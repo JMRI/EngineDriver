@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright (C) 2010 Jason M'Sadoques
+  jlyonm@gmail.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" >
+  <TextView android:text="@string/host_ip" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+  <EditText android:id="@+id/host_ip" android:layout_width="160sp" android:layout_height="wrap_content"
+            android:singleLine="true" android:maxLength="15" />
+  <TextView android:text="@string/port" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+  <EditText android:id="@+id/port" android:layout_width="80sp" android:layout_height="wrap_content"
+            android:singleLine="true" android:maxLength="5" android:inputType="number" />
+  <TextView android:text="@string/loco_address" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+  <EditText android:id="@+id/loco_address" android:layout_width="65sp" android:layout_height="wrap_content"
+            android:singleLine="true" android:maxLength="4" android:inputType="number" />
+  <SeekBar android:id="@+id/speed" android:layout_width="fill_parent" android:layout_height="40dp"
+           android:paddingLeft="10dp" android:paddingRight="10dp" />
+</LinearLayout>
