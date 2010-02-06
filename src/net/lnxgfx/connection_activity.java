@@ -48,6 +48,8 @@ public class connection_activity extends Activity
 
   ArrayList<String> ip_list;
   ArrayList<Integer> port_list;
+  ArrayList<String> discovered_ip_list;
+  ArrayList<Integer> discovered_port_list;
 
   //The IP address and port that are used to connect.
   String host_ip;
@@ -70,13 +72,27 @@ public class connection_activity extends Activity
     startActivity(select_loco);
   };
 
+  public enum server_list_type { DISCOVERED_SERVER, RECENT_CONNECTION }
   public class connect_item implements AdapterView.OnItemClickListener
   {
+    server_list_type server_type;
+
+    connect_item(server_list_type new_type) { server_type=new_type; }
+
     //When an item is clicked, connect to the given IP address and port.
     public void onItemClick(AdapterView<?> parent, View v, int position, long id)
     {
-      host_ip=new String(ip_list.get(position));
-      port=port_list.get(position);
+      switch(server_type)
+      {
+        case DISCOVERED_SERVER:
+          host_ip=new String(discovered_ip_list.get(position));
+          port=discovered_port_list.get(position);
+        break;
+        case RECENT_CONNECTION:
+          host_ip=new String(ip_list.get(position));
+          port=port_list.get(position);
+        break;
+      }
       connect();
     };
   }
@@ -103,12 +119,12 @@ public class connection_activity extends Activity
         case message_type.SERVICE_RESOLVED:
         {
           //Add this discovered service to the list.
-          String host_ip=new String((String)msg.obj);
-          Integer port=msg.arg1;
+          discovered_ip_list.add((String)msg.obj);
+          discovered_port_list.add(msg.arg1);
 
           HashMap<String, String> hm=new HashMap<String, String>();
-          hm.put("ip_address", host_ip);
-          hm.put("port", port.toString());
+          hm.put("ip_address", discovered_ip_list.get(discovered_ip_list.size()-1));
+          hm.put("port", discovered_port_list.get(discovered_port_list.size()-1).toString());
           discovery_list.add(hm);
           discovery_list_adapter.notifyDataSetChanged();
         }
@@ -158,17 +174,19 @@ public class connection_activity extends Activity
                                              new int[] {R.id.ip_item_label, R.id.port_item_label});
     ListView discover_list=(ListView)findViewById(R.id.discovery_list);
     discover_list.setAdapter(discovery_list_adapter);
-    discover_list.setOnItemClickListener(new connect_item());
+    discover_list.setOnItemClickListener(new connect_item(server_list_type.DISCOVERED_SERVER));
     //Set up a list adapter to allow adding the list of recent connections to the UI.
     connections_list=new ArrayList<HashMap<String, String> >();
     connection_list_adapter=new SimpleAdapter(this, connections_list, R.layout.connections_list_item, new String[] {"ip_address", "port"},
                                    new int[] {R.id.ip_item_label, R.id.port_item_label});
     ListView conn_list=(ListView)findViewById(R.id.connections_list);
     conn_list.setAdapter(connection_list_adapter);
-    conn_list.setOnItemClickListener(new connect_item());
+    conn_list.setOnItemClickListener(new connect_item(server_list_type.RECENT_CONNECTION));
 
     ip_list=new ArrayList<String>();
     port_list=new ArrayList<Integer>();
+    discovered_ip_list=new ArrayList<String>();
+    discovered_port_list=new ArrayList<Integer>();
     //Populate the ListView with the recent connections saved in a file. This will be stored in
     // /sdcard/engine_driver/connections_list.txt
     try
