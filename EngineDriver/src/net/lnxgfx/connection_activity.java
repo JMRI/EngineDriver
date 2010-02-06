@@ -42,7 +42,9 @@ import android.widget.AdapterView;
 public class connection_activity extends Activity
 {
   ArrayList<HashMap<String, String> > connections_list;
-  private SimpleAdapter list_adapter;
+  ArrayList<HashMap<String, String> > discovery_list;
+  private SimpleAdapter connection_list_adapter;
+  private SimpleAdapter discovery_list_adapter;
 
   ArrayList<String> ip_list;
   ArrayList<Integer> port_list;
@@ -63,6 +65,7 @@ public class connection_activity extends Activity
 
   void start_select_loco_activity()
   {
+//    multicast_lock.release();
     Intent select_loco=new Intent().setClass(this, select_loco.class);
     startActivity(select_loco);
   };
@@ -97,6 +100,19 @@ public class connection_activity extends Activity
     {
       switch(msg.what)
       {
+        case message_type.SERVICE_RESOLVED:
+        {
+          //Add this discovered service to the list.
+          String host_ip=new String((String)msg.obj);
+          Integer port=msg.arg1;
+
+          HashMap<String, String> hm=new HashMap<String, String>();
+          hm.put("ip_address", host_ip);
+          hm.put("port", port.toString());
+          discovery_list.add(hm);
+          discovery_list_adapter.notifyDataSetChanged();
+        }
+        break;
         case message_type.CONNECTED:
           //Save the new list to the connections_list.txt file.
           File sdcard_path=Environment.getExternalStorageDirectory();
@@ -135,12 +151,20 @@ public class connection_activity extends Activity
 
     threaded_application app=(threaded_application)this.getApplication();
     app.thread.ui_msg_handler=new ui_handler();
+    //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
+    discovery_list=new ArrayList<HashMap<String, String> >();
+    discovery_list_adapter=new SimpleAdapter(this, discovery_list, R.layout.connections_list_item,
+                                             new String[] {"ip_address", "port"},
+                                             new int[] {R.id.ip_item_label, R.id.port_item_label});
+    ListView discover_list=(ListView)findViewById(R.id.discovery_list);
+    discover_list.setAdapter(discovery_list_adapter);
+    discover_list.setOnItemClickListener(new connect_item());
     //Set up a list adapter to allow adding the list of recent connections to the UI.
     connections_list=new ArrayList<HashMap<String, String> >();
-    list_adapter=new SimpleAdapter(this, connections_list, R.layout.connections_list_item, new String[] {"ip_address", "port"},
+    connection_list_adapter=new SimpleAdapter(this, connections_list, R.layout.connections_list_item, new String[] {"ip_address", "port"},
                                    new int[] {R.id.ip_item_label, R.id.port_item_label});
     ListView conn_list=(ListView)findViewById(R.id.connections_list);
-    conn_list.setAdapter(list_adapter);
+    conn_list.setAdapter(connection_list_adapter);
     conn_list.setOnItemClickListener(new connect_item());
 
     ip_list=new ArrayList<String>();
@@ -173,7 +197,7 @@ public class connection_activity extends Activity
               hm.put("port", port_list.get(port_list.size()-1).toString());
               connections_list.add(hm);
             }
-            list_adapter.notifyDataSetChanged();
+            connection_list_adapter.notifyDataSetChanged();
           }
         }
 
