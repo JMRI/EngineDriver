@@ -26,6 +26,12 @@ import android.os.Message;
 import java.net.*;
 import java.io.*;
 import android.util.Log;
+import javax.jmdns.*;
+import android.net.wifi.WifiManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager.MulticastLock;
+import java.net.InetAddress;
+import android.content.Context;
 
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
@@ -35,13 +41,47 @@ public class threaded_application extends Application
 
   class comm_thread extends Thread
   {
-    String host_ip; //The IP address (TODO: test/allow host names) if the WiThrottle server.
+    String host_ip; //The IP address (TODO: test/allow host names) of the WiThrottle server.
     int port; //The TCP port that the WiThrottle server is running on (TODO: Add ZeroConf capability).
     int loco_address; //The Address of the locomotive being controlled (TODO: Allow multiple engines at the same time).
     //Communications variables.
     Socket client_socket;
     InetAddress host_address;
     PrintWriter output_pw;
+
+    //Listen for a WiThrottle service advertisement on the LAN.
+    public class withrottle_listener implements ServiceListener
+    {
+      public void serviceAdded(ServiceEvent event)
+      {
+        //A service has been added. Request the service's information.
+        JmDNS jmdns=event.getDNS();
+        jmdns.requestServiceInfo(event.getType(), event.getName(), 0);
+        Log.d("serviceAdded", event.toString());
+      };
+
+      public void serviceRemoved(ServiceEvent event)
+      {
+        Log.d("serviceRemoved", event.getName());
+      };
+
+      public void serviceResolved(ServiceEvent event)
+      {
+        //A service's information has been resolved. Capture the necessary part needed to connect to that service.
+        int port=event.getInfo().getPort();
+        String host_ip=event.getInfo().getHostAddress();
+        Log.d("serviceResolved", String.format("%s:%d", host_ip, port));
+        //Tell the UI thread so as to update the list of services available.
+        Message service_message=Message.obtain();
+        service_message.what=message_type.SERVICE_RESOLVED;
+        service_message.arg1=port;
+        service_message.obj=new String(host_ip);
+        ui_msg_handler.sendMessage(service_message);
+      };
+    }
+    JmDNS jmdns;
+    withrottle_listener listener;
+    MulticastLock multicast_lock;
 
     class comm_handler extends Handler
     {
@@ -126,6 +166,28 @@ public class threaded_application extends Application
 
     public void run()
     {
+      //Set up to find a WiThrottle service via ZeroConf.
+      try
+      {
+        WifiManager wifi = (WifiManager)threaded_application.this.getSystemService(Context.WIFI_SERVICE);
+        //Acquire a multicast lock. This allows us to obtain multicast packets, but consumes a bit more battery life.
+        //Release it as soon as possible (after the user has connected to a WiThrottle service, or this application is
+        //not the currently active one.
+        multicast_lock=wifi.createMulticastLock("engine_driver");
+        multicast_lock.setReferenceCounted(true);
+        multicast_lock.acquire();
+        WifiInfo wifiinfo = wifi.getConnectionInfo();
+        int intaddr = wifiinfo.getIpAddress();
+        byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
+                                       (byte)(intaddr >> 24 & 0xff) };
+        InetAddress addr = InetAddress.getByAddress(byteaddr);
+        Log.d("comm_thread_run", String.format("found intaddr=%d, addr=%s", intaddr, addr.toString()));
+        jmdns=JmDNS.create(addr);
+        listener=new withrottle_listener();
+        jmdns.addServiceListener("_withrottle._tcp.local.", listener);
+      }
+      catch(IOException except) { Log.e("comm_thread_run", "Error: IOException: "+except.getMessage()); }
+
       Looper.prepare();
       comm_msg_handler=new comm_handler();
       //TODO: Respond to incoming communication on the Socket. I think this is done by creating a custom Looper.

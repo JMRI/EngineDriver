@@ -29,4 +29,5 @@ interface message_type
   public static final int DIRECTION=5;
   public static final int FUNCTION=6;
   public static final int CONNECTED=7;
+  public static final int SERVICE_RESOLVED=8;
 }
