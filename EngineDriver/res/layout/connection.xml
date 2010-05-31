@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
               android:layout_height="wrap_content" />
     <EditText android:id="@+id/host_ip" android:layout_width="160sp" android:layout_height="wrap_content"
               android:layout_below="@id/ip_label"
-              android:singleLine="true" android:maxLength="15" />
+              android:singleLine="true" android:maxLength="60"/>
     <EditText android:id="@+id/port" android:layout_width="80sp" android:layout_height="wrap_content"
               android:singleLine="true" android:maxLength="5" android:inputType="number"
               android:layout_toRightOf="@id/host_ip" android:layout_alignBottom="@id/host_ip" />
@@ -44,4 +44,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   <ListView android:id="@+id/connections_list" android:layout_width="fill_parent" android:layout_height="0dp"
             android:layout_weight="1" >
   </ListView>
+    <TextView android:id="@+id/ca_footer" android:text="@string/none" android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
 </LinearLayout>
