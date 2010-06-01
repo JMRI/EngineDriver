@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright (C) 2010 Jason M'Sadoques
+  jlyonm@gmail.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+--> 
+
+<resources>
+    <string name="exit">Exit</string>
+    <string name="settings">Function Settings</string>
+    <string name="fb_label">Function Label</string>
+    <string name="function_buttons">function_buttons</string>
+    
+    <string name="app_name">Engine Driver</string>
+    <string name="host_ip">Host IP Address</string>
+    <string name="port">Port</string>
+    <string name="loco_address">Loco Address</string>
+    <string name="connect_button">Connect</string>
+    <string name="recent_connections">Recent Connections</string>
+    <string name="select_loco">Enter Locomotive Address</string>
+    <string name="acquire_button">Acquire</string>
+    <string name="recent_engines">Select from Recent Locomotives</string>
+    <string name="direction">Fwd</string>
+    <string name="speed">Speed:</string>
+    <string name="discovered_services">Discovered Services</string>
+<string name="save_settings">Save Settings</string>
+<string name="stop">Stop</string>
+<string name="forward">Forward</string>
+<string name="reverse">Reverse</string>
+<string name="none">None</string>
+<string name="prefTitle">Preferences</string>
+<string name="prefSummary">Preferences for Engine Driver</string>
+<string name="preferences">Preferences</string>
+<string name="prefThrottleNameTitle">Throttle Name</string>
+<string name="prefThrottleNameDefaultValue">Engine Driver</string>
+<string name="prefThrottleNameSummary">Set the throttle name (shown on WiThrottle screen)</string>
+<string name="fb_helptext">Enter labels and function#s in list at left.  Toggle sets button to &quot;stick&quot;.  Leave label blank to hide button.</string>
+<string name="copy_function_labels">Copy Labels from Roster</string>
+<string name="fb_header">Edit Functions</string>
+<string name="about">About</string>
+<string name="prefStopOnReleaseTitle">Stop On Release</string>
+<string name="prefStopOnReleaseDefaultValue">true</string>
+<string name="prefStopOnReleaseSummary">Stop loco when releasing from throttle</string>
+</resources>
