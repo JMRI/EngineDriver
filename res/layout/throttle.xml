@@ -1,79 +1,393 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Copyright (C) 2010 Jason M'Sadoques
-  jlyonm@gmail.com
+   <!--
+      Copyright (C) 2010 Jason M'Sadoques jlyonm@gmail.com This program is free
+      software; you can redistribute it and/or modify it under the terms of the
+      GNU General Public License as published by the Free Software Foundation;
+      either version 3 of the License, or (at your option) any later version.
+      This program is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+      for more details. You should have received a copy of the GNU General
+      Public License along with this program; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+   -->
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
+<LinearLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   android:id="@+id/throttle_screen"
+   android:layout_width="fill_parent"
+   android:layout_height="fill_parent"
+   android:orientation="vertical">
+   <ScrollView
+      android:id="@+id/function_buttons_scroller_T"
+      android:layout_width="fill_parent"
+      android:layout_height="200dp"
+      android:layout_weight="1" >
+      <TableLayout
+         android:id="@+id/function_buttons_group_T"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:stretchColumns="0,1,2,3" >
+         <TableRow>
+            <Button
+               android:text="Light"
+               style="@style/button_style" />
+            <Button
+               android:text="Bell"
+               style="@style/button_style" />
+            <Button
+               android:text="Horn"
+               style="@style/button_style" />
+            <Button
+               android:text="3"
+               style="@style/button_style" />
+         </TableRow>
+         <TableRow>
+            <Button
+               android:text="4"
+               style="@style/button_style" />
+            <Button
+               android:text="5"
+               style="@style/button_style" />
+            <Button
+               android:text="6"
+               style="@style/button_style" />
+            <Button
+               android:text="7"
+               style="@style/button_style" />
+         </TableRow>
+         <TableRow>
+            <Button
+               android:text="8"
+               style="@style/button_style" />
+            <Button
+               android:text="9"
+               style="@style/button_style" />
+            <Button
+               android:text="10"
+               style="@style/button_style" />
+            <Button
+               android:text="11"
+               style="@style/button_style" />
+         </TableRow>
+         <TableRow>
+            <Button
+               android:text="12"
+               style="@style/button_style" />
+            <Button
+               android:text="13"
+               style="@style/button_style" />
+            <Button
+               android:text="14"
+               style="@style/button_style" />
+            <Button
+               android:text="15"
+               style="@style/button_style" />
+         </TableRow>
+         <TableRow>
+            <Button
+               android:text="16"
+               style="@style/button_style" />
+            <Button
+               android:text="17"
+               style="@style/button_style" />
+            <Button
+               android:text="18"
+               style="@style/button_style" />
+            <Button
+               android:text="19"
+               style="@style/button_style" />
+         </TableRow>
+         <TableRow>
+            <Button
+               android:text="20"
+               style="@style/button_style" />
+            <Button
+               android:text="21"
+               style="@style/button_style" />
+            <Button
+               android:text="22"
+               style="@style/button_style" />
+            <Button
+               android:text="23"
+               style="@style/button_style" />
+         </TableRow>
+         <TableRow>
+            <Button
+               android:text="24"
+               style="@style/button_style" />
+            <Button
+               android:text="25"
+               style="@style/button_style" />
+            <Button
+               android:text="26"
+               style="@style/button_style" />
+            <Button
+               android:text="27"
+               style="@style/button_style" />
+         </TableRow>
+         <TableRow>
+            <Button
+               android:text="28"
+               style="@style/button_style" />
+            <Button
+               android:text="29"
+               style="@style/button_style" />
+            <Button
+               android:text="30"
+               style="@style/button_style" />
+            <Button
+               android:text="31"
+               style="@style/button_style" />
+         </TableRow>
+      </TableLayout>
+   </ScrollView>
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+   <TableLayout
+      android:id="@+id/dir_buttons_table"
+      android:layout_width="fill_parent"
+      android:stretchColumns="0,1,2"
+      android:layout_height="wrap_content">
+      <TableRow>
+         <Button
+            android:id="@+id/button_fwd_T"
+            android:text="@string/forward"
+            style="@style/large_button_style" />
+         <Button
+            android:id="@+id/button_stop_T"
+            android:text="@string/stop"
+            style="@style/large_button_style" />
+         <Button
+            android:id="@+id/button_rev_T"
+            android:text="@string/reverse"
+            style="@style/large_button_style" />
+      </TableRow>
+   </TableLayout>
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
--->
+   <RelativeLayout
+      android:id="@+id/speed_group_T"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+      <Button
+         android:id="@+id/button_select_loco_T"
+         android:text="@string/none"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+      <TextView
+         android:id="@+id/speed_label_T"
+         android:text="@string/speed"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:textAppearance="?android:attr/textAppearanceLarge"
+         android:layout_toRightOf="@id/button_select_loco_T"
+         android:layout_alignBottom="@id/button_select_loco_T"
+         android:gravity="right" />
+      <TextView
+         android:id="@+id/speed_value_label_T"
+         android:text="0"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_toRightOf="@id/speed_label_T"
+         android:layout_alignBottom="@id/speed_label_T"
+         android:paddingLeft="8dp"
+         android:textAppearance="?android:attr/textAppearanceLarge"
+         android:gravity="right" />
+      <SeekBar
+         android:id="@+id/speed_T"
+         android:layout_width="fill_parent"
+         android:layout_height="40dp"
+         android:layout_below="@id/button_select_loco_T"
+         android:layout_alignLeft="@id/button_select_loco_T"
+         android:paddingLeft="12dp"
+         android:paddingRight="12dp" />
+   </RelativeLayout>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/throttle_screen" 
-    android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical">
-  <TextView android:id="@+id/throttle_header" android:text="@string/none" android:layout_width="wrap_content"
-              android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" />
-  <TableLayout android:layout_width="fill_parent" android:stretchColumns="0,1,2,3" android:layout_height="wrap_content" android:id="@+id/function_buttons_group">
+   <ScrollView
+      android:id="@+id/function_buttons_scroller_S"
+      android:layout_width="fill_parent"
+      android:layout_height="200dp"
+      android:layout_weight="1"
+   >
+      <TableLayout
+         android:id="@+id/function_buttons_group_S"
+         android:layout_width="fill_parent"
+         android:stretchColumns="0,1,2,3"
+         android:layout_height="wrap_content"
+      >
+         <TableRow>
+            <Button
+               android:text="Light"
+               style="@style/button_style" />
+            <Button
+               android:text="Bell"
+               style="@style/button_style" />
+            <Button
+               android:text="Horn"
+               style="@style/button_style" />
+            <Button
+               android:text="3"
+               style="@style/button_style" />
+         </TableRow>
+         <TableRow>
+            <Button
+               android:text="4"
+               style="@style/button_style" />
+            <Button
+               android:text="5"
+               style="@style/button_style" />
+            <Button
+               android:text="6"
+               style="@style/button_style" />
+            <Button
+               android:text="7"
+               style="@style/button_style" />
+         </TableRow>
 
-    <TableRow>
-        <Button android:id="@+id/button_0" android:text="Light" style="@style/button_style"/>
-        <Button android:id="@+id/button_1" android:text="Bell" style="@style/button_style" />
-        <Button android:id="@+id/button_2" android:text="Horn" style="@style/button_style" />
-        <Button android:id="@+id/button_3" android:text="3" style="@style/button_style" />
-    </TableRow>
-    <TableRow>
-        <Button android:id="@+id/button_4" android:text="4" style="@style/button_style"  />
-        <Button android:id="@+id/button_5" android:text="5" style="@style/button_style"  />
-        <Button android:id="@+id/button_6" android:text="6" style="@style/button_style"  />
-        <Button android:id="@+id/button_7" android:text="7" style="@style/button_style"  />
-    </TableRow>
+         <TableRow>
+            <Button
+               android:text="8"
+               style="@style/button_style" />
+            <Button
+               android:text="9"
+               style="@style/button_style" />
+            <Button
+               android:text="10"
+               style="@style/button_style" />
+            <Button
+               android:text="11"
+               style="@style/button_style" />
+         </TableRow>
 
-    <TableRow>
-        <Button android:id="@+id/button_8" android:text="8" style="@style/button_style"  />
-        <Button android:id="@+id/button_9" android:text="9" style="@style/button_style"  />
-        <Button android:id="@+id/button_10" android:text="10" style="@style/button_style"  />
-        <Button android:id="@+id/button_11" android:text="11" style="@style/button_style"  />
-    </TableRow>
+         <TableRow>
+            <Button
+               android:text="12"
+               style="@style/button_style" />
+            <Button
+               android:text="13"
+               style="@style/button_style" />
+            <Button
+               android:text="14"
+               style="@style/button_style" />
+            <Button
+               android:text="15"
+               style="@style/button_style" />
+         </TableRow>
+         <TableRow>
+            <Button
+               android:text="16"
+               style="@style/button_style" />
+            <Button
+               android:text="17"
+               style="@style/button_style" />
+            <Button
+               android:text="18"
+               style="@style/button_style" />
+            <Button
+               android:text="19"
+               style="@style/button_style" />
+         </TableRow>
+         <TableRow>
+            <Button
+               android:text="20"
+               style="@style/button_style" />
+            <Button
+               android:text="21"
+               style="@style/button_style" />
+            <Button
+               android:text="22"
+               style="@style/button_style" />
+            <Button
+               android:text="23"
+               style="@style/button_style" />
+         </TableRow>
+         <TableRow>
+            <Button
+               android:text="24"
+               style="@style/button_style" />
+            <Button
+               android:text="25"
+               style="@style/button_style" />
+            <Button
+               android:text="26"
+               style="@style/button_style" />
+            <Button
+               android:text="27"
+               style="@style/button_style" />
+         </TableRow>
+         <TableRow>
+            <Button
+               android:text="28"
+               style="@style/button_style" />
+            <Button
+               android:text="29"
+               style="@style/button_style" />
+            <Button
+               android:text="30"
+               style="@style/button_style" />
+            <Button
+               android:text="31"
+               style="@style/button_style" />
+         </TableRow>
+      </TableLayout>
+   </ScrollView>
+   <TableLayout
+      android:id="@+id/dir_buttons_table_S"
+      android:layout_width="fill_parent"
+      android:stretchColumns="0,1,2"
+      android:layout_height="wrap_content">
+      <TableRow>
+         <Button
+            android:id="@+id/button_fwd_S"
+            android:text="@string/forward"
+            style="@style/large_button_style" />
+         <Button
+            android:id="@+id/button_stop_S"
+            android:text="@string/stop"
+            style="@style/large_button_style" />
+         <Button
+            android:id="@+id/button_rev_S"
+            android:text="@string/reverse"
+            style="@style/large_button_style" />
+      </TableRow>
 
-    <TableRow>
-        <Button android:id="@+id/button_12" android:text="12" style="@style/button_style"  />
-        <Button android:id="@+id/button_13" android:text="13" style="@style/button_style"  />
-        <Button android:id="@+id/button_14" android:text="14" style="@style/button_style"  />
-        <Button android:id="@+id/button_15" android:text="15" style="@style/button_style"  />
-    </TableRow>
-  </TableLayout>
+   </TableLayout>
+   <RelativeLayout
+      android:id="@+id/speed_group_S"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+   >
+      <Button
+         android:id="@+id/button_select_loco_S"
+         android:text="@string/none"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+      <TextView
+         android:id="@+id/speed_label_S"
+         android:text="@string/speed"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:textAppearance="?android:attr/textAppearanceLarge"
+         android:layout_toRightOf="@id/button_select_loco_S"
+         android:layout_alignBottom="@id/button_select_loco_S" />
+      <TextView
+         android:id="@+id/speed_value_label_S"
+         android:text="0"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_toRightOf="@id/speed_label_S"
+         android:layout_alignBottom="@id/speed_label_S"
+         android:paddingLeft="8dp"
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+      <SeekBar
+         android:id="@+id/speed_S"
+         android:layout_width="fill_parent"
+         android:layout_height="40dp"
+         android:layout_below="@id/button_select_loco_S"
+         android:layout_alignLeft="@id/button_select_loco_S"
+         android:paddingLeft="12dp"
+         android:paddingRight="12dp" />
+   </RelativeLayout>
 
-  <TableLayout android:layout_width="fill_parent" android:stretchColumns="0,1,2" android:layout_height="wrap_content" android:id="@+id/dir_buttons_table">
-    <TableRow>
-        <Button android:id="@+id/button_fwd" android:text="@string/forward" style="@style/large_button_style"/>
-        <Button android:id="@+id/button_stop" android:text="@string/stop" style="@style/large_button_style"/>
-        <Button android:id="@+id/button_rev" android:text="@string/reverse" style="@style/large_button_style"/>
-    </TableRow>
-
-  </TableLayout>
-  <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
-    <TextView android:id="@+id/speed_label" android:text="@string/speed" android:layout_width="wrap_content"
-              android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" />
-    <TextView android:id="@+id/speed_value_label" android:text="0" android:layout_width="wrap_content"
-              android:layout_height="wrap_content" android:layout_toRightOf="@id/speed_label"
-              android:layout_alignBottom="@id/speed_label" android:paddingLeft="8dp"
-              android:textAppearance="?android:attr/textAppearanceLarge" />
-    <SeekBar android:id="@+id/speed" android:layout_width="fill_parent" android:layout_height="40dp"
-             android:layout_below="@id/speed_label" android:layout_alignLeft="@id/speed_label" android:paddingLeft="15dp"
-             android:paddingRight="15dp" />
-  </RelativeLayout>
-  <TextView android:id="@+id/ed_log_text" android:layout_width="fill_parent" android:layout_height="0dp"
-            android:layout_weight="1" >
-  </TextView>
-  
-  <TextView android:id="@+id/ed_footer" android:text="@string/none" android:layout_width="fill_parent"
-              android:layout_height="wrap_content" />
- </LinearLayout>
+</LinearLayout>

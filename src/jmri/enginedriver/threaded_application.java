@@ -30,33 +30,52 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   send hardware address as HU<throttle-name>  (prevents duplicates in WiThrottle server)
  *   changed process namespace from net.lnxgfx to jmri.enginedriver
  *   added html About page
- *
- *   TODO: toast message on release of loco
- *   TODO: add roster list to select_loco activity
- *   TODO: send "quit" to ed on "Not Set"
+ *   added select loco button to ed screen, call ed direct from connect
+ */
+
+/* Version 0.4 - changes/additions by mstevetodd
+ *   added select loco button to ed screen, call ed direct from connect
+ *  added 32 function buttons for both throttles, using scroller
+ */
+
+/*
  *   TODO: add consisting features
- *   TODO: show more than 16 function buttons, via scroller? (also handle with 2nd throttle?)
- *   TODO: add 2nd throttle
- *   TODO: update individual function settings using long press on each
+ *   TODO: toast messages on release of loco and update of preferences
+ *   TODO: make private stuff private
+ * threaded_application
+ *   TODO: add client-side conversation logging for easier debugging
+ *   TODO: check for error on send and do something with it 
+ *   TODO: improve error handling of read error (sometimes it loops sending toast messages) 
+ *   TODO: Move wifi listener to OnStart from OnCreate (so it works each time activity gets focus), and add OnPause (or somesuch) to turn off listener
  *   TODO: move socket timeout values to preference
  *   TODO: determine why ip by server name won't resolve
- *   TODO: make private stuff private
+ *   TODO: don't add discovered server more than once (restart WiT to cause this)
+ * engine_driver:
+ *   TODO: disable buttons and slider unless each loco is selected (not "Not Set"?)
+ *   TODO: improve screen layout, especially regarding loco, and scroll without pressing buttons
+ *   TODO: in ed exit, don't ask to release if "Not Set"
  *   TODO: get 2nd line of label text working again
- *   TODO: Move wifi listener to OnStart from OnCreate (so it works each time activity gets focus)
+ *   TODO: update individual function settings using long press on each (maybe not, since folks like to hold the horn)
+ *   TODO: add graphics (slider, stop, directions, functions?)
+ * select_loco:
+ *   TODO: don't show or allow selection of loco if already in use on "other" throttle
+ *   TODO: add roster list
+ *   TODO: add Release button
+ *   TODO: simplify select_loco by removing handler
  *
  * These require changes to WiThrottle
- *   TODO: add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
- *   TODO: get "sticky" flags as part of roster receive 
- *   TODO: disallow "steal"  (if requested addr "in use", return error)  probably should be a pref
- *   TODO: pull more data from roster
  *   TODO: get current status (speed, direction, function states, speed steps?)  On request would be best.
- *   TODO: add turnout controls
+ *   TODO: add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
+ *   TODO: get "sticky" flags as part of roster receive (not needed if status updates made available)
+ *   TODO: disallow "steal"  (if requested addr "in use", return error)  probably should be a pref
+ *   TODO: pull more details from roster
+ *   TODO: add turnout and route controls
  *   
  * Other potential changes to WiThrottle:
  *   ) remove throttle from withrottle screen on loss of connection (estop)
- *   ) add response for heartbeat (so client will know it's still alive)  
+ *   ) add response for heartbeat (so client will know it's still alive)  status message would be ideal
  *   ) allow restart of withrottle (variable UI needs to be cleared when it closes)
- *   ) handle read error looping on loss of connection
+ *   ) fix read error looping on loss of connection to device
  *   ) add "E"rror response
  * 
  * */
@@ -93,13 +112,16 @@ public class threaded_application extends Application
     public comm_thread thread;
 	String host_ip; //The IP address of the WiThrottle server.
 	int port; //The TCP port that the WiThrottle server is running on
-	int loco_address_1; //The Address of the locomotive being controlled 
+	int loco_address_1 = -1; //The Address of the locomotive being controlled 
+	int loco_address_2 = -1; //The Address of the locomotive being controlled 
 	//shared variables returned from the withrottle server, stored here for easy access by other activities
 	String host_name_string; //retrieved host name of connection
-	String loco_string_1; //Loco Address string returned from the server for selected loco #1
+	String loco_string_1 = "Not Set"; //Loco Address string returned from the server for selected loco #1
+	String loco_string_2 = "Not Set"; //Loco Address string returned from the server for selected loco #1
 	String withrottle_version_string; //version of withrottle server
 	String roster_list_string; //roster list
 	String roster_function_string_1; //roster function list for selected loco #1
+	String roster_function_string_2; //roster function list for selected loco #1
 	int heartbeat_interval; //heartbeat interval in seconds
 	//Communications variables.
 	Socket client_socket;
@@ -202,6 +224,7 @@ public class threaded_application extends Application
             try { output_pw=new PrintWriter(new OutputStreamWriter(client_socket.getOutputStream()), true); }
             catch(IOException except) {
               process_comm_error("Error creating a PrintWriter, IOException: "+except.getMessage());
+              return;
             }
 
 			try {input_reader = new BufferedReader(new InputStreamReader(client_socket.getInputStream()));
@@ -222,13 +245,23 @@ public class threaded_application extends Application
             break;
 
           //Release the current loco
-          case message_type.RELEASE:
-//        	Boolean dv = getApplicationContext().getResources().getBoolean(R.string.prefStopOnReleaseDefaultValue); TODO: fix this
-  		    Boolean f = prefs.getBoolean("stop_on_release_preference", true );
-  		    if (f) {
-  		    	withrottle_send("TV0");  //send stop command before releasing (if set in prefs)
+          case message_type.RELEASE:  //release specified loco
+          	String whichThrottle = msg.obj.toString();
+
+        	//        	Boolean f = getApplicationContext().getResources().getBoolean(R.string.prefStopOnReleaseDefaultValue); TODO: fix this
+  		    if (prefs.getBoolean("stop_on_release_preference", true )) {
+  		    	withrottle_send(whichThrottle+"V0");  //send stop command before releasing (if set in prefs)
   		    }
-  		    withrottle_send("Tr");  //send release command
+            if (whichThrottle.equals("T")) {
+  		      loco_string_1 = "Not Set"; 
+              roster_function_string_1 = null;
+              loco_address_1 = -1;
+            } else {
+              loco_string_2 = "Not Set"; 
+              roster_function_string_2 = null;
+              loco_address_2 = -1;
+            }
+            withrottle_send(whichThrottle+"r");  //send release command
             break;
 
           //send heartbeat
@@ -247,22 +280,31 @@ public class threaded_application extends Application
         	withrottle_send("Q");
             withrottle_send("*-");     //turn off heartbeat
             readTimer.cancel();        //stop reading from socket
+            try{ Thread.sleep(500); }   //  give server time to process this.
+              catch (InterruptedException except){ process_comm_error("Error sleeping the thread, InterruptedException: "+except.getMessage()); }
             try { client_socket.close(); }
-            catch(IOException except) {
-              process_comm_error("Error closing the Socket, IOException: "+except.getMessage());
-            }
+              catch(IOException except) { process_comm_error("Error closing the Socket, IOException: "+except.getMessage()); }
             break;
 
            //Set up an engine to control. The address of the engine is given in arg1, and the address type (long or short) is given in arg2.
           case message_type.LOCO_ADDR:
-            //clear app-level shared variables so they can be reset
-            loco_string_1 = null; 
-            roster_function_string_1 = null;
-            loco_address_1=msg.arg1;
-            withrottle_send(String.format("T"+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", loco_address_1));
-            //In order to get the engine to start, I must set a direction and some non-zero velocity and then set the velocity to zero. TODO: Fix this bug
+            //clear appropriate app-level shared variables so they can be reset
+        	whichThrottle = msg.obj.toString();
+            if (whichThrottle.equals("T")) {
+            		loco_string_1 = "Not Set"; 
+                    roster_function_string_1 = null;
+                    loco_address_1=msg.arg1;
+            } else {
+        		loco_string_2 = "Not Set"; 
+                roster_function_string_2 = null;
+                loco_address_2=msg.arg1;
+            }
+//            withrottle_send(String.format("T"+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", loco_address_1));
+            withrottle_send(String.format(whichThrottle+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", msg.arg1));
+                     //In order to get the engine to start, I must set a direction and some non-zero velocity and then set the velocity to zero. TODO: Fix this bug
             //in the WiThrottle server.
-            withrottle_send("TR1\nTV1\nTV0");
+//            withrottle_send("TR1\nTV1\nTV0");
+            withrottle_send(whichThrottle+"R1\n"+whichThrottle+"V1\n"+whichThrottle+"V0"); 
             withrottle_send("*+");     //always request to turn on heartbeat (must be enabled in server prefs)
             break;
 
@@ -271,17 +313,21 @@ public class threaded_application extends Application
             
           //Adjust the locomotive's speed. arg1 holds the value of the speed to set. //TODO: Allow 14 and 28 speed steps (might need a change on the server size).
           case message_type.VELOCITY:
-        	withrottle_send(String.format("TV%d", msg.arg1));
+//          	withrottle_send(String.format("TV%d", msg.arg1));
+          	whichThrottle = msg.obj.toString();
+        	withrottle_send(String.format(whichThrottle+"V%d", msg.arg1));
             break;
 
           //Change direction. arg2 holds the direction to change to. The reason direction is in arg2 is for compatibility
           //with the function buttons.
           case message_type.DIRECTION:
-        	withrottle_send(String.format("TR%d", msg.arg2));
+          	whichThrottle = msg.obj.toString();
+        	withrottle_send(String.format(whichThrottle+"R%d", msg.arg2));
             break;
           //Set or unset a function. arg1 is the function number, arg2 is set or unset.
           case message_type.FUNCTION:
-        	withrottle_send(String.format("TF%d%d", msg.arg2, msg.arg1));
+          	whichThrottle = msg.obj.toString();
+        	withrottle_send(String.format(whichThrottle+"F%d%d", msg.arg2, msg.arg1));
             break;
 /*
           //end the application and thread
@@ -309,44 +355,43 @@ public class threaded_application extends Application
     }
 
     private void process_response(String response_str) {
-    	/* see java/arc/jmri/jmrit/withrottle/deviceserver.java for server code and some documentation
+    /* see java/arc/jmri/jmrit/withrottle/deviceserver.java for server code and some documentation
     	 * VN<Version#>
-    	 * T<EngineAddress>(<LongOrShort>)  note:sends 
+    	 * T<EngineAddress>(<LongOrShort>)  
     	 * S<2ndEngineAddress>(<LongOrShort>)
     	 * RL<RosterSize>]<RosterList>
     	 * RF<RosterFunctionList>
     	 * RS<2ndRosterFunctionList>
-    	 * *<HeartbeatIntervalInSeconds>
-    	 */
+    	 * *<HeartbeatIntervalInSeconds>      */
   	  switch (response_str.charAt(0)) {
 	  	case 'T': {
-	  		loco_string_1 = response_str.substring(1);  //set app.thread variable
-	  		if (loco_string_1.equals("Not Set")) {  
-	  			//tell engine_driver to end itself if loco unset
-	  		} else {
-	            Message loco_selected_msg=Message.obtain(); //only start the next activity if NOT "Not Set"
-	            loco_selected_msg.what=message_type.LOCO_SELECTED;
-	            loco_selected_msg.obj=new String(loco_string_1);  //include loco name in msg
-	            select_loco_msg_handler.sendMessage(loco_selected_msg);  //tell select_loco activity to call engine_driver
-	  		}
+	  		loco_string_1 = response_str.substring(1);  //set app variable
+	  	break;
+	  	}
+	  	case 'S': {
+	  		loco_string_2 = response_str.substring(1);  //set app variable
 	  	break;
 	  	}
 	  	case 'V': {
-	  		withrottle_version_string = response_str.substring(2);  //set app.thread variable
+	  		withrottle_version_string = response_str.substring(2);  //set app variable
 	  	break;
 	  	}
 	  	case '*': {
-	  		heartbeat_interval = Integer.parseInt(response_str.substring(1));  //set app.thread variable
+	  		heartbeat_interval = Integer.parseInt(response_str.substring(1));  //set app variable
 	  	break;
 	  	}
 	  	case 'R': {
     	  switch (response_str.charAt(1)) {
     	  	case 'L': {
-    	  		roster_list_string = response_str.substring(2);  //set app.thread variable
+    	  		roster_list_string = response_str.substring(2);  //set app variable
     	  	break;
     	  	}
     	  	case 'F': {
-    	  		roster_function_string_1 = response_str.substring(2);  //set app.thread variable
+    	  		roster_function_string_1 = response_str.substring(2);  //set app variable for throttle 1
+    	  	break;
+    	  	}
+    	  	case 'S': {
+    	  		roster_function_string_2 = response_str.substring(2);  //set app variable for throttle 2
     	  	break;
     	  	}
     	  }
@@ -359,6 +404,10 @@ public class threaded_application extends Application
       msg.obj=new String(response_str); 
       if (engine_driver_msg_handler != null) { engine_driver_msg_handler.sendMessage(msg); }
       if (select_loco_msg_handler != null)   { select_loco_msg_handler.sendMessage(msg);   }
+      
+      //send response to debug log for review
+      Log.d("Engine_Driver", "<--:" + response_str);
+
     }  //end of process_response
     
     //send the passed-in message to the socket
@@ -369,6 +418,8 @@ public class threaded_application extends Application
       	} else {
           process_comm_error("No writer, tried to send: "+msg);
       	}
+        //send response to debug log for review
+        Log.d("Engine_Driver", "-->:" + msg);
     }  //end withrottle_send()
 
 
@@ -398,9 +449,9 @@ public class threaded_application extends Application
 			} catch  (SocketTimeoutException e )   {
 				// this one is not a problem
 			} catch (IOException e) {
-				e.printStackTrace();
-  	            process_comm_error("read err:" + e.getMessage());  
   	            readTimer.cancel();  //stop trying to read if an error occurred
+//				e.printStackTrace();
+  	            process_comm_error("withrottle_rcv err:" + e.getMessage());  
 			} 
       	  
     }  //end withrottle_rcv()
