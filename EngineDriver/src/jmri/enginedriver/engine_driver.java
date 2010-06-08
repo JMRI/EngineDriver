@@ -15,18 +15,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-/* version 0.3 by mstevetodd - added function labels, separate fwd-stop-rev buttons
- */
-/*TODO: show loco number on throttle screen
- * 
- */
-
 
 package jmri.enginedriver;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -37,9 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.io.*;
@@ -67,6 +58,11 @@ public class engine_driver extends Activity {
   private Drawable button_pressed_small_drawable;  //needed different buttons for wide vs. not-wide
   private Drawable button_normal_small_drawable;
 
+  ArrayList<String> aLbl;
+  ArrayList<Integer> aFnc;
+  ArrayList<Boolean> aTgl;
+
+
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class engine_driver_handler extends Handler {
 
@@ -77,13 +73,12 @@ public class engine_driver extends Activity {
 	        	// refresh text labels
 	        	set_labels();
 //	        	String response_str = msg.obj.toString();
-//	        	Toast.makeText(getApplicationContext(), "responsed with:" + response_str, Toast.LENGTH_SHORT).show();
+//	        	Toast.makeText(getApplicationContext(), "responsed with:" + response_str, Toast.LENGTH_LONG).show();  //debugging use only
 	        }
 	        break;
 	        case message_type.HEARTBEAT: {
 	        	// refresh text labels
-	        	set_labels();
-//	        	Toast.makeText(getApplicationContext(), "refreshed", Toast.LENGTH_SHORT).show();
+	        	set_labels();  //TODO: is this still needed?
 	        }
 	        break;
 	        case message_type.END_ACTIVITY: {      	    //Program shutdown has been requested
@@ -99,17 +94,26 @@ public class engine_driver extends Activity {
 	  mainapp.engine_driver_msg_handler = null;
 	  this.finish();
   }
-  
+
+  void start_select_loco_activity(String whichThrottle)
+  {
+    Intent select_loco=new Intent().setClass(this, select_loco.class);
+    select_loco.putExtra("whichThrottle", whichThrottle);  //pass whichThrottle as an extra to activity
+    startActivityForResult(select_loco, 0);
+  };
+
   public class function_button_touch_listener implements View.OnTouchListener
   {
     int function;
     boolean is_toggle_type; //True if the button is a toggle on/toggle off type (for example the head light).
     boolean toggled;
+    String whichThrottle;  //T for first throttle, S for second 
 
-    public function_button_touch_listener(int new_function, boolean new_toggle_type)
+    public function_button_touch_listener(int new_function, boolean new_toggle_type, String new_whichThrottle)
     {
-      function=new_function;
+      function=new_function;  //store these values for this button
       is_toggle_type=new_toggle_type;
+      whichThrottle = new_whichThrottle;
     }
 
     public boolean onTouch(View v, MotionEvent event)
@@ -118,48 +122,73 @@ public class engine_driver extends Activity {
       {
         case MotionEvent.ACTION_DOWN:
         {
-          Message function_msg=Message.obtain();
-          if(is_toggle_type) {
-            toggled=!toggled; //The toggle/latch functionality is taken care of by the WiThrottle server. This might not be useful in certain
-                              //cases, but for now I'll let it stand.
-          }
+          Message function_msg=Message.obtain();  //create a message to be used by many of the buttons below
+          function_msg.what = message_type.NONE;
+
           switch (function) {
             case function_button.FORWARD : {
+            	Button b;
             	function_msg.what=message_type.DIRECTION;
                 function_msg.arg1=1;
             	function_msg.arg2=1;  //forward is 1
-            	//show pressed image, and turn off pressed image on other button 
+            	//show pressed image on current button, and turn off pressed image on "other" button 
                 v.setBackgroundDrawable(button_pressed_drawable);
-                Button b = (Button)findViewById(R.id.button_rev);
+            	if (whichThrottle.equals("T")) {
+                    b = (Button)findViewById(R.id.button_rev_T);
+              	} else {
+                    b = (Button)findViewById(R.id.button_rev_S);
+              	}
             	b.setBackgroundDrawable(button_normal_drawable);
             }
               break;
+
             case function_button.REVERSE : {
+            	Button b;
             	function_msg.what=message_type.DIRECTION;
                 function_msg.arg1=1;
             	function_msg.arg2=0;  //reverse is 0
-            	//show pressed image, and turn off pressed image on other button 
+            	//show pressed image on current button, and turn off pressed image on "other" button 
             	v.setBackgroundDrawable(button_pressed_drawable);
-                Button b = (Button)findViewById(R.id.button_fwd);
+            	if (whichThrottle.equals("T")) {
+                    b = (Button)findViewById(R.id.button_fwd_T);
+              	} else {
+                    b = (Button)findViewById(R.id.button_fwd_S);
+              	}
             	b.setBackgroundDrawable(button_normal_drawable);
-            }
+              }
               break;
+
             // setting the throttle slide to 0 sends a velocity change to the withrottle          	  
-            case function_button.STOP : {
-              SeekBar sb=(SeekBar)findViewById(R.id.speed);
+            case function_button.STOP : { 
+            	SeekBar sb;
+            	if (whichThrottle.equals("T")) {
+            	  sb=(SeekBar)findViewById(R.id.speed_T);
+            	} else {
+              	  sb=(SeekBar)findViewById(R.id.speed_S);
+            	}
               sb.setProgress(0);
         	  break;
             }
+            case function_button.SELECT_LOCO : {
+            	start_select_loco_activity(new String(whichThrottle));  //pass throttle #
+              }
+              break;
             default : {
               function_msg.what=message_type.FUNCTION;
               function_msg.arg1=function;
               function_msg.arg2=1;
             }
-          }
+          }  //end of function switch
           
-          mainapp.comm_msg_handler.sendMessage(function_msg);
+          if (function_msg.what != message_type.NONE) {  //don't send if no payload
+            function_msg.obj=new String(whichThrottle);    // always load whichThrottle into message
+            mainapp.comm_msg_handler.sendMessage(function_msg);            //send the message to comm thread
+          }
 
           //Change the appearance of toggleable buttons to show the current function state.
+          if(is_toggle_type) {
+              toggled=!toggled; //The toggle/latch functionality is taken care of by the WiThrottle server. WiThrottle will be changed to send state.
+          }
           if(is_toggle_type) {
             if(toggled) {
               v.setBackgroundDrawable(button_pressed_small_drawable);
@@ -174,12 +203,12 @@ public class engine_driver extends Activity {
         //handle stopping of function on key-up 
         case MotionEvent.ACTION_UP:
           // only process UP for function buttons
-          if(function < function_button.FORWARD)
-          {
+          if(function < function_button.FORWARD)   {
             Message function_msg=Message.obtain();
             function_msg.what=message_type.FUNCTION;
             function_msg.arg1=function;
             function_msg.arg2=0;
+            function_msg.obj=new String(whichThrottle);    // always load whichThrottle into message
             mainapp.comm_msg_handler.sendMessage(function_msg);
           }
         break;
@@ -190,13 +219,25 @@ public class engine_driver extends Activity {
 
   public class throttle_listener implements SeekBar.OnSeekBarChangeListener
   {
+      String whichThrottle;
+      
+    public throttle_listener(String new_whichThrottle)    {
+	      whichThrottle = new_whichThrottle;   //store this value for this listener
+	    }
+
     public void onProgressChanged(SeekBar throttle, int speed, boolean fromUser)
     {
-      Message velocity_msg=Message.obtain();
-      velocity_msg.what=message_type.VELOCITY;
-      velocity_msg.arg1=speed;
-      mainapp.comm_msg_handler.sendMessage(velocity_msg);
-      TextView speed_label=(TextView)findViewById(R.id.speed_value_label);
+      TextView speed_label;
+      Message msg=Message.obtain();
+      msg.what=message_type.VELOCITY;
+      msg.arg1=speed;
+      msg.obj=new String(whichThrottle);    // always load whichThrottle into message
+      mainapp.comm_msg_handler.sendMessage(msg);
+  	   if (whichThrottle.equals("T")) {
+  	      speed_label=(TextView)findViewById(R.id.speed_value_label_T);
+  	   } else {
+  	      speed_label=(TextView)findViewById(R.id.speed_value_label_S);
+  	   }
       speed_label.setText(Integer.toString(speed));
     }
 
@@ -212,18 +253,56 @@ public class engine_driver extends Activity {
   {
     mainapp.engine_driver_msg_handler = null; //clear out pointer to this activity  
     
-    Message release_msg=Message.obtain();
-    release_msg.what=message_type.RELEASE;
-//    threaded_application app=(threaded_application)this.getApplication();
-    mainapp.comm_msg_handler.sendMessage(release_msg);
+    //release first loco
+    Message msg=Message.obtain();
+    msg.what=message_type.RELEASE;
+    msg.obj=new String("T");
+    mainapp.comm_msg_handler.sendMessage(msg);
+
+    //release second loco
+    msg=Message.obtain();
+    msg.what=message_type.RELEASE;
+    msg.obj=new String("S");
+    mainapp.comm_msg_handler.sendMessage(msg);
+    
+    //disconnect from throttle
+    msg=Message.obtain();
+    msg.what=message_type.DISCONNECT;
+    mainapp.comm_msg_handler.sendMessage(msg);  
     
     //kill the heartbeat timer
 	if (heartbeatTimer != null) {
   	    heartbeatTimer.cancel();
   	}
+    this.finish();  //end this activity
   }
   return(super.onKeyDown(key, event));
 };
+
+
+@Override
+public void onStart() {
+  super.onStart();
+
+  //put pointer to this activity's handler in main app's shared variable (If needed)
+  if (mainapp.engine_driver_msg_handler == null){
+	  mainapp.engine_driver_msg_handler=new engine_driver_handler();
+  }
+
+  //create heartbeat if requested and not already started
+  if ((heartbeatTimer == null) && (mainapp.heartbeat_interval > 0)) {
+      int interval = (mainapp.heartbeat_interval - 1) * 900;  //set heartbeat one second less than required (900 copied from withrottle side)
+
+    heartbeatTimer = new Timer();
+  	heartbeatTimer.schedule(new TimerTask() {
+  		@Override
+  		public void run() {
+  			send_heartbeat();
+  		}
+  	}, 100, interval);
+  }
+
+}
 
 
   /** Called when the activity is first created. */
@@ -234,8 +313,6 @@ public class engine_driver extends Activity {
     setContentView(R.layout.throttle);
 
     mainapp=(threaded_application)getApplication();
-    //put pointer to this activity's handler in main app's shared variable
-    mainapp.engine_driver_msg_handler=new engine_driver_handler();
 
     button_pressed_drawable=getResources().getDrawable(R.drawable.btn_default_small_pressed);
     button_normal_drawable=getResources().getDrawable(R.drawable.btn_default_small_normal);
@@ -244,45 +321,59 @@ public class engine_driver extends Activity {
 
     set_function_buttons();
 
-    // set listeners for 3 direction buttons
-    Button b = (Button)findViewById(R.id.button_fwd);
-    function_button_touch_listener fbtl=new function_button_touch_listener(function_button.FORWARD, false);
+    Button b;
+    function_button_touch_listener fbtl;
+    
+    //set listener for select loco buttons
+    b = (Button)findViewById(R.id.button_select_loco_T);
+    fbtl=new function_button_touch_listener(function_button.SELECT_LOCO, false, "T");
     b.setOnTouchListener(fbtl);
-    b = (Button)findViewById(R.id.button_stop);
-    fbtl=new function_button_touch_listener(function_button.STOP, false);
-    b.setOnTouchListener(fbtl);
-    b = (Button)findViewById(R.id.button_rev);
-    fbtl=new function_button_touch_listener(function_button.REVERSE, false);
+    b = (Button)findViewById(R.id.button_select_loco_S);
+    fbtl=new function_button_touch_listener(function_button.SELECT_LOCO, false, "S");
     b.setOnTouchListener(fbtl);
     
-    SeekBar sb=(SeekBar)findViewById(R.id.speed);
+    // set listeners for 3 direction buttons
+    b = (Button)findViewById(R.id.button_fwd_T);
+    fbtl=new function_button_touch_listener(function_button.FORWARD, false, "T");
+    b.setOnTouchListener(fbtl);
+    b = (Button)findViewById(R.id.button_stop_T);
+    fbtl=new function_button_touch_listener(function_button.STOP, false, "T");
+    b.setOnTouchListener(fbtl);
+    b = (Button)findViewById(R.id.button_rev_T);
+    fbtl=new function_button_touch_listener(function_button.REVERSE, false, "T");
+    b.setOnTouchListener(fbtl);
+
+    b = (Button)findViewById(R.id.button_fwd_S);
+    fbtl=new function_button_touch_listener(function_button.FORWARD, false, "S");
+    b.setOnTouchListener(fbtl);
+    b = (Button)findViewById(R.id.button_stop_S);
+    fbtl=new function_button_touch_listener(function_button.STOP, false, "S");
+    b.setOnTouchListener(fbtl);
+    b = (Button)findViewById(R.id.button_rev_S);
+    fbtl=new function_button_touch_listener(function_button.REVERSE, false, "S");
+    b.setOnTouchListener(fbtl);
+
+    // set up sliders for throttles
+    SeekBar sb=(SeekBar)findViewById(R.id.speed_T);
     sb.setMax(126);
-    sb.setOnSeekBarChangeListener(new throttle_listener());
+    sb.setOnSeekBarChangeListener(new throttle_listener("T"));
+
+    sb=(SeekBar)findViewById(R.id.speed_S);
+    sb.setMax(126);
+    sb.setOnSeekBarChangeListener(new throttle_listener("S"));
 
     set_labels();
 
-    if (mainapp.heartbeat_interval > 0) {
-        int interval = (mainapp.heartbeat_interval - 1) * 900;  //set heartbeat one second less than required (900 copied from withrottle side)
-
-        heartbeatTimer = new Timer();
-    	heartbeatTimer.schedule(new TimerTask() {
-    		@Override
-    		public void run() {
-    			send_heartbeat();
-    		}
-
-    	}, 100, interval);
-    }
-
-   
+  
   } //end of onCreate()
 
   //set up label, dcc function, toggle setting for each button from settings and setup listeners TODO: allow refresh (need to deal with old listeners?) 
   //TODO: unduplicate this code (in settings.java and engine_driver.java)
   private void set_function_buttons() {
-	    ArrayList<String> aLbl = new ArrayList<String>();
-	    ArrayList<Integer> aFnc = new ArrayList<Integer>();
-	    ArrayList<Boolean> aTgl = new ArrayList<Boolean>();
+
+	  aLbl = new ArrayList<String>();
+	  aFnc = new ArrayList<Integer>();
+	  aTgl = new ArrayList<Boolean>();
 
 	    try
 	    {
@@ -324,18 +415,26 @@ public class engine_driver extends Activity {
 
 	    // loop through all function buttons and
 	    //   set label and dcc functions (based on settings) or hide if no label
-	    function_button_touch_listener fbtl;
-	    Button b; //button
 	    
-	    ViewGroup t = (ViewGroup) findViewById(R.id.function_buttons_group); //table
-	    ViewGroup r;  //row
-	    int k = 0; //button count
-	    for(int i = 0; i < t.getChildCount(); i++) {
-	        r = (ViewGroup)t.getChildAt(i);
-	        for(int j = 0; j < r.getChildCount(); j++) {
-	        	b = (Button)r.getChildAt(j);
-	      		if (k < aFnc.size()) {
-		       		fbtl=new function_button_touch_listener(aFnc.get(k), aTgl.get(k));
+	    ViewGroup t = (ViewGroup) findViewById(R.id.function_buttons_group_T); //table
+	    set_function_buttons_for_view(t, "T");
+	    t = (ViewGroup) findViewById(R.id.function_buttons_group_S); //table
+	    set_function_buttons_for_view(t, "S");
+
+  }
+
+  //helper function to set up function buttons for each throttle
+  void set_function_buttons_for_view(ViewGroup t, String whichLoco)  {
+	  ViewGroup r;  //row
+	  function_button_touch_listener fbtl;
+	  Button b; //button
+	  int k = 0; //button count
+	  for(int i = 0; i < t.getChildCount(); i++) {
+	      r = (ViewGroup)t.getChildAt(i);
+	      for(int j = 0; j < r.getChildCount(); j++) {
+	      	b = (Button)r.getChildAt(j);
+	    		if (k < aFnc.size()) {
+		       		fbtl=new function_button_touch_listener(aFnc.get(k), aTgl.get(k), whichLoco);
 		       		b.setOnTouchListener(fbtl);
 		            if (aTgl.get(k)) {        //if button is sticky, set background to "off" state
 		              b.setBackgroundDrawable(button_normal_small_drawable);
@@ -344,33 +443,43 @@ public class engine_driver extends Activity {
 		       		String bt = aLbl.get(k) + "        ";  //pad with spaces, and limit to 8 characters
 		       		b.setText(bt.substring(0, 7));
 		       	    b.setVisibility(VISIBLE);
+//		       	    b.setEnabled(false);
 		       	} else {
 		       	    b.setVisibility(GONE);
 		       	}
-	        	k++;
-	        }
-	    }
-
-  }
-
+	      	k++;
+	      }
+	  }
+}
   //lookup and set values of various informational text labels 
   private void set_labels() {
 
 	String s;
 
-	TextView v=(TextView)findViewById(R.id.throttle_header);
+/*	TextView v=(TextView)findViewById(R.id.throttle_header);
     s = mainapp.loco_string_1;
     v.setText("Loco: " + s);
+ */
 
+    Button b=(Button)findViewById(R.id.button_select_loco_T);
+    s = mainapp.loco_string_1;
+    b.setText("Loco: " + s);
+
+    b=(Button)findViewById(R.id.button_select_loco_S);
+    s = mainapp.loco_string_2;
+    b.setText("Loco: " + s);
+
+/*
     //format and show footer info
     SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-    v=(TextView)findViewById(R.id.ed_footer);
+    TextView v=(TextView)findViewById(R.id.ed_footer);
 
     s = "Throttle Name: " + prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
     s += "\nHost: " + mainapp.host_name_string;
     s += "\nWiThrottle: v" + mainapp.withrottle_version_string;
     s += String.format("     Heartbeat: %d secs", mainapp.heartbeat_interval);
     v.setText(s);
+*/
 
 }
 

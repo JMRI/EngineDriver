@@ -59,6 +59,7 @@ public class select_loco extends Activity
 
   int engine_address;
   int address_size;
+  private String whichThrottle; //"T" or "S" to distinguish which throttle we're asking for
 
   private threaded_application mainapp;  // hold pointer to mainapp
 
@@ -87,11 +88,12 @@ public class select_loco extends Activity
           set_labels();
         }
         break;
-      case message_type.LOCO_SELECTED: {      	    //Start the throttle activity.
+/*      case message_type.LOCO_SELECTED: {      	    //Start the throttle activity.
   		  Intent engine_driver=new Intent().setClass(getApplicationContext(), engine_driver.class);
   	      startActivityForResult(engine_driver, 0);
       	}
         break;
+*/        
       case message_type.END_ACTIVITY: {      	    //Program shutdown has been requested
     	  end_this_activity();
     	}
@@ -118,7 +120,7 @@ public class select_loco extends Activity
     acquire_msg.what=message_type.LOCO_ADDR;
     acquire_msg.arg1=engine_address;
     acquire_msg.arg2=address_size;
-//    threaded_application app=(threaded_application)this.getApplication();
+    acquire_msg.obj=new String(whichThrottle);  //pass T or S in message
     mainapp.comm_msg_handler.sendMessage(acquire_msg);
 
     //Save the engine list to the engine_list.txt file.
@@ -157,6 +159,7 @@ public class select_loco extends Activity
       Spinner spinner=(Spinner)findViewById(R.id.address_length);
       address_size=spinner.getSelectedItemPosition();
       acquire_engine();
+      end_this_activity();
     };
   }
 
@@ -168,23 +171,31 @@ public class select_loco extends Activity
       engine_address=engine_address_list.get(position);
       address_size=address_size_list.get(position);
       acquire_engine();
+      end_this_activity();
     };
   }
 
-  //Handle pressing of the back button to disconnect from the WiThrottle server.
+  //Handle pressing of the back button to simply return to caller 
   @Override
   public boolean onKeyDown(int key, KeyEvent event)
   {
     if(key==KeyEvent.KEYCODE_BACK)
     {
-      Message disconnect_msg=Message.obtain();
-      disconnect_msg.what=message_type.DISCONNECT;
-      mainapp.comm_msg_handler.sendMessage(disconnect_msg);
-//      mainapp.select_loco_msg_handler = null;  //clear out pointer to this activity's handler
+    	end_this_activity();
     }
     return(super.onKeyDown(key, event));
   };
-  
+
+  @Override
+  public void onStart() {
+
+	super.onStart();
+    Bundle extras = getIntent().getExtras(); 
+    if(extras !=null)    {
+      whichThrottle = extras.getString("whichThrottle");
+    }
+
+ }
   
   /** Called when the activity is first created. */
   @Override

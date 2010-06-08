@@ -86,6 +86,13 @@ public class connection_activity extends Activity
     Intent select_loco=new Intent().setClass(this, select_loco.class);
     startActivity(select_loco);
   };
+
+  void start_engine_driver_activity()
+  {
+//    multicast_lock.release();
+    Intent engine_driver=new Intent().setClass(this, engine_driver.class);
+    startActivity(engine_driver);
+  };
   
   public enum server_list_type { DISCOVERED_SERVER, RECENT_CONNECTION }
   public class connect_item implements AdapterView.OnItemClickListener
@@ -176,7 +183,8 @@ public class connection_activity extends Activity
             Log.e("connection_activity", "Error creating a PrintWriter, IOException: "+except.getMessage());
           }
 
-          start_select_loco_activity();
+//          start_select_loco_activity();
+          start_engine_driver_activity();
         break;
         case message_type.ERROR: {
           //display error message from msg.obj
