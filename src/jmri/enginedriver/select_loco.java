@@ -66,11 +66,18 @@ public class select_loco extends Activity
   //lookup and set values of various text labels 
   private void set_labels() {
 
+	 //format and show currently selected locos
+	TextView v=(TextView)findViewById(R.id.sl_selected_locos);
+	String s = mainapp.loco_string_1 + "   " + mainapp.loco_string_2;
+    v.setText(s);
+
     //format and show footer info
 	SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-    TextView v=(TextView)findViewById(R.id.sl_footer);
+    v=(TextView)findViewById(R.id.sl_footer);
   
-    String s = "Throttle Name: " + prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
+    s = "Throttle Name: " + prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
+    s += "\nt=" +  java.util.Arrays.toString(mainapp.function_states_T);
+    s += "\ns=" +  java.util.Arrays.toString(mainapp.function_states_S);
     s += "\nHost: " + mainapp.host_name_string;
     s += "\nWiThrottle: v" + mainapp.withrottle_version_string;
     s += String.format("     Heartbeat: %d secs", mainapp.heartbeat_interval);

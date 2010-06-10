@@ -55,8 +55,8 @@ public class engine_driver extends Activity {
 
   private Drawable button_pressed_drawable;  //hold background graphics for buttons
   private Drawable button_normal_drawable;
-  private Drawable button_pressed_small_drawable;  //needed different buttons for wide vs. not-wide
-  private Drawable button_normal_small_drawable;
+//  private Drawable button_pressed_small_drawable;  //needed different buttons for wide vs. not-wide
+//  private Drawable button_normal_small_drawable;
 
   ArrayList<String> aLbl;
   ArrayList<Integer> aFnc;
@@ -69,7 +69,17 @@ public class engine_driver extends Activity {
 	public void handleMessage(Message msg) {
 	      switch(msg.what) {
 	        
-	        case message_type.RESPONSE: {  //handle future messages, such as changes to functions
+	        case message_type.RESPONSE: {  //handle messages from WiThrottle server
+	        	String response_str = msg.obj.toString();
+
+	        	switch (response_str.charAt(0)) {
+	      	  	  case 'T':
+	      	  	  case 'S':
+		      	  		enable_disable_buttons(response_str.substring(0,1));  //pass whichthrottle
+	      	  	  break;
+	      	  	
+	        	}  //end of switch
+	        	
 	        	// refresh text labels
 	        	set_labels();
 //	        	String response_str = msg.obj.toString();
@@ -101,6 +111,39 @@ public class engine_driver extends Activity {
     select_loco.putExtra("whichThrottle", whichThrottle);  //pass whichThrottle as an extra to activity
     startActivityForResult(select_loco, 0);
   };
+
+  void enable_disable_buttons(String whichThrottle)  {
+      boolean newEnabledState;
+	  if (whichThrottle.equals("T")) {
+		  newEnabledState = !(mainapp.loco_string_1.equals("Not Set"));  //set false if loco is "Not Set"
+          findViewById(R.id.button_fwd_T).setEnabled(newEnabledState);
+          findViewById(R.id.button_stop_T).setEnabled(newEnabledState);
+          findViewById(R.id.button_rev_T).setEnabled(newEnabledState);
+          findViewById(R.id.speed_T).setEnabled(newEnabledState);
+          enable_disable_buttons_for_view((ViewGroup)findViewById(R.id.function_buttons_group_T),newEnabledState);
+	  } else {
+		  newEnabledState = !(mainapp.loco_string_2.equals("Not Set"));  //set false if loco is "Not Set"
+          findViewById(R.id.button_fwd_S).setEnabled(newEnabledState);
+          findViewById(R.id.button_stop_S).setEnabled(newEnabledState);
+          findViewById(R.id.button_rev_S).setEnabled(newEnabledState);
+          findViewById(R.id.speed_S).setEnabled(newEnabledState);
+          enable_disable_buttons_for_view((ViewGroup)findViewById(R.id.function_buttons_group_S),newEnabledState);
+	  }
+        
+  };  //end of enable_disable_buttons
+
+  //helper function to enable/disable all children for a group
+  void enable_disable_buttons_for_view(ViewGroup t, boolean newEnabledState)  {
+	  ViewGroup r;  //row
+	  Button b; //button
+	  for(int i = 0; i < t.getChildCount(); i++) {
+	      r = (ViewGroup)t.getChildAt(i);
+	      for(int j = 0; j < r.getChildCount(); j++) {
+	      	b = (Button)r.getChildAt(j);
+       	    b.setEnabled(newEnabledState);
+	      }
+	  }
+} //end of set_function_buttons_for_view
 
   public class function_button_touch_listener implements View.OnTouchListener
   {
@@ -186,7 +229,7 @@ public class engine_driver extends Activity {
           }
 
           //Change the appearance of toggleable buttons to show the current function state.
-          if(is_toggle_type) {
+/*         if(is_toggle_type) {
               toggled=!toggled; //The toggle/latch functionality is taken care of by the WiThrottle server. WiThrottle will be changed to send state.
           }
           if(is_toggle_type) {
@@ -198,6 +241,7 @@ public class engine_driver extends Activity {
               v.setPadding(2, 2, 2, 2);
             }
           }
+*/          
         }
         break;
         //handle stopping of function on key-up 
@@ -316,8 +360,8 @@ public void onStart() {
 
     button_pressed_drawable=getResources().getDrawable(R.drawable.btn_default_small_pressed);
     button_normal_drawable=getResources().getDrawable(R.drawable.btn_default_small_normal);
-    button_pressed_small_drawable=getResources().getDrawable(R.drawable.btn_default_small_pressed);
-    button_normal_small_drawable=getResources().getDrawable(R.drawable.btn_default_small_normal);
+//    button_pressed_small_drawable=getResources().getDrawable(R.drawable.btn_default_small_pressed);
+//    button_normal_small_drawable=getResources().getDrawable(R.drawable.btn_default_small_normal);
 
     set_function_buttons();
 
@@ -332,42 +376,50 @@ public void onStart() {
     fbtl=new function_button_touch_listener(function_button.SELECT_LOCO, false, "S");
     b.setOnTouchListener(fbtl);
     
-    // set listeners for 3 direction buttons
+    // set listeners for 3 direction buttons, initially disabled
     b = (Button)findViewById(R.id.button_fwd_T);
     fbtl=new function_button_touch_listener(function_button.FORWARD, false, "T");
     b.setOnTouchListener(fbtl);
+    b.setEnabled(false);
     b = (Button)findViewById(R.id.button_stop_T);
     fbtl=new function_button_touch_listener(function_button.STOP, false, "T");
     b.setOnTouchListener(fbtl);
+    b.setEnabled(false);
     b = (Button)findViewById(R.id.button_rev_T);
     fbtl=new function_button_touch_listener(function_button.REVERSE, false, "T");
     b.setOnTouchListener(fbtl);
+    b.setEnabled(false);
 
     b = (Button)findViewById(R.id.button_fwd_S);
     fbtl=new function_button_touch_listener(function_button.FORWARD, false, "S");
     b.setOnTouchListener(fbtl);
+    b.setEnabled(false);
     b = (Button)findViewById(R.id.button_stop_S);
     fbtl=new function_button_touch_listener(function_button.STOP, false, "S");
     b.setOnTouchListener(fbtl);
+    b.setEnabled(false);
     b = (Button)findViewById(R.id.button_rev_S);
     fbtl=new function_button_touch_listener(function_button.REVERSE, false, "S");
     b.setOnTouchListener(fbtl);
+    b.setEnabled(false);
 
-    // set up sliders for throttles
+    // set up sliders for throttles, initially disabled
     SeekBar sb=(SeekBar)findViewById(R.id.speed_T);
     sb.setMax(126);
     sb.setOnSeekBarChangeListener(new throttle_listener("T"));
-
+    sb.setEnabled(false);
+    
     sb=(SeekBar)findViewById(R.id.speed_S);
     sb.setMax(126);
     sb.setOnSeekBarChangeListener(new throttle_listener("S"));
+    sb.setEnabled(false);
 
     set_labels();
 
   
   } //end of onCreate()
 
-  //set up label, dcc function, toggle setting for each button from settings and setup listeners TODO: allow refresh (need to deal with old listeners?) 
+  //set up label, dcc function, toggle setting for each button from settings and setup listeners
   //TODO: unduplicate this code (in settings.java and engine_driver.java)
   private void set_function_buttons() {
 
@@ -416,10 +468,10 @@ public void onStart() {
 	    // loop through all function buttons and
 	    //   set label and dcc functions (based on settings) or hide if no label
 	    
-	    ViewGroup t = (ViewGroup) findViewById(R.id.function_buttons_group_T); //table
-	    set_function_buttons_for_view(t, "T");
-	    t = (ViewGroup) findViewById(R.id.function_buttons_group_S); //table
-	    set_function_buttons_for_view(t, "S");
+	    ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_group_T); //table
+	    set_function_buttons_for_view(tv, "T");
+	    tv = (ViewGroup) findViewById(R.id.function_buttons_group_S); //table
+	    set_function_buttons_for_view(tv, "S");
 
   }
 
@@ -436,50 +488,38 @@ public void onStart() {
 	    		if (k < aFnc.size()) {
 		       		fbtl=new function_button_touch_listener(aFnc.get(k), aTgl.get(k), whichLoco);
 		       		b.setOnTouchListener(fbtl);
-		            if (aTgl.get(k)) {        //if button is sticky, set background to "off" state
-		              b.setBackgroundDrawable(button_normal_small_drawable);
-		              b.setPadding(2, 2, 2, 2);
-		            }
-		       		String bt = aLbl.get(k) + "        ";  //pad with spaces, and limit to 8 characters
+//		            if (aTgl.get(k)) {        //if button is sticky, set background to "off" state
+//		              b.setBackgroundDrawable(button_normal_small_drawable);
+//		              b.setPadding(2, 2, 2, 2);
+//		            }
+		       		String bt = aLbl.get(k) + "        ";  //pad with spaces, and limit to 7 characters
 		       		b.setText(bt.substring(0, 7));
 		       	    b.setVisibility(VISIBLE);
-//		       	    b.setEnabled(false);
+		       	    b.setEnabled(false);  //start out with everything disabled
 		       	} else {
 		       	    b.setVisibility(GONE);
 		       	}
 	      	k++;
 	      }
 	  }
-}
+} //end of set_function_buttons_for_view
+
   //lookup and set values of various informational text labels 
   private void set_labels() {
 
-	String s;
-
-/*	TextView v=(TextView)findViewById(R.id.throttle_header);
-    s = mainapp.loco_string_1;
-    v.setText("Loco: " + s);
- */
-
     Button b=(Button)findViewById(R.id.button_select_loco_T);
-    s = mainapp.loco_string_1;
-    b.setText("Loco: " + s);
-
+    if (mainapp.loco_string_1.equals("Not Set")) {
+      b.setText("Press to select");
+    } else {
+    	b.setText(mainapp.loco_string_1);
+    }
+ 
     b=(Button)findViewById(R.id.button_select_loco_S);
-    s = mainapp.loco_string_2;
-    b.setText("Loco: " + s);
-
-/*
-    //format and show footer info
-    SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-    TextView v=(TextView)findViewById(R.id.ed_footer);
-
-    s = "Throttle Name: " + prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
-    s += "\nHost: " + mainapp.host_name_string;
-    s += "\nWiThrottle: v" + mainapp.withrottle_version_string;
-    s += String.format("     Heartbeat: %d secs", mainapp.heartbeat_interval);
-    v.setText(s);
-*/
+    if (mainapp.loco_string_2.equals("Not Set")) {
+        b.setText("Press to select");
+    } else {
+      	b.setText(mainapp.loco_string_2);
+    }
 
 }
 
@@ -524,6 +564,8 @@ public void onStart() {
       //since we always do the same action no need to distinguish between requests
       set_function_buttons();
 	  set_labels();
+	  enable_disable_buttons("T");  //TODO: this is executed twice when loco is selected
+	  enable_disable_buttons("S");  
   }
 
 }

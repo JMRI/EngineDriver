@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 /* Version 0.4 - changes/additions by mstevetodd
  *   added select loco button to ed screen, call ed direct from connect
  *  added 32 function buttons for both throttles, using scroller
+ *  disable buttons and slider unless each loco is selected
  */
 
 /*
@@ -49,16 +50,17 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: Move wifi listener to OnStart from OnCreate (so it works each time activity gets focus), and add OnPause (or somesuch) to turn off listener
  *   TODO: move socket timeout values to preference
  *   TODO: determine why ip by server name won't resolve
- *   TODO: don't add discovered server more than once (restart WiT to cause this)
+ *   TODO: don't add discovered server more than once (restart WiT to see this)
+ *   TODO: rewrite readTimer logic 
+ *   TODO: redo hard-coded 32 in function arrays
  * engine_driver:
- *   TODO: disable buttons and slider unless each loco is selected (not "Not Set"?)
- *   TODO: improve screen layout, especially regarding loco, and scroll without pressing buttons
+ *   TODO: improve screen layout, especially regarding loco, and leave room to scroll without hitting buttons
  *   TODO: in ed exit, don't ask to release if "Not Set"
  *   TODO: get 2nd line of label text working again
  *   TODO: update individual function settings using long press on each (maybe not, since folks like to hold the horn)
  *   TODO: add graphics (slider, stop, directions, functions?)
  * select_loco:
- *   TODO: don't show or allow selection of loco if already in use on "other" throttle
+ *   TODO: don't show or allow entry of loco if already in use on "other" throttle
  *   TODO: add roster list
  *   TODO: add Release button
  *   TODO: simplify select_loco by removing handler
@@ -88,6 +90,8 @@ import android.os.Looper;
 import android.os.Message;
 import java.net.*;
 import java.io.*;
+
+import java.util.*;
 
 import android.util.Log;
 
@@ -122,6 +126,8 @@ public class threaded_application extends Application
 	String roster_list_string; //roster list
 	String roster_function_string_1; //roster function list for selected loco #1
 	String roster_function_string_2; //roster function list for selected loco #1
+	boolean[] function_states_T;  //current function states for first throttle
+	boolean[] function_states_S;  //current function states for second throttle
 	int heartbeat_interval; //heartbeat interval in seconds
 	//Communications variables.
 	Socket client_socket;
@@ -356,46 +362,55 @@ public class threaded_application extends Application
 
     private void process_response(String response_str) {
     /* see java/arc/jmri/jmrit/withrottle/deviceserver.java for server code and some documentation
-    	 * VN<Version#>
-    	 * T<EngineAddress>(<LongOrShort>)  
-    	 * S<2ndEngineAddress>(<LongOrShort>)
-    	 * RL<RosterSize>]<RosterList>
-    	 * RF<RosterFunctionList>
-    	 * RS<2ndRosterFunctionList>
-    	 * *<HeartbeatIntervalInSeconds>      */
-  	  switch (response_str.charAt(0)) {
-	  	case 'T': {
+    	  VN<Version#>
+    	  T<EngineAddress>(<LongOrShort>)  
+    	  S<2ndEngineAddress>(<LongOrShort>)
+    	  RL<RosterSize>]<RosterList>
+    	  RF<RosterFunctionList>
+    	  RS<2ndRosterFunctionList>
+    	  *<HeartbeatIntervalInSeconds>      */
+
+    	//send response to debug log for review
+        Log.d("Engine_Driver", "<--:" + response_str);
+
+        switch (response_str.charAt(0)) {
+	  	case 'T': 
 	  		loco_string_1 = response_str.substring(1);  //set app variable
-	  	break;
-	  	}
-	  	case 'S': {
+ 	  	    break;
+	  	
+	  	case 'S': 
 	  		loco_string_2 = response_str.substring(1);  //set app variable
-	  	break;
-	  	}
-	  	case 'V': {
+	  	    break;
+	  	
+	  	case 'V': 
 	  		withrottle_version_string = response_str.substring(2);  //set app variable
-	  	break;
-	  	}
-	  	case '*': {
+	  	    break;
+	  	
+	  	case '*': 
 	  		heartbeat_interval = Integer.parseInt(response_str.substring(1));  //set app variable
-	  	break;
-	  	}
-	  	case 'R': {
+	  	    break;
+	  	
+	  	case 'R': //Roster
     	  switch (response_str.charAt(1)) {
-    	  	case 'L': {
+    	  	case 'L': 
     	  		roster_list_string = response_str.substring(2);  //set app variable
-    	  	break;
-    	  	}
-    	  	case 'F': {
+    	  	    break;
+    	  	
+    	  	case 'F': 
     	  		roster_function_string_1 = response_str.substring(2);  //set app variable for throttle 1
-    	  	break;
-    	  	}
-    	  	case 'S': {
+    	  	    break;
+        	  	
+    	  	case 'S': 
     	  		roster_function_string_2 = response_str.substring(2);  //set app variable for throttle 2
-    	  	break;
-    	  	}
-    	  }
-	  	}  //end cases
+    	  	    break;
+        	  	
+    	  	case 'P': //Properties
+    	  		if 	(response_str.charAt(2) == 'F') {  //function state 
+    	  			process_function_state(response_str);  //process function state message (passing the whole message)
+    	  		}
+    	  	    break;
+    	  }  //end switch inside R
+	  	 break;
   	  }  //end switch
   	  
   	  //forward whatever we got to other activities (if started)
@@ -403,13 +418,37 @@ public class threaded_application extends Application
       msg.what=message_type.RESPONSE;
       msg.obj=new String(response_str); 
       if (engine_driver_msg_handler != null) { engine_driver_msg_handler.sendMessage(msg); }
-      if (select_loco_msg_handler != null)   { select_loco_msg_handler.sendMessage(msg);   }
+//      if (select_loco_msg_handler != null)   { select_loco_msg_handler.sendMessage(msg);   }
       
-      //send response to debug log for review
-      Log.d("Engine_Driver", "<--:" + response_str);
 
     }  //end of process_response
+
+    //parse function state string into appropriate app variable array
+    private void process_function_state(String response_str) {
     
+     String whichThrottle = null;
+     
+     String[] sa = splitByString(response_str,"]\\[F");  //initial separation (note that I include the F just to strip it off and simplify later stuff
+     int i = 0;
+     for (String fs : sa) {
+    	 String[] fa = splitByString(fs,"}|{");  //split these into 2 parts, key and value
+    	 if (i == 0) { //first chunk is different, contains whichThrottle
+    	    whichThrottle = fa[1];
+    	 } else {  //all others have function#, then value
+    		 int fn = Integer.parseInt(fa[0]);
+    		 boolean fState = Boolean.parseBoolean(fa[1]);
+    		 
+    		 if (whichThrottle.equals("T")) {
+    			 function_states_T[fn] = fState;
+    		 }  else {
+    			 function_states_S[fn] = fState;
+    		 }
+    	 }  //end if i==0
+    	 i++;
+     }  //end for
+     
+  }
+  
     //send the passed-in message to the socket
     private void withrottle_send(String msg) {
     	if (output_pw != null) {
@@ -431,7 +470,7 @@ public class threaded_application extends Application
 		public void run() {
 			withrottle_rcv();
 		}
-	}, 10, 2000 );  //very short pause on first fire, 2 sec on subsequent ones
+	}, 1000, 2000 );  //1 sec on first fire, 2 sec on subsequent ones
 }
 
     
@@ -439,6 +478,7 @@ public class threaded_application extends Application
     private void withrottle_rcv() {
       	  
      	  //read responses from withrottle and send non-blank ones to other activities
+          readTimer.cancel();  //don't double-fire
       	  String str = null;
 			try {
 				while ((str = input_reader.readLine()) != null) {  //loop until no more data found
@@ -447,7 +487,7 @@ public class threaded_application extends Application
 					}
 				}
 			} catch  (SocketTimeoutException e )   {
-				// this one is not a problem
+				start_read_timer();  //delay and read again
 			} catch (IOException e) {
   	            readTimer.cancel();  //stop trying to read if an error occurred
 //				e.printStackTrace();
@@ -499,7 +539,52 @@ public class threaded_application extends Application
   public void onCreate()
   {
 	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+	function_states_T = new boolean[32];
+	function_states_S = new boolean[32];
+	
     thread=new comm_thread();
     thread.start();
   }
+
+/** ------ copied from jmri util code -------------------
+ * Split a string into an array of Strings, at a particular
+ * divider.  This is similar to the new String.split method,
+ * except that this does not provide regular expression
+ * handling; the divider string is just a string.
+ * @param input String to split
+ * @param divider Where to divide the input; this does not appear in output
+ */
+  static public String[] splitByString(String input, String divider) {
+    int size = 0;
+    String temp = input;
+    
+    // count entries
+    while (temp.length() > 0) {
+        size++;
+        int index = temp.indexOf(divider);
+        if (index < 0) break;    // break not found
+        temp = temp.substring(index+divider.length());
+        if (temp.length() == 0) {  // found at end
+            size++;
+            break;
+        }
+    }
+    
+    String[] result = new String[size];
+    
+    // find entries
+    temp = input;
+    size = 0;
+    while (temp.length() > 0) {
+        int index = temp.indexOf(divider);
+        if (index < 0) break;    // done with all but last
+        result[size] = temp.substring(0,index);
+        temp = temp.substring(index+divider.length());
+        size++;
+    }
+    result[size] = temp;
+    
+    return result;
+  }
 }
+
