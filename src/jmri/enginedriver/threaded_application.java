@@ -37,12 +37,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   added select loco button to ed screen, call ed direct from connect
  *  added 32 function buttons for both throttles, using scroller
  *  disable buttons and slider unless each loco is selected
+ *  display current function button state from WiT server
  */
 
 /*
  *   TODO: add consisting features
  *   TODO: toast messages on release of loco and update of preferences
  *   TODO: make private stuff private
+ *   TODO: allow for separate button arrangements for each loco
  * threaded_application
  *   TODO: add client-side conversation logging for easier debugging
  *   TODO: check for error on send and do something with it 
@@ -54,11 +56,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: rewrite readTimer logic 
  *   TODO: redo hard-coded 32 in function arrays
  * engine_driver:
- *   TODO: improve screen layout, especially regarding loco, and leave room to scroll without hitting buttons
+ *   TODO: change height of "unused" loco section
  *   TODO: in ed exit, don't ask to release if "Not Set"
+ *   TODO: add graphics (slider, stop, directions, functions?)  add colors
  *   TODO: get 2nd line of label text working again
- *   TODO: update individual function settings using long press on each (maybe not, since folks like to hold the horn)
- *   TODO: add graphics (slider, stop, directions, functions?)
+ *   TODO: create preference for "switcher" throttle, which removes fwd-stop-rev button row.  Double-tap for stop?
+ *   TODO: turn off the states when loco not selected
+ *   TODO: add throttle name to title bar
  * select_loco:
  *   TODO: don't show or allow entry of loco if already in use on "other" throttle
  *   TODO: add roster list
@@ -90,8 +94,6 @@ import android.os.Looper;
 import android.os.Message;
 import java.net.*;
 import java.io.*;
-
-import java.util.*;
 
 import android.util.Log;
 

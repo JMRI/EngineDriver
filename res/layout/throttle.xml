@@ -19,6 +19,87 @@
    android:layout_height="fill_parent"
    android:orientation="vertical"
 >
+   <LinearLayout
+      android:id="@+id/loco_buttons_group_T"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:weightSum="1.0"
+   >
+      <RelativeLayout
+         android:id="@+id/loco_cell_T"
+         android:layout_weight=".73"
+         android:layout_height="wrap_content"
+         android:layout_width="0dp"
+      >
+         <Button
+            android:id="@+id/button_select_loco_T"
+            android:text="@string/none"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_alignParentRight="true"
+            android:padding="0dp" />
+         <TextView
+            android:id="@+id/loco_label_T"
+            android:text="@string/loco"
+            android:paddingTop="2dp"
+            android:paddingLeft="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#666666" />
+      </RelativeLayout>
+      <RelativeLayout
+         android:id="@+id/speed_cell_T"
+         android:layout_weight=".27"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+      >
+         <TextView
+            android:id="@+id/speed_label_T"
+            android:text="@string/speed"
+            android:paddingTop="2dp"
+            android:paddingLeft="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+         <TextView
+            android:id="@+id/speed_value_label_T"
+            android:text="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="36dp"
+            android:layout_alignParentRight="true" />
+      </RelativeLayout>
+   </LinearLayout>
+   <TableLayout
+      android:id="@+id/dir_buttons_table_T"
+      android:layout_width="fill_parent"
+      android:stretchColumns="0,1,2"
+      android:layout_height="wrap_content"
+   >
+      <TableRow>
+         <Button
+            android:id="@+id/button_fwd_T"
+            android:text="@string/forward"
+            style="@style/large_button_style" />
+         <Button
+            android:id="@+id/button_stop_T"
+            android:text="@string/stop"
+            style="@style/large_button_style" />
+         <Button
+            android:id="@+id/button_rev_T"
+            android:text="@string/reverse"
+            style="@style/large_button_style" />
+      </TableRow>
+   </TableLayout>
+   <SeekBar
+      android:id="@+id/speed_T"
+      android:layout_width="fill_parent"
+      android:layout_height="40dp"
+      android:layout_below="@id/loco_label_T"
+      android:layout_alignLeft="@id/loco_label_T"
+      android:paddingLeft="8dp"
+      android:paddingRight="8dp" />
    <ScrollView
       android:id="@+id/function_buttons_scroller_T"
       android:layout_width="fill_parent"
@@ -147,78 +228,95 @@
       </TableLayout>
    </ScrollView>
 
+   <LinearLayout
+      android:id="@+id/separator"
+      android:layout_width="fill_parent"
+      android:layout_height="2dp"
+      android:background="#888888" />
+
+   <LinearLayout
+      android:id="@+id/loco_buttons_group_S"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:weightSum="1.0"
+   >
+      <RelativeLayout
+         android:id="@+id/loco_cell_S"
+         android:layout_weight=".73"
+         android:layout_height="wrap_content"
+         android:layout_width="0dp"
+      >
+         <Button
+            android:id="@+id/button_select_loco_S"
+            android:text="@string/none"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_alignParentRight="true"
+            android:padding="0dp" />
+         <TextView
+            android:id="@+id/loco_label_S"
+            android:text="@string/loco"
+            android:paddingTop="2dp"
+            android:paddingLeft="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#666666" />
+      </RelativeLayout>
+      <RelativeLayout
+         android:id="@+id/speed_cell_S"
+         android:layout_weight=".27"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+      >
+         <TextView
+            android:id="@+id/speed_label_S"
+            android:text="@string/speed"
+            android:paddingTop="2dp"
+            android:paddingLeft="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+         <TextView
+            android:id="@+id/speed_value_label_S"
+            android:text="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="36dp"
+            android:layout_alignParentRight="true" />
+      </RelativeLayout>
+   </LinearLayout>
    <TableLayout
-      android:id="@+id/dir_buttons_table_T"
+      android:id="@+id/dir_buttons_table_S"
       android:layout_width="fill_parent"
       android:stretchColumns="0,1,2"
       android:layout_height="wrap_content"
    >
       <TableRow>
          <Button
-            android:id="@+id/button_fwd_T"
+            android:id="@+id/button_fwd_S"
             android:text="@string/forward"
             style="@style/large_button_style" />
          <Button
-            android:id="@+id/button_stop_T"
+            android:id="@+id/button_stop_S"
             android:text="@string/stop"
             style="@style/large_button_style" />
          <Button
-            android:id="@+id/button_rev_T"
+            android:id="@+id/button_rev_S"
             android:text="@string/reverse"
             style="@style/large_button_style" />
       </TableRow>
-   </TableLayout>
-   <TableLayout
-      android:id="@+id/loco_buttons_table_T"
-      android:layout_width="fill_parent"
-      android:stretchColumns="0,1"
-      android:layout_height="wrap_content"
-   >
-      <TableRow>
-         <RelativeLayout
-            android:id="@+id/loco_cell_T"
-         >
-            <TextView
-               android:id="@+id/loco_label_T"
-               android:text="@string/loco"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
-            <Button
-               android:id="@+id/button_select_loco_T"
-               android:text="@string/none"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textAppearance="?android:attr/textAppearanceLarge"
-               android:layout_alignParentRight="true" />
-         </RelativeLayout>
-         <RelativeLayout
-            android:id="@+id/speed_cell_T"
-         >
-            <TextView
-               android:id="@+id/speed_label_T"
-               android:text="@string/speed"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
-            <TextView
-               android:id="@+id/speed_value_label_T"
-               android:text="0"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textSize="36dp"
-               android:layout_alignParentRight="true" />
-         </RelativeLayout>
-      </TableRow>
+
    </TableLayout>
 
    <SeekBar
-      android:id="@+id/speed_T"
+      android:id="@+id/speed_S"
       android:layout_width="fill_parent"
       android:layout_height="40dp"
-      android:layout_below="@id/loco_label_T"
-      android:layout_alignLeft="@id/loco_label_T"
-      android:paddingLeft="12dp"
-      android:paddingRight="12dp" />
-
+      android:layout_below="@id/loco_label_S"
+      android:layout_alignLeft="@id/loco_label_S"
+      android:paddingLeft="8dp"
+      android:paddingRight="8dp" />
    <ScrollView
       android:id="@+id/function_buttons_scroller_S"
       android:layout_width="fill_parent"
@@ -348,77 +446,5 @@
          </TableRow>
       </TableLayout>
    </ScrollView>
-   <TableLayout
-      android:id="@+id/dir_buttons_table_S"
-      android:layout_width="fill_parent"
-      android:stretchColumns="0,1,2"
-      android:layout_height="wrap_content"
-   >
-      <TableRow>
-         <Button
-            android:id="@+id/button_fwd_S"
-            android:text="@string/forward"
-            style="@style/large_button_style" />
-         <Button
-            android:id="@+id/button_stop_S"
-            android:text="@string/stop"
-            style="@style/large_button_style" />
-         <Button
-            android:id="@+id/button_rev_S"
-            android:text="@string/reverse"
-            style="@style/large_button_style" />
-      </TableRow>
-
-   </TableLayout>
-
-   <TableLayout
-      android:id="@+id/loco_buttons_table_S"
-      android:layout_width="fill_parent"
-      android:stretchColumns="0,1"
-      android:layout_height="wrap_content"
-   >
-      <TableRow>
-         <RelativeLayout
-            android:id="@+id/loco_cell_S"
-         >
-            <TextView
-               android:id="@+id/loco_label_S"
-               android:text="@string/loco"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
-            <Button
-               android:id="@+id/button_select_loco_S"
-               android:text="@string/none"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textAppearance="?android:attr/textAppearanceLarge"
-               android:layout_alignParentRight="true" />
-         </RelativeLayout>
-         <RelativeLayout
-            android:id="@+id/speed_cell_S"
-         >
-            <TextView
-               android:id="@+id/speed_label_S"
-               android:text="@string/speed"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
-            <TextView
-               android:id="@+id/speed_value_label_S"
-               android:text="0"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textSize="36dp"
-               android:layout_alignParentRight="true" />
-         </RelativeLayout>
-      </TableRow>
-   </TableLayout>
-      <SeekBar
-         android:id="@+id/speed_S"
-         android:layout_width="fill_parent"
-         android:layout_height="40dp"
-         android:layout_below="@id/loco_label_S"
-         android:layout_alignLeft="@id/loco_label_S"
-         android:paddingLeft="12dp"
-         android:paddingRight="12dp" />
 
 </LinearLayout>
