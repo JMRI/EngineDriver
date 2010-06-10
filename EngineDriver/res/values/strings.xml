@@ -53,4 +53,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 <string name="prefStopOnReleaseTitle">Stop On Release</string>
 <string name="prefStopOnReleaseDefaultValue">true</string>
 <string name="prefStopOnReleaseSummary">Stop loco when releasing from throttle</string>
+<string name="loco">Loco:</string>
+<string name="current_locos">Currently Selected Locos</string>
 </resources>

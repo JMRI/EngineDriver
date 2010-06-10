@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
       <item name="android:textSize">18sp</item>
       <item name="android:singleLine">true</item>
       <item name="android:ellipsize">none</item>
-      <item name="android:layout_width">0dp</item>
+      <item name="android:layout_width">60dp</item>
       <item name="android:layout_height">48dp</item>
       <item name="android:padding">2dp</item>
     </style>
