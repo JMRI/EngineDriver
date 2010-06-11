@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   added select loco button to ed screen, call ed direct from connect
  *  added 32 function buttons for both throttles, using scroller
  *  disable buttons and slider unless each loco is selected
- *  display current function button state from WiT server
+ *  adjust function buttons to indicate current state from WiT server
  */
 
 /*
@@ -55,6 +55,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: don't add discovered server more than once (restart WiT to see this)
  *   TODO: rewrite readTimer logic 
  *   TODO: redo hard-coded 32 in function arrays
+ *   TODO: split listener creation into more try blocks for better error handling
  * engine_driver:
  *   TODO: change height of "unused" loco section
  *   TODO: in ed exit, don't ask to release if "Not Set"
@@ -118,16 +119,16 @@ public class threaded_application extends Application
     public comm_thread thread;
 	String host_ip; //The IP address of the WiThrottle server.
 	int port; //The TCP port that the WiThrottle server is running on
-	int loco_address_1 = -1; //The Address of the locomotive being controlled 
-	int loco_address_2 = -1; //The Address of the locomotive being controlled 
+	int loco_address_T = -1; //The Address of the locomotive being controlled 
+	int loco_address_S = -1; //The Address of the locomotive being controlled 
 	//shared variables returned from the withrottle server, stored here for easy access by other activities
 	String host_name_string; //retrieved host name of connection
-	String loco_string_1 = "Not Set"; //Loco Address string returned from the server for selected loco #1
-	String loco_string_2 = "Not Set"; //Loco Address string returned from the server for selected loco #1
+	String loco_string_T = "Not Set"; //Loco Address string returned from the server for selected loco #1
+	String loco_string_S = "Not Set"; //Loco Address string returned from the server for selected loco #1
 	String withrottle_version_string; //version of withrottle server
 	String roster_list_string; //roster list
-	String roster_function_string_1; //roster function list for selected loco #1
-	String roster_function_string_2; //roster function list for selected loco #1
+	String roster_function_string_T; //roster function list for selected loco #1
+	String roster_function_string_S; //roster function list for selected loco #1
 	boolean[] function_states_T;  //current function states for first throttle
 	boolean[] function_states_S;  //current function states for second throttle
 	int heartbeat_interval; //heartbeat interval in seconds
@@ -261,13 +262,13 @@ public class threaded_application extends Application
   		    	withrottle_send(whichThrottle+"V0");  //send stop command before releasing (if set in prefs)
   		    }
             if (whichThrottle.equals("T")) {
-  		      loco_string_1 = "Not Set"; 
-              roster_function_string_1 = null;
-              loco_address_1 = -1;
+  		      loco_string_T = "Not Set"; 
+              roster_function_string_T = null;
+              loco_address_T = -1;
             } else {
-              loco_string_2 = "Not Set"; 
-              roster_function_string_2 = null;
-              loco_address_2 = -1;
+              loco_string_S = "Not Set"; 
+              roster_function_string_S = null;
+              loco_address_S = -1;
             }
             withrottle_send(whichThrottle+"r");  //send release command
             break;
@@ -299,15 +300,15 @@ public class threaded_application extends Application
             //clear appropriate app-level shared variables so they can be reset
         	whichThrottle = msg.obj.toString();
             if (whichThrottle.equals("T")) {
-            		loco_string_1 = "Not Set"; 
-                    roster_function_string_1 = null;
-                    loco_address_1=msg.arg1;
+            		loco_string_T = "Not Set"; 
+                    roster_function_string_T = null;
+                    loco_address_T=msg.arg1;
             } else {
-        		loco_string_2 = "Not Set"; 
-                roster_function_string_2 = null;
-                loco_address_2=msg.arg1;
+        		loco_string_S = "Not Set"; 
+                roster_function_string_S = null;
+                loco_address_S=msg.arg1;
             }
-//            withrottle_send(String.format("T"+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", loco_address_1));
+//            withrottle_send(String.format("T"+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", loco_address_T));
             withrottle_send(String.format(whichThrottle+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", msg.arg1));
                      //In order to get the engine to start, I must set a direction and some non-zero velocity and then set the velocity to zero. TODO: Fix this bug
             //in the WiThrottle server.
@@ -377,11 +378,11 @@ public class threaded_application extends Application
 
         switch (response_str.charAt(0)) {
 	  	case 'T': 
-	  		loco_string_1 = response_str.substring(1);  //set app variable
+	  		loco_string_T = response_str.substring(1);  //set app variable
  	  	    break;
 	  	
 	  	case 'S': 
-	  		loco_string_2 = response_str.substring(1);  //set app variable
+	  		loco_string_S = response_str.substring(1);  //set app variable
 	  	    break;
 	  	
 	  	case 'V': 
@@ -399,11 +400,11 @@ public class threaded_application extends Application
     	  	    break;
     	  	
     	  	case 'F': 
-    	  		roster_function_string_1 = response_str.substring(2);  //set app variable for throttle 1
+    	  		roster_function_string_T = response_str.substring(2);  //set app variable for throttle 1
     	  	    break;
         	  	
     	  	case 'S': 
-    	  		roster_function_string_2 = response_str.substring(2);  //set app variable for throttle 2
+    	  		roster_function_string_S = response_str.substring(2);  //set app variable for throttle 2
     	  	    break;
         	  	
     	  	case 'P': //Properties

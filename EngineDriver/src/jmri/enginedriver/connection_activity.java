@@ -76,7 +76,11 @@ public class connection_activity extends Activity
     connect_msg.what=message_type.CONNECT;
     connect_msg.arg1=port;
     connect_msg.obj=new String(host_ip);
-    mainapp.comm_msg_handler.sendMessage(connect_msg);
+    if (mainapp.comm_msg_handler != null) {
+    	mainapp.comm_msg_handler.sendMessage(connect_msg);
+    } else {
+   	    Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
+    }    	
   };
 
 

@@ -40,7 +40,7 @@ public class function_settings extends Activity {
 	//set up label, dcc function, toggle setting for each button
     ArrayList<String> aLbl = new ArrayList<String>();
     ArrayList<Integer> aFnc = new ArrayList<Integer>();
-    ArrayList<Boolean> aTgl = new ArrayList<Boolean>();
+//    ArrayList<Boolean> aTgl = new ArrayList<Boolean>();
 
 	/** Called when the activity is first created. */
     @Override
@@ -55,7 +55,7 @@ public class function_settings extends Activity {
         	move_settings_to_view();
         }
         threaded_application app=(threaded_application)getApplication();
-        String s = mainapp.roster_function_string_1;
+        String s = mainapp.roster_function_string_T;
         TextView v=(TextView)findViewById(R.id.fb_copy_labels_from_roster);
         if (s == null) {
           v.setVisibility(GONE);  //hide button if no roster
@@ -95,7 +95,7 @@ public class function_settings extends Activity {
                   String temp[] = line.split(":");
                   aLbl.add(temp[0]);
                   aFnc.add(Integer.parseInt(temp[1]));
-                  aTgl.add(Boolean.parseBoolean(temp[2]));
+//                  aTgl.add(Boolean.parseBoolean(temp[2]));
                   settingsFound = true;
                 }
               }
@@ -110,21 +110,21 @@ public class function_settings extends Activity {
     //replace arrays using data from roster entry (called by button)
     void get_settings_from_roster() {
 
-        String s = mainapp.roster_function_string_1;
+        String s = mainapp.roster_function_string_T;
         s = s.replace("]\\[", "`");  //handle some odd stuff in format of roster string
         String ra[] = s.split("`");
         aLbl.clear();
         aFnc.clear();
-        aTgl.clear();
+//        aTgl.clear();
     	//read settings into arrays, (skip first entry, which is length)
         for(int i = 1; i < ra.length; i++) {
                   aLbl.add(ra[i]);
                   aFnc.add(i - 1);
-                  if (i == 3 ) {     
-                    aTgl.add(false);   //default "horn" to momentary
-                  } else {
-                	aTgl.add(true);  //others to sticky, not being sent from withrottle
-                  }
+//                  if (i == 3 ) {     
+//                    aTgl.add(false);   //default "horn" to momentary
+//                  } else {
+//                	aTgl.add(true);  //others to sticky, not being sent from withrottle
+//                  }
         }
         
     }
@@ -143,12 +143,12 @@ public class function_settings extends Activity {
               //set label and function from saved settings
               ((EditText)r.getChildAt(1)).setText(aFnc.get(k).toString());
               ((EditText)r.getChildAt(0)).setText(aLbl.get(k));
-              ((CheckBox)r.getChildAt(2)).setChecked(aTgl.get(k));
+//              ((CheckBox)r.getChildAt(2)).setChecked(aTgl.get(k));
             } else {
               //clear remaining label and function defaults
               ((EditText)r.getChildAt(1)).setText("");
               ((EditText)r.getChildAt(0)).setText("");
-              ((CheckBox)r.getChildAt(2)).setChecked(false);
+//              ((CheckBox)r.getChildAt(2)).setChecked(false);
             }
             k++;
           }
@@ -159,7 +159,7 @@ public class function_settings extends Activity {
     {
       public void onClick(View v)
       {
-//          String s = mainapp.roster_function_string_1;
+//          String s = mainapp.roster_function_string_T;
 //    	  Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
     	  get_settings_from_roster();
     	  move_settings_to_view();
@@ -179,15 +179,15 @@ public class function_settings extends Activity {
          
           ViewGroup t = (ViewGroup) findViewById(R.id.label_func_table); //table
           ViewGroup r;  //row
-          //loop thru each row, Skipping the first one (the headings)  format is "label:function#:toggle"
+          //loop thru each row, Skipping the first one (the headings)  format is "label:function#"
           for(int i = 1; i < t.getChildCount(); i++){
               r = (ViewGroup)t.getChildAt(i);
-              //get the 3 inputs from each row
+              //get the 2 inputs from each row
               String label = ((EditText)r.getChildAt(0)).getText().toString();
               label = label.replace("\n", " ");  //remove newlines
               label = label.replace(":", " ");   //   and colons, as they confuse the save format
               String sfunc = ((EditText)r.getChildAt(1)).getText().toString();
-              boolean toggle = ((CheckBox)r.getChildAt(2)).isChecked();
+//              boolean toggle = ((CheckBox)r.getChildAt(2)).isChecked();
               //ignore blank labels and function  
               if (label.length() > 0 && sfunc.length() > 0) {
                 //verify function is valid number between 0 and 99
@@ -199,7 +199,8 @@ public class function_settings extends Activity {
                 }
             	// write out valid items to settings
                 if (func >= 0 && func <= 99 ) {
-                  settings_output.format("%s:%s:%s\n", label, func, toggle);
+//                    settings_output.format("%s:%s:%s\n", label, func, toggle);
+                    settings_output.format("%s:%s\n", label, func);
                 }
               }
               
