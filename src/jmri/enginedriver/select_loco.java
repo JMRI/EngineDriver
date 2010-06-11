@@ -47,7 +47,6 @@ import android.widget.Button;
 import android.widget.AdapterView;
 import java.io.PrintWriter;
 
-
 public class select_loco extends Activity
 {
 
@@ -63,21 +62,39 @@ public class select_loco extends Activity
 
   private threaded_application mainapp;  // hold pointer to mainapp
 
+  private static final int GONE = 8;
+  private static final int VISIBLE = 0;
+
+
   //lookup and set values of various text labels 
   private void set_labels() {
 
-	 //format and show currently selected locos
-	TextView v=(TextView)findViewById(R.id.sl_selected_locos);
-	String s = mainapp.loco_string_1 + "   " + mainapp.loco_string_2;
-    v.setText(s);
-
+	 //format and show currently selected locos, and hide or show Release buttons
+	TextView v=(TextView)findViewById(R.id.sl_loco_T);
+	Button b=(Button)findViewById(R.id.sl_release_T);
+    v.setText(mainapp.loco_string_T);
+    if (mainapp.loco_string_T.equals("Not Set")) {
+//   	    b.setVisibility(GONE);
+    	b.setEnabled(false);
+    } else {
+    	b.setEnabled(true);
+    }
+	v=(TextView)findViewById(R.id.sl_loco_S);
+	b=(Button)findViewById(R.id.sl_release_S);
+    v.setText(mainapp.loco_string_S);
+    if (mainapp.loco_string_S.equals("Not Set")) {
+    	b.setEnabled(false);
+    } else {
+    	b.setEnabled(true);
+    }
+    
     //format and show footer info
 	SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     v=(TextView)findViewById(R.id.sl_footer);
   
-    s = "Throttle Name: " + prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
-    s += "\nt=" +  java.util.Arrays.toString(mainapp.function_states_T);
-    s += "\ns=" +  java.util.Arrays.toString(mainapp.function_states_S);
+    String s = "Throttle Name: " + prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
+//    s += "\nt=" +  java.util.Arrays.toString(mainapp.function_states_T);
+//    s += "\ns=" +  java.util.Arrays.toString(mainapp.function_states_S);
     s += "\nHost: " + mainapp.host_name_string;
     s += "\nWiThrottle: v" + mainapp.withrottle_version_string;
     s += String.format("     Heartbeat: %d secs", mainapp.heartbeat_interval);
@@ -120,7 +137,15 @@ public class select_loco extends Activity
       //since we always do the same action no need to distinguish between requests
 	  set_labels();
   }
-
+  
+  //request release of specified loco
+  void release_loco(String whichThrottle)  {
+    Message msg=Message.obtain();
+    msg.what=message_type.RELEASE;
+    msg.obj=new String(whichThrottle);  //pass T or S in message
+    mainapp.comm_msg_handler.sendMessage(msg);
+  }
+  
   void acquire_engine()
   {
     Message acquire_msg=Message.obtain();
@@ -166,6 +191,21 @@ public class select_loco extends Activity
       Spinner spinner=(Spinner)findViewById(R.id.address_length);
       address_size=spinner.getSelectedItemPosition();
       acquire_engine();
+      end_this_activity();
+    };
+  }
+
+  public class release_button_listener_T implements View.OnClickListener
+  {
+    public void onClick(View v)    {
+      release_loco("T");
+      end_this_activity();
+    };
+  }
+  public class release_button_listener_S implements View.OnClickListener
+  {
+    public void onClick(View v)    {
+      release_loco("S");
       end_this_activity();
     };
   }
@@ -264,10 +304,17 @@ public class select_loco extends Activity
     }
     catch (IOException except) { Log.e("connection_activity", "Could not read file "+except.getMessage()); }
 
-    //Set the button callback.
+    //Set the button callbacks.
     Button button=(Button)findViewById(R.id.acquire);
     button_listener click_listener=new button_listener();
     button.setOnClickListener(click_listener);
+
+    button=(Button)findViewById(R.id.sl_release_T);
+    button.setOnClickListener(new release_button_listener_T());
+    
+    button=(Button)findViewById(R.id.sl_release_S);
+    button.setOnClickListener(new release_button_listener_S());
+    
     
     //set long/short based on length of text entered (but user can override if needed)
     EditText la = (EditText)findViewById(R.id.loco_address);

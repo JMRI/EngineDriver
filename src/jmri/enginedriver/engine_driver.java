@@ -116,14 +116,14 @@ public class engine_driver extends Activity {
   void enable_disable_buttons(String whichThrottle)  {
       boolean newEnabledState;
 	  if (whichThrottle.equals("T")) {
-		  newEnabledState = !(mainapp.loco_string_1.equals("Not Set"));  //set false if loco is "Not Set"
+		  newEnabledState = !(mainapp.loco_string_T.equals("Not Set"));  //set false if loco is "Not Set"
           findViewById(R.id.button_fwd_T).setEnabled(newEnabledState);
           findViewById(R.id.button_stop_T).setEnabled(newEnabledState);
           findViewById(R.id.button_rev_T).setEnabled(newEnabledState);
           findViewById(R.id.speed_T).setEnabled(newEnabledState);
           enable_disable_buttons_for_view((ViewGroup)findViewById(R.id.function_buttons_group_T),newEnabledState);
 	  } else {
-		  newEnabledState = !(mainapp.loco_string_2.equals("Not Set"));  //set false if loco is "Not Set"
+		  newEnabledState = !(mainapp.loco_string_S.equals("Not Set"));  //set false if loco is "Not Set"
           findViewById(R.id.button_fwd_S).setEnabled(newEnabledState);
           findViewById(R.id.button_stop_S).setEnabled(newEnabledState);
           findViewById(R.id.button_rev_S).setEnabled(newEnabledState);
@@ -542,17 +542,17 @@ public void onStart() {
   private void set_labels() {
 
     Button b=(Button)findViewById(R.id.button_select_loco_T);
-    if (mainapp.loco_string_1.equals("Not Set")) {
+    if (mainapp.loco_string_T.equals("Not Set")) {
       b.setText("Press to select");
     } else {
-    	b.setText(mainapp.loco_string_1);
+    	b.setText(mainapp.loco_string_T);
     }
  
     b=(Button)findViewById(R.id.button_select_loco_S);
-    if (mainapp.loco_string_2.equals("Not Set")) {
+    if (mainapp.loco_string_S.equals("Not Set")) {
         b.setText("Press to select");
     } else {
-      	b.setText(mainapp.loco_string_2);
+      	b.setText(mainapp.loco_string_S);
     }
 
     //update the state of each function button based on shared variable

@@ -29,9 +29,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
     <string name="loco_address">Loco Address</string>
     <string name="connect_button">Connect</string>
     <string name="recent_connections">Recent Connections</string>
-    <string name="select_loco">Enter Locomotive Address</string>
+    <string name="select_loco">Enter Locomotive Address to Acquire</string>
     <string name="acquire_button">Acquire</string>
-    <string name="recent_engines">Select from Recent Locomotives</string>
+    <string name="recent_engines">-OR- Select from Recent Locomotives</string>
     <string name="direction">Fwd</string>
     <string name="speed">Speed:</string>
     <string name="discovered_services">Discovered Services</string>
@@ -55,4 +55,5 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 <string name="prefStopOnReleaseSummary">Stop loco when releasing from throttle</string>
 <string name="loco">Loco:</string>
 <string name="current_locos">Currently Selected Locos</string>
+<string name="release">Release</string>
 </resources>
