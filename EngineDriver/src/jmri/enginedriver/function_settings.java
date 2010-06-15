@@ -7,29 +7,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.net.*;
 import java.io.*;
 
-import jmri.enginedriver.engine_driver.function_button_touch_listener;
-import jmri.enginedriver.select_loco.button_listener;
-
 import android.util.Log;
-import android.widget.CheckBox;
-import android.widget.ListView;
-import android.widget.SeekBar;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Toast;
-import android.view.MotionEvent;
-import android.os.Message;
 import android.widget.TextView;
-import android.graphics.drawable.Drawable;
-import android.content.res.Resources;
-
 
 public class function_settings extends Activity {
 
@@ -40,7 +24,6 @@ public class function_settings extends Activity {
 	//set up label, dcc function, toggle setting for each button
     ArrayList<String> aLbl = new ArrayList<String>();
     ArrayList<Integer> aFnc = new ArrayList<Integer>();
-//    ArrayList<Boolean> aTgl = new ArrayList<Boolean>();
 
 	/** Called when the activity is first created. */
     @Override
@@ -54,7 +37,6 @@ public class function_settings extends Activity {
         if (get_settings_from_file()) {
         	move_settings_to_view();
         }
-        threaded_application app=(threaded_application)getApplication();
         String s = mainapp.roster_function_string_T;
         TextView v=(TextView)findViewById(R.id.fb_copy_labels_from_roster);
         if (s == null) {
@@ -95,7 +77,6 @@ public class function_settings extends Activity {
                   String temp[] = line.split(":");
                   aLbl.add(temp[0]);
                   aFnc.add(Integer.parseInt(temp[1]));
-//                  aTgl.add(Boolean.parseBoolean(temp[2]));
                   settingsFound = true;
                 }
               }
@@ -115,16 +96,10 @@ public class function_settings extends Activity {
         String ra[] = s.split("`");
         aLbl.clear();
         aFnc.clear();
-//        aTgl.clear();
     	//read settings into arrays, (skip first entry, which is length)
         for(int i = 1; i < ra.length; i++) {
                   aLbl.add(ra[i]);
                   aFnc.add(i - 1);
-//                  if (i == 3 ) {     
-//                    aTgl.add(false);   //default "horn" to momentary
-//                  } else {
-//                	aTgl.add(true);  //others to sticky, not being sent from withrottle
-//                  }
         }
         
     }
@@ -143,12 +118,10 @@ public class function_settings extends Activity {
               //set label and function from saved settings
               ((EditText)r.getChildAt(1)).setText(aFnc.get(k).toString());
               ((EditText)r.getChildAt(0)).setText(aLbl.get(k));
-//              ((CheckBox)r.getChildAt(2)).setChecked(aTgl.get(k));
             } else {
               //clear remaining label and function defaults
               ((EditText)r.getChildAt(1)).setText("");
               ((EditText)r.getChildAt(0)).setText("");
-//              ((CheckBox)r.getChildAt(2)).setChecked(false);
             }
             k++;
           }
@@ -159,8 +132,6 @@ public class function_settings extends Activity {
     {
       public void onClick(View v)
       {
-//          String s = mainapp.roster_function_string_T;
-//    	  Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
     	  get_settings_from_roster();
     	  move_settings_to_view();
       };
@@ -187,10 +158,9 @@ public class function_settings extends Activity {
               label = label.replace("\n", " ");  //remove newlines
               label = label.replace(":", " ");   //   and colons, as they confuse the save format
               String sfunc = ((EditText)r.getChildAt(1)).getText().toString();
-//              boolean toggle = ((CheckBox)r.getChildAt(2)).isChecked();
               //ignore blank labels and function  
               if (label.length() > 0 && sfunc.length() > 0) {
-                //verify function is valid number between 0 and 99
+                //verify function is valid number between 0 and 28
             	int func = -1;
                 try {
                     func = Integer.parseInt(sfunc);
@@ -198,8 +168,7 @@ public class function_settings extends Activity {
                 // if invalid, don't set func
                 }
             	// write out valid items to settings
-                if (func >= 0 && func <= 99 ) {
-//                    settings_output.format("%s:%s:%s\n", label, func, toggle);
+                if (func >= 0 && func <= 28 ) {
                     settings_output.format("%s:%s\n", label, func);
                 }
               }

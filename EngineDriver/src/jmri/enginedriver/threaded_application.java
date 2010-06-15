@@ -30,22 +30,22 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   send hardware address as HU<throttle-name>  (prevents duplicates in WiThrottle server)
  *   changed process namespace from net.lnxgfx to jmri.enginedriver
  *   added html About page
- *   added select loco button to ed screen, call ed direct from connect
  */
 
 /* Version 0.4 - changes/additions by mstevetodd
- *   added select loco button to ed screen, call ed direct from connect
- *  added 32 function buttons for both throttles, using scroller
- *  disable buttons and slider unless each loco is selected
+ *  added select loco button to ed screen, call ed direct from connect
+ *  added 29 function buttons for both throttles, using scrollers
+ *  disable buttons and slider and shrink screen usage for unselected loco
  *  adjust function buttons to indicate current state from WiT server
+ *  added release buttons to sl activity
  */
 
 /*
  *   TODO: add consisting features
  *   TODO: toast messages on release of loco and update of preferences
  *   TODO: make private stuff private
- *   TODO: allow for separate button arrangements for each loco
  * threaded_application
+ *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: add client-side conversation logging for easier debugging
  *   TODO: check for error on send and do something with it 
  *   TODO: improve error handling of read error (sometimes it loops sending toast messages) 
@@ -53,28 +53,27 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: move socket timeout values to preference
  *   TODO: determine why ip by server name won't resolve
  *   TODO: don't add discovered server more than once (restart WiT to see this)
- *   TODO: rewrite readTimer logic 
  *   TODO: redo hard-coded 32 in function arrays
  *   TODO: split listener creation into more try blocks for better error handling
  * engine_driver:
- *   TODO: change height of "unused" loco section
- *   TODO: in ed exit, don't ask to release if "Not Set"
+ *   TODO: create preference for "switcher" throttle, which removes fwd-stop-rev button row.  Double-tap for stop?
+ *   TODO: in ed exit, don't send release if "Not Set"
  *   TODO: add graphics (slider, stop, directions, functions?)  add colors
  *   TODO: get 2nd line of label text working again
- *   TODO: create preference for "switcher" throttle, which removes fwd-stop-rev button row.  Double-tap for stop?
- *   TODO: turn off the states when loco not selected
+ *   TODO: unset all states when loco not selected
  *   TODO: add throttle name to title bar
+ *   TODO: allow for different button arrangements for each loco
  * select_loco:
  *   TODO: don't show or allow entry of loco if already in use on "other" throttle
  *   TODO: add roster list
- *   TODO: add Release button
  *   TODO: simplify select_loco by removing handler
+ * preferences:
+ *   TODO: show error if invalid entry
  *
  * These require changes to WiThrottle
- *   TODO: get current status (speed, direction, function states, speed steps?)  On request would be best.
+ *   TODO: get current status (speed, direction, speed steps?)  On request would be best.
  *   TODO: add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
- *   TODO: get "sticky" flags as part of roster receive (not needed if status updates made available)
- *   TODO: disallow "steal"  (if requested addr "in use", return error)  probably should be a pref
+ *   TODO: disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
  *   TODO: pull more details from roster
  *   TODO: add turnout and route controls
  *   
