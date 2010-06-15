@@ -8,7 +8,7 @@
 >
    <LinearLayout
       android:layout_width="0dp"
-      android:layout_weight = ".5"
+      android:layout_weight=".5"
       android:layout_height="fill_parent"
       android:orientation="vertical"
 
@@ -37,7 +37,7 @@
       android:id="@+id/ScrollView01"
       android:layout_height="wrap_content"
       android:layout_width="0dp"
-      android:layout_weight = ".5"
+      android:layout_weight=".5"
    >
       <TableLayout
          android:id="@+id/label_func_table"
@@ -149,7 +149,6 @@
                android:text="08"
                style="@style/edit_func_style"
             ></EditText>
-
          </TableRow>
          <TableRow>
             <EditText
@@ -160,7 +159,16 @@
                android:text="09"
                style="@style/edit_func_style"
             ></EditText>
-
+         </TableRow>
+         <TableRow>
+            <EditText
+               android:text="10"
+               style="@style/edit_label_style"
+            ></EditText>
+            <EditText
+               android:text="10"
+               style="@style/edit_func_style"
+            ></EditText>
          </TableRow>
          <TableRow>
             <EditText
@@ -171,7 +179,6 @@
                android:text="11"
                style="@style/edit_func_style"
             ></EditText>
-
          </TableRow>
          <TableRow>
             <EditText
@@ -182,7 +189,6 @@
                android:text="12"
                style="@style/edit_func_style"
             ></EditText>
-
          </TableRow>
          <TableRow>
             <EditText
@@ -325,7 +331,6 @@
                android:text="25"
                style="@style/edit_func_style"
             ></EditText>
-
          </TableRow>
          <TableRow>
             <EditText
@@ -336,7 +341,6 @@
                android:text="26"
                style="@style/edit_func_style"
             ></EditText>
-
          </TableRow>
          <TableRow>
             <EditText
@@ -347,7 +351,6 @@
                android:text="27"
                style="@style/edit_func_style"
             ></EditText>
-
          </TableRow>
          <TableRow>
             <EditText
@@ -358,18 +361,6 @@
                android:text="28"
                style="@style/edit_func_style"
             ></EditText>
-
-         </TableRow>
-         <TableRow>
-            <EditText
-               android:text="29"
-               style="@style/edit_label_style"
-            ></EditText>
-            <EditText
-               android:text="29"
-               style="@style/edit_func_style"
-            ></EditText>
-
          </TableRow>
       </TableLayout>
    </ScrollView>

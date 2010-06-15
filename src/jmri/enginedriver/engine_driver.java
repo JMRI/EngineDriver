@@ -35,9 +35,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.io.*;
 
-//import jmri.enginedriver.connection_activity.ui_handler;
-
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Button;
 import android.widget.Toast;
@@ -56,13 +55,9 @@ public class engine_driver extends Activity {
 
   private Drawable button_pressed_drawable;  //hold background graphics for buttons
   private Drawable button_normal_drawable;
-//  private Drawable button_pressed_small_drawable;  //needed different buttons for wide vs. not-wide
-//  private Drawable button_normal_small_drawable;
 
   ArrayList<String> aLbl;
   ArrayList<Integer> aFnc;
-//  ArrayList<Boolean> aTgl;
-
 
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class engine_driver_handler extends Handler {
@@ -120,15 +115,27 @@ public class engine_driver extends Activity {
           findViewById(R.id.button_fwd_T).setEnabled(newEnabledState);
           findViewById(R.id.button_stop_T).setEnabled(newEnabledState);
           findViewById(R.id.button_rev_T).setEnabled(newEnabledState);
-          findViewById(R.id.speed_T).setEnabled(newEnabledState);
-          enable_disable_buttons_for_view((ViewGroup)findViewById(R.id.function_buttons_group_T),newEnabledState);
+          findViewById(R.id.speed_label_T).setEnabled(newEnabledState);
+          findViewById(R.id.speed_value_label_T).setEnabled(newEnabledState);
+          enable_disable_buttons_for_view((ViewGroup)findViewById(R.id.function_buttons_table_T),newEnabledState);
+          SeekBar sb = (SeekBar)findViewById(R.id.speed_T);
+          sb.setEnabled(newEnabledState);
+          if (!newEnabledState) {
+              sb.setProgress(0);  //set slider to 0 if disabled
+          }
 	  } else {
 		  newEnabledState = !(mainapp.loco_string_S.equals("Not Set"));  //set false if loco is "Not Set"
           findViewById(R.id.button_fwd_S).setEnabled(newEnabledState);
           findViewById(R.id.button_stop_S).setEnabled(newEnabledState);
           findViewById(R.id.button_rev_S).setEnabled(newEnabledState);
-          findViewById(R.id.speed_S).setEnabled(newEnabledState);
-          enable_disable_buttons_for_view((ViewGroup)findViewById(R.id.function_buttons_group_S),newEnabledState);
+          findViewById(R.id.speed_label_S).setEnabled(newEnabledState);
+          findViewById(R.id.speed_value_label_S).setEnabled(newEnabledState);
+          enable_disable_buttons_for_view((ViewGroup)findViewById(R.id.function_buttons_table_S),newEnabledState);
+          SeekBar sb = (SeekBar)findViewById(R.id.speed_S);
+          sb.setEnabled(newEnabledState);
+          if (!newEnabledState) {
+              sb.setProgress(0);  //set slider to 0 if disabled
+          }
 	  }
         
   };  //end of enable_disable_buttons
@@ -154,10 +161,10 @@ public class engine_driver extends Activity {
 	  boolean[] fs;  //copy of this throttle's function state array
 	  int k = 0; //counter for button array
   	  if (whichThrottle.equals("T")) {
-  		 vg = (ViewGroup)findViewById(R.id.function_buttons_group_T);
+  		 vg = (ViewGroup)findViewById(R.id.function_buttons_table_T);
   		 fs = mainapp.function_states_T;
   	  } else {
-		 vg = (ViewGroup)findViewById(R.id.function_buttons_group_S);
+		 vg = (ViewGroup)findViewById(R.id.function_buttons_table_S);
   		 fs = mainapp.function_states_S;
   	  }
 	  for(int i = 0; i < vg.getChildCount(); i++) {
@@ -179,15 +186,12 @@ public class engine_driver extends Activity {
   public class function_button_touch_listener implements View.OnTouchListener
   {
     int function;
-//    boolean is_toggle_type; //True if the button is a toggle on/toggle off type (for example the head light).
-//    boolean toggled;
     String whichThrottle;  //T for first throttle, S for second 
 
 //    public function_button_touch_listener(int new_function, boolean new_toggle_type, String new_whichThrottle)
     public function_button_touch_listener(int new_function, String new_whichThrottle)
     {
       function=new_function;  //store these values for this button
-//      is_toggle_type=new_toggle_type;
       whichThrottle = new_whichThrottle;
     }
 
@@ -260,20 +264,6 @@ public class engine_driver extends Activity {
             mainapp.comm_msg_handler.sendMessage(function_msg);            //send the message to comm thread
           }
 
-          //Change the appearance of toggleable buttons to show the current function state.
-/*         if(is_toggle_type) {
-              toggled=!toggled; //The toggle/latch functionality is taken care of by the WiThrottle server. WiThrottle will be changed to send state.
-          }
-          if(is_toggle_type) {
-            if(toggled) {
-              v.setBackgroundDrawable(button_pressed_small_drawable);
-              v.setPadding(2, 2, 2, 2);  //not sure why, but padding gets lost and has to be reset
-            } else {
-              v.setBackgroundDrawable(button_normal_small_drawable);
-              v.setPadding(2, 2, 2, 2);
-            }
-          }
-*/          
         }
         break;
         //handle stopping of function on key-up 
@@ -393,8 +383,6 @@ public void onStart() {
 
     button_pressed_drawable=getResources().getDrawable(R.drawable.btn_default_small_pressed);
     button_normal_drawable=getResources().getDrawable(R.drawable.btn_default_small_normal);
-//    button_pressed_small_drawable=getResources().getDrawable(R.drawable.btn_default_small_pressed);
-//    button_normal_small_drawable=getResources().getDrawable(R.drawable.btn_default_small_normal);
 
     set_function_buttons();
 
@@ -409,43 +397,35 @@ public void onStart() {
     fbtl=new function_button_touch_listener(function_button.SELECT_LOCO, "S");
     b.setOnTouchListener(fbtl);
     
-    // set listeners for 3 direction buttons, initially disabled
+    // set listeners for 3 direction buttons for each throttle
     b = (Button)findViewById(R.id.button_fwd_T);
     fbtl=new function_button_touch_listener(function_button.FORWARD, "T");
     b.setOnTouchListener(fbtl);
-    b.setEnabled(false);
     b = (Button)findViewById(R.id.button_stop_T);
     fbtl=new function_button_touch_listener(function_button.STOP,  "T");
     b.setOnTouchListener(fbtl);
-    b.setEnabled(false);
     b = (Button)findViewById(R.id.button_rev_T);
     fbtl=new function_button_touch_listener(function_button.REVERSE, "T");
     b.setOnTouchListener(fbtl);
-    b.setEnabled(false);
 
     b = (Button)findViewById(R.id.button_fwd_S);
     fbtl=new function_button_touch_listener(function_button.FORWARD, "S");
     b.setOnTouchListener(fbtl);
-    b.setEnabled(false);
     b = (Button)findViewById(R.id.button_stop_S);
     fbtl=new function_button_touch_listener(function_button.STOP, "S");
     b.setOnTouchListener(fbtl);
-    b.setEnabled(false);
     b = (Button)findViewById(R.id.button_rev_S);
     fbtl=new function_button_touch_listener(function_button.REVERSE, "S");
     b.setOnTouchListener(fbtl);
-    b.setEnabled(false);
 
-    // set up sliders for throttles, initially disabled
+    // set up sliders for throttles
     SeekBar sb=(SeekBar)findViewById(R.id.speed_T);
     sb.setMax(126);
     sb.setOnSeekBarChangeListener(new throttle_listener("T"));
-    sb.setEnabled(false);
     
     sb=(SeekBar)findViewById(R.id.speed_S);
     sb.setMax(126);
     sb.setOnSeekBarChangeListener(new throttle_listener("S"));
-    sb.setEnabled(false);
 
     set_labels();
 
@@ -453,12 +433,11 @@ public void onStart() {
   } //end of onCreate()
 
   //set up label, dcc function, toggle setting for each button from settings and setup listeners
-  //TODO: unduplicate this code (in settings.java and engine_driver.java)
+  //TODO: unduplicate this code (in function_settings.java and engine_driver.java)
   private void set_function_buttons() {
 
 	  aLbl = new ArrayList<String>();
 	  aFnc = new ArrayList<Integer>();
-//	  aTgl = new ArrayList<Boolean>();
 
 	    try
 	    {
@@ -481,16 +460,14 @@ public void onStart() {
 	              String temp[] = line.split(":");
 	              aLbl.add(temp[0]);
 	              aFnc.add(Integer.parseInt(temp[1]));
-//	              aTgl.add(Boolean.parseBoolean(temp[2]));
 	            }
 	          } else {  //hard-code some buttons and default the rest
 	              aLbl.add("Light");aFnc.add(0); //aTgl.add(true);
 	              aLbl.add("Bell"); aFnc.add(1); //aTgl.add(true);
 	              aLbl.add("Horn"); aFnc.add(2); //aTgl.add(false);
-	              for(int k = 3; k <= 15; k++) {
+	              for(int k = 3; k <= 27; k++) {
 	                aLbl.add(String.format("%d",k));
 	                aFnc.add(k);
-//	                aTgl.add(true);
 	              }
 	          }
 	        }
@@ -501,9 +478,9 @@ public void onStart() {
 	    // loop through all function buttons and
 	    //   set label and dcc functions (based on settings) or hide if no label
 	    
-	    ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_group_T); //table
+	    ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_T); //table
 	    set_function_buttons_for_view(tv, "T");
-	    tv = (ViewGroup) findViewById(R.id.function_buttons_group_S); //table
+	    tv = (ViewGroup) findViewById(R.id.function_buttons_table_S); //table
 	    set_function_buttons_for_view(tv, "S");
 
   }
@@ -519,13 +496,8 @@ public void onStart() {
 	      for(int j = 0; j < r.getChildCount(); j++) {
 	      	b = (Button)r.getChildAt(j);
 	    		if (k < aFnc.size()) {
-//		       		fbtl=new function_button_touch_listener(aFnc.get(k), aTgl.get(k), whichLoco);
 		       		fbtl=new function_button_touch_listener(aFnc.get(k), whichLoco);
 		       		b.setOnTouchListener(fbtl);
-//		            if (aTgl.get(k)) {        //if button is sticky, set background to "off" state
-//		              b.setBackgroundDrawable(button_normal_small_drawable);
-//		              b.setPadding(2, 2, 2, 2);
-//		            }
 		       		String bt = aLbl.get(k) + "        ";  //pad with spaces, and limit to 7 characters
 		       		b.setText(bt.substring(0, 7));
 		       	    b.setVisibility(VISIBLE);
@@ -538,14 +510,21 @@ public void onStart() {
 	  }
 } //end of set_function_buttons_for_view
 
-  //lookup and set values of various informational text labels 
+  //lookup and set values of various informational text labels and size the screen elements 
   private void set_labels() {
 
+//    int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
+	int screenHeight = findViewById(R.id.throttle_screen).getHeight();  //get the height of usable area
+    int throttle_count = 0;
+   	int height_T;
+	int height_S;
+  
     Button b=(Button)findViewById(R.id.button_select_loco_T);
     if (mainapp.loco_string_T.equals("Not Set")) {
-      b.setText("Press to select");
+        b.setText("Press to select");
     } else {
     	b.setText(mainapp.loco_string_T);
+    	throttle_count++;
     }
  
     b=(Button)findViewById(R.id.button_select_loco_S);
@@ -553,11 +532,39 @@ public void onStart() {
         b.setText("Press to select");
     } else {
       	b.setText(mainapp.loco_string_S);
+    	throttle_count++;
     }
 
+    //determine how to split the screen (evenly if both, 85/15 if only one)
+    if (throttle_count == 0 || throttle_count == 2)  {
+    	height_T = (int) (screenHeight * 0.5);
+    	height_S = (int) (screenHeight * 0.5);
+    } else if (mainapp.loco_string_T.equals("Not Set")) {
+    	height_T = (int) (screenHeight * 0.15);
+    	height_S = (int) (screenHeight * 0.85);
+    } else {
+    	height_T = (int) (screenHeight * 0.85);
+    	height_S = (int) (screenHeight * 0.15);
+    }
+    	
+  //set height of T area 
+    LinearLayout ll=(LinearLayout)findViewById(R.id.throttle_T);
+    LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.FILL_PARENT,
+            height_T);
+    ll.setLayoutParams(llLp);
+
+    //set height of S area
+    ll=(LinearLayout)findViewById(R.id.throttle_S);
+    llLp = new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.FILL_PARENT,
+            height_S);
+    ll.setLayoutParams(llLp);
+    
     //update the state of each function button based on shared variable
     set_function_states("T");
     set_function_states("S");
+     
 
 }
 
