@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 <string name="prefThrottleNameTitle">Throttle Name</string>
 <string name="prefThrottleNameDefaultValue">Engine Driver</string>
 <string name="prefThrottleNameSummary">Set the throttle name (shown on WiThrottle screen)</string>
-<string name="fb_helptext">Enter labels and function#s in list at left.  Toggle sets button to &quot;stick&quot;.  Leave label blank to hide button.</string>
+<string name="fb_helptext">Enter labels and function#s in list at right.  Leave label blank to hide button.</string>
 <string name="copy_function_labels">Copy Labels from Roster</string>
 <string name="fb_header">Edit Functions</string>
 <string name="about">About</string>
@@ -56,4 +56,5 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 <string name="loco">Loco:</string>
 <string name="current_locos">Currently Selected Locos</string>
 <string name="release">Release</string>
+<string name="app_description">Engine Driver - JMRI Throttle for your Android phone.  This application can connect to a JMRI WiThrottle server running on a PC, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one or two locomotives. </string>
 </resources>
