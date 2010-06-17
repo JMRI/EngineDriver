@@ -53,7 +53,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: move socket timeout values to preference
  *   TODO: determine why ip by server name won't resolve
  *   TODO: don't add discovered server more than once (restart WiT to see this)
- *   TODO: redo hard-coded 32 in function arrays
+ *   TODO: redo hard-coded 29 in function arrays
  *   TODO: split listener creation into more try blocks for better error handling
  * engine_driver:
  *   TODO: create preference for "switcher" throttle, which removes fwd-stop-rev button row.  Double-tap for stop?
@@ -65,7 +65,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: allow for different button arrangements for each loco
  * select_loco:
  *   TODO: don't show or allow entry of loco if already in use on "other" throttle
- *   TODO: add roster list
+ *   TODO: add "Select from Roster" list
  *   TODO: simplify select_loco by removing handler
  * preferences:
  *   TODO: show error if invalid entry
@@ -75,7 +75,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
  *   TODO: disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
  *   TODO: pull more details from roster
- *   TODO: add turnout and route controls
+ *   TODO: add turnout, route, and power controls
  *   
  * Other potential changes to WiThrottle:
  *   ) remove throttle from withrottle screen on loss of connection (estop)
