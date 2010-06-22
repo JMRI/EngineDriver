@@ -57,4 +57,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 <string name="current_locos">Currently Selected Locos</string>
 <string name="release">Release</string>
 <string name="app_description">Engine Driver - JMRI Throttle for your Android phone.  This application can connect to a JMRI WiThrottle server running on a PC, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one or two locomotives. </string>
+<string name="prefMaximumThrottleTitle">Maximum Throttle Value</string>
+<string name="prefMaximumThrottleDefaultValue">99</string>
+<string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value</string>
 </resources>

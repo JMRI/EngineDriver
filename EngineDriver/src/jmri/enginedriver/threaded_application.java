@@ -45,23 +45,24 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: toast messages on release of loco and update of preferences
  *   TODO: make private stuff private
  * threaded_application
+ *   TODO: Move wifi listener to OnStart from OnCreate (so it works each time activity gets focus), and add OnPause (or somesuch) to turn off listener
+ *   TODO: don't add discovered server more than once (restart WiT to see this)
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: add client-side conversation logging for easier debugging
  *   TODO: check for error on send and do something with it 
  *   TODO: improve error handling of read error (sometimes it loops sending toast messages) 
- *   TODO: Move wifi listener to OnStart from OnCreate (so it works each time activity gets focus), and add OnPause (or somesuch) to turn off listener
  *   TODO: move socket timeout values to preference
  *   TODO: determine why ip by server name won't resolve
- *   TODO: don't add discovered server more than once (restart WiT to see this)
  *   TODO: redo hard-coded 29 in function arrays
  *   TODO: split listener creation into more try blocks for better error handling
  * engine_driver:
+ *   TODO: allow adjustment of slider, for those with very slow-running locos (Maximum Throttle?)
+ *   TODO: add graphics (slider, stop, directions, functions?)  add colors
+ *   TODO: add throttle name to title bar
  *   TODO: create preference for "switcher" throttle, which removes fwd-stop-rev button row.  Double-tap for stop?
  *   TODO: in ed exit, don't send release if "Not Set"
- *   TODO: add graphics (slider, stop, directions, functions?)  add colors
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
- *   TODO: add throttle name to title bar
  *   TODO: allow for different button arrangements for each loco
  * select_loco:
  *   TODO: don't show or allow entry of loco if already in use on "other" throttle
