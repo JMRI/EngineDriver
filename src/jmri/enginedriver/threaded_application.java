@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   added html About page
  */
 
-/* Version 0.4 - changes/additions by mstevetodd
+/* Version 0.5 - changes/additions by mstevetodd
  *  added select loco button to ed screen, call ed direct from connect
  *  added 29 function buttons for both throttles, using scrollers
  *  disable buttons and slider and shrink screen usage for unselected loco
@@ -40,8 +40,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *  added release buttons to sl activity
  */
 
+/* Version 0.6 - changes/additions by mstevetodd
+ *  added preference for Maximum Throttle, to set a maximum speed to be sent
+ *  lowered minSDK from 7 to 4 (to allow use by Android 1.6 devices) 
+ */
+
 /*
  *   TODO: add consisting features
+ *   TODO: add turnout controls
+ *   TODO: add route controls
  *   TODO: toast messages on release of loco and update of preferences
  *   TODO: make private stuff private
  * threaded_application
@@ -56,10 +63,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: redo hard-coded 29 in function arrays
  *   TODO: split listener creation into more try blocks for better error handling
  * engine_driver:
- *   TODO: allow adjustment of slider, for those with very slow-running locos (Maximum Throttle?)
  *   TODO: add graphics (slider, stop, directions, functions?)  add colors
  *   TODO: add throttle name to title bar
- *   TODO: create preference for "switcher" throttle, which removes fwd-stop-rev button row.  Double-tap for stop?
  *   TODO: in ed exit, don't send release if "Not Set"
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
