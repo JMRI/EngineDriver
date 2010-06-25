@@ -20,6 +20,7 @@ package jmri.enginedriver;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -51,6 +52,7 @@ public class engine_driver extends Activity {
   private threaded_application mainapp;  // hold pointer to mainapp
   private static final int GONE = 8;
   private static final int VISIBLE = 0;
+  private SharedPreferences prefs;
   private Timer heartbeatTimer;
 
   private Drawable button_pressed_drawable;  //hold background graphics for buttons
@@ -68,6 +70,7 @@ public class engine_driver extends Activity {
 	        case message_type.RESPONSE: {  //handle messages from WiThrottle server
 	        	String response_str = msg.obj.toString();
 
+	        	//loco connected (or disconnected)
 	        	switch (response_str.charAt(0)) {
 	      	  	  case 'T':
 	      	  	  case 'S':
@@ -119,10 +122,10 @@ public class engine_driver extends Activity {
           findViewById(R.id.speed_value_label_T).setEnabled(newEnabledState);
           enable_disable_buttons_for_view((ViewGroup)findViewById(R.id.function_buttons_table_T),newEnabledState);
           SeekBar sb = (SeekBar)findViewById(R.id.speed_T);
-          sb.setEnabled(newEnabledState);
           if (!newEnabledState) {
               sb.setProgress(0);  //set slider to 0 if disabled
           }
+          sb.setEnabled(newEnabledState);
 	  } else {
 		  newEnabledState = !(mainapp.loco_string_S.equals("Not Set"));  //set false if loco is "Not Set"
           findViewById(R.id.button_fwd_S).setEnabled(newEnabledState);
@@ -132,10 +135,10 @@ public class engine_driver extends Activity {
           findViewById(R.id.speed_value_label_S).setEnabled(newEnabledState);
           enable_disable_buttons_for_view((ViewGroup)findViewById(R.id.function_buttons_table_S),newEnabledState);
           SeekBar sb = (SeekBar)findViewById(R.id.speed_S);
-          sb.setEnabled(newEnabledState);
           if (!newEnabledState) {
               sb.setProgress(0);  //set slider to 0 if disabled
           }
+          sb.setEnabled(newEnabledState);
 	  }
         
   };  //end of enable_disable_buttons
@@ -308,9 +311,12 @@ public class engine_driver extends Activity {
       speed_label.setText(Integer.toString(displayedSpeed));
     }
 
-    public void onStartTrackingTouch(SeekBar sb) { }
+	@Override
+	public void onStartTrackingTouch(SeekBar sb) {}
 
-    public void onStopTrackingTouch(SeekBar sb) { }
+	@Override
+	public void onStopTrackingTouch(SeekBar sb) {}
+
   }
 
   //Handle pressing of the back button to release the selected loco and end this activity
@@ -346,6 +352,15 @@ public class engine_driver extends Activity {
   return(super.onKeyDown(key, event));
 };
 
+@Override
+public void onResume() {
+  super.onResume();
+
+  //format the screen area
+  set_labels();
+
+}
+
 
 @Override
 public void onStart() {
@@ -355,7 +370,7 @@ public void onStart() {
   if (mainapp.engine_driver_msg_handler == null){
 	  mainapp.engine_driver_msg_handler=new engine_driver_handler();
   }
-
+ 
   //create heartbeat if requested and not already started
   if ((heartbeatTimer == null) && (mainapp.heartbeat_interval > 0)) {
       int interval = (mainapp.heartbeat_interval - 1) * 900;  //set heartbeat one second less than required (900 copied from withrottle side)
@@ -379,10 +394,13 @@ public void onStart() {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.throttle);
 
+
     mainapp=(threaded_application)getApplication();
 
     button_pressed_drawable=getResources().getDrawable(R.drawable.btn_default_small_pressed);
     button_normal_drawable=getResources().getDrawable(R.drawable.btn_default_small_normal);
+
+    prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
     set_function_buttons();
 
@@ -418,21 +436,16 @@ public void onStart() {
     fbtl=new function_button_touch_listener(function_button.REVERSE, "S");
     b.setOnTouchListener(fbtl);
 
-    // set up sliders for throttles
+    // set up listeners for both throttles
     SeekBar sb=(SeekBar)findViewById(R.id.speed_T);
-    sb.setMax(126);
     sb.setOnSeekBarChangeListener(new throttle_listener("T"));
     
     sb=(SeekBar)findViewById(R.id.speed_S);
-    sb.setMax(126);
     sb.setOnSeekBarChangeListener(new throttle_listener("S"));
 
-    set_labels();
-
-  
   } //end of onCreate()
 
-  //set up label, dcc function, toggle setting for each button from settings and setup listeners
+  //set up text label and dcc function for each button from settings and setup listeners
   //TODO: unduplicate this code (in function_settings.java and engine_driver.java)
   private void set_function_buttons() {
 
@@ -513,8 +526,6 @@ public void onStart() {
   //lookup and set values of various informational text labels and size the screen elements 
   private void set_labels() {
 
-//    int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
-	int screenHeight = findViewById(R.id.throttle_screen).getHeight();  //get the height of usable area
     int throttle_count = 0;
    	int height_T;
 	int height_S;
@@ -535,37 +546,50 @@ public void onStart() {
     	throttle_count++;
     }
 
-    //determine how to split the screen (evenly if both, 85/15 if only one)
-    if (throttle_count == 0 || throttle_count == 2)  {
-    	height_T = (int) (screenHeight * 0.5);
-    	height_S = (int) (screenHeight * 0.5);
-    } else if (mainapp.loco_string_T.equals("Not Set")) {
-    	height_T = (int) (screenHeight * 0.15);
-    	height_S = (int) (screenHeight * 0.85);
-    } else {
-    	height_T = (int) (screenHeight * 0.85);
-    	height_S = (int) (screenHeight * 0.15);
-    }
-    	
-  //set height of T area 
-    LinearLayout ll=(LinearLayout)findViewById(R.id.throttle_T);
-    LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.FILL_PARENT,
-            height_T);
-    ll.setLayoutParams(llLp);
+    // set up max speeds for throttles
+    String s = prefs.getString("maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+    int maxThrottle = Integer.parseInt(s);
+    maxThrottle =(int) ((double) (maxThrottle/99.0) * 126.0);
+    SeekBar sb=(SeekBar)findViewById(R.id.speed_T);
+    sb.setMax(maxThrottle);
+    sb=(SeekBar)findViewById(R.id.speed_S);
+    sb.setMax(maxThrottle);
 
-    //set height of S area
-    ll=(LinearLayout)findViewById(R.id.throttle_S);
-    llLp = new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.FILL_PARENT,
-            height_S);
-    ll.setLayoutParams(llLp);
     
     //update the state of each function button based on shared variable
     set_function_states("T");
     set_function_states("S");
      
-
+//  int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
+	int screenHeight = findViewById(R.id.throttle_screen).getHeight();  //get the height of usable area
+  
+    if (screenHeight > 0) {  //don't do this if screen not measurable
+		//determine how to split the screen (evenly if both, 85/15 if only one)
+	    if (throttle_count == 0 || throttle_count == 2)  {
+	    	height_T = (int) (screenHeight * 0.5);
+	    	height_S = (int) (screenHeight * 0.5);
+	    } else if (mainapp.loco_string_T.equals("Not Set")) {
+	    	height_T = (int) (screenHeight * 0.15);
+	    	height_S = (int) (screenHeight * 0.85);
+	    } else {
+	    	height_T = (int) (screenHeight * 0.85);
+	    	height_S = (int) (screenHeight * 0.15);
+	    }
+	    	
+	  //set height of T area 
+	    LinearLayout ll=(LinearLayout)findViewById(R.id.throttle_T);
+	    LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(
+	            ViewGroup.LayoutParams.FILL_PARENT,
+	            height_T);
+	    ll.setLayoutParams(llLp);
+	
+	    //set height of S area
+	    ll=(LinearLayout)findViewById(R.id.throttle_S);
+	    llLp = new LinearLayout.LayoutParams(
+	            ViewGroup.LayoutParams.FILL_PARENT,
+	            height_S);
+	    ll.setLayoutParams(llLp);
+    }
 }
 
   //send heartbeat to withrottle to keep this throttle alive 
@@ -608,7 +632,7 @@ public void onStart() {
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
       //since we always do the same action no need to distinguish between requests
       set_function_buttons();
-	  set_labels();
+//	  set_labels();
 	  enable_disable_buttons("T");  //TODO: this is executed twice when loco is selected
 	  enable_disable_buttons("S");  
   }
