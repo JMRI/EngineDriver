@@ -45,9 +45,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *  lowered minSDK from 7 to 4 (to allow use by Android 1.6 devices) 
  */
 
+/* Version 0.7 - changes/additions by mstevetodd
+ */
+
 /*
+ *   TODO: add turnout controls.  Separate activity to show all turnouts, plus way to add selected turnout(s) to throttle view
+ *   TODO: add power on/off (if allowed.  PPA+x where x 0=no, 1=yes, 2=unknown
  *   TODO: add consisting features
- *   TODO: add turnout controls
  *   TODO: add route controls
  *   TODO: toast messages on release of loco and update of preferences
  *   TODO: make private stuff private
@@ -136,6 +140,9 @@ public class threaded_application extends Application
 	String roster_function_string_S; //roster function list for selected loco #1
 	boolean[] function_states_T;  //current function states for first throttle
 	boolean[] function_states_S;  //current function states for second throttle
+	String[] to_system_names;
+	String[] to_user_names;
+	String[] to_state;
 	int heartbeat_interval; //heartbeat interval in seconds
 	//Communications variables.
 	Socket client_socket;
@@ -376,7 +383,10 @@ public class threaded_application extends Application
     	  RL<RosterSize>]<RosterList>
     	  RF<RosterFunctionList>
     	  RS<2ndRosterFunctionList>
-    	  *<HeartbeatIntervalInSeconds>      */
+    	  *<HeartbeatIntervalInSeconds>      
+    	  PTL[<SystemName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
+    	  PTA<VewState><SystemName><NewState>
+    	  */
 
     	//send response to debug log for review
         Log.d("Engine_Driver", "<--:" + response_str);
@@ -419,6 +429,24 @@ public class threaded_application extends Application
     	  	    break;
     	  }  //end switch inside R
 	  	 break;
+	  	case 'P': //Panel 
+	    	  switch (response_str.charAt(1)) {
+	    	  	case 'T': //turnouts
+	    	  		if (response_str.charAt(2) == 'L') {  //list of turnouts
+	    	  			process_turnout_list(response_str);  //process turnout list
+	    	  		}
+	    	  		if (response_str.charAt(2) == 'A') {  //action?
+	    	  			//
+	    	  		}
+	    	  	    break;
+	    	  	
+	    	  	case 'R':  //routes 
+	    	  	    break;
+	        	  	
+	    	  	case 'P':  //power 
+	    	  	    break;
+	    	  }  //end switch inside P
+		  	 break;
   	  }  //end switch
   	  
   	  //forward whatever we got to other activities (if started)
@@ -430,6 +458,29 @@ public class threaded_application extends Application
       
 
     }  //end of process_response
+
+    //parse turnout list into appropriate app variable array
+	//  PTL[<SystemName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
+    //  PTL]\[LT12}|{my12}|{1
+    private void process_turnout_list(String response_str) {
+     
+     String[] ta = splitByString(response_str,"]\\[");  //initial separation 
+     //initialize app arrays (skipping first)
+     to_system_names = new String[ta.length - 1];
+     to_user_names = new String[ta.length - 1];
+     to_state = new String[ta.length - 1];
+     int i = 0;
+     for (String ts : ta) {
+    	 if (i > 0) { //skip first chunk, just message id
+        	 String[] tv = splitByString(ts,"}|{");  //split these into 3 parts, key and value
+        	 to_system_names[i-1] = tv[0];
+        	 to_user_names[i-1]      = tv[1];
+        	 to_state[i-1]                  = tv[2];
+    	 }  //end if i>0
+    	 i++;
+     }  //end for
+     
+  }
 
     //parse function state string into appropriate app variable array
     private void process_function_state(String response_str) {
