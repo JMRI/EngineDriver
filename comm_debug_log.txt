@@ -1,6 +1,7 @@
 The following log captured while performing the following: 
 connect, acquire 2591, forward, speed 21, turn on light and bell, 
 acquire 4805, forward, speed 21, turn on light and bell,
+changed turnout 12 (externally)
 release 4805, then back button twice to exit program
 
 06-22 15:44:59.674: DEBUG/Engine_Driver(322): -->:NEngine Driver
@@ -9,6 +10,7 @@ release 4805, then back button twice to exit program
 06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:RL2]\[NS2591}|{2591}|{L]\[NS4805}|{4805}|{L
 06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:PPA2
 06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
+06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:PTL]\[LT12}|{my12}|{1
 06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4
 06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:RCC0
 06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:*30
@@ -47,6 +49,7 @@ release 4805, then back button twice to exit program
 06-22 15:45:58.253: DEBUG/Engine_Driver(322): -->:SF01
 06-22 15:45:58.523: DEBUG/Engine_Driver(322): <--:RPF}|{S]\[F1}|{true
 06-22 15:45:58.643: DEBUG/Engine_Driver(322): -->:*
+06-22 15:45:59:543: DEBUG/Engine_Driver(322):<--:PTA2LT12
 06-22 15:46:06.314: DEBUG/Engine_Driver(322): -->:SV0
 06-22 15:46:06.314: DEBUG/Engine_Driver(322): -->:Sr
 06-22 15:46:06.364: DEBUG/Engine_Driver(322): <--:SNot Set
