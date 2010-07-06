@@ -62,10 +62,6 @@ public class select_loco extends Activity
 
   private threaded_application mainapp;  // hold pointer to mainapp
 
-  private static final int GONE = 8;
-  private static final int VISIBLE = 0;
-
-
   //lookup and set values of various text labels 
   private void set_labels() {
 
@@ -74,7 +70,6 @@ public class select_loco extends Activity
 	Button b=(Button)findViewById(R.id.sl_release_T);
     v.setText(mainapp.loco_string_T);
     if (mainapp.loco_string_T.equals("Not Set")) {
-//   	    b.setVisibility(GONE);
     	b.setEnabled(false);
     } else {
     	b.setEnabled(true);
@@ -95,7 +90,7 @@ public class select_loco extends Activity
     String s = "Throttle Name: " + prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
 //    s += "\nt=" +  java.util.Arrays.toString(mainapp.function_states_T);
 //    s += "\ns=" +  java.util.Arrays.toString(mainapp.function_states_S);
-    s += "\nHost: " + mainapp.host_name_string;
+    s += "\nHost: " + mainapp.host_name_string +"  System Power: " + mainapp.power_state;
     s += "\nWiThrottle: v" + mainapp.withrottle_version_string;
     s += String.format("     Heartbeat: %d secs", mainapp.heartbeat_interval);
 //    s += "\nRoster: " + mainapp.roster_list_string;
@@ -176,10 +171,6 @@ public class select_loco extends Activity
     {
       Log.e("connection_activity", "Error creating a PrintWriter, IOException: "+except.getMessage());
     }
-    //Start the throttle activity.
-/*    Intent engine_driver=new Intent().setClass(this, engine_driver.class);
-    startActivity(engine_driver);
-*/
   };
 
   public class button_listener implements View.OnClickListener
@@ -320,8 +311,18 @@ public class select_loco extends Activity
     EditText la = (EditText)findViewById(R.id.loco_address);
     la.setOnKeyListener(new OnKeyListener()  { 
         public boolean onKey(View v, int keyCode, KeyEvent event)  { 
+            Button ba=(Button)findViewById(R.id.acquire);
             EditText la = (EditText)findViewById(R.id.loco_address);
     	    Spinner al=(Spinner)findViewById(R.id.address_length);
+
+    	    //don't allow acquire button if nothing entered
+    	    if (la.getText().toString().length() > 0) {
+           	  ba.setEnabled(true);
+          	} else {
+          	  ba.setEnabled(false);
+          	}
+    	    
+    	    //auto-set address length
         	if (la.getText().toString().length() > 2) {
           	  al.setSelection(1);
         	} else {
