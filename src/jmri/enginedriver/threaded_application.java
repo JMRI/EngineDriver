@@ -42,20 +42,22 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 /* Version 0.6 - changes/additions by mstevetodd
  *  added preference for Maximum Throttle, to set a maximum speed to be sent
- *  lowered minSDK from 7 to 4 (to allow use by Android 1.6 devices) 
+ *  lowered minSDK from 7 to 4 (to allow use by Android 1.6 devices)  had to copy drawables to drawable folder
  */
 
 /* Version 0.7 - changes/additions by mstevetodd
+ *  prevent acquire with blank loco address (was crashing)
  */
 
 /*
  *   TODO: add turnout controls.  Separate activity to show all turnouts, plus way to add selected turnout(s) to throttle view
  *   TODO: add power on/off (if allowed.  PPA+x where x 0=no, 1=yes, 2=unknown
- *   TODO: add consisting features
  *   TODO: add route controls
+ *   TODO: add consisting features
  *   TODO: toast messages on release of loco and update of preferences
  *   TODO: make private stuff private
  * threaded_application
+ *   TODO: allow compile/run at Android 1.5 (SDK 3) currently crashes when thread starts and tries to resolve android.net.wifi.WifiManager.createMulticastLock
  *   TODO: Move wifi listener to OnStart from OnCreate (so it works each time activity gets focus), and add OnPause (or somesuch) to turn off listener
  *   TODO: don't add discovered server more than once (restart WiT to see this)
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
@@ -110,7 +112,7 @@ import android.util.Log;
 import javax.jmdns.*;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager.MulticastLock;
+//import android.net.wifi.WifiManager.MulticastLock;
 import java.net.InetAddress;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -142,7 +144,8 @@ public class threaded_application extends Application
 	boolean[] function_states_S;  //current function states for second throttle
 	String[] to_system_names;
 	String[] to_user_names;
-	String[] to_state;
+	String[] to_states;
+	String power_state;
 	int heartbeat_interval; //heartbeat interval in seconds
 	//Communications variables.
 	Socket client_socket;
@@ -164,7 +167,8 @@ public class threaded_application extends Application
   {
     JmDNS jmdns;
     withrottle_listener listener;
-    MulticastLock multicast_lock;
+    android.net.wifi.WifiManager.MulticastLock multicast_lock;
+//    Object multicast_lock;
 
     //Listen for a WiThrottle service advertisement on the LAN.
     public class withrottle_listener implements ServiceListener
@@ -384,8 +388,9 @@ public class threaded_application extends Application
     	  RF<RosterFunctionList>
     	  RS<2ndRosterFunctionList>
     	  *<HeartbeatIntervalInSeconds>      
-    	  PTL[<SystemName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
-    	  PTA<VewState><SystemName><NewState>
+    	  PTL[<SystemTurnoutName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
+    	  PTA<NewTurnoutState><SystemName>
+    	  PPA<NewPowerState> where state 0=off, 1=on, 2=unknown
     	  */
 
     	//send response to debug log for review
@@ -435,8 +440,8 @@ public class threaded_application extends Application
 	    	  		if (response_str.charAt(2) == 'L') {  //list of turnouts
 	    	  			process_turnout_list(response_str);  //process turnout list
 	    	  		}
-	    	  		if (response_str.charAt(2) == 'A') {  //action?
-	    	  			//
+	    	  		if (response_str.charAt(2) == 'A') {  //action?  changes to turnouts
+	    	  			process_turnout_change(response_str);  //process turnout changes
 	    	  		}
 	    	  	    break;
 	    	  	
@@ -444,6 +449,9 @@ public class threaded_application extends Application
 	    	  	    break;
 	        	  	
 	    	  	case 'P':  //power 
+	    	  		if (response_str.substring(1,3).equals("PA")) {  //change power state
+	    	  			power_state = response_str.substring(3);
+	    	  		}
 	    	  	    break;
 	    	  }  //end switch inside P
 		  	 break;
@@ -460,6 +468,24 @@ public class threaded_application extends Application
     }  //end of process_response
 
     //parse turnout list into appropriate app variable array
+	//  PTA<NewState><SystemName>
+    //  PTA2LT12
+    private void process_turnout_change(String response_str) {
+    	String newState = response_str.substring(3,4);
+    	String systemName = response_str.substring(4);
+    	int pos = -1;
+        for (String sn : to_system_names) {
+        	if (sn.equals(systemName)) {
+        		break;
+        	}
+        	pos++;
+        }
+        if (pos <= to_system_names.length) {  //if found, update to new value
+        	to_states[pos] = newState;
+        }
+    }  //end of process_turnout_change
+
+    //parse turnout list into appropriate app variable array
 	//  PTL[<SystemName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
     //  PTL]\[LT12}|{my12}|{1
     private void process_turnout_list(String response_str) {
@@ -468,14 +494,14 @@ public class threaded_application extends Application
      //initialize app arrays (skipping first)
      to_system_names = new String[ta.length - 1];
      to_user_names = new String[ta.length - 1];
-     to_state = new String[ta.length - 1];
+     to_states = new String[ta.length - 1];
      int i = 0;
      for (String ts : ta) {
     	 if (i > 0) { //skip first chunk, just message id
         	 String[] tv = splitByString(ts,"}|{");  //split these into 3 parts, key and value
         	 to_system_names[i-1] = tv[0];
         	 to_user_names[i-1]      = tv[1];
-        	 to_state[i-1]                  = tv[2];
+        	 to_states[i-1]                 = tv[2];
     	 }  //end if i>0
     	 i++;
      }  //end for
@@ -558,14 +584,17 @@ public class threaded_application extends Application
     public void run()
     {
       int intaddr = 0;
-      //Set up to find a WiThrottle service via ZeroConf.
-      
-      try
-      {
+ 
+      //Set up to find a WiThrottle service via ZeroConf, not supported for OS 1.5 (SDK 3)
+if (android.os.Build.VERSION.SDK.equals("3")) {    	 
+    process_comm_error("WiFi discovery not supported.  Skipping.");
+} else {
+    try   {
         WifiManager wifi = (WifiManager)threaded_application.this.getSystemService(Context.WIFI_SERVICE);
         //Acquire a multicast lock. This allows us to obtain multicast packets, but consumes a bit more battery life.
         //Release it as soon as possible (after the user has connected to a WiThrottle service, or this application is
         //not the currently active one.
+
         multicast_lock=wifi.createMulticastLock("engine_driver");
         multicast_lock.setReferenceCounted(true);
         multicast_lock.acquire();
@@ -584,12 +613,11 @@ public class threaded_application extends Application
         } else {
           process_comm_error("No IP Address found.\nCheck your WiFi connection.");
         }  //end of if intaddr==0
-      }
-      catch(IOException except) { 
-    	  Log.e("comm_thread_run", "Error creating withrottle listener: IOException: "+except.getMessage()); 
-          process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()+"\n"+except.getCause().getMessage()); 
-      }
-
+     }  catch(IOException except) { 
+   	  Log.e("comm_thread_run", "Error creating withrottle listener: IOException: "+except.getMessage()); 
+         process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()+"\n"+except.getCause().getMessage()); 
+     }
+}     
       Looper.prepare();
       comm_msg_handler=new comm_handler();
       Looper.loop();

@@ -100,7 +100,8 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_toRightOf="@id/address_length"
-         android:layout_alignBottom="@id/address_length" />
+         android:layout_alignBottom="@id/address_length"
+         android:enabled="false" />
    </RelativeLayout>
    <TextView
       android:text="@string/recent_engines"
