@@ -168,6 +168,9 @@ public class threaded_application extends Application
 	public Handler engine_driver_msg_handler;
 	//For communication to the select loco activity
 	public Handler select_loco_msg_handler;
+	//For communication to the turnouts activity
+	public Handler turnouts_msg_handler;
+	
 	PrintWriter output_pw;
 	BufferedReader input_reader = null;
 	private SharedPreferences prefs;
@@ -476,10 +479,12 @@ public class threaded_application extends Application
       Message msg=Message.obtain(); 
       msg.what=message_type.RESPONSE;
       msg.obj=new String(response_str); 
+      if (turnouts_msg_handler != null)   { turnouts_msg_handler.sendMessage(msg);   }
+      msg=Message.obtain(); 
+      msg.what=message_type.RESPONSE;
+      msg.obj=new String(response_str); 
       if (engine_driver_msg_handler != null) { engine_driver_msg_handler.sendMessage(msg); }
-//      if (select_loco_msg_handler != null)   { select_loco_msg_handler.sendMessage(msg);   }
       
-
     }  //end of process_response
 
     //parse turnout list into appropriate app variable array
@@ -490,10 +495,10 @@ public class threaded_application extends Application
     	String systemName = response_str.substring(4);
     	int pos = -1;
         for (String sn : to_system_names) {
+        	pos++;
         	if (sn.equals(systemName)) {
         		break;
         	}
-        	pos++;
         }
         if (pos <= to_system_names.length) {  //if found, update to new value
         	to_states[pos] = newState;
