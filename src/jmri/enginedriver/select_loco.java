@@ -115,12 +115,6 @@ public class select_loco extends Activity
           set_labels();
         }
         break;
-/*      case message_type.LOCO_SELECTED: {      	    //Start the throttle activity.
-  		  Intent engine_driver=new Intent().setClass(getApplicationContext(), engine_driver.class);
-  	      startActivityForResult(engine_driver, 0);
-      	}
-        break;
-*/        
       case message_type.END_ACTIVITY: {      	    //Program shutdown has been requested
     	  end_this_activity();
     	}
