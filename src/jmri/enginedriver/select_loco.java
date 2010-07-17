@@ -61,7 +61,7 @@ public class select_loco extends Activity
   private String whichThrottle; //"T" or "S" to distinguish which throttle we're asking for
 
   private threaded_application mainapp;  // hold pointer to mainapp
-
+ 
   //lookup and set values of various text labels 
   private void set_labels() {
 
@@ -90,7 +90,15 @@ public class select_loco extends Activity
     String s = "Throttle Name: " + prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
 //    s += "\nt=" +  java.util.Arrays.toString(mainapp.function_states_T);
 //    s += "\ns=" +  java.util.Arrays.toString(mainapp.function_states_S);
-    s += "\nHost: " + mainapp.host_name_string +"  System Power: " + mainapp.power_state;
+    s += "\nHost: " + mainapp.host_name_string;
+    s +="\nSystem Power: " + mainapp.power_state ;
+    if (mainapp.to_allowed) {
+		int to_count = 0;
+    	if (mainapp.to_user_names != null) {
+    		to_count = mainapp.to_user_names.length;
+    	}
+    	s += String.format("    Turnouts: %d", to_count);
+    }
     s += "\nWiThrottle: v" + mainapp.withrottle_version_string;
     s += String.format("     Heartbeat: %d secs", mainapp.heartbeat_interval);
 //    s += "\nRoster: " + mainapp.roster_list_string;

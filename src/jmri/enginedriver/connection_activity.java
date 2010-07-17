@@ -264,11 +264,15 @@ public class connection_activity extends Activity
             while(list_reader.ready())
             {
               String line=list_reader.readLine();
-              ip_list.add(line.substring(0, line.indexOf(':')));
-              port_list.add(Integer.decode(line.substring(line.indexOf(':')+1, line.length())));
+              String il = line.substring(0, line.indexOf(':'));
+              Integer pl = Integer.decode(line.substring(line.indexOf(':')+1, line.length()));
+              ip_list.add(il);
+              port_list.add(pl);
               HashMap<String, String> hm=new HashMap<String, String>();
-              hm.put("ip_address", ip_list.get(ip_list.size()-1));
-              hm.put("port", port_list.get(port_list.size()-1).toString());
+//              hm.put("ip_address", ip_list.get(ip_list.size()-1));
+//              hm.put("port", port_list.get(port_list.size()-1).toString());
+              hm.put("ip_address", il);
+              hm.put("port", pl.toString());
               connections_list.add(hm);
             }
             connection_list_adapter.notifyDataSetChanged();
@@ -297,7 +301,7 @@ public class connection_activity extends Activity
   @Override
   public boolean onCreateOptionsMenu(Menu menu){
 	  MenuInflater inflater = getMenuInflater();
-	  inflater.inflate(R.menu.menu, menu);
+	  inflater.inflate(R.menu.connection_menu, menu);
 	  return true;
   }
   @Override

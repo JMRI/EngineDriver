@@ -60,4 +60,5 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 <string name="prefMaximumThrottleTitle">Maximum Throttle Value</string>
 <string name="prefMaximumThrottleDefaultValue">99</string>
 <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value</string>
+<string name="turnouts">Turnouts</string>
 </resources>

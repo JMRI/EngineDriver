@@ -606,7 +606,7 @@ public void onStart() {
   @Override
   public boolean onCreateOptionsMenu(Menu menu){
 	  MenuInflater inflater = getMenuInflater();
-	  inflater.inflate(R.menu.menu, menu);
+	  inflater.inflate(R.menu.throttle_menu, menu);
 	  return true;
   }
   @Override
@@ -624,6 +624,10 @@ public void onStart() {
       case R.id.preferences:
     	  Intent preferences=new Intent().setClass(this, preferences.class);
     	    startActivityForResult(preferences, 0);
+    	  break;
+      case R.id.turnouts:
+    	  Intent turnouts=new Intent().setClass(this, turnouts.class);
+    	    startActivityForResult(turnouts, 0);
     	  break;
       }
       return super.onOptionsItemSelected(item);

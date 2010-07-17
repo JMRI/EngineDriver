@@ -50,14 +50,20 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /*
- *   TODO: add turnout controls.  Separate activity to show all turnouts, plus way to add selected turnout(s) to throttle view
+ *   TODO: allow compile/run at Android 1.5 (SDK 3) currently crashes when thread starts and tries to resolve android.net.wifi.WifiManager.createMulticastLock
  *   TODO: add power on/off (if allowed.  PPA+x where x 0=no, 1=yes, 2=unknown
  *   TODO: add route controls
  *   TODO: add consisting features
  *   TODO: toast messages on release of loco and update of preferences
  *   TODO: make private stuff private
+ * turnouts
+ *   TODO: improve appearance, add literals for state
+ *   TODO: add turnout controls.  Separate activity to show all turnouts, plus way to add selected turnout(s) to throttle view
+ *   TODO: show message on Turnout page if not allowed, different message if none defined
+ *   TODO: update turnout list on change (call message handler from ta)
+ * connection
+ *   TODO: add pref for auto-connect on discovery
  * threaded_application
- *   TODO: allow compile/run at Android 1.5 (SDK 3) currently crashes when thread starts and tries to resolve android.net.wifi.WifiManager.createMulticastLock
  *   TODO: Move wifi listener to OnStart from OnCreate (so it works each time activity gets focus), and add OnPause (or somesuch) to turn off listener
  *   TODO: don't add discovered server more than once (restart WiT to see this)
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
@@ -114,6 +120,7 @@ import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
 //import android.net.wifi.WifiManager.MulticastLock;
 import java.net.InetAddress;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -145,6 +152,9 @@ public class threaded_application extends Application
 	String[] to_system_names;
 	String[] to_user_names;
 	String[] to_states;
+	boolean to_allowed = false;  //default turnout support to off
+    HashMap<String, String> to_state_names;
+
 	String power_state;
 	int heartbeat_interval; //heartbeat interval in seconds
 	//Communications variables.
@@ -220,6 +230,7 @@ public class threaded_application extends Application
             port=msg.arg1;
             
             //clear app.thread shared variables so they can be reset
+            to_allowed = false;
             host_name_string = null;
             withrottle_version_string = null; 
             heartbeat_interval = 0;
@@ -437,6 +448,10 @@ public class threaded_application extends Application
 	  	case 'P': //Panel 
 	    	  switch (response_str.charAt(1)) {
 	    	  	case 'T': //turnouts
+	    	  		if (response_str.charAt(2) == 'T') {  //turnout control allowed
+	    	  			to_allowed = true;
+	    	  			process_turnout_settings(response_str);
+	    	  		}
 	    	  		if (response_str.charAt(2) == 'L') {  //list of turnouts
 	    	  			process_turnout_list(response_str);  //process turnout list
 	    	  		}
@@ -507,6 +522,25 @@ public class threaded_application extends Application
      }  //end for
      
   }
+
+    private void process_turnout_settings(String response_str) {
+        //PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
+    	
+    	//clear the global variable
+        to_state_names = new HashMap<String, String>();
+        
+    	String[] ta = splitByString(response_str,"]\\[");  //initial separation 
+        //initialize app arrays (skipping first)
+        int i = 0;
+        for (String ts : ta) {
+       	 if (i > 1) { //skip first 2 chunks
+       		 String[] tv = splitByString(ts,"}|{");  //split these into value and key
+           	 to_state_names.put(tv[1],tv[0]);
+       	 }  //end if i>0
+       	 i++;
+        }  //end for
+        
+     }
 
     //parse function state string into appropriate app variable array
     private void process_function_state(String response_str) {
