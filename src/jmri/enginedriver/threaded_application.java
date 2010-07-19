@@ -363,11 +363,18 @@ public class threaded_application extends Application
           	whichThrottle = msg.obj.toString();
         	withrottle_send(String.format(whichThrottle+"R%d", msg.arg2));
             break;
-          //Set or unset a function. arg1 is the function number, arg2 is set or unset.
+          
+            //Set or unset a function. arg1 is the function number, arg2 is set or unset.
           case message_type.FUNCTION:
           	whichThrottle = msg.obj.toString();
         	withrottle_send(String.format(whichThrottle+"F%d%d", msg.arg2, msg.arg1));
             break;
+          
+           //send command to change turnout.  PTA2LT12  (throw or close is passed in arg1)
+          case message_type.TURNOUT:
+        	  String systemname = msg.obj.toString();
+        	  withrottle_send(String.format("PTA%d", msg.arg1) + systemname);
+              break;
 /*
           //end the application and thread
           case message_type.SHUTDOWN:
@@ -453,7 +460,7 @@ public class threaded_application extends Application
 	    	  	case 'T': //turnouts
 	    	  		if (response_str.charAt(2) == 'T') {  //turnout control allowed
 	    	  			to_allowed = true;
-	    	  			process_turnout_settings(response_str);
+	    	  			process_turnout_titles(response_str);
 	    	  		}
 	    	  		if (response_str.charAt(2) == 'L') {  //list of turnouts
 	    	  			process_turnout_list(response_str);  //process turnout list
@@ -528,7 +535,7 @@ public class threaded_application extends Application
      
   }
 
-    private void process_turnout_settings(String response_str) {
+    private void process_turnout_titles(String response_str) {
         //PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
     	
     	//clear the global variable

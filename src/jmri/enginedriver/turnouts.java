@@ -20,37 +20,46 @@ package jmri.enginedriver;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import jmri.enginedriver.connection_activity.connect_item;
-import jmri.enginedriver.connection_activity.server_list_type;
-import jmri.enginedriver.engine_driver.engine_driver_handler;
-import jmri.enginedriver.select_loco.select_loco_handler;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.webkit.WebView;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 public class turnouts extends Activity {
 
 	private threaded_application mainapp;  // hold pointer to mainapp
 	
 	ArrayList<HashMap<String, String> > turnouts_list;
-	  private SimpleAdapter turnouts_list_adapter;
-//	  ArrayList<String> to_user_name;
-//	  ArrayList<String> to_system_name;;
-//	  ArrayList<String> to_current_state;
+	private SimpleAdapter turnouts_list_adapter;
 
 	  public class turnout_item implements AdapterView.OnItemClickListener	  {
 
-		  //When an item is clicked, connect to the given IP address and port.
+		  //When a turnout  is clicked, send command to toggle it
 	    public void onItemClick(AdapterView<?> parent, View v, int position, long id)	    {
+	    	ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
+	    	ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
+	    	TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
+	    	String systemname = (String) snv.getText();
+	    	TextView csv = (TextView) vg.getChildAt(1);  //get currentstate textview
+	    	String currentstate = (String) csv.getText();
+	        Message msg=Message.obtain();  
+        	msg.what=message_type.TURNOUT;
+/*        	if (currentstate.equals("Thrown")) {  //TODO: replace with hash lookup 
+        		msg.arg1=4; //toggle
+        	} else {
+        		msg.arg1=2; //toggle
+        	}
+*/
+msg.arg1=2; // 2 = toggle???  //TODO: find out from Brett if this is broken        	
+        	msg.arg2=0; 
+            msg.obj=new String(systemname);    // load system name for turnout into message
+            mainapp.comm_msg_handler.sendMessage(msg);
 	    };
 	  }	  
 
