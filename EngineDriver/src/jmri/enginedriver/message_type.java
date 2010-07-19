@@ -36,5 +36,6 @@ interface message_type
   public static final int END_ACTIVITY=11;  		// not used
   public static final int HEARTBEAT=12;  		// ed(timer) -> ta  AND ta(receipt of heartbeat from ed) -> ed   strange, huh?
   public static final int LOCO_SELECTED=13;  	// ta(read msg) -> sl -- (start ed)
+  public static final int TURNOUT=14;  	// tu -> ta
   
 }

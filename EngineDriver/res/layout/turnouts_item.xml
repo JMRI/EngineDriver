@@ -22,29 +22,29 @@
    <RelativeLayout
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_weight="0.7"
+      android:layout_weight="0.6"
    >
       <TextView
          android:id="@+id/to_user_name"
-   android:text="testing string"
+         android:text="testing string"
          android:layout_width="wrap_content"
          android:textAppearance="?android:attr/textAppearanceLarge"
-   android:paddingTop="20dp"
-   android:paddingBottom="20dp"
+         android:paddingTop="15dp"
+         android:paddingBottom="10dp"
          android:layout_height="wrap_content" />
       <TextView
          android:id="@+id/to_system_name"
-   android:text="testing string"
+         android:text="testing string"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content" />
    </RelativeLayout>
    <TextView
       android:id="@+id/to_current_state_desc"
-   android:text="testing string"
+      android:text="testing string"
       android:textAppearance="?android:attr/textAppearanceLarge"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-   android:paddingTop="20dp"
-   android:paddingBottom="20dp"
-      android:layout_weight="0.3" />
+      android:paddingTop="15dp"
+      android:paddingBottom="10dp"
+      android:layout_weight="0.4" />
 </LinearLayout>
