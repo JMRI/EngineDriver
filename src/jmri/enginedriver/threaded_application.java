@@ -47,6 +47,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 /* Version 0.7 - changes/additions by mstevetodd
  *  prevent acquire with blank loco address (was crashing)
+ *  new Turnouts display showing list of defined turnouts, current state, updated on change
+ *  toggle turnout on list click
+ *  direct entry of turnout address with toggle and throw/close buttons
  */
 
 /*
@@ -57,10 +60,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: toast messages on release of loco and update of preferences
  *   TODO: make private stuff private
  * turnouts
- *   TODO: improve appearance, add literals for state
- *   TODO: add turnout controls.  Separate activity to show all turnouts, plus way to add selected turnout(s) to throttle view
- *   TODO: show message on Turnout page if not allowed, different message if none defined
- *   TODO: update turnout list on change (call message handler from ta)
+ *   TODO: allow adding selected turnout(s) to throttle view
+ *   TODO: show message on Turnout page if not turnouts allowed, different message if none defined
+ *   TODO: update turnout list on change not working after reentry to turnout view (worked around by finishing on exit)
+ *   TODO: use titles for Turnouts/Turnout
  * connection
  *   TODO: add pref for auto-connect on discovery
  * threaded_application
@@ -93,7 +96,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
  *   TODO: disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
  *   TODO: pull more details from roster
- *   TODO: add turnout, route, and power controls
  *   
  * Other potential changes to WiThrottle:
  *   ) remove throttle from withrottle screen on loss of connection (estop)
@@ -370,10 +372,18 @@ public class threaded_application extends Application
         	withrottle_send(String.format(whichThrottle+"F%d%d", msg.arg2, msg.arg1));
             break;
           
-           //send command to change turnout.  PTA2LT12  (throw or close is passed in arg1)
+           //send command to change turnout.  PTA2LT12  (throw, close or toggle is passed in arg1) TODO: fix the 8/9 by passing char in obj
           case message_type.TURNOUT:
+        	  String whichCommand = "";
         	  String systemname = msg.obj.toString();
-        	  withrottle_send(String.format("PTA%d", msg.arg1) + systemname);
+        	  switch (msg.arg1) {
+	        	  case 2: whichCommand = "2";
+	        	  break;
+	        	  case 8: whichCommand = "C";
+	        	  break;
+	        	  case 9: whichCommand = "T";      	  
+        	  }
+        	  withrottle_send("PTA" + whichCommand + systemname);
               break;
 /*
           //end the application and thread
