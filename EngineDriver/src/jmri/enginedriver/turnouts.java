@@ -20,50 +20,50 @@ package jmri.enginedriver;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class turnouts extends Activity {
 
 	private threaded_application mainapp;  // hold pointer to mainapp
 	
+	private static final int GONE = 8;
+	private static final int VISIBLE = 0;
+
 	ArrayList<HashMap<String, String> > turnouts_list;
 	private SimpleAdapter turnouts_list_adapter;
 
 	  public class turnout_item implements AdapterView.OnItemClickListener	  {
 
-		  //When a turnout  is clicked, send command to toggle it
+		  //When a turnout  is clicked, extract systemname and send command to toggle it
 	    public void onItemClick(AdapterView<?> parent, View v, int position, long id)	    {
 	    	ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
 	    	ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
 	    	TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
 	    	String systemname = (String) snv.getText();
-	    	TextView csv = (TextView) vg.getChildAt(1);  //get currentstate textview
-	    	String currentstate = (String) csv.getText();
 	        Message msg=Message.obtain();  
         	msg.what=message_type.TURNOUT;
-/*        	if (currentstate.equals("Thrown")) {  //TODO: replace with hash lookup 
-        		msg.arg1=4; //toggle
-        	} else {
-        		msg.arg1=2; //toggle
-        	}
-*/
-msg.arg1=2; // 2 = toggle???  //TODO: find out from Brett if this is broken        	
-        	msg.arg2=0; 
+        	msg.arg1=2; // 2 = toggle        	
+        	msg.arg2=0; // not used 
             msg.obj=new String(systemname);    // load system name for turnout into message
             mainapp.comm_msg_handler.sendMessage(msg);
 	    };
 	  }	  
 
-	private void refresh_turnout_list() {
+	public void refresh_turnout_list() {
 
 		//clear and rebuild
        turnouts_list.clear();
@@ -76,7 +76,7 @@ msg.arg1=2; // 2 = toggle???  //TODO: find out from Brett if this is broken
 		    		String currentstate = mainapp.to_states[pos];
 		    		String currentstatedesc = mainapp.to_state_names.get(currentstate);
 		    		if (currentstatedesc == null) {
-		    			currentstatedesc = "unknown";
+		    			currentstatedesc = "   ???";
 		    		}
 		    		
 		    		//put values into temp hashmap
@@ -103,12 +103,42 @@ msg.arg1=2; // 2 = toggle???  //TODO: find out from Brett if this is broken
 	      case message_type.RESPONSE: {
 	        	String response_str = msg.obj.toString();
 	        	if (response_str.substring(0,3).equals("PTA")) {  //refresh turnouts if any have changed
-	        		refresh_turnout_list();
+	        		refresh_turnout_list(); 
 	        	}
 	        }
 	        break;
 	    };
 		}
+	  }
+	  
+	  public class button_listener implements View.OnClickListener  {
+		  Integer whichCommand; //command to send for button instance 'C'lose, 'T'hrow or '2' for toggle
+		  
+		  public button_listener(Integer new_command) {
+			  whichCommand = new_command;
+		  }
+		  
+		    public void onClick(View v) {
+		      EditText entryv=(EditText)findViewById(R.id.turnout_entry);
+		      String entrytext = new String(entryv.getText().toString());
+		      if (entrytext.trim().length() > 0 ) {
+		        try {
+		          Integer entryint=new Integer(entrytext);  //edit check address by attempting conversion to int
+		        } catch(NumberFormatException except) { 
+		       	    Toast.makeText(getApplicationContext(), "Turnout # must be numeric, reenter.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
+		         	return;
+		        }
+		        String systemname = "LT" + entrytext;
+		        Message msg=Message.obtain();  
+	        	msg.what=message_type.TURNOUT;
+	        	msg.arg1=whichCommand;
+	        	msg.arg2=0; // not used 
+	            msg.obj=new String(systemname);    // load system name for turnout into message
+	            mainapp.comm_msg_handler.sendMessage(msg);
+		      } else {
+		    	    Toast.makeText(getApplicationContext(), "Enter a turnout # to control", Toast.LENGTH_SHORT).show();
+		      }
+		    };
 	  }
 
   @Override
@@ -129,19 +159,61 @@ msg.arg1=2; // 2 = toggle???  //TODO: find out from Brett if this is broken
   @Override
   public void onCreate(Bundle savedInstanceState)  {
     super.onCreate(savedInstanceState);
+
     setContentView(R.layout.turnouts);
     
     mainapp=(threaded_application)getApplication();
-    //put pointer to this activity's handler in main app's shared variable
-//    mainapp.turnouts_handler=new turnouts_handler();
     
     //Set up a list adapter to allow adding the list of recent connections to the UI.
     turnouts_list=new ArrayList<HashMap<String, String> >();
-    turnouts_list_adapter=new SimpleAdapter(this, turnouts_list, R.layout.turnouts_item, new String[] {"to_user_name", "to_system_name", "to_current_state_desc"},
+    turnouts_list_adapter=new SimpleAdapter(this, turnouts_list, R.layout.turnouts_item, 
+    		new String[] {"to_user_name", "to_system_name", "to_current_state_desc"},
             new int[] {R.id.to_user_name, R.id.to_system_name, R.id.to_current_state_desc});
     ListView turnouts_lv=(ListView)findViewById(R.id.turnouts_list);
     turnouts_lv.setAdapter(turnouts_list_adapter);
     turnouts_lv.setOnItemClickListener(new turnout_item());
+    
+    //Set the button callbacks, storing the command to pass for each
+    Button b=(Button)findViewById(R.id.turnout_toggle);
+    button_listener click_listener=new button_listener(2);
+    b.setOnClickListener(click_listener);
+
+    //don't show throw and close buttons if withrottle version < 1.6
+    Double vn = 0.0;
+    if (mainapp.withrottle_version_string != null) { 
+    	vn=new Double(mainapp.withrottle_version_string);
+    }
+    if (vn >= 1.6) {
+    	b=(Button)findViewById(R.id.turnout_close);
+    	click_listener=new button_listener(8);
+    	b.setOnClickListener(click_listener);
+
+    	b=(Button)findViewById(R.id.turnout_throw);
+    	click_listener=new button_listener(9);
+    	b.setOnClickListener(click_listener);
+
+    } else {
+    	//hide the buttons
+    	b=(Button)findViewById(R.id.turnout_close);
+   	    b.setVisibility(GONE);
+
+    	b=(Button)findViewById(R.id.turnout_throw);
+   	    b.setVisibility(GONE);
+    	
+    }
 
   };
+
+  //Handle pressing of the back button to end this activity
+  @Override
+  public boolean onKeyDown(int key, KeyEvent event) {
+  if(key==KeyEvent.KEYCODE_BACK)
+  {
+    mainapp.turnouts_msg_handler = null; //clear out pointer to this activity  
+    this.finish();  //end this activity
+  }
+  return(super.onKeyDown(key, event));
+};
+
+  
 }
