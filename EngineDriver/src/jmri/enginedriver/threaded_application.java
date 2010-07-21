@@ -50,6 +50,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *  new Turnouts display showing list of defined turnouts, current state, updated on change
  *  toggle turnout on list click
  *  direct entry of turnout address with toggle and throw/close buttons
+ *  layout power control activity
  */
 
 /*
@@ -59,7 +60,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: add consisting features
  *   TODO: toast messages on release of loco and update of preferences
  *   TODO: make private stuff private
+ *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  * turnouts
+*    TODO: disable direct entry buttons if not allowed
  *   TODO: allow adding selected turnout(s) to throttle view
  *   TODO: show message on Turnout page if not turnouts allowed, different message if none defined
  *   TODO: update turnout list on change not working after reentry to turnout view (worked around by finishing on exit)
@@ -90,6 +93,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: simplify select_loco by removing handler
  * preferences:
  *   TODO: show error if invalid entry
+ * power_control:
+ *   TODO: use JMRI images for off/on/unknown (instead of words)
  *
  * These require changes to WiThrottle
  *   TODO: get current status (speed, direction, speed steps?)  On request would be best.
@@ -172,6 +177,8 @@ public class threaded_application extends Application
 	public Handler select_loco_msg_handler;
 	//For communication to the turnouts activity
 	public Handler turnouts_msg_handler;
+	//For communication to the power_control activity
+	public Handler power_control_msg_handler;
 	
 	PrintWriter output_pw;
 	BufferedReader input_reader = null;
@@ -240,6 +247,12 @@ public class threaded_application extends Application
             withrottle_version_string = null; 
             heartbeat_interval = 0;
             roster_list_string = null;
+            power_state = null;
+            to_states = null;
+            to_system_names = null;
+            to_user_names = null;
+            to_state_names = null;
+            
             try { host_address=InetAddress.getByName(host_ip); }
             catch(UnknownHostException except) {
               process_comm_error("Could not connect to " + host_ip + "\n"+except.getMessage()+"\n"+except.getCause().getMessage());
@@ -372,7 +385,7 @@ public class threaded_application extends Application
         	withrottle_send(String.format(whichThrottle+"F%d%d", msg.arg2, msg.arg1));
             break;
           
-           //send command to change turnout.  PTA2LT12  (throw, close or toggle is passed in arg1) TODO: fix the 8/9 by passing char in obj
+            //send command to change turnout.  PTA2LT12  (throw, close or toggle is passed in arg1) TODO: fix the 8/9 by passing char in obj
           case message_type.TURNOUT:
         	  String whichCommand = "";
         	  String systemname = msg.obj.toString();
@@ -384,6 +397,11 @@ public class threaded_application extends Application
 	        	  case 9: whichCommand = "T";      	  
         	  }
         	  withrottle_send("PTA" + whichCommand + systemname);
+              break;
+
+              //send command to change power setting, new state is passed in arg1
+          case message_type.POWER_CONTROL:
+        	  withrottle_send(String.format("PPA%d", msg.arg1));
               break;
 /*
           //end the application and thread
@@ -484,7 +502,7 @@ public class threaded_application extends Application
 	    	  	    break;
 	        	  	
 	    	  	case 'P':  //power 
-	    	  		if (response_str.substring(1,3).equals("PA")) {  //change power state
+	    	  		if (response_str.charAt(2) == 'A') {  //change power state
 	    	  			power_state = response_str.substring(3);
 	    	  		}
 	    	  	    break;
@@ -501,6 +519,10 @@ public class threaded_application extends Application
       msg.what=message_type.RESPONSE;
       msg.obj=new String(response_str); 
       if (engine_driver_msg_handler != null) { engine_driver_msg_handler.sendMessage(msg); }
+      msg=Message.obtain(); 
+      msg.what=message_type.RESPONSE;
+      msg.obj=new String(response_str); 
+      if (power_control_msg_handler != null) { power_control_msg_handler.sendMessage(msg); }
       
     }  //end of process_response
 
