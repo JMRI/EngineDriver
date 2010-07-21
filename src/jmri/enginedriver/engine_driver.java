@@ -599,7 +599,6 @@ public void onStart() {
 	    Message msg=Message.obtain();
 	    msg.what=message_type.HEARTBEAT;
 	    mainapp.comm_msg_handler.sendMessage(msg);
-	    
 	  }
   }
   
@@ -627,7 +626,11 @@ public void onStart() {
     	  break;
       case R.id.turnouts:
     	  Intent turnouts=new Intent().setClass(this, turnouts.class);
-    	    startActivityForResult(turnouts, 0);
+    	    startActivity(turnouts);
+    	  break;
+      case R.id.power_control_menu:
+    	  Intent in = new Intent().setClass(this, power_control.class);
+    	    startActivity(in);
     	  break;
       }
       return super.onOptionsItemSelected(item);
