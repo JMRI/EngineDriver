@@ -161,6 +161,11 @@ public class threaded_application extends Application
 	String[] to_states;
 	boolean to_allowed = false;  //default turnout support to off
     HashMap<String, String> to_state_names;
+	String[] rt_system_names;
+	String[] rt_user_names;
+	String[] rt_states;
+	boolean rt_allowed = false;  //default route support to off
+    HashMap<String, String> rt_state_names;
 
 	String power_state;
 	int heartbeat_interval; //heartbeat interval in seconds
@@ -169,15 +174,12 @@ public class threaded_application extends Application
 	InetAddress host_address;
 	//For communication to the comm_thread.
 	public comm_handler comm_msg_handler;
-	//For communication back to the main UI activity.
+	//For communication to each of the activities (set and unset by the activity)
 	public Handler ui_msg_handler;
-	//For communication to the engine driver activity
 	public Handler engine_driver_msg_handler;
-	//For communication to the select loco activity
 	public Handler select_loco_msg_handler;
-	//For communication to the turnouts activity
 	public Handler turnouts_msg_handler;
-	//For communication to the power_control activity
+	public Handler routes_msg_handler;
 	public Handler power_control_msg_handler;
 	
 	PrintWriter output_pw;
@@ -242,16 +244,21 @@ public class threaded_application extends Application
             port=msg.arg1;
             
             //clear app.thread shared variables so they can be reset
-            to_allowed = false;
             host_name_string = null;
             withrottle_version_string = null; 
             heartbeat_interval = 0;
             roster_list_string = null;
             power_state = null;
+            to_allowed = false;
             to_states = null;
             to_system_names = null;
             to_user_names = null;
             to_state_names = null;
+            rt_allowed = false;
+            rt_states = null;
+            rt_system_names = null;
+            rt_user_names = null;
+            rt_state_names = null;
             
             try { host_address=InetAddress.getByName(host_ip); }
             catch(UnknownHostException except) {
@@ -399,6 +406,12 @@ public class threaded_application extends Application
         	  withrottle_send("PTA" + whichCommand + systemname);
               break;
 
+              //send command to route turnout.  PRA2LT12  only 2=toggle supported
+          case message_type.ROUTE:
+        	  systemname = msg.obj.toString();
+        	  withrottle_send("PRA2" + systemname);
+              break;
+
               //send command to change power setting, new state is passed in arg1
           case message_type.POWER_CONTROL:
         	  withrottle_send(String.format("PPA%d", msg.arg1));
@@ -499,6 +512,16 @@ public class threaded_application extends Application
 	    	  	    break;
 	    	  	
 	    	  	case 'R':  //routes 
+	    	  		if (response_str.charAt(2) == 'T') {  //route  control allowed
+	    	  			rt_allowed = true;
+	    	  			process_route_titles(response_str);
+	    	  		}
+	    	  		if (response_str.charAt(2) == 'L') {  //list of routes
+	    	  			process_route_list(response_str);  //process route list
+	    	  		}
+	    	  		if (response_str.charAt(2) == 'A') {  //action?  changes to routes
+	    	  			process_route_change(response_str);  //process route changes
+	    	  		}
 	    	  	    break;
 	        	  	
 	    	  	case 'P':  //power 
@@ -510,11 +533,15 @@ public class threaded_application extends Application
 		  	 break;
   	  }  //end switch
   	  
-  	  //forward whatever we got to other activities (if started)
+  	  //forward whatever we got to other activities (if started)  dup code needed, not sure why msg is getting stepped on
       Message msg=Message.obtain(); 
       msg.what=message_type.RESPONSE;
       msg.obj=new String(response_str); 
       if (turnouts_msg_handler != null)   { turnouts_msg_handler.sendMessage(msg);   }
+      msg=Message.obtain(); 
+      msg.what=message_type.RESPONSE;
+      msg.obj=new String(response_str); 
+      if (routes_msg_handler != null)   { routes_msg_handler.sendMessage(msg);   }
       msg=Message.obtain(); 
       msg.what=message_type.RESPONSE;
       msg.obj=new String(response_str); 
@@ -586,6 +613,65 @@ public class threaded_application extends Application
         
      }
 
+    //parse route list into appropriate app variable array
+	//  PRA<NewState><SystemName>
+    //  PRA2LT12
+    private void process_route_change(String response_str) {
+    	String newState = response_str.substring(3,4);
+    	String systemName = response_str.substring(4);
+    	int pos = -1;
+        for (String sn : rt_system_names) {
+        	pos++;
+        	if (sn.equals(systemName)) {
+        		break;
+        	}
+        }
+        if (pos <= rt_system_names.length) {  //if found, update to new value
+        	rt_states[pos] = newState;
+        }
+    }  //end of process_route_change
+
+    //parse route list into appropriate app variable array
+	//  PTL[<SystemName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
+    //  PTL]\[LT12}|{my12}|{1
+    private void process_route_list(String response_str) {
+     
+     String[] ta = splitByString(response_str,"]\\[");  //initial separation 
+     //initialize app arrays (skipping first)
+     rt_system_names = new String[ta.length - 1];
+     rt_user_names = new String[ta.length - 1];
+     rt_states = new String[ta.length - 1];
+     int i = 0;
+     for (String ts : ta) {
+    	 if (i > 0) { //skip first chunk, just message id
+        	 String[] tv = splitByString(ts,"}|{");  //split these into 3 parts, key and value
+        	 rt_system_names[i-1] = tv[0];
+        	 rt_user_names[i-1]      = tv[1];
+        	 rt_states[i-1]                 = tv[2];
+    	 }  //end if i>0
+    	 i++;
+     }  //end for
+     
+  }
+
+    private void process_route_titles(String response_str) {
+        //PRT
+    	
+    	//clear the global variable
+        rt_state_names = new HashMap<String, String>();
+        
+    	String[] ta = splitByString(response_str,"]\\[");  //initial separation 
+        //initialize app arrays (skipping first)
+        int i = 0;
+        for (String ts : ta) {
+       	 if (i > 1) { //skip first 2 chunks
+       		 String[] tv = splitByString(ts,"}|{");  //split these into value and key
+           	 rt_state_names.put(tv[1],tv[0]);
+       	 }  //end if i>0
+       	 i++;
+        }  //end for
+        
+     }
     //parse function state string into appropriate app variable array
     private void process_function_state(String response_str) {
     

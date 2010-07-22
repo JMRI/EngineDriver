@@ -632,6 +632,10 @@ public void onStart() {
     	  Intent in = new Intent().setClass(this, power_control.class);
     	    startActivity(in);
     	  break;
+      case R.id.routes:
+    	  in = new Intent().setClass(this, routes.class);
+    	    startActivity(in);
+    	  break;
       }
       return super.onOptionsItemSelected(item);
   }
