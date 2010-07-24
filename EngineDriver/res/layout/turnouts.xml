@@ -21,7 +21,7 @@
 >
    <TextView
       android:id="@+id/turnouts_label"
-      android:text="@string/turnouts"
+      android:text="@string/turnouts_label"
       android:layout_width="fill_parent"
       android:textColor="#FFFFFF"
       android:background="#8c8a8c"
@@ -32,9 +32,16 @@
       android:orientation="horizontal"
       android:padding="4dp"
    >
+   <TextView
+      android:id="@+id/hardware_system"
+      android:text="-"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+   
       <EditText
          android:id="@+id/turnout_entry"
          android:layout_width="80sp"
+         android:layout_weight = "0.25"
          android:layout_height="wrap_content"
          android:singleLine="true"
          android:maxLength="4"
@@ -42,17 +49,20 @@
       <Button
          android:id="@+id/turnout_throw"
          android:text="@string/throw_button"
-         android:layout_width="wrap_content"
+         android:layout_width="40sp"
+         android:layout_weight = "0.25"
          android:layout_height="wrap_content" />
       <Button
          android:id="@+id/turnout_close"
          android:text="@string/close_button"
-         android:layout_width="wrap_content"
+         android:layout_width="40sp"
+         android:layout_weight = "0.25"
          android:layout_height="wrap_content" />
       <Button
          android:id="@+id/turnout_toggle"
+         android:layout_width="40sp"
+         android:layout_weight = "0.25"
          android:text="@string/toggle_button"
-         android:layout_width="wrap_content"
          android:layout_height="wrap_content" />
    </LinearLayout>
 

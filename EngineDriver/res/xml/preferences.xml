@@ -30,4 +30,11 @@
       android:numeric="integer"
       android:maxLength="2"
    ></EditTextPreference>
+   <ListPreference
+      android:key="hardware_system"
+      android:title="@string/prefHardwareSystemTitle"
+      android:summary="@string/prefHardwareSystemSummary"
+      android:defaultValue="@string/prefHardwareSystemDefaultValue"
+      android:entries="@array/hardware_system_names"
+      android:entryValues="@array/hardware_systems" />
 </PreferenceScreen>

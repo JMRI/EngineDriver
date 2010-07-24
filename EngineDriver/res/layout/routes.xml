@@ -21,7 +21,7 @@
 >
    <TextView
       android:id="@+id/routes_label"
-      android:text="@string/routes"
+      android:text="@string/routes_label"
       android:layout_width="fill_parent"
       android:textColor="#FFFFFF"
       android:background="#8c8a8c"
@@ -35,15 +35,18 @@
       <EditText
          android:id="@+id/route_entry"
          android:layout_width="80sp"
+          android:layout_weight = "0.75"
          android:layout_height="wrap_content"
          android:singleLine="true"
          android:maxLength="4"
          android:inputType="number" />
       <Button
          android:id="@+id/route_toggle"
-         android:text="@string/toggle_button"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content" />
+         android:text="@string/set"
+         android:textAppearance="?android:attr/textAppearanceLarge"
+         android:layout_width="80sp"
+          android:layout_weight = "0.75"
+          android:layout_height="wrap_content" />
    </LinearLayout>
 
    <ListView
