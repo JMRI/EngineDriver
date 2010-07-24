@@ -75,12 +75,14 @@ public class power_control extends Activity {
 		    Button b=(Button)findViewById(R.id.power_control_button);
 		    String currentState = "???";
 		    if (mainapp.power_state == null) {
-		    	currentState = "Not Allowed";  //must be turned on in Withrottle settings
+		    	currentState = getString(R.string.not_allowed);  //must be turned on in Withrottle settings
 			    b.setEnabled(false);
+			    TextView tv=(TextView)findViewById(R.id.power_control_text);
+			    tv.setText(getString(R.string.power_control_not_allowed)); 
 		    } else if (mainapp.power_state.equals("1")) {
-		    	currentState = "On";
+		    	currentState = getString(R.string.on);
 		    } else if (mainapp.power_state.equals("0")) {
-		    	currentState = "Off";
+		    	currentState = getString(R.string.off);
 		    }		    	
 		    b.setText(currentState);
 		}

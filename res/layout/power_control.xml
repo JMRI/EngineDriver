@@ -39,6 +39,7 @@
          android:padding="10dp"
          android:layout_height="wrap_content" />
       <TextView
+         android:id="@+id/power_control_text"
          android:text="@string/press_to_toggle"
          android:layout_width="fill_parent"
          android:padding="10dp"

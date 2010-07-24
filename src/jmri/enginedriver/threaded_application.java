@@ -49,22 +49,21 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *  prevent acquire with blank loco address (was crashing)
  *  new Turnouts display showing list of defined turnouts, current state, updated on change
  *  toggle turnout on list click
- *  direct entry of turnout address with toggle and throw/close buttons
- *  layout power control activity
+ *  direct entry of turnout address with toggle and throw/close buttons, disable controls on not allowed
+ *  new Layout Power control activity
+ *  new Route control activity (clone of Turnouts)
+ *  enhanced titles on all activities
  */
 
 /*
+ *   TODO: figure out issue with server discovery on Incredible
  *   TODO: allow compile/run at Android 1.5 (SDK 3) currently crashes when thread starts and tries to resolve android.net.wifi.WifiManager.createMulticastLock
- *   TODO: add power on/off (if allowed.  PPA+x where x 0=no, 1=yes, 2=unknown
- *   TODO: add route controls
  *   TODO: add consisting features
  *   TODO: toast messages on release of loco and update of preferences
  *   TODO: make private stuff private
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  * turnouts
-*    TODO: disable direct entry buttons if not allowed
- *   TODO: allow adding selected turnout(s) to throttle view
- *   TODO: show message on Turnout page if not turnouts allowed, different message if none defined
+ *   TODO: default "system" based on items in use
  *   TODO: update turnout list on change not working after reentry to turnout view (worked around by finishing on exit)
  *   TODO: use titles for Turnouts/Turnout
  * connection
@@ -83,6 +82,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * engine_driver:
  *   TODO: add graphics (slider, stop, directions, functions?)  add colors
  *   TODO: add throttle name to title bar
+ *   TODO: allow adding selected turnout(s) to throttle view
  *   TODO: in ed exit, don't send release if "Not Set"
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected

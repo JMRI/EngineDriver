@@ -40,9 +40,6 @@ public class routes extends Activity {
 
 	private threaded_application mainapp;  // hold pointer to mainapp
 	
-	private static final int GONE = 8;
-	private static final int VISIBLE = 0;
-
 	ArrayList<HashMap<String, String> > routes_list;
 	private SimpleAdapter routes_list_adapter;
 
@@ -63,38 +60,52 @@ public class routes extends Activity {
 	    };
 	  }	  
 
-	public void refresh_route_list() {
+	public void refresh_route_view() {
 
 		//clear and rebuild
-       routes_list.clear();
-	  if (mainapp.rt_user_names != null) {
-			int pos = 0;
-		    for (String username : mainapp.rt_user_names) {
-		    	if (!username.equals(""))  {  //skip routes without usernames
-		    		//get values from global array
-		    		String systemname = mainapp.rt_system_names[pos];
-		    		String currentstate = mainapp.rt_states[pos];
-		    		String currentstatedesc = mainapp.rt_state_names.get(currentstate);
-		    		if (currentstatedesc == null) {
-		    			currentstatedesc = "   ???";
-		    		}
-		    		
-		    		//put values into temp hashmap
-		            HashMap<String, String> hm=new HashMap<String, String>();
-		            hm.put("rt_user_name", username);
-		            hm.put("rt_system_name", systemname);
-		            hm.put("rt_current_state_desc", currentstatedesc);
+		routes_list.clear();
+		if (mainapp.rt_state_names != null) {  //not allowed
+			if (mainapp.rt_user_names != null) { //none defined
+				int pos = 0;
+				for (String username : mainapp.rt_user_names) {
+					if (!username.equals(""))  {  //skip routes without usernames
+						//get values from global array
+						String systemname = mainapp.rt_system_names[pos];
+						String currentstate = mainapp.rt_states[pos];
+						String currentstatedesc = mainapp.rt_state_names.get(currentstate);
+						if (currentstatedesc == null) {
+							currentstatedesc = "   ???";
+						}
 
-		            //add temp hashmap to list which view is hooked to
-		            routes_list.add(hm);
-			//
-		    	}
-		    	pos++;
-		    }  //if username blank
-		    routes_list_adapter.notifyDataSetChanged();
-		 }  //end for loop
-	  }
-	  
+						//put values into temp hashmap
+						HashMap<String, String> hm=new HashMap<String, String>();
+						hm.put("rt_user_name", username);
+						hm.put("rt_system_name", systemname);
+						hm.put("rt_current_state_desc", currentstatedesc);
+
+						//add temp hashmap to list which view is hooked to
+						routes_list.add(hm);
+						//
+					}
+					pos++;
+				}  //if username blank
+				routes_list_adapter.notifyDataSetChanged();
+			}  //if usernames is null
+			EditText te =(EditText)findViewById(R.id.route_entry);  // enable the buttons
+			te.setEnabled(true);
+			Button b =(Button)findViewById(R.id.route_toggle);
+			b.setEnabled(true);
+			b.setText(getString(R.string.set));
+		}  else {
+			EditText te =(EditText)findViewById(R.id.route_entry);
+			te.setEnabled(false);
+			Button b =(Button)findViewById(R.id.route_toggle);
+			b.setEnabled(false);
+			b.setText(getString(R.string.not_allowed));
+		}  //end statenames  is null
+
+	}
+
 	  //Handle messages from the communication thread back to this thread (responses from withrottle)
 	  class routes_handler extends Handler {
 
@@ -103,7 +114,7 @@ public class routes extends Activity {
 	      case message_type.RESPONSE: {
 	        	String response_str = msg.obj.toString();
 	        	if (response_str.substring(0,3).equals("PRA")) {  //refresh routes if any have changed
-	        		refresh_route_list(); 
+	        		refresh_route_view(); 
 	        	}
 	        }
 	        break;
@@ -128,15 +139,16 @@ public class routes extends Activity {
 		       	    Toast.makeText(getApplicationContext(), "route # must be numeric, reenter.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
 		         	return;
 		        }
-		        String systemname = "LT" + entrytext;
+		        String systemname ="R" + entrytext;
 		        Message msg=Message.obtain();  
 	        	msg.what=message_type.ROUTE;
 	        	msg.arg1=whichCommand;
 	        	msg.arg2=0; // not used 
 	            msg.obj=new String(systemname);    // load system name for route into message
 	            mainapp.comm_msg_handler.sendMessage(msg);
+	            entryv.setText(""); //clear the text after send
 		      } else {
-		    	    Toast.makeText(getApplicationContext(), "Enter a route # to control", Toast.LENGTH_SHORT).show();
+		    	    Toast.makeText(getApplicationContext(), "Enter a route # to set", Toast.LENGTH_SHORT).show();
 		      }
 		    };
 	  }
@@ -151,7 +163,7 @@ public class routes extends Activity {
     }
 
     //update route list
-    refresh_route_list();
+    refresh_route_view();
   }
 
 	  

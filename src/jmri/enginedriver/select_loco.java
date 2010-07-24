@@ -91,7 +91,7 @@ public class select_loco extends Activity
 //    s += "\nt=" +  java.util.Arrays.toString(mainapp.function_states_T);
 //    s += "\ns=" +  java.util.Arrays.toString(mainapp.function_states_S);
     s += "\nHost: " + mainapp.host_name_string;
-    s +="\nSystem Power: " + mainapp.power_state ;
+/*    s +="\nSystem Power: " + mainapp.power_state ;
     if (mainapp.to_allowed) {
 		int to_count = 0;
     	if (mainapp.to_user_names != null) {
@@ -99,6 +99,7 @@ public class select_loco extends Activity
     	}
     	s += String.format("    Turnouts: %d", to_count);
     }
+*/
     s += "\nWiThrottle: v" + mainapp.withrottle_version_string;
     s += String.format("     Heartbeat: %d secs", mainapp.heartbeat_interval);
 //    s += "\nRoster: " + mainapp.roster_list_string;

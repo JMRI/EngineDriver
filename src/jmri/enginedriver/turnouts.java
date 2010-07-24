@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,16 +30,20 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class turnouts extends Activity {
 
 	private threaded_application mainapp;  // hold pointer to mainapp
+	
+	private SharedPreferences prefs;
 	
 	private static final int GONE = 8;
 	private static final int VISIBLE = 0;
@@ -63,37 +68,65 @@ public class turnouts extends Activity {
 	    };
 	  }	  
 
-	public void refresh_turnout_list() {
+	public void refresh_turnout_view() {
 
-		//clear and rebuild
-       turnouts_list.clear();
-	  if (mainapp.to_user_names != null) {
-			int pos = 0;
-		    for (String username : mainapp.to_user_names) {
-		    	if (!username.equals(""))  {  //skip turnouts without usernames
-		    		//get values from global array
-		    		String systemname = mainapp.to_system_names[pos];
-		    		String currentstate = mainapp.to_states[pos];
-		    		String currentstatedesc = mainapp.to_state_names.get(currentstate);
-		    		if (currentstatedesc == null) {
-		    			currentstatedesc = "   ???";
-		    		}
-		    		
-		    		//put values into temp hashmap
-		            HashMap<String, String> hm=new HashMap<String, String>();
-		            hm.put("to_user_name", username);
-		            hm.put("to_system_name", systemname);
-		            hm.put("to_current_state_desc", currentstatedesc);
+		//show selected hardware system
+	    String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
+		TextView hstv =(TextView)findViewById(R.id.hardware_system);
+		hstv.setText(hs);
+		
+		//clear and rebuild, or disable if not allowed
+		turnouts_list.clear();
+		if (mainapp.to_state_names != null) {  //not allowed
 
-		            //add temp hashmap to list which view is hooked to
-		            turnouts_list.add(hm);
-			//
-		    	}
-		    	pos++;
-		    }  //if username blank
-		    turnouts_list_adapter.notifyDataSetChanged();
-		 }  //end for loop
-	  }
+			if (mainapp.to_user_names != null) { //none defined
+				int pos = 0;
+				for (String username : mainapp.to_user_names) {
+					if (!username.equals(""))  {  //skip turnouts without usernames
+						//get values from global array
+						String systemname = mainapp.to_system_names[pos];
+						String currentstate = mainapp.to_states[pos];
+						String currentstatedesc = mainapp.to_state_names.get(currentstate);
+						if (currentstatedesc == null) {
+							currentstatedesc = "   ???";
+						}
+
+						//put values into temp hashmap
+						HashMap<String, String> hm=new HashMap<String, String>();
+						hm.put("to_user_name", username);
+						hm.put("to_system_name", systemname);
+						hm.put("to_current_state_desc", currentstatedesc);
+
+						//add temp hashmap to list which view is hooked to
+						turnouts_list.add(hm);
+
+					}  //if username blank
+					pos++;
+				}  //end for loop
+				turnouts_list_adapter.notifyDataSetChanged();  //update the list
+			}  //if usernames is null
+			EditText te =(EditText)findViewById(R.id.turnout_entry);  // enable the buttons
+			te.setEnabled(true);
+			Button b =(Button)findViewById(R.id.turnout_throw);
+			b.setEnabled(true);
+			b =(Button)findViewById(R.id.turnout_close);
+			b.setEnabled(true);
+			b =(Button)findViewById(R.id.turnout_toggle);
+			b.setEnabled(true);
+			b.setText(getString(R.string.toggle_button));
+		}  else {
+			EditText te =(EditText)findViewById(R.id.turnout_entry);
+			te.setEnabled(false);
+			Button b =(Button)findViewById(R.id.turnout_throw);
+			b.setEnabled(false);
+			b =(Button)findViewById(R.id.turnout_close);
+			b.setEnabled(false);
+			b =(Button)findViewById(R.id.turnout_toggle);
+			b.setEnabled(false);
+			b.setText(getString(R.string.not_allowed));
+
+		}  //end statenames is null
+	}
 	  
 	  //Handle messages from the communication thread back to this thread (responses from withrottle)
 	  class turnouts_handler extends Handler {
@@ -103,7 +136,7 @@ public class turnouts extends Activity {
 	      case message_type.RESPONSE: {
 	        	String response_str = msg.obj.toString();
 	        	if (response_str.substring(0,3).equals("PTA")) {  //refresh turnouts if any have changed
-	        		refresh_turnout_list(); 
+	        		refresh_turnout_view(); 
 	        	}
 	        }
 	        break;
@@ -128,13 +161,17 @@ public class turnouts extends Activity {
 		       	    Toast.makeText(getApplicationContext(), "Turnout # must be numeric, reenter.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
 		         	return;
 		        }
-		        String systemname = "LT" + entrytext;
+		        //use preference for system name in command string
+		        String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
+		        String systemname = hs + "T" + entrytext;
+		        
 		        Message msg=Message.obtain();  
 	        	msg.what=message_type.TURNOUT;
 	        	msg.arg1=whichCommand;
 	        	msg.arg2=0; // not used 
 	            msg.obj=new String(systemname);    // load system name for turnout into message
 	            mainapp.comm_msg_handler.sendMessage(msg);
+	            entryv.setText(""); //clear the text after send
 		      } else {
 		    	    Toast.makeText(getApplicationContext(), "Enter a turnout # to control", Toast.LENGTH_SHORT).show();
 		      }
@@ -151,7 +188,7 @@ public class turnouts extends Activity {
     }
 
     //update turnout list
-    refresh_turnout_list();
+    refresh_turnout_view();
   }
 
 	  
@@ -164,6 +201,8 @@ public class turnouts extends Activity {
     
     mainapp=(threaded_application)getApplication();
     
+	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
     //Set up a list adapter to allow adding the list of recent connections to the UI.
     turnouts_list=new ArrayList<HashMap<String, String> >();
     turnouts_list_adapter=new SimpleAdapter(this, turnouts_list, R.layout.turnouts_item, 
