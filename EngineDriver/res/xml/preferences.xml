@@ -37,4 +37,11 @@
       android:defaultValue="@string/prefHardwareSystemDefaultValue"
       android:entries="@array/hardware_system_names"
       android:entryValues="@array/hardware_systems" />
+   <ListPreference
+      android:key="default_address_length"
+      android:title="@string/prefDefaultAddressLengthTitle"
+      android:summary="@string/prefDefaultAddressLengthSummary"
+      android:defaultValue="@string/prefDefaultAddressLengthDefaultValue"
+      android:entries="@array/address_size_defaults"
+      android:entryValues="@array/address_size_defaults" />
 </PreferenceScreen>

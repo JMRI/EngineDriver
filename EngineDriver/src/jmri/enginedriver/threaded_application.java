@@ -54,7 +54,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *  new Route control activity (clone of Turnouts)
  *  enhanced titles on all activities
  */
-
+/* Version 0.8 - changes/additions by mstevetodd
+ *  added NCE to hardware system list (oversight)
+ *  added preference to default Long/Short/Auto for loco address length
+ *  leading 0 was treated as octal in select_loco, made it stop doing that 
+ */
 /*
  *   TODO: figure out issue with server discovery on Incredible
  *   TODO: allow compile/run at Android 1.5 (SDK 3) currently crashes when thread starts and tries to resolve android.net.wifi.WifiManager.createMulticastLock
@@ -65,12 +69,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * turnouts
  *   TODO: default "system" based on items in use
  *   TODO: update turnout list on change not working after reentry to turnout view (worked around by finishing on exit)
- *   TODO: use titles for Turnouts/Turnout
+ *   TODO: use PTT titles for Turnouts/Turnout
  * connection
  *   TODO: add pref for auto-connect on discovery
+ *   TODO: allow entry of server by name in addition to IP address
  * threaded_application
  *   TODO: Move wifi listener to OnStart from OnCreate (so it works each time activity gets focus), and add OnPause (or somesuch) to turn off listener
  *   TODO: don't add discovered server more than once (restart WiT to see this)
+ *   TODO: remove discovered servers no longer available
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: add client-side conversation logging for easier debugging
  *   TODO: check for error on send and do something with it 
@@ -86,7 +92,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: in ed exit, don't send release if "Not Set"
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
- *   TODO: allow for different button arrangements for each loco
+ *   TODO: allow for different button arrangements for each loco, suggest using roster entry if passed, client-side settings if not
  * select_loco:
  *   TODO: don't show or allow entry of loco if already in use on "other" throttle
  *   TODO: add "Select from Roster" list
@@ -95,6 +101,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: show error if invalid entry
  * power_control:
  *   TODO: use JMRI images for off/on/unknown (instead of words)
+ * function_settings:
+ *   TODO: show disabled Copy button
  *
  * These require changes to WiThrottle
  *   TODO: get current status (speed, direction, speed steps?)  On request would be best.
@@ -192,7 +200,6 @@ public class threaded_application extends Application
     JmDNS jmdns;
     withrottle_listener listener;
     android.net.wifi.WifiManager.MulticastLock multicast_lock;
-//    Object multicast_lock;
 
     //Listen for a WiThrottle service advertisement on the LAN.
     public class withrottle_listener implements ServiceListener

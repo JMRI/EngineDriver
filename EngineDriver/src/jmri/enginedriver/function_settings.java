@@ -17,8 +17,8 @@ import android.widget.TextView;
 
 public class function_settings extends Activity {
 
-	private static final int GONE = 8;
-	private static final int VISIBLE = 0;
+//	private static final int GONE = 8;
+//	private static final int VISIBLE = 0;
 	private threaded_application mainapp;
 
 	//set up label, dcc function, toggle setting for each button
@@ -40,12 +40,14 @@ public class function_settings extends Activity {
         String s = mainapp.roster_function_string_T;
         TextView v=(TextView)findViewById(R.id.fb_copy_labels_from_roster);
         if (s == null) {
-          v.setVisibility(GONE);  //hide button if no roster
+//          v.setVisibility(GONE);  //hide button if no roster
+            v.setEnabled(false);  //hide button if no roster
         } else { 
           //Set the button callback.
           Button button=(Button)findViewById(R.id.fb_copy_labels_from_roster);
           button_listener click_listener=new button_listener();
           button.setOnClickListener(click_listener);
+          v.setEnabled(true);
         }
      }
 

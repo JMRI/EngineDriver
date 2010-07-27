@@ -61,7 +61,10 @@ public class select_loco extends Activity
   private String whichThrottle; //"T" or "S" to distinguish which throttle we're asking for
 
   private threaded_application mainapp;  // hold pointer to mainapp
- 
+  
+  private SharedPreferences prefs;
+  private String default_address_length;
+  
   //lookup and set values of various text labels 
   private void set_labels() {
 
@@ -84,7 +87,6 @@ public class select_loco extends Activity
     }
     
     //format and show footer info
-	SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     v=(TextView)findViewById(R.id.sl_footer);
   
     String s = "Throttle Name: " + prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
@@ -181,7 +183,8 @@ public class select_loco extends Activity
     public void onClick(View v)
     {
       EditText entry=(EditText)findViewById(R.id.loco_address);
-      engine_address=Integer.decode(entry.getText().toString());
+//      engine_address=Integer.decode(entry.getText().toString());  //decode treated leading zeros as octal
+      engine_address = new Integer(entry.getText().toString());
       Spinner spinner=(Spinner)findViewById(R.id.address_length);
       address_size=spinner.getSelectedItemPosition();
       acquire_engine();
@@ -235,6 +238,15 @@ public class select_loco extends Activity
     if(extras !=null)    {
       whichThrottle = extras.getString("whichThrottle");
     }
+    
+    //set address length if default is set in prefs
+    default_address_length = prefs.getString("default_address_length", this.getResources().getString(R.string.prefDefaultAddressLengthDefaultValue));
+    Spinner al=(Spinner)findViewById(R.id.address_length);
+    if (default_address_length.equals("Long")) {
+    		al.setSelection(1);
+    	} else if (default_address_length.equals("Short")) {
+    		al.setSelection(0);
+    }
 
  }
   
@@ -249,6 +261,8 @@ public class select_loco extends Activity
     mainapp=(threaded_application)getApplication();
     //put pointer to this activity's handler in main app's shared variable
     mainapp.select_loco_msg_handler=new select_loco_handler();
+    
+	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     
     //Set the options for the address length.
     Spinner address_spinner=(Spinner)findViewById(R.id.address_length);
@@ -308,9 +322,9 @@ public class select_loco extends Activity
     
     button=(Button)findViewById(R.id.sl_release_S);
     button.setOnClickListener(new release_button_listener_S());
-    
-    
-    //set long/short based on length of text entered (but user can override if needed)
+    default_address_length = prefs.getString("default_address_length", this.getResources().getString(R.string.prefDefaultAddressLengthDefaultValue));
+        
+     //set long/short based on length of text entered (but user can override if needed)
     EditText la = (EditText)findViewById(R.id.loco_address);
     la.setOnKeyListener(new OnKeyListener()  { 
         public boolean onKey(View v, int keyCode, KeyEvent event)  { 
@@ -325,13 +339,15 @@ public class select_loco extends Activity
           	  ba.setEnabled(false);
           	}
     	    
-    	    //auto-set address length
-        	if (la.getText().toString().length() > 2) {
-          	  al.setSelection(1);
-        	} else {
-      	      al.setSelection(0);
-        	}
-            return false;
+    	    //auto-set address length if requested
+    	    if (default_address_length.equals("Auto")) {
+    	    	if (la.getText().toString().length() > 2) {
+    	    		al.setSelection(1);
+    	    	} else {
+    	    		al.setSelection(0);
+    	    	}
+    	    }
+    	    return false;
         };
     });
                 
