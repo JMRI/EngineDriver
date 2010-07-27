@@ -21,6 +21,13 @@
       <item>Long</item>
    </string-array>
    <string-array
+      name="address_size_defaults"
+   >
+      <item>Short</item>
+      <item>Long</item>
+      <item>Auto</item>
+   </string-array>
+   <string-array
       name="hardware_system_names"
    >
       <item>CTI Acela</item>
@@ -33,6 +40,7 @@
       <item>Maple Systems</item>
       <item>Loconet</item>
       <item>MERG CBUS</item>
+      <item>NCE</item>
       <item>Oak Tree Systems</item>
       <item>Powerline transmission</item>
       <item>QSI</item>
@@ -57,6 +65,7 @@
       <item>K</item>
       <item>L</item>
       <item>M</item>
+      <item>N</item>
       <item>O</item>
       <item>P</item>
       <item>Q</item>
