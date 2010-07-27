@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright (C) 2010 Jason M'Sadoques
+  jlyonm@gmail.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+--> 
+
+<resources>
+    <string name="exit">Exit</string>
+    <string name="settings">Function Settings</string>
+    <string name="fb_label">Function Label</string>
+    <string name="function_buttons">function_buttons</string>
+    
+    <string name="app_name">Engine Driver</string>
+    <string name="app_name_connect">Engine Driver - Connect to JMRI WiThrottle</string>
+    <string name="app_name_throttle">Engine Driver - Throttle</string>
+    <string name="app_name_power_control">Engine Driver - Power Control</string>
+    <string name="app_name_routes">Engine Driver - Routes</string>
+    <string name="app_name_turnouts">Engine Driver - Turnouts</string>
+    <string name="app_name_about">Engine Driver - About</string>
+    <string name="app_name_functions">Engine Driver - Function Settings</string>
+    <string name="app_name_preferences">Engine Driver - Preferences</string>
+    <string name="app_name_select_loco">Engine Driver - Select Loco</string>
+    <string name="host_ip">Host IP Address</string>
+    <string name="port">Port</string>
+    <string name="loco_address">Loco Address</string>
+    <string name="connect_button">Connect</string>
+    <string name="recent_connections">Recent Connections</string>
+    <string name="select_loco">Enter Locomotive Address to Acquire</string>
+    <string name="acquire_button">Acquire</string>
+    <string name="recent_engines">-OR- Select from Recent Locomotives</string>
+    <string name="direction">Fwd</string>
+    <string name="speed">Speed:</string>
+    <string name="discovered_services">Discovered Services</string>
+<string name="save_settings">Save Settings</string>
+<string name="stop">Stop</string>
+<string name="forward">Forward</string>
+<string name="reverse">Reverse</string>
+<string name="none">None</string>
+<string name="prefTitle">Preferences</string>
+<string name="prefSummary">Preferences for Engine Driver</string>
+<string name="preferences">Preferences</string>
+<string name="prefThrottleNameTitle">Throttle Name</string>
+<string name="prefThrottleNameDefaultValue">Engine Driver</string>
+<string name="prefThrottleNameSummary">Set the throttle name (shown on WiThrottle screen)</string>
+<string name="prefHardwareSystemTitle">Hardware System</string>
+<string name="prefHardwareSystemDefaultValue">L</string>
+<string name="prefHardwareSystemSummary">Select hardware system to use for turnout commands</string>
+<string name="fb_helptext">Enter labels and function#s in list at right.  Leave label blank to hide button.</string>
+<string name="copy_function_labels">Copy Labels from Roster</string>
+<string name="fb_header">Edit Functions</string>
+<string name="about">About</string>
+<string name="prefStopOnReleaseTitle">Stop On Release</string>
+<string name="prefStopOnReleaseDefaultValue">true</string>
+<string name="prefStopOnReleaseSummary">Stop loco when releasing from throttle</string>
+<string name="loco">Loco:</string>
+<string name="current_locos">Currently Selected Locos</string>
+<string name="release">Release</string>
+<string name="app_description">Engine Driver - JMRI Throttle for your Android phone.  This application can connect to a JMRI WiThrottle server running on a PC, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one or two locomotives. </string>
+<string name="prefMaximumThrottleTitle">Maximum Throttle Value</string>
+<string name="prefMaximumThrottleDefaultValue">99</string>
+<string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value</string>
+<string name="prefDefaultAddressLengthTitle">Default Address Length</string>
+<string name="prefDefaultAddressLengthDefaultValue">Auto</string>
+<string name="prefDefaultAddressLengthSummary">Default Loco Address Length, (Auto will set based on # of digits).</string>
+<string name="turnouts">Turnouts</string>
+<string name="turnouts_label">Control Turnouts</string>
+<string name="turnouts_direct_entry_label">Enter turnout# and Close, Throw or Toggle</string>
+<string name="routes">Routes</string>
+<string name="routes_label">Control Routes</string>
+<string name="routes_direct_entry_label">Enter route# and press Toggle</string>
+<string name="throw_button">Throw</string>
+<string name="close_button">Close</string>
+<string name="toggle_button">Toggle</string>
+<string name="power_control_label">Control Layout Power Setting</string>
+<string name="power_control_button">unknown</string>
+<string name="press_to_toggle">Press button to toggle layout power state.</string>
+<string name="power_control_not_allowed">Power Control not allowed.  Change in WiThrottle Preferences in JMRI.</string>
+<string name="power">Power</string>
+<string name="on">On</string>
+<string name="off">Off</string>
+<string name="set">Set</string>
+<string name="not_allowed">Not Allowed</string>
+
+</resources>

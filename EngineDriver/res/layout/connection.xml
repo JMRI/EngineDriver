@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+   <!--
+      Copyright (C) 2010 Jason M'Sadoques jlyonm@gmail.com This program is free
+      software; you can redistribute it and/or modify it under the terms of the
+      GNU General Public License as published by the Free Software Foundation;
+      either version 3 of the License, or (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+      for more details. You should have received a copy of the GNU General
+      Public License along with this program; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+   -->
+
+<LinearLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   android:orientation="vertical"
+   android:layout_width="fill_parent"
+   android:layout_height="fill_parent"
+>
+   <RelativeLayout
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+   >
+      <TextView
+         android:id="@+id/ip_label"
+         android:text="@string/host_ip"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content" />
+      <EditText
+         android:id="@+id/host_ip"
+         android:layout_width="160sp"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/ip_label"
+         android:singleLine="true"
+         android:maxLength="60" />
+      <EditText
+         android:id="@+id/port"
+         android:layout_width="80sp"
+         android:layout_height="wrap_content"
+         android:singleLine="true"
+         android:maxLength="5"
+         android:inputType="number"
+         android:layout_toRightOf="@id/host_ip"
+         android:layout_alignBottom="@id/host_ip" />
+      <TextView
+         android:text="@string/port"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@id/port"
+         android:layout_alignLeft="@id/port" />
+      <Button
+         android:id="@+id/connect"
+         android:text="@string/connect_button"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_toRightOf="@id/port"
+         android:layout_alignBottom="@id/port" />
+   </RelativeLayout>
+   <TextView
+      android:text="@string/discovered_services"
+      android:textColor="#FFFFFF"
+      android:background="#8c8a8c"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content" />
+   <ListView
+      android:id="@+id/discovery_list"
+      android:layout_width="fill_parent"
+      android:layout_height="0dp"
+      android:layout_weight="0.5"
+   >
+   </ListView>
+   <TextView
+      android:text="@string/recent_connections"
+      android:textColor="#FFFFFF"
+      android:background="#8c8a8c"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content" />
+   <ListView
+      android:id="@+id/connections_list"
+      android:layout_width="fill_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+   >
+   </ListView>
+   <TextView
+      android:id="@+id/ca_footer"
+      android:text="@string/none"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+</LinearLayout>
