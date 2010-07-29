@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.os.Message;
 import android.view.KeyEvent;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,8 +51,10 @@ import java.io.PrintWriter;
 public class select_loco extends Activity
 {
 
-  ArrayList<HashMap<String, String> > engine_list;
-  private SimpleAdapter list_adapter;
+  ArrayList<HashMap<String, String> > recent_engine_list;
+  private SimpleAdapter recent_list_adapter;
+  ArrayList<HashMap<String, String> > roster_list;
+  private SimpleAdapter roster_list_adapter;
 
   ArrayList<Integer> engine_address_list;
   ArrayList<Integer> address_size_list; //Look at address_type.java
@@ -64,7 +67,27 @@ public class select_loco extends Activity
   
   private SharedPreferences prefs;
   private String default_address_length;
-  
+
+  //populate the on-screen roster view from global hashmap
+  public void refresh_roster_list() {
+	  //clear and rebuild
+	  roster_list.clear();
+	  if (mainapp.roster_entries != null) { //none defined
+		  for (String rostername : mainapp.roster_entries.keySet()) {
+
+			  //put key and values into temp hashmap
+			  HashMap<String, String> hm=new HashMap<String, String>();
+			  hm.put("roster_name", rostername);  
+			  hm.put("roster_address", mainapp.roster_entries.get(rostername));  
+
+			  //add temp hashmap to list which view is hooked to
+			  roster_list.add(hm);
+
+		  }  //for rostername
+		  roster_list_adapter.notifyDataSetChanged();
+	  }  //if roster_entries not null
+  }
+
   //lookup and set values of various text labels 
   private void set_labels() {
 
@@ -90,22 +113,13 @@ public class select_loco extends Activity
     v=(TextView)findViewById(R.id.sl_footer);
   
     String s = "Throttle Name: " + prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
-//    s += "\nt=" +  java.util.Arrays.toString(mainapp.function_states_T);
-//    s += "\ns=" +  java.util.Arrays.toString(mainapp.function_states_S);
     s += "\nHost: " + mainapp.host_name_string;
-/*    s +="\nSystem Power: " + mainapp.power_state ;
-    if (mainapp.to_allowed) {
-		int to_count = 0;
-    	if (mainapp.to_user_names != null) {
-    		to_count = mainapp.to_user_names.length;
-    	}
-    	s += String.format("    Turnouts: %d", to_count);
-    }
-*/
     s += "\nWiThrottle: v" + mainapp.withrottle_version_string;
     s += String.format("     Heartbeat: %d secs", mainapp.heartbeat_interval);
 //    s += "\nRoster: " + mainapp.roster_list_string;
     v.setText(s);
+    
+    refresh_roster_list();
     
   }
  
@@ -155,9 +169,9 @@ public class select_loco extends Activity
     acquire_msg.obj=new String(whichThrottle);  //pass T or S in message
     mainapp.comm_msg_handler.sendMessage(acquire_msg);
 
-    //Save the engine list to the engine_list.txt file.
+    //Save the engine list to the recent_engine_list.txt file.
     File sdcard_path=Environment.getExternalStorageDirectory();
-    File connections_list_file=new File(sdcard_path, "engine_driver/engine_list.txt");
+    File connections_list_file=new File(sdcard_path, "engine_driver/recent_engine_list.txt");
     PrintWriter list_output;
     try
     {
@@ -219,6 +233,29 @@ public class select_loco extends Activity
     };
   }
 
+  public class roster_item_ClickListener implements AdapterView.OnItemClickListener
+  {
+    //When an item is clicked, acquire that engine.
+    public void onItemClick(AdapterView<?> parent, View v, int position, long id)
+    {
+    	ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
+    	TextView rav = (TextView) vg.getChildAt(1); // get rosteraddress text from 2nd text field
+    	String rosteraddressstring = (String) rav.getText();
+    	//parse address and length from string, e.g.  2591(L)
+    	String ras[] = mainapp.splitByString(rosteraddressstring,"(");
+    	Integer addresslength = (ras[1].charAt(0) == 'L') ? address_type.LONG : address_type.SHORT ; //convert S/L to 0/1 
+        Message msg=Message.obtain();
+        msg.what=message_type.LOCO_ADDR;
+        msg.arg1=new Integer(ras[0]);  //convert address to int and pass in arg1
+        msg.arg2=addresslength;
+        msg.obj=new String(whichThrottle);  //pass T or S in message
+        mainapp.comm_msg_handler.sendMessage(msg);
+
+        end_this_activity();
+
+    };
+  }
+
   //Handle pressing of the back button to simply return to caller 
   @Override
   public boolean onKeyDown(int key, KeyEvent event)
@@ -270,18 +307,30 @@ public class select_loco extends Activity
                                                                  android.R.layout.simple_spinner_item);
     spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     address_spinner.setAdapter(spinner_adapter);
+
+    //Set up a list adapter to contain the current roster list.
+    roster_list=new ArrayList<HashMap<String, String> >();
+    roster_list_adapter=new SimpleAdapter(this, roster_list, R.layout.roster_list_item, 
+    		new String[] {"roster_name","roster_address"},
+            new int[] {R.id.roster_name_label, R.id.roster_address_label});
+    ListView roster_list_view=(ListView)findViewById(R.id.roster_list);
+    roster_list_view.setAdapter(roster_list_adapter);
+    roster_list_view.setOnItemClickListener(new roster_item_ClickListener()); 
+    refresh_roster_list();
+
     //Set up a list adapter to allow adding the list of recent engines to the UI.
-    engine_list=new ArrayList<HashMap<String, String> >();
-    list_adapter=new SimpleAdapter(this, engine_list, R.layout.engine_list_item, new String[] {"engine"},
-                                   new int[] {R.id.engine_item_label});
+    recent_engine_list=new ArrayList<HashMap<String, String> >();
+    recent_list_adapter=new SimpleAdapter(this, recent_engine_list, R.layout.engine_list_item, 
+    		new String[] {"engine"},
+            new int[] {R.id.engine_item_label});
     ListView engine_list_view=(ListView)findViewById(R.id.engine_list);
-    engine_list_view.setAdapter(list_adapter);
+    engine_list_view.setAdapter(recent_list_adapter);
     engine_list_view.setOnItemClickListener(new engine_item());
 
     engine_address_list=new ArrayList<Integer>();
     address_size_list=new ArrayList<Integer>();
     //Populate the ListView with the recent engines saved in a file. This will be stored in
-    // /sdcard/engine_driver/engine_list.txt
+    // /sdcard/engine_driver/recent_engine_list.txt
     try
     {
       File sdcard_path=Environment.getExternalStorageDirectory();
@@ -292,7 +341,7 @@ public class select_loco extends Activity
         if(engine_driver_dir.exists() && engine_driver_dir.isDirectory())
         {
           //TODO: Fix things if the path is not a directory.
-          File engine_list_file=new File(engine_driver_dir, "engine_list.txt");
+          File engine_list_file=new File(engine_driver_dir, "recent_engine_list.txt");
           if(engine_list_file.exists())
           {
             BufferedReader list_reader=new BufferedReader(new FileReader(engine_list_file));
@@ -303,9 +352,9 @@ public class select_loco extends Activity
               address_size_list.add(Integer.decode(line.substring(line.indexOf(':')+1, line.length())));
               HashMap<String, String> hm=new HashMap<String, String>();
               hm.put("engine", engine_address_list.get(engine_address_list.size()-1).toString());
-              engine_list.add(hm);
+              recent_engine_list.add(hm);
             }
-            list_adapter.notifyDataSetChanged();
+            recent_list_adapter.notifyDataSetChanged();
           }
         }
       }
