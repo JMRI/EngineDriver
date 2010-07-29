@@ -145,46 +145,50 @@ public class function_settings extends Activity {
         //Save the valid function labels to the settings.txt file.
         File sdcard_path=Environment.getExternalStorageDirectory();
         File settings_file=new File(sdcard_path, "engine_driver/function_settings.txt");
-        PrintWriter settings_output;
-        try
-        {
-          settings_output=new PrintWriter(settings_file);
-         
-          ViewGroup t = (ViewGroup) findViewById(R.id.label_func_table); //table
-          ViewGroup r;  //row
-          //loop thru each row, Skipping the first one (the headings)  format is "label:function#"
-          for(int i = 1; i < t.getChildCount(); i++){
-              r = (ViewGroup)t.getChildAt(i);
-              //get the 2 inputs from each row
-              String label = ((EditText)r.getChildAt(0)).getText().toString();
-              label = label.replace("\n", " ");  //remove newlines
-              label = label.replace(":", " ");   //   and colons, as they confuse the save format
-              String sfunc = ((EditText)r.getChildAt(1)).getText().toString();
-              //ignore blank labels and function  
-              if (label.length() > 0 && sfunc.length() > 0) {
-                //verify function is valid number between 0 and 28
-            	int func = -1;
-                try {
-                    func = Integer.parseInt(sfunc);
-                } catch (NumberFormatException e) {
-                // if invalid, don't set func
-                }
-            	// write out valid items to settings
-                if (func >= 0 && func <= 28 ) {
-                    settings_output.format("%s:%s\n", label, func);
-                }
-              }
-              
-          }
-
-          settings_output.flush();
-          settings_output.close();
-          Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();
-        }
-        catch(IOException except)
-        {
-          Log.e("settings_activity", "Error creating a PrintWriter, IOException: "+except.getMessage());
-          Toast.makeText(getApplicationContext(), "Save Settings Failed.", Toast.LENGTH_LONG).show();
+        if (settings_file != null) {
+	        PrintWriter settings_output;
+	        try
+	        {
+	          settings_output=new PrintWriter(settings_file);
+	         
+	          ViewGroup t = (ViewGroup) findViewById(R.id.label_func_table); //table
+	          ViewGroup r;  //row
+	          //loop thru each row, Skipping the first one (the headings)  format is "label:function#"
+	          for(int i = 1; i < t.getChildCount(); i++){
+	              r = (ViewGroup)t.getChildAt(i);
+	              //get the 2 inputs from each row
+	              String label = ((EditText)r.getChildAt(0)).getText().toString();
+	              label = label.replace("\n", " ");  //remove newlines
+	              label = label.replace(":", " ");   //   and colons, as they confuse the save format
+	              String sfunc = ((EditText)r.getChildAt(1)).getText().toString();
+	              //ignore blank labels and function  
+	              if (label.length() > 0 && sfunc.length() > 0) {
+	                //verify function is valid number between 0 and 28
+	            	int func = -1;
+	                try {
+	                    func = Integer.parseInt(sfunc);
+	                } catch (NumberFormatException e) {
+	                // if invalid, don't set func
+	                }
+	            	// write out valid items to settings
+	                if (func >= 0 && func <= 28 ) {
+	                    settings_output.format("%s:%s\n", label, func);
+	                }
+	              }
+	              
+	          }
+	
+	          settings_output.flush();
+	          settings_output.close();
+	          Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();
+	        }
+	        catch(IOException except)
+	        {
+	          Log.e("settings_activity", "Error creating a PrintWriter, IOException: "+except.getMessage());
+	          Toast.makeText(getApplicationContext(), "Save Settings Failed." +except.getMessage(), Toast.LENGTH_LONG).show();
+	        }
+        } else { //if settings_file not null
+        	Toast.makeText(getApplicationContext(), "Error: Settings file is null", Toast.LENGTH_LONG).show();
         }
     }
     

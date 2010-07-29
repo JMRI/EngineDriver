@@ -104,6 +104,19 @@
          android:enabled="false" />
    </RelativeLayout>
    <TextView
+      android:text="@string/roster_list"
+      android:textColor="#FFFFFF"
+      android:background="#8c8a8c"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content" />
+   <ListView
+      android:id="@+id/roster_list"
+      android:layout_width="fill_parent"
+      android:layout_height="0dp"
+      android:layout_weight="0.5"
+   >
+   </ListView>
+   <TextView
       android:text="@string/recent_engines"
       android:textColor="#FFFFFF"
       android:background="#8c8a8c"
@@ -113,7 +126,7 @@
       android:id="@+id/engine_list"
       android:layout_width="fill_parent"
       android:layout_height="0dp"
-      android:layout_weight="1"
+      android:layout_weight="0.5"
    >
    </ListView>
    <TextView

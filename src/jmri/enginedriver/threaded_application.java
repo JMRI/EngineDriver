@@ -16,7 +16,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-/* Version 0.3 - changes/additions by mstevetodd
+/*Version 0.3 - changes/additions by mstevetodd
  *   function labels for throttle, hiding unused
  *   separate rev-stop-fwd buttons
  *   read responses from withrottle and store in shared app variables
@@ -30,22 +30,16 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   send hardware address as HU<throttle-name>  (prevents duplicates in WiThrottle server)
  *   changed process namespace from net.lnxgfx to jmri.enginedriver
  *   added html About page
- */
-
-/* Version 0.5 - changes/additions by mstevetodd
+ *Version 0.5 - changes/additions by mstevetodd
  *  added select loco button to ed screen, call ed direct from connect
  *  added 29 function buttons for both throttles, using scrollers
  *  disable buttons and slider and shrink screen usage for unselected loco
  *  adjust function buttons to indicate current state from WiT server
  *  added release buttons to sl activity
- */
-
-/* Version 0.6 - changes/additions by mstevetodd
+ *Version 0.6 - changes/additions by mstevetodd
  *  added preference for Maximum Throttle, to set a maximum speed to be sent
  *  lowered minSDK from 7 to 4 (to allow use by Android 1.6 devices)  had to copy drawables to drawable folder
- */
-
-/* Version 0.7 - changes/additions by mstevetodd
+ *Version 0.7 - changes/additions by mstevetodd
  *  prevent acquire with blank loco address (was crashing)
  *  new Turnouts display showing list of defined turnouts, current state, updated on change
  *  toggle turnout on list click
@@ -53,15 +47,18 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *  new Layout Power control activity
  *  new Route control activity (clone of Turnouts)
  *  enhanced titles on all activities
- */
-/* Version 0.8 - changes/additions by mstevetodd
+ *Version 0.8 - changes/additions by mstevetodd
  *  added NCE to hardware system list (oversight)
  *  added preference to default Long/Short/Auto for loco address length
  *  leading 0 was treated as octal in select_loco, made it stop doing that 
+ *  show disabled Copy button in function settings
+ *Version 0.9 - changes/additions by mstevetodd
+ *  adding roster list to select_loco screen
  */
 /*
  *   TODO: figure out issue with server discovery on Incredible
  *   TODO: allow compile/run at Android 1.5 (SDK 3) currently crashes when thread starts and tries to resolve android.net.wifi.WifiManager.createMulticastLock
+ *   TODO: provide "reset" function to delete config files
  *   TODO: add consisting features
  *   TODO: toast messages on release of loco and update of preferences
  *   TODO: make private stuff private
@@ -101,8 +98,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: show error if invalid entry
  * power_control:
  *   TODO: use JMRI images for off/on/unknown (instead of words)
- * function_settings:
- *   TODO: show disabled Copy button
  *
  * These require changes to WiThrottle
  *   TODO: get current status (speed, direction, speed steps?)  On request would be best.
@@ -174,6 +169,7 @@ public class threaded_application extends Application
 	String[] rt_states;
 	boolean rt_allowed = false;  //default route support to off
     HashMap<String, String> rt_state_names;
+    HashMap<String, String> roster_entries;
 
 	String power_state;
 	int heartbeat_interval; //heartbeat interval in seconds
@@ -266,6 +262,7 @@ public class threaded_application extends Application
             rt_system_names = null;
             rt_user_names = null;
             rt_state_names = null;
+            roster_entries = null;
             
             try { host_address=InetAddress.getByName(host_ip); }
             catch(UnknownHostException except) {
@@ -486,6 +483,7 @@ public class threaded_application extends Application
     	  switch (response_str.charAt(1)) {
     	  	case 'L': 
     	  		roster_list_string = response_str.substring(2);  //set app variable
+	  			process_roster_list(response_str);  //process roster list
     	  	    break;
     	  	
     	  	case 'F': 
@@ -559,6 +557,25 @@ public class threaded_application extends Application
       if (power_control_msg_handler != null) { power_control_msg_handler.sendMessage(msg); }
       
     }  //end of process_response
+
+    //parse roster list into appropriate app variable array
+    //  RL2]\[NS2591}|{2591}|{L]\[NS4805}|{4805}|{L
+    private void process_roster_list(String response_str) {
+    	//clear the global variable
+    	roster_entries = new HashMap<String, String>();
+
+    	String[] ta = splitByString(response_str,"]\\[");  //initial separation 
+    	//initialize app arrays (skipping first)
+    	int i = 0;
+    	for (String ts : ta) {
+    		if (i > 0) { //skip first chunk
+    			String[] tv = splitByString(ts,"}|{");  //split these into name, address and length
+    			roster_entries.put(tv[0],tv[1]+"("+tv[2]+")"); //roster name is hashmap key, value is address(L or S), e.g.  2591(L)
+    		}  //end if i>0
+    		i++;
+    	}  //end for
+    }
+
 
     //parse turnout list into appropriate app variable array
 	//  PTA<NewState><SystemName>
@@ -677,8 +694,8 @@ public class threaded_application extends Application
        	 }  //end if i>0
        	 i++;
         }  //end for
-        
      }
+
     //parse function state string into appropriate app variable array
     private void process_function_state(String response_str) {
     

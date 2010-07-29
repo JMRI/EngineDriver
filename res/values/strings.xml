@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
     <string name="recent_connections">Recent Connections</string>
     <string name="select_loco">Enter Locomotive Address to Acquire</string>
     <string name="acquire_button">Acquire</string>
+    <string name="roster_list">-OR- Select from Roster Entries</string>
     <string name="recent_engines">-OR- Select from Recent Locomotives</string>
     <string name="direction">Fwd</string>
     <string name="speed">Speed:</string>
