@@ -16,107 +16,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-/*Version 0.3 - changes/additions by mstevetodd
- *   function labels for throttle, hiding unused
- *   separate rev-stop-fwd buttons
- *   read responses from withrottle and store in shared app variables
- *   forward responses to other activities, so they can update as needed
- *   advance screens only upon successful responses
- *   release loco when leaving throttle activity, with pref for stopping loco
- *   screen and messaging additions and edits to provide more feedback to user
- *   set short timeout on socket open and reads to prevent app from "hanging" on long timeout
- *   added heartbeat logic (when set on withrottle side)
- *   copy function labels from roster (note: they do not include sticky bit)
- *   send hardware address as HU<throttle-name>  (prevents duplicates in WiThrottle server)
- *   changed process namespace from net.lnxgfx to jmri.enginedriver
- *   added html About page
- *Version 0.5 - changes/additions by mstevetodd
- *  added select loco button to ed screen, call ed direct from connect
- *  added 29 function buttons for both throttles, using scrollers
- *  disable buttons and slider and shrink screen usage for unselected loco
- *  adjust function buttons to indicate current state from WiT server
- *  added release buttons to sl activity
- *Version 0.6 - changes/additions by mstevetodd
- *  added preference for Maximum Throttle, to set a maximum speed to be sent
- *  lowered minSDK from 7 to 4 (to allow use by Android 1.6 devices)  had to copy drawables to drawable folder
- *Version 0.7 - changes/additions by mstevetodd
- *  prevent acquire with blank loco address (was crashing)
- *  new Turnouts display showing list of defined turnouts, current state, updated on change
- *  toggle turnout on list click
- *  direct entry of turnout address with toggle and throw/close buttons, disable controls on not allowed
- *  new Layout Power control activity
- *  new Route control activity (clone of Turnouts)
- *  enhanced titles on all activities
- *Version 0.8 - changes/additions by mstevetodd
- *  added NCE to hardware system list (oversight)
- *  added preference to default Long/Short/Auto for loco address length
- *  leading 0 was treated as octal in select_loco, made it stop doing that 
- *  show disabled Copy button in function settings
- *Version 0.9 - changes/additions by mstevetodd
- *  added roster list to select_loco screen (hidden if no entries)
- */
-/*
- *   TODO: figure out issue with server discovery on Incredible
- *   TODO: allow compile/run at Android 1.5 (SDK 3) currently crashes when thread starts and tries to resolve android.net.wifi.WifiManager.createMulticastLock
- *   TODO: provide "reset" function to delete config files
- *   TODO: add consisting features
- *   TODO: toast messages on release of loco and update of preferences
- *   TODO: make private stuff private
- *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
- * turnouts
- *   TODO: default "system" based on items in use
- *   TODO: update turnout list on change not working after reentry to turnout view (worked around by finishing on exit)
- *   TODO: use PTT titles for Turnouts/Turnout
- * connection
- *   TODO: add pref for auto-connect on discovery
- *   TODO: allow entry of server by name in addition to IP address
- * threaded_application
- *   TODO: Move wifi listener to OnStart from OnCreate (so it works each time activity gets focus), and add OnPause (or somesuch) to turn off listener
- *   TODO: don't add discovered server more than once (restart WiT to see this)
- *   TODO: remove discovered servers no longer available
- *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
- *   TODO: add client-side conversation logging for easier debugging
- *   TODO: check for error on send and do something with it 
- *   TODO: improve error handling of read error (sometimes it loops sending toast messages) 
- *   TODO: move socket timeout values to preference
- *   TODO: determine why ip by server name won't resolve
- *   TODO: redo hard-coded 29 in function arrays
- *   TODO: split listener creation into more try blocks for better error handling
- * engine_driver:
- *   TODO: don't skip loading of functions if sd card not writeable
- *   TODO: add graphics (slider, stop, directions, functions?)  add colors
- *   TODO: add throttle name to title bar
- *   TODO: allow adding selected turnout(s) to throttle view
- *   TODO: in ed exit, don't send release if "Not Set"
- *   TODO: get 2nd line of label text working again
- *   TODO: unset all states when loco not selected
- *   TODO: allow for different button arrangements for each loco, suggest using roster entry if passed, client-side settings if not
- * select_loco:
- *   TODO: show long/short in list
- *   TODO: deal with key-handling on Incredible (events not processing while keypad is up)
- *   TODO: don't show or allow entry of loco if already in use on "other" throttle
- *   TODO: simplify select_loco by removing handler
- * preferences:
- *   TODO: show error if invalid entry
- * power_control:
- *   TODO: use JMRI images for off/on/unknown (instead of words)
- *
- * These require changes to WiThrottle
- *   TODO: get current status (speed, direction, speed steps?)  On request would be best.
- *   TODO: add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
- *   TODO: disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
- *   TODO: pull more details from roster
- *   
- * Other potential changes to WiThrottle:
- *   ) remove throttle from withrottle screen on loss of connection (estop)
- *   ) add response for heartbeat (so client will know it's still alive)  status message would be ideal
- *   ) allow restart of withrottle (variable UI needs to be cleared when it closes)
- *   ) fix read error looping on loss of connection to device
- *   ) add "E"rror response
- * 
- * */
-
 package jmri.enginedriver;
+
+/* TODO: see changelog-and-todo-list.txt for complete list of project to-do's */
 
 import android.app.Application;
 import android.os.Handler;
@@ -126,6 +28,7 @@ import java.net.*;
 import java.io.*;
 
 import android.util.Log;
+import android.view.View;
 
 import javax.jmdns.*;
 import android.net.wifi.WifiManager;
@@ -459,6 +362,7 @@ public class threaded_application extends Application
     	  PTL[<SystemTurnoutName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
     	  PTA<NewTurnoutState><SystemName>
     	  PPA<NewPowerState> where state 0=off, 1=on, 2=unknown
+    	  TODO: add remaining items, or move examples into code below
     	  */
 
     	//send response to debug log for review
@@ -466,11 +370,12 @@ public class threaded_application extends Application
 
         switch (response_str.charAt(0)) {
 	  	case 'T': 
-	  		loco_string_T = response_str.substring(1);  //set app variable
+	  		loco_string_T = get_rostername_from_address_string(response_str.substring(1));  //set app variable
+	  		
  	  	    break;
 	  	
 	  	case 'S': 
-	  		loco_string_S = response_str.substring(1);  //set app variable
+	  		loco_string_S = get_rostername_from_address_string(response_str.substring(1));  //set app variable
 	  	    break;
 	  	
 	  	case 'V': 
@@ -721,9 +626,21 @@ public class threaded_application extends Application
     	 }  //end if i==0
     	 i++;
      }  //end for
-     
   }
-  
+
+	// get the roster name from address string 123(L).  Return input if not found in roster
+    private String get_rostername_from_address_string(String response_str) {
+    	
+    	if ((roster_entries == null) || (roster_entries.size() == 0)) { return response_str; } //return input if no roster
+
+    	for (String rostername : roster_entries.keySet()) {  // loop thru entries, 
+    		if (roster_entries.get(rostername).equals(response_str)) { //looking for value = input parm
+    			return rostername;  //if found, return the roster name (key)
+    		}
+    	}
+    	return response_str; //return input if not found
+    }
+    
     //send the passed-in message to the socket
     private void withrottle_send(String msg) {
     	if (output_pw != null) {
