@@ -40,8 +40,7 @@ public class function_settings extends Activity {
         String s = mainapp.roster_function_string_T;
         TextView v=(TextView)findViewById(R.id.fb_copy_labels_from_roster);
         if (s == null) {
-//          v.setVisibility(GONE);  //hide button if no roster
-            v.setEnabled(false);  //hide button if no roster
+            v.setEnabled(false);  //disable button if no roster
         } else { 
           //Set the button callback.
           Button button=(Button)findViewById(R.id.fb_copy_labels_from_roster);
