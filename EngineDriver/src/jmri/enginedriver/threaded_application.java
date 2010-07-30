@@ -53,7 +53,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *  leading 0 was treated as octal in select_loco, made it stop doing that 
  *  show disabled Copy button in function settings
  *Version 0.9 - changes/additions by mstevetodd
- *  adding roster list to select_loco screen
+ *  added roster list to select_loco screen (hidden if no entries)
  */
 /*
  *   TODO: figure out issue with server discovery on Incredible
@@ -83,6 +83,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: redo hard-coded 29 in function arrays
  *   TODO: split listener creation into more try blocks for better error handling
  * engine_driver:
+ *   TODO: don't skip loading of functions if sd card not writeable
  *   TODO: add graphics (slider, stop, directions, functions?)  add colors
  *   TODO: add throttle name to title bar
  *   TODO: allow adding selected turnout(s) to throttle view
@@ -91,8 +92,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   TODO: unset all states when loco not selected
  *   TODO: allow for different button arrangements for each loco, suggest using roster entry if passed, client-side settings if not
  * select_loco:
+ *   TODO: show long/short in list
+ *   TODO: deal with key-handling on Incredible (events not processing while keypad is up)
  *   TODO: don't show or allow entry of loco if already in use on "other" throttle
- *   TODO: add "Select from Roster" list
  *   TODO: simplify select_loco by removing handler
  * preferences:
  *   TODO: show error if invalid entry

@@ -452,49 +452,45 @@ public void onStart() {
 	  aLbl = new ArrayList<String>();
 	  aFnc = new ArrayList<Integer>();
 
-	    try
-	    {
-	      File sdcard_path=Environment.getExternalStorageDirectory();
-	      if(sdcard_path.canWrite())
-	      {
-	        //First, determine if the engine_driver directory exists. If not, create it.
-	        File engine_driver_dir=new File(sdcard_path, "engine_driver");
-	        if(!engine_driver_dir.exists()) { engine_driver_dir.mkdir(); }
+	  try	  {
+		  File sdcard_path=Environment.getExternalStorageDirectory();
+		  //		  if(sdcard_path.canWrite()) {  //TODO: handle false better
 
-	        if(engine_driver_dir.exists() && engine_driver_dir.isDirectory())
-	        {
-	          //TODO: Fix things if the path is not a directory.
-	          File settings_file=new File(engine_driver_dir, "function_settings.txt");
-	          if(settings_file.exists()) {
-	            BufferedReader settings_reader=new BufferedReader(new FileReader(settings_file));
-	            //read settings into local arrays
-	            while(settings_reader.ready()) {
-	              String line=settings_reader.readLine();
-	              String temp[] = line.split(":");
-	              aLbl.add(temp[0]);
-	              aFnc.add(Integer.parseInt(temp[1]));
-	            }
-	          } else {  //hard-code some buttons and default the rest
-	              aLbl.add("Light");aFnc.add(0); //aTgl.add(true);
-	              aLbl.add("Bell"); aFnc.add(1); //aTgl.add(true);
-	              aLbl.add("Horn"); aFnc.add(2); //aTgl.add(false);
-	              for(int k = 3; k <= 27; k++) {
-	                aLbl.add(String.format("%d",k));
-	                aFnc.add(k);
-	              }
-	          }
-	        }
-	      }
-	    }
-	    catch (IOException except) { Log.e("settings_activity", "Could not read file "+except.getMessage()); }
+		  //First, determine if the engine_driver directory exists. If not, create it.
+		  //			  File engine_driver_dir=new File(sdcard_path, "engine_driver");
+		  //			  if(!engine_driver_dir.exists()) { engine_driver_dir.mkdir(); }
 
-	    // loop through all function buttons and
-	    //   set label and dcc functions (based on settings) or hide if no label
-	    
-	    ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_T); //table
-	    set_function_buttons_for_view(tv, "T");
-	    tv = (ViewGroup) findViewById(R.id.function_buttons_table_S); //table
-	    set_function_buttons_for_view(tv, "S");
+		  //			  if(engine_driver_dir.exists() && engine_driver_dir.isDirectory())  {
+
+		  File settings_file=new File(sdcard_path + "/engine_driver/function_settings.txt");
+		  if(settings_file.exists()) {  //if file found, use it for settings arrays
+			  BufferedReader settings_reader=new BufferedReader(new FileReader(settings_file));
+			  //read settings into local arrays
+			  while(settings_reader.ready()) {
+				  String line=settings_reader.readLine();
+				  String temp[] = line.split(":");
+				  aLbl.add(temp[0]);
+				  aFnc.add(Integer.parseInt(temp[1]));
+			  }
+		  } else {  //hard-code some buttons and default the rest
+			  aLbl.add("Light");aFnc.add(0); //aTgl.add(true);
+			  aLbl.add("Bell"); aFnc.add(1); //aTgl.add(true);
+			  aLbl.add("Horn"); aFnc.add(2); //aTgl.add(false);
+			  for(int k = 3; k <= 27; k++) {
+				  aLbl.add(String.format("%d",k));
+				  aFnc.add(k);
+			  }
+		  }
+	  }
+	  catch (IOException except) { Log.e("settings_activity", "Could not read file "+except.getMessage()); }
+
+	  // loop through all function buttons and
+	  //   set label and dcc functions (based on settings) or hide if no label
+
+	  ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_T); //table
+	  set_function_buttons_for_view(tv, "T");
+	  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S); //table
+	  set_function_buttons_for_view(tv, "S");
 
   }
 

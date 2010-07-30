@@ -116,4 +116,5 @@
 
 
    
+<uses-sdk android:minSdkVersion="3"></uses-sdk>
 </manifest> 

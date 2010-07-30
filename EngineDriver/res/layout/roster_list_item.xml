@@ -23,11 +23,13 @@
       android:id="@+id/roster_name_label"
       android:textAppearance="?android:attr/textAppearanceLarge"
       android:padding="5dp"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
+      android:layout_weight="0.6"
       android:layout_height="wrap_content" />
    <TextView
       android:id="@+id/roster_address_label"
       android:textAppearance="?android:attr/textAppearanceLarge"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
+      android:layout_weight="0.4"
       android:layout_height="wrap_content" />
 </LinearLayout>
