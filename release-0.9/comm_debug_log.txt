@@ -1,0 +1,62 @@
+The following log captured while performing the following: 
+connect, acquire 2591, forward, speed 21, turn on light and bell, 
+acquire 4805, forward, speed 21, turn on light and bell,
+changed turnout 12 (externally)
+release 4805, then back button twice to exit program
+
+06-22 15:44:59.674: DEBUG/Engine_Driver(322): -->:NEngine Driver
+06-22 15:44:59.684: DEBUG/Engine_Driver(322): -->:HUEngine Driver
+06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:VN1.5
+06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:RL2]\[NS2591}|{2591}|{L]\[NS4805}|{4805}|{L
+06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:PPA2
+06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
+06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:PTL]\[LT12}|{my12}|{1
+06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4
+06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:RCC0
+06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:*30
+06-22 15:45:05.993: DEBUG/Engine_Driver(322): <--:T2591(L)
+06-22 15:45:05.993: DEBUG/Engine_Driver(322): <--:RF29}|{2591(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
+06-22 15:45:05.993: DEBUG/Engine_Driver(322): <--:RPF}|{T]\[F0}|{false]\[F1}|{false]\[F2}|{false]\[F3}|{false]\[F4}|{false]\[F5}|{false]\[F6}|{false]\[F7}|{false]\[F8}|{false]\[F9}|{false]\[F10}|{false]\[F11}|{false]\[F12}|{false]\[F13}|{false]\[F14}|{false]\[F15}|{false]\[F16}|{false]\[F17}|{false]\[F18}|{false]\[F19}|{false]\[F20}|{false]\[F21}|{false]\[F22}|{false]\[F23}|{false]\[F24}|{false]\[F25}|{false]\[F26}|{false]\[F27}|{false]\[F28}|{false
+06-22 15:45:06.003: DEBUG/Engine_Driver(322): -->:TL2591
+06-22 15:45:06.013: DEBUG/Engine_Driver(322): -->:TR1
+06-22 15:45:06.013: DEBUG/Engine_Driver(322): TV1
+06-22 15:45:06.013: DEBUG/Engine_Driver(322): TV0
+06-22 15:45:06.033: DEBUG/Engine_Driver(322): -->:*+
+06-22 15:45:06.443: DEBUG/Engine_Driver(322): -->:*
+06-22 15:45:15.584: DEBUG/Engine_Driver(322): -->:TR1
+06-22 15:45:18.483: DEBUG/Engine_Driver(322): -->:TV27
+06-22 15:45:23.693: DEBUG/Engine_Driver(322): -->:TF10
+06-22 15:45:23.963: DEBUG/Engine_Driver(322): -->:TF00
+06-22 15:45:24.293: DEBUG/Engine_Driver(322): <--:RPF}|{T]\[F0}|{true
+06-22 15:45:32.544: DEBUG/Engine_Driver(322): -->:*
+06-22 15:45:33.224: DEBUG/Engine_Driver(322): -->:TF11
+06-22 15:45:33.384: DEBUG/Engine_Driver(322): -->:TF01
+06-22 15:45:33.468: DEBUG/Engine_Driver(322): <--:RPF}|{T]\[F1}|{true
+06-22 15:45:38.343: DEBUG/Engine_Driver(322): -->:SL4805
+06-22 15:45:38.373: DEBUG/Engine_Driver(322): -->:SR1
+06-22 15:45:38.373: DEBUG/Engine_Driver(322): SV1
+06-22 15:45:38.373: DEBUG/Engine_Driver(322): SV0
+06-22 15:45:38.373: DEBUG/Engine_Driver(322): -->:*+
+06-22 15:45:38.693: DEBUG/Engine_Driver(322): <--:S4805(L)
+06-22 15:45:38.693: DEBUG/Engine_Driver(322): <--:RS29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Couple]\[Brake]\[DynBrk]\[Hose]\[ShtDwn]\[Fan]\[Clack]\[Assoc]\[ChgEng]\[Air Rls]\[Couple]\[AirPump]\[Assoc]\[Flange]\[ChgBell]\[ChgHorn]\[Assoc]\[BellVol]\[HornVol]\[EngVol]\[AirRls]\[Flange]\[SftyPop]\[Sand]\[
+06-22 15:45:38.693: DEBUG/Engine_Driver(322): <--:RPF}|{S]\[F0}|{false]\[F1}|{false]\[F2}|{false]\[F3}|{false]\[F4}|{false]\[F5}|{false]\[F6}|{false]\[F7}|{false]\[F8}|{false]\[F9}|{false]\[F10}|{false]\[F11}|{false]\[F12}|{false]\[F13}|{false]\[F14}|{false]\[F15}|{false]\[F16}|{false]\[F17}|{false]\[F18}|{false]\[F19}|{false]\[F20}|{false]\[F21}|{false]\[F22}|{false]\[F23}|{false]\[F24}|{false]\[F25}|{false]\[F26}|{false]\[F27}|{false]\[F28}|{false
+06-22 15:45:44.254: DEBUG/Engine_Driver(322): -->:SR0
+06-22 15:45:48.573: DEBUG/Engine_Driver(322): -->:SV27
+06-22 15:45:56.873: DEBUG/Engine_Driver(322): -->:SF10
+06-22 15:45:56.973: DEBUG/Engine_Driver(322): -->:SF00
+06-22 15:45:57.203: DEBUG/Engine_Driver(322): <--:RPF}|{S]\[F0}|{true
+06-22 15:45:58.173: DEBUG/Engine_Driver(322): -->:SF11
+06-22 15:45:58.253: DEBUG/Engine_Driver(322): -->:SF01
+06-22 15:45:58.523: DEBUG/Engine_Driver(322): <--:RPF}|{S]\[F1}|{true
+06-22 15:45:58.643: DEBUG/Engine_Driver(322): -->:*
+06-22 15:45:59:543: DEBUG/Engine_Driver(322):<--:PTA2LT12
+06-22 15:46:06.314: DEBUG/Engine_Driver(322): -->:SV0
+06-22 15:46:06.314: DEBUG/Engine_Driver(322): -->:Sr
+06-22 15:46:06.364: DEBUG/Engine_Driver(322): <--:SNot Set
+06-22 15:46:06.464: DEBUG/Engine_Driver(322): -->:SV0
+06-22 15:46:14.643: DEBUG/Engine_Driver(322): -->:TV0
+06-22 15:46:14.693: DEBUG/Engine_Driver(322): -->:Tr
+06-22 15:46:14.703: DEBUG/Engine_Driver(322): -->:SV0
+06-22 15:46:14.703: DEBUG/Engine_Driver(322): -->:Sr
+06-22 15:46:14.723: DEBUG/Engine_Driver(322): -->:Q
+06-22 15:46:14.723: DEBUG/Engine_Driver(322): -->:*-
