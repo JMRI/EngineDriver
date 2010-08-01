@@ -33,6 +33,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.io.*;
@@ -165,32 +166,51 @@ public class engine_driver extends Activity {
 	  }
 } //end of set_function_buttons_for_view
 
-  //helper function to loop thru buttons, setting appearance based on current function state (on or off)
+  @SuppressWarnings("unchecked")
+//helper function to loop thru buttons, setting appearance based on current function state (on or off)
   void set_function_states(String whichThrottle)  {
 	  ViewGroup vg; //table
 	  ViewGroup r;  //row
 	  Button b; //button
 	  boolean[] fs;  //copy of this throttle's function state array
 	  int k = 0; //counter for button array
-  	  if (whichThrottle.equals("T")) {
+	  LinkedHashMap<Integer, String> function_labels_temp = new  LinkedHashMap<Integer, String>();
+	  
+	  if (whichThrottle.equals("T")) {
   		 vg = (ViewGroup)findViewById(R.id.function_buttons_table_T);
   		 fs = mainapp.function_states_T;
+  		 if (mainapp.function_labels_T != null && mainapp.function_labels_T.size()>0) {  //use roster functions or default functions
+  			function_labels_temp = mainapp.function_labels_T;
+  		 } else {
+   			function_labels_temp = mainapp.function_labels_default;
+  		 }
   	  } else {
 		 vg = (ViewGroup)findViewById(R.id.function_buttons_table_S);
   		 fs = mainapp.function_states_S;
+  		 if (mainapp.function_labels_S != null && mainapp.function_labels_S.size()>0) {  //use roster functions or default functions
+   			function_labels_temp = mainapp.function_labels_S;
+  		 } else {
+   			function_labels_temp = mainapp.function_labels_default;
+ 		 }
   	  }
+	  
+	  //put values in array for indexing in next step TODO: find direct way to do this
+	  ArrayList<Integer> aList = new ArrayList<Integer>();
+	  for (Integer f : function_labels_temp.keySet()) {
+		  aList.add(f);
+	  }
+
 	  for(int i = 0; i < vg.getChildCount(); i++) {
 	      r = (ViewGroup)vg.getChildAt(i);
 	      for(int j = 0; j < r.getChildCount(); j++) {
-/*	    	if (k < aFnc.size()) {  //TODO: short-circuit this
+	    	if (k < aList.size()) {  //TODO: short-circuit this
 		      	b = (Button)r.getChildAt(j);
-		      	if (fs[aFnc.get(k)]) {  //get function number for kth button, and look up state in shared variable
+		      	if (fs[aList.get(k)]) {  //get function number for kth button, and look up state in shared variable
 			      	  b.setTypeface(null, Typeface.ITALIC);
 		      	} else {
 			      	  b.setTypeface(null, Typeface.NORMAL);
 		      	}
 	    	}
-		      	*/
   	        k++;
 	      }
 	  }
