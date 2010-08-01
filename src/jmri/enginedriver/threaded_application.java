@@ -36,6 +36,7 @@ import android.net.wifi.WifiInfo;
 //import android.net.wifi.WifiManager.MulticastLock;
 import java.net.InetAddress;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -60,8 +61,11 @@ public class threaded_application extends Application
 	String loco_string_S = "Not Set"; //Loco Address string returned from the server for selected loco #1
 	String withrottle_version_string; //version of withrottle server
 	String roster_list_string; //roster list
-	String roster_function_string_T; //roster function list for selected loco #1
-	String roster_function_string_S; //roster function list for selected loco #1
+//	String roster_function_string_T; //roster function list for selected loco #1
+//	String roster_function_string_S; //roster function list for selected loco #2
+	LinkedHashMap<Integer, String> function_labels_T;  //function#s and labels from roster for throttle #1
+	LinkedHashMap<Integer, String> function_labels_S;  //function#s and labels from roster for throttle #2
+	LinkedHashMap<Integer, String> function_labels_default;  //function#s and labels from local settings
 	boolean[] function_states_T;  //current function states for first throttle
 	boolean[] function_states_S;  //current function states for second throttle
 	String[] to_system_names;
@@ -168,6 +172,10 @@ public class threaded_application extends Application
             rt_user_names = null;
             rt_state_names = null;
             roster_entries = null;
+      	  	function_labels_S = new LinkedHashMap<Integer, String>();
+      	  	function_labels_T = new LinkedHashMap<Integer, String>();
+      	  	function_labels_default = new LinkedHashMap<Integer, String>();
+
             
             try { host_address=InetAddress.getByName(host_ip); }
             catch(UnknownHostException except) {
@@ -224,12 +232,14 @@ public class threaded_application extends Application
   		    }
             if (whichThrottle.equals("T")) {
   		      loco_string_T = "Not Set"; 
-              roster_function_string_T = null;
+//              roster_function_string_T = null;
               loco_address_T = -1;
+              function_labels_T = new LinkedHashMap<Integer, String>();
             } else {
               loco_string_S = "Not Set"; 
-              roster_function_string_S = null;
+//              roster_function_string_S = null;
               loco_address_S = -1;
+              function_labels_S = new LinkedHashMap<Integer, String>();
             }
             withrottle_send(whichThrottle+"r");  //send release command
             break;
@@ -259,16 +269,18 @@ public class threaded_application extends Application
            //Set up an engine to control. The address of the engine is given in arg1, and the address type (long or short) is given in arg2.
           case message_type.LOCO_ADDR:
             //clear appropriate app-level shared variables so they can be reset
-        	whichThrottle = msg.obj.toString();
-            if (whichThrottle.equals("T")) {
-            		loco_string_T = "Not Set"; 
-                    roster_function_string_T = null;
-                    loco_address_T=msg.arg1;
-            } else {
-        		loco_string_S = "Not Set"; 
-                roster_function_string_S = null;
-                loco_address_S=msg.arg1;
-            }
+        	  whichThrottle = msg.obj.toString();
+        	  if (whichThrottle.equals("T")) {
+        		  loco_string_T = "Not Set"; 
+//        		  roster_function_string_T = null;
+        		  function_labels_T = new LinkedHashMap<Integer, String>();
+        		  loco_address_T=msg.arg1;
+        	  } else {
+        		  loco_string_S = "Not Set"; 
+//        		  roster_function_string_S = null;
+        		  function_labels_S = new LinkedHashMap<Integer, String>();
+        		  loco_address_S=msg.arg1;
+        	  }
 //            withrottle_send(String.format("T"+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", loco_address_T));
             withrottle_send(String.format(whichThrottle+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", msg.arg1));
                      //In order to get the engine to start, I must set a direction and some non-zero velocity and then set the velocity to zero. TODO: Fix this bug
@@ -393,12 +405,14 @@ public class threaded_application extends Application
 	  			process_roster_list(response_str);  //process roster list
     	  	    break;
     	  	
-    	  	case 'F': 
-    	  		roster_function_string_T = response_str.substring(2);  //set app variable for throttle 1
+    	  	case 'F':   //RF29}|{2591(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
+//    	  		roster_function_string_T = response_str.substring(2);  //set app variable for throttle 1  TODO: remove this
+    	  		process_roster_function_string(response_str.substring(2), "T");
     	  	    break;
         	  	
-    	  	case 'S': 
-    	  		roster_function_string_S = response_str.substring(2);  //set app variable for throttle 2
+    	  	case 'S': //RS29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
+//    	  		roster_function_string_S = response_str.substring(2);  //set app variable for throttle 2  TODO: remove this
+    	  		process_roster_function_string(response_str.substring(2), "S");
     	  	    break;
         	  	
     	  	case 'P': //Properties
@@ -464,6 +478,33 @@ public class threaded_application extends Application
       if (power_control_msg_handler != null) { power_control_msg_handler.sendMessage(msg); }
       
     }  //end of process_response
+
+    //parse roster functions list into appropriate app variable array
+    //  //RF29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
+    private void process_roster_function_string(String response_str, String whichThrottle) {
+    	//clear the appropriate global variable
+    	if (whichThrottle.equals("T")) {
+    		function_labels_T = new LinkedHashMap<Integer, String>();
+//    		function_labels_T.clear();
+    	} else {
+    		function_labels_S = new LinkedHashMap<Integer, String>();
+//    		function_labels_S.clear();
+    	}
+
+    	String[] ta = splitByString(response_str,"]\\[");  //split into list of labels
+    	//initialize app arrays (skipping first)
+    	int i = 0;
+    	for (String ts : ta) {
+    		if (i > 0 && !ts.equals("")) { //skip first chunk, which is length, and skip any blank entries
+    	    	if (whichThrottle.equals("T")) {  //populate the appropriate hashmap
+    	    		function_labels_T.put(i-1,ts); //index is hashmap key, value is label string
+    	    	} else {
+    	    		function_labels_S.put(i-1,ts); //index is hashmap key, value is label string
+    	    	}
+    		}  //end if i>0
+    		i++;
+    	}  //end for
+    }
 
     //parse roster list into appropriate app variable array
     //  RL2]\[NS2591}|{2591}|{L]\[NS4805}|{4805}|{L
@@ -690,46 +731,48 @@ public class threaded_application extends Application
 
     public void run()
     {
-      int intaddr = 0;
- 
-      //Set up to find a WiThrottle service via ZeroConf, not supported for OS 1.5 (SDK 3)
-if (android.os.Build.VERSION.SDK.equals("3")) {    	 
-    process_comm_error("WiFi discovery not supported.  Skipping.");
-} else {
-    try   {
-        WifiManager wifi = (WifiManager)threaded_application.this.getSystemService(Context.WIFI_SERVICE);
-        //Acquire a multicast lock. This allows us to obtain multicast packets, but consumes a bit more battery life.
-        //Release it as soon as possible (after the user has connected to a WiThrottle service, or this application is
-        //not the currently active one.
+    	int intaddr = 0;
 
-        multicast_lock=wifi.createMulticastLock("engine_driver");
-        multicast_lock.setReferenceCounted(true);
-        multicast_lock.acquire();
-        WifiInfo wifiinfo = wifi.getConnectionInfo();
-        intaddr = wifiinfo.getIpAddress();
-        if (intaddr != 0) {
-          byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
-                                       (byte)(intaddr >> 24 & 0xff) };
-          InetAddress addr = InetAddress.getByAddress(byteaddr);
-          String s = String.format("found intaddr=%d, addr=%s", intaddr, addr.toString());
-          Log.d("comm_thread_run", s);
+    	//Set up to find a WiThrottle service via ZeroConf, not supported for OS 1.5 (SDK 3)
+    	if (android.os.Build.VERSION.SDK.equals("3")) {    	 
+    		process_comm_error("WiFi discovery not supported.  Skipping.");
+    	} else {
+    		try   {
+    			WifiManager wifi = (WifiManager)threaded_application.this.getSystemService(Context.WIFI_SERVICE);
+    			//Acquire a multicast lock. This allows us to obtain multicast packets, but consumes a bit more battery life.
+    			//Release it as soon as possible (after the user has connected to a WiThrottle service, or this application is
+    			//not the currently active one.
 
-          jmdns=JmDNS.create(addr);
-          listener=new withrottle_listener();
-          jmdns.addServiceListener("_withrottle._tcp.local.", listener);
-        } else {
-          process_comm_error("No IP Address found.\nCheck your WiFi connection.");
-        }  //end of if intaddr==0
-     }  catch(IOException except) { 
-   	  Log.e("comm_thread_run", "Error creating withrottle listener: IOException: "+except.getMessage()); 
-         process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()+"\n"+except.getCause().getMessage()); 
-     }
-}     
-      Looper.prepare();
-      comm_msg_handler=new comm_handler();
-      Looper.loop();
+    			multicast_lock=wifi.createMulticastLock("engine_driver");
+    			multicast_lock.setReferenceCounted(true);
+    			multicast_lock.acquire();
+    			WifiInfo wifiinfo = wifi.getConnectionInfo();
+    			intaddr = wifiinfo.getIpAddress();
+    			if (intaddr != 0) {
+    				byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
+    						(byte)(intaddr >> 24 & 0xff) };
+    				InetAddress addr = InetAddress.getByAddress(byteaddr);
+    				String s = String.format("found intaddr=%d, addr=%s", intaddr, addr.toString());
+    				Log.d("comm_thread_run", s);
+
+    				jmdns=JmDNS.create(addr);
+    				listener=new withrottle_listener();
+    				jmdns.addServiceListener("_withrottle._tcp.local.", listener);
+    			} else {
+    				process_comm_error("No IP Address found.\nCheck your WiFi connection.");
+    			}  //end of if intaddr==0
+    		}  catch(IOException except) { 
+    			Log.e("comm_thread_run", "Error creating withrottle listener: IOException: "+except.getMessage()); 
+    			process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()+"\n"+except.getCause().getMessage()); 
+    		}
+    	}     
+    	Looper.prepare();
+    	comm_msg_handler=new comm_handler();
+    	Looper.loop();
     };
   }
+  
+  
   public void onCreate()
   {
 	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);

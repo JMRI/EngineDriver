@@ -39,6 +39,7 @@
  *  removed writeable check from read routines of settings and recent file loads (was causing it to randomly skip loading on Incredible)
  *  show long/short in recent locos list
  *  show roster names in throttle and selected loco
+ *  always use function labels from roster entry (if set)
  */
 /*
  *   TODO: figure out issue with server discovery on Incredible (debugging shows no errors on creation side, just never responds)
@@ -48,6 +49,7 @@
  *   TODO: toast messages on release of loco and update of preferences
  *   TODO: make private stuff private
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
+ *   TODO: rewrite procedural process_xxx functions into proper OO classes
  * turnouts
  *   TODO: default "system" based on items in use
  *   TODO: update turnout list on change not working after reentry to turnout view (worked around by finishing on exit)
@@ -68,9 +70,7 @@
  *   TODO: redo hard-coded 29 in function arrays
  *   TODO: split listener creation into more try blocks for better error handling
  * engine_driver:
- *   TODO: show roster name on loco buttons
- *   TODO: always use roster functions if populated
- *   TODO: don't use empty list of functions from roster entry
+ *   TODO: make selected buttons more obvious
  *   TODO: add graphics (slider, stop, directions, functions?)  add colors
  *   TODO: add throttle name to title bar
  *   TODO: allow adding selected turnout(s) to throttle view
