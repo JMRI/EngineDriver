@@ -37,9 +37,9 @@ public class function_settings extends Activity {
         if (get_settings_from_file()) {
         	move_settings_to_view();
         }
-        String s = mainapp.roster_function_string_T;
+//        String s = mainapp.roster_function_string_T;
         TextView v=(TextView)findViewById(R.id.fb_copy_labels_from_roster);
-        if (s == null) {
+        if (mainapp.function_labels_T == null || mainapp.function_labels_T.size()==0) {
             v.setEnabled(false);  //disable button if no roster
         } else { 
           //Set the button callback.
@@ -92,19 +92,15 @@ public class function_settings extends Activity {
     //replace arrays using data from roster entry (called by button)
     void get_settings_from_roster() {
 
-        String s = mainapp.roster_function_string_T;
-        s = s.replace("]\\[", "`");  //handle some odd stuff in format of roster string
-        String ra[] = s.split("`");
-        aLbl.clear();
-        aFnc.clear();
-    	//read settings into arrays, (skip first entry, which is length)
-        for(int i = 1; i < ra.length; i++) {
-                  aLbl.add(ra[i]);
-                  aFnc.add(i - 1);
-        }
-        
+    	aLbl.clear();
+    	aFnc.clear();
+    	for (Integer f : mainapp.function_labels_T.keySet()) {
+    		aLbl.add(mainapp.function_labels_T.get(f));
+    		aFnc.add(f);
+    	}
+
     }
-    
+
     //take data from arrays and update the editing view
     void move_settings_to_view() {
     	

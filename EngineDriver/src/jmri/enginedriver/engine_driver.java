@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.io.*;
@@ -58,9 +59,6 @@ public class engine_driver extends Activity {
   private Drawable button_pressed_drawable;  //hold background graphics for buttons
   private Drawable button_normal_drawable;
 
-  ArrayList<String> aLbl;
-  ArrayList<Integer> aFnc;
-
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class engine_driver_handler extends Handler {
 
@@ -76,10 +74,21 @@ public class engine_driver extends Activity {
 	      	  	  case 'S':
 		      	  		enable_disable_buttons(response_str.substring(0,1));  //pass whichthrottle
 	      	  	  break;
-	      	  	
+	      	  	  
+	      	  	  case 'R': //roster function labels
+	      	  		  if (response_str.charAt(1) == 'F') {
+	      	  			  ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
+	      	  			  set_function_buttons_for_view(tv, "T");
+	      	  			  enable_disable_buttons_for_view(tv, true);
+	      	  		  } else if (response_str.charAt(1) == 'S') {
+	      	  			  ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
+	      	  			  set_function_buttons_for_view(tv, "S");
+	      	  			  enable_disable_buttons_for_view(tv, true);
+	      	  		  }
+	      	  	  break;
 	        	}  //end of switch
 	        	
-	        	// refresh text labels
+	        	// refresh text labels on any response
 	        	set_labels();
 //	        	String response_str = msg.obj.toString();
 //	        	Toast.makeText(getApplicationContext(), "responsed with:" + response_str, Toast.LENGTH_LONG).show();  //debugging use only
@@ -173,7 +182,7 @@ public class engine_driver extends Activity {
 	  for(int i = 0; i < vg.getChildCount(); i++) {
 	      r = (ViewGroup)vg.getChildAt(i);
 	      for(int j = 0; j < r.getChildCount(); j++) {
-	    	if (k < aFnc.size()) {  //TODO: short-circuit this
+/*	    	if (k < aFnc.size()) {  //TODO: short-circuit this
 		      	b = (Button)r.getChildAt(j);
 		      	if (fs[aFnc.get(k)]) {  //get function number for kth button, and look up state in shared variable
 			      	  b.setTypeface(null, Typeface.ITALIC);
@@ -181,6 +190,7 @@ public class engine_driver extends Activity {
 			      	  b.setTypeface(null, Typeface.NORMAL);
 		      	}
 	    	}
+		      	*/
   	        k++;
 	      }
 	  }
@@ -446,21 +456,13 @@ public void onStart() {
   } //end of onCreate()
 
   //set up text label and dcc function for each button from settings and setup listeners
-  //TODO: unduplicate this code (in function_settings.java and engine_driver.java)
+  //TODO: move file reading to another function and only do when needed
   private void set_function_buttons() {
 
-	  aLbl = new ArrayList<String>();
-	  aFnc = new ArrayList<Integer>();
+	  mainapp.function_labels_default = new LinkedHashMap<Integer, String>();
 
 	  try	  {
 		  File sdcard_path=Environment.getExternalStorageDirectory();
-		  //		  if(sdcard_path.canWrite()) {  //TODO: handle false better
-
-		  //First, determine if the engine_driver directory exists. If not, create it.
-		  //			  File engine_driver_dir=new File(sdcard_path, "engine_driver");
-		  //			  if(!engine_driver_dir.exists()) { engine_driver_dir.mkdir(); }
-
-		  //			  if(engine_driver_dir.exists() && engine_driver_dir.isDirectory())  {
 
 		  File settings_file=new File(sdcard_path + "/engine_driver/function_settings.txt");
 		  if(settings_file.exists()) {  //if file found, use it for settings arrays
@@ -469,16 +471,14 @@ public void onStart() {
 			  while(settings_reader.ready()) {
 				  String line=settings_reader.readLine();
 				  String temp[] = line.split(":");
-				  aLbl.add(temp[0]);
-				  aFnc.add(Integer.parseInt(temp[1]));
+				  mainapp.function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
 			  }
 		  } else {  //hard-code some buttons and default the rest
-			  aLbl.add("Light");aFnc.add(0); //aTgl.add(true);
-			  aLbl.add("Bell"); aFnc.add(1); //aTgl.add(true);
-			  aLbl.add("Horn"); aFnc.add(2); //aTgl.add(false);
+			  mainapp.function_labels_default.put(0, "Light");
+			  mainapp.function_labels_default.put(1, "Bell");
+			  mainapp.function_labels_default.put(2, "Horn");
 			  for(int k = 3; k <= 27; k++) {
-				  aLbl.add(String.format("%d",k));
-				  aFnc.add(k);
+				  mainapp.function_labels_default.put(k, String.format("%d",k));
 			  }
 		  }
 	  }
@@ -486,7 +486,6 @@ public void onStart() {
 
 	  // loop through all function buttons and
 	  //   set label and dcc functions (based on settings) or hide if no label
-
 	  ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_T); //table
 	  set_function_buttons_for_view(tv, "T");
 	  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S); //table
@@ -495,19 +494,35 @@ public void onStart() {
   }
 
   //helper function to set up function buttons for each throttle
-  void set_function_buttons_for_view(ViewGroup t, String whichLoco)  {
+  void set_function_buttons_for_view(ViewGroup t, String whichThrottle)  {
 	  ViewGroup r;  //row
 	  function_button_touch_listener fbtl;
 	  Button b; //button
 	  int k = 0; //button count
+	  LinkedHashMap<Integer, String> function_labels_temp = new  LinkedHashMap<Integer, String>();
+	  if (whichThrottle.equals("T") && mainapp.function_labels_T != null && mainapp.function_labels_T.size()>0) {
+		  function_labels_temp = mainapp.function_labels_T;  //point temp to T
+	  } else if (whichThrottle.equals("S") && mainapp.function_labels_S != null  && mainapp.function_labels_S.size()>0) {
+		  function_labels_temp = mainapp.function_labels_S;  //point temp to S
+	  } else {
+		  function_labels_temp = mainapp.function_labels_default;  //point temp to default
+	  }
+
+	  //put values in array for indexing in next step TODO: find direct way to do this
+	  ArrayList<Integer> aList = new ArrayList<Integer>();
+	  for (Integer f : function_labels_temp.keySet()) {
+		  aList.add(f);
+	  }
+
 	  for(int i = 0; i < t.getChildCount(); i++) {
 	      r = (ViewGroup)t.getChildAt(i);
 	      for(int j = 0; j < r.getChildCount(); j++) {
 	      	b = (Button)r.getChildAt(j);
-	    		if (k < aFnc.size()) {
-		       		fbtl=new function_button_touch_listener(aFnc.get(k), whichLoco);
+	    		if (k <  function_labels_temp.size()) {
+	    			Integer func = aList.get(k);
+		       		fbtl=new function_button_touch_listener(func, whichThrottle);
 		       		b.setOnTouchListener(fbtl);
-		       		String bt = aLbl.get(k) + "        ";  //pad with spaces, and limit to 7 characters
+		       		String bt = function_labels_temp.get(func) + "        ";  //pad with spaces, and limit to 7 characters
 		       		b.setText(bt.substring(0, 7));
 		       	    b.setVisibility(VISIBLE);
 		       	    b.setEnabled(false);  //start out with everything disabled

@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
     <string name="app_name_routes">Engine Driver - Routes</string>
     <string name="app_name_turnouts">Engine Driver - Turnouts</string>
     <string name="app_name_about">Engine Driver - About</string>
-    <string name="app_name_functions">Engine Driver - Function Settings</string>
+    <string name="app_name_functions">Engine Driver - Default Function Settings</string>
     <string name="app_name_preferences">Engine Driver - Preferences</string>
     <string name="app_name_select_loco">Engine Driver - Select Loco</string>
     <string name="host_ip">Host IP Address</string>
@@ -59,7 +59,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 <string name="prefHardwareSystemTitle">Hardware System</string>
 <string name="prefHardwareSystemDefaultValue">L</string>
 <string name="prefHardwareSystemSummary">Select hardware system to use for turnout commands</string>
-<string name="fb_helptext">Enter labels and function#s in list at right.  Leave label blank to hide button.</string>
+<string name="fb_helptext">Enter labels and function#s in list at right.  Leave label blank to hide button.  These are used when roster functions are not available.</string>
 <string name="copy_function_labels">Copy Labels from Roster</string>
 <string name="fb_header">Edit Functions</string>
 <string name="about">About</string>
