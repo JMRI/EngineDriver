@@ -165,27 +165,33 @@ public class connection_activity extends Activity
         }
         break;
         case message_type.CONNECTED:
-          //Save the new list to the connections_list.txt file.
-          File sdcard_path=Environment.getExternalStorageDirectory();
-          File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
-          PrintWriter list_output;
-          try
-          {
-            list_output=new PrintWriter(connections_list_file);
-            //Add this connection to the head of connections list.
-            list_output.format("%s:%d\n", host_ip, port);
-            for(int i=0; i<ip_list.size(); i+=1)
-            {
-              if(host_ip.equals(ip_list.get(i)) && port_list.get(i)==port) { continue; }
-              list_output.format("%s:%d\n", ip_list.get(i), port_list.get(i));
-            }
-            list_output.flush();
-            list_output.close();
-          }
-          catch(IOException except)
-          {
-            Log.e("connection_activity", "Error creating a PrintWriter, IOException: "+except.getMessage());
-          }
+        	
+        	//Save the new connection list to the connections_list.txt file.
+        	try  {
+        		File sdcard_path=Environment.getExternalStorageDirectory();
+
+        		//First, determine if the engine_driver directory exists. If not, create it.
+        		File engine_driver_dir=new File(sdcard_path, "engine_driver");
+        		if(!engine_driver_dir.exists()) { engine_driver_dir.mkdir(); }
+        	
+        		File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
+        		PrintWriter list_output;
+        		list_output=new PrintWriter(connections_list_file);
+        		//Add this connection to the head of connections list.
+        		list_output.format("%s:%d\n", host_ip, port);
+        		for(int i=0; i<ip_list.size(); i+=1)
+        		{
+        			if(host_ip.equals(ip_list.get(i)) && port_list.get(i)==port) { continue; }
+        			list_output.format("%s:%d\n", ip_list.get(i), port_list.get(i));
+        		}
+        		list_output.flush();
+        		list_output.close();
+        	}
+        	catch(IOException except)
+        	{
+        		Log.e("connection_activity", "Error saving recent connection: "+except.getMessage());
+        		Toast.makeText(getApplicationContext(), "Error saving recent connection: "+except.getMessage(), Toast.LENGTH_SHORT).show();
+        	}
 
 //          start_select_loco_activity();
           start_engine_driver_activity();
@@ -243,44 +249,33 @@ public class connection_activity extends Activity
     port_list=new ArrayList<Integer>();
     discovered_ip_list=new ArrayList<String>();
     discovered_port_list=new ArrayList<Integer>();
+
     //Populate the ListView with the recent connections saved in a file. This will be stored in
     // /sdcard/engine_driver/connections_list.txt
-    try
-    {
-      File sdcard_path=Environment.getExternalStorageDirectory();
-      if(sdcard_path.canWrite())
-      {
-        //First, determine if the engine_driver directory exists. If not, create it.
-        File engine_driver_dir=new File(sdcard_path, "engine_driver");
-        if(!engine_driver_dir.exists()) { engine_driver_dir.mkdir(); }
+    try    {
+    	File sdcard_path=Environment.getExternalStorageDirectory();
+    	File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
 
-        if(engine_driver_dir.exists() && engine_driver_dir.isDirectory())
-        {
-          //TODO: Fix things if the path is not a directory.
-          File connections_list_file=new File(engine_driver_dir, "connections_list.txt");
-          if(connections_list_file.exists())
-          {
-            BufferedReader list_reader=new BufferedReader(new FileReader(connections_list_file));
-            while(list_reader.ready())
-            {
-              String line=list_reader.readLine();
-              String il = line.substring(0, line.indexOf(':'));
-              Integer pl = Integer.decode(line.substring(line.indexOf(':')+1, line.length()));
-              ip_list.add(il);
-              port_list.add(pl);
-              HashMap<String, String> hm=new HashMap<String, String>();
-//              hm.put("ip_address", ip_list.get(ip_list.size()-1));
-//              hm.put("port", port_list.get(port_list.size()-1).toString());
-              hm.put("ip_address", il);
-              hm.put("port", pl.toString());
-              connections_list.add(hm);
-            }
-            connection_list_adapter.notifyDataSetChanged();
-          }
-        }
-      }
+    	if(connections_list_file.exists())    {
+    		BufferedReader list_reader=new BufferedReader(new FileReader(connections_list_file));
+    		while(list_reader.ready())    {
+    			String line=list_reader.readLine();
+    			String il = line.substring(0, line.indexOf(':'));
+    			Integer pl = Integer.decode(line.substring(line.indexOf(':')+1, line.length()));
+    			ip_list.add(il);
+    			port_list.add(pl);
+    			HashMap<String, String> hm=new HashMap<String, String>();
+    			hm.put("ip_address", il);
+    			hm.put("port", pl.toString());
+    			connections_list.add(hm);
+    		}
+    		connection_list_adapter.notifyDataSetChanged();
+    	}
     }
-    catch (IOException except) { Log.e("connection_activity", "Could not read file "+except.getMessage()); }
+    catch (IOException except) { 
+    	Log.e("connection_activity", "Error reading recent connections list: "+except.getMessage());
+		Toast.makeText(getApplicationContext(), "Error reading recent connections list: "+except.getMessage(), Toast.LENGTH_SHORT).show();
+    }
 
     //Set the button callback.
     Button button=(Button)findViewById(R.id.connect);

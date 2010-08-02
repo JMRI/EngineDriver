@@ -1,3 +1,5 @@
+ *Version 1.0 - changes/additions by mstevetodd
+ *  moved directory creation to connect message handler, removed writeable check altogether, and added toast messages on file read/writes
  *Version 0.9 - changes/additions by mstevetodd
  *  added roster list to select_loco screen (hidden if no entries)
  *  removed writeable check from read routines of settings and recent file loads (was causing it to randomly skip loading on Incredible)
@@ -51,6 +53,7 @@
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  * turnouts
+ *   TODO: move connections_list.txt read to Start from Create
  *   TODO: default "system" based on items in use
  *   TODO: use PTT titles for Turnouts/Turnout
  *   TODO: update turnout list on change not working after reentry to turnout view (worked around by finishing on exit)
