@@ -743,9 +743,9 @@ public class threaded_application extends Application
     			//Release it as soon as possible (after the user has connected to a WiThrottle service, or this application is
     			//not the currently active one.
 
-    			multicast_lock=wifi.createMulticastLock("engine_driver");
-    			multicast_lock.setReferenceCounted(true);
-    			multicast_lock.acquire();
+       			multicast_lock=wifi.createMulticastLock("engine_driver");
+      			multicast_lock.setReferenceCounted(true);
+       			multicast_lock.acquire();
     			WifiInfo wifiinfo = wifi.getConnectionInfo();
     			intaddr = wifiinfo.getIpAddress();
     			if (intaddr != 0) {
