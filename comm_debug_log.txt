@@ -12,7 +12,8 @@ release 4805, then back button twice to exit program
 06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
 06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:PTL]\[LT12}|{my12}|{1
 06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4
-06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:RCC0
+06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:RCC1
+06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:RCD}|{88(S)}|{88(S)]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
 06-22 15:45:00.724: DEBUG/Engine_Driver(322): <--:*30
 06-22 15:45:05.993: DEBUG/Engine_Driver(322): <--:T2591(L)
 06-22 15:45:05.993: DEBUG/Engine_Driver(322): <--:RF29}|{2591(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[

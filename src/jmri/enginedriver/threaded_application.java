@@ -79,6 +79,8 @@ public class threaded_application extends Application
 	boolean rt_allowed = false;  //default route support to off
     HashMap<String, String> rt_state_names;
     HashMap<String, String> roster_entries;
+	boolean consist_allowed = false;  //default consist support to off
+    LinkedHashMap<String, String> consist_entries;
 
 	String power_state;
 	int heartbeat_interval; //heartbeat interval in seconds
@@ -175,7 +177,8 @@ public class threaded_application extends Application
       	  	function_labels_S = new LinkedHashMap<Integer, String>();
       	  	function_labels_T = new LinkedHashMap<Integer, String>();
       	  	function_labels_default = new LinkedHashMap<Integer, String>();
-
+            consist_allowed = false;
+            consist_entries = new LinkedHashMap<String, String>();
             
             try { host_address=InetAddress.getByName(host_ip); }
             catch(UnknownHostException except) {
@@ -337,18 +340,18 @@ public class threaded_application extends Application
           case message_type.POWER_CONTROL:
         	  withrottle_send(String.format("PPA%d", msg.arg1));
               break;
-/*
+
           //end the application and thread
           case message_type.SHUTDOWN:
         	//forward end message to all active activities
             Message fwd_msg=Message.obtain();
             fwd_msg.what=message_type.END_ACTIVITY;
-            if (engine_driver_msg_handler != null) { engine_driver_msg_handler.sendMessage(fwd_msg); }
-            if (select_loco_msg_handler != null) { select_loco_msg_handler.sendMessage(fwd_msg); }
-            if (ui_msg_handler != null) { ui_msg_handler.sendMessage(fwd_msg); }
+//            if (engine_driver_msg_handler != null) { engine_driver_msg_handler.sendMessage(fwd_msg); }
+//            if (select_loco_msg_handler != null) { select_loco_msg_handler.sendMessage(fwd_msg); }
+//            if (ui_msg_handler != null) { ui_msg_handler.sendMessage(fwd_msg); }
             end_this_thread(); 
             break;
-*/
+
         }
       };
     }
@@ -382,12 +385,12 @@ public class threaded_application extends Application
 
         switch (response_str.charAt(0)) {
 	  	case 'T': 
-	  		loco_string_T = get_rostername_from_address_string(response_str.substring(1));  //set app variable
+	  		loco_string_T = get_loconame_from_address_string(response_str.substring(1));  //set app variable
 	  		
  	  	    break;
 	  	
 	  	case 'S': 
-	  		loco_string_S = get_rostername_from_address_string(response_str.substring(1));  //set app variable
+	  		loco_string_S = get_loconame_from_address_string(response_str.substring(1));  //set app variable
 	  	    break;
 	  	
 	  	case 'V': 
@@ -399,29 +402,39 @@ public class threaded_application extends Application
 	  	    break;
 	  	
 	  	case 'R': //Roster
-    	  switch (response_str.charAt(1)) {
-    	  	case 'L': 
-    	  		roster_list_string = response_str.substring(2);  //set app variable
+	  		switch (response_str.charAt(1)) {
+
+	  		case 'C': 
+	  			if 	(response_str.charAt(2) == 'C') {  //RCC1
+	  				consist_allowed = true;  //set app variable
+	  			} else	if 	(response_str.charAt(2) == 'D') {  //RCD}|{88(S)}|{88(S)]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
+	  				process_consist_list(response_str);
+	  			}
+
+	  			break;
+
+	  		case 'L': 
+	  			roster_list_string = response_str.substring(2);  //set app variable
 	  			process_roster_list(response_str);  //process roster list
-    	  	    break;
-    	  	
-    	  	case 'F':   //RF29}|{2591(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
-//    	  		roster_function_string_T = response_str.substring(2);  //set app variable for throttle 1  TODO: remove this
-    	  		process_roster_function_string(response_str.substring(2), "T");
-    	  	    break;
-        	  	
-    	  	case 'S': //RS29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
-//    	  		roster_function_string_S = response_str.substring(2);  //set app variable for throttle 2  TODO: remove this
-    	  		process_roster_function_string(response_str.substring(2), "S");
-    	  	    break;
-        	  	
-    	  	case 'P': //Properties
-    	  		if 	(response_str.charAt(2) == 'F') {  //function state 
-    	  			process_function_state(response_str);  //process function state message (passing the whole message)
-    	  		}
-    	  	    break;
-    	  }  //end switch inside R
-	  	 break;
+	  			break;
+
+	  		case 'F':   //RF29}|{2591(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
+	  			//    	  		roster_function_string_T = response_str.substring(2);  //set app variable for throttle 1  TODO: remove this
+	  			process_roster_function_string(response_str.substring(2), "T");
+	  			break;
+
+	  		case 'S': //RS29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
+	  			//    	  		roster_function_string_S = response_str.substring(2);  //set app variable for throttle 2  TODO: remove this
+	  			process_roster_function_string(response_str.substring(2), "S");
+	  			break;
+
+	  		case 'P': //Properties
+	  			if 	(response_str.charAt(2) == 'F') {  //function state 
+	  				process_function_state(response_str);  //process function state message (passing the whole message)
+	  			}
+	  			break;
+	  		}  //end switch inside R
+	  		break;
 	  	case 'P': //Panel 
 	    	  switch (response_str.charAt(1)) {
 	    	  	case 'T': //turnouts
@@ -524,15 +537,44 @@ public class threaded_application extends Application
     	}  //end for
     }
 
+    //parse consist list into appropriate mainapp hashmap
+   //RCD}|{88(S)}|{88(S)]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
+    private void process_consist_list(String response_str) {
+    	String consist_addr = null;
+    	String consist_desc = "";
+    	String consist_name = "";
+    	String[] ta = splitByString(response_str,"]\\[");  //initial separation
+    	String plus = ""; //plus sign for a separator
+    	//initialize app arrays (skipping first)
+    	int i = 0;
+    	for (String ts : ta) {
+    		if (i == 0) { //first chunk is a "header"
+    			String[] tv = splitByString(ts,"}|{");  //split header chunk into header, address and name
+    			consist_addr = tv[1];
+    			consist_name = tv[2];
+    		}  else {  //list of locos in consist
+    			String[] tv = splitByString(ts,"}|{");  //split these into loco address and direction
+    			tv = splitByString(tv[0],"(");  //split again to strip off address size (L)
+    			consist_desc +=  plus + tv[0];
+    			plus = "+";
+    		}  //end if i==0
+    		i++;
+    	}  //end for
+    	if (!consist_name.equals(consist_addr)) {
+    		consist_desc = consist_name; // use name if different from address
+    	}
+    	consist_entries.put(consist_addr, consist_desc); 
+    }
 
-    //parse turnout list into appropriate app variable array
+
+    //parse turnout change to update mainapp array entry
 	//  PTA<NewState><SystemName>
     //  PTA2LT12
     private void process_turnout_change(String response_str) {
     	String newState = response_str.substring(3,4);
     	String systemName = response_str.substring(4);
     	int pos = -1;
-        for (String sn : to_system_names) {
+        for (String sn : to_system_names) { //TODO: rewrite for better lookup
         	pos++;
         	if (sn.equals(systemName)) {
         		break;
@@ -669,14 +711,20 @@ public class threaded_application extends Application
      }  //end for
   }
 
-	// get the roster name from address string 123(L).  Return input if not found in roster
-    private String get_rostername_from_address_string(String response_str) {
-    	
-    	if ((roster_entries == null) || (roster_entries.size() == 0)) { return response_str; } //return input if no roster
+	// get the roster name from address string 123(L).  Return input if not found in roster or in consist
+    private String get_loconame_from_address_string(String response_str) {
 
-    	for (String rostername : roster_entries.keySet()) {  // loop thru entries, 
-    		if (roster_entries.get(rostername).equals(response_str)) { //looking for value = input parm
-    			return rostername;  //if found, return the roster name (key)
+    	if ((roster_entries != null) && (roster_entries.size() > 0))  { 
+    		for (String rostername : roster_entries.keySet()) {  // loop thru roster entries, 
+    			if (roster_entries.get(rostername).equals(response_str)) { //looking for value = input parm
+    				return rostername;  //if found, return the roster name (key)
+    			}
+    		}
+    	}
+    	if ((consist_entries != null) && (consist_entries.size() > 0)) {
+    		String consistname = consist_entries.get(response_str);  //consists are keyed by address "123(L)"
+    		if (consistname != null)  { //looking for value = input parm
+    			return consistname;  //if found, return the consist name (value)
     		}
     	}
     	return response_str; //return input if not found

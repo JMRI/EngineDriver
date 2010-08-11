@@ -352,35 +352,46 @@ public class engine_driver extends Activity {
   //Handle pressing of the back button to release the selected loco and end this activity
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {
-  if(key==KeyEvent.KEYCODE_BACK)
-  {
-    mainapp.engine_driver_msg_handler = null; //clear out pointer to this activity  
-    
-    //release first loco
-    Message msg=Message.obtain();
-    msg.what=message_type.RELEASE;
-    msg.obj=new String("T");
-    mainapp.comm_msg_handler.sendMessage(msg);
+	  if(key==KeyEvent.KEYCODE_BACK)  {
+		  mainapp.engine_driver_msg_handler = null; //clear out pointer to this activity  
 
-    //release second loco
-    msg=Message.obtain();
-    msg.what=message_type.RELEASE;
-    msg.obj=new String("S");
-    mainapp.comm_msg_handler.sendMessage(msg);
-    
-    //disconnect from throttle
-    msg=Message.obtain();
-    msg.what=message_type.DISCONNECT;
-    mainapp.comm_msg_handler.sendMessage(msg);  
-    
-    //kill the heartbeat timer
-	if (heartbeatTimer != null) {
-  	    heartbeatTimer.cancel();
-  	}
-    this.finish();  //end this activity
-  }
-  return(super.onKeyDown(key, event));
-};
+		  //release first loco
+		  Message msg=Message.obtain();
+		  msg.what=message_type.RELEASE;
+		  msg.obj=new String("T");
+		  mainapp.comm_msg_handler.sendMessage(msg);
+
+		  //release second loco
+		  msg=Message.obtain();
+		  msg.what=message_type.RELEASE;
+		  msg.obj=new String("S");
+		  mainapp.comm_msg_handler.sendMessage(msg);
+
+		  //disconnect from throttle
+		  msg=Message.obtain();
+		  msg.what=message_type.DISCONNECT;
+		  mainapp.comm_msg_handler.sendMessage(msg);  
+
+		  //kill the heartbeat timer
+		  if (heartbeatTimer != null) {
+			  heartbeatTimer.cancel();
+		  }
+		  this.finish();  //end this activity
+		  
+	  } else if((key==KeyEvent.KEYCODE_VOLUME_UP) && (!mainapp.loco_string_T.equals("Not Set"))) { //use volume up to increase throttle, but only if first loco is set
+		  SeekBar sb;
+		  sb=(SeekBar)findViewById(R.id.speed_T);
+		  sb.setProgress(sb.getProgress() + 1 );
+		  return(true);  //stop processing this key
+
+	  } else if((key==KeyEvent.KEYCODE_VOLUME_DOWN) && (!mainapp.loco_string_T.equals("Not Set"))) { //use volume down to decrease throttle, but only if first loco is set
+		  SeekBar sb;
+		  sb=(SeekBar)findViewById(R.id.speed_T);
+		  sb.setProgress(sb.getProgress() - 1 );
+		  return(true);  //stop processing this key
+	  }
+	  return(super.onKeyDown(key, event)); //continue with normal key processing
+  };
 
 @Override
 public void onResume() {

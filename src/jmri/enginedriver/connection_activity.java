@@ -37,6 +37,7 @@ import java.io.IOException;
 import android.util.Log;
 import java.io.FileReader;
 
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -217,7 +218,45 @@ public class connection_activity extends Activity
 	  this.finish();
   }
   
+	@Override
+	public void onStart() {
 
+		super.onStart();
+
+		ip_list=new ArrayList<String>();
+	    port_list=new ArrayList<Integer>();
+
+	    connections_list.clear();
+	    
+	    //Populate the ListView with the recent connections saved in a file. This will be stored in
+	    // /sdcard/engine_driver/connections_list.txt
+	    try    {
+	    	File sdcard_path=Environment.getExternalStorageDirectory();
+	    	File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
+
+	    	if(connections_list_file.exists())    {
+	    		BufferedReader list_reader=new BufferedReader(new FileReader(connections_list_file));
+	    		while(list_reader.ready())    {
+	    			String line=list_reader.readLine();
+	    			String il = line.substring(0, line.indexOf(':'));
+	    			Integer pl = Integer.decode(line.substring(line.indexOf(':')+1, line.length()));
+	    			ip_list.add(il);
+	    			port_list.add(pl);
+	    			HashMap<String, String> hm=new HashMap<String, String>();
+	    			hm.put("ip_address", il);
+	    			hm.put("port", pl.toString());
+	    			connections_list.add(hm);
+	    		}
+	    		connection_list_adapter.notifyDataSetChanged();
+	    	}
+	    }
+	    catch (IOException except) { 
+	    	Log.e("connection_activity", "Error reading recent connections list: "+except.getMessage());
+			Toast.makeText(getApplicationContext(), "Error reading recent connections list: "+except.getMessage(), Toast.LENGTH_SHORT).show();
+	    }
+	
+	}  //end of onStart
+  
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState)
@@ -245,37 +284,8 @@ public class connection_activity extends Activity
     conn_list.setAdapter(connection_list_adapter);
     conn_list.setOnItemClickListener(new connect_item(server_list_type.RECENT_CONNECTION));
 
-    ip_list=new ArrayList<String>();
-    port_list=new ArrayList<Integer>();
     discovered_ip_list=new ArrayList<String>();
     discovered_port_list=new ArrayList<Integer>();
-
-    //Populate the ListView with the recent connections saved in a file. This will be stored in
-    // /sdcard/engine_driver/connections_list.txt
-    try    {
-    	File sdcard_path=Environment.getExternalStorageDirectory();
-    	File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
-
-    	if(connections_list_file.exists())    {
-    		BufferedReader list_reader=new BufferedReader(new FileReader(connections_list_file));
-    		while(list_reader.ready())    {
-    			String line=list_reader.readLine();
-    			String il = line.substring(0, line.indexOf(':'));
-    			Integer pl = Integer.decode(line.substring(line.indexOf(':')+1, line.length()));
-    			ip_list.add(il);
-    			port_list.add(pl);
-    			HashMap<String, String> hm=new HashMap<String, String>();
-    			hm.put("ip_address", il);
-    			hm.put("port", pl.toString());
-    			connections_list.add(hm);
-    		}
-    		connection_list_adapter.notifyDataSetChanged();
-    	}
-    }
-    catch (IOException except) { 
-    	Log.e("connection_activity", "Error reading recent connections list: "+except.getMessage());
-		Toast.makeText(getApplicationContext(), "Error reading recent connections list: "+except.getMessage(), Toast.LENGTH_SHORT).show();
-    }
 
     //Set the button callback.
     Button button=(Button)findViewById(R.id.connect);
@@ -324,5 +334,19 @@ public class connection_activity extends Activity
       //since we always do the same action no need to distinguish between requests
 	  set_labels();
   }
+	// Handle pressing of the back button to simply return to caller
+	@Override
+	public boolean onKeyDown(int key, KeyEvent event) {
+		if (key == KeyEvent.KEYCODE_BACK) {
+		    Message connect_msg=Message.obtain();
+		    connect_msg.what=message_type.SHUTDOWN;
+		    if (mainapp.comm_msg_handler != null) {
+		    	mainapp.comm_msg_handler.sendMessage(connect_msg);
+		    }    	
+			end_this_activity();
+		}
+		return (super.onKeyDown(key, event));
+	};
+
 
 }

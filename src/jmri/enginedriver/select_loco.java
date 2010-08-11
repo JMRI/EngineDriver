@@ -74,21 +74,42 @@ public class select_loco extends Activity {
 	public void refresh_roster_list() {
 		// clear and rebuild
 		roster_list.clear();
-		if ((mainapp.roster_entries != null)
-				&& (mainapp.roster_entries.size() > 0)) { // add roster entries if any defined
-			for (String rostername : mainapp.roster_entries.keySet()) {
+		if (((mainapp.roster_entries != null)  // add roster and consist entries if any defined
+				&& (mainapp.roster_entries.size() > 0))
+				|| ((mainapp.consist_entries != null)
+				&& (mainapp.consist_entries.size() > 0))) {
 
-				// put key and values into temp hashmap
-				HashMap<String, String> hm = new HashMap<String, String>();
-				hm.put("roster_name", rostername);
-				hm.put("roster_address", mainapp.roster_entries.get(rostername));
+			if (mainapp.roster_entries != null) {
+				for (String rostername : mainapp.roster_entries.keySet()) {
 
-				// add temp hashmap to list which view is hooked to
-				roster_list.add(hm);
+					// put key and values into temp hashmap
+					HashMap<String, String> hm = new HashMap<String, String>();
+					hm.put("roster_name", rostername);
+					hm.put("roster_address", mainapp.roster_entries.get(rostername));
 
-			} // for rostername
+					// add temp hashmap to list which view is hooked to
+					roster_list.add(hm);
+
+				} // for rostername
+			} //if roster_entries not null
+
+			if (mainapp.consist_entries != null) {
+				for (String consistname : mainapp.consist_entries.keySet()) {
+
+					// put key and values into temp hashmap
+					HashMap<String, String> hm = new HashMap<String, String>();
+					hm.put("roster_name", mainapp.consist_entries.get(consistname));
+					hm.put("roster_address", consistname);
+
+					// add temp hashmap to list which view is hooked to
+					roster_list.add(hm);
+
+				} // for consistname
+			} //if consist_entries not null
+			
 			roster_list_adapter.notifyDataSetChanged();
-		} else { // hide roster section if not populated
+
+		} else { // hide roster section if nothing to show
 			View v = (View) findViewById(R.id.roster_list_heading);
 			v.setVisibility(GONE);
 			v = (View) findViewById(R.id.roster_list);
@@ -262,7 +283,7 @@ public class select_loco extends Activity {
 														// field
 			String rosteraddressstring = (String) rav.getText();
 			// parse address and length from string, e.g. 2591(L)
-			String ras[] = mainapp.splitByString(rosteraddressstring, "(");
+			String ras[] = threaded_application.splitByString(rosteraddressstring, "(");
 			Integer addresslength = (ras[1].charAt(0) == 'L') ? address_type.LONG
 					: address_type.SHORT; // convert S/L to 0/1
 			Message msg = Message.obtain();
