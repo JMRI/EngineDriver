@@ -98,7 +98,8 @@ public class connection_activity extends Activity
 	    discovered_ip_list.clear();
 	    discovered_port_list.clear();
 	    discovery_list.clear();
-	    
+
+	    /*
 	    //shutdown server discovery listener
 	    Message msg=Message.obtain();
 	    msg.what=message_type.SET_LISTENER;
@@ -108,7 +109,7 @@ public class connection_activity extends Activity
 	    } else {
 	   	    Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
 	    }    	
-	    
+	    */
 
 	    Intent engine_driver=new Intent().setClass(this, engine_driver.class);
 	    startActivity(engine_driver);
@@ -240,7 +241,28 @@ public class connection_activity extends Activity
 	  mainapp.ui_msg_handler = null;
 	  this.finish();
   }
-  
+
+	@Override
+	public void onPause() {
+
+		//shutdown server discovery listener
+	    Message msg=Message.obtain();
+	    msg.what=message_type.SET_LISTENER;
+	    msg.arg1 = 0; //zero turns it off
+	    if (mainapp.comm_msg_handler != null) {
+	    	mainapp.comm_msg_handler.sendMessage(msg);
+	    } else {
+	   	    Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
+	    }    	
+
+	    // clear the discovered list  TODO: handle this better
+	    discovered_ip_list.clear();
+	    discovered_port_list.clear();
+	    discovery_list.clear();
+
+	    super.onPause();
+
+}
 	@Override
 	public void onStart() {
 
