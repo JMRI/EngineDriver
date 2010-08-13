@@ -114,7 +114,7 @@ public class threaded_application extends Application
       public void serviceAdded(ServiceEvent event)
       {
         //A service has been added. Request the service's information.
-        JmDNS jmdns=event.getDNS();
+//        JmDNS jmdns=event.getDNS();
         jmdns.requestServiceInfo(event.getType(), event.getName(), 0);
         Log.d("serviceAdded", String.format("InfoRqst Type='%s', Name='%s', %s", event.getType(), event.getName(), event.toString()));
       };
@@ -126,15 +126,21 @@ public class threaded_application extends Application
 
       public void serviceResolved(ServiceEvent event)
       {
-        //A service's information has been resolved. Capture the necessary part needed to connect to that service.
-        int port=event.getInfo().getPort();
-        String host_ip=event.getInfo().getHostAddress();
-        Log.d("serviceResolved", String.format("%s:%d", host_ip, port));
+    	  //A service's information has been resolved. Capture the necessary part needed to connect to that service.
+    	  int port=event.getInfo().getPort();
+    	  String hostname=event.getInfo().getHostAddress();
+    	  try { //attempt to find full name from ip
+    		  InetAddress hostaddress=Inet4Address.getByName(hostname);
+    		  hostname = hostaddress.getHostName();  //use this name instead of address
+    	  }  
+    	  catch(UnknownHostException except) {}  //ip will work fine, so don't worry about exception
+
+        Log.d("serviceResolved", String.format("%s:%d", hostname, port));
         //Tell the UI thread so as to update the list of services available.
         Message service_message=Message.obtain();
         service_message.what=message_type.SERVICE_RESOLVED;
         service_message.arg1=port;
-        service_message.obj=new String(host_ip);
+        service_message.obj=new String(hostname);
         ui_msg_handler.sendMessage(service_message);
       };
     }
@@ -153,13 +159,14 @@ public class threaded_application extends Application
         {
         //Connect to the WiThrottle server.
         case message_type.SET_LISTENER:
-        	//arg1= to turn on, arg1=0 to turn off
-        	if (msg.arg1 == 0) {
-        		jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
-        	} else {
-        		jmdns.addServiceListener("_withrottle._tcp.local.", listener);
+        	if (jmdns != null) { //don't bother if network stuff not running
+        		//arg1= to turn on, arg1=0 to turn off
+        		if (msg.arg1 == 0) {
+        			jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
+        		} else {
+        			jmdns.addServiceListener("_withrottle._tcp.local.", listener);
+        		}
         	}
-        	
         	break;
         	//Connect to the WiThrottle server.
           case message_type.CONNECT:

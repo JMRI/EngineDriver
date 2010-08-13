@@ -4,6 +4,7 @@
  *  use volume button for speed of first loco (only if selected)
  *  add existing consists to select list in select loco, formatting name as addr1+addr2+addr3, etc. 
  *  improved handling of discovery listener, turn it off and on, and don't add duplicates
+ *  get qualified name of server and use it in discovery list
  *Version 0.9 - changes/additions by mstevetodd
  *  added roster list to select_loco screen (hidden if no entries)
  *  removed writeable check from read routines of settings and recent file loads (was causing it to randomly skip loading on Incredible)
