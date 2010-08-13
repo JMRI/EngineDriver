@@ -116,7 +116,7 @@ public class threaded_application extends Application
         //A service has been added. Request the service's information.
         JmDNS jmdns=event.getDNS();
         jmdns.requestServiceInfo(event.getType(), event.getName(), 0);
-        Log.d("serviceAdded", event.toString());
+        Log.d("serviceAdded", String.format("InfoRqst Type='%s', Name='%s', %s", event.getType(), event.getName(), event.toString()));
       };
 
       public void serviceRemoved(ServiceEvent event)
@@ -138,10 +138,11 @@ public class threaded_application extends Application
         ui_msg_handler.sendMessage(service_message);
       };
     }
-    void end_this_thread() {
+/*    void end_this_thread() {
     	thread = null;
     	this.interrupt();
     }
+   */
     
     class comm_handler extends Handler
     {
@@ -150,7 +151,17 @@ public class threaded_application extends Application
       {
         switch(msg.what)
         {
-          //Connect to the WiThrottle server.
+        //Connect to the WiThrottle server.
+        case message_type.SET_LISTENER:
+        	//arg1= to turn on, arg1=0 to turn off
+        	if (msg.arg1 == 0) {
+        		jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
+        	} else {
+        		jmdns.addServiceListener("_withrottle._tcp.local.", listener);
+        	}
+        	
+        	break;
+        	//Connect to the WiThrottle server.
           case message_type.CONNECT:
             //The IP address is stored in the obj as a String, the port is stored in arg1.
             host_ip=new String((String)msg.obj);
@@ -220,7 +231,7 @@ public class threaded_application extends Application
             Message connection_message=Message.obtain();
             connection_message.what=message_type.CONNECTED;
             ui_msg_handler.sendMessage(connection_message);
-            
+            		
             start_read_timer();
             
             break;
@@ -342,7 +353,7 @@ public class threaded_application extends Application
               break;
 
           //end the application and thread
-          case message_type.SHUTDOWN:
+/*          case message_type.SHUTDOWN:
         	//forward end message to all active activities
             Message fwd_msg=Message.obtain();
             fwd_msg.what=message_type.END_ACTIVITY;
@@ -351,7 +362,7 @@ public class threaded_application extends Application
 //            if (ui_msg_handler != null) { ui_msg_handler.sendMessage(fwd_msg); }
             end_this_thread(); 
             break;
-
+*/
         }
       };
     }
@@ -779,7 +790,10 @@ public class threaded_application extends Application
 
     public void run()
     {
-    	int intaddr = 0;
+    	Looper.prepare();
+    	comm_msg_handler=new comm_handler(); //set shared pointer to handler 
+
+      	int intaddr = 0;
 
     	//Set up to find a WiThrottle service via ZeroConf, not supported for OS 1.5 (SDK 3)
     	if (android.os.Build.VERSION.SDK.equals("3")) {    	 
@@ -805,7 +819,7 @@ public class threaded_application extends Application
 
     				jmdns=JmDNS.create(addr);
     				listener=new withrottle_listener();
-    				jmdns.addServiceListener("_withrottle._tcp.local.", listener);
+//    				jmdns.addServiceListener("_withrottle._tcp.local.", listener);  moved to handler so ca can control
     			} else {
     				process_comm_error("No IP Address found.\nCheck your WiFi connection.");
     			}  //end of if intaddr==0
@@ -814,8 +828,8 @@ public class threaded_application extends Application
     			process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()+"\n"+except.getCause().getMessage()); 
     		}
     	}     
-    	Looper.prepare();
-    	comm_msg_handler=new comm_handler();
+//    	Looper.prepare();
+//    	comm_msg_handler=new comm_handler();
     	Looper.loop();
     };
   }
@@ -823,12 +837,12 @@ public class threaded_application extends Application
   
   public void onCreate()
   {
-	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-	function_states_T = new boolean[32];
-	function_states_S = new boolean[32];
+	  prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+	  function_states_T = new boolean[32];
+	  function_states_S = new boolean[32];
 	
-    thread=new comm_thread();
-    thread.start();
+	  thread=new comm_thread();
+	  thread.start();
   }
 
 /** ------ copied from jmri util code -------------------

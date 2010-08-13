@@ -40,5 +40,6 @@ interface message_type
   public static final int ROUTE=16;  	// r -> ta
   public static final int POWER_CONTROL=15;  	// pc -> ta
   public static final int SHUTDOWN=17;  	// ca -> ta
+  public static final int SET_LISTENER=18;  	// ca -> ta, pass 1 to turn on, 0 to turn off
   
 }

@@ -94,9 +94,25 @@ public class connection_activity extends Activity
 
   void start_engine_driver_activity()
   {
-//    multicast_lock.release();
-    Intent engine_driver=new Intent().setClass(this, engine_driver.class);
-    startActivity(engine_driver);
+	    // clear the discovered list
+	    discovered_ip_list.clear();
+	    discovered_port_list.clear();
+	    discovery_list.clear();
+	    
+	    //shutdown server discovery listener
+	    Message msg=Message.obtain();
+	    msg.what=message_type.SET_LISTENER;
+	    msg.arg1 = 0; //zero turns it off
+	    if (mainapp.comm_msg_handler != null) {
+	    	mainapp.comm_msg_handler.sendMessage(msg);
+	    } else {
+	   	    Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
+	    }    	
+	    
+
+	    Intent engine_driver=new Intent().setClass(this, engine_driver.class);
+	    startActivity(engine_driver);
+
   };
   
   public enum server_list_type { DISCOVERED_SERVER, RECENT_CONNECTION }
@@ -154,11 +170,18 @@ public class connection_activity extends Activity
       {
         case message_type.SERVICE_RESOLVED:
         {
-          //Add this discovered service to the list.
-          discovered_ip_list.add((String)msg.obj);
-          discovered_port_list.add(msg.arg1);
+          //stop if new address is already in the list   TODO: improve this lookup
+        	String newaddr = new String((String)msg.obj);
+        	for (String oldaddr : discovered_ip_list) {
+        		if (oldaddr.equals(newaddr)) {
+        			return;
+        		}
+        	}
+            //Add this discovered service to the list.
+        	discovered_ip_list.add(newaddr);
+        	discovered_port_list.add(msg.arg1);
 
-          HashMap<String, String> hm=new HashMap<String, String>();
+          HashMap<String, String> hm=new HashMap<String, String>();  //TODO: don't add if already in array
           hm.put("ip_address", discovered_ip_list.get(discovered_ip_list.size()-1));
           hm.put("port", discovered_port_list.get(discovered_port_list.size()-1).toString());
           discovery_list.add(hm);
@@ -254,7 +277,21 @@ public class connection_activity extends Activity
 	    	Log.e("connection_activity", "Error reading recent connections list: "+except.getMessage());
 			Toast.makeText(getApplicationContext(), "Error reading recent connections list: "+except.getMessage(), Toast.LENGTH_SHORT).show();
 	    }
-	
+	    // clear the discovered list  TODO: handle this better
+	    discovered_ip_list.clear();
+	    discovered_port_list.clear();
+	    discovery_list.clear();
+	    
+	    //start up server discovery listener
+	    Message msg=Message.obtain();
+	    msg.what=message_type.SET_LISTENER;
+	    msg.arg1 = 1; //one turns it on
+	    if (mainapp.comm_msg_handler != null) {
+	    	mainapp.comm_msg_handler.sendMessage(msg);
+	    } else {
+	   	    Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
+	    }    	
+
 	}  //end of onStart
   
   /** Called when the activity is first created. */
@@ -335,7 +372,7 @@ public class connection_activity extends Activity
 	  set_labels();
   }
 	// Handle pressing of the back button to simply return to caller
-	@Override
+/*	@Override
 	public boolean onKeyDown(int key, KeyEvent event) {
 		if (key == KeyEvent.KEYCODE_BACK) {
 		    Message connect_msg=Message.obtain();
@@ -347,6 +384,6 @@ public class connection_activity extends Activity
 		}
 		return (super.onKeyDown(key, event));
 	};
-
+*/
 
 }
