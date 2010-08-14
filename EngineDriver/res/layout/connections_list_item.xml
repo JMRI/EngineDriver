@@ -21,15 +21,19 @@
 >
    <TextView
       android:id="@+id/ip_item_label"
+      android:text="test.test.test"
       android:textAppearance="?android:attr/textAppearanceLarge"
       android:paddingTop="5dp"
+      android:layout_weight="0.72"
       android:paddingBottom="5dp"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content" />
    <TextView
       android:id="@+id/port_item_label"
+      android:text="test"
       android:textAppearance="?android:attr/textAppearanceLarge"
-      android:paddingLeft="10dp"
-      android:layout_width="wrap_content"
+      android:paddingLeft="4dp"
+      android:layout_weight="0.28"
+      android:layout_width="0dp"
       android:layout_height="wrap_content" />
 </LinearLayout>

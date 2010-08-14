@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -39,6 +40,8 @@ import android.widget.Toast;
 public class routes extends Activity {
 
 	private threaded_application mainapp;  // hold pointer to mainapp
+
+	private SharedPreferences prefs;
 	
 	ArrayList<HashMap<String, String> > routes_list;
 	private SimpleAdapter routes_list_adapter;
@@ -61,6 +64,8 @@ public class routes extends Activity {
 	  }	  
 
 	public void refresh_route_view() {
+		
+	    boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference", false);  //TODO fix getting from strings
 
 		//clear and rebuild
 		routes_list.clear();
@@ -80,7 +85,10 @@ public class routes extends Activity {
 						//put values into temp hashmap
 						HashMap<String, String> hm=new HashMap<String, String>();
 						hm.put("rt_user_name", username);
-						hm.put("rt_system_name", systemname);
+						hm.put("rt_system_name_hidden", systemname);
+						if (!hidesystemroutes) {  //check prefs for show or not show this
+							hm.put("rt_system_name", systemname);
+						}
 						hm.put("rt_current_state_desc", currentstatedesc);
 
 						//add temp hashmap to list which view is hooked to
@@ -176,11 +184,13 @@ public class routes extends Activity {
     
     mainapp=(threaded_application)getApplication();
     
-    //Set up a list adapter to allow adding the list of recent connections to the UI.
+	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+    
+	//Set up a list adapter to allow adding the list of recent connections to the UI.
     routes_list=new ArrayList<HashMap<String, String> >();
     routes_list_adapter=new SimpleAdapter(this, routes_list, R.layout.routes_item, 
-    		new String[] {"rt_user_name", "rt_system_name", "rt_current_state_desc"},
-            new int[] {R.id.rt_user_name, R.id.rt_system_name, R.id.rt_current_state_desc});
+    		new String[] {"rt_user_name", "rt_system_name_hidden", "rt_system_name", "rt_current_state_desc"},
+            new int[] {R.id.rt_user_name, R.id.rt_system_name_hidden, R.id.rt_system_name, R.id.rt_current_state_desc});
     ListView routes_lv=(ListView)findViewById(R.id.routes_list);
     routes_lv.setAdapter(routes_list_adapter);
     routes_lv.setOnItemClickListener(new route_item());
