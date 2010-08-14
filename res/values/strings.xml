@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
     <string name="app_name_functions">Engine Driver - Default Function Settings</string>
     <string name="app_name_preferences">Engine Driver - Preferences</string>
     <string name="app_name_select_loco">Engine Driver - Select Loco</string>
-    <string name="host_ip">Host IP Address</string>
+    <string name="host_ip">Host Name or Address</string>
     <string name="port">Port</string>
     <string name="loco_address">Loco Address</string>
     <string name="connect_button">Connect</string>
@@ -56,9 +56,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 <string name="prefThrottleNameTitle">Throttle Name</string>
 <string name="prefThrottleNameDefaultValue">Engine Driver</string>
 <string name="prefThrottleNameSummary">Set the throttle name (shown on WiThrottle screen)</string>
-<string name="prefHardwareSystemTitle">Hardware System</string>
+<string name="prefHardwareSystemTitle">Turnout Hardware System</string>
 <string name="prefHardwareSystemDefaultValue">L</string>
-<string name="prefHardwareSystemSummary">Select hardware system to use for turnout commands</string>
+<string name="prefHardwareSystemSummary">Select hardware system to use for direct entry turnout commands</string>
+<string name="prefHideSystemRouteNamesTitle">Hide Sys Route Names?</string>
+<string
+   name="prefHideSystemRouteNamesDefaultValue"
+>false</string>
+<string name="prefHideSystemRouteNamesSummary">Hide system names for Routes, used to save space on Route list.</string>
 <string name="fb_helptext">Enter labels and function#s in list at right.  Leave label blank to hide button.  These are used when roster functions are not available.</string>
 <string name="copy_function_labels">Copy Labels from Roster</string>
 <string name="fb_header">Edit Functions</string>

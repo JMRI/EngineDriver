@@ -258,12 +258,10 @@ public class threaded_application extends Application
   		    }
             if (whichThrottle.equals("T")) {
   		      loco_string_T = "Not Set"; 
-//              roster_function_string_T = null;
               loco_address_T = -1;
               function_labels_T = new LinkedHashMap<Integer, String>();
             } else {
               loco_string_S = "Not Set"; 
-//              roster_function_string_S = null;
               loco_address_S = -1;
               function_labels_S = new LinkedHashMap<Integer, String>();
             }

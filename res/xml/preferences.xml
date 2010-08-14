@@ -44,4 +44,12 @@
       android:defaultValue="@string/prefDefaultAddressLengthDefaultValue"
       android:entries="@array/address_size_defaults"
       android:entryValues="@array/address_size_defaults" />
+   <CheckBoxPreference
+      android:key="hide_system_route_names_preference"
+      android:summary="@string/prefHideSystemRouteNamesSummary"
+      android:title="@string/prefHideSystemRouteNamesTitle"
+      android:defaultValue="@string/prefHideSystemRouteNamesDefaultValue"
+      android:dialogTitle="@string/prefHideSystemRouteNamesTitle"
+   >
+   </CheckBoxPreference>
 </PreferenceScreen>

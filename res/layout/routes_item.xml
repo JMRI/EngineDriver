@@ -34,6 +34,12 @@
          android:paddingBottom="4dp"
          android:layout_height="wrap_content" />
       <TextView
+         android:id="@+id/rt_system_name_hidden"
+         android:text="this is hidden"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content" 
+         android:visibility="invisible"/>
+      <TextView
          android:id="@+id/rt_system_name"
          android:text="testing string"
          android:layout_width="wrap_content"
