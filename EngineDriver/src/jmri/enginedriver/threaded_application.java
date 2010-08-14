@@ -128,12 +128,16 @@ public class threaded_application extends Application
       {
     	  //A service's information has been resolved. Capture the necessary part needed to connect to that service.
     	  int port=event.getInfo().getPort();
-    	  String hostname=event.getInfo().getHostAddress();
+    	  String hostip=event.getInfo().getHostAddress();
+    	  String hostname = "";
     	  try { //attempt to find full name from ip
-    		  InetAddress hostaddress=Inet4Address.getByName(hostname);
-    		  hostname = hostaddress.getHostName();  //use this name instead of address
+    		  InetAddress hostaddress=Inet4Address.getByName(hostip);
+    		  hostname = hostaddress.getHostName();  //try to use this name instead of ip address
+    		  hostaddress=Inet4Address.getByName(hostname); //verify this will resolve before using it
     	  }  
-    	  catch(UnknownHostException except) {}  //ip will work fine, so don't worry about exception
+    	  catch(UnknownHostException except) {
+    		  hostname = hostip;
+    	  }  //if name resolution fails, use ip address
 
         Log.d("serviceResolved", String.format("%s:%d", hostname, port));
         //Tell the UI thread so as to update the list of services available.
@@ -157,7 +161,7 @@ public class threaded_application extends Application
       {
         switch(msg.what)
         {
-        //Connect to the WiThrottle server.
+        //Start or Stop the WiThrottle listener
         case message_type.SET_LISTENER:
         	if (jmdns != null) { //don't bother if network stuff not running
         		//arg1= to turn on, arg1=0 to turn off
@@ -168,6 +172,7 @@ public class threaded_application extends Application
         		}
         	}
         	break;
+
         	//Connect to the WiThrottle server.
           case message_type.CONNECT:
             //The IP address is stored in the obj as a String, the port is stored in arg1.
@@ -835,8 +840,6 @@ public class threaded_application extends Application
     			process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()+"\n"+except.getCause().getMessage()); 
     		}
     	}     
-//    	Looper.prepare();
-//    	comm_msg_handler=new comm_handler();
     	Looper.loop();
     };
   }
