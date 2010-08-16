@@ -60,6 +60,7 @@ public class connection_activity extends Activity
 
   ArrayList<String> ip_list;
   ArrayList<Integer> port_list;
+
   ArrayList<String> discovered_ip_list;
   ArrayList<Integer> discovered_port_list;
 
@@ -67,16 +68,16 @@ public class connection_activity extends Activity
   threaded_application mainapp;
   
   //The IP address and port that are used to connect.
-  String host_ip;
-  int port;
+  String connected_host;
+  int connected_port;
 
   //Request connection to the WiThrottle server.
   void connect()
   {
     Message connect_msg=Message.obtain();
     connect_msg.what=message_type.CONNECT;
-    connect_msg.arg1=port;
-    connect_msg.obj=new String(host_ip);
+    connect_msg.arg1=connected_port;
+    connect_msg.obj=new String(connected_host);
     if (mainapp.comm_msg_handler != null) {
     	mainapp.comm_msg_handler.sendMessage(connect_msg);
     } else {
@@ -95,9 +96,9 @@ public class connection_activity extends Activity
   void start_engine_driver_activity()
   {
 	    // clear the discovered list
-	    discovered_ip_list.clear();
-	    discovered_port_list.clear();
-	    discovery_list.clear();
+//	    discovered_ip_list.clear();
+//	    discovered_port_list.clear();
+//	    discovery_list.clear();
 
 	    /*
 	    //shutdown server discovery listener
@@ -129,12 +130,12 @@ public class connection_activity extends Activity
       switch(server_type)
       {
         case DISCOVERED_SERVER:
-          host_ip=new String(discovered_ip_list.get(position));
-          port=discovered_port_list.get(position);
+          connected_host=new String(discovered_ip_list.get(position));
+          connected_port=discovered_port_list.get(position);
         break;
         case RECENT_CONNECTION:
-          host_ip=new String(ip_list.get(position));
-          port=port_list.get(position);
+          connected_host=new String(ip_list.get(position));
+          connected_port=port_list.get(position);
         break;
       }
       connect();
@@ -145,18 +146,18 @@ public class connection_activity extends Activity
   {
     public void onClick(View v) {
       EditText entry=(EditText)findViewById(R.id.host_ip);
-      host_ip=new String(entry.getText().toString());
-      if (host_ip.trim().length() > 0 ) {
+      connected_host=new String(entry.getText().toString());
+      if (connected_host.trim().length() > 0 ) {
         entry=(EditText)findViewById(R.id.port);
         try {
-          port=new Integer(entry.getText().toString());
+          connected_port=new Integer(entry.getText().toString());
         } catch(NumberFormatException except) { 
-       	    Toast.makeText(getApplicationContext(), "Invalid port#, retry.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
+       	    Toast.makeText(getApplicationContext(), "Invalid connected_port#, retry.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
          	return;
         }
         connect();
       } else {
-    	    Toast.makeText(getApplicationContext(), "Enter or select an address and port", Toast.LENGTH_SHORT).show();
+    	    Toast.makeText(getApplicationContext(), "Enter or select an address and connected_port", Toast.LENGTH_SHORT).show();
 
       }
     };
@@ -182,7 +183,7 @@ public class connection_activity extends Activity
         	discovered_ip_list.add(newaddr);
         	discovered_port_list.add(msg.arg1);
 
-          HashMap<String, String> hm=new HashMap<String, String>();  //TODO: don't add if already in array
+          HashMap<String, String> hm=new HashMap<String, String>();
           hm.put("ip_address", discovered_ip_list.get(discovered_ip_list.size()-1));
           hm.put("port", discovered_port_list.get(discovered_port_list.size()-1).toString());
           discovery_list.add(hm);
@@ -203,10 +204,10 @@ public class connection_activity extends Activity
         		PrintWriter list_output;
         		list_output=new PrintWriter(connections_list_file);
         		//Add this connection to the head of connections list.
-        		list_output.format("%s:%d\n", host_ip, port);
+        		list_output.format("%s:%d\n", connected_host, connected_port);
         		for(int i=0; i<ip_list.size(); i+=1)
         		{
-        			if(host_ip.equals(ip_list.get(i)) && port_list.get(i)==port) { continue; }
+        			if(connected_host.equals(ip_list.get(i)) && port_list.get(i)==connected_port) { continue; }
         			list_output.format("%s:%d\n", ip_list.get(i), port_list.get(i));
         		}
         		list_output.flush();
