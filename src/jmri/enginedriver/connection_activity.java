@@ -260,6 +260,7 @@ public class connection_activity extends Activity
 	    discovered_ip_list.clear();
 	    discovered_port_list.clear();
 	    discovery_list.clear();
+        discovery_list_adapter.notifyDataSetChanged();
 
 	    super.onPause();
 
@@ -304,6 +305,7 @@ public class connection_activity extends Activity
 	    discovered_ip_list.clear();
 	    discovered_port_list.clear();
 	    discovery_list.clear();
+        discovery_list_adapter.notifyDataSetChanged();
 	    
 	    //start up server discovery listener
 	    Message msg=Message.obtain();
