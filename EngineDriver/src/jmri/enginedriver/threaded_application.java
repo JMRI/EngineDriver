@@ -113,10 +113,39 @@ public class threaded_application extends Application
     {
       public void serviceAdded(ServiceEvent event)
       {
-        //A service has been added. Request the service's information.
 //        JmDNS jmdns=event.getDNS();
-        jmdns.requestServiceInfo(event.getType(), event.getName(), 0);
-        Log.d("serviceAdded", String.format("InfoRqst Type='%s', Name='%s', %s", event.getType(), event.getName(), event.toString()));
+
+    	  process_comm_error(String.format("Add started for: '%s'", event.getName()));
+    	  
+          //A service has been added. Request details of the service
+		  ServiceInfo si = jmdns.getServiceInfo(event.getType(), event.getName(), 0);
+    	  
+    	  if (si == null || si.getPort() == 0 ) {  //not enough info, submit request for details
+    		  Log.d("serviceAdded", String.format("More Info Requested: Type='%s', Name='%s', %s", event.getType(), event.getName(), event.toString()));
+    		  process_comm_error(String.format("Requesting more: '%s'", event.getName()));
+    		  jmdns.requestServiceInfo(event.getType(), event.getName(), 0);
+
+    	  } else {  //get the port and validate that the host address will resolve
+    		  int port=si.getPort();
+    		  String hostip=si.getHostAddress();
+    		  String hostname = "";
+    		  try { //attempt to find full name from ip
+    			  InetAddress hostaddress=Inet4Address.getByName(hostip);
+    			  hostname = hostaddress.getHostName();  //try to use this name instead of ip address
+    			  hostaddress=Inet4Address.getByName(hostname); //verify this will resolve before using it
+    		  }  
+    		  catch(UnknownHostException except) {
+    			  hostname = hostip;
+    		  }  //if name resolution fails, use ip address
+    		  Log.d("serviceAdded", String.format("%s:%d -- %s", hostname, port, event.toString()));
+    		  //process_comm_error(String.format(String.format("Added %s:%d", hostname, port)));
+    		  //Tell the UI thread so as to update the list of services available.
+    		  Message service_message=Message.obtain();
+    		  service_message.what=message_type.SERVICE_RESOLVED;
+    		  service_message.arg1=port;
+    		  service_message.obj=new String(hostname);
+    		  ui_msg_handler.sendMessage(service_message);
+    	  }
       };
 
       public void serviceRemoved(ServiceEvent event)
@@ -139,7 +168,8 @@ public class threaded_application extends Application
     		  hostname = hostip;
     	  }  //if name resolution fails, use ip address
 
-        Log.d("serviceResolved", String.format("%s:%d", hostname, port));
+        Log.d("serviceResolved", String.format("%s:%d -- %s", hostname, port, event.toString()));
+//        process_comm_error(String.format(String.format("Resolved %s:%d", hostname, port)));
         //Tell the UI thread so as to update the list of services available.
         Message service_message=Message.obtain();
         service_message.what=message_type.SERVICE_RESOLVED;
@@ -205,8 +235,8 @@ public class threaded_application extends Application
             
             try { host_address=InetAddress.getByName(host_ip); }
             catch(UnknownHostException except) {
-              process_comm_error("Could not connect to " + host_ip + "\n"+except.getMessage()+"\n"+except.getCause().getMessage());
-              return;
+            	process_comm_error("Could not connect to " + host_ip + "\n"+except.getMessage() + "\nUnknownHostException");
+            	return;
             }
             if (host_address == null) {
                 process_comm_error("Could not connect to " + host_ip);

@@ -33,8 +33,8 @@
  *  added 29 function buttons for both throttles, using scrollers
  *  disable buttons and slider and shrink screen usage for unselected loco
  *  adjust function buttons to indicate current state from WiT server
- *  added release buttons to sl activity
-/*Version 0.3 - changes/additions by mstevetodd
+ *  added release buttons to sl activity 
+ *Version 0.3 - changes/additions by mstevetodd
  *   function labels for throttle, hiding unused
  *   separate rev-stop-fwd buttons
  *   read responses from withrottle and store in shared app variables
@@ -51,7 +51,7 @@
  */
 /*
  *   TODO: control discovered server list in ta, change ca to only display what is in array
- *   TODO: add consist editing features
+ *   TODO: add consist creation/editing features
  *   TODO: allow compile/run at Android 1.5 (SDK 3) currently crashes when thread starts and tries to resolve android.net.wifi.WifiManager.createMulticastLock
  *   TODO: deal with key-handling on Incredible (events not processing while keypad is up)
  *   TODO: provide "reset" function to delete config files
