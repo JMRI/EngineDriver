@@ -115,14 +115,14 @@ public class threaded_application extends Application
       {
 //        JmDNS jmdns=event.getDNS();
 
-    	  process_comm_error(String.format("Add started for: '%s'", event.getName()));
+//    	  process_comm_error(String.format("Add started for: '%s'", event.getName()));
     	  
           //A service has been added. Request details of the service
 		  ServiceInfo si = jmdns.getServiceInfo(event.getType(), event.getName(), 0);
     	  
     	  if (si == null || si.getPort() == 0 ) {  //not enough info, submit request for details
     		  Log.d("serviceAdded", String.format("More Info Requested: Type='%s', Name='%s', %s", event.getType(), event.getName(), event.toString()));
-    		  process_comm_error(String.format("Requesting more: '%s'", event.getName()));
+ //   		  process_comm_error(String.format("Requesting more: '%s'", event.getName()));
     		  jmdns.requestServiceInfo(event.getType(), event.getName(), 0);
 
     	  } else {  //get the port and validate that the host address will resolve
@@ -194,10 +194,12 @@ public class threaded_application extends Application
         //Start or Stop the WiThrottle listener
         case message_type.SET_LISTENER:
         	if (jmdns != null) { //don't bother if network stuff not running
-        		//arg1= to turn on, arg1=0 to turn off
+        		//arg1= 1 to turn on, arg1=0 to turn off
         		if (msg.arg1 == 0) {
         			jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
+        			multicast_lock.release();
         		} else {
+        			multicast_lock.acquire();
         			jmdns.addServiceListener("_withrottle._tcp.local.", listener);
         		}
         	}
@@ -845,10 +847,7 @@ public class threaded_application extends Application
     			//Release it as soon as possible (after the user has connected to a WiThrottle service, or this application is
     			//not the currently active one.
 
-       			multicast_lock=wifi.createMulticastLock("engine_driver");
-      			multicast_lock.setReferenceCounted(true);
-       			multicast_lock.acquire();
-    			WifiInfo wifiinfo = wifi.getConnectionInfo();
+     			WifiInfo wifiinfo = wifi.getConnectionInfo();
     			intaddr = wifiinfo.getIpAddress();
     			if (intaddr != 0) {
     				byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
@@ -859,7 +858,13 @@ public class threaded_application extends Application
 
     				jmdns=JmDNS.create(addr);
     				listener=new withrottle_listener();
-//    				jmdns.addServiceListener("_withrottle._tcp.local.", listener);  moved to handler so ca can control
+
+          			multicast_lock=wifi.createMulticastLock("engine_driver");
+          			multicast_lock.setReferenceCounted(true);
+//           			multicast_lock.acquire();
+//    process_comm_error("Multicast details: " + 	multicast_lock.toString());
+
+    				//    				jmdns.addServiceListener("_withrottle._tcp.local.", listener);  moved to handler so ca can control
     			} else {
     				process_comm_error("No IP Address found.\nCheck your WiFi connection.");
     			}  //end of if intaddr==0

@@ -146,7 +146,7 @@ public class select_loco extends Activity {
 				+ prefs.getString("throttle_name_preference", this
 						.getResources().getString(
 								R.string.prefThrottleNameDefaultValue));
-		s += "\nHost: " + mainapp.host_name_string;
+		//s += "\nHost: " + mainapp.host_name_string;
 		s += "\nWiThrottle: v" + mainapp.withrottle_version_string;
 		s += String.format("     Heartbeat: %d secs",
 				mainapp.heartbeat_interval);
