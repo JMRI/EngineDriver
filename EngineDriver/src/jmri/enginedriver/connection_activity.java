@@ -50,8 +50,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.AdapterView;
 
-public class connection_activity extends Activity
-{
+public class connection_activity extends Activity {
 	
   ArrayList<HashMap<String, String> > connections_list;
   ArrayList<HashMap<String, String> > discovery_list;
@@ -396,15 +395,16 @@ public class connection_activity extends Activity
       //since we always do the same action no need to distinguish between requests
 	  set_labels();
   }
-	// Handle pressing of the back button to simply return to caller
+
+  // Handle pressing of the back button to simply return to caller
 /*	@Override
 	public boolean onKeyDown(int key, KeyEvent event) {
 		if (key == KeyEvent.KEYCODE_BACK) {
-		    Message connect_msg=Message.obtain();
-		    connect_msg.what=message_type.SHUTDOWN;
-		    if (mainapp.comm_msg_handler != null) {
-		    	mainapp.comm_msg_handler.sendMessage(connect_msg);
-		    }    	
+//		    Message connect_msg=Message.obtain();
+//		    connect_msg.what=message_type.SHUTDOWN;
+//		    if (mainapp.comm_msg_handler != null) {
+//		    	mainapp.comm_msg_handler.sendMessage(connect_msg);
+//		    }    	
 			end_this_activity();
 		}
 		return (super.onKeyDown(key, event));

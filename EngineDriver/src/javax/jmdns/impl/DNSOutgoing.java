@@ -2,393 +2,510 @@
 //Licensed under Apache License version 2.0
 //Original license LGPL
 
-
 package javax.jmdns.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.jmdns.impl.constants.DNSConstants;
+import javax.jmdns.impl.constants.DNSRecordClass;
 
 /**
  * An outgoing DNS message.
  *
  * @version %I%, %G%
- * @author	Arthur van Hoff, Rick Blair, Werner Randelshofer
+ * @author Arthur van Hoff, Rick Blair, Werner Randelshofer
  */
-public final class DNSOutgoing
+public final class DNSOutgoing extends DNSMessage
 {
-    /**
-     * This can be used to turn off domain name compression.  This was helpful for 
-     * tracking problems interacting with other mdns implementations.
-     */
-    public static  boolean USE_DOMAIN_NAME_COMPRESSION = true;
-    
-    private static Logger logger = Logger.getLogger(DNSOutgoing.class.getName());
-    int id;
-    int flags;
-    private boolean multicast;
-    private int numQuestions;
-    private int numAnswers;
-    private int numAuthorities;
-    private int numAdditionals;
-    private Hashtable names;
 
-    byte data[];
-    int off;
-    int len;
+    public static class MessageOutputStream extends ByteArrayOutputStream
+    {
+        private DNSOutgoing _out;
+
+        /**
+         * Creates a new message stream, with a buffer capacity of the specified size, in bytes.
+         *
+         * @param size
+         *            the initial size.
+         * @exception IllegalArgumentException
+         *                if size is negative.
+         */
+        MessageOutputStream(int size, DNSOutgoing out)
+        {
+            super(size);
+            _out = out;
+        }
+
+        void writeByte(int value)
+        {
+            this.write(value & 0xFF);
+        }
+
+        void writeBytes(String str, int off, int len)
+        {
+            for (int i = 0; i < len; i++)
+            {
+                writeByte(str.charAt(off + i));
+            }
+        }
+
+        void writeBytes(byte data[])
+        {
+            if (data != null)
+            {
+                writeBytes(data, 0, data.length);
+            }
+        }
+
+        void writeBytes(byte data[], int off, int len)
+        {
+            for (int i = 0; i < len; i++)
+            {
+                writeByte(data[off + i]);
+            }
+        }
+
+        void writeShort(int value)
+        {
+            writeByte(value >> 8);
+            writeByte(value);
+        }
+
+        void writeInt(int value)
+        {
+            writeShort(value >> 16);
+            writeShort(value);
+        }
+
+        void writeUTF(String str, int off, int len)
+        {
+            // compute utf length
+            int utflen = 0;
+            for (int i = 0; i < len; i++)
+            {
+                int ch = str.charAt(off + i);
+                if ((ch >= 0x0001) && (ch <= 0x007F))
+                {
+                    utflen += 1;
+                }
+                else
+                {
+                    if (ch > 0x07FF)
+                    {
+                        utflen += 3;
+                    }
+                    else
+                    {
+                        utflen += 2;
+                    }
+                }
+            }
+            // write utf length
+            writeByte(utflen);
+            // write utf data
+            for (int i = 0; i < len; i++)
+            {
+                int ch = str.charAt(off + i);
+                if ((ch >= 0x0001) && (ch <= 0x007F))
+                {
+                    writeByte(ch);
+                }
+                else
+                {
+                    if (ch > 0x07FF)
+                    {
+                        writeByte(0xE0 | ((ch >> 12) & 0x0F));
+                        writeByte(0x80 | ((ch >> 6) & 0x3F));
+                        writeByte(0x80 | ((ch >> 0) & 0x3F));
+                    }
+                    else
+                    {
+                        writeByte(0xC0 | ((ch >> 6) & 0x1F));
+                        writeByte(0x80 | ((ch >> 0) & 0x3F));
+                    }
+                }
+            }
+        }
+
+        void writeName(String name)
+        {
+            writeName(name, true);
+        }
+
+        void writeName(String name, boolean useCompression)
+        {
+            String aName = name;
+            while (true)
+            {
+                int n = aName.indexOf('.');
+                if (n < 0)
+                {
+                    n = aName.length();
+                }
+                if (n <= 0)
+                {
+                    writeByte(0);
+                    return;
+                }
+                if (useCompression && USE_DOMAIN_NAME_COMPRESSION)
+                {
+                    Integer offset = _out._names.get(aName);
+                    if (offset != null)
+                    {
+                        int val = offset.intValue();
+
+                        writeByte((val >> 8) | 0xC0);
+                        writeByte(val & 0xFF);
+                        return;
+                    }
+                    _out._names.put(aName, Integer.valueOf(this.size()));
+                }
+                writeUTF(aName, 0, n);
+                aName = aName.substring(n);
+                if (aName.startsWith("."))
+                {
+                    aName = aName.substring(1);
+                }
+            }
+        }
+
+        void writeQuestion(DNSQuestion question)
+        {
+            writeName(question.getName());
+            writeShort(question.getRecordType().indexValue());
+            writeShort(question.getRecordClass().indexValue());
+        }
+
+        void writeRecord(DNSRecord rec, long now)
+        {
+            writeName(rec.getName());
+            writeShort(rec.getRecordType().indexValue());
+            writeShort(rec.getRecordClass().indexValue() | ((rec.isUnique() && _out.isMulticast()) ? DNSRecordClass.CLASS_UNIQUE : 0));
+            writeInt((now == 0) ? rec.getTTL() : rec.getRemainingTTL(now));
+
+            MessageOutputStream record = new MessageOutputStream(512, _out);
+            rec.write(record);
+            byte[] byteArray = record.toByteArray();
+
+            writeShort(byteArray.length);
+            write(byteArray, 0, byteArray.length);
+        }
+
+    }
+
+    /**
+     * This can be used to turn off domain name compression. This was helpful for tracking problems interacting with other mdns implementations.
+     */
+    public static boolean USE_DOMAIN_NAME_COMPRESSION = true;
+
+    Map<String, Integer> _names;
+
+    private int _maxUDPPayload;
+
+    private final MessageOutputStream _questionsBytes;
+
+    private final MessageOutputStream _answersBytes;
+
+    private final MessageOutputStream _authoritativeAnswersBytes;
+
+    private final MessageOutputStream _additionalsAnswersBytes;
+
+    private final static int HEADER_SIZE = 12;
 
     /**
      * Create an outgoing multicast query or response.
+     *
+     * @param flags
      */
     public DNSOutgoing(int flags)
     {
-        this(flags, true);
+        this(flags, true, DNSConstants.MAX_MSG_TYPICAL);
     }
 
     /**
      * Create an outgoing query or response.
+     *
+     * @param flags
+     * @param multicast
      */
     public DNSOutgoing(int flags, boolean multicast)
     {
-        this.flags = flags;
-        this.multicast = multicast;
-        names = new Hashtable();
-        data = new byte[DNSConstants.MAX_MSG_TYPICAL];
-        off = 12;
+        this(flags, multicast, DNSConstants.MAX_MSG_TYPICAL);
+    }
+
+    /**
+     * Create an outgoing query or response.
+     *
+     * @param flags
+     * @param multicast
+     * @param senderUDPPayload
+     *            The sender's UDP payload size is the number of bytes of the largest UDP payload that can be reassembled and delivered in the sender's network stack.
+     */
+    public DNSOutgoing(int flags, boolean multicast, int senderUDPPayload)
+    {
+        super(flags, 0, multicast);
+        _names = new HashMap<String, Integer>();
+        _maxUDPPayload = (senderUDPPayload > 0 ? senderUDPPayload : DNSConstants.MAX_MSG_TYPICAL);
+        _questionsBytes = new MessageOutputStream(senderUDPPayload, this);
+        _answersBytes = new MessageOutputStream(senderUDPPayload, this);
+        _authoritativeAnswersBytes = new MessageOutputStream(senderUDPPayload, this);
+        _additionalsAnswersBytes = new MessageOutputStream(senderUDPPayload, this);
+    }
+
+    /**
+     * Return the number of byte available in the message.
+     *
+     * @return available space
+     */
+    public int availableSpace()
+    {
+        return _maxUDPPayload - HEADER_SIZE - _questionsBytes.size() - _answersBytes.size() - _authoritativeAnswersBytes.size() - _additionalsAnswersBytes.size();
     }
 
     /**
      * Add a question to the message.
+     *
+     * @param rec
+     * @throws IOException
      */
     public void addQuestion(DNSQuestion rec) throws IOException
     {
-        if (numAnswers > 0 || numAuthorities > 0 || numAdditionals > 0)
+        MessageOutputStream record = new MessageOutputStream(512, this);
+        record.writeQuestion(rec);
+        byte[] byteArray = record.toByteArray();
+        if (byteArray.length < this.availableSpace())
         {
-            throw new IllegalStateException("Questions must be added before answers");
+            _questions.add(rec);
+            _questionsBytes.write(byteArray, 0, byteArray.length);
         }
-        numQuestions++;
-        writeQuestion(rec);
+        else
+        {
+            throw new IOException("message full");
+        }
     }
 
     /**
      * Add an answer if it is not suppressed.
+     *
+     * @param in
+     * @param rec
+     * @throws IOException
      */
-    void addAnswer(DNSIncoming in, DNSRecord rec) throws IOException
+    public void addAnswer(DNSIncoming in, DNSRecord rec) throws IOException
     {
-        if (numAuthorities > 0 || numAdditionals > 0)
+        if ((in == null) || !rec.suppressedBy(in))
         {
-            throw new IllegalStateException("Answers must be added before authorities and additionals");
-        }
-        if (!rec.suppressedBy(in))
-        {
-            addAnswer(rec, 0);
-        }
-    }
-
-    /**
-     * Add an additional answer to the record. Omit if there is no room.
-     */
-    void addAdditionalAnswer(DNSIncoming in, DNSRecord rec) throws IOException
-    {
-        if ((off < DNSConstants.MAX_MSG_TYPICAL - 200) && !rec.suppressedBy(in))
-        {
-            writeRecord(rec, 0);
-            numAdditionals++;
+            this.addAnswer(rec, 0);
         }
     }
 
     /**
      * Add an answer to the message.
+     *
+     * @param rec
+     * @param now
+     * @throws IOException
      */
     public void addAnswer(DNSRecord rec, long now) throws IOException
     {
-        if (numAuthorities > 0 || numAdditionals > 0)
-        {
-            throw new IllegalStateException("Questions must be added before answers");
-        }
         if (rec != null)
         {
+            // FIXME [PJYF July 27 2010] This is wrong when adding answers to a query we should not include stale records.
             if ((now == 0) || !rec.isExpired(now))
             {
-                writeRecord(rec, now);
-                numAnswers++;
+                MessageOutputStream record = new MessageOutputStream(512, this);
+                record.writeRecord(rec, now);
+                byte[] byteArray = record.toByteArray();
+                if (byteArray.length < this.availableSpace())
+                {
+                    _answers.add(rec);
+                    _answersBytes.write(byteArray, 0, byteArray.length);
+                }
+                else
+                {
+                    throw new IOException("message full");
+                }
             }
         }
     }
 
-    private LinkedList authorativeAnswers = new LinkedList();
-
     /**
-     * Add an authorative answer to the message.
+     * Add an authoritative answer to the message.
+     *
+     * @param rec
+     * @throws IOException
      */
     public void addAuthorativeAnswer(DNSRecord rec) throws IOException
     {
-        if (numAdditionals > 0)
+        MessageOutputStream record = new MessageOutputStream(512, this);
+        record.writeRecord(rec, 0);
+        byte[] byteArray = record.toByteArray();
+        if (byteArray.length < this.availableSpace())
         {
-            throw new IllegalStateException("Authorative answers must be added before additional answers");
+            _authoritativeAnswers.add(rec);
+            _authoritativeAnswersBytes.write(byteArray, 0, byteArray.length);
         }
-        authorativeAnswers.add(rec);
-        writeRecord(rec, 0);
-        numAuthorities++;
-
-        // VERIFY:
-
-    }
-
-    void writeByte(int value) throws IOException
-    {
-        if (off >= data.length)
+        else
         {
-            throw new IOException("buffer full");
-        }
-        data[off++] = (byte) value;
-    }
-
-    void writeBytes(String str, int off, int len) throws IOException
-    {
-        for (int i = 0; i < len; i++)
-        {
-            writeByte(str.charAt(off + i));
-        }
-    }
-
-    void writeBytes(byte data[]) throws IOException
-    {
-        if (data != null)
-        {
-            writeBytes(data, 0, data.length);
-        }
-    }
-
-    void writeBytes(byte data[], int off, int len) throws IOException
-    {
-        for (int i = 0; i < len; i++)
-        {
-            writeByte(data[off + i]);
-        }
-    }
-
-    void writeShort(int value) throws IOException
-    {
-        writeByte(value >> 8);
-        writeByte(value);
-    }
-
-    void writeInt(int value) throws IOException
-    {
-        writeShort(value >> 16);
-        writeShort(value);
-    }
-
-    void writeUTF(String str, int off, int len) throws IOException
-    {
-        // compute utf length
-        int utflen = 0;
-        for (int i = 0; i < len; i++)
-        {
-            int ch = str.charAt(off + i);
-            if ((ch >= 0x0001) && (ch <= 0x007F))
-            {
-                utflen += 1;
-            }
-            else
-            {
-                if (ch > 0x07FF)
-                {
-                    utflen += 3;
-                }
-                else
-                {
-                    utflen += 2;
-                }
-            }
-        }
-        // write utf length
-        writeByte(utflen);
-        // write utf data
-        for (int i = 0; i < len; i++)
-        {
-            int ch = str.charAt(off + i);
-            if ((ch >= 0x0001) && (ch <= 0x007F))
-            {
-                writeByte(ch);
-            }
-            else
-            {
-                if (ch > 0x07FF)
-                {
-                    writeByte(0xE0 | ((ch >> 12) & 0x0F));
-                    writeByte(0x80 | ((ch >> 6) & 0x3F));
-                    writeByte(0x80 | ((ch >> 0) & 0x3F));
-                }
-                else
-                {
-                    writeByte(0xC0 | ((ch >> 6) & 0x1F));
-                    writeByte(0x80 | ((ch >> 0) & 0x3F));
-                }
-            }
-        }
-    }
-
-    void writeName(String name) throws IOException
-    {
-        writeName(name, true);
-    }
-    
-    void writeName(String name, boolean useCompression) throws IOException
-    {
-        while (true)
-        {
-            int n = name.indexOf('.');
-            if (n < 0)
-            {
-                n = name.length();
-            }
-            if (n <= 0)
-            {
-                writeByte(0);
-                return;
-            }
-            if(useCompression && USE_DOMAIN_NAME_COMPRESSION){
-                Integer offset = (Integer) names.get(name);
-                if (offset != null)
-                {
-                    int val = offset.intValue();
-
-                    if (val > off)
-                    {
-                        logger.log(Level.WARNING, "DNSOutgoing writeName failed val=" + val + " name=" + name);
-                    }
-
-                    writeByte((val >> 8) | 0xC0);
-                    writeByte(val & 0xFF);
-                    return;
-                }
-                names.put(name, Integer.valueOf(off));
-            }
-            writeUTF(name, 0, n);
-            name = name.substring(n);
-            if (name.startsWith("."))
-            {
-                name = name.substring(1);
-            }
-        }
-    }
-
-    void writeQuestion(DNSQuestion question) throws IOException
-    {
-        writeName(question.name);
-        writeShort(question.type);
-        writeShort(question.clazz);
-    }
-
-    void writeRecord(DNSRecord rec, long now) throws IOException
-    {
-        int save = off;
-        try
-        {
-            writeName(rec.name);
-            writeShort(rec.type);
-            writeShort(rec.clazz | ((rec.unique && multicast) ? DNSConstants.CLASS_UNIQUE : 0));
-            writeInt((now == 0) ? rec.getTtl() : rec.getRemainingTTL(now));
-            writeShort(0);
-            int start = off;
-            rec.write(this);
-            int len = off - start;
-            data[start - 2] = (byte) (len >> 8);
-            data[start - 1] = (byte) (len & 0xFF);
-        }
-        catch (IOException e)
-        {
-            off = save;
-            throw e;
+            throw new IOException("message full");
         }
     }
 
     /**
-     * Finish the message before sending it off.
+     * Add an additional answer to the record. Omit if there is no room.
+     *
+     * @param in
+     * @param rec
+     * @throws IOException
      */
-    void finish() throws IOException
+    public void addAdditionalAnswer(DNSIncoming in, DNSRecord rec) throws IOException
     {
-        int save = off;
-        off = 0;
-
-        writeShort(multicast ? 0 : id);
-        writeShort(flags);
-        writeShort(numQuestions);
-        writeShort(numAnswers);
-        writeShort(numAuthorities);
-        writeShort(numAdditionals);
-        off = save;
+        MessageOutputStream record = new MessageOutputStream(512, this);
+        record.writeRecord(rec, 0);
+        byte[] byteArray = record.toByteArray();
+        if (byteArray.length < this.availableSpace())
+        {
+            _additionals.add(rec);
+            _additionalsAnswersBytes.write(byteArray, 0, byteArray.length);
+        }
+        else
+        {
+            throw new IOException("message full");
+        }
     }
 
-    boolean isQuery()
+    /**
+     * Builds the final message buffer to be send and returns it.
+     *
+     * @return bytes to send.
+     */
+    public byte[] data()
     {
-        return (flags & DNSConstants.FLAGS_QR_MASK) == DNSConstants.FLAGS_QR_QUERY;
+        long now = System.currentTimeMillis(); // System.currentTimeMillis()
+        _names.clear();
+
+        MessageOutputStream message = new MessageOutputStream(_maxUDPPayload, this);
+        message.writeShort(_multicast ? 0 : this.getId());
+        message.writeShort(this.getFlags());
+        message.writeShort(this.getNumberOfQuestions());
+        message.writeShort(this.getNumberOfAnswers());
+        message.writeShort(this.getNumberOfAuthorities());
+        message.writeShort(this.getNumberOfAdditionals());
+        for (DNSQuestion question : _questions)
+        {
+            message.writeQuestion(question);
+        }
+        for (DNSRecord record : _answers)
+        {
+            message.writeRecord(record, now);
+        }
+        for (DNSRecord record : _authoritativeAnswers)
+        {
+            message.writeRecord(record, now);
+        }
+        for (DNSRecord record : _additionals)
+        {
+            message.writeRecord(record, now);
+        }
+        return message.toByteArray();
     }
 
-    public boolean isEmpty()
+    @Override
+    public boolean isQuery()
     {
-        return numQuestions == 0 && numAuthorities == 0
-            && numAdditionals == 0 && numAnswers == 0;
+        return (this.getFlags() & DNSConstants.FLAGS_QR_MASK) == DNSConstants.FLAGS_QR_QUERY;
     }
 
-
+    @Override
     public String toString()
     {
         StringBuffer buf = new StringBuffer();
-        buf.append(isQuery() ? "dns[query," : "dns[response,");
-        //buf.append(packet.getAddress().getHostAddress());
-        buf.append(':');
-        //buf.append(packet.getPort());
-        //buf.append(",len=");
-        //buf.append(packet.getLength());
-        buf.append(",id=0x");
-        buf.append(Integer.toHexString(id));
-        if (flags != 0)
+        buf.append(isQuery() ? "dns[query:" : "dns[response:");
+        buf.append(" id=0x");
+        buf.append(Integer.toHexString(this.getId()));
+        if (this.getFlags() != 0)
         {
-            buf.append(",flags=0x");
-            buf.append(Integer.toHexString(flags));
-            if ((flags & DNSConstants.FLAGS_QR_RESPONSE) != 0)
+            buf.append(", flags=0x");
+            buf.append(Integer.toHexString(this.getFlags()));
+            if ((this.getFlags() & DNSConstants.FLAGS_QR_RESPONSE) != 0)
             {
                 buf.append(":r");
             }
-            if ((flags & DNSConstants.FLAGS_AA) != 0)
+            if ((this.getFlags() & DNSConstants.FLAGS_AA) != 0)
             {
                 buf.append(":aa");
             }
-            if ((flags & DNSConstants.FLAGS_TC) != 0)
+            if ((this.getFlags() & DNSConstants.FLAGS_TC) != 0)
             {
                 buf.append(":tc");
             }
         }
-        if (numQuestions > 0)
+        if (this.getNumberOfQuestions() > 0)
         {
-            buf.append(",questions=");
-            buf.append(numQuestions);
+            buf.append(", questions=");
+            buf.append(this.getNumberOfQuestions());
         }
-        if (numAnswers > 0)
+        if (this.getNumberOfAnswers() > 0)
         {
-            buf.append(",answers=");
-            buf.append(numAnswers);
+            buf.append(", answers=");
+            buf.append(this.getNumberOfAnswers());
         }
-        if (numAuthorities > 0)
+        if (this.getNumberOfAuthorities() > 0)
         {
-            buf.append(",authorities=");
-            buf.append(numAuthorities);
+            buf.append(", authorities=");
+            buf.append(this.getNumberOfAuthorities());
         }
-        if (numAdditionals > 0)
+        if (this.getNumberOfAdditionals() > 0)
         {
-            buf.append(",additionals=");
-            buf.append(numAdditionals);
+            buf.append(", additionals=");
+            buf.append(this.getNumberOfAdditionals());
         }
-        buf.append(",\nnames=" + names);
-        buf.append(",\nauthorativeAnswers=" + authorativeAnswers);
-
+        if (this.getNumberOfQuestions() > 0)
+        {
+            buf.append("\nquestions:");
+            for (DNSQuestion question : _questions)
+            {
+                buf.append("\n\t" + question);
+            }
+        }
+        if (this.getNumberOfAnswers() > 0)
+        {
+            buf.append("\nanswers:");
+            for (DNSRecord record : _answers)
+            {
+                buf.append("\n\t" + record);
+            }
+        }
+        if (this.getNumberOfAuthorities() > 0)
+        {
+            buf.append("\nauthorities:");
+            for (DNSRecord record : _authoritativeAnswers)
+            {
+                buf.append("\n\t" + record);
+            }
+        }
+        if (this.getNumberOfAdditionals() > 0)
+        {
+            buf.append("\nadditionals:");
+            for (DNSRecord record : _additionals)
+            {
+                buf.append("\n\t" + record);
+            }
+        }
+        buf.append("\nnames=" + _names);
         buf.append("]");
         return buf.toString();
+    }
+
+    /**
+     * @return the maxUDPPayload
+     */
+    public int getMaxUDPPayload()
+    {
+        return this._maxUDPPayload;
     }
 
 }

@@ -4,79 +4,91 @@
 
 package javax.jmdns.impl.tasks;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.jmdns.impl.DNSCache;
-import javax.jmdns.impl.DNSConstants;
+import javax.jmdns.impl.DNSEntry;
 import javax.jmdns.impl.DNSRecord;
-import javax.jmdns.impl.DNSState;
 import javax.jmdns.impl.JmDNSImpl;
+import javax.jmdns.impl.JmDNSImpl.Operation;
+import javax.jmdns.impl.constants.DNSConstants;
 
 /**
- * Periodicaly removes expired entries from the cache.
+ * Periodically removes expired entries from the cache.
  */
-public class RecordReaper extends TimerTask
+public class RecordReaper extends DNSTask
 {
     static Logger logger = Logger.getLogger(RecordReaper.class.getName());
-
-    /**
-     * 
-     */
-    private final JmDNSImpl jmDNSImpl;
 
     /**
      * @param jmDNSImpl
      */
     public RecordReaper(JmDNSImpl jmDNSImpl)
     {
-        this.jmDNSImpl = jmDNSImpl;
+        super(jmDNSImpl);
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see javax.jmdns.impl.tasks.DNSTask#getName()
+     */
+    @Override
+    public String getName()
+    {
+        return "RecordReaper(" + (this.getDns() != null ? this.getDns().getName() : "") + ")";
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see javax.jmdns.impl.tasks.DNSTask#start(java.util.Timer)
+     */
+    @Override
     public void start(Timer timer)
     {
-        timer.schedule(this, DNSConstants.RECORD_REAPER_INTERVAL, DNSConstants.RECORD_REAPER_INTERVAL);
+        if (!this.getDns().isCanceling() && !this.getDns().isCanceled())
+        {
+            timer.schedule(this, DNSConstants.RECORD_REAPER_INTERVAL, DNSConstants.RECORD_REAPER_INTERVAL);
+        }
     }
 
+    @Override
     public void run()
     {
-        synchronized (this.jmDNSImpl)
+        if (this.getDns().isCanceling() || this.getDns().isCanceled())
         {
-            if (this.jmDNSImpl.getState() == DNSState.CANCELED)
-            {
-                return;
-            }
-            logger.finest("run() JmDNS reaping cache");
+            return;
+        }
+        if (logger.isLoggable(Level.FINEST))
+        {
+            logger.finest(this.getName() + ".run() JmDNS reaping cache");
+        }
 
-            // Remove expired answers from the cache
-            // -------------------------------------
-            // To prevent race conditions, we defensively copy all cache
-            // entries into a list.
-            List list = new ArrayList();
-            synchronized (this.jmDNSImpl.getCache())
+        // Remove expired answers from the cache
+        // -------------------------------------
+        long now = System.currentTimeMillis();
+        for (DNSEntry entry : this.getDns().getCache().allValues())
+        {
+            try
             {
-                for (Iterator i = this.jmDNSImpl.getCache().iterator(); i.hasNext();)
+                DNSRecord record = (DNSRecord) entry;
+                if (record.isStale(now))
                 {
-                    for (DNSCache.CacheNode n = (DNSCache.CacheNode) i.next(); n != null; n = n.next())
-                    {
-                        list.add(n.getValue());
-                    }
+                    // we should query for the record we care about i.e. those in the service collectors
+                    this.getDns().renewServiceCollector(record);
+                }
+                if (record.isExpired(now))
+                {
+                    this.getDns().updateRecord(now, record, Operation.Remove);
+                    this.getDns().getCache().removeDNSEntry(record);
                 }
             }
-            // Now, we remove them.
-            long now = System.currentTimeMillis();
-            for (Iterator i = list.iterator(); i.hasNext();)
+            catch (Exception exception)
             {
-                DNSRecord c = (DNSRecord) i.next();
-                if (c.isExpired(now))
-                {
-                    this.jmDNSImpl.updateRecord(now, c);
-                    this.jmDNSImpl.getCache().remove(c);
-                }
+                logger.log(Level.SEVERE, this.getName() + ".Error while reaping records: " + entry, exception);
+                logger.severe(this.getDns().toString());
             }
         }
     }

@@ -4,8 +4,6 @@
 
 package javax.jmdns.impl;
 
-import java.util.logging.Logger;
-
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
@@ -18,41 +16,48 @@ import javax.jmdns.ServiceInfo;
  */
 public class ServiceEventImpl extends ServiceEvent
 {
-    private static Logger logger = Logger.getLogger(ServiceEvent.class.getName());
+    /**
+     *
+     */
+    private static final long serialVersionUID = 7107973622016897488L;
+    // private static Logger logger = Logger.getLogger(ServiceEvent.class.getName());
     /**
      * The type name of the service.
      */
-    private String type;
+    private String _type;
     /**
-     * The instance name of the service. Or null, if the event was
-     * fired to a service type listener.
+     * The instance name of the service. Or null, if the event was fired to a service type listener.
      */
-    private String name;
+    private String _name;
     /**
-     * The service info record, or null if the service could be be resolved.
-     * This is also null, if the event was fired to a service type listener.
+     * The service info record, or null if the service could be be resolved. This is also null, if the event was fired to a service type listener.
      */
-    private ServiceInfoImpl info;
+    private ServiceInfo _info;
 
     /**
      * Creates a new instance.
      *
-     * @param source the JmDNS instance which originated the event.
-     * @param type   the type name of the service.
-     * @param name   the instance name of the service.
-     * @param info   the service info record, or null if the service could be be resolved.
+     * @param jmDNS
+     *            the JmDNS instance which originated the event.
+     * @param type
+     *            the type name of the service.
+     * @param name
+     *            the instance name of the service.
+     * @param info
+     *            the service info record, or null if the service could be be resolved.
      */
-    public ServiceEventImpl(JmDNSImpl source, String type, String name, ServiceInfoImpl info)
+    public ServiceEventImpl(JmDNSImpl jmDNS, String type, String name, ServiceInfo info)
     {
-        super(source);
-        this.type = type;
-        this.name = name;
-        this.info = info;
+        super(jmDNS);
+        this._type = type;
+        this._name = name;
+        this._info = info;
     }
 
     /**
      * @see javax.jmdns.ServiceEvent#getDNS()
      */
+    @Override
     public JmDNS getDNS()
     {
         return (JmDNS) getSource();
@@ -61,39 +66,58 @@ public class ServiceEventImpl extends ServiceEvent
     /**
      * @see javax.jmdns.ServiceEvent#getType()
      */
+    @Override
     public String getType()
     {
-        return type;
+        return _type;
     }
 
     /**
      * @see javax.jmdns.ServiceEvent#getName()
      */
+    @Override
     public String getName()
     {
-        return name;
+        return _name;
     }
 
     /**
      * @see javax.jmdns.ServiceEvent#toString()
      */
+    @Override
     public String toString()
     {
-        StringBuffer buf = new StringBuffer();
-        buf.append("<" + getClass().getName() + "> ");
-        buf.append(super.toString());
-        buf.append(" name ");
-        buf.append(getName());
-        buf.append(" type ");
-        buf.append(getType());
-        buf.append(" info ");
-        buf.append(getInfo());
+        StringBuilder buf = new StringBuilder();
+        buf.append("[" + this.getClass().getSimpleName() + "@" + System.identityHashCode(this) + " ");
+        buf.append("\n\tname: '");
+        buf.append(this.getName());
+        buf.append("' type: '");
+        buf.append(this.getType());
+        buf.append("' info: '");
+        buf.append(this.getInfo());
+        buf.append("']");
+        // buf.append("' source: ");
+        // buf.append("\n\t" + source + "");
+        // buf.append("\n]");
         return buf.toString();
     }
 
+    @Override
     public ServiceInfo getInfo()
     {
-        return info;
+        return _info;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#clone()
+     */
+    @Override
+    public Object clone() throws CloneNotSupportedException
+    {
+        ServiceInfoImpl newInfo = new ServiceInfoImpl(this.getInfo());
+        return new ServiceEventImpl((JmDNSImpl) this.getDNS(), this.getType(), this.getName(), newInfo);
     }
 
 }
