@@ -170,7 +170,6 @@ public class connection_activity extends Activity {
       switch(msg.what)
       {
         case message_type.SERVICE_RESOLVED:
-        {
           //stop if new address is already in the list   TODO: improve this lookup
         	String newaddr = new String((String)msg.obj);
         	for (String oldaddr : discovered_ip_list) {
@@ -187,10 +186,13 @@ public class connection_activity extends Activity {
           hm.put("port", discovered_port_list.get(discovered_port_list.size()-1).toString());
           discovery_list.add(hm);
           discovery_list_adapter.notifyDataSetChanged();
-        }
         break;
+
+        case message_type.SERVICE_REMOVED:        
+        	//TODO: add this after removing arraylists
+        break;
+
         case message_type.CONNECTED:
-        	
         	//Save the new connection list to the connections_list.txt file.
         	try  {
         		File sdcard_path=Environment.getExternalStorageDirectory();
@@ -218,16 +220,16 @@ public class connection_activity extends Activity {
         		Toast.makeText(getApplicationContext(), "Error saving recent connection: "+except.getMessage(), Toast.LENGTH_SHORT).show();
         	}
 
-//          start_select_loco_activity();
           start_engine_driver_activity();
         break;
+
         case message_type.ERROR: {
           //display error message from msg.obj
           String msg_txt = new String((String)msg.obj);
       	  Toast.makeText(getApplicationContext(), msg_txt, Toast.LENGTH_SHORT).show();
-
         }
         break;
+
         case message_type.END_ACTIVITY: {      	    //Program shutdown has been requested
       	    end_this_activity();
       	}
@@ -261,9 +263,9 @@ public class connection_activity extends Activity {
 	    discovery_list.clear();
         discovery_list_adapter.notifyDataSetChanged();
 
-	    super.onPause();
-
+        super.onPause();
 }
+	
 	@Override
 	public void onStart() {
 
@@ -396,19 +398,19 @@ public class connection_activity extends Activity {
 	  set_labels();
   }
 
-  // Handle pressing of the back button to simply return to caller
-/*	@Override
+  // Handle pressing of the back button to request shutdown of all threads
+	@Override
 	public boolean onKeyDown(int key, KeyEvent event) {
 		if (key == KeyEvent.KEYCODE_BACK) {
-//		    Message connect_msg=Message.obtain();
-//		    connect_msg.what=message_type.SHUTDOWN;
-//		    if (mainapp.comm_msg_handler != null) {
-//		    	mainapp.comm_msg_handler.sendMessage(connect_msg);
-//		    }    	
+		    Message connect_msg=Message.obtain();
+		    connect_msg.what=message_type.SHUTDOWN;
+		    if (mainapp.comm_msg_handler != null) {
+		    	mainapp.comm_msg_handler.sendMessage(connect_msg);
+		    }    	
 			end_this_activity();
 		}
 		return (super.onKeyDown(key, event));
 	};
-*/
+
 
 }

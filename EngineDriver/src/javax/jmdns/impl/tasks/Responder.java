@@ -112,7 +112,6 @@ public class Responder extends DNSTask
         this.getDns().respondToQuery(_in);
 
         // We use these sets to prevent duplicate records
-        // FIXME - This should be moved into DNSOutgoing
         Set<DNSQuestion> questions = new HashSet<DNSQuestion>();
         Set<DNSRecord> answers = new HashSet<DNSRecord>();
 
