@@ -1,3 +1,5 @@
+ *Version 1.1 - changes/additions by mstevetodd
+ *  create and delete jmdns as needed (should prevent lockup when wifi is toggled, and will "retry" if wifi state changes.(
  *Version 1.0 - changes/additions by mstevetodd
  *  moved directory creation to connect message handler, removed writeable check altogether, and added toast messages on file read/writes
  *  moved read of connections_list.txt to onStart so it shows immediately
@@ -7,7 +9,7 @@
  *  get qualified name of server and use it in discovery list, (verify it resolves first)
  *  added preference to hide route system names
  *  update jmDNS to 3.2.2 to improve server discovery
- *  turn off multicastlock when not used
+ *  turn off multicast_lock when not used
  *Version 0.9 - changes/additions by mstevetodd
  *  added roster list to select_loco screen (hidden if no entries)
  *  removed writeable check from read routines of settings and recent file loads (was causing it to randomly skip loading on Incredible)
@@ -68,19 +70,14 @@
  *   TODO: use PTT titles for Turnouts/Turnout
  *   TODO: update turnout list on change not working after reentry to turnout view (worked around by finishing on exit)
  * connection
- *   TODO: move clearing of discovered list to eliminate blank flash
  *   TODO: extract server name and ip from view and remove the array(s)
  *   TODO: add pref for auto-connect on discovery
- *   TODO: hide "Discovered Servers" section if not supported (jmdns is null?) 
  * threaded_application
- *   TODO: Prevent lockup if network is toggled while app is active
- *   TODO: Move jmdns creation to allow for retrying
  *   TODO: figure out issue with server discovery on Incredible (debugging shows no errors on creation side, just never responds)
  *   TODO: remove discovered servers when no longer available (partially complete, just need to send a remove if one removed while ca is up)
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: add client-side conversation logging for easier debugging
  *   TODO: check for error on send and do something with it 
- *   TODO: improve error handling of read error (sometimes it loops sending toast messages) 
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays
  * engine_driver:
@@ -92,8 +89,7 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
- *   TODO: don't show or allow entry of loco if already in use on "other" throttle
- *   TODO: don't show or allow entry of loco if already in use in consist
+ *   TODO: don't show or allow entry of loco if already in use on "other" throttle or in a consist
  *   TODO: simplify select_loco by removing handler
  * preferences:
  *   TODO: show error if invalid entry

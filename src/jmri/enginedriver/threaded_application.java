@@ -28,12 +28,11 @@ import java.net.*;
 import java.io.*;
 
 import android.util.Log;
-import android.view.View;
 
 import javax.jmdns.*;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
-//import android.net.wifi.WifiManager.MulticastLock;
+
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -106,15 +105,13 @@ public class threaded_application extends Application
   {
     JmDNS jmdns;
     withrottle_listener listener;
-    android.net.wifi.WifiManager.MulticastLock multicast_lock;
+   android.net.wifi.WifiManager.MulticastLock multicast_lock;
 
     //Listen for a WiThrottle service advertisement on the LAN.
     public class withrottle_listener implements ServiceListener
     {
       public void serviceAdded(ServiceEvent event)
       {
-//        JmDNS jmdns=event.getDNS();
-
 //    	  process_comm_error(String.format("Add started for: '%s'", event.getName()));
     	  
           //A service has been added. Request details of the service
@@ -148,9 +145,9 @@ public class threaded_application extends Application
     	  }
       };
 
-      public void serviceRemoved(ServiceEvent event)
-      {
-        Log.d("serviceRemoved", event.getName());
+      public void serviceRemoved(ServiceEvent event)      {
+    	  Log.d("serviceRemoved", String.format("%s", event.getName()));
+    	  //this only returns the name, not the address, so not sure how to remove it without storing name
       };
 
       public void serviceResolved(ServiceEvent event)
@@ -178,11 +175,52 @@ public class threaded_application extends Application
         ui_msg_handler.sendMessage(service_message);
       };
     }
-/*    void end_this_thread() {
-    	thread = null;
-    	this.interrupt();
+
+//    void end_this_thread() {
+//    	end_jmdns();
+//    }
+    
+    void start_jmdns() {
+      	int intaddr = 0;
+
+    	//Set up to find a WiThrottle service via ZeroConf, not supported for OS 1.5 (SDK 3)
+    	if (android.os.Build.VERSION.SDK.equals("3")) {    	 
+    		process_comm_error("WiFi discovery not supported.  Skipping.");
+    	} else {
+    		try   {
+    			WifiManager wifi = (WifiManager)threaded_application.this.getSystemService(Context.WIFI_SERVICE);
+     			WifiInfo wifiinfo = wifi.getConnectionInfo();
+    			intaddr = wifiinfo.getIpAddress();
+    			if (intaddr != 0) {
+    				byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
+    						(byte)(intaddr >> 24 & 0xff) };
+    				InetAddress addr = InetAddress.getByAddress(byteaddr);
+    				String s = String.format("found intaddr=%d, addr=%s", intaddr, addr.toString());
+    				Log.d("comm_thread_run", s);
+
+    				jmdns=JmDNS.create(addr);
+
+    				if (multicast_lock == null) {  //do this only as needed
+    				multicast_lock=wifi.createMulticastLock("engine_driver");
+    				multicast_lock.setReferenceCounted(true);
+    				}
+    			} else {
+    				process_comm_error("No IP Address found.\nCheck your WiFi connection.");
+    			}  //end of if intaddr==0
+    		}  catch(IOException except) { 
+    			Log.e("comm_thread_run", "Error creating withrottle listener: IOException: "+except.getMessage()); 
+    			process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()+"\n"+except.getCause().getMessage()); 
+    		}
+    	}     
     }
-   */
+    
+   
+    void end_jmdns() {
+    	if (jmdns != null) {
+    		jmdns.close();
+    		jmdns = null;
+    	}
+    }
     
     class comm_handler extends Handler
     {
@@ -191,14 +229,20 @@ public class threaded_application extends Application
       {
         switch(msg.what)
         {
-        //Start or Stop the WiThrottle listener
+        //Start or Stop the WiThrottle listener and required jmdns stuff
         case message_type.SET_LISTENER:
-        	if (jmdns != null) { //don't bother if network stuff not running
-        		//arg1= 1 to turn on, arg1=0 to turn off
-        		if (msg.arg1 == 0) {
+        	//arg1= 1 to turn on, arg1=0 to turn off
+        	if (msg.arg1 == 0) {
+        		if (jmdns != null) { 
         			jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
         			multicast_lock.release();
-        		} else {
+        			end_jmdns();
+        		}
+        	} else {
+        		if (jmdns == null) {   //start jmdns if not started
+        			start_jmdns();
+        		}
+        		if (jmdns != null) {  //don't bother if jmdns not started
         			multicast_lock.acquire();
         			jmdns.addServiceListener("_withrottle._tcp.local.", listener);
         		}
@@ -395,16 +439,17 @@ public class threaded_application extends Application
               break;
 
           //end the application and thread
-/*          case message_type.SHUTDOWN:
+          case message_type.SHUTDOWN:
         	//forward end message to all active activities
-            Message fwd_msg=Message.obtain();
-            fwd_msg.what=message_type.END_ACTIVITY;
+//            Message fwd_msg=Message.obtain();
+//            fwd_msg.what=message_type.END_ACTIVITY;
 //            if (engine_driver_msg_handler != null) { engine_driver_msg_handler.sendMessage(fwd_msg); }
 //            if (select_loco_msg_handler != null) { select_loco_msg_handler.sendMessage(fwd_msg); }
 //            if (ui_msg_handler != null) { ui_msg_handler.sendMessage(fwd_msg); }
-            end_this_thread(); 
+//            end_this_thread();
+        	  end_jmdns();
             break;
-*/
+
         }
       };
     }
@@ -825,7 +870,7 @@ public class threaded_application extends Application
 			} catch (IOException e) {
   	            readTimer.cancel();  //stop trying to read if an error occurred
 //				e.printStackTrace();
-  	            process_comm_error("withrottle_rcv err:" + e.getMessage());  
+//  	            process_comm_error("withrottle_rcv err:" + e.getMessage());  
 			} 
       	  
     }  //end withrottle_rcv()
@@ -834,46 +879,10 @@ public class threaded_application extends Application
     {
     	Looper.prepare();
     	comm_msg_handler=new comm_handler(); //set shared pointer to handler 
+		listener=new withrottle_listener();
 
-      	int intaddr = 0;
-
-    	//Set up to find a WiThrottle service via ZeroConf, not supported for OS 1.5 (SDK 3)
-    	if (android.os.Build.VERSION.SDK.equals("3")) {    	 
-    		process_comm_error("WiFi discovery not supported.  Skipping.");
-    	} else {
-    		try   {
-    			WifiManager wifi = (WifiManager)threaded_application.this.getSystemService(Context.WIFI_SERVICE);
-    			//Acquire a multicast lock. This allows us to obtain multicast packets, but consumes a bit more battery life.
-    			//Release it as soon as possible (after the user has connected to a WiThrottle service, or this application is
-    			//not the currently active one.
-
-     			WifiInfo wifiinfo = wifi.getConnectionInfo();
-    			intaddr = wifiinfo.getIpAddress();
-    			if (intaddr != 0) {
-    				byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
-    						(byte)(intaddr >> 24 & 0xff) };
-    				InetAddress addr = InetAddress.getByAddress(byteaddr);
-    				String s = String.format("found intaddr=%d, addr=%s", intaddr, addr.toString());
-    				Log.d("comm_thread_run", s);
-
-    				jmdns=JmDNS.create(addr);
-    				listener=new withrottle_listener();
-
-          			multicast_lock=wifi.createMulticastLock("engine_driver");
-          			multicast_lock.setReferenceCounted(true);
-//           			multicast_lock.acquire();
-//    process_comm_error("Multicast details: " + 	multicast_lock.toString());
-
-    				//    				jmdns.addServiceListener("_withrottle._tcp.local.", listener);  moved to handler so ca can control
-    			} else {
-    				process_comm_error("No IP Address found.\nCheck your WiFi connection.");
-    			}  //end of if intaddr==0
-    		}  catch(IOException except) { 
-    			Log.e("comm_thread_run", "Error creating withrottle listener: IOException: "+except.getMessage()); 
-    			process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()+"\n"+except.getCause().getMessage()); 
-    		}
-    	}     
     	Looper.loop();
+  
     };
   }
   
