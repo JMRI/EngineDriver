@@ -78,6 +78,14 @@
                android:textSize="36dp"
                android:layout_alignParentRight="true"
                android:enabled="false" />
+            <TextView
+               android:id="@+id/volume_indicator_T"
+               android:text="@string/volume_indicator"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentLeft="true"
+               android:layout_alignBottom="@id/speed_value_label_T"
+               android:enabled="false" />
          </RelativeLayout>
       </LinearLayout>
       <TableLayout
@@ -296,6 +304,14 @@
                android:layout_height="wrap_content"
                android:textSize="36dp"
                android:layout_alignParentRight="true"
+               android:enabled="false" />
+            <TextView
+               android:id="@+id/volume_indicator_S"
+               android:text="@string/volume_indicator"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentLeft="true"
+               android:layout_alignBottom="@id/speed_value_label_S"
                android:enabled="false" />
          </RelativeLayout>
       </LinearLayout>

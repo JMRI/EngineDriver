@@ -99,5 +99,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 <string name="off">Off</string>
 <string name="set">Set</string>
 <string name="not_allowed">Not Allowed</string>
+<string name="volume_indicator">v</string>
 
 </resources>
