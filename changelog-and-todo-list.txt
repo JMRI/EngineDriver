@@ -1,6 +1,7 @@
  *Version 1.2 - changes/additions by mstevetodd
  *  update jmDNS again
  *  fixed a couple of NPEs reported to Market
+ * moved start of jmDNS to OnResume (to reconnect after lock/unlock of device)
  *Version 1.1 - changes/additions by mstevetodd
  *  create and delete jmdns as needed (should prevent lockup when wifi is toggled, and will "retry" if wifi state changes.(
  *Version 1.0 - changes/additions by mstevetodd

@@ -267,9 +267,9 @@ public class connection_activity extends Activity {
 }
 	
 	@Override
-	public void onStart() {
+	public void onResume() {
 
-		super.onStart();
+		super.onResume();
 
 		ip_list=new ArrayList<String>();
 	    port_list=new ArrayList<Integer>();
