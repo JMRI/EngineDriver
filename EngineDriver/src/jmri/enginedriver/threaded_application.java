@@ -103,8 +103,8 @@ public class threaded_application extends Application
 
   class comm_thread extends Thread
   {
-    JmDNS jmdns;
-    withrottle_listener listener;
+   JmDNS jmdns = null;
+   withrottle_listener listener;
    android.net.wifi.WifiManager.MulticastLock multicast_lock;
 
     //Listen for a WiThrottle service advertisement on the LAN.
@@ -209,7 +209,7 @@ public class threaded_application extends Application
     			}  //end of if intaddr==0
     		}  catch(IOException except) { 
     			Log.e("comm_thread_run", "Error creating withrottle listener: IOException: "+except.getMessage()); 
-    			process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()+"\n"+except.getCause().getMessage()); 
+    			process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()); 
     		}
     	}     
     }

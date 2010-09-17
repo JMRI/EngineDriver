@@ -272,30 +272,30 @@ public class select_loco extends Activity {
 	}
 
 	public class roster_item_ClickListener implements
-			AdapterView.OnItemClickListener {
+	AdapterView.OnItemClickListener {
 		// When an item is clicked, acquire that engine.
 		public void onItemClick(AdapterView<?> parent, View v, int position,
 				long id) {
 			ViewGroup vg = (ViewGroup) v; // convert to viewgroup for clicked
-											// row
+			// row
 			TextView rav = (TextView) vg.getChildAt(1); // get rosteraddress
-														// text from 2nd text
-														// field
+			// text from 2nd text
+			// field
 			String rosteraddressstring = (String) rav.getText();
 			// parse address and length from string, e.g. 2591(L)
 			String ras[] = threaded_application.splitByString(rosteraddressstring, "(");
-			Integer addresslength = (ras[1].charAt(0) == 'L') ? address_type.LONG
-					: address_type.SHORT; // convert S/L to 0/1
-			Message msg = Message.obtain();
-			msg.what = message_type.LOCO_ADDR;
-			msg.arg1 = new Integer(ras[0]); // convert address to int and pass
-											// in arg1
-			msg.arg2 = addresslength;
-			msg.obj = new String(whichThrottle); // pass T or S in message
-			mainapp.comm_msg_handler.sendMessage(msg);
+			if (ras[0].length() > 0) {  //only process if address found
+				Integer addresslength = (ras[1].charAt(0) == 'L') ? address_type.LONG
+						: address_type.SHORT; // convert S/L to 0/1
+				Message msg = Message.obtain();
+				msg.what = message_type.LOCO_ADDR;
+				msg.arg1 = new Integer(ras[0]); // convert address to int and pass in arg1
+				msg.arg2 = addresslength;
+				msg.obj = new String(whichThrottle); // pass T or S in message
+				mainapp.comm_msg_handler.sendMessage(msg);
 
-			end_this_activity();
-
+				end_this_activity();
+			}
 		};
 	}
 
