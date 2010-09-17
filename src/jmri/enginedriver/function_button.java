@@ -26,4 +26,5 @@ interface function_button
   public static final int STOP=991;
   public static final int REVERSE=992;
   public static final int SELECT_LOCO=993;
+  public static final int SPEED_LABEL=994;
 }

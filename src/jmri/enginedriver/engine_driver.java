@@ -56,6 +56,7 @@ public class engine_driver extends Activity {
   private static final int VISIBLE = 0;
   private SharedPreferences prefs;
   private Timer heartbeatTimer;
+  private String whichVolume = "T";
 
   private Drawable button_pressed_drawable;  //hold background graphics for buttons
   private Drawable button_normal_drawable;
@@ -281,6 +282,12 @@ public class engine_driver extends Activity {
               sb.setProgress(0);
         	  break;
             }
+            // specify which throttle the volume button controls          	  
+            case function_button.SPEED_LABEL: { 
+            	whichVolume = whichThrottle;  //use whichever was clicked
+            	set_labels();
+        	  break;
+            }
             case function_button.SELECT_LOCO : {
             	start_select_loco_activity(new String(whichThrottle));  //pass throttle #
               }
@@ -378,16 +385,21 @@ public class engine_driver extends Activity {
 		  }
 		  this.finish();  //end this activity
 		  
-	  } else if((key==KeyEvent.KEYCODE_VOLUME_UP) && (!mainapp.loco_string_T.equals("Not Set"))) { //use volume up to increase throttle, but only if first loco is set
-		  SeekBar sb;
-		  sb=(SeekBar)findViewById(R.id.speed_T);
-		  sb.setProgress(sb.getProgress() + 1 );
-		  return(true);  //stop processing this key
-
-	  } else if((key==KeyEvent.KEYCODE_VOLUME_DOWN) && (!mainapp.loco_string_T.equals("Not Set"))) { //use volume down to decrease throttle, but only if first loco is set
-		  SeekBar sb;
-		  sb=(SeekBar)findViewById(R.id.speed_T);
-		  sb.setProgress(sb.getProgress() - 1 );
+	  } else if((key==KeyEvent.KEYCODE_VOLUME_UP) || (key==KeyEvent.KEYCODE_VOLUME_DOWN) ) { //use volume to change speed for specified loco
+		  SeekBar sb = null;
+		  if (whichVolume.equals("T") && !mainapp.loco_string_T.equals("Not Set")) {
+			  sb=(SeekBar)findViewById(R.id.speed_T);
+		  }
+		  if (whichVolume.equals("S") && !mainapp.loco_string_S.equals("Not Set")) {
+			  sb=(SeekBar)findViewById(R.id.speed_S);
+		  }
+		  if (sb != null) {
+			  if (key==KeyEvent.KEYCODE_VOLUME_UP) {
+				  sb.setProgress(sb.getProgress() + 1 ); //increase 
+			  } else {
+				  sb.setProgress(sb.getProgress() - 1 );  //decrease (else is VOLUME_DOWN)
+			  }
+		  }
 		  return(true);  //stop processing this key
 	  }
 	  return(super.onKeyDown(key, event)); //continue with normal key processing
@@ -466,6 +478,9 @@ public void onStart() {
     b = (Button)findViewById(R.id.button_rev_T);
     fbtl=new function_button_touch_listener(function_button.REVERSE, "T");
     b.setOnTouchListener(fbtl);
+    View v = findViewById(R.id.speed_cell_T);
+    fbtl=new function_button_touch_listener(function_button.SPEED_LABEL, "T");
+    v.setOnTouchListener(fbtl);
 
     b = (Button)findViewById(R.id.button_fwd_S);
     fbtl=new function_button_touch_listener(function_button.FORWARD, "S");
@@ -476,6 +491,9 @@ public void onStart() {
     b = (Button)findViewById(R.id.button_rev_S);
     fbtl=new function_button_touch_listener(function_button.REVERSE, "S");
     b.setOnTouchListener(fbtl);
+    v = findViewById(R.id.speed_cell_S);
+    fbtl=new function_button_touch_listener(function_button.SPEED_LABEL, "S");
+    v.setOnTouchListener(fbtl);
 
     // set up listeners for both throttles
     SeekBar sb=(SeekBar)findViewById(R.id.speed_T);
@@ -575,6 +593,7 @@ public void onStart() {
     Button b=(Button)findViewById(R.id.button_select_loco_T);
     if (mainapp.loco_string_T.equals("Not Set")) {
         b.setText("Press to select");
+        whichVolume = "S";  //set the "other" one to use volume control 
     } else {
     	b.setText(mainapp.loco_string_T);
     	throttle_count++;
@@ -583,11 +602,23 @@ public void onStart() {
     b=(Button)findViewById(R.id.button_select_loco_S);
     if (mainapp.loco_string_S.equals("Not Set")) {
         b.setText("Press to select");
+        whichVolume = "T";  //set the "other" one to use volume control 
     } else {
       	b.setText(mainapp.loco_string_S);
     	throttle_count++;
     }
 
+    // hide or display volume control indicator based on variable
+    View viT = findViewById(R.id.volume_indicator_T);
+    View viS = findViewById(R.id.volume_indicator_S);
+    if (whichVolume.equals("T")) {
+    	viT.setVisibility(VISIBLE);
+    	viS.setVisibility(GONE);
+    } else {
+    	viT.setVisibility(GONE);
+    	viS.setVisibility(VISIBLE);
+    }
+    
     // set up max speeds for throttles
     String s = prefs.getString("maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
     int maxThrottle = Integer.parseInt(s);

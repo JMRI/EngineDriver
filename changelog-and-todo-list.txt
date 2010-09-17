@@ -2,6 +2,7 @@
  *  update jmDNS again
  *  fixed a couple of NPEs reported to Market
  * moved start of jmDNS to OnResume (to reconnect after lock/unlock of device)
+ * switch loco controlled by volume buttons (by tapping the speed label)
  *Version 1.1 - changes/additions by mstevetodd
  *  create and delete jmdns as needed (should prevent lockup when wifi is toggled, and will "retry" if wifi state changes.(
  *Version 1.0 - changes/additions by mstevetodd
@@ -85,7 +86,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays
  * engine_driver:
- *   TODO: switch loco controlled by volume buttons (by tapping the speed?)
+ *   TODO: add preference to disable other hardware buttons in throttle screen
  *   TODO: optionally increase height of throttle bars
  *   TODO: make selected buttons more obvious
  *   TODO: add graphics (slider, stop, directions, functions?)  add colors
