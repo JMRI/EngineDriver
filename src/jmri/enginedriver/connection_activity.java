@@ -151,12 +151,12 @@ public class connection_activity extends Activity {
         try {
           connected_port=new Integer(entry.getText().toString());
         } catch(NumberFormatException except) { 
-       	    Toast.makeText(getApplicationContext(), "Invalid connected_port#, retry.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
+       	    Toast.makeText(getApplicationContext(), "Invalid port#, retry.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
          	return;
         }
         connect();
       } else {
-    	    Toast.makeText(getApplicationContext(), "Enter or select an address and connected_port", Toast.LENGTH_SHORT).show();
+    	    Toast.makeText(getApplicationContext(), "Enter or select an address and port", Toast.LENGTH_SHORT).show();
 
       }
     };
