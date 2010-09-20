@@ -52,4 +52,12 @@
       android:dialogTitle="@string/prefHideSystemRouteNamesTitle"
    >
    </CheckBoxPreference>
+   <CheckBoxPreference
+      android:key="increase_slider_height_preference"
+      android:summary="@string/prefIncreaseSliderHeightSummary"
+      android:title="@string/prefIncreaseSliderHeightTitle"
+      android:defaultValue="@string/prefIncreaseSliderHeightDefaultValue"
+      android:dialogTitle="@string/prefIncreaseSliderHeightTitle"
+   >
+   </CheckBoxPreference>
 </PreferenceScreen>
