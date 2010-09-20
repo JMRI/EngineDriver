@@ -411,7 +411,8 @@ public void onResume() {
 
   //format the screen area
   set_labels();
-
+  enable_disable_buttons("T"); 
+  enable_disable_buttons("S");  
 }
 
 
@@ -619,15 +620,29 @@ public void onStart() {
     	viS.setVisibility(VISIBLE);
     }
     
-    // set up max speeds for throttles
+    SeekBar sbT=(SeekBar)findViewById(R.id.speed_T);
+    SeekBar sbS=(SeekBar)findViewById(R.id.speed_S);
+    
+ // set up max speeds for throttles
     String s = prefs.getString("maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
     int maxThrottle = Integer.parseInt(s);
     maxThrottle =(int) ((double) (maxThrottle/99.0) * 126.0);
-    SeekBar sb=(SeekBar)findViewById(R.id.speed_T);
-    sb.setMax(maxThrottle);
-    sb=(SeekBar)findViewById(R.id.speed_S);
-    sb.setMax(maxThrottle);
+    sbT.setMax(maxThrottle);
+    sbS.setMax(maxThrottle);
 
+ // increase height of throttle slider (if requested in preferences)
+    boolean ish = prefs.getBoolean("increase_slider_height_preference", false);  //TODO fix getting from strings
+    if (ish) {
+	    LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(
+	            ViewGroup.LayoutParams.FILL_PARENT,  100);  //set height to 100
+	    sbS.setLayoutParams(llLp);
+	    sbT.setLayoutParams(llLp);
+    } else {
+	    LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(
+	            ViewGroup.LayoutParams.FILL_PARENT,  60);  //set height to 60
+	    sbS.setLayoutParams(llLp);
+	    sbT.setLayoutParams(llLp);
+    }
     
     //update the state of each function button based on shared variable
     set_function_states("T");
@@ -717,8 +732,8 @@ public void onStart() {
       //since we always do the same action no need to distinguish between requests
       set_function_buttons();
 //	  set_labels();
-	  enable_disable_buttons("T");  //TODO: this is executed twice when loco is selected
-	  enable_disable_buttons("S");  
+//	  enable_disable_buttons("T");
+//	  enable_disable_buttons("S");  
   }
 
 }
