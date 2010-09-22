@@ -359,7 +359,7 @@ public class threaded_application extends Application
           case message_type.DISCONNECT:
         	withrottle_send("Q");
             withrottle_send("*-");     //turn off heartbeat
-            readTimer.cancel();        //stop reading from socket
+            if (readTimer != null) { readTimer.cancel(); }       //stop reading from socket
             try{ Thread.sleep(500); }   //  give server time to process this.
               catch (InterruptedException except){ process_comm_error("Error sleeping the thread, InterruptedException: "+except.getMessage()); }
             try { client_socket.close(); }
