@@ -313,6 +313,8 @@ public class threaded_application extends Application
 			    return;
 			} 
 
+//			String deviceId = Settings.System.getString(getContentResolver(),
+//                    Settings.System.ANDROID_ID);
 		    String s = prefs.getString("throttle_name_preference", getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue));
             withrottle_send("N" + s);  //send throttle name
             withrottle_send("HU" + s);  //also send throttle name as the UDID
