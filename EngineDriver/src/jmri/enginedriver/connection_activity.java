@@ -318,7 +318,9 @@ public class connection_activity extends Activity {
 	   	    Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
 	    }    	
 
-	}  //end of onStart
+	   // withrottle_list();
+	    
+	}  //end of onResume
   
   /** Called when the activity is first created. */
   @Override
@@ -412,5 +414,26 @@ public class connection_activity extends Activity {
 		return (super.onKeyDown(key, event));
 	};
 
+	//for debugging only
+/*	private void withrottle_list() {		
+		try {
+			JmDNS jmdns = JmDNS.create();
+			ServiceInfo[] infos = jmdns.list("_withrottle._tcp.local.");
+			String fh = "";
+			for (ServiceInfo info : infos) {
+				fh +=  info.getURL() + "\n";
+			}
+			jmdns.close();
+			if (fh != "") {
+				Toast.makeText(getApplicationContext(), "Found withrottle servers:\n" + fh, Toast.LENGTH_LONG).show();
+			} else {
+				Toast.makeText(getApplicationContext(), "No withrottle servers found.", Toast.LENGTH_LONG).show();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+*/
 
 }
