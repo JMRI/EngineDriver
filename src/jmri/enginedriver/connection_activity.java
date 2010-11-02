@@ -37,6 +37,9 @@ import java.io.IOException;
 import android.util.Log;
 import java.io.FileReader;
 
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceInfo;
+
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -317,8 +320,10 @@ public class connection_activity extends Activity {
 	    } else {
 	   	    Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
 	    }    	
+	    
+	    set_labels();
 
-	   // withrottle_list();
+	   // withrottle_list();  //debugging
 	    
 	}  //end of onResume
   
@@ -365,7 +370,7 @@ public class connection_activity extends Activity {
 	    SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 	    TextView v=(TextView)findViewById(R.id.ca_footer);
 	    String s = prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
-	    v.setText("Throttle Name: " + s);  
+	    v.setText("Throttle Name: " + s + "\n" + "Client Address: " + mainapp.client_address);  
   }
   
   @Override
@@ -415,7 +420,7 @@ public class connection_activity extends Activity {
 	};
 
 	//for debugging only
-/*	private void withrottle_list() {		
+	private void withrottle_list() {		
 		try {
 			JmDNS jmdns = JmDNS.create();
 			ServiceInfo[] infos = jmdns.list("_withrottle._tcp.local.");
@@ -434,6 +439,6 @@ public class connection_activity extends Activity {
 			e.printStackTrace();
 		}
 	}
-*/
+
 
 }
