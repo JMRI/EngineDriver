@@ -86,6 +86,8 @@ public class threaded_application extends Application
 	//Communications variables.
 	Socket client_socket;
 	InetAddress host_address;
+
+	String client_address; //address string of the client address
 	//For communication to the comm_thread.
 	public comm_handler comm_msg_handler;
 	//For communication to each of the activities (set and unset by the activity)
@@ -194,15 +196,16 @@ public class threaded_application extends Application
     			if (intaddr != 0) {
     				byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
     						(byte)(intaddr >> 24 & 0xff) };
-    				InetAddress addr = InetAddress.getByAddress(byteaddr);
-    				String s = String.format("found intaddr=%d, addr=%s", intaddr, addr.toString());
+    				Inet4Address addr = (Inet4Address) Inet4Address.getByAddress(byteaddr);
+    				client_address = addr.toString();
+    				String s = String.format("found intaddr=%d, addr=%s", intaddr, client_address);
     				Log.d("comm_thread_run", s);
 
     				jmdns=JmDNS.create(addr);
 
     				if (multicast_lock == null) {  //do this only as needed
-    				multicast_lock=wifi.createMulticastLock("engine_driver");
-    				multicast_lock.setReferenceCounted(true);
+    					multicast_lock=wifi.createMulticastLock("engine_driver");
+    					multicast_lock.setReferenceCounted(true);
     				}
     			} else {
     				process_comm_error("No IP Address found.\nCheck your WiFi connection.");
@@ -217,7 +220,12 @@ public class threaded_application extends Application
    
     void end_jmdns() {
     	if (jmdns != null) {
-    		jmdns.close();
+//    		try {
+				jmdns.close();
+//			} catch (IOException e) {
+				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
     		jmdns = null;
     	}
     }

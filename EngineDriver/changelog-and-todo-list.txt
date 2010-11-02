@@ -79,6 +79,7 @@
  *   TODO: use PTT titles for Turnouts/Turnout
  *   TODO: update turnout list on change not working after reentry to turnout view (worked around by finishing on exit)
  * connection
+ *   TODO: handle missing ':' when reading connections file
  *   TODO: extract server name and ip from view and remove the array(s)
  *   TODO: add pref for auto-connect on discovery
  * threaded_application
