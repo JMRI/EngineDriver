@@ -220,12 +220,12 @@ public class threaded_application extends Application
    
     void end_jmdns() {
     	if (jmdns != null) {
-//    		try {
+    		try {
 				jmdns.close();
-//			} catch (IOException e) {
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+				e.printStackTrace();
+			}
     		jmdns = null;
     	}
     }
