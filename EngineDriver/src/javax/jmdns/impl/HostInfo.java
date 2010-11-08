@@ -13,6 +13,7 @@ import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,6 +74,23 @@ public class HostInfo implements DNSStatefulObject
                 else
                 {
                     addr = InetAddress.getLocalHost();
+                    if (addr.isLoopbackAddress())
+                    {
+                        // Find local address that isn't a loopback address
+                        for (Enumeration<NetworkInterface> nifs = NetworkInterface.getNetworkInterfaces(); nifs.hasMoreElements() && addr.isLoopbackAddress();)
+                        {
+                            NetworkInterface nif = nifs.nextElement();
+                            for (Enumeration<InetAddress> iaenum = nif.getInetAddresses(); iaenum.hasMoreElements();)
+                            {
+                                InetAddress interfaceAddress = iaenum.nextElement();
+                                if (useInetAddress(nif, interfaceAddress))
+                                {
+                                    addr = interfaceAddress;
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
                 aName = addr.getHostName();
                 if (addr.isLoopbackAddress())
@@ -95,7 +113,7 @@ public class HostInfo implements DNSStatefulObject
         }
         catch (final IOException e)
         {
-            logger.warning("Could not intialize the host network interface on " + address + "because of an error: " + e.getMessage());
+            logger.log(Level.WARNING, "Could not intialize the host network interface on " + address + "because of an error: " + e.getMessage(), e);
             // This is only used for running unit test on Debian / Ubuntu
             localhost = new HostInfo(loopbackAddress(), "computer", dns);
         }
@@ -111,6 +129,32 @@ public class HostInfo implements DNSStatefulObject
         catch (UnknownHostException exception)
         {
             return null;
+        }
+    }
+
+    private static boolean useInetAddress(NetworkInterface networkInterface, InetAddress interfaceAddress)
+    {
+        try
+        {
+/*            if (!networkInterface.isUp())
+            {
+                return false;
+            }
+            if (!networkInterface.supportsMulticast())
+            {
+                return false;
+            }
+*/            
+            
+            if (interfaceAddress.isLoopbackAddress())
+            {
+                return false;
+            }
+            return true;
+        }
+        catch (Exception exception)
+        {
+            return false;
         }
     }
 
@@ -270,10 +314,8 @@ public class HostInfo implements DNSStatefulObject
         return list;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#getDns()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public JmDNSImpl getDns()
@@ -281,10 +323,8 @@ public class HostInfo implements DNSStatefulObject
         return this._state.getDns();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#advanceState(javax.jmdns.impl.tasks.DNSTask)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean advanceState(DNSTask task)
@@ -292,10 +332,8 @@ public class HostInfo implements DNSStatefulObject
         return this._state.advanceState(task);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#removeAssociationWithTask(javax.jmdns.impl.tasks.DNSTask)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void removeAssociationWithTask(DNSTask task)
@@ -303,10 +341,8 @@ public class HostInfo implements DNSStatefulObject
         this._state.removeAssociationWithTask(task);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#revertState()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean revertState()
@@ -314,10 +350,8 @@ public class HostInfo implements DNSStatefulObject
         return this._state.revertState();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#associateWithTask(javax.jmdns.impl.tasks.DNSTask, javax.jmdns.impl.constants.DNSState)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void associateWithTask(DNSTask task, DNSState state)
@@ -325,10 +359,8 @@ public class HostInfo implements DNSStatefulObject
         this._state.associateWithTask(task, state);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#isAssociatedWithTask(javax.jmdns.impl.tasks.DNSTask, javax.jmdns.impl.constants.DNSState)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean isAssociatedWithTask(DNSTask task, DNSState state)
@@ -336,10 +368,8 @@ public class HostInfo implements DNSStatefulObject
         return this._state.isAssociatedWithTask(task, state);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#cancel()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean cancelState()
@@ -347,10 +377,8 @@ public class HostInfo implements DNSStatefulObject
         return this._state.cancelState();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#recover()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean recoverState()
@@ -358,10 +386,8 @@ public class HostInfo implements DNSStatefulObject
         return this._state.recoverState();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#isProbing()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean isProbing()
@@ -369,10 +395,8 @@ public class HostInfo implements DNSStatefulObject
         return this._state.isProbing();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#isAnnouncing()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean isAnnouncing()
@@ -380,10 +404,8 @@ public class HostInfo implements DNSStatefulObject
         return this._state.isAnnouncing();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#isAnnounced()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean isAnnounced()
@@ -391,10 +413,8 @@ public class HostInfo implements DNSStatefulObject
         return this._state.isAnnounced();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#isCanceling()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean isCanceling()
@@ -402,10 +422,8 @@ public class HostInfo implements DNSStatefulObject
         return this._state.isCanceling();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#isCanceled()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean isCanceled()
@@ -413,10 +431,8 @@ public class HostInfo implements DNSStatefulObject
         return this._state.isCanceled();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#waitForAnnounced(long)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean waitForAnnounced(long timeout)
@@ -424,10 +440,8 @@ public class HostInfo implements DNSStatefulObject
         return _state.waitForAnnounced(timeout);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see javax.jmdns.impl.DNSStatefulObject#waitForCanceled(long)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean waitForCanceled(long timeout)

@@ -65,7 +65,7 @@ public abstract class DNSEntry
         if (obj instanceof DNSEntry)
         {
             DNSEntry other = (DNSEntry) obj;
-            result = this.getKey().equals(other.getKey()) && this.getRecordType().equals(other.getRecordType()) && _dnsClass == other.getRecordClass();
+            result = this.getKey().equals(other.getKey()) && this.getRecordType().equals(other.getRecordType()) && this.getRecordClass() == other.getRecordClass();
         }
         return result;
     }
@@ -82,6 +82,12 @@ public abstract class DNSEntry
         return this.getKey().equals(entry.getKey()) && this.getRecordType().equals(entry.getRecordType()) && ((DNSRecordClass.CLASS_ANY == entry.getRecordClass()) || this.getRecordClass().equals(entry.getRecordClass()));
     }
 
+    /**
+     * Check if two entries have the same subtype.
+     *
+     * @param other
+     * @return <code>true</code> if the two entries have are for the same subtype, <code>false</code> otherwise
+     */
     public boolean sameSubtype(DNSEntry other)
     {
         return this.getSubtype().equals(other.getSubtype());
@@ -275,7 +281,7 @@ public abstract class DNSEntry
     @Override
     public int hashCode()
     {
-        return _name.hashCode() + this.getRecordType().indexValue() + this.getRecordClass().indexValue();
+        return this.getKey().hashCode() + this.getRecordType().indexValue() + this.getRecordClass().indexValue();
     }
 
     /*

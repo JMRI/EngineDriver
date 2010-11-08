@@ -14,7 +14,7 @@ import javax.jmdns.impl.constants.DNSConstants;
 /**
  * Listen for multicast packets.
  */
-class SocketListener implements Runnable
+class SocketListener extends Thread
 {
     static Logger logger = Logger.getLogger(SocketListener.class.getName());
 
@@ -28,7 +28,8 @@ class SocketListener implements Runnable
      */
     SocketListener(JmDNSImpl jmDNSImpl)
     {
-        super();
+        super("SocketListener(" + (jmDNSImpl != null ? jmDNSImpl.getName() : "") + ")");
+        this.setDaemon(true);
         this._jmDNSImpl = jmDNSImpl;
     }
 
@@ -92,15 +93,14 @@ class SocketListener implements Runnable
         // thread has died.
         // Note: This is placed here to avoid locking the IoLock object and
         // 'this' instance together.
+        if (logger.isLoggable(Level.FINEST))
+        {
+            logger.finest(this.getName() + ".run() exiting.");
+        }
         synchronized (this._jmDNSImpl)
         {
             this._jmDNSImpl.notifyAll();
         }
-    }
-
-    public String getName()
-    {
-        return "SocketListener(" + (this.getDns() != null ? this.getDns().getName() : "") + ")";
     }
 
     public JmDNSImpl getDns()
