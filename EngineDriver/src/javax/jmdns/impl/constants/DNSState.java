@@ -1,17 +1,15 @@
-//Copyright 2003-2005 Arthur van Hoff, Rick Blair
-//Licensed under Apache License version 2.0
-//Original license LGPL
+// Copyright 2003-2005 Arthur van Hoff, Rick Blair
+// Licensed under Apache License version 2.0
+// Original license LGPL
 
 package javax.jmdns.impl.constants;
 
 /**
  * DNSState defines the possible states for services registered with JmDNS.
  *
- * @version %I%, %G%
  * @author Werner Randelshofer, Rick Blair, Pierre Frisch
  */
-public enum DNSState
-{
+public enum DNSState {
 
     /**
      *
@@ -54,26 +52,23 @@ public enum DNSState
     */
     CANCELED("canceled", StateClass.canceled);
 
-    private enum StateClass
-    {
+    private enum StateClass {
         probing, announcing, announced, canceling, canceled
     }
 
     // private static Logger logger = Logger.getLogger(DNSState.class.getName());
 
-    private final String _name;
+    private final String     _name;
 
     private final StateClass _state;
 
-    private DNSState(String name, StateClass state)
-    {
+    private DNSState(String name, StateClass state) {
         _name = name;
         _state = state;
     }
 
     @Override
-    public final String toString()
-    {
+    public final String toString() {
         return _name;
     }
 
@@ -84,10 +79,8 @@ public enum DNSState
      *
      * @return next state
      */
-    public final DNSState advance()
-    {
-        switch (this)
-        {
+    public final DNSState advance() {
+        switch (this) {
             case PROBING_1:
                 return PROBING_2;
             case PROBING_2:
@@ -108,9 +101,10 @@ public enum DNSState
                 return CANCELED;
             case CANCELED:
                 return CANCELED;
+            default:
+                // This is just to keep the compiler happy as we have covered all cases before.
+                return this;
         }
-        // This is just to keep the compiler happy as we have covered all cases before.
-        return this;
     }
 
     /**
@@ -118,10 +112,8 @@ public enum DNSState
      *
      * @return reverted state
      */
-    public final DNSState revert()
-    {
-        switch (this)
-        {
+    public final DNSState revert() {
+        switch (this) {
             case PROBING_1:
             case PROBING_2:
             case PROBING_3:
@@ -135,9 +127,10 @@ public enum DNSState
                 return CANCELING_1;
             case CANCELED:
                 return CANCELED;
+            default:
+                // This is just to keep the compiler happy as we have covered all cases before.
+                return this;
         }
-        // This is just to keep the compiler happy as we have covered all cases before.
-        return this;
     }
 
     /**
@@ -145,8 +138,7 @@ public enum DNSState
      *
      * @return <code>true</code> if probing state, <code>false</code> otherwise
      */
-    public final boolean isProbing()
-    {
+    public final boolean isProbing() {
         return _state == StateClass.probing;
     }
 
@@ -155,8 +147,7 @@ public enum DNSState
      *
      * @return <code>true</code> if announcing state, <code>false</code> otherwise
      */
-    public final boolean isAnnouncing()
-    {
+    public final boolean isAnnouncing() {
         return _state == StateClass.announcing;
     }
 
@@ -165,8 +156,7 @@ public enum DNSState
      *
      * @return <code>true</code> if announced state, <code>false</code> otherwise
      */
-    public final boolean isAnnounced()
-    {
+    public final boolean isAnnounced() {
         return _state == StateClass.announced;
     }
 
@@ -175,8 +165,7 @@ public enum DNSState
      *
      * @return <code>true</code> if canceling state, <code>false</code> otherwise
      */
-    public final boolean isCanceling()
-    {
+    public final boolean isCanceling() {
         return _state == StateClass.canceling;
     }
 
@@ -185,8 +174,7 @@ public enum DNSState
      *
      * @return <code>true</code> if canceled state, <code>false</code> otherwise
      */
-    public final boolean isCanceled()
-    {
+    public final boolean isCanceled() {
         return _state == StateClass.canceled;
     }
 
