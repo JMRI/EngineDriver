@@ -1,6 +1,6 @@
-//Copyright 2003-2005 Arthur van Hoff, Rick Blair
-//Licensed under Apache License version 2.0
-//Original license LGPL
+// Copyright 2003-2005 Arthur van Hoff, Rick Blair
+// Licensed under Apache License version 2.0
+// Original license LGPL
 
 package javax.jmdns;
 
@@ -9,11 +9,9 @@ import java.util.EventListener;
 /**
  * Listener for service updates.
  *
- * @version %I%, %G%
  * @author Arthur van Hoff, Werner Randelshofer, Pierre Frisch
  */
-public interface ServiceListener extends EventListener
-{
+public interface ServiceListener extends EventListener {
     /**
      * A service has been added.<br/>
      * <b>Note:</b>This event is only the service added event. The service info associated with this event does not include resolution information.<br/>

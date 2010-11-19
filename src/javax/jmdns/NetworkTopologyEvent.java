@@ -7,12 +7,9 @@ import java.net.InetAddress;
 import java.util.EventObject;
 
 /**
- *
- * @version %I%, %G%
  * @author C&eacute;drik Lime, Pierre Frisch
  */
-public abstract class NetworkTopologyEvent extends EventObject
-{
+public abstract class NetworkTopologyEvent extends EventObject {
 
     /**
      *
@@ -27,8 +24,7 @@ public abstract class NetworkTopologyEvent extends EventObject
      * @exception IllegalArgumentException
      *                if source is null.
      */
-    protected NetworkTopologyEvent(Object eventSource)
-    {
+    protected NetworkTopologyEvent(Object eventSource) {
         super(eventSource);
     }
 
