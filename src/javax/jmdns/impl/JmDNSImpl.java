@@ -234,7 +234,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject {
         _services = new ConcurrentHashMap<String, ServiceInfo>(20);
         _serviceTypes = new ConcurrentHashMap<String, Set<String>>(20);
 
-        _localHost = HostInfo.newHostInfo(address, this);
+        _localHost = HostInfo.newHostInfo(address, this, name);
         _name = (name != null ? name : _localHost.getName());
 
         _timer = new Timer("JmDNS(" + _name + ").Timer", true);
@@ -1112,7 +1112,6 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject {
         }
 
         // update the cache
-        // if ((newRecord.getRecordType() != DNSRecordType.TYPE_PTR) || (!newRecord.isServicesDiscoveryMetaQuery()))
         if (!newRecord.isServicesDiscoveryMetaQuery() && !newRecord.isDomainDiscoveryQuery()) {
             final DNSRecord cachedRecord = (DNSRecord) this.getCache().getDNSEntry(newRecord);
             if (logger.isLoggable(Level.FINE)) {
