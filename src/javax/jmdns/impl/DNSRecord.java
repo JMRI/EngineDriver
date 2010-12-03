@@ -120,6 +120,7 @@ public abstract class DNSRecord extends DNSEntry {
      * Get the expiration time of this record.
      */
     long getExpirationTime(int percent) {
+        // ttl is in seconds the constant 10 is 1000 ms / 100 %
         return _created + (percent * _ttl * 10L);
     }
 
@@ -154,6 +155,14 @@ public abstract class DNSRecord extends DNSEntry {
     void resetTTL(DNSRecord other) {
         _created = other._created;
         _ttl = other._ttl;
+    }
+
+    /**
+     * When a record flushed we don't remove it immediately, but mark it for rapid decay.
+     */
+    void setWillExpireSoon(long now) {
+        _created = now;
+        _ttl = DNSConstants.RECORD_EXPIRY_DELAY;
     }
 
     /**
@@ -489,13 +498,15 @@ public abstract class DNSRecord extends DNSEntry {
 
     }
 
+    public final static byte[] EMPTY_TXT = new byte[] { 0 };
+
     public static class Text extends DNSRecord {
         // private static Logger logger = Logger.getLogger(Text.class.getName());
         private final byte[] _text;
 
         public Text(String name, DNSRecordClass recordClass, boolean unique, int ttl, byte text[]) {
             super(name, DNSRecordType.TYPE_TXT, recordClass, unique, ttl);
-            this._text = text;
+            this._text = (text != null && text.length > 0 ? text : EMPTY_TXT);
         }
 
         /**

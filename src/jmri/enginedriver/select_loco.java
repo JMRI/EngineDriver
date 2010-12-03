@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -411,6 +412,9 @@ public class select_loco extends Activity {
 			Log.e("connection_activity", "Error reading recent loco file. "
 					+ except.getMessage());
 		}
+
+	    // suppress popup keyboard until EditText is touched
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		// Set the button callbacks.
 		Button button = (Button) findViewById(R.id.acquire);
