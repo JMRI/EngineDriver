@@ -45,6 +45,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.os.Message;
 import android.widget.EditText;
 import android.widget.Button;
@@ -357,6 +358,9 @@ public class connection_activity extends Activity {
     discovered_ip_list=new ArrayList<String>();
     discovered_port_list=new ArrayList<Integer>();
 
+    // suppress popup keyboard until EditText is touched
+	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
     //Set the button callback.
     Button button=(Button)findViewById(R.id.connect);
     button_listener click_listener=new button_listener();
@@ -370,7 +374,7 @@ public class connection_activity extends Activity {
 	    SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 	    TextView v=(TextView)findViewById(R.id.ca_footer);
 	    String s = prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
-	    v.setText("Throttle Name: " + s + "\n" + "Client Address: " + mainapp.client_address);  
+	    v.setText("Throttle Name: " + s);  
   }
   
   @Override

@@ -29,6 +29,7 @@ import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -194,7 +195,10 @@ public class routes extends Activity {
     ListView routes_lv=(ListView)findViewById(R.id.routes_list);
     routes_lv.setAdapter(routes_list_adapter);
     routes_lv.setOnItemClickListener(new route_item());
-    
+
+    // suppress popup keyboard until EditText is touched
+	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
     //Set the button callbacks, storing the command to pass for each
     Button b=(Button)findViewById(R.id.route_toggle);
     button_listener click_listener=new button_listener(2);

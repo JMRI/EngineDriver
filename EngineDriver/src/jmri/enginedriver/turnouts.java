@@ -29,6 +29,7 @@ import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -211,6 +212,9 @@ public class turnouts extends Activity {
     ListView turnouts_lv=(ListView)findViewById(R.id.turnouts_list);
     turnouts_lv.setAdapter(turnouts_list_adapter);
     turnouts_lv.setOnItemClickListener(new turnout_item());
+
+    // suppress popup keyboard until EditText is touched
+	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     
     //Set the button callbacks, storing the command to pass for each
     Button b=(Button)findViewById(R.id.turnout_toggle);

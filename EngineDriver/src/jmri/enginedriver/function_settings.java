@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import java.util.ArrayList;
 import java.io.*;
@@ -42,11 +43,15 @@ public class function_settings extends Activity {
         if (mainapp.function_labels_T == null || mainapp.function_labels_T.size()==0) {
             v.setEnabled(false);  //disable button if no roster
         } else { 
-          //Set the button callback.
-          Button button=(Button)findViewById(R.id.fb_copy_labels_from_roster);
-          button_listener click_listener=new button_listener();
-          button.setOnClickListener(click_listener);
-          v.setEnabled(true);
+
+        	// suppress popup keyboard until EditText is touched
+        	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        	//Set the button callback.
+        	Button button=(Button)findViewById(R.id.fb_copy_labels_from_roster);
+        	button_listener click_listener=new button_listener();
+        	button.setOnClickListener(click_listener);
+        	v.setEnabled(true);
         }
      }
 

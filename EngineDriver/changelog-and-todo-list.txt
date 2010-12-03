@@ -1,7 +1,9 @@
- *Version 1.3 - changes/additions by mstevetodd
- *  fixed another NPE reported to market
+ *Version 1.3
+ *  suppressed popup soft keyboard on Turnout and Route panels until EditText view is touched (added by rbecker)
+ *  fixed another NPE reported to market (mstevetodd)
+ *  updated jmDNS again (mstevetodd)
  *Version 1.2 - changes/additions by mstevetodd
- *  update jmDNS again
+ *  updated jmDNS again
  *  fixed a couple of NPEs reported to Market
  * moved start of jmDNS to OnResume (to reconnect after lock/unlock of device)
  * switch loco controlled by volume buttons (by tapping the speed label)
@@ -89,8 +91,9 @@
  *   TODO: add client-side conversation logging for easier debugging
  *   TODO: check for error on send and do something with it 
  *   TODO: move socket timeout values to preference
- *   TODO: redo hard-coded 29 in function arrays
+ *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * engine_driver:
+ *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
  *   TODO: reduce number of calls to set_labels()
  *   TODO: add preference to disable other hardware buttons in throttle screen
  *   TODO: make selected buttons more obvious
@@ -101,6 +104,7 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
+ *   TODO: use new 'E' and 'c' WiT commands to select by roster name instead of address (to handle duplicates)
  *   TODO: don't show or allow entry of loco if already in use on "other" throttle or in a consist
  *   TODO: simplify select_loco by removing handler
  * preferences:
