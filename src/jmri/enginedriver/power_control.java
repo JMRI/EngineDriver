@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -39,6 +40,10 @@ import android.widget.Toast;
 public class power_control extends Activity {
 
 	private threaded_application mainapp;  // hold pointer to mainapp
+	private Drawable power_on_drawable;  //hold background graphics for power button
+	private Drawable power_off_drawable;
+	private Drawable power_unknown_drawable;
+
 		  
 	  //Handle messages from the communication thread back to this thread (responses from withrottle)
 	  class power_control_handler extends Handler {
@@ -73,18 +78,17 @@ public class power_control extends Activity {
 	    //Set the button text based on current power state  TODO: improve code 
 		public void refresh_power_control_view() {
 		    Button b=(Button)findViewById(R.id.power_control_button);
-		    String currentState = "???";
+		    Drawable currentImage = power_unknown_drawable;
 		    if (mainapp.power_state == null) {
-		    	currentState = getString(R.string.not_allowed);  //must be turned on in Withrottle settings
 			    b.setEnabled(false);
 			    TextView tv=(TextView)findViewById(R.id.power_control_text);
 			    tv.setText(getString(R.string.power_control_not_allowed)); 
 		    } else if (mainapp.power_state.equals("1")) {
-		    	currentState = getString(R.string.on);
+		    	currentImage = power_on_drawable;
 		    } else if (mainapp.power_state.equals("0")) {
-		    	currentState = getString(R.string.off);
+		    	currentImage = power_off_drawable;
 		    }		    	
-		    b.setText(currentState);
+		    b.setBackgroundDrawable(currentImage);
 		}
 
   @Override
@@ -108,6 +112,11 @@ public class power_control extends Activity {
     setContentView(R.layout.power_control);
     
     mainapp=(threaded_application)getApplication();
+    
+    power_on_drawable=getResources().getDrawable(R.drawable.power_green);
+    power_off_drawable=getResources().getDrawable(R.drawable.power_red);
+    power_unknown_drawable=getResources().getDrawable(R.drawable.power_yellow);
+
     
     //Set the button callbacks, storing the command to pass for each
     Button b=(Button)findViewById(R.id.power_control_button);
