@@ -98,26 +98,8 @@ public class connection_activity extends Activity {
 
   void start_engine_driver_activity()
   {
-	    // clear the discovered list
-//	    discovered_ip_list.clear();
-//	    discovered_port_list.clear();
-//	    discovery_list.clear();
-
-	    /*
-	    //shutdown server discovery listener
-	    Message msg=Message.obtain();
-	    msg.what=message_type.SET_LISTENER;
-	    msg.arg1 = 0; //zero turns it off
-	    if (mainapp.comm_msg_handler != null) {
-	    	mainapp.comm_msg_handler.sendMessage(msg);
-	    } else {
-	   	    Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
-	    }    	
-	    */
-
 	    Intent engine_driver=new Intent().setClass(this, engine_driver.class);
 	    startActivity(engine_driver);
-
   };
   
   public enum server_list_type { DISCOVERED_SERVER, RECENT_CONNECTION }
@@ -289,15 +271,24 @@ public class connection_activity extends Activity {
 	    	if(connections_list_file.exists())    {
 	    		BufferedReader list_reader=new BufferedReader(new FileReader(connections_list_file));
 	    		while(list_reader.ready())    {
+	    			Integer pl = 0;
 	    			String line=list_reader.readLine();
-	    			String il = line.substring(0, line.indexOf(':'));
-	    			Integer pl = Integer.decode(line.substring(line.indexOf(':')+1, line.length()));
-	    			ip_list.add(il);
-	    			port_list.add(pl);
-	    			HashMap<String, String> hm=new HashMap<String, String>();
-	    			hm.put("ip_address", il);
-	    			hm.put("port", pl.toString());
-	    			connections_list.add(hm);
+	    			Integer splitPos = line.indexOf(':');
+	    			if (splitPos > 0) {
+	    				String il = line.substring(0, splitPos);
+	    				try {
+	    					pl = Integer.decode(line.substring(splitPos+1, line.length()));
+	    				} catch (NumberFormatException e) {
+	    				}
+	    				if (pl > 0) {
+	    					ip_list.add(il);
+	    					port_list.add(pl);
+	    					HashMap<String, String> hm=new HashMap<String, String>();
+	    					hm.put("ip_address", il);
+	    					hm.put("port", pl.toString());
+	    					connections_list.add(hm);
+	    				} //if pl>0
+	    			} //if splitPos>0 
 	    		}
 	    		connection_list_adapter.notifyDataSetChanged();
 	    	}

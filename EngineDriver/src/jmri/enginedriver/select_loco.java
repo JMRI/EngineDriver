@@ -237,8 +237,6 @@ public class select_loco extends Activity {
 	public class button_listener implements View.OnClickListener {
 		public void onClick(View v) {
 			EditText entry = (EditText) findViewById(R.id.loco_address);
-			// engine_address=Integer.decode(entry.getText().toString());
-			// //decode treated leading zeros as octal
 			engine_address = new Integer(entry.getText().toString());
 			Spinner spinner = (Spinner) findViewById(R.id.address_length);
 			address_size = spinner.getSelectedItemPosition();
@@ -377,33 +375,36 @@ public class select_loco extends Activity {
 		engine_address_list = new ArrayList<Integer>();
 		address_size_list = new ArrayList<Integer>();
 		// Populate the ListView with the recent engines saved in a file. This
-		// will be stored in
-		// /sdcard/engine_driver/recent_engine_list.txt
+		// will be stored in /sdcard/engine_driver/recent_engine_list.txt
+		// entries not matching the assumptions will be ignored
 		try {
 			File sdcard_path = Environment.getExternalStorageDirectory();
-			//			if (sdcard_path.canWrite()) {
-			//				File engine_driver_dir = new File(sdcard_path, "engine_driver");
-			// The engine_driver directory should already exist. The
-			// connection activity should have already created it.
-			//				if (engine_driver_dir.exists()
-			//						&& engine_driver_dir.isDirectory()) {
 			File engine_list_file = new File(sdcard_path + "/engine_driver/recent_engine_list.txt");
 			if (engine_list_file.exists()) {
 				BufferedReader list_reader = new BufferedReader(
 						new FileReader(engine_list_file));
 				while (list_reader.ready()) {
 					String line = list_reader.readLine();
-					engine_address_list.add(Integer.decode(line
-							.substring(0, line.indexOf(':'))));
-					address_size_list.add(Integer.decode(line
-							.substring(line.indexOf(':') + 1, line
-									.length())));
-					HashMap<String, String> hm = new HashMap<String, String>();
-					String addressLengthString = "L";
-					String engineAddressString = String.format("%s(%s)",engine_address_list.get(
-							engine_address_list.size() - 1).toString(), addressLengthString);
-					hm.put("engine", engineAddressString);
-					recent_engine_list.add(hm);
+	    			Integer splitPos = line.indexOf(':');
+	    			Integer ea = -1;
+	    			Integer as = -1;
+	    			if (splitPos > 0) {
+	    				try {	ea = Integer.decode(line.substring(0, splitPos));
+						} catch (NumberFormatException e) {}
+	    				try {	as = Integer.decode(line.substring(splitPos + 1, line.length()));
+						} catch (NumberFormatException e) {}
+
+						if ((ea >= 0) && (as >= 0)) {
+							engine_address_list.add(ea);
+							address_size_list.add(as);
+							HashMap<String, String> hm = new HashMap<String, String>();
+							String addressLengthString = "L";
+							String engineAddressString = String.format("%s(%s)",engine_address_list.get(
+									engine_address_list.size() - 1).toString(), addressLengthString);
+							hm.put("engine", engineAddressString);
+							recent_engine_list.add(hm);
+						} //if ea>=0&&as>=0
+	    			} //if splitPos>0
 				}
 				recent_list_adapter.notifyDataSetChanged();
 			}
