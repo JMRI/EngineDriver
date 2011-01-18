@@ -24,6 +24,8 @@ import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.Settings;
+
 import java.net.*;
 import java.io.*;
 
@@ -321,9 +323,17 @@ public class threaded_application extends Application
 			    return;
 			} 
 
-//			String deviceId = Settings.System.getString(getContentResolver(),
-//                    Settings.System.ANDROID_ID);
-		    String s = prefs.getString("throttle_name_preference", getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue));
+			String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+			if (deviceId != null && deviceId.length() >=4) {
+				deviceId = deviceId.substring(deviceId.length() - 4);
+			} else {
+				deviceId = "";
+			}
+			String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue) + " " + deviceId;
+		    String s = prefs.getString("throttle_name_preference", defaultName);
+		    if (s.equals("")) {
+		    	s = defaultName;
+		    }
             withrottle_send("N" + s);  //send throttle name
             withrottle_send("HU" + s);  //also send throttle name as the UDID
             Message connection_message=Message.obtain();
