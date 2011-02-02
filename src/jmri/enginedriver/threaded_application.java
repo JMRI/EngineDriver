@@ -120,6 +120,7 @@ public class threaded_application extends Application
     	  
           //A service has been added. Request details of the service
 		  ServiceInfo si = jmdns.getServiceInfo(event.getType(), event.getName(), 0);
+		  
     	  
     	  if (si == null || si.getPort() == 0 ) {  //not enough info, submit request for details
     		  Log.d("serviceAdded", String.format("More Info Requested: Type='%s', Name='%s', %s", event.getType(), event.getName(), event.toString()));
@@ -128,15 +129,19 @@ public class threaded_application extends Application
 
     	  } else {  //get the port and validate that the host address will resolve
     		  int port=si.getPort();
-    		  String hostip=si.getHostAddress();
-    		  String hostname = "";
-    		  try { //attempt to find full name from ip
-    			  InetAddress hostaddress=Inet4Address.getByName(hostip);
-    			  hostname = hostaddress.getHostName();  //try to use this name instead of ip address
-    			  hostaddress=Inet4Address.getByName(hostname); //verify this will resolve before using it
+//    		  String hostip=si.getHostAddress();
+//    		  String hostname = "";
+        	  String hostname = si.getName(); 
+    		  
+    		  try { //verify that the name will resolve
+//    			  InetAddress hostaddress=InetAddress.getByName(hostip);
+//    			  hostname = hostaddress.getHostName();  //try to use this name instead of ip address
+//    			  hostaddress=InetAddress.getByName(hostname); //verify this will resolve before using it
+        		  InetAddress hostaddress=InetAddress.getByName(hostname);
     		  }  
-    		  catch(UnknownHostException except) {
-    			  hostname = hostip;
+    		  catch(UnknownHostException except) {  //if name resolution fails, use ip address
+//    			  hostname = hostip;
+    			  hostname = si.getHostAddress();
     		  }  //if name resolution fails, use ip address
     		  Log.d("serviceAdded", String.format("%s:%d -- %s", hostname, port, event.toString()));
     		  //process_comm_error(String.format(String.format("Added %s:%d", hostname, port)));
@@ -156,18 +161,20 @@ public class threaded_application extends Application
 
       public void serviceResolved(ServiceEvent event)
       {
-    	  //A service's information has been resolved. Capture the necessary part needed to connect to that service.
+    	  //A service's information has been resolved. Store the port and servername to connect to that service.  Verify the servername.
     	  int port=event.getInfo().getPort();
-    	  String hostip=event.getInfo().getHostAddress();
-    	  String hostname = "";
-    	  try { //attempt to find full name from ip
-    		  InetAddress hostaddress=Inet4Address.getByName(hostip);
-    		  hostname = hostaddress.getHostName();  //try to use this name instead of ip address
-    		  hostaddress=Inet4Address.getByName(hostname); //verify this will resolve before using it
+//    	  String hostip=event.getInfo().getHostAddress();
+    	  String hostname = event.getInfo().getName(); //
+    	  
+    	  try { //verify that the name will resolve
+//    		  InetAddress hostaddress=InetAddress.getByName(hostip);
+    		  InetAddress hostaddress=InetAddress.getByName(hostname);
+//    		  hostname = hostaddress.getHostName();  //try to use this name instead of ip address
+//    		  hostaddress=InetAddress.getByName(hostname); //verify this will resolve before using it
     	  }  
-    	  catch(UnknownHostException except) {
-    		  hostname = hostip;
-    	  }  //if name resolution fails, use ip address
+    	  catch(UnknownHostException except) {  //if name resolution fails, use ip address
+    		  hostname = event.getInfo().getHostAddress();
+    	  }  
 
         Log.d("serviceResolved", String.format("%s:%d -- %s", hostname, port, event.toString()));
 //        process_comm_error(String.format(String.format("Resolved %s:%d", hostname, port)));

@@ -39,7 +39,7 @@ class SocketListener extends Thread {
             while (!this._jmDNSImpl.isCanceling() && !this._jmDNSImpl.isCanceled()) {
                 packet.setLength(buf.length);
                 this._jmDNSImpl.getSocket().receive(packet);
-                if (this._jmDNSImpl.isCanceling() || this._jmDNSImpl.isCanceled()) {
+                if (this._jmDNSImpl.isCanceling() || this._jmDNSImpl.isCanceled() || this._jmDNSImpl.isClosing() || this._jmDNSImpl.isClosed()) {
                     break;
                 }
                 try {
@@ -64,22 +64,13 @@ class SocketListener extends Thread {
                 }
             }
         } catch (IOException e) {
-            if (!this._jmDNSImpl.isCanceling() && !this._jmDNSImpl.isCanceled()) {
+            if (!this._jmDNSImpl.isCanceling() && !this._jmDNSImpl.isCanceled() && !this._jmDNSImpl.isClosing() && !this._jmDNSImpl.isClosed()) {
                 logger.log(Level.WARNING, this.getName() + ".run() exception ", e);
                 this._jmDNSImpl.recover();
             }
         }
-        // jP: 20010-01-18. Per issue #2933183. If this thread was stopped
-        // by closeMulticastSocket, we need to signal the other party via
-        // the jmDNS monitor. The other guy will then check to see if this
-        // thread has died.
-        // Note: This is placed here to avoid locking the IoLock object and
-        // 'this' instance together.
         if (logger.isLoggable(Level.FINEST)) {
             logger.finest(this.getName() + ".run() exiting.");
-        }
-        synchronized (this._jmDNSImpl) {
-            this._jmDNSImpl.notifyAll();
         }
     }
 
