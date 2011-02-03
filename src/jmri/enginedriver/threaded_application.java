@@ -114,13 +114,12 @@ public class threaded_application extends Application
     //Listen for a WiThrottle service advertisement on the LAN.
     public class withrottle_listener implements ServiceListener
     {
-      public void serviceAdded(ServiceEvent event)
-      {
+
+    	public void serviceAdded(ServiceEvent event)  	{
 //    	  process_comm_error(String.format("Add started for: '%s'", event.getName()));
     	  
           //A service has been added. Request details of the service
 		  ServiceInfo si = jmdns.getServiceInfo(event.getType(), event.getName(), 0);
-		  
     	  
     	  if (si == null || si.getPort() == 0 ) {  //not enough info, submit request for details
     		  Log.d("serviceAdded", String.format("More Info Requested: Type='%s', Name='%s', %s", event.getType(), event.getName(), event.toString()));
@@ -141,7 +140,8 @@ public class threaded_application extends Application
     		  }  
     		  catch(UnknownHostException except) {  //if name resolution fails, use ip address
 //    			  hostname = hostip;
-    			  hostname = si.getHostAddress();
+    			  String[] hostnames = si.getHostAddresses();
+    			  hostname = hostnames[0];  //use first one, since WiThrottle is only putting one in (for now)
     		  }  //if name resolution fails, use ip address
     		  Log.d("serviceAdded", String.format("%s:%d -- %s", hostname, port, event.toString()));
     		  //process_comm_error(String.format(String.format("Added %s:%d", hostname, port)));
@@ -153,14 +153,13 @@ public class threaded_application extends Application
     		  ui_msg_handler.sendMessage(service_message);
     	  }
       };
-
+    	
       public void serviceRemoved(ServiceEvent event)      {
     	  Log.d("serviceRemoved", String.format("%s", event.getName()));
     	  //this only returns the name, not the address, so not sure how to remove it without storing name
       };
 
-      public void serviceResolved(ServiceEvent event)
-      {
+      public void serviceResolved(ServiceEvent event)  {
     	  //A service's information has been resolved. Store the port and servername to connect to that service.  Verify the servername.
     	  int port=event.getInfo().getPort();
 //    	  String hostip=event.getInfo().getHostAddress();
@@ -173,7 +172,9 @@ public class threaded_application extends Application
 //    		  hostaddress=InetAddress.getByName(hostname); //verify this will resolve before using it
     	  }  
     	  catch(UnknownHostException except) {  //if name resolution fails, use ip address
-    		  hostname = event.getInfo().getHostAddress();
+//    		  hostname = event.getInfo().getHostAddresses();
+			  String[] hostnames = event.getInfo().getHostAddresses();
+			  hostname = hostnames[0];  //use first one, since WiThrottle is only putting one in (for now)
     	  }  
 
         Log.d("serviceResolved", String.format("%s:%d -- %s", hostname, port, event.toString()));
