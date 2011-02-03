@@ -337,10 +337,11 @@ public class threaded_application extends Application
 			} else {
 				deviceId = "";
 			}
-			String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue) + " " + deviceId;
-		    String s = prefs.getString("throttle_name_preference", defaultName);
-		    if (s.equals("")) {
-		    	s = defaultName;
+			String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
+			String uniqueDefaultName = defaultName + " " + deviceId;
+		    String s = prefs.getString("throttle_name_preference", uniqueDefaultName);
+		    if (s.trim().equals("") || s.equals(defaultName)) {
+		    	s = uniqueDefaultName;
 		    }
             withrottle_send("N" + s);  //send throttle name
             withrottle_send("HU" + s);  //also send throttle name as the UDID
