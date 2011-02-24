@@ -331,19 +331,8 @@ public class threaded_application extends Application
 			    return;
 			} 
 
-			String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-			if (deviceId != null && deviceId.length() >=4) {
-				deviceId = deviceId.substring(deviceId.length() - 4);
-			} else {
-				deviceId = "";
-			}
-			String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-			String uniqueDefaultName = defaultName + " " + deviceId;
-		    String s = prefs.getString("throttle_name_preference", uniqueDefaultName);
-		    if (s.trim().equals("") || s.equals(defaultName)) {
-		    	s = uniqueDefaultName;
-		    }
-            withrottle_send("N" + s);  //send throttle name
+		    String s = prefs.getString("throttle_name_preference", getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue));
+             withrottle_send("N" + s);  //send throttle name
             withrottle_send("HU" + s);  //also send throttle name as the UDID
             Message connection_message=Message.obtain();
             connection_message.what=message_type.CONNECTED;
@@ -916,12 +905,12 @@ public class threaded_application extends Application
   }
   
   
-  public void onCreate()
-  {
+  public void onCreate()  {
 	  prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
 	  function_states_T = new boolean[32];
 	  function_states_S = new boolean[32];
-	
+
 	  thread=new comm_thread();
 	  thread.start();
   }

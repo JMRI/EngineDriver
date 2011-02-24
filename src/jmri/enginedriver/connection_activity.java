@@ -23,6 +23,7 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
@@ -50,6 +51,7 @@ import android.os.Message;
 import android.widget.EditText;
 import android.widget.Button;
 import android.os.Handler;
+import android.provider.Settings;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.AdapterView;
@@ -328,6 +330,27 @@ public class connection_activity extends Activity {
     mainapp=(threaded_application)this.getApplication();
     mainapp.ui_msg_handler=new ui_handler();
 
+    //check for "default" throttle name and make it more unique
+    //TODO: move this and similar code in preferences.java into single routine
+    SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+    String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
+    String s = prefs.getString("throttle_name_preference", defaultName);
+    if (s.trim().equals("") || s.equals(defaultName)) {
+        String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+        if (deviceId != null && deviceId.length() >=4) {
+        	deviceId = deviceId.substring(deviceId.length() - 4);
+        } else {
+        	Random rand = new Random();
+        	deviceId = String.valueOf(rand.nextInt(9999));  //use random string
+        }
+        String uniqueDefaultName = defaultName + " " + deviceId;
+    	s = uniqueDefaultName;
+    	prefs.edit().putString("throttle_name_preference", s).commit();  //save new name to prefs
+
+    }
+
+
+    
     setContentView(R.layout.connection);
     
     //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
