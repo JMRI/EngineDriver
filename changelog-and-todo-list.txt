@@ -1,3 +1,5 @@
+**Version 1.5
+  * sort roster entries by name
 **Version 1.4
  *  uses JMRI images for power off/on/unknown instead of text (added by rbecker)
  *  fixed several potential crashes when reading misformatted settings files (mstevetodd)
@@ -72,7 +74,6 @@
 /*
  *   TODO: merge throttle, turnout, route and power activities into a single "wide" screen and enable "fling"
  *   TODO: once wide screen is working, allow user to configure it for pads, etc.
- *   TODO: set throttle name preference to default if user blanks the entry
  *   TODO: control discovered server list in ta, change ca to only display what is in array
  *   TODO: add consist creation/editing features
  *   TODO: allow compile/run at Android 1.5 (SDK 3) currently crashes when thread starts and tries to resolve android.net.wifi.WifiManager.createMulticastLock
@@ -90,7 +91,6 @@
  * connection
  *   TODO: extract server name and ip from view and remove the array(s)
  *   TODO: add pref for auto-connect on discovery
- *   TODO: investigate and improve discover on ubuntu (works rarely)
  *   TODO: save "visible" server name and the resolvable name/ip to improve the looks of the connections
  * threaded_application
  *   TODO: figure out issue with server discovery on Incredible (debugging shows no errors on creation side, just never responds)
@@ -126,7 +126,6 @@
  *   remove throttle from withrottle screen on loss of connection (estop)
  *   add response for heartbeat (so client will know it's still alive)  status message would be ideal
  *   allow restart of withrottle (variable UI needs to be cleared when it closes)
- *   fix read error looping on loss of connection to device
  *   add "E"rror response
  *   add filter for routes
  *   add filter for roster entries

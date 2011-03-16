@@ -975,8 +975,12 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         }
         final ServiceInfoImpl info = (ServiceInfoImpl) infoAbstract;
 
-        if ((info.getDns() != null) && (info.getDns() != this)) {
-            throw new IllegalStateException("This service information is already registered with another DNS.");
+        if (info.getDns() != null) {
+            if (info.getDns() != this) {
+                throw new IllegalStateException("A service information can only be registered with a single instamce of JmDNS.");
+            } else if (_services.get(info.getKey()) != null) {
+                throw new IllegalStateException("A service information can only be registered once.");
+            }
         }
         info.setDns(this);
 
@@ -1129,19 +1133,16 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
             collision = false;
 
             // Check for collision in cache
-            Collection<? extends DNSEntry> entryList = this.getCache().getDNSEntryList(info.getKey());
-            if (entryList != null) {
-                for (DNSEntry dnsEntry : entryList) {
-                    if (DNSRecordType.TYPE_SRV.equals(dnsEntry.getRecordType()) && !dnsEntry.isExpired(now)) {
-                        final DNSRecord.Service s = (DNSRecord.Service) dnsEntry;
-                        if (s.getPort() != info.getPort() || !s.getServer().equals(_localHost.getName())) {
-                            if (logger.isLoggable(Level.FINER)) {
-                                logger.finer("makeServiceNameUnique() JmDNS.makeServiceNameUnique srv collision:" + dnsEntry + " s.server=" + s.getServer() + " " + _localHost.getName() + " equals:" + (s.getServer().equals(_localHost.getName())));
-                            }
-                            info.setName(incrementName(info.getName()));
-                            collision = true;
-                            break;
+            for (DNSEntry dnsEntry : this.getCache().getDNSEntryList(info.getKey())) {
+                if (DNSRecordType.TYPE_SRV.equals(dnsEntry.getRecordType()) && !dnsEntry.isExpired(now)) {
+                    final DNSRecord.Service s = (DNSRecord.Service) dnsEntry;
+                    if (s.getPort() != info.getPort() || !s.getServer().equals(_localHost.getName())) {
+                        if (logger.isLoggable(Level.FINER)) {
+                            logger.finer("makeServiceNameUnique() JmDNS.makeServiceNameUnique srv collision:" + dnsEntry + " s.server=" + s.getServer() + " " + _localHost.getName() + " equals:" + (s.getServer().equals(_localHost.getName())));
                         }
+                        info.setName(incrementName(info.getName()));
+                        collision = true;
+                        break;
                     }
                 }
             }
@@ -1191,14 +1192,9 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         // report existing matched records
 
         if (question != null) {
-            Collection<? extends DNSEntry> entryList = this.getCache().getDNSEntryList(question.getName().toLowerCase());
-            if (entryList != null) {
-                synchronized (entryList) {
-                    for (DNSEntry dnsEntry : entryList) {
-                        if (question.answeredBy(dnsEntry) && !dnsEntry.isExpired(now)) {
-                            listener.updateRecord(this.getCache(), now, dnsEntry);
-                        }
-                    }
+            for (DNSEntry dnsEntry : this.getCache().getDNSEntryList(question.getName().toLowerCase())) {
+                if (question.answeredBy(dnsEntry) && !dnsEntry.isExpired(now)) {
+                    listener.updateRecord(this.getCache(), now, dnsEntry);
                 }
             }
         }
@@ -1332,12 +1328,9 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
                 logger.fine(this.getName() + " handle response cached record: " + cachedRecord);
             }
             if (unique) {
-                Collection<? extends DNSEntry> entries = this.getCache().getDNSEntryList(newRecord.getKey());
-                if (entries != null) {
-                    for (DNSEntry entry : entries) {
-                        if (newRecord.getRecordType().equals(entry.getRecordType()) && newRecord.getRecordClass().equals(entry.getRecordClass()) && (entry != cachedRecord)) {
-                            ((DNSRecord) entry).setWillExpireSoon(now);
-                        }
+                for (DNSEntry entry : this.getCache().getDNSEntryList(newRecord.getKey())) {
+                    if (newRecord.getRecordType().equals(entry.getRecordType()) && newRecord.getRecordClass().equals(entry.getRecordClass()) && (entry != cachedRecord)) {
+                        ((DNSRecord) entry).setWillExpireSoon(now);
                     }
                 }
             }

@@ -30,6 +30,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import android.widget.SimpleAdapter;
@@ -107,6 +109,14 @@ public class select_loco extends Activity {
 
 				} // for consistname
 			} //if consist_entries not null
+			
+			Comparator<HashMap<String, String>> comperator = new Comparator<HashMap<String, String>>() {
+				@Override
+				public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
+					return arg0.get("roster_name").compareToIgnoreCase(arg1.get("roster_name"));
+				}
+			};
+			Collections.sort(roster_list, comperator);
 			
 			roster_list_adapter.notifyDataSetChanged();
 
