@@ -127,7 +127,6 @@
  *   add response for heartbeat (so client will know it's still alive)  status message would be ideal
  *   allow restart of withrottle (variable UI needs to be cleared when it closes)
  *   add "E"rror response
- *   add filter for routes
  *   add filter for roster entries
  * 
  * */
