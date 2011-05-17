@@ -33,7 +33,6 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.io.*;
@@ -42,7 +41,6 @@ import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Button;
-import android.widget.Toast;
 import android.view.MotionEvent;
 import android.os.Message;
 import android.widget.TextView;
@@ -70,11 +68,21 @@ public class engine_driver extends Activity {
 	        case message_type.RESPONSE: {  //handle messages from WiThrottle server
 	        	String response_str = msg.obj.toString();
 
-	        	//loco connected (or disconnected)
 	        	switch (response_str.charAt(0)) {
+
+	        	//loco connected (or disconnected)
+	        	case 'M':
+	        		if (!response_str.substring(0,4).equals("MTAL")) {  //skip the function updates for now
+		      	  		set_function_buttons();
+		      	  		enable_disable_buttons(response_str.substring(1,2));  //pass whichthrottle
+			        	set_labels();
+	        		}
+	      	  	  break;
+	      	  	  
 	      	  	  case 'T':
 	      	  	  case 'S':
 		      	  		enable_disable_buttons(response_str.substring(0,1));  //pass whichthrottle
+			        	set_labels();
 	      	  	  break;
 	      	  	  
 	      	  	  case 'R': //roster function labels
@@ -87,18 +95,15 @@ public class engine_driver extends Activity {
 	      	  			  set_function_buttons_for_view(tv, "S");
 	      	  			  enable_disable_buttons_for_view(tv, true);
 	      	  		  }
+	      	  		  set_labels();
 	      	  	  break;
 	        	}  //end of switch
 	        	
-	        	// refresh text labels on any response
-	        	set_labels();
-//	        	String response_str = msg.obj.toString();
-//	        	Toast.makeText(getApplicationContext(), "responsed with:" + response_str, Toast.LENGTH_LONG).show();  //debugging use only
 	        }
 	        break;
 	        case message_type.HEARTBEAT: {
 	        	// refresh text labels
-	        	set_labels();  //TODO: is this still needed?
+	        	set_labels();
 	        }
 	        break;
 	        case message_type.END_ACTIVITY: {      	    //Program shutdown has been requested
@@ -169,7 +174,7 @@ public class engine_driver extends Activity {
 
   @SuppressWarnings("unchecked")
 //helper function to loop thru buttons, setting appearance based on current function state (on or off)
-  void set_function_states(String whichThrottle)  {
+  void set_function_labels_and_states(String whichThrottle)  {
 	  ViewGroup vg; //table
 	  ViewGroup r;  //row
 	  Button b; //button
@@ -410,9 +415,9 @@ public void onResume() {
   super.onResume();
 
   //format the screen area
-  set_labels();
   enable_disable_buttons("T"); 
   enable_disable_buttons("S");  
+  set_labels();
 }
 
 
@@ -644,10 +649,6 @@ public void onStart() {
 	    sbT.setLayoutParams(llLp);
     }
     
-    //update the state of each function button based on shared variable
-    set_function_states("T");
-    set_function_states("S");
-     
 //  int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
 	int screenHeight = findViewById(R.id.throttle_screen).getHeight();  //get the height of usable area
   
@@ -678,7 +679,12 @@ public void onStart() {
 	            height_S);
 	    ll.setLayoutParams(llLp);
     }
-}
+
+    //update the state of each function button based on shared variable
+    set_function_labels_and_states("T");
+    set_function_labels_and_states("S");
+     
+  }
 
   //send heartbeat to withrottle to keep this throttle alive 
   private void send_heartbeat() {

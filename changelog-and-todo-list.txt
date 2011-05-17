@@ -1,5 +1,7 @@
+**Version 1.6
+ * Began adding Multithrottle support (serious rigged version, release not working on WiT side)
 **Version 1.5
-  * sort roster entries by name
+ * sort roster entries by name
 **Version 1.4
  *  uses JMRI images for power off/on/unknown instead of text (added by rbecker)
  *  fixed several potential crashes when reading misformatted settings files (mstevetodd)
@@ -93,7 +95,6 @@
  *   TODO: add pref for auto-connect on discovery
  *   TODO: save "visible" server name and the resolvable name/ip to improve the looks of the connections
  * threaded_application
- *   TODO: figure out issue with server discovery on Incredible (debugging shows no errors on creation side, just never responds)
  *   TODO: remove discovered servers when no longer available (partially complete, just need to send a remove if one removed while ca is up)
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: add client-side conversation logging for easier debugging
@@ -101,6 +102,10 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * engine_driver:
+ *   TODO: drop out (and show error)?  if no response within timeout (WiT 2.0+)
+ *   TODO: get current status (speed, direction, speed steps?) periodically (WiT 2.0+)
+ *   TODO: use returned direction and speed to update slider and buttons (WiT 2.0+)
+ *   TODO: shrink loco name font if more than x chars
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
  *   TODO: reduce number of calls to set_labels()
  *   TODO: add preference to disable other hardware buttons in throttle screen
@@ -112,6 +117,9 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
+ *   TODO: pref to hide or shrink the "recently-used locos" list 
+ *   TODO: handle direction of locos in MT consist 
+ *   TODO: clean up code for  new MT (Multi-throttle) feature 
  *   TODO: use new 'E' and 'c' WiT commands to select by roster name instead of address (to handle duplicates)
  *   TODO: don't show or allow entry of loco if already in use on "other" throttle or in a consist
  *   TODO: simplify select_loco by removing handler
@@ -119,12 +127,10 @@
  *   TODO: show error if invalid entry
  *
  * These require changes to WiThrottle
- *   get current status (speed, direction, speed steps?)  On request would be best.
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
  *   disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
  *   pull more details from roster
  *   remove throttle from withrottle screen on loss of connection (estop)
- *   add response for heartbeat (so client will know it's still alive)  status message would be ideal
  *   allow restart of withrottle (variable UI needs to be cleared when it closes)
  *   add "E"rror response
  *   add filter for roster entries

@@ -24,8 +24,6 @@ import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.provider.Settings;
-
 import java.net.*;
 import java.io.*;
 
@@ -54,8 +52,8 @@ public class threaded_application extends Application
     public comm_thread thread;
 	String host_ip; //The IP address of the WiThrottle server.
 	int port; //The TCP port that the WiThrottle server is running on
-	int loco_address_T = -1; //The Address of the locomotive being controlled 
-	int loco_address_S = -1; //The Address of the locomotive being controlled 
+//	int loco_address_T = -1; //The Address of the locomotive being controlled 
+//	int loco_address_S = -1; //The Address of the locomotive being controlled 
 	//shared variables returned from the withrottle server, stored here for easy access by other activities
 	String host_name_string; //retrieved host name of connection
 	String loco_string_T = "Not Set"; //Loco Address string returned from the server for selected loco #1
@@ -352,11 +350,11 @@ public class threaded_application extends Application
   		    }
             if (whichThrottle.equals("T")) {
   		      loco_string_T = "Not Set"; 
-              loco_address_T = -1;
+//              loco_address_T = -1;
               function_labels_T = new LinkedHashMap<Integer, String>();
             } else {
               loco_string_S = "Not Set"; 
-              loco_address_S = -1;
+//              loco_address_S = -1;
               function_labels_S = new LinkedHashMap<Integer, String>();
             }
             withrottle_send(whichThrottle+"r");  //send release command
@@ -364,7 +362,12 @@ public class threaded_application extends Application
 
           //send heartbeat
           case message_type.HEARTBEAT:
-        	withrottle_send("*");
+            	withrottle_send("*");
+/*              	withrottle_send("MTA*<;>qR");  //TODO: only send for active throttles
+              	withrottle_send("MTA*<;>qV");  //TODO: only send for active throttles
+              	withrottle_send("MSA*<;>qR");  //TODO: only send for active throttles
+              	withrottle_send("MSA*<;>qV");  //TODO: only send for active throttles
+*/
         	//also send to engine_driver activity if active
  		    if (engine_driver_msg_handler != null) {
 		       msg=Message.obtain(); 
@@ -388,23 +391,25 @@ public class threaded_application extends Application
           case message_type.LOCO_ADDR:
             //clear appropriate app-level shared variables so they can be reset
         	  whichThrottle = msg.obj.toString();
-        	  if (whichThrottle.equals("T")) {
-        		  loco_string_T = "Not Set"; 
+//        	  if (whichThrottle.equals("T")) {
+//        		  loco_string_T = "Not Set";  //TODO: verify this works at <2.0 
 //        		  roster_function_string_T = null;
-        		  function_labels_T = new LinkedHashMap<Integer, String>();
-        		  loco_address_T=msg.arg1;
-        	  } else {
-        		  loco_string_S = "Not Set"; 
+//        		  function_labels_T = new LinkedHashMap<Integer, String>();
+//        		  loco_address_T=msg.arg1;
+//        	  } else {
+//        		  loco_string_S = "Not Set"; 
 //        		  roster_function_string_S = null;
-        		  function_labels_S = new LinkedHashMap<Integer, String>();
-        		  loco_address_S=msg.arg1;
-        	  }
+//        		  function_labels_S = new LinkedHashMap<Integer, String>();
+//        		  loco_address_S=msg.arg1;
+//        	  }
 //            withrottle_send(String.format("T"+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", loco_address_T));
             withrottle_send(String.format(whichThrottle+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", msg.arg1));
                      //In order to get the engine to start, I must set a direction and some non-zero velocity and then set the velocity to zero. TODO: Fix this bug
             //in the WiThrottle server.
 //            withrottle_send("TR1\nTV1\nTV0");
-            withrottle_send(whichThrottle+"R1\n"+whichThrottle+"V1\n"+whichThrottle+"V0"); 
+            withrottle_send(whichThrottle+"R1"); 
+            withrottle_send(whichThrottle+"V1"); 
+            withrottle_send(whichThrottle+"V0"); 
             withrottle_send("*+");     //always request to turn on heartbeat (must be enabled in server prefs)
             break;
 
@@ -416,6 +421,7 @@ public class threaded_application extends Application
 //          	withrottle_send(String.format("TV%d", msg.arg1));
           	whichThrottle = msg.obj.toString();
         	withrottle_send(String.format(whichThrottle+"V%d", msg.arg1));
+        	withrottle_send(whichThrottle+"qV");  //request current speed
             break;
 
           //Change direction. arg2 holds the direction to change to. The reason direction is in arg2 is for compatibility
@@ -423,6 +429,7 @@ public class threaded_application extends Application
           case message_type.DIRECTION:
           	whichThrottle = msg.obj.toString();
         	withrottle_send(String.format(whichThrottle+"R%d", msg.arg2));
+        	withrottle_send(whichThrottle+"qR");  //request current direction
             break;
           
             //Set or unset a function. arg1 is the function number, arg2 is set or unset.
@@ -500,6 +507,36 @@ public class threaded_application extends Application
         Log.d("Engine_Driver", "<--:" + response_str);
 
         switch (response_str.charAt(0)) {
+
+        //response from MultiThrottle function
+        case 'M': 
+	  		//loco was successfully added to a throttle
+        	if 	(response_str.charAt(2) == '+') {  //MT+xxxx  loco was added
+	  			String[] ls = splitByString(response_str.substring(3),"<;>");//drop off separator
+	  			if 	(response_str.charAt(1) == 'T') {
+	  				if (loco_string_T.equals("Not Set")) {  
+	  					loco_string_T = ""; 
+	  				} else {
+	  					loco_string_T += "+"; 
+	  				}
+	  				loco_string_T += ls[0];  //append new loco to app variable
+	  			} else {
+	  				if (loco_string_S.equals("Not Set")) {  
+	  					loco_string_S = ""; 
+	  				} else {
+	  					loco_string_S += "+"; 
+	  				}
+	  				loco_string_S += ls[0];  //append new loco to app variable
+	  			}
+	  		} else if (response_str.charAt(2) == 'L'){  //RF29}|{2591(L)]\[Light]\[
+	  			String[] ls = splitByString(response_str,"<;>");//drop off front portion
+	  			process_roster_function_string("RF29}|{1234(L)" + ls[1], response_str.substring(1,2));  //prepend some stuff to match old-style
+	  			break;
+
+	  		}
+
+ 	  	    break;
+	  	
 	  	case 'T': 
 	  		loco_string_T = get_loconame_from_address_string(response_str.substring(1));  //set app variable
 	  		
@@ -588,23 +625,31 @@ public class threaded_application extends Application
 		  	 break;
   	  }  //end switch
   	  
-  	  //forward whatever we got to other activities (if started)  dup code needed, not sure why msg is getting stepped on
-      Message msg=Message.obtain(); 
-      msg.what=message_type.RESPONSE;
-      msg.obj=new String(response_str); 
-      if (turnouts_msg_handler != null)   { turnouts_msg_handler.sendMessage(msg);   }
-      msg=Message.obtain(); 
-      msg.what=message_type.RESPONSE;
-      msg.obj=new String(response_str); 
-      if (routes_msg_handler != null)   { routes_msg_handler.sendMessage(msg);   }
-      msg=Message.obtain(); 
-      msg.what=message_type.RESPONSE;
-      msg.obj=new String(response_str); 
-      if (engine_driver_msg_handler != null) { engine_driver_msg_handler.sendMessage(msg); }
-      msg=Message.obtain(); 
-      msg.what=message_type.RESPONSE;
-      msg.obj=new String(response_str); 
-      if (power_control_msg_handler != null) { power_control_msg_handler.sendMessage(msg); }
+  	  //forward whatever we got to other activities (if started)  dup code needed, not sure why msg is getting stepped on  //TODO: move creates inside ifs
+      if (turnouts_msg_handler != null)   { 
+          Message msg=Message.obtain(); 
+          msg.what=message_type.RESPONSE;
+          msg.obj=new String(response_str); 
+    	  turnouts_msg_handler.sendMessage(msg);   
+      }
+      if (routes_msg_handler != null)   { 
+          Message msg=Message.obtain(); 
+          msg.what=message_type.RESPONSE;
+          msg.obj=new String(response_str); 
+    	  routes_msg_handler.sendMessage(msg);   
+      }
+      if (engine_driver_msg_handler != null) {
+    	  Message msg=Message.obtain(); 
+    	  msg.what=message_type.RESPONSE;
+    	  msg.obj=new String(response_str);
+    	  engine_driver_msg_handler.sendMessage(msg);
+      }
+      if (power_control_msg_handler != null) { 
+          Message msg=Message.obtain(); 
+          msg.what=message_type.RESPONSE;
+          msg.obj=new String(response_str); 
+    	  power_control_msg_handler.sendMessage(msg); 
+      }
       
     }  //end of process_response
 
@@ -848,14 +893,30 @@ public class threaded_application extends Application
     
     //send the passed-in message to the socket
     private void withrottle_send(String msg) {
+    	
+    	String newMsg = msg;
+    	//convert msg to new MultiThrottle format if version >= 2.0
+        Double vn = 0.0;
+        if (withrottle_version_string != null) { 
+        	vn=new Double(withrottle_version_string);
+        }
+        if (vn >= 2.0) {
+          if (msg.substring(0,1).equals("T") || msg.substring(0,1).equals("S")) {
+              if (msg.substring(1,2).equals("L")) {
+            	  newMsg = "M" + msg.substring(0,1) + "+" + msg.substring(1) + "<;>" + msg.substring(1);
+              } else {
+            	  newMsg = "M" + msg.substring(0,1) + "A*<;>" + msg.substring(1);
+              }
+          }
+        }
     	if (output_pw != null) {
-      	  output_pw.println(msg);
+      	  output_pw.println(newMsg);
       	  output_pw.flush();
       	} else {
-          process_comm_error("No writer, tried to send: "+msg);
+          process_comm_error("No writer, tried to send: "+newMsg);
       	}
         //send response to debug log for review
-        Log.d("Engine_Driver", "-->:" + msg);
+        Log.d("Engine_Driver", "-->:" + newMsg + "  was(" + msg + ")");
     }  //end withrottle_send()
 
 
