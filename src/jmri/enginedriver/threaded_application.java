@@ -59,6 +59,7 @@ public class threaded_application extends Application
 	String loco_string_T = "Not Set"; //Loco Address string returned from the server for selected loco #1
 	String loco_string_S = "Not Set"; //Loco Address string returned from the server for selected loco #1
 	String withrottle_version_string; //version of withrottle server
+	Double withrottle_version; //version of withrottle server
 	String roster_list_string; //roster list
 //	String roster_function_string_T; //roster function list for selected loco #1
 //	String roster_function_string_S; //roster function list for selected loco #2
@@ -275,6 +276,7 @@ public class threaded_application extends Application
             //clear app.thread shared variables so they can be reset
             host_name_string = null;
             withrottle_version_string = null; 
+            withrottle_version = 0.0; 
             heartbeat_interval = 0;
             roster_list_string = null;
             power_state = null;
@@ -407,9 +409,9 @@ public class threaded_application extends Application
                      //In order to get the engine to start, I must set a direction and some non-zero velocity and then set the velocity to zero. TODO: Fix this bug
             //in the WiThrottle server.
 //            withrottle_send("TR1\nTV1\nTV0");
-            withrottle_send(whichThrottle+"R1"); 
-            withrottle_send(whichThrottle+"V1"); 
-            withrottle_send(whichThrottle+"V0"); 
+//            withrottle_send(whichThrottle+"R1");    TODO: turn these back on? 
+//            withrottle_send(whichThrottle+"V1"); 
+//            withrottle_send(whichThrottle+"V0"); 
             withrottle_send("*+");     //always request to turn on heartbeat (must be enabled in server prefs)
             break;
 
@@ -547,7 +549,11 @@ public class threaded_application extends Application
 	  	    break;
 	  	
 	  	case 'V': 
-	  		withrottle_version_string = response_str.substring(2);  //set app variable
+	  		withrottle_version_string = response_str.substring(2);  //set app variables
+	  		withrottle_version = 0.0;
+	        if (withrottle_version_string != null) { 
+	        	withrottle_version=new Double(withrottle_version_string);
+	        }
 	  	    break;
 	  	
 	  	case '*': 
@@ -896,16 +902,14 @@ public class threaded_application extends Application
     	
     	String newMsg = msg;
     	//convert msg to new MultiThrottle format if version >= 2.0
-        Double vn = 0.0;
-        if (withrottle_version_string != null) { 
-        	vn=new Double(withrottle_version_string);
-        }
-        if (vn >= 2.0) {
+        if (withrottle_version >= 2.0) {
           if (msg.substring(0,1).equals("T") || msg.substring(0,1).equals("S")) {
               if (msg.substring(1,2).equals("L")) {
-            	  newMsg = "M" + msg.substring(0,1) + "+" + msg.substring(1) + "<;>" + msg.substring(1);
+            	  newMsg = "M" + msg.substring(0,1) + "+" + msg.substring(1) + "<;>" + msg.substring(1);  //add requested loco to this throttle
+              } else if (msg.substring(1,2).equals("r")) {
+            	  newMsg = "M" + msg.substring(0,1) + "-*<;>r";  //release all locos from this throttle
               } else {
-            	  newMsg = "M" + msg.substring(0,1) + "A*<;>" + msg.substring(1);
+            	  newMsg = "M" + msg.substring(0,1) + "A*<;>" + msg.substring(1);  //pass all action commands along
               }
           }
         }

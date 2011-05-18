@@ -220,11 +220,7 @@ public class turnouts extends Activity {
     b.setOnClickListener(click_listener);
 
     //don't show throw and close buttons if withrottle version < 1.6
-    Double vn = 0.0;
-    if (mainapp.withrottle_version_string != null) { 
-    	vn=new Double(mainapp.withrottle_version_string);
-    }
-    if (vn >= 1.6) {
+    if (mainapp.withrottle_version >= 1.6) {
     	b=(Button)findViewById(R.id.turnout_close);
     	click_listener=new button_listener(8);
     	b.setOnClickListener(click_listener);
