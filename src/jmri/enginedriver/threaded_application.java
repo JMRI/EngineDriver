@@ -84,6 +84,7 @@ public class threaded_application extends Application
 
 	String power_state;
 	int heartbeat_interval; //heartbeat interval in seconds
+	
 	//Communications variables.
 	Socket client_socket;
 	InetAddress host_address;
@@ -364,13 +365,25 @@ public class threaded_application extends Application
 
           //send heartbeat
           case message_type.HEARTBEAT:
-            	withrottle_send("*");
-/*              	withrottle_send("MTA*<;>qR");  //TODO: only send for active throttles
-              	withrottle_send("MTA*<;>qV");  //TODO: only send for active throttles
-              	withrottle_send("MSA*<;>qR");  //TODO: only send for active throttles
-              	withrottle_send("MSA*<;>qV");  //TODO: only send for active throttles
-*/
-        	//also send to engine_driver activity if active
+        	  if (withrottle_version < 2.0) { 
+        		  withrottle_send("*");   //send a simple heartbeat on early versions
+        	  } else {
+        		  boolean anySent = false;
+        		  if (!loco_string_T.equals("Not Set")) {  
+        			  withrottle_send("MTA*<;>qR"); //request direction
+        			  withrottle_send("MTA*<;>qV"); //request speed
+        			  anySent = true;
+        		  }
+        		  if (!loco_string_S.equals("Not Set")) {  
+        			  withrottle_send("MSA*<;>qR"); //request direction
+        			  withrottle_send("MSA*<;>qV"); //request speed
+        			  anySent = true;
+        		  }
+        		  if (!anySent) {
+        			  withrottle_send("*");   //send a simple heartbeat if no status requests sent
+        		  }	
+        	  }
+        	  //also send to engine_driver activity if active
  		    if (engine_driver_msg_handler != null) {
 		       msg=Message.obtain(); 
 		       msg.what=message_type.HEARTBEAT;
@@ -423,7 +436,7 @@ public class threaded_application extends Application
 //          	withrottle_send(String.format("TV%d", msg.arg1));
           	whichThrottle = msg.obj.toString();
         	withrottle_send(String.format(whichThrottle+"V%d", msg.arg1));
-        	withrottle_send(whichThrottle+"qV");  //request current speed
+//        	withrottle_send(whichThrottle+"qV");  //request current speed
             break;
 
           //Change direction. arg2 holds the direction to change to. The reason direction is in arg2 is for compatibility
@@ -431,7 +444,7 @@ public class threaded_application extends Application
           case message_type.DIRECTION:
           	whichThrottle = msg.obj.toString();
         	withrottle_send(String.format(whichThrottle+"R%d", msg.arg2));
-        	withrottle_send(whichThrottle+"qR");  //request current direction
+//        	withrottle_send(whichThrottle+"qR");  //request current direction
             break;
           
             //Set or unset a function. arg1 is the function number, arg2 is set or unset.
@@ -631,7 +644,7 @@ public class threaded_application extends Application
 		  	 break;
   	  }  //end switch
   	  
-  	  //forward whatever we got to other activities (if started)  dup code needed, not sure why msg is getting stepped on  //TODO: move creates inside ifs
+  	  //forward whatever we got to other activities (if started)  dup code needed, not sure why msg is getting stepped on 
       if (turnouts_msg_handler != null)   { 
           Message msg=Message.obtain(); 
           msg.what=message_type.RESPONSE;
@@ -904,7 +917,7 @@ public class threaded_application extends Application
     	//convert msg to new MultiThrottle format if version >= 2.0
         if (withrottle_version >= 2.0) {
           if (msg.substring(0,1).equals("T") || msg.substring(0,1).equals("S")) {
-              if (msg.substring(1,2).equals("L")) {
+              if (msg.substring(1,2).equals("L") || msg.substring(1,2).equals("S")) {
             	  newMsg = "M" + msg.substring(0,1) + "+" + msg.substring(1) + "<;>" + msg.substring(1);  //add requested loco to this throttle
               } else if (msg.substring(1,2).equals("r")) {
             	  newMsg = "M" + msg.substring(0,1) + "-*<;>r";  //release all locos from this throttle

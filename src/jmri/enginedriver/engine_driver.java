@@ -41,6 +41,7 @@ import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Button;
+import android.widget.Toast;
 import android.view.MotionEvent;
 import android.os.Message;
 import android.widget.TextView;
@@ -54,6 +55,8 @@ public class engine_driver extends Activity {
   private static final int VISIBLE = 0;
   private SharedPreferences prefs;
   private Timer heartbeatTimer;
+  boolean heartbeat; //turn on with each response, show error if not on
+
   private String whichVolume = "T";
 
   private Drawable button_pressed_drawable;  //hold background graphics for buttons
@@ -63,19 +66,32 @@ public class engine_driver extends Activity {
   class engine_driver_handler extends Handler {
 
 	public void handleMessage(Message msg) {
-	      switch(msg.what) {
+		
+		switch(msg.what) {
 	        
 	        case message_type.RESPONSE: {  //handle messages from WiThrottle server
-	        	String response_str = msg.obj.toString();
+	    		
+	        	heartbeat = true; //any response
+
+	    		String response_str = msg.obj.toString();
 
 	        	switch (response_str.charAt(0)) {
 
-	        	//loco connected (or disconnected)
+	        	//various MultiThrottle responses
 	        	case 'M':
-	        		if (!response_str.substring(0,4).equals("MTAL")) {  //skip the function updates for now
+	        		if (response_str.substring(2,3).equals("+")) {  //if loco added, refresh the function labels
 		      	  		set_function_buttons();
 		      	  		enable_disable_buttons(response_str.substring(1,2));  //pass whichthrottle
 			        	set_labels();
+	        		} else if (response_str.substring(2,3).equals("A")) {  //e.g. MTAL2608<;>R1
+	        			String whichThrottle = response_str.substring(1,2);
+	    	  			String[] ls = threaded_application.splitByString(response_str,"<;>");
+	    	  			if (ls[1].substring(0,1).equals("R")) {
+	    	  				set_direction_buttons(whichThrottle, new Integer(ls[1].substring(1,2))); //set direction button 
+	    	  			} else if (ls[1].substring(0,1).equals("V")) {
+	    	  				set_speed_slider(whichThrottle, new Integer(ls[1].substring(1))); //set slider to value
+	    	  			}	    	  			
+
 	        		}
 	      	  	  break;
 	      	  	  
@@ -104,6 +120,13 @@ public class engine_driver extends Activity {
 	        case message_type.HEARTBEAT: {
 	        	// refresh text labels
 	        	set_labels();
+	        	//only check for heartbeat if version 2.0+ and at least one loco selected
+	        	if  (mainapp.withrottle_version >= 2.0 &&  !mainapp.loco_string_T.equals("Not Set") || !mainapp.loco_string_S.equals("Not Set")) {
+	        		if (!heartbeat) {
+	        			Toast.makeText(getApplicationContext(), "ERROR: no response from server in timeout.", Toast.LENGTH_SHORT).show();
+	        		}
+	        		heartbeat = false;
+	        	}
 	        }
 	        break;
 	        case message_type.END_ACTIVITY: {      	    //Program shutdown has been requested
@@ -120,7 +143,44 @@ public class engine_driver extends Activity {
 	  this.finish();
   }
 
-  void start_select_loco_activity(String whichThrottle)
+  void set_speed_slider(String whichThrottle, int speed) {
+	  TextView speed_label;
+	  SeekBar throttle_slider;
+
+	  if (whichThrottle.equals("T")) {
+		  speed_label=(TextView)findViewById(R.id.speed_value_label_T);
+		  throttle_slider=(SeekBar)findViewById(R.id.speed_T);
+	  } else {
+		  speed_label=(TextView)findViewById(R.id.speed_value_label_S);
+		  throttle_slider=(SeekBar)findViewById(R.id.speed_S);
+	  }
+	  int displayedSpeed = (int)Math.round(speed * 99.0 / 128.0); //show speed as 0-99 instead of 0-128
+	  speed_label.setText(Integer.toString(displayedSpeed));
+	  throttle_slider.setProgress(speed);
+  }
+
+//"press" correct direction button based on direction returned from server
+  //TODO: improve this code
+  void set_direction_buttons(String whichThrottle, Integer direction) {
+	  Button bFwd;
+	  Button bRev;
+	  if (whichThrottle.equals("T")) {
+		  bFwd = (Button)findViewById(R.id.button_fwd_T);
+		  bRev = (Button)findViewById(R.id.button_rev_T);
+	  } else {
+		  bFwd = (Button)findViewById(R.id.button_fwd_S);
+		  bRev = (Button)findViewById(R.id.button_rev_S);
+	  }
+	  if (direction == 0) {
+		  bFwd.setBackgroundDrawable(button_normal_drawable);
+		  bRev.setBackgroundDrawable(button_pressed_drawable);
+	  } else {
+		  bFwd.setBackgroundDrawable(button_pressed_drawable);
+		  bRev.setBackgroundDrawable(button_normal_drawable);
+	  }
+  }
+  
+void start_select_loco_activity(String whichThrottle)
   {
     Intent select_loco=new Intent().setClass(this, select_loco.class);
     select_loco.putExtra("whichThrottle", whichThrottle);  //pass whichThrottle as an extra to activity
