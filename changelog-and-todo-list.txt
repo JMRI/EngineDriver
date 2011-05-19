@@ -1,5 +1,7 @@
 **Version 1.6
  * Began adding Multithrottle support (serious rigged version)
+ * Mirror speed and direction from server (on heartbeat)
+ * Show error on client if server goes away while loco selected 
 **Version 1.5
  * sort roster entries by name
 **Version 1.4
