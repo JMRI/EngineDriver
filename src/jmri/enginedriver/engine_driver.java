@@ -79,8 +79,21 @@ public class engine_driver extends Activity {
 	        	//various MultiThrottle responses
 	        	case 'M':
 	        		if (response_str.substring(2,3).equals("+")) {  //if loco added, refresh the function labels
-		      	  		set_function_buttons();
+		      	  		set_default_function_labels();
+		      	  		// loop through all function buttons and
+		      	  		//   set label and dcc functions (based on settings) or hide if no label
+//		      	  		set_function_buttons_for_view("T");
+//		      	  		set_function_buttons_for_view("S");
 		      	  		enable_disable_buttons(response_str.substring(1,2));  //pass whichthrottle
+		      	  		if (response_str.charAt(1) == 'T') {
+		      	  			ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
+		      	  			set_function_labels_and_listeners_for_view("T");
+		      	  			enable_disable_buttons_for_view(tv, true);
+		      	  		} else if (response_str.charAt(1) == 'S') {
+		      	  			ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
+		      	  			set_function_labels_and_listeners_for_view("S");
+		      	  			enable_disable_buttons_for_view(tv, true);
+		      	  		}
 	        		} else if (response_str.substring(2,3).equals("A")) {  //e.g. MTAL2608<;>R1
 	        			String whichThrottle = response_str.substring(1,2);  //TODO: move this processing to ta?
 	    	  			String[] ls = threaded_application.splitByString(response_str,"<;>");
@@ -103,11 +116,11 @@ public class engine_driver extends Activity {
 	      	  	  case 'R': //roster function labels
 	      	  		  if (response_str.charAt(1) == 'F') {
 	      	  			  ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
-	      	  			  set_function_buttons_for_view(tv, "T");
+	      	  			  set_function_labels_and_listeners_for_view("T");
 	      	  			  enable_disable_buttons_for_view(tv, true);
 	      	  		  } else if (response_str.charAt(1) == 'S') {
 	      	  			  ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
-	      	  			  set_function_buttons_for_view(tv, "S");
+	      	  			  set_function_labels_and_listeners_for_view("S");
 	      	  			  enable_disable_buttons_for_view(tv, true);
 	      	  		  }
 	      	  		  set_labels();
@@ -122,7 +135,7 @@ public class engine_driver extends Activity {
 	        	//only check for heartbeat if version 2.0+ and at least one loco selected
 	        	if  (mainapp.withrottle_version >= 2.0 &&  (!mainapp.loco_string_T.equals("Not Set") || !mainapp.loco_string_S.equals("Not Set"))) {
 	        		if (!heartbeat) {
-	        			Toast.makeText(getApplicationContext(), "ERROR: lost connection with WiThrottle server!  Please reconnect!", Toast.LENGTH_LONG).show();
+	        			Toast.makeText(getApplicationContext(), "WARNING: No response from WiThrottle server in " + mainapp.heartbeat_interval  + " seconds.", Toast.LENGTH_LONG).show();
 	        		}
 	        		heartbeat = false;
 	        	}
@@ -224,6 +237,8 @@ void start_select_loco_activity(String whichThrottle)
 
   //helper function to enable/disable all children for a group
   void enable_disable_buttons_for_view(ViewGroup vg, boolean newEnabledState)  {
+ Log.d("Engine_Driver","starting enable_disable_buttons_for_view " + newEnabledState);
+
 	  ViewGroup r;  //row
 	  Button b; //button
 	  for(int i = 0; i < vg.getChildCount(); i++) {
@@ -236,7 +251,8 @@ void start_select_loco_activity(String whichThrottle)
 } //enable_disable_buttons_for_view
 
   //helper function to loop thru buttons, setting label text and appearance based on current function state (on or off)
-  void set_function_labels_and_states(String whichThrottle)  {
+  void set_function_states(String whichThrottle)  {
+	  Log.d("Engine_Driver","starting set_function_states");
 	  ViewGroup vg; //table
 	  ViewGroup r;  //row
 	  Button b; //button
@@ -519,8 +535,6 @@ public void onStart() {
 
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-    set_function_buttons();
-
     Button b;
     function_button_touch_listener fbtl;
     
@@ -566,11 +580,17 @@ public void onStart() {
     sb=(SeekBar)findViewById(R.id.speed_S);
     sb.setOnSeekBarChangeListener(new throttle_listener("S"));
 
+    set_default_function_labels();
+    // loop through all function buttons and
+    //   set label and dcc functions (based on settings) or hide if no label
+    set_function_labels_and_listeners_for_view("T");
+    set_function_labels_and_listeners_for_view("S");
+
   } //end of onCreate()
 
   //set up text label and dcc function for each button from settings and setup listeners
   //TODO: move file reading to another function and only do when needed
-  private void set_function_buttons() {
+  private void set_default_function_labels() {
 
 	  mainapp.function_labels_default = new LinkedHashMap<Integer, String>();
 
@@ -597,22 +617,25 @@ public void onStart() {
 	  }
 	  catch (IOException except) { Log.e("settings_activity", "Could not read file "+except.getMessage()); }
 
-	  // loop through all function buttons and
-	  //   set label and dcc functions (based on settings) or hide if no label
-	  ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_T); //table
-	  set_function_buttons_for_view(tv, "T");
-	  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S); //table
-	  set_function_buttons_for_view(tv, "S");
-
   }
 
   //helper function to set up function buttons for each throttle
-  void set_function_buttons_for_view(ViewGroup t, String whichThrottle)  {
+  void set_function_labels_and_listeners_for_view(String whichThrottle)  {
+	  Log.d("Engine_Driver","starting set_function_labels_and_listeners_for_view");
+
+	  ViewGroup tv; //group
 	  ViewGroup r;  //row
 	  function_button_touch_listener fbtl;
 	  Button b; //button
 	  int k = 0; //button count
 	  LinkedHashMap<Integer, String> function_labels_temp = new  LinkedHashMap<Integer, String>();
+
+	  if (whichThrottle.equals("T")) {
+		  tv = (ViewGroup) findViewById(R.id.function_buttons_table_T); //table
+	  } else {
+		  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S); //table
+	  }
+	  
 	  if (whichThrottle.equals("T") && mainapp.function_labels_T != null && mainapp.function_labels_T.size()>0) {
 		  function_labels_temp = mainapp.function_labels_T;  //point temp to T
 	  } else if (whichThrottle.equals("S") && mainapp.function_labels_S != null  && mainapp.function_labels_S.size()>0) {
@@ -627,8 +650,8 @@ public void onStart() {
 		  aList.add(f);
 	  }
 
-	  for(int i = 0; i < t.getChildCount(); i++) {
-	      r = (ViewGroup)t.getChildAt(i);
+	  for(int i = 0; i < tv.getChildCount(); i++) {
+	      r = (ViewGroup)tv.getChildAt(i);
 	      for(int j = 0; j < r.getChildCount(); j++) {
 	      	b = (Button)r.getChildAt(j);
 	    		if (k <  function_labels_temp.size()) {
@@ -649,6 +672,8 @@ public void onStart() {
 
   //lookup and set values of various informational text labels and size the screen elements 
   private void set_labels() {
+
+	  Log.d("Engine_Driver","starting set_labels");
 
     int throttle_count = 0;
    	int height_T;
@@ -689,7 +714,29 @@ public void onStart() {
 	    sbT.setLayoutParams(llLp);
     }
     
-	int screenHeight = findViewById(R.id.throttle_screen).getHeight();  //get the height of usable area
+    Button b=(Button)findViewById(R.id.button_select_loco_T);
+    if (mainapp.loco_string_T.equals("Not Set")) {
+        b.setText("Press to select");
+        whichVolume = "S";  //set the "other" one to use volume control 
+    } else {
+    	b.setText(mainapp.loco_string_T);
+    	throttle_count++;
+    }
+    b.setSelected(false);
+    b.setPressed(false);
+ 
+    b=(Button)findViewById(R.id.button_select_loco_S);
+    if (mainapp.loco_string_S.equals("Not Set")) {
+        b.setText("Press to select");
+        whichVolume = "T";  //set the "other" one to use volume control 
+    } else {
+      	b.setText(mainapp.loco_string_S);
+    	throttle_count++;
+    }
+    b.setSelected(false);
+    b.setPressed(false);
+
+    int screenHeight = findViewById(R.id.throttle_screen).getHeight();  //get the height of usable area
   
     if (screenHeight > 0) {  //don't do this if screen not measurable
 		//determine how to split the screen (evenly if both, 85/15 if only one)
@@ -720,30 +767,8 @@ public void onStart() {
     }
 
     //update the state of each function button based on shared variable
-    set_function_labels_and_states("T");
-    set_function_labels_and_states("S");
-     
-    Button b=(Button)findViewById(R.id.button_select_loco_T);
-    if (mainapp.loco_string_T.equals("Not Set")) {
-        b.setText("Press to select");
-        whichVolume = "S";  //set the "other" one to use volume control 
-    } else {
-    	b.setText(mainapp.loco_string_T);
-    	throttle_count++;
-    }
-    b.setSelected(false);
-    b.setPressed(false);
- 
-    b=(Button)findViewById(R.id.button_select_loco_S);
-    if (mainapp.loco_string_S.equals("Not Set")) {
-        b.setText("Press to select");
-        whichVolume = "T";  //set the "other" one to use volume control 
-    } else {
-      	b.setText(mainapp.loco_string_S);
-    	throttle_count++;
-    }
-    b.setSelected(false);
-    b.setPressed(false);
+    set_function_states("T");
+    set_function_states("S");
 
   }
 
@@ -797,7 +822,11 @@ public void onStart() {
   //handle return from menu items
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
       //since we always do the same action no need to distinguish between requests
-      set_function_buttons();
+      set_default_function_labels();
+      // loop through all function buttons and
+      //   set label and dcc functions (based on settings) or hide if no label
+      set_function_labels_and_listeners_for_view("T");
+      set_function_labels_and_listeners_for_view("S");
       heartbeat = true;
 //	  set_labels();
 //	  enable_disable_buttons("T");
