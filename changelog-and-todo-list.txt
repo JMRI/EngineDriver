@@ -2,6 +2,7 @@
  * Began adding Multithrottle support (serious rigged version)
  * Mirror speed and direction from server (on heartbeat)
  * Show error on client if server goes away while loco selected 
+ * Improved appearance of buttons 
 **Version 1.5
  * sort roster entries by name
 **Version 1.4
@@ -104,9 +105,6 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * engine_driver:
- *   TODO: drop out (and show error)?  if no response within timeout (WiT 2.0+)
- *   TODO: get current status (speed, direction, speed steps?) periodically (WiT 2.0+)
- *   TODO: use returned direction and speed to update slider and buttons (WiT 2.0+)
  *   TODO: shrink loco name font if more than x chars
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
  *   TODO: reduce number of calls to set_labels()

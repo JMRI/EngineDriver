@@ -46,7 +46,6 @@ import android.view.MotionEvent;
 import android.os.Message;
 import android.widget.TextView;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 
 public class engine_driver extends Activity {
 
@@ -55,12 +54,12 @@ public class engine_driver extends Activity {
   private static final int VISIBLE = 0;
   private SharedPreferences prefs;
   private Timer heartbeatTimer;
-  boolean heartbeat; //turn on with each response, show error if not on
+  boolean heartbeat = true;; //turn on with each response, show error if not on
 
   private String whichVolume = "T";
 
-  private Drawable button_pressed_drawable;  //hold background graphics for buttons
-  private Drawable button_normal_drawable;
+//  private Drawable button_pressed_drawable;  //hold background graphics for buttons
+//  private Drawable button_normal_drawable;
 
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class engine_driver_handler extends Handler {
@@ -82,9 +81,8 @@ public class engine_driver extends Activity {
 	        		if (response_str.substring(2,3).equals("+")) {  //if loco added, refresh the function labels
 		      	  		set_function_buttons();
 		      	  		enable_disable_buttons(response_str.substring(1,2));  //pass whichthrottle
-			        	set_labels();
 	        		} else if (response_str.substring(2,3).equals("A")) {  //e.g. MTAL2608<;>R1
-	        			String whichThrottle = response_str.substring(1,2);
+	        			String whichThrottle = response_str.substring(1,2);  //TODO: move this processing to ta?
 	    	  			String[] ls = threaded_application.splitByString(response_str,"<;>");
 	    	  			if (ls[1].substring(0,1).equals("R")) {
 	    	  				set_direction_buttons(whichThrottle, new Integer(ls[1].substring(1,2))); //set direction button 
@@ -93,7 +91,8 @@ public class engine_driver extends Activity {
 	    	  			}	    	  			
 
 	        		}
-	      	  	  break;
+		        	set_labels();
+	        		break;
 	      	  	  
 	      	  	  case 'T':
 	      	  	  case 'S':
@@ -121,9 +120,9 @@ public class engine_driver extends Activity {
 	        	// refresh text labels
 	        	set_labels();
 	        	//only check for heartbeat if version 2.0+ and at least one loco selected
-	        	if  (mainapp.withrottle_version >= 2.0 &&  !mainapp.loco_string_T.equals("Not Set") || !mainapp.loco_string_S.equals("Not Set")) {
+	        	if  (mainapp.withrottle_version >= 2.0 &&  (!mainapp.loco_string_T.equals("Not Set") || !mainapp.loco_string_S.equals("Not Set"))) {
 	        		if (!heartbeat) {
-	        			Toast.makeText(getApplicationContext(), "ERROR: no response from server in timeout.", Toast.LENGTH_SHORT).show();
+	        			Toast.makeText(getApplicationContext(), "ERROR: lost connection with WiThrottle server!  Please reconnect!", Toast.LENGTH_LONG).show();
 	        		}
 	        		heartbeat = false;
 	        	}
@@ -172,11 +171,15 @@ public class engine_driver extends Activity {
 		  bRev = (Button)findViewById(R.id.button_rev_S);
 	  }
 	  if (direction == 0) {
-		  bFwd.setBackgroundDrawable(button_normal_drawable);
-		  bRev.setBackgroundDrawable(button_pressed_drawable);
+		  bFwd.setPressed(false);
+		  bFwd.setTypeface(null, Typeface.NORMAL);
+		  bRev.setPressed(true);
+		  bRev.setTypeface(null, Typeface.ITALIC);
 	  } else {
-		  bFwd.setBackgroundDrawable(button_pressed_drawable);
-		  bRev.setBackgroundDrawable(button_normal_drawable);
+		  bFwd.setPressed(true);
+		  bFwd.setTypeface(null, Typeface.ITALIC);
+		  bRev.setPressed(false);
+		  bRev.setTypeface(null, Typeface.NORMAL);
 	  }
   }
   
@@ -230,10 +233,9 @@ void start_select_loco_activity(String whichThrottle)
        	    b.setEnabled(newEnabledState);
 	      }
 	  }
-} //end of set_function_buttons_for_view
+} //enable_disable_buttons_for_view
 
-  @SuppressWarnings("unchecked")
-//helper function to loop thru buttons, setting appearance based on current function state (on or off)
+  //helper function to loop thru buttons, setting label text and appearance based on current function state (on or off)
   void set_function_labels_and_states(String whichThrottle)  {
 	  ViewGroup vg; //table
 	  ViewGroup r;  //row
@@ -259,28 +261,32 @@ void start_select_loco_activity(String whichThrottle)
    			function_labels_temp = mainapp.function_labels_default;
  		 }
   	  }
-	  
-	  //put values in array for indexing in next step TODO: find direct way to do this
-	  ArrayList<Integer> aList = new ArrayList<Integer>();
-	  for (Integer f : function_labels_temp.keySet()) {
-		  aList.add(f);
-	  }
 
-	  for(int i = 0; i < vg.getChildCount(); i++) {
-	      r = (ViewGroup)vg.getChildAt(i);
-	      for(int j = 0; j < r.getChildCount(); j++) {
-	    	if (k < aList.size()) {  //TODO: short-circuit this
-		      	b = (Button)r.getChildAt(j);
-		      	if (fs[aList.get(k)]) {  //get function number for kth button, and look up state in shared variable
-			      	  b.setTypeface(null, Typeface.ITALIC);
-		      	} else {
-			      	  b.setTypeface(null, Typeface.NORMAL);
-		      	}
-	    	}
-  	        k++;
-	      }
+	  if (fs !=null) { //don't bother if no function states found
+		  //put values in array for indexing in next step TODO: find direct way to do this
+		  ArrayList<Integer> aList = new ArrayList<Integer>();
+		  for (Integer f : function_labels_temp.keySet()) {
+			  aList.add(f);
+		  }
+
+		  for(int i = 0; i < vg.getChildCount(); i++) {
+			  r = (ViewGroup)vg.getChildAt(i);
+			  for(int j = 0; j < r.getChildCount(); j++) {
+				  if (k < aList.size()) {  //TODO: short-circuit this
+					  b = (Button)r.getChildAt(j);
+					  if (fs[aList.get(k)]) {  //get function number for kth button, and look up state in shared variable
+						  b.setTypeface(null, Typeface.ITALIC);
+						  b.setPressed(true);
+					  } else {
+						  b.setTypeface(null, Typeface.NORMAL);
+						  b.setPressed(false);
+					  }
+				  }
+				  k++;
+			  }
+		  }
 	  }
-} //end of set_function_buttons_for_view
+} //end of set_function_labels_and_states 
 
   public class function_button_touch_listener implements View.OnTouchListener
   {
@@ -309,14 +315,9 @@ void start_select_loco_activity(String whichThrottle)
             	function_msg.what=message_type.DIRECTION;
                 function_msg.arg1=1;
             	function_msg.arg2=1;  //forward is 1
+
             	//show pressed image on current button, and turn off pressed image on "other" button 
-                v.setBackgroundDrawable(button_pressed_drawable);
-            	if (whichThrottle.equals("T")) {
-                    b = (Button)findViewById(R.id.button_rev_T);
-              	} else {
-                    b = (Button)findViewById(R.id.button_rev_S);
-              	}
-            	b.setBackgroundDrawable(button_normal_drawable);
+            	set_direction_buttons(whichThrottle, 1);
             }
               break;
 
@@ -326,13 +327,8 @@ void start_select_loco_activity(String whichThrottle)
                 function_msg.arg1=1;
             	function_msg.arg2=0;  //reverse is 0
             	//show pressed image on current button, and turn off pressed image on "other" button 
-            	v.setBackgroundDrawable(button_pressed_drawable);
-            	if (whichThrottle.equals("T")) {
-                    b = (Button)findViewById(R.id.button_fwd_T);
-              	} else {
-                    b = (Button)findViewById(R.id.button_fwd_S);
-              	}
-            	b.setBackgroundDrawable(button_normal_drawable);
+            	set_direction_buttons(whichThrottle, 0);
+            	//            	v.setPressed(true);
               }
               break;
 
@@ -357,7 +353,8 @@ void start_select_loco_activity(String whichThrottle)
             	start_select_loco_activity(new String(whichThrottle));  //pass throttle #
               }
               break;
-            default : {
+
+            default : {  //handle the function buttons
               function_msg.what=message_type.FUNCTION;
               function_msg.arg1=function;
               function_msg.arg2=1;
@@ -373,16 +370,17 @@ void start_select_loco_activity(String whichThrottle)
         break;
         //handle stopping of function on key-up 
         case MotionEvent.ACTION_UP:
-          // only process UP for function buttons
-          if(function < function_button.FORWARD)   {
-            Message function_msg=Message.obtain();
-            function_msg.what=message_type.FUNCTION;
-            function_msg.arg1=function;
-            function_msg.arg2=0;
-            function_msg.obj=new String(whichThrottle);    // always load whichThrottle into message
-            mainapp.comm_msg_handler.sendMessage(function_msg);
-          }
-        break;
+
+        	// only process UP for function buttons
+        	if(function < function_button.FORWARD)   {
+        		Message function_msg=Message.obtain();
+        		function_msg.what=message_type.FUNCTION;
+        		function_msg.arg1=function;
+        		function_msg.arg2=0;
+        		function_msg.obj=new String(whichThrottle);    // always load whichThrottle into message
+        		mainapp.comm_msg_handler.sendMessage(function_msg);
+        	}
+        	break;
       }
       return(false);
     };
@@ -516,8 +514,8 @@ public void onStart() {
 
     mainapp=(threaded_application)getApplication();
 
-    button_pressed_drawable=getResources().getDrawable(R.drawable.btn_default_small_pressed);
-    button_normal_drawable=getResources().getDrawable(R.drawable.btn_default_small_normal);
+//    button_pressed_drawable=getResources().getDrawable(R.drawable.btn_default_small_pressed);
+//    button_normal_drawable=getResources().getDrawable(R.drawable.btn_default_small_normal);
 
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
@@ -656,24 +654,6 @@ public void onStart() {
    	int height_T;
 	int height_S;
   
-    Button b=(Button)findViewById(R.id.button_select_loco_T);
-    if (mainapp.loco_string_T.equals("Not Set")) {
-        b.setText("Press to select");
-        whichVolume = "S";  //set the "other" one to use volume control 
-    } else {
-    	b.setText(mainapp.loco_string_T);
-    	throttle_count++;
-    }
- 
-    b=(Button)findViewById(R.id.button_select_loco_S);
-    if (mainapp.loco_string_S.equals("Not Set")) {
-        b.setText("Press to select");
-        whichVolume = "T";  //set the "other" one to use volume control 
-    } else {
-      	b.setText(mainapp.loco_string_S);
-    	throttle_count++;
-    }
-
     // hide or display volume control indicator based on variable
     View viT = findViewById(R.id.volume_indicator_T);
     View viS = findViewById(R.id.volume_indicator_S);
@@ -709,7 +689,6 @@ public void onStart() {
 	    sbT.setLayoutParams(llLp);
     }
     
-//  int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
 	int screenHeight = findViewById(R.id.throttle_screen).getHeight();  //get the height of usable area
   
     if (screenHeight > 0) {  //don't do this if screen not measurable
@@ -744,6 +723,28 @@ public void onStart() {
     set_function_labels_and_states("T");
     set_function_labels_and_states("S");
      
+    Button b=(Button)findViewById(R.id.button_select_loco_T);
+    if (mainapp.loco_string_T.equals("Not Set")) {
+        b.setText("Press to select");
+        whichVolume = "S";  //set the "other" one to use volume control 
+    } else {
+    	b.setText(mainapp.loco_string_T);
+    	throttle_count++;
+    }
+    b.setSelected(false);
+    b.setPressed(false);
+ 
+    b=(Button)findViewById(R.id.button_select_loco_S);
+    if (mainapp.loco_string_S.equals("Not Set")) {
+        b.setText("Press to select");
+        whichVolume = "T";  //set the "other" one to use volume control 
+    } else {
+      	b.setText(mainapp.loco_string_S);
+    	throttle_count++;
+    }
+    b.setSelected(false);
+    b.setPressed(false);
+
   }
 
   //send heartbeat to withrottle to keep this throttle alive 
@@ -797,6 +798,7 @@ public void onStart() {
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
       //since we always do the same action no need to distinguish between requests
       set_function_buttons();
+      heartbeat = true;
 //	  set_labels();
 //	  enable_disable_buttons("T");
 //	  enable_disable_buttons("S");  
