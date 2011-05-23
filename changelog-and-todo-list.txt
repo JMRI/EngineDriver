@@ -1,8 +1,9 @@
 **Version 1.6
  * Began adding Multithrottle support (serious rigged version)
  * Mirror speed and direction from server (on heartbeat)
- * Show error on client if server goes away while loco selected 
- * Improved appearance of buttons 
+ * Show warning on client if server goes away while loco selected 
+ * Improved appearance of buttons (not complete)
+ * Fixed incorrect heartbeat request when not enabled on server side
 **Version 1.5
  * sort roster entries by name
 **Version 1.4
@@ -105,11 +106,14 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * engine_driver:
+ *   TODO: turn on heartbeat even when no loco selected
+ *   TODO: restart heartbeat on every send
  *   TODO: shrink loco name font if more than x chars
+ *   TODO: make button images work even when < 2.0 (should also fix the immed-after-press display)
+ *   TODO: quicker access to turnouts/routes
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
  *   TODO: reduce number of calls to set_labels()
  *   TODO: add preference to disable other hardware buttons in throttle screen
- *   TODO: make selected buttons more obvious (maybe background "LED" at bottom similar to wifi, etc. control widget on Android)
  *   TODO: add graphics (slider, stop, directions, functions?)  add colors
  *   TODO: add throttle name to title bar
  *   TODO: allow adding selected turnout(s) to throttle view
@@ -117,6 +121,7 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
+ *   TODO: shrink loco name font if more than x chars
  *   TODO: show roster names instead of "L2591" 
  *   TODO: pref to hide or shrink the "recently-used locos" list 
  *   TODO: handle direction of locos in MT consist 

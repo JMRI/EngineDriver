@@ -371,13 +371,13 @@ public class threaded_application extends Application
         	  } else {
         		  boolean anySent = false;
         		  if (!loco_string_T.equals("Not Set")) {  
-        			  withrottle_send("MTA*<;>qR"); //request direction
         			  withrottle_send("MTA*<;>qV"); //request speed
+        			  withrottle_send("MTA*<;>qR"); //request direction
         			  anySent = true;
         		  }
         		  if (!loco_string_S.equals("Not Set")) {  
-        			  withrottle_send("MSA*<;>qR"); //request direction
         			  withrottle_send("MSA*<;>qV"); //request speed
+        			  withrottle_send("MSA*<;>qR"); //request direction
         			  anySent = true;
         		  }
         		  if (!anySent) {
@@ -395,7 +395,9 @@ public class threaded_application extends Application
           //Disconnect from the WiThrottle server.
           case message_type.DISCONNECT:
         	withrottle_send("Q");
-            withrottle_send("*-");     //turn off heartbeat
+        	if (heartbeat_interval > 0) {
+        		withrottle_send("*-");     //request to turn on heartbeat (if enabled in server prefs)
+        	}
             if (readTimer != null) { readTimer.cancel(); }       //stop reading from socket
             try{ Thread.sleep(500); }   //  give server time to process this.
               catch (InterruptedException except){ process_comm_error("Error sleeping the thread, InterruptedException: "+except.getMessage()); }
@@ -409,16 +411,23 @@ public class threaded_application extends Application
         	  whichThrottle = msg.obj.toString();
         	  withrottle_send(String.format(whichThrottle+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", msg.arg1));
               //In order to get the engine to start, I must set a direction and some non-zero velocity and then set the velocity to zero. TODO: Verify this problem still exists
-            withrottle_send(whichThrottle+"R1"); 
-            withrottle_send(whichThrottle+"V1"); 
-            withrottle_send(whichThrottle+"V0"); 
-            withrottle_send("*+");     //always request to turn on heartbeat (must be enabled in server prefs)
+//            withrottle_send(whichThrottle+"R1"); 
+//            withrottle_send(whichThrottle+"V1"); 
+//            withrottle_send(whichThrottle+"V0"); 
+        	  if (withrottle_version >= 2.0) {  //request current direction and speed (WiT 2.0+)
+        		  withrottle_send("M" + whichThrottle+"A*<;>qV");
+        		  withrottle_send("M" + whichThrottle+"A*<;>qR");
+        	  }
+
+        	  if (heartbeat_interval > 0) {
+        		  withrottle_send("*+");     //request to turn on heartbeat (if enabled in server prefs)
+        	  }
             break;
 
 //          case message_type.ERROR:
 //            break;
             
-          //Adjust the locomotive's speed. arg1 holds the value of the speed to set. //TODO: Allow 14 and 28 speed steps (might need a change on the server size).
+          //Adjust the locomotive's speed. arg1 holds the value of the speed to set. //TODO: Allow 14 and 28 speed steps (might need a change on the server side).
           case message_type.VELOCITY:
           	whichThrottle = msg.obj.toString();
         	withrottle_send(String.format(whichThrottle+"V%d", msg.arg1));

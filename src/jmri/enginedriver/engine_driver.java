@@ -54,7 +54,7 @@ public class engine_driver extends Activity {
   private static final int VISIBLE = 0;
   private SharedPreferences prefs;
   private Timer heartbeatTimer;
-  boolean heartbeat = true;; //turn on with each response, show error if not on
+  boolean heartbeat = true; //turn on with each response, show error if not on
 
   private String whichVolume = "T";
 
@@ -132,10 +132,11 @@ public class engine_driver extends Activity {
 	        case message_type.HEARTBEAT: {
 	        	// refresh text labels
 	        	set_labels();
-	        	//only check for heartbeat if version 2.0+ and at least one loco selected
-	        	if  (mainapp.withrottle_version >= 2.0 &&  (!mainapp.loco_string_T.equals("Not Set") || !mainapp.loco_string_S.equals("Not Set"))) {
+	        	//only check for heartbeat if version 2.0+, heartbeat enabled, and loco selected
+	        	if  (mainapp.withrottle_version >= 2.0 && mainapp.heartbeat_interval > 0
+	        			&&	(!mainapp.loco_string_T.equals("Not Set") || !mainapp.loco_string_S.equals("Not Set"))) {
 	        		if (!heartbeat) {
-	        			Toast.makeText(getApplicationContext(), "WARNING: No response from WiThrottle server in " + mainapp.heartbeat_interval  + " seconds.", Toast.LENGTH_LONG).show();
+	        			Toast.makeText(getApplicationContext(), "WARNING: No response from WiThrottle server for " + mainapp.heartbeat_interval  + " seconds.  Verify connection.", Toast.LENGTH_LONG).show();
 	        		}
 	        		heartbeat = false;
 	        	}
@@ -696,7 +697,7 @@ public void onStart() {
  // set up max speeds for throttles
     String s = prefs.getString("maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
     int maxThrottle = Integer.parseInt(s);
-    maxThrottle =(int) ((double) (maxThrottle/99.0) * 126.0);
+    maxThrottle =(int) ((double) (maxThrottle/100.0) * 126.0);
     sbT.setMax(maxThrottle);
     sbS.setMax(maxThrottle);
 
@@ -772,10 +773,9 @@ public void onStart() {
 
   }
 
-  //send heartbeat to withrottle to keep this throttle alive 
+  //send heartbeat to withrottle to keep this throttle alive (if enabled in withrottle prefs)
   private void send_heartbeat() {
 	  if (mainapp.heartbeat_interval > 0) {
-
 	    Message msg=Message.obtain();
 	    msg.what=message_type.HEARTBEAT;
 	    mainapp.comm_msg_handler.sendMessage(msg);
