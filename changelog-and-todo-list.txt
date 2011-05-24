@@ -4,6 +4,9 @@
  * Show warning on client if server goes away while loco selected 
  * Improved appearance of buttons (not complete)
  * Fixed incorrect heartbeat request when not enabled on server side
+ * Added roster name lookup for MT locos
+ * Ellipsize the loco strings instead of growing the buttons
+ * Started adding background texture
 **Version 1.5
  * sort roster entries by name
 **Version 1.4
@@ -106,9 +109,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * engine_driver:
- *   TODO: turn on heartbeat even when no loco selected
  *   TODO: restart heartbeat on every send
- *   TODO: shrink loco name font if more than x chars
  *   TODO: make button images work even when < 2.0 (should also fix the immed-after-press display)
  *   TODO: quicker access to turnouts/routes
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
@@ -121,8 +122,7 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
- *   TODO: shrink loco name font if more than x chars
- *   TODO: show roster names instead of "L2591" 
+ *   TODO: fix issue with Short addresses not working
  *   TODO: pref to hide or shrink the "recently-used locos" list 
  *   TODO: handle direction of locos in MT consist 
  *   TODO: clean up code for  new MT (Multi-throttle) feature 
@@ -133,6 +133,7 @@
  *   TODO: show error if invalid entry
  *
  * These require changes to WiThrottle
+ *   turn on heartbeat even when no loco selected (need something to request)
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
  *   disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
  *   pull more details from roster

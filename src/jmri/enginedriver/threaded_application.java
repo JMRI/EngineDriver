@@ -519,25 +519,29 @@ public class threaded_application extends Application
 
         switch (response_str.charAt(0)) {
 
-        //response from MultiThrottle function
+        //handle responses from MultiThrottle function
         case 'M': 
 	  		//loco was successfully added to a throttle
-        	if 	(response_str.charAt(2) == '+') {  //MT+xxxx  loco was added
+        	if 	(response_str.charAt(2) == '+') {  //"MT+L2591<;>L2591"  loco was added
 	  			String[] ls = splitByString(response_str.substring(3),"<;>");//drop off separator
+
+	  			String rosterName = ls[0].substring(1) + "(" + ls[0].substring(0,1) + ")";  //reformat from L2591 to 2591(L)  
+	  			rosterName = get_loconame_from_address_string(rosterName);  //lookup name in roster
+
 	  			if 	(response_str.charAt(1) == 'T') {
 	  				if (loco_string_T.equals("Not Set")) {  
 	  					loco_string_T = ""; 
 	  				} else {
-	  					loco_string_T += "+"; 
+	  					loco_string_T += " +"; 
 	  				}
-	  				loco_string_T += ls[0];  //append new loco to app variable
+	  				loco_string_T += rosterName;  //append new loco to app variable
 	  			} else {
 	  				if (loco_string_S.equals("Not Set")) {  
 	  					loco_string_S = ""; 
 	  				} else {
-	  					loco_string_S += "+"; 
+	  					loco_string_S += " +"; 
 	  				}
-	  				loco_string_S += ls[0];  //append new loco to app variable
+	  				loco_string_S += rosterName;  //append new loco to app variable
 	  			}
 	  		} else if (response_str.charAt(2) == 'L'){ //list of function buttons
 	  			String[] ls = splitByString(response_str,"<;>");//drop off front portion
@@ -920,7 +924,7 @@ public class threaded_application extends Application
     	}
     	return response_str; //return input if not found
     }
-    
+
     //send the passed-in message to the socket
     private void withrottle_send(String msg) {
     	

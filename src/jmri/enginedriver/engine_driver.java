@@ -238,7 +238,7 @@ void start_select_loco_activity(String whichThrottle)
 
   //helper function to enable/disable all children for a group
   void enable_disable_buttons_for_view(ViewGroup vg, boolean newEnabledState)  {
- Log.d("Engine_Driver","starting enable_disable_buttons_for_view " + newEnabledState);
+// Log.d("Engine_Driver","starting enable_disable_buttons_for_view " + newEnabledState);
 
 	  ViewGroup r;  //row
 	  Button b; //button
@@ -253,7 +253,7 @@ void start_select_loco_activity(String whichThrottle)
 
   //helper function to loop thru buttons, setting label text and appearance based on current function state (on or off)
   void set_function_states(String whichThrottle)  {
-	  Log.d("Engine_Driver","starting set_function_states");
+//	  Log.d("Engine_Driver","starting set_function_states");
 	  ViewGroup vg; //table
 	  ViewGroup r;  //row
 	  Button b; //button
@@ -616,13 +616,13 @@ public void onStart() {
 			  }
 		  }
 	  }
-	  catch (IOException except) { Log.e("settings_activity", "Could not read file "+except.getMessage()); }
+	  catch (IOException except) { Log.e("settings_activity", "Could not read file "+except.getMessage()); }  
 
   }
 
   //helper function to set up function buttons for each throttle
   void set_function_labels_and_listeners_for_view(String whichThrottle)  {
-	  Log.d("Engine_Driver","starting set_function_labels_and_listeners_for_view");
+//	  Log.d("Engine_Driver","starting set_function_labels_and_listeners_for_view");
 
 	  ViewGroup tv; //group
 	  ViewGroup r;  //row
@@ -674,7 +674,7 @@ public void onStart() {
   //lookup and set values of various informational text labels and size the screen elements 
   private void set_labels() {
 
-	  Log.d("Engine_Driver","starting set_labels");
+//	  Log.d("Engine_Driver","starting set_labels");
 
     int throttle_count = 0;
    	int height_T;
