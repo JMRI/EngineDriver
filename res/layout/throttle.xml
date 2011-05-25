@@ -19,7 +19,6 @@
    android:layout_height="fill_parent"
    android:orientation="vertical"
    android:keepScreenOn="true"
-   android:background="@drawable/metal_tread"
 >
    <LinearLayout
       android:id="@+id/throttle_T"

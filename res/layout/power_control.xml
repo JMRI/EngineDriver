@@ -18,7 +18,6 @@
    android:orientation="vertical"
    android:layout_width="fill_parent"
    android:layout_height="fill_parent"
-   android:background="@drawable/metal_tread"
 >
    <TextView
       android:text="@string/power_control_label"
