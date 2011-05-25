@@ -36,21 +36,22 @@
          <RelativeLayout
             android:id="@+id/loco_cell_T"
             android:layout_weight=".73"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_width="0dp"
          >
             <Button
                android:id="@+id/button_select_loco_T"
                android:text="@string/none"
+               style="@style/normal_button"
                android:layout_width="fill_parent"
-               android:layout_height="wrap_content"
-               android:textAppearance="?android:attr/textAppearanceLarge"
-               android:layout_alignParentRight="true"
-               android:padding="0dp" 
-               android:ellipsize="end"/>
+               android:layout_alignParentRight="true"/>
             <TextView
                android:id="@+id/loco_label_T"
                android:text="@string/loco"
+               android:shadowColor="#FFFFFFFF"
+               android:shadowDx="1"
+               android:shadowDy="1"
+               android:shadowRadius="1"
                android:paddingTop="2dp"
                android:paddingLeft="6dp"
                android:layout_width="wrap_content"
@@ -264,21 +265,23 @@
          <RelativeLayout
             android:id="@+id/loco_cell_S"
             android:layout_weight=".73"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_width="0dp"
          >
             <Button
                android:id="@+id/button_select_loco_S"
                android:text="@string/none"
+               style="@style/normal_button"
                android:layout_width="fill_parent"
-               android:layout_height="wrap_content"
-               android:textAppearance="?android:attr/textAppearanceLarge"
                android:layout_alignParentRight="true"
-               android:padding="0dp" 
-               android:ellipsize="end"/>
+            />
             <TextView
                android:id="@+id/loco_label_S"
                android:text="@string/loco"
+               android:shadowColor="#FFFFFFFF"
+               android:shadowDx="1"
+               android:shadowDy="1"
+               android:shadowRadius="1"
                android:paddingTop="2dp"
                android:paddingLeft="6dp"
                android:layout_width="wrap_content"

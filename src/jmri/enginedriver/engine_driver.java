@@ -38,6 +38,7 @@ import java.util.TimerTask;
 import java.io.*;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Button;
@@ -716,6 +717,12 @@ public void onStart() {
     }
     
     Button b=(Button)findViewById(R.id.button_select_loco_T);
+	if (mainapp.loco_string_T.length() > 18) {  //shrink text if long
+		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+	} else {
+		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+	}
+
     if (mainapp.loco_string_T.equals("Not Set")) {
         b.setText("Press to select");
         whichVolume = "S";  //set the "other" one to use volume control 
@@ -727,6 +734,11 @@ public void onStart() {
     b.setPressed(false);
  
     b=(Button)findViewById(R.id.button_select_loco_S);
+	if (mainapp.loco_string_S.length() > 18) {  //shrink text if long
+		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+	} else {
+		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+	}
     if (mainapp.loco_string_S.equals("Not Set")) {
         b.setText("Press to select");
         whichVolume = "T";  //set the "other" one to use volume control 

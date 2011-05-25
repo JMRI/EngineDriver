@@ -1,12 +1,11 @@
 **Version 1.6
- * Began adding Multithrottle support (serious rigged version)
- * Mirror speed and direction from server (on heartbeat)
+ * Began adding Multithrottle support (serious rigged version, 2.0+ only)
+ * Mirror speed and direction from server (on heartbeat, 2.0+ only)
  * Show warning on client if server goes away while loco selected 
- * Improved appearance of buttons (not complete)
+ * Improved appearance of buttons
  * Fixed incorrect heartbeat request when not enabled on server side
- * Added roster name lookup for MT locos
- * Ellipsize the loco strings instead of growing the buttons
- * Started adding background texture
+ * Shrink the font for loco strings instead of growing the buttons
+ * Added background texture
 **Version 1.5
  * sort roster entries by name
 **Version 1.4
@@ -109,15 +108,14 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * engine_driver:
- *   TODO: restart heartbeat on every send
- *   TODO: make button images work even when < 2.0 (should also fix the immed-after-press display)
+ *   TODO: restart/extend heartbeat on every send
+ *   TODO: make button "on" images work even when < 2.0 (should also fix the immed-after-press display)
  *   TODO: quicker access to turnouts/routes
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
  *   TODO: reduce number of calls to set_labels()
  *   TODO: add preference to disable other hardware buttons in throttle screen
  *   TODO: add graphics (slider, stop, directions, functions?)  add colors
  *   TODO: add throttle name to title bar
- *   TODO: allow adding selected turnout(s) to throttle view
  *   TODO: in ed exit, don't send release if "Not Set"
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected

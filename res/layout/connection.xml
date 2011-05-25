@@ -53,10 +53,11 @@
       <Button
          android:id="@+id/connect"
          android:text="@string/connect_button"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
+         style="@style/normal_button"
+         android:layout_width="fill_parent"
          android:layout_toRightOf="@id/port"
-         android:layout_alignBottom="@id/port" />
+         android:layout_alignBottom="@id/port"
+       />
    </RelativeLayout>
    <TextView
       android:text="@string/discovered_services"

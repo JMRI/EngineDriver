@@ -31,15 +31,17 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">0.2</item>
     </style>
-    <style name="select_button_style">
-      <item name="android:padding">0dp</item>
-      <item name="android:background">@drawable/nonsticky_button_states</item>
-      <item name="android:gravity">center_vertical|center_horizontal</item>
-        <item name="android:textColor">#FF000000</item>
+    <style name="normal_button" parent="@android:style/Widget.Button">
+        <item name="android:textSize">18sp</item>
         <item name="android:shadowColor">#FFFFFFFF</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">0.2</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:background">@drawable/nonsticky_button_states</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+         <item name="android:ellipsize">end</item>
     </style>
     <style name="edit_label_style">
       <item name="android:textSize">18sp</item>
@@ -60,6 +62,10 @@
         <item name="android:windowBackground">@drawable/app_background</item>
         <item name="android:listViewStyle">@style/EDListView</item>
         <item name="android:expandableListViewStyle">@style/EDListView</item>
+        <item name="android:shadowColor">#000000</item>
+      <item name="android:shadowDx">2</item>
+      <item name="android:shadowDy">2</item>
+      <item name="android:shadowRadius">1</item>
     </style>
 
  <style name="EDListView" parent="@android:style/Widget.ListView">

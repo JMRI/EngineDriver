@@ -46,6 +46,12 @@
       android:layout_height="wrap_content"
       android:text="testing"
       android:textAppearance="?android:attr/textAppearanceLarge"
+      
+      android:shadowColor="#000000"
+      android:shadowDx="2"
+      android:shadowDy="2"
+      android:shadowRadius="2"
+      
       android:paddingTop="15dp"
       android:paddingRight="4dp"
       android:paddingLeft="4dp"

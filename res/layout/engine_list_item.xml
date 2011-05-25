@@ -17,9 +17,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent"
-              android:layout_height="wrap_content" android:orientation="horizontal">
-  <TextView android:id="@+id/engine_item_label" android:textAppearance="?android:attr/textAppearanceLarge"
-            android:paddingTop="5dp" android:paddingBottom="5dp" android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+<LinearLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="fill_parent"
+   android:layout_height="wrap_content"
+   android:orientation="horizontal"
+>
+  <TextView
+   android:id="@+id/engine_item_label"
+   android:textAppearance="?android:attr/textAppearanceLarge"
+   android:paddingTop="5dp"
+   android:paddingBottom="5dp"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content" />
 </LinearLayout>

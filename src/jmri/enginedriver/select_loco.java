@@ -43,6 +43,8 @@ import android.os.Environment;
 import java.io.BufferedReader;
 import java.io.IOException;
 import android.util.Log;
+import android.util.TypedValue;
+
 import java.io.FileReader;
 import android.widget.EditText;
 import android.content.Intent;
@@ -134,16 +136,26 @@ public class select_loco extends Activity {
 		// format and show currently selected locos, and hide or show Release
 		// buttons
 		TextView v = (TextView) findViewById(R.id.sl_loco_T);
-		Button b = (Button) findViewById(R.id.sl_release_T);
+		if (mainapp.loco_string_T.length() > 7) {  //shrink text if long
+			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+		} else {
+			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+		}
 		v.setText(mainapp.loco_string_T);
+		Button b = (Button) findViewById(R.id.sl_release_T);
 		if (mainapp.loco_string_T.equals("Not Set")) {
 			b.setEnabled(false);
 		} else {
 			b.setEnabled(true);
 		}
 		v = (TextView) findViewById(R.id.sl_loco_S);
-		b = (Button) findViewById(R.id.sl_release_S);
+		if (mainapp.loco_string_S.length() > 7) {  //shrink text if long
+			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+		} else {
+			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+		}
 		v.setText(mainapp.loco_string_S);
+		b = (Button) findViewById(R.id.sl_release_S);
 		if (mainapp.loco_string_S.equals("Not Set")) {
 			b.setEnabled(false);
 		} else {
