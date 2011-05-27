@@ -697,7 +697,12 @@ public void onStart() {
     
  // set up max speeds for throttles
     String s = prefs.getString("maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
-    int maxThrottle = Integer.parseInt(s);
+    int maxThrottle = 99;
+    try {
+    	maxThrottle = Integer.parseInt(s);
+    } catch (NumberFormatException e) {
+	}
+
     maxThrottle =(int) ((double) (maxThrottle/100.0) * 126.0);
     sbT.setMax(maxThrottle);
     sbS.setMax(maxThrottle);

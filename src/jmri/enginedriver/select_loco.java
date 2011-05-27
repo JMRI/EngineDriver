@@ -429,7 +429,7 @@ public class select_loco extends Activity {
 							engine_address_list.add(ea);
 							address_size_list.add(as);
 							HashMap<String, String> hm = new HashMap<String, String>();
-							String addressLengthString = "L";
+							String addressLengthString = ((as == 0) ? "S" : "L");  //show L or S based on length from file
 							String engineAddressString = String.format("%s(%s)",engine_address_list.get(
 									engine_address_list.size() - 1).toString(), addressLengthString);
 							hm.put("engine", engineAddressString);
