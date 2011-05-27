@@ -97,6 +97,10 @@
          android:singleLine="true"
          android:inputType="number"
          android:maxLength="4" 
+         android:shadowColor="#FFFFFFFF"
+         android:shadowDx="1"
+         android:shadowDy="1"
+         android:shadowRadius="0.2"
          />
       <Spinner
          android:id="@+id/address_length"

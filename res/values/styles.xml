@@ -50,12 +50,20 @@
       <item name="android:layout_width">0dp</item>
       <item name="android:layout_height">48dp</item>
       <item name="android:maxLength">7</item>
+      <item name="android:shadowColor">#FFFFFFFF</item>
+      <item name="android:shadowDx">1</item>
+      <item name="android:shadowDy">1</item>
+      <item name="android:shadowRadius">0.2</item>
     </style>
     <style name="edit_func_style">
       <item name="android:textSize">18sp</item>
       <item name="android:singleLine">true</item>
       <item name="android:maxLength">2</item>
       <item name="android:inputType">number</item>
+      <item name="android:shadowColor">#FFFFFFFF</item>
+      <item name="android:shadowDx">1</item>
+      <item name="android:shadowDy">1</item>
+      <item name="android:shadowRadius">0.2</item>
     </style>
 
     <style name="app_theme" parent="android:Theme">

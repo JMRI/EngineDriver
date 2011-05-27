@@ -34,7 +34,12 @@
          android:layout_height="wrap_content"
          android:layout_below="@id/ip_label"
          android:singleLine="true"
-         android:maxLength="60" />
+         android:maxLength="60"
+         android:shadowColor="#FFFFFFFF"
+         android:shadowDx="1"
+         android:shadowDy="1"
+         android:shadowRadius="0.2"
+          />
       <EditText
          android:id="@+id/port"
          android:layout_width="80sp"
@@ -43,7 +48,12 @@
          android:maxLength="5"
          android:inputType="number"
          android:layout_toRightOf="@id/host_ip"
-         android:layout_alignBottom="@id/host_ip" />
+         android:layout_alignBottom="@id/host_ip" 
+         android:shadowColor="#FFFFFFFF"
+         android:shadowDx="1"
+         android:shadowDy="1"
+         android:shadowRadius="0.2"
+         />
       <TextView
          android:text="@string/port"
          android:layout_width="wrap_content"
