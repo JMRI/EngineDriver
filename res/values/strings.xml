@@ -74,6 +74,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 <string name="prefIncreaseSliderHeightTitle">Increase Slider Height</string>
 <string name="prefIncreaseSliderHeightDefaultValue">false</string>
 <string name="prefIncreaseSliderHeightSummary">Use a larger slider for throttles.</string>
+<string name="prefHideRecentLocosTitle">Hide Recent Locos panel</string>
+<string name="prefHideRecentLocosDefaultValue">false</string>
+<string name="prefHideRecentLocosSummary">Leave more room for roster locos.</string>
 <string name="loco">Loco:</string>
 <string name="current_locos">Currently Selected Locos</string>
 <string name="release">Release</string>

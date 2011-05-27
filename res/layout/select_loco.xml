@@ -131,6 +131,7 @@
    >
    </ListView>
    <TextView
+      android:id="@+id/recent_engines_heading"
       android:text="@string/recent_engines"
       android:textColor="#FFFFFF"
       android:background="#8c8a8c"

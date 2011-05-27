@@ -162,6 +162,15 @@ public class select_loco extends Activity {
 			b.setEnabled(true);
 		}
 
+		// hide the recent locos list if selected in prefs
+	    boolean hrl = prefs.getBoolean("hide_recent_locos_preference", false);  //TODO fix getting from strings
+	    if (hrl) {
+			View rlv = (View) findViewById(R.id.recent_engines_heading);
+			rlv.setVisibility(GONE);
+			rlv = (View) findViewById(R.id.engine_list);
+			rlv.setVisibility(GONE);
+	    }
+
 		// format and show footer info
 		v = (TextView) findViewById(R.id.sl_footer);
 

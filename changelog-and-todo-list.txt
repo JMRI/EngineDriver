@@ -6,6 +6,7 @@
  * Fixed incorrect heartbeat request when not enabled on server side
  * Shrink the font for loco strings instead of growing the buttons
  * Added background texture
+ * Added preference to hide recent loco list (more room for roster list)
 **Version 1.5
  * sort roster entries by name
 **Version 1.4
@@ -84,8 +85,7 @@
  *   TODO: once wide screen is working, allow user to configure it for pads, etc.
  *   TODO: control discovered server list in ta, change ca to only display what is in array
  *   TODO: add consist creation/editing features
- *   TODO: allow compile/run at Android 1.5 (SDK 3) currently crashes when thread starts and tries to resolve android.net.wifi.WifiManager.createMulticastLock
- *   TODO: provide "reset" function to delete config files
+ *   TODO: provide "reset" function to delete config files (or change files to db)
  *   TODO: toast messages on release of loco and update of preferences
  *   TODO: make private stuff private
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
@@ -120,7 +120,8 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
- *   TODO: fix issue with Short addresses not working
+ *   TODO: fix (verify?) issue with Short addresses not acquiring loco
+ *   TODO: correct display of Short addresses in Recent list
  *   TODO: pref to hide or shrink the "recently-used locos" list 
  *   TODO: handle direction of locos in MT consist 
  *   TODO: clean up code for  new MT (Multi-throttle) feature 
@@ -128,6 +129,7 @@
  *   TODO: don't show or allow entry of loco if already in use on "other" throttle or in a consist
  *   TODO: simplify select_loco by removing handler
  * preferences:
+ *   TODO: prevent crash when Max Throttle is blanked
  *   TODO: show error if invalid entry
  *
  * These require changes to WiThrottle

@@ -60,4 +60,12 @@
       android:dialogTitle="@string/prefIncreaseSliderHeightTitle"
    >
    </CheckBoxPreference>
+   <CheckBoxPreference
+      android:key="hide_recent_locos_preference"
+      android:summary="@string/prefHideRecentLocosSummary"
+      android:title="@string/prefHideRecentLocosTitle"
+      android:defaultValue="@string/prefHideRecentLocosDefaultValue"
+      android:dialogTitle="@string/prefHideRecentLocosTitle"
+   >
+   </CheckBoxPreference>
 </PreferenceScreen>
