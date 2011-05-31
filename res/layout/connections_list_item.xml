@@ -27,7 +27,9 @@
       android:layout_weight="0.72"
       android:paddingBottom="5dp"
       android:layout_width="0dp"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content" 
+      style="@style/list_item_style"   
+    />
    <TextView
       android:id="@+id/port_item_label"
       android:text="test"
@@ -35,5 +37,6 @@
       android:paddingLeft="4dp"
       android:layout_weight="0.28"
       android:layout_width="0dp"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content" 
+      style="@style/list_item_style"   />
 </LinearLayout>

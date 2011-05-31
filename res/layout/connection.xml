@@ -27,7 +27,8 @@
          android:id="@+id/ip_label"
          android:text="@string/host_ip"
          android:layout_width="wrap_content"
-         android:layout_height="wrap_content" />
+         android:layout_height="wrap_content" 
+         style="@style/floating_text_style"   />
       <EditText
          android:id="@+id/host_ip"
          android:layout_width="160sp"
@@ -35,10 +36,6 @@
          android:layout_below="@id/ip_label"
          android:singleLine="true"
          android:maxLength="60"
-         android:shadowColor="#FFFFFFFF"
-         android:shadowDx="1"
-         android:shadowDy="1"
-         android:shadowRadius="0.2"
           />
       <EditText
          android:id="@+id/port"
@@ -49,21 +46,18 @@
          android:inputType="number"
          android:layout_toRightOf="@id/host_ip"
          android:layout_alignBottom="@id/host_ip" 
-         android:shadowColor="#FFFFFFFF"
-         android:shadowDx="1"
-         android:shadowDy="1"
-         android:shadowRadius="0.2"
          />
       <TextView
          android:text="@string/port"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_above="@id/port"
-         android:layout_alignLeft="@id/port" />
+         android:layout_alignLeft="@id/port"
+         style="@style/floating_text_style"   />
       <Button
          android:id="@+id/connect"
          android:text="@string/connect_button"
-         style="@style/normal_button"
+         style="@style/normal_button_style"
          android:layout_width="fill_parent"
          android:layout_toRightOf="@id/port"
          android:layout_alignBottom="@id/port"
@@ -71,10 +65,7 @@
    </RelativeLayout>
    <TextView
       android:text="@string/discovered_services"
-      android:textColor="#FFFFFF"
-      android:background="#8c8a8c"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content" />
+      style="@style/small_heading_style"   />
    <ListView
       android:id="@+id/discovery_list"
       android:layout_width="fill_parent"
@@ -84,10 +75,7 @@
    </ListView>
    <TextView
       android:text="@string/recent_connections"
-      android:textColor="#FFFFFF"
-      android:background="#8c8a8c"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content" />
+      style="@style/small_heading_style"   />
    <ListView
       android:id="@+id/connections_list"
       android:layout_width="fill_parent"
@@ -99,5 +87,6 @@
       android:id="@+id/ca_footer"
       android:text="@string/none"
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content" 
+      style="@style/floating_text_style"   />
 </LinearLayout>

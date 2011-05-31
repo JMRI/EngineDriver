@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <style name="large_button_style">
+    <style name="large_button_style" parent="@android:style/Widget.Button">
       <item name="android:textSize">24sp</item>
       <item name="android:singleLine">true</item>
       <item name="android:ellipsize">none</item>
@@ -10,13 +10,8 @@
       <item name="android:padding">2dp</item>
       <item name="android:background">@drawable/sticky_button_states</item>
       <item name="android:gravity">center_vertical|center_horizontal</item>
-      <item name="android:textColor">#FF000000</item>
-      <item name="android:shadowColor">#FFFFFFFF</item>
-      <item name="android:shadowDx">1</item>
-      <item name="android:shadowDy">1</item>
-      <item name="android:shadowRadius">0.4</item>
     </style>
-    <style name="button_style">
+    <style name="fn_button_style" parent="@android:style/Widget.Button">
       <item name="android:textSize">18sp</item>
       <item name="android:singleLine">true</item>
       <item name="android:ellipsize">none</item>
@@ -25,13 +20,8 @@
       <item name="android:padding">2dp</item>
       <item name="android:background">@drawable/sticky_button_states</item>
       <item name="android:gravity">center_vertical|center_horizontal</item>
-        <item name="android:textColor">#FF000000</item>
-        <item name="android:shadowColor">#FFFFFFFF</item>
-        <item name="android:shadowDx">1</item>
-        <item name="android:shadowDy">1</item>
-        <item name="android:shadowRadius">0.2</item>
     </style>
-    <style name="normal_button" parent="@android:style/Widget.Button">
+    <style name="normal_button_style" parent="@android:style/Widget.Button">
         <item name="android:textSize">18sp</item>
         <item name="android:shadowColor">#FFFFFFFF</item>
         <item name="android:shadowDx">1</item>
@@ -66,14 +56,18 @@
       <item name="android:shadowRadius">0.2</item>
     </style>
 
+<style name="app_title" parent="@android:style/WindowTitle">
+  <item name="android:shadowColor">#FF000000</item>
+  <item name="android:shadowDx">2</item>
+  <item name="android:shadowDy">2</item>
+  <item name="android:shadowRadius">1</item>
+</style>
+
     <style name="app_theme" parent="android:Theme">
         <item name="android:windowBackground">@drawable/app_background</item>
+        <item name="android:windowTitleStyle">@style/app_title</item>
         <item name="android:listViewStyle">@style/EDListView</item>
         <item name="android:expandableListViewStyle">@style/EDListView</item>
-        <item name="android:shadowColor">#000000</item>
-      <item name="android:shadowDx">2</item>
-      <item name="android:shadowDy">2</item>
-      <item name="android:shadowRadius">1</item>
     </style>
 
  <style name="EDListView" parent="@android:style/Widget.ListView">
@@ -81,5 +75,32 @@
   <item name="android:dividerHeight">1dp</item>
   <item name="android:cacheColorHint">@android:color/transparent</item>
  </style>
+
+<style name="small_heading_style" parent="@android:style/Widget.TextView">
+  <item name="android:textColor">#FFFFFF</item>
+  <item name="android:background">#8c8a8c</item>
+  <item name="android:layout_width">fill_parent</item>
+  <item name="android:layout_height">wrap_content</item>
+  <item name="android:shadowColor">#FF000000</item>
+  <item name="android:shadowDx">2</item>
+  <item name="android:shadowDy">2</item>
+  <item name="android:shadowRadius">1</item>
+</style>
+
+<style name="floating_text_style" parent="@android:style/Widget.TextView">
+  <item name="android:shadowColor">#FF000000</item>
+  <item name="android:shadowDx">2</item>
+  <item name="android:shadowDy">2</item>
+  <item name="android:shadowRadius">1</item>
+</style>
+
+<style name="list_item_style" parent="@android:style/Widget.TextView">
+  <item name="android:textColor">#FFFFFF</item>
+  <item name="android:shadowColor">#FF000000</item>
+  <item name="android:shadowDx">2</item>
+  <item name="android:shadowDy">2</item>
+  <item name="android:shadowRadius">1</item>
+</style>
+
 
 </resources>

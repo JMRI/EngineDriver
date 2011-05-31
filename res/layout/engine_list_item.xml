@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   <TextView
    android:id="@+id/engine_item_label"
    android:textAppearance="?android:attr/textAppearanceLarge"
+   style="@style/list_item_style"   
    android:paddingTop="5dp"
    android:paddingBottom="5dp"
    android:layout_width="wrap_content"

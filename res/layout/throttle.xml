@@ -42,7 +42,7 @@
             <Button
                android:id="@+id/button_select_loco_T"
                android:text="@string/none"
-               style="@style/normal_button"
+               style="@style/normal_button_style"
                android:layout_width="fill_parent"
                android:layout_alignParentRight="true"/>
             <TextView
@@ -71,7 +71,9 @@
                android:paddingLeft="2dp"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:enabled="false" />
+               android:enabled="false" 
+               style="@style/floating_text_style"
+            />
             <TextView
                android:id="@+id/speed_value_label_T"
                android:text="0"
@@ -79,6 +81,7 @@
                android:layout_height="wrap_content"
                android:textSize="36dp"
                android:layout_alignParentRight="true"
+               style="@style/floating_text_style"
                android:enabled="false" />
             <TextView
                android:id="@+id/volume_indicator_T"
@@ -87,6 +90,7 @@
                android:layout_height="wrap_content"
                android:layout_alignParentLeft="true"
                android:layout_alignBottom="@id/speed_value_label_T"
+               style="@style/floating_text_style"
                android:enabled="false" />
          </RelativeLayout>
       </LinearLayout>
@@ -138,105 +142,105 @@
             <TableRow>
                <Button
                   android:text="Light"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="Bell"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="Horn"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="3"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
             <TableRow>
                <Button
                   android:text="4"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="5"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="6"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="7"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
             <TableRow>
                <Button
                   android:text="8"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="9"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="10"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="11"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
             <TableRow>
                <Button
                   android:text="12"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="13"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="14"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="15"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
             <TableRow>
                <Button
                   android:text="16"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="17"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="18"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="19"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
             <TableRow>
                <Button
                   android:text="20"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="21"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="22"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="23"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
             <TableRow>
                <Button
                   android:text="24"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="25"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="26"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="27"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
             <TableRow>
                <Button
                   android:text="28"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
          </TableLayout>
 
@@ -271,7 +275,7 @@
             <Button
                android:id="@+id/button_select_loco_S"
                android:text="@string/none"
-               style="@style/normal_button"
+               style="@style/normal_button_style"
                android:layout_width="fill_parent"
                android:layout_alignParentRight="true"
             />
@@ -301,6 +305,7 @@
                android:paddingLeft="2dp"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
+               style="@style/floating_text_style"
                android:enabled="false" />
             <TextView
                android:id="@+id/speed_value_label_S"
@@ -309,6 +314,7 @@
                android:layout_height="wrap_content"
                android:textSize="36dp"
                android:layout_alignParentRight="true"
+               style="@style/floating_text_style"
                android:enabled="false" />
             <TextView
                android:id="@+id/volume_indicator_S"
@@ -317,6 +323,7 @@
                android:layout_height="wrap_content"
                android:layout_alignParentLeft="true"
                android:layout_alignBottom="@id/speed_value_label_S"
+                style="@style/floating_text_style"
                android:enabled="false" />
          </RelativeLayout>
       </LinearLayout>
@@ -370,116 +377,116 @@
             <TableRow>
                <Button
                   android:text="Light"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="Bell"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="Horn"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="3"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
             <TableRow>
                <Button
                   android:text="4"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="5"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="6"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="7"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
 
             <TableRow>
                <Button
                   android:text="8"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="9"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="10"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="11"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
 
             <TableRow>
                <Button
                   android:text="12"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="13"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="14"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="15"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
             <TableRow>
                <Button
                   android:text="16"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="17"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="18"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="19"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
             <TableRow>
                <Button
                   android:text="20"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="21"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="22"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="23"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
             <TableRow>
                <Button
                   android:text="24"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="25"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="26"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="27"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
             <TableRow>
                <Button
                   android:text="28"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="29"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="30"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
                <Button
                   android:text="31"
-                  style="@style/button_style" />
+                  style="@style/fn_button_style" />
             </TableRow>
          </TableLayout>
       </ScrollView>

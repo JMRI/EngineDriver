@@ -30,6 +30,7 @@
          android:text="testing string string string string"
          android:layout_width="wrap_content"
          android:textAppearance="?android:attr/textAppearanceLarge"
+         style="@style/list_item_style"   
          android:paddingTop="15dp"
          android:paddingBottom="4dp"
          android:layout_height="wrap_content" />
@@ -42,6 +43,7 @@
       <TextView
          android:id="@+id/rt_system_name"
          android:text="testing string"
+        style="@style/list_item_style"   
          android:layout_width="wrap_content"
          android:layout_height="wrap_content" />
    </RelativeLayout>
@@ -52,6 +54,7 @@
       android:layout_height="wrap_content"
       android:text="testing"
       android:textAppearance="?android:attr/textAppearanceLarge"
+      style="@style/list_item_style"   
       android:paddingTop="15dp"
       android:paddingRight="4dp"
       android:paddingLeft="4dp"

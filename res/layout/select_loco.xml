@@ -29,10 +29,7 @@
       <TextView
          android:id="@+id/current_locos_header"
          android:text="@string/current_locos"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:textColor="#FFFFFF"
-         android:background="#8c8a8c" />
+        style="@style/small_heading_style"   />
       <LinearLayout
          android:id="@+id/current_locos_row"
          android:layout_width="fill_parent"
@@ -54,7 +51,7 @@
             android:id="@+id/sl_release_T"
             android:text="@string/release"
             android:layout_height="wrap_content"
-            style="@style/normal_button" 
+            style="@style/normal_button_style" 
             />
          <TextView
             android:id="@+id/sl_loco_S"
@@ -71,7 +68,7 @@
             android:id="@+id/sl_release_S"
             android:text="@string/release"
             android:layout_height="wrap_content"
-            style="@style/normal_button" />
+            style="@style/normal_button_style" />
 
       </LinearLayout>
    </LinearLayout>
@@ -85,11 +82,8 @@
       <TextView
          android:id="@+id/select_loco_label"
          android:text="@string/select_loco"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:textColor="#FFFFFF"
-         android:background="#8c8a8c" />
-      <EditText
+        style="@style/small_heading_style"   />
+    <EditText
          android:id="@+id/loco_address"
          android:layout_width="80sp"
          android:layout_height="wrap_content"
@@ -118,15 +112,12 @@
          android:layout_alignBottom="@id/address_length"
          android:layout_below="@id/select_loco_label"
          android:enabled="false" 
-         style="@style/normal_button" />
+         style="@style/normal_button_style" />
    </RelativeLayout>
    <TextView
       android:id="@+id/roster_list_heading"
       android:text="@string/roster_list"
-      android:textColor="#FFFFFF"
-      android:background="#8c8a8c"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content" />
+      style="@style/small_heading_style"   />
    <ListView
       android:id="@+id/roster_list"
       android:layout_width="fill_parent"
@@ -137,10 +128,7 @@
    <TextView
       android:id="@+id/recent_engines_heading"
       android:text="@string/recent_engines"
-      android:textColor="#FFFFFF"
-      android:background="#8c8a8c"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content" />
+      style="@style/small_heading_style"   />
    <ListView
       android:id="@+id/engine_list"
       android:layout_width="fill_parent"
@@ -151,6 +139,7 @@
    <TextView
       android:id="@+id/sl_footer"
       android:text="@string/none"
+      style="@style/floating_text_style"   
       android:layout_width="fill_parent"
       android:layout_height="wrap_content" />
 </LinearLayout>
