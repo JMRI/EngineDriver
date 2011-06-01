@@ -400,7 +400,7 @@ void start_select_loco_activity(String whichThrottle)
         	}
         	break;
       }
-      return(false);
+      return(true);
     };
   }
 
