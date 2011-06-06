@@ -83,8 +83,6 @@ public class engine_driver extends Activity {
 		      	  		set_default_function_labels();
 		      	  		// loop through all function buttons and
 		      	  		//   set label and dcc functions (based on settings) or hide if no label
-//		      	  		set_function_buttons_for_view("T");
-//		      	  		set_function_buttons_for_view("S");
 		      	  		enable_disable_buttons(response_str.substring(1,2));  //pass whichthrottle
 		      	  		if (response_str.charAt(1) == 'T') {
 		      	  			ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
@@ -709,18 +707,21 @@ public void onStart() {
 
  // increase height of throttle slider (if requested in preferences)
     boolean ish = prefs.getBoolean("increase_slider_height_preference", false);  //TODO fix getting from strings
-    if (ish) {
-	    LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(
-	            ViewGroup.LayoutParams.FILL_PARENT,  100);  //set height to 100
-	    sbS.setLayoutParams(llLp);
-	    sbT.setLayoutParams(llLp);
-    } else {
-	    LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(
-	            ViewGroup.LayoutParams.FILL_PARENT,  60);  //set height to 60
-	    sbS.setLayoutParams(llLp);
-	    sbT.setLayoutParams(llLp);
-    }
     
+ // Get the screen's density scale
+    final float scale = getResources().getDisplayMetrics().density;
+    // Convert the dps to pixels, based on density scale
+    int newHeight;
+    if (ish) {
+    	newHeight = (int) (80 * scale + 0.5f) ;  //increased height
+    } else {
+    	newHeight = (int) (50 * scale + 0.5f );  //normal height
+    }    	
+    LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(
+    		ViewGroup.LayoutParams.FILL_PARENT,  newHeight); 
+    sbS.setLayoutParams(llLp);
+    sbT.setLayoutParams(llLp);
+
     Button b=(Button)findViewById(R.id.button_select_loco_T);
 	if (mainapp.loco_string_T.length() > 18) {  //shrink text if long
 		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
@@ -771,7 +772,7 @@ public void onStart() {
 	    	
 	  //set height of T area 
 	    LinearLayout ll=(LinearLayout)findViewById(R.id.throttle_T);
-	    LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(
+	    llLp = new LinearLayout.LayoutParams(
 	            ViewGroup.LayoutParams.FILL_PARENT,
 	            height_T);
 	    ll.setLayoutParams(llLp);

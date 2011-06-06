@@ -2,7 +2,7 @@
 
 <resources>
     <style name="large_button_style" parent="@android:style/Widget.Button">
-      <item name="android:textColor">#FF000000</item>
+      <item name="android:textColor">@color/btn_text_color</item>
       <item name="android:textSize">24sp</item>
       <item name="android:singleLine">true</item>
       <item name="android:ellipsize">none</item>
@@ -10,9 +10,14 @@
       <item name="android:layout_height">60dp</item>
       <item name="android:padding">2dp</item>
       <item name="android:background">@drawable/sticky_button_states</item>
+      <item name="android:shadowColor">#88ffffff</item>
+      <item name="android:shadowDx">2</item>
+      <item name="android:shadowDy">2</item>
+      <item name="android:shadowRadius">1</item>
       <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
     <style name="fn_button_style" parent="@android:style/Widget.Button">
+      <item name="android:textColor">@color/btn_text_color</item>
       <item name="android:textSize">18sp</item>
       <item name="android:singleLine">true</item>
       <item name="android:ellipsize">none</item>
@@ -21,14 +26,22 @@
       <item name="android:padding">2dp</item>
       <item name="android:background">@drawable/sticky_button_states</item>
       <item name="android:gravity">center_vertical|center_horizontal</item>
+      <item name="android:shadowColor">#88ffffff</item>
+      <item name="android:shadowDx">1</item>
+      <item name="android:shadowDy">1</item>
+      <item name="android:shadowRadius">1</item>
     </style>
     <style name="normal_button_style" parent="@android:style/Widget.Button">
+      <item name="android:textColor">@color/btn_text_color</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">#FF000000</item>
         <item name="android:padding">6dp</item>
-        <item name="android:background">@drawable/nonsticky_button_states</item>
+        <item name="android:background">@drawable/sticky_button_states</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">fill_parent</item>
+      <item name="android:shadowColor">#88ffffff</item>
+      <item name="android:shadowDx">2</item>
+      <item name="android:shadowDy">2</item>
+      <item name="android:shadowRadius">1</item>
          <item name="android:ellipsize">end</item>
     </style>
     <style name="edit_label_style">

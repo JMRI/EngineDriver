@@ -11,6 +11,5 @@
       android:state_enabled="true"
       android:drawable="@drawable/btn_pressed" />
    <item
-      android:state_enabled="true"
       android:drawable="@drawable/btn_not_pressed" />
 </selector>

@@ -10,6 +10,7 @@
  * corrected display of Short addresses in Recent list
  * prevented crash when MaxThrottle pref is blanked
  * button "on" images work even when < 2.0 (also fixes the immed-after-press display)
+ * fixed slider height on low-dpi devices
 **Version 1.5
  * sort roster entries by name
 **Version 1.4
@@ -111,6 +112,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * engine_driver:
+ *   TODO: fix intermittent failure to get functions from roster (timing?) 
  *   TODO: make Forward, Stop, Reverse language-sensitive 
  *   TODO: restart/extend heartbeat on every send
  *   TODO: quicker access to turnouts/routes
@@ -123,6 +125,7 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
+ *   TODO: pass rosterid as second part of MT+ command 
  *   TODO: handle direction of locos in MT consist 
  *   TODO: clean up code for  new MT (Multi-throttle) feature 
  *   TODO: use new 'E' and 'c' WiT commands to select by roster name instead of address (to handle duplicates)

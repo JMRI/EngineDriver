@@ -118,15 +118,7 @@
                android:enabled="false" />
          </TableRow>
       </TableLayout>
-      <SeekBar
-         android:id="@+id/speed_T"
-         android:layout_width="fill_parent"
-         android:layout_height="40dp"
-         android:layout_below="@id/loco_label_T"
-         android:layout_alignLeft="@id/loco_label_T"
-         android:paddingLeft="8dp"
-         android:paddingRight="8dp"
-         android:enabled="false" />
+      <SeekBar android:paddingLeft="8dp" android:layout_height="50dp" android:layout_width="fill_parent" android:id="@+id/speed_T" android:paddingRight="8dp"></SeekBar>
       <ScrollView
          android:id="@+id/function_buttons_scroller_T"
          android:layout_width="fill_parent"
@@ -356,7 +348,7 @@
       <SeekBar
          android:id="@+id/speed_S"
          android:layout_width="fill_parent"
-         android:layout_height="40dp"
+         android:layout_height="50dp"
          android:layout_below="@id/loco_label_S"
          android:layout_alignLeft="@id/loco_label_S"
          android:paddingLeft="8dp"
