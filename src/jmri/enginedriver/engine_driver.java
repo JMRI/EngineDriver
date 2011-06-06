@@ -59,9 +59,6 @@ public class engine_driver extends Activity {
 
   private String whichVolume = "T";
 
-//  private Drawable button_pressed_drawable;  //hold background graphics for buttons
-//  private Drawable button_normal_drawable;
-
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class engine_driver_handler extends Handler {
 
@@ -529,9 +526,6 @@ public void onStart() {
 
 
     mainapp=(threaded_application)getApplication();
-
-//    button_pressed_drawable=getResources().getDrawable(R.drawable.btn_default_small_pressed);
-//    button_normal_drawable=getResources().getDrawable(R.drawable.btn_default_small_normal);
 
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
