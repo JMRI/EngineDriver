@@ -11,6 +11,8 @@
  * prevented crash when MaxThrottle pref is blanked
  * button "on" images work even when < 2.0 (also fixes the immed-after-press display)
  * fixed slider height on low-dpi devices
+ * fixed height of selected locos lists on select_loco activity
+ * button text now shows up in eclipse graphical layout tool
 **Version 1.5
  * sort roster entries by name
 **Version 1.4
@@ -112,6 +114,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * engine_driver:
+ *   TODO: show feedback on Stop button (maybe a red indicator?) 
  *   TODO: fix intermittent failure to get functions from roster (timing?) 
  *   TODO: make Forward, Stop, Reverse language-sensitive 
  *   TODO: restart/extend heartbeat on every send
@@ -135,10 +138,11 @@
  *   TODO: show error if invalid entry
  *
  * These require changes to WiThrottle
+ *   request/receive web server port# (for pulling roster.xml)
+ *   pull more details from roster (using roster.xml)
  *   turn on heartbeat even when no loco selected (need something to request)
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
  *   disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
- *   pull more details from roster
  *   remove throttle from withrottle screen on loss of connection (estop)
  *   allow restart of withrottle (variable UI needs to be cleared when it closes)
  *   add "E"rror response

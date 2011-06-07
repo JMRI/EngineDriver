@@ -45,31 +45,32 @@
             android:textColor="#FFFFFF"
             android:layout_width="0dp"
             android:layout_weight="0.3"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:ellipsize="end" />
          <Button
             android:id="@+id/sl_release_T"
             android:text="@string/release"
-            android:layout_height="wrap_content"
             style="@style/normal_button_style" 
+            android:layout_height="wrap_content"
+            android:padding="8dp"
             />
          <TextView
             android:id="@+id/sl_loco_S"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:padding="0dp"
-            android:paddingLeft="6dp"
             android:text="@string/none"
+            android:gravity="center"
+            android:padding="0dp"
+            android:textColor="#FFFFFF"
             android:layout_width="0dp"
             android:layout_weight="0.3"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:ellipsize="end" />
          <Button
             android:id="@+id/sl_release_S"
             android:text="@string/release"
+            style="@style/normal_button_style" 
             android:layout_height="wrap_content"
-            style="@style/normal_button_style" />
-
+            android:padding="8dp"
+            />
       </LinearLayout>
    </LinearLayout>
    <RelativeLayout

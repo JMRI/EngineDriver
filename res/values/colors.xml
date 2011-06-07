@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black_half_trans">#88000000</color>
+    <color name="black">#ff000000</color>
+    <color name="grey">#ff888888</color>
+</resources>
