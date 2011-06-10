@@ -56,8 +56,8 @@ public class threaded_application extends Application
 	String host_name_string; //retrieved host name of connection
 	String loco_string_T = "Not Set"; //Loco Address string returned from the server for selected loco #1
 	String loco_string_S = "Not Set"; //Loco Address string returned from the server for selected loco #1
-	String withrottle_version_string; //version of withrottle server
 	Double withrottle_version; //version of withrottle server
+	Integer web_server_port; //default port for jmri web server
 	String roster_list_string; //roster list
 	LinkedHashMap<Integer, String> function_labels_T;  //function#s and labels from roster for throttle #1
 	LinkedHashMap<Integer, String> function_labels_S;  //function#s and labels from roster for throttle #2
@@ -272,8 +272,8 @@ public class threaded_application extends Application
             
             //clear app.thread shared variables so they can be reset
             host_name_string = null;
-            withrottle_version_string = null; 
             withrottle_version = 0.0; 
+	  		web_server_port = 0;
             heartbeat_interval = 0;
             roster_list_string = null;
             power_state = null;
@@ -567,15 +567,21 @@ public class threaded_application extends Application
 	  	    break;
 	  	
 	  	case 'V': 
-	  		withrottle_version_string = response_str.substring(2);  //set app variables
+	  		String withrottle_version_string = response_str.substring(2);
 	  		withrottle_version = 0.0;
 	        if (withrottle_version_string != null) { 
-	        	withrottle_version=new Double(withrottle_version_string);
+	        	try {
+					withrottle_version=new Double(withrottle_version_string);
+				} catch (NumberFormatException e) {
+				}
 	        }
 	  	    break;
 	  	
 	  	case '*': 
-	  		heartbeat_interval = Integer.parseInt(response_str.substring(1));  //set app variable
+	  		try {
+				heartbeat_interval = Integer.parseInt(response_str.substring(1));  //set app variable
+			} catch (NumberFormatException e) {
+			}
 	  	    break;
 	  	
 	  	case 'R': //Roster
@@ -644,6 +650,14 @@ public class threaded_application extends Application
 	    	  		if (response_str.charAt(2) == 'A') {  //change power state
 	    	  			power_state = response_str.substring(3);
 	    	  		}
+	    	  	    break;
+
+	    	  	case 'W':  //Web Server port 
+	    	  		web_server_port = 0;
+	    	  		try {
+		    	  		web_server_port = Integer.parseInt(response_str.substring(2));  //set app variable
+	    			} catch (NumberFormatException e) {
+	    			}
 	    	  	    break;
 	    	  }  //end switch inside P
 		  	 break;

@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
     <string name="app_name_routes">Engine Driver - Routes</string>
     <string name="app_name_turnouts">Engine Driver - Turnouts</string>
     <string name="app_name_about">Engine Driver - About</string>
+    <string name="app_name_web">Engine Driver - Web</string>
     <string name="app_name_functions">Engine Driver - Default Function Settings</string>
     <string name="app_name_preferences">Engine Driver - Preferences</string>
     <string name="app_name_select_loco">Engine Driver - Select Loco</string>
@@ -68,6 +69,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 <string name="copy_function_labels">Copy Labels from Roster</string>
 <string name="fb_header">Edit Functions</string>
 <string name="about">About</string>
+<string name="web">Web</string>
 <string name="prefStopOnReleaseTitle">Stop On Release</string>
 <string name="prefStopOnReleaseDefaultValue">true</string>
 <string name="prefStopOnReleaseSummary">Stop loco when releasing from throttle</string>

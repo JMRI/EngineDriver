@@ -22,12 +22,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -38,7 +43,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class routes extends Activity {
+public class routes extends Activity  implements OnGestureListener {
 
 	private threaded_application mainapp;  // hold pointer to mainapp
 
@@ -46,6 +51,13 @@ public class routes extends Activity {
 	
 	ArrayList<HashMap<String, String> > routes_list;
 	private SimpleAdapter routes_list_adapter;
+
+	private GestureDetector myGesture ;
+
+	//these constants are used for onFling
+    private static final int SWIPE_MIN_DISTANCE = 120;
+    private static final int SWIPE_MAX_OFF_PATH = 250;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
 	  public class route_item implements AdapterView.OnItemClickListener	  {
 
@@ -175,6 +187,11 @@ public class routes extends Activity {
     refresh_route_view();
   }
 
+  @Override
+  public boolean onTouchEvent(MotionEvent event){
+  	return myGesture.onTouchEvent(event);
+  }
+
 	  
   /** Called when the activity is first created. */
   @Override
@@ -187,6 +204,8 @@ public class routes extends Activity {
     
 	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     
+	myGesture = new GestureDetector(this);
+        
 	//Set up a list adapter to allow adding the list of recent connections to the UI.
     routes_list=new ArrayList<HashMap<String, String> >();
     routes_list_adapter=new SimpleAdapter(this, routes_list, R.layout.routes_item, 
@@ -195,9 +214,19 @@ public class routes extends Activity {
     ListView routes_lv=(ListView)findViewById(R.id.routes_list);
     routes_lv.setAdapter(routes_list_adapter);
     routes_lv.setOnItemClickListener(new route_item());
+    
+    OnTouchListener gestureListener = new ListView.OnTouchListener() {
+        public boolean onTouch(View v, MotionEvent event) {
+            if (myGesture.onTouchEvent(event)) {
+                return true;
+            }
+            return false;
+        }
+    };
+    routes_lv.setOnTouchListener(gestureListener);
 
     // suppress popup keyboard until EditText is touched
-	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
     //Set the button callbacks, storing the command to pass for each
     Button b=(Button)findViewById(R.id.route_toggle);
@@ -209,13 +238,47 @@ public class routes extends Activity {
   //Handle pressing of the back button to end this activity
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {
-  if(key==KeyEvent.KEYCODE_BACK)
-  {
-    mainapp.routes_msg_handler = null; //clear out pointer to this activity  
-    this.finish();  //end this activity
+	  if(key==KeyEvent.KEYCODE_BACK) {
+		  mainapp.routes_msg_handler = null; //clear out pointer to this activity  
+		  this.finish();  //end this activity
+	  }
+	  return(super.onKeyDown(key, event));
   }
-  return(super.onKeyDown(key, event));
-};
 
-  
-}
+  @Override
+  public boolean onDown(MotionEvent e) {
+	  // TODO Auto-generated method stub
+	  return false;
+  }
+
+  @Override
+  public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+	  // left to right swipe goes to throttle
+	  if(((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
+		  Intent in=new Intent().setClass(this, engine_driver.class);
+		  startActivity(in);
+		  this.finish();  //don't keep on return stack
+		  // right to left swipe goes to turnouts
+	  }  else if(((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
+		  Intent in=new Intent().setClass(this, turnouts.class);
+		  startActivity(in);
+		  this.finish();  //don't keep on return stack
+	  }
+	  return false;
+  }
+
+  @Override
+  public void onLongPress(MotionEvent e) {
+  }
+  @Override
+  public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+	  return false;
+  }
+  @Override
+  public void onShowPress(MotionEvent e) {
+  }
+  @Override
+  public boolean onSingleTapUp(MotionEvent e) {
+	  return false;
+  }
+};

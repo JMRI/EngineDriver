@@ -13,6 +13,9 @@
  * fixed slider height on low-dpi devices
  * fixed height of selected locos lists on select_loco activity
  * button text now shows up in eclipse graphical layout tool
+ * receive web server port#
+ * add menu option to browse mini web server home page
+ * started work on "flings" between turnouts, throttle, routes.
 **Version 1.5
  * sort roster entries by name
 **Version 1.4
@@ -138,7 +141,6 @@
  *   TODO: show error if invalid entry
  *
  * These require changes to WiThrottle
- *   request/receive web server port# (for pulling roster.xml)
  *   pull more details from roster (using roster.xml)
  *   turn on heartbeat even when no loco selected (need something to request)
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)

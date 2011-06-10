@@ -15,7 +15,7 @@
       android:label="@string/app_name"
       android:icon="@drawable/icon"
       android:name=".threaded_application"
-      android:description="@string/app_description" android:theme="@style/app_theme" android:debuggable="false">
+      android:description="@string/app_description" android:theme="@style/app_theme" android:debuggable="true">
       <activity
          android:name=".connection_activity"
          android:screenOrientation="portrait" android:label="@string/app_name_connect">
@@ -95,6 +95,16 @@
       <activity
          android:label="@string/app_name_about"
          android:name=".about_page"
+      >
+         <intent-filter>
+            <action
+               android:name="android.intent.action.MAIN"
+            ></action>
+         </intent-filter>
+      </activity>
+      <activity
+         android:label="@string/app_name_web"
+         android:name=".web_activity"
       >
          <intent-filter>
             <action

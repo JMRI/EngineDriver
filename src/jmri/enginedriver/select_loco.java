@@ -179,10 +179,10 @@ public class select_loco extends Activity {
 						.getResources().getString(
 								R.string.prefThrottleNameDefaultValue));
 		//s += "\nHost: " + mainapp.host_name_string;
-		s += "\nWiThrottle: v" + mainapp.withrottle_version_string;
+		s += "\nWiThrottle: v" + mainapp.withrottle_version;
 		s += String.format("     Heartbeat: %d secs",
 				mainapp.heartbeat_interval);
-		// s += "\nRoster: " + mainapp.roster_list_string;
+		 s += "\nPort: " + mainapp.web_server_port;
 		v.setText(s);
 
 		refresh_roster_list();

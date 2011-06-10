@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,24 +41,35 @@ import java.io.*;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Button;
 import android.widget.Toast;
 import android.view.MotionEvent;
+import android.view.GestureDetector.OnGestureListener;
+import android.view.View.OnTouchListener;
 import android.os.Message;
 import android.widget.TextView;
 import android.graphics.Typeface;
 
-public class engine_driver extends Activity {
+public class engine_driver extends Activity implements OnGestureListener {
 
-  private threaded_application mainapp;  // hold pointer to mainapp
-  private static final int GONE = 8;
-  private static final int VISIBLE = 0;
-  private SharedPreferences prefs;
-  private Timer heartbeatTimer;
-  boolean heartbeat = true; //turn on with each response, show error if not on
+	private threaded_application mainapp;  // hold pointer to mainapp
+	private static final int GONE = 8;
+	private static final int VISIBLE = 0;
+	private SharedPreferences prefs;
+	private Timer heartbeatTimer;
+	boolean heartbeat = true; //turn on with each response, show error if not on
 
-  private String whichVolume = "T";
+	private String whichVolume = "T";
+
+	private GestureDetector myGesture ;
+
+	//these constants are used for onFling
+	private static final int SWIPE_MIN_DISTANCE = 120;
+	private static final int SWIPE_MAX_OFF_PATH = 250;
+	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class engine_driver_handler extends Handler {
@@ -432,6 +444,11 @@ void start_select_loco_activity(String whichThrottle)
 
   }
 
+  @Override
+  public boolean onTouchEvent(MotionEvent event){
+  	return myGesture.onTouchEvent(event);
+  }
+
   //Handle pressing of the back button to release the selected loco and end this activity
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {
@@ -481,6 +498,58 @@ void start_select_loco_activity(String whichThrottle)
 	  return(super.onKeyDown(key, event)); //continue with normal key processing
   };
 
+
+  @Override
+  public boolean onDown(MotionEvent e) {
+  	// TODO Auto-generated method stub
+  	return false;
+  }
+
+
+  @Override
+  public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+	  // left to right swipe goes to turnouts
+	  if(((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
+		  Intent in=new Intent().setClass(this, turnouts.class);
+		  startActivity(in);
+//		  this.finish();  //don't keep on return stack
+		  // right to left swipe goes to routes
+	  }  else if(((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
+		  Intent in=new Intent().setClass(this, routes.class);
+		  startActivity(in);
+//		  this.finish();  //don't keep on return stack
+	  }
+	  return false;
+  }
+
+
+  @Override
+  public void onLongPress(MotionEvent e) {
+  	// TODO Auto-generated method stub
+  	
+  }
+
+
+  @Override
+  public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+  		float distanceY) {
+  	// TODO Auto-generated method stub
+  	return false;
+  }
+
+
+  @Override
+  public void onShowPress(MotionEvent e) {
+  	// TODO Auto-generated method stub
+  	
+  }
+
+
+  @Override
+  public boolean onSingleTapUp(MotionEvent e) {
+  	// TODO Auto-generated method stub
+  	return false;
+  };
 @Override
 public void onResume() {
   super.onResume();
@@ -513,6 +582,8 @@ public void onStart() {
   		}
   	}, 100, interval);
   }
+  
+  set_labels();
 
 }
 
@@ -528,7 +599,9 @@ public void onStart() {
     mainapp=(threaded_application)getApplication();
 
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-
+    
+    myGesture = new GestureDetector(this);
+    
     Button b;
     function_button_touch_listener fbtl;
     
@@ -580,6 +653,23 @@ public void onStart() {
     set_function_labels_and_listeners_for_view("T");
     set_function_labels_and_listeners_for_view("S");
 
+/*    
+    OnTouchListener gestureListener = new ListView.OnTouchListener() {
+        public boolean onTouch(View v, MotionEvent event) {
+            if (myGesture.onTouchEvent(event)) {
+                return true;
+            }
+            return false;
+        }
+    };
+    ScrollView sv = (ScrollView)findViewById(R.id.function_buttons_scroller_T);
+    sv.setOnTouchListener(gestureListener);   
+    sv = (ScrollView)findViewById(R.id.function_buttons_scroller_S);
+    sv.setOnTouchListener(gestureListener);   
+*/
+    
+//    set_labels();
+    
   } //end of onCreate()
 
   //set up text label and dcc function for each button from settings and setup listeners
@@ -811,6 +901,10 @@ public void onStart() {
       case R.id.about_menu:
     	  Intent about_page=new Intent().setClass(this, about_page.class);
     	  startActivity(about_page);
+    	  break;
+      case R.id.web_menu:
+    	  Intent web_intent=new Intent().setClass(this, web_activity.class);
+    	  startActivity(web_intent);
     	  break;
       case R.id.preferences:
     	  Intent preferences=new Intent().setClass(this, preferences.class);
