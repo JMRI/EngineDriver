@@ -117,6 +117,8 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * engine_driver:
+ *   TODO: fix Back button to handle new fling functions 
+ *   TODO: make fling overlay so it'll work on top of buttons, etc. 
  *   TODO: show feedback on Stop button (maybe a red indicator?) 
  *   TODO: fix intermittent failure to get functions from roster (timing?) 
  *   TODO: make Forward, Stop, Reverse language-sensitive 

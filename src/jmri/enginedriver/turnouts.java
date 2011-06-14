@@ -294,14 +294,14 @@ public boolean onDown(MotionEvent e) {
 public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
     // left to right swipe goes to routes
     if(((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
-  	  Intent in=new Intent().setClass(this, routes.class);
-	  startActivity(in);
-	  this.finish();  //don't keep on return stack
+//  	  Intent in=new Intent().setClass(this, routes.class);
+//	  startActivity(in);
+//	  this.finish();  //don't keep on return stack
    // right to left swipe goes to throttle
     }  else if(((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
-  	  Intent in=new Intent().setClass(this, engine_driver.class);
-	  startActivity(in);
-	  this.finish();  //don't keep on return stack
+//  	  Intent in=new Intent().setClass(this, engine_driver.class);
+//	  startActivity(in);
+//	  this.finish();  //don't keep on return stack
    }
 	return false;
 }

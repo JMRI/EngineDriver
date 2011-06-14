@@ -175,7 +175,7 @@ public class engine_driver extends Activity implements OnGestureListener {
 		  speed_label=(TextView)findViewById(R.id.speed_value_label_S);
 		  throttle_slider=(SeekBar)findViewById(R.id.speed_S);
 	  }
-	  int displayedSpeed = (int)Math.round(speed * 99.0 / 128.0); //show speed as 0-99 instead of 0-128
+	  int displayedSpeed = (int)Math.round(speed * 99.0 / 126.0); //show speed as 0-99 instead of 0-126
 	  speed_label.setText(Integer.toString(displayedSpeed));
 	  throttle_slider.setProgress(speed);
   }
@@ -432,8 +432,8 @@ void start_select_loco_activity(String whichThrottle)
   	   } else {
   	      speed_label=(TextView)findViewById(R.id.speed_value_label_S);
   	   }
-  	  int displayedSpeed = (int)Math.round(speed * 99.0 / 126.0); //show speed as 0-99 instead of 0-126
-      speed_label.setText(Integer.toString(displayedSpeed));
+  	   int displayedSpeed = (int)Math.round(speed * 99.0 / 126.0); ; //show speed as 0-99 instead of 0-126
+  	   speed_label.setText(Integer.toString(displayedSpeed));
     }
 
 	@Override
@@ -501,7 +501,6 @@ void start_select_loco_activity(String whichThrottle)
 
   @Override
   public boolean onDown(MotionEvent e) {
-  	// TODO Auto-generated method stub
   	return false;
   }
 
@@ -510,47 +509,33 @@ void start_select_loco_activity(String whichThrottle)
   public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 	  // left to right swipe goes to turnouts
 	  if(((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
-		  Intent in=new Intent().setClass(this, turnouts.class);
-		  startActivity(in);
-//		  this.finish();  //don't keep on return stack
+//		  Intent in=new Intent().setClass(this, turnouts.class);
+//		  startActivityForResult(in, 0);
 		  // right to left swipe goes to routes
 	  }  else if(((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
-		  Intent in=new Intent().setClass(this, routes.class);
-		  startActivity(in);
-//		  this.finish();  //don't keep on return stack
+//		  Intent in=new Intent().setClass(this, routes.class);
+//		  startActivityForResult(in, 0);
 	  }
 	  return false;
   }
 
-
   @Override
   public void onLongPress(MotionEvent e) {
-  	// TODO Auto-generated method stub
-  	
   }
-
-
   @Override
   public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
   		float distanceY) {
-  	// TODO Auto-generated method stub
   	return false;
   }
-
-
   @Override
   public void onShowPress(MotionEvent e) {
-  	// TODO Auto-generated method stub
-  	
   }
-
-
   @Override
   public boolean onSingleTapUp(MotionEvent e) {
-  	// TODO Auto-generated method stub
   	return false;
   };
-@Override
+
+  @Override
 public void onResume() {
   super.onResume();
 
