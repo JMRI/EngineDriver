@@ -182,7 +182,7 @@ public class select_loco extends Activity {
 		s += "\nWiThrottle: v" + mainapp.withrottle_version;
 		s += String.format("     Heartbeat: %d secs",
 				mainapp.heartbeat_interval);
-		 s += "\nPort: " + mainapp.web_server_port;
+//		 s += "\nPort: " + mainapp.web_server_port;
 		v.setText(s);
 
 		refresh_roster_list();
