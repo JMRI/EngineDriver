@@ -16,6 +16,7 @@
  * receive web server port#
  * add menu option to browse mini web server home page
  * started work on "flings" between turnouts, throttle, routes.
+ * added device IP to "cannot connect" message for better debugging
 **Version 1.5
  * sort roster entries by name
 **Version 1.4
@@ -90,11 +91,10 @@
  *   added html About page
  */
 /*
- *   TODO: merge throttle, turnout, route and power activities into a single "wide" screen and enable "fling"
- *   TODO: once wide screen is working, allow user to configure it for pads, etc.
+ *   TODO: allow user to configure side-by-side panels for pads, etc.
  *   TODO: control discovered server list in ta, change ca to only display what is in array
  *   TODO: add consist creation/editing features
- *   TODO: provide "reset" function to delete config files (or change files to db)
+ *   TODO: change config files to use db
  *   TODO: toast messages on release of loco and update of preferences
  *   TODO: make private stuff private
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
@@ -106,6 +106,7 @@
  *   TODO: use PTT titles for Turnouts/Turnout
  *   TODO: update turnout list on change not working after reentry to turnout view (worked around by finishing on exit)
  * connection
+ *   TODO: show (somewhere) the device's current IP (for debugging connection problems)
  *   TODO: extract server name and ip from view and remove the array(s)
  *   TODO: add pref for auto-connect on discovery
  *   TODO: save "visible" server name and the resolvable name/ip to improve the looks of the connections

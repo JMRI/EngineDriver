@@ -314,7 +314,9 @@ public class threaded_application extends Application
     		      client_socket.setSoTimeout(300);
             }
             catch(IOException except) {
-              process_comm_error("Cannot connect to host "+host_ip+" and port "+port+": "+except.getMessage()+"\nCheck WiThrottle and network settings.");
+              process_comm_error("Cannot connect to host "+host_ip+" and port "+port+
+            		  " from " + client_address +
+            		  " - "+except.getMessage()+"\nCheck WiThrottle and network settings.");
               return;
             }
 
