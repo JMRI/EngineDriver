@@ -229,6 +229,8 @@ public class connection_activity extends Activity {
   //end current activity
   void end_this_activity() {
 	  mainapp.ui_msg_handler = null;
+	  moveTaskToBack(true);
+	  System.exit(0);
 	  this.finish();
   }
 
@@ -433,6 +435,7 @@ public class connection_activity extends Activity {
 		    	mainapp.comm_msg_handler.sendMessage(connect_msg);
 		    }    	
 			end_this_activity();
+			return true;
 		}
 		return (super.onKeyDown(key, event));
 	};

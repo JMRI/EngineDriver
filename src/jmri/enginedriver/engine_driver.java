@@ -476,7 +476,12 @@ void start_select_loco_activity(String whichThrottle)
 		  if (heartbeatTimer != null) {
 			  heartbeatTimer.cancel();
 		  }
+		  
+		  //always go to Connection Activity
+	  	  Intent in=new Intent().setClass(this, connection_activity.class);
+		  startActivity(in);
 		  this.finish();  //end this activity
+		  return false;
 		  
 	  } else if((key==KeyEvent.KEYCODE_VOLUME_UP) || (key==KeyEvent.KEYCODE_VOLUME_DOWN) ) { //use volume to change speed for specified loco
 		  SeekBar sb = null;
@@ -509,12 +514,12 @@ void start_select_loco_activity(String whichThrottle)
   public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 	  // left to right swipe goes to turnouts
 	  if(((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
-//		  Intent in=new Intent().setClass(this, turnouts.class);
-//		  startActivityForResult(in, 0);
+		  Intent in=new Intent().setClass(this, turnouts.class);
+		  startActivityForResult(in, 0);
 		  // right to left swipe goes to routes
 	  }  else if(((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
-//		  Intent in=new Intent().setClass(this, routes.class);
-//		  startActivityForResult(in, 0);
+		  Intent in=new Intent().setClass(this, routes.class);
+		  startActivityForResult(in, 0);
 	  }
 	  return false;
   }

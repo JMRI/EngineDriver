@@ -235,19 +235,21 @@ public class routes extends Activity  implements OnGestureListener {
 
   };
 
-  //Handle pressing of the back button to end this activity
+  //Always go to engine_driver activity if back button pressed
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {
 	  if(key==KeyEvent.KEYCODE_BACK) {
-		  mainapp.routes_msg_handler = null; //clear out pointer to this activity  
-		  this.finish();  //end this activity
+//		  mainapp.routes_msg_handler = null; //clear out pointer to this activity  
+//		  this.finish();  //end this activity
+		  Intent in=new Intent().setClass(this, engine_driver.class);
+		  startActivity(in);
+		  return true;
 	  }
 	  return(super.onKeyDown(key, event));
   }
 
   @Override
   public boolean onDown(MotionEvent e) {
-	  // TODO Auto-generated method stub
 	  return false;
   }
 
@@ -255,14 +257,14 @@ public class routes extends Activity  implements OnGestureListener {
   public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 	  // left to right swipe goes to throttle
 	  if(((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
-//		  Intent in=new Intent().setClass(this, engine_driver.class);
-//		  startActivity(in);
-//		  this.finish();  //don't keep on return stack
+		  Intent in=new Intent().setClass(this, engine_driver.class);
+		  startActivity(in);
+		  this.finish();  //don't keep on return stack
 		  // right to left swipe goes to turnouts
 	  }  else if(((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
-//		  Intent in=new Intent().setClass(this, turnouts.class);
-//		  startActivity(in);
-//		  this.finish();  //don't keep on return stack
+		  Intent in=new Intent().setClass(this, turnouts.class);
+		  startActivity(in);
+		  this.finish();  //don't keep on return stack
 	  }
 	  return false;
   }
