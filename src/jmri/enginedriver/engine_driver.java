@@ -51,9 +51,11 @@ import android.view.GestureDetector.OnGestureListener;
 import android.view.View.OnTouchListener;
 import android.os.Message;
 import android.widget.TextView;
+import android.gesture.Gesture;
+import android.gesture.GestureOverlayView;
 import android.graphics.Typeface;
 
-public class engine_driver extends Activity implements OnGestureListener {
+public class engine_driver extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
 
 	private threaded_application mainapp;  // hold pointer to mainapp
 	private static final int GONE = 8;
@@ -71,6 +73,9 @@ public class engine_driver extends Activity implements OnGestureListener {
 	private static final int SWIPE_MAX_OFF_PATH = 250;
 	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
+	private int gestureStartX = 0;
+	private int gestureStartY = 0;
+	
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class engine_driver_handler extends Handler {
 
@@ -503,13 +508,7 @@ void start_select_loco_activity(String whichThrottle)
 	  return(super.onKeyDown(key, event)); //continue with normal key processing
   };
 
-
-  @Override
-  public boolean onDown(MotionEvent e) {
-  	return false;
-  }
-
-
+  /*
   @Override
   public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 	  // left to right swipe goes to turnouts
@@ -523,23 +522,8 @@ void start_select_loco_activity(String whichThrottle)
 	  }
 	  return false;
   }
-
-  @Override
-  public void onLongPress(MotionEvent e) {
-  }
-  @Override
-  public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-  		float distanceY) {
-  	return false;
-  }
-  @Override
-  public void onShowPress(MotionEvent e) {
-  }
-  @Override
-  public boolean onSingleTapUp(MotionEvent e) {
-  	return false;
-  };
-
+*/
+  
   @Override
 public void onResume() {
   super.onResume();
@@ -590,7 +574,9 @@ public void onStart() {
 
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     
-    myGesture = new GestureDetector(this);
+//    myGesture = new GestureDetector(this);
+    GestureOverlayView ov = (GestureOverlayView)findViewById(R.id.throttle_overlay);
+    ov.addOnGestureListener(this);
     
     Button b;
     function_button_touch_listener fbtl;
@@ -928,5 +914,34 @@ public void onStart() {
 //	  enable_disable_buttons("T");
 //	  enable_disable_buttons("S");  
   }
+
+  @Override
+  public void onGesture(GestureOverlayView arg0, MotionEvent event) {
+  }
+@Override
+public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
+}
+
+@Override
+public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
+	  // left to right swipe goes to turnouts
+	  if((event.getX() - gestureStartX) > SWIPE_MIN_DISTANCE) {
+		  Intent in=new Intent().setClass(this, turnouts.class);
+		  startActivity(in);
+//		  this.finish();  //don't keep on return stack
+		  // right to left swipe goes to routes
+	  }  else if((gestureStartX - event.getX()) > SWIPE_MIN_DISTANCE) {
+		  Intent in=new Intent().setClass(this, routes.class);
+		  startActivity(in);
+//		  this.finish();  //don't keep on return stack
+	  }
+
+}
+
+@Override
+public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
+	gestureStartX = (int) event.getX();
+	gestureStartY = (int) event.getY();
+}
 
 }

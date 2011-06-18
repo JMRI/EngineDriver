@@ -12,8 +12,17 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
    -->
 
-<LinearLayout
+  <android.gesture.GestureOverlayView
    xmlns:android="http://schemas.android.com/apk/res/android"
+   android:id="@+id/throttle_overlay"
+   android:layout_width="fill_parent"
+   android:layout_height="fill_parent"
+   android:gestureStrokeType="single"
+   android:eventsInterceptionEnabled="true"
+   android:orientation="horizontal"
+>
+
+<LinearLayout
    android:id="@+id/throttle_screen"
    android:layout_width="fill_parent"
    android:layout_height="fill_parent"
@@ -237,13 +246,15 @@
          </TableLayout>
 
       </ScrollView>
-   </LinearLayout>
 
    <LinearLayout
       android:id="@+id/separator"
       android:layout_width="fill_parent"
       android:layout_height="2dp"
       android:background="#888888" />
+
+   </LinearLayout>
+
    <LinearLayout
       android:id="@+id/throttle_S"
       android:layout_width="fill_parent"
@@ -483,5 +494,6 @@
          </TableLayout>
       </ScrollView>
    </LinearLayout>
-
 </LinearLayout>
+  </android.gesture.GestureOverlayView>
+
