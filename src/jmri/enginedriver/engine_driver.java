@@ -165,8 +165,8 @@ public class engine_driver extends Activity implements android.gesture.GestureOv
 
   //end current activity
   void end_this_activity() {
-	  mainapp.engine_driver_msg_handler = null;
-	  this.finish();
+//	  mainapp.engine_driver_msg_handler = null;
+//	  this.finish();
   }
 
   void set_speed_slider(String whichThrottle, int speed) {
@@ -341,7 +341,6 @@ void start_select_loco_activity(String whichThrottle)
 
           switch (function) {
             case function_button.FORWARD : {
-            	Button b;
             	function_msg.what=message_type.DIRECTION;
                 function_msg.arg1=1;
             	function_msg.arg2=1;  //forward is 1
@@ -352,7 +351,6 @@ void start_select_loco_activity(String whichThrottle)
               break;
 
             case function_button.REVERSE : {
-            	Button b;
             	function_msg.what=message_type.DIRECTION;
                 function_msg.arg1=1;
             	function_msg.arg2=0;  //reverse is 0
@@ -484,9 +482,10 @@ void start_select_loco_activity(String whichThrottle)
 		  
 		  //always go to Connection Activity
 	  	  Intent in=new Intent().setClass(this, connection_activity.class);
+	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		  startActivity(in);
 		  this.finish();  //end this activity
-		  return false;
+		  return true;
 		  
 	  } else if((key==KeyEvent.KEYCODE_VOLUME_UP) || (key==KeyEvent.KEYCODE_VOLUME_DOWN) ) { //use volume to change speed for specified loco
 		  SeekBar sb = null;
@@ -887,16 +886,18 @@ public void onStart() {
     	    startActivityForResult(preferences, 0);
     	  break;
       case R.id.turnouts:
-    	  Intent turnouts=new Intent().setClass(this, turnouts.class);
-    	    startActivity(turnouts);
+    	  Intent in=new Intent().setClass(this, turnouts.class);
+      	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+      	  startActivity(in);
     	  break;
       case R.id.power_control_menu:
-    	  Intent in = new Intent().setClass(this, power_control.class);
-    	    startActivity(in);
+    	  in = new Intent().setClass(this, power_control.class);
+      	  startActivity(in);
     	  break;
       case R.id.routes:
     	  in = new Intent().setClass(this, routes.class);
-    	    startActivity(in);
+      	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+      	  startActivity(in);
     	  break;
       }
       return super.onOptionsItemSelected(item);
@@ -922,10 +923,11 @@ public void onStart() {
 public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
 }
 
+//determine if the action was long enough to be a swipe
 @Override
 public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
 	  // left to right swipe goes to turnouts
-	  if((event.getX() - gestureStartX) > SWIPE_MIN_DISTANCE) {
+	  if((event.getX() - gestureStartX) > SWIPE_MIN_DISTANCE) {  //TODO: add check for velocity
 		  Intent in=new Intent().setClass(this, turnouts.class);
 		  startActivity(in);
 //		  this.finish();  //don't keep on return stack
@@ -938,6 +940,7 @@ public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
 
 }
 
+//save start position of potential gesture
 @Override
 public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
 	gestureStartX = (int) event.getX();

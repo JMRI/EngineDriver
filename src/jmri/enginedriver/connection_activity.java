@@ -91,12 +91,13 @@ public class connection_activity extends Activity {
   };
 
 
-  void start_select_loco_activity()
+/*  void start_select_loco_activity()
   {
 //    multicast_lock.release();
     Intent select_loco=new Intent().setClass(this, select_loco.class);
     startActivity(select_loco);
   };
+  */
 
   void start_engine_driver_activity()
   {
@@ -228,10 +229,10 @@ public class connection_activity extends Activity {
 
   //end current activity
   void end_this_activity() {
-	  mainapp.ui_msg_handler = null;
+//	  mainapp.ui_msg_handler = null;
 	  moveTaskToBack(true);
-	  System.exit(0);
-	  this.finish();
+//	  System.exit(0);
+//	  this.finish();
   }
 
 	@Override

@@ -242,6 +242,7 @@ public class routes extends Activity  implements OnGestureListener {
 //		  mainapp.routes_msg_handler = null; //clear out pointer to this activity  
 //		  this.finish();  //end this activity
 		  Intent in=new Intent().setClass(this, engine_driver.class);
+	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		  startActivity(in);
 		  return true;
 	  }
@@ -258,13 +259,15 @@ public class routes extends Activity  implements OnGestureListener {
 	  // left to right swipe goes to throttle
 	  if(((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
 		  Intent in=new Intent().setClass(this, engine_driver.class);
+	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		  startActivity(in);
-		  this.finish();  //don't keep on return stack
+//		  this.finish();  //don't keep on return stack
 		  // right to left swipe goes to turnouts
 	  }  else if(((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
 		  Intent in=new Intent().setClass(this, turnouts.class);
+	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		  startActivity(in);
-		  this.finish();  //don't keep on return stack
+//		  this.finish();  //don't keep on return stack
 	  }
 	  return false;
   }

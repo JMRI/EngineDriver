@@ -277,7 +277,8 @@ public class turnouts extends Activity implements OnGestureListener {
   if(key==KeyEvent.KEYCODE_BACK)  {
   	  Intent in=new Intent().setClass(this, engine_driver.class);
 	  startActivity(in);
-	  this.finish();
+  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+//	  this.finish();
 	  return true;
   }
   return(super.onKeyDown(key, event));
@@ -293,13 +294,15 @@ public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float ve
     // left to right swipe goes to routes
     if(((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
   	  Intent in=new Intent().setClass(this, routes.class);
+  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 	  startActivity(in);
-	  this.finish();  //don't keep on return stack
+//	  this.finish();  //don't keep on return stack
    // right to left swipe goes to throttle
     }  else if(((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
   	  Intent in=new Intent().setClass(this, engine_driver.class);
+  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 	  startActivity(in);
-	  this.finish();  //don't keep on return stack
+//	  this.finish();  //don't keep on return stack
    }
 	return false;
 }
