@@ -195,17 +195,13 @@ public class select_loco extends Activity {
 
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case message_type.RESPONSE: {
-				set_labels();
-			}
-				break;
-			case message_type.END_ACTIVITY: { // Program shutdown has been
-												// requested
-				end_this_activity();
-			}
-				break;
-			}
-			;
+				case message_type.RESPONSE:
+					set_labels();
+					break;
+				case message_type.END_ACTIVITY:  // Program shutdown has been requested
+					end_this_activity();
+					break;
+			};
 		}
 	}
 

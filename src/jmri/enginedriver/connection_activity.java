@@ -229,10 +229,19 @@ public class connection_activity extends Activity {
 
   //end current activity
   void end_this_activity() {
-//	  mainapp.ui_msg_handler = null;
+	  Message connect_msg=Message.obtain();
+	  connect_msg.what=message_type.SHUTDOWN;
+	  if (mainapp.comm_msg_handler != null) {
+		  mainapp.comm_msg_handler.sendMessage(connect_msg);
+	  }    	
+      try{ Thread.sleep(500); }   //  give comm_msg_handler time to process shutdown
+      catch (InterruptedException except) {
+		// TODO 
+      }
+	  mainapp.ui_msg_handler = null;
 	  moveTaskToBack(true);
-//	  System.exit(0);
-//	  this.finish();
+	  System.exit(0);
+	  this.finish();
   }
 
 	@Override
@@ -430,11 +439,6 @@ public class connection_activity extends Activity {
 	@Override
 	public boolean onKeyDown(int key, KeyEvent event) {
 		if (key == KeyEvent.KEYCODE_BACK) {
-		    Message connect_msg=Message.obtain();
-		    connect_msg.what=message_type.SHUTDOWN;
-		    if (mainapp.comm_msg_handler != null) {
-		    	mainapp.comm_msg_handler.sendMessage(connect_msg);
-		    }    	
 			end_this_activity();
 			return true;
 		}

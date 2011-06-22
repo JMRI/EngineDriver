@@ -145,17 +145,28 @@ public class turnouts extends Activity implements OnGestureListener {
 	  class turnouts_handler extends Handler {
 
 		public void handleMessage(Message msg) {
-	      switch(msg.what) {
-	      case message_type.RESPONSE: {
-	        	String response_str = msg.obj.toString();
-	        	if (response_str.substring(0,3).equals("PTA")) {  //refresh turnouts if any have changed
-	        		refresh_turnout_view(); 
-	        	}
-	        }
-	        break;
-	    };
+			switch(msg.what) {
+	      		case message_type.RESPONSE:
+	      			String response_str = msg.obj.toString();
+	      			if (response_str.substring(0,3).equals("PTA")) {  //refresh turnouts if any have changed
+	      				refresh_turnout_view(); 
+	      			}
+	      			break;
+	      		case message_type.END_ACTIVITY: // Program shutdown has been requested
+	      			end_this_activity();
+	      			break;
+			};
 		}
 	  }
+
+	// end current activity
+	void end_this_activity() {
+		mainapp.turnouts_msg_handler = null; // remove pointer to this activity's handler
+		this.finish();
+	}
+
+	  
+	  
 	  
 	  public class button_listener implements View.OnClickListener  {
 		  Integer whichCommand; //command to send for button instance 'C'lose, 'T'hrow or '2' for toggle
@@ -275,10 +286,10 @@ public class turnouts extends Activity implements OnGestureListener {
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {
   if(key==KeyEvent.KEYCODE_BACK)  {
+//	  this.finish();
   	  Intent in=new Intent().setClass(this, engine_driver.class);
 	  startActivity(in);
   	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-//	  this.finish();
 	  return true;
   }
   return(super.onKeyDown(key, event));
@@ -293,16 +304,16 @@ public boolean onDown(MotionEvent e) {
 public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
     // left to right swipe goes to routes
     if(((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
+//  	  this.finish();  //don't keep on return stack
   	  Intent in=new Intent().setClass(this, routes.class);
   	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 	  startActivity(in);
-//	  this.finish();  //don't keep on return stack
    // right to left swipe goes to throttle
     }  else if(((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
+ // 	  this.finish();  //don't keep on return stack
   	  Intent in=new Intent().setClass(this, engine_driver.class);
   	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 	  startActivity(in);
-//	  this.finish();  //don't keep on return stack
    }
 	return false;
 }

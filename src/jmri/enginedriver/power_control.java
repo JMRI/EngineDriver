@@ -40,17 +40,25 @@ public class power_control extends Activity {
 	  class power_control_handler extends Handler {
 
 		public void handleMessage(Message msg) {
-	      switch(msg.what) {
-	        case message_type.RESPONSE: {
-	      	    String response_str = msg.obj.toString();
-	        	if (response_str.substring(0,3).equals("PPA")) {  //refresh power state 
-	        		refresh_power_control_view(); 
-	        	}
-	        }
-	        break;
-	    };
+			switch(msg.what) {
+				case message_type.RESPONSE:
+					String response_str = msg.obj.toString();
+					if (response_str.substring(0,3).equals("PPA")) {  //refresh power state 
+						refresh_power_control_view(); 
+					}
+					break;
+				case message_type.END_ACTIVITY:  // Program shutdown has been requested
+					end_this_activity();
+					break;
+			};
 		}
 	  }
+		// end current activity
+	  void end_this_activity() {
+			mainapp.power_control_msg_handler = null; // remove pointer to this activity's handler
+			this.finish();
+	  }
+
 	  public class button_listener implements View.OnClickListener	  {
 		  
 	    public void onClick(View v) {

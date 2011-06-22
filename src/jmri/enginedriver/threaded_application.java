@@ -479,13 +479,25 @@ public class threaded_application extends Application
           //end the application and thread
           case message_type.SHUTDOWN:
         	//forward end message to all active activities
-//            Message fwd_msg=Message.obtain();
-//            fwd_msg.what=message_type.END_ACTIVITY;
-//            if (engine_driver_msg_handler != null) { engine_driver_msg_handler.sendMessage(fwd_msg); }
-//            if (select_loco_msg_handler != null) { select_loco_msg_handler.sendMessage(fwd_msg); }
+            Message fwd_msg=Message.obtain();
+            fwd_msg.what=message_type.END_ACTIVITY;
+            if (engine_driver_msg_handler != null) { engine_driver_msg_handler.sendMessage(fwd_msg); }
+            fwd_msg=Message.obtain();			// prior call may alter fwd_msg
+            fwd_msg.what=message_type.END_ACTIVITY;
+            if (select_loco_msg_handler != null) { select_loco_msg_handler.sendMessage(fwd_msg); }
+            fwd_msg=Message.obtain();			// prior call may alter fwd_msg
+            fwd_msg.what=message_type.END_ACTIVITY;
+            if (power_control_msg_handler != null) { power_control_msg_handler.sendMessage(fwd_msg); }
+            fwd_msg=Message.obtain();			// prior call may alter fwd_msg
+            fwd_msg.what=message_type.END_ACTIVITY;
+            if (routes_msg_handler != null) { routes_msg_handler.sendMessage(fwd_msg); }
+            fwd_msg=Message.obtain();			// prior call may alter fwd_msg
+            fwd_msg.what=message_type.END_ACTIVITY;
+            if (turnouts_msg_handler != null) { turnouts_msg_handler.sendMessage(fwd_msg); 	}
 //            if (ui_msg_handler != null) { ui_msg_handler.sendMessage(fwd_msg); }
 //            end_this_thread();
-        	  end_jmdns();
+            this.getLooper().quit();
+            end_jmdns();
             break;
 
         }

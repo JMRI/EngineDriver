@@ -165,8 +165,8 @@ public class engine_driver extends Activity implements android.gesture.GestureOv
 
   //end current activity
   void end_this_activity() {
-//	  mainapp.engine_driver_msg_handler = null;
-//	  this.finish();
+	  mainapp.engine_driver_msg_handler = null;
+	  this.finish();
   }
 
   void set_speed_slider(String whichThrottle, int speed) {
@@ -456,7 +456,7 @@ void start_select_loco_activity(String whichThrottle)
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {
 	  if(key==KeyEvent.KEYCODE_BACK)  {
-		  mainapp.engine_driver_msg_handler = null; //clear out pointer to this activity  
+		  mainapp.engine_driver_msg_handler = null; //clear out pointer to this activity
 
 		  //release first loco
 		  Message msg=Message.obtain();
@@ -481,10 +481,10 @@ void start_select_loco_activity(String whichThrottle)
 		  }
 		  
 		  //always go to Connection Activity
+		  this.finish();  //end this activity
 	  	  Intent in=new Intent().setClass(this, connection_activity.class);
 	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		  startActivity(in);
-		  this.finish();  //end this activity
 		  return true;
 		  
 	  } else if((key==KeyEvent.KEYCODE_VOLUME_UP) || (key==KeyEvent.KEYCODE_VOLUME_DOWN) ) { //use volume to change speed for specified loco
@@ -886,6 +886,7 @@ public void onStart() {
     	    startActivityForResult(preferences, 0);
     	  break;
       case R.id.turnouts:
+//    	  this.finish();
     	  Intent in=new Intent().setClass(this, turnouts.class);
       	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
       	  startActivity(in);
@@ -895,6 +896,7 @@ public void onStart() {
       	  startActivity(in);
     	  break;
       case R.id.routes:
+ //   	  this.finish();
     	  in = new Intent().setClass(this, routes.class);
       	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
       	  startActivity(in);
@@ -928,14 +930,16 @@ public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
 public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
 	  // left to right swipe goes to turnouts
 	  if((event.getX() - gestureStartX) > SWIPE_MIN_DISTANCE) {  //TODO: add check for velocity
+		  this.finish();  //don't keep on return stack
 		  Intent in=new Intent().setClass(this, turnouts.class);
+	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		  startActivity(in);
-//		  this.finish();  //don't keep on return stack
 		  // right to left swipe goes to routes
 	  }  else if((gestureStartX - event.getX()) > SWIPE_MIN_DISTANCE) {
+		  this.finish();  //don't keep on return stack
 		  Intent in=new Intent().setClass(this, routes.class);
+	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		  startActivity(in);
-//		  this.finish();  //don't keep on return stack
 	  }
 
 }
