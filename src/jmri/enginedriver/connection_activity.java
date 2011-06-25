@@ -35,8 +35,11 @@ import java.io.File;
 import android.os.Environment;
 import java.io.BufferedReader;
 import java.io.IOException;
+
+import android.util.DisplayMetrics;
 import android.util.Log;
 import java.io.FileReader;
+import java.lang.reflect.Method;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
@@ -56,7 +59,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.AdapterView;
 
+
 public class connection_activity extends Activity {
+	
+  //set use_default_host to true with appropriate host and port values
+  //  to avoid manual entry when debugging and discovery isn't available 
+  private static final boolean use_default_host = false;
+  
+  
+  String default_host = "192.168.1.2";
+  String default_port = "2029";
+
 	
   ArrayList<HashMap<String, String> > connections_list;
   ArrayList<HashMap<String, String> > discovery_list;
@@ -76,6 +89,32 @@ public class connection_activity extends Activity {
   String connected_host;
   int connected_port;
 
+  private static Method overridePendingTransition;
+  static {
+  try {
+  overridePendingTransition = Activity.class.getMethod("overridePendingTransition", new Class[] {Integer.TYPE, Integer.TYPE}); //$NON-NLS-1$
+  }
+  catch (NoSuchMethodException e) {
+  overridePendingTransition = null;
+  }
+  }
+  /**
+  * Calls Activity.overridePendingTransition if the method is available (>=Android 2.0)
+  * @param activity the activity that launches another activity
+  * @param animEnter the entering animation
+  * @param animExit the exiting animation
+  */
+  public static void overridePendingTransition(Activity activity, int animEnter, int animExit) {
+  if (overridePendingTransition!=null) {
+  try {
+  overridePendingTransition.invoke(activity, animEnter, animExit);
+  } catch (Exception e) {
+  // do nothing
+  }
+  }
+  }
+
+  
   //Request connection to the WiThrottle server.
   void connect()
   {
@@ -94,16 +133,19 @@ public class connection_activity extends Activity {
 /*  void start_select_loco_activity()
   {
 //    multicast_lock.release();
-    Intent select_loco=new Intent().setClass(this, select_loco.class);
-    startActivity(select_loco);
-  };
+	Intent select_loco=new Intent().setClass(this, select_loco.class);
+	select_loco.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+	startActivity(select_loco);
+	};
   */
 
-  void start_engine_driver_activity()
+  void start_throttle_activity()
   {
-	    Intent engine_driver=new Intent().setClass(this, engine_driver.class);
-	    startActivity(engine_driver);
-  };
+	    Intent throttle=new Intent().setClass(this, throttle.class);
+//	  	throttle.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+	    startActivity(throttle);
+        overridePendingTransition(this,R.anim.fade_in, R.anim.fade_out);
+ };
   
   public enum server_list_type { DISCOVERED_SERVER, RECENT_CONNECTION }
   public class connect_item implements AdapterView.OnItemClickListener
@@ -133,21 +175,21 @@ public class connection_activity extends Activity {
   public class button_listener implements View.OnClickListener
   {
     public void onClick(View v) {
-      EditText entry=(EditText)findViewById(R.id.host_ip);
-      connected_host=new String(entry.getText().toString());
-      if (connected_host.trim().length() > 0 ) {
-        entry=(EditText)findViewById(R.id.port);
-        try {
-          connected_port=new Integer(entry.getText().toString());
-        } catch(NumberFormatException except) { 
-       	    Toast.makeText(getApplicationContext(), "Invalid port#, retry.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
-         	return;
-        }
-        connect();
-      } else {
-    	    Toast.makeText(getApplicationContext(), "Enter or select an address and port", Toast.LENGTH_SHORT).show();
-
-      }
+    	EditText entry=(EditText)findViewById(R.id.host_ip);
+		connected_host=new String(entry.getText().toString());
+		if (connected_host.trim().length() > 0 ) {
+	        entry =(EditText)findViewById(R.id.port);
+			try {
+				connected_port=new Integer(entry.getText().toString());
+			} catch(NumberFormatException except) { 
+				Toast.makeText(getApplicationContext(), "Invalid port#, retry.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
+				return;
+			}
+			connect();
+		} 
+		else {
+			Toast.makeText(getApplicationContext(), "Enter or select an address and port", Toast.LENGTH_SHORT).show();
+		}
     };
   }
 
@@ -209,7 +251,7 @@ public class connection_activity extends Activity {
         		Toast.makeText(getApplicationContext(), "Error saving recent connection: "+except.getMessage(), Toast.LENGTH_SHORT).show();
         	}
 
-          start_engine_driver_activity();
+          start_throttle_activity();
         break;
 
         case message_type.ERROR: {
@@ -218,35 +260,34 @@ public class connection_activity extends Activity {
       	  Toast.makeText(getApplicationContext(), msg_txt, Toast.LENGTH_SHORT).show();
         }
         break;
-
-        case message_type.END_ACTIVITY: {      	    //Program shutdown has been requested
-      	    end_this_activity();
-      	}
-        break;
       }
     };
   }
 
-  //end current activity
-  void end_this_activity() {
+  //end all activity
+  void end_all_activity() {
 	  Message connect_msg=Message.obtain();
 	  connect_msg.what=message_type.SHUTDOWN;
+	  this.finish();	// close activity
 	  if (mainapp.comm_msg_handler != null) {
 		  mainapp.comm_msg_handler.sendMessage(connect_msg);
-	  }    	
-      try{ Thread.sleep(500); }   //  give comm_msg_handler time to process shutdown
-      catch (InterruptedException except) {
-		// TODO 
-      }
-	  mainapp.ui_msg_handler = null;
-	  moveTaskToBack(true);
+		  // wait a bit for comm_msg_handler to process shutdown message
+		  for( int i=0; i <3; i++) { 
+			  if(mainapp.connection_msg_handler== null)	// null when comm_msg_handler has shut down
+			  	break;
+			  try{ Thread.sleep(200); }
+		      catch (InterruptedException except) {
+				// TODO 
+		      }
+		  }
+		  mainapp.comm_msg_handler = null;
+	  }
+	  mainapp.connection_msg_handler= null;
 	  System.exit(0);
-	  this.finish();
   }
 
 	@Override
 	public void onPause() {
-
 		//shutdown server discovery listener
 	    Message msg=Message.obtain();
 	    msg.what=message_type.SET_LISTENER;
@@ -268,7 +309,6 @@ public class connection_activity extends Activity {
 	
 	@Override
 	public void onResume() {
-
 		super.onResume();
 
 		ip_list=new ArrayList<String>();
@@ -340,7 +380,7 @@ public class connection_activity extends Activity {
     super.onCreate(savedInstanceState);
     
     mainapp=(threaded_application)this.getApplication();
-    mainapp.ui_msg_handler=new ui_handler();
+    mainapp.connection_msg_handler=new ui_handler();
 
     //check for "default" throttle name and make it more unique
     //TODO: move this and similar code in preferences.java into single routine
@@ -360,7 +400,6 @@ public class connection_activity extends Activity {
     	prefs.edit().putString("throttle_name_preference", s).commit();  //save new name to prefs
 
     }
-
 
     
     setContentView(R.layout.connection);
@@ -394,6 +433,15 @@ public class connection_activity extends Activity {
     
     set_labels();
 
+    DisplayMetrics dm = new DisplayMetrics();
+    getWindowManager().getDefaultDisplay().getMetrics(dm);
+    threaded_application.min_fling_distance = (dm.widthPixels * threaded_application.MIN_FLING_PERCENT) / 100;
+    
+	if(use_default_host == true)
+	{
+		((EditText)findViewById(R.id.host_ip)).setText(default_host);
+	    ((EditText)findViewById(R.id.port)).setText(default_port);
+	}
   }
   
   private void set_labels() {
@@ -415,15 +463,21 @@ public class connection_activity extends Activity {
       switch (item.getItemId()) {
       case R.id.settings_menu:
     	  Intent settings=new Intent().setClass(this, function_settings.class);
+//	  	  settings.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
     	  startActivityForResult(settings, 0);
+     	  overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
       case R.id.about_menu:
     	  Intent about_page=new Intent().setClass(this, about_page.class);
+//	  	  about_page.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
     	  startActivity(about_page);
+     	  overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
         case R.id.preferences:
     	  Intent preferences=new Intent().setClass(this, preferences.class);
+//	  	  preferences.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
     	  startActivityForResult(preferences, 0);
+     	  overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
       }
       return super.onOptionsItemSelected(item);
@@ -439,8 +493,7 @@ public class connection_activity extends Activity {
 	@Override
 	public boolean onKeyDown(int key, KeyEvent event) {
 		if (key == KeyEvent.KEYCODE_BACK) {
-			end_this_activity();
-			return true;
+			end_all_activity();
 		}
 		return (super.onKeyDown(key, event));
 	};

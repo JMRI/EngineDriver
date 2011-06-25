@@ -53,9 +53,10 @@ import android.os.Message;
 import android.widget.TextView;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
+import android.graphics.Color;
 import android.graphics.Typeface;
 
-public class engine_driver extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
+public class throttle extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
 
 	private threaded_application mainapp;  // hold pointer to mainapp
 	private static final int GONE = 8;
@@ -77,7 +78,7 @@ public class engine_driver extends Activity implements android.gesture.GestureOv
 	private int gestureStartY = 0;
 	
   //Handle messages from the communication thread TO this thread (responses from withrottle)
-  class engine_driver_handler extends Handler {
+  class throttle_handler extends Handler {
 
 	public void handleMessage(Message msg) {
 		
@@ -91,8 +92,8 @@ public class engine_driver extends Activity implements android.gesture.GestureOv
 
 	        	switch (response_str.charAt(0)) {
 
-	        	//various MultiThrottle responses
-	        	case 'M':
+	        	  //various MultiThrottle responses
+	        	  case 'M':
 	        		if (response_str.substring(2,3).equals("+")) {  //if loco added, refresh the function labels
 		      	  		set_default_function_labels();
 		      	  		// loop through all function buttons and
@@ -124,7 +125,7 @@ public class engine_driver extends Activity implements android.gesture.GestureOv
 	      	  	  case 'S':
 		      	  		enable_disable_buttons(response_str.substring(0,1));  //pass whichthrottle
 			        	set_labels();
-	      	  	  break;
+			        	break;
 	      	  	  
 	      	  	  case 'R': //roster function labels
 	      	  		  if (response_str.charAt(1) == 'F') {
@@ -137,7 +138,7 @@ public class engine_driver extends Activity implements android.gesture.GestureOv
 	      	  			  enable_disable_buttons_for_view(tv, true);
 	      	  		  }
 	      	  		  set_labels();
-	      	  	  break;
+	      	  		  break;
 	        	}  //end of switch
 	        	
 	        }
@@ -155,19 +156,9 @@ public class engine_driver extends Activity implements android.gesture.GestureOv
 	        	}
 	        }
 	        break;
-	        case message_type.END_ACTIVITY: {      	    //Program shutdown has been requested
-	      	    end_this_activity();
-	      	}
-	        break;
 	      }
 	    };
 	  }
-
-  //end current activity
-  void end_this_activity() {
-	  mainapp.engine_driver_msg_handler = null;
-	  this.finish();
-  }
 
   void set_speed_slider(String whichThrottle, int speed) {
 	  TextView speed_label;
@@ -214,7 +205,9 @@ void start_select_loco_activity(String whichThrottle)
   {
     Intent select_loco=new Intent().setClass(this, select_loco.class);
     select_loco.putExtra("whichThrottle", whichThrottle);  //pass whichThrottle as an extra to activity
+//    select_loco.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
     startActivityForResult(select_loco, 0);
+    connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
   };
 
   void enable_disable_buttons(String whichThrottle)  {
@@ -421,43 +414,48 @@ void start_select_loco_activity(String whichThrottle)
     public throttle_listener(String new_whichThrottle)    {
 	      whichThrottle = new_whichThrottle;   //store this value for this listener
 	    }
-
+    
     public void onProgressChanged(SeekBar throttle, int speed, boolean fromUser)
     {
-      TextView speed_label;
-      Message msg=Message.obtain();
-      msg.what=message_type.VELOCITY;
-      msg.arg1=speed;
-      msg.obj=new String(whichThrottle);    // always load whichThrottle into message
-      mainapp.comm_msg_handler.sendMessage(msg);
-  	   if (whichThrottle.equals("T")) {
-  	      speed_label=(TextView)findViewById(R.id.speed_value_label_T);
-  	   } else {
-  	      speed_label=(TextView)findViewById(R.id.speed_value_label_S);
-  	   }
-  	   int displayedSpeed = (int)Math.round(speed * 99.0 / 126.0); ; //show speed as 0-99 instead of 0-126
-  	   speed_label.setText(Integer.toString(displayedSpeed));
+		TextView speed_label;
+		Message msg=Message.obtain();
+		msg.what=message_type.VELOCITY;
+		msg.arg1=speed;
+		msg.obj=new String(whichThrottle);    // always load whichThrottle into message
+		mainapp.comm_msg_handler.sendMessage(msg);
+		if (whichThrottle.equals("T")) {
+			speed_label=(TextView)findViewById(R.id.speed_value_label_T);
+		} 
+		else {
+			speed_label=(TextView)findViewById(R.id.speed_value_label_S);
+		}
+		int displayedSpeed = (int)Math.round(speed * 99.0 / 126.0); ; //show speed as 0-99 instead of 0-126
+		speed_label.setText(Integer.toString(displayedSpeed));
+		int left = throttle.getLeft();
+		int width = throttle.getRight();
+		// update gesture position to suppress gestures when moving the throttles
+		gestureStartX = left + (throttle.getProgress() * width) / 126;
+		gestureStartY = throttle.getTop();
     }
 
-	@Override
-	public void onStartTrackingTouch(SeekBar sb) {}
+		@Override
+	public void onStartTrackingTouch(SeekBar sb) {
+//		sb.setEnabled(false);
+	}
 
 	@Override
-	public void onStopTrackingTouch(SeekBar sb) {}
+	public void onStopTrackingTouch(SeekBar sb) {
+//		sb.setEnabled(true);
+	}
 
-  }
-
-  @Override
-  public boolean onTouchEvent(MotionEvent event){
-  	return myGesture.onTouchEvent(event);
   }
 
   //Handle pressing of the back button to release the selected loco and end this activity
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {
 	  if(key==KeyEvent.KEYCODE_BACK)  {
-		  mainapp.engine_driver_msg_handler = null; //clear out pointer to this activity
-
+//		  mainapp.throttle_msg_handler = null; //clear out pointer to this activity
+		  
 		  //release first loco
 		  Message msg=Message.obtain();
 		  msg.what=message_type.RELEASE;
@@ -481,13 +479,14 @@ void start_select_loco_activity(String whichThrottle)
 		  }
 		  
 		  //always go to Connection Activity
+//	  	  Intent in=new Intent().setClass(this, connection_activity.class);
+//	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+//		  startActivity(in);
 		  this.finish();  //end this activity
-	  	  Intent in=new Intent().setClass(this, connection_activity.class);
-	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		  startActivity(in);
-		  return true;
-		  
-	  } else if((key==KeyEvent.KEYCODE_VOLUME_UP) || (key==KeyEvent.KEYCODE_VOLUME_DOWN) ) { //use volume to change speed for specified loco
+		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+//          return true;
+	  } 
+	  else if((key==KeyEvent.KEYCODE_VOLUME_UP) || (key==KeyEvent.KEYCODE_VOLUME_DOWN) ) { //use volume to change speed for specified loco
 		  SeekBar sb = null;
 		  if (whichVolume.equals("T") && !mainapp.loco_string_T.equals("Not Set")) {
 			  sb=(SeekBar)findViewById(R.id.speed_T);
@@ -513,11 +512,15 @@ void start_select_loco_activity(String whichThrottle)
 	  // left to right swipe goes to turnouts
 	  if(((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
 		  Intent in=new Intent().setClass(this, turnouts.class);
+	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		  startActivityForResult(in, 0);
+      	  overridePendingTransition(this, R.anim.push_right_in, R.anim..push_right_out);
 		  // right to left swipe goes to routes
 	  }  else if(((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
 		  Intent in=new Intent().setClass(this, routes.class);
+	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		  startActivityForResult(in, 0);
+      	  overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
 	  }
 	  return false;
   }
@@ -539,8 +542,8 @@ public void onStart() {
   super.onStart();
 
   //put pointer to this activity's handler in main app's shared variable (If needed)
-  if (mainapp.engine_driver_msg_handler == null){
-	  mainapp.engine_driver_msg_handler=new engine_driver_handler();
+  if (mainapp.throttle_msg_handler == null){
+	  mainapp.throttle_msg_handler=new throttle_handler();
   }
  
   //create heartbeat if requested and not already started
@@ -576,6 +579,7 @@ public void onStart() {
 //    myGesture = new GestureDetector(this);
     GestureOverlayView ov = (GestureOverlayView)findViewById(R.id.throttle_overlay);
     ov.addOnGestureListener(this);
+    ov.setGestureVisible(false);
     
     Button b;
     function_button_touch_listener fbtl;
@@ -868,39 +872,43 @@ public void onStart() {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
       // Handle all of the possible menu actions.
+	  Intent in;
       switch (item.getItemId()) {
       case R.id.settings_menu:
-    	  Intent settings=new Intent().setClass(this, function_settings.class);
-    	  startActivityForResult(settings, 0);
-    	  break;
+    	  in=new Intent().setClass(this, function_settings.class);
+     	  startActivityForResult(in, 0);
+     	 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+   	  break;
       case R.id.about_menu:
-    	  Intent about_page=new Intent().setClass(this, about_page.class);
-    	  startActivity(about_page);
+    	  in=new Intent().setClass(this, about_page.class);
+     	  startActivity(in);
+     	 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
       case R.id.web_menu:
-    	  Intent web_intent=new Intent().setClass(this, web_activity.class);
-    	  startActivity(web_intent);
+    	  in=new Intent().setClass(this, web_activity.class);
+     	  startActivity(in);
+     	 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
       case R.id.preferences:
-    	  Intent preferences=new Intent().setClass(this, preferences.class);
-    	    startActivityForResult(preferences, 0);
-    	  break;
-      case R.id.turnouts:
-//    	  this.finish();
-    	  Intent in=new Intent().setClass(this, turnouts.class);
-      	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-      	  startActivity(in);
+    	  in=new Intent().setClass(this, preferences.class);
+     	  startActivityForResult(in, 0);
+     	 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
       case R.id.power_control_menu:
-    	  in = new Intent().setClass(this, power_control.class);
-      	  startActivity(in);
+    	  in=new Intent().setClass(this, power_control.class);
+     	  startActivity(in);
+     	 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    	  break;
+      case R.id.turnouts:
+    	  in=new Intent().setClass(this, turnouts.class);
+     	  startActivity(in);
+     	 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
       case R.id.routes:
- //   	  this.finish();
     	  in = new Intent().setClass(this, routes.class);
-      	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-      	  startActivity(in);
-    	  break;
+     	  startActivity(in);
+     	 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+     	  break;
       }
       return super.onOptionsItemSelected(item);
   }
@@ -917,38 +925,60 @@ public void onStart() {
 //	  enable_disable_buttons("T");
 //	  enable_disable_buttons("S");  
   }
+  
 
+  // touch events outside the GestureOverlayView get caught here 
   @Override
-  public void onGesture(GestureOverlayView arg0, MotionEvent event) {
+  public boolean onTouchEvent(MotionEvent event){
+	  if(event.getAction() == MotionEvent.ACTION_DOWN)
+		  gestureStart(event);
+	  else if(event.getAction() == MotionEvent.ACTION_UP)
+		  gestureEnd(event);
+	  return true;
   }
-@Override
-public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
-}
 
-//determine if the action was long enough to be a swipe
-@Override
-public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
-	  // left to right swipe goes to turnouts
-	  if((event.getX() - gestureStartX) > SWIPE_MIN_DISTANCE) {  //TODO: add check for velocity
-		  this.finish();  //don't keep on return stack
-		  Intent in=new Intent().setClass(this, turnouts.class);
-	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		  startActivity(in);
-		  // right to left swipe goes to routes
-	  }  else if((gestureStartX - event.getX()) > SWIPE_MIN_DISTANCE) {
-		  this.finish();  //don't keep on return stack
-		  Intent in=new Intent().setClass(this, routes.class);
-	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		  startActivity(in);
-	  }
+	@Override
+	public void onGesture(GestureOverlayView arg0, MotionEvent event) {
+	}
 
-}
+	@Override
+	public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
+	}
+	
+	//determine if the action was long enough to be a swipe
+	@Override
+	public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
+		gestureEnd(event);
+	}
+	
+	//save start position of potential gesture
+	@Override
+	public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
+		gestureStart(event);
+	}
+	
+	private void gestureStart( MotionEvent event ) {
+		gestureStartX = (int) event.getX();
+		gestureStartY = (int) event.getY();
+	}
 
-//save start position of potential gesture
-@Override
-public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
-	gestureStartX = (int) event.getX();
-	gestureStartY = (int) event.getY();
-}
+	private void gestureEnd( MotionEvent event) {
+		//TODO: add check for velocity
+		if(Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance)
+		{
+			// left to right swipe goes to turnouts
+			if(event.getX() > gestureStartX) {
+				Intent in=new Intent().setClass(this, turnouts.class);
+				startActivity(in);
+				connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+			}
+			// right to left swipe goes to routes
+			else {
+				Intent in=new Intent().setClass(this, routes.class);
+				startActivity(in);
+				connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+			}
+		}
+	}
 
 }

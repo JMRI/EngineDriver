@@ -20,6 +20,7 @@ package jmri.enginedriver;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.webkit.WebView;
 
 public class web_activity extends Activity {
@@ -41,5 +42,16 @@ public class web_activity extends Activity {
     
   };
 
+  //Handle pressing of the back button to end this activity
+  @Override
+  public boolean onKeyDown(int key, KeyEvent event) {
+	  if(key==KeyEvent.KEYCODE_BACK)
+	  {
+	//      mainapp.power_control_msg_handler = null; //clear out pointer to this activity  
+	      this.finish();  //end this activity
+	      connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	  }
+	  return(super.onKeyDown(key, event));
+  };
 
 }

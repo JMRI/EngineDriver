@@ -47,16 +47,8 @@ public class power_control extends Activity {
 						refresh_power_control_view(); 
 					}
 					break;
-				case message_type.END_ACTIVITY:  // Program shutdown has been requested
-					end_this_activity();
-					break;
 			};
 		}
-	  }
-		// end current activity
-	  void end_this_activity() {
-			mainapp.power_control_msg_handler = null; // remove pointer to this activity's handler
-			this.finish();
 	  }
 
 	  public class button_listener implements View.OnClickListener	  {
@@ -96,7 +88,7 @@ public class power_control extends Activity {
 
     //put pointer to this activity's handler in main app's shared variable (If needed)
     if (mainapp.power_control_msg_handler == null){
-  	  mainapp.power_control_msg_handler=new power_control_handler();
+    	mainapp.power_control_msg_handler=new power_control_handler();
     }
 
     refresh_power_control_view();
@@ -129,8 +121,8 @@ public class power_control extends Activity {
   public boolean onKeyDown(int key, KeyEvent event) {
   if(key==KeyEvent.KEYCODE_BACK)
   {
-    mainapp.power_control_msg_handler = null; //clear out pointer to this activity  
-    this.finish();  //end this activity
+      this.finish();  //end this activity
+      connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
   }
   return(super.onKeyDown(key, event));
 };

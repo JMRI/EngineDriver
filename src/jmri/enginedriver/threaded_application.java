@@ -89,12 +89,15 @@ public class threaded_application extends Application
 	//For communication to the comm_thread.
 	public comm_handler comm_msg_handler;
 	//For communication to each of the activities (set and unset by the activity)
-	public Handler ui_msg_handler;
-	public Handler engine_driver_msg_handler;
+	public Handler connection_msg_handler;
+	public Handler throttle_msg_handler;
 	public Handler select_loco_msg_handler;
 	public Handler turnouts_msg_handler;
 	public Handler routes_msg_handler;
 	public Handler power_control_msg_handler;
+
+	public static final int MIN_FLING_PERCENT = 30;		// percent of view width needed for fling
+	public static int min_fling_distance;				// pixel width needed for fling
 	
 	PrintWriter output_pw;
 	BufferedReader input_reader = null;
@@ -146,7 +149,7 @@ public class threaded_application extends Application
     		  service_message.what=message_type.SERVICE_RESOLVED;
     		  service_message.arg1=port;
     		  service_message.obj=new String(hostname);
-    		  ui_msg_handler.sendMessage(service_message);
+    		  connection_msg_handler.sendMessage(service_message);
     	  }
       };
     	
@@ -180,14 +183,10 @@ public class threaded_application extends Application
         service_message.what=message_type.SERVICE_RESOLVED;
         service_message.arg1=port;
         service_message.obj=new String(hostname);
-        ui_msg_handler.sendMessage(service_message);
+        connection_msg_handler.sendMessage(service_message);
       };
     }
 
-//    void end_this_thread() {
-//    	end_jmdns();
-//    }
-    
     void start_jmdns() {
       	int intaddr = 0;
 
@@ -337,7 +336,7 @@ public class threaded_application extends Application
             withrottle_send("HU" + s);  //also send throttle name as the UDID
             Message connection_message=Message.obtain();
             connection_message.what=message_type.CONNECTED;
-            ui_msg_handler.sendMessage(connection_message);
+            connection_msg_handler.sendMessage(connection_message);
             		
             start_read_timer();
             
@@ -386,11 +385,11 @@ public class threaded_application extends Application
         			  withrottle_send("*");   //send a simple heartbeat if no status requests sent
         		  }	
         	  }
-        	  //also send to engine_driver activity if active
- 		    if (engine_driver_msg_handler != null) {
+        	  //also send to throttle activity if active
+ 		    if (throttle_msg_handler != null) {
 		       msg=Message.obtain(); 
 		       msg.what=message_type.HEARTBEAT;
-		       engine_driver_msg_handler.sendMessage(msg);
+		       throttle_msg_handler.sendMessage(msg);
 		    }
             break;
 
@@ -476,30 +475,17 @@ public class threaded_application extends Application
         	  withrottle_send(String.format("PPA%d", msg.arg1));
               break;
 
-          //end the application and thread
+              // release handlers and shutdown jmdns
+              // release connection_msg_handlerlast to signal connection_activity we're done
           case message_type.SHUTDOWN:
-        	//forward end message to all active activities
-            Message fwd_msg=Message.obtain();
-            fwd_msg.what=message_type.END_ACTIVITY;
-            if (engine_driver_msg_handler != null) { engine_driver_msg_handler.sendMessage(fwd_msg); }
-            fwd_msg=Message.obtain();			// prior call may alter fwd_msg
-            fwd_msg.what=message_type.END_ACTIVITY;
-            if (select_loco_msg_handler != null) { select_loco_msg_handler.sendMessage(fwd_msg); }
-            fwd_msg=Message.obtain();			// prior call may alter fwd_msg
-            fwd_msg.what=message_type.END_ACTIVITY;
-            if (power_control_msg_handler != null) { power_control_msg_handler.sendMessage(fwd_msg); }
-            fwd_msg=Message.obtain();			// prior call may alter fwd_msg
-            fwd_msg.what=message_type.END_ACTIVITY;
-            if (routes_msg_handler != null) { routes_msg_handler.sendMessage(fwd_msg); }
-            fwd_msg=Message.obtain();			// prior call may alter fwd_msg
-            fwd_msg.what=message_type.END_ACTIVITY;
-            if (turnouts_msg_handler != null) { turnouts_msg_handler.sendMessage(fwd_msg); 	}
-//            if (ui_msg_handler != null) { ui_msg_handler.sendMessage(fwd_msg); }
-//            end_this_thread();
-            this.getLooper().quit();
-            end_jmdns();
-            break;
-
+            throttle_msg_handler = null; 
+            select_loco_msg_handler = null; 
+            power_control_msg_handler = null; 
+            routes_msg_handler = null; 
+            turnouts_msg_handler = null;
+            end_jmdns();		// this takes too long?
+            connection_msg_handler= null;
+  		  	break;
         }
       };
     }
@@ -508,8 +494,8 @@ public class threaded_application extends Application
         Message ui_msg=Message.obtain();
         ui_msg.what=message_type.ERROR;
         ui_msg.obj = new String(msg_txt);  //put error message text in message
-        if (ui_msg_handler != null) {
-          ui_msg_handler.sendMessage(ui_msg); //send message to ui thread for display
+        if (connection_msg_handler!= null) {
+          connection_msg_handler.sendMessage(ui_msg); //send message to ui thread for display
         }
     }
 
@@ -690,11 +676,11 @@ public class threaded_application extends Application
           msg.obj=new String(response_str); 
     	  routes_msg_handler.sendMessage(msg);   
       }
-      if (engine_driver_msg_handler != null) {
+      if (throttle_msg_handler != null) {
     	  Message msg=Message.obtain(); 
     	  msg.what=message_type.RESPONSE;
     	  msg.obj=new String(response_str);
-    	  engine_driver_msg_handler.sendMessage(msg);
+    	  throttle_msg_handler.sendMessage(msg);
       }
       if (power_control_msg_handler != null) { 
           Message msg=Message.obtain(); 

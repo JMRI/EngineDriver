@@ -7,6 +7,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.provider.Settings;
+import android.view.KeyEvent;
 
 public class preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
@@ -54,4 +55,14 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 		  }
 
 	  }
+	  //Handle pressing of the back button to end this activity
+	  @Override
+	  public boolean onKeyDown(int key, KeyEvent event) {
+	  if(key==KeyEvent.KEYCODE_BACK)
+	  {
+	      this.finish();  //end this activity
+	      connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	  }
+	  return(super.onKeyDown(key, event));
+	};
 }

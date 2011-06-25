@@ -27,9 +27,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -58,6 +62,7 @@ public class routes extends Activity  implements OnGestureListener {
     private static final int SWIPE_MIN_DISTANCE = 120;
     private static final int SWIPE_MAX_OFF_PATH = 250;
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    static int min_fling_distance;
 
 	  public class route_item implements AdapterView.OnItemClickListener	  {
 
@@ -139,20 +144,10 @@ public class routes extends Activity  implements OnGestureListener {
 	        	}
 	        }
 	        break;
-		case message_type.END_ACTIVITY: { // Program shutdown has been requested
-			end_this_activity();
-			}
-			break;
 		};
 		}
 	  }
 
-	// end current activity
-	void end_this_activity() {
-		mainapp.routes_msg_handler = null; // remove pointer to this activity's handler
-		this.finish();
-	}
-	  
 	  public class button_listener implements View.OnClickListener  {
 		  Integer whichCommand; //command to send for button instance 'C'lose, 'T'hrow or '2' for toggle
 		  
@@ -234,7 +229,7 @@ public class routes extends Activity  implements OnGestureListener {
         }
     };
     routes_lv.setOnTouchListener(gestureListener);
-
+    
     // suppress popup keyboard until EditText is touched
     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -245,15 +240,12 @@ public class routes extends Activity  implements OnGestureListener {
 
   };
 
-  //Always go to engine_driver activity if back button pressed
+  //Always go to throttle activity if back button pressed
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {
 	  if(key==KeyEvent.KEYCODE_BACK) {
-//		  mainapp.routes_msg_handler = null; //clear out pointer to this activity  
-//		  this.finish();  //end this activity
-		  Intent in=new Intent().setClass(this, engine_driver.class);
-	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		  startActivity(in);
+		  this.finish();  //end this activity
+		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  return true;
 	  }
 	  return(super.onKeyDown(key, event));
@@ -266,18 +258,19 @@ public class routes extends Activity  implements OnGestureListener {
 
   @Override
   public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-	  // left to right swipe goes to throttle
-	  if(((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
-//		  this.finish();  //don't keep on return stack
-		  Intent in=new Intent().setClass(this, engine_driver.class);
-	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		  startActivity(in);
+	  if((Math.abs(e2.getX() - e1.getX()) > threaded_application.min_fling_distance) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
+		  // left to right swipe goes to throttle
+		  if(e2.getX() > e1.getX()) {
+			  this.finish();  //don't keep on return stack
+			  connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+		  }
 		  // right to left swipe goes to turnouts
-	  }  else if(((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
-//		  this.finish();  //don't keep on return stack
-		  Intent in=new Intent().setClass(this, turnouts.class);
-	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		  startActivity(in);
+		  else {
+			  Intent in=new Intent().setClass(this, turnouts.class);
+			  startActivity(in);
+			  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+			  this.finish();  //don't keep on return stack
+		  }
 	  }
 	  return false;
   }
@@ -296,4 +289,49 @@ public class routes extends Activity  implements OnGestureListener {
   public boolean onSingleTapUp(MotionEvent e) {
 	  return false;
   }
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu){
+  	  MenuInflater inflater = getMenuInflater();
+  	  inflater.inflate(R.menu.routes_menu, menu);
+  	  return true;
+  }
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+      // Handle all of the possible menu actions.
+  	Intent in;
+      switch (item.getItemId()) {
+      case R.id.about_menu:
+    	  in=new Intent().setClass(this, about_page.class);
+    	  startActivity(in);
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    	  break;
+      case R.id.web_menu:
+    	  in=new Intent().setClass(this, web_activity.class);
+     	  startActivity(in);
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    	  break;
+      case R.id.power_control_menu:
+    	  in=new Intent().setClass(this, power_control.class);
+     	  startActivity(in);
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    	  break;
+      case R.id.throttle:
+    	  this.finish();
+    	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    	  break;
+      case R.id.turnouts:
+    	  in = new Intent().setClass(this, turnouts.class);
+     	  startActivity(in);
+     	  this.finish();
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+     	  break;
+      }
+      return super.onOptionsItemSelected(item);
+  }
+  //handle return from menu items
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+      //since we always do the same action no need to distinguish between requests
+  }
+
+  
 };

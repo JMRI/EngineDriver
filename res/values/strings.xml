@@ -103,6 +103,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 <string name="press_to_toggle">Press button to toggle layout power state.</string>
 <string name="power_control_not_allowed">Power Control not allowed.  Change in WiThrottle Preferences in JMRI.</string>
 <string name="power">Power</string>
+<string name="throttle">Throttle</string>
 <string name="on">On</string>
 <string name="off">Off</string>
 <string name="set">Set</string>

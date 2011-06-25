@@ -30,6 +30,9 @@ import android.os.Message;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -152,21 +155,10 @@ public class turnouts extends Activity implements OnGestureListener {
 	      				refresh_turnout_view(); 
 	      			}
 	      			break;
-	      		case message_type.END_ACTIVITY: // Program shutdown has been requested
-	      			end_this_activity();
-	      			break;
 			};
 		}
 	  }
 
-	// end current activity
-	void end_this_activity() {
-		mainapp.turnouts_msg_handler = null; // remove pointer to this activity's handler
-		this.finish();
-	}
-
-	  
-	  
 	  
 	  public class button_listener implements View.OnClickListener  {
 		  Integer whichCommand; //command to send for button instance 'C'lose, 'T'hrow or '2' for toggle
@@ -282,14 +274,12 @@ public class turnouts extends Activity implements OnGestureListener {
     
   };
 
-  //Always go to engine_driver activity if back button pressed
+  //Always go to throttle activity if back button pressed
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {
   if(key==KeyEvent.KEYCODE_BACK)  {
-//	  this.finish();
-  	  Intent in=new Intent().setClass(this, engine_driver.class);
-	  startActivity(in);
-  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+	  this.finish();
+	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	  return true;
   }
   return(super.onKeyDown(key, event));
@@ -302,19 +292,20 @@ public boolean onDown(MotionEvent e) {
 
 @Override
 public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-    // left to right swipe goes to routes
-    if(((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
-//  	  this.finish();  //don't keep on return stack
-  	  Intent in=new Intent().setClass(this, routes.class);
-  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-	  startActivity(in);
-   // right to left swipe goes to throttle
-    }  else if(((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
- // 	  this.finish();  //don't keep on return stack
-  	  Intent in=new Intent().setClass(this, engine_driver.class);
-  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-	  startActivity(in);
-   }
+	  if((Math.abs(e2.getX() - e1.getX()) > threaded_application.min_fling_distance) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
+		  // left to right swipe goes to routes
+		  if(e2.getX() > e1.getX()) {
+			  Intent in=new Intent().setClass(this, routes.class);
+			  startActivity(in);
+			  connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);				
+		   	  this.finish();  //don't keep on return stack
+		  }
+		  // right to left swipe goes to throttle
+		  else {
+		   	  this.finish();  //don't keep on return stack
+		   	  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+		  }
+    }
 	return false;
 }
 
@@ -334,5 +325,44 @@ public boolean onSingleTapUp(MotionEvent e) {
 	return false;
 };
 
+@Override
+public boolean onCreateOptionsMenu(Menu menu){
+	  MenuInflater inflater = getMenuInflater();
+	  inflater.inflate(R.menu.turnouts_menu, menu);
+	  return true;
+}
+@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+    // Handle all of the possible menu actions.
+	Intent in;
+    switch (item.getItemId()) {
+    case R.id.about_menu:
+  	  in=new Intent().setClass(this, about_page.class);
+   	  startActivity(in);
+   	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+  	  break;
+    case R.id.web_menu:
+  	  in=new Intent().setClass(this, web_activity.class);
+   	  startActivity(in);
+   	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+  	  break;
+    case R.id.power_control_menu:
+  	  in=new Intent().setClass(this, power_control.class);
+   	  startActivity(in);
+   	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+  	  break;
+    case R.id.throttle:
+      this.finish();
+      connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+  	  break;
+    case R.id.routes:
+  	  in = new Intent().setClass(this, routes.class);
+   	  startActivity(in);
+      this.finish();
+      connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+   	  break;
+    }
+    return super.onOptionsItemSelected(item);
+}
   
 }

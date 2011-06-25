@@ -198,21 +198,12 @@ public class select_loco extends Activity {
 				case message_type.RESPONSE:
 					set_labels();
 					break;
-				case message_type.END_ACTIVITY:  // Program shutdown has been requested
-					end_this_activity();
-					break;
 			};
 		}
 	}
 
-	// end current activity
-	void end_this_activity() {
-		mainapp.select_loco_msg_handler = null; // remove pointer to this
-												// activity's handler
-		this.finish();
-	}
 
-	// handle return from engine_drive activity
+	// handle return from throttle activity
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// since we always do the same action no need to distinguish between
 		// requests
@@ -334,6 +325,11 @@ public class select_loco extends Activity {
 		return (super.onKeyDown(key, event));
 	};
 
+	// end current activity
+	void end_this_activity() {
+		this.finish();
+		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	}
 	@Override
 	public void onStart() {
 

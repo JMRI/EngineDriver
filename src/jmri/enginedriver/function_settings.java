@@ -195,6 +195,8 @@ public class function_settings extends Activity {
       if(key==KeyEvent.KEYCODE_BACK)
       {
     	  save_settings();
+          this.finish();  //end this activity
+          connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
       }
       return(super.onKeyDown(key, event));
     };
