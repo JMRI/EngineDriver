@@ -41,8 +41,6 @@ import java.io.*;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Button;
 import android.widget.Toast;
@@ -53,7 +51,6 @@ import android.os.Message;
 import android.widget.TextView;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
-import android.graphics.Color;
 import android.graphics.Typeface;
 
 public class throttle extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
@@ -67,7 +64,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 	private String whichVolume = "T";
 
-	private GestureDetector myGesture ;
+//	private GestureDetector myGesture ;
 
 	//these constants are used for onFling
 	private static final int SWIPE_MIN_DISTANCE = 120;
@@ -76,6 +73,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 	private int gestureStartX = 0;
 	private int gestureStartY = 0;
+	private boolean trackGesture = false;	// used to disabled gestures when moving sliders
 	
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class throttle_handler extends Handler {
@@ -431,11 +429,7 @@ void start_select_loco_activity(String whichThrottle)
 		}
 		int displayedSpeed = (int)Math.round(speed * 99.0 / 126.0); ; //show speed as 0-99 instead of 0-126
 		speed_label.setText(Integer.toString(displayedSpeed));
-		int left = throttle.getLeft();
-		int width = throttle.getRight();
-		// update gesture position to suppress gestures when moving the throttles
-		gestureStartX = left + (throttle.getProgress() * width) / 126;
-		gestureStartY = throttle.getTop();
+		trackGesture = false;		// suppress gesture tracking when moving the throttle speed slider
     }
 
 		@Override
@@ -960,24 +954,30 @@ public void onStart() {
 	private void gestureStart( MotionEvent event ) {
 		gestureStartX = (int) event.getX();
 		gestureStartY = (int) event.getY();
+		// track the new gesture. seekbar onProgressChanged clears this flag to stop tracking.
+		trackGesture = true;	
 	}
 
 	private void gestureEnd( MotionEvent event) {
-		//TODO: add check for velocity
-		if(Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance)
+		if(trackGesture == true)
 		{
-			// left to right swipe goes to turnouts
-			if(event.getX() > gestureStartX) {
-				Intent in=new Intent().setClass(this, turnouts.class);
-				startActivity(in);
-				connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+			//TODO: add check for velocity
+			if(Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance)
+			{
+				// left to right swipe goes to turnouts
+				if(event.getX() > gestureStartX) {
+					Intent in=new Intent().setClass(this, turnouts.class);
+					startActivity(in);
+					connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+				}
+				// right to left swipe goes to routes
+				else {
+					Intent in=new Intent().setClass(this, routes.class);
+					startActivity(in);
+					connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+				}
 			}
-			// right to left swipe goes to routes
-			else {
-				Intent in=new Intent().setClass(this, routes.class);
-				startActivity(in);
-				connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-			}
+			trackGesture = false;	// probably unneeded, but safe
 		}
 	}
 
