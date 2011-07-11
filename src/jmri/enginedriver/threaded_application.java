@@ -28,6 +28,7 @@ import java.net.*;
 import java.io.*;
 
 import android.util.Log;
+import android.view.ViewConfiguration;
 
 import javax.jmdns.*;
 import android.net.wifi.WifiManager;
@@ -96,8 +97,12 @@ public class threaded_application extends Application
 	public Handler routes_msg_handler;
 	public Handler power_control_msg_handler;
 
-	public static final int MIN_FLING_PERCENT = 30;		// percent of view width needed for fling
-	public static int min_fling_distance;				// pixel width needed for fling
+	//these constants are used for onFling
+	public static final int SWIPE_MIN_DISTANCE = 120;
+	public static final int SWIPE_MAX_OFF_PATH = 250;
+	public static final int SWIPE_THRESHOLD_VELOCITY = 200;
+	public static int min_fling_distance;			// pixel width needed for fling
+	public static int min_fling_velocity;			// velocity needed for fling
 	
 	PrintWriter output_pw;
 	BufferedReader input_reader = null;

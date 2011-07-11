@@ -60,11 +60,6 @@ public class turnouts extends Activity implements OnGestureListener {
 
 	private GestureDetector myGesture ;
 
-	//these constants are used for onFling
-    private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_MAX_OFF_PATH = 250;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-
 
 	  public class turnout_item implements AdapterView.OnItemClickListener	  {
 
@@ -172,7 +167,7 @@ public class turnouts extends Activity implements OnGestureListener {
 		      String entrytext = new String(entryv.getText().toString());
 		      if (entrytext.trim().length() > 0 ) {
 		        try {
-		          Integer entryint=new Integer(entrytext);  //edit check address by attempting conversion to int
+		          new Integer(entrytext);  //edit check address by attempting conversion to int
 		        } catch(NumberFormatException except) { 
 		       	    Toast.makeText(getApplicationContext(), "Turnout # must be numeric, reenter.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
 		         	return;
@@ -279,7 +274,7 @@ public class turnouts extends Activity implements OnGestureListener {
   public boolean onKeyDown(int key, KeyEvent event) {
   if(key==KeyEvent.KEYCODE_BACK)  {
 	  this.finish();
-	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+   	  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
 	  return true;
   }
   return(super.onKeyDown(key, event));
@@ -292,7 +287,8 @@ public boolean onDown(MotionEvent e) {
 
 @Override
 public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-	  if((Math.abs(e2.getX() - e1.getX()) > threaded_application.min_fling_distance) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
+	  if((Math.abs(e2.getX() - e1.getX()) > threaded_application.min_fling_distance) && 
+		 (Math.abs(velocityX) > threaded_application.min_fling_velocity)) {
 		  // left to right swipe goes to routes
 		  if(e2.getX() > e1.getX()) {
 			  Intent in=new Intent().setClass(this, routes.class);
@@ -305,6 +301,7 @@ public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float ve
 		   	  this.finish();  //don't keep on return stack
 		   	  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
 		  }
+		  return true;
     }
 	return false;
 }
@@ -353,13 +350,13 @@ public boolean onOptionsItemSelected(MenuItem item) {
   	  break;
     case R.id.throttle:
       this.finish();
-      connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+   	  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
   	  break;
     case R.id.routes:
   	  in = new Intent().setClass(this, routes.class);
    	  startActivity(in);
       this.finish();
-      connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+   	  connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
    	  break;
     }
     return super.onOptionsItemSelected(item);

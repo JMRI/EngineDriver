@@ -147,4 +147,8 @@ public interface NetworkTopologyDiscovery {
      */
     public boolean useInetAddress(NetworkInterface networkInterface, InetAddress interfaceAddress);
 
+	void lockInetAddress(InetAddress interfaceAddress);
+
+	void unlockInetAddress(InetAddress interfaceAddress);
+
 }

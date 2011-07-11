@@ -29,6 +29,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -60,6 +61,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static final int VISIBLE = 0;
 	private SharedPreferences prefs;
 	private Timer heartbeatTimer;
+	private static final int MAX_SPEED_DISPLAY = 99;	// value to display at maximum speed setting 
+	private static final int MAX_SPEED_VAL = 126;		// maximum speed setting
+	// speed scale factors
+	private static final double SPEED_TO_DISPLAY = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL);
+	private static final double DISPLAY_TO_SPEED = (1.0 / SPEED_TO_DISPLAY);
+	
 	boolean heartbeat = true; //turn on with each response, show error if not on
 
 	private String whichVolume = "T";
@@ -67,14 +74,16 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 //	private GestureDetector myGesture ;
 
 	//these constants are used for onFling
-	private static final int SWIPE_MIN_DISTANCE = 120;
-	private static final int SWIPE_MAX_OFF_PATH = 250;
-	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
 	private int gestureStartX = 0;
 	private int gestureStartY = 0;
-	private boolean trackGesture = false;	// used to disabled gestures when moving sliders
-	
+	private boolean gestureFailedVelocity = false;	// gesture didn't meet velocity - treat as a DOWN event
+	private boolean gestureInProgress = false;		// gesture is in progress
+	private long gestureVelocityTime;				// time in milliseconds that velocity was last checked
+	private final long gestureVelocityRate = 100;	// milliseconds
+	private VelocityTracker mVelocityTracker;
+
+
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class throttle_handler extends Handler {
 
@@ -108,11 +117,25 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		      	  		}
 	        		} else if (response_str.substring(2,3).equals("A")) {  //e.g. MTAL2608<;>R1
 	        			String whichThrottle = response_str.substring(1,2);  //TODO: move this processing to ta?
-	    	  			String[] ls = threaded_application.splitByString(response_str,"<;>");
+    	  				String[] ls = threaded_application.splitByString(response_str,"<;>");
 	    	  			if (ls[1].substring(0,1).equals("R")) {
-	    	  				set_direction_buttons(whichThrottle, new Integer(ls[1].substring(1,2))); //set direction button 
-	    	  			} else if (ls[1].substring(0,1).equals("V")) {
-	    	  				set_speed_slider(whichThrottle, new Integer(ls[1].substring(1))); //set slider to value
+	    	  				int dir;
+	    	  				try {
+	    	  					dir = new Integer(ls[1].substring(1,2));
+	    	  				}
+	    	  				catch(NumberFormatException e) {
+	    	  					dir = 1;
+	    	  				}
+	    	  				set_direction_buttons(whichThrottle, dir); //set direction button 
+	    	  			} 
+	    	  			else if (ls[1].substring(0,1).equals("V")) {
+	    	  				int speed = 0;
+	    	  				try {
+	    	  					speed = Integer.parseInt(ls[1].substring(1));
+	    	  				}
+	    	  				catch(NumberFormatException e) {
+	    	  				}
+        	  				set_speed_slider(whichThrottle, speed); //set slider to value
 	    	  			}	    	  			
 
 	        		}
@@ -169,7 +192,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		  speed_label=(TextView)findViewById(R.id.speed_value_label_S);
 		  throttle_slider=(SeekBar)findViewById(R.id.speed_S);
 	  }
-	  int displayedSpeed = (int)Math.round(speed * 99.0 / 126.0); //show speed as 0-99 instead of 0-126
+	  int displayedSpeed = 0;
+	  if(speed < 0)
+		  speed = 0;
+	  else
+		  displayedSpeed = (int)Math.round(speed * SPEED_TO_DISPLAY); //show speed as 0-99 instead of 0-126
 	  speed_label.setText(Integer.toString(displayedSpeed));
 	  throttle_slider.setProgress(speed);
   }
@@ -323,6 +350,18 @@ void start_select_loco_activity(String whichThrottle)
 
     public boolean onTouch(View v, MotionEvent event)
     {
+      if(gestureInProgress == true)
+      {
+    	  // skip event processing while gesture is active
+    	  return(true);
+      }
+
+      if(gestureFailedVelocity == true)
+      {
+    	  // since gesture failed, need to recreate the DOWN event on this control
+    	  event.setAction(MotionEvent.ACTION_DOWN);
+    	  gestureFailedVelocity = false;	// just do this once
+      }
       switch(event.getAction())
       {
         case MotionEvent.ACTION_DOWN:
@@ -408,38 +447,54 @@ void start_select_loco_activity(String whichThrottle)
   public class throttle_listener implements SeekBar.OnSeekBarChangeListener
   {
       String whichThrottle;
+	  SeekBar speed_slider;
+	  TextView speed_label;
       
     public throttle_listener(String new_whichThrottle)    {
-	      whichThrottle = new_whichThrottle;   //store this value for this listener
-	    }
-    
-    public void onProgressChanged(SeekBar throttle, int speed, boolean fromUser)
-    {
-		TextView speed_label;
-		Message msg=Message.obtain();
-		msg.what=message_type.VELOCITY;
-		msg.arg1=speed;
-		msg.obj=new String(whichThrottle);    // always load whichThrottle into message
-		mainapp.comm_msg_handler.sendMessage(msg);
-		if (whichThrottle.equals("T")) {
+	    whichThrottle = new_whichThrottle;   	//store values for this listener
+  		if (whichThrottle.equals("T")) {
 			speed_label=(TextView)findViewById(R.id.speed_value_label_T);
+			speed_slider=(SeekBar)findViewById(R.id.speed_T);
 		} 
 		else {
 			speed_label=(TextView)findViewById(R.id.speed_value_label_S);
+			speed_slider=(SeekBar)findViewById(R.id.speed_S);
 		}
-		int displayedSpeed = (int)Math.round(speed * 99.0 / 126.0); ; //show speed as 0-99 instead of 0-126
-		speed_label.setText(Integer.toString(displayedSpeed));
-		trackGesture = false;		// suppress gesture tracking when moving the throttle speed slider
+    }
+   
+    public void onProgressChanged(SeekBar throttle, int speed, boolean fromUser)
+    {
+		//
+		// rdb: The logic below using the gestureInProgress flag suffices to lock the slider when a 
+    	//		gesture is taking place on top of it.  We should be able to use onStartTrackingTouch(SeekBar sb)
+    	//		as simpler method to lock slider on gesture, however it did not seem to run early enough 
+    	//		to stop the initial movement of the slider.  The code below seems simple enough
+    	//
+    	if(gestureInProgress == true)
+    	{
+    		//gesture is in progress: put the seekbar back where it was
+    		int sliderSpeed = new Integer(speed_label.getText().toString());
+    		sliderSpeed = (int)Math.round(sliderSpeed * DISPLAY_TO_SPEED);
+    		speed_slider.setProgress(sliderSpeed);
+    	}
+    	else
+    	{
+			Message msg=Message.obtain();
+			msg.what=message_type.VELOCITY;
+			msg.arg1=speed;
+			msg.obj=new String(whichThrottle);    // always load whichThrottle into message
+			mainapp.comm_msg_handler.sendMessage(msg);
+			int displayedSpeed = (int)Math.round(speed * SPEED_TO_DISPLAY);
+			speed_label.setText(Integer.toString(displayedSpeed));
+    	}
     }
 
-		@Override
+	@Override
 	public void onStartTrackingTouch(SeekBar sb) {
-//		sb.setEnabled(false);
 	}
 
 	@Override
 	public void onStopTrackingTouch(SeekBar sb) {
-//		sb.setEnabled(true);
 	}
 
   }
@@ -499,26 +554,6 @@ void start_select_loco_activity(String whichThrottle)
 	  }
 	  return(super.onKeyDown(key, event)); //continue with normal key processing
   };
-
-  /*
-  @Override
-  public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-	  // left to right swipe goes to turnouts
-	  if(((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
-		  Intent in=new Intent().setClass(this, turnouts.class);
-	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		  startActivityForResult(in, 0);
-      	  overridePendingTransition(this, R.anim.push_right_in, R.anim..push_right_out);
-		  // right to left swipe goes to routes
-	  }  else if(((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)) {
-		  Intent in=new Intent().setClass(this, routes.class);
-	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		  startActivityForResult(in, 0);
-      	  overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-	  }
-	  return false;
-  }
-*/
   
   @Override
 public void onResume() {
@@ -528,6 +563,8 @@ public void onResume() {
   enable_disable_buttons("T"); 
   enable_disable_buttons("S");  
   set_labels();
+  gestureFailedVelocity = false;
+  gestureInProgress = false;
 }
 
 
@@ -626,22 +663,7 @@ public void onStart() {
     set_function_labels_and_listeners_for_view("T");
     set_function_labels_and_listeners_for_view("S");
 
-/*    
-    OnTouchListener gestureListener = new ListView.OnTouchListener() {
-        public boolean onTouch(View v, MotionEvent event) {
-            if (myGesture.onTouchEvent(event)) {
-                return true;
-            }
-            return false;
-        }
-    };
-    ScrollView sv = (ScrollView)findViewById(R.id.function_buttons_scroller_T);
-    sv.setOnTouchListener(gestureListener);   
-    sv = (ScrollView)findViewById(R.id.function_buttons_scroller_S);
-    sv.setOnTouchListener(gestureListener);   
-*/
-    
-//    set_labels();
+    ov.bringToFront();
     
   } //end of onCreate()
 
@@ -752,13 +774,13 @@ public void onStart() {
     
  // set up max speeds for throttles
     String s = prefs.getString("maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
-    int maxThrottle = 99;
+    int maxThrottle = MAX_SPEED_DISPLAY;
     try {
     	maxThrottle = Integer.parseInt(s);
     } catch (NumberFormatException e) {
 	}
 
-    maxThrottle =(int) ((double) (maxThrottle/100.0) * 126.0);
+    maxThrottle = (int) Math.round(((double)(maxThrottle)/MAX_SPEED_DISPLAY) * MAX_SPEED_VAL);
     sbT.setMax(maxThrottle);
     sbS.setMax(maxThrottle);
 
@@ -896,12 +918,12 @@ public void onStart() {
       case R.id.turnouts:
     	  in=new Intent().setClass(this, turnouts.class);
      	  startActivity(in);
-     	 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+       	  connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
     	  break;
       case R.id.routes:
     	  in = new Intent().setClass(this, routes.class);
      	  startActivity(in);
-     	 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+       	  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
      	  break;
       }
       return super.onOptionsItemSelected(item);
@@ -920,7 +942,6 @@ public void onStart() {
 //	  enable_disable_buttons("S");  
   }
   
-
   // touch events outside the GestureOverlayView get caught here 
   @Override
   public boolean onTouchEvent(MotionEvent event){
@@ -933,10 +954,29 @@ public void onStart() {
 
 	@Override
 	public void onGesture(GestureOverlayView arg0, MotionEvent event) {
+		if(gestureInProgress == true)
+		{
+			mVelocityTracker.addMovement(event);
+			if((event.getEventTime() - gestureVelocityTime) > gestureVelocityRate) 
+			{
+				//monitor velocity and fail gesture if it is too low
+				gestureVelocityTime = event.getEventTime();
+				final VelocityTracker velocityTracker = mVelocityTracker;
+				velocityTracker.computeCurrentVelocity(1000);
+				int velocityX = (int) velocityTracker.getXVelocity();
+				if(Math.abs(velocityX) < threaded_application.min_fling_velocity)
+				{
+					gestureFailedVelocity = true;
+					gestureInProgress = false;
+				}
+			}
+		}
 	}
 
 	@Override
 	public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
+		gestureInProgress = false;
+		gestureEnd(event);
 	}
 	
 	//determine if the action was long enough to be a swipe
@@ -955,17 +995,23 @@ public void onStart() {
 		gestureStartX = (int) event.getX();
 		gestureStartY = (int) event.getY();
 		// track the new gesture. seekbar onProgressChanged clears this flag to stop tracking.
-		trackGesture = true;	
+		gestureInProgress = true;
+		gestureFailedVelocity = false;
+		gestureVelocityTime = event.getEventTime();
+		if (mVelocityTracker == null) {
+			mVelocityTracker = VelocityTracker.obtain();
+		}
+		mVelocityTracker.clear();
 	}
 
 	private void gestureEnd( MotionEvent event) {
-		if(trackGesture == true)
+		if(gestureInProgress == true)
 		{
-			//TODO: add check for velocity
-			if(Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance)
+			
+			if(Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) 
 			{
 				// left to right swipe goes to turnouts
-				if(event.getX() > gestureStartX) {
+				if(event.getRawX() > gestureStartX) {
 					Intent in=new Intent().setClass(this, turnouts.class);
 					startActivity(in);
 					connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
@@ -977,8 +1023,12 @@ public void onStart() {
 					connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
 				}
 			}
-			trackGesture = false;	// probably unneeded, but safe
+			else
+			{
+				gestureInProgress = false;
+			}
 		}
+//		mVelocityTracker.recycle();
 	}
 
 }

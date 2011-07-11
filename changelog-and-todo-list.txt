@@ -104,6 +104,9 @@
  *   TODO: make private stuff private
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
+ * web
+ *   TODO: allow user to specify or save the current URL  (multiples?)
+ *   TODO: optionally add web to fling logic  (multiples?)
  * routes
  *   TODO: use PRT titles for Active/inactive
  * turnouts
@@ -111,10 +114,10 @@
  *   TODO: use PTT titles for Turnouts/Turnout
  *   TODO: update turnout list on change not working after reentry to turnout view (worked around by finishing on exit)
  * connection
- *   TODO: show (somewhere) the device's current IP (for debugging connection problems)
  *   TODO: extract server name and ip from view and remove the array(s)
- *   TODO: add pref for auto-connect on discovery
+ *   TODO: add pref for auto-connect to first discovered server
  *   TODO: save "visible" server name and the resolvable name/ip to improve the looks of the connections
+ *   TODO: (maybe?) on repeated connection failures, use IP address instead of name
  * threaded_application
  *   TODO: remove discovered servers when no longer available (partially complete, just need to send a remove if one removed while ca is up)
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
@@ -123,13 +126,11 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * engine_driver:
- *   TODO: fix Back button to handle new fling functions 
- *   TODO: make fling overlay so it'll work on top of buttons, etc. 
+ *   TODO: keep fling from falling through to buttons 
  *   TODO: show feedback on Stop button (maybe a red indicator?) 
  *   TODO: fix intermittent failure to get functions from roster (timing?) 
  *   TODO: make Forward, Stop, Reverse language-sensitive 
  *   TODO: restart/extend heartbeat on every send
- *   TODO: quicker access to turnouts/routes
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
  *   TODO: reduce number of calls to set_labels()
  *   TODO: add preference to disable other hardware buttons in throttle screen
@@ -149,11 +150,9 @@
  *   TODO: show error if invalid entry
  *
  * These require changes to WiThrottle
- *   pull more details from roster (using roster.xml)
  *   turn on heartbeat even when no loco selected (need something to request)
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
  *   disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
- *   remove throttle from withrottle screen on loss of connection (estop)
  *   allow restart of withrottle (variable UI needs to be cleared when it closes)
  *   add "E"rror response
  *   add filter for roster entries

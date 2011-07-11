@@ -49,6 +49,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.os.Message;
 import android.widget.EditText;
@@ -64,13 +65,12 @@ public class connection_activity extends Activity {
 	
   //set use_default_host to true with appropriate host and port values
   //  to avoid manual entry when debugging and discovery isn't available 
-  private static final boolean use_default_host = false;
+  private static final boolean use_default_host = true;
   
   
   String default_host = "192.168.1.2";
   String default_port = "2029";
 
-	
   ArrayList<HashMap<String, String> > connections_list;
   ArrayList<HashMap<String, String> > discovery_list;
   private SimpleAdapter connection_list_adapter;
@@ -432,12 +432,12 @@ public class connection_activity extends Activity {
     button.setOnClickListener(click_listener);
     
     set_labels();
-
     DisplayMetrics dm = new DisplayMetrics();
     getWindowManager().getDefaultDisplay().getMetrics(dm);
-    threaded_application.min_fling_distance = (dm.widthPixels * threaded_application.MIN_FLING_PERCENT) / 100;
-    
-	if(use_default_host == true)
+    threaded_application.min_fling_distance = (int)(threaded_application.SWIPE_MIN_DISTANCE * dm.densityDpi / 160.0f);
+    threaded_application.min_fling_velocity = (int)(threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f); 
+
+    if(use_default_host == true)
 	{
 		((EditText)findViewById(R.id.host_ip)).setText(default_host);
 	    ((EditText)findViewById(R.id.port)).setText(default_port);
