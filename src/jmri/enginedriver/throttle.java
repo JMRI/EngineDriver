@@ -71,16 +71,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 	private String whichVolume = "T";
 
-//	private GestureDetector myGesture ;
-
-	//these constants are used for onFling
-
+	//these are used for gesture tracking
 	private int gestureStartX = 0;
 	private int gestureStartY = 0;
-	private boolean gestureFailedVelocity = false;	// gesture didn't meet velocity - treat as a DOWN event
+	private boolean gestureFailed = false;			// gesture didn't meet velocity or distance requirement
 	private boolean gestureInProgress = false;		// gesture is in progress
-	private long gestureVelocityTime;				// time in milliseconds that velocity was last checked
-	private final long gestureVelocityRate = 100;	// milliseconds
+	private long gestureLastCheckTime;				// time in milliseconds that velocity was last checked
+	private static final long gestureCheckRate = 200;	// rate in milliseconds to check velocity
 	private VelocityTracker mVelocityTracker;
 
 
@@ -226,6 +223,22 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	  }
   }
   
+  void set_stop_button(String whichThrottle, boolean pressed) {
+	  Button bStop;
+	  if (whichThrottle.equals("T")) {
+		  bStop = (Button)findViewById(R.id.button_stop_T);
+	  } 
+	  else {
+		  bStop = (Button)findViewById(R.id.button_stop_S);
+	  }
+	  if (pressed == true) {
+		  bStop.setPressed(true);
+		  bStop.setTypeface(null, Typeface.ITALIC);
+	  } else {
+		  bStop.setPressed(false);
+		  bStop.setTypeface(null, Typeface.NORMAL);
+	  }
+  }
 void start_select_loco_activity(String whichThrottle)
   {
     Intent select_loco=new Intent().setClass(this, select_loco.class);
@@ -352,17 +365,27 @@ void start_select_loco_activity(String whichThrottle)
     {
       if(gestureInProgress == true)
       {
-    	  // skip event processing while gesture is active
-    	  return(true);
+    	  //add movement and recheck gesture velocity
+    	  //if gesture is still in progress, skip button processing
+          Log.d("Engine_Driver", "onTouch func" + function + " action " + event.getAction());
+    	  gestureVelocityCheck(event);
+    	  if(gestureInProgress == true) 
+    		  return(true);
       }
-
-      if(gestureFailedVelocity == true)
+      if(gestureFailed == true)
       {
-    	  // since gesture failed, need to recreate the DOWN event on this control
-    	  event.setAction(MotionEvent.ACTION_DOWN);
-    	  gestureFailedVelocity = false;	// just do this once
+    	  // if gesture just failed, insert one DOWN event on this control
+    	  handleAction(MotionEvent.ACTION_DOWN);
+    	  gestureFailed = false;	// just do this once
       }
-      switch(event.getAction())
+      handleAction(event.getAction());
+      return(true);
+    }
+
+    private void handleAction(int action) 
+    {
+      Log.d("Engine_Driver", "handleAction func" + function + " action " + action);
+      switch(action)
       {
         case MotionEvent.ACTION_DOWN:
         {
@@ -392,6 +415,7 @@ void start_select_loco_activity(String whichThrottle)
 
             // setting the throttle slide to 0 sends a velocity change to the withrottle          	  
             case function_button.STOP : { 
+            	set_stop_button(whichThrottle, true);
             	SeekBar sb;
             	if (whichThrottle.equals("T")) {
             	  sb=(SeekBar)findViewById(R.id.speed_T);
@@ -428,9 +452,13 @@ void start_select_loco_activity(String whichThrottle)
         break;
         //handle stopping of function on key-up 
         case MotionEvent.ACTION_UP:
+        case MotionEvent.ACTION_CANCEL:
 
+        	if(function == function_button.STOP) { 
+        		set_stop_button(whichThrottle, false);
+        	}
         	// only process UP for function buttons
-        	if(function < function_button.FORWARD)   {
+        	else if(function < function_button.FORWARD)   {
         		Message function_msg=Message.obtain();
         		function_msg.what=message_type.FUNCTION;
         		function_msg.arg1=function;
@@ -440,15 +468,15 @@ void start_select_loco_activity(String whichThrottle)
         	}
         	break;
       }
-      return(true);
     };
   }
 
-  public class throttle_listener implements SeekBar.OnSeekBarChangeListener
+  public class throttle_listener implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener
   {
       String whichThrottle;
 	  SeekBar speed_slider;
 	  TextView speed_label;
+//	  int progress;
       
     public throttle_listener(String new_whichThrottle)    {
 	    whichThrottle = new_whichThrottle;   	//store values for this listener
@@ -460,41 +488,42 @@ void start_select_loco_activity(String whichThrottle)
 			speed_label=(TextView)findViewById(R.id.speed_value_label_S);
 			speed_slider=(SeekBar)findViewById(R.id.speed_S);
 		}
+//  		progress = speed_slider.getProgress();
     }
    
-    public void onProgressChanged(SeekBar throttle, int speed, boolean fromUser)
+    public boolean onTouch(View v, MotionEvent event) 
     {
-		//
-		// rdb: The logic below using the gestureInProgress flag suffices to lock the slider when a 
-    	//		gesture is taking place on top of it.  We should be able to use onStartTrackingTouch(SeekBar sb)
-    	//		as simpler method to lock slider on gesture, however it did not seem to run early enough 
-    	//		to stop the initial movement of the slider.  The code below seems simple enough
-    	//
+        Log.d("Engine_Driver", "onTouchThrot action " + event.getAction());
     	if(gestureInProgress == true)
     	{
-    		//gesture is in progress: put the seekbar back where it was
-    		int sliderSpeed = new Integer(speed_label.getText().toString());
-    		sliderSpeed = (int)Math.round(sliderSpeed * DISPLAY_TO_SPEED);
-    		speed_slider.setProgress(sliderSpeed);
+    		//add movement and recheck gesture velocity
+    		gestureVelocityCheck(event);
     	}
-    	else
-    	{
-			Message msg=Message.obtain();
-			msg.what=message_type.VELOCITY;
-			msg.arg1=speed;
-			msg.obj=new String(whichThrottle);    // always load whichThrottle into message
-			mainapp.comm_msg_handler.sendMessage(msg);
-			int displayedSpeed = (int)Math.round(speed * SPEED_TO_DISPLAY);
-			speed_label.setText(Integer.toString(displayedSpeed));
-    	}
+    	//consume event if gesture is in progress, otherwise pass it to the SeekBar onProgressChanged
+    	return(gestureInProgress);
+    }
+
+    public void onProgressChanged(SeekBar throttle, int speed, boolean fromUser)
+    {
+        Log.d("Engine_Driver", "onProgChanged speed " + speed);
+		Message msg=Message.obtain();
+		msg.what=message_type.VELOCITY;
+		msg.arg1=speed;
+		msg.obj=new String(whichThrottle);    // always load whichThrottle into message
+		mainapp.comm_msg_handler.sendMessage(msg);
+		int displayedSpeed = (int)Math.round(speed * SPEED_TO_DISPLAY);
+		speed_label.setText(Integer.toString(displayedSpeed));
+//			progress = speed;
     }
 
 	@Override
 	public void onStartTrackingTouch(SeekBar sb) {
+        Log.d("Engine_Driver", "onStartTracking");
 	}
 
 	@Override
 	public void onStopTrackingTouch(SeekBar sb) {
+        Log.d("Engine_Driver", "onStopTracking");
 	}
 
   }
@@ -563,7 +592,7 @@ public void onResume() {
   enable_disable_buttons("T"); 
   enable_disable_buttons("S");  
   set_labels();
-  gestureFailedVelocity = false;
+  gestureFailed = false;
   gestureInProgress = false;
 }
 
@@ -651,11 +680,16 @@ public void onStart() {
     v.setOnTouchListener(fbtl);
 
     // set up listeners for both throttles
+    throttle_listener th1;
     SeekBar sb=(SeekBar)findViewById(R.id.speed_T);
-    sb.setOnSeekBarChangeListener(new throttle_listener("T"));
+    th1 = new throttle_listener("T");
+    sb.setOnSeekBarChangeListener(th1);
+    sb.setOnTouchListener(th1);
     
     sb=(SeekBar)findViewById(R.id.speed_S);
-    sb.setOnSeekBarChangeListener(new throttle_listener("S"));
+    th1 = new throttle_listener("S");
+    sb.setOnSeekBarChangeListener(th1);
+    sb.setOnTouchListener(th1);
 
     set_default_function_labels();
     // loop through all function buttons and
@@ -954,19 +988,26 @@ public void onStart() {
 
 	@Override
 	public void onGesture(GestureOverlayView arg0, MotionEvent event) {
+        Log.d("Engine_Driver", "onGesture action " + event.getAction());
+		gestureVelocityCheck(event);
+	}
+	
+	public void gestureVelocityCheck(MotionEvent event)
+	{
 		if(gestureInProgress == true)
 		{
 			mVelocityTracker.addMovement(event);
-			if((event.getEventTime() - gestureVelocityTime) > gestureVelocityRate) 
+			if((event.getEventTime() - gestureLastCheckTime) > gestureCheckRate) 
 			{
 				//monitor velocity and fail gesture if it is too low
-				gestureVelocityTime = event.getEventTime();
+				gestureLastCheckTime = event.getEventTime();
 				final VelocityTracker velocityTracker = mVelocityTracker;
 				velocityTracker.computeCurrentVelocity(1000);
 				int velocityX = (int) velocityTracker.getXVelocity();
+		        Log.d("Engine_Driver", "gestureVelocity vel " + velocityX);
 				if(Math.abs(velocityX) < threaded_application.min_fling_velocity)
 				{
-					gestureFailedVelocity = true;
+					gestureFailed = true;
 					gestureInProgress = false;
 				}
 			}
@@ -975,6 +1016,7 @@ public void onStart() {
 
 	@Override
 	public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
+        Log.d("Engine_Driver", "onGestureCancelled action " + event.getAction());
 		gestureInProgress = false;
 		gestureEnd(event);
 	}
@@ -982,22 +1024,25 @@ public void onStart() {
 	//determine if the action was long enough to be a swipe
 	@Override
 	public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
+        Log.d("Engine_Driver", "onGestureEnded action " + event.getAction());
 		gestureEnd(event);
 	}
 	
 	//save start position of potential gesture
 	@Override
 	public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
+        Log.d("Engine_Driver", "onGestureStarted action" + event.getAction());
 		gestureStart(event);
 	}
 	
 	private void gestureStart( MotionEvent event ) {
+        Log.d("Engine_Driver", "gestureStart action " + event.getAction());
 		gestureStartX = (int) event.getX();
 		gestureStartY = (int) event.getY();
 		// track the new gesture. seekbar onProgressChanged clears this flag to stop tracking.
 		gestureInProgress = true;
-		gestureFailedVelocity = false;
-		gestureVelocityTime = event.getEventTime();
+		gestureFailed = false;
+		gestureLastCheckTime = event.getEventTime();
 		if (mVelocityTracker == null) {
 			mVelocityTracker = VelocityTracker.obtain();
 		}
@@ -1025,10 +1070,32 @@ public void onStart() {
 			}
 			else
 			{
+				// gesture was not long enough
 				gestureInProgress = false;
+				gestureFailed = true;
 			}
 		}
 //		mVelocityTracker.recycle();
+	}
+	void showEvent(MotionEvent event, String func)
+	{
+		String eventName;
+		switch(event.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+				eventName = "ACTION_DOWN";
+				break;
+			case MotionEvent.ACTION_UP:
+				eventName = "ACTION_UP";
+				break;
+			case MotionEvent.ACTION_MOVE:
+				eventName = "ACTION_MOVE";
+				break;
+			default:
+				eventName = "ACTION_OTHER";
+				break;
+		}
+		Log.d("Engine_Driver", func + " " + eventName + " gestureInProg " + gestureInProgress);
+		
 	}
 
 }

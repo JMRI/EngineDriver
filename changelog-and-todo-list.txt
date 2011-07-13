@@ -3,6 +3,7 @@
  * Fixed the shutdown and back behavior (rbecker)
  * added animations to all page transitions (rbecker)
  * added menus to routes and turnouts activities (rbecker)
+ * fixed fling on throttle activity (rbecker)
 **Version 1.6
  * Began adding Multithrottle support (serious rigged version, 2.0+ only)
  * Mirror speed and direction from server (on heartbeat, 2.0+ only)
