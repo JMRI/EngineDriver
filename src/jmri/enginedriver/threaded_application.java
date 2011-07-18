@@ -295,7 +295,7 @@ public class threaded_application extends Application
       	  	function_labels_S = new LinkedHashMap<Integer, String>();
       	  	function_labels_T = new LinkedHashMap<Integer, String>();
       	  	function_labels_default = new LinkedHashMap<Integer, String>();
-      	  	function_states_T = new boolean[32];
+      	  	function_states_T = new boolean[32];		// also allocated in onCreate() ???
       	  	function_states_S = new boolean[32];
             consist_allowed = false;
             consist_entries = new LinkedHashMap<String, String>();
@@ -398,7 +398,25 @@ public class threaded_application extends Application
 		    }
             break;
 
-          //Disconnect from the WiThrottle server.
+            //request speed
+          case message_type.REQ_VELOCITY:
+        	if (withrottle_version >= 2.0) {
+               	whichThrottle = msg.obj.toString();
+//               	withrottle_send(whichThrottle+"qV");
+               	withrottle_send("M"+whichThrottle+"A*<;>qV");
+        	}
+          	break;
+
+          	//request direction
+          case message_type.REQ_DIRECTION:
+        	if (withrottle_version >= 2.0) {
+               	whichThrottle = msg.obj.toString();
+//        		withrottle_send(whichThrottle+"qR");  //request updated direction
+        		withrottle_send("M"+whichThrottle+"A*<;>qR");  //request updated direction
+        	}
+        	break;
+        	
+        	//Disconnect from the WiThrottle server.
           case message_type.DISCONNECT:
         	withrottle_send("Q");
         	if (heartbeat_interval > 0) {
@@ -444,9 +462,6 @@ public class threaded_application extends Application
           case message_type.DIRECTION:
           	whichThrottle = msg.obj.toString();
         	withrottle_send(String.format(whichThrottle+"R%d", msg.arg2));
-        	if (withrottle_version >= 2.0) {
-        		withrottle_send(whichThrottle+"qR");  //request updated direction
-        	}
             break;
           
             //Set or unset a function. arg1 is the function number, arg2 is set or unset.
@@ -564,7 +579,7 @@ public class threaded_application extends Application
 	  	
 	  	case 'T': 
 	  		loco_string_T = get_loconame_from_address_string(response_str.substring(1));  //set app variable
-	  		
+	  		Log.d("Engine_Driver", "comm_handler loco MT "+loco_string_T);
  	  	    break;
 	  	
 	  	case 'S': 
@@ -946,7 +961,7 @@ public class threaded_application extends Application
 
     //send the passed-in message to the socket
     private void withrottle_send(String msg) {
-    	
+//    	Log.d("Engine_Driver", "WiT send " + msg);    	
     	String newMsg = msg;
     	//convert msg to new MultiThrottle format if version >= 2.0
         if (withrottle_version >= 2.0) {

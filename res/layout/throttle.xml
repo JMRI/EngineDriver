@@ -19,7 +19,7 @@
    android:layout_height="fill_parent"
    android:gestureStrokeType="single"
    android:eventsInterceptionEnabled="true"
-   android:orientation="horizontal"
+   android:orientation="vertical"
 >
 
 <LinearLayout
@@ -118,7 +118,7 @@
             <Button
                android:id="@+id/button_stop_T"
                android:text="@string/stop"
-               style="@style/large_button_style"
+               style="@style/stop_button_style"
                android:enabled="false" />
             <Button
                android:id="@+id/button_rev_T"

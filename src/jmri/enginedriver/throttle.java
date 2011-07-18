@@ -24,7 +24,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -67,6 +66,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static final double SPEED_TO_DISPLAY = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL);
 	private static final double DISPLAY_TO_SPEED = (1.0 / SPEED_TO_DISPLAY);
 	
+	private static final long speedUpdateDelay = 500;	// idle time in milliseconds after speed change before requesting speed update 
 	boolean heartbeat = true; //turn on with each response, show error if not on
 
 	private String whichVolume = "T";
@@ -79,6 +79,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private long gestureLastCheckTime;				// time in milliseconds that velocity was last checked
 	private static final long gestureCheckRate = 200;	// rate in milliseconds to check velocity
 	private VelocityTracker mVelocityTracker;
+//	private Handler gestureHandler = new Handler();
+	private static MotionEvent lastEvent;
 
 
   //Handle messages from the communication thread TO this thread (responses from withrottle)
@@ -94,15 +96,19 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 	    		String response_str = msg.obj.toString();
 
+//	    		Log.d("Engine_Driver", "throt resp:"+ response_str);
 	        	switch (response_str.charAt(0)) {
 
 	        	  //various MultiThrottle responses
 	        	  case 'M':
-	        		if (response_str.substring(2,3).equals("+")) {  //if loco added, refresh the function labels
-		      	  		set_default_function_labels();
+	        		String scom = response_str.substring(2,3);
+	        		if (scom.equals("+") || scom.equals("L")) {  //if loco added or function labels updated
+	        			if(scom.equals("+")) {
+		      	  			set_default_function_labels();
+		      	  			enable_disable_buttons(response_str.substring(1,2));  //direction and slider: pass whichthrottle
+	        			}
 		      	  		// loop through all function buttons and
 		      	  		//   set label and dcc functions (based on settings) or hide if no label
-		      	  		enable_disable_buttons(response_str.substring(1,2));  //pass whichthrottle
 		      	  		if (response_str.charAt(1) == 'T') {
 		      	  			ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
 		      	  			set_function_labels_and_listeners_for_view("T");
@@ -123,7 +129,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	    	  				catch(NumberFormatException e) {
 	    	  					dir = 1;
 	    	  				}
-	    	  				set_direction_buttons(whichThrottle, dir); //set direction button 
+	    	  				set_direction_indication(whichThrottle, dir); //set direction button 
 	    	  			} 
 	    	  			else if (ls[1].substring(0,1).equals("V")) {
 	    	  				int speed = 0;
@@ -132,11 +138,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	    	  				}
 	    	  				catch(NumberFormatException e) {
 	    	  				}
-        	  				set_speed_slider(whichThrottle, speed); //set slider to value
+	    	  				setDisplayedSpeed(whichThrottle, speed);	//update speed indicator
 	    	  			}	    	  			
 
 	        		}
 		        	set_labels();
+		        	findViewById(R.id.throttle_screen).invalidate();
 	        		break;
 	      	  	  
 	      	  	  case 'T':
@@ -198,9 +205,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	  throttle_slider.setProgress(speed);
   }
 
-//"press" correct direction button based on direction returned from server
-  //TODO: improve this code
-  void set_direction_buttons(String whichThrottle, Integer direction) {
+// indicate actual direction
+  void set_direction_indication(String whichThrottle, Integer direction) {
 	  Button bFwd;
 	  Button bRev;
 	  if (whichThrottle.equals("T")) {
@@ -212,15 +218,49 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	  }
 	  if (direction == 0) {
 		  bFwd.setPressed(false);
-		  bFwd.setTypeface(null, Typeface.NORMAL);
 		  bRev.setPressed(true);
-		  bRev.setTypeface(null, Typeface.ITALIC);
 	  } else {
 		  bFwd.setPressed(true);
-		  bFwd.setTypeface(null, Typeface.ITALIC);
 		  bRev.setPressed(false);
+	  }
+  }
+
+ // indicate requested direction
+  void set_direction_request(String whichThrottle, Integer direction) {
+	  Button bFwd;
+	  Button bRev;
+	  if (whichThrottle.equals("T")) {
+		  bFwd = (Button)findViewById(R.id.button_fwd_T);
+		  bRev = (Button)findViewById(R.id.button_rev_T);
+	  } else {
+		  bFwd = (Button)findViewById(R.id.button_fwd_S);
+		  bRev = (Button)findViewById(R.id.button_rev_S);
+	  }
+	  if (direction == 0) {
+		  bFwd.setTypeface(null, Typeface.NORMAL);
+		  bRev.setTypeface(null, Typeface.ITALIC);
+	  } else {
+		  bFwd.setTypeface(null, Typeface.ITALIC);
 		  bRev.setTypeface(null, Typeface.NORMAL);
 	  }
+/*
+ * this code gathers direction feedback for the direction indication
+ *
+ *  
+	  if (mainapp.withrottle_version < 2.0) {
+		  // no feedback avail so just let indication follow request
+		  set_direction_indication(whichThrottle, direction);
+	  }
+  	  else {
+  			Message msg=Message.obtain();
+  			msg.what=message_type.REQ_DIRECTION;
+  			msg.obj=new String(whichThrottle);    // always load whichThrottle into message
+  			mainapp.comm_msg_handler.sendMessage(msg);
+  	}
+*
+*  for now just track the setting:
+*/  	
+		  set_direction_indication(whichThrottle, direction);
   }
   
   void set_stop_button(String whichThrottle, boolean pressed) {
@@ -250,6 +290,7 @@ void start_select_loco_activity(String whichThrottle)
 
   void enable_disable_buttons(String whichThrottle)  {
       boolean newEnabledState;
+//      Log.d("Engine_Driver", "e/d buttons "+mainapp.loco_string_T);
 	  if (whichThrottle.equals("T")) {
 		  newEnabledState = !(mainapp.loco_string_T.equals("Not Set"));  //set false if loco is "Not Set"
           findViewById(R.id.button_fwd_T).setEnabled(newEnabledState);
@@ -349,6 +390,66 @@ void start_select_loco_activity(String whichThrottle)
 	  }
 } //end of set_function_labels_and_states 
 
+  
+  
+/*
+ * future use: displays requested function state independent of (in addition to) feedback state
+ * todo: need to handle momentary buttons somehow
+ */
+  void set_function_request(String whichThrottle, int function, int reqState)  {
+//	  Log.d("Engine_Driver","starting set_function_request");
+	  ViewGroup vg; //table
+	  ViewGroup r;  //row
+	  Button b; //button
+	  boolean[] fs;  //copy of this throttle's function state array
+	  int k = 0; //counter for button array
+	  LinkedHashMap<Integer, String> function_labels_temp = new  LinkedHashMap<Integer, String>();
+	  
+	  if (whichThrottle.equals("T")) {
+  		 vg = (ViewGroup)findViewById(R.id.function_buttons_table_T);
+  		 fs = mainapp.function_states_T;
+  		 if (mainapp.function_labels_T != null && mainapp.function_labels_T.size()>0) {  //use roster functions or default functions
+  			function_labels_temp = mainapp.function_labels_T;
+  		 } else {
+   			function_labels_temp = mainapp.function_labels_default;
+  		 }
+  	  } else {
+		 vg = (ViewGroup)findViewById(R.id.function_buttons_table_S);
+  		 fs = mainapp.function_states_S;
+  		 if (mainapp.function_labels_S != null && mainapp.function_labels_S.size()>0) {  //use roster functions or default functions
+   			function_labels_temp = mainapp.function_labels_S;
+  		 } else {
+   			function_labels_temp = mainapp.function_labels_default;
+ 		 }
+  	  }
+
+	  if (fs !=null) { //don't bother if no function states found
+		  //put values in array for indexing in next step TODO: find direct way to do this
+		  ArrayList<Integer> aList = new ArrayList<Integer>();
+		  for (Integer f : function_labels_temp.keySet()) {
+			  aList.add(f);
+		  }
+
+		  for(int i = 0; i < vg.getChildCount(); i++) {
+			r = (ViewGroup)vg.getChildAt(i);
+			for(int j = 0; j < r.getChildCount(); j++) {
+				b = (Button)r.getChildAt(j);
+				if (k < aList.size()) {
+					if(function == aList.get(k)) {
+						if(reqState != 0) {
+							b.setTypeface(null, Typeface.ITALIC);
+						} else {
+					  		b.setTypeface(null, Typeface.NORMAL);
+						}
+						return;
+					}
+				}
+				k++;
+			}
+		  }
+	  }
+} //end of set_function_labels_and_states 
+
   public class function_button_touch_listener implements View.OnTouchListener
   {
     int function;
@@ -363,18 +464,16 @@ void start_select_loco_activity(String whichThrottle)
 
     public boolean onTouch(View v, MotionEvent event)
     {
+//      Log.d("Engine_Driver", "onTouch func" + function + " action " + event.getAction());
+	  //if gesture in progress, skip button processing
       if(gestureInProgress == true)
       {
-    	  //add movement and recheck gesture velocity
-    	  //if gesture is still in progress, skip button processing
-          Log.d("Engine_Driver", "onTouch func" + function + " action " + event.getAction());
-    	  gestureVelocityCheck(event);
-    	  if(gestureInProgress == true) 
-    		  return(true);
+   		  return(true);
       }
+
+      // if gesture just failed, insert one DOWN event on this control
       if(gestureFailed == true)
       {
-    	  // if gesture just failed, insert one DOWN event on this control
     	  handleAction(MotionEvent.ACTION_DOWN);
     	  gestureFailed = false;	// just do this once
       }
@@ -384,7 +483,7 @@ void start_select_loco_activity(String whichThrottle)
 
     private void handleAction(int action) 
     {
-      Log.d("Engine_Driver", "handleAction func" + function + " action " + action);
+//      Log.d("Engine_Driver", "handleAction func" + function + " action " + action);
       switch(action)
       {
         case MotionEvent.ACTION_DOWN:
@@ -399,7 +498,7 @@ void start_select_loco_activity(String whichThrottle)
             	function_msg.arg2=1;  //forward is 1
 
             	//show pressed image on current button, and turn off pressed image on "other" button 
-            	set_direction_buttons(whichThrottle, 1);
+            	set_direction_request(whichThrottle, 1);
             }
               break;
 
@@ -408,12 +507,11 @@ void start_select_loco_activity(String whichThrottle)
                 function_msg.arg1=1;
             	function_msg.arg2=0;  //reverse is 0
             	//show pressed image on current button, and turn off pressed image on "other" button 
-            	set_direction_buttons(whichThrottle, 0);
+            	set_direction_request(whichThrottle, 0);
             	//            	v.setPressed(true);
               }
               break;
 
-            // setting the throttle slide to 0 sends a velocity change to the withrottle          	  
             case function_button.STOP : { 
             	set_stop_button(whichThrottle, true);
             	SeekBar sb;
@@ -422,8 +520,13 @@ void start_select_loco_activity(String whichThrottle)
             	} else {
               	  sb=(SeekBar)findViewById(R.id.speed_S);
             	}
-              sb.setProgress(0);
-        	  break;
+                // changing the throttle slider to 0 sends a velocity change to the withrottle
+            	// otherwise explicitly send 0 speed message
+            	if(sb.getProgress() != 0)
+            		sb.setProgress(0);
+            	else
+            		sendSpeedMsg(whichThrottle, 0);
+            	break;
             }
             // specify which throttle the volume button controls          	  
             case function_button.SPEED_LABEL: { 
@@ -440,6 +543,7 @@ void start_select_loco_activity(String whichThrottle)
               function_msg.what=message_type.FUNCTION;
               function_msg.arg1=function;
               function_msg.arg2=1;
+//              set_function_request(whichThrottle, function, 1);
             }
           }  //end of function switch
           
@@ -465,6 +569,7 @@ void start_select_loco_activity(String whichThrottle)
         		function_msg.arg2=0;
         		function_msg.obj=new String(whichThrottle);    // always load whichThrottle into message
         		mainapp.comm_msg_handler.sendMessage(function_msg);
+//                set_function_request(whichThrottle, function, 0);
         	}
         	break;
       }
@@ -475,57 +580,106 @@ void start_select_loco_activity(String whichThrottle)
   {
       String whichThrottle;
 	  SeekBar speed_slider;
-	  TextView speed_label;
-//	  int progress;
       
     public throttle_listener(String new_whichThrottle)    {
 	    whichThrottle = new_whichThrottle;   	//store values for this listener
   		if (whichThrottle.equals("T")) {
-			speed_label=(TextView)findViewById(R.id.speed_value_label_T);
 			speed_slider=(SeekBar)findViewById(R.id.speed_T);
 		} 
 		else {
-			speed_label=(TextView)findViewById(R.id.speed_value_label_S);
 			speed_slider=(SeekBar)findViewById(R.id.speed_S);
 		}
-//  		progress = speed_slider.getProgress();
     }
    
     public boolean onTouch(View v, MotionEvent event) 
     {
-        Log.d("Engine_Driver", "onTouchThrot action " + event.getAction());
-    	if(gestureInProgress == true)
-    	{
-    		//add movement and recheck gesture velocity
-    		gestureVelocityCheck(event);
-    	}
-    	//consume event if gesture is in progress, otherwise pass it to the SeekBar onProgressChanged
+//        Log.d("Engine_Driver", "onTouchThrot action " + event.getAction());
+
+    	//consume event if gesture is in progress, otherwise pass it to the SeekBar onProgressChanged()
     	return(gestureInProgress);
     }
 
     public void onProgressChanged(SeekBar throttle, int speed, boolean fromUser)
     {
-        Log.d("Engine_Driver", "onProgChanged speed " + speed);
+//        Log.d("Engine_Driver", "onProgChanged speed " + speed);
+      sendSpeedMsg(whichThrottle, speed);
+
+/* 
+ * this code (re)triggers speed feedback for the speed indication
+ *        
+      mainapp.throttle_msg_handler.removeCallbacks(speedUpdate);
+      mainapp.throttle_msg_handler.postDelayed(speedUpdate, speedUpdateDelay);
+*
+*  for now just display the setpoint:
+*/      
+		  setDisplayedSpeed(whichThrottle, speed);
+    }
+
+	@Override
+	public void onStartTrackingTouch(SeekBar sb) {
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar sb) {
+	}
+    
+	//
+	// speedUpdate runs when more than speedUpdateDelay milliseconds 
+	// elapse between speed changes.
+	//
+	private Runnable speedUpdate = new Runnable() {
+	   @Override
+	   public void run() {
+		   Log.d("Engine_Driver", "speedUpdate " + whichThrottle);
+		  	  if (mainapp.withrottle_version < 2.0) 
+		  	  {
+				  // no speed feedback avail so just let speed indication follow request  
+		  		  setDisplayedSpeed(whichThrottle, speed_slider.getProgress());
+		  	  }
+		  	  else 
+		  	  {
+		   
+		  		  requestSpeedMsg(whichThrottle);
+		  	  }
+	   }
+	};
+
+  }
+
+  private void requestSpeedMsg(String whichThrottle) {
+		Message msg=Message.obtain();
+		msg.what=message_type.REQ_VELOCITY;
+		msg.obj=new String(whichThrottle);    // always load whichThrottle into message
+		mainapp.comm_msg_handler.sendMessage(msg);
+}
+
+  private void sendSpeedMsg(String whichThrottle, int speed) {
 		Message msg=Message.obtain();
 		msg.what=message_type.VELOCITY;
 		msg.arg1=speed;
 		msg.obj=new String(whichThrottle);    // always load whichThrottle into message
 		mainapp.comm_msg_handler.sendMessage(msg);
+  }
+  
+  private void setDisplayedSpeed(String whichThrottle, int speed) {
+	  	TextView speed_label;
+	  	if (whichThrottle.equals("T")) {
+			speed_label=(TextView)findViewById(R.id.speed_value_label_T);
+		} 
+		else {
+			speed_label=(TextView)findViewById(R.id.speed_value_label_S);
+		}
+	  	if(speed < 0) {
+	  		speed = 0;
+	  		String loco;
+	  		if(whichThrottle.equals("T"))
+	  			loco = mainapp.loco_string_T;
+	  		else
+	  			loco = mainapp.loco_string_S;
+	  		Toast.makeText(getApplicationContext(), "Alert: Engine " + loco + " is set to ESTOP", Toast.LENGTH_LONG).show();
+	  	}
 		int displayedSpeed = (int)Math.round(speed * SPEED_TO_DISPLAY);
 		speed_label.setText(Integer.toString(displayedSpeed));
-//			progress = speed;
-    }
-
-	@Override
-	public void onStartTrackingTouch(SeekBar sb) {
-        Log.d("Engine_Driver", "onStartTracking");
-	}
-
-	@Override
-	public void onStopTrackingTouch(SeekBar sb) {
-        Log.d("Engine_Driver", "onStopTracking");
-	}
-
   }
 
   //Handle pressing of the back button to release the selected loco and end this activity
@@ -557,12 +711,12 @@ void start_select_loco_activity(String whichThrottle)
 		  }
 		  
 		  //always go to Connection Activity
-//	  	  Intent in=new Intent().setClass(this, connection_activity.class);
+	  	  Intent in=new Intent().setClass(this, connection_activity.class);
 //	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-//		  startActivity(in);
+		  startActivity(in);
 		  this.finish();  //end this activity
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-//          return true;
+          return (true);	//stop processing this key
 	  } 
 	  else if((key==KeyEvent.KEYCODE_VOLUME_UP) || (key==KeyEvent.KEYCODE_VOLUME_DOWN) ) { //use volume to change speed for specified loco
 		  SeekBar sb = null;
@@ -608,21 +762,24 @@ public void onStart() {
  
   //create heartbeat if requested and not already started
   if ((heartbeatTimer == null) && (mainapp.heartbeat_interval > 0)) {
-      int interval = (mainapp.heartbeat_interval - 1) * 900;  //set heartbeat one second less than required (900 copied from withrottle side)
+      int interval = (mainapp.heartbeat_interval - 1) * 900;  //set heartbeat in mSec to (one second less than required) * .9 
 
     heartbeatTimer = new Timer();
   	heartbeatTimer.schedule(new TimerTask() {
   		@Override
   		public void run() {
-  			send_heartbeat();
+  		  //send heartbeat to withrottle to keep this throttle alive (if enabled in withrottle prefs)
+  			  if (mainapp.heartbeat_interval > 0) {
+//  			    Log.d("Engine_Driver", "send_heartbeat");
+  			    Message msg=Message.obtain();
+  			    msg.what=message_type.HEARTBEAT;
+  			    mainapp.comm_msg_handler.sendMessage(msg);
+  			  }
   		}
   	}, 100, interval);
   }
-  
   set_labels();
-
 }
-
 
   /** Called when the activity is first created. */
   @Override
@@ -697,7 +854,7 @@ public void onStart() {
     set_function_labels_and_listeners_for_view("T");
     set_function_labels_and_listeners_for_view("S");
 
-    ov.bringToFront();
+ //   ov.bringToFront();
     
   } //end of onCreate()
 
@@ -904,15 +1061,6 @@ public void onStart() {
 
   }
 
-  //send heartbeat to withrottle to keep this throttle alive (if enabled in withrottle prefs)
-  private void send_heartbeat() {
-	  if (mainapp.heartbeat_interval > 0) {
-	    Message msg=Message.obtain();
-	    msg.what=message_type.HEARTBEAT;
-	    mainapp.comm_msg_handler.sendMessage(msg);
-	  }
-  }
-  
   @Override
   public boolean onCreateOptionsMenu(Menu menu){
 	  MenuInflater inflater = getMenuInflater();
@@ -988,14 +1136,12 @@ public void onStart() {
 
 	@Override
 	public void onGesture(GestureOverlayView arg0, MotionEvent event) {
-        Log.d("Engine_Driver", "onGesture action " + event.getAction());
-		gestureVelocityCheck(event);
-	}
-	
-	public void gestureVelocityCheck(MotionEvent event)
-	{
+//        Log.d("Engine_Driver", "onGesture action " + event.getAction());
 		if(gestureInProgress == true)
 		{
+			//stop the gesture timeout timer
+			mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
+
 			mVelocityTracker.addMovement(event);
 			if((event.getEventTime() - gestureLastCheckTime) > gestureCheckRate) 
 			{
@@ -1004,19 +1150,25 @@ public void onStart() {
 				final VelocityTracker velocityTracker = mVelocityTracker;
 				velocityTracker.computeCurrentVelocity(1000);
 				int velocityX = (int) velocityTracker.getXVelocity();
-		        Log.d("Engine_Driver", "gestureVelocity vel " + velocityX);
+//		        Log.d("Engine_Driver", "gestureVelocity vel " + velocityX);
 				if(Math.abs(velocityX) < threaded_application.min_fling_velocity)
 				{
 					gestureFailed = true;
 					gestureInProgress = false;
 				}
 			}
+			if(gestureInProgress == true)
+			{
+				// restart the gesture timeout timer
+				lastEvent = event;
+				mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+			}
 		}
 	}
 
 	@Override
 	public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
-        Log.d("Engine_Driver", "onGestureCancelled action " + event.getAction());
+//        Log.d("Engine_Driver", "onGestureCancelled action " + event.getAction());
 		gestureInProgress = false;
 		gestureEnd(event);
 	}
@@ -1024,22 +1176,21 @@ public void onStart() {
 	//determine if the action was long enough to be a swipe
 	@Override
 	public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
-        Log.d("Engine_Driver", "onGestureEnded action " + event.getAction());
+//        Log.d("Engine_Driver", "onGestureEnded action " + event.getAction());
 		gestureEnd(event);
 	}
 	
 	//save start position of potential gesture
 	@Override
 	public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
-        Log.d("Engine_Driver", "onGestureStarted action" + event.getAction());
+//        Log.d("Engine_Driver", "onGestureStarted action" + event.getAction());
 		gestureStart(event);
 	}
 	
 	private void gestureStart( MotionEvent event ) {
-        Log.d("Engine_Driver", "gestureStart action " + event.getAction());
+//        Log.d("Engine_Driver", "gestureStart action " + event.getAction());
 		gestureStartX = (int) event.getX();
 		gestureStartY = (int) event.getY();
-		// track the new gesture. seekbar onProgressChanged clears this flag to stop tracking.
 		gestureInProgress = true;
 		gestureFailed = false;
 		gestureLastCheckTime = event.getEventTime();
@@ -1047,14 +1198,20 @@ public void onStart() {
 			mVelocityTracker = VelocityTracker.obtain();
 		}
 		mVelocityTracker.clear();
+		// start the gesture timeout timer
+		lastEvent = event;
+		mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
 	}
 
 	private void gestureEnd( MotionEvent event) {
+		mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
 		if(gestureInProgress == true)
 		{
-			
 			if(Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) 
 			{
+				// valid gesture.  Change the event action to CANCEL so that it isn't processed by
+				// any control below the gesture overlay 
+				event.setAction(MotionEvent.ACTION_CANCEL);
 				// left to right swipe goes to turnouts
 				if(event.getRawX() > gestureStartX) {
 					Intent in=new Intent().setClass(this, turnouts.class);
@@ -1077,25 +1234,29 @@ public void onStart() {
 		}
 //		mVelocityTracker.recycle();
 	}
-	void showEvent(MotionEvent event, String func)
-	{
-		String eventName;
-		switch(event.getAction()) {
-			case MotionEvent.ACTION_DOWN:
-				eventName = "ACTION_DOWN";
-				break;
-			case MotionEvent.ACTION_UP:
-				eventName = "ACTION_UP";
-				break;
-			case MotionEvent.ACTION_MOVE:
-				eventName = "ACTION_MOVE";
-				break;
-			default:
-				eventName = "ACTION_OTHER";
-				break;
-		}
-		Log.d("Engine_Driver", func + " " + eventName + " gestureInProg " + gestureInProgress);
-		
-	}
 
+	//
+	// GestureStopped runs when more than gestureCheckRate milliseconds 
+	// elapse between onGesture events (i.e. press without movement).
+	//
+	private Runnable gestureStopped = new Runnable() {
+	   @Override
+	   public void run() {
+		   if(gestureInProgress == true)
+		   {
+			   //end the gesture
+			   gestureInProgress = false;
+			   gestureFailed = true;
+			   //create a MOVE event to trigger the underlying control
+			   MotionEvent event = lastEvent;
+			   event.setAction(MotionEvent.ACTION_MOVE);
+			   View v = findViewById(R.id.throttle_screen);
+			   if(v != null)
+			   {
+//				   Log.d("Engine_Driver", "gestureStopped dispatching event");
+				   v.dispatchTouchEvent(event);
+			   }
+		   }
+	   }
+	};
 }
