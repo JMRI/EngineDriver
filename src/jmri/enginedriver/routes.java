@@ -21,6 +21,8 @@ package jmri.enginedriver;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import jmri.enginedriver.turnouts.turnouts_handler;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -173,6 +175,18 @@ public class routes extends Activity  implements OnGestureListener {
 	  }
 
   @Override
+  public boolean onTouchEvent(MotionEvent event){
+  	return myGesture.onTouchEvent(event);
+  }
+
+  @Override
+  public void onResume() {
+	  super.onResume();
+    //update route list
+    refresh_route_view();
+  }
+
+  @Override
   public void onStart() {
     super.onStart();
 
@@ -180,17 +194,15 @@ public class routes extends Activity  implements OnGestureListener {
     if (mainapp.routes_msg_handler == null){
   	  mainapp.routes_msg_handler=new routes_handler();
     }
-
-    //update route list
-    refresh_route_view();
   }
 
+  /** Called when the activity is finished. */
   @Override
-  public boolean onTouchEvent(MotionEvent event){
-  	return myGesture.onTouchEvent(event);
+  public void onDestroy() {
+	  super.onDestroy();
+  	  mainapp.routes_msg_handler = null;
   }
-
-	  
+  
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState)  {

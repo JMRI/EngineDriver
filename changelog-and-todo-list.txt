@@ -1,9 +1,12 @@
 **Version 1.7
- * Enabled "fling" between turnouts, throttle, routes.
+ * Enabled "fling" between turnouts, throttle, routes (rbecker)
  * Fixed the shutdown and back behavior (rbecker)
  * added animations to all page transitions (rbecker)
  * added menus to routes and turnouts activities (rbecker)
- * fixed fling on throttle activity (rbecker)
+ * fixed initial height on throttle (rbecker)
+ * show feedback on Stop button (rbecker) 
+ * fixed intermittent failure to get functions from roster (rbecker)
+ * handle eStop and show message (rbecker) 
 **Version 1.6
  * Began adding Multithrottle support (serious rigged version, 2.0+ only)
  * Mirror speed and direction from server (on heartbeat, 2.0+ only)
@@ -97,6 +100,7 @@
  *   added html About page
  */
 /*
+ *   TODO: fix crash when ED is left backgrounded for a while, then reopened
  *   TODO: show icon in notification bar if app is running but not visible
  *   TODO: allow user to configure side-by-side panels for pads, etc.
  *   TODO: control discovered server list in ta, change ca to only display what is in array
@@ -129,8 +133,6 @@
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
  *   TODO: prompt "Are you sure you want to Disconnect?" when Back button pressed 
- *   TODO: show feedback on Stop button (maybe a red indicator?) 
- *   TODO: fix intermittent failure to get functions from roster (timing?) 
  *   TODO: make Forward, Stop, Reverse language-sensitive 
  *   TODO: restart/extend heartbeat on every send
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)

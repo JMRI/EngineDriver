@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,6 +39,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.io.*;
 
+import jmri.enginedriver.turnouts.turnouts_handler;
+
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.LinearLayout;
@@ -58,6 +62,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private threaded_application mainapp;  // hold pointer to mainapp
 	private static final int GONE = 8;
 	private static final int VISIBLE = 0;
+	private static final int throttleMargin = 15;		// margin between the throttles
 	private SharedPreferences prefs;
 	private Timer heartbeatTimer;
 	private static final int MAX_SPEED_DISPLAY = 99;	// value to display at maximum speed setting 
@@ -138,7 +143,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	    	  				}
 	    	  				catch(NumberFormatException e) {
 	    	  				}
-	    	  				setDisplayedSpeed(whichThrottle, speed);	//update speed indicator
+	    	  				set_speed_slider(whichThrottle, speed);	//update speed slider and indicator
+	    	  				
 	    	  			}	    	  			
 
 	        		}
@@ -186,26 +192,40 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	  }
 
   void set_speed_slider(String whichThrottle, int speed) {
-	  TextView speed_label;
 	  SeekBar throttle_slider;
 
 	  if (whichThrottle.equals("T")) {
-		  speed_label=(TextView)findViewById(R.id.speed_value_label_T);
 		  throttle_slider=(SeekBar)findViewById(R.id.speed_T);
 	  } else {
-		  speed_label=(TextView)findViewById(R.id.speed_value_label_S);
 		  throttle_slider=(SeekBar)findViewById(R.id.speed_S);
 	  }
-	  int displayedSpeed = 0;
 	  if(speed < 0)
 		  speed = 0;
-	  else
-		  displayedSpeed = (int)Math.round(speed * SPEED_TO_DISPLAY); //show speed as 0-99 instead of 0-126
-	  speed_label.setText(Integer.toString(displayedSpeed));
 	  throttle_slider.setProgress(speed);
   }
 
-// indicate actual direction
+private void setDisplayedSpeed(String whichThrottle, int speed) {
+	  	TextView speed_label;
+	  	if (whichThrottle.equals("T")) {
+			speed_label=(TextView)findViewById(R.id.speed_value_label_T);
+		} 
+		else {
+			speed_label=(TextView)findViewById(R.id.speed_value_label_S);
+		}
+	  	if(speed < 0) {
+	  		speed = 0;
+	  		String loco;
+	  		if(whichThrottle.equals("T"))
+	  			loco = mainapp.loco_string_T;
+	  		else
+	  			loco = mainapp.loco_string_S;
+	  		Toast.makeText(getApplicationContext(), "Alert: Engine " + loco + " is set to ESTOP", Toast.LENGTH_LONG).show();
+	  	}
+		int displayedSpeed = (int)Math.round(speed * SPEED_TO_DISPLAY);
+		speed_label.setText(Integer.toString(displayedSpeed));
+  }
+
+ // indicate actual direction
   void set_direction_indication(String whichThrottle, Integer direction) {
 	  Button bFwd;
 	  Button bRev;
@@ -225,7 +245,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	  }
   }
 
- // indicate requested direction
+// indicate requested direction
   void set_direction_request(String whichThrottle, Integer direction) {
 	  Button bFwd;
 	  Button bRev;
@@ -551,6 +571,9 @@ void start_select_loco_activity(String whichThrottle)
             function_msg.obj=new String(whichThrottle);    // always load whichThrottle into message
             mainapp.comm_msg_handler.sendMessage(function_msg);            //send the message to comm thread
           }
+          else {
+        	  function_msg.recycle();
+          }
 
         }
         break;
@@ -623,6 +646,7 @@ void start_select_loco_activity(String whichThrottle)
 	public void onStopTrackingTouch(SeekBar sb) {
 	}
     
+/*
 	//
 	// speedUpdate runs when more than speedUpdateDelay milliseconds 
 	// elapse between speed changes.
@@ -643,9 +667,10 @@ void start_select_loco_activity(String whichThrottle)
 		  	  }
 	   }
 	};
-
+*/
   }
 
+	
   private void requestSpeedMsg(String whichThrottle) {
 		Message msg=Message.obtain();
 		msg.what=message_type.REQ_VELOCITY;
@@ -661,27 +686,6 @@ void start_select_loco_activity(String whichThrottle)
 		mainapp.comm_msg_handler.sendMessage(msg);
   }
   
-  private void setDisplayedSpeed(String whichThrottle, int speed) {
-	  	TextView speed_label;
-	  	if (whichThrottle.equals("T")) {
-			speed_label=(TextView)findViewById(R.id.speed_value_label_T);
-		} 
-		else {
-			speed_label=(TextView)findViewById(R.id.speed_value_label_S);
-		}
-	  	if(speed < 0) {
-	  		speed = 0;
-	  		String loco;
-	  		if(whichThrottle.equals("T"))
-	  			loco = mainapp.loco_string_T;
-	  		else
-	  			loco = mainapp.loco_string_S;
-	  		Toast.makeText(getApplicationContext(), "Alert: Engine " + loco + " is set to ESTOP", Toast.LENGTH_LONG).show();
-	  	}
-		int displayedSpeed = (int)Math.round(speed * SPEED_TO_DISPLAY);
-		speed_label.setText(Integer.toString(displayedSpeed));
-  }
-
   //Handle pressing of the back button to release the selected loco and end this activity
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {
@@ -739,16 +743,16 @@ void start_select_loco_activity(String whichThrottle)
   };
   
   @Override
-public void onResume() {
-  super.onResume();
-
-  //format the screen area
-  enable_disable_buttons("T"); 
-  enable_disable_buttons("S");  
-  set_labels();
-  gestureFailed = false;
-  gestureInProgress = false;
-}
+  public void onResume() {
+	  super.onResume();
+	
+	  //format the screen area
+	  enable_disable_buttons("T"); 
+	  enable_disable_buttons("S");  
+	  set_labels();
+	  gestureFailed = false;
+	  gestureInProgress = false;
+  }
 
 
 @Override
@@ -778,8 +782,16 @@ public void onStart() {
   		}
   	}, 100, interval);
   }
-  set_labels();
+//  set_labels();
 }
+
+/** Called when the activity is finished. */
+  @Override
+  public void onDestroy() {
+	  super.onDestroy();
+	  mainapp.throttle_msg_handler = null;
+  }
+
 
   /** Called when the activity is first created. */
   @Override
@@ -854,6 +866,9 @@ public void onStart() {
     set_function_labels_and_listeners_for_view("T");
     set_function_labels_and_listeners_for_view("S");
 
+	if (mVelocityTracker == null) {
+		mVelocityTracker = VelocityTracker.obtain();
+	}
  //   ov.bringToFront();
     
   } //end of onCreate()
@@ -978,8 +993,10 @@ public void onStart() {
  // increase height of throttle slider (if requested in preferences)
     boolean ish = prefs.getBoolean("increase_slider_height_preference", false);  //TODO fix getting from strings
     
+    final DisplayMetrics dm = getResources().getDisplayMetrics();
  // Get the screen's density scale
-    final float scale = getResources().getDisplayMetrics().density;
+    
+    final float scale = dm.density;
     // Convert the dps to pixels, based on density scale
     int newHeight;
     if (ish) {
@@ -1026,9 +1043,13 @@ public void onStart() {
     b.setPressed(false);
 
     int screenHeight = findViewById(R.id.throttle_screen).getHeight();  //get the height of usable area
-  
-    if (screenHeight > 0) {  //don't do this if screen not measurable
+    if(screenHeight == 0) {
+    	//throttle screen hasn't been drawn yet, so use display metrics for now
+        screenHeight = dm.heightPixels - 30;	//allow for title bar, etc	
+    }
+    if (screenHeight > throttleMargin) {	//don't do this if height is invalid
 		//determine how to split the screen (evenly if both, 85/15 if only one)
+    	screenHeight -= throttleMargin;
 	    if (throttle_count == 0 || throttle_count == 2)  {
 	    	height_T = (int) (screenHeight * 0.5);
 	    	height_S = (int) (screenHeight * 0.5);
@@ -1045,6 +1066,7 @@ public void onStart() {
 	    llLp = new LinearLayout.LayoutParams(
 	            ViewGroup.LayoutParams.FILL_PARENT,
 	            height_T);
+	    llLp.bottomMargin = throttleMargin;
 	    ll.setLayoutParams(llLp);
 	
 	    //set height of S area
@@ -1194,9 +1216,6 @@ public void onStart() {
 		gestureInProgress = true;
 		gestureFailed = false;
 		gestureLastCheckTime = event.getEventTime();
-		if (mVelocityTracker == null) {
-			mVelocityTracker = VelocityTracker.obtain();
-		}
 		mVelocityTracker.clear();
 		// start the gesture timeout timer
 		lastEvent = event;
@@ -1232,7 +1251,6 @@ public void onStart() {
 				gestureFailed = true;
 			}
 		}
-//		mVelocityTracker.recycle();
 	}
 
 	//

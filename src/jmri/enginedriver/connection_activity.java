@@ -65,13 +65,14 @@ public class connection_activity extends Activity {
 	
   //set use_default_host to true with appropriate host and port values
   //  to avoid manual entry when debugging and discovery isn't available 
-//  private static final boolean use_default_host = true;
+//	private static final boolean use_default_host = true;
+  private static final boolean use_default_host = false;
   
   
-//  String default_host = "192.168.1.2";
-//  String default_port = "2029";
-  String default_host = "dev.mstevetodd.com";
-  String default_port = "44444";
+  String default_host = "192.168.1.2";
+  String default_port = "2029";
+//  String default_host = "dev.mstevetodd.com";
+//  String default_port = "44444";
 
   ArrayList<HashMap<String, String> > connections_list;
   ArrayList<HashMap<String, String> > discovery_list;
@@ -440,13 +441,11 @@ public class connection_activity extends Activity {
     threaded_application.min_fling_distance = (int)(threaded_application.SWIPE_MIN_DISTANCE * dm.densityDpi / 160.0f);
     threaded_application.min_fling_velocity = (int)(threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f); 
 
-/*    if(use_default_host == true)
+    if(use_default_host == true)
 	{
 		((EditText)findViewById(R.id.host_ip)).setText(default_host);
 	    ((EditText)findViewById(R.id.port)).setText(default_port);
 	}
-*/
-    
   }
   
   private void set_labels() {

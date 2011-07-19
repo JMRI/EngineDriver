@@ -83,6 +83,13 @@ public class power_control extends Activity {
 		}
 
   @Override
+  public void onResume() {
+	  super.onResume();
+    //update route list
+    refresh_power_control_view();
+  }
+
+  @Override
   public void onStart() {
     super.onStart();
 
@@ -90,10 +97,14 @@ public class power_control extends Activity {
     if (mainapp.power_control_msg_handler == null){
     	mainapp.power_control_msg_handler=new power_control_handler();
     }
-
-    refresh_power_control_view();
   }
 
+  /** Called when the activity is finished. */
+  @Override
+  public void onDestroy() {
+	  super.onDestroy();
+  	  mainapp.power_control_msg_handler = null;
+  }
 	  
   /** Called when the activity is first created. */
   @Override

@@ -394,7 +394,12 @@ public class threaded_application extends Application
  		    if (throttle_msg_handler != null) {
 		       msg=Message.obtain(); 
 		       msg.what=message_type.HEARTBEAT;
-		       throttle_msg_handler.sendMessage(msg);
+		       try {
+		    	   throttle_msg_handler.sendMessage(msg);
+		       }
+		       catch(Exception e) {
+		    	   msg.recycle();
+		       }
 		    }
             break;
 
@@ -684,29 +689,50 @@ public class threaded_application extends Application
   	  }  //end switch
   	  
   	  //forward whatever we got to other activities (if started)  dup code needed, not sure why msg is getting stepped on 
-      if (turnouts_msg_handler != null)   { 
+      if (turnouts_msg_handler != null)   
+      { 
           Message msg=Message.obtain(); 
           msg.what=message_type.RESPONSE;
-          msg.obj=new String(response_str); 
-    	  turnouts_msg_handler.sendMessage(msg);   
+          msg.obj=new String(response_str);
+          try {
+        	  turnouts_msg_handler.sendMessage(msg);
+          }
+          catch(Exception e) {
+        	  msg.recycle();
+          }
       }
       if (routes_msg_handler != null)   { 
           Message msg=Message.obtain(); 
           msg.what=message_type.RESPONSE;
           msg.obj=new String(response_str); 
-    	  routes_msg_handler.sendMessage(msg);   
+          try {
+        	  routes_msg_handler.sendMessage(msg);
+          }
+          catch(Exception e) {
+        	  msg.recycle();
+          }
       }
       if (throttle_msg_handler != null) {
     	  Message msg=Message.obtain(); 
     	  msg.what=message_type.RESPONSE;
     	  msg.obj=new String(response_str);
-    	  throttle_msg_handler.sendMessage(msg);
+          try {
+        	  throttle_msg_handler.sendMessage(msg);
+          }
+          catch(Exception e) {
+        	  msg.recycle();
+          }
       }
       if (power_control_msg_handler != null) { 
           Message msg=Message.obtain(); 
           msg.what=message_type.RESPONSE;
           msg.obj=new String(response_str); 
-    	  power_control_msg_handler.sendMessage(msg); 
+          try {
+        	  power_control_msg_handler.sendMessage(msg);
+          }
+          catch(Exception e) {
+        	  msg.recycle();
+          }
       }
       
     }  //end of process_response
@@ -1033,6 +1059,7 @@ public class threaded_application extends Application
   
   
   public void onCreate()  {
+	  super.onCreate();
 	  prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
 	  function_states_T = new boolean[32];

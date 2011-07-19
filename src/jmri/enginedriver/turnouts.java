@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
@@ -79,7 +80,6 @@ public class turnouts extends Activity implements OnGestureListener {
 	  }	  
 
 	public void refresh_turnout_view() {
-
 		//show selected hardware system
 	    String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
 		TextView hstv =(TextView)findViewById(R.id.hardware_system);
@@ -190,6 +190,18 @@ public class turnouts extends Activity implements OnGestureListener {
 	  }
 
   @Override
+  public boolean onTouchEvent(MotionEvent event){
+  	return myGesture.onTouchEvent(event);
+  }
+
+  @Override
+  public void onResume() {
+	  super.onResume();
+    //update turnout list
+    refresh_turnout_view();
+  }
+
+  @Override
   public void onStart() {
     super.onStart();
 
@@ -197,15 +209,15 @@ public class turnouts extends Activity implements OnGestureListener {
     if (mainapp.turnouts_msg_handler == null){
   	  mainapp.turnouts_msg_handler=new turnouts_handler();
     }
-
-    //update turnout list
-    refresh_turnout_view();
   }
-
+  
+  /** Called when the activity is finished. */
   @Override
-  public boolean onTouchEvent(MotionEvent event){
-  	return myGesture.onTouchEvent(event);
+  public void onDestroy() {
+	  super.onDestroy();
+  	  mainapp.turnouts_msg_handler = null;
   }
+  
 	  
   /** Called when the activity is first created. */
   @Override
@@ -269,6 +281,7 @@ public class turnouts extends Activity implements OnGestureListener {
     
   };
 
+    
   //Always go to throttle activity if back button pressed
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {
