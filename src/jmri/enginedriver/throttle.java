@@ -19,6 +19,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -62,7 +64,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private threaded_application mainapp;  // hold pointer to mainapp
 	private static final int GONE = 8;
 	private static final int VISIBLE = 0;
-	private static final int throttleMargin = 15;		// margin between the throttles
+	private static final int throttleMargin = 8;	// margin between the throttles in dp
+	private static final int titleBar = 45;			// estimate of lost screen height in dp
 	private SharedPreferences prefs;
 	private Timer heartbeatTimer;
 	private static final int MAX_SPEED_DISPLAY = 99;	// value to display at maximum speed setting 
@@ -686,62 +689,6 @@ void start_select_loco_activity(String whichThrottle)
 		mainapp.comm_msg_handler.sendMessage(msg);
   }
   
-  //Handle pressing of the back button to release the selected loco and end this activity
-  @Override
-  public boolean onKeyDown(int key, KeyEvent event) {
-	  if(key==KeyEvent.KEYCODE_BACK)  {
-//		  mainapp.throttle_msg_handler = null; //clear out pointer to this activity
-		  
-		  //release first loco
-		  Message msg=Message.obtain();
-		  msg.what=message_type.RELEASE;
-		  msg.obj=new String("T");
-		  mainapp.comm_msg_handler.sendMessage(msg);
-
-		  //release second loco
-		  msg=Message.obtain();
-		  msg.what=message_type.RELEASE;
-		  msg.obj=new String("S");
-		  mainapp.comm_msg_handler.sendMessage(msg);
-
-		  //disconnect from throttle
-		  msg=Message.obtain();
-		  msg.what=message_type.DISCONNECT;
-		  mainapp.comm_msg_handler.sendMessage(msg);  
-
-		  //kill the heartbeat timer
-		  if (heartbeatTimer != null) {
-			  heartbeatTimer.cancel();
-		  }
-		  
-		  //always go to Connection Activity
-	  	  Intent in=new Intent().setClass(this, connection_activity.class);
-//	  	  in.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		  startActivity(in);
-		  this.finish();  //end this activity
-		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-          return (true);	//stop processing this key
-	  } 
-	  else if((key==KeyEvent.KEYCODE_VOLUME_UP) || (key==KeyEvent.KEYCODE_VOLUME_DOWN) ) { //use volume to change speed for specified loco
-		  SeekBar sb = null;
-		  if (whichVolume.equals("T") && !mainapp.loco_string_T.equals("Not Set")) {
-			  sb=(SeekBar)findViewById(R.id.speed_T);
-		  }
-		  if (whichVolume.equals("S") && !mainapp.loco_string_S.equals("Not Set")) {
-			  sb=(SeekBar)findViewById(R.id.speed_S);
-		  }
-		  if (sb != null) {
-			  if (key==KeyEvent.KEYCODE_VOLUME_UP) {
-				  sb.setProgress(sb.getProgress() + 1 ); //increase 
-			  } else {
-				  sb.setProgress(sb.getProgress() - 1 );  //decrease (else is VOLUME_DOWN)
-			  }
-		  }
-		  return(true);  //stop processing this key
-	  }
-	  return(super.onKeyDown(key, event)); //continue with normal key processing
-  };
-  
   @Override
   public void onResume() {
 	  super.onResume();
@@ -1045,7 +992,7 @@ public void onStart() {
     int screenHeight = findViewById(R.id.throttle_screen).getHeight();  //get the height of usable area
     if(screenHeight == 0) {
     	//throttle screen hasn't been drawn yet, so use display metrics for now
-        screenHeight = dm.heightPixels - 30;	//allow for title bar, etc	
+        screenHeight = dm.heightPixels - (int)(titleBar * (dm.densityDpi/160.));	//allow for title bar, etc	
     }
     if (screenHeight > throttleMargin) {	//don't do this if height is invalid
 		//determine how to split the screen (evenly if both, 85/15 if only one)
@@ -1066,7 +1013,7 @@ public void onStart() {
 	    llLp = new LinearLayout.LayoutParams(
 	            ViewGroup.LayoutParams.FILL_PARENT,
 	            height_T);
-	    llLp.bottomMargin = throttleMargin;
+	    llLp.bottomMargin = (int)(throttleMargin * (dm.densityDpi/160.));
 	    ll.setLayoutParams(llLp);
 	
 	    //set height of S area
@@ -1083,7 +1030,77 @@ public void onStart() {
 
   }
 
+ 
   @Override
+  public boolean onKeyDown(int key, KeyEvent event) {
+	  //Handle pressing of the back button to release the selected loco and end this activity
+	  if(key==KeyEvent.KEYCODE_BACK)  {
+		  final AlertDialog.Builder b = new AlertDialog.Builder(this); 
+		  b.setIcon(android.R.drawable.ic_dialog_alert); 
+		  b.setTitle("Disconnect"); 
+		  b.setMessage("Disconnect from JMRI?");
+		  b.setCancelable(true);
+		  b.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+			 public void onClick(DialogInterface dialog, int id) {
+				 disconnect();
+			 }
+		  } ); 
+		  b.setNegativeButton(android.R.string.no, null);
+		  AlertDialog alert = b.create();
+		  alert.show();
+          return (true);	//stop processing this key
+	  } 
+	  else if((key==KeyEvent.KEYCODE_VOLUME_UP) || (key==KeyEvent.KEYCODE_VOLUME_DOWN) ) { //use volume to change speed for specified loco
+		  SeekBar sb = null;
+		  if (whichVolume.equals("T") && !mainapp.loco_string_T.equals("Not Set")) {
+			  sb=(SeekBar)findViewById(R.id.speed_T);
+		  }
+		  if (whichVolume.equals("S") && !mainapp.loco_string_S.equals("Not Set")) {
+			  sb=(SeekBar)findViewById(R.id.speed_S);
+		  }
+		  if (sb != null) {
+			  if (key==KeyEvent.KEYCODE_VOLUME_UP) {
+				  sb.setProgress(sb.getProgress() + 1 ); //increase 
+			  } else {
+				  sb.setProgress(sb.getProgress() - 1 );  //decrease (else is VOLUME_DOWN)
+			  }
+		  }
+		  return(true);  //stop processing this key
+	  }
+	  return(super.onKeyDown(key, event)); //continue with normal key processing
+  }
+
+  private void disconnect() {
+	  //release first loco
+	  Message msg=Message.obtain();
+	  msg.what=message_type.RELEASE;
+	  msg.obj=new String("T");
+	  mainapp.comm_msg_handler.sendMessage(msg);
+
+	  //release second loco
+	  msg=Message.obtain();
+	  msg.what=message_type.RELEASE;
+	  msg.obj=new String("S");
+	  mainapp.comm_msg_handler.sendMessage(msg);
+
+	  //disconnect from throttle
+	  msg=Message.obtain();
+	  msg.what=message_type.DISCONNECT;
+	  mainapp.comm_msg_handler.sendMessage(msg);  
+
+	  //kill the heartbeat timer
+	  if (heartbeatTimer != null) {
+		  heartbeatTimer.cancel();
+	  }
+	  
+	  //always go to Connection Activity
+  	  Intent in=new Intent().setClass(this, connection_activity.class);
+	  startActivity(in);
+	  this.finish();  //end this activity
+	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+  }
+	  
+@Override
   public boolean onCreateOptionsMenu(Menu menu){
 	  MenuInflater inflater = getMenuInflater();
 	  inflater.inflate(R.menu.throttle_menu, menu);

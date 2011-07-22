@@ -7,6 +7,7 @@
  * show feedback on Stop button (rbecker) 
  * fixed intermittent failure to get functions from roster (rbecker)
  * handle eStop and show message (rbecker) 
+ * add prompt before disconnecting (rbecker)
 **Version 1.6
  * Began adding Multithrottle support (serious rigged version, 2.0+ only)
  * Mirror speed and direction from server (on heartbeat, 2.0+ only)
