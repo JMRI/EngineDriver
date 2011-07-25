@@ -117,7 +117,9 @@
  * routes
  *   TODO: use PRT titles for Active/inactive
  * turnouts
+ *   TODO: don't blank out manual entry after use
  *   TODO: default "system" based on items in use
+ *   TODO: if system is blank, allow (force) entry of entire name "LT12"
  *   TODO: use PTT titles for Turnouts/Turnout
  *   TODO: update turnout list on change not working after reentry to turnout view (worked around by finishing on exit)
  * connection

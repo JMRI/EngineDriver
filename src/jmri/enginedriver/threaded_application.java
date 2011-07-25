@@ -28,7 +28,10 @@ import java.net.*;
 import java.io.*;
 
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewConfiguration;
+import android.widget.Toast;
 
 import javax.jmdns.*;
 import android.net.wifi.WifiManager;
@@ -80,7 +83,9 @@ public class threaded_application extends Application
     LinkedHashMap<String, String> consist_entries;
 
 	String power_state;
-	int heartbeat_interval; //heartbeat interval in seconds
+	int heartbeat_interval; 		//heartbeat interval in seconds
+	int heartbeatInterval;			//heartbeat interval in milliseconds
+	int heartbeatTimeoutInterval;	//heartbeat interval in milliseconds
 	
 	//Communications variables.
 	Socket client_socket;
@@ -107,9 +112,15 @@ public class threaded_application extends Application
 	PrintWriter output_pw;
 	BufferedReader input_reader = null;
 	private SharedPreferences prefs;
-    private Timer readTimer;  
 
-  class comm_thread extends Thread
+	//WiT read delays.  These are additional to the socket read timeout of 300 msec when there is no inbound traffic
+    private static final int idleReadDelay = 1500;		//milliseconds max delay between WiThrottle read attempts
+    private static final int busyReadDelay = 100;		//milliseconds min delay between WiThrottle read attempts
+    private static final int stepReadDelay = 100;		//milliseconds to increase read delay each time there is no traffic
+    private static int nextReadDelay = idleReadDelay;	//current read delay
+    Timer readTimer;
+
+class comm_thread extends Thread
   {
    JmDNS jmdns = null;
    withrottle_listener listener;
@@ -228,17 +239,25 @@ public class threaded_application extends Application
     }
     
    
+    //end_jmdns() takes a long time, so put it in its own thread
     void end_jmdns() {
-    	if (jmdns != null) {
-    		try {
-				jmdns.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    		jmdns = null;
-    	}
+    	Thread jmdnsThread = new Thread() {
+    		@Override
+    		public void run() {
+    	    	if (jmdns != null) {
+    	    		try {
+    					jmdns.close();
+    				} catch (IOException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    	    		jmdns = null;
+    	    	}
+    		}
+    	};
+    	jmdnsThread.start();
     }
+    	
     
     class comm_handler extends Handler
     {
@@ -336,14 +355,12 @@ public class threaded_application extends Application
 			    return;
 			} 
 
-		    String s = prefs.getString("throttle_name_preference", getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue));
-             withrottle_send("N" + s);  //send throttle name
-            withrottle_send("HU" + s);  //also send throttle name as the UDID
+			sendThrottleName();
             Message connection_message=Message.obtain();
             connection_message.what=message_type.CONNECTED;
             connection_msg_handler.sendMessage(connection_message);
             		
-            start_read_timer();
+            start_read_timer(busyReadDelay);
             
             break;
 
@@ -370,39 +387,6 @@ public class threaded_application extends Application
             withrottle_send(whichThrottle+"r");  //send release command
             break;
 
-          //send heartbeat
-          case message_type.HEARTBEAT:
-        	  if (withrottle_version < 2.0) { 
-        		  withrottle_send("*");   //send a simple heartbeat on early versions
-        	  } else {
-        		  boolean anySent = false;
-        		  if (!loco_string_T.equals("Not Set")) {  
-        			  withrottle_send("MTA*<;>qV"); //request speed
-        			  withrottle_send("MTA*<;>qR"); //request direction
-        			  anySent = true;
-        		  }
-        		  if (!loco_string_S.equals("Not Set")) {  
-        			  withrottle_send("MSA*<;>qV"); //request speed
-        			  withrottle_send("MSA*<;>qR"); //request direction
-        			  anySent = true;
-        		  }
-        		  if (!anySent) {
-        			  withrottle_send("*");   //send a simple heartbeat if no status requests sent
-        		  }	
-        	  }
-        	  //also send to throttle activity if active
- 		    if (throttle_msg_handler != null) {
-		       msg=Message.obtain(); 
-		       msg.what=message_type.HEARTBEAT;
-		       try {
-		    	   throttle_msg_handler.sendMessage(msg);
-		       }
-		       catch(Exception e) {
-		    	   msg.recycle();
-		       }
-		    }
-            break;
-
             //request speed
           case message_type.REQ_VELOCITY:
         	if (withrottle_version >= 2.0) {
@@ -426,8 +410,9 @@ public class threaded_application extends Application
         	withrottle_send("Q");
         	if (heartbeat_interval > 0) {
         		withrottle_send("*-");     //request to turn on heartbeat (if enabled in server prefs)
+            	stopHeartbeat();
         	}
-            if (readTimer != null) { readTimer.cancel(); }       //stop reading from socket
+            stop_read_timer();				//stop reading from socket
             try{ Thread.sleep(500); }   //  give server time to process this.
               catch (InterruptedException except){ process_comm_error("Error sleeping the thread, InterruptedException: "+except.getMessage()); }
             try { client_socket.close(); }
@@ -501,20 +486,89 @@ public class threaded_application extends Application
               break;
 
               // release handlers and shutdown jmdns
-              // release connection_msg_handlerlast to signal connection_activity we're done
+              // release comm_msg_handler last to signal that we're done
           case message_type.SHUTDOWN:
+        	  /*
             throttle_msg_handler = null; 
             select_loco_msg_handler = null; 
             power_control_msg_handler = null; 
             routes_msg_handler = null; 
             turnouts_msg_handler = null;
+            connection_msg_handler = null;
+            */
             end_jmdns();		// this takes too long?
-            connection_msg_handler= null;
+            comm_msg_handler = null;
   		  	break;
         }
       };
     }
-    private void process_comm_error(String msg_txt) {
+    
+    private void sendThrottleName() {
+	    String s = prefs.getString("throttle_name_preference", getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue));
+	    withrottle_send("N" + s);  //send throttle name
+	    withrottle_send("HU" + s);  //also send throttle name as the UDID
+    }
+
+    private void startHeartbeat() {
+	  if(heartbeat_interval > 2) {
+	      heartbeatTimeoutInterval = heartbeat_interval * 1000;	//set heartbeat timeout in mSec 
+	      heartbeatInterval = (heartbeat_interval - 1) * 900;  	//set heartbeat in mSec to ((timeout - one second ) * .9)
+	      restartHeartbeat();
+	  }
+    }
+    
+    private void restartHeartbeat() {
+  	  if(heartbeat_interval > 0) {
+	      comm_msg_handler.removeCallbacks(heartbeatTimer);			//remove pending requests
+	      comm_msg_handler.removeCallbacks(heartbeatTimeoutTimer);	//remove pending requests
+	      comm_msg_handler.postDelayed(heartbeatTimer, heartbeatInterval);
+	      comm_msg_handler.postDelayed(heartbeatTimeoutTimer, heartbeatTimeoutInterval);
+  	  }
+    }
+    
+    private void stopHeartbeat() {
+      comm_msg_handler.removeCallbacks(heartbeatTimer);			//remove pending requests
+      comm_msg_handler.removeCallbacks(heartbeatTimeoutTimer);	//remove pending requests
+    }
+	  
+    private Runnable heartbeatTimer = new Runnable() {
+ 	   @Override
+ 	   public void run() {
+// 		   Log.d("Engine_Driver", "heartbeatTimer");
+ 		   if (withrottle_version < 2.0) { 
+    		  withrottle_send("*");   //send a simple heartbeat on early versions
+ 		   } else {
+    		  boolean anySent = false;
+    		  if (!loco_string_T.equals("Not Set")) {  
+    			  withrottle_send("MTA*<;>qV"); //request speed
+    			  withrottle_send("MTA*<;>qR"); //request direction
+    			  anySent = true;
+    		  }
+    		  if (!loco_string_S.equals("Not Set")) {  
+    			  withrottle_send("MSA*<;>qV"); //request speed
+    			  withrottle_send("MSA*<;>qR"); //request direction
+    			  anySent = true;
+    		  }
+    		  if (!anySent) {
+    			  sendThrottleName();	//should get a response
+    		  }
+ 		   }
+ 		   comm_msg_handler.removeCallbacks(heartbeatTimer);	//remove pending requests
+ 		   comm_msg_handler.postDelayed(heartbeatTimer,heartbeatInterval);
+ 	   }
+ 	};
+
+    private Runnable heartbeatTimeoutTimer = new Runnable() {
+  	   @Override
+  	   public void run() {
+//  		   Log.d("Engine_Driver", "heartbeatTimeoutTimer");
+ 			Toast.makeText(getApplicationContext(), "WARNING: No response from WiThrottle server for " + heartbeat_interval  + " seconds.  Verify connection.", Toast.LENGTH_LONG).show();
+  	    	comm_msg_handler.removeCallbacks(heartbeatTimeoutTimer);	//remove pending requests
+  	    	comm_msg_handler.postDelayed(heartbeatTimeoutTimer,heartbeatTimeoutInterval);
+  	   }
+  	};
+
+  	private void process_comm_error(String msg_txt) {
         Log.e("comm_handler.handleMessage", msg_txt);
         Message ui_msg=Message.obtain();
         ui_msg.what=message_type.ERROR;
@@ -607,6 +661,7 @@ public class threaded_application extends Application
 				heartbeat_interval = Integer.parseInt(response_str.substring(1));  //set app variable
 			} catch (NumberFormatException e) {
 			}
+			startHeartbeat();
 	  	    break;
 	  	
 	  	case 'R': //Roster
@@ -1009,40 +1064,86 @@ public class threaded_application extends Application
       	}
         //send response to debug log for review
         Log.d("Engine_Driver", "-->:" + newMsg + "  was(" + msg + ")");
+        start_read_timer(busyReadDelay);
     }  //end withrottle_send()
-
-
+/*
+    void start_read_timer(int nextDelay) {
+    	readTimer = new Timer();
+    	readTimer.schedule(new TimerTask() {
+    		@Override
+    		public void run() {
+    			withrottle_rcv();
+    		}
+    	}, nextDelay);
+    }
+    void stop_read_timer() {
+    	readTimer.cancel();
+    }
+*/
     //setup a loop to read from the socket 
-    void start_read_timer() {
-      readTimer = new Timer();
-	  readTimer.schedule(new TimerTask() {
-		@Override
-		public void run() {
-			withrottle_rcv();
-		}
-	}, 1000, 2000 );  //1 sec on first fire, 2 sec on subsequent ones
-}
+    void start_read_timer(int nextDelay) {
+//    	Log.d("Engine_Driver", "startReadTimer " + nextDelay);
+    	if(nextDelay > 0)
+    	{
+    		nextReadDelay = nextDelay;
+    		while(comm_msg_handler.postDelayed(newReadTimer,nextDelay) == false) {
+    	    	try { 
+    	    		Thread.sleep(200); 
+    	    	}
+    	    	catch(Exception e){
+    	    		break;
+    	    	}
+    		}
+    	}
+    }
+    void stop_read_timer() {
+    	comm_msg_handler.removeCallbacks(newReadTimer);	//remove pending requests
+    }
 
-    
-    //read anything coming back from server and call process_response for it.
+    private Runnable newReadTimer = new Runnable() {
+	   @Override
+	   public void run() {
+//		   Log.d("Engine_Driver", "newReadTimer");
+	    	if(nextReadDelay > idleReadDelay)
+	    	{
+    			nextReadDelay = idleReadDelay;
+	    	}
+			withrottle_rcv();
+	    	comm_msg_handler.removeCallbacks(newReadTimer);	//remove pending requests
+	    	while(comm_msg_handler.postDelayed(newReadTimer,nextReadDelay) == false) {
+	    		try {
+	    			Thread.sleep(200);
+	    		}
+    	    	catch(Exception e) {
+    	    		break;
+    	    	}
+	    	}
+	   }
+	};
+ 
+	//read anything coming back from server and call process_response for it.
     private void withrottle_rcv() {
       	  
      	  //read responses from withrottle and send non-blank ones to other activities
-          readTimer.cancel();  //don't double-fire
-      	  String str = null;
+//    		readTimer.cancel();  //don't double-fire
+      	    String str = null;
 			try {
 				while ((str = input_reader.readLine()) != null) {  //loop until no more data found
 					if (str.length()>0) {
+						restartHeartbeat();
 						process_response(str);
+						nextReadDelay = busyReadDelay;			//short delay if data was found
 					}
 				}
 			} catch  (SocketTimeoutException e )   {
-				start_read_timer();  //delay and read again
+				nextReadDelay += stepReadDelay;
 			} catch (IOException e) {
-  	            readTimer.cancel();  //stop trying to read if an error occurred
+				nextReadDelay = idleReadDelay;
+//  	            readTimer.cancel();  //stop trying to read if an error occurred
 //				e.printStackTrace();
 //  	            process_comm_error("withrottle_rcv err:" + e.getMessage());  
-			} 
+			}
+//			start_read_timer(nextReadDelay);
       	  
     }  //end withrottle_rcv()
 

@@ -63,9 +63,14 @@ import android.widget.AdapterView;
 
 public class connection_activity extends Activity {
 	
-  //set use_default_host to true with appropriate host and port values
-  //  to avoid manual entry when debugging and discovery isn't available 
-  private static final int use_test_host = 1;
+  //set use_testhost to default to preset host and port values
+  //this avoids manual entry if debugging and discovery isn't available 
+  //
+  // 0	none
+  // 1	mstevetodd.com 44444
+  // 2	192.168.1.2 2029
+  //
+  private static final int use_test_host = 0;
   
   String mst_host = "dev.mstevetodd.com";
   String mst_port = "44444";
@@ -84,7 +89,7 @@ public class connection_activity extends Activity {
   ArrayList<Integer> discovered_port_list;
 
   //pointer back to application
-  threaded_application mainapp;
+  static threaded_application mainapp;
   
   //The IP address and port that are used to connect.
   String connected_host;
@@ -266,28 +271,6 @@ public class connection_activity extends Activity {
     };
   }
 
-  //end all activity
-  void end_all_activity() {
-	  Message connect_msg=Message.obtain();
-	  connect_msg.what=message_type.SHUTDOWN;
-	  this.finish();	// close activity
-	  if (mainapp.comm_msg_handler != null) {
-		  mainapp.comm_msg_handler.sendMessage(connect_msg);
-		  // wait a bit for comm_msg_handler to process shutdown message
-		  for( int i=0; i <3; i++) { 
-			  if(mainapp.connection_msg_handler== null)	// null when comm_msg_handler has shut down
-			  	break;
-			  try{ Thread.sleep(200); }
-		      catch (InterruptedException except) {
-				// TODO 
-		      }
-		  }
-		  mainapp.comm_msg_handler = null;
-	  }
-	  mainapp.connection_msg_handler= null;
-	  System.exit(0);
-  }
-
 	@Override
 	public void onPause() {
 		//shutdown server discovery listener
@@ -382,7 +365,8 @@ public class connection_activity extends Activity {
     super.onCreate(savedInstanceState);
     
     mainapp=(threaded_application)this.getApplication();
-    mainapp.connection_msg_handler=new ui_handler();
+    if(mainapp.connection_msg_handler == null)
+    	mainapp.connection_msg_handler=new ui_handler();
 
     //check for "default" throttle name and make it more unique
     //TODO: move this and similar code in preferences.java into single routine
@@ -433,7 +417,7 @@ public class connection_activity extends Activity {
     button_listener click_listener=new button_listener();
     button.setOnClickListener(click_listener);
     
-    set_labels();
+//    set_labels();
     DisplayMetrics dm = new DisplayMetrics();
     getWindowManager().getDefaultDisplay().getMetrics(dm);
     threaded_application.min_fling_distance = (int)(threaded_application.SWIPE_MIN_DISTANCE * dm.densityDpi / 160.0f);
@@ -446,7 +430,7 @@ public class connection_activity extends Activity {
     		((EditText)findViewById(R.id.host_ip)).setText(mst_host);
     		((EditText)findViewById(R.id.port)).setText(mst_port);
     	}
-    	else
+    	else if(use_test_host == 2)
     	{
     		((EditText)findViewById(R.id.host_ip)).setText(rdb_host);
     		((EditText)findViewById(R.id.port)).setText(rdb_port);
@@ -461,7 +445,14 @@ public class connection_activity extends Activity {
 	    v.setText("Throttle Name: " + s);  
   }
   
+  /** Called when the activity is finished. */
   @Override
+  public void onDestroy() {
+	  super.onDestroy();
+	  mainapp.connection_msg_handler = null;
+  }
+
+ @Override
   public boolean onCreateOptionsMenu(Menu menu){
 	  MenuInflater inflater = getMenuInflater();
 	  inflater.inflate(R.menu.connection_menu, menu);
@@ -503,10 +494,32 @@ public class connection_activity extends Activity {
 	@Override
 	public boolean onKeyDown(int key, KeyEvent event) {
 		if (key == KeyEvent.KEYCODE_BACK) {
+			this.finish();	// close activity
 			end_all_activity();
 		}
 		return (super.onKeyDown(key, event));
 	};
+
+    //end all activity
+    static void end_all_activity() {
+  	  if (mainapp.comm_msg_handler != null) {
+  	  	  Message disconnect_msg=Message.obtain();
+  	  	  disconnect_msg.what=message_type.SHUTDOWN;
+  		  mainapp.comm_msg_handler.sendMessage(disconnect_msg);
+  		  // wait a bit for comm_msg_handler to process shutdown message
+  		  for( int i=0; i <3; i++) { 
+  			  if(mainapp.comm_msg_handler== null)	// null when comm_msg_handler has shut down
+  			  	break;
+  			  try{ Thread.sleep(200); }
+  		      catch (InterruptedException except) {
+  				// TODO 
+  		      }
+  		  }
+  		  mainapp.comm_msg_handler = null;
+  	  }
+  	  System.exit(0);
+    }
+
 
 	//for debugging only
 	private void withrottle_list() {		

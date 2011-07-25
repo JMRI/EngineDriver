@@ -40,6 +40,7 @@ import java.util.LinkedHashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.io.*;
+import java.lang.reflect.Array;
 
 import jmri.enginedriver.turnouts.turnouts_handler;
 
@@ -67,7 +68,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static final int throttleMargin = 8;	// margin between the throttles in dp
 	private static final int titleBar = 45;			// estimate of lost screen height in dp
 	private SharedPreferences prefs;
-	private Timer heartbeatTimer;
 	private static final int MAX_SPEED_DISPLAY = 99;	// value to display at maximum speed setting 
 	private static final int MAX_SPEED_VAL = 126;		// maximum speed setting
 	// speed scale factors
@@ -75,21 +75,25 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static final double DISPLAY_TO_SPEED = (1.0 / SPEED_TO_DISPLAY);
 	
 	private static final long speedUpdateDelay = 500;	// idle time in milliseconds after speed change before requesting speed update 
-	boolean heartbeat = true; //turn on with each response, show error if not on
 
 	private String whichVolume = "T";
 
 	//these are used for gesture tracking
-	private int gestureStartX = 0;
-	private int gestureStartY = 0;
+	private float gestureStartX = 0;
+	private float gestureStartY = 0;
 	private boolean gestureFailed = false;			// gesture didn't meet velocity or distance requirement
 	private boolean gestureInProgress = false;		// gesture is in progress
 	private long gestureLastCheckTime;				// time in milliseconds that velocity was last checked
 	private static final long gestureCheckRate = 200;	// rate in milliseconds to check velocity
 	private VelocityTracker mVelocityTracker;
-//	private Handler gestureHandler = new Handler();
-	private static MotionEvent lastEvent;
+	
+	//function number-to-button maps
+	private LinkedHashMap<Integer, Button> functionMapT;
+	private LinkedHashMap<Integer, Button> functionMapS;
 
+	//current direction
+	private int dirT = 0;
+	private int dirS = 0;
 
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class throttle_handler extends Handler {
@@ -99,11 +103,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		switch(msg.what) {
 	        
 	        case message_type.RESPONSE: {  //handle messages from WiThrottle server
-	    		
-	        	heartbeat = true; //any response
-
 	    		String response_str = msg.obj.toString();
-
 //	    		Log.d("Engine_Driver", "throt resp:"+ response_str);
 	        	switch (response_str.charAt(0)) {
 
@@ -126,7 +126,22 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		      	  			set_function_labels_and_listeners_for_view("S");
 		      	  			enable_disable_buttons_for_view(tv, true);
 		      	  		}
-	        		} else if (response_str.substring(2,3).equals("A")) {  //e.g. MTAL2608<;>R1
+			        	set_labels();
+	        		} else if (scom.equals("-")) {  		//if loco removed
+	      	  			enable_disable_buttons(response_str.substring(1,2));  //direction and slider: pass whichthrottle
+		      	  		if (response_str.charAt(1) == 'T') {
+		      	  			enable_disable_buttons("T");  //direction and slider
+		      	  			ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
+		      	  			set_function_labels_and_listeners_for_view("T");
+		      	  			enable_disable_buttons_for_view(tv, false);
+		      	  		} else if (response_str.charAt(1) == 'S') {
+		      	  			enable_disable_buttons("S");  //direction and slider
+		      	  			ViewGroup tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
+		      	  			set_function_labels_and_listeners_for_view("S");
+		      	  			enable_disable_buttons_for_view(tv, false);
+		      	  		}
+	        			set_labels();
+	        		} else if (scom.equals("A")) {  		//e.g. MTAL2608<;>R1
 	        			String whichThrottle = response_str.substring(1,2);  //TODO: move this processing to ta?
     	  				String[] ls = threaded_application.splitByString(response_str,"<;>");
 	    	  			if (ls[1].substring(0,1).equals("R")) {
@@ -147,12 +162,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	    	  				catch(NumberFormatException e) {
 	    	  				}
 	    	  				set_speed_slider(whichThrottle, speed);	//update speed slider and indicator
-	    	  				
-	    	  			}	    	  			
-
+	    	  			}
+	    	  			else if (ls[1].substring(0,1).equals("F")) {
+	    	  				int function = new Integer(ls[1].substring(2));
+	    	  				set_function_state(whichThrottle, function);
+	    	  			}
+	    	  			else {
+//	    		        	set_labels();
+	    	  			}
 	        		}
-		        	set_labels();
-		        	findViewById(R.id.throttle_screen).invalidate();
 	        		break;
 	      	  	  
 	      	  	  case 'T':
@@ -175,19 +193,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	      	  		  break;
 	        	}  //end of switch
 	        	
-	        }
-	        break;
-	        case message_type.HEARTBEAT: {
-	        	// refresh text labels
-	        	set_labels();
-	        	//only check for heartbeat if version 2.0+, heartbeat enabled, and loco selected
-	        	if  (mainapp.withrottle_version >= 2.0 && mainapp.heartbeat_interval > 0
-	        			&&	(!mainapp.loco_string_T.equals("Not Set") || !mainapp.loco_string_S.equals("Not Set"))) {
-	        		if (!heartbeat) {
-	        			Toast.makeText(getApplicationContext(), "WARNING: No response from WiThrottle server for " + mainapp.heartbeat_interval  + " seconds.  Verify connection.", Toast.LENGTH_LONG).show();
-	        		}
-	        		heartbeat = false;
-	        	}
 	        }
 	        break;
 	      }
@@ -235,9 +240,11 @@ private void setDisplayedSpeed(String whichThrottle, int speed) {
 	  if (whichThrottle.equals("T")) {
 		  bFwd = (Button)findViewById(R.id.button_fwd_T);
 		  bRev = (Button)findViewById(R.id.button_rev_T);
+		  dirT = direction;
 	  } else {
 		  bFwd = (Button)findViewById(R.id.button_fwd_S);
 		  bRev = (Button)findViewById(R.id.button_rev_S);
+		  dirS = direction;
 	  }
 	  if (direction == 0) {
 		  bFwd.setPressed(false);
@@ -359,119 +366,68 @@ void start_select_loco_activity(String whichThrottle)
 	  }
 } //enable_disable_buttons_for_view
 
-  //helper function to loop thru buttons, setting label text and appearance based on current function state (on or off)
-  void set_function_states(String whichThrottle)  {
-//	  Log.d("Engine_Driver","starting set_function_states");
-	  ViewGroup vg; //table
-	  ViewGroup r;  //row
-	  Button b; //button
-	  boolean[] fs;  //copy of this throttle's function state array
-	  int k = 0; //counter for button array
-	  LinkedHashMap<Integer, String> function_labels_temp = new  LinkedHashMap<Integer, String>();
-	  
-	  if (whichThrottle.equals("T")) {
-  		 vg = (ViewGroup)findViewById(R.id.function_buttons_table_T);
-  		 fs = mainapp.function_states_T;
-  		 if (mainapp.function_labels_T != null && mainapp.function_labels_T.size()>0) {  //use roster functions or default functions
-  			function_labels_temp = mainapp.function_labels_T;
-  		 } else {
-   			function_labels_temp = mainapp.function_labels_default;
-  		 }
-  	  } else {
-		 vg = (ViewGroup)findViewById(R.id.function_buttons_table_S);
-  		 fs = mainapp.function_states_S;
-  		 if (mainapp.function_labels_S != null && mainapp.function_labels_S.size()>0) {  //use roster functions or default functions
-   			function_labels_temp = mainapp.function_labels_S;
-  		 } else {
-   			function_labels_temp = mainapp.function_labels_default;
- 		 }
-  	  }
+//update the appearance of all function buttons 
+  void set_all_function_states(String whichThrottle)  {
+//	  Log.d("Engine_Driver","set_function_states");
 
-	  if (fs !=null) { //don't bother if no function states found
-		  //put values in array for indexing in next step TODO: find direct way to do this
-		  ArrayList<Integer> aList = new ArrayList<Integer>();
-		  for (Integer f : function_labels_temp.keySet()) {
-			  aList.add(f);
-		  }
+	  LinkedHashMap<Integer, Button> fMap;
+	  if(whichThrottle.equals("T"))
+		  fMap = functionMapT;
+	  else
+		  fMap = functionMapS;
 
-		  for(int i = 0; i < vg.getChildCount(); i++) {
-			  r = (ViewGroup)vg.getChildAt(i);
-			  for(int j = 0; j < r.getChildCount(); j++) {
-				  if (k < aList.size()) {  //TODO: short-circuit this
-					  b = (Button)r.getChildAt(j);
-					  if (fs[aList.get(k)]) {  //get function number for kth button, and look up state in shared variable
-						  b.setTypeface(null, Typeface.ITALIC);
-						  b.setPressed(true);
-					  } else {
-						  b.setTypeface(null, Typeface.NORMAL);
-						  b.setPressed(false);
-					  }
-				  }
-				  k++;
-			  }
-		  }
+	  for(Integer f : fMap.keySet()) {
+		  set_function_state(whichThrottle, f);
 	  }
-} //end of set_function_labels_and_states 
+  }
 
-  
+//update a function button appearance based on its state 
+    void set_function_state(String whichThrottle, int function)  {
+//  	  Log.d("Engine_Driver","starting set_function_request");
+    	Button b;
+    	boolean[] fs;  //copy of this throttle's function state array
+    	if(whichThrottle.equals("T")) {
+        	b = functionMapT.get(function);
+     		fs = mainapp.function_states_T;
+    	}
+    	else {
+        	b = functionMapS.get(function);
+        	fs = mainapp.function_states_S;
+    	}
+    	if(b != null && fs != null) {
+	    	if(fs[function] == true) {
+	    		b.setTypeface(null, Typeface.ITALIC);
+				b.setPressed(true);
+			} 
+	    	else {
+	    		b.setTypeface(null, Typeface.NORMAL);
+				b.setPressed(false);
+	    	}
+    	}
+  	}
   
 /*
- * future use: displays requested function state independent of (in addition to) feedback state
+ * future use: displays the requested function state independent of (in addition to) feedback state
  * todo: need to handle momentary buttons somehow
  */
-  void set_function_request(String whichThrottle, int function, int reqState)  {
+    void set_function_request(String whichThrottle, int function, int reqState)  {
 //	  Log.d("Engine_Driver","starting set_function_request");
-	  ViewGroup vg; //table
-	  ViewGroup r;  //row
-	  Button b; //button
-	  boolean[] fs;  //copy of this throttle's function state array
-	  int k = 0; //counter for button array
-	  LinkedHashMap<Integer, String> function_labels_temp = new  LinkedHashMap<Integer, String>();
-	  
-	  if (whichThrottle.equals("T")) {
-  		 vg = (ViewGroup)findViewById(R.id.function_buttons_table_T);
-  		 fs = mainapp.function_states_T;
-  		 if (mainapp.function_labels_T != null && mainapp.function_labels_T.size()>0) {  //use roster functions or default functions
-  			function_labels_temp = mainapp.function_labels_T;
-  		 } else {
-   			function_labels_temp = mainapp.function_labels_default;
-  		 }
-  	  } else {
-		 vg = (ViewGroup)findViewById(R.id.function_buttons_table_S);
-  		 fs = mainapp.function_states_S;
-  		 if (mainapp.function_labels_S != null && mainapp.function_labels_S.size()>0) {  //use roster functions or default functions
-   			function_labels_temp = mainapp.function_labels_S;
-  		 } else {
-   			function_labels_temp = mainapp.function_labels_default;
- 		 }
-  	  }
-
-	  if (fs !=null) { //don't bother if no function states found
-		  //put values in array for indexing in next step TODO: find direct way to do this
-		  ArrayList<Integer> aList = new ArrayList<Integer>();
-		  for (Integer f : function_labels_temp.keySet()) {
-			  aList.add(f);
-		  }
-
-		  for(int i = 0; i < vg.getChildCount(); i++) {
-			r = (ViewGroup)vg.getChildAt(i);
-			for(int j = 0; j < r.getChildCount(); j++) {
-				b = (Button)r.getChildAt(j);
-				if (k < aList.size()) {
-					if(function == aList.get(k)) {
-						if(reqState != 0) {
-							b.setTypeface(null, Typeface.ITALIC);
-						} else {
-					  		b.setTypeface(null, Typeface.NORMAL);
-						}
-						return;
-					}
-				}
-				k++;
-			}
-		  }
-	  }
-} //end of set_function_labels_and_states 
+	  	Button b;
+		if(whichThrottle.equals("T")) {
+	    	b = functionMapT.get(function);
+		}
+		else {
+	    	b = functionMapS.get(function);
+		}
+		if(b != null) {
+	    	if(reqState != 0) {
+	    		b.setTypeface(null, Typeface.ITALIC);
+			} 
+	    	else {
+	    		b.setTypeface(null, Typeface.NORMAL);
+	    	}
+		}
+    } 
 
   public class function_button_touch_listener implements View.OnTouchListener
   {
@@ -503,7 +459,6 @@ void start_select_loco_activity(String whichThrottle)
       handleAction(event.getAction());
       return(true);
     }
-
     private void handleAction(int action) 
     {
 //      Log.d("Engine_Driver", "handleAction func" + function + " action " + action);
@@ -710,26 +665,6 @@ public void onStart() {
   if (mainapp.throttle_msg_handler == null){
 	  mainapp.throttle_msg_handler=new throttle_handler();
   }
- 
-  //create heartbeat if requested and not already started
-  if ((heartbeatTimer == null) && (mainapp.heartbeat_interval > 0)) {
-      int interval = (mainapp.heartbeat_interval - 1) * 900;  //set heartbeat in mSec to (one second less than required) * .9 
-
-    heartbeatTimer = new Timer();
-  	heartbeatTimer.schedule(new TimerTask() {
-  		@Override
-  		public void run() {
-  		  //send heartbeat to withrottle to keep this throttle alive (if enabled in withrottle prefs)
-  			  if (mainapp.heartbeat_interval > 0) {
-//  			    Log.d("Engine_Driver", "send_heartbeat");
-  			    Message msg=Message.obtain();
-  			    msg.what=message_type.HEARTBEAT;
-  			    mainapp.comm_msg_handler.sendMessage(msg);
-  			  }
-  		}
-  	}, 100, interval);
-  }
-//  set_labels();
 }
 
 /** Called when the activity is finished. */
@@ -861,6 +796,7 @@ public void onStart() {
 	  Button b; //button
 	  int k = 0; //button count
 	  LinkedHashMap<Integer, String> function_labels_temp = new  LinkedHashMap<Integer, String>();
+	  LinkedHashMap<Integer, Button> functionButtonMap = new  LinkedHashMap<Integer, Button>();
 
 	  if (whichThrottle.equals("T")) {
 		  tv = (ViewGroup) findViewById(R.id.function_buttons_table_T); //table
@@ -883,11 +819,12 @@ public void onStart() {
 	  }
 
 	  for(int i = 0; i < tv.getChildCount(); i++) {
-	      r = (ViewGroup)tv.getChildAt(i);
-	      for(int j = 0; j < r.getChildCount(); j++) {
-	      	b = (Button)r.getChildAt(j);
-	    		if (k <  function_labels_temp.size()) {
+		  r = (ViewGroup)tv.getChildAt(i);
+		  for(int j = 0; j < r.getChildCount(); j++) {
+	    	  b = (Button)r.getChildAt(j);
+	    	  if (k <  function_labels_temp.size()) {
 	    			Integer func = aList.get(k);
+	    			functionButtonMap.put(func, b);	//save function to button mapping
 		       		fbtl=new function_button_touch_listener(func, whichThrottle);
 		       		b.setOnTouchListener(fbtl);
 		       		String bt = function_labels_temp.get(func) + "        ";  //pad with spaces, and limit to 7 characters
@@ -900,9 +837,16 @@ public void onStart() {
 	      	k++;
 	      }
 	  }
-} //end of set_function_buttons_for_view
+	  
+	  //update the function-to-button map for the current throttle
+	  if(whichThrottle.equals("T"))
+		  functionMapT = functionButtonMap;
+	  else
+		  functionMapS = functionButtonMap;
+  }
 
-  //lookup and set values of various informational text labels and size the screen elements 
+
+//lookup and set values of various informational text labels and size the screen elements 
   private void set_labels() {
 
 //	  Log.d("Engine_Driver","starting set_labels");
@@ -989,7 +933,8 @@ public void onStart() {
     b.setSelected(false);
     b.setPressed(false);
 
-    int screenHeight = findViewById(R.id.throttle_screen).getHeight();  //get the height of usable area
+    View v = findViewById(R.id.throttle_screen);
+    int screenHeight = v.getHeight();  //get the height of usable area
     if(screenHeight == 0) {
     	//throttle screen hasn't been drawn yet, so use display metrics for now
         screenHeight = dm.heightPixels - (int)(titleBar * (dm.densityDpi/160.));	//allow for title bar, etc	
@@ -1024,10 +969,15 @@ public void onStart() {
 	    ll.setLayoutParams(llLp);
     }
 
-    //update the state of each function button based on shared variable
-    set_function_states("T");
-    set_function_states("S");
+    //update the direction indicators
+    set_direction_indication("T", dirT);
+    set_direction_indication("S", dirS);
 
+    //update the state of each function button based on shared variable
+    set_all_function_states("T");
+    set_all_function_states("S");
+    v.invalidate();
+//	  Log.d("Engine_Driver","ending set_labels");
   }
 
  
@@ -1037,15 +987,15 @@ public void onStart() {
 	  if(key==KeyEvent.KEYCODE_BACK)  {
 		  final AlertDialog.Builder b = new AlertDialog.Builder(this); 
 		  b.setIcon(android.R.drawable.ic_dialog_alert); 
-		  b.setTitle("Disconnect"); 
-		  b.setMessage("Disconnect from JMRI?");
+		  b.setTitle(R.string.exit_title); 
+		  b.setMessage(R.string.exit_text);
 		  b.setCancelable(true);
-		  b.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+		  b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 			 public void onClick(DialogInterface dialog, int id) {
 				 disconnect();
 			 }
 		  } ); 
-		  b.setNegativeButton(android.R.string.no, null);
+		  b.setNegativeButton(R.string.no, null);
 		  AlertDialog alert = b.create();
 		  alert.show();
           return (true);	//stop processing this key
@@ -1088,17 +1038,17 @@ public void onStart() {
 	  msg.what=message_type.DISCONNECT;
 	  mainapp.comm_msg_handler.sendMessage(msg);  
 
-	  //kill the heartbeat timer
-	  if (heartbeatTimer != null) {
-		  heartbeatTimer.cancel();
-	  }
-	  
+/*
 	  //always go to Connection Activity
   	  Intent in=new Intent().setClass(this, connection_activity.class);
 	  startActivity(in);
 	  this.finish();  //end this activity
 	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+*/	  
+	  this.finish();
+	  connection_activity.end_all_activity();
   }
+
 	  
 @Override
   public boolean onCreateOptionsMenu(Menu menu){
@@ -1154,28 +1104,67 @@ public void onStart() {
       //since we always do the same action no need to distinguish between requests
       set_default_function_labels();
       // loop through all function buttons and
-      //   set label and dcc functions (based on settings) or hide if no label
+      //  set label and dcc functions (based on settings) or hide if no label
       set_function_labels_and_listeners_for_view("T");
       set_function_labels_and_listeners_for_view("S");
-      heartbeat = true;
-//	  set_labels();
-//	  enable_disable_buttons("T");
-//	  enable_disable_buttons("S");  
   }
   
+
   // touch events outside the GestureOverlayView get caught here 
   @Override
   public boolean onTouchEvent(MotionEvent event){
-	  if(event.getAction() == MotionEvent.ACTION_DOWN)
-		  gestureStart(event);
-	  else if(event.getAction() == MotionEvent.ACTION_UP)
-		  gestureEnd(event);
+//	  Log.d("Engine_Driver", "onTouch Title action " + event.getAction());
+	  switch(event.getAction()) {
+	  	case MotionEvent.ACTION_DOWN:
+	  		gestureStart(event);
+	  		break;
+	  	case MotionEvent.ACTION_UP:
+	  		gestureEnd(event);
+	  		break;
+	  	case MotionEvent.ACTION_MOVE:
+	  		gestureMove(event);
+	  		break;
+	  	case MotionEvent.ACTION_CANCEL:
+	  		gestureCancel(event);
+	  }
 	  return true;
   }
 
 	@Override
 	public void onGesture(GestureOverlayView arg0, MotionEvent event) {
-//        Log.d("Engine_Driver", "onGesture action " + event.getAction());
+        gestureMove(event);
+	}
+
+	@Override
+	public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
+		gestureCancel(event);
+	}
+	
+	//determine if the action was long enough to be a swipe
+	@Override
+	public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
+		gestureEnd(event);
+	}
+	
+	@Override
+	public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
+		gestureStart(event);
+	}
+	
+	private void gestureStart(MotionEvent event ) {
+//        Log.d("Engine_Driver", "gestureStart action " + event.getAction());
+		gestureStartX = event.getX();
+		gestureStartY = event.getY();
+		gestureInProgress = true;
+		gestureFailed = false;
+		gestureLastCheckTime = event.getEventTime();
+		mVelocityTracker.clear();
+		// start the gesture timeout timer
+		mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+	}
+
+	public void gestureMove(MotionEvent event) {
+//        Log.d("Engine_Driver", "gestureMove action " + event.getAction());
 		if(gestureInProgress == true)
 		{
 			//stop the gesture timeout timer
@@ -1192,54 +1181,20 @@ public void onStart() {
 //		        Log.d("Engine_Driver", "gestureVelocity vel " + velocityX);
 				if(Math.abs(velocityX) < threaded_application.min_fling_velocity)
 				{
-					gestureFailed = true;
-					gestureInProgress = false;
+					gestureFailed(event);
 				}
 			}
 			if(gestureInProgress == true)
 			{
 				// restart the gesture timeout timer
-				lastEvent = event;
 				mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
 			}
 		}
 	}
-
-	@Override
-	public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
-//        Log.d("Engine_Driver", "onGestureCancelled action " + event.getAction());
-		gestureInProgress = false;
-		gestureEnd(event);
-	}
 	
-	//determine if the action was long enough to be a swipe
-	@Override
-	public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
-//        Log.d("Engine_Driver", "onGestureEnded action " + event.getAction());
-		gestureEnd(event);
-	}
 	
-	//save start position of potential gesture
-	@Override
-	public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
-//        Log.d("Engine_Driver", "onGestureStarted action" + event.getAction());
-		gestureStart(event);
-	}
-	
-	private void gestureStart( MotionEvent event ) {
-//        Log.d("Engine_Driver", "gestureStart action " + event.getAction());
-		gestureStartX = (int) event.getX();
-		gestureStartY = (int) event.getY();
-		gestureInProgress = true;
-		gestureFailed = false;
-		gestureLastCheckTime = event.getEventTime();
-		mVelocityTracker.clear();
-		// start the gesture timeout timer
-		lastEvent = event;
-		mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
-	}
-
-	private void gestureEnd( MotionEvent event) {
+	private void gestureEnd(MotionEvent event) {
+//        Log.d("Engine_Driver", "gestureEnd action " + event.getAction());
 		mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
 		if(gestureInProgress == true)
 		{
@@ -1264,10 +1219,23 @@ public void onStart() {
 			else
 			{
 				// gesture was not long enough
-				gestureInProgress = false;
-				gestureFailed = true;
+				gestureFailed(event);
 			}
 		}
+	}
+
+	private void gestureCancel(MotionEvent event) {
+		mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
+//		Log.d("Engine_Driver", "gestureCancel action " + event.getAction());
+		gestureInProgress = false;
+		gestureFailed = true;
+	}
+
+	void gestureFailed(MotionEvent event) {
+//        Log.d("Engine_Driver", "gestureFailed action " + event.getAction());
+	   //end the gesture
+	   gestureInProgress = false;
+	   gestureFailed = true;
 	}
 
 	//
@@ -1277,21 +1245,21 @@ public void onStart() {
 	private Runnable gestureStopped = new Runnable() {
 	   @Override
 	   public void run() {
+//		   Log.d("Engine_Driver", "gestureStopped");
 		   if(gestureInProgress == true)
 		   {
 			   //end the gesture
 			   gestureInProgress = false;
 			   gestureFailed = true;
 			   //create a MOVE event to trigger the underlying control
-			   MotionEvent event = lastEvent;
-			   event.setAction(MotionEvent.ACTION_MOVE);
 			   View v = findViewById(R.id.throttle_screen);
 			   if(v != null)
 			   {
-//				   Log.d("Engine_Driver", "gestureStopped dispatching event");
+				   MotionEvent event = MotionEvent.obtain(0,0,MotionEvent.ACTION_MOVE,gestureStartX, gestureStartY,0);
 				   v.dispatchTouchEvent(event);
 			   }
 		   }
 	   }
 	};
 }
+
