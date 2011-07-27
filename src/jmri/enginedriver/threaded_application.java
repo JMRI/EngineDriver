@@ -83,14 +83,10 @@ public class threaded_application extends Application
     LinkedHashMap<String, String> consist_entries;
 
 	String power_state;
-	int heartbeat_interval; 		//heartbeat interval in seconds
-	int heartbeatInterval;			//heartbeat interval in milliseconds
-	int heartbeatTimeoutInterval;	//heartbeat interval in milliseconds
 	
-	//Communications variables.
-	Socket client_socket;
-	InetAddress host_address;
-
+	int heartbeat_interval; 		//heartbeat interval in seconds
+	static final int MIN_HEARTBEAT_INTERVAL = 4;	//intervals shorter than this are ignored 
+	
 	String client_address; //address string of the client address
 	//For communication to the comm_thread.
 	public comm_handler comm_msg_handler;
@@ -109,22 +105,15 @@ public class threaded_application extends Application
 	public static int min_fling_distance;			// pixel width needed for fling
 	public static int min_fling_velocity;			// velocity needed for fling
 	
-	PrintWriter output_pw;
-	BufferedReader input_reader = null;
 	private SharedPreferences prefs;
 
-	//WiT read delays.  These are additional to the socket read timeout of 300 msec when there is no inbound traffic
-    private static final int idleReadDelay = 1500;		//milliseconds max delay between WiThrottle read attempts
-    private static final int busyReadDelay = 100;		//milliseconds min delay between WiThrottle read attempts
-    private static final int stepReadDelay = 100;		//milliseconds to increase read delay each time there is no traffic
-    private static int nextReadDelay = idleReadDelay;	//current read delay
-    Timer readTimer;
-
-class comm_thread extends Thread
+  class comm_thread extends Thread
   {
    JmDNS jmdns = null;
    withrottle_listener listener;
    android.net.wifi.WifiManager.MulticastLock multicast_lock;
+   socket_WiT socketWiT = new socket_WiT();
+   heartbeat heart = new heartbeat();
 
     //Listen for a WiThrottle service advertisement on the LAN.
     public class withrottle_listener implements ServiceListener
@@ -319,48 +308,15 @@ class comm_thread extends Thread
             consist_allowed = false;
             consist_entries = new LinkedHashMap<String, String>();
             
-            try { host_address=InetAddress.getByName(host_ip); }
-            catch(UnknownHostException except) {
-            	process_comm_error("Could not connect to " + host_ip + "\n"+except.getMessage() + "\nUnknownHostException");
+            if(socketWiT.connect() == false)
             	return;
-            }
-            if (host_address == null) {
-                process_comm_error("Could not connect to " + host_ip);
-                return;            	
-            }
-            
-            host_name_string = host_address.getHostName();  //store host server name in app.thread shared variable
-
-            try { client_socket=new Socket();               //look for someone to answer on specified socket, and set timeout
-                  InetSocketAddress sa = new InetSocketAddress(host_ip, port);
-                  client_socket.connect(sa, 1500);  //TODO: adjust these timeouts
-    		      client_socket.setSoTimeout(300);
-            }
-            catch(IOException except) {
-              process_comm_error("Cannot connect to host "+host_ip+" and port "+port+
-            		  " from " + client_address +
-            		  " - "+except.getMessage()+"\nCheck WiThrottle and network settings.");
-              return;
-            }
-
-            try { output_pw=new PrintWriter(new OutputStreamWriter(client_socket.getOutputStream()), true); }
-            catch(IOException except) {
-              process_comm_error("Error creating a PrintWriter, IOException: "+except.getMessage());
-              return;
-            }
-
-			try {input_reader = new BufferedReader(new InputStreamReader(client_socket.getInputStream()));
-			} catch (IOException except) {
-				process_comm_error("Error creating input stream, IOException: "+except.getMessage());
-			    return;
-			} 
 
 			sendThrottleName();
             Message connection_message=Message.obtain();
             connection_message.what=message_type.CONNECTED;
             connection_msg_handler.sendMessage(connection_message);
             		
-            start_read_timer(busyReadDelay);
+//            start_read_timer(busyReadDelay);
             
             break;
 
@@ -410,13 +366,11 @@ class comm_thread extends Thread
         	withrottle_send("Q");
         	if (heartbeat_interval > 0) {
         		withrottle_send("*-");     //request to turn on heartbeat (if enabled in server prefs)
-            	stopHeartbeat();
+            	heart.stopHeartbeat();
         	}
-            stop_read_timer();				//stop reading from socket
-            try{ Thread.sleep(500); }   //  give server time to process this.
-              catch (InterruptedException except){ process_comm_error("Error sleeping the thread, InterruptedException: "+except.getMessage()); }
-            try { client_socket.close(); }
-              catch(IOException except) { process_comm_error("Error closing the Socket, IOException: "+except.getMessage()); }
+//            stop_read_timer();				//stop reading from socket
+        	socketWiT.disconnect();
+//			witReader.stop();
             break;
 
            //Set up an engine to control. The address of the engine is given in arg1, and the address type (long or short) is given in arg2.
@@ -508,65 +462,6 @@ class comm_thread extends Thread
 	    withrottle_send("N" + s);  //send throttle name
 	    withrottle_send("HU" + s);  //also send throttle name as the UDID
     }
-
-    private void startHeartbeat() {
-	  if(heartbeat_interval > 2) {
-	      heartbeatTimeoutInterval = heartbeat_interval * 1000;	//set heartbeat timeout in mSec 
-	      heartbeatInterval = (heartbeat_interval - 1) * 900;  	//set heartbeat in mSec to ((timeout - one second ) * .9)
-	      restartHeartbeat();
-	  }
-    }
-    
-    private void restartHeartbeat() {
-  	  if(heartbeat_interval > 0) {
-	      comm_msg_handler.removeCallbacks(heartbeatTimer);			//remove pending requests
-	      comm_msg_handler.removeCallbacks(heartbeatTimeoutTimer);	//remove pending requests
-	      comm_msg_handler.postDelayed(heartbeatTimer, heartbeatInterval);
-	      comm_msg_handler.postDelayed(heartbeatTimeoutTimer, heartbeatTimeoutInterval);
-  	  }
-    }
-    
-    private void stopHeartbeat() {
-      comm_msg_handler.removeCallbacks(heartbeatTimer);			//remove pending requests
-      comm_msg_handler.removeCallbacks(heartbeatTimeoutTimer);	//remove pending requests
-    }
-	  
-    private Runnable heartbeatTimer = new Runnable() {
- 	   @Override
- 	   public void run() {
-// 		   Log.d("Engine_Driver", "heartbeatTimer");
- 		   if (withrottle_version < 2.0) { 
-    		  withrottle_send("*");   //send a simple heartbeat on early versions
- 		   } else {
-    		  boolean anySent = false;
-    		  if (!loco_string_T.equals("Not Set")) {  
-    			  withrottle_send("MTA*<;>qV"); //request speed
-    			  withrottle_send("MTA*<;>qR"); //request direction
-    			  anySent = true;
-    		  }
-    		  if (!loco_string_S.equals("Not Set")) {  
-    			  withrottle_send("MSA*<;>qV"); //request speed
-    			  withrottle_send("MSA*<;>qR"); //request direction
-    			  anySent = true;
-    		  }
-    		  if (!anySent) {
-    			  sendThrottleName();	//should get a response
-    		  }
- 		   }
- 		   comm_msg_handler.removeCallbacks(heartbeatTimer);	//remove pending requests
- 		   comm_msg_handler.postDelayed(heartbeatTimer,heartbeatInterval);
- 	   }
- 	};
-
-    private Runnable heartbeatTimeoutTimer = new Runnable() {
-  	   @Override
-  	   public void run() {
-//  		   Log.d("Engine_Driver", "heartbeatTimeoutTimer");
- 			Toast.makeText(getApplicationContext(), "WARNING: No response from WiThrottle server for " + heartbeat_interval  + " seconds.  Verify connection.", Toast.LENGTH_LONG).show();
-  	    	comm_msg_handler.removeCallbacks(heartbeatTimeoutTimer);	//remove pending requests
-  	    	comm_msg_handler.postDelayed(heartbeatTimeoutTimer,heartbeatTimeoutInterval);
-  	   }
-  	};
 
   	private void process_comm_error(String msg_txt) {
         Log.e("comm_handler.handleMessage", msg_txt);
@@ -661,7 +556,7 @@ class comm_thread extends Thread
 				heartbeat_interval = Integer.parseInt(response_str.substring(1));  //set app variable
 			} catch (NumberFormatException e) {
 			}
-			startHeartbeat();
+			heart.startHeartbeat(heartbeat_interval);
 	  	    break;
 	  	
 	  	case 'R': //Roster
@@ -1056,96 +951,11 @@ class comm_thread extends Thread
               }
           }
         }
-    	if (output_pw != null) {
-      	  output_pw.println(newMsg);
-      	  output_pw.flush();
-      	} else {
-          process_comm_error("No writer, tried to send: "+newMsg);
-      	}
+        socketWiT.Send(newMsg);
         //send response to debug log for review
         Log.d("Engine_Driver", "-->:" + newMsg + "  was(" + msg + ")");
-        start_read_timer(busyReadDelay);
+//        start_read_timer(busyReadDelay);
     }  //end withrottle_send()
-/*
-    void start_read_timer(int nextDelay) {
-    	readTimer = new Timer();
-    	readTimer.schedule(new TimerTask() {
-    		@Override
-    		public void run() {
-    			withrottle_rcv();
-    		}
-    	}, nextDelay);
-    }
-    void stop_read_timer() {
-    	readTimer.cancel();
-    }
-*/
-    //setup a loop to read from the socket 
-    void start_read_timer(int nextDelay) {
-//    	Log.d("Engine_Driver", "startReadTimer " + nextDelay);
-    	if(nextDelay > 0)
-    	{
-    		nextReadDelay = nextDelay;
-    		while(comm_msg_handler.postDelayed(newReadTimer,nextDelay) == false) {
-    	    	try { 
-    	    		Thread.sleep(200); 
-    	    	}
-    	    	catch(Exception e){
-    	    		break;
-    	    	}
-    		}
-    	}
-    }
-    void stop_read_timer() {
-    	comm_msg_handler.removeCallbacks(newReadTimer);	//remove pending requests
-    }
-
-    private Runnable newReadTimer = new Runnable() {
-	   @Override
-	   public void run() {
-//		   Log.d("Engine_Driver", "newReadTimer");
-	    	if(nextReadDelay > idleReadDelay)
-	    	{
-    			nextReadDelay = idleReadDelay;
-	    	}
-			withrottle_rcv();
-	    	comm_msg_handler.removeCallbacks(newReadTimer);	//remove pending requests
-	    	while(comm_msg_handler.postDelayed(newReadTimer,nextReadDelay) == false) {
-	    		try {
-	    			Thread.sleep(200);
-	    		}
-    	    	catch(Exception e) {
-    	    		break;
-    	    	}
-	    	}
-	   }
-	};
- 
-	//read anything coming back from server and call process_response for it.
-    private void withrottle_rcv() {
-      	  
-     	  //read responses from withrottle and send non-blank ones to other activities
-//    		readTimer.cancel();  //don't double-fire
-      	    String str = null;
-			try {
-				while ((str = input_reader.readLine()) != null) {  //loop until no more data found
-					if (str.length()>0) {
-						restartHeartbeat();
-						process_response(str);
-						nextReadDelay = busyReadDelay;			//short delay if data was found
-					}
-				}
-			} catch  (SocketTimeoutException e )   {
-				nextReadDelay += stepReadDelay;
-			} catch (IOException e) {
-				nextReadDelay = idleReadDelay;
-//  	            readTimer.cancel();  //stop trying to read if an error occurred
-//				e.printStackTrace();
-//  	            process_comm_error("withrottle_rcv err:" + e.getMessage());  
-			}
-//			start_read_timer(nextReadDelay);
-      	  
-    }  //end withrottle_rcv()
 
     public void run()
     {
@@ -1156,8 +966,198 @@ class comm_thread extends Thread
     	Looper.loop();
   
     };
+
+    class socket_WiT extends Thread {
+    	protected InetAddress host_address;
+    	protected Socket clientSocket = null;
+    	protected BufferedReader inputBR = null;
+    	protected PrintWriter outputPW = null;
+    	private boolean doRead;
+    	
+    	public boolean connect() {
+    		//validate address
+            try { 
+            	host_address=InetAddress.getByName(host_ip); 
+            }
+            catch(UnknownHostException except) {
+            	process_comm_error("Could not connect to " + host_ip + "\n"+except.getMessage() + "\nUnknownHostException");
+            	return false;
+            }
+            if (host_address == null) {
+                process_comm_error("Could not connect to " + host_ip);
+                return false;            	
+            }
+            
+            host_name_string = host_address.getHostName();  //store host server name in app.thread shared variable
+
+            //socket
+            try {
+            	clientSocket=new Socket();               //look for someone to answer on specified socket, and set timeout
+            	InetSocketAddress sa = new InetSocketAddress(host_ip, port);
+            	clientSocket.connect(sa, 1500);  //TODO: adjust these timeouts
+            	clientSocket.setSoTimeout(300);
+            }
+            catch(IOException except) 
+            {
+		        process_comm_error("Cannot connect to host "+host_ip+" and port "+port+
+		        					" from " + client_address +
+		        					" - "+except.getMessage()+"\nCheck WiThrottle and network settings.");
+		        return false;
+            }
+
+            //rcvr
+			try {
+				inputBR = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			}
+			catch (IOException except) {
+				process_comm_error("Error creating input stream, IOException: "+except.getMessage());
+			    return false;
+			} 
+			doRead = true;
+    		this.start();
+            
+            //xmtr
+            try { 
+            	outputPW = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true); 
+            }
+            catch(IOException e) {
+              process_comm_error("Error creating a PrintWriter, IOException: "+e.getMessage());
+              return false;
+            }
+            
+    		return true;
+    	}
+    	
+    	public void disconnect() {
+    		//stop rcvr
+    		doRead = false;
+    		for(int i = 0; i < 3 && this.isAlive(); i++) {
+	            try { 
+	            	Thread.sleep(300);    			//  give run() a chance to exit
+	            }
+	            catch (InterruptedException e) { 
+	            	process_comm_error("Error sleeping the thread, InterruptedException: "+e.getMessage());
+	            }
+    		}
+            
+            //close socket
+            try { 
+            	clientSocket.close();
+            }
+            catch(IOException e) { 
+            	process_comm_error("Error closing the Socket, IOException: "+e.getMessage()); 
+            }
+    	}
+
+    	//read the input buffer
+    	public void run() {
+      	    String str = null;
+      	    while(doRead) {
+				try {
+					if((str = inputBR.readLine()) != null) {
+						if (str.length()>0) {
+							heart.restartHeartbeatTimeout();
+							process_response(str);
+						}
+					}
+				} 
+				catch  (SocketTimeoutException e )   {
+				} 
+				catch (IOException e) {
+	    			process_comm_error("WiT rcvr error.  Stopping rcvr. ");
+	    			doRead = false;
+				}
+	    	}
+    	}
+
+    	public void Send(String msg) {
+    		try {
+    			outputPW.println(msg);
+    			outputPW.flush();
+    			heart.restartHeartbeat();
+        	} 
+    		catch (Exception e) {
+    			process_comm_error("WiT xmtr error.  Failed to send: "+msg);
+        	}
+    	}
+    }
+
+    class heartbeat {
+		int heartbeatInterval = 0;				//sends heartbeat message if no other outbound traffic for heartbeatInterval msec
+		int heartbeatTimeoutInterval = 0;		//alerts if no inbound traffic for heartbeatTimeoutInterval msec
+		
+		//startHeartbeat(timeoutInterval in seconds)
+		//calcs the inbound and outbound intervals and starts the beating
+		public void startHeartbeat(int timeoutInterval) {
+    		heartbeatTimeoutInterval = timeoutInterval * 1000;	//heartbeat timeout in mSec 
+	    	if(timeoutInterval > MIN_HEARTBEAT_INTERVAL) {
+    			heartbeatInterval = (timeoutInterval - 1) * 900;  	//heartbeat rate in mSec: ((timeout - one second ) * .9)
+	    		restartHeartbeat();
+	    		restartHeartbeatTimeout();
+	    	}
+	    }
+          
+		//restartHeartbeat()
+		//restarts the outbound interval timing - call this after sending anything to WiT
+		public void restartHeartbeat() {
+			if(heartbeatTimeoutInterval > 0) {
+				comm_msg_handler.removeCallbacks(heartbeatTimer);					//remove any pending requests
+				comm_msg_handler.postDelayed(heartbeatTimer, heartbeatInterval);	//restart interval
+			}
+		}
+	  
+		//restartHeartbeatTimeout()
+		//restarts the inbound interval timing - call this after receiving anything from WiT
+		public void restartHeartbeatTimeout() {
+			if(heartbeatTimeoutInterval > 0) {
+				comm_msg_handler.removeCallbacks(heartbeatTimeoutTimer);
+				comm_msg_handler.postDelayed(heartbeatTimeoutTimer, heartbeatTimeoutInterval);
+			}
+		}
+		
+        public void stopHeartbeat() {
+        	comm_msg_handler.removeCallbacks(heartbeatTimer);			//remove any pending requests
+        	comm_msg_handler.removeCallbacks(heartbeatTimeoutTimer);
+        }
+      	
+        //outbound heartbeat generator
+        private Runnable heartbeatTimer = new Runnable() {
+        	@Override
+        	public void run() {
+        		if (withrottle_version < 2.0) { 
+        			withrottle_send("*");   //send a simple heartbeat on early versions
+        		} else {
+        			boolean anySent = false;
+        			if (!loco_string_T.equals("Not Set")) {  
+        				withrottle_send("MTA*<;>qV"); //request speed
+        				withrottle_send("MTA*<;>qR"); //request direction
+        				anySent = true;
+        			}
+        			if (!loco_string_S.equals("Not Set")) {  
+        				withrottle_send("MSA*<;>qV"); //request speed
+        				withrottle_send("MSA*<;>qR"); //request direction
+        				anySent = true;
+        			}
+        			if (!anySent) {
+        				sendThrottleName();	//this should get a response
+        			}
+       		   }
+       		   comm_msg_handler.removeCallbacks(heartbeatTimer);				//remove pending requests
+       		   comm_msg_handler.postDelayed(heartbeatTimer,heartbeatInterval);	//set next beat
+       	   }
+       	};
+
+       	//inbound heartbeat monitor
+       	private Runnable heartbeatTimeoutTimer = new Runnable() {
+       		@Override
+       		public void run() {
+       			Toast.makeText(getApplicationContext(), "WARNING: No response from WiThrottle server for " + heartbeat_interval  + " seconds.  Verify connection.", Toast.LENGTH_LONG).show();
+       			comm_msg_handler.removeCallbacks(heartbeatTimeoutTimer);	//remove pending requests
+       			comm_msg_handler.postDelayed(heartbeatTimeoutTimer,heartbeatTimeoutInterval);	//set next timeout
+       		}
+       	};
+    }
   }
-  
   
   public void onCreate()  {
 	  super.onCreate();

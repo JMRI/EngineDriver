@@ -8,6 +8,7 @@
  * fixed intermittent failure to get functions from roster (rbecker)
  * handle eStop and show message (rbecker) 
  * add prompt before disconnecting (rbecker)
+ * moved socket read and heartbeat into classes (rbecker)
 **Version 1.6
  * Began adding Multithrottle support (serious rigged version, 2.0+ only)
  * Mirror speed and direction from server (on heartbeat, 2.0+ only)
@@ -101,7 +102,7 @@
  *   added html About page
  */
 /*
- *   TODO: fix crash when ED is left backgrounded for a while, then reopened
+ *   TODO: fix crash when ED is left backgrounded for a while, then reopened, or when returning from web
  *   TODO: show icon in notification bar if app is running but not visible
  *   TODO: allow user to configure side-by-side panels for pads, etc.
  *   TODO: control discovered server list in ta, change ca to only display what is in array
