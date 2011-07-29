@@ -9,6 +9,7 @@
  * handle eStop and show message (rbecker) 
  * add prompt before disconnecting (rbecker)
  * moved socket read and heartbeat into classes (rbecker)
+ * now shows correct page when returning from web (mstevetodd)
 **Version 1.6
  * Began adding Multithrottle support (serious rigged version, 2.0+ only)
  * Mirror speed and direction from server (on heartbeat, 2.0+ only)

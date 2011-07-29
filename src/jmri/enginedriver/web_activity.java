@@ -30,17 +30,24 @@ public class web_activity extends Activity {
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    WebView webview = new WebView(this);
-     
-    String url = "file:///android_asset/feature_not_available.html";
-    threaded_application mainapp = (threaded_application) getApplication();
-    if (mainapp.web_server_port != null && mainapp.web_server_port > 0) {
-    	url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port;
-    }
-    webview.loadUrl(url);
-    setContentView(webview);
-    
   };
+
+  @Override
+  public void onResume() {
+	  super.onResume();
+	
+	    WebView webview = new WebView(this);
+	     
+	    String url = "file:///android_asset/feature_not_available.html";
+	    threaded_application mainapp = (threaded_application) getApplication();
+	    if (mainapp.web_server_port != null && mainapp.web_server_port > 0) {
+	    	url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port;
+	    }
+	    webview.loadUrl(url);
+	    setContentView(webview);
+	    
+  }
+
 
   //Handle pressing of the back button to end this activity
   @Override
