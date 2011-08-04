@@ -208,16 +208,30 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			        	break;
 	      	  	  
 	      	  	  case 'R': //roster function labels - legacy
-      	  			  ViewGroup tv = null;
-      	  			  if (thrSel == 'F') {			// used to use 'F' instead of 'T'
-      	  				  tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
-      	  			  } else if (thrSel == 'S') {
-      	  				  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
-      	  			  }
-	      	  		  if(tv != null) {
-	      	  			  set_function_labels_and_listeners_for_view(thrSel);
-	      	  			  enable_disable_buttons_for_view(tv, true);
-	      	  			  set_labels();
+			          if(thrSel == 'F' || thrSel == 'S') 
+			          {
+	      	  			  ViewGroup tv;
+			        	  if (thrSel == 'F') {			// used to use 'F' instead of 'T'
+	      	  				  tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
+	      	  			  } else {
+	      	  				  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
+	      	  			  }
+			        	  set_function_labels_and_listeners_for_view(thrSel);
+			        	  enable_disable_buttons_for_view(tv, true);
+			        	  set_labels();
+			          }
+			          else 
+			          {
+			        	  try {
+			        		  String scom2 = response_str.substring(1,6);
+				        	  if(scom2.equals("PF}|{"))
+				        	  {
+					        	  thrSel = response_str.charAt(6);
+				        		  set_all_function_states(thrSel);
+				        	  }
+			        	  }
+			        	  catch(IndexOutOfBoundsException e){
+			        	  }
 	      	  		  }
 	      	  		  break;
 	        	}  //end of switch

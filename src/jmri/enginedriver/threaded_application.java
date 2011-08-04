@@ -28,9 +28,6 @@ import java.net.*;
 import java.io.*;
 
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewConfiguration;
 import android.widget.Toast;
 
 import javax.jmdns.*;
@@ -40,8 +37,7 @@ import android.net.wifi.WifiInfo;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 import jmri.enginedriver.message_type;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
@@ -365,7 +361,7 @@ public class threaded_application extends Application
           case message_type.DISCONNECT:
         	withrottle_send("Q");
         	if (heartbeat_interval > 0) {
-        		withrottle_send("*-");     //request to turn on heartbeat (if enabled in server prefs)
+        		withrottle_send("*-");     //request to turn off heartbeat (if enabled in server prefs)
             	heart.stopHeartbeat();
         	}
 //            stop_read_timer();				//stop reading from socket
@@ -458,9 +454,14 @@ public class threaded_application extends Application
     }
     
     private void sendThrottleName() {
+    	sendThrottleName(true);
+    }
+    
+    private void sendThrottleName(Boolean sendHWID) {
 	    String s = prefs.getString("throttle_name_preference", getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue));
 	    withrottle_send("N" + s);  //send throttle name
-	    withrottle_send("HU" + s);  //also send throttle name as the UDID
+	    if(sendHWID == true)
+	    	withrottle_send("HU" + s);  //also send throttle name as the UDID
     }
 
   	private void process_comm_error(String msg_txt) {
@@ -974,6 +975,10 @@ public class threaded_application extends Application
     	protected PrintWriter outputPW = null;
     	private boolean doRead;
     	
+    	socket_WiT() {
+    		super("socket_WiT");
+    	}
+    	
     	public boolean connect() {
     		//validate address
             try { 
@@ -1014,7 +1019,7 @@ public class threaded_application extends Application
 			    return false;
 			} 
 			doRead = true;
-    		this.start();
+			this.start();
             
             //xmtr
             try { 
@@ -1124,10 +1129,8 @@ public class threaded_application extends Application
         private Runnable heartbeatTimer = new Runnable() {
         	@Override
         	public void run() {
-        		if (withrottle_version < 2.0) { 
-        			withrottle_send("*");   //send a simple heartbeat on early versions
-        		} else {
-        			boolean anySent = false;
+    			boolean anySent = false;
+        		if (withrottle_version >= 2.0) { 
         			if (!loco_string_T.equals("Not Set")) {  
         				withrottle_send("MTA*<;>qV"); //request speed
         				withrottle_send("MTA*<;>qR"); //request direction
@@ -1138,10 +1141,11 @@ public class threaded_application extends Application
         				withrottle_send("MSA*<;>qR"); //request direction
         				anySent = true;
         			}
-        			if (!anySent) {
-        				sendThrottleName();	//this should get a response
-        			}
        		   }
+    			if (!anySent) {
+//        			withrottle_send("*");   //send a simple heartbeat on early versions
+    				sendThrottleName(false);	//this should get a response
+    			}
        		   comm_msg_handler.removeCallbacks(heartbeatTimer);				//remove pending requests
        		   comm_msg_handler.postDelayed(heartbeatTimer,heartbeatInterval);	//set next beat
        	   }
