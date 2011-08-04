@@ -6,9 +6,10 @@
  * fixed initial height on throttle (rbecker)
  * show feedback on Stop button (rbecker) 
  * fixed intermittent failure to get functions from roster (rbecker)
- * handle eStop and show message (rbecker) 
+ * handle strange speeds sent by eStop and show message (rbecker) 
  * add prompt before disconnecting (rbecker)
  * moved socket read and heartbeat into classes (rbecker)
+ * now checks for WiT even when no loco selected (rbecker)
  * now shows correct page when returning from web (mstevetodd)
 **Version 1.6
  * Began adding Multithrottle support (serious rigged version, 2.0+ only)

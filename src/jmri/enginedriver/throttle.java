@@ -213,6 +213,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	      	  			  ViewGroup tv;
 			        	  if (thrSel == 'F') {			// used to use 'F' instead of 'T'
 	      	  				  tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
+	      	  				  thrSel = 'T';
 	      	  			  } else {
 	      	  				  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
 	      	  			  }
