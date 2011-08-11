@@ -49,7 +49,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.os.Message;
 import android.widget.EditText;
@@ -81,9 +81,6 @@ public class connection_activity extends Activity {
   ArrayList<HashMap<String, String> > discovery_list;
   private SimpleAdapter connection_list_adapter;
   private SimpleAdapter discovery_list_adapter;
-
-  ArrayList<String> ip_list;
-  ArrayList<Integer> port_list;
 
   ArrayList<String> discovered_ip_list;
   ArrayList<Integer> discovered_port_list;
@@ -171,8 +168,12 @@ public class connection_activity extends Activity {
           connected_port=discovered_port_list.get(position);
         break;
         case RECENT_CONNECTION:
-          connected_host=new String(ip_list.get(position));
-          connected_port=port_list.get(position);
+	    	ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
+	    	TextView hnv = (TextView) vg.getChildAt(0); // get host name from 1st box
+	    	connected_host = (String) hnv.getText();
+	    	TextView hpv = (TextView) vg.getChildAt(1); // get port from 2nd box
+	    	connected_port =new Integer( (String) hpv.getText());
+
         break;
       }
       connect();
@@ -242,18 +243,24 @@ public class connection_activity extends Activity {
         		File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
         		PrintWriter list_output;
         		list_output=new PrintWriter(connections_list_file);
-        		//Add this connection to the head of connections list.
+        		
+        		//Write this connection to file, then write all others (skipping earlier instance of current one)
         		list_output.format("%s:%d\n", connected_host, connected_port);
-        		for(int i=0; i<ip_list.size(); i+=1)
-        		{
-        			if(connected_host.equals(ip_list.get(i)) && port_list.get(i)==connected_port) { continue; }
-        			list_output.format("%s:%d\n", ip_list.get(i), port_list.get(i));
-        		}
+        		
+        	    ListView conn_list=(ListView)findViewById(R.id.connections_list);  //loop thru connections listview
+        	    for(int i = 0; i < conn_list.getChildCount(); i++)  { 
+        	    	ViewGroup vg = (ViewGroup) conn_list.getChildAt(i); //convert to viewgroup for each row
+        	    	TextView hnv = (TextView) vg.getChildAt(0); // get host name from 1st box
+        	    	String lh = (String) hnv.getText();
+        	    	TextView hpv = (TextView) vg.getChildAt(1); // get port from 2nd box
+        	    	Integer lp = new Integer((String) hpv.getText());
+        	    	if(connected_host.equals(lh) && connected_port==lp) { continue; }
+        	    	list_output.format("%s:%d\n", lh, lp);
+        	    }
         		list_output.flush();
         		list_output.close();
         	}
-        	catch(IOException except)
-        	{
+        	catch(IOException except) 	{
         		Log.e("connection_activity", "Error saving recent connection: "+except.getMessage());
         		Toast.makeText(getApplicationContext(), "Error saving recent connection: "+except.getMessage(), Toast.LENGTH_SHORT).show();
         	}
@@ -264,7 +271,7 @@ public class connection_activity extends Activity {
         case message_type.ERROR: {
           //display error message from msg.obj
           String msg_txt = new String((String)msg.obj);
-      	  Toast.makeText(getApplicationContext(), msg_txt, Toast.LENGTH_SHORT).show();
+      	  Toast.makeText(getApplicationContext(), msg_txt, Toast.LENGTH_LONG).show();
         }
         break;
       }
@@ -296,10 +303,9 @@ public class connection_activity extends Activity {
 	public void onResume() {
 		super.onResume();
 
-		ip_list=new ArrayList<String>();
-	    port_list=new ArrayList<Integer>();
-
 	    connections_list.clear();
+	    String example_host = "jmri.mstevetodd.com";
+	    String example_port = "44444";
 	    
 	    //Populate the ListView with the recent connections saved in a file. This will be stored in
 	    // /sdcard/engine_driver/connections_list.txt
@@ -320,17 +326,28 @@ public class connection_activity extends Activity {
 	    				} catch (NumberFormatException e) {
 	    				}
 	    				if (pl > 0) {
-	    					ip_list.add(il);
-	    					port_list.add(pl);
 	    					HashMap<String, String> hm=new HashMap<String, String>();
 	    					hm.put("ip_address", il);
 	    					hm.put("port", pl.toString());
 	    					connections_list.add(hm);
+	    					if (il.equals(example_host)) {
+	    						example_host = "";  //clear if found
+	    					}
 	    				} //if pl>0
 	    			} //if splitPos>0 
-	    		}
-	    		connection_list_adapter.notifyDataSetChanged();
-	    	}
+	    		} //while list_reader
+	    	} //if file exists
+
+	    	//if example host not already in list, add it
+    		if (!example_host.equals("")) {
+    			HashMap<String, String> hm=new HashMap<String, String>();
+    			hm.put("ip_address", example_host);
+    			hm.put("port", example_port);
+    			connections_list.add(hm);
+    		}
+
+    		connection_list_adapter.notifyDataSetChanged();
+
 	    }
 	    catch (IOException except) { 
 	    	Log.e("connection_activity", "Error reading recent connections list: "+except.getMessage());
@@ -398,6 +415,7 @@ public class connection_activity extends Activity {
     ListView discover_list=(ListView)findViewById(R.id.discovery_list);
     discover_list.setAdapter(discovery_list_adapter);
     discover_list.setOnItemClickListener(new connect_item(server_list_type.DISCOVERED_SERVER));
+    
     //Set up a list adapter to allow adding the list of recent connections to the UI.
     connections_list=new ArrayList<HashMap<String, String> >();
     connection_list_adapter=new SimpleAdapter(this, connections_list, R.layout.connections_list_item, new String[] {"ip_address", "port"},

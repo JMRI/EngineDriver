@@ -13,6 +13,7 @@
  * now shows correct page when returning from web (mstevetodd)
  * added menu to web activity (mstevetodd)
  * don't blank out manual entry after use (mstevetodd)
+ * always include jmri.mstevetodd.com in connections list (mstevetodd)
 **Version 1.6
  * Began adding Multithrottle support (serious rigged version, 2.0+ only)
  * Mirror speed and direction from server (on heartbeat, 2.0+ only)
@@ -128,14 +129,13 @@
  *   TODO: if system is blank, allow (force) entry of entire name "LT12"
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
- *   TODO: extract server name and ip from view and remove the array(s)
- *   TODO: add pref for auto-connect to first discovered server
+ *   TODO: extract server name and ip from view and remove the array(s) (connect done, still need to do discovered)
+ *   TODO: add pref for auto-connect to first discovered server?
  *   TODO: save "visible" server name and the resolvable name/ip to improve the looks of the connections
  *   TODO: (maybe?) on repeated connection failures, use IP address instead of name
  * threaded_application
  *   TODO: remove discovered servers when no longer available (partially complete, just need to send a remove if one removed while ca is up)
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
- *   TODO: add client-side conversation logging for easier debugging
  *   TODO: check for error on send and do something with it 
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
@@ -167,6 +167,6 @@
  *   disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
  *   allow restart of withrottle (variable UI needs to be cleared when it closes)
  *   add "E"rror response
- *   add filter for roster entries
+ *   add filter for roster entries, (requested due to accessory decoders being included in "roster")
  * 
  * */
