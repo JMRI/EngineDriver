@@ -30,20 +30,12 @@
       android:orientation="horizontal"
       android:padding="4dp"
    >
-      <TextView
-         android:id="@+id/default_char_for_routes"
-         android:text="R"
-         style="@style/floating_text_style"   
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content" />
       <EditText
          android:id="@+id/route_entry"
          android:layout_width="80sp"
          android:layout_weight="0.75"
          android:layout_height="wrap_content"
-         android:singleLine="true"
-         android:maxLength="4"
-         android:inputType="number" />
+         android:singleLine="true" />
       <Button
          android:id="@+id/route_toggle"
          android:text="@string/set"

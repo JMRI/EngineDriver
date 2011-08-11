@@ -84,7 +84,6 @@ public class turnouts extends Activity implements OnGestureListener {
 	    String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
 		TextView hstv =(TextView)findViewById(R.id.hardware_system);
 		hstv.setText(hs);
-		
 	
 		//clear and rebuild, or disable if not allowed
 		turnouts_list.clear();
@@ -182,7 +181,7 @@ public class turnouts extends Activity implements OnGestureListener {
 	        	msg.arg2=0; // not used 
 	            msg.obj=new String(systemname);    // load system name for turnout into message
 	            mainapp.comm_msg_handler.sendMessage(msg);
-	            entryv.setText(""); //clear the text after send
+//	            entryv.setText(""); //clear the text after send
 		      } else {
 		    	    Toast.makeText(getApplicationContext(), "Enter a turnout # to control", Toast.LENGTH_SHORT).show();
 		      }

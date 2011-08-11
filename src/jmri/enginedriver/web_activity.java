@@ -19,8 +19,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.webkit.WebView;
 
 public class web_activity extends Activity {
@@ -61,4 +65,44 @@ public class web_activity extends Activity {
 	  return(super.onKeyDown(key, event));
   };
 
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu){
+	  MenuInflater inflater = getMenuInflater();
+	  inflater.inflate(R.menu.web_menu, menu);
+	  return true;
+  }
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+	  // Handle all of the possible menu actions.
+	  Intent in;
+	  switch (item.getItemId()) {
+	  case R.id.about_menu:
+		  in=new Intent().setClass(this, about_page.class);
+		  startActivity(in);
+		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+		  break;
+	  case R.id.routes_menu:
+		  in=new Intent().setClass(this, routes.class);
+		  startActivity(in);
+		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+		  break;
+	  case R.id.power_control_menu:
+		  in=new Intent().setClass(this, power_control.class);
+		  startActivity(in);
+		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+		  break;
+	  case R.id.throttle:
+		  this.finish();
+		  connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+		  break;
+	  case R.id.turnouts:
+		  in = new Intent().setClass(this, turnouts.class);
+		  startActivity(in);
+		  this.finish();
+		  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+		  break;
+	  }
+	  return super.onOptionsItemSelected(item);
+  }
 }
+

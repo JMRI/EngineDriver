@@ -11,6 +11,8 @@
  * moved socket read and heartbeat into classes (rbecker)
  * now checks for WiT even when no loco selected (rbecker)
  * now shows correct page when returning from web (mstevetodd)
+ * added menu to web activity (mstevetodd)
+ * don't blank out manual entry after use (mstevetodd)
 **Version 1.6
  * Began adding Multithrottle support (serious rigged version, 2.0+ only)
  * Mirror speed and direction from server (on heartbeat, 2.0+ only)
@@ -104,8 +106,8 @@
  *   added html About page
  */
 /*
- *   TODO: process MS-L2591<;> messages, sent when WiT shuts down.
  *   TODO: fix crash when ED is left backgrounded for a while, then reopened
+ *   TODO: process MS-L2591<;> messages, sent when WiT shuts down.
  *   TODO: show icon in notification bar if app is running but not visible
  *   TODO: allow user to configure side-by-side panels for pads, etc.
  *   TODO: control discovered server list in ta, change ca to only display what is in array
@@ -116,16 +118,15 @@
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  * web
+ *   TODO: add menu or navigation to allow user to return to ED without multiple "back"s.
  *   TODO: allow user to specify or save the current URL  (multiples?)
  *   TODO: optionally add web to fling logic  (multiples?)
  * routes
  *   TODO: use PRT titles for Active/inactive
  * turnouts
- *   TODO: don't blank out manual entry after use
  *   TODO: default "system" based on items in use
  *   TODO: if system is blank, allow (force) entry of entire name "LT12"
  *   TODO: use PTT titles for Turnouts/Turnout
- *   TODO: update turnout list on change not working after reentry to turnout view (worked around by finishing on exit)
  * connection
  *   TODO: extract server name and ip from view and remove the array(s)
  *   TODO: add pref for auto-connect to first discovered server
@@ -139,7 +140,6 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
- *   TODO: prompt "Are you sure you want to Disconnect?" when Back button pressed 
  *   TODO: make Forward, Stop, Reverse language-sensitive 
  *   TODO: restart/extend heartbeat on every send
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
@@ -151,6 +151,8 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
+ *   TODO: add roster images (Lionel's code) 
+ *   TODO: add additional roster info on long-press 
  *   TODO: pass rosterid as second part of MT+ command 
  *   TODO: handle direction of locos in MT consist 
  *   TODO: clean up code for  new MT (Multi-throttle) feature 
@@ -161,7 +163,6 @@
  *   TODO: show error if invalid entry
  *
  * These require changes to WiThrottle
- *   turn on heartbeat even when no loco selected (need something to request)
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
  *   disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
  *   allow restart of withrottle (variable UI needs to be cleared when it closes)

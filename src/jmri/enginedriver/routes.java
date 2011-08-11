@@ -154,20 +154,22 @@ public class routes extends Activity  implements OnGestureListener {
 		      EditText entryv=(EditText)findViewById(R.id.route_entry);
 		      String entrytext = new String(entryv.getText().toString());
 		      if (entrytext.trim().length() > 0 ) {
-		        try {
+/*		        try {
 		          new Integer(entrytext);  //edit check address by attempting conversion to int
 		        } catch(NumberFormatException except) { 
 		       	    Toast.makeText(getApplicationContext(), "route # must be numeric, reenter.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
 		         	return;
 		        }
-		        String systemname ="R" + entrytext;
+*/		        
+//		        String systemname ="R" + entrytext;
+		        String systemname = entrytext;
 		        Message msg=Message.obtain();  
 	        	msg.what=message_type.ROUTE;
 	        	msg.arg1=whichCommand;
 	        	msg.arg2=0; // not used 
 	            msg.obj=new String(systemname);    // load system name for route into message
 	            mainapp.comm_msg_handler.sendMessage(msg);
-	            entryv.setText(""); //clear the text after send
+//	            entryv.setText(""); //clear the text after send
 		      } else {
 		    	    Toast.makeText(getApplicationContext(), "Enter a route # to set", Toast.LENGTH_SHORT).show();
 		      }
