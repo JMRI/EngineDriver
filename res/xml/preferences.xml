@@ -68,4 +68,13 @@
       android:dialogTitle="@string/prefHideRecentLocosTitle"
    >
    </CheckBoxPreference>
+   <EditTextPreference
+      android:key="maximum_recent_connections_preference"
+      android:summary="@string/prefMaximumRecentConnectionsSummary"
+      android:title="@string/prefMaximumRecentConnectionsTitle"
+      android:defaultValue="@string/prefMaximumRecentConnectionsDefaultValue"
+      android:dialogTitle="@string/prefMaximumRecentConnectionsTitle"
+      android:numeric="integer"
+      android:maxLength="2"
+   ></EditTextPreference>
 </PreferenceScreen>

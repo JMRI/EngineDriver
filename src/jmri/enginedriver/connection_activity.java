@@ -232,7 +232,7 @@ public class connection_activity extends Activity {
         break;
 
         case message_type.CONNECTED:
-        	//Save the new connection list to the connections_list.txt file.
+        	//Save the updated connection list to the connections_list.txt file
         	try  {
         		File sdcard_path=Environment.getExternalStorageDirectory();
 
@@ -244,18 +244,24 @@ public class connection_activity extends Activity {
         		PrintWriter list_output;
         		list_output=new PrintWriter(connections_list_file);
         		
-        		//Write this connection to file, then write all others (skipping earlier instance of current one)
+        		//Write selected connection to file, then write all others (skipping selected if found)
         		list_output.format("%s:%d\n", connected_host, connected_port);
         		
-        	    ListView conn_list=(ListView)findViewById(R.id.connections_list);  //loop thru connections listview
-        	    for(int i = 0; i < conn_list.getChildCount(); i++)  { 
-        	    	ViewGroup vg = (ViewGroup) conn_list.getChildAt(i); //convert to viewgroup for each row
-        	    	TextView hnv = (TextView) vg.getChildAt(0); // get host name from 1st box
-        	    	String lh = (String) hnv.getText();
-        	    	TextView hpv = (TextView) vg.getChildAt(1); // get port from 2nd box
-        	    	Integer lp = new Integer((String) hpv.getText());
-        	    	if(connected_host.equals(lh) && connected_port==lp) { continue; }
-        	    	list_output.format("%s:%d\n", lh, lp);
+        	    SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        	    String smrc = prefs.getString("maximum_recent_connections_preference", ""); //retrieve pref for max recents to show  
+        	    if (smrc.equals("")) { //if no value or entry removed, set to default
+        	    	smrc = getApplicationContext().getResources().getString(R.string.prefMaximumRecentConnectionsDefaultValue);
+        	    }
+        	    int mrc = Integer.parseInt(smrc);  
+
+        	    int clEntries =Math.min(connections_list.size(), mrc);  //don't keep more entries than specified in preference
+        	    for(int i = 0; i < clEntries; i++)  {  //loop thru entries from connections list, up to max in prefs 
+        	    	HashMap <String, String> t = connections_list.get(i);
+        	    	String lh = (String) t.get("ip_address");
+        	    	Integer lp = new Integer((String) t.get("port"));
+        	    	if(!connected_host.equals(lh) || connected_port!=lp) {  //write it out if not same as selected 
+        	    		list_output.format("%s:%d\n", lh, lp);
+        	    	}
         	    }
         		list_output.flush();
         		list_output.close();

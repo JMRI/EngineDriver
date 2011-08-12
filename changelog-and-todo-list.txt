@@ -14,6 +14,7 @@
  * added menu to web activity (mstevetodd)
  * don't blank out manual entry after use (mstevetodd)
  * always include jmri.mstevetodd.com in connections list (mstevetodd)
+ * new pref for max recent connections (mstevetodd)
 **Version 1.6
  * Began adding Multithrottle support (serious rigged version, 2.0+ only)
  * Mirror speed and direction from server (on heartbeat, 2.0+ only)
@@ -114,7 +115,7 @@
  *   TODO: control discovered server list in ta, change ca to only display what is in array
  *   TODO: add consist creation/editing features
  *   TODO: change config files to use db
- *   TODO: toast messages on release of loco and update of preferences
+ *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: make private stuff private
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
@@ -140,8 +141,10 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
+ *   TODO: use notched slider (pref?, get from WiT?)
+ *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released" 
  *   TODO: make Forward, Stop, Reverse language-sensitive 
- *   TODO: restart/extend heartbeat on every send
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
  *   TODO: reduce number of calls to set_labels()
  *   TODO: add preference to disable other hardware buttons in throttle screen

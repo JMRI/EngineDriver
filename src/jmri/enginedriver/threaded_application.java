@@ -80,8 +80,9 @@ public class threaded_application extends Application
 
 	String power_state;
 	
-	int heartbeat_interval; 		//heartbeat interval in seconds
-	static final int MIN_HEARTBEAT_INTERVAL = 4;	//intervals shorter than this are ignored 
+	static final int MIN_INBOUND_HEARTBEAT_INTERVAL = 4;	//minimum interval for inbound heartbeat checking
+	static final int HEARTBEAT_RESPONSE_ALLOWANCE = 2;		//seconds to allow for WiT response delay
+	public int heartbeatInterval = 0;						//WiT heartbeat interval setting
 	
 	String client_address; //address string of the client address
 	//For communication to the comm_thread.
@@ -102,6 +103,7 @@ public class threaded_application extends Application
 	public static int min_fling_velocity;			// velocity needed for fling
 	
 	private SharedPreferences prefs;
+	
 
   class comm_thread extends Thread
   {
@@ -109,7 +111,7 @@ public class threaded_application extends Application
    withrottle_listener listener;
    android.net.wifi.WifiManager.MulticastLock multicast_lock;
    socket_WiT socketWiT = new socket_WiT();
-   heartbeat heart = new heartbeat();
+   heartbeat heart  = new heartbeat();
 
     //Listen for a WiThrottle service advertisement on the LAN.
     public class withrottle_listener implements ServiceListener
@@ -282,7 +284,6 @@ public class threaded_application extends Application
             host_name_string = null;
             withrottle_version = 0.0; 
 	  		web_server_port = 0;
-            heartbeat_interval = 0;
             roster_list_string = null;
             power_state = null;
             to_allowed = false;
@@ -360,7 +361,7 @@ public class threaded_application extends Application
         	//Disconnect from the WiThrottle server.
           case message_type.DISCONNECT:
         	withrottle_send("Q");
-        	if (heartbeat_interval > 0) {
+        	if (heart.getInboundInterval() > 0) {
         		withrottle_send("*-");     //request to turn off heartbeat (if enabled in server prefs)
             	heart.stopHeartbeat();
         	}
@@ -383,7 +384,7 @@ public class threaded_application extends Application
         		  withrottle_send("M" + whichThrottle+"A*<;>qR");
         	  }
 
-        	  if (heartbeat_interval > 0) {
+        	  if (heart.getInboundInterval() > 0) {
         		  withrottle_send("*+");     //request to turn on heartbeat (if enabled in server prefs)
         	  }
             break;
@@ -554,10 +555,11 @@ public class threaded_application extends Application
 	  	
 	  	case '*': 
 	  		try {
-				heartbeat_interval = Integer.parseInt(response_str.substring(1));  //set app variable
+				heartbeatInterval = Integer.parseInt(response_str.substring(1));  //set app variable
 			} catch (NumberFormatException e) {
+				heartbeatInterval = 0;
 			}
-			heart.startHeartbeat(heartbeat_interval);
+			heart.startHeartbeat(heartbeatInterval);
 	  	    break;
 	  	
 	  	case 'R': //Roster
@@ -1061,7 +1063,7 @@ public class threaded_application extends Application
 				try {
 					if((str = inputBR.readLine()) != null) {
 						if (str.length()>0) {
-							heart.restartHeartbeatTimeout();
+							heart.restartInboundInterval();
 							process_response(str);
 						}
 					}
@@ -1079,7 +1081,6 @@ public class threaded_application extends Application
     		try {
     			outputPW.println(msg);
     			outputPW.flush();
-    			heart.restartHeartbeat();
         	} 
     		catch (Exception e) {
     			process_comm_error("WiT xmtr error.  Failed to send: "+msg);
@@ -1088,45 +1089,69 @@ public class threaded_application extends Application
     }
 
     class heartbeat {
-		int heartbeatInterval = 0;				//sends heartbeat message if no other outbound traffic for heartbeatInterval msec
-		int heartbeatTimeoutInterval = 0;		//alerts if no inbound traffic for heartbeatTimeoutInterval msec
+    	private int heartbeatIntervalSetpoint = 0;		//WiT heartbeat interval in seconds
+		private int heartbeatOutboundInterval = 0;		//sends heartbeat message if no other outbound traffic for heartbeatInterval msec
+		private int heartbeatInboundInterval = 0;		//alerts user if no inbound traffic for heartbeatTimeoutInterval msec
+		
+		
+		public int getInboundInterval() {
+			return heartbeatInboundInterval;
+		}
+		public int getOutboundInterval() {
+			return heartbeatOutboundInterval;
+		}
 		
 		//startHeartbeat(timeoutInterval in seconds)
 		//calcs the inbound and outbound intervals and starts the beating
 		public void startHeartbeat(int timeoutInterval) {
-    		heartbeatTimeoutInterval = timeoutInterval * 1000;	//heartbeat timeout in mSec 
-	    	if(timeoutInterval > MIN_HEARTBEAT_INTERVAL) {
-    			heartbeatInterval = (timeoutInterval - 1) * 900;  	//heartbeat rate in mSec: ((timeout - one second ) * .9)
-	    		restartHeartbeat();
-	    		restartHeartbeatTimeout();
+	    	//update interval timers if timeout changed
+			if(timeoutInterval != heartbeatIntervalSetpoint)
+			{
+				heartbeatIntervalSetpoint = timeoutInterval;
+
+				//inbound heartbeat timeout in mSec
+				if(timeoutInterval >= MIN_INBOUND_HEARTBEAT_INTERVAL)
+					heartbeatInboundInterval = timeoutInterval * 1000;
+				else
+					heartbeatInboundInterval = 0;
+
+	    		//outbound heartbeat rate in msec
+	    		// allow MAX_HEARTBEAT_RESPONSE_DELAY for WiT to respond
+	    		if(timeoutInterval > HEARTBEAT_RESPONSE_ALLOWANCE)
+	    			heartbeatOutboundInterval = (timeoutInterval - HEARTBEAT_RESPONSE_ALLOWANCE) * 1000;
+	    		else
+	    			heartbeatOutboundInterval = 0;
+
+	    		restartOutboundInterval();
+	    		restartInboundInterval();
 	    	}
 	    }
           
-		//restartHeartbeat()
+		//restartOutboundInterval()
 		//restarts the outbound interval timing - call this after sending anything to WiT
-		public void restartHeartbeat() {
-			if(heartbeatTimeoutInterval > 0) {
-				comm_msg_handler.removeCallbacks(heartbeatTimer);					//remove any pending requests
-				comm_msg_handler.postDelayed(heartbeatTimer, heartbeatInterval);	//restart interval
+		public void restartOutboundInterval() {
+			comm_msg_handler.removeCallbacks(outboundHeartbeatTimer);					//remove any pending requests
+			if(heartbeatOutboundInterval > 0) {
+				comm_msg_handler.postDelayed(outboundHeartbeatTimer, heartbeatOutboundInterval);	//restart interval
 			}
 		}
 	  
-		//restartHeartbeatTimeout()
+		//restartInboundInterval()
 		//restarts the inbound interval timing - call this after receiving anything from WiT
-		public void restartHeartbeatTimeout() {
-			if(heartbeatTimeoutInterval > 0) {
-				comm_msg_handler.removeCallbacks(heartbeatTimeoutTimer);
-				comm_msg_handler.postDelayed(heartbeatTimeoutTimer, heartbeatTimeoutInterval);
+		public void restartInboundInterval() {
+			comm_msg_handler.removeCallbacks(inboundHeartbeatTimer);
+			if(heartbeatInboundInterval > 0) {
+				comm_msg_handler.postDelayed(inboundHeartbeatTimer, heartbeatInboundInterval);
 			}
 		}
 		
         public void stopHeartbeat() {
-        	comm_msg_handler.removeCallbacks(heartbeatTimer);			//remove any pending requests
-        	comm_msg_handler.removeCallbacks(heartbeatTimeoutTimer);
+        	comm_msg_handler.removeCallbacks(outboundHeartbeatTimer);			//remove any pending requests
+        	comm_msg_handler.removeCallbacks(inboundHeartbeatTimer);
         }
       	
         //outbound heartbeat generator
-        private Runnable heartbeatTimer = new Runnable() {
+        private Runnable outboundHeartbeatTimer = new Runnable() {
         	@Override
         	public void run() {
     			boolean anySent = false;
@@ -1143,21 +1168,21 @@ public class threaded_application extends Application
         			}
        		   }
     			if (!anySent) {
-//        			withrottle_send("*");   //send a simple heartbeat on early versions
-    				sendThrottleName(false);	//this should get a response
+    				sendThrottleName(false);	//send message that will get a response
     			}
-       		   comm_msg_handler.removeCallbacks(heartbeatTimer);				//remove pending requests
-       		   comm_msg_handler.postDelayed(heartbeatTimer,heartbeatInterval);	//set next beat
+       		   comm_msg_handler.removeCallbacks(this);				//remove pending requests
+       		   comm_msg_handler.postDelayed(this,heartbeatOutboundInterval);	//set next beat
        	   }
        	};
 
        	//inbound heartbeat monitor
-       	private Runnable heartbeatTimeoutTimer = new Runnable() {
+       	private Runnable inboundHeartbeatTimer = new Runnable() {
        		@Override
        		public void run() {
-       			Toast.makeText(getApplicationContext(), "WARNING: No response from WiThrottle server for " + heartbeat_interval  + " seconds.  Verify connection.", Toast.LENGTH_LONG).show();
-       			comm_msg_handler.removeCallbacks(heartbeatTimeoutTimer);	//remove pending requests
-       			comm_msg_handler.postDelayed(heartbeatTimeoutTimer,heartbeatTimeoutInterval);	//set next timeout
+		        Log.d("Engine_Driver", "heartbeat: no response from WiT for "+heartbeatInterval+" seconds");
+       			Toast.makeText(getApplicationContext(), "WARNING: No response from WiThrottle server for " + heartbeatInterval  + " seconds.  Verify connection.", Toast.LENGTH_LONG).show();
+       			comm_msg_handler.removeCallbacks(this);	//remove pending requests
+       			comm_msg_handler.postDelayed(this,heartbeatInboundInterval);	//set next timeout
        		}
        	};
     }
