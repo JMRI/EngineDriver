@@ -80,8 +80,8 @@ public class threaded_application extends Application
 
 	String power_state;
 	
-	static final int MIN_INBOUND_HEARTBEAT_INTERVAL = 4;	//minimum interval for inbound heartbeat checking
-	static final int HEARTBEAT_RESPONSE_ALLOWANCE = 2;		//seconds to allow for WiT response delay
+	static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;	//minimum interval for outbound heartbeat generator
+	static final int HEARTBEAT_RESPONSE_ALLOWANCE = 4;		//worst case time delay for WiT to respond to a heartbeat message
 	public int heartbeatInterval = 0;						//WiT heartbeat interval setting
 	
 	String client_address; //address string of the client address
@@ -641,7 +641,7 @@ public class threaded_application extends Application
 		  	 break;
   	  }  //end switch
   	  
-  	  //forward whatever we got to other activities (if started)  dup code needed, not sure why msg is getting stepped on 
+  	  //forward whatever we got to other activities (if started) 
       if (turnouts_msg_handler != null)   
       { 
           Message msg=Message.obtain(); 
@@ -1089,9 +1089,23 @@ public class threaded_application extends Application
     }
 
     class heartbeat {
+    	//	outboundHeartbeat - send a periodic heartbeat to WiT to show that ED is alive.
+    	//
+    	//	inboundHeartbeat - WiT doesn't send a heartbeat to ED, so send a periodic message to WiT that requires a response.
+    	//
+    	//	If the WiT heartbeat interval = 0 then heartbeat checking is disabled.
+    	//
+    	//	Else 
+    	//		If the WiT heartbeat is >= (MIN_OUTBOUND_HEARTBEAT_INTERVAL + HEARTBEAT_RESPONSE_ALLOWANCE) 
+    	//		then the outbound heartbeat rate to (WiT heartbeat - HEARTBEAT_RESPONSE_ALLOWANCE)
+    	//
+    	//		Else the outbound heartbeat rate to	MIN_OUTBOUND_HEARTBEAT_INTERVAL.
+    	//
+    	//		The inbound heartbeat rate is set to (outbound heartbeat rate + HEARTBEAT_RESPONSE_ALLOWANCE)
+    	
     	private int heartbeatIntervalSetpoint = 0;		//WiT heartbeat interval in seconds
-		private int heartbeatOutboundInterval = 0;		//sends heartbeat message if no other outbound traffic for heartbeatInterval msec
-		private int heartbeatInboundInterval = 0;		//alerts user if no inbound traffic for heartbeatTimeoutInterval msec
+		private int heartbeatOutboundInterval = 0;		//sends outbound heartbeat message at this rate
+		private int heartbeatInboundInterval = 0;		//alerts user if there was no inbound traffic for this long
 		
 		
 		public int getInboundInterval() {
@@ -1104,31 +1118,31 @@ public class threaded_application extends Application
 		//startHeartbeat(timeoutInterval in seconds)
 		//calcs the inbound and outbound intervals and starts the beating
 		public void startHeartbeat(int timeoutInterval) {
-	    	//update interval timers if timeout changed
+	    	//update interval timers only when the heartbeat timeout interval changed
 			if(timeoutInterval != heartbeatIntervalSetpoint)
 			{
 				heartbeatIntervalSetpoint = timeoutInterval;
-
-				//inbound heartbeat timeout in mSec
-				if(timeoutInterval >= MIN_INBOUND_HEARTBEAT_INTERVAL)
-					heartbeatInboundInterval = timeoutInterval * 1000;
-				else
+				if(heartbeatIntervalSetpoint == 0) {	//heartbeat is disabled
+					heartbeatOutboundInterval = 0;
 					heartbeatInboundInterval = 0;
+				}
+				else {
+	    			heartbeatOutboundInterval = heartbeatIntervalSetpoint - HEARTBEAT_RESPONSE_ALLOWANCE;
+	    			if(heartbeatOutboundInterval < MIN_OUTBOUND_HEARTBEAT_INTERVAL)
+	    				heartbeatOutboundInterval = MIN_OUTBOUND_HEARTBEAT_INTERVAL;
 
-	    		//outbound heartbeat rate in msec
-	    		// allow MAX_HEARTBEAT_RESPONSE_DELAY for WiT to respond
-	    		if(timeoutInterval > HEARTBEAT_RESPONSE_ALLOWANCE)
-	    			heartbeatOutboundInterval = (timeoutInterval - HEARTBEAT_RESPONSE_ALLOWANCE) * 1000;
-	    		else
-	    			heartbeatOutboundInterval = 0;
+	    			heartbeatInboundInterval = heartbeatOutboundInterval + HEARTBEAT_RESPONSE_ALLOWANCE;
 
+					heartbeatOutboundInterval *= 1000;		//convert to milliseconds
+					heartbeatInboundInterval *= 1000;		//convert to milliseconds
+				}
 	    		restartOutboundInterval();
 	    		restartInboundInterval();
 	    	}
 	    }
           
 		//restartOutboundInterval()
-		//restarts the outbound interval timing - call this after sending anything to WiT
+		//restarts the outbound interval timing - call this after sending anything to WiT that requires a response
 		public void restartOutboundInterval() {
 			comm_msg_handler.removeCallbacks(outboundHeartbeatTimer);					//remove any pending requests
 			if(heartbeatOutboundInterval > 0) {
@@ -1150,39 +1164,49 @@ public class threaded_application extends Application
         	comm_msg_handler.removeCallbacks(inboundHeartbeatTimer);
         }
       	
-        //outbound heartbeat generator
+        public void sendHeartbeat() {
+			comm_msg_handler.post(outboundHeartbeatTimer);
+        }
+        
+        //outboundHeartbeatTimer()
+        //sends a periodic message to WiT
         private Runnable outboundHeartbeatTimer = new Runnable() {
         	@Override
         	public void run() {
-    			boolean anySent = false;
-        		if (withrottle_version >= 2.0) { 
-        			if (!loco_string_T.equals("Not Set")) {  
-        				withrottle_send("MTA*<;>qV"); //request speed
-        				withrottle_send("MTA*<;>qR"); //request direction
-        				anySent = true;
-        			}
-        			if (!loco_string_S.equals("Not Set")) {  
-        				withrottle_send("MSA*<;>qV"); //request speed
-        				withrottle_send("MSA*<;>qR"); //request direction
-        				anySent = true;
-        			}
-       		   }
-    			if (!anySent) {
-    				sendThrottleName(false);	//send message that will get a response
-    			}
        		   comm_msg_handler.removeCallbacks(this);				//remove pending requests
-       		   comm_msg_handler.postDelayed(this,heartbeatOutboundInterval);	//set next beat
+       		   if(heartbeatOutboundInterval != 0) {
+       			   boolean anySent = false;
+       			   if (withrottle_version >= 2.0) { 
+       				   if (!loco_string_T.equals("Not Set")) {  
+       					   withrottle_send("MTA*<;>qV"); //request speed
+       					   withrottle_send("MTA*<;>qR"); //request direction
+       					   anySent = true;
+       				   }
+       				   if (!loco_string_S.equals("Not Set")) {  
+       					   withrottle_send("MSA*<;>qV"); //request speed
+       					   withrottle_send("MSA*<;>qR"); //request direction
+       					   anySent = true;
+       				   }
+	       		   }
+       			   if (!anySent) {
+       				   sendThrottleName(false);	//send message that will get a response
+       			   }
+	       		   comm_msg_handler.postDelayed(this,heartbeatOutboundInterval);	//set next beat
+       		   }
        	   }
        	};
 
-       	//inbound heartbeat monitor
+       	//inboundHeartbeatTimer()
+       	//display an alert message when there is no inbound traffic from WiT within required interval 
        	private Runnable inboundHeartbeatTimer = new Runnable() {
        		@Override
        		public void run() {
-		        Log.d("Engine_Driver", "heartbeat: no response from WiT for "+heartbeatInterval+" seconds");
-       			Toast.makeText(getApplicationContext(), "WARNING: No response from WiThrottle server for " + heartbeatInterval  + " seconds.  Verify connection.", Toast.LENGTH_LONG).show();
        			comm_msg_handler.removeCallbacks(this);	//remove pending requests
-       			comm_msg_handler.postDelayed(this,heartbeatInboundInterval);	//set next timeout
+       			if(heartbeatInboundInterval != 0) {
+			        Log.d("Engine_Driver", "heartbeat: no response from WiT for "+(heartbeatInboundInterval / 1000)+" seconds");
+	       			Toast.makeText(getApplicationContext(), "WARNING: No response from WiThrottle server for " + (heartbeatInboundInterval/1000)  + " seconds.  Verify connection.", Toast.LENGTH_LONG).show();
+	       			comm_msg_handler.postDelayed(this,heartbeatInboundInterval);	//set next inbound timeout
+       			}
        		}
        	};
     }
