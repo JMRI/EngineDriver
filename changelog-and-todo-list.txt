@@ -130,6 +130,7 @@
  *   TODO: if system is blank, allow (force) entry of entire name "LT12"
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
+ *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
  *   TODO: extract server name and ip from view and remove the array(s) (connect done, still need to do discovered)
  *   TODO: add pref for auto-connect to first discovered server?
  *   TODO: save "visible" server name and the resolvable name/ip to improve the looks of the connections

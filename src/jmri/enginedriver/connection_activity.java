@@ -334,9 +334,10 @@ public class connection_activity extends Activity {
 	    				if (pl > 0) {
 	    					HashMap<String, String> hm=new HashMap<String, String>();
 	    					hm.put("ip_address", il);
-	    					hm.put("port", pl.toString());
+	    					String ps = pl.toString();
+	    					hm.put("port", ps);
 	    					connections_list.add(hm);
-	    					if (il.equals(example_host)) {
+	    					if (il.equals(example_host) && ps.equals(example_port)) {
 	    						example_host = "";  //clear if found
 	    					}
 	    				} //if pl>0
