@@ -229,9 +229,12 @@ public class connection_activity extends Activity {
 
         case message_type.SERVICE_REMOVED:        
         	//TODO: add this after removing arraylists
-        break;
+        	break;
 
         case message_type.CONNECTED:
+
+        	start_throttle_activity();
+
         	//Save the updated connection list to the connections_list.txt file
         	try  {
         		File sdcard_path=Environment.getExternalStorageDirectory();
@@ -239,30 +242,30 @@ public class connection_activity extends Activity {
         		//First, determine if the engine_driver directory exists. If not, create it.
         		File engine_driver_dir=new File(sdcard_path, "engine_driver");
         		if(!engine_driver_dir.exists()) { engine_driver_dir.mkdir(); }
-        	
+
         		File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
         		PrintWriter list_output;
         		list_output=new PrintWriter(connections_list_file);
-        		
+
         		//Write selected connection to file, then write all others (skipping selected if found)
         		list_output.format("%s:%d\n", connected_host, connected_port);
-        		
-        	    SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        	    String smrc = prefs.getString("maximum_recent_connections_preference", ""); //retrieve pref for max recents to show  
-        	    if (smrc.equals("")) { //if no value or entry removed, set to default
-        	    	smrc = getApplicationContext().getResources().getString(R.string.prefMaximumRecentConnectionsDefaultValue);
-        	    }
-        	    int mrc = Integer.parseInt(smrc);  
 
-        	    int clEntries =Math.min(connections_list.size(), mrc);  //don't keep more entries than specified in preference
-        	    for(int i = 0; i < clEntries; i++)  {  //loop thru entries from connections list, up to max in prefs 
-        	    	HashMap <String, String> t = connections_list.get(i);
-        	    	String lh = (String) t.get("ip_address");
-        	    	Integer lp = new Integer((String) t.get("port"));
-        	    	if(!connected_host.equals(lh) || connected_port!=lp) {  //write it out if not same as selected 
-        	    		list_output.format("%s:%d\n", lh, lp);
-        	    	}
-        	    }
+        		SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        		String smrc = prefs.getString("maximum_recent_connections_preference", ""); //retrieve pref for max recents to show  
+        		if (smrc.equals("")) { //if no value or entry removed, set to default
+        			smrc = getApplicationContext().getResources().getString(R.string.prefMaximumRecentConnectionsDefaultValue);
+        		}
+        		int mrc = Integer.parseInt(smrc);  
+
+        		int clEntries =Math.min(connections_list.size(), mrc);  //don't keep more entries than specified in preference
+        		for(int i = 0; i < clEntries; i++)  {  //loop thru entries from connections list, up to max in prefs 
+        			HashMap <String, String> t = connections_list.get(i);
+        			String lh = (String) t.get("ip_address");
+        			Integer lp = new Integer((String) t.get("port"));
+        			if(!connected_host.equals(lh) || connected_port!=lp) {  //write it out if not same as selected 
+        				list_output.format("%s:%d\n", lh, lp);
+        			}
+        		}
         		list_output.flush();
         		list_output.close();
         	}
@@ -271,7 +274,7 @@ public class connection_activity extends Activity {
         		Toast.makeText(getApplicationContext(), "Error saving recent connection: "+except.getMessage(), Toast.LENGTH_SHORT).show();
         	}
 
-          start_throttle_activity();
+//        	start_throttle_activity();
         break;
 
         case message_type.ERROR: {

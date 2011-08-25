@@ -15,6 +15,7 @@
  * don't blank out manual entry after use (mstevetodd)
  * always include jmri.mstevetodd.com in connections list (mstevetodd)
  * new pref for max recent connections (mstevetodd)
+ * moved save of recent connections to follow start of throttle activity instead of precede
 **Version 1.6
  * Began adding Multithrottle support (serious rigged version, 2.0+ only)
  * Mirror speed and direction from server (on heartbeat, 2.0+ only)
