@@ -1,3 +1,5 @@
+**Version 1.8
+ *
 **Version 1.7
  * Enabled "fling" between turnouts, throttle, routes (rbecker)
  * Fixed the shutdown and back behavior (rbecker)
