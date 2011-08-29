@@ -1327,7 +1327,13 @@ public void onStart() {
 			   if(v != null)
 			   {
 				   MotionEvent event = MotionEvent.obtain(0,0,MotionEvent.ACTION_MOVE,gestureStartX, gestureStartY,0);
-				   v.dispatchTouchEvent(event);
+				   try {
+					   v.dispatchTouchEvent(event);
+				   }
+				   catch(IllegalArgumentException e) 
+				   {
+					   Log.d("Engine_Driver", "gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
+				   }
 			   }
 		   }
 	   }
