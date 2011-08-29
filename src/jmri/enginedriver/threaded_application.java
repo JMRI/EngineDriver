@@ -729,7 +729,11 @@ public class threaded_application extends Application
     	for (String ts : ta) {
     		if (i > 0) { //skip first chunk
     			String[] tv = splitByString(ts,"}|{");  //split these into name, address and length
-    			roster_entries.put(tv[0],tv[1]+"("+tv[2]+")"); //roster name is hashmap key, value is address(L or S), e.g.  2591(L)
+    			try {
+					roster_entries.put(tv[0],tv[1]+"("+tv[2]+")"); //roster name is hashmap key, value is address(L or S), e.g.  2591(L)
+				} catch (Exception e) {
+			  		Log.d("Engine_Driver", "process_roster_list caught Exception");  //ignore any bad stuff in roster entries
+				}
     		}  //end if i>0
     		i++;
     	}  //end for
