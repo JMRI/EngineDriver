@@ -21,11 +21,15 @@ package jmri.enginedriver;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.os.Message;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
@@ -33,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
@@ -47,11 +53,14 @@ import android.util.TypedValue;
 
 import java.io.FileReader;
 import android.widget.EditText;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.Button;
 import android.widget.AdapterView;
 import java.io.PrintWriter;
+
+import com.example.android.xmladapters.ImageDownloader;
 
 public class select_loco extends Activity {
 	private static final int GONE = 8;
@@ -60,8 +69,8 @@ public class select_loco extends Activity {
 	ArrayList<HashMap<String, String>> recent_engine_list;
 	private SimpleAdapter recent_list_adapter;
 	ArrayList<HashMap<String, String>> roster_list;
-	private SimpleAdapter roster_list_adapter;
-
+	private RosterSimpleAdapter roster_list_adapter;
+	
 	ArrayList<Integer> engine_address_list;
 	ArrayList<Integer> address_size_list; // Look at address_type.java
 
@@ -74,7 +83,7 @@ public class select_loco extends Activity {
 
 	private SharedPreferences prefs;
 	private String default_address_length;
-
+	
 	// populate the on-screen roster view from global hashmap
 	public void refresh_roster_list() {
 		// clear and rebuild
@@ -91,12 +100,15 @@ public class select_loco extends Activity {
 					HashMap<String, String> hm = new HashMap<String, String>();
 					hm.put("roster_name", rostername);
 					hm.put("roster_address", mainapp.roster_entries.get(rostername));
-
+					if ((mainapp.roster != null) && (mainapp.roster.get(rostername)!=null))
+						hm.put("roster_icon", mainapp.roster.get(rostername).getIconPath());						
+					
 					// add temp hashmap to list which view is hooked to
 					roster_list.add(hm);
 
 				} // for rostername
 			} //if roster_entries not null
+
 
 			if (mainapp.consist_entries != null) {
 				for (String consistname : mainapp.consist_entries.keySet()) {
@@ -293,11 +305,8 @@ public class select_loco extends Activity {
 		// When an item is clicked, acquire that engine.
 		public void onItemClick(AdapterView<?> parent, View v, int position,
 				long id) {
-			ViewGroup vg = (ViewGroup) v; // convert to viewgroup for clicked
-			// row
-			TextView rav = (TextView) vg.getChildAt(1); // get rosteraddress
-			// text from 2nd text
-			// field
+			ViewGroup vg = (ViewGroup) v; // convert to viewgroup for clicked row
+			TextView rav = (TextView) vg.getChildAt(2); // get rosteraddress text from 3rd field
 			String rosteraddressstring = (String) rav.getText();
 			// parse address and length from string, e.g. 2591(L)
 			String ras[] = threaded_application.splitByString(rosteraddressstring, "(");
@@ -375,14 +384,16 @@ public class select_loco extends Activity {
 
 		// Set up a list adapter to contain the current roster list.
 		roster_list = new ArrayList<HashMap<String, String>>();
-		roster_list_adapter = new SimpleAdapter(this, roster_list,
+		roster_list_adapter = new RosterSimpleAdapter(this, roster_list,
 				R.layout.roster_list_item, new String[] { "roster_name",
-						"roster_address" }, new int[] { R.id.roster_name_label,
-						R.id.roster_address_label });
+						"roster_address", "roster_icon" }, new int[] { R.id.roster_name_label,
+						R.id.roster_address_label, R.id.roster_icon_image });
+
 		ListView roster_list_view = (ListView) findViewById(R.id.roster_list);
 		roster_list_view.setAdapter(roster_list_adapter);
 		roster_list_view
 				.setOnItemClickListener(new roster_item_ClickListener());
+
 		refresh_roster_list();
 
 		// Set up a list adapter to allow adding the list of recent engines to
@@ -485,5 +496,52 @@ public class select_loco extends Activity {
 		set_labels();
 
 	};
+
+    public class RosterSimpleAdapter extends SimpleAdapter {
+    	private Context cont;
+
+        public RosterSimpleAdapter(Context context,
+				List<? extends Map<String, ?>> data, int resource,
+				String[] from, int[] to) {
+			super(context, data, resource, from, to);
+			cont = context;
+		}
+
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+        	if (position>roster_list.size())
+        		return convertView;
+        	
+        	HashMap<String, String> hm = roster_list.get(position);
+        	if (hm == null)
+        		return convertView;
+        	
+        	LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);        	
+        	RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.roster_list_item, null, false);
+
+        	String str = hm.get("roster_icon");
+        	if ((str != null) && (str.length()>0)){
+        		Log.d("RosterSimpleAdapter","Loading icon "+str);
+				ImageView image = (ImageView) view.findViewById(R.id.roster_icon_image);
+				mainapp.imageDownloader.download( str,image);
+//        	} else {
+//        		view.removeView(view.findViewById(R.id.roster_icon_image));
+        	}
+        				
+        	str = hm.get("roster_name");
+        	if (str != null) {
+        		TextView name = (TextView) view.findViewById(R.id.roster_name_label);
+        		name.setText(str);
+        	}
+        	
+        	str = hm.get("roster_address");
+        	if (str != null) {        	
+        		TextView secondLine = (TextView) view.findViewById(R.id.roster_address_label);
+        		secondLine.setText(hm.get("roster_address"));
+        	}
+
+			return view;
+        }
+    }
 
 }

@@ -23,21 +23,21 @@
       android:layout_width="0dp"
       android:layout_weight="0.7"
       android:layout_height="wrap_content"
-      
    >
       <TextView
          android:id="@+id/to_user_name"
-         android:text="testing string string string string"
+         android:text="Test user name string"
          android:layout_width="wrap_content"
          android:textAppearance="?android:attr/textAppearanceLarge"
-        style="@style/list_item_style"   
+         style="@style/list_item_style"   
          android:paddingTop="15dp"
          android:paddingBottom="4dp"
          android:layout_height="wrap_content" />
       <TextView
          android:id="@+id/to_system_name"
-         android:text="testing string"
-         style="@style/list_item_style"   
+         android:text="System name"
+         style="@style/list_id_style"   
+         android:paddingTop="2dp"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content" />
    </RelativeLayout>
@@ -46,7 +46,7 @@
       android:layout_width="0dp"
       android:layout_weight="0.3"
       android:layout_height="wrap_content"
-      android:text="testing"
+      android:text="State"
       android:textAppearance="?android:attr/textAppearanceLarge"
       style="@style/list_item_style"   
       android:paddingTop="15dp"

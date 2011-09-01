@@ -31,6 +31,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import javax.jmdns.*;
+
+import com.example.android.xmladapters.ImageDownloader;
+
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
 
@@ -41,6 +44,8 @@ import java.util.LinkedHashMap;
 
 import jmri.enginedriver.message_type;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterLoader;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -77,6 +82,8 @@ public class threaded_application extends Application
     HashMap<String, String> roster_entries;
 	boolean consist_allowed = false;  //default consist support to off
     LinkedHashMap<String, String> consist_entries;
+    HashMap<String, RosterEntry> roster;
+     ImageDownloader imageDownloader = new ImageDownloader();
 
 	String power_state;
 	
@@ -636,6 +643,12 @@ public class threaded_application extends Application
 		    	  		web_server_port = Integer.parseInt(response_str.substring(2));  //set app variable
 	    			} catch (NumberFormatException e) {
 	    			}
+	    	    	
+	    	    	//TODO: move to an asynchronous thread
+	    	    	Log.d("http connect","Trying http://"+host_ip+":"+web_server_port+"/prefs/roster.xml");
+	    	        RosterLoader rl = new RosterLoader("http://"+host_ip+":"+web_server_port+"/prefs/roster.xml");
+	    	        roster = rl.parse();
+	    	        
 	    	  	    break;
 	    	  }  //end switch inside P
 		  	 break;
@@ -737,6 +750,7 @@ public class threaded_application extends Application
     		}  //end if i>0
     		i++;
     	}  //end for
+
     }
 
     //parse consist list into appropriate mainapp hashmap

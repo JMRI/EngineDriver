@@ -1,6 +1,7 @@
 **Version 1.8
  * Add try/catch for ScrollView.onTouchEvent, reported to dev console (rbecker)
  * ignore malformed roster list, reported to dev console (mstevetodd)
+ * retrieve and display roster images, if mini web server running (lionel)
  * minor updates to jmDNS
 **Version 1.7
  * Enabled "fling" between turnouts, throttle, routes (rbecker)
@@ -147,6 +148,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: pref to limit max throttle change, to prevent accidental speedup when trying to press reverse.
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: respect "Max Throttle %" from roster entry
  *   TODO: use notched slider (pref?, get from WiT?)

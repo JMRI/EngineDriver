@@ -79,7 +79,7 @@
       <item name="android:shadowRadius">0.2</item>
     </style>
 
-<style name="app_title" parent="@android:style/WindowTitle">
+<style name="app_title" parent="@*android:style/WindowTitle">
   <item name="android:shadowColor">#FF000000</item>
   <item name="android:shadowDx">2</item>
   <item name="android:shadowDy">2</item>
@@ -119,6 +119,15 @@
 
 <style name="list_item_style" parent="@android:style/Widget.TextView">
   <item name="android:textColor">#FFFFFF</item>
+  <item name="android:shadowColor">#FF000000</item>
+  <item name="android:shadowDx">2</item>
+  <item name="android:shadowDy">2</item>
+  <item name="android:shadowRadius">1</item>
+</style>
+
+<style name="list_id_style" parent="@android:style/Widget.TextView">
+  <item name="android:textColor">#FFFFFF</item>
+  <item name="android:textStyle">italic</item>
   <item name="android:shadowColor">#FF000000</item>
   <item name="android:shadowDx">2</item>
   <item name="android:shadowDy">2</item>
