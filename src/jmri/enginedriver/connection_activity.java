@@ -108,28 +108,27 @@ public class connection_activity extends Activity {
   * @param animExit the exiting animation
   */
   public static void overridePendingTransition(Activity activity, int animEnter, int animExit) {
-  if (overridePendingTransition!=null) {
-  try {
-  overridePendingTransition.invoke(activity, animEnter, animExit);
-  } catch (Exception e) {
-  // do nothing
-  }
-  }
+	  if (overridePendingTransition!=null) {
+		  try {
+			  overridePendingTransition.invoke(activity, animEnter, animExit);
+		  } catch (Exception e) {
+			  // do nothing
+		  }
+	  }
   }
 
   
   //Request connection to the WiThrottle server.
-  void connect()
-  {
-    Message connect_msg=Message.obtain();
-    connect_msg.what=message_type.CONNECT;
-    connect_msg.arg1=connected_port;
-    connect_msg.obj=new String(connected_host);
-    if (mainapp.comm_msg_handler != null) {
-    	mainapp.comm_msg_handler.sendMessage(connect_msg);
-    } else {
-   	    Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
-    }    	
+  void connect()  {
+	  Message connect_msg=Message.obtain();
+	  connect_msg.what=message_type.CONNECT;
+	  connect_msg.arg1=connected_port;
+	  connect_msg.obj=new String(connected_host);
+	  if (mainapp.comm_msg_handler != null) {
+		  mainapp.comm_msg_handler.sendMessage(connect_msg);
+	  } else {
+		  Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
+	  }    	
   };
 
 
@@ -159,24 +158,22 @@ public class connection_activity extends Activity {
     connect_item(server_list_type new_type) { server_type=new_type; }
 
     //When an item is clicked, connect to the given IP address and port.
-    public void onItemClick(AdapterView<?> parent, View v, int position, long id)
-    {
-      switch(server_type)
-      {
-        case DISCOVERED_SERVER:
-          connected_host=new String(discovered_ip_list.get(position));
-          connected_port=discovered_port_list.get(position);
-        break;
-        case RECENT_CONNECTION:
-	    	ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
-	    	TextView hnv = (TextView) vg.getChildAt(0); // get host name from 1st box
-	    	connected_host = (String) hnv.getText();
-	    	TextView hpv = (TextView) vg.getChildAt(1); // get port from 2nd box
-	    	connected_port =new Integer( (String) hpv.getText());
+    public void onItemClick(AdapterView<?> parent, View v, int position, long id)    {
+    	switch(server_type)      {
+    	case DISCOVERED_SERVER:
+    		connected_host=new String(discovered_ip_list.get(position));
+    		connected_port=discovered_port_list.get(position);
+    		break;
+    	case RECENT_CONNECTION:
+    		ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
+    		TextView hnv = (TextView) vg.getChildAt(0); // get host name from 1st box
+    		connected_host = (String) hnv.getText();
+    		TextView hpv = (TextView) vg.getChildAt(1); // get port from 2nd box
+    		connected_port =new Integer( (String) hpv.getText());
 
-        break;
-      }
-      connect();
+    		break;
+    	}
+    	connect();
     };
   }
 

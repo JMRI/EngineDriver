@@ -58,7 +58,7 @@ public class threaded_application extends Application
 	String host_ip; //The IP address of the WiThrottle server.
 	int port; //The TCP port that the WiThrottle server is running on
 	//shared variables returned from the withrottle server, stored here for easy access by other activities
-	String host_name_string; //retrieved host name of connection
+//	String host_name_string; //retrieved host name of connection
 	String loco_string_T = "Not Set"; //Loco Address string returned from the server for selected loco #1
 	String loco_string_S = "Not Set"; //Loco Address string returned from the server for selected loco #1
 	Double withrottle_version; //version of withrottle server
@@ -256,10 +256,9 @@ public class threaded_application extends Application
     class comm_handler extends Handler
     {
       //All of the work of the communications thread is initiated from this function.
-      public void handleMessage(Message msg)
-      {
-        switch(msg.what)
-        {
+      public void handleMessage(Message msg)      {
+
+    	  switch(msg.what)        {
         //Start or Stop the WiThrottle listener and required jmdns stuff
         case message_type.SET_LISTENER:
         	//arg1= 1 to turn on, arg1=0 to turn off
@@ -288,7 +287,7 @@ public class threaded_application extends Application
             port=msg.arg1;
             
             //clear app.thread shared variables so they can be reset
-            host_name_string = null;
+//            host_name_string = null;
             withrottle_version = 0.0; 
 	  		web_server_port = 0;
             roster_list_string = null;
@@ -972,9 +971,10 @@ public class threaded_application extends Application
               }
           }
         }
-        socketWiT.Send(newMsg);
         //send response to debug log for review
         Log.d("Engine_Driver", "-->:" + newMsg + "  was(" + msg + ")");
+        //perform the send
+        socketWiT.Send(newMsg);
 //        start_read_timer(busyReadDelay);
     }  //end withrottle_send()
 
@@ -1000,6 +1000,7 @@ public class threaded_application extends Application
     	}
     	
     	public boolean connect() {
+
     		//validate address
             try { 
             	host_address=InetAddress.getByName(host_ip); 
@@ -1013,7 +1014,7 @@ public class threaded_application extends Application
                 return false;            	
             }
             
-            host_name_string = host_address.getHostName();  //store host server name in app.thread shared variable
+//            host_name_string = host_address.getHostName();  //store host server name in app.thread shared variable
 
             //socket
             try {
@@ -1022,8 +1023,7 @@ public class threaded_application extends Application
             	clientSocket.connect(sa, 1500);  //TODO: adjust these timeouts
             	clientSocket.setSoTimeout(300);
             }
-            catch(IOException except) 
-            {
+            catch(IOException except)  {
 		        process_comm_error("Cannot connect to host "+host_ip+" and port "+port+
 		        					" from " + client_address +
 		        					" - "+except.getMessage()+"\nCheck WiThrottle and network settings.");

@@ -4,6 +4,7 @@
  * retrieve and display roster images, if mini web server running (lionel)
  * minor updates to jmDNS
  * show consist details unless name is > 4
+ * Removed unneeded host name lookup to speed connection on some networks.
 **Version 1.7
  * Enabled "fling" between turnouts, throttle, routes (rbecker)
  * Fixed the shutdown and back behavior (rbecker)
