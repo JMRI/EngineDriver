@@ -573,7 +573,7 @@ public class threaded_application extends Application
 	  		switch (response_str.charAt(1)) {
 
 	  		case 'C': 
-	  			if 	(response_str.charAt(2) == 'C') {  //RCC1
+	  			if 	(response_str.charAt(2) == 'C' || response_str.charAt(2) == 'L') {  //RCC1 or RCL1 (treated the same in ED)
 	  				consist_allowed = true;  //set app variable
 	  			} else	if 	(response_str.charAt(2) == 'D') {  //RCD}|{88(S)}|{88(S)]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
 	  				process_consist_list(response_str);
@@ -776,8 +776,8 @@ public class threaded_application extends Application
     		}  //end if i==0
     		i++;
     	}  //end for
-    	if (!consist_name.equals(consist_addr)) {
-    		consist_desc = consist_name; // use name if different from address
+    	if (!consist_name.equals(consist_addr) && (consist_name.length() > 4)) { 
+    		consist_desc = consist_name; // use entered name if significant
     	}
     	consist_entries.put(consist_addr, consist_desc); 
     }

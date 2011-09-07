@@ -3,6 +3,7 @@
  * ignore malformed roster list, reported to dev console (mstevetodd)
  * retrieve and display roster images, if mini web server running (lionel)
  * minor updates to jmDNS
+ * show consist details unless name is > 4
 **Version 1.7
  * Enabled "fling" between turnouts, throttle, routes (rbecker)
  * Fixed the shutdown and back behavior (rbecker)
@@ -114,6 +115,7 @@
  *   added html About page
  */
 /*
+ *   TODO: eliminate or handle "Thread already started" message
  *   TODO: fix crash when ED is left backgrounded for a while, then reopened
  *   TODO: process MS-L2591<;> messages, sent when WiT shuts down.
  *   TODO: show icon in notification bar if app is running but not visible
@@ -163,7 +165,7 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
- *   TODO: add roster images (Lionel's code) 
+ *   TODO: include NCE consists (change to WiT?) 
  *   TODO: add additional roster info on long-press 
  *   TODO: pass rosterid as second part of MT+ command 
  *   TODO: handle direction of locos in MT consist 
