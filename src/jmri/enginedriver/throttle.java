@@ -170,7 +170,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		    	  				catch(NumberFormatException e) {
 		    	  				}
 		    	  			}
-		    	  			else if(com3 == 's') {
+/*		    	  			else if(com3 == 's') {
 		    	  				try {
 			    	  				int stepCode = new Integer(ls[1].substring(1));
 			    	  				int newMaxSpeed = 0;
@@ -194,6 +194,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		    	  				catch(NumberFormatException e) {
 		    	  				}
 		    	  			}
+*/		    	  			
 		    	  			else {
 	//	    		        	set_labels();
 		    	  			}
