@@ -145,7 +145,7 @@ public class turnouts extends Activity implements OnGestureListener {
 			switch(msg.what) {
 	      		case message_type.RESPONSE:
 	      			String response_str = msg.obj.toString();
-	      			if (response_str.substring(0,3).equals("PTA")) {  //refresh turnouts if any have changed
+	      			if (response_str.length() >= 3 && response_str.substring(0,3).equals("PTA")) {  //refresh turnouts if any have changed
 	      				refresh_turnout_view(); 
 	      			}
 	      			break;

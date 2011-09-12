@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
@@ -59,8 +58,6 @@ import android.content.SharedPreferences;
 import android.widget.Button;
 import android.widget.AdapterView;
 import java.io.PrintWriter;
-
-import com.example.android.xmladapters.ImageDownloader;
 
 public class select_loco extends Activity {
 	private static final int GONE = 8;
@@ -524,7 +521,7 @@ public class select_loco extends Activity {
         		Log.d("RosterSimpleAdapter","Loading icon "+str);
 				ImageView image = (ImageView) view.findViewById(R.id.roster_icon_image);
 				mainapp.imageDownloader.download( str,image);
-//        	} else {
+        	} else {
 //        		view.removeView(view.findViewById(R.id.roster_icon_image));
         	}
         				

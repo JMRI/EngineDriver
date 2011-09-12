@@ -43,7 +43,7 @@ public class power_control extends Activity {
 			switch(msg.what) {
 				case message_type.RESPONSE:
 					String response_str = msg.obj.toString();
-					if (response_str.substring(0,3).equals("PPA")) {  //refresh power state 
+					if (response_str.length() >= 3 && response_str.substring(0,3).equals("PPA")) {  //refresh power state 
 						refresh_power_control_view(); 
 					}
 					break;

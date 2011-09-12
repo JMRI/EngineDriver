@@ -134,7 +134,7 @@ public class routes extends Activity  implements OnGestureListener {
 	      switch(msg.what) {
 	      case message_type.RESPONSE: {
 	        	String response_str = msg.obj.toString();
-	        	if (response_str.substring(0,3).equals("PRA")) {  //refresh routes if any have changed
+	        	if (response_str.length() >= 3 && response_str.substring(0,3).equals("PRA")) {  //refresh routes if any have changed
 	        		refresh_route_view(); 
 	        	}
 	        }
