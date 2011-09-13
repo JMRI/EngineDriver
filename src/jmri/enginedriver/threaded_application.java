@@ -255,222 +255,228 @@ public class threaded_application extends Application
     }
     	
     
-    class comm_handler extends Handler
-    {
-      //All of the work of the communications thread is initiated from this function.
-      public void handleMessage(Message msg)      {
-Log.d("Engine_Driver","starting handleMessage()");
-    	  switch(msg.what)        {
-        //Start or Stop the WiThrottle listener and required jmdns stuff
-        case message_type.SET_LISTENER:
-        	Log.d("Engine_Driver","starting SET_LISTENER");
-        	//arg1= 1 to turn on, arg1=0 to turn off
-        	if (msg.arg1 == 0) {
-        		if (jmdns != null) { 
-        			jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
-        			multicast_lock.release();
-        			end_jmdns();
-        		}
-        	} else {
-        		if (jmdns == null) {   //start jmdns if not started
-                	Log.d("Engine_Driver","before start_jmdns()");
-        			start_jmdns();
-                	Log.d("Engine_Driver","after start_jmdns()");
-        		}
-        		if (jmdns != null) {  //don't bother if jmdns not started
-                	Log.d("Engine_Driver","before multicast_lock.acquire()");
-        			multicast_lock.acquire();
-                	Log.d("Engine_Driver","after multicast_lock.acquire()");
-        			jmdns.addServiceListener("_withrottle._tcp.local.", listener);
-                	Log.d("Engine_Driver","after addServiceListener()");
-        		}
-        	}
-        	break;
+    class comm_handler extends Handler    {
 
-        	//Connect to the WiThrottle server.
-          case message_type.CONNECT:
-Log.d("Engine_Driver","in handleMessage().CONNECT");
-            //The IP address is stored in the obj as a String, the port is stored in arg1.
-            host_ip=new String((String)msg.obj);
-            host_ip = host_ip.trim();
-            port=msg.arg1;
-            
-            //clear app.thread shared variables so they can be reset
-//            host_name_string = null;
-            withrottle_version = 0.0; 
-	  		web_server_port = 0;
-            roster_list_string = null;
-            power_state = null;
-            to_allowed = false;
-            to_states = null;
-            to_system_names = null;
-            to_user_names = null;
-            to_state_names = null;
-            rt_allowed = false;
-            rt_states = null;
-            rt_system_names = null;
-            rt_user_names = null;
-            rt_state_names = null;
-            roster_entries = null;
-      	  	function_labels_S = new LinkedHashMap<Integer, String>();
-      	  	function_labels_T = new LinkedHashMap<Integer, String>();
-      	  	function_labels_default = new LinkedHashMap<Integer, String>();
-      	  	function_states_T = new boolean[32];		// also allocated in onCreate() ???
-      	  	function_states_S = new boolean[32];
-            consist_allowed = false;
-            consist_entries = new LinkedHashMap<String, String>();
-            
-Log.d("Engine_Driver","before socketWiT.connect()");
-            if(socketWiT.connect() == false)
-            	return;
-            Log.d("Engine_Driver","after socketWiT.connect()");
+    	//All of the work of the communications thread is initiated from this function.
+    	public void handleMessage(Message msg)      {
 
-			sendThrottleName();
-            Message connection_message=Message.obtain();
-            connection_message.what=message_type.CONNECTED;
-            connection_msg_handler.sendMessage(connection_message);
-            		
-//            start_read_timer(busyReadDelay);
-            
-            break;
+    		switch(msg.what)        {
+    		//Start or Stop the WiThrottle listener and required jmdns stuff
+    		case message_type.SET_LISTENER:
+    			Log.d("Engine_Driver","starting SET_LISTENER");
+    			//arg1= 1 to turn on, arg1=0 to turn off
+    			if (msg.arg1 == 0) {
+    				if (jmdns != null) { 
+    					jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
+    					multicast_lock.release();
+    					end_jmdns();
+    				}
+    			} else {
+    				if (jmdns == null) {   //start jmdns if not started
+    					Log.d("Engine_Driver","before start_jmdns()");
+    					start_jmdns();
+    					Log.d("Engine_Driver","after start_jmdns()");
+    				}
+    				if (jmdns != null) {  //don't bother if jmdns not started
+    					Log.d("Engine_Driver","before multicast_lock.acquire()");
+    					multicast_lock.acquire();
+    					Log.d("Engine_Driver","after multicast_lock.acquire()");
+    					jmdns.addServiceListener("_withrottle._tcp.local.", listener);
+    					Log.d("Engine_Driver","after addServiceListener()");
+    				}
+    			}
+    			break;
 
-          //Release the current loco
-          case message_type.RELEASE:  //release specified loco
-          	String whichThrottle = msg.obj.toString();
+    			//Connect to the WiThrottle server.
+    		case message_type.CONNECT:
 
-        	//        	Boolean f = getApplicationContext().getResources().getBoolean(R.string.prefStopOnReleaseDefaultValue); TODO: fix this
-  		    if (prefs.getBoolean("stop_on_release_preference", true )) {
-  		    	withrottle_send(whichThrottle+"V0");  //send stop command before releasing (if set in prefs)
-  		    }
-            if (whichThrottle.equals("T")) {
-  		      loco_string_T = "Not Set"; 
-//              loco_address_T = -1;
-              function_labels_T = new LinkedHashMap<Integer, String>();
-              function_states_T = new boolean[32];
+    			//avoid duplicate connects, seen when user clicks address multiple times quickly
+    			if (host_ip != null) {
+    				Log.d("Engine_Driver","Duplicate CONNECT message received.  Ignoring.");
+    				return;
+    			}
 
-            } else {
-              loco_string_S = "Not Set"; 
-//              loco_address_S = -1;
-              function_labels_S = new LinkedHashMap<Integer, String>();
-              function_states_S = new boolean[32];
-            }
-            withrottle_send(whichThrottle+"r");  //send release command
-            break;
+    			//The IP address is stored in the obj as a String, the port is stored in arg1.
+    			host_ip=new String((String)msg.obj);
+    			host_ip = host_ip.trim();
+    			port=msg.arg1;
 
-            //request speed
-          case message_type.REQ_VELOCITY:
-        	if (withrottle_version >= 2.0) {
-               	whichThrottle = msg.obj.toString();
-//               	withrottle_send(whichThrottle+"qV");
-               	withrottle_send("M"+whichThrottle+"A*<;>qV");
-        	}
-          	break;
+    			//clear app.thread shared variables so they can be reset
+    			//            host_name_string = null;
+    			withrottle_version = 0.0; 
+    			web_server_port = 0;
+    			roster_list_string = null;
+    			power_state = null;
+    			to_allowed = false;
+    			to_states = null;
+    			to_system_names = null;
+    			to_user_names = null;
+    			to_state_names = null;
+    			rt_allowed = false;
+    			rt_states = null;
+    			rt_system_names = null;
+    			rt_user_names = null;
+    			rt_state_names = null;
+    			roster_entries = null;
+    			function_labels_S = new LinkedHashMap<Integer, String>();
+    			function_labels_T = new LinkedHashMap<Integer, String>();
+    			function_labels_default = new LinkedHashMap<Integer, String>();
+    			function_states_T = new boolean[32];		// also allocated in onCreate() ???
+    					function_states_S = new boolean[32];
+    					consist_allowed = false;
+    					consist_entries = new LinkedHashMap<String, String>();
 
-          	//request direction
-          case message_type.REQ_DIRECTION:
-        	if (withrottle_version >= 2.0) {
-               	whichThrottle = msg.obj.toString();
-//        		withrottle_send(whichThrottle+"qR");  //request updated direction
-        		withrottle_send("M"+whichThrottle+"A*<;>qR");  //request updated direction
-        	}
-        	break;
-        	
-        	//Disconnect from the WiThrottle server.
-          case message_type.DISCONNECT:
-        	withrottle_send("Q");
-        	if (heart.getInboundInterval() > 0) {
-        		withrottle_send("*-");     //request to turn off heartbeat (if enabled in server prefs)
-            	heart.stopHeartbeat();
-        	}
-//            stop_read_timer();				//stop reading from socket
-        	socketWiT.disconnect();
-//			witReader.stop();
-            break;
+    					Log.d("Engine_Driver","before socketWiT.connect()");
+    					if(socketWiT.connect() == false)
+    						return;
+    					Log.d("Engine_Driver","after socketWiT.connect()");
 
-           //Set up an engine to control. The address of the engine is given in arg1, and the address type (long or short) is given in arg2.
-          case message_type.LOCO_ADDR:
-            //clear appropriate app-level shared variables so they can be reset
-        	  whichThrottle = msg.obj.toString();
-        	  withrottle_send(String.format(whichThrottle+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", msg.arg1));
-              //In order to get the engine to start, I must set a direction and some non-zero velocity and then set the velocity to zero. TODO: Verify this problem still exists
-//            withrottle_send(whichThrottle+"R1"); 
-//            withrottle_send(whichThrottle+"V1"); 
-//            withrottle_send(whichThrottle+"V0"); 
-        	  if (withrottle_version >= 2.0) {  //request current direction and speed (WiT 2.0+)
-        		  withrottle_send("M" + whichThrottle+"A*<;>qV");
-        		  withrottle_send("M" + whichThrottle+"A*<;>qR");
-        	  }
+    					sendThrottleName();
+    					Message connection_message=Message.obtain();
+    					connection_message.what=message_type.CONNECTED;
+    					connection_msg_handler.sendMessage(connection_message);
 
-        	  if (heart.getInboundInterval() > 0) {
-        		  withrottle_send("*+");     //request to turn on heartbeat (if enabled in server prefs)
-        	  }
-            break;
+    					//            start_read_timer(busyReadDelay);
 
-//          case message_type.ERROR:
-//            break;
-            
-          //Adjust the locomotive's speed. arg1 holds the value of the speed to set. //TODO: Allow 14 and 28 speed steps (might need a change on the server side).
-          case message_type.VELOCITY:
-          	whichThrottle = msg.obj.toString();
-        	withrottle_send(String.format(whichThrottle+"V%d", msg.arg1));
-            break;
+    					break;
 
-          //Change direction. arg2 holds the direction to change to. The reason direction is in arg2 is for compatibility
-          //with the function buttons.
-          case message_type.DIRECTION:
-          	whichThrottle = msg.obj.toString();
-        	withrottle_send(String.format(whichThrottle+"R%d", msg.arg2));
-            break;
-          
-            //Set or unset a function. arg1 is the function number, arg2 is set or unset.
-          case message_type.FUNCTION:
-          	whichThrottle = msg.obj.toString();
-        	withrottle_send(String.format(whichThrottle+"F%d%d", msg.arg2, msg.arg1));
-            break;
-          
-            //send command to change turnout.  PTA2LT12  (throw, close or toggle is passed in arg1) TODO: fix the 8/9 by passing char in obj
-          case message_type.TURNOUT:
-        	  String whichCommand = "";
-        	  String systemname = msg.obj.toString();
-        	  switch (msg.arg1) {
-	        	  case 2: whichCommand = "2";
-	        	  break;
-	        	  case 8: whichCommand = "C";
-	        	  break;
-	        	  case 9: whichCommand = "T";      	  
-        	  }
-        	  withrottle_send("PTA" + whichCommand + systemname);
-              break;
+    					//Release the current loco
+    		case message_type.RELEASE:  //release specified loco
+    			String whichThrottle = msg.obj.toString();
 
-              //send command to route turnout.  PRA2LT12  only 2=toggle supported
-          case message_type.ROUTE:
-        	  systemname = msg.obj.toString();
-        	  withrottle_send("PRA2" + systemname);
-              break;
+    			//        	Boolean f = getApplicationContext().getResources().getBoolean(R.string.prefStopOnReleaseDefaultValue); TODO: fix this
+    			if (prefs.getBoolean("stop_on_release_preference", true )) {
+    				withrottle_send(whichThrottle+"V0");  //send stop command before releasing (if set in prefs)
+    			}
+    			if (whichThrottle.equals("T")) {
+    				loco_string_T = "Not Set"; 
+    				//              loco_address_T = -1;
+    				function_labels_T = new LinkedHashMap<Integer, String>();
+    				function_states_T = new boolean[32];
 
-              //send command to change power setting, new state is passed in arg1
-          case message_type.POWER_CONTROL:
-        	  withrottle_send(String.format("PPA%d", msg.arg1));
-              break;
+    			} else {
+    				loco_string_S = "Not Set"; 
+    				//              loco_address_S = -1;
+    				function_labels_S = new LinkedHashMap<Integer, String>();
+    				function_states_S = new boolean[32];
+    			}
+    			withrottle_send(whichThrottle+"r");  //send release command
+    			break;
 
-              // release handlers and shutdown jmdns
-              // release comm_msg_handler last to signal that we're done
-          case message_type.SHUTDOWN:
-        	  /*
+    			//request speed
+    		case message_type.REQ_VELOCITY:
+    			if (withrottle_version >= 2.0) {
+    				whichThrottle = msg.obj.toString();
+    				//               	withrottle_send(whichThrottle+"qV");
+    				withrottle_send("M"+whichThrottle+"A*<;>qV");
+    			}
+    			break;
+
+    			//request direction
+    		case message_type.REQ_DIRECTION:
+    			if (withrottle_version >= 2.0) {
+    				whichThrottle = msg.obj.toString();
+    				//        		withrottle_send(whichThrottle+"qR");  //request updated direction
+    				withrottle_send("M"+whichThrottle+"A*<;>qR");  //request updated direction
+    			}
+    			break;
+
+    			//Disconnect from the WiThrottle server.
+    		case message_type.DISCONNECT:
+    			withrottle_send("Q");
+    			if (heart.getInboundInterval() > 0) {
+    				withrottle_send("*-");     //request to turn off heartbeat (if enabled in server prefs)
+    				heart.stopHeartbeat();
+    			}
+    			//            stop_read_timer();				//stop reading from socket
+    			socketWiT.disconnect();
+    			//			witReader.stop();
+    			break;
+
+    			//Set up an engine to control. The address of the engine is given in arg1, and the address type (long or short) is given in arg2.
+    		case message_type.LOCO_ADDR:
+    			//clear appropriate app-level shared variables so they can be reset
+    			whichThrottle = msg.obj.toString();
+    			withrottle_send(String.format(whichThrottle+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", msg.arg1));
+    			//In order to get the engine to start, I must set a direction and some non-zero velocity and then set the velocity to zero. TODO: Verify this problem still exists
+    			//            withrottle_send(whichThrottle+"R1"); 
+    			//            withrottle_send(whichThrottle+"V1"); 
+    			//            withrottle_send(whichThrottle+"V0"); 
+    			if (withrottle_version >= 2.0) {  //request current direction and speed (WiT 2.0+)
+    				withrottle_send("M" + whichThrottle+"A*<;>qV");
+    				withrottle_send("M" + whichThrottle+"A*<;>qR");
+    			}
+
+    			if (heart.getInboundInterval() > 0) {
+    				withrottle_send("*+");     //request to turn on heartbeat (if enabled in server prefs)
+    			}
+    			break;
+
+    			//          case message_type.ERROR:
+    			//            break;
+
+    			//Adjust the locomotive's speed. arg1 holds the value of the speed to set. //TODO: Allow 14 and 28 speed steps (might need a change on the server side).
+    		case message_type.VELOCITY:
+    			whichThrottle = msg.obj.toString();
+    			withrottle_send(String.format(whichThrottle+"V%d", msg.arg1));
+    			break;
+
+    			//Change direction. arg2 holds the direction to change to. The reason direction is in arg2 is for compatibility
+    			//with the function buttons.
+    		case message_type.DIRECTION:
+    			whichThrottle = msg.obj.toString();
+    			withrottle_send(String.format(whichThrottle+"R%d", msg.arg2));
+    			break;
+
+    			//Set or unset a function. arg1 is the function number, arg2 is set or unset.
+    		case message_type.FUNCTION:
+    			whichThrottle = msg.obj.toString();
+    			withrottle_send(String.format(whichThrottle+"F%d%d", msg.arg2, msg.arg1));
+    			break;
+
+    			//send command to change turnout.  PTA2LT12  (throw, close or toggle is passed in arg1) TODO: fix the 8/9 by passing char in obj
+    		case message_type.TURNOUT:
+    			String whichCommand = "";
+    			String systemname = msg.obj.toString();
+    			switch (msg.arg1) {
+    			case 2: whichCommand = "2";
+    			break;
+    			case 8: whichCommand = "C";
+    			break;
+    			case 9: whichCommand = "T";      	  
+    			}
+    			withrottle_send("PTA" + whichCommand + systemname);
+    			break;
+
+    			//send command to route turnout.  PRA2LT12  only 2=toggle supported
+    		case message_type.ROUTE:
+    			systemname = msg.obj.toString();
+    			withrottle_send("PRA2" + systemname);
+    			break;
+
+    			//send command to change power setting, new state is passed in arg1
+    		case message_type.POWER_CONTROL:
+    			withrottle_send(String.format("PPA%d", msg.arg1));
+    			break;
+
+    			// release handlers and shutdown jmdns
+    			// release comm_msg_handler last to signal that we're done
+    		case message_type.SHUTDOWN:
+    			/*
             throttle_msg_handler = null; 
             select_loco_msg_handler = null; 
             power_control_msg_handler = null; 
             routes_msg_handler = null; 
             turnouts_msg_handler = null;
             connection_msg_handler = null;
-            */
-            end_jmdns();		// this takes too long?
-            comm_msg_handler = null;
-  		  	break;
-        }
-      };
+    			 */
+    			end_jmdns();		// this takes too long?
+    			comm_msg_handler = null;
+    			break;
+    		}
+    	};
     }
-    
+
     private void sendThrottleName() {
     	sendThrottleName(true);
     }
@@ -658,7 +664,11 @@ Log.d("Engine_Driver","before socketWiT.connect()");
 	    	    	Log.d("Engine_Driver","http connect - Trying http://"+host_ip+":"+web_server_port+"/prefs/roster.xml");
 	    	        RosterLoader rl = new RosterLoader("http://"+host_ip+":"+web_server_port+"/prefs/roster.xml");
 	    	        roster = rl.parse();
-	    	        
+	    	        int re = 0;
+	    	        if (roster != null) {
+	    	        	re = roster.size();
+	    	        }
+	    	    	Log.d("Engine_Driver","Loaded " + re +" entries from roster.xml.");
 	    	  	    break;
 	    	  }  //end switch inside P
 		  	 break;
@@ -1051,12 +1061,11 @@ Log.d("Engine_Driver","before socketWiT.connect()");
 			} 
 			doRead = true;
 
-			//start the socket_WiT thread.  TODO: prevent call further upstream? 
+			//start the socket_WiT thread.   Ignore "already started" exception.
 			try {
 				this.start();
 			} catch (IllegalThreadStateException except) {
 				process_comm_error("Error starting socket_WiT thread:  "+except.getMessage());
-			    return false;
 			}
 
 			//xmtr

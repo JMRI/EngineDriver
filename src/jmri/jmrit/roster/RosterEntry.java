@@ -78,7 +78,7 @@ public class RosterEntry {
 		for (int k=0; k<nm.getLength() ;k++) {
 			if ("id".compareTo(nm.item(k).getNodeName())==0) {    			
 				_id  = nm.item(k).getNodeValue();
-				Log.d("RosterEntry ", "adding id "+_id);
+				Log.d("Engine_Driver","RosterEntry - adding id "+_id);
 				continue;
 			}
 			/*    		if ("fileName".compareTo(nm.item(k).getNodeName())==0) {
