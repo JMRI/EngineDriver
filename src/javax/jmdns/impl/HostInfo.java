@@ -82,7 +82,6 @@ public class HostInfo implements DNSStatefulObject {
                         }
                     }
                 }
-                aName = addr.getHostName();
                 if (addr.isLoopbackAddress()) {
                     logger.warning("Could not find any address beside the loopback.");
                 }

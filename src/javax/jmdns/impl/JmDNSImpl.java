@@ -391,9 +391,9 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
      */
     public JmDNSImpl(InetAddress address, String name) throws IOException {
         super();
-//        if (logger.isLoggable(Level.FINER)) {
-logger.info("JmDNS instance created");
-//        }
+        if (logger.isLoggable(Level.FINER)) {
+        	logger.finer("JmDNS instance created");
+        }
         _cache = new DNSCache(100);
 
         _listeners = Collections.synchronizedList(new ArrayList<DNSListener>());
@@ -404,11 +404,8 @@ logger.info("JmDNS instance created");
         _services = new ConcurrentHashMap<String, ServiceInfo>(20);
         _serviceTypes = new ConcurrentHashMap<String, ServiceTypeEntry>(20);
 
-logger.info("before set _localHost");
         _localHost = HostInfo.newHostInfo(address, this, name);
-logger.info("before name");
         _name = (name != null ? name : _localHost.getName());
-logger.info("after name");
 
         // _cancelerTimer = new Timer("JmDNS.cancelerTimer");
 
