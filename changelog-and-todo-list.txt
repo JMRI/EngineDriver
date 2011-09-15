@@ -184,6 +184,6 @@
  *   disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
  *   allow restart of withrottle (variable UI needs to be cleared when it closes)
  *   add "E"rror response
- *   add filter for roster entries, (requested due to accessory decoders being included in "roster")
+ *   add filter for roster entries, use "active" entry? (requested due to accessory decoders being included in "roster")
  * 
  * */

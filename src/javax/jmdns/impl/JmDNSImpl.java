@@ -392,7 +392,7 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
     public JmDNSImpl(InetAddress address, String name) throws IOException {
         super();
         if (logger.isLoggable(Level.FINER)) {
-        	logger.finer("JmDNS instance created");
+            logger.finer("JmDNS instance created");
         }
         _cache = new DNSCache(100);
 
@@ -417,14 +417,10 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         // -------------------------------------------------
 
         // Bind to multicast socket
-        logger.info("before this.openMulticastSocket(this.getLocalHost())");
         this.openMulticastSocket(this.getLocalHost());
-        logger.info("after this.openMulticastSocket(this.getLocalHost())");
         this.start(this.getServices().values());
-        logger.info("after this.getServices().values()");
 
         this.startReaper();
-        logger.info("after this.startReaper()");
         
     }
 
