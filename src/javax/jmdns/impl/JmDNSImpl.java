@@ -421,7 +421,6 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         this.start(this.getServices().values());
 
         this.startReaper();
-        
     }
 
     private void start(Collection<? extends ServiceInfo> serviceInfos) {

@@ -82,13 +82,16 @@ public class HostInfo implements DNSStatefulObject {
                         }
                     }
                 }
+                aName = addr.getHostName();
                 if (addr.isLoopbackAddress()) {
                     logger.warning("Could not find any address beside the loopback.");
                 }
+            } else {
+                aName = addr.getHostName();
             }
-            //  if name passed in use it, else get host name
-            aName = ((jmdnsName != null) && (jmdnsName.length() > 0) ? jmdnsName : addr.getHostName());
-
+            if (aName.contains("in-addr.arpa") || (aName.equals(addr.getHostAddress()))) {
+                aName = ((jmdnsName != null) && (jmdnsName.length() > 0) ? jmdnsName : addr.getHostAddress());
+            }
         } catch (final IOException e) {
             logger.log(Level.WARNING, "Could not intialize the host network interface on " + address + "because of an error: " + e.getMessage(), e);
             // This is only used for running unit test on Debian / Ubuntu
