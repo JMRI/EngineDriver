@@ -1264,7 +1264,7 @@ public class threaded_application extends Application
   
   public void onCreate()  {
 	  super.onCreate();
-	  prefs = getSharedPreferences("jmri.Engine_Driver_preferences", 0);
+	  prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
 	  function_states_T = new boolean[32];
 	  function_states_S = new boolean[32];
