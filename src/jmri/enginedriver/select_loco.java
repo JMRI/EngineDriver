@@ -303,7 +303,7 @@ public class select_loco extends Activity {
 		public void onItemClick(AdapterView<?> parent, View v, int position,
 				long id) {
 			ViewGroup vg = (ViewGroup) v; // convert to viewgroup for clicked row
-			TextView rav = (TextView) vg.getChildAt(2); // get rosteraddress text from 3rd field
+			TextView rav = (TextView) vg.getChildAt(1); // get rosteraddress text from 2nd field
 			String rosteraddressstring = (String) rav.getText();
 			// parse address and length from string, e.g. 2591(L)
 			String ras[] = threaded_application.splitByString(rosteraddressstring, "(");
@@ -383,8 +383,8 @@ public class select_loco extends Activity {
 		roster_list = new ArrayList<HashMap<String, String>>();
 		roster_list_adapter = new RosterSimpleAdapter(this, roster_list,
 				R.layout.roster_list_item, new String[] { "roster_name",
-						"roster_address", "roster_icon" }, new int[] { R.id.roster_name_label,
-						R.id.roster_address_label, R.id.roster_icon_image });
+				"roster_address", "roster_icon" }, new int[] { R.id.roster_name_label,
+				R.id.roster_address_label, R.id.roster_icon_image });
 
 		ListView roster_list_view = (ListView) findViewById(R.id.roster_list);
 		roster_list_view.setAdapter(roster_list_adapter);
@@ -516,16 +516,7 @@ public class select_loco extends Activity {
         	LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);        	
         	RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.roster_list_item, null, false);
 
-        	String str = hm.get("roster_icon");
-        	if ((str != null) && (str.length()>0)){
-        		Log.d("RosterSimpleAdapter","Loading icon "+str);
-				ImageView image = (ImageView) view.findViewById(R.id.roster_icon_image);
-				mainapp.imageDownloader.download( str,image);
-        	} else {
-//        		view.removeView(view.findViewById(R.id.roster_icon_image));
-        	}
-        				
-        	str = hm.get("roster_name");
+        	String str = hm.get("roster_name");
         	if (str != null) {
         		TextView name = (TextView) view.findViewById(R.id.roster_name_label);
         		name.setText(str);
@@ -537,6 +528,16 @@ public class select_loco extends Activity {
         		secondLine.setText(hm.get("roster_address"));
         	}
 
+        	str = hm.get("roster_icon");
+        	if ((str != null) && (str.length()>0)){
+        		Log.d("RosterSimpleAdapter","Loading icon "+str);
+				ImageView image = (ImageView) view.findViewById(R.id.roster_icon_image);
+				mainapp.imageDownloader.download( str,image);
+        	} else {
+        		View v = view.findViewById(R.id.roster_icon_image);
+    			v.setVisibility(GONE);
+        	}
+        				
 			return view;
         }
     }

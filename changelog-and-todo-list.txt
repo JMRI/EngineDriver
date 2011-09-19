@@ -2,12 +2,12 @@
  * Add try/catch for ScrollView.onTouchEvent, reported to dev console (rbecker)
  * ignore malformed roster list, reported to dev console (mstevetodd)
  * retrieve and display roster images, if mini web server running (lionel)
- * minor updates to jmDNS
  * show consist details unless name is > 4
- * Removed unneeded host name lookups to speed connection on some networks.
+ * Removed unneeded host name lookups to speed connection on some networks, including 2 in jmDNS
  * Turned off speed step handling (for now)
  * Fixed crash  (reported to dev console) in routes, turnouts and power when response was < 3 chars  
  * catch error "Thread already started" message (reported to dev console)
+ * reduce height of roster entries if icon not used
 **Version 1.7
  * Enabled "fling" between turnouts, throttle, routes (rbecker)
  * Fixed the shutdown and back behavior (rbecker)
@@ -156,7 +156,7 @@
  *   TODO: pref to limit max throttle change, to prevent accidental speedup when trying to press reverse.
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: respect "Max Throttle %" from roster entry
- *   TODO: use notched slider (pref?, get from WiT?)
+ *   TODO: use notched slider using speedstep value returned from WiT (pref?)
  *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released" 
  *   TODO: make Forward, Stop, Reverse language-sensitive 
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
@@ -168,7 +168,6 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
- *   TODO: reduce height of roster items if no icon 
  *   TODO: add additional roster info on long-press 
  *   TODO: pass rosterid as second part of MT+ command 
  *   TODO: handle direction of locos in MT consist 
