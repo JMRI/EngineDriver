@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -1315,29 +1316,29 @@ public void onStart() {
 	// elapse between onGesture events (i.e. press without movement).
 	//
 	private Runnable gestureStopped = new Runnable() {
-	   @Override
-	   public void run() {
-//		   Log.d("Engine_Driver", "gestureStopped");
-		   if(gestureInProgress == true)
-		   {
-			   //end the gesture
-			   gestureInProgress = false;
-			   gestureFailed = true;
-			   //create a MOVE event to trigger the underlying control
-			   View v = findViewById(R.id.throttle_screen);
-			   if(v != null)
-			   {
-				   MotionEvent event = MotionEvent.obtain(0,0,MotionEvent.ACTION_MOVE,gestureStartX, gestureStartY,0);
-				   try {
-					   v.dispatchTouchEvent(event);
-				   }
-				   catch(IllegalArgumentException e) 
-				   {
-					   Log.d("Engine_Driver", "gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
-				   }
-			   }
-		   }
-	   }
+		@Override
+		public void run() {
+			//		   Log.d("Engine_Driver", "gestureStopped");
+			if(gestureInProgress == true)
+			{
+				//end the gesture
+				gestureInProgress = false;
+				gestureFailed = true;
+				//create a MOVE event to trigger the underlying control
+				View v = findViewById(R.id.throttle_screen);
+				if(v != null)  {
+					//use uptimeMillis() rather than 0 for time in MotionEvent.obtain() call in throttle gestureStopped:
+					MotionEvent event = MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),MotionEvent.ACTION_MOVE,gestureStartX, gestureStartY,0);
+					try {
+						v.dispatchTouchEvent(event);
+					}
+					catch(IllegalArgumentException e) 
+					{
+						Log.d("Engine_Driver", "gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
+					}
+				}
+			}
+		}
 	};
 }
 
