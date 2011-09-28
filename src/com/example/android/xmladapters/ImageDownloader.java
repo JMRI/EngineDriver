@@ -244,8 +244,15 @@ public class ImageDownloader {
         protected Bitmap doInBackground(String... params) {
             final DefaultHttpClient client = new DefaultHttpClient();//.newInstance("Android");
             url = params[0];
-            final HttpGet getRequest = new HttpGet(url);
-            String cookie = params[1];
+            HttpGet getRequest;
+			try {
+				getRequest = new HttpGet(url);
+			} catch (IllegalArgumentException e1) {
+                Log.w(LOG_TAG, "Illegal Argument while retrieving " + url, e1);
+				return null;  //bail if problem with the url itself
+			}
+
+			String cookie = params[1];
             if (cookie != null) {
                 getRequest.setHeader("cookie", cookie);
             }

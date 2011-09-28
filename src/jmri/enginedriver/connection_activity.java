@@ -120,7 +120,6 @@ public class connection_activity extends Activity {
   
   //Request connection to the WiThrottle server.
   void connect()  {
-	  Log.d("Engine_Driver","starting connect()");
 	  Message connect_msg=Message.obtain();
 	  connect_msg.what=message_type.CONNECT;
 	  connect_msg.arg1=connected_port;
@@ -130,7 +129,6 @@ public class connection_activity extends Activity {
 	  } else {
 		  Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
 	  }    	
-	  Log.d("Engine_Driver","ending connect()");
   };
 
 
@@ -161,7 +159,6 @@ public class connection_activity extends Activity {
 
     //When an item is clicked, connect to the given IP address and port.
     public void onItemClick(AdapterView<?> parent, View v, int position, long id)    {
-    	Log.d("Engine_Driver","in onItemClick");
     	switch(server_type)      {
     	case DISCOVERED_SERVER:
     		connected_host=new String(discovered_ip_list.get(position));

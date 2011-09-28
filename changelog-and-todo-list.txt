@@ -1,3 +1,5 @@
+**Version 1.9
+ * Ignore unsupported icon filenames
 **Version 1.8
  * Add try/catch for ScrollView.onTouchEvent, reported to dev console (rbecker)
  * ignore malformed roster list, reported to dev console (mstevetodd)
@@ -119,6 +121,7 @@
  *   added html About page
  */
 /*
+ *   TODO: fix missing background on empty lists on bionic
  *   TODO: fix crash when ED is left backgrounded for a while, then reopened
  *   TODO: process MS-L2591<;> messages, sent when WiT shuts down.
  *   TODO: show icon in notification bar if app is running but not visible

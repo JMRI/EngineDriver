@@ -217,8 +217,6 @@ public class threaded_application extends Application
     				Log.d("Engine_Driver", s);
 
     				jmdns=JmDNS.create(addr, client_address.substring(1));  //pass ip as name to avoid hostname lookup attempt, stripping off leading /
-//    				jmdns=JmDNS.create(addr);  //pass ip as name to avoid hostname lookup attempt
-    				Log.d("Engine_Driver", "after jmDNS.create()");
 
     				if (multicast_lock == null) {  //do this only as needed
     					multicast_lock=wifi.createMulticastLock("engine_driver");
@@ -264,7 +262,6 @@ public class threaded_application extends Application
     		switch(msg.what)        {
     		//Start or Stop the WiThrottle listener and required jmdns stuff
     		case message_type.SET_LISTENER:
-    			Log.d("Engine_Driver","starting SET_LISTENER");
     			//arg1= 1 to turn on, arg1=0 to turn off
     			if (msg.arg1 == 0) {
     				if (jmdns != null) { 
@@ -274,16 +271,11 @@ public class threaded_application extends Application
     				}
     			} else {
     				if (jmdns == null) {   //start jmdns if not started
-    					Log.d("Engine_Driver","before start_jmdns()");
     					start_jmdns();
-    					Log.d("Engine_Driver","after start_jmdns()");
     				}
     				if (jmdns != null) {  //don't bother if jmdns not started
-    					Log.d("Engine_Driver","before multicast_lock.acquire()");
     					multicast_lock.acquire();
-    					Log.d("Engine_Driver","after multicast_lock.acquire()");
     					jmdns.addServiceListener("_withrottle._tcp.local.", listener);
-    					Log.d("Engine_Driver","after addServiceListener()");
     				}
     			}
     			break;
@@ -327,14 +319,12 @@ public class threaded_application extends Application
     			consist_allowed = false;
     			consist_entries = new LinkedHashMap<String, String>();
 
-    			Log.d("Engine_Driver","before socketWiT.connect()");
     			//attempt connection to WiThrottle server
     			if(socketWiT.connect() == false) {
     				host_ip = null;  //clear vars and return if failed to connect
     				port = 0;
     				return;
     			}
-    			Log.d("Engine_Driver","after socketWiT.connect()");
 
     			sendThrottleName();
     			Message connection_message=Message.obtain();
