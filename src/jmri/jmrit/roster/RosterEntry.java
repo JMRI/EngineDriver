@@ -1,5 +1,7 @@
 package jmri.jmrit.roster;
 
+import java.net.URLEncoder;
+
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -31,7 +33,7 @@ public class RosterEntry {
 	static private String _defaultOwner = "";       
 	final static int MAXFNNUM = 28;
 
-	private String ResourcesDir = "";
+	private String resourcesURL = "";
 	public int getMAXFNNUM() { return MAXFNNUM; }
 	protected String[] functionLabels;
 	protected String[] functionSelectedImages;
@@ -58,19 +60,22 @@ public class RosterEntry {
 	public String getDecoderComment() { return _decoderComment; }
 	public String getImagePath() {
 		if ((_imageFilePath != null) && (_imageFilePath.length()>0))
-			return ResourcesDir+_imageFilePath;
+			return resourcesURL+URLEncoder.encode(_imageFilePath);
 		return null;
 	}
+	
+	//set icon url including sizing instruction  TODO: verify this is best place for the resizing
 	public String getIconPath() { 
-		if ((_iconFilePath != null) && (_iconFilePath.length()>0))
-			return ResourcesDir+_iconFilePath;
+		if ((_iconFilePath != null) && (_iconFilePath.length()>0) && (!_iconFilePath.equals("__noIcon.jpg"))) {			
+			return resourcesURL+URLEncoder.encode(_iconFilePath)+"?MaxHeight=52";
+		}
 		return null;
 	}
 	public String getURL() { return _URL; }
 	public String getDateUpdated() { return _dateUpdated; }
 
 	public void setHostPort(String s) {
-		ResourcesDir ="http://"+s+"/prefs/resources/";
+		resourcesURL ="http://"+s+"/prefs/resources/";
 	}
 	
 	public RosterEntry(Node n) {
@@ -289,7 +294,7 @@ public class RosterEntry {
 	}
 	public String getFunctionImage(int fn) {
 		if ((functionImages != null) && (functionImages.length>fn) && (functionImages[fn]!=null) && (functionImages[fn].length()>0))
-			return ResourcesDir+functionImages[fn];
+			return resourcesURL+functionImages[fn];
 		return null ; 
 	}
 
@@ -299,7 +304,7 @@ public class RosterEntry {
 	}
 	public String getFunctionSelectedImage(int fn) {
 		if ((functionSelectedImages != null) && (functionSelectedImages.length>fn) && (functionSelectedImages[fn]!=null) && (functionSelectedImages[fn].length()>0))
-			return ResourcesDir+functionSelectedImages[fn];
+			return resourcesURL+functionSelectedImages[fn];
 		return null ; 
 	}
 	/**

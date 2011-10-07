@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.xmladapters;
+package jmri.enginedriver;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -104,7 +104,11 @@ public class ImageDownloader {
      */
     public void download(String url, ImageView imageView, String cookie) {
         resetPurgeTimer();
-        Bitmap bitmap = getBitmapFromCache(url);
+
+//replace some bad characters with html encoding
+//        url = fixURL.fix(url);
+        
+		Bitmap bitmap = getBitmapFromCache(url);
 
         if (bitmap == null) {
             forceDownload(url, imageView, cookie);
@@ -244,6 +248,7 @@ public class ImageDownloader {
         protected Bitmap doInBackground(String... params) {
             final DefaultHttpClient client = new DefaultHttpClient();//.newInstance("Android");
             url = params[0];
+            Log.d(LOG_TAG, "Downloading image " + url);
             HttpGet getRequest;
 			try {
 				getRequest = new HttpGet(url);
@@ -261,7 +266,7 @@ public class ImageDownloader {
                 HttpResponse response = client.execute(getRequest);
                 final int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode != HttpStatus.SC_OK) {
-                    Log.w("ImageDownloader", "Error " + statusCode +
+                    Log.w(LOG_TAG, "Error " + statusCode +
                             " while retrieving bitmap from " + url);
                     return null;
                 }
@@ -271,19 +276,21 @@ public class ImageDownloader {
                     InputStream inputStream = null;
                     OutputStream outputStream = null;
                     try {
-                        inputStream = entity.getContent();
-                        final ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
-                        outputStream = new BufferedOutputStream(dataStream, IO_BUFFER_SIZE);
-                        copy(inputStream, outputStream);
-                        outputStream.flush();
+                    	inputStream = entity.getContent();
+//                    	final ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+//                    	outputStream = new BufferedOutputStream(dataStream, IO_BUFFER_SIZE);
+//                    	copy(inputStream, outputStream);
+//                    	outputStream.flush();
+//                    	final byte[] data = dataStream.toByteArray();
+//                    	final Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
 
-                        final byte[] data = dataStream.toByteArray();
-                        final Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    	// FIXME : Should use BitmapFactory.decodeStream(inputStream) instead.
+                    	BitmapFactory.Options options=new BitmapFactory.Options(); 
+//                    	options.outHeight = 52;
+//                    	options.inSampleSize = 8;
+                    	final Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, options);
 
-                        // FIXME : Should use BitmapFactory.decodeStream(inputStream) instead.
-                        //final Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-
-                        return bitmap;
+                    	return bitmap;
 
                     } finally {
                         if (inputStream != null) {
@@ -295,6 +302,9 @@ public class ImageDownloader {
                         entity.consumeContent();
                     }
                 }
+            } catch (OutOfMemoryError e) {
+                getRequest.abort();
+            	Log.w(LOG_TAG, "OutOfMemory error decoding bitmap from " + url, e);
             } catch (IOException e) {
                 getRequest.abort();
                 Log.w(LOG_TAG, "I/O error while retrieving bitmap from " + url, e);
@@ -311,7 +321,7 @@ public class ImageDownloader {
             }*/
             return null;
         }
-
+        
         /**
          * Once the image is downloaded, associates it to the imageView
          */
@@ -358,7 +368,7 @@ public class ImageDownloader {
         private final WeakReference<BitmapDownloaderTask> bitmapDownloaderTaskReference;
 
         public DownloadedDrawable(BitmapDownloaderTask bitmapDownloaderTask) {
-            super(Color.BLACK);
+//            super(Color.BLACK);
             bitmapDownloaderTaskReference =
                 new WeakReference<BitmapDownloaderTask>(bitmapDownloaderTask);
         }
@@ -367,4 +377,26 @@ public class ImageDownloader {
             return bitmapDownloaderTaskReference.get();
         }
     }
+
+/*    static class fixURL {
+        private static String bads = " #!*'()\"?&<>|";
+        private static String fix(String argString) {
+            StringBuilder uri = new StringBuilder(); // Encoded URL
+            char[] chars = argString.toCharArray();
+            for(int i = 0; i<chars.length; i++) {
+                char c = chars[i];
+                if(bads.indexOf(c) == -1) {
+                    uri.append(c);  //not bad, copy
+                }
+                else {
+                    uri.append("%");  //bad, replace
+                    uri.append(Integer.toHexString((int)c));
+                }
+            }
+            return uri.toString();
+        }
+        
+    }
+    */
 }
+

@@ -1,5 +1,7 @@
 **Version 1.9
- * Ignore unsupported icon filenames
+ * encode icon filenames to handle special characters
+ * catch error when attempting to load very large image files
+ * send resizing parm with image retrieval (also added code to JMRI to take advantage of this)
 **Version 1.8
  * Add try/catch for ScrollView.onTouchEvent, reported to dev console (rbecker)
  * ignore malformed roster list, reported to dev console (mstevetodd)

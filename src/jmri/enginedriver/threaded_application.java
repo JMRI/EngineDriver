@@ -32,15 +32,12 @@ import android.widget.Toast;
 
 import javax.jmdns.*;
 
-import com.example.android.xmladapters.ImageDownloader;
-
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
 
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-
 
 import jmri.enginedriver.message_type;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;

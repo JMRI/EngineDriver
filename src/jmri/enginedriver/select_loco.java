@@ -255,8 +255,8 @@ public class select_loco extends Activity {
 			list_output.flush();
 			list_output.close();
 		} catch (IOException except) {
-			Log.e("connection_activity",
-					"Error creating a PrintWriter, IOException: "
+			Log.e("Engine_Driver",
+					"select_loco - Error creating a PrintWriter, IOException: "
 							+ except.getMessage());
 		}
 	};
@@ -441,7 +441,7 @@ public class select_loco extends Activity {
 			}
 
 		} catch (IOException except) {
-			Log.e("connection_activity", "Error reading recent loco file. "
+			Log.e("Engine_Driver", "select_loco - Error reading recent loco file. "
 					+ except.getMessage());
 		}
 
@@ -528,11 +528,11 @@ public class select_loco extends Activity {
         		secondLine.setText(hm.get("roster_address"));
         	}
 
-        	str = hm.get("roster_icon");
-        	if ((str != null) && (str.length()>0)){
-        		Log.d("RosterSimpleAdapter","Loading icon "+str);
-				ImageView image = (ImageView) view.findViewById(R.id.roster_icon_image);
-				mainapp.imageDownloader.download( str,image);
+        	String iconURL = hm.get("roster_icon");
+        	if ((iconURL != null) && (iconURL.length()>0)){
+        		Log.d("Engine_Driver","select_loco - Loading icon "+iconURL);
+				ImageView imageView = (ImageView) view.findViewById(R.id.roster_icon_image);
+				mainapp.imageDownloader.download(iconURL, imageView);
         	} else {
         		View v = view.findViewById(R.id.roster_icon_image);
     			v.setVisibility(GONE);

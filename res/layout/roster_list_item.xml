@@ -14,6 +14,19 @@
    android:layout_width="fill_parent"
    android:layout_height="wrap_content"
 >
+   <ImageView
+   android:id="@+id/roster_icon_image"
+   android:layout_height="54dp"
+   android:layout_width="200dp"
+   android:layout_alignParentRight="true"
+></ImageView>
+   <TextView
+      android:id="@+id/roster_address_label"
+      android:text="TestAddress"
+      style="@style/list_id_style"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+   ></TextView>
    <TextView
       android:id="@+id/roster_name_label"
       android:text="Test Roster Name"
@@ -24,17 +37,4 @@
       android:paddingTop="12dp"
       android:paddingBottom="0dp"
    ></TextView>
-   <TextView
-      android:id="@+id/roster_address_label"
-      android:text="TestAddress"
-      style="@style/list_id_style"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-   ></TextView>
-   <ImageView
-      android:id="@+id/roster_icon_image"
-      android:layout_width="wrap_content"
-      android:layout_height="54dp"
-      android:layout_alignParentRight="true"
-   ></ImageView>
 </RelativeLayout>
