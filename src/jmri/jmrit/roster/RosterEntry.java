@@ -112,17 +112,14 @@ public class RosterEntry {
     		}		*/	
 			if ("dccAddress".compareTo(nm.item(k).getNodeName())==0) {
 				_dccAddress  = nm.item(k).getNodeValue();
-				Log.d("RosterEntry ", "adding dcc address "+_dccAddress);
 				continue;
 			}
 			if (("imageFilePath".compareTo(nm.item(k).getNodeName())==0) && (nm.item(k).getNodeValue().length()>0)) {
 				_imageFilePath  = nm.item(k).getNodeValue();
-				Log.d("RosterEntry ", "adding image "+_imageFilePath);
 				continue;
 			}
 			if (("iconFilePath".compareTo(nm.item(k).getNodeName())==0) && (nm.item(k).getNodeValue().length()>0)) {
 				_iconFilePath  = nm.item(k).getNodeValue();
-				Log.d("RosterEntry ", "adding icon "+_iconFilePath);
 				continue;
 			}	
 			/*    		if ("URL".compareTo(nm.item(k).getNodeName())==0) {

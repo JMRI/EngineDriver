@@ -23,11 +23,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,12 +38,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.io.*;
-import java.lang.reflect.Array;
-
-import jmri.enginedriver.turnouts.turnouts_handler;
+import jmri.jmrit.roster.RosterLoader;
 
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -53,11 +49,8 @@ import android.widget.SeekBar;
 import android.widget.Button;
 import android.widget.Toast;
 import android.view.MotionEvent;
-import android.view.GestureDetector.OnGestureListener;
-import android.view.View.OnTouchListener;
 import android.os.Message;
 import android.widget.TextView;
-import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.graphics.Typeface;
 
@@ -105,7 +98,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		switch(msg.what) {
 	        case message_type.RESPONSE: {  //handle messages from WiThrottle server
 	    		String response_str = msg.obj.toString();
-//	    		Log.d("Engine_Driver", "throt resp:"+ response_str);
+//	    		Log.d("Engine_Driver", "throttle msg:"+ response_str);
 	    		char com1 = response_str.charAt(0);
   	    		char thrSel = response_str.charAt(1);
 	        	switch (com1) {
@@ -825,7 +818,11 @@ public void onStart() {
 	if (mVelocityTracker == null) {
 		mVelocityTracker = VelocityTracker.obtain();
 	}
- //   ov.bringToFront();
+
+	//attempt to get roster.xml if webserver port is known, and not already retrieved 
+	if (mainapp.roster == null && mainapp.web_server_port > 0) {
+		new DownloadRosterTask().execute("http://"+mainapp.host_ip+":"+mainapp.web_server_port+"/prefs/roster.xml");
+	}
     
   } //end of onCreate()
 
@@ -1340,5 +1337,30 @@ public void onStart() {
 			}
 		}
 	};
+    class DownloadRosterTask extends AsyncTask<String, Void, Integer> {
+    	@Override    
+    	protected Integer doInBackground(String... params) {
+    		Log.d("Engine_Driver","Background loading roster from " + params[0].toString());
+    		RosterLoader rl = new RosterLoader(params[0].toString());
+    		mainapp.roster = rl.parse();
+    		Integer re = 0;
+    		if (mainapp.roster != null) {
+    			re = mainapp.roster.size();
+    		} else {
+    			Log.d("Engine_Driver","Failed to load roster.xml.");
+    		}
+    		return re;  //return the count of entries loaded
+    	}
+        /**
+         * background load of roster completed
+         */
+        @Override
+        protected void onPostExecute(Integer entries) {
+			Log.d("Engine_Driver","Loaded " + entries +" entries from roster.xml.");
+        }
+
+    }
+
+
 }
 

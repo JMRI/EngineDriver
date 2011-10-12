@@ -97,8 +97,11 @@ public class select_loco extends Activity {
 					HashMap<String, String> hm = new HashMap<String, String>();
 					hm.put("roster_name", rostername);
 					hm.put("roster_address", mainapp.roster_entries.get(rostername));
-					if ((mainapp.roster != null) && (mainapp.roster.get(rostername)!=null))
-						hm.put("roster_icon", mainapp.roster.get(rostername).getIconPath());						
+					
+					//check roster retrieved via http for icon
+					if ((mainapp.roster != null) && (mainapp.roster.get(rostername)!=null)) {
+						hm.put("roster_icon", mainapp.roster.get(rostername).getIconPath());	
+					}
 					
 					// add temp hashmap to list which view is hooked to
 					roster_list.add(hm);
@@ -530,7 +533,6 @@ public class select_loco extends Activity {
 
         	String iconURL = hm.get("roster_icon");
         	if ((iconURL != null) && (iconURL.length()>0)){
-        		Log.d("Engine_Driver","select_loco - Loading icon "+iconURL);
 				ImageView imageView = (ImageView) view.findViewById(R.id.roster_icon_image);
 				mainapp.imageDownloader.download(iconURL, imageView);
         	} else {

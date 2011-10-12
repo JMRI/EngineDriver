@@ -21,6 +21,7 @@ package jmri.enginedriver;
 /* TODO: see changelog-and-todo-list.txt for complete list of project to-do's */
 
 import android.app.Application;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -76,10 +77,10 @@ public class threaded_application extends Application
 	String[] rt_states;
 	boolean rt_allowed = false;  //default route support to off
     HashMap<String, String> rt_state_names;
-    HashMap<String, String> roster_entries;
+    HashMap<String, String> roster_entries;  //roster sent by WiThrottle
 	boolean consist_allowed = false;  //default consist support to off
     LinkedHashMap<String, String> consist_entries;
-    HashMap<String, RosterEntry> roster;
+    HashMap<String, RosterEntry> roster;  //roster entries retrieved from roster.xml (null if not retrieved)
      ImageDownloader imageDownloader = new ImageDownloader();
 
 	String power_state;
@@ -308,6 +309,7 @@ public class threaded_application extends Application
     			rt_user_names = null;
     			rt_state_names = null;
     			roster_entries = null;
+    			roster = null;
     			function_labels_S = new LinkedHashMap<Integer, String>();
     			function_labels_T = new LinkedHashMap<Integer, String>();
     			function_labels_default = new LinkedHashMap<Integer, String>();
@@ -652,16 +654,7 @@ public class threaded_application extends Application
 	    			} catch (NumberFormatException e) {
 	    			}
 	    	    	
-	    	    	//TODO: move to an asynchronous thread
-	    	    	Log.d("Engine_Driver","http connect - Trying http://"+host_ip+":"+web_server_port+"/prefs/roster.xml");
-	    	        RosterLoader rl = new RosterLoader("http://"+host_ip+":"+web_server_port+"/prefs/roster.xml");
-	    	        roster = rl.parse();
-	    	        int re = 0;
-	    	        if (roster != null) {
-	    	        	re = roster.size();
-	    	        }
-	    	    	Log.d("Engine_Driver","Loaded " + re +" entries from roster.xml.");
-	    	  	    break;
+	    			break;
 	    	  }  //end switch inside P
 		  	 break;
   	  }  //end switch
@@ -1001,7 +994,7 @@ public class threaded_application extends Application
   
     };
 
-    class socket_WiT extends Thread {
+	class socket_WiT extends Thread {
     	protected InetAddress host_address;
     	protected Socket clientSocket = null;
     	protected BufferedReader inputBR = null;
@@ -1095,6 +1088,9 @@ public class threaded_application extends Application
 
     	//read the input buffer
     	public void run() {
+    		
+        	Looper.prepare();
+
       	    String str = null;
       	    while(doRead) {
 				try {
@@ -1112,6 +1108,7 @@ public class threaded_application extends Application
 	    			doRead = false;
 				}
 	    	}
+        	Looper.loop();  
     	}
 
     	public void Send(String msg) {
@@ -1300,5 +1297,6 @@ public class threaded_application extends Application
     
     return result;
   }
+
 }
 

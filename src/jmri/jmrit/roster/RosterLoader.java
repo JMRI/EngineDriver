@@ -28,7 +28,6 @@ public class RosterLoader {
 
 	protected InputStream getInputStream() {
 		try {
-			Log.d("Engine_Driver","getInputStream - Connecting to "+rosterUrl.getHost());
 			return rosterUrl.openConnection().getInputStream();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
