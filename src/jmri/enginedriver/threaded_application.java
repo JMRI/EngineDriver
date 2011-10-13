@@ -965,9 +965,11 @@ public class threaded_application extends Application
     private void withrottle_send(String msg) {
 //    	Log.d("Engine_Driver", "WiT send " + msg);    	
     	String newMsg = msg;
+    	boolean validMsg = (newMsg != null);
     	//convert msg to new MultiThrottle format if version >= 2.0
-        if (withrottle_version >= 2.0) {
-          if (msg.substring(0,1).equals("T") || msg.substring(0,1).equals("S")) {
+        if (validMsg && withrottle_version >= 2.0) {
+          try {
+        	if (msg.substring(0,1).equals("T") || msg.substring(0,1).equals("S")) {
               if (msg.substring(1,2).equals("L") || msg.substring(1,2).equals("S")) { //address length
             	  newMsg = "M" + msg.substring(0,1) + "+" + msg.substring(1) + "<;>" + msg.substring(1);  //add requested loco to this throttle
               } else if (msg.substring(1,2).equals("r")) {
@@ -975,12 +977,23 @@ public class threaded_application extends Application
               } else {
             	  newMsg = "M" + msg.substring(0,1) + "A*<;>" + msg.substring(1);  //pass all action commands along
               }
+        	}
+          }
+          catch(Exception e) {
+              validMsg = false;
           }
         }
-        //send response to debug log for review
-        Log.d("Engine_Driver", "-->:" + newMsg + "  was(" + msg + ")");
-        //perform the send
-        socketWiT.Send(newMsg);
+        
+        if (validMsg) {
+        	//send response to debug log for review
+        	Log.d("Engine_Driver", "-->:" + newMsg + "  was(" + msg + ")");
+        	//perform the send
+        	socketWiT.Send(newMsg);
+        }
+        else {
+        	Log.d("Engine_Driver", "--> invalid msg: " + newMsg);
+        }
+        	
 //        start_read_timer(busyReadDelay);
     }  //end withrottle_send()
 
@@ -1089,7 +1102,7 @@ public class threaded_application extends Application
     	//read the input buffer
     	public void run() {
     		
-        	Looper.prepare();
+//        	Looper.prepare();
 
       	    String str = null;
       	    while(doRead) {
@@ -1108,7 +1121,7 @@ public class threaded_application extends Application
 	    			doRead = false;
 				}
 	    	}
-        	Looper.loop();  
+//        	Looper.loop();  
     	}
 
     	public void Send(String msg) {

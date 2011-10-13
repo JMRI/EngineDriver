@@ -79,7 +79,7 @@
       <item name="android:shadowRadius">0.2</item>
     </style>
 
-<style name="app_title" parent="@*android:style/WindowTitle">
+<style name="app_title" parent="@android:style/TextAppearance.WindowTitle">
   <item name="android:shadowColor">#FF000000</item>
   <item name="android:shadowDx">2</item>
   <item name="android:shadowDy">2</item>
