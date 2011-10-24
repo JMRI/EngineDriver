@@ -259,7 +259,7 @@ public class turnouts extends Activity implements OnGestureListener {
     b.setOnClickListener(click_listener);
 
     //don't show throw and close buttons if withrottle version < 1.6
-    if (mainapp.withrottle_version >= 1.6) {
+    if (mainapp.withrottle_version != null && mainapp.withrottle_version >= 1.6) {
     	b=(Button)findViewById(R.id.turnout_close);
     	click_listener=new button_listener(8);
     	b.setOnClickListener(click_listener);
