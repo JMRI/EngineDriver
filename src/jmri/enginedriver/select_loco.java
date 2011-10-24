@@ -179,7 +179,7 @@ public class select_loco extends Activity {
 	    if (hrl) {
 			View rlv = (View) findViewById(R.id.recent_engines_heading);
 			rlv.setVisibility(GONE);
-			rlv = (View) findViewById(R.id.engine_list);
+			rlv = (View) findViewById(R.id.engine_list_wrapper);
 			rlv.setVisibility(GONE);
 	    }
 

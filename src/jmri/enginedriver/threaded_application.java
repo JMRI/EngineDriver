@@ -25,6 +25,8 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.SystemClock;
+
 import java.net.*;
 import java.io.*;
 
@@ -33,6 +35,8 @@ import android.widget.Toast;
 
 import javax.jmdns.*;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
 
@@ -118,6 +122,10 @@ public class threaded_application extends Application
    socket_WiT socketWiT = new socket_WiT();
    heartbeat heart  = new heartbeat();
 
+   comm_thread() {
+	   super("comm_thread");
+   }
+   
     //Listen for a WiThrottle service advertisement on the LAN.
     public class withrottle_listener implements ServiceListener
     {
@@ -199,7 +207,7 @@ public class threaded_application extends Application
       	int intaddr = 0;
 
     	//Set up to find a WiThrottle service via ZeroConf, not supported for OS 1.5 (SDK 3)
-    	if (android.os.Build.VERSION.SDK.equals("3")) {    	 
+    	if ("3".equals(android.os.Build.VERSION.SDK)) {    	 
     		process_comm_error("WiFi discovery not supported.  Skipping.");
     	} else {
     		try   {
@@ -342,7 +350,7 @@ public class threaded_application extends Application
     			if (prefs.getBoolean("stop_on_release_preference", true )) {
     				withrottle_send(whichThrottle+"V0");  //send stop command before releasing (if set in prefs)
     			}
-    			if (whichThrottle.equals("T")) {
+    			if ("T".equals(whichThrottle)) {
     				loco_string_T = "Not Set"; 
     				//              loco_address_T = -1;
     				function_labels_T = new LinkedHashMap<Integer, String>();
@@ -383,7 +391,7 @@ public class threaded_application extends Application
     				heart.stopHeartbeat();
     			}
     			//            stop_read_timer();				//stop reading from socket
-    			socketWiT.disconnect();
+    			socketWiT.disconnect(true);
     			//			witReader.stop();
     			break;
 
@@ -484,10 +492,10 @@ public class threaded_application extends Application
 
   	private void process_comm_error(String msg_txt) {
         Log.e("Engine_Driver", "comm_handler.handleMessage: " + msg_txt);
-        Message ui_msg=Message.obtain();
-        ui_msg.what=message_type.ERROR;
-        ui_msg.obj = new String(msg_txt);  //put error message text in message
         if (connection_msg_handler!= null) {
+          Message ui_msg=Message.obtain();
+          ui_msg.what=message_type.ERROR;
+          ui_msg.obj = new String(msg_txt);  //put error message text in message
           connection_msg_handler.sendMessage(ui_msg); //send message to ui thread for display
         }
     }
@@ -522,14 +530,14 @@ public class threaded_application extends Application
 	  			rosterName = get_loconame_from_address_string(rosterName);  //lookup name in roster
 
 	  			if 	(response_str.charAt(1) == 'T') {
-	  				if (loco_string_T.equals("Not Set")) {  
+	  				if ("Not Set".equals(loco_string_T)) {  
 	  					loco_string_T = ""; 
 	  				} else {
 	  					loco_string_T += " +"; 
 	  				}
 	  				loco_string_T += rosterName;  //append new loco to app variable
 	  			} else {
-	  				if (loco_string_S.equals("Not Set")) {  
+	  				if ("Not Set".equals(loco_string_S)) {  
 	  					loco_string_S = ""; 
 	  				} else {
 	  					loco_string_S += " +"; 
@@ -540,11 +548,11 @@ public class threaded_application extends Application
 	  			String[] ls = splitByString(response_str,"<;>");//drop off front portion
 	  			process_roster_function_string("RF29}|{1234(L)" + ls[1], response_str.substring(1,2));  //prepend some stuff to match old-style
 
-	  		} else if (response_str.charAt(2) == 'A'){ //process change in function value  MTL4805<;>F028
+	  		} else if (response_str.charAt(2) == 'A'){ //process change in function value  MTAL4805<;>F028
     			String whichThrottle = response_str.substring(1,2);
 	  			String[] ls = threaded_application.splitByString(response_str,"<;>");
-	  			if (ls[1].substring(0,1).equals("F")) {
-	  				process_function_state_20(whichThrottle, new Integer(ls[1].substring(2)), ls[1].substring(1,2).equals("1") ? true : false);  
+	  			if ("F".equals(ls[1].substring(0,1))) {
+	  				process_function_state_20(whichThrottle, new Integer(ls[1].substring(2)), "1".equals(ls[1].substring(1,2)) ? true : false);  
 	  			}	    	  			
 	  		}
 
@@ -714,7 +722,7 @@ public class threaded_application extends Application
     	
     	Log.d("Engine_Driver", "processing function labels for " + whichThrottle);
     	//clear the appropriate global variable
-    	if (whichThrottle.equals("T")) {
+    	if ("T".equals(whichThrottle)) {
     		function_labels_T = new LinkedHashMap<Integer, String>();
     	} else {
     		function_labels_S = new LinkedHashMap<Integer, String>();
@@ -724,8 +732,8 @@ public class threaded_application extends Application
     	//initialize app arrays (skipping first)
     	int i = 0;
     	for (String ts : ta) {
-    		if (i > 0 && !ts.equals("")) { //skip first chunk, which is length, and skip any blank entries
-    	    	if (whichThrottle.equals("T")) {  //populate the appropriate hashmap
+    		if (i > 0 && !"".equals(ts)) { //skip first chunk, which is length, and skip any blank entries
+    	    	if ("T".equals(whichThrottle)) {  //populate the appropriate hashmap
     	    		function_labels_T.put(i-1,ts); //index is hashmap key, value is label string
     	    	} else {
     	    		function_labels_S.put(i-1,ts); //index is hashmap key, value is label string
@@ -922,7 +930,7 @@ public class threaded_application extends Application
     		 int fn = Integer.parseInt(fa[0]);
     		 boolean fState = Boolean.parseBoolean(fa[1]);
     		 
-    		 if (whichThrottle.equals("T")) {
+    		 if ("T".equals(whichThrottle)) {
     			 function_states_T[fn] = fState;
     		 }  else {
     			 function_states_S[fn] = fState;
@@ -935,7 +943,7 @@ public class threaded_application extends Application
     //parse function state string into appropriate app variable array (format for WiT >= 2.0)
     private void process_function_state_20(String whichThrottle, Integer fn, boolean fState) {
 
-    	if (whichThrottle.equals("T")) {
+    	if ("T".equals(whichThrottle)) {
     		function_states_T[fn] = fState;
     	}  else {
     		function_states_S[fn] = fState;
@@ -966,13 +974,16 @@ public class threaded_application extends Application
 //    	Log.d("Engine_Driver", "WiT send " + msg);    	
     	String newMsg = msg;
     	boolean validMsg = (newMsg != null);
+    	if(!validMsg) {
+        	Log.d("Engine_Driver", "--> null msg");
+    	}
     	//convert msg to new MultiThrottle format if version >= 2.0
-        if (validMsg && withrottle_version >= 2.0) {
+    	else if (withrottle_version >= 2.0) {
           try {
-        	if (msg.substring(0,1).equals("T") || msg.substring(0,1).equals("S")) {
-              if (msg.substring(1,2).equals("L") || msg.substring(1,2).equals("S")) { //address length
+        	if ("T".equals(msg.substring(0,1)) || "S".equals(msg.substring(0,1))) {
+              if ("L".equals(msg.substring(1,2)) || "S".equals(msg.substring(1,2))) { //address length
             	  newMsg = "M" + msg.substring(0,1) + "+" + msg.substring(1) + "<;>" + msg.substring(1);  //add requested loco to this throttle
-              } else if (msg.substring(1,2).equals("r")) {
+              } else if ("r".equals(msg.substring(1,2))) {
             	  newMsg = "M" + msg.substring(0,1) + "-*<;>r";  //release all locos from this throttle
               } else {
             	  newMsg = "M" + msg.substring(0,1) + "A*<;>" + msg.substring(1);  //pass all action commands along
@@ -980,7 +991,8 @@ public class threaded_application extends Application
         	}
           }
           catch(Exception e) {
-              validMsg = false;
+        	Log.d("Engine_Driver", "--> invalid msg: " + newMsg);
+            validMsg = false;
           }
         }
         
@@ -990,10 +1002,7 @@ public class threaded_application extends Application
         	//perform the send
         	socketWiT.Send(newMsg);
         }
-        else {
-        	Log.d("Engine_Driver", "--> invalid msg: " + newMsg);
-        }
-        	
+       	
 //        start_read_timer(busyReadDelay);
     }  //end withrottle_send()
 
@@ -1012,7 +1021,8 @@ public class threaded_application extends Application
     	protected Socket clientSocket = null;
     	protected BufferedReader inputBR = null;
     	protected PrintWriter outputPW = null;
-    	private boolean doRead;
+    	private boolean endRead = false;			//signals rcvr to terminate
+    	private boolean socketGood = false;			//indicates socket condition
     	
     	socket_WiT() {
     		super("socket_WiT");
@@ -1020,74 +1030,90 @@ public class threaded_application extends Application
     	
     	public boolean connect() {
 
+    		socketGood = HaveNetworkConnection();
+    		
     		//validate address
-            try { 
-            	host_address=InetAddress.getByName(host_ip); 
-            }
-            catch(UnknownHostException except) {
-            	process_comm_error("Could not connect to " + host_ip + "\n"+except.getMessage() + "\nUnknownHostException");
-            	return false;
-            }
-            if (host_address == null) {
-                process_comm_error("Could not connect to " + host_ip);
-                return false;            	
-            }
+    		if (socketGood) {
+	            try { 
+	            	host_address=InetAddress.getByName(host_ip); 
+	            }
+	            catch(UnknownHostException except) {
+	            	process_comm_error("Could not connect to " + host_ip + "\n"+except.getMessage() + "\nUnknownHostException");
+	            	socketGood = false;
+	            }
+	            if (host_address == null) {
+	                process_comm_error("Could not connect to " + host_ip);
+	                socketGood = false;            	
+	            }
+    		}
             
 //            host_name_string = host_address.getHostName();  //store host server name in app.thread shared variable
 
             //socket
-            try {
-            	clientSocket=new Socket();               //look for someone to answer on specified socket, and set timeout
-            	InetSocketAddress sa = new InetSocketAddress(host_ip, port);
-            	clientSocket.connect(sa, 1500);  //TODO: adjust these timeouts
-            	clientSocket.setSoTimeout(300);
-            }
-            catch(IOException except)  {
-		        process_comm_error("Cannot connect to host "+host_ip+" and port "+port+
-		        					" from " + client_address +
-		        					" - "+except.getMessage()+"\nCheck WiThrottle and network settings.");
-		        return false;
+            if (socketGood) {
+	            try {
+	            	clientSocket=new Socket();               //look for someone to answer on specified socket, and set timeout
+	            	InetSocketAddress sa = new InetSocketAddress(host_ip, port);
+	            	clientSocket.connect(sa, 1500);  //TODO: adjust these timeouts
+	            	clientSocket.setSoTimeout(300);
+	            }
+	            catch(Exception except)  {
+			        process_comm_error("Cannot connect to host "+host_ip+" and port "+port+
+			        					" from " + client_address +
+			        					" - "+except.getMessage()+"\nCheck WiThrottle and network settings.");
+			        socketGood = false;
+	            }
             }
 
             //rcvr
-			try {
-				inputBR = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			}
-			catch (IOException except) {
-				process_comm_error("Error creating input stream, IOException: "+except.getMessage());
-			    return false;
-			} 
-			doRead = true;
+            if (socketGood) {
+				try {
+					inputBR = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+				}
+				catch (IOException except) {
+					process_comm_error("Error creating input stream, IOException: "+except.getMessage());
+				    socketGood = false;
+				} 
+            }
 
-			//start the socket_WiT thread.   Ignore "already started" exception.
-			try {
-				this.start();
-			} catch (IllegalThreadStateException except) {
-				process_comm_error("Error starting socket_WiT thread:  "+except.getMessage());
-			}
+			//start the socket_WiT thread.
+            if (socketGood) {
+				if (!this.isAlive()) {
+					endRead = false;
+					try {
+						this.start();
+					} catch (IllegalThreadStateException except) {
+						//ignore "already started" errors
+						process_comm_error("Error starting socket_WiT thread:  "+except.getMessage());
+					}
+				}
+            }
 
 			//xmtr
-            try { 
-            	outputPW = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true); 
-            }
-            catch(IOException e) {
-              process_comm_error("Error creating a PrintWriter, IOException: "+e.getMessage());
-              return false;
-            }
-            
-    		return true;
+			if (socketGood) {
+	            try { 
+	            	outputPW = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true); 
+	            }
+	            catch(IOException e) {
+	              process_comm_error("Error creating output stream, IOException: "+e.getMessage());
+	              socketGood = false;
+	            }
+			}
+			
+			return socketGood;
     	}
     	
-    	public void disconnect() {
-    		//stop rcvr
-    		doRead = false;
-    		for(int i = 0; i < 3 && this.isAlive(); i++) {
-	            try { 
-	            	Thread.sleep(300);    			//  give run() a chance to exit
-	            }
-	            catch (InterruptedException e) { 
-	            	process_comm_error("Error sleeping the thread, InterruptedException: "+e.getMessage());
-	            }
+    	public void disconnect(boolean stopRcvr) {
+    		if (stopRcvr) {
+    			endRead = true;
+    			for(int i = 0; i < 3 && this.isAlive(); i++) {
+    				try { 
+    					Thread.sleep(300);    			//  give run() a chance to exit
+    				}
+    				catch (InterruptedException e) { 
+    					process_comm_error("Error sleeping the thread, InterruptedException: "+e.getMessage());
+    				}
+    			}
     		}
             
             //close socket
@@ -1097,41 +1123,105 @@ public class threaded_application extends Application
             catch(IOException e) { 
             	process_comm_error("Error closing the Socket, IOException: "+e.getMessage()); 
             }
+            
+			//release any loco selections internally
+			Message msg;
+			if (!"Not Set".equals(loco_string_T)) {
+				msg = Message.obtain();
+				msg.what = message_type.RELEASE;
+				msg.obj = new String("T");
+				comm_msg_handler.sendMessage(msg);
+			}
+			if (!"Not Set".equals(loco_string_S)) {
+				msg = Message.obtain();
+				msg.what = message_type.RELEASE;
+				msg.obj = new String("S");
+				comm_msg_handler.sendMessage(msg);
+			}
+
+			socketGood = false;
     	}
 
-    	//read the input buffer
+   	//read the input buffer
     	public void run() {
     		
-//        	Looper.prepare();
+ //       	Looper.prepare();
 
       	    String str = null;
-      	    while(doRead) {
-				try {
+      	    //continue reading until signalled to exit by endRead
+      	    while(!endRead) {
+      	    	if(socketGood) {		//skip read when the socket is down
+				  try {
 					if((str = inputBR.readLine()) != null) {
 						if (str.length()>0) {
 							heart.restartInboundInterval();
 							process_response(str);
 						}
 					}
-				} 
-				catch  (SocketTimeoutException e )   {
-				} 
-				catch (IOException e) {
-	    			process_comm_error("WiT rcvr error.  Stopping rcvr. ");
-	    			doRead = false;
-				}
+				  } 
+				  catch (SocketTimeoutException e )   {
+					  socketGood = this.SocketCheck();
+				  } 
+				  catch (IOException e) {
+	    			process_comm_error("WiT rcvr error.");
+    			    socketGood = false;		//input buffer error so force reconnection on next send
+				  }
+      	    	}
+      	    	if(!socketGood) {
+      	        	SystemClock.sleep(1000L);	//don't become compute bound here when the socket is down
+      	    	}
 	    	}
 //        	Looper.loop();  
     	}
 
     	public void Send(String msg) {
-    		try {
-    			outputPW.println(msg);
-    			outputPW.flush();
-        	} 
-    		catch (Exception e) {
-    			process_comm_error("WiT xmtr error.  Failed to send: "+msg);
-        	}
+    		//reconnect socket if needed
+    		if(!socketGood || !this.SocketCheck()) {
+    			process_comm_error("WiT attempting to reconnect.");
+    			this.disconnect(false);		//clean up socket but do not shut down the receiver
+    			this.connect();				//attempt to reopen the connection
+    		}
+
+    		//send the message
+    		if (socketGood) {
+	    		try {
+	    			outputPW.println(msg);
+	    			outputPW.flush();
+	        	} 
+	    		catch (Exception e) {
+	    			process_comm_error("WiT xmtr error.");
+	    			socketGood = false;		//output buffer error so force reconnection on next send
+	        	}
+    		}
+    	}
+    	
+    	// attempt to determine if the socket connection is still good
+    	public boolean SocketCheck() {
+    		boolean status = clientSocket.isConnected() && !clientSocket.isInputShutdown() && !clientSocket.isOutputShutdown();
+    		if (status)
+    			status = HaveNetworkConnection();	// can't trust the socket flags so try something else...
+    		return status;
+    	}
+    	
+    	// temporary - SocketCheck should determine whether socket connection is good however socket flags sometimes do not get updated
+    	// so it doesn't work.  This is better than nothing though?
+    	private boolean HaveNetworkConnection()
+    	{
+    	    boolean haveConnectedWifi = false;
+    	    boolean haveConnectedMobile = false;
+
+    	    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    	    NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+    	    for (NetworkInfo ni : netInfo)
+    	    {
+    	        if ("WIFI".equalsIgnoreCase(ni.getTypeName()))
+    	            if (ni.isConnected())
+    	                haveConnectedWifi = true;
+    	        if ("MOBILE".equalsIgnoreCase(ni.getTypeName()))
+    	            if (ni.isConnected())
+    	                haveConnectedMobile = true;
+    	    }
+    	    return haveConnectedWifi || haveConnectedMobile;
     	}
     }
 
