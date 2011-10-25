@@ -27,7 +27,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
@@ -54,7 +53,6 @@ public class turnouts extends Activity implements OnGestureListener {
 	private SharedPreferences prefs;
 	
 	private static final int GONE = 8;
-	private static final int VISIBLE = 0;
 
 	ArrayList<HashMap<String, String> > turnouts_list;
 	private SimpleAdapter turnouts_list_adapter;
@@ -113,7 +111,6 @@ public class turnouts extends Activity implements OnGestureListener {
 					}  //if username blank
 					pos++;
 				}  //end for loop
-				turnouts_list_adapter.notifyDataSetChanged();  //update the list
 			}  //if usernames is null
 			EditText te =(EditText)findViewById(R.id.turnout_entry);  // enable the buttons
 			te.setEnabled(true);
@@ -136,6 +133,7 @@ public class turnouts extends Activity implements OnGestureListener {
 			b.setText(getString(R.string.not_allowed));
 
 		}  //end statenames is null
+		turnouts_list_adapter.notifyDataSetChanged();  //update the list
 	}
 	  
 	  //Handle messages from the communication thread back to this thread (responses from withrottle)
@@ -145,8 +143,12 @@ public class turnouts extends Activity implements OnGestureListener {
 			switch(msg.what) {
 	      		case message_type.RESPONSE:
 	      			String response_str = msg.obj.toString();
-	      			if (response_str.length() >= 3 && response_str.substring(0,3).equals("PTA")) {  //refresh turnouts if any have changed
-	      				refresh_turnout_view(); 
+	      			if (response_str.length() >= 3) {
+	      				String com1 = response_str.substring(0,3);
+	      			    //refresh turnouts if any have changed or if turnout list has changed
+	      				if ("PTA".equals(com1) || "PTL".equals(com1)) {
+	      					refresh_turnout_view(); 
+	      				}
 	      			}
 	      			break;
 			};
@@ -167,7 +169,8 @@ public class turnouts extends Activity implements OnGestureListener {
 		      if (entrytext.trim().length() > 0 ) {
 		        try {
 		          new Integer(entrytext);  //edit check address by attempting conversion to int
-		        } catch(NumberFormatException except) { 
+		        } 
+		        catch(Exception except) { 
 		       	    Toast.makeText(getApplicationContext(), "Turnout # must be numeric, reenter.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
 		         	return;
 		        }
@@ -182,7 +185,8 @@ public class turnouts extends Activity implements OnGestureListener {
 	            msg.obj=new String(systemname);    // load system name for turnout into message
 	            mainapp.comm_msg_handler.sendMessage(msg);
 //	            entryv.setText(""); //clear the text after send
-		      } else {
+		      } 
+		      else {
 		    	    Toast.makeText(getApplicationContext(), "Enter a turnout # to control", Toast.LENGTH_SHORT).show();
 		      }
 		    };

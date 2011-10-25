@@ -186,8 +186,9 @@ public class connection_activity extends Activity {
 	        entry =(EditText)findViewById(R.id.port);
 			try {
 				connected_port=new Integer(entry.getText().toString());
-			} catch(NumberFormatException except) { 
+			} catch(Exception except) { 
 				Toast.makeText(getApplicationContext(), "Invalid port#, retry.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
+				connected_port = 0;
 				return;
 			}
 			connect();
@@ -322,14 +323,16 @@ public class connection_activity extends Activity {
 	    	if(connections_list_file.exists())    {
 	    		BufferedReader list_reader=new BufferedReader(new FileReader(connections_list_file));
 	    		while(list_reader.ready())    {
-	    			Integer pl = 0;
 	    			String line=list_reader.readLine();
 	    			Integer splitPos = line.indexOf(':');
 	    			if (splitPos > 0) {
 	    				String il = line.substring(0, splitPos);
+	    				Integer pl;
 	    				try {
 	    					pl = Integer.decode(line.substring(splitPos+1, line.length()));
-	    				} catch (NumberFormatException e) {
+	    				} 
+	    				catch (Exception e) {
+	    					pl = 0;
 	    				}
 	    				if (pl > 0) {
 	    					HashMap<String, String> hm=new HashMap<String, String>();

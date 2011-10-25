@@ -110,21 +110,22 @@ public class routes extends Activity  implements OnGestureListener {
 					}
 					pos++;
 				}  //if username blank
-				routes_list_adapter.notifyDataSetChanged();
+//				routes_list_adapter.notifyDataSetChanged();
 			}  //if usernames is null
 			EditText te =(EditText)findViewById(R.id.route_entry);  // enable the buttons
 			te.setEnabled(true);
 			Button b =(Button)findViewById(R.id.route_toggle);
 			b.setEnabled(true);
 			b.setText(getString(R.string.set));
-		}  else {
+		}  
+		else {
 			EditText te =(EditText)findViewById(R.id.route_entry);
 			te.setEnabled(false);
 			Button b =(Button)findViewById(R.id.route_toggle);
 			b.setEnabled(false);
 			b.setText(getString(R.string.not_allowed));
 		}  //end statenames  is null
-
+		routes_list_adapter.notifyDataSetChanged();
 	}
 
 	  //Handle messages from the communication thread back to this thread (responses from withrottle)
@@ -134,8 +135,12 @@ public class routes extends Activity  implements OnGestureListener {
 	      switch(msg.what) {
 	      case message_type.RESPONSE: {
 	        	String response_str = msg.obj.toString();
-	        	if (response_str.length() >= 3 && response_str.substring(0,3).equals("PRA")) {  //refresh routes if any have changed
-	        		refresh_route_view(); 
+	        	if (response_str.length() >= 3) {
+	        		String com1 = response_str.substring(0,3);
+	        		//refresh routes if any have changed state or if route list changed
+	        		if ("PRA".equals(com1) || "PRL".equals(com1)) {
+	        			refresh_route_view();
+	        		}
 	        	}
 	        }
 	        break;
@@ -156,7 +161,7 @@ public class routes extends Activity  implements OnGestureListener {
 		      if (entrytext.trim().length() > 0 ) {
 /*		        try {
 		          new Integer(entrytext);  //edit check address by attempting conversion to int
-		        } catch(NumberFormatException except) { 
+		        } catch(Exception except) { 
 		       	    Toast.makeText(getApplicationContext(), "route # must be numeric, reenter.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
 		         	return;
 		        }

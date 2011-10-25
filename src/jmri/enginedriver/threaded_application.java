@@ -568,20 +568,20 @@ public class threaded_application extends Application
 	  	    break;
 	  	
 	  	case 'V': 
-	  		String withrottle_version_string = response_str.substring(2);
-	  		withrottle_version = 0.0;
-	        if (withrottle_version_string != null) { 
-	        	try {
-					withrottle_version=new Double(withrottle_version_string);
-				} catch (NumberFormatException e) {
-				}
-	        }
+        	try {
+				withrottle_version= Double.parseDouble(response_str.substring(2));
+			} 
+        	catch (Exception e) {
+		        Log.d("Engine_Driver", "process response: invalid WiT version string");
+		  		withrottle_version = 0.0;
+			}
 	  	    break;
 	  	
 	  	case '*': 
 	  		try {
 				heartbeatInterval = Integer.parseInt(response_str.substring(1));  //set app variable
-			} catch (NumberFormatException e) {
+			} catch (Exception e) {
+		        Log.d("Engine_Driver", "process response: invalid WiT hearbeat string");
 				heartbeatInterval = 0;
 			}
 			heart.startHeartbeat(heartbeatInterval);
@@ -656,10 +656,12 @@ public class threaded_application extends Application
 	    	  	    break;
 
 	    	  	case 'W':  //Web Server port 
-	    	  		web_server_port = 0;
 	    	  		try {
 		    	  		web_server_port = Integer.parseInt(response_str.substring(2));  //set app variable
-	    			} catch (NumberFormatException e) {
+	    			} 
+	    	  		catch (Exception e) {
+	    		        Log.d("Engine_Driver", "process response: invalid web server port string");
+	    				web_server_port = 0;
 	    			}
 	    	    	
 	    			break;
@@ -875,8 +877,8 @@ public class threaded_application extends Application
     }  //end of process_route_change
 
     //parse route list into appropriate app variable array
-	//  PTL[<SystemName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
-    //  PTL]\[LT12}|{my12}|{1
+	//  PRL[<SystemName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
+    //  PRL]\[LT12}|{my12}|{1
     private void process_route_list(String response_str) {
      
      String[] ta = splitByString(response_str,"]\\[");  //initial separation 

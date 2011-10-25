@@ -163,11 +163,12 @@ public class function_settings extends Activity {
     			//ignore blank labels and function  
     			if (label.length() > 0 && sfunc.length() > 0) {
     				//verify function is valid number between 0 and 28
-    				int func = -1;
+    				int func;
     				try {
     					func = Integer.parseInt(sfunc);
-    				} catch (NumberFormatException e) {
+    				} catch (Exception e) {
     					// if invalid, don't set func
+    					func = -1;
     				}
     				// write out valid items to settings
     				if (func >= 0 && func <= 28 ) {

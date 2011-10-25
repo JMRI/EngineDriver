@@ -74,10 +74,15 @@ public class power_control extends Activity {
 			    b.setEnabled(false);
 			    TextView tv=(TextView)findViewById(R.id.power_control_text);
 			    tv.setText(getString(R.string.power_control_not_allowed)); 
-		    } else if (mainapp.power_state.equals("1")) {
-		    	currentImage = power_on_drawable;
-		    } else if (mainapp.power_state.equals("0")) {
-		    	currentImage = power_off_drawable;
+		    } 
+		    else { 
+			    b.setEnabled(true);
+		    	if (mainapp.power_state.equals("1")) {
+				    currentImage = power_on_drawable;
+		    	} 
+		    	else {
+		    		currentImage = power_off_drawable;
+		    	}
 		    }		    	
 		    b.setBackgroundDrawable(currentImage);
 		}

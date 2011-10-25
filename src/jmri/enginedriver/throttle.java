@@ -145,7 +145,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		    	  					int dir = new Integer(ls[1].substring(1,2));
 			    	  				set_direction_indication(thrSel, dir); //set direction button 
 		    	  				}
-		    	  				catch(NumberFormatException e) {
+		    	  				catch(Exception e) {
 		    	  				}
 		    	  			} 
 		    	  			else if (com3 == 'V') {
@@ -153,7 +153,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		    	  					int speed = Integer.parseInt(ls[1].substring(1));
 			    	  				set_speed_slider(thrSel, speed);	//update speed slider and indicator
 		    	  				}
-		    	  				catch(NumberFormatException e) {
+		    	  				catch(Exception e) {
 		    	  				}
 		    	  			}
 		    	  			else if (com3 == 'F') {
@@ -161,7 +161,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			    	  				int function = new Integer(ls[1].substring(2));
 			    	  				set_function_state(thrSel, function);
 		    	  				}
-		    	  				catch(NumberFormatException e) {
+		    	  				catch(Exception e) {
 		    	  				}
 		    	  			}
 /*		    	  			else if(com3 == 's') {
@@ -185,7 +185,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			    	  				if(newMaxSpeed != 0)
 			    	  					updateMaxSpeed(thrSel, newMaxSpeed);
 		    	  				}
-		    	  				catch(NumberFormatException e) {
+		    	  				catch(Exception e) {
 		    	  				}
 		    	  			}
 */		    	  			
@@ -750,7 +750,7 @@ public void onStart() {
     setContentView(R.layout.throttle);
 
 
-    mainapp=(threaded_application)getApplication();
+    mainapp=(threaded_application)this.getApplication();
 
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     
@@ -820,7 +820,7 @@ public void onStart() {
 	}
 
 	//attempt to get roster.xml if webserver port is known, and not already retrieved 
-	if (mainapp.roster == null && mainapp.web_server_port > 0) {
+	if (mainapp.roster == null && mainapp.web_server_port != null && mainapp.web_server_port > 0) {
 		new DownloadRosterTask().execute("http://"+mainapp.host_ip+":"+mainapp.web_server_port+"/prefs/roster.xml");
 	}
     
@@ -942,10 +942,12 @@ public void onStart() {
     
  // set up max speeds for throttles
     String s = prefs.getString("maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
-    int maxThrottle = MAX_SPEED_DISPLAY;
+    int maxThrottle;
     try {
     	maxThrottle = Integer.parseInt(s);
-    } catch (NumberFormatException e) {
+    } 
+    catch (Exception e) {
+        maxThrottle = MAX_SPEED_DISPLAY;
 	}
 
     sbT.setMax((int) Math.round(((double)(maxThrottle)/MAX_SPEED_DISPLAY) * MAX_SPEED_VAL_T));

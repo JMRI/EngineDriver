@@ -420,13 +420,16 @@ public class select_loco extends Activity {
 				while (list_reader.ready()) {
 					String line = list_reader.readLine();
 	    			Integer splitPos = line.indexOf(':');
-	    			Integer ea = -1;
-	    			Integer as = -1;
 	    			if (splitPos > 0) {
-	    				try {	ea = Integer.decode(line.substring(0, splitPos));
-						} catch (NumberFormatException e) {}
-	    				try {	as = Integer.decode(line.substring(splitPos + 1, line.length()));
-						} catch (NumberFormatException e) {}
+	    				Integer ea, as;
+	    				try {	
+	    					ea = Integer.decode(line.substring(0, splitPos));
+	    					as = Integer.decode(line.substring(splitPos + 1, line.length()));
+						} 
+	    				catch (Exception e) {
+	    					ea = -1;
+	    					as = -1;
+						}
 
 						if ((ea >= 0) && (as >= 0)) {
 							engine_address_list.add(ea);
