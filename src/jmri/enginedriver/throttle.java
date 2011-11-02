@@ -85,6 +85,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	//function number-to-button maps
 	private LinkedHashMap<Integer, Button> functionMapT;
 	private LinkedHashMap<Integer, Button> functionMapS;
+	private DownloadRosterTask dlRosterTask;
 
 	//current direction
 	private int dirT = 0;
@@ -94,7 +95,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
   class throttle_handler extends Handler {
 
 	public void handleMessage(Message msg) {
-		
 		switch(msg.what) {
 	        case message_type.RESPONSE: {  //handle messages from WiThrottle server
 	    		String response_str = msg.obj.toString();
@@ -230,10 +230,17 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			        	  }
 	      	  		  }
 	      	  		  break;
+	      	  	  case 'P': //panel info
+	      	  		  if (thrSel == 'W') {		// PW - web server port info
+	      	  			// onCreate might have run before this message arrived, so we handle dl here as well
+	      	  			  dlRosterTask.getRoster();
+	      	  		  }
 	        	}  //end of switch
-	        	
 	        }
 	        break;
+  		  	case message_type.DISCONNECT:
+			  disconnect();
+			  break;
 	      }
 	    };
 	  }
@@ -378,7 +385,16 @@ private void setDisplayedSpeed(char whichThrottle, int speed) {
   }
 void start_select_loco_activity(char whichThrottle)
   {
-    Intent select_loco=new Intent().setClass(this, select_loco.class);
+	Button bSel;
+	if (whichThrottle == 'T') {
+		bSel = (Button)findViewById(R.id.button_select_loco_T);
+	} 
+	else {
+		bSel = (Button)findViewById(R.id.button_select_loco_S);
+	}
+	bSel.setPressed(true);	//give feedback that select button was pressed
+
+	Intent select_loco=new Intent().setClass(this, select_loco.class);
     select_loco.putExtra("whichThrottle", Character.toString(whichThrottle));  //pass whichThrottle as an extra to activity
 //    select_loco.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
     startActivityForResult(select_loco, 0);
@@ -729,9 +745,8 @@ public void onStart() {
   super.onStart();
 
   //put pointer to this activity's handler in main app's shared variable (If needed)
-  if (mainapp.throttle_msg_handler == null){
+//  if (mainapp.throttle_msg_handler == null)
 	  mainapp.throttle_msg_handler=new throttle_handler();
-  }
 }
 
 /** Called when the activity is finished. */
@@ -748,7 +763,6 @@ public void onStart() {
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.throttle);
-
 
     mainapp=(threaded_application)this.getApplication();
 
@@ -819,13 +833,11 @@ public void onStart() {
 		mVelocityTracker = VelocityTracker.obtain();
 	}
 
-	//attempt to get roster.xml if webserver port is known, and not already retrieved 
-	if (mainapp.roster == null && mainapp.web_server_port != null && mainapp.web_server_port > 0) {
-		new DownloadRosterTask().execute("http://"+mainapp.host_ip+":"+mainapp.web_server_port+"/prefs/roster.xml");
-	}
+	dlRosterTask = new DownloadRosterTask();
+	dlRosterTask.getRoster();		// if web port is already known, start background roster dl here
     
   } //end of onCreate()
-
+  
   //set up text label and dcc function for each button from settings and setup listeners
   //TODO: move file reading to another function and only do when needed
   private void set_default_function_labels() {
@@ -1064,7 +1076,10 @@ public void onStart() {
 		  b.setCancelable(true);
 		  b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 			 public void onClick(DialogInterface dialog, int id) {
-				 disconnect();
+				  //disconnect from throttle
+				  Message msg=Message.obtain();
+				  msg.what=message_type.DISCONNECT;
+				  mainapp.comm_msg_handler.sendMessage(msg);
 			 }
 		  } ); 
 		  b.setNegativeButton(R.string.no, null);
@@ -1093,32 +1108,39 @@ public void onStart() {
   }
 
   private void disconnect() {
-	  //release first loco
+	  //stop roster download if it is still in progress
+	  try {
+		  dlRosterTask.stopRoster();
+	  }
+	  catch(Exception e){
+	  }
+	  
+	  //release the locos
 	  Message msg=Message.obtain();
-	  msg.what=message_type.RELEASE;
-	  msg.obj=new String("T");
-	  mainapp.comm_msg_handler.sendMessage(msg);
+	  try {
+		  //release first loco
+		  msg.what=message_type.RELEASE;
+		  msg.obj=new String("T");
+		  mainapp.comm_msg_handler.sendMessage(msg);
+		  
+		  //release second loco
+		  msg=Message.obtain();
+		  msg.what=message_type.RELEASE;
+		  msg.obj=new String("S");
+		  mainapp.comm_msg_handler.sendMessage(msg);
+	  }
+	  catch(Exception e) {
+		  msg.recycle();
+	  }
 
-	  //release second loco
-	  msg=Message.obtain();
-	  msg.what=message_type.RELEASE;
-	  msg.obj=new String("S");
-	  mainapp.comm_msg_handler.sendMessage(msg);
+//always go to Connection Activity
+//  	  Intent in=new Intent().setClass(this, connection_activity.class);
+//	  startActivity(in);
 
-	  //disconnect from throttle
-	  msg=Message.obtain();
-	  msg.what=message_type.DISCONNECT;
-	  mainapp.comm_msg_handler.sendMessage(msg);  
-
-/*
-	  //always go to Connection Activity
-  	  Intent in=new Intent().setClass(this, connection_activity.class);
-	  startActivity(in);
 	  this.finish();  //end this activity
-	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-*/	  
-	  this.finish();
-	  connection_activity.end_all_activity();
+//	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+
+	  //	  connection_activity.end_all_activity();
   }
 
 	  
@@ -1232,7 +1254,8 @@ public void onStart() {
 		gestureLastCheckTime = event.getEventTime();
 		mVelocityTracker.clear();
 		// start the gesture timeout timer
-		mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+		if (mainapp.throttle_msg_handler != null)
+			mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
 	}
 
 	public void gestureMove(MotionEvent event) {
@@ -1297,14 +1320,13 @@ public void onStart() {
 	}
 
 	private void gestureCancel(MotionEvent event) {
-		mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
-//		Log.d("Engine_Driver", "gestureCancel action " + event.getAction());
+		if (mainapp.throttle_msg_handler != null)
+			mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
 		gestureInProgress = false;
 		gestureFailed = true;
 	}
 
 	void gestureFailed(MotionEvent event) {
-//        Log.d("Engine_Driver", "gestureFailed action " + event.getAction());
 	   //end the gesture
 	   gestureInProgress = false;
 	   gestureFailed = true;
@@ -1317,7 +1339,6 @@ public void onStart() {
 	private Runnable gestureStopped = new Runnable() {
 		@Override
 		public void run() {
-			//		   Log.d("Engine_Driver", "gestureStopped");
 			if(gestureInProgress == true)
 			{
 				//end the gesture
@@ -1339,7 +1360,8 @@ public void onStart() {
 			}
 		}
 	};
-    class DownloadRosterTask extends AsyncTask<String, Void, Integer> {
+
+	class DownloadRosterTask extends AsyncTask<String, Void, Integer> {
     	@Override    
     	protected Integer doInBackground(String... params) {
     		Log.d("Engine_Driver","Background loading roster from " + params[0].toString());
@@ -1360,7 +1382,20 @@ public void onStart() {
         protected void onPostExecute(Integer entries) {
 			Log.d("Engine_Driver","Loaded " + entries +" entries from roster.xml.");
         }
-
+        
+        void getRoster() {
+    		//attempt to get roster.xml if webserver port is known and not already retrieved 
+    		if (mainapp.web_server_port == 0) {
+    			Log.d("Engine_Driver","DownloadRosterTask: web_server_port is not known");
+    		}
+    		if (mainapp.web_server_port > 0 && this.getStatus() == AsyncTask.Status.PENDING) {
+   				this.execute("http://"+mainapp.host_ip+":"+mainapp.web_server_port+"/prefs/roster.xml");
+    		}
+        }
+        void stopRoster() {
+        	if (this.getStatus() == AsyncTask.Status.RUNNING)
+        		this.cancel(true);
+        }
     }
 
 

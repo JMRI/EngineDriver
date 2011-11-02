@@ -20,6 +20,7 @@ package jmri.enginedriver;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.SystemClock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,7 +77,7 @@ public class connection_activity extends Activity {
   String mst_port = "44444";
   String rdb_host = "192.168.1.2";
   String rdb_port = "2029";
-
+  
   ArrayList<HashMap<String, String> > connections_list;
   ArrayList<HashMap<String, String> > discovery_list;
   private SimpleAdapter connection_list_adapter;
@@ -89,18 +90,23 @@ public class connection_activity extends Activity {
   static threaded_application mainapp;
   
   //The IP address and port that are used to connect.
-  String connected_host;
-  int connected_port;
-
+  private String connected_host;
+  private int connected_port;
+  
+  private long timestamp = 0;
+  //flag to indicate the app is shutting down, used to speed up the transition through the lifecycle 
+  private boolean isShuttingDown = false;
+  
   private static Method overridePendingTransition;
   static {
-  try {
-  overridePendingTransition = Activity.class.getMethod("overridePendingTransition", new Class[] {Integer.TYPE, Integer.TYPE}); //$NON-NLS-1$
+	  try {
+		  overridePendingTransition = Activity.class.getMethod("overridePendingTransition", new Class[] {Integer.TYPE, Integer.TYPE}); //$NON-NLS-1$
+	  }
+	  catch (NoSuchMethodException e) {
+		  overridePendingTransition = null;
+	  }
   }
-  catch (NoSuchMethodException e) {
-  overridePendingTransition = null;
-  }
-  }
+
   /**
   * Calls Activity.overridePendingTransition if the method is available (>=Android 2.0)
   * @param activity the activity that launches another activity
@@ -117,7 +123,7 @@ public class connection_activity extends Activity {
 	  }
   }
 
-  
+
   //Request connection to the WiThrottle server.
   void connect()  {
 	  Message connect_msg=Message.obtain();
@@ -127,6 +133,7 @@ public class connection_activity extends Activity {
 	  if (mainapp.comm_msg_handler != null) {
 		  mainapp.comm_msg_handler.sendMessage(connect_msg);
 	  } else {
+		  connect_msg.recycle();
 		  Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
 	  }    	
   };
@@ -143,11 +150,10 @@ public class connection_activity extends Activity {
 
   void start_throttle_activity()
   {
-	    Intent throttle=new Intent().setClass(this, throttle.class);
-//	  	throttle.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-	    startActivity(throttle);
-	    this.finish();
-        overridePendingTransition(this,R.anim.fade_in, R.anim.fade_out);
+	Intent throttle=new Intent().setClass(this, throttle.class);
+	startActivity(throttle);
+//    this.finish();
+    overridePendingTransition(this,R.anim.fade_in, R.anim.fade_out);
  };
   
   public enum server_list_type { DISCOVERED_SERVER, RECENT_CONNECTION }
@@ -223,14 +229,13 @@ public class connection_activity extends Activity {
           hm.put("port", discovered_port_list.get(discovered_port_list.size()-1).toString());
           discovery_list.add(hm);
           discovery_list_adapter.notifyDataSetChanged();
-        break;
+          break;
 
         case message_type.SERVICE_REMOVED:        
         	//TODO: add this after removing arraylists
         	break;
 
         case message_type.CONNECTED:
-
         	start_throttle_activity();
 
         	//Save the updated connection list to the connections_list.txt file
@@ -260,6 +265,7 @@ public class connection_activity extends Activity {
         			HashMap <String, String> t = connections_list.get(i);
         			String lh = (String) t.get("ip_address");
         			Integer lp = new Integer((String) t.get("port"));
+//***        			if(connected_host != null && connected_port != 0)
         			if(!connected_host.equals(lh) || connected_port!=lp) {  //write it out if not same as selected 
         				list_output.format("%s:%d\n", lh, lp);
         			}
@@ -271,31 +277,36 @@ public class connection_activity extends Activity {
         		Log.e("connection_activity", "Error saving recent connection: "+except.getMessage());
         		Toast.makeText(getApplicationContext(), "Error saving recent connection: "+except.getMessage(), Toast.LENGTH_SHORT).show();
         	}
+        	break;
 
-//        	start_throttle_activity();
-        break;
+        case message_type.DISCONNECT:
+        	startShutdown();
+        	break;
 
-        case message_type.ERROR: {
+        case message_type.SHUTDOWN:
+        	completeShutdown();
+        	break;
+
+        case message_type.ERROR:
           //display error message from msg.obj
           String msg_txt = new String((String)msg.obj);
       	  Toast.makeText(getApplicationContext(), msg_txt, Toast.LENGTH_LONG).show();
-        }
-        break;
+      	  break;
       }
     };
   }
 
 	@Override
 	public void onPause() {
+        super.onPause();
+//	      Log.d("Engine_Driver","CA onPause " + timestamp);
 		//shutdown server discovery listener
 	    Message msg=Message.obtain();
 	    msg.what=message_type.SET_LISTENER;
 	    msg.arg1 = 0; //zero turns it off
 	    if (mainapp.comm_msg_handler != null) {
 	    	mainapp.comm_msg_handler.sendMessage(msg);
-	    } else {
-	   	    Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
-	    }    	
+	    }
 
 	    // clear the discovered list  TODO: handle this better
 	    discovered_ip_list.clear();
@@ -303,14 +314,16 @@ public class connection_activity extends Activity {
 	    discovery_list.clear();
         discovery_list_adapter.notifyDataSetChanged();
 
-        super.onPause();
 }
 	
 	@Override
 	public void onResume() {
 		super.onResume();
+//	      Log.d("Engine_Driver","CA onResume " + timestamp);
+	    if (isShuttingDown)
+	    	return;
 
-	    connections_list.clear();
+		connections_list.clear();
 	    String example_host = "jmri.mstevetodd.com";
 	    String example_port = "44444";
 	    
@@ -384,17 +397,27 @@ public class connection_activity extends Activity {
 	   // withrottle_list();  //debugging
 	    
 	}  //end of onResume
-  
-  /** Called when the activity is first created. */
+
+	@Override
+	public void onRestart() {
+		super.onRestart();
+//	    Log.d("Engine_Driver","CA onRestart " + timestamp);
+	    if (this.isShuttingDown && !this.isFinishing())
+	    	this.finish();
+	}
+	
+ /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    
+//    timestamp = SystemClock.uptimeMillis();
+//    Log.d("Engine_Driver","CA onCreate " + timestamp);
     mainapp=(threaded_application)this.getApplication();
-    if(mainapp.connection_msg_handler == null)
+//    if(mainapp.connection_msg_handler == null)
     	mainapp.connection_msg_handler=new ui_handler();
-
+    isShuttingDown = false;
+    
     //check for "default" throttle name and make it more unique
     //TODO: move this and similar code in preferences.java into single routine
     SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -473,13 +496,6 @@ public class connection_activity extends Activity {
 	    v.setText("Throttle Name: " + s);  
   }
   
-  /** Called when the activity is finished. */
-  @Override
-  public void onDestroy() {
-	  super.onDestroy();
-	  mainapp.connection_msg_handler = null;
-  }
-
  @Override
   public boolean onCreateOptionsMenu(Menu menu){
 	  MenuInflater inflater = getMenuInflater();
@@ -518,34 +534,29 @@ public class connection_activity extends Activity {
 	  set_labels();
   }
 
-  // Handle pressing of the back button to request shutdown of all threads
+  // Handle pressing of the back button to request exit
 	@Override
 	public boolean onKeyDown(int key, KeyEvent event) {
 		if (key == KeyEvent.KEYCODE_BACK) {
-			this.finish();	// close activity
-			end_all_activity();
+			startShutdown();	// close activity and app
 		}
 		return (super.onKeyDown(key, event));
 	};
 
     //end all activity
-    static void end_all_activity() {
+    private void startShutdown() {
+      isShuttingDown = true;
   	  if (mainapp.comm_msg_handler != null) {
-  	  	  Message disconnect_msg=Message.obtain();
-  	  	  disconnect_msg.what=message_type.SHUTDOWN;
-  		  mainapp.comm_msg_handler.sendMessage(disconnect_msg);
-  		  // wait a bit for comm_msg_handler to process shutdown message
-  		  for( int i=0; i <3; i++) { 
-  			  if(mainapp.comm_msg_handler== null)	// null when comm_msg_handler has shut down
-  			  	break;
-  			  try{ Thread.sleep(200); }
-  		      catch (InterruptedException except) {
-  				// TODO 
-  		      }
-  		  }
-  		  mainapp.comm_msg_handler = null;
+  	  	  Message msg=Message.obtain();
+  	  	  msg.what=message_type.SHUTDOWN;
+  		  mainapp.comm_msg_handler.sendMessage(msg);
   	  }
-  	  System.exit(0);
+    }
+    
+    private void completeShutdown() {
+      this.finish();
+//	  mainapp.connection_msg_handler = null;
+//	  System.exit(0);
     }
 
 

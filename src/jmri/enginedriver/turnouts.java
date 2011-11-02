@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
@@ -53,6 +54,7 @@ public class turnouts extends Activity implements OnGestureListener {
 	private SharedPreferences prefs;
 	
 	private static final int GONE = 8;
+	private static final int VISIBLE = 0;
 
 	ArrayList<HashMap<String, String> > turnouts_list;
 	private SimpleAdapter turnouts_list_adapter;
@@ -151,6 +153,9 @@ public class turnouts extends Activity implements OnGestureListener {
 	      				}
 	      			}
 	      			break;
+	  		  	case message_type.DISCONNECT:
+	  		  		disconnect();
+	  		  		break;
 			};
 		}
 	  }
@@ -209,9 +214,8 @@ public class turnouts extends Activity implements OnGestureListener {
     super.onStart();
 
     //put pointer to this activity's handler in main app's shared variable (If needed)
-    if (mainapp.turnouts_msg_handler == null){
+//    if (mainapp.turnouts_msg_handler == null)
   	  mainapp.turnouts_msg_handler=new turnouts_handler();
-    }
   }
   
   /** Called when the activity is finished. */
@@ -263,7 +267,7 @@ public class turnouts extends Activity implements OnGestureListener {
     b.setOnClickListener(click_listener);
 
     //don't show throw and close buttons if withrottle version < 1.6
-    if (mainapp.withrottle_version != null && mainapp.withrottle_version >= 1.6) {
+    if (mainapp.withrottle_version >= 1.6) {
     	b=(Button)findViewById(R.id.turnout_close);
     	click_listener=new button_listener(8);
     	b.setOnClickListener(click_listener);
@@ -288,94 +292,99 @@ public class turnouts extends Activity implements OnGestureListener {
   //Always go to throttle activity if back button pressed
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {
-  if(key==KeyEvent.KEYCODE_BACK)  {
-	  this.finish();
-   	  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-	  return true;
-  }
-  return(super.onKeyDown(key, event));
-}
-
-@Override
-public boolean onDown(MotionEvent e) {
-	return false;
-}
-
-@Override
-public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-	  if((Math.abs(e2.getX() - e1.getX()) > threaded_application.min_fling_distance) && 
-		 (Math.abs(velocityX) > threaded_application.min_fling_velocity)) {
-		  // left to right swipe goes to routes
-		  if(e2.getX() > e1.getX()) {
-			  Intent in=new Intent().setClass(this, routes.class);
-			  startActivity(in);
-			  connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);				
-		   	  this.finish();  //don't keep on return stack
-		  }
-		  // right to left swipe goes to throttle
-		  else {
-		   	  this.finish();  //don't keep on return stack
-		   	  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-		  }
+	  if(key==KeyEvent.KEYCODE_BACK)  {
+		  this.finish();
+	   	  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
 		  return true;
-    }
-	return false;
-}
+	  }
+	  return(super.onKeyDown(key, event));
+	}
 
-@Override
-public void onLongPress(MotionEvent e) {
-}
-@Override
-public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-		float distanceY) {
-	return false;
-}
-@Override
-public void onShowPress(MotionEvent e) {
-}
-@Override
-public boolean onSingleTapUp(MotionEvent e) {
-	return false;
-};
-
-@Override
-public boolean onCreateOptionsMenu(Menu menu){
-	  MenuInflater inflater = getMenuInflater();
-	  inflater.inflate(R.menu.turnouts_menu, menu);
-	  return true;
-}
-@Override
-public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle all of the possible menu actions.
-	Intent in;
-    switch (item.getItemId()) {
-    case R.id.about_menu:
-  	  in=new Intent().setClass(this, about_page.class);
-   	  startActivity(in);
-   	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-  	  break;
-    case R.id.web_menu:
-  	  in=new Intent().setClass(this, web_activity.class);
-   	  startActivity(in);
-   	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-  	  break;
-    case R.id.power_control_menu:
-  	  in=new Intent().setClass(this, power_control.class);
-   	  startActivity(in);
-   	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-  	  break;
-    case R.id.throttle:
-      this.finish();
-   	  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-  	  break;
-    case R.id.routes:
-  	  in = new Intent().setClass(this, routes.class);
-   	  startActivity(in);
-      this.finish();
-   	  connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-   	  break;
-    }
-    return super.onOptionsItemSelected(item);
-}
-  
+  @Override
+	public boolean onDown(MotionEvent e) {
+		return false;
+	}
+	
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+		  if((Math.abs(e2.getX() - e1.getX()) > threaded_application.min_fling_distance) && 
+			 (Math.abs(velocityX) > threaded_application.min_fling_velocity)) {
+			  // left to right swipe goes to routes
+			  if(e2.getX() > e1.getX()) {
+				  Intent in=new Intent().setClass(this, routes.class);
+				  startActivity(in);
+				  connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);				
+			   	  this.finish();  //don't keep on return stack
+			  }
+			  // right to left swipe goes to throttle
+			  else {
+			   	  this.finish();  //don't keep on return stack
+			   	  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+			  }
+			  return true;
+	    }
+		return false;
+	}
+	
+	@Override
+	public void onLongPress(MotionEvent e) {
+	}
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+			float distanceY) {
+		return false;
+	}
+	@Override
+	public void onShowPress(MotionEvent e) {
+	}
+	@Override
+	public boolean onSingleTapUp(MotionEvent e) {
+		return false;
+	};
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		  MenuInflater inflater = getMenuInflater();
+		  inflater.inflate(R.menu.turnouts_menu, menu);
+		  return true;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle all of the possible menu actions.
+		Intent in;
+	    switch (item.getItemId()) {
+	    case R.id.about_menu:
+	  	  in=new Intent().setClass(this, about_page.class);
+	   	  startActivity(in);
+	   	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	  	  break;
+	    case R.id.web_menu:
+	  	  in=new Intent().setClass(this, web_activity.class);
+	   	  startActivity(in);
+	   	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	  	  break;
+	    case R.id.power_control_menu:
+	  	  in=new Intent().setClass(this, power_control.class);
+	   	  startActivity(in);
+	   	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	  	  break;
+	    case R.id.throttle:
+	      this.finish();
+	   	  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+	  	  break;
+	    case R.id.routes:
+	  	  in = new Intent().setClass(this, routes.class);
+	   	  startActivity(in);
+	      this.finish();
+	   	  connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+	   	  break;
+	    }
+	    return super.onOptionsItemSelected(item);
+	}
+	
+	private void disconnect() {
+		this.finish();
+		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	}
+	  
 }

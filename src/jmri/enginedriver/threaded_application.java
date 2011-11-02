@@ -50,6 +50,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
@@ -63,8 +64,8 @@ public class threaded_application extends Application
 //	String host_name_string; //retrieved host name of connection
 	String loco_string_T = "Not Set"; //Loco Address string returned from the server for selected loco #1
 	String loco_string_S = "Not Set"; //Loco Address string returned from the server for selected loco #1
-	Double withrottle_version; //version of withrottle server
-	Integer web_server_port; //default port for jmri web server
+	Double withrottle_version = 0.0; //version of withrottle server
+	Integer web_server_port = 0; //default port for jmri web server
 	String roster_list_string; //roster list
 	LinkedHashMap<Integer, String> function_labels_T;  //function#s and labels from roster for throttle #1
 	LinkedHashMap<Integer, String> function_labels_S;  //function#s and labels from roster for throttle #2
@@ -112,14 +113,14 @@ public class threaded_application extends Application
 	public static int min_fling_velocity;			// velocity needed for fling
 	
 	private SharedPreferences prefs;
-	
 
   class comm_thread extends Thread
   {
    JmDNS jmdns = null;
+   boolean endingJmdns = false;
    withrottle_listener listener;
    android.net.wifi.WifiManager.MulticastLock multicast_lock;
-   socket_WiT socketWiT = new socket_WiT();
+   socket_WiT socketWiT;
    heartbeat heart  = new heartbeat();
 
    comm_thread() {
@@ -218,11 +219,10 @@ public class threaded_application extends Application
     				byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
     						(byte)(intaddr >> 24 & 0xff) };
     				Inet4Address addr = (Inet4Address) Inet4Address.getByAddress(byteaddr);
-    				client_address = addr.toString();
-    				String s = String.format("comm_thread_run - found intaddr=%d, addr=%s", intaddr, client_address);
-    				Log.d("Engine_Driver", s);
+    				client_address = addr.toString().substring(1);		//strip off leading /
+    				Log.d("Engine_Driver","start_jmdns: local IP addr " + client_address);
 
-    				jmdns=JmDNS.create(addr, client_address.substring(1));  //pass ip as name to avoid hostname lookup attempt, stripping off leading /
+    				jmdns=JmDNS.create(addr, client_address);  //pass ip as name to avoid hostname lookup attempt
 
     				if (multicast_lock == null) {  //do this only as needed
     					multicast_lock=wifi.createMulticastLock("engine_driver");
@@ -230,10 +230,10 @@ public class threaded_application extends Application
         				Log.d("Engine_Driver", "multicast_lock created.");
     				}
     			} else {
-    				process_comm_error("No IP Address found.\nCheck your WiFi connection.");
+    				process_comm_error("No local IP Address found.\nCheck your WiFi connection.");
     			}  //end of if intaddr==0
     		}  catch(IOException except) { 
-    			Log.e("Engine_Driver", "comm_thread_run - Error creating withrottle listener: IOException: "+except.getMessage()); 
+    			Log.e("Engine_Driver", "start_jmdns - Error creating withrottle listener: "+except.getMessage()); 
     			process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()); 
     		}
     	}     
@@ -245,18 +245,23 @@ public class threaded_application extends Application
     	Thread jmdnsThread = new Thread() {
     		@Override
     		public void run() {
-    	    	if (jmdns != null) {
-    	    		try {
-    					jmdns.close();
-    				} catch (IOException e) {
-    					// TODO Auto-generated catch block
-    					e.printStackTrace();
-    				}
-    	    		jmdns = null;
-    	    	}
+	    		try {
+					jmdns.close();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+				}
+				jmdns = null;
+				endingJmdns = false;
     		}
     	};
-    	jmdnsThread.start();
+    	if (jmdnsIsActive()) {		//only need to run one instance of this thread to terminate jmdns 
+			endingJmdns = true;
+			jmdnsThread.start();
+    	}
+    }
+    boolean jmdnsIsActive() {
+    	boolean isActive = jmdns != null && !endingJmdns;
+    	return isActive;
     }
     	
     
@@ -264,22 +269,25 @@ public class threaded_application extends Application
 
     	//All of the work of the communications thread is initiated from this function.
     	public void handleMessage(Message msg)      {
-
     		switch(msg.what)        {
     		//Start or Stop the WiThrottle listener and required jmdns stuff
     		case message_type.SET_LISTENER:
     			//arg1= 1 to turn on, arg1=0 to turn off
     			if (msg.arg1 == 0) {
-    				if (jmdns != null) { 
-    					jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
-    					multicast_lock.release();
+    				if (jmdnsIsActive()) { 
+    					try {
+    						jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
+    						multicast_lock.release();
+    					}
+    					catch(Exception e) {	//just catch any exception and proceed to end_jmdns
+    					}
     					end_jmdns();
     				}
     			} else {
     				if (jmdns == null) {   //start jmdns if not started
     					start_jmdns();
     				}
-    				if (jmdns != null) {  //don't bother if jmdns not started
+    				if (jmdns != null) {  //don't bother if jmdns didn't start
     					multicast_lock.acquire();
     					jmdns.addServiceListener("_withrottle._tcp.local.", listener);
     				}
@@ -327,42 +335,45 @@ public class threaded_application extends Application
     			consist_entries = new LinkedHashMap<String, String>();
 
     			//attempt connection to WiThrottle server
-    			if(socketWiT.connect() == false) {
-    				host_ip = null;  //clear vars and return if failed to connect
-    				port = 0;
-    				return;
+    			socketWiT = new socket_WiT();
+    			if(socketWiT.connect() == true) {
+	    			sendThrottleName();
+	    			Message connection_message=Message.obtain();
+	    			connection_message.what=message_type.CONNECTED;
+	    			connection_msg_handler.sendMessage(connection_message);
     			}
-
-    			sendThrottleName();
-    			Message connection_message=Message.obtain();
-    			connection_message.what=message_type.CONNECTED;
-    			connection_msg_handler.sendMessage(connection_message);
-
-    			//            start_read_timer(busyReadDelay);
+    			else {
+    				host_ip = null;  //clear vars if failed to connect
+    				port = 0;
+    			}
 
     			break;
 
     					//Release the current loco
     		case message_type.RELEASE:  //release specified loco
     			String whichThrottle = msg.obj.toString();
-
-    			//        	Boolean f = getApplicationContext().getResources().getBoolean(R.string.prefStopOnReleaseDefaultValue); TODO: fix this
-    			if (prefs.getBoolean("stop_on_release_preference", true )) {
-    				withrottle_send(whichThrottle+"V0");  //send stop command before releasing (if set in prefs)
-    			}
-    			if ("T".equals(whichThrottle)) {
+    			boolean doRelease = false;
+    			if ("T".equals(whichThrottle) && !"Not Set".equals(loco_string_T)) {
+    				doRelease = true;
     				loco_string_T = "Not Set"; 
     				//              loco_address_T = -1;
     				function_labels_T = new LinkedHashMap<Integer, String>();
     				function_states_T = new boolean[32];
 
-    			} else {
+    			} else if (!"Not Set".equals(loco_string_S)) {
+    				doRelease = true;
     				loco_string_S = "Not Set"; 
     				//              loco_address_S = -1;
     				function_labels_S = new LinkedHashMap<Integer, String>();
     				function_states_S = new boolean[32];
     			}
-    			withrottle_send(whichThrottle+"r");  //send release command
+    			if (doRelease) {
+	    			//        	Boolean f = getApplicationContext().getResources().getBoolean(R.string.prefStopOnReleaseDefaultValue); TODO: fix this
+	    			if (prefs.getBoolean("stop_on_release_preference", true )) {
+	    				withrottle_send(whichThrottle+"V0");  //send stop command before releasing (if set in prefs)
+	    			}
+	    			withrottle_send(whichThrottle+"r");  //send release command
+    			}
     			break;
 
     			//request speed
@@ -385,14 +396,21 @@ public class threaded_application extends Application
 
     			//Disconnect from the WiThrottle server.
     		case message_type.DISCONNECT:
+				heart.stopHeartbeat();
     			withrottle_send("Q");
+    			alert_activities(message_type.DISCONNECT,"");
     			if (heart.getInboundInterval() > 0) {
     				withrottle_send("*-");     //request to turn off heartbeat (if enabled in server prefs)
-    				heart.stopHeartbeat();
     			}
-    			//            stop_read_timer();				//stop reading from socket
-    			socketWiT.disconnect(true);
-    			//			witReader.stop();
+				try { 
+    				Thread.sleep(250L);			//give msgs a chance to xmit before closing socket
+				}
+				catch (Exception e) { 
+				}
+//				heart.stopHeartbeat();
+    			socketWiT.disconnect(true);		//stop reading from the socket
+    			socketWiT = null;
+    			host_ip = null;
     			break;
 
     			//Set up an engine to control. The address of the engine is given in arg1, and the address type (long or short) is given in arg2.
@@ -461,19 +479,10 @@ public class threaded_application extends Application
     			withrottle_send(String.format("PPA%d", msg.arg1));
     			break;
 
-    			// release handlers and shutdown jmdns
-    			// release comm_msg_handler last to signal that we're done
+    			// terminate jmdns and send activities a SHUTDOWN msg
     		case message_type.SHUTDOWN:
-    			/*
-            throttle_msg_handler = null; 
-            select_loco_msg_handler = null; 
-            power_control_msg_handler = null; 
-            routes_msg_handler = null; 
-            turnouts_msg_handler = null;
-            connection_msg_handler = null;
-    			 */
-    			end_jmdns();		// this takes too long?
-    			comm_msg_handler = null;
+   				end_jmdns();
+    			alert_activities(message_type.SHUTDOWN,"");	//only connection_activity should still be running
     			break;
     		}
     	};
@@ -491,7 +500,7 @@ public class threaded_application extends Application
     }
 
   	private void process_comm_error(String msg_txt) {
-        Log.e("Engine_Driver", "comm_handler.handleMessage: " + msg_txt);
+        Log.d("Engine_Driver", "comm_handler.handleMessage: " + msg_txt);
         if (connection_msg_handler!= null) {
           Message ui_msg=Message.obtain();
           ui_msg.what=message_type.ERROR;
@@ -668,56 +677,10 @@ public class threaded_application extends Application
 	    	  }  //end switch inside P
 		  	 break;
   	  }  //end switch
-  	  
-  	  //forward whatever we got to other activities (if started) 
-      if (turnouts_msg_handler != null)   
-      { 
-          Message msg=Message.obtain(); 
-          msg.what=message_type.RESPONSE;
-          msg.obj=new String(response_str);
-          try {
-        	  turnouts_msg_handler.sendMessage(msg);
-          }
-          catch(Exception e) {
-        	  msg.recycle();
-          }
-      }
-      if (routes_msg_handler != null)   { 
-          Message msg=Message.obtain(); 
-          msg.what=message_type.RESPONSE;
-          msg.obj=new String(response_str); 
-          try {
-        	  routes_msg_handler.sendMessage(msg);
-          }
-          catch(Exception e) {
-        	  msg.recycle();
-          }
-      }
-      if (throttle_msg_handler != null) {
-    	  Message msg=Message.obtain(); 
-    	  msg.what=message_type.RESPONSE;
-    	  msg.obj=new String(response_str);
-          try {
-        	  throttle_msg_handler.sendMessage(msg);
-          }
-          catch(Exception e) {
-        	  msg.recycle();
-          }
-      }
-      if (power_control_msg_handler != null) { 
-          Message msg=Message.obtain(); 
-          msg.what=message_type.RESPONSE;
-          msg.obj=new String(response_str); 
-          try {
-        	  power_control_msg_handler.sendMessage(msg);
-          }
-          catch(Exception e) {
-        	  msg.recycle();
-          }
-      }
-      
+        
+      alert_activities(message_type.RESPONSE, response_str);	//send response to running activities
     }  //end of process_response
-
+  	  
     //parse roster functions list into appropriate app variable array
     //  //RF29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
     private void process_roster_function_string(String response_str, String whichThrottle) {
@@ -952,6 +915,79 @@ public class threaded_application extends Application
     	}
     }
 
+  	// forward a message to all running activities 
+    private void alert_activities(int msgType, String msgBody) {
+        if (connection_msg_handler != null)   
+        { 
+            Message msg=Message.obtain(); 
+            msg.what=msgType;
+            msg.obj=new String(msgBody);
+            try {
+          	  connection_msg_handler.sendMessage(msg);
+            }
+            catch(Exception e) {
+          	  msg.recycle();
+            }
+        }
+      if (turnouts_msg_handler != null)   
+      { 
+          Message msg=Message.obtain(); 
+          msg.what=msgType;
+          msg.obj=new String(msgBody);
+          try {
+        	  turnouts_msg_handler.sendMessage(msg);
+          }
+          catch(Exception e) {
+        	  msg.recycle();
+          }
+      }
+      if (routes_msg_handler != null)   { 
+          Message msg=Message.obtain(); 
+          msg.what=msgType;
+          msg.obj=new String(msgBody); 
+          try {
+        	  routes_msg_handler.sendMessage(msg);
+          }
+          catch(Exception e) {
+        	  msg.recycle();
+          }
+      }
+      if (throttle_msg_handler != null) {
+    	  Message msg=Message.obtain(); 
+    	  msg.what=msgType;
+    	  msg.obj=new String(msgBody);
+          try {
+        	  throttle_msg_handler.sendMessage(msg);
+          }
+          catch(Exception e) {
+        	  msg.recycle();
+          }
+      }
+      if (power_control_msg_handler != null) { 
+          Message msg=Message.obtain(); 
+          msg.what=msgType;
+          msg.obj=new String(msgBody); 
+          try {
+        	  power_control_msg_handler.sendMessage(msg);
+          }
+          catch(Exception e) {
+        	  msg.recycle();
+          }
+      }
+      
+      if (select_loco_msg_handler != null) { 
+          Message msg=Message.obtain(); 
+          msg.what=msgType;
+          msg.obj=new String(msgBody); 
+          try {
+        	  select_loco_msg_handler.sendMessage(msg);
+          }
+          catch(Exception e) {
+        	  msg.recycle();
+          }
+      }
+    }
+
 	// get the roster name from address string 123(L).  Return input if not found in roster or in consist
     private String get_loconame_from_address_string(String response_str) {
 
@@ -1002,7 +1038,8 @@ public class threaded_application extends Application
         	//send response to debug log for review
         	Log.d("Engine_Driver", "-->:" + newMsg + "  was(" + msg + ")");
         	//perform the send
-        	socketWiT.Send(newMsg);
+        	if(socketWiT != null)
+        		socketWiT.Send(newMsg);
         }
        	
 //        start_read_timer(busyReadDelay);
@@ -1032,27 +1069,24 @@ public class threaded_application extends Application
     	
     	public boolean connect() {
 
-    		socketGood = HaveNetworkConnection();
+    		//use local socketOk instead of setting socketGood so that the rcvr doesn't resume until connect() is done
+    		boolean socketOk = HaveNetworkConnection();	
     		
     		//validate address
-    		if (socketGood) {
+    		if (socketOk) {
 	            try { 
 	            	host_address=InetAddress.getByName(host_ip); 
 	            }
 	            catch(UnknownHostException except) {
-	            	process_comm_error("Could not connect to " + host_ip + "\n"+except.getMessage() + "\nUnknownHostException");
-	            	socketGood = false;
-	            }
-	            if (host_address == null) {
-	                process_comm_error("Could not connect to " + host_ip);
-	                socketGood = false;            	
+		            process_comm_error("Can't determine IP address of " + host_ip);
+	            	socketOk = false;
 	            }
     		}
             
 //            host_name_string = host_address.getHostName();  //store host server name in app.thread shared variable
 
             //socket
-            if (socketGood) {
+            if (socketOk) {
 	            try {
 	            	clientSocket=new Socket();               //look for someone to answer on specified socket, and set timeout
 	            	InetSocketAddress sa = new InetSocketAddress(host_ip, port);
@@ -1060,26 +1094,26 @@ public class threaded_application extends Application
 	            	clientSocket.setSoTimeout(300);
 	            }
 	            catch(Exception except)  {
-			        process_comm_error("Cannot connect to host "+host_ip+" and port "+port+
+			        process_comm_error("Can't connect to host "+host_ip+" and port "+port+
 			        					" from " + client_address +
 			        					" - "+except.getMessage()+"\nCheck WiThrottle and network settings.");
-			        socketGood = false;
+			        socketOk = false;
 	            }
             }
 
             //rcvr
-            if (socketGood) {
+            if (socketOk) {
 				try {
 					inputBR = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 				}
 				catch (IOException except) {
 					process_comm_error("Error creating input stream, IOException: "+except.getMessage());
-				    socketGood = false;
+				    socketOk = false;
 				} 
             }
 
 			//start the socket_WiT thread.
-            if (socketGood) {
+            if (socketOk) {
 				if (!this.isAlive()) {
 					endRead = false;
 					try {
@@ -1092,21 +1126,21 @@ public class threaded_application extends Application
             }
 
 			//xmtr
-			if (socketGood) {
+			if (socketOk) {
 	            try { 
 	            	outputPW = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true); 
 	            }
 	            catch(IOException e) {
 	              process_comm_error("Error creating output stream, IOException: "+e.getMessage());
-	              socketGood = false;
+	              socketOk = false;
 	            }
 			}
-			
+			socketGood = socketOk;
 			return socketGood;
     	}
     	
-    	public void disconnect(boolean stopRcvr) {
-    		if (stopRcvr) {
+    	public void disconnect(boolean shutdown) {
+    		if (shutdown) {
     			endRead = true;
     			for(int i = 0; i < 3 && this.isAlive(); i++) {
     				try { 
@@ -1118,30 +1152,110 @@ public class threaded_application extends Application
     			}
     		}
             
-            //close socket
-            try { 
-            	clientSocket.close();
-            }
-            catch(IOException e) { 
-            	process_comm_error("Error closing the Socket, IOException: "+e.getMessage()); 
-            }
-            
-			//release any loco selections internally
-			Message msg;
-			if (!"Not Set".equals(loco_string_T)) {
-				msg = Message.obtain();
-				msg.what = message_type.RELEASE;
-				msg.obj = new String("T");
-				comm_msg_handler.sendMessage(msg);
-			}
-			if (!"Not Set".equals(loco_string_S)) {
-				msg = Message.obtain();
-				msg.what = message_type.RELEASE;
-				msg.obj = new String("S");
-				comm_msg_handler.sendMessage(msg);
-			}
+		    socketGood = false;
 
-			socketGood = false;
+		    //close socket
+		    if (clientSocket != null) {
+	            try { 
+	            	clientSocket.close();
+	            }
+	            catch(Exception e) { 
+	            	Log.d("Engine_Driver","Error closing the Socket: "+e.getMessage()); 
+	            }
+		    }
+            
+//			if (!shutdown) {
+		    {
+			    // reinit shared variables then signal activities to refresh their views
+				// so that (potentially) invalid information is not displayed
+				power_state = null;
+				to_allowed = false;
+				to_states = null;
+				to_system_names = null;
+				to_user_names = null;
+				to_state_names = null;
+				rt_allowed = false;
+				rt_states = null;
+				rt_system_names = null;
+				rt_user_names = null;
+				rt_state_names = null;
+				loco_string_T = "Not Set";
+				loco_string_S = "Not Set";
+				function_labels_S = new LinkedHashMap<Integer, String>();
+				function_labels_T = new LinkedHashMap<Integer, String>();
+				function_labels_default = new LinkedHashMap<Integer, String>();
+				function_states_T = new boolean[32];		// also allocated in onCreate() ???
+				function_states_S = new boolean[32];
+				consist_allowed = false;
+				consist_entries = new LinkedHashMap<String, String>();
+				roster_entries = null;
+	
+		        if (turnouts_msg_handler != null)   
+		        { 
+		            Message msg=Message.obtain(); 
+		            msg.what=message_type.RESPONSE;
+		            msg.obj=new String("PTL");		//tell turnout activity that there is a new turnout list
+		            try {
+		          	  turnouts_msg_handler.sendMessage(msg);
+		            }
+		            catch(Exception e) {
+		          	  msg.recycle();
+		            }
+		        }
+		        if (routes_msg_handler != null)   { 
+		            Message msg=Message.obtain(); 
+		            msg.what=message_type.RESPONSE;
+		            msg.obj=new String("PRL"); 		//tell route activity that there is a new route list
+		            try {
+		          	  routes_msg_handler.sendMessage(msg);
+		            }
+		            catch(Exception e) {
+		          	  msg.recycle();
+		            }
+		        }
+		        if (throttle_msg_handler != null) {
+					Message msg=Message.obtain(); 
+					msg.what=message_type.RESPONSE;
+					msg.obj=new String("MT-");		//tell throttle activity to release throttle T
+					try {
+						  throttle_msg_handler.sendMessage(msg);
+					}
+					catch(Exception e) {
+						  msg.recycle();
+					}
+					msg=Message.obtain(); 
+					msg.what=message_type.RESPONSE;
+					msg.obj=new String("MS-");		//tell throttle activity to release throttle S
+					try {
+					  throttle_msg_handler.sendMessage(msg);
+					}
+					catch(Exception e) {
+					  msg.recycle();
+					}
+		        }
+		        if (power_control_msg_handler != null) { 
+		            Message msg=Message.obtain(); 
+		            msg.what=message_type.RESPONSE;
+		            msg.obj=new String("PPA"); 		//tell power activity that the power state has changed
+		            try {
+		          	  power_control_msg_handler.sendMessage(msg);
+		            }
+		            catch(Exception e) {
+		          	  msg.recycle();
+		            }
+		        }
+		        if (select_loco_msg_handler != null) { 
+		            Message msg=Message.obtain(); 
+		            msg.what=message_type.RESPONSE;
+		            msg.obj=new String("R"); 		//tell select loco activity that the roster has changed
+		            try {
+		          	  select_loco_msg_handler.sendMessage(msg);
+		            }
+		            catch(Exception e) {
+		          	  msg.recycle();
+		            }
+		        }
+			}
     	}
 
    	//read the input buffer
@@ -1165,8 +1279,10 @@ public class threaded_application extends Application
 					  socketGood = this.SocketCheck();
 				  } 
 				  catch (IOException e) {
-	    			process_comm_error("WiT rcvr error.");
-    			    socketGood = false;		//input buffer error so force reconnection on next send
+					if(socketGood) {
+						  Log.d("Engine_Driver","WiT rcvr error.");
+						  socketGood = false;		//input buffer error so force reconnection on next send
+					}
 				  }
       	    	}
       	    	if(!socketGood) {
@@ -1179,9 +1295,15 @@ public class threaded_application extends Application
     	public void Send(String msg) {
     		//reconnect socket if needed
     		if(!socketGood || !this.SocketCheck()) {
-    			process_comm_error("WiT attempting to reconnect.");
     			this.disconnect(false);		//clean up socket but do not shut down the receiver
-    			this.connect();				//attempt to reopen the connection
+    			this.connect();				//attempt to reestablish connection
+    			if(socketGood) {
+        			process_comm_error("Success: Restored connection to WiThrottle server " + host_ip + ".\n");
+    			}
+    			else {
+        			process_comm_error("Warning: Lost connection to WiThrottle server " + host_ip + ".\nAttempting to reconnect.");
+    				comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 5000L);	//try connection again in 5 seconds
+    			}
     		}
 
     		//send the message
@@ -1191,7 +1313,7 @@ public class threaded_application extends Application
 	    			outputPW.flush();
 	        	} 
 	    		catch (Exception e) {
-	    			process_comm_error("WiT xmtr error.");
+	    			Log.d("Engine_Driver","WiT xmtr error.");
 	    			socketGood = false;		//output buffer error so force reconnection on next send
 	        	}
     		}
@@ -1301,7 +1423,8 @@ public class threaded_application extends Application
         public void stopHeartbeat() {
         	comm_msg_handler.removeCallbacks(outboundHeartbeatTimer);			//remove any pending requests
         	comm_msg_handler.removeCallbacks(inboundHeartbeatTimer);
-        }
+        	heartbeatIntervalSetpoint = 0;
+       }
       	
         public void sendHeartbeat() {
 			comm_msg_handler.post(outboundHeartbeatTimer);
@@ -1342,8 +1465,8 @@ public class threaded_application extends Application
        		public void run() {
        			comm_msg_handler.removeCallbacks(this);	//remove pending requests
        			if(heartbeatInboundInterval != 0) {
-			        Log.d("Engine_Driver", "heartbeat: no response from WiT for "+(heartbeatInboundInterval / 1000)+" seconds");
-	       			Toast.makeText(getApplicationContext(), "WARNING: No response from WiThrottle server for " + (heartbeatInboundInterval/1000)  + " seconds.  Verify connection.", Toast.LENGTH_LONG).show();
+       				if (socketWiT != null && socketWiT.socketGood)
+       					process_comm_error("WARNING: No response from WiThrottle server for " + (heartbeatInboundInterval/1000)  + " seconds.  Verify connection.");
 	       			comm_msg_handler.postDelayed(this,heartbeatInboundInterval);	//set next inbound timeout
        			}
        		}
@@ -1353,6 +1476,7 @@ public class threaded_application extends Application
   
   public void onCreate()  {
 	  super.onCreate();
+
 	  prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
 	  function_states_T = new boolean[32];
@@ -1361,6 +1485,8 @@ public class threaded_application extends Application
 	  thread=new comm_thread();
 	  thread.start();
   }
+  
+  
 
 /** ------ copied from jmri util code -------------------
  * Split a string into an array of Strings, at a particular

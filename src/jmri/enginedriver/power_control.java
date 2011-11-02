@@ -47,6 +47,9 @@ public class power_control extends Activity {
 						refresh_power_control_view(); 
 					}
 					break;
+	  		  	case message_type.DISCONNECT:
+	  			  disconnect();
+	  			  break;
 			};
 		}
 	  }
@@ -99,9 +102,8 @@ public class power_control extends Activity {
     super.onStart();
 
     //put pointer to this activity's handler in main app's shared variable (If needed)
-    if (mainapp.power_control_msg_handler == null){
+//    if (mainapp.power_control_msg_handler == null)
     	mainapp.power_control_msg_handler=new power_control_handler();
-    }
   }
 
   /** Called when the activity is finished. */
@@ -135,13 +137,17 @@ public class power_control extends Activity {
   //Handle pressing of the back button to end this activity
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {
-  if(key==KeyEvent.KEYCODE_BACK)
-  {
-      this.finish();  //end this activity
-      connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-  }
-  return(super.onKeyDown(key, event));
-};
+	  if(key==KeyEvent.KEYCODE_BACK)
+	  {
+	      this.finish();  //end this activity
+	      connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	  }
+	  return(super.onKeyDown(key, event));
+  };
 
-  
+  private void disconnect() {
+	this.finish();
+	connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+  }
+
 }

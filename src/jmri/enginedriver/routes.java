@@ -21,8 +21,6 @@ package jmri.enginedriver;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import jmri.enginedriver.turnouts.turnouts_handler;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -144,6 +142,9 @@ public class routes extends Activity  implements OnGestureListener {
 	        	}
 	        }
 	        break;
+		  	case message_type.DISCONNECT:
+	  			  disconnect();
+	  			  break;
 		};
 		}
 	  }
@@ -198,9 +199,8 @@ public class routes extends Activity  implements OnGestureListener {
     super.onStart();
 
     //put pointer to this activity's handler in main app's shared variable (If needed)
-    if (mainapp.routes_msg_handler == null){
+//    if (mainapp.routes_msg_handler == null)
   	  mainapp.routes_msg_handler=new routes_handler();
-    }
   }
 
   /** Called when the activity is finished. */
@@ -347,5 +347,9 @@ public class routes extends Activity  implements OnGestureListener {
       //since we always do the same action no need to distinguish between requests
   }
 
+  private void disconnect() {
+	this.finish();
+	connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+  }
   
 };

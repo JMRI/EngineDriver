@@ -133,8 +133,13 @@ public class select_loco extends Activity {
 			Collections.sort(roster_list, comperator);
 			
 			roster_list_adapter.notifyDataSetChanged();
+			View v = (View) findViewById(R.id.roster_list_heading);
+			v.setVisibility(VISIBLE);
+			v = (View) findViewById(R.id.roster_list);
+			v.setVisibility(VISIBLE);
 
-		} else { // hide roster section if nothing to show
+		} 
+		else { // hide roster section if nothing to show
 			View v = (View) findViewById(R.id.roster_list_heading);
 			v.setVisibility(GONE);
 			v = (View) findViewById(R.id.roster_list);
@@ -179,7 +184,7 @@ public class select_loco extends Activity {
 	    if (hrl) {
 			View rlv = (View) findViewById(R.id.recent_engines_heading);
 			rlv.setVisibility(GONE);
-			rlv = (View) findViewById(R.id.engine_list_wrapper);
+			rlv = (View) findViewById(R.id.engine_list);
 			rlv.setVisibility(GONE);
 	    }
 
@@ -208,8 +213,18 @@ public class select_loco extends Activity {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 				case message_type.RESPONSE:
-					set_labels();
+	      			String response_str = msg.obj.toString();
+	      			if (response_str.length() >= 1) {
+	      				char com1 = response_str.charAt(0);
+	      			    //refresh labels when any roster response is received
+	      				if (com1 == 'R') {
+	    					set_labels();
+	      				}
+	      			}
 					break;
+	  		  	case message_type.DISCONNECT:
+	  		  		end_this_activity();
+	  		  		break;
 			};
 		}
 	}
@@ -339,6 +354,7 @@ public class select_loco extends Activity {
 		this.finish();
 		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	}
+
 	@Override
 	public void onStart() {
 
@@ -394,7 +410,7 @@ public class select_loco extends Activity {
 		roster_list_view
 				.setOnItemClickListener(new roster_item_ClickListener());
 
-		refresh_roster_list();
+//		refresh_roster_list();
 
 		// Set up a list adapter to allow adding the list of recent engines to
 		// the UI.
@@ -546,5 +562,4 @@ public class select_loco extends Activity {
 			return view;
         }
     }
-
 }
