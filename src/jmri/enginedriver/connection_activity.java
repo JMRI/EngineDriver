@@ -119,7 +119,8 @@ public class connection_activity extends Activity {
 		  mainapp.comm_msg_handler.sendMessage(connect_msg);
 	  } else {
 		  connect_msg.recycle();
-		  Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
+		  Log.e("Engine_Driver","ERROR in ca.connect: comm thread not started.") ;
+		  Toast.makeText(getApplicationContext(), "ERROR in ca.connect: comm thread not started.", Toast.LENGTH_SHORT).show();
 	  }    	
   };
 
@@ -284,21 +285,13 @@ public class connection_activity extends Activity {
 	@Override
 	public void onPause() {
         super.onPause();
-//	      Log.d("Engine_Driver","CA onPause " + timestamp);
 		//shutdown server discovery listener
-/*	    Message msg=Message.obtain();
+	    Message msg=Message.obtain();
 	    msg.what=message_type.SET_LISTENER;
 	    msg.arg1 = 0; //zero turns it off
 	    if (mainapp.comm_msg_handler != null) {
-//	    	mainapp.comm_msg_handler.sendMessage(msg);
+	    	mainapp.comm_msg_handler.sendMessage(msg);
 	    }
-*/
-	    // clear the discovered list  TODO: handle this better
-//FIXME	    discovered_ip_list.clear();
-//	    discovered_port_list.clear();
-//	    discovery_list.clear();
-//        discovery_list_adapter.notifyDataSetChanged();
-
 }
 	
 	@Override
@@ -315,7 +308,8 @@ public class connection_activity extends Activity {
 	    if (mainapp.comm_msg_handler != null) {
 	    	mainapp.comm_msg_handler.sendMessage(msg);
 	    } else {
-	   	    Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
+	    	Log.e("Engine_Driver","ERROR in ca.onResume: comm thread not started.") ;
+	   	    Toast.makeText(getApplicationContext(), "ERROR in ca.onResume: comm thread not started.", Toast.LENGTH_SHORT).show();
 	    }    	
 
 	    connections_list.clear();
@@ -384,15 +378,22 @@ public class connection_activity extends Activity {
 	    	Log.e("connection_activity", "Error reading recent connections list: "+except.getMessage());
 			Toast.makeText(getApplicationContext(), "Error reading recent connections list: "+except.getMessage(), Toast.LENGTH_SHORT).show();
 	    }
-	    // clear the discovered list  TODO: handle this better
-//FIXME	    discovered_ip_list.clear();
-//	    discovered_port_list.clear();
-//	    discovery_list.clear();
-//        discovery_list_adapter.notifyDataSetChanged();
-	    
+    
 	    set_labels();
 
-	   // withrottle_list();  //debugging
+	    //start up server discovery listener again (after a 1 second delay)
+	    //TODO: this is a rig, figure out why this is needed for ubuntu servers
+	    msg=Message.obtain();
+	    msg.what=message_type.SET_LISTENER;
+	    msg.arg1 = 1; //one turns it on
+	    if (mainapp.comm_msg_handler != null) {
+	    	mainapp.comm_msg_handler.sendMessageDelayed(msg, 3000);
+	    } else {
+	    	Log.e("Engine_Driver","ERROR in ca.onResume: comm thread not started.") ;
+	   	    Toast.makeText(getApplicationContext(), "ERROR in ca.onResume: comm thread not started.", Toast.LENGTH_SHORT).show();
+	    }    	
+
+// withrottle_list();  //debugging
 	    
 	}  //end of onResume
 
@@ -434,7 +435,6 @@ public class connection_activity extends Activity {
     	prefs.edit().putString("throttle_name_preference", s).commit();  //save new name to prefs
 
     }
-
     
     setContentView(R.layout.connection);
     
@@ -455,9 +455,6 @@ public class connection_activity extends Activity {
     ListView conn_list=(ListView)findViewById(R.id.connections_list);
     conn_list.setAdapter(connection_list_adapter);
     conn_list.setOnItemClickListener(new connect_item(server_list_type.RECENT_CONNECTION));
-
-//    discovered_ip_list=new ArrayList<String>();
-//    discovered_port_list=new ArrayList<Integer>();
 
     // suppress popup keyboard until EditText is touched
 	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);

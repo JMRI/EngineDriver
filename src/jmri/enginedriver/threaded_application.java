@@ -126,7 +126,7 @@ public class threaded_application extends Application {
             //A service has been added. If no details, ask for them 
   		  ServiceInfo si = jmdns.getServiceInfo(event.getType(), event.getName(), 0);
       	  if (si == null || si.getPort() == 0 ) { 
-      		  Log.d("Engine_Driver", String.format("serviceAdded - Requesting details: Type='%s', Name='%s', %s", event.getType(), event.getName()));
+      		  Log.d("Engine_Driver", String.format("serviceAdded - Requesting details: Name='%s', Type='%s'", event.getName(), event.getType()));
       		  jmdns.requestServiceInfo(event.getType(), event.getName(), 1);
       	  }
     	};
@@ -237,27 +237,28 @@ Log.d("Engine_Driver","inside start_jmdns");
     		case message_type.SET_LISTENER:
     			//arg1= 1 to turn on, arg1=0 to turn off
     			if (msg.arg1 == 0) {
-Log.d("Engine_Driver","Set listener off");
     				if (jmdnsIsActive()) { 
-Log.d("Engine_Driver","jmdns IS active");
     					try {
-    						Log.d("Engine_Driver","removeServiceListener");
     						jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
-    						Log.d("Engine_Driver","removeServiceListener completed");
     						multicast_lock.release();
     					}
     					catch(Exception e) {	//just catch any exception and proceed to end_jmdns
     					}
-//    					end_jmdns();
+    					end_jmdns();
     				}
     			} else {
     				if (jmdns == null) {   //start jmdns if not started
-Log.d("Engine_Driver","jmdns IS null");
+    					Log.d("Engine_Driver","jmdns not started, starting");
     					start_jmdns();
+    				} else {
+    					Log.d("Engine_Driver","comm_handler: jmdns already running");
     				}
     				if (jmdns != null) {  //don't bother if jmdns didn't start
     					multicast_lock.acquire();
+    					Log.d("Engine_Driver","comm_handler: adding serviceListener");
     					jmdns.addServiceListener("_withrottle._tcp.local.", listener);
+    				} else {
+    					Log.d("Engine_Driver","comm_handler: jmdns not running, didn't start listener");
     				}
     			}
     			break;
@@ -1010,42 +1011,7 @@ Log.d("Engine_Driver","jmdns IS null");
     }  //end withrottle_send()
 
     public void run()   {
-    	
-    	int intaddr = 0;
 
-    	//Set up to find a WiThrottle service via ZeroConf, not supported for OS 1.5 (SDK 3)
-    	if (android.os.Build.VERSION.SDK.equals("3")) {    	 
-    		process_comm_error("WiFi discovery not supported.  Skipping.");
-    	} else {
-    		try   {
-    			WifiManager wifi = (WifiManager)threaded_application.this.getSystemService(Context.WIFI_SERVICE);
-    			//Acquire a multicast lock. This allows us to obtain multicast packets, but consumes a bit more battery life.
-    			//Release it as soon as possible (after the user has connected to a WiThrottle service, or this application is
-    			//not the currently active one.
-
-    			multicast_lock=wifi.createMulticastLock("engine_driver");
-    			multicast_lock.setReferenceCounted(true);
-    			multicast_lock.acquire();
-    			WifiInfo wifiinfo = wifi.getConnectionInfo();
-    			intaddr = wifiinfo.getIpAddress();
-    			if (intaddr != 0) {
-    				byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
-    						(byte)(intaddr >> 24 & 0xff) };
-    				InetAddress addr = InetAddress.getByAddress(byteaddr);
-    				String s = String.format("found intaddr=%d, addr=%s", intaddr, addr.toString());
-    				Log.d("comm_thread_run", s);
-
-    				jmdns=JmDNS.create(addr);
-    				listener=new withrottle_listener();
-    				jmdns.addServiceListener("_withrottle._tcp.local.", listener);
-    			} else {
-    				process_comm_error("No IP Address found.\nCheck your WiFi connection.");
-    			}  //end of if intaddr==0
-    		}  catch(IOException except) { 
-    			Log.e("comm_thread_run", "Error creating withrottle listener: IOException: "+except.getMessage()); 
-    			process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()+"\n"+except.getCause().getMessage()); 
-    		}
-    	}     
     	Looper.prepare();
     	comm_msg_handler=new comm_handler();
     	Looper.loop();
