@@ -21,7 +21,6 @@ package jmri.enginedriver;
 /* TODO: see changelog-and-todo-list.txt for complete list of project to-do's */
 
 import android.app.Application;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -31,8 +30,6 @@ import java.net.*;
 import java.io.*;
 
 import android.util.Log;
-import android.widget.Toast;
-
 import javax.jmdns.*;
 
 import android.net.ConnectivityManager;
@@ -47,16 +44,12 @@ import java.util.LinkedHashMap;
 import jmri.enginedriver.message_type;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.roster.RosterLoader;
-
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
-public class threaded_application extends Application
-{
+public class threaded_application extends Application {
     public comm_thread thread;
 	String host_ip; //The IP address of the WiThrottle server.
 	int port; //The TCP port that the WiThrottle server is running on
@@ -114,8 +107,7 @@ public class threaded_application extends Application
 	
 	private SharedPreferences prefs;
 
-  class comm_thread extends Thread
-  {
+  class comm_thread extends Thread  {
    JmDNS jmdns = null;
    boolean endingJmdns = false;
    withrottle_listener listener;
@@ -128,107 +120,76 @@ public class threaded_application extends Application
    }
    
     //Listen for a WiThrottle service advertisement on the LAN.
-    public class withrottle_listener implements ServiceListener
-    {
+    public class withrottle_listener implements ServiceListener    {
 
     	public void serviceAdded(ServiceEvent event)  	{
-//    	  process_comm_error(String.format("Add started for: '%s'", event.getName()));
-    	  
-          //A service has been added. Request details of the service
-		  ServiceInfo si = jmdns.getServiceInfo(event.getType(), event.getName(), 0);
-    	  
-    	  if (si == null || si.getPort() == 0 ) {  //not enough info, submit request for details
-    		  Log.d("Engine_Driver", String.format("serviceAdded - More Info Requested: Type='%s', Name='%s', %s", event.getType(), event.getName(), event.toString()));
- //   		  process_comm_error(String.format("Requesting more: '%s'", event.getName()));
-    		  jmdns.requestServiceInfo(event.getType(), event.getName(), 0);
+            //A service has been added. If no details, ask for them 
+  		  ServiceInfo si = jmdns.getServiceInfo(event.getType(), event.getName(), 0);
+      	  if (si == null || si.getPort() == 0 ) { 
+      		  Log.d("Engine_Driver", String.format("serviceAdded - Requesting details: Type='%s', Name='%s', %s", event.getType(), event.getName()));
+      		  jmdns.requestServiceInfo(event.getType(), event.getName(), 1);
+      	  }
+    	};
 
-    	  } else {  //get the port and validate that the host address will resolve
-    		  int port=si.getPort();
-//    		  String hostip=si.getHostAddress();
-//    		  String hostname = "";
-        	  String hostname = si.getName(); 
-    		  
-    		  try { //verify that the name will resolve
-//    			  InetAddress hostaddress=InetAddress.getByName(hostip);
-//    			  hostname = hostaddress.getHostName();  //try to use this name instead of ip address
-//    			  hostaddress=InetAddress.getByName(hostname); //verify this will resolve before using it
-        		  InetAddress hostaddress=InetAddress.getByName(hostname);
-    		  }  
-    		  catch(UnknownHostException except) {  //if name resolution fails, use ip address
-//    			  hostname = hostip;
-    			  String[] hostnames = si.getHostAddresses();
-    			  hostname = hostnames[0];  //use first one, since WiThrottle is only putting one in (for now)
-    		  }  //if name resolution fails, use ip address
-    		  Log.d("Engine_Driver", String.format("serviceAdded - %s:%d -- %s", hostname, port, event.toString()));
-    		  //process_comm_error(String.format(String.format("Added %s:%d", hostname, port)));
-    		  //Tell the UI thread so as to update the list of services available.
-    		  Message service_message=Message.obtain();
-    		  service_message.what=message_type.SERVICE_RESOLVED;
-    		  service_message.arg1=port;
-    		  service_message.obj=new String(hostname);
-    		  connection_msg_handler.sendMessage(service_message);
-    	  }
-      };
-    	
-      public void serviceRemoved(ServiceEvent event)      {
-    	  Log.d("Engine_Driver", String.format("serviceRemoved - %s", event.getName()));
-    	  //this only returns the name, not the address, so not sure how to remove it without storing name
-      };
+    	public void serviceRemoved(ServiceEvent event)      {
+    		//TODO: handle this once the host names are tracked (since it only returns name, not IP)
+    	};
 
-      public void serviceResolved(ServiceEvent event)  {
-    	  //A service's information has been resolved. Store the port and servername to connect to that service.  Verify the servername.
-    	  int port=event.getInfo().getPort();
-//    	  String hostip=event.getInfo().getHostAddress();
-    	  String hostname = event.getInfo().getName(); //
-    	  
-    	  try { //verify that the name will resolve
-//    		  InetAddress hostaddress=InetAddress.getByName(hostip);
-    		  InetAddress hostaddress=InetAddress.getByName(hostname);
-//    		  hostname = hostaddress.getHostName();  //try to use this name instead of ip address
-//    		  hostaddress=InetAddress.getByName(hostname); //verify this will resolve before using it
-    	  }  
-    	  catch(UnknownHostException except) {  //if name resolution fails, use ip address
-//    		  hostname = event.getInfo().getHostAddresses();
-			  String[] hostnames = event.getInfo().getHostAddresses();
-			  hostname = hostnames[0];  //use first one, since WiThrottle is only putting one in (for now)
-    	  }  
+    	public void serviceResolved(ServiceEvent event)  {
+    		//A service's information has been resolved. Store the port and servername to connect to that service.  Verify the servername.
+    		int port=event.getInfo().getPort();
+    		String host_name = event.getInfo().getName(); //
+    		String[] ip_addresses = event.getInfo().getHostAddresses();
+    		String ip_address = ip_addresses[0];  //use first one, since WiThrottle is only putting one in (for now)
 
-        Log.d("Engine_Driver", String.format("serviceResolved - %s:%d -- %s", hostname, port, event.toString()));
-//        process_comm_error(String.format(String.format("Resolved %s:%d", hostname, port)));
-        //Tell the UI thread so as to update the list of services available.
-        Message service_message=Message.obtain();
-        service_message.what=message_type.SERVICE_RESOLVED;
-        service_message.arg1=port;
-        service_message.obj=new String(hostname);
-        connection_msg_handler.sendMessage(service_message);
-      };
+    		Log.d("Engine_Driver", String.format("serviceResolved - %s(%s):%d -- %s", host_name, ip_address, port, event.toString()));
+
+    		//Tell the UI thread so as to update the list of services available.
+    		HashMap<String, String> hm=new HashMap<String, String>();
+    		hm.put("ip_address", ip_address);
+    		hm.put("port", ((Integer)port).toString());
+    		hm.put("host_name",host_name);
+
+    		Message service_message=Message.obtain();
+    		service_message.what=message_type.SERVICE_RESOLVED;
+    		service_message.arg1=port;
+    		service_message.obj=hm;  //send the hashmap as the payload
+    		connection_msg_handler.sendMessage(service_message);
+    	};
     }
 
     void start_jmdns() {
-      	int intaddr = 0;
+
+Log.d("Engine_Driver","inside start_jmdns");
+    	int intaddr = 0;
 
     	//Set up to find a WiThrottle service via ZeroConf, not supported for OS 1.5 (SDK 3)
-    	if ("3".equals(android.os.Build.VERSION.SDK)) {    	 
-    		process_comm_error("WiFi discovery not supported.  Skipping.");
-    	} else {
     		try   {
     			WifiManager wifi = (WifiManager)threaded_application.this.getSystemService(Context.WIFI_SERVICE);
      			WifiInfo wifiinfo = wifi.getConnectionInfo();
     			intaddr = wifiinfo.getIpAddress();
     			if (intaddr != 0) {
+
+    				if (multicast_lock == null) {  //do this only as needed
+    					multicast_lock=wifi.createMulticastLock("engine_driver");
+    					multicast_lock.setReferenceCounted(true);
+    					multicast_lock.acquire();
+    					Log.d("Engine_Driver", "multicast_lock created.");
+    				}
+    				
     				byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
     						(byte)(intaddr >> 24 & 0xff) };
     				Inet4Address addr = (Inet4Address) Inet4Address.getByAddress(byteaddr);
     				client_address = addr.toString().substring(1);		//strip off leading /
     				Log.d("Engine_Driver","start_jmdns: local IP addr " + client_address);
 
-    				jmdns=JmDNS.create(addr, client_address);  //pass ip as name to avoid hostname lookup attempt
+//    				jmdns=JmDNS.create(addr, client_address);  //pass ip as name to avoid hostname lookup attempt
+    				jmdns=JmDNS.create(addr);
 
-    				if (multicast_lock == null) {  //do this only as needed
-    					multicast_lock=wifi.createMulticastLock("engine_driver");
-    					multicast_lock.setReferenceCounted(true);
-        				Log.d("Engine_Driver", "multicast_lock created.");
-    				}
+    				listener=new withrottle_listener();
+    				
+					jmdns.addServiceListener("_withrottle._tcp.local.", listener);
+
     			} else {
     				process_comm_error("No local IP Address found.\nCheck your WiFi connection.");
     			}  //end of if intaddr==0
@@ -236,7 +197,6 @@ public class threaded_application extends Application
     			Log.e("Engine_Driver", "start_jmdns - Error creating withrottle listener: "+except.getMessage()); 
     			process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()); 
     		}
-    	}     
     }
     
    
@@ -245,20 +205,23 @@ public class threaded_application extends Application
     	Thread jmdnsThread = new Thread() {
     		@Override
     		public void run() {
-	    		try {
-					jmdns.close();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-				}
-				jmdns = null;
-				endingJmdns = false;
+    			try {
+    				Log.d("Engine_Driver","calling jmdns.close()");
+    				jmdns.close();
+    				Log.d("Engine_Driver","after jmdns.close()");
+    			} catch (Exception e) {
+    				Log.d("Engine_Driver","exception in jmdns.close()");
+    			}
+    			jmdns = null;
+    			endingJmdns = false;
     		}
     	};
     	if (jmdnsIsActive()) {		//only need to run one instance of this thread to terminate jmdns 
-			endingJmdns = true;
-			jmdnsThread.start();
+    		endingJmdns = true;
+    		jmdnsThread.start();
     	}
     }
+    
     boolean jmdnsIsActive() {
     	boolean isActive = jmdns != null && !endingJmdns;
     	return isActive;
@@ -274,17 +237,22 @@ public class threaded_application extends Application
     		case message_type.SET_LISTENER:
     			//arg1= 1 to turn on, arg1=0 to turn off
     			if (msg.arg1 == 0) {
+Log.d("Engine_Driver","Set listener off");
     				if (jmdnsIsActive()) { 
+Log.d("Engine_Driver","jmdns IS active");
     					try {
+    						Log.d("Engine_Driver","removeServiceListener");
     						jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
+    						Log.d("Engine_Driver","removeServiceListener completed");
     						multicast_lock.release();
     					}
     					catch(Exception e) {	//just catch any exception and proceed to end_jmdns
     					}
-    					end_jmdns();
+//    					end_jmdns();
     				}
     			} else {
     				if (jmdns == null) {   //start jmdns if not started
+Log.d("Engine_Driver","jmdns IS null");
     					start_jmdns();
     				}
     				if (jmdns != null) {  //don't bother if jmdns didn't start
@@ -418,10 +386,6 @@ public class threaded_application extends Application
     			//clear appropriate app-level shared variables so they can be reset
     			whichThrottle = msg.obj.toString();
     			withrottle_send(String.format(whichThrottle+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", msg.arg1));
-    			//In order to get the engine to start, I must set a direction and some non-zero velocity and then set the velocity to zero. TODO: Verify this problem still exists
-    			//            withrottle_send(whichThrottle+"R1"); 
-    			//            withrottle_send(whichThrottle+"V1"); 
-    			//            withrottle_send(whichThrottle+"V0"); 
     			if (withrottle_version >= 2.0) {  //request current direction and speed (WiT 2.0+)
     				withrottle_send("M" + whichThrottle+"A*<;>qV");
     				withrottle_send("M" + whichThrottle+"A*<;>qR");
@@ -1045,14 +1009,46 @@ public class threaded_application extends Application
 //        start_read_timer(busyReadDelay);
     }  //end withrottle_send()
 
-    public void run()
-    {
-    	Looper.prepare();
-    	comm_msg_handler=new comm_handler(); //set shared pointer to handler 
-		listener=new withrottle_listener();
+    public void run()   {
+    	
+    	int intaddr = 0;
 
+    	//Set up to find a WiThrottle service via ZeroConf, not supported for OS 1.5 (SDK 3)
+    	if (android.os.Build.VERSION.SDK.equals("3")) {    	 
+    		process_comm_error("WiFi discovery not supported.  Skipping.");
+    	} else {
+    		try   {
+    			WifiManager wifi = (WifiManager)threaded_application.this.getSystemService(Context.WIFI_SERVICE);
+    			//Acquire a multicast lock. This allows us to obtain multicast packets, but consumes a bit more battery life.
+    			//Release it as soon as possible (after the user has connected to a WiThrottle service, or this application is
+    			//not the currently active one.
+
+    			multicast_lock=wifi.createMulticastLock("engine_driver");
+    			multicast_lock.setReferenceCounted(true);
+    			multicast_lock.acquire();
+    			WifiInfo wifiinfo = wifi.getConnectionInfo();
+    			intaddr = wifiinfo.getIpAddress();
+    			if (intaddr != 0) {
+    				byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
+    						(byte)(intaddr >> 24 & 0xff) };
+    				InetAddress addr = InetAddress.getByAddress(byteaddr);
+    				String s = String.format("found intaddr=%d, addr=%s", intaddr, addr.toString());
+    				Log.d("comm_thread_run", s);
+
+    				jmdns=JmDNS.create(addr);
+    				listener=new withrottle_listener();
+    				jmdns.addServiceListener("_withrottle._tcp.local.", listener);
+    			} else {
+    				process_comm_error("No IP Address found.\nCheck your WiFi connection.");
+    			}  //end of if intaddr==0
+    		}  catch(IOException except) { 
+    			Log.e("comm_thread_run", "Error creating withrottle listener: IOException: "+except.getMessage()); 
+    			process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()+"\n"+except.getCause().getMessage()); 
+    		}
+    	}     
+    	Looper.prepare();
+    	comm_msg_handler=new comm_handler();
     	Looper.loop();
-  
     };
 
 	class socket_WiT extends Thread {

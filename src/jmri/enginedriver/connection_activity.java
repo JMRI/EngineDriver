@@ -23,7 +23,9 @@ import android.os.Bundle;
 import android.os.SystemClock;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import android.widget.SimpleAdapter;
@@ -63,49 +65,32 @@ import android.widget.AdapterView;
 
 
 public class connection_activity extends Activity {
-	
-  //set use_testhost to default to preset host and port values
-  //this avoids manual entry if debugging and discovery isn't available 
-  //
-  // 0	none
-  // 1	mstevetodd.com 44444
-  // 2	192.168.1.2 2029
-  //
-  private static final int use_test_host = 0;
-  
-  String mst_host = "dev.mstevetodd.com";
-  String mst_port = "44444";
-  String rdb_host = "192.168.1.2";
-  String rdb_port = "2029";
-  
-  ArrayList<HashMap<String, String> > connections_list;
-  ArrayList<HashMap<String, String> > discovery_list;
-  private SimpleAdapter connection_list_adapter;
-  private SimpleAdapter discovery_list_adapter;
 
-  ArrayList<String> discovered_ip_list;
-  ArrayList<Integer> discovered_port_list;
+	ArrayList<HashMap<String, String> > connections_list;
+	ArrayList<HashMap<String, String> > discovery_list;
+	private SimpleAdapter connection_list_adapter;
+	private SimpleAdapter discovery_list_adapter;
 
-  //pointer back to application
-  static threaded_application mainapp;
-  
-  //The IP address and port that are used to connect.
-  private String connected_host;
-  private int connected_port;
-  
-  private long timestamp = 0;
-  //flag to indicate the app is shutting down, used to speed up the transition through the lifecycle 
-  private boolean isShuttingDown = false;
-  
-  private static Method overridePendingTransition;
-  static {
-	  try {
-		  overridePendingTransition = Activity.class.getMethod("overridePendingTransition", new Class[] {Integer.TYPE, Integer.TYPE}); //$NON-NLS-1$
-	  }
-	  catch (NoSuchMethodException e) {
-		  overridePendingTransition = null;
-	  }
-  }
+	//pointer back to application
+	static threaded_application mainapp;
+
+	//The IP address and port that are used to connect.
+	private String connected_hostip;
+	private String connected_hostname;
+	private int connected_port;
+
+	//flag to indicate the app is shutting down, used to speed up the transition through the lifecycle 
+	private boolean isShuttingDown = false;
+
+	private static Method overridePendingTransition;
+	static {
+		try {
+			overridePendingTransition = Activity.class.getMethod("overridePendingTransition", new Class[] {Integer.TYPE, Integer.TYPE}); //$NON-NLS-1$
+		}
+		catch (NoSuchMethodException e) {
+			overridePendingTransition = null;
+		}
+	}
 
   /**
   * Calls Activity.overridePendingTransition if the method is available (>=Android 2.0)
@@ -129,7 +114,7 @@ public class connection_activity extends Activity {
 	  Message connect_msg=Message.obtain();
 	  connect_msg.what=message_type.CONNECT;
 	  connect_msg.arg1=connected_port;
-	  connect_msg.obj=new String(connected_host);
+	  connect_msg.obj=new String(connected_hostip);
 	  if (mainapp.comm_msg_handler != null) {
 		  mainapp.comm_msg_handler.sendMessage(connect_msg);
 	  } else {
@@ -167,16 +152,14 @@ public class connection_activity extends Activity {
     public void onItemClick(AdapterView<?> parent, View v, int position, long id)    {
     	switch(server_type)      {
     	case DISCOVERED_SERVER:
-    		connected_host=new String(discovered_ip_list.get(position));
-    		connected_port=discovered_port_list.get(position);
-    		break;
     	case RECENT_CONNECTION:
     		ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
-    		TextView hnv = (TextView) vg.getChildAt(0); // get host name from 1st box
-    		connected_host = (String) hnv.getText();
-    		TextView hpv = (TextView) vg.getChildAt(1); // get port from 2nd box
+    		TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
+    		connected_hostip = (String) hip.getText();
+    		TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
+    		connected_hostname = (String) hnv.getText();
+    		TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
     		connected_port =new Integer( (String) hpv.getText());
-
     		break;
     	}
     	connect();
@@ -187,8 +170,8 @@ public class connection_activity extends Activity {
   {
     public void onClick(View v) {
     	EditText entry=(EditText)findViewById(R.id.host_ip);
-		connected_host=new String(entry.getText().toString());
-		if (connected_host.trim().length() > 0 ) {
+		connected_hostip=new String(entry.getText().toString());
+		if (connected_hostip.trim().length() > 0 ) {
 	        entry =(EditText)findViewById(R.id.port);
 			try {
 				connected_port=new Integer(entry.getText().toString());
@@ -197,6 +180,7 @@ public class connection_activity extends Activity {
 				connected_port = 0;
 				return;
 			}
+			connected_hostname = connected_hostip; //copy ip to name
 			connect();
 		} 
 		else {
@@ -213,23 +197,23 @@ public class connection_activity extends Activity {
       switch(msg.what)
       {
         case message_type.SERVICE_RESOLVED:
-          //stop if new address is already in the list   TODO: improve this lookup
-        	String newaddr = new String((String)msg.obj);
-        	for (String oldaddr : discovered_ip_list) {
-        		if (oldaddr.equals(newaddr)) {
-        			return;
-        		}
-        	}
-            //Add this discovered service to the list.
-        	discovered_ip_list.add(newaddr);
-        	discovered_port_list.add(msg.arg1);
+            HashMap<String, String> hm=new HashMap<String, String>();
+            hm = (HashMap<String, String>) msg.obj;  //payload is already a hashmap
+            String found_host_name = hm.get("host_name");
 
-          HashMap<String, String> hm=new HashMap<String, String>();
-          hm.put("ip_address", discovered_ip_list.get(discovered_ip_list.size()-1));
-          hm.put("port", discovered_port_list.get(discovered_port_list.size()-1).toString());
-          discovery_list.add(hm);
-          discovery_list_adapter.notifyDataSetChanged();
-          break;
+            //stop if new address is already in the list
+            HashMap<String, String> tm=new HashMap<String, String>();
+            for(int index=0; index < discovery_list.size(); index++) {
+            	tm = discovery_list.get(index);
+            	if (tm.get("host_name").equals(found_host_name)) {
+            		return;
+            	};
+            }
+                 	
+            // add to discovered list on screen          
+            discovery_list.add(hm);
+            discovery_list_adapter.notifyDataSetChanged();
+            break;
 
         case message_type.SERVICE_REMOVED:        
         	//TODO: add this after removing arraylists
@@ -251,7 +235,7 @@ public class connection_activity extends Activity {
         		list_output=new PrintWriter(connections_list_file);
 
         		//Write selected connection to file, then write all others (skipping selected if found)
-        		list_output.format("%s:%d\n", connected_host, connected_port);
+        		list_output.format("%s:%s:%d\n", connected_hostname, connected_hostip, connected_port);
 
         		SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         		String smrc = prefs.getString("maximum_recent_connections_preference", ""); //retrieve pref for max recents to show  
@@ -263,11 +247,12 @@ public class connection_activity extends Activity {
         		int clEntries =Math.min(connections_list.size(), mrc);  //don't keep more entries than specified in preference
         		for(int i = 0; i < clEntries; i++)  {  //loop thru entries from connections list, up to max in prefs 
         			HashMap <String, String> t = connections_list.get(i);
-        			String lh = (String) t.get("ip_address");
+        			String li = (String) t.get("ip_address");
+        			String lh = (String) t.get("host_name");
         			Integer lp = new Integer((String) t.get("port"));
-//***        			if(connected_host != null && connected_port != 0)
-        			if(!connected_host.equals(lh) || connected_port!=lp) {  //write it out if not same as selected 
-        				list_output.format("%s:%d\n", lh, lp);
+//***        			if(connected_hostip != null && connected_port != 0)
+        			if(!connected_hostip.equals(li) || connected_port!=lp) {  //write it out if not same as selected 
+        				list_output.format("%s:%s:%d\n", lh, li, lp);
         			}
         		}
         		list_output.flush();
@@ -301,18 +286,18 @@ public class connection_activity extends Activity {
         super.onPause();
 //	      Log.d("Engine_Driver","CA onPause " + timestamp);
 		//shutdown server discovery listener
-	    Message msg=Message.obtain();
+/*	    Message msg=Message.obtain();
 	    msg.what=message_type.SET_LISTENER;
 	    msg.arg1 = 0; //zero turns it off
 	    if (mainapp.comm_msg_handler != null) {
-	    	mainapp.comm_msg_handler.sendMessage(msg);
+//	    	mainapp.comm_msg_handler.sendMessage(msg);
 	    }
-
+*/
 	    // clear the discovered list  TODO: handle this better
-	    discovered_ip_list.clear();
-	    discovered_port_list.clear();
-	    discovery_list.clear();
-        discovery_list_adapter.notifyDataSetChanged();
+//FIXME	    discovered_ip_list.clear();
+//	    discovered_port_list.clear();
+//	    discovery_list.clear();
+//        discovery_list_adapter.notifyDataSetChanged();
 
 }
 	
@@ -323,7 +308,17 @@ public class connection_activity extends Activity {
 	    if (isShuttingDown)
 	    	return;
 
-		connections_list.clear();
+	    //start up server discovery listener
+	    Message msg=Message.obtain();
+	    msg.what=message_type.SET_LISTENER;
+	    msg.arg1 = 1; //one turns it on
+	    if (mainapp.comm_msg_handler != null) {
+	    	mainapp.comm_msg_handler.sendMessage(msg);
+	    } else {
+	   	    Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
+	    }    	
+
+	    connections_list.clear();
 	    String example_host = "jmri.mstevetodd.com";
 	    String example_port = "44444";
 	    
@@ -337,34 +332,47 @@ public class connection_activity extends Activity {
 	    		BufferedReader list_reader=new BufferedReader(new FileReader(connections_list_file));
 	    		while(list_reader.ready())    {
 	    			String line=list_reader.readLine();
-	    			Integer splitPos = line.indexOf(':');
-	    			if (splitPos > 0) {
-	    				String il = line.substring(0, splitPos);
-	    				Integer pl;
-	    				try {
-	    					pl = Integer.decode(line.substring(splitPos+1, line.length()));
+	    			String ip_address;
+	    			String host_name;
+	    			String port_str = "";
+	    			Integer port = 0;
+	    			List<String> parts = new ArrayList<String>();
+	    			parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
+	    			if (parts.size() > 1) {  //skip if not split
+	    				if (parts.size() == 2) {  //old style, use part 1 for ip and host
+	    					host_name = parts.get(0);
+	    					ip_address = parts.get(0);
+	    					port_str = parts.get(1).toString();
+	    				} else { 						  //new style, get all 3 parts
+	    					host_name = parts.get(0);
+	    					ip_address = parts.get(1);
+	    					port_str = parts.get(2).toString();
+	    				}
+	    				try {  //attempt to convert port to integer
+	    					port = Integer.decode(port_str);
 	    				} 
 	    				catch (Exception e) {
-	    					pl = 0;
 	    				}
-	    				if (pl > 0) {
+	    				if (port > 0) {  //skip if port not converted to integer
 	    					HashMap<String, String> hm=new HashMap<String, String>();
-	    					hm.put("ip_address", il);
-	    					String ps = pl.toString();
-	    					hm.put("port", ps);
+	    					hm.put("ip_address", ip_address);
+	    					hm.put("host_name", host_name);
+	    					hm.put("port", port.toString());
 	    					connections_list.add(hm);
-	    					if (il.equals(example_host) && ps.equals(example_port)) {
-	    						example_host = "";  //clear if found
+	    					if (host_name.equals(example_host) && port.toString().equals(example_port)) {
+	    						example_host = "";  //clear if found, so as not to add twice
 	    					}
 	    				} //if pl>0
-	    			} //if splitPos>0 
+
+	    			} // if la.length >0 
 	    		} //while list_reader
 	    	} //if file exists
 
-	    	//if example host not already in list, add it
+	    	//if example host not already in list, add it at end
     		if (!example_host.equals("")) {
     			HashMap<String, String> hm=new HashMap<String, String>();
     			hm.put("ip_address", example_host);
+    			hm.put("host_name", example_host);
     			hm.put("port", example_port);
     			connections_list.add(hm);
     		}
@@ -377,20 +385,10 @@ public class connection_activity extends Activity {
 			Toast.makeText(getApplicationContext(), "Error reading recent connections list: "+except.getMessage(), Toast.LENGTH_SHORT).show();
 	    }
 	    // clear the discovered list  TODO: handle this better
-	    discovered_ip_list.clear();
-	    discovered_port_list.clear();
-	    discovery_list.clear();
-        discovery_list_adapter.notifyDataSetChanged();
-	    
-	    //start up server discovery listener
-	    Message msg=Message.obtain();
-	    msg.what=message_type.SET_LISTENER;
-	    msg.arg1 = 1; //one turns it on
-	    if (mainapp.comm_msg_handler != null) {
-	    	mainapp.comm_msg_handler.sendMessage(msg);
-	    } else {
-	   	    Toast.makeText(getApplicationContext(), "ERROR: comm thread not started.", Toast.LENGTH_SHORT).show();
-	    }    	
+//FIXME	    discovered_ip_list.clear();
+//	    discovered_port_list.clear();
+//	    discovery_list.clear();
+//        discovery_list_adapter.notifyDataSetChanged();
 	    
 	    set_labels();
 
@@ -443,22 +441,23 @@ public class connection_activity extends Activity {
     //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
     discovery_list=new ArrayList<HashMap<String, String> >();
     discovery_list_adapter=new SimpleAdapter(this, discovery_list, R.layout.connections_list_item,
-                                             new String[] {"ip_address", "port"},
-                                             new int[] {R.id.ip_item_label, R.id.port_item_label});
+    		new String[] {"ip_address", "host_name", "port"},
+    		new int[] {R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
     ListView discover_list=(ListView)findViewById(R.id.discovery_list);
     discover_list.setAdapter(discovery_list_adapter);
     discover_list.setOnItemClickListener(new connect_item(server_list_type.DISCOVERED_SERVER));
     
     //Set up a list adapter to allow adding the list of recent connections to the UI.
     connections_list=new ArrayList<HashMap<String, String> >();
-    connection_list_adapter=new SimpleAdapter(this, connections_list, R.layout.connections_list_item, new String[] {"ip_address", "port"},
-                                   new int[] {R.id.ip_item_label, R.id.port_item_label});
+    connection_list_adapter=new SimpleAdapter(this, connections_list, R.layout.connections_list_item, 
+    		new String[] {"ip_address", "host_name", "port"},
+    		new int[] {R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
     ListView conn_list=(ListView)findViewById(R.id.connections_list);
     conn_list.setAdapter(connection_list_adapter);
     conn_list.setOnItemClickListener(new connect_item(server_list_type.RECENT_CONNECTION));
 
-    discovered_ip_list=new ArrayList<String>();
-    discovered_port_list=new ArrayList<Integer>();
+//    discovered_ip_list=new ArrayList<String>();
+//    discovered_port_list=new ArrayList<Integer>();
 
     // suppress popup keyboard until EditText is touched
 	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -474,19 +473,6 @@ public class connection_activity extends Activity {
     threaded_application.min_fling_distance = (int)(threaded_application.SWIPE_MIN_DISTANCE * dm.densityDpi / 160.0f);
     threaded_application.min_fling_velocity = (int)(threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f); 
 
-    if(use_test_host > 0)
-    {
-    	if(use_test_host == 1)
-    	{
-    		((EditText)findViewById(R.id.host_ip)).setText(mst_host);
-    		((EditText)findViewById(R.id.port)).setText(mst_port);
-    	}
-    	else if(use_test_host == 2)
-    	{
-    		((EditText)findViewById(R.id.host_ip)).setText(rdb_host);
-    		((EditText)findViewById(R.id.port)).setText(rdb_port);
-    	}
-	}
   }
   
   private void set_labels() {
