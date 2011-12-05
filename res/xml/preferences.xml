@@ -77,4 +77,11 @@
       android:numeric="integer"
       android:maxLength="2"
    ></EditTextPreference>
+   <ListPreference
+      android:key="FrameLocation"
+      android:title="@string/prefFrameLocationTitle"
+      android:summary="@string/prefFrameLocationSummary"
+      android:defaultValue="@string/prefFrameLocationDefaultValue"
+      android:entries="@array/FrameLocation"
+      android:entryValues="@array/FrameLocation" />
 </PreferenceScreen>

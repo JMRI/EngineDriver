@@ -26,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class web_activity extends Activity {
 
@@ -39,17 +40,30 @@ public class web_activity extends Activity {
   @Override
   public void onResume() {
 	  super.onResume();
-	
-	    WebView webview = new WebView(this);
-	     
+
+	    setContentView(R.layout.web_activity);
+	  
 	    String url = "file:///android_asset/feature_not_available.html";
 	    threaded_application mainapp = (threaded_application) getApplication();
 	    if (mainapp.web_server_port != null && mainapp.web_server_port > 0) {
 	    	url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/frame";
 	    }
-	    webview.loadUrl(url);
-	    setContentView(webview);
 	    
+		WebView webView = (WebView) findViewById(R.id.webview);
+		webView.getSettings().setJavaScriptEnabled(true);
+		webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported by ROM
+	       
+		webView.loadUrl(url);
+
+		// open all links inside the current view (don't start external web browser)
+		WebViewClient EDWebClient = new WebViewClient()	{
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView  view, String  url) {
+				return false;
+			}
+		};
+		webView.setWebViewClient(EDWebClient);
+
   }
 
 
