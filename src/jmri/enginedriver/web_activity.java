@@ -45,7 +45,7 @@ public class web_activity extends Activity {
 	    String url = "file:///android_asset/feature_not_available.html";
 	    threaded_application mainapp = (threaded_application) getApplication();
 	    if (mainapp.web_server_port != null && mainapp.web_server_port > 0) {
-	    	url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port;
+	    	url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/frame";
 	    }
 	    webview.loadUrl(url);
 	    setContentView(webview);

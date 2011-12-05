@@ -16,9 +16,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/turnouts" android:title="@string/turnouts"></item>
     <item android:id="@+id/routes" android:title="@string/routes"></item>
-    <item android:id="@+id/power_control_menu" android:title="@string/power"></item>
+    <item android:id="@+id/web_menu" android:title="@string/web"></item><item android:id="@+id/power_control_menu" android:title="@string/power"></item>
     <item android:id="@+id/preferences" android:title="@string/preferences"></item>
     <item android:id="@+id/about_menu" android:title="@string/about"></item>
     <item android:id="@+id/settings_menu" android:title="@string/settings"></item>
-    <item android:id="@+id/web_menu" android:title="@string/web"></item>
+    
 </menu> 
