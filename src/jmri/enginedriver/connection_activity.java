@@ -217,7 +217,16 @@ public class connection_activity extends Activity {
             break;
 
         case message_type.SERVICE_REMOVED:        
-        	//TODO: add this after removing arraylists
+            //look for name in list
+            String removed_host_name = (String) msg.obj;
+            tm=new HashMap<String, String>();
+            for(int index=0; index < discovery_list.size(); index++) {
+            	tm = discovery_list.get(index);
+            	if (tm.get("host_name").equals(removed_host_name)) {
+                    discovery_list.remove(index);
+            	};
+                discovery_list_adapter.notifyDataSetChanged();
+            }
         	break;
 
         case message_type.CONNECTED:
@@ -297,7 +306,6 @@ public class connection_activity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-//	      Log.d("Engine_Driver","CA onResume " + timestamp);
 	    if (isShuttingDown)
 	    	return;
 
@@ -414,7 +422,7 @@ public class connection_activity extends Activity {
 //    Log.d("Engine_Driver","CA onCreate " + timestamp);
     mainapp=(threaded_application)this.getApplication();
 //    if(mainapp.connection_msg_handler == null)
-    	mainapp.connection_msg_handler=new ui_handler();
+    mainapp.connection_msg_handler=new ui_handler();
     isShuttingDown = false;
     
     //check for "default" throttle name and make it more unique

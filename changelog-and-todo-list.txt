@@ -2,6 +2,8 @@
  * connect to discovered servers using IP instead of verifying name (avoids timeout on non-DNS network)
  * change server list items to display system name and ip address
  * move "web" menu item higher in list so it always shows in Throttle (instead of under More)
+ * only show/use ipv4 address
+ * implement serviceRemoved to remove ended servers from discovered list
 **Version 1.9
  * encode icon filenames to handle special characters
  * catch error when attempting to load very large image files

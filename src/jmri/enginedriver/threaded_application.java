@@ -126,23 +126,26 @@ public class threaded_application extends Application {
             //A service has been added. If no details, ask for them 
   		  ServiceInfo si = jmdns.getServiceInfo(event.getType(), event.getName(), 0);
       	  if (si == null || si.getPort() == 0 ) { 
-      		  Log.d("Engine_Driver", String.format("serviceAdded - Requesting details: Name='%s', Type='%s'", event.getName(), event.getType()));
       		  jmdns.requestServiceInfo(event.getType(), event.getName(), 1);
+      		  Log.d("Engine_Driver", String.format("serviceAdded, requesting details: '%s', Type='%s'", event.getName(), event.getType()));
       	  }
     	};
 
     	public void serviceRemoved(ServiceEvent event)      {
-    		//TODO: handle this once the host names are tracked (since it only returns name, not IP)
+    		//Tell the UI thread so as to remove from the list of services available.
+    		Message service_message=Message.obtain();
+    		service_message.what=message_type.SERVICE_REMOVED;
+    		service_message.obj=event.getName();  //send the service name to be removed
+    		connection_msg_handler.sendMessage(service_message);
+    		Log.d("Engine_Driver", String.format("serviceRemoved: '%s'", event.getName()));
     	};
 
     	public void serviceResolved(ServiceEvent event)  {
     		//A service's information has been resolved. Store the port and servername to connect to that service.  Verify the servername.
     		int port=event.getInfo().getPort();
     		String host_name = event.getInfo().getName(); //
-    		String[] ip_addresses = event.getInfo().getHostAddresses();
-    		String ip_address = ip_addresses[0];  //use first one, since WiThrottle is only putting one in (for now)
-
-    		Log.d("Engine_Driver", String.format("serviceResolved - %s(%s):%d -- %s", host_name, ip_address, port, event.toString()));
+    		Inet4Address[] ip_addresses = event.getInfo().getInet4Addresses();  //only get ipV4 address
+    		String ip_address = ip_addresses[0].toString().substring(1);  //use first one, since WiThrottle is only putting one in (for now), and remove leading slash
 
     		//Tell the UI thread so as to update the list of services available.
     		HashMap<String, String> hm=new HashMap<String, String>();
@@ -155,15 +158,17 @@ public class threaded_application extends Application {
     		service_message.arg1=port;
     		service_message.obj=hm;  //send the hashmap as the payload
     		connection_msg_handler.sendMessage(service_message);
+
+    		Log.d("Engine_Driver", String.format("serviceResolved - %s(%s):%d -- %s", host_name, ip_address, port, event.toString().replace(System.getProperty("line.separator"), "")));
+
     	};
     }
 
     void start_jmdns() {
 
-Log.d("Engine_Driver","inside start_jmdns");
     	int intaddr = 0;
 
-    	//Set up to find a WiThrottle service via ZeroConf, not supported for OS 1.5 (SDK 3)
+    	//Set up to find a WiThrottle service via ZeroConf
     		try   {
     			WifiManager wifi = (WifiManager)threaded_application.this.getSystemService(Context.WIFI_SERVICE);
      			WifiInfo wifiinfo = wifi.getConnectionInfo();
@@ -174,7 +179,6 @@ Log.d("Engine_Driver","inside start_jmdns");
     					multicast_lock=wifi.createMulticastLock("engine_driver");
     					multicast_lock.setReferenceCounted(true);
     					multicast_lock.acquire();
-    					Log.d("Engine_Driver", "multicast_lock created.");
     				}
     				
     				byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
@@ -183,8 +187,8 @@ Log.d("Engine_Driver","inside start_jmdns");
     				client_address = addr.toString().substring(1);		//strip off leading /
     				Log.d("Engine_Driver","start_jmdns: local IP addr " + client_address);
 
-//    				jmdns=JmDNS.create(addr, client_address);  //pass ip as name to avoid hostname lookup attempt
-    				jmdns=JmDNS.create(addr);
+    				jmdns=JmDNS.create(addr, client_address);  //pass ip as name to avoid hostname lookup attempt
+//    				jmdns=JmDNS.create(addr);
 
     				listener=new withrottle_listener();
     				
@@ -248,14 +252,13 @@ Log.d("Engine_Driver","inside start_jmdns");
     				}
     			} else {
     				if (jmdns == null) {   //start jmdns if not started
-    					Log.d("Engine_Driver","jmdns not started, starting");
+    					Log.d("Engine_Driver","comm_handler: jmdns not started, starting");
     					start_jmdns();
     				} else {
     					Log.d("Engine_Driver","comm_handler: jmdns already running");
     				}
     				if (jmdns != null) {  //don't bother if jmdns didn't start
     					multicast_lock.acquire();
-    					Log.d("Engine_Driver","comm_handler: adding serviceListener");
     					jmdns.addServiceListener("_withrottle._tcp.local.", listener);
     				} else {
     					Log.d("Engine_Driver","comm_handler: jmdns not running, didn't start listener");
@@ -579,12 +582,10 @@ Log.d("Engine_Driver","inside start_jmdns");
 	  			break;
 
 	  		case 'F':   //RF29}|{2591(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
-	  			//    	  		roster_function_string_T = response_str.substring(2);  //set app variable for throttle 1  TODO: remove this
 	  			process_roster_function_string(response_str.substring(2), "T");
 	  			break;
 
 	  		case 'S': //RS29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
-	  			//    	  		roster_function_string_S = response_str.substring(2);  //set app variable for throttle 2  TODO: remove this
 	  			process_roster_function_string(response_str.substring(2), "S");
 	  			break;
 
