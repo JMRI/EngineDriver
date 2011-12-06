@@ -41,7 +41,6 @@ public class web_activity extends Activity {
 
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-
     setContentView(R.layout.web_activity);
   
     String url = "file:///android_asset/feature_not_available.html";

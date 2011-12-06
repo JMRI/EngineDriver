@@ -80,6 +80,7 @@ public class threaded_application extends Application {
     LinkedHashMap<String, String> consist_entries;
     HashMap<String, RosterEntry> roster;  //roster entries retrieved from roster.xml (null if not retrieved)
      ImageDownloader imageDownloader = new ImageDownloader();
+ 	String webViewLocation = "none"; //pref value where user would like to see webview (or none)
 
 	String power_state;
 	
@@ -380,7 +381,7 @@ public class threaded_application extends Application {
 				catch (Exception e) { 
 				}
 //				heart.stopHeartbeat();
-    			socketWiT.disconnect(true);		//stop reading from the socket
+				if (socketWiT != null) socketWiT.disconnect(true);		//stop reading from the socket
     			socketWiT = null;
     			host_ip = null;
     			break;
@@ -638,7 +639,9 @@ public class threaded_application extends Application {
 	    		        Log.d("Engine_Driver", "process response: invalid web server port string");
 	    				web_server_port = 0;
 	    			}
-	    	    	
+	    	  		//store webviewlocation for later
+	    	  		webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+
 	    			break;
 	    	  }  //end switch inside P
 		  	 break;
@@ -928,6 +931,8 @@ public class threaded_application extends Application {
           catch(Exception e) {
         	  msg.recycle();
           }
+      } else {
+      	Log.d("Engine_Driver", "failed to send message to throttle " + msgBody);
       }
       if (power_control_msg_handler != null) { 
           Message msg=Message.obtain(); 

@@ -44,6 +44,8 @@ import jmri.jmrit.roster.RosterLoader;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Button;
@@ -94,156 +96,126 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class throttle_handler extends Handler {
 
-	public void handleMessage(Message msg) {
-		switch(msg.what) {
-	        case message_type.RESPONSE: {  //handle messages from WiThrottle server
-	    		String response_str = msg.obj.toString();
-//	    		Log.d("Engine_Driver", "throttle msg:"+ response_str);
-	    		char com1 = response_str.charAt(0);
-  	    		char thrSel = response_str.charAt(1);
-	        	switch (com1) {
-	        	  //various MultiThrottle responses
-	        	  case 'M':
-	  	    		if(thrSel == 'T' || thrSel == 'S')
-	  	    		{
-		  	    		
-		        		char com2 = response_str.charAt(2);
-		        		if (com2 == '+' || com2 == 'L') {  //if loco added or function labels updated
-		        			if(com2 == ('+')) {
-			      	  			set_default_function_labels();
-			      	  			enable_disable_buttons(thrSel);  //direction and slider: pass whichthrottle
-		        			}
-			      	  		// loop through all function buttons and
-			      	  		//   set label and dcc functions (based on settings) or hide if no label
-		        			ViewGroup tv;
-			      	  		if (thrSel == 'T') {
-			      	  			tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
-			      	  		} else {
-			      	  			tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
-			      	  		}
-		      	  			set_function_labels_and_listeners_for_view(thrSel);
-		      	  			enable_disable_buttons_for_view(tv, true);
-				        	set_labels();
-		        		} 
-		        		else if (com2 == '-') {  		//if loco removed
-		        			ViewGroup tv;
-			      	  		if (thrSel == 'T') {
-			      	  			tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
-			      	  		} else {
-			      	  			tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
-			      	  		}
-		      	  			enable_disable_buttons(thrSel);  //direction and slider
-		      	  			set_function_labels_and_listeners_for_view(thrSel);
-		      	  			enable_disable_buttons_for_view(tv, false);
-		        			set_labels();
-		        		} 
-		        		else if (com2 == 'A') {	  		//e.g. MTAL2608<;>R1
-	    	  				String[] ls = threaded_application.splitByString(response_str,"<;>");
-	    	  				char com3 = ls[1].charAt(0);
-		    	  			if (com3 == 'R') {
-		    	  				try {
-		    	  					int dir = new Integer(ls[1].substring(1,2));
-			    	  				set_direction_indication(thrSel, dir); //set direction button 
-		    	  				}
-		    	  				catch(Exception e) {
-		    	  				}
-		    	  			} 
-		    	  			else if (com3 == 'V') {
-		    	  				try {
-		    	  					int speed = Integer.parseInt(ls[1].substring(1));
-			    	  				set_speed_slider(thrSel, speed);	//update speed slider and indicator
-		    	  				}
-		    	  				catch(Exception e) {
-		    	  				}
-		    	  			}
-		    	  			else if (com3 == 'F') {
-		    	  				try {
-			    	  				int function = new Integer(ls[1].substring(2));
-			    	  				set_function_state(thrSel, function);
-		    	  				}
-		    	  				catch(Exception e) {
-		    	  				}
-		    	  			}
-/*		    	  			else if(com3 == 's') {
-		    	  				try {
-			    	  				int stepCode = new Integer(ls[1].substring(1));
-			    	  				int newMaxSpeed = 0;
-			    	  				switch(stepCode) {
-		    	  					case 1:
-		    	  						newMaxSpeed = 126;
-		    	  						break;
-		    	  					case 2:
-		    	  						newMaxSpeed = 28;
-		    	  						break;
-		    	  					case 4:
-		    	  						newMaxSpeed = 27;
-		    	  						break;
-		    	  					case 8:
-		    	  						newMaxSpeed = 14;
-		    	  						break;
-			    	  				}
-			    	  				if(newMaxSpeed != 0)
-			    	  					updateMaxSpeed(thrSel, newMaxSpeed);
-		    	  				}
-		    	  				catch(Exception e) {
-		    	  				}
-		    	  			}
-*/		    	  			
-		    	  			else {
-	//	    		        	set_labels();
-		    	  			}
-		        		}
-	  	    		}
-	  	    		break;
-		      	  	  
-	      	  	  case 'T':
-	      	  	  case 'S':
-		      	  		enable_disable_buttons(com1);  //pass whichthrottle
-			        	set_labels();
-			        	break;
-	      	  	  
-	      	  	  case 'R': //roster function labels - legacy
-			          if(thrSel == 'F' || thrSel == 'S') 
-			          {
-	      	  			  ViewGroup tv;
-			        	  if (thrSel == 'F') {			// used to use 'F' instead of 'T'
-	      	  				  tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
-	      	  				  thrSel = 'T';
-	      	  			  } else {
-	      	  				  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
-	      	  			  }
-			        	  set_function_labels_and_listeners_for_view(thrSel);
-			        	  enable_disable_buttons_for_view(tv, true);
-			        	  set_labels();
-			          }
-			          else 
-			          {
-			        	  try {
-			        		  String scom2 = response_str.substring(1,6);
-				        	  if(scom2.equals("PF}|{"))
-				        	  {
-					        	  thrSel = response_str.charAt(6);
-				        		  set_all_function_states(thrSel);
-				        	  }
-			        	  }
-			        	  catch(IndexOutOfBoundsException e){
-			        	  }
-	      	  		  }
-	      	  		  break;
-	      	  	  case 'P': //panel info
-	      	  		  if (thrSel == 'W') {		// PW - web server port info
-	      	  			// onCreate might have run before this message arrived, so we handle dl here as well
-	      	  			  dlRosterTask.getRoster();
-	      	  		  }
-	        	}  //end of switch
-	        }
-	        break;
-  		  	case message_type.DISCONNECT:
+	  public void handleMessage(Message msg) {
+		  switch(msg.what) {
+		  case message_type.RESPONSE: {  //handle messages from WiThrottle server
+			  String response_str = msg.obj.toString();
+			  char com1 = response_str.charAt(0);
+			  char thrSel = response_str.charAt(1);
+			  switch (com1) {
+			  //various MultiThrottle responses
+			  case 'M':
+				  if(thrSel == 'T' || thrSel == 'S') {
+
+					  char com2 = response_str.charAt(2);
+					  if (com2 == '+' || com2 == 'L') {  //if loco added or function labels updated
+						  if(com2 == ('+')) {
+							  set_default_function_labels();
+							  enable_disable_buttons(thrSel);  //direction and slider: pass whichthrottle
+						  }
+						  // loop through all function buttons and
+						  //   set label and dcc functions (based on settings) or hide if no label
+						  ViewGroup tv;
+						  if (thrSel == 'T') {
+							  tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
+						  } else {
+							  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
+						  }
+						  set_function_labels_and_listeners_for_view(thrSel);
+						  enable_disable_buttons_for_view(tv, true);
+						  set_labels();
+					  } 
+					  else if (com2 == '-') {  		//if loco removed
+						  ViewGroup tv;
+						  if (thrSel == 'T') {
+							  tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
+						  } else {
+							  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
+						  }
+						  enable_disable_buttons(thrSel);  //direction and slider
+						  set_function_labels_and_listeners_for_view(thrSel);
+						  enable_disable_buttons_for_view(tv, false);
+						  set_labels();
+					  } 
+					  else if (com2 == 'A') {	  		//e.g. MTAL2608<;>R1
+						  String[] ls = threaded_application.splitByString(response_str,"<;>");
+						  char com3 = ls[1].charAt(0);
+						  if (com3 == 'R') {
+							  try {
+								  int dir = new Integer(ls[1].substring(1,2));
+								  set_direction_indication(thrSel, dir); //set direction button 
+							  }
+							  catch(Exception e) {
+							  }
+						  } 
+						  else if (com3 == 'V') {
+							  try {
+								  int speed = Integer.parseInt(ls[1].substring(1));
+								  set_speed_slider(thrSel, speed);	//update speed slider and indicator
+							  }
+							  catch(Exception e) {
+							  }
+						  }
+						  else if (com3 == 'F') {
+							  try {
+								  int function = new Integer(ls[1].substring(2));
+								  set_function_state(thrSel, function);
+							  }
+							  catch(Exception e) {
+							  }
+						  } else {
+							  //	    		        	set_labels();
+						  }
+					  }
+				  }
+				  break;
+
+			  case 'T':
+			  case 'S':
+				  enable_disable_buttons(com1);  //pass whichthrottle
+				  set_labels();
+				  break;
+
+			  case 'R': //roster function labels - legacy
+				  if(thrSel == 'F' || thrSel == 'S') {
+					  ViewGroup tv;
+					  if (thrSel == 'F') {			// used to use 'F' instead of 'T'
+						  tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
+						  thrSel = 'T';
+					  } else {
+						  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
+					  }
+					  set_function_labels_and_listeners_for_view(thrSel);
+					  enable_disable_buttons_for_view(tv, true);
+					  set_labels();
+				  } else {
+					  try {
+						  String scom2 = response_str.substring(1,6);
+						  if(scom2.equals("PF}|{"))
+						  {
+							  thrSel = response_str.charAt(6);
+							  set_all_function_states(thrSel);
+						  }
+					  }
+					  catch(IndexOutOfBoundsException e){
+					  }
+				  }
+				  break;
+			  case 'P': //panel info  (UNLIKELY TO BE RECEIVED)
+				  Log.d("Engine_Driver","in P");
+				  if (thrSel == 'W') {		// PW - web server port info
+					  // kick off web-dependent items
+					  dlRosterTask.getRoster();
+				  }
+			  }  //end of switch
+		  }
+		  break;
+		  case message_type.DISCONNECT:
 			  disconnect();
 			  break;
-	      }
-	    };
-	  }
+		  }
+	  };
+  }
 
   void updateMaxSpeed(char whichThrottle, int maxSpeed) {
 	if(whichThrottle == 'T') {
@@ -711,7 +683,6 @@ void start_select_loco_activity(char whichThrottle)
 */
   }
 
-	
   private void requestSpeedMsg(char whichThrottle) {
 		Message msg=Message.obtain();
 		msg.what=message_type.REQ_VELOCITY;
@@ -737,6 +708,13 @@ void start_select_loco_activity(char whichThrottle)
 	  set_labels();
 	  gestureFailed = false;
 	  gestureInProgress = false;
+	  
+	  if (!mainapp.webViewLocation.equals("none")) {
+		  setup_webview();
+	  }
+
+
+
   }
 
 
@@ -835,8 +813,32 @@ public void onStart() {
 
 	dlRosterTask = new DownloadRosterTask();
 	dlRosterTask.getRoster();		// if web port is already known, start background roster dl here
-    
+	    
   } //end of onCreate()
+  
+  //set up webview to requested initial page
+  private void setup_webview() {
+	  String url = "file:///android_asset/feature_not_available.html";
+	  if (mainapp.web_server_port != null && mainapp.web_server_port > 0) {
+		  String s = prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
+		  url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/" + s;
+	  }
+	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
+	  webView.getSettings().setJavaScriptEnabled(true);
+	  webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported by ROM
+	  webView.loadUrl(url);
+	  Log.d("Engine_Driver","web view set to " + url);	  
+
+	  // open all links inside the current view (don't start external web browser)
+	  WebViewClient EDWebClient = new WebViewClient()	{
+		  @Override
+		  public boolean shouldOverrideUrlLoading(WebView  view, String  url) {
+			  return false;
+		  }
+	  };
+	  webView.setWebViewClient(EDWebClient);
+  }  
+
   
   //set up text label and dcc function for each button from settings and setup listeners
   //TODO: move file reading to another function and only do when needed
@@ -935,8 +937,9 @@ public void onStart() {
 //	  Log.d("Engine_Driver","starting set_labels");
 
     int throttle_count = 0;
-   	int height_T;
-	int height_S;
+   	int height_T = 50; //height of first throttle area
+	int height_S = 50; //height of second throttle area
+	int height_W = 50; //height of web view area
   
     // hide or display volume control indicator based on variable
     View viT = findViewById(R.id.volume_indicator_T);
@@ -1017,7 +1020,7 @@ public void onStart() {
     b.setSelected(false);
     b.setPressed(false);
 
-    View v = findViewById(R.id.throttle_screen);
+    View v = findViewById(R.id.throttle_screen_wrapper);
     int screenHeight = v.getHeight();  //get the height of usable area
     if(screenHeight == 0) {
     	//throttle screen hasn't been drawn yet, so use display metrics for now
@@ -1026,16 +1029,27 @@ public void onStart() {
     if (screenHeight > throttleMargin) {	//don't do this if height is invalid
 		//determine how to split the screen (evenly if both, 85/15 if only one)
     	screenHeight -= throttleMargin;
-	    if (throttle_count == 0 || throttle_count == 2)  {
-	    	height_T = (int) (screenHeight * 0.5);
-	    	height_S = (int) (screenHeight * 0.5);
+/*	    if (throttle_count == 0 || throttle_count == 2)  {
+	    	height_T = (int) (screenHeight * 0.4);
+	    	height_S = (int) (screenHeight * 0.4);
 	    } else if (mainapp.loco_string_T.equals("Not Set")) {
 	    	height_T = (int) (screenHeight * 0.15);
-	    	height_S = (int) (screenHeight * 0.85);
+	    	height_S = (int) (screenHeight * 0.65);
 	    } else {
-	    	height_T = (int) (screenHeight * 0.85);
+	    	height_T = (int) (screenHeight * 0.65);
 	    	height_S = (int) (screenHeight * 0.15);
 	    }
+*/	    
+    	if (mainapp.loco_string_T.equals("Not Set")) {
+    		height_T = (int) (screenHeight * 0.1);
+    	} else {
+    		height_T = (int) (screenHeight * 0.4);
+    	}
+    	if (mainapp.loco_string_S.equals("Not Set")) {
+    		height_S = (int) (screenHeight * 0.1);
+    	} else {
+    		height_S = (int) (screenHeight * 0.4);
+    	}
 	    	
 	  //set height of T area 
 	    LinearLayout ll=(LinearLayout)findViewById(R.id.throttle_T);
