@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Copyright (C) 2010 Jason M'Sadoques
-  jlyonm@gmail.com
+<!--
+      Copyright (C) 2011 M. Steve Todd mstevetodd@enginedriver.rrclubs.org
+      This program is free software; you can redistribute it and/or modify it 
+      under the terms of the GNU General Public License as published by the 
+      Free Software Foundation;
+      either version 3 of the License, or (at your option) any later version.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
+      This program is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+      for more details. You should have received a copy of the GNU General
+      Public License along with this program; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
---> 
 
 <resources>
     <string name="exit">Exit</string>
@@ -45,7 +43,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
     <string name="recent_engines">-OR- Select from Recent Locomotives</string>
     <string name="direction">Fwd</string>
     <string name="speed">Speed:</string>
-    <string name="discovered_services">Discovered Services</string>
+    <string name="discovered_services">Discovered Servers</string>
 <string name="save_settings">Save Settings</string>
 <string name="stop">Stop</string>
 <string name="forward">Forward</string>
@@ -86,9 +84,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 <string name="prefMaximumThrottleTitle">Maximum Throttle Value</string>
 <string name="prefMaximumThrottleDefaultValue">99</string>
 <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value</string>
-<string name="prefFrameLocationTitle">Frame Location?</string>
-<string name="prefFrameLocationDefaultValue">none</string>
-<string name="prefFrameLocationSummary">Include web frame on Throttle pane?</string>
+<string name="prefWebViewLocationTitle">Web View Location?</string>
+<string name="prefWebViewLocationDefaultValue">none</string>
+<string name="prefWebViewLocationSummary">Include web view on Throttle pane?</string>
+<string name="prefInitialWebPageTitle">Initial Web Page</string>
+<string name="prefInitialWebPageDefaultValue">frame</string>
+<string name="prefInitialWebPageSummary">Initial Web Page (such as \'frame/My%20Layout.html\')</string>
 <string name="prefDefaultAddressLengthTitle">Default Address Length</string>
 <string name="prefDefaultAddressLengthDefaultValue">Auto</string>
 <string name="prefDefaultAddressLengthSummary">Default Loco Address Length, (Auto will set based on # of digits).</string>

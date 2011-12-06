@@ -145,7 +145,6 @@
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  * web
- *   TODO: add menu or navigation to allow user to return to ED without multiple "back"s. (not as critical with ajax /panel)
  *   TODO: allow user to specify or save the current URL  (multiples?)
  *   TODO: optionally add web to fling logic  (multiples?)
  * routes
