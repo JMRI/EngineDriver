@@ -818,25 +818,30 @@ public void onStart() {
   
   //set up webview to requested initial page
   private void setup_webview() {
-	  String url = "file:///android_asset/feature_not_available.html";
-	  if (mainapp.web_server_port != null && mainapp.web_server_port > 0) {
-		  String s = prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
-		  url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/" + s;
-	  }
-	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
-	  webView.getSettings().setJavaScriptEnabled(true);
-	  webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported by ROM
-	  webView.loadUrl(url);
-	  Log.d("Engine_Driver","web view set to " + url);	  
 
-	  // open all links inside the current view (don't start external web browser)
-	  WebViewClient EDWebClient = new WebViewClient()	{
-		  @Override
-		  public boolean shouldOverrideUrlLoading(WebView  view, String  url) {
-			  return false;
+	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
+	  if (webView.getUrl() == null) {
+		  String url = "file:///android_asset/feature_not_available.html";
+		  if (mainapp.web_server_port != null && mainapp.web_server_port > 0) {
+			  String s = prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
+			  url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/" + s;
 		  }
-	  };
-	  webView.setWebViewClient(EDWebClient);
+		  webView.getSettings().setJavaScriptEnabled(true);
+		  webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported by ROM
+		  webView.loadUrl(url);
+		  Log.d("Engine_Driver","web view set to " + url);	  
+
+		  // open all links inside the current view (don't start external web browser)
+		  WebViewClient EDWebClient = new WebViewClient()	{
+			  @Override
+			  public boolean shouldOverrideUrlLoading(WebView  view, String  url) {
+				  return false;
+			  }
+		  };
+		  webView.setWebViewClient(EDWebClient);
+	  } else {
+		  Log.d("Engine_Driver","web view already set");
+	  }
   }  
 
   
@@ -937,9 +942,8 @@ public void onStart() {
 //	  Log.d("Engine_Driver","starting set_labels");
 
     int throttle_count = 0;
-   	int height_T = 50; //height of first throttle area
-	int height_S = 50; //height of second throttle area
-	int height_W = 50; //height of web view area
+   	int height_T = 0; //height of first throttle area
+	int height_S = 0; //height of second throttle area
   
     // hide or display volume control indicator based on variable
     View viT = findViewById(R.id.volume_indicator_T);
@@ -1026,31 +1030,26 @@ public void onStart() {
     	//throttle screen hasn't been drawn yet, so use display metrics for now
         screenHeight = dm.heightPixels - (int)(titleBar * (dm.densityDpi/160.));	//allow for title bar, etc	
     }
+
+    // save 1/2 the screen for webview
+    if (mainapp.webViewLocation.equals("Top") || mainapp.webViewLocation.equals("Bottom")) {
+    	screenHeight *= 0.5; 
+    }
+    
     if (screenHeight > throttleMargin) {	//don't do this if height is invalid
 		//determine how to split the screen (evenly if both, 85/15 if only one)
     	screenHeight -= throttleMargin;
-/*	    if (throttle_count == 0 || throttle_count == 2)  {
-	    	height_T = (int) (screenHeight * 0.4);
-	    	height_S = (int) (screenHeight * 0.4);
+	    if (throttle_count == 0 || throttle_count == 2)  {
+	    	height_T = (int) (screenHeight * 0.5);
+	    	height_S = (int) (screenHeight * 0.5);
 	    } else if (mainapp.loco_string_T.equals("Not Set")) {
 	    	height_T = (int) (screenHeight * 0.15);
-	    	height_S = (int) (screenHeight * 0.65);
+	    	height_S = (int) (screenHeight * 0.85);
 	    } else {
-	    	height_T = (int) (screenHeight * 0.65);
+	    	height_T = (int) (screenHeight * 0.85);
 	    	height_S = (int) (screenHeight * 0.15);
 	    }
-*/	    
-    	if (mainapp.loco_string_T.equals("Not Set")) {
-    		height_T = (int) (screenHeight * 0.1);
-    	} else {
-    		height_T = (int) (screenHeight * 0.4);
-    	}
-    	if (mainapp.loco_string_S.equals("Not Set")) {
-    		height_S = (int) (screenHeight * 0.1);
-    	} else {
-    		height_S = (int) (screenHeight * 0.4);
-    	}
-	    	
+	    
 	  //set height of T area 
 	    LinearLayout ll=(LinearLayout)findViewById(R.id.throttle_T);
 	    llLp = new LinearLayout.LayoutParams(

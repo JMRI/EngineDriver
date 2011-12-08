@@ -35,8 +35,7 @@ public class web_activity extends Activity {
 
   /** Called when the activity is first created. */
   @Override
-  public void onCreate(Bundle savedInstanceState)
-  {
+  public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
