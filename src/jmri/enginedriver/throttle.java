@@ -821,24 +821,24 @@ public void onStart() {
 
 	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
 	  if (webView.getUrl() == null) {
-		  String url = "file:///android_asset/feature_not_available.html";
+		  //		  String url = "file:///android_asset/feature_not_available.html";
 		  if (mainapp.web_server_port != null && mainapp.web_server_port > 0) {
 			  String s = prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
-			  url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/" + s;
-		  }
-		  webView.getSettings().setJavaScriptEnabled(true);
-		  webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported by ROM
-		  webView.loadUrl(url);
-		  Log.d("Engine_Driver","web view set to " + url);	  
+			  String url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/" + s;
+			  webView.getSettings().setJavaScriptEnabled(true);
+			  webView.getSettings().setBuiltInZoomControls(true);
+			  webView.loadUrl(url);
+			  Log.d("Engine_Driver","web view set to " + url);	  
 
-		  // open all links inside the current view (don't start external web browser)
-		  WebViewClient EDWebClient = new WebViewClient()	{
-			  @Override
-			  public boolean shouldOverrideUrlLoading(WebView  view, String  url) {
-				  return false;
-			  }
-		  };
-		  webView.setWebViewClient(EDWebClient);
+			  // open all links inside the current view (don't start external web browser)
+			  WebViewClient EDWebClient = new WebViewClient()	{
+				  @Override
+				  public boolean shouldOverrideUrlLoading(WebView  view, String  url) {
+					  return false;
+				  }
+			  };
+			  webView.setWebViewClient(EDWebClient);
+		  }
 	  } else {
 		  Log.d("Engine_Driver","web view already set");
 	  }

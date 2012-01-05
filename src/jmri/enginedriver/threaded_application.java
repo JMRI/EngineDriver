@@ -142,7 +142,7 @@ public class threaded_application extends Application {
     	};
 
     	public void serviceResolved(ServiceEvent event)  {
-    		//A service's information has been resolved. Store the port and servername to connect to that service.  Verify the servername.
+    		//A service's information has been resolved. Send the port and service name to connect to that service.
     		int port=event.getInfo().getPort();
     		String host_name = event.getInfo().getName(); //
     		Inet4Address[] ip_addresses = event.getInfo().getInet4Addresses();  //only get ipV4 address
@@ -932,7 +932,7 @@ public class threaded_application extends Application {
         	  msg.recycle();
           }
       } else {
-      	Log.d("Engine_Driver", "failed to send message to throttle " + msgBody);
+      	Log.d("Engine_Driver", "Throttle activity not active, did not forward: " + msgBody);
       }
       if (power_control_msg_handler != null) { 
           Message msg=Message.obtain(); 

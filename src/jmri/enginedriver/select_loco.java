@@ -38,6 +38,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
@@ -90,9 +91,10 @@ public class select_loco extends Activity {
 				|| ((mainapp.consist_entries != null)
 				&& (mainapp.consist_entries.size() > 0))) {
 
+			//put roster entries into screen list
 			if (mainapp.roster_entries != null) {
-				for (String rostername : mainapp.roster_entries.keySet()) {
-
+				Set<String> res = mainapp.roster_entries.keySet();
+				for (String rostername : res) {
 					// put key and values into temp hashmap
 					HashMap<String, String> hm = new HashMap<String, String>();
 					hm.put("roster_name", rostername);
@@ -109,10 +111,10 @@ public class select_loco extends Activity {
 				} // for rostername
 			} //if roster_entries not null
 
-
+			//add consist entries to screen list
 			if (mainapp.consist_entries != null) {
-				for (String consistname : mainapp.consist_entries.keySet()) {
-
+				Set<String> ces = mainapp.consist_entries.keySet();
+				for (String consistname : ces) {
 					// put key and values into temp hashmap
 					HashMap<String, String> hm = new HashMap<String, String>();
 					hm.put("roster_name", mainapp.consist_entries.get(consistname));

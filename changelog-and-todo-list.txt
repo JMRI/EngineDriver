@@ -7,6 +7,7 @@
  * web page links now open inside ED instead of external browser 
  * added prefs for "Initial Web Page" and Web View Location
  * initial version of web page on throttle page, bottom only, 50%
+ * prevent ConcurrentModificationException crash (reported to market)
 **Version 1.9
  * encode icon filenames to handle special characters
  * catch error when attempting to load very large image files
@@ -165,6 +166,8 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: remove swipe from slider
+ *   TODO: additional left margin on throttle
  *   TODO: pref to limit max throttle change, to prevent accidental speedup when trying to press reverse.
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: respect "Max Throttle %" from roster entry
@@ -193,8 +196,6 @@
  * These require changes to WiThrottle
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
  *   disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
- *   allow restart of withrottle (variable UI needs to be cleared when it closes)
  *   add "E"rror response
- *   add filter for roster entries, use "active" entry? (requested due to accessory decoders being included in "roster")
  * 
  * */
