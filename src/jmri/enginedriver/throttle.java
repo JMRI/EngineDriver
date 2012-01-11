@@ -705,15 +705,17 @@ void start_select_loco_activity(char whichThrottle)
 	  //format the screen area
 	  enable_disable_buttons('T'); 
 	  enable_disable_buttons('S');  
-	  set_labels();
 	  gestureFailed = false;
 	  gestureInProgress = false;
-	  
+
+	  //copy webviewlocation from prefs to app var
+	  mainapp.webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+
 	  if (!mainapp.webViewLocation.equals("none")) {
 		  setup_webview();
 	  }
 
-
+	  set_labels();
 
   }
 
@@ -1214,6 +1216,8 @@ public void onStart() {
       //  set label and dcc functions (based on settings) or hide if no label
       set_function_labels_and_listeners_for_view('T');
       set_function_labels_and_listeners_for_view('S');
+      
+      set_labels();
   }
   
 

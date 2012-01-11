@@ -6,7 +6,7 @@
  * implement serviceRemoved to remove ended servers from discovered list
  * web page links now open inside ED instead of external browser 
  * added prefs for "Initial Web Page" and Web View Location
- * initial version of web page on throttle page, bottom only, 50%
+ * initial version of web page on throttle page, Bottom only, 50%
  * prevent ConcurrentModificationException crash (reported to market)
 **Version 1.9
  * encode icon filenames to handle special characters

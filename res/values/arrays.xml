@@ -73,10 +73,7 @@
         <item>Z</item>
     </string-array>
     <string-array name="WebViewLocation">
-        <item>Top</item>
         <item>Bottom</item>
-        <item>Right</item>
-        <item>Left</item>
         <item>none</item>
     </string-array>
         

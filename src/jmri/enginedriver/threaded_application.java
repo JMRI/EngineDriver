@@ -639,10 +639,8 @@ public class threaded_application extends Application {
 	    		        Log.d("Engine_Driver", "process response: invalid web server port string");
 	    				web_server_port = 0;
 	    			}
-	    	  		//store webviewlocation for later
-	    	  		webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
 
-	    			break;
+	    	  		break;
 	    	  }  //end switch inside P
 		  	 break;
   	  }  //end switch
