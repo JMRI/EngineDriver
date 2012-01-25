@@ -1,3 +1,6 @@
+**Version 2.1
+ * turned off auto-rotate on Throttle
+** stop javascript refresh on exit (by loading a "blank" page)
 **Version 2.0
  * connect to discovered servers using IP instead of verifying name (avoids timeout on non-DNS network)
  * change server list items to display system name and ip address
@@ -166,7 +169,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
- *   TODO: remove swipe from slider
+ *   TODO: remove swipe from slider area
  *   TODO: additional left margin on throttle
  *   TODO: pref to limit max throttle change, to prevent accidental speedup when trying to press reverse.
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one

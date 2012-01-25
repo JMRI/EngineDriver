@@ -697,6 +697,14 @@ void start_select_loco_activity(char whichThrottle)
 		msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
 		mainapp.comm_msg_handler.sendMessage(msg);
   }
+  @Override
+  protected void onPause() {
+	  super.onPause();
+	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
+
+	  //load a bogus url to prevent javascript from continuing to run
+	  webView.loadUrl("file:///android_asset/blank_page.html");
+  }
   
   @Override
   public void onResume() {
@@ -708,12 +716,7 @@ void start_select_loco_activity(char whichThrottle)
 	  gestureFailed = false;
 	  gestureInProgress = false;
 
-	  //copy webviewlocation from prefs to app var
-	  mainapp.webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
-
-	  if (!mainapp.webViewLocation.equals("none")) {
-		  setup_webview();
-	  }
+	  setup_webview();
 
 	  set_labels();
 
@@ -732,6 +735,8 @@ public void onStart() {
 /** Called when the activity is finished. */
   @Override
   public void onDestroy() {
+	  Log.d("Engine_Driver","onDestroy() called");
+
 	  super.onDestroy();
 	  mainapp.throttle_msg_handler = null;
   }
@@ -821,28 +826,36 @@ public void onStart() {
   //set up webview to requested initial page
   private void setup_webview() {
 
+	  //copy webviewlocation from prefs to app var
+	  mainapp.webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
 	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
-	  if (webView.getUrl() == null) {
-		  //		  String url = "file:///android_asset/feature_not_available.html";
-		  if (mainapp.web_server_port != null && mainapp.web_server_port > 0) {
-			  String s = prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
-			  String url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/" + s;
-			  webView.getSettings().setJavaScriptEnabled(true);
-			  webView.getSettings().setBuiltInZoomControls(true);
-			  webView.loadUrl(url);
-			  Log.d("Engine_Driver","web view set to " + url);	  
 
-			  // open all links inside the current view (don't start external web browser)
-			  WebViewClient EDWebClient = new WebViewClient()	{
-				  @Override
-				  public boolean shouldOverrideUrlLoading(WebView  view, String  url) {
-					  return false;
-				  }
-			  };
-			  webView.setWebViewClient(EDWebClient);
+	  if (!mainapp.webViewLocation.equals("none")) {
+		  String s = prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
+		  String url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/" + s;
+		  if (webView.getUrl() == null) {
+			  if (mainapp.web_server_port != null && mainapp.web_server_port > 0) {
+				  webView.getSettings().setJavaScriptEnabled(true);
+				  webView.getSettings().setBuiltInZoomControls(true);
+				  webView.loadUrl(url);
+				  Log.d("Engine_Driver","web view set to " + url);	  
+
+				  // open all links inside the current view (don't start external web browser)
+				  WebViewClient EDWebClient = new WebViewClient()	{
+					  @Override
+					  public boolean shouldOverrideUrlLoading(WebView  view, String  url) {
+						  return false;
+					  }
+				  };
+				  webView.setWebViewClient(EDWebClient);
+			  }
+		  } else {
+			  Log.d("Engine_Driver","web view already set");
+			  webView.loadUrl(url);
 		  }
 	  } else {
-		  Log.d("Engine_Driver","web view already set");
+		  Log.d("Engine_Driver","web view set to blank");
+		  webView.loadUrl("file:///android_asset/blank_page.html");
 	  }
   }  
 
