@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -66,12 +67,20 @@ public class web_activity extends Activity {
 
   };
 
+  /** Called when the activity is finished. */
   @Override
-  public void onResume() {
-	  super.onResume();
+  public void onDestroy() {
+	  Log.d("Engine_Driver","web_activity.onDestroy() called");
+
+	  //load a bogus url to prevent javascript from continuing to run
+	  WebView webView = (WebView) findViewById(R.id.webview);
+	  webView.loadUrl("file:///android_asset/blank_page.html");
+
+	  super.onDestroy();
   }
 
 
+  
   //Handle pressing of the back button to end this activity
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {

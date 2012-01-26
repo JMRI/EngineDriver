@@ -697,15 +697,7 @@ void start_select_loco_activity(char whichThrottle)
 		msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
 		mainapp.comm_msg_handler.sendMessage(msg);
   }
-  @Override
-  protected void onPause() {
-	  super.onPause();
-	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
 
-	  //load a bogus url to prevent javascript from continuing to run
-	  webView.loadUrl("file:///android_asset/blank_page.html");
-  }
-  
   @Override
   public void onResume() {
 	  super.onResume();
@@ -735,10 +727,15 @@ public void onStart() {
 /** Called when the activity is finished. */
   @Override
   public void onDestroy() {
-	  Log.d("Engine_Driver","onDestroy() called");
+	  Log.d("Engine_Driver","throttle.onDestroy() called");
+
+	  //load a bogus url to prevent javascript from continuing to run
+	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
+	  webView.loadUrl("file:///android_asset/blank_page.html");
+
+	  mainapp.throttle_msg_handler = null;
 
 	  super.onDestroy();
-	  mainapp.throttle_msg_handler = null;
   }
 
 
@@ -851,7 +848,7 @@ public void onStart() {
 			  }
 		  } else {
 			  Log.d("Engine_Driver","web view already set");
-			  webView.loadUrl(url);
+//			  webView.loadUrl(url);
 		  }
 	  } else {
 		  Log.d("Engine_Driver","web view set to blank");
