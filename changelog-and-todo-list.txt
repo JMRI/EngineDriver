@@ -1,6 +1,7 @@
 **Version 2.1
  * new user pref to select orientation on Throttle (default to portrait)
-** stop javascript refresh on exit (by loading a "blank" page)
+ * stop javascript refresh on exit (by loading a "blank" page)
+ * rearranged prefs                                                                          
 **Version 2.0
  * connect to discovered servers using IP instead of verifying name (avoids timeout on non-DNS network)
  * change server list items to display system name and ip address
