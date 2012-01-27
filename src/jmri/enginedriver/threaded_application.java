@@ -124,7 +124,7 @@ public class threaded_application extends Application {
     public class withrottle_listener implements ServiceListener    {
 
     	public void serviceAdded(ServiceEvent event)  	{
-    		Log.d("Engine_Driver", String.format("serviceAdded fired"));
+//    		Log.d("Engine_Driver", String.format("serviceAdded fired"));
     		//A service has been added. If no details, ask for them 
     		ServiceInfo si = jmdns.getServiceInfo(event.getType(), event.getName(), 0);
     		if (si == null || si.getPort() == 0 ) { 
@@ -143,8 +143,8 @@ public class threaded_application extends Application {
     	};
 
     	public void serviceResolved(ServiceEvent event)  {
+//    		Log.d("Engine_Driver", String.format("serviceResolved fired"));
     		//A service's information has been resolved. Send the port and service name to connect to that service.
-    		Log.d("Engine_Driver", String.format("serviceResolved fired"));
     		int port=event.getInfo().getPort();
     		String host_name = event.getInfo().getName(); //
     		Inet4Address[] ip_addresses = event.getInfo().getInet4Addresses();  //only get ipV4 address

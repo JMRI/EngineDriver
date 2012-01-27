@@ -23,6 +23,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -63,7 +65,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static final int VISIBLE = 0;
 	private static final int throttleMargin = 8;	// margin between the throttles in dp
 	private static final int titleBar = 45;			// estimate of lost screen height in dp
-	private SharedPreferences prefs;
+	private static SharedPreferences prefs;
 	private static final int MAX_SPEED_DISPLAY = 99;	// value to display at maximum speed setting 
 	private static int MAX_SPEED_VAL_T = 126;			// maximum DCC speed setting in current mode
 	private static int MAX_SPEED_VAL_S = 126;			// maximum DCC speed setting in current mode
@@ -698,10 +700,26 @@ void start_select_loco_activity(char whichThrottle)
 		mainapp.comm_msg_handler.sendMessage(msg);
   }
 
+  // set throttle screen orientation based on prefs, check to avoid sending change when already there
+  private static void setActivityOrientation(Activity activity) {
+
+	  String to = prefs.getString("ThrottleOrientation", 
+			  activity.getApplicationContext().getResources().getString(R.string.prefThrottleOrientationDefaultValue));
+	  int co = activity.getRequestedOrientation();
+	  if      (to.equals("Landscape")   && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))  
+		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+	  else if (to.equals("Auto-Rotate") && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))  
+		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+	  else if (to.equals("Portrait")    && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
+		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+  }
+
   @Override
   public void onResume() {
 	  super.onResume();
 	
+	  setActivityOrientation(this);  //set throttle screen orientation based on prefs
+	  
 	  //format the screen area
 	  enable_disable_buttons('T'); 
 	  enable_disable_buttons('S');  

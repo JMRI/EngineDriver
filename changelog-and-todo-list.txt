@@ -1,5 +1,5 @@
 **Version 2.1
- * turned off auto-rotate on Throttle
+ * new user pref to select orientation on Throttle (default to portrait)
 ** stop javascript refresh on exit (by loading a "blank" page)
 **Version 2.0
  * connect to discovered servers using IP instead of verifying name (avoids timeout on non-DNS network)
@@ -140,7 +140,7 @@
  *   added html About page
  */
 /*
- *   TODO: add pref for orientation (landscape, portrait, or both)
+ *   TODO: reload last web page when auto-rotating
  *   TODO: fix crash when ED is left backgrounded for a while, then reopened
  *   TODO: process MS-L2591<;> messages, sent when WiT shuts down.
  *   TODO: show icon in notification bar if app is running but not visible
