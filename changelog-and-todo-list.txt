@@ -1,3 +1,4 @@
+**Version 2.2
 **Version 2.1
  * new user pref to select orientation on Throttle (default to portrait)
  * stop javascript refresh on exit (by loading a "blank" page)
