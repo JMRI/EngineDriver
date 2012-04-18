@@ -1,4 +1,4 @@
-/*Copyright (C) 2011 M. Steve Todd
+/*Copyright (C) 2012 M. Steve Todd
   mstevetodd@enginedriver.rrclubs.org
   
 This program is free software; you can redistribute it and/or modify
@@ -203,8 +203,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					  }
 				  }
 				  break;
-			  case 'P': //panel info  (UNLIKELY TO BE RECEIVED)
-				  Log.d("Engine_Driver","in P");
+			  case 'P': //panel info
 				  if (thrSel == 'W') {		// PW - web server port info
 					  // kick off web-dependent items
 					  dlRosterTask.getRoster();

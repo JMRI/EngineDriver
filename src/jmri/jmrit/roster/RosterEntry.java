@@ -34,6 +34,7 @@ public class RosterEntry {
 	final static int MAXFNNUM = 28;
 
 	private String resourcesURL = "";
+	private String rosterURL	= "";
 	public int getMAXFNNUM() { return MAXFNNUM; }
 	protected String[] functionLabels;
 	protected String[] functionSelectedImages;
@@ -64,18 +65,22 @@ public class RosterEntry {
 		return null;
 	}
 	
-	//set icon url including sizing instruction  TODO: verify this is best place for the resizing
 	public String getIconPath() { 
 		if ((_iconFilePath != null) && (_iconFilePath.length()>0) && (!_iconFilePath.equals("__noIcon.jpg"))) {			
-			return resourcesURL+URLEncoder.encode(_iconFilePath)+"?MaxHeight=52";
+//			return resourcesURL+URLEncoder.encode(_iconFilePath)+"?MaxHeight=52";
+			//Log.d("Engine_Driver","RosterEntry - icon found for "+_id);
+			return rosterURL+URLEncoder.encode(_id)+"/icon";
 		}
+		//Log.d("Engine_Driver","RosterEntry - no icon found for "+_id);
 		return null;
+		
 	}
 	public String getURL() { return _URL; }
 	public String getDateUpdated() { return _dateUpdated; }
 
-	public void setHostPort(String s) {
+	public void setHostURLs(String s) {
 		resourcesURL ="http://"+s+"/prefs/resources/";
+		rosterURL 	 ="http://"+s+"/roster/";
 	}
 	
 	public RosterEntry(Node n) {
@@ -86,7 +91,7 @@ public class RosterEntry {
 				Log.d("Engine_Driver","RosterEntry - adding id "+_id);
 				continue;
 			}
-			/*    		if ("fileName".compareTo(nm.item(k).getNodeName())==0) {
+			if ("fileName".compareTo(nm.item(k).getNodeName())==0) {
     			_fileName  = nm.item(k).getNodeValue();
     			continue;
     		}
@@ -109,7 +114,7 @@ public class RosterEntry {
     		if ("model".compareTo(nm.item(k).getNodeName())==0) {
     			_model  = nm.item(k).getNodeValue();
     			continue;
-    		}		*/	
+    		}
 			if ("dccAddress".compareTo(nm.item(k).getNodeName())==0) {
 				_dccAddress  = nm.item(k).getNodeValue();
 				continue;
@@ -122,7 +127,7 @@ public class RosterEntry {
 				_iconFilePath  = nm.item(k).getNodeValue();
 				continue;
 			}	
-			/*    		if ("URL".compareTo(nm.item(k).getNodeName())==0) {
+			if ("URL".compareTo(nm.item(k).getNodeName())==0) {
     			_URL  = nm.item(k).getNodeValue();
     			continue;
     		}
@@ -133,20 +138,21 @@ public class RosterEntry {
     		if ("comment".compareTo(nm.item(k).getNodeName())==0) {
     			_comment  = nm.item(k).getNodeValue();
     			continue;
-    		}     */
+    		}
 		}
 		NodeList nl = n.getChildNodes();
 		for (int i = 0; i < nl.getLength(); i++) {
 			Node node = nl.item(i);
-			/*    		if ( "dateUpdated".compareTo(node.getNodeName()) == 0) {
+/*
+			if ( "dateUpdated".compareTo(node.getNodeName()) == 0) {
     			_dateUpdated = node.getNodeValue();
-    			Log.d("RosterEntry ", "Adding date updated "+_dateUpdated+" / text content : "+node.getTextContent());
+    			//Log.d("RosterEntry ", "Adding date updated "+_dateUpdated+" / text content : "+node.getNodeValue());
     			continue;
     		}
     		if ( "locoaddress".compareTo(node.getNodeName()) == 0) {
     			_dccAddress = node.getNodeValue();
     			//TODO _isLongAddress=
-    			Log.d("RosterEntry ", "Adding 2nd dcc address "+_dccAddress+" / text content : "+node.getTextContent());
+    			//Log.d("RosterEntry ", "Adding 2nd dcc address "+_dccAddress+" / text content : "+node.getNodeValue());
 
     			continue;
     		}
@@ -169,7 +175,8 @@ public class RosterEntry {
     				}
     			}
     			continue;
-    		} */
+    		}
+*/    		 
 			if ("functionlabels".compareTo(node.getNodeName()) == 0) {
 				loadFunctions(node);
 				continue;
@@ -198,7 +205,6 @@ public class RosterEntry {
 	 * Loads function names from a 
 	 * JDOM element.  Does not change values that are already present!
 	 */
-	@SuppressWarnings("unchecked")
 	public void loadFunctions(Node n) {
 		if (n != null)  {
 			// load function names
@@ -251,7 +257,6 @@ public class RosterEntry {
 	 * Loads attribute key/value pairs from a 
 	 * JDOM element.
 	 */
-	@SuppressWarnings("unchecked")
 	public void loadAttributes(Node e3) {
 		/*        if (e3 != null)  {
             java.util.List<Element> l = e3.getChildren("keyvaluepair");

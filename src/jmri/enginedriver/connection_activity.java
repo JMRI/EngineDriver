@@ -1,4 +1,4 @@
-/* Copyright (C) 2011 M. Steve Todd mstevetodd@enginedriver.rrclubs.org
+/* Copyright (C) 2012 M. Steve Todd mstevetodd@enginedriver.rrclubs.org
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -282,7 +282,7 @@ public class connection_activity extends Activity {
         case message_type.ERROR:
           //display error message from msg.obj
           String msg_txt = new String((String)msg.obj);
-      	  Toast.makeText(getApplicationContext(), msg_txt, Toast.LENGTH_LONG).show();
+      	  Toast.makeText(getApplicationContext(), msg_txt, Toast.LENGTH_SHORT).show();
       	  break;
       }
     };

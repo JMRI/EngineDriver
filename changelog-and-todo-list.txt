@@ -1,4 +1,8 @@
 **Version 2.2
+ * ignore failed wifi lock attempt (error reported to Market)
+ * use roster name when selecting loco (not yet complete)
+ * determine full JMRI version using xmlio server (if available) (not yet complete)
+ * use new roster icon urls if JMRI version > 2.99.4 (not yet complete)
 **Version 2.1
  * new user pref to select orientation on Throttle (default to portrait)
  * stop javascript refresh on exit (by loading a "blank" page)
@@ -142,9 +146,8 @@
  *   added html About page
  */
 /*
- *   TODO: reload last web page when auto-rotating
- *   TODO: fix crash when ED is left backgrounded for a while, then reopened
- *   TODO: process MS-L2591<;> messages, sent when WiT shuts down.
+ *   TODO: reload last web page when auto-rotating (or don't reload at all)
+ *   TODO: process MS-L2591<;> messages, sent when WiT shuts down, and after WiT eStops after timeout
  *   TODO: show icon in notification bar if app is running but not visible
  *   TODO: allow user to configure side-by-side panels for pads, etc.
  *   TODO: add consist creation/editing features
@@ -167,6 +170,7 @@
  *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
  * threaded_application
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
+ *   TODO: determine full JMRI version using xmlio server (if available) 
  *   TODO: check for error on send and do something with it 
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
@@ -188,8 +192,8 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
+ *   TODO: reenable old roster icon urls
  *   TODO: add additional roster info on long-press (use web page?) 
- *   TODO: pass rosterid as second part of MT+ command 
  *   TODO: handle direction of locos in MT consist 
  *   TODO: clean up code for  new MT (Multi-throttle) feature 
  *   TODO: use new 'E' and 'c' WiT commands to select by roster name instead of address (to handle duplicates)

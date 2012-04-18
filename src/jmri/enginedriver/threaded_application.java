@@ -1,4 +1,4 @@
-/*Copyright (C) 2011 M. Steve Todd
+/*Copyright (C) 2012 M. Steve Todd
   mstevetodd@enginedriver.rrclubs.org
 
 This program is free software; you can redistribute it and/or modify
@@ -55,8 +55,8 @@ public class threaded_application extends Application {
 	int port; //The TCP port that the WiThrottle server is running on
 	//shared variables returned from the withrottle server, stored here for easy access by other activities
 //	String host_name_string; //retrieved host name of connection
-	String loco_string_T = "Not Set"; //Loco Address string returned from the server for selected loco #1
-	String loco_string_S = "Not Set"; //Loco Address string returned from the server for selected loco #1
+	String loco_string_T = "Not Set"; //Loco Address string to display on first throttle
+	String loco_string_S = "Not Set"; //Loco Address string to display on second throttle
 	Double withrottle_version = 0.0; //version of withrottle server
 	Integer web_server_port = 0; //default port for jmri web server
 	String roster_list_string; //roster list
@@ -261,8 +261,12 @@ public class threaded_application extends Application {
     					Log.d("Engine_Driver","comm_handler: jmdns already running");
     				}
     				if (jmdns != null) {  //don't bother if jmdns didn't start
-    					multicast_lock.acquire();
-    					jmdns.addServiceListener("_withrottle._tcp.local.", listener);
+    					try {
+							multicast_lock.acquire();
+						} catch (Exception e) {
+							//keep going if this fails
+						}
+						jmdns.addServiceListener("_withrottle._tcp.local.", listener);
     				} else {
     					Log.d("Engine_Driver","comm_handler: jmdns not running, didn't start listener");
     				}
@@ -388,11 +392,15 @@ public class threaded_application extends Application {
     			host_ip = null;
     			break;
 
-    			//Set up an engine to control. The address of the engine is given in arg1, and the address type (long or short) is given in arg2.
+  			//Set up an engine to control. The address of the engine is given in arg1, and the address type (long or short) is given in arg2.
+    		//  also add rostername at end 
     		case message_type.LOCO_ADDR:
-    			//clear appropriate app-level shared variables so they can be reset
-    			whichThrottle = msg.obj.toString();
-    			withrottle_send(String.format(whichThrottle+(msg.arg2==address_type.LONG ? "L" : "S")+"%d", msg.arg1));
+    			whichThrottle = msg.obj.toString().substring(0, 1);  //first char is throttle T or S
+				String rosternamestring = "";
+    			if (withrottle_version >= 2.0) {  //don't pass rostername to older WiT
+    				rosternamestring = msg.obj.toString().substring(1);  //roster name is rest of string
+    			}
+    			withrottle_send(String.format(whichThrottle+(msg.arg2==address_type.LONG ? "L" : "S")+"%d%s", msg.arg1, rosternamestring));
     			if (withrottle_version >= 2.0) {  //request current direction and speed (WiT 2.0+)
     				withrottle_send("M" + whichThrottle+"A*<;>qV");
     				withrottle_send("M" + whichThrottle+"A*<;>qR");
@@ -505,9 +513,14 @@ public class threaded_application extends Application {
 	  		//loco was successfully added to a throttle
         	if 	(response_str.charAt(2) == '+') {  //"MT+L2591<;>L2591"  loco was added
 	  			String[] ls = splitByString(response_str.substring(3),"<;>");//drop off separator
+	  			String rosterName = "rostername";
+	  			if (ls[1].length() > 0) {  //was rostername passed?
+	  				rosterName = ls[1].substring(1);  //strip off the E, indicating rostername was passed
+	  			} else {  //look up name from address
+		  			rosterName = ls[0].substring(1) + "(" + ls[0].substring(0,1) + ")";  //reformat from L2591 to 2591(L)  
+		  			rosterName = get_loconame_from_address_string(rosterName);  //lookup name in roster
+	  			}
 
-	  			String rosterName = ls[0].substring(1) + "(" + ls[0].substring(0,1) + ")";  //reformat from L2591 to 2591(L)  
-	  			rosterName = get_loconame_from_address_string(rosterName);  //lookup name in roster
 
 	  			if 	(response_str.charAt(1) == 'T') {
 	  				if ("Not Set".equals(loco_string_T)) {  
@@ -990,10 +1003,21 @@ public class threaded_application extends Application {
     	else if (withrottle_version >= 2.0) {
           try {
         	if ("T".equals(msg.substring(0,1)) || "S".equals(msg.substring(0,1))) {
+        	  //acquire loco
               if ("L".equals(msg.substring(1,2)) || "S".equals(msg.substring(1,2))) { //address length
-            	  newMsg = "M" + msg.substring(0,1) + "+" + msg.substring(1) + "<;>" + msg.substring(1);  //add requested loco to this throttle
+            	  String[] as = splitByString(msg.substring(1),"|");//split off rostername
+        		  String address = as[0];
+        		  String rostername = "";
+            	  if (as.length == 1) {  //if rostername found, use it, else use address again
+            		  rostername = as[0];
+            	  } else {
+            		  rostername = new String("E" + as[1]);  //use E to indicate rostername
+            	  }
+            	  newMsg = "M" + msg.substring(0,1) + "+" + address + "<;>" + rostername;  //add requested loco to this throttle
+              //release loco(s)
               } else if ("r".equals(msg.substring(1,2))) {
             	  newMsg = "M" + msg.substring(0,1) + "-*<;>r";  //release all locos from this throttle
+              //anything else (speed, direction, functions, etc.)
               } else {
             	  newMsg = "M" + msg.substring(0,1) + "A*<;>" + msg.substring(1);  //pass all action commands along
               }

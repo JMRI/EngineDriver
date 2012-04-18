@@ -1,4 +1,4 @@
-/*Copyright (C) 2011 M. Steve Todd
+/*Copyright (C) 2012 M. Steve Todd
   mstevetodd@enginedriver.rrclubs.org
 
 This program is free software; you can redistribute it and/or modify
@@ -100,9 +100,9 @@ public class select_loco extends Activity {
 					hm.put("roster_name", rostername);
 					hm.put("roster_address", mainapp.roster_entries.get(rostername));
 					
-					//check roster retrieved via http for icon
-					if ((mainapp.roster != null) && (mainapp.roster.get(rostername)!=null)) {
-						hm.put("roster_icon", mainapp.roster.get(rostername).getIconPath());	
+					//add icon if url set
+					if ((mainapp.roster != null) && (mainapp.roster.get(rostername)!=null) && (mainapp.roster.get(rostername).getIconPath()!=null)) {
+						hm.put("roster_icon", mainapp.roster.get(rostername).getIconPath() + "?maxHeight=52");  //include sizing instructions	
 					}
 					
 					// add temp hashmap to list which view is hooked to
@@ -323,6 +323,8 @@ public class select_loco extends Activity {
 		public void onItemClick(AdapterView<?> parent, View v, int position,
 				long id) {
 			ViewGroup vg = (ViewGroup) v; // convert to viewgroup for clicked row
+			TextView rtv = (TextView) vg.getChildAt(2); // get rostername text from 3rd field
+			String rosternamestring = (String) rtv.getText();
 			TextView rav = (TextView) vg.getChildAt(1); // get rosteraddress text from 2nd field
 			String rosteraddressstring = (String) rav.getText();
 			// parse address and length from string, e.g. 2591(L)
@@ -334,7 +336,7 @@ public class select_loco extends Activity {
 				msg.what = message_type.LOCO_ADDR;
 				msg.arg1 = new Integer(ras[0]); // convert address to int and pass in arg1
 				msg.arg2 = addresslength;
-				msg.obj = new String(whichThrottle); // pass T or S in message
+				msg.obj = new String(whichThrottle + "|" + rosternamestring); // pass throttle and rostername
 				mainapp.comm_msg_handler.sendMessage(msg);
 
 				end_this_activity();

@@ -44,7 +44,7 @@ public class RosterLoader {
 			NodeList items = root.getElementsByTagName("locomotive");
 			for (int i=0;i<items.getLength();i++){	       	
 				RosterEntry entry = new RosterEntry( items.item(i));
-				entry.setHostPort(rosterUrl.getHost()+":"+rosterUrl.getPort());
+				entry.setHostURLs(rosterUrl.getHost()+":"+rosterUrl.getPort());
 				roster.put(entry.getId(),entry);
 			}
 		} catch (Exception e) {
