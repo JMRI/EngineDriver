@@ -39,8 +39,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import jmri.jmrit.roster.RosterLoader;
 
 import android.util.DisplayMetrics;
@@ -89,6 +100,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	//function number-to-button maps
 	private LinkedHashMap<Integer, Button> functionMapT;
 	private LinkedHashMap<Integer, Button> functionMapS;
+	
 	private DownloadRosterTask dlRosterTask;
 
 	//current direction
@@ -729,6 +741,7 @@ void start_select_loco_activity(char whichThrottle)
 
 	  set_labels();
 
+  
   }
 
 
@@ -737,7 +750,6 @@ public void onStart() {
   super.onStart();
 
   //put pointer to this activity's handler in main app's shared variable (If needed)
-//  if (mainapp.throttle_msg_handler == null)
 	  mainapp.throttle_msg_handler=new throttle_handler();
 }
 
@@ -832,11 +844,54 @@ public void onStart() {
 		mVelocityTracker = VelocityTracker.obtain();
 	}
 
+	// retrieve JMRI metadata, and place in global hashmap 
+	threaded_application.metadata = new HashMap<String, String>();
+	String xmlioURL = "http://"+mainapp.host_ip+":"+mainapp.web_server_port + "/xmlio/";
+	Log.d("Engine_Driver", "Fetching JMRI metadata from: " + xmlioURL);
+	try  {
+		URL url = new URL( xmlioURL );
+		URLConnection con = url.openConnection();
+
+		// specify that we will send output and accept input
+		con.setDoInput(true);
+		con.setDoOutput(true);
+		con.setConnectTimeout( 2000 );
+		con.setReadTimeout( 2000 );
+		con.setUseCaches (false);
+		con.setDefaultUseCaches (false);
+
+		// tell the web server to expect xml text
+		con.setRequestProperty ( "Content-Type", "text/xml" );
+
+		OutputStreamWriter writer = new OutputStreamWriter( con.getOutputStream() );
+		writer.write( "<XMLIO><list type='metadata' /></XMLIO>" );  //ask for metadata info
+		writer.flush();
+		writer.close();
+
+		//read response and treat as xml doc
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document dom = builder.parse( con.getInputStream() );
+		Element root = dom.getDocumentElement();
+		//get list of metadata children and loop thru, putting each in global variable metadata
+		NodeList items = root.getElementsByTagName("metadata");
+		for (int i=0;i<items.getLength();i++){
+			String metadataName = items.item(i).getAttributes().getNamedItem("name").getNodeValue(); 
+			String metadataValue = items.item(i).getAttributes().getNamedItem("value").getNodeValue(); 
+			threaded_application.metadata.put(metadataName, metadataValue);
+		}
+		Log.d("Engine_Driver", "Metadata retrieved: " + threaded_application.metadata.toString());
+
+	}
+	catch( Throwable t )	  {
+		Log.d("Engine_Driver", "Metadata fetch failed: " + t.getMessage());
+	}	  
+
 	dlRosterTask = new DownloadRosterTask();
 	dlRosterTask.getRoster();		// if web port is already known, start background roster dl here
-	    
+
   } //end of onCreate()
-  
+
   //set up webview to requested initial page
   private void setup_webview() {
 

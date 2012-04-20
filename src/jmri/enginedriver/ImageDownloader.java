@@ -52,7 +52,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * A local cache of downloaded images is maintained internally to improve performance.
  */
 public class ImageDownloader {
-    private static final String LOG_TAG = "ImageDownloader";
+    private static final String LOG_TAG = "Engine_Driver";
 
     public enum Mode { NO_ASYNC_TASK, NO_DOWNLOADED_DRAWABLE, CORRECT }
 //    private Mode mode = Mode.NO_ASYNC_TASK;
@@ -170,7 +170,7 @@ public class ImageDownloader {
             HttpResponse response = client.execute(getRequest);
             final int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != HttpStatus.SC_OK) {
-                Log.w("ImageDownloader", "Error " + statusCode +
+                Log.w(LOG_TAG, "Error " + statusCode +
                         " while retrieving bitmap from " + url);
                 return null;
             }
@@ -179,13 +179,17 @@ public class ImageDownloader {
             if (entity != null) {
                 InputStream inputStream = null;
                 try {
-                    inputStream = entity.getContent();
-                    return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
+                	inputStream = entity.getContent();
+                	try {
+                		return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
+                	} catch (OutOfMemoryError e) {
+                        Log.e(LOG_TAG, "Bitmap retrieval failed, out of memory: " + url);
+                	}
                 } finally {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
-                    entity.consumeContent();
+                	if (inputStream != null) {
+                		inputStream.close();
+                	}
+                	entity.consumeContent();
                 }
             }
         } catch (IOException e) {
@@ -202,6 +206,7 @@ public class ImageDownloader {
 //                ((DefaultHttpClient) client).close();
 //            }
         }
+        Log.d(LOG_TAG, "Bitmap not retrieved from " + url);
         return null;
     }
     
@@ -263,7 +268,7 @@ public class ImageDownloader {
                 // Or if we don't use any bitmap to task association (NO_DOWNLOADED_DRAWABLE mode)
                 if ((this == bitmapDownloaderTask) || (mode != Mode.CORRECT)) {
                     imageView.setImageBitmap(bitmap);
-                	Log.d("Engine_Driver","ImageDownloader: Download complete.");
+                	Log.d("Engine_Driver","ImageDownloader: Download complete: " + url);
                 }
             }
         }

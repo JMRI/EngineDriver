@@ -1,8 +1,9 @@
 **Version 2.2
  * ignore failed wifi lock attempt (error reported to Market)
- * use roster name when selecting loco (not yet complete)
- * determine full JMRI version using xmlio server (if available) (not yet complete)
- * use new roster icon urls if JMRI version > 2.99.4 (not yet complete)
+ * use roster name when selecting loco (requesting correctly, but not yet handling response)
+ * determine full JMRI version using xmlio server (shown on roster page if available)
+ * use new roster icon urls if JMRI version > 2.99.4
+ * catch out of memory error when retrieving large images (seen when resize not available)
 **Version 2.1
  * new user pref to select orientation on Throttle (default to portrait)
  * stop javascript refresh on exit (by loading a "blank" page)
@@ -170,11 +171,12 @@
  *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
  * threaded_application
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
- *   TODO: determine full JMRI version using xmlio server (if available) 
  *   TODO: check for error on send and do something with it 
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: catch ArrayIndexOutOfBoundsException (reported to Market)
+ *   TODO: retrieve metadata in background
  *   TODO: remove swipe from slider area
  *   TODO: additional left margin on throttle
  *   TODO: pref to limit max throttle change, to prevent accidental speedup when trying to press reverse.
@@ -192,7 +194,7 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
- *   TODO: reenable old roster icon urls
+ *   TODO: find out why roster.xml not fetched (in 2.14 only)
  *   TODO: add additional roster info on long-press (use web page?) 
  *   TODO: handle direction of locos in MT consist 
  *   TODO: clean up code for  new MT (Multi-throttle) feature 

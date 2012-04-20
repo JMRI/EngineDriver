@@ -201,6 +201,11 @@ public class select_loco extends Activity {
 		s += "\nWiThrottle: v" + mainapp.withrottle_version;
 		s += String.format("     Heartbeat: %d secs",
 				mainapp.heartbeatInterval);
+	    HashMap<String, String> metadata = threaded_application.metadata;
+		if (metadata != null && metadata.size() > 0) {
+			s += "\nJMRI: " + metadata.get("JMRIVERSION");
+		}
+
 //		 s += "\nPort: " + mainapp.web_server_port;
 		v.setText(s);
 

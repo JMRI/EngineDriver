@@ -1,6 +1,9 @@
 package jmri.jmrit.roster;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
+
+import jmri.enginedriver.threaded_application;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -67,11 +70,13 @@ public class RosterEntry {
 	
 	public String getIconPath() { 
 		if ((_iconFilePath != null) && (_iconFilePath.length()>0) && (!_iconFilePath.equals("__noIcon.jpg"))) {			
-//			return resourcesURL+URLEncoder.encode(_iconFilePath)+"?MaxHeight=52";
-			//Log.d("Engine_Driver","RosterEntry - icon found for "+_id);
-			return rosterURL+URLEncoder.encode(_id)+"/icon";
+			//decide which icon path to use, path was changed with jetty upgrade, 2.99.5
+		    HashMap<String, String> metadata = threaded_application.metadata;  //reference global metadata 
+			if (metadata != null && metadata.size() > 0 && metadata.get("JMRIVERCANON").compareTo("2.99.4") > 0 ) {
+				return rosterURL+URLEncoder.encode(_id)+"/icon";
+			} 
+			return resourcesURL+URLEncoder.encode(_iconFilePath);
 		}
-		//Log.d("Engine_Driver","RosterEntry - no icon found for "+_id);
 		return null;
 		
 	}
