@@ -176,7 +176,6 @@
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
  *   TODO: catch ArrayIndexOutOfBoundsException (reported to Market)
- *   TODO: retrieve metadata in background
  *   TODO: remove swipe from slider area
  *   TODO: additional left margin on throttle
  *   TODO: pref to limit max throttle change, to prevent accidental speedup when trying to press reverse.
@@ -194,7 +193,6 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
- *   TODO: find out why roster.xml not fetched (in 2.14 only)
  *   TODO: add additional roster info on long-press (use web page?) 
  *   TODO: handle direction of locos in MT consist 
  *   TODO: clean up code for  new MT (Multi-throttle) feature 

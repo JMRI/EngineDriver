@@ -102,6 +102,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private LinkedHashMap<Integer, Button> functionMapS;
 	
 	private DownloadRosterTask dlRosterTask;
+	private DownloadMetadataTask dlMetadataTask;
 
 	//current direction
 	private int dirT = 0;
@@ -218,6 +219,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			  case 'P': //panel info
 				  if (thrSel == 'W') {		// PW - web server port info
 					  // kick off web-dependent items
+					  dlMetadataTask.getMetadata();
 					  dlRosterTask.getRoster();
 				  }
 			  }  //end of switch
@@ -844,48 +846,8 @@ public void onStart() {
 		mVelocityTracker = VelocityTracker.obtain();
 	}
 
-	// retrieve JMRI metadata, and place in global hashmap 
-	threaded_application.metadata = new HashMap<String, String>();
-	String xmlioURL = "http://"+mainapp.host_ip+":"+mainapp.web_server_port + "/xmlio/";
-	Log.d("Engine_Driver", "Fetching JMRI metadata from: " + xmlioURL);
-	try  {
-		URL url = new URL( xmlioURL );
-		URLConnection con = url.openConnection();
-
-		// specify that we will send output and accept input
-		con.setDoInput(true);
-		con.setDoOutput(true);
-		con.setConnectTimeout( 2000 );
-		con.setReadTimeout( 2000 );
-		con.setUseCaches (false);
-		con.setDefaultUseCaches (false);
-
-		// tell the web server to expect xml text
-		con.setRequestProperty ( "Content-Type", "text/xml" );
-
-		OutputStreamWriter writer = new OutputStreamWriter( con.getOutputStream() );
-		writer.write( "<XMLIO><list type='metadata' /></XMLIO>" );  //ask for metadata info
-		writer.flush();
-		writer.close();
-
-		//read response and treat as xml doc
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = factory.newDocumentBuilder();
-		Document dom = builder.parse( con.getInputStream() );
-		Element root = dom.getDocumentElement();
-		//get list of metadata children and loop thru, putting each in global variable metadata
-		NodeList items = root.getElementsByTagName("metadata");
-		for (int i=0;i<items.getLength();i++){
-			String metadataName = items.item(i).getAttributes().getNamedItem("name").getNodeValue(); 
-			String metadataValue = items.item(i).getAttributes().getNamedItem("value").getNodeValue(); 
-			threaded_application.metadata.put(metadataName, metadataValue);
-		}
-		Log.d("Engine_Driver", "Metadata retrieved: " + threaded_application.metadata.toString());
-
-	}
-	catch( Throwable t )	  {
-		Log.d("Engine_Driver", "Metadata fetch failed: " + t.getMessage());
-	}	  
+	dlMetadataTask = new DownloadMetadataTask();
+	dlMetadataTask.getMetadata();		// if web port is already known, start background roster dl here
 
 	dlRosterTask = new DownloadRosterTask();
 	dlRosterTask.getRoster();		// if web port is already known, start background roster dl here
@@ -1205,8 +1167,9 @@ public void onStart() {
   }
 
   private void disconnect() {
-	  //stop roster download if it is still in progress
+	  //stop roster or metadata download if still in progress
 	  try {
+		  dlMetadataTask.stopMetadata();
 		  dlRosterTask.stopRoster();
 	  }
 	  catch(Exception e){
@@ -1485,13 +1448,84 @@ public void onStart() {
         void getRoster() {
     		//attempt to get roster.xml if webserver port is known and not already retrieved 
     		if (mainapp.web_server_port == 0) {
-    			Log.d("Engine_Driver","DownloadRosterTask: web_server_port is not known");
+    			Log.d("Engine_Driver","DownloadRosterTask: web_server_port is not known (yet?)");
     		}
     		if (mainapp.web_server_port > 0 && this.getStatus() == AsyncTask.Status.PENDING) {
    				this.execute("http://"+mainapp.host_ip+":"+mainapp.web_server_port+"/prefs/roster.xml");
     		}
         }
         void stopRoster() {
+        	if (this.getStatus() == AsyncTask.Status.RUNNING)
+        		this.cancel(true);
+        }
+    }
+
+	class DownloadMetadataTask extends AsyncTask<String, Void, Integer> {
+    	@Override    
+    	protected Integer doInBackground(String... params) {
+    		Log.d("Engine_Driver","Background loading metadata from " + params[0].toString());
+    		// retrieve JMRI metadata, and place in global hashmap 
+    		threaded_application.metadata = new HashMap<String, String>();
+    		String xmlioURL = params[0].toString();
+    		Log.d("Engine_Driver", "Fetching JMRI metadata from: " + xmlioURL);
+    		Integer re = 0;
+    		try  {
+    			URL url = new URL( xmlioURL );
+    			URLConnection con = url.openConnection();
+
+    			// specify that we will send output and accept input
+    			con.setDoInput(true);
+    			con.setDoOutput(true);
+    			con.setConnectTimeout( 2000 );
+    			con.setReadTimeout( 2000 );
+    			con.setUseCaches (false);
+    			con.setDefaultUseCaches (false);
+
+    			// tell the web server to expect xml text
+    			con.setRequestProperty ( "Content-Type", "text/xml" );
+
+    			OutputStreamWriter writer = new OutputStreamWriter( con.getOutputStream() );
+    			writer.write( "<XMLIO><list type='metadata' /></XMLIO>" );  //ask for metadata info
+    			writer.flush();
+    			writer.close();
+
+    			//read response and treat as xml doc
+    			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    			DocumentBuilder builder = factory.newDocumentBuilder();
+    			Document dom = builder.parse( con.getInputStream() );
+    			Element root = dom.getDocumentElement();
+    			//get list of metadata children and loop thru, putting each in global variable metadata
+    			NodeList items = root.getElementsByTagName("metadata");
+    			for (int i=0;i<items.getLength();i++){
+    				String metadataName = items.item(i).getAttributes().getNamedItem("name").getNodeValue(); 
+    				String metadataValue = items.item(i).getAttributes().getNamedItem("value").getNodeValue(); 
+    				threaded_application.metadata.put(metadataName, metadataValue);
+    				re++;
+    			}
+    			Log.d("Engine_Driver", "Metadata retrieved: " + threaded_application.metadata.toString());
+
+    		}
+    		catch( Throwable t )	  {
+    			Log.d("Engine_Driver", "Metadata fetch failed: " + t.getMessage());
+    		}	  
+    		return re;  //return the count of entries loaded
+    	}
+        // background load of Metadata completed
+        @Override
+        protected void onPostExecute(Integer entries) {
+			Log.d("Engine_Driver","Loaded " + entries +" metadata entries from xmlio server.");
+        }
+        
+        void getMetadata() {
+    		//attempt to get roster.xml if webserver port is known and not already retrieved 
+    		if (mainapp.web_server_port == 0) {
+    			Log.d("Engine_Driver","DownloadMetadataTask: web_server_port is not known (yet?)");
+    		}
+    		if (mainapp.web_server_port > 0 && this.getStatus() == AsyncTask.Status.PENDING) {
+   				this.execute("http://"+mainapp.host_ip+":"+mainapp.web_server_port + "/xmlio/");
+    		}
+        }
+        void stopMetadata() {
         	if (this.getStatus() == AsyncTask.Status.RUNNING)
         		this.cancel(true);
         }
