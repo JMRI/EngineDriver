@@ -1,10 +1,10 @@
 **Version 2.2
- * ignore failed wifi lock attempt (error reported to Market)
- * use roster name when selecting loco (requesting correctly, but not yet handling response)
+ * use roster name when selecting loco, to handle multiples with same address
+ * show roster details (including comments) on long-press on roster entry in list
  * determine full JMRI version using xmlio server (shown on roster page if available)
  * use new roster icon urls if JMRI version > 2.99.4
  * catch out of memory error when retrieving large images (seen when resize not available)
- * show roster details (including comments) on long-press on roster entry in list
+ * ignore failed wifi lock attempt (error reported to Market)
 **Version 2.1
  * new user pref to select orientation on Throttle (default to portrait)
  * stop javascript refresh on exit (by loading a "blank" page)
@@ -194,7 +194,7 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
- *   TODO: finish handling of loco select by rostername, don't send rostername for consists 
+ *   TODO: add close button and roster image to details dialog
  *   TODO: handle direction of locos in MT consist 
  *   TODO: clean up code for  new MT (Multi-throttle) feature 
  *   TODO: use new 'E' and 'c' WiT commands to select by roster name instead of address (to handle duplicates)

@@ -102,6 +102,7 @@ public class select_loco extends Activity {
 					HashMap<String, String> hm = new HashMap<String, String>();
 					hm.put("roster_name", rostername);
 					hm.put("roster_address", mainapp.roster_entries.get(rostername));
+					hm.put("roster_entry_type", "loco");
 					
 					//add icon if url set
 					if ((mainapp.roster != null) && (mainapp.roster.get(rostername)!=null) && (mainapp.roster.get(rostername).getIconPath()!=null)) {
@@ -122,6 +123,7 @@ public class select_loco extends Activity {
 					HashMap<String, String> hm = new HashMap<String, String>();
 					hm.put("roster_name", mainapp.consist_entries.get(consistname));
 					hm.put("roster_address", consistname);
+					hm.put("roster_entry_type", "consist");
 
 					// add temp hashmap to list which view is hooked to
 					roster_list.add(hm);
@@ -327,14 +329,14 @@ public class select_loco extends Activity {
 
 	public class roster_item_ClickListener implements
 	AdapterView.OnItemClickListener {
-		// When an item is clicked, acquire that engine.
-		public void onItemClick(AdapterView<?> parent, View v, int position,
-				long id) {
-			ViewGroup vg = (ViewGroup) v; // convert to viewgroup for clicked row
-			TextView rtv = (TextView) vg.getChildAt(2); // get rostername text from 3rd field
-			String rosternamestring = (String) rtv.getText();
-			TextView rav = (TextView) vg.getChildAt(1); // get rosteraddress text from 2nd field
-			String rosteraddressstring = (String) rav.getText();
+		// When a roster item is clicked, send request to acquire that engine.
+		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+			
+			//use clicked position in list to retrieve roster item object from roster_list
+			HashMap<String, String> hm 	= roster_list.get(position);
+			String rosternamestring 	= hm.get("roster_name");
+			String rosteraddressstring 	= hm.get("roster_address");
+			String rosterentrytype 		= hm.get("roster_entry_type");
 			// parse address and length from string, e.g. 2591(L)
 			String ras[] = threaded_application.splitByString(rosteraddressstring, "(");
 			if (ras[0].length() > 0) {  //only process if address found
@@ -344,7 +346,11 @@ public class select_loco extends Activity {
 				msg.what = message_type.LOCO_ADDR;
 				msg.arg1 = new Integer(ras[0]); // convert address to int and pass in arg1
 				msg.arg2 = addresslength;
-				msg.obj = new String(whichThrottle + "|" + rosternamestring); // pass throttle and rostername
+				String t = whichThrottle;
+				if (rosterentrytype.equals("loco")) { 
+					t += "|" + rosternamestring;  //append rostername if type is loco (not consist) 
+				}
+				msg.obj = new String(t); // pass throttle and rostername
 				mainapp.comm_msg_handler.sendMessage(msg);
 
 				end_this_activity();
@@ -534,16 +540,19 @@ public class select_loco extends Activity {
 
 	};
 
-	protected boolean onLongListItemClick(View v, int pos, long id) {
-		ViewGroup vg = (ViewGroup) v; // convert to viewgroup for clicked row
-		TextView rtv = (TextView) vg.getChildAt(2); // get rostername text from 3rd field
-		String rosternamestring = (String) rtv.getText();
-		RosterEntry re = mainapp.roster.get(rosternamestring);
-		if (re == null) {
-			Log.d("Engine_Driver", "Roster entry " + rosternamestring + " not available.");
+	protected boolean onLongListItemClick(View v, int position, long id) {
+		if (mainapp.roster == null) {
+			Log.w("Engine_Driver", "No roster details found.");
 			return true;
 		} 
-		Log.d("Engine_Driver", "Showing dialog for roster entry " + rosternamestring);
+		HashMap<String, String> hm 	= roster_list.get(position);
+		String rosternamestring 	= hm.get("roster_name");
+		RosterEntry re = mainapp.roster.get(rosternamestring);
+		if (re == null) {
+			Log.w("Engine_Driver", "Roster entry " + rosternamestring + " not available.");
+			return true;
+		} 
+		Log.d("Engine_Driver", "Showing details for roster entry " + rosternamestring);
         Dialog dialog = new Dialog(select_loco.this);
         dialog.setTitle("Roster details for " + rosternamestring);
         dialog.setContentView(R.layout.roster_entry);

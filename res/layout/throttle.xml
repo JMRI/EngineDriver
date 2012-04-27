@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-      Copyright (C) 2012 M. Steve Todd mstevetodd@enginedriver.rrclubs.org
-      This program is free software; you can redistribute it and/or modify it 
-      under the terms of the GNU General Public License as published by the 
-      Free Software Foundation;
-      either version 3 of the License, or (at your option) any later version.
-
-      This program is distributed in the hope that it will be useful, but
-      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-      for more details. You should have received a copy of the GNU General
-      Public License along with this program; if not, write to the Free Software
-      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
--->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/throttle_screen_wrapper"
     android:layout_width="fill_parent"
@@ -105,7 +91,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:stretchColumns="0,1,2" >
-                    <TableRow >
+                    <TableRow>
                         <Button
                             android:id="@+id/button_fwd_T"
                             style="@style/large_button_style"
@@ -140,7 +126,7 @@
                         android:layout_height="wrap_content"
                         android:paddingRight="20dp"
                         android:stretchColumns="0,1,2,3" >
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="Light" />
@@ -154,7 +140,7 @@
                                 style="@style/fn_button_style"
                                 android:text="3" />
                         </TableRow>
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="4" />
@@ -168,7 +154,7 @@
                                 style="@style/fn_button_style"
                                 android:text="7" />
                         </TableRow>
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="8" />
@@ -182,7 +168,7 @@
                                 style="@style/fn_button_style"
                                 android:text="11" />
                         </TableRow>
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="12" />
@@ -196,7 +182,7 @@
                                 style="@style/fn_button_style"
                                 android:text="15" />
                         </TableRow>
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="16" />
@@ -210,7 +196,7 @@
                                 style="@style/fn_button_style"
                                 android:text="19" />
                         </TableRow>
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="20" />
@@ -224,7 +210,7 @@
                                 style="@style/fn_button_style"
                                 android:text="23" />
                         </TableRow>
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="24" />
@@ -238,7 +224,7 @@
                                 style="@style/fn_button_style"
                                 android:text="27" />
                         </TableRow>
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="28" />
@@ -325,7 +311,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:stretchColumns="0,1,2" >
-                    <TableRow >
+                    <TableRow>
                         <Button
                             android:id="@+id/button_fwd_S"
                             style="@style/large_button_style"
@@ -362,7 +348,7 @@
                         android:layout_height="wrap_content"
                         android:paddingRight="20dp"
                         android:stretchColumns="0,1,2,3" >
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="Light" />
@@ -376,7 +362,7 @@
                                 style="@style/fn_button_style"
                                 android:text="3" />
                         </TableRow>
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="4" />
@@ -390,7 +376,7 @@
                                 style="@style/fn_button_style"
                                 android:text="7" />
                         </TableRow>
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="8" />
@@ -404,7 +390,7 @@
                                 style="@style/fn_button_style"
                                 android:text="11" />
                         </TableRow>
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="12" />
@@ -418,7 +404,7 @@
                                 style="@style/fn_button_style"
                                 android:text="15" />
                         </TableRow>
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="16" />
@@ -432,7 +418,7 @@
                                 style="@style/fn_button_style"
                                 android:text="19" />
                         </TableRow>
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="20" />
@@ -446,7 +432,7 @@
                                 style="@style/fn_button_style"
                                 android:text="23" />
                         </TableRow>
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="24" />
@@ -460,7 +446,7 @@
                                 style="@style/fn_button_style"
                                 android:text="27" />
                         </TableRow>
-                        <TableRow >
+                        <TableRow>
                             <Button
                                 style="@style/fn_button_style"
                                 android:text="28" />

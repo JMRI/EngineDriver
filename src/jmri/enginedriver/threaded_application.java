@@ -117,6 +117,8 @@ public class threaded_application extends Application {
 		socket_WiT socketWiT;
 		heartbeat heart  = new heartbeat();
 
+		private String last_roster_entry_requested = ""; //"remember" last entry, for use in response
+
 		comm_thread() {
 			super("comm_thread");
 		}
@@ -397,11 +399,15 @@ public class threaded_application extends Application {
 					//  also add rostername at end 
 				case message_type.LOCO_ADDR:
 					whichThrottle = msg.obj.toString().substring(0, 1);  //first char is throttle T or S
-					String rosternamestring = "";
+					String pipeentry = "";  //TODO: clean up handling of pipe
+					last_roster_entry_requested = "";
 					if (withrottle_version >= 2.0) {  //don't pass rostername to older WiT
-						rosternamestring = msg.obj.toString().substring(1);  //roster name is rest of string
+						pipeentry = msg.obj.toString().substring(1);  //roster name is rest of string with '|'
+						if (!pipeentry.equals("")) {
+							last_roster_entry_requested = pipeentry.substring(1);  //remember for use in response, stripping off bang 
+						}
 					}
-					withrottle_send(String.format(whichThrottle+(msg.arg2==address_type.LONG ? "L" : "S")+"%d%s", msg.arg1, rosternamestring));
+					withrottle_send(String.format(whichThrottle+(msg.arg2==address_type.LONG ? "L" : "S")+"%d%s", msg.arg1, pipeentry));
 					if (withrottle_version >= 2.0) {  //request current direction and speed (WiT 2.0+)
 						withrottle_send("M" + whichThrottle+"A*<;>qV");
 						withrottle_send("M" + whichThrottle+"A*<;>qR");
@@ -512,16 +518,16 @@ public class threaded_application extends Application {
 			//handle responses from MultiThrottle function
 			case 'M': 
 				//loco was successfully added to a throttle
-				if 	(response_str.charAt(2) == '+') {  //"MT+L2591<;>L2591"  loco was added
+				if 	(response_str.charAt(2) == '+') {  //"MT+L2591<;>"  loco was added
 					String[] ls = splitByString(response_str.substring(3),"<;>");//drop off separator
 					String rosterName = "rostername";
-					if (ls[1].length() > 0) {  //was rostername passed?
-						rosterName = ls[1].substring(1);  //strip off the E, indicating rostername was passed
-					} else {  //look up name from address
-						rosterName = ls[0].substring(1) + "(" + ls[0].substring(0,1) + ")";  //reformat from L2591 to 2591(L)  
-						rosterName = get_loconame_from_address_string(rosterName);  //lookup name in roster
+					if (last_roster_entry_requested.equals("")) {  //use remembered name, or look up from address
+						//look up name from address
+						String addr = ls[0].substring(1) + "(" + ls[0].substring(0,1) + ")";  //reformat from L2591 to 2591(L)  
+						rosterName = get_loconame_from_address_string(addr);  //lookup name in roster
+					} else {
+						rosterName = last_roster_entry_requested;
 					}
-
 
 					if 	(response_str.charAt(1) == 'T') {
 						if ("Not Set".equals(loco_string_T)) {  

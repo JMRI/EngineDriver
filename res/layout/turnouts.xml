@@ -1,77 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-   <!--
-      Copyright (C) 2010 Jason M'Sadoques jlyonm@gmail.com This program is free
-      software; you can redistribute it and/or modify it under the terms of the
-      GNU General Public License as published by the Free Software Foundation;
-      either version 3 of the License, or (at your option) any later version.
-
-      This program is distributed in the hope that it will be useful, but
-      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-      for more details. You should have received a copy of the GNU General
-      Public License along with this program; if not, write to the Free Software
-      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-   -->
-
-<LinearLayout
-   xmlns:android="http://schemas.android.com/apk/res/android"
-   android:orientation="vertical"
-   android:layout_width="fill_parent"
-   android:layout_height="fill_parent"
-   android:keepScreenOn="true"
->
-   <TextView
-      android:id="@+id/turnouts_label"
-      android:text="@string/turnouts_label"
-      style="@style/small_heading_style"   />
-   <LinearLayout
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:padding="4dp"
-   >
-   <TextView
-      android:id="@+id/hardware_system"
-      android:text="-"
-      style="@style/floating_text_style"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
-   
-      <EditText
-         android:id="@+id/turnout_entry"
-         android:layout_width="80sp"
-         android:layout_weight = "0.25"
-         android:layout_height="wrap_content"
-         android:singleLine="true"
-         android:maxLength="4"
-         android:inputType="number" />
-      <Button
-         android:id="@+id/turnout_throw"
-         android:text="@string/throw_button"
-         android:layout_width="40sp"
-         android:layout_weight = "0.25"
-         android:layout_height="wrap_content" />
-      <Button
-         android:id="@+id/turnout_close"
-         android:text="@string/close_button"
-         android:layout_width="40sp"
-         android:layout_weight = "0.25"
-         android:layout_height="wrap_content" />
-      <Button
-         android:id="@+id/turnout_toggle"
-         android:layout_width="40sp"
-         android:layout_weight = "0.25"
-         android:text="@string/toggle_button"
-         android:layout_height="wrap_content" />
-   </LinearLayout>
-
-   <ListView
-      android:id="@+id/turnouts_list"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-   >
-   </ListView>
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:keepScreenOn="true"
+    android:orientation="vertical" >
+    <TextView
+        android:id="@+id/turnouts_label"
+        style="@style/small_heading_style"
+        android:text="@string/turnouts_label" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="4dp" >
+        <TextView
+            android:id="@+id/hardware_system"
+            style="@style/floating_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-" />
+        <EditText
+            android:id="@+id/turnout_entry"
+            android:layout_width="80sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:inputType="number"
+            android:maxLength="4"
+            android:singleLine="true" />
+        <Button
+            android:id="@+id/turnout_throw"
+            android:layout_width="40sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:text="@string/throw_button" />
+        <Button
+            android:id="@+id/turnout_close"
+            android:layout_width="40sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:text="@string/close_button" />
+        <Button
+            android:id="@+id/turnout_toggle"
+            android:layout_width="40sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:text="@string/toggle_button" />
+    </LinearLayout>
+    <ListView
+        android:id="@+id/turnouts_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
 </LinearLayout>
-
-

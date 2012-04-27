@@ -167,12 +167,12 @@ public class RosterEntry {
     			for (int j = 0; j < nnm.getLength(); j++) {        			
     				if ("model".compareTo(nnm.item(j).getNodeName())==0) {
     					_decoderModel  = nnm.item(j).getNodeValue();
-    					Log.d("RosterEntry ", "adding decoder "+_decoderModel);
+//    					Log.d("RosterEntry ", "adding decoder "+_decoderModel);
     					continue;
     				}
     				if ("family".compareTo(nnm.item(j).getNodeName())==0) {
     					_decoderFamily  = nnm.item(j).getNodeValue();
-    					Log.d("RosterEntry ", "adding decoder family "+_decoderFamily);
+//    					Log.d("RosterEntry ", "adding decoder family "+_decoderFamily);
     					continue;
     				}
     				if ("comment".compareTo(nnm.item(j).getNodeName())==0) {
@@ -364,7 +364,7 @@ public class RosterEntry {
 		if (!_roadNumber.equals("")) res += "Road Number: " + _roadNumber + "\n";
 		if (!_owner.equals("")) res += "Owner: " + _owner + "\n";
 		if (!_model.equals("")) res += "Model: " + _model + "\n";
-		if (!_comment.equals("")) res += "Comment: " + _comment.replace("<?p?>", "\n");  //clean up odd returns + "\n";
+		if (!_comment.equals("")) res += "Comment: " + _comment.replace("<?p?>", "\n") + "\n";  //clean up odd returns + "\n";
 		if (!_decoderFamily.equals("")) res += "Decoder Family: " + _decoderFamily + "\n";
 		if (!_decoderModel.equals("")) res += "Decoder Model: " + _decoderModel + "\n";
 		if (!_decoderComment.equals("")) res += "Decoder Comment: " + _decoderComment.replace("<?p?>", "\n");  //clean up odd returns
