@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
@@ -59,6 +60,8 @@ import android.content.SharedPreferences;
 import android.widget.Button;
 import android.widget.AdapterView;
 import java.io.PrintWriter;
+
+import jmri.jmrit.roster.RosterEntry;
 
 public class select_loco extends Activity {
 	private static final int GONE = 8;
@@ -416,8 +419,14 @@ public class select_loco extends Activity {
 
 		ListView roster_list_view = (ListView) findViewById(R.id.roster_list);
 		roster_list_view.setAdapter(roster_list_adapter);
-		roster_list_view
-				.setOnItemClickListener(new roster_item_ClickListener());
+		roster_list_view.setOnItemClickListener(new roster_item_ClickListener());
+		roster_list_view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+		    @Override
+		    public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
+		        return onLongListItemClick(v,pos,id);
+		    }
+		});
+
 
 //		refresh_roster_list();
 
@@ -524,6 +533,28 @@ public class select_loco extends Activity {
 		set_labels();
 
 	};
+
+	protected boolean onLongListItemClick(View v, int pos, long id) {
+		ViewGroup vg = (ViewGroup) v; // convert to viewgroup for clicked row
+		TextView rtv = (TextView) vg.getChildAt(2); // get rostername text from 3rd field
+		String rosternamestring = (String) rtv.getText();
+		RosterEntry re = mainapp.roster.get(rosternamestring);
+		if (re == null) {
+			Log.d("Engine_Driver", "Roster entry " + rosternamestring + " not available.");
+			return true;
+		} 
+		Log.d("Engine_Driver", "Showing dialog for roster entry " + rosternamestring);
+        Dialog dialog = new Dialog(select_loco.this);
+        dialog.setTitle("Roster details for " + rosternamestring);
+        dialog.setContentView(R.layout.roster_entry);
+        String res = re.toString();
+        TextView tv = (TextView) dialog.findViewById(R.id.rosterEntryText);
+        tv.setText(res);
+        dialog.setCancelable(true);
+        dialog.show();
+        
+	    return true;
+	}
 
     public class RosterSimpleAdapter extends SimpleAdapter {
     	private Context cont;

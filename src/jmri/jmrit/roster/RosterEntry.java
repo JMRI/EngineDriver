@@ -148,19 +148,20 @@ public class RosterEntry {
 		NodeList nl = n.getChildNodes();
 		for (int i = 0; i < nl.getLength(); i++) {
 			Node node = nl.item(i);
-/*
+
 			if ( "dateUpdated".compareTo(node.getNodeName()) == 0) {
     			_dateUpdated = node.getNodeValue();
-    			//Log.d("RosterEntry ", "Adding date updated "+_dateUpdated+" / text content : "+node.getNodeValue());
+//Log.d("RosterEntry ", "Adding date updated "+_dateUpdated+" / text content : "+node.getNodeValue());
     			continue;
     		}
-    		if ( "locoaddress".compareTo(node.getNodeName()) == 0) {
+/*    		if ( "locoaddress".compareTo(node.getNodeName()) == 0) {
     			_dccAddress = node.getNodeValue();
     			//TODO _isLongAddress=
     			//Log.d("RosterEntry ", "Adding 2nd dcc address "+_dccAddress+" / text content : "+node.getNodeValue());
 
     			continue;
     		}
+*/    		
     		if ( "decoder".compareTo(node.getNodeName()) == 0) {
     			NamedNodeMap nnm = node.getAttributes();
     			for (int j = 0; j < nnm.getLength(); j++) {        			
@@ -181,7 +182,7 @@ public class RosterEntry {
     			}
     			continue;
     		}
-*/    		 
+    		 
 			if ("functionlabels".compareTo(node.getNodeName()) == 0) {
 				loadFunctions(node);
 				continue;
@@ -353,5 +354,20 @@ public class RosterEntry {
 	}
 	public int getMaxSpeedPCT() {
 		return _maxSpeedPCT;
+	}
+	
+	//format a human-readable output of the values  TODO: figure out a way to loop thru properties these instead
+	public String toString() {
+		String res = "";
+		if (!_dccAddress.equals("")) res += "DCC Address: " + _dccAddress + "\n";
+		if (!_roadName.equals("")) res += "Road Name: " + _roadName + "\n";
+		if (!_roadNumber.equals("")) res += "Road Number: " + _roadNumber + "\n";
+		if (!_owner.equals("")) res += "Owner: " + _owner + "\n";
+		if (!_model.equals("")) res += "Model: " + _model + "\n";
+		if (!_comment.equals("")) res += "Comment: " + _comment.replace("<?p?>", "\n");  //clean up odd returns + "\n";
+		if (!_decoderFamily.equals("")) res += "Decoder Family: " + _decoderFamily + "\n";
+		if (!_decoderModel.equals("")) res += "Decoder Model: " + _decoderModel + "\n";
+		if (!_decoderComment.equals("")) res += "Decoder Comment: " + _decoderComment.replace("<?p?>", "\n");  //clean up odd returns
+		return res;
 	}
 }
