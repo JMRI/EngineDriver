@@ -1,3 +1,5 @@
+**Version 2.3
+ * lock orientation to portrait for most screens
 **Version 2.2
  * use roster name when selecting loco, to handle multiples with same address
  * show roster details (including comments) on long-press on roster entry in list
