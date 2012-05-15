@@ -356,7 +356,7 @@ public class RosterEntry {
 		return _maxSpeedPCT;
 	}
 	
-	//format a human-readable output of the values  TODO: figure out a way to loop thru properties these instead
+	//format a human-readable output of the values  TODO: figure out a way to loop thru properties instead
 	public String toString() {
 		String res = "";
 		if (!_dccAddress.equals("")) res += "DCC Address: " + _dccAddress + "\n";
@@ -364,7 +364,8 @@ public class RosterEntry {
 		if (!_roadNumber.equals("")) res += "Road Number: " + _roadNumber + "\n";
 		if (!_owner.equals("")) res += "Owner: " + _owner + "\n";
 		if (!_model.equals("")) res += "Model: " + _model + "\n";
-		if (!_comment.equals("")) res += "Comment: " + _comment.replace("<?p?>", "\n") + "\n";  //clean up odd returns + "\n";
+		if (!_mfg.equals("")) res += "Mfg: " + _mfg + "\n";
+		if (!_comment.equals("")) res += "Comment: " + _comment.replace("<?p?>", "\n") + "\n";  //clean up odd return encoding;
 		if (!_decoderFamily.equals("")) res += "Decoder Family: " + _decoderFamily + "\n";
 		if (!_decoderModel.equals("")) res += "Decoder Model: " + _decoderModel + "\n";
 		if (!_decoderComment.equals("")) res += "Decoder Comment: " + _decoderComment.replace("<?p?>", "\n");  //clean up odd returns

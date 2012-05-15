@@ -1089,8 +1089,8 @@ public class threaded_application extends Application {
 					try {
 						clientSocket=new Socket();               //look for someone to answer on specified socket, and set timeout
 						InetSocketAddress sa = new InetSocketAddress(host_ip, port);
-						clientSocket.connect(sa, 1500);  //TODO: adjust these timeouts
-						clientSocket.setSoTimeout(300);
+						clientSocket.connect(sa, 3000);  //TODO: adjust these timeouts, or set in prefs
+						clientSocket.setSoTimeout(500);
 					}
 					catch(Exception except)  {
 						process_comm_error("Can't connect to host "+host_ip+" and port "+port+

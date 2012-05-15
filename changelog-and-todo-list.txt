@@ -1,5 +1,8 @@
 **Version 2.3
  * lock orientation to portrait for most screens
+ * add Mfg to roster details (overlooked earlier)
+ * prevent "bounce" when slow server sends old speed.  ED was sending it back as new request.
+ * increase server connection timeout values
 **Version 2.2
  * use roster name when selecting loco, to handle multiples with same address
  * show roster details (including comments) on long-press on roster entry in list
@@ -150,6 +153,7 @@
  *   added html About page
  */
 /*
+ *   TODO: use pref for orientation of all screens, not just throttle
  *   TODO: reload last web page when auto-rotating (or don't reload at all)
  *   TODO: process MS-L2591<;> messages, sent when WiT shuts down, and after WiT eStops after timeout
  *   TODO: show icon in notification bar if app is running but not visible
@@ -178,6 +182,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: send function commands to "lead" loco of a JMRI-defined consist
  *   TODO: catch ArrayIndexOutOfBoundsException (reported to Market)
  *   TODO: remove swipe from slider area
  *   TODO: additional left margin on throttle

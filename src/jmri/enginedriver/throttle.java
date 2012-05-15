@@ -88,6 +88,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 	private char whichVolume = 'T';
 
+	private boolean slider_moved_by_server = false;			// true if the slider was moved due to a processed response
+
 	//these are used for gesture tracking
 	private float gestureStartX = 0;
 	private float gestureStartY = 0;
@@ -166,7 +168,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 						  else if (com3 == 'V') {
 							  try {
 								  int speed = Integer.parseInt(ls[1].substring(1));
+								  slider_moved_by_server = true;
 								  set_speed_slider(thrSel, speed);	//update speed slider and indicator
+								  slider_moved_by_server = false;
 							  }
 							  catch(Exception e) {
 							  }
@@ -269,6 +273,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	  }
 	  if(speed < 0)
 		  speed = 0;
+	  
 	  throttle_slider.setProgress(speed);
   }
 
@@ -650,20 +655,20 @@ void start_select_loco_activity(char whichThrottle)
     	return(gestureInProgress);
     }
 
-    public void onProgressChanged(SeekBar throttle, int speed, boolean fromUser)
-    {
-//        Log.d("Engine_Driver", "onProgChanged speed " + speed);
-      sendSpeedMsg(whichThrottle, speed);
+    public void onProgressChanged(SeekBar throttle, int speed, boolean fromUser) {
 
-/* 
- * this code (re)triggers speed feedback for the speed indication
- *        
-      mainapp.throttle_msg_handler.removeCallbacks(speedUpdate);
-      mainapp.throttle_msg_handler.postDelayed(speedUpdate, speedUpdateDelay);
-*
-*  for now just display the setpoint:
-*/      
-		  setDisplayedSpeed(whichThrottle, speed);
+    	//Log.d("Engine_Driver", "onProgChanged speed=" + speed + " smbs=" + slider_moved_by_server);
+    	setDisplayedSpeed(whichThrottle, speed);
+    	
+    	//only send update to JMRI if initiated by a user touch (prevents "bouncing")
+    	if (slider_moved_by_server) {
+    		slider_moved_by_server = false;  //reset before return
+    		return;
+    	}
+
+		//send request for new speed to WiT server
+		sendSpeedMsg(whichThrottle, speed);
+
     }
 
 	@Override
