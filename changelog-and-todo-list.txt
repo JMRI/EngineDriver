@@ -3,6 +3,8 @@
  * add Mfg to roster details (overlooked earlier)
  * prevent "bounce" when slow server sends old speed.  ED was sending it back as new request.
  * increase server connection timeout values
+ * track individual addresses/rosterids for acquired locos
+ * process MT-xxx messages to remove loco from a throttle
 **Version 2.2
  * use roster name when selecting loco, to handle multiples with same address
  * show roster details (including comments) on long-press on roster entry in list
@@ -204,7 +206,6 @@
  *   TODO: add close button and roster image to details dialog
  *   TODO: handle direction of locos in MT consist 
  *   TODO: clean up code for  new MT (Multi-throttle) feature 
- *   TODO: use new 'E' and 'c' WiT commands to select by roster name instead of address (to handle duplicates)
  *   TODO: don't show or allow entry of loco if already in use on "other" throttle or in a consist
  *   TODO: simplify select_loco by removing handler
  * preferences:

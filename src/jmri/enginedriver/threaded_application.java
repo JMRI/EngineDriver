@@ -62,6 +62,8 @@ public class threaded_application extends Application {
 	String roster_list_string; //roster list
 	LinkedHashMap<Integer, String> function_labels_T;  //function#s and labels from roster for throttle #1
 	LinkedHashMap<Integer, String> function_labels_S;  //function#s and labels from roster for throttle #2
+	LinkedHashMap<String, String> locos_on_T;  //list of locos currently assigned to throttle #1
+	LinkedHashMap<String, String> locos_on_S;  //list of locos currently assigned to throttle #2
 	LinkedHashMap<Integer, String> function_labels_default;  //function#s and labels from local settings
 	boolean[] function_states_T;  //current function states for first throttle
 	boolean[] function_states_S;  //current function states for second throttle
@@ -310,6 +312,8 @@ public class threaded_application extends Application {
 					roster = null;
 					function_labels_S = new LinkedHashMap<Integer, String>();
 					function_labels_T = new LinkedHashMap<Integer, String>();
+					locos_on_T = new LinkedHashMap<String, String>();
+					locos_on_S = new LinkedHashMap<String, String>();
 					function_labels_default = new LinkedHashMap<Integer, String>();
 					function_states_T = new boolean[32];		// also allocated in onCreate() ???
 					function_states_S = new boolean[32];
@@ -341,6 +345,7 @@ public class threaded_application extends Application {
 						//              loco_address_T = -1;
 						function_labels_T = new LinkedHashMap<Integer, String>();
 						function_states_T = new boolean[32];
+						locos_on_T = new LinkedHashMap<String, String>();
 
 					} else if (!"Not Set".equals(loco_string_S)) {
 						doRelease = true;
@@ -348,6 +353,7 @@ public class threaded_application extends Application {
 						//              loco_address_S = -1;
 						function_labels_S = new LinkedHashMap<Integer, String>();
 						function_states_S = new boolean[32];
+						locos_on_S = new LinkedHashMap<String, String>();
 					}
 					if (doRelease) {
 						//        	Boolean f = getApplicationContext().getResources().getBoolean(R.string.prefStopOnReleaseDefaultValue); TODO: fix this
@@ -495,6 +501,19 @@ public class threaded_application extends Application {
 			}
 		}
 
+		private String setLocoString(LinkedHashMap<String,String> locos) {
+			String s = "";
+			String sep = "";
+			for (String loco : locos.values()) {  // loop thru locos
+				s += sep + loco;
+				sep = " +";
+			}
+			if (s.equals("")) {
+				s = "Not Set";
+			}
+			return s;
+		}
+
 		private void process_response(String response_str) {
 			/* see java/arc/jmri/jmrit/withrottle/deviceserver.java for server code and some documentation
     	  VN<Version#>
@@ -519,31 +538,43 @@ public class threaded_application extends Application {
 			case 'M': 
 				//loco was successfully added to a throttle
 				if 	(response_str.charAt(2) == '+') {  //"MT+L2591<;>"  loco was added
+					char whichThrottle = response_str.charAt(1);
 					String[] ls = splitByString(response_str.substring(3),"<;>");//drop off separator
 					String rosterName = "rostername";
+					String addr = ls[0].substring(1) + "(" + ls[0].substring(0,1) + ")";  //reformat from L2591 to 2591(L)  
 					if (last_roster_entry_requested.equals("")) {  //use remembered name, or look up from address
 						//look up name from address
-						String addr = ls[0].substring(1) + "(" + ls[0].substring(0,1) + ")";  //reformat from L2591 to 2591(L)  
 						rosterName = get_loconame_from_address_string(addr);  //lookup name in roster
 					} else {
 						rosterName = last_roster_entry_requested;
 					}
 
-					if 	(response_str.charAt(1) == 'T') {
-						if ("Not Set".equals(loco_string_T)) {  
-							loco_string_T = ""; 
-						} else {
-							loco_string_T += " +"; 
-						}
-						loco_string_T += rosterName;  //append new loco to app variable
+					if 	(whichThrottle == 'T') {
+//						if ("Not Set".equals(loco_string_T)) {  
+//							loco_string_T = ""; 
+//						} else {
+//							loco_string_T += " +"; 
+//						}
+//						loco_string_T += rosterName;  //append new loco to app variable
+						locos_on_T.put(addr, rosterName);  //add new loco 
+						loco_string_T = setLocoString(locos_on_T);  //reformat changed loco string
 					} else {
-						if ("Not Set".equals(loco_string_S)) {  
-							loco_string_S = ""; 
-						} else {
-							loco_string_S += " +"; 
-						}
-						loco_string_S += rosterName;  //append new loco to app variable
+						locos_on_S.put(addr, rosterName);
+						loco_string_S = setLocoString(locos_on_S);
 					}
+				} else if (response_str.charAt(2) == '-'){ //"MS-L6318<;>"  loco removed from throttle
+					char whichThrottle = response_str.charAt(1);
+					String[] ls = splitByString(response_str.substring(3),"<;>");//drop off separator
+					String addr = ls[0].substring(1) + "(" + ls[0].substring(0,1) + ")";  //reformat from L2591 to 2591(L)  
+					if (whichThrottle == 'T') {
+						locos_on_T.remove(addr);
+						loco_string_T = setLocoString(locos_on_T);  //reformat changed loco string
+					} else {
+						locos_on_S.remove(addr);
+						loco_string_S = setLocoString(locos_on_S);  //reformat changed loco string
+					}
+					Log.d("Engine_Driver", "loco " + addr + " dropped from " + whichThrottle);
+
 				} else if (response_str.charAt(2) == 'L'){ //list of function buttons
 					String[] ls = splitByString(response_str,"<;>");//drop off front portion
 					process_roster_function_string("RF29}|{1234(L)" + ls[1], response_str.substring(1,2));  //prepend some stuff to match old-style
@@ -1180,6 +1211,8 @@ public class threaded_application extends Application {
 					rt_state_names = null;
 					loco_string_T = "Not Set";
 					loco_string_S = "Not Set";
+					locos_on_T = new LinkedHashMap<String, String>();
+					locos_on_S = new LinkedHashMap<String, String>();
 					function_labels_S = new LinkedHashMap<Integer, String>();
 					function_labels_T = new LinkedHashMap<Integer, String>();
 					function_labels_default = new LinkedHashMap<Integer, String>();
