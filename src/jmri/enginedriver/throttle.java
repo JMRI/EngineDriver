@@ -24,7 +24,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -84,7 +83,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static double SPEED_TO_DISPLAY_T = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL_T);
 	private static double SPEED_TO_DISPLAY_S = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL_S);
 	
-	private static final long speedUpdateDelay = 500;	// idle time in milliseconds after speed change before requesting speed update 
+//	private static final long speedUpdateDelay = 500;	// idle time in milliseconds after speed change before requesting speed update 
 
 	private char whichVolume = 'T';
 
@@ -703,12 +702,13 @@ void start_select_loco_activity(char whichThrottle)
 */
   }
 
-  private void requestSpeedMsg(char whichThrottle) {
+/*  private void requestSpeedMsg(char whichThrottle) {
 		Message msg=Message.obtain();
 		msg.what=message_type.REQ_VELOCITY;
 		msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
 		mainapp.comm_msg_handler.sendMessage(msg);
 }
+*/
 
   private void sendSpeedMsg(char whichThrottle, int speed) {
 		Message msg=Message.obtain();

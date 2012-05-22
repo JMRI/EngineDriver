@@ -89,7 +89,7 @@
             android:layout_alignBottom="@id/address_length"
             android:layout_below="@id/select_loco_label"
             android:layout_toRightOf="@id/address_length"
-            android:enabled="false"
+            android:state_enabled="false"
             android:text="@string/acquire_button" />
     </RelativeLayout>
     <TextView
@@ -105,7 +105,7 @@
         <ListView
             android:id="@+id/roster_list"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="fill_parent" >
         </ListView>
     </LinearLayout>
     <TextView
@@ -122,7 +122,7 @@
         <ListView
             android:id="@+id/engine_list"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="fill_parent" >
         </ListView>
     </LinearLayout>
     <TextView

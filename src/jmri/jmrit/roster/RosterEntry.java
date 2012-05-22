@@ -73,9 +73,9 @@ public class RosterEntry {
 			//decide which icon path to use, path was changed with jetty upgrade, 2.99.5
 		    HashMap<String, String> metadata = threaded_application.metadata;  //reference global metadata 
 			if (metadata != null && metadata.size() > 0 && metadata.get("JMRIVERCANON") != null && metadata.get("JMRIVERCANON").compareTo("2.99.4") > 0 ) {
-				return rosterURL+URLEncoder.encode(_id)+"/icon";
+				return rosterURL + URLEncoder.encode(_id).replace("+", "%20") + "/icon";  //roster servlet doesn't like the + replacements
 			} 
-			return resourcesURL+URLEncoder.encode(_iconFilePath);
+			return resourcesURL + URLEncoder.encode(_iconFilePath);
 		}
 		return null;
 		

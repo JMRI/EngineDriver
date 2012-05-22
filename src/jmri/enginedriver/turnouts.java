@@ -27,7 +27,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
@@ -54,7 +53,7 @@ public class turnouts extends Activity implements OnGestureListener {
 	private SharedPreferences prefs;
 	
 	private static final int GONE = 8;
-	private static final int VISIBLE = 0;
+//	private static final int VISIBLE = 0;
 
 	ArrayList<HashMap<String, String> > turnouts_list;
 	private SimpleAdapter turnouts_list_adapter;

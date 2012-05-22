@@ -5,6 +5,9 @@
  * increase server connection timeout values
  * track individual addresses/rosterids for acquired locos
  * process MT-xxx messages to remove loco from a throttle
+ * handle space char in roster id as %20, not +, for new jetty server
+ * increased caching of roster icon images
+ * prevent multiple requests of same image when opening roster (was due to resizing of view)
 **Version 2.2
  * use roster name when selecting loco, to handle multiples with same address
  * show roster details (including comments) on long-press on roster entry in list
@@ -157,7 +160,6 @@
 /*
  *   TODO: use pref for orientation of all screens, not just throttle
  *   TODO: reload last web page when auto-rotating (or don't reload at all)
- *   TODO: process MS-L2591<;> messages, sent when WiT shuts down, and after WiT eStops after timeout
  *   TODO: show icon in notification bar if app is running but not visible
  *   TODO: allow user to configure side-by-side panels for pads, etc.
  *   TODO: add consist creation/editing features
@@ -206,12 +208,12 @@
  *   TODO: add close button and roster image to details dialog
  *   TODO: handle direction of locos in MT consist 
  *   TODO: clean up code for  new MT (Multi-throttle) feature 
- *   TODO: don't show or allow entry of loco if already in use on "other" throttle or in a consist
  *   TODO: simplify select_loco by removing handler
  * preferences:
  *   TODO: show error if invalid entry
  *
  * These require changes to WiThrottle
+ *   WiT send MT-xxx when commands are received from a client for a loco that is not active.  (to get ED up to date with server after connection loss)
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
  *   disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
  *   add "E"rror response

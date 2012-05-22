@@ -41,9 +41,6 @@ import android.util.Log;
 import java.io.FileReader;
 import java.lang.reflect.Method;
 
-import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceInfo;
-
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -190,7 +187,8 @@ public class connection_activity extends Activity {
   //Handle messages from the communication thread back to the UI thread.
   class ui_handler extends Handler
   {
-    public void handleMessage(Message msg)
+    @SuppressWarnings("unchecked")
+	public void handleMessage(Message msg)
     {
       switch(msg.what)
       {
@@ -549,7 +547,7 @@ public class connection_activity extends Activity {
 
 
 	//for debugging only
-	private void withrottle_list() {		
+/*	private void withrottle_list() {		
 		try {
 			JmDNS jmdns = JmDNS.create();
 			ServiceInfo[] infos = jmdns.list("_withrottle._tcp.local.");
@@ -568,6 +566,6 @@ public class connection_activity extends Activity {
 			e.printStackTrace();
 		}
 	}
-
+*/
 
 }
