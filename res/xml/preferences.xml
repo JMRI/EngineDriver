@@ -34,6 +34,15 @@
             android:summary="@string/prefMaximumThrottleSummary"
             android:title="@string/prefMaximumThrottleTitle" >
         </EditTextPreference>
+        <EditTextPreference
+            android:defaultValue="@string/prefMaximumThrottleChangeDefaultValue"
+            android:dialogTitle="@string/prefMaximumThrottleChangeTitle"
+            android:key="maximum_throttle_change_preference"
+            android:maxLength="2"
+            android:numeric="integer"
+            android:summary="@string/prefMaximumThrottleChangeSummary"
+            android:title="@string/prefMaximumThrottleChangeTitle" >
+        </EditTextPreference>
         <CheckBoxPreference
             android:defaultValue="@string/prefIncreaseSliderHeightDefaultValue"
             android:dialogTitle="@string/prefIncreaseSliderHeightTitle"

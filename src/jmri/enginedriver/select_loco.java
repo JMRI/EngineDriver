@@ -602,9 +602,6 @@ public class select_loco extends Activity {
         	String iconURL = hm.get("roster_icon");
         	if ((iconURL != null) && (iconURL.length()>0)){
 				ImageView imageView = (ImageView) view.findViewById(R.id.roster_icon_image);
-				if (hm.get("roster_name").equals("CSX37")) {
-					Log.d("ED", "view="+imageView.toString()+"icon="+iconURL);
-				}
 				mainapp.imageDownloader.download(iconURL, imageView);
         	} else {
         		View v = view.findViewById(R.id.roster_icon_image);

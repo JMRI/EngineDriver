@@ -79,6 +79,9 @@
     <string name="prefMaximumThrottleTitle">Maximum Throttle Value</string>
     <string name="prefMaximumThrottleDefaultValue">99</string>
     <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value</string>
+    <string name="prefMaximumThrottleChangeTitle">Maximum Throttle Change</string>
+    <string name="prefMaximumThrottleChangeDefaultValue">25</string>
+    <string name="prefMaximumThrottleChangeSummary">Maximum Allowed throttle change in %</string>
     <string name="prefWebViewLocationTitle">Web View Location?</string>
     <string name="prefWebViewLocationDefaultValue">none</string>
     <string name="prefWebViewLocationSummary">Include web view on Throttle pane?</string>

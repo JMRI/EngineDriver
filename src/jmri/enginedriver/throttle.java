@@ -66,6 +66,7 @@ import android.view.MotionEvent;
 import android.os.Message;
 import android.widget.TextView;
 import android.gesture.GestureOverlayView;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 
 public class throttle extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
@@ -89,6 +90,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 	private boolean slider_moved_by_server = false;			// true if the slider was moved due to a processed response
 
+	int max_throttle_change = 99;  //maximum allowable change of the sliders, set in preferences
+	
+	//screen coordinates for throttle sliders, so we can ignore swipe on them
+	int T_top;  
+	int T_bottom;  
+	int S_top;  
+	int S_bottom;  
+	
 	//these are used for gesture tracking
 	private float gestureStartX = 0;
 	private float gestureStartY = 0;
@@ -635,6 +644,7 @@ void start_select_loco_activity(char whichThrottle)
   {
       char whichThrottle;
 	  SeekBar speed_slider;
+	  int lastSpeed;
       
     public throttle_listener(char new_whichThrottle)    {
 	    whichThrottle = new_whichThrottle;   	//store values for this listener
@@ -655,19 +665,37 @@ void start_select_loco_activity(char whichThrottle)
     }
 
     public void onProgressChanged(SeekBar throttle, int speed, boolean fromUser) {
-
-    	//Log.d("Engine_Driver", "onProgChanged speed=" + speed + " smbs=" + slider_moved_by_server);
+    	
+    	//Log.d("Engine_Driver", "onProgChanged " + speed + "-" + lastSpeed + "=" + (speed-lastSpeed));
+    	
     	setDisplayedSpeed(whichThrottle, speed);
     	
-    	//only send update to JMRI if initiated by a user touch (prevents "bouncing")
+    	//only continue (limit, send to JMRI) if change was initiated by a user touch (prevents "bouncing")
     	if (slider_moved_by_server) {
+    		lastSpeed = speed;
     		slider_moved_by_server = false;  //reset before return
     		return;
     	}
 
-		//send request for new speed to WiT server
+    	//limit the percent change requested (from prefs)
+    	double speedScale;
+    	if (whichThrottle == 'T') {
+    		speedScale = SPEED_TO_DISPLAY_T;
+    	} else {
+    		speedScale = SPEED_TO_DISPLAY_S;
+    	}
+    	if ((speed - lastSpeed) > (max_throttle_change / speedScale)) { 
+        	//Log.d("Engine_Driver", "onProgressChanged -- throttling change");
+    		speed = lastSpeed + 1;  //advance, but slowly, so user knows something is happening
+    		throttle.setProgress(speed);
+    	}
+
+    	//send request for new speed to WiT server
 		sendSpeedMsg(whichThrottle, speed);
 
+		lastSpeed = speed;
+
+		return;
     }
 
 	@Override
@@ -735,9 +763,18 @@ void start_select_loco_activity(char whichThrottle)
   @Override
   public void onResume() {
 	  super.onResume();
-	
+
 	  setActivityOrientation(this);  //set throttle screen orientation based on prefs
-	  
+
+	  // set max allowed change for throttles from prefs
+	  String s = prefs.getString("maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
+	  try {
+		  max_throttle_change = Integer.parseInt(s);
+	  } 
+	  catch (Exception e) {
+		  max_throttle_change = 25;
+	  }
+
 	  //format the screen area
 	  enable_disable_buttons('T'); 
 	  enable_disable_buttons('S');  
@@ -748,7 +785,6 @@ void start_select_loco_activity(char whichThrottle)
 
 	  set_labels();
 
-  
   }
 
 
@@ -1313,9 +1349,30 @@ public void onStart() {
 	}
 	
 	private void gestureStart(MotionEvent event ) {
-//        Log.d("Engine_Driver", "gestureStart action " + event.getAction());
 		gestureStartX = event.getX();
 		gestureStartY = event.getY();
+        //Log.d("Engine_Driver", "gestureStart y=" + gestureStartY);
+        
+		//TODO: move the calc of slider coords elsewhere (for performance)
+		//TODO: if slider is disabled, don't consider it in this logic
+		//set global variables for slider tops and bottoms, so they can be ignored for swipe 
+        View tv=findViewById(R.id.throttle_T);
+        View sbT=findViewById(R.id.speed_T);
+        T_top= tv.getTop()+sbT.getTop();
+        T_bottom= tv.getTop()+sbT.getBottom();
+        tv=findViewById(R.id.throttle_S);
+        View sbS=findViewById(R.id.speed_S);
+        S_top= tv.getTop()+sbS.getTop();
+        S_bottom= tv.getTop()+sbS.getBottom();
+        //Log.d("Engine_Driver","y="+gestureStartY+" T_top="+T_top+" T_bottom="+T_bottom+" S_top="+S_top+" S_bottom="+S_bottom);
+        
+        //if gesture is attempting to start over a slider, ignore it and return immediately.
+        if ((gestureStartY >= T_top && gestureStartY <= T_bottom) ||
+            (gestureStartY >= S_top && gestureStartY <= S_bottom)) {
+        	//Log.d("Engine_Driver","exiting gestureStart");
+        	return;
+        }
+        
 		gestureInProgress = true;
 		gestureFailed = false;
 		gestureLastCheckTime = event.getEventTime();
