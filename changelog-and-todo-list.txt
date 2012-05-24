@@ -10,6 +10,7 @@
  * prevent multiple requests of same image when opening roster (was due to resizing of view)
  * pref to limit max throttle change, to prevent accidental speedup when trying to press reverse.
  * ignore swipe on throttle sliders
+ * re-retrieve roster details when roster received
 **Version 2.2
  * use roster name when selecting loco, to handle multiples with same address
  * show roster details (including comments) on long-press on roster entry in list
@@ -160,7 +161,7 @@
  *   added html About page
  */
 /*
- *   TODO: add e-stop button to all screens
+ *   TODO: add e-stop button to all screens (enabled by pref)
  *   TODO: use pref for orientation of all screens, not just throttle
  *   TODO: reload last web page when auto-rotating (or don't reload at all)
  *   TODO: show icon in notification bar if app is running but not visible
@@ -191,7 +192,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
- *   TODO: move lots of stuff to OnStart
+ *   TODO: move lots of stuff from set_labels() to OnResume (or maybe not, since that precedes the layout of views?)
  *   TODO: catch ArrayIndexOutOfBoundsException (reported to Market)
  *   TODO: additional left margin on throttle
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
@@ -208,8 +209,7 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
- *   TODO: re-retrieve roster details when roster received
- *   TODO: remove deleted consists from roster list
+ *   TODO: fix missing background texture in unused portion of roster list view 
  *   TODO: add close button and roster image to details dialog
  *   TODO: handle direction of locos in MT consist 
  *   TODO: clean up code for  new MT (Multi-throttle) feature 

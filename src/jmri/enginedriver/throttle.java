@@ -203,8 +203,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				  set_labels();
 				  break;
 
-			  case 'R': //roster function labels - legacy
-				  if(thrSel == 'F' || thrSel == 'S') {
+			  case 'R': 
+				  if(thrSel == 'F' || thrSel == 'S') { //roster function labels - legacy
 					  ViewGroup tv;
 					  if (thrSel == 'F') {			// used to use 'F' instead of 'T'
 						  tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
@@ -215,6 +215,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					  set_function_labels_and_listeners_for_view(thrSel);
 					  enable_disable_buttons_for_view(tv, true);
 					  set_labels();
+
+				  } else if (thrSel == 'L') { //roster list received, request details from web server
+					  //Log.d("Engine_Driver", "got updated roster list, requesting details");
+					  dlRosterTask = new DownloadRosterTask();
+					  dlRosterTask.getRoster();
+					  
 				  } else {
 					  try {
 						  String scom2 = response_str.substring(1,6);
@@ -230,7 +236,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				  break;
 			  case 'P': //panel info
 				  if (thrSel == 'W') {		// PW - web server port info
-					  // kick off web-dependent items
+					  // try web-dependent items again
 					  dlMetadataTask.getMetadata();
 					  dlRosterTask.getRoster();
 				  }
@@ -1490,6 +1496,7 @@ public void onStart() {
     	protected Integer doInBackground(String... params) {
     		Log.d("Engine_Driver","Background loading roster from " + params[0].toString());
     		RosterLoader rl = new RosterLoader(params[0].toString());
+    		//if (mainapp.roster != null) mainapp.roster.clear();
     		mainapp.roster = rl.parse();
     		Integer re = 0;
     		if (mainapp.roster != null) {
@@ -1514,6 +1521,7 @@ public void onStart() {
     		}
     		if (mainapp.web_server_port > 0 && this.getStatus() == AsyncTask.Status.PENDING) {
    				this.execute("http://"+mainapp.host_ip+":"+mainapp.web_server_port+"/prefs/roster.xml");
+    			//Log.d("Engine_Driver","executed roster download");
     		}
         }
         void stopRoster() {

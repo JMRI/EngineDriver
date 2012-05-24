@@ -624,6 +624,7 @@ public class threaded_application extends Application {
 				case 'C': 
 					if 	(response_str.charAt(2) == 'C' || response_str.charAt(2) == 'L') {  //RCC1 or RCL1 (treated the same in ED)
 						consist_allowed = true;  //set app variable
+						clear_consist_list();
 					} else	if 	(response_str.charAt(2) == 'D') {  //RCD}|{88(S)}|{88(S)]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
 						process_consist_list(response_str);
 					}
@@ -778,6 +779,11 @@ public class threaded_application extends Application {
 				consist_desc = consist_name; // use entered name if significant
 			}
 			consist_entries.put(consist_addr, consist_desc); 
+		}
+
+		//clear out any stored consists
+		private void clear_consist_list() {
+			consist_entries.clear();
 		}
 
 
