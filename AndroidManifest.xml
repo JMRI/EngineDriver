@@ -17,7 +17,7 @@
       android:label="@string/app_name"
       android:icon="@drawable/icon"
       android:name="jmri.enginedriver.threaded_application"
-      android:description="@string/app_description" android:theme="@style/app_theme" android:debuggable="true">
+      android:description="@string/app_description" android:theme="@style/app_theme" android:debuggable="false">
       <activity
          android:name=".connection_activity"
          android:label="@string/app_name_connect" android:screenOrientation="portrait">
