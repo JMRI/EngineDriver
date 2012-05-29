@@ -13,7 +13,7 @@ import javax.jmdns.impl.constants.DNSConstants;
 
 /**
  * DNSMessage define a DNS message either incoming or outgoing.
- * 
+ *
  * @author Werner Randelshofer, Rick Blair, Pierre Frisch
  */
 public abstract class DNSMessage {
@@ -182,8 +182,27 @@ public abstract class DNSMessage {
     }
 
     /**
+     * Check is the response code is valid<br/>
+     * The only valid value is zero all other values signify an error and the message must be ignored.
+     *
+     * @return true if the message has a valid response code.
+     */
+    public boolean isValidResponseCode() {
+        return (_flags & DNSConstants.FLAGS_RCODE) == 0;
+    }
+
+    /**
+     * Returns the operation code value. Currently only standard query 0 is valid.
+     *
+     * @return The operation code value.
+     */
+    public int getOperationCode() {
+        return (_flags & DNSConstants.FLAGS_OPCODE) >> 11;
+    }
+
+    /**
      * Check if the message is truncated.
-     * 
+     *
      * @return true if the message was truncated
      */
     public boolean isTruncated() {
@@ -191,8 +210,17 @@ public abstract class DNSMessage {
     }
 
     /**
+     * Check if the message is an authoritative answer.
+     *
+     * @return true if the message is an authoritative answer
+     */
+    public boolean isAuthoritativeAnswer() {
+        return (_flags & DNSConstants.FLAGS_AA) != 0;
+    }
+
+    /**
      * Check if the message is a query.
-     * 
+     *
      * @return true is the message is a query
      */
     public boolean isQuery() {
@@ -201,7 +229,7 @@ public abstract class DNSMessage {
 
     /**
      * Check if the message is a response.
-     * 
+     *
      * @return true is the message is a response
      */
     public boolean isResponse() {
@@ -210,7 +238,7 @@ public abstract class DNSMessage {
 
     /**
      * Check if the message is empty
-     * 
+     *
      * @return true is the message is empty
      */
     public boolean isEmpty() {
@@ -249,7 +277,7 @@ public abstract class DNSMessage {
 
     /**
      * Debugging.
-     * 
+     *
      * @param data
      * @return data dump
      */

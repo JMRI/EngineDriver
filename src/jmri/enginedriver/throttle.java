@@ -66,7 +66,6 @@ import android.view.MotionEvent;
 import android.os.Message;
 import android.widget.TextView;
 import android.gesture.GestureOverlayView;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 
 public class throttle extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {

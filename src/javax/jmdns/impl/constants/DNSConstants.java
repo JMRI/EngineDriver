@@ -27,6 +27,7 @@ public final class DNSConstants {
     public static final int    FLAGS_QR_QUERY                 = 0x0000;                                                       // Query
     public static final int    FLAGS_QR_RESPONSE              = 0x8000;                                                       // Response
 
+    public static final int    FLAGS_OPCODE                   = 0x7800;                                                       // Operation code
     public static final int    FLAGS_AA                       = 0x0400;                                                       // Authorative answer
     public static final int    FLAGS_TC                       = 0x0200;                                                       // Truncated
     public static final int    FLAGS_RD                       = 0x0100;                                                       // Recursion desired
@@ -35,6 +36,7 @@ public final class DNSConstants {
     public static final int    FLAGS_Z                        = 0x0040;                                                       // Zero
     public static final int    FLAGS_AD                       = 0x0020;                                                       // Authentic data
     public static final int    FLAGS_CD                       = 0x0010;                                                       // Checking disabled
+    public static final int    FLAGS_RCODE                    = 0x000F;                                                       // Response code
 
     // Time Intervals for various functions
 

@@ -19,7 +19,7 @@ import javax.jmdns.impl.JmmDNSImpl;
  * This class will monitor network topology changes, and will create or destroy JmDNS instances as required. It is your responsibility to maintain services registration (hint: use a {@link NetworkTopologyListener}).<br/>
  * Most of this class methods have no notion of transaction: if an Exception is raised in the middle of execution, you may be in an incoherent state.
  * <p>
- * <b>Note:</b> This API is experimental and may change in the future please let us know what work and what does not work in you application.
+ * <b>Note:</b> This API is experimental and may change in the future please let us know what work and what does not work in your application.
  * </p>
  *
  * @author C&eacute;drik Lime, Pierre Frisch
@@ -105,6 +105,18 @@ public interface JmmDNS extends Closeable {
                 }
             }
             return _instance;
+        }
+
+        /**
+         * Closes the instance if still running and discard it.
+         *
+         * @throws IOException
+         */
+        public static void close() throws IOException {
+            synchronized (Factory.class) {
+                _instance.close();
+                _instance = null;
+            }
         }
     }
 
