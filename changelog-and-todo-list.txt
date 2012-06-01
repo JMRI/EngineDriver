@@ -1,6 +1,8 @@
 **Version 2.4
  * update JmDNS
  * fixed opaque "footer" in roster listview (seen when few items exist)
+ * catch error when loco address left blank
+ * allow entry of complete http* url for web views
 **Version 2.3
  * lock orientation to portrait for most screens
  * add Mfg to roster details (overlooked earlier)

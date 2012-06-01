@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -294,7 +295,12 @@ public class select_loco extends Activity {
 	public class button_listener implements View.OnClickListener {
 		public void onClick(View v) {
 			EditText entry = (EditText) findViewById(R.id.loco_address);
-			engine_address = new Integer(entry.getText().toString());
+			try {
+				engine_address = new Integer(entry.getText().toString());
+			} catch (NumberFormatException e) {
+				Toast.makeText(getApplicationContext(), "ERROR - Please enter a valid DCC address.\n"+e.getMessage(), Toast.LENGTH_SHORT).show();
+				return;
+			}
 			Spinner spinner = (Spinner) findViewById(R.id.address_length);
 			address_size = spinner.getSelectedItemPosition();
 			acquire_engine();

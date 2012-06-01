@@ -46,8 +46,11 @@ public class web_activity extends Activity {
     String url = "file:///android_asset/feature_not_available.html";
     threaded_application mainapp = (threaded_application) getApplication();
     if (mainapp.web_server_port != null && mainapp.web_server_port > 0) {
-        String s = prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
-    	url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/" + s;
+    	url = prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
+    	if (!url.startsWith("http")) {  //if url starts with http, use it as is, else prepend servername and port
+    		url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/" + url;
+    	}
+        
     }
     
 	WebView webView = (WebView) findViewById(R.id.webview);

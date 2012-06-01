@@ -908,8 +908,10 @@ public void onStart() {
 	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
 
 	  if (!mainapp.webViewLocation.equals("none")) {
-		  String s = prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
-		  String url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/" + s;
+		  String url = prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
+		  if (!url.startsWith("http")) {  //if url starts with http, use it as is, else prepend servername and port
+			  url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/" + url;
+		  }
 		  if (webView.getUrl() == null) {
 			  if (mainapp.web_server_port != null && mainapp.web_server_port > 0) {
 				  webView.getSettings().setJavaScriptEnabled(true);
