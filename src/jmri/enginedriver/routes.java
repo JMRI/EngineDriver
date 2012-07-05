@@ -19,6 +19,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import android.app.Activity;
@@ -78,6 +80,14 @@ public class routes extends Activity  implements OnGestureListener {
 		
 	    boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference", false);  //TODO fix getting from strings
 
+		//specify logic for sort comparison (by username)
+	    Comparator<HashMap<String, String>> route_comparator = new Comparator<HashMap<String, String>>() {
+			@Override
+			public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
+				return arg0.get("rt_user_name").compareToIgnoreCase(arg1.get("rt_user_name"));
+			}
+		};
+
 		//clear and rebuild
 		routes_list.clear();
 		if (mainapp.rt_state_names != null) {  //not allowed
@@ -123,7 +133,12 @@ public class routes extends Activity  implements OnGestureListener {
 			b.setEnabled(false);
 			b.setText(getString(R.string.not_allowed));
 		}  //end statenames  is null
+		
+		//sort by username
+		Collections.sort(routes_list, route_comparator);
+
 		routes_list_adapter.notifyDataSetChanged();
+
 	}
 
 	  //Handle messages from the communication thread back to this thread (responses from withrottle)

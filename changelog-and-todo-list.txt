@@ -1,8 +1,10 @@
 **Version 2.4
- * update JmDNS
+ * update JmDNS to 3.4.2+
  * fixed opaque "footer" in roster listview (seen when few items exist)
  * catch error when loco address left blank
  * allow entry of complete http* url for web views
+ * sort routes by user name
+ * sort turnouts by user name
 **Version 2.3
  * lock orientation to portrait for most screens
  * add Mfg to roster details (overlooked earlier)
@@ -214,7 +216,6 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
- *   TODO: fix missing background texture in unused portion of roster list view 
  *   TODO: add close button and roster image to details dialog
  *   TODO: handle direction of locos in MT consist 
  *   TODO: clean up code for  new MT (Multi-throttle) feature 

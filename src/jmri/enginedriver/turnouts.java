@@ -19,6 +19,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import android.app.Activity;
@@ -79,6 +81,15 @@ public class turnouts extends Activity implements OnGestureListener {
 	  }	  
 
 	public void refresh_turnout_view() {
+		
+		//specify logic for sort comparison (by username)
+	    Comparator<HashMap<String, String>> route_comparator = new Comparator<HashMap<String, String>>() {
+			@Override
+			public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
+				return arg0.get("to_user_name").compareToIgnoreCase(arg1.get("to_user_name"));
+			}
+		};
+
 		//show selected hardware system
 	    String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
 		TextView hstv =(TextView)findViewById(R.id.hardware_system);
@@ -134,6 +145,10 @@ public class turnouts extends Activity implements OnGestureListener {
 			b.setText(getString(R.string.not_allowed));
 
 		}  //end statenames is null
+		
+		//sort by username
+		Collections.sort(turnouts_list, route_comparator);
+
 		turnouts_list_adapter.notifyDataSetChanged();  //update the list
 	}
 	  

@@ -132,13 +132,13 @@ public class select_loco extends Activity {
 				} // for consistname
 			} //if consist_entries not null
 			
-			Comparator<HashMap<String, String>> comperator = new Comparator<HashMap<String, String>>() {
+			Comparator<HashMap<String, String>> comparator = new Comparator<HashMap<String, String>>() {
 				@Override
 				public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
 					return arg0.get("roster_name").compareToIgnoreCase(arg1.get("roster_name"));
 				}
 			};
-			Collections.sort(roster_list, comperator);
+			Collections.sort(roster_list, comparator);
 			
 			roster_list_adapter.notifyDataSetChanged();
 			View v = (View) findViewById(R.id.roster_list_heading);
