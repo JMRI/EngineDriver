@@ -76,7 +76,7 @@
         <item>Bottom</item>
         <item>none</item>
     </string-array>
-    <string-array name="ThrottleOrientation">
+    <string-array name="OrientationOptions">
         <item>Portrait</item>
         <item>Landscape</item>
         <item>Auto-Rotate</item>

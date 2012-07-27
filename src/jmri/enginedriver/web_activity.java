@@ -18,9 +18,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -32,10 +34,10 @@ import android.webkit.WebViewClient;
 
 public class web_activity extends Activity {
 
-	private SharedPreferences prefs;
+	private static SharedPreferences prefs;
 
   /** Called when the activity is first created. */
-  @Override
+  @SuppressLint("SetJavaScriptEnabled") @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
@@ -68,6 +70,14 @@ public class web_activity extends Activity {
 	};
 	webView.setWebViewClient(EDWebClient);
 
+  };
+
+  @Override
+  public void onResume() {
+	  Log.d("Engine_Driver","web_activity.onResume() called");
+ 	  super.onResume();
+
+ 	  setActivityOrientation(this);  //set screen orientation based on prefs
   };
 
   /** Called when the activity is finished. */
@@ -135,5 +145,19 @@ public class web_activity extends Activity {
 	  }
 	  return super.onOptionsItemSelected(item);
   }
+//set throttle screen orientation based on prefs, check to avoid sending change when already there
+ private static void setActivityOrientation(Activity activity) {
+
+	  String to = prefs.getString("WebOrientation", 
+			  activity.getApplicationContext().getResources().getString(R.string.prefWebOrientationDefaultValue));
+	  int co = activity.getRequestedOrientation();
+	  if      (to.equals("Landscape")   && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))  
+		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+	  else if (to.equals("Auto-Rotate") && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))  
+		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+	  else if (to.equals("Portrait")    && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
+		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+ }
+
 }
 

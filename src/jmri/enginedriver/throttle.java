@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -901,7 +902,7 @@ public void onStart() {
   } //end of onCreate()
 
   //set up webview to requested initial page
-  private void setup_webview() {
+  @SuppressLint("SetJavaScriptEnabled") private void setup_webview() {
 
 	  //copy webviewlocation from prefs to app var
 	  mainapp.webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
@@ -957,6 +958,7 @@ public void onStart() {
 				  String temp[] = line.split(":");
 				  mainapp.function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
 			  }
+			  settings_reader.close();
 		  } else {  //hard-code some buttons and default the rest
 			  mainapp.function_labels_default.put(0, "Light");
 			  mainapp.function_labels_default.put(1, "Bell");

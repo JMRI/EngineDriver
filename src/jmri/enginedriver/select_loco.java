@@ -489,6 +489,7 @@ public class select_loco extends Activity {
 						} //if ea>=0&&as>=0
 	    			} //if splitPos>0
 				}
+				list_reader.close();
 				recent_list_adapter.notifyDataSetChanged();
 			}
 

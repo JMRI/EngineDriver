@@ -13,8 +13,8 @@
     <PreferenceCategory android:title="Throttle Screen Preferences" >
         <ListPreference
             android:defaultValue="@string/prefThrottleOrientationDefaultValue"
-            android:entries="@array/ThrottleOrientation"
-            android:entryValues="@array/ThrottleOrientation"
+            android:entries="@array/OrientationOptions"
+            android:entryValues="@array/OrientationOptions"
             android:key="ThrottleOrientation"
             android:summary="@string/prefThrottleOrientationSummary"
             android:title="@string/prefThrottleOrientationTitle" />
@@ -51,7 +51,7 @@
             android:title="@string/prefIncreaseSliderHeightTitle" >
         </CheckBoxPreference>
     </PreferenceCategory>
-    <PreferenceCategory android:title="Web Panel Preferences" >
+    <PreferenceCategory android:title="Web Preferences" >
         <EditTextPreference
             android:defaultValue="@string/prefInitialWebPageDefaultValue"
             android:dialogTitle="@string/prefInitialWebPageSummary"
@@ -65,7 +65,14 @@
             android:key="WebViewLocation"
             android:summary="@string/prefWebViewLocationSummary"
             android:title="@string/prefWebViewLocationTitle" />
-    </PreferenceCategory>
+        <ListPreference
+            android:defaultValue="@string/prefWebOrientationDefaultValue"
+            android:entries="@array/OrientationOptions"
+            android:entryValues="@array/OrientationOptions"
+            android:key="WebOrientation"
+            android:summary="@string/prefWebOrientationSummary"
+            android:title="@string/prefWebOrientationTitle" />
+        </PreferenceCategory>
     <PreferenceCategory android:title="Connect Screen Preferences" >
         <ListPreference
             android:defaultValue="@string/prefDefaultAddressLengthDefaultValue"

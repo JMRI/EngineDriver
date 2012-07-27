@@ -363,6 +363,7 @@ public class connection_activity extends Activity {
 
 	    			} // if la.length >0 
 	    		} //while list_reader
+	    		list_reader.close();
 	    	} //if file exists
 
 	    	//if example host not already in list, add it at end

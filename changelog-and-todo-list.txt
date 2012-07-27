@@ -5,6 +5,7 @@
  * allow entry of complete http* url for web views
  * sort routes by user name
  * sort turnouts by user name
+ * add pref for orientation of web screen
 **Version 2.3
  * lock orientation to portrait for most screens
  * add Mfg to roster details (overlooked earlier)

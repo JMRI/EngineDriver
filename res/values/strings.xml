@@ -97,6 +97,9 @@
     <string name="prefThrottleOrientationTitle">Throttle screen orientation</string>
     <string name="prefThrottleOrientationDefaultValue">Portrait</string>
     <string name="prefThrottleOrientationSummary">Throttle screen orientation</string>
+    <string name="prefWebOrientationTitle">Web screen orientation</string>
+    <string name="prefWebOrientationDefaultValue">Portrait</string>
+    <string name="prefWebOrientationSummary">Web screen orientation</string>
     <string name="turnouts">Turnouts</string>
     <string name="turnouts_label">Control Turnouts</string>
     <string name="turnouts_direct_entry_label">Enter turnout# and Close, Throw or Toggle</string>
