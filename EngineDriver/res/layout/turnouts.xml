@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:keepScreenOn="true"
+    android:orientation="vertical" >
+    <TextView
+        android:id="@+id/turnouts_label"
+        style="@style/small_heading_style"
+        android:text="@string/turnouts_label" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="4dp" >
+        <TextView
+            android:id="@+id/hardware_system"
+            style="@style/floating_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-" />
+        <EditText
+            android:id="@+id/turnout_entry"
+            android:layout_width="80sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:inputType="number"
+            android:maxLength="4"
+            android:singleLine="true" />
+        <Button
+            android:id="@+id/turnout_throw"
+            android:layout_width="40sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:text="@string/throw_button" />
+        <Button
+            android:id="@+id/turnout_close"
+            android:layout_width="40sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:text="@string/close_button" />
+        <Button
+            android:id="@+id/turnout_toggle"
+            android:layout_width="40sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:text="@string/toggle_button" />
+    </LinearLayout>
+    <ListView
+        android:id="@+id/turnouts_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+</LinearLayout>

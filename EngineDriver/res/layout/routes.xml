@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:keepScreenOn="true"
+    android:orientation="vertical" >
+    <TextView
+        android:id="@+id/routes_label"
+        style="@style/small_heading_style"
+        android:text="@string/routes_label" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="4dp" >
+        <EditText
+            android:id="@+id/route_entry"
+            android:layout_width="80sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.75"
+            android:singleLine="true" />
+        <Button
+            android:id="@+id/route_toggle"
+            android:layout_width="80sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.75"
+            android:text="@string/set"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+    <ListView
+        android:id="@+id/routes_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+</LinearLayout>

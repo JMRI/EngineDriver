@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7" >
+        <TextView
+            android:id="@+id/rt_user_name"
+            style="@style/list_item_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="4dp"
+            android:paddingTop="15dp"
+            android:text="testing string string string string"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:id="@+id/rt_system_name_hidden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="this is hidden"
+            android:visibility="invisible" />
+        <TextView
+            android:id="@+id/rt_system_name"
+            style="@style/list_id_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="testing string" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/rt_current_state_desc"
+        style="@style/list_item_style"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        android:paddingBottom="4dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="15dp"
+        android:text="testing"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+</LinearLayout>
