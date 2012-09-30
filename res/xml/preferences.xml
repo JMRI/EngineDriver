@@ -18,13 +18,6 @@
             android:key="ThrottleOrientation"
             android:summary="@string/prefThrottleOrientationSummary"
             android:title="@string/prefThrottleOrientationTitle" />
-        <CheckBoxPreference
-            android:defaultValue="@string/prefStopOnReleaseDefaultValue"
-            android:dialogTitle="@string/prefStopOnReleaseTitle"
-            android:key="stop_on_release_preference"
-            android:summary="@string/prefStopOnReleaseSummary"
-            android:title="@string/prefStopOnReleaseTitle" >
-        </CheckBoxPreference>
         <EditTextPreference
             android:defaultValue="@string/prefMaximumThrottleDefaultValue"
             android:dialogTitle="@string/prefMaximumThrottleTitle"
@@ -51,6 +44,22 @@
             android:title="@string/prefIncreaseSliderHeightTitle" >
         </CheckBoxPreference>
     </PreferenceCategory>
+    <PreferenceCategory android:title="Select Loco Preferences" >
+        <CheckBoxPreference
+            android:defaultValue="@string/prefStopOnReleaseDefaultValue"
+            android:dialogTitle="@string/prefStopOnReleaseTitle"
+            android:key="stop_on_release_preference"
+            android:summary="@string/prefStopOnReleaseSummary"
+            android:title="@string/prefStopOnReleaseTitle" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="@string/prefDropOnAcquireDefaultValue"
+            android:dialogTitle="@string/prefDropOnAcquireTitle"
+            android:key="drop_on_acquire_preference"
+            android:summary="@string/prefDropOnAcquireSummary"
+            android:title="@string/prefDropOnAcquireTitle" >
+        </CheckBoxPreference>
+        </PreferenceCategory>
     <PreferenceCategory android:title="Web Preferences" >
         <EditTextPreference
             android:defaultValue="@string/prefInitialWebPageDefaultValue"

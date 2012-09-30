@@ -412,7 +412,10 @@ public class threaded_application extends Application {
 						if (!pipeentry.equals("")) {
 							last_roster_entry_requested = pipeentry.substring(1);  //remember for use in response, stripping off bang 
 						}
-					}
+						if (prefs.getBoolean("drop_on_acquire_preference", false )) {
+							withrottle_send(whichThrottle+"r");  //send release command for any already acquired locos (if set in prefs)
+						}
+}
 					withrottle_send(String.format(whichThrottle+(msg.arg2==address_type.LONG ? "L" : "S")+"%d%s", msg.arg1, pipeentry));
 					if (withrottle_version >= 2.0) {  //request current direction and speed (WiT 2.0+)
 						withrottle_send("M" + whichThrottle+"A*<;>qV");
