@@ -205,6 +205,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: add JMRI fast-clock to screens (in new title bar?)
  *   TODO: pref for throttle up/down buttons at ends of sliders, with setting for amount of change
  *   TODO: pref for additional left margin on throttle
  *   TODO: move lots of stuff from set_labels() to OnResume (or maybe not, since that precedes the layout of views?)
