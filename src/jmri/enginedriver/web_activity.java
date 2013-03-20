@@ -24,6 +24,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -31,46 +33,95 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebSettings;
 
 public class web_activity extends Activity {
 
-	private static SharedPreferences prefs;
+  private threaded_application mainapp;  // hold pointer to mainapp
+  private static SharedPreferences prefs;
+  private Boolean clearHistory = false;
+
+  
+  class web_handler extends Handler {
+
+	  public void handleMessage(Message msg) {
+		  switch(msg.what) {
+			  case message_type.RESPONSE: {  //handle messages from WiThrottle server
+				  String response_str = msg.obj.toString();
+				  char com1 = response_str.charAt(0);
+				  char thrSel = response_str.charAt(1);
+				  switch (com1) {
+					  case 'P': //panel info
+						  if (thrSel == 'W') {		// PW - web server port info
+							  clearHistory = true;
+							  load_webview();		// reload the page
+						  }
+						  break;
+				  }
+				  break;
+			  }
+			  case message_type.DISCONNECT:
+				  disconnect();
+				  break;
+		  }
+	  };
+  }
 
   /** Called when the activity is first created. */
   @SuppressLint("SetJavaScriptEnabled") @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    mainapp=(threaded_application)this.getApplication();
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
     setContentView(R.layout.web_activity);
   
-    String url = "file:///android_asset/feature_not_available.html";
-    threaded_application mainapp = (threaded_application) getApplication();
-    if (mainapp.web_server_port != null && mainapp.web_server_port > 0) {
-    	url = prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
-    	if (!url.startsWith("http")) {  //if url starts with http, use it as is, else prepend servername and port
-    		url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/" + url;
-    	}
-        
-    }
-    
 	WebView webView = (WebView) findViewById(R.id.webview);
-	webView.getSettings().setJavaScriptEnabled(true);
-	webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported by ROM
-       
-	webView.loadUrl(url);
 
+	webView.getSettings().setJavaScriptEnabled(true);
+	webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
+
+	webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out
+	webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+
+	webView.getSettings().setLoadWithOverviewMode(true);	// zoomed-out when page is loaded
+	
 	// open all links inside the current view (don't start external web browser)
 	WebViewClient EDWebClient = new WebViewClient()	{
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView  view, String  url) {
 			return false;
 		}
+		@Override
+		public void onPageFinished(WebView view, String url)
+		{
+			if(clearHistory)
+			{
+				view.clearHistory();
+				clearHistory = false;
+			}
+		}
 	};
 	webView.setWebViewClient(EDWebClient);
 
   };
+
+  // load the url
+  private void load_webview()
+  {
+	  WebView webView = (WebView) findViewById(R.id.webview);
+	  if(!(mainapp.getWebUrl().equals(webView.getUrl())))		// suppress load if url hasn't changed
+		  webView.loadUrl(mainapp.getWebUrl());
+  }
+  
+  @Override
+  public void onStart() {
+    super.onStart();
+
+    //put pointer to this activity's handler in main app's shared variable (If needed)
+  	  mainapp.web_msg_handler=new web_handler();
+  }
 
   @Override
   public void onResume() {
@@ -78,8 +129,19 @@ public class web_activity extends Activity {
  	  super.onResume();
 
  	  setActivityOrientation(this);  //set screen orientation based on prefs
+ 	  load_webview();								// load the url
+
   };
 
+  @Override
+  public void onPause() {
+	  WebView webView = (WebView) findViewById(R.id.webview);
+      threaded_application mainapp = (threaded_application) getApplication();
+	  mainapp.setWebUrl(webView.getUrl());
+	  super.onPause();
+  }
+  
+  
   /** Called when the activity is finished. */
   @Override
   public void onDestroy() {
@@ -88,10 +150,10 @@ public class web_activity extends Activity {
 	  //load a bogus url to prevent javascript from continuing to run
 	  WebView webView = (WebView) findViewById(R.id.webview);
 	  webView.loadUrl("file:///android_asset/blank_page.html");
+  	  mainapp.power_control_msg_handler = null;
 
 	  super.onDestroy();
   }
-
 
   
   //Handle pressing of the back button to end this activity
@@ -99,7 +161,13 @@ public class web_activity extends Activity {
   public boolean onKeyDown(int key, KeyEvent event) {
 	  if(key==KeyEvent.KEYCODE_BACK)
 	  {
-	//      mainapp.power_control_msg_handler = null; //clear out pointer to this activity  
+			WebView webView = (WebView) findViewById(R.id.webview);
+			if(webView.canGoBack()) {
+				webView.goBack();
+				return true;
+			}
+	  
+	      mainapp.web_msg_handler = null; //clear out pointer to this activity  
 	      this.finish();  //end this activity
 	      connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	  }
@@ -125,6 +193,7 @@ public class web_activity extends Activity {
 	  case R.id.routes_menu:
 		  in=new Intent().setClass(this, routes.class);
 		  startActivity(in);
+		  this.finish();
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  break;
 	  case R.id.power_control_menu:
@@ -134,13 +203,13 @@ public class web_activity extends Activity {
 		  break;
 	  case R.id.throttle:
 		  this.finish();
-		  connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  break;
 	  case R.id.turnouts:
 		  in = new Intent().setClass(this, turnouts.class);
 		  startActivity(in);
 		  this.finish();
-		  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  break;
 	  }
 	  return super.onOptionsItemSelected(item);
@@ -159,5 +228,11 @@ public class web_activity extends Activity {
 		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
  }
 
+ private void disconnect() {
+	  this.finish();
+	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+ }
+
 }
+
 

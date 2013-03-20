@@ -84,6 +84,8 @@ public class threaded_application extends Application {
 	public static HashMap<String, String> metadata;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
 	ImageDownloader imageDownloader = new ImageDownloader();
 	String webViewLocation = "none"; //pref value where user would like to see webview (or none)
+	String webUrl = null;	//current web page url
+	String throtUrl = null;	//current throttle page url
 
 	String power_state;
 
@@ -97,6 +99,7 @@ public class threaded_application extends Application {
 	//For communication to each of the activities (set and unset by the activity)
 	public Handler connection_msg_handler;
 	public Handler throttle_msg_handler;
+	public Handler web_msg_handler;
 	public Handler select_loco_msg_handler;
 	public Handler turnouts_msg_handler;
 	public Handler routes_msg_handler;
@@ -319,6 +322,8 @@ public class threaded_application extends Application {
 					function_states_S = new boolean[32];
 					consist_allowed = false;
 					consist_entries = new LinkedHashMap<String, String>();
+					webUrl = null;
+					throtUrl = null;
 
 					//attempt connection to WiThrottle server
 					socketWiT = new socket_WiT();
@@ -586,7 +591,7 @@ public class threaded_application extends Application {
 					String whichThrottle = response_str.substring(1,2);
 					String[] ls = threaded_application.splitByString(response_str,"<;>");
 					if ("F".equals(ls[1].substring(0,1))) {
-						process_function_state_20(whichThrottle, new Integer(ls[1].substring(2)), "1".equals(ls[1].substring(1,2)) ? true : false);  
+						process_function_state_20(whichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1,2)) ? true : false);  
 					}	    	  			
 				}
 
@@ -691,6 +696,8 @@ public class threaded_application extends Application {
 				case 'W':  //Web Server port 
 					try {
 						web_server_port = Integer.parseInt(response_str.substring(2));  //set app variable
+						webUrl = null;
+						throtUrl = null;
 					} 
 					catch (Exception e) {
 						Log.d("Engine_Driver", "process response: invalid web server port string");
@@ -994,6 +1001,17 @@ public class threaded_application extends Application {
 			} else {
 				Log.d("Engine_Driver", "Throttle activity not active, did not forward: " + msgBody);
 			}
+			if (web_msg_handler != null) { 
+				Message msg=Message.obtain(); 
+				msg.what=msgType;
+				msg.obj=new String(msgBody); 
+				try {
+					web_msg_handler.sendMessage(msg);
+				}
+				catch(Exception e) {
+					msg.recycle();
+				}
+			}
 			if (power_control_msg_handler != null) { 
 				Message msg=Message.obtain(); 
 				msg.what=msgType;
@@ -1230,6 +1248,8 @@ public class threaded_application extends Application {
 					consist_allowed = false;
 					consist_entries = new LinkedHashMap<String, String>();
 					roster_entries = null;
+					webUrl = null;
+					throtUrl = null;
 
 					if (turnouts_msg_handler != null)   
 					{ 
@@ -1269,6 +1289,17 @@ public class threaded_application extends Application {
 						msg.obj=new String("MS-");		//tell throttle activity to release throttle S
 						try {
 							throttle_msg_handler.sendMessage(msg);
+						}
+						catch(Exception e) {
+							msg.recycle();
+						}
+					}
+					if (web_msg_handler != null) { 
+						Message msg=Message.obtain(); 
+						msg.what=message_type.RESPONSE;
+						msg.obj=new String("PW"); 		//tell web activity that the port has changed
+						try {
+							web_msg_handler.sendMessage(msg);
 						}
 						catch(Exception e) {
 							msg.recycle();
@@ -1568,6 +1599,47 @@ public class threaded_application extends Application {
 		result[size] = temp;
 
 		return result;
+	}
+	
+	//
+	// return the current url if it exists else returns the default one
+	//
+	public String getThrotUrl()
+	{
+		return getUrl(throtUrl, prefs.getString("InitialThrotWebPage", getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue)));
+	}
+	public String getWebUrl()
+	{
+		return getUrl(webUrl, prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue)));
+	}
+	
+	private String getUrl(String url, String defaultUrl)
+	{
+	    if(url == null)
+	    {
+		    if (web_server_port != null && web_server_port > 0) {
+		    	url = defaultUrl;
+		    	if (!url.startsWith("http")) {  //if url starts with http, use it as is, else prepend servername and port
+		    		url = "http://" + host_ip + ":" +  web_server_port + "/" + url;
+		    	}
+		    }
+		    else
+			    url = "file:///android_asset/feature_not_available.html";
+	    }
+	    return url;
+	}
+	
+	public void setThrotUrl(String url)
+	{
+		throtUrl = url;
+		if (prefs.getBoolean("web_throt_lock_preference", true ))
+			webUrl = url;
+	}
+	public void setWebUrl(String url)
+	{
+		webUrl = url;
+		if (prefs.getBoolean("web_throt_lock_preference", true ))
+			throtUrl = url;
 	}
 
 }

@@ -42,9 +42,9 @@
             android:key="increase_slider_height_preference"
             android:summary="@string/prefIncreaseSliderHeightSummary"
             android:title="@string/prefIncreaseSliderHeightTitle" >
+        </CheckBoxPreference><CheckBoxPreference android:defaultValue="@string/prefUseOneThrottleDefaultValue" android:dialogTitle="@string/prefUseOneThrottleTitle" android:key="use_one_throttle_preference" android:summary="@string/prefUseOneThrottleSummary" android:title="@string/prefUseOneThrottleTitle">
         </CheckBoxPreference>
-    </PreferenceCategory>
-    <PreferenceCategory android:title="Select Loco Preferences" >
+    </PreferenceCategory><PreferenceCategory android:title="Select Loco Preferences" >
         <CheckBoxPreference
             android:defaultValue="@string/prefStopOnReleaseDefaultValue"
             android:dialogTitle="@string/prefStopOnReleaseTitle"
@@ -61,26 +61,20 @@
         </CheckBoxPreference>
         </PreferenceCategory>
     <PreferenceCategory android:title="Web Preferences" >
-        <EditTextPreference
+        <ListPreference android:defaultValue="@string/prefWebOrientationDefaultValue" android:entries="@array/OrientationOptions" android:entryValues="@array/OrientationOptions" android:key="WebOrientation" android:summary="@string/prefWebOrientationSummary" android:title="@string/prefWebOrientationTitle" /><EditTextPreference
             android:defaultValue="@string/prefInitialWebPageDefaultValue"
             android:dialogTitle="@string/prefInitialWebPageSummary"
             android:key="InitialWebPage"
             android:summary="@string/prefInitialWebPageSummary"
-            android:title="@string/prefInitialWebPageTitle" />
-        <ListPreference
-            android:defaultValue="@string/prefWebViewLocationDefaultValue"
-            android:entries="@array/WebViewLocation"
-            android:entryValues="@array/WebViewLocation"
-            android:key="WebViewLocation"
-            android:summary="@string/prefWebViewLocationSummary"
-            android:title="@string/prefWebViewLocationTitle" />
-        <ListPreference
-            android:defaultValue="@string/prefWebOrientationDefaultValue"
-            android:entries="@array/OrientationOptions"
-            android:entryValues="@array/OrientationOptions"
-            android:key="WebOrientation"
-            android:summary="@string/prefWebOrientationSummary"
-            android:title="@string/prefWebOrientationTitle" />
+            android:title="@string/prefInitialWebPageTitle" /><ListPreference android:defaultValue="@string/prefWebViewLocationDefaultValue" android:entries="@array/WebViewLocation" android:entryValues="@array/WebViewLocation" android:key="WebViewLocation" android:summary="@string/prefWebViewLocationSummary" android:title="@string/prefWebViewLocationTitle" /><EditTextPreference
+            android:defaultValue="@string/prefInitialThrotWebPageDefaultValue"
+            android:dialogTitle="@string/prefInitialThrotWebPageSummary"
+            android:key="InitialThrotWebPage"
+            android:summary="@string/prefInitialThrotWebPageSummary"
+            android:title="@string/prefInitialThrotWebPageTitle" /><CheckBoxPreference android:defaultValue="@string/prefWebThrotLockDefaultValue" android:dialogTitle="@string/prefWebThrotLockTitle" android:key="web_throt_lock_preference" android:summary="@string/prefWebThrotLockSummary" android:title="@string/prefWebThrotLockTitle">
+        </CheckBoxPreference>
+        
+        
         </PreferenceCategory>
     <PreferenceCategory android:title="Connect Screen Preferences" >
         <ListPreference

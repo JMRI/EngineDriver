@@ -118,6 +118,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private int dirT = 0;
 	private int dirS = 0;
 
+	private Boolean clearHistory = false;	// flag to webViewClient to clear history when page load finishes
+
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class throttle_handler extends Handler {
 
@@ -167,7 +169,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 						  char com3 = ls[1].charAt(0);
 						  if (com3 == 'R') {
 							  try {
-								  int dir = new Integer(ls[1].substring(1,2));
+								  int dir = Integer.valueOf(ls[1].substring(1,2));
 								  set_direction_indication(thrSel, dir); //set direction button 
 							  }
 							  catch(Exception e) {
@@ -185,7 +187,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 						  }
 						  else if (com3 == 'F') {
 							  try {
-								  int function = new Integer(ls[1].substring(2));
+								  int function = Integer.valueOf(ls[1].substring(2));
 								  set_function_state(thrSel, function);
 							  }
 							  catch(Exception e) {
@@ -239,7 +241,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					  // try web-dependent items again
 					  dlMetadataTask.getMetadata();
 					  dlRosterTask.getRoster();
+					  clearHistory = true;
+					  load_webview();				// reinit webview
 				  }
+				  break;
 			  }  //end of switch
 		  }
 		  break;
@@ -787,12 +792,11 @@ void start_select_loco_activity(char whichThrottle)
 	  gestureFailed = false;
 	  gestureInProgress = false;
 
-	  setup_webview();
-
-	  set_labels();
-
+	  // prefs may have changed so update webviewlocation from prefs
+	  mainapp.webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+	  load_webview();		// reload url
+	  set_labels();			// handle labels
   }
-
 
 @Override
 public void onStart() {
@@ -801,6 +805,13 @@ public void onStart() {
   //put pointer to this activity's handler in main app's shared variable (If needed)
 	  mainapp.throttle_msg_handler=new throttle_handler();
 }
+
+  @Override
+  public void onPause() {
+	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
+	  mainapp.setThrotUrl(webView.getUrl());
+	  super.onPause();
+  }
 
 /** Called when the activity is finished. */
   @Override
@@ -858,6 +869,15 @@ public void onStart() {
     fbtl=new function_button_touch_listener(function_button.SPEED_LABEL, 'T');
     v.setOnTouchListener(fbtl);
 
+//    b = (Button)findViewById(R.id.button_speed_inc_T);
+//   fbtl=new function_button_touch_listener(function_button.SPEED_INC, 'T');
+//    b.setOnTouchListener(fbtl);
+//    b = (Button)findViewById(R.id.button_speed_inc_T);
+//    fbtl=new function_button_touch_listener(function_button.SPEED_DEC,  'T');
+//    b.setOnTouchListener(fbtl);
+
+    
+    
     b = (Button)findViewById(R.id.button_fwd_S);
     fbtl=new function_button_touch_listener(function_button.FORWARD, 'S');
     b.setOnTouchListener(fbtl);
@@ -871,6 +891,8 @@ public void onStart() {
     fbtl=new function_button_touch_listener(function_button.SPEED_LABEL, 'S');
     v.setOnTouchListener(fbtl);
 
+    
+    
     // set up listeners for both throttles
     throttle_listener th1;
     SeekBar sb=(SeekBar)findViewById(R.id.speed_T);
@@ -899,46 +921,43 @@ public void onStart() {
 	dlRosterTask = new DownloadRosterTask();
 	dlRosterTask.getRoster();		// if web port is already known, start background roster dl here
 
+	WebView webView = (WebView) findViewById(R.id.throttle_webview);
+	webView.getSettings().setJavaScriptEnabled(true);
+	webView.getSettings().setBuiltInZoomControls(true);
+
+	// open all links inside the current view (don't start external web browser)
+	WebViewClient EDWebClient = new WebViewClient()	{
+		@Override
+		public boolean shouldOverrideUrlLoading(WebView  view, String  url) {
+			return false;
+		}
+		@Override
+		public void onPageFinished(WebView view, String url) {
+			if(clearHistory)
+			{
+				view.clearHistory();
+				clearHistory = false;
+			}
+		}
+	};
+	webView.setWebViewClient(EDWebClient);
   } //end of onCreate()
 
-  //set up webview to requested initial page
-  @SuppressLint("SetJavaScriptEnabled") private void setup_webview() {
 
-	  //copy webviewlocation from prefs to app var
-	  mainapp.webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+  // load the url
+  private void load_webview()
+  {
 	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
-
-	  if (!mainapp.webViewLocation.equals("none")) {
-		  String url = prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
-		  if (!url.startsWith("http")) {  //if url starts with http, use it as is, else prepend servername and port
-			  url = "http://" + mainapp.host_ip + ":" +  mainapp.web_server_port + "/" + url;
-		  }
-		  if (webView.getUrl() == null) {
-			  if (mainapp.web_server_port != null && mainapp.web_server_port > 0) {
-				  webView.getSettings().setJavaScriptEnabled(true);
-				  webView.getSettings().setBuiltInZoomControls(true);
-				  webView.loadUrl(url);
-				  Log.d("Engine_Driver","web view set to " + url);	  
-
-				  // open all links inside the current view (don't start external web browser)
-				  WebViewClient EDWebClient = new WebViewClient()	{
-					  @Override
-					  public boolean shouldOverrideUrlLoading(WebView  view, String  url) {
-						  return false;
-					  }
-				  };
-				  webView.setWebViewClient(EDWebClient);
-			  }
-		  } else {
-			  Log.d("Engine_Driver","web view already set");
-//			  webView.loadUrl(url);
-		  }
-	  } else {
+	  if (!mainapp.webViewLocation.equals("none")) {			// if displaying webview
+		  if(!(mainapp.getThrotUrl().equals(webView.getUrl())))		// suppress load if url hasn't changed
+			  webView.loadUrl(mainapp.getThrotUrl());
+	  }
+	  else {
 		  Log.d("Engine_Driver","web view set to blank");
 		  webView.loadUrl("file:///android_asset/blank_page.html");
 	  }
-  }  
-
+  }
+  
   
   //set up text label and dcc function for each button from settings and setup listeners
   //TODO: move file reading to another function and only do when needed
@@ -1133,17 +1152,23 @@ public void onStart() {
     }
     
     if (screenHeight > throttleMargin) {	//don't do this if height is invalid
-		//determine how to split the screen (evenly if both, 85/15 if only one)
+		//determine how to split the screen (evenly if both, 90/10 if only one)
     	screenHeight -= throttleMargin;
-	    if (throttle_count == 0 || throttle_count == 2)  {
+        boolean use_S = prefs.getBoolean("use_one_throttle_preference", false);
+        if(use_S == true)
+        {
+	    	height_T = screenHeight;
+	    	height_S = 0;
+        }
+        else if (throttle_count == 0 || throttle_count == 2)  {
 	    	height_T = (int) (screenHeight * 0.5);
 	    	height_S = (int) (screenHeight * 0.5);
 	    } else if (mainapp.loco_string_T.equals("Not Set")) {
-	    	height_T = (int) (screenHeight * 0.15);
-	    	height_S = (int) (screenHeight * 0.85);
+	    	height_T = (int) (screenHeight * 0.10);
+	    	height_S = (int) (screenHeight * 0.90);
 	    } else {
-	    	height_T = (int) (screenHeight * 0.85);
-	    	height_S = (int) (screenHeight * 0.15);
+	    	height_T = (int) (screenHeight * 0.90);
+	    	height_S = (int) (screenHeight * 0.10);
 	    }
 	    
 	  //set height of T area 
@@ -1178,22 +1203,9 @@ public void onStart() {
   public boolean onKeyDown(int key, KeyEvent event) {
 	  //Handle pressing of the back button to release the selected loco and end this activity
 	  if(key==KeyEvent.KEYCODE_BACK)  {
-		  final AlertDialog.Builder b = new AlertDialog.Builder(this); 
-		  b.setIcon(android.R.drawable.ic_dialog_alert); 
-		  b.setTitle(R.string.exit_title); 
-		  b.setMessage(R.string.exit_text);
-		  b.setCancelable(true);
-		  b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-			 public void onClick(DialogInterface dialog, int id) {
-				  //disconnect from throttle
-				  Message msg=Message.obtain();
-				  msg.what=message_type.DISCONNECT;
-				  mainapp.comm_msg_handler.sendMessage(msg);
-			 }
-		  } ); 
-		  b.setNegativeButton(R.string.no, null);
-		  AlertDialog alert = b.create();
-		  alert.show();
+		  WebView webView = (WebView) findViewById(R.id.throttle_webview);
+		  if(webView.canGoBack())
+			  webView.goBack();
           return (true);	//stop processing this key
 	  } 
 	  else if((key==KeyEvent.KEYCODE_VOLUME_UP) || (key==KeyEvent.KEYCODE_VOLUME_DOWN) ) { //use volume to change speed for specified loco
@@ -1268,27 +1280,45 @@ public void onStart() {
       case R.id.settings_menu:
     	  in=new Intent().setClass(this, function_settings.class);
      	  startActivityForResult(in, 0);
-     	 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-   	  break;
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+     	  break;
       case R.id.about_menu:
     	  in=new Intent().setClass(this, about_page.class);
      	  startActivity(in);
-     	 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
+      case R.id.exit:
+		  final AlertDialog.Builder b = new AlertDialog.Builder(this); 
+		  b.setIcon(android.R.drawable.ic_dialog_alert); 
+		  b.setTitle(R.string.exit_title); 
+		  b.setMessage(R.string.exit_text);
+		  b.setCancelable(true);
+		  b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+			 public void onClick(DialogInterface dialog, int id) {
+				  //disconnect from throttle
+				  Message msg=Message.obtain();
+				  msg.what=message_type.DISCONNECT;
+				  mainapp.comm_msg_handler.sendMessage(msg);
+			 }
+		  } ); 
+		  b.setNegativeButton(R.string.no, null);
+		  AlertDialog alert = b.create();
+		  alert.show();
+     	 break;
       case R.id.web_menu:
     	  in=new Intent().setClass(this, web_activity.class);
      	  startActivity(in);
-     	 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
       case R.id.preferences:
     	  in=new Intent().setClass(this, preferences.class);
      	  startActivityForResult(in, 0);
-     	 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
       case R.id.power_control_menu:
     	  in=new Intent().setClass(this, power_control.class);
      	  startActivity(in);
-     	 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
       case R.id.turnouts:
     	  in=new Intent().setClass(this, turnouts.class);

@@ -71,7 +71,7 @@
     <string name="prefDropOnAcquireSummary">Drop current loco before acquiring new loco</string>
     <string name="prefIncreaseSliderHeightTitle">Increase Slider Height</string>
     <string name="prefIncreaseSliderHeightDefaultValue">false</string>
-    <string name="prefIncreaseSliderHeightSummary">Use a taller slider for throttles.</string>
+    <string name="prefIncreaseSliderHeightSummary">Use a taller slider for throttles.</string><string name="prefUseOneThrottleTitle">Display One Throttle</string><string name="prefUseOneThrottleDefaultValue">false</string><string name="prefUseOneThrottleSummary">Display only one throttle.</string>
     <string name="prefHideRecentLocosTitle">Hide Recent Locos panel</string>
     <string name="prefHideRecentLocosDefaultValue">false</string>
     <string name="prefHideRecentLocosSummary">Leave more room for roster locos.</string>
@@ -91,7 +91,7 @@
     <string name="prefInitialWebPageTitle">Initial Web Page</string>
     <string name="prefInitialWebPageDefaultValue">frame</string>
     <string name="prefInitialWebPageSummary">Initial Web Page (such as \'frame/My%20Layout.html\')</string>
-    <string name="prefDefaultAddressLengthTitle">Default Address Length</string>
+    <string name="prefInitialThrotWebPageTitle">Initial Throttle Web Page</string><string name="prefInitialThrotWebPageDefaultValue">frame</string><string name="prefInitialThrotWebPageSummary">Initial Throttle Web Page (such as \'frame/My%20Layout.html\')</string><string name="prefWebThrotLockTitle">Tie Web Views Together</string><string name="prefWebThrotLockDefaultValue">true</string><string name="prefWebThrotLockSummary">Keep both web views on the same url.</string><string name="prefDefaultAddressLengthTitle">Default Address Length</string>
     <string name="prefDefaultAddressLengthDefaultValue">Auto</string>
     <string name="prefDefaultAddressLengthSummary">Default Loco Address Length, (Auto will set based on # of digits).</string>
     <string name="prefMaximumRecentConnectionsTitle">Maximum Recent Connections</string>
@@ -127,4 +127,6 @@
     <string name="no">No</string>
     <string name="exit_text">Exit Engine Driver?</string>
     <string name="exit_title">Exit</string>
+    
+    
 </resources>

@@ -375,6 +375,7 @@ public class turnouts extends Activity implements OnGestureListener {
 	    case R.id.web_menu:
 	  	  in=new Intent().setClass(this, web_activity.class);
 	   	  startActivity(in);
+	   	  this.finish();
 	   	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	  	  break;
 	    case R.id.power_control_menu:

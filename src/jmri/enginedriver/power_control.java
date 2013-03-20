@@ -108,8 +108,8 @@ public class power_control extends Activity {
   /** Called when the activity is finished. */
   @Override
   public void onDestroy() {
-	  super.onDestroy();
   	  mainapp.power_control_msg_handler = null;
+	  super.onDestroy();
   }
 	  
   /** Called when the activity is first created. */
