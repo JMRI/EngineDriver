@@ -772,64 +772,6 @@ void start_select_loco_activity(char whichThrottle)
   }
 
   @Override
-  public void onResume() {
-	  super.onResume();
-
-	  setActivityOrientation(this);  //set throttle screen orientation based on prefs
-
-	  // set max allowed change for throttles from prefs
-	  String s = prefs.getString("maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
-	  try {
-		  max_throttle_change = Integer.parseInt(s);
-	  } 
-	  catch (Exception e) {
-		  max_throttle_change = 25;
-	  }
-
-	  //format the screen area
-	  enable_disable_buttons('T'); 
-	  enable_disable_buttons('S');  
-	  gestureFailed = false;
-	  gestureInProgress = false;
-
-	  // prefs may have changed so update webviewlocation from prefs
-	  mainapp.webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
-	  load_webview();		// reload url
-	  set_labels();			// handle labels
-  }
-
-@Override
-public void onStart() {
-  super.onStart();
-
-  //put pointer to this activity's handler in main app's shared variable (If needed)
-	  mainapp.throttle_msg_handler=new throttle_handler();
-}
-
-  @Override
-  public void onPause() {
-	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
-	  mainapp.setThrotUrl(webView.getUrl());
-	  super.onPause();
-  }
-
-/** Called when the activity is finished. */
-  @Override
-  public void onDestroy() {
-	  Log.d("Engine_Driver","throttle.onDestroy() called");
-
-	  //load a bogus url to prevent javascript from continuing to run
-	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
-	  webView.loadUrl("file:///android_asset/blank_page.html");
-
-	  mainapp.throttle_msg_handler = null;
-
-	  super.onDestroy();
-  }
-
-
-  /** Called when the activity is first created. */
-  @Override
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
@@ -922,6 +864,10 @@ public void onStart() {
 	dlRosterTask.getRoster();		// if web port is already known, start background roster dl here
 
 	WebView webView = (WebView) findViewById(R.id.throttle_webview);
+	if(savedInstanceState != null)
+		webView.restoreState(savedInstanceState);		// restore if possible
+	else
+	 	  load_webview();								// else load the saved url
 	webView.getSettings().setJavaScriptEnabled(true);
 	webView.getSettings().setBuiltInZoomControls(true);
 
@@ -942,6 +888,69 @@ public void onStart() {
 	};
 	webView.setWebViewClient(EDWebClient);
   } //end of onCreate()
+
+  @Override
+  public void onStart() {
+    super.onStart();
+
+    //put pointer to this activity's handler in main app's shared variable (If needed)
+  	  mainapp.throttle_msg_handler=new throttle_handler();
+  }
+
+  @Override
+  public void onResume() {
+	  super.onResume();
+
+	  setActivityOrientation(this);  //set throttle screen orientation based on prefs
+
+	  // set max allowed change for throttles from prefs
+	  String s = prefs.getString("maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
+	  try {
+		  max_throttle_change = Integer.parseInt(s);
+	  } 
+	  catch (Exception e) {
+		  max_throttle_change = 25;
+	  }
+
+	  //format the screen area
+	  enable_disable_buttons('T'); 
+	  enable_disable_buttons('S');  
+	  gestureFailed = false;
+	  gestureInProgress = false;
+
+	  // prefs may have changed so update webviewlocation from prefs
+	  mainapp.webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+//	  load_webview();		// reload url
+	  set_labels();			// handle labels
+  }
+
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+	  super.onSaveInstanceState(outState);
+	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
+	  webView.saveState(outState);		// save history (on rotation)
+  }
+
+  @Override
+  public void onPause() {
+	  super.onPause();
+  }
+
+/** Called when the activity is finished. */
+  @Override
+  public void onDestroy() {
+	  Log.d("Engine_Driver","throttle.onDestroy() called");
+
+	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
+	  mainapp.setThrotUrl(webView.getUrl());		// save url
+	  //load a bogus url to prevent javascript from continuing to run
+	  webView.loadUrl("file:///android_asset/blank_page.html");
+
+	  mainapp.throttle_msg_handler = null;
+
+	  super.onDestroy();
+  }
+
 
 
   // load the url
@@ -1206,6 +1215,8 @@ public void onStart() {
 		  WebView webView = (WebView) findViewById(R.id.throttle_webview);
 		  if(webView.canGoBack())
 			  webView.goBack();
+		  else
+			  checkExit();
           return (true);	//stop processing this key
 	  } 
 	  else if((key==KeyEvent.KEYCODE_VOLUME_UP) || (key==KeyEvent.KEYCODE_VOLUME_DOWN) ) { //use volume to change speed for specified loco
@@ -1228,6 +1239,24 @@ public void onStart() {
 	  return(super.onKeyDown(key, event)); //continue with normal key processing
   }
 
+  private void checkExit() {
+	  final AlertDialog.Builder b = new AlertDialog.Builder(this); 
+	  b.setIcon(android.R.drawable.ic_dialog_alert); 
+	  b.setTitle(R.string.exit_title); 
+	  b.setMessage(R.string.exit_text);
+	  b.setCancelable(true);
+	  b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+		 public void onClick(DialogInterface dialog, int id) {
+			  //disconnect from throttle
+			  Message msg=Message.obtain();
+			  msg.what=message_type.DISCONNECT;
+			  mainapp.comm_msg_handler.sendMessage(msg);
+		 }
+	  } ); 
+	  b.setNegativeButton(R.string.no, null);
+	  AlertDialog alert = b.create();
+	  alert.show();
+  }
   private void disconnect() {
 	  //stop roster or metadata download if still in progress
 	  try {
@@ -1288,23 +1317,8 @@ public void onStart() {
      	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
       case R.id.exit:
-		  final AlertDialog.Builder b = new AlertDialog.Builder(this); 
-		  b.setIcon(android.R.drawable.ic_dialog_alert); 
-		  b.setTitle(R.string.exit_title); 
-		  b.setMessage(R.string.exit_text);
-		  b.setCancelable(true);
-		  b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-			 public void onClick(DialogInterface dialog, int id) {
-				  //disconnect from throttle
-				  Message msg=Message.obtain();
-				  msg.what=message_type.DISCONNECT;
-				  mainapp.comm_msg_handler.sendMessage(msg);
-			 }
-		  } ); 
-		  b.setNegativeButton(R.string.no, null);
-		  AlertDialog alert = b.create();
-		  alert.show();
-     	 break;
+    	  checkExit();
+     	  break;
       case R.id.web_menu:
     	  in=new Intent().setClass(this, web_activity.class);
      	  startActivity(in);
@@ -1345,7 +1359,7 @@ public void onStart() {
       set_labels();
   }
   
-
+  
   // touch events outside the GestureOverlayView get caught here 
   @Override
   public boolean onTouchEvent(MotionEvent event){

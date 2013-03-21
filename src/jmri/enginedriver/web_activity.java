@@ -78,6 +78,10 @@ public class web_activity extends Activity {
     setContentView(R.layout.web_activity);
   
 	WebView webView = (WebView) findViewById(R.id.webview);
+	if(savedInstanceState != null)
+		webView.restoreState(savedInstanceState);		// restore if possible
+	else
+	 	load_webview();									// else load the saved url
 
 	webView.getSettings().setJavaScriptEnabled(true);
 	webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
@@ -104,17 +108,9 @@ public class web_activity extends Activity {
 		}
 	};
 	webView.setWebViewClient(EDWebClient);
-
+		
   };
 
-  // load the url
-  private void load_webview()
-  {
-	  WebView webView = (WebView) findViewById(R.id.webview);
-	  if(!(mainapp.getWebUrl().equals(webView.getUrl())))		// suppress load if url hasn't changed
-		  webView.loadUrl(mainapp.getWebUrl());
-  }
-  
   @Override
   public void onStart() {
     super.onStart();
@@ -129,15 +125,18 @@ public class web_activity extends Activity {
  	  super.onResume();
 
  	  setActivityOrientation(this);  //set screen orientation based on prefs
- 	  load_webview();								// load the url
-
+// 	  load_webview();								// load the url
   };
 
+ @Override
+  public void onSaveInstanceState(Bundle outState) {
+	  super.onSaveInstanceState(outState);
+	  WebView webView = (WebView) findViewById(R.id.webview);
+	  webView.saveState(outState);		// save history
+  }
+  
   @Override
   public void onPause() {
-	  WebView webView = (WebView) findViewById(R.id.webview);
-      threaded_application mainapp = (threaded_application) getApplication();
-	  mainapp.setWebUrl(webView.getUrl());
 	  super.onPause();
   }
   
@@ -147,8 +146,10 @@ public class web_activity extends Activity {
   public void onDestroy() {
 	  Log.d("Engine_Driver","web_activity.onDestroy() called");
 
-	  //load a bogus url to prevent javascript from continuing to run
+      threaded_application mainapp = (threaded_application) getApplication();
 	  WebView webView = (WebView) findViewById(R.id.webview);
+	  mainapp.setWebUrl(webView.getUrl());		// save current url
+	  //load a bogus url to prevent javascript from continuing to run
 	  webView.loadUrl("file:///android_asset/blank_page.html");
   	  mainapp.power_control_msg_handler = null;
 
@@ -214,7 +215,17 @@ public class web_activity extends Activity {
 	  }
 	  return super.onOptionsItemSelected(item);
   }
-//set throttle screen orientation based on prefs, check to avoid sending change when already there
+  
+  // load the url
+  private void load_webview()
+  {
+	  WebView webView = (WebView) findViewById(R.id.webview);
+	  if(!(mainapp.getWebUrl().equals(webView.getUrl())))		// suppress load if url hasn't changed
+		  webView.loadUrl(mainapp.getWebUrl());
+  }
+  
+
+ //set throttle screen orientation based on prefs, check to avoid sending change when already there
  private static void setActivityOrientation(Activity activity) {
 
 	  String to = prefs.getString("WebOrientation", 

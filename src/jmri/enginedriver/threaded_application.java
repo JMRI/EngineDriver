@@ -21,6 +21,7 @@ package jmri.enginedriver;
 /* TODO: see changelog-and-todo-list.txt for complete list of project to-do's */
 
 import android.app.Application;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -1624,7 +1625,7 @@ public class threaded_application extends Application {
 		    	}
 		    }
 		    else
-			    url = "file:///android_asset/feature_not_available.html";
+			    url = "file:///android_asset/blank_page.html";
 	    }
 	    return url;
 	}
