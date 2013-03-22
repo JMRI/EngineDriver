@@ -154,7 +154,7 @@ public class connection_activity extends Activity {
     		TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
     		connected_hostname = (String) hnv.getText();
     		TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
-    		connected_port =new Integer( (String) hpv.getText());
+    		connected_port = Integer.valueOf((String) hpv.getText());
     		break;
     	}
     	connect();
@@ -169,7 +169,7 @@ public class connection_activity extends Activity {
 		if (connected_hostip.trim().length() > 0 ) {
 	        entry =(EditText)findViewById(R.id.port);
 			try {
-				connected_port=new Integer(entry.getText().toString());
+				connected_port = Integer.valueOf(entry.getText().toString());
 			} catch(Exception except) { 
 				Toast.makeText(getApplicationContext(), "Invalid port#, retry.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
 				connected_port = 0;
@@ -254,7 +254,7 @@ public class connection_activity extends Activity {
         			HashMap <String, String> t = connections_list.get(i);
         			String li = (String) t.get("ip_address");
         			String lh = (String) t.get("host_name");
-        			Integer lp = new Integer((String) t.get("port"));
+        			Integer lp = Integer.valueOf((String) t.get("port"));
 //***        			if(connected_hostip != null && connected_port != 0)
         			if(!connected_hostip.equals(li) || connected_port!=lp) {  //write it out if not same as selected 
         				list_output.format("%s:%s:%d\n", lh, li, lp);

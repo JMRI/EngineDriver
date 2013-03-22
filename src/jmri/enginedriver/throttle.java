@@ -245,8 +245,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					  dlMetadataTask.getMetadata();
 					  dlRosterTask.getRoster();
 					  mainapp.setThrotUrl(null);
+					  webView.stopLoading();
 					  clearHistory = true;
-					  load_webview();				// reinit webview
+					  load_webview();				//reload
 					  set_labels();					// update layout in case web loc pref changed
 				  }
 				  break;
@@ -872,7 +873,11 @@ void start_select_loco_activity(char whichThrottle)
 
 	webView = (WebView) findViewById(R.id.throttle_webview);
 	webView.getSettings().setJavaScriptEnabled(true);
-	webView.getSettings().setBuiltInZoomControls(true);
+	webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
+	webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out
+	webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+	webView.setInitialScale(150);
+//	webView.getSettings().setLoadWithOverviewMode(true);	// size image to fill width
 
 	// open all links inside the current view (don't start external web browser)
 	WebViewClient EDWebClient = new WebViewClient()	{
@@ -894,13 +899,7 @@ void start_select_loco_activity(char whichThrottle)
 	if(savedInstanceState != null)
 		webView.restoreState(savedInstanceState);		// restore if possible
 	else
-	{
-//		webView.setInitialScale(10);						// make image < width
-		webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out
-		webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
-		webView.getSettings().setLoadWithOverviewMode(true);	// size image to fill width
-	 	load_webview();								// else load the saved url
-	}
+		load_webview();	//reload
 
   } //end of onCreate()
 
@@ -931,7 +930,6 @@ void start_select_loco_activity(char whichThrottle)
 	  gestureInProgress = false;
 
 //** rdb moved this to onCreate & onSharedPreferencesChanged	  mainapp.webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
-	  load_webview();		// update if url changed
 	  set_labels();			// handle labels
   }
 
@@ -952,7 +950,6 @@ void start_select_loco_activity(char whichThrottle)
   public void onDestroy() {
 	  Log.d("Engine_Driver","throttle.onDestroy() called");
 
-//	  webView.setInitialScale(100);				// restore scale for next use
 	  //load a bogus url to prevent javascript from continuing to run
 	  webView.loadUrl("file:///android_asset/blank_page.html");
 	  mainapp.throttle_msg_handler = null;
@@ -968,8 +965,7 @@ void start_select_loco_activity(char whichThrottle)
 		  url = mainapp.getThrotUrl();
 	  else
 		  url = "file:///android_asset/blank_page.html";
-	  if(!url.equals(webView.getUrl()))			// suppress load if url hasn't changed
-		  webView.loadUrl(url);
+	  webView.loadUrl(url);
   }
   
   

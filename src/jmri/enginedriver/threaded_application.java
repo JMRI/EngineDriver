@@ -20,6 +20,7 @@ package jmri.enginedriver;
 
 /* TODO: see changelog-and-todo-list.txt for complete list of project to-do's */
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,6 +47,7 @@ import jmri.enginedriver.message_type;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.jmrit.roster.RosterEntry;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
@@ -1605,22 +1607,17 @@ public class threaded_application extends Application {
 	//
 	// return the current url if it exists else returns the default one
 	//
-	public String getThrotUrl()
+	public String getThrotUrl() 
 	{
-		String defaultUrl;
-		if(prefs.getBoolean("web_throt_lock_preference", true ))
-			defaultUrl = getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue);
-		else
-			defaultUrl = getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue);
-		return getUrl(throtUrl, defaultUrl);
+		return getUrl(throtUrl, prefs.getString("InitialThrotWebPage", getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue)));
 	}
 	
-	public String getWebUrl()
-	{
+	public String getWebUrl() 
+	{	
 		return getUrl(webUrl, prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue)));
 	}
 	
-	private String getUrl(String url, String defaultUrl)
+	public String getUrl(String url, String defaultUrl)
 	{
 	    if(url == null)
 	    {
@@ -1644,13 +1641,4 @@ public class threaded_application extends Application {
 	{
 		webUrl = url;
 	}
-
-	public void initThrotUrl() {
-		throtUrl = null;
-	}
-	
-	public void initWebUrl() {
-		webUrl = null;
-	}
-	
 }

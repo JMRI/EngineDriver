@@ -54,6 +54,8 @@ public class web_activity extends Activity {
 					  case 'P': //panel info
 						  if (thrSel == 'W') {		// PW - web server port info
 							  mainapp.setWebUrl(null);
+							  webView = (WebView) findViewById(R.id.webview);
+							  webView.stopLoading();
 							  clearHistory = true;
 							  load_webview();		// reload the page
 						  }
@@ -83,7 +85,10 @@ public class web_activity extends Activity {
 	webView = (WebView) findViewById(R.id.webview);
 	webView.getSettings().setJavaScriptEnabled(true);
 	webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
-
+	webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out
+	webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+	webView.setInitialScale(150);
+//	webView.getSettings().setLoadWithOverviewMode(true);	// size image to fill width
 
 	// open all links inside the current view (don't start external web browser)
 	WebViewClient EDWebClient = new WebViewClient()	{
@@ -103,17 +108,10 @@ public class web_activity extends Activity {
 	};
 	webView.setWebViewClient(EDWebClient);
 
-	if(savedInstanceState != null) {
+	if(savedInstanceState != null) 
 		webView.restoreState(savedInstanceState);		// restore if possible
-    }
 	else
-	{
-//		webView.setInitialScale(10);						// make image < width
-		webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out
-		webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
-		webView.getSettings().setLoadWithOverviewMode(true);	// size image to fill width
 	 	load_webview();									// else load the saved url
-	}
   };
 
   @Override
@@ -127,7 +125,12 @@ public class web_activity extends Activity {
  	  super.onResume();
 
  	  setActivityOrientation(this);  	//set screen orientation based on prefs
- 	  load_webview();					// update if url changed
+
+// don't load here - onCreate already handled it.  Load might not be finished yet
+// in which case call load_webview here just creates extra work since url will still be null
+// causing load_webview to load the page again 
+//	  load_webview();
+ 	  
   };
 
  @Override
@@ -147,7 +150,6 @@ public class web_activity extends Activity {
   public void onDestroy() {
 	  Log.d("Engine_Driver","web_activity.onDestroy() called");
 
-//	  webView.setInitialScale(100);				// restore scale for next use
 	  //load a bogus url to prevent javascript from continuing to run
 	  webView.loadUrl("file:///android_asset/blank_page.html");
   	  mainapp.web_msg_handler = null;
@@ -215,10 +217,8 @@ public class web_activity extends Activity {
   }
   
   // load the url
-  private void load_webview()
-  {
-	  if(!(mainapp.getWebUrl().equals(webView.getUrl())))		// suppress load if url hasn't changed
-		  webView.loadUrl(mainapp.getWebUrl());
+  private void load_webview() {
+	  webView.loadUrl(mainapp.getWebUrl());
   }
   
 

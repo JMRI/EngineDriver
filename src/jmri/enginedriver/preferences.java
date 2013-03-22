@@ -74,8 +74,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 		  }
 		  else if(key.equals("WebViewLocation")) {
 			  mainapp.webViewLocation = sharedPreferences.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
-			  mainapp.initThrotUrl();
-			  sendThrot(message_type.RESPONSE, "PW");
 			  if (mainapp.throttle_msg_handler != null) { 		// tell throt to redraw its web view and clear history
 				Message msg=Message.obtain(); 
 				msg.what = message_type.RESPONSE;
@@ -90,21 +88,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 		  }
 	  }
 
-	  private void sendThrot(int msgType, String msgBody) {
-		threaded_application mainapp=(threaded_application)this.getApplication();
-		if (mainapp.throttle_msg_handler != null) {
-			Message msg=Message.obtain(); 
-			msg.what=msgType;
-			msg.obj=new String(msgBody);
-			try {
-				mainapp.throttle_msg_handler.sendMessage(msg);
-			}
-			catch(Exception e) {
-				msg.recycle();
-			}
-		}
-	  }
-	  
 	  //Handle pressing of the back button to end this activity
 	  @Override
 	  public boolean onKeyDown(int key, KeyEvent event) {
