@@ -85,8 +85,8 @@ public class threaded_application extends Application {
 	public static HashMap<String, String> metadata;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
 	ImageDownloader imageDownloader = new ImageDownloader();
 	String webViewLocation = "none"; //pref value where user would like to see webview (or none)
-	String webUrl = null;	//current web page url
-	String throtUrl = null;	//current throttle page url
+	private String webUrl = null;	//current web page url
+	private String throtUrl = null;	//current throttle page url
 
 	String power_state;
 
@@ -697,8 +697,6 @@ public class threaded_application extends Application {
 				case 'W':  //Web Server port 
 					try {
 						web_server_port = Integer.parseInt(response_str.substring(2));  //set app variable
-						webUrl = null;
-						throtUrl = null;
 					} 
 					catch (Exception e) {
 						Log.d("Engine_Driver", "process response: invalid web server port string");
@@ -1038,6 +1036,8 @@ public class threaded_application extends Application {
 			}
 		}
 
+		
+		
 		// get the roster name from address string 123(L).  Return input if not found in roster or in consist
 		private String get_loconame_from_address_string(String response_str) {
 
@@ -1607,8 +1607,14 @@ public class threaded_application extends Application {
 	//
 	public String getThrotUrl()
 	{
-		return getUrl(throtUrl, prefs.getString("InitialThrotWebPage", getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue)));
+		String defaultUrl;
+		if(prefs.getBoolean("web_throt_lock_preference", true ))
+			defaultUrl = getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue);
+		else
+			defaultUrl = getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue);
+		return getUrl(throtUrl, defaultUrl);
 	}
+	
 	public String getWebUrl()
 	{
 		return getUrl(webUrl, prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue)));
@@ -1633,15 +1639,18 @@ public class threaded_application extends Application {
 	public void setThrotUrl(String url)
 	{
 		throtUrl = url;
-		if (prefs.getBoolean("web_throt_lock_preference", true ))
-			webUrl = url;
 	}
 	public void setWebUrl(String url)
 	{
 		webUrl = url;
-		if (prefs.getBoolean("web_throt_lock_preference", true ))
-			throtUrl = url;
 	}
 
+	public void initThrotUrl() {
+		throtUrl = null;
+	}
+	
+	public void initWebUrl() {
+		webUrl = null;
+	}
+	
 }
-

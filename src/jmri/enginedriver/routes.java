@@ -202,29 +202,6 @@ public class routes extends Activity  implements OnGestureListener {
   	return myGesture.onTouchEvent(event);
   }
 
-  @Override
-  public void onResume() {
-	  super.onResume();
-    //update route list
-    refresh_route_view();
-  }
-
-  @Override
-  public void onStart() {
-    super.onStart();
-
-    //put pointer to this activity's handler in main app's shared variable (If needed)
-//    if (mainapp.routes_msg_handler == null)
-  	  mainapp.routes_msg_handler=new routes_handler();
-  }
-
-  /** Called when the activity is finished. */
-  @Override
-  public void onDestroy() {
-	  super.onDestroy();
-  	  mainapp.routes_msg_handler = null;
-  }
-  
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState)  {
@@ -233,8 +210,9 @@ public class routes extends Activity  implements OnGestureListener {
     setContentView(R.layout.routes);
     
     mainapp=(threaded_application)getApplication();
-    
 	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+    //put pointer to this activity's handler in main app's shared variable (If needed)
+  	  mainapp.routes_msg_handler=new routes_handler();
     
 	myGesture = new GestureDetector(this);
         
@@ -267,6 +245,25 @@ public class routes extends Activity  implements OnGestureListener {
 
   };
 
+  @Override
+  public void onStart() {
+    super.onStart();
+  }
+
+  @Override
+  public void onResume() {
+	  super.onResume();
+    //update route list
+    refresh_route_view();
+  }
+
+  /** Called when the activity is finished. */
+  @Override
+  public void onDestroy() {
+  	  mainapp.routes_msg_handler = null;
+	  super.onDestroy();
+  }
+  
   //Always go to throttle activity if back button pressed
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {

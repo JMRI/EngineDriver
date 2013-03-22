@@ -57,6 +57,7 @@ import jmri.jmrit.roster.RosterLoader;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
@@ -119,6 +120,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private int dirS = 0;
 
 	private Boolean clearHistory = false;	// flag to webViewClient to clear history when page load finishes
+	
+	private WebView webView;
 
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class throttle_handler extends Handler {
@@ -241,8 +244,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					  // try web-dependent items again
 					  dlMetadataTask.getMetadata();
 					  dlRosterTask.getRoster();
+					  mainapp.setThrotUrl(null);
 					  clearHistory = true;
 					  load_webview();				// reinit webview
+					  set_labels();					// update layout in case web loc pref changed
 				  }
 				  break;
 			  }  //end of switch
@@ -778,9 +783,11 @@ void start_select_loco_activity(char whichThrottle)
     setContentView(R.layout.throttle);
 
     mainapp=(threaded_application)this.getApplication();
-
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+    //put pointer to this activity's handler in main app's shared variable (If needed)
+    mainapp.throttle_msg_handler=new throttle_handler();
     
+    mainapp.webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));    
 //    myGesture = new GestureDetector(this);
     GestureOverlayView ov = (GestureOverlayView)findViewById(R.id.throttle_overlay);
     ov.addOnGestureListener(this);
@@ -863,11 +870,7 @@ void start_select_loco_activity(char whichThrottle)
 	dlRosterTask = new DownloadRosterTask();
 	dlRosterTask.getRoster();		// if web port is already known, start background roster dl here
 
-	WebView webView = (WebView) findViewById(R.id.throttle_webview);
-	if(savedInstanceState != null)
-		webView.restoreState(savedInstanceState);		// restore if possible
-	else
-	 	  load_webview();								// else load the saved url
+	webView = (WebView) findViewById(R.id.throttle_webview);
 	webView.getSettings().setJavaScriptEnabled(true);
 	webView.getSettings().setBuiltInZoomControls(true);
 
@@ -887,14 +890,23 @@ void start_select_loco_activity(char whichThrottle)
 		}
 	};
 	webView.setWebViewClient(EDWebClient);
+
+	if(savedInstanceState != null)
+		webView.restoreState(savedInstanceState);		// restore if possible
+	else
+	{
+//		webView.setInitialScale(10);						// make image < width
+		webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out
+		webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+		webView.getSettings().setLoadWithOverviewMode(true);	// size image to fill width
+	 	load_webview();								// else load the saved url
+	}
+
   } //end of onCreate()
 
   @Override
   public void onStart() {
     super.onStart();
-
-    //put pointer to this activity's handler in main app's shared variable (If needed)
-  	  mainapp.throttle_msg_handler=new throttle_handler();
   }
 
   @Override
@@ -918,21 +930,20 @@ void start_select_loco_activity(char whichThrottle)
 	  gestureFailed = false;
 	  gestureInProgress = false;
 
-	  // prefs may have changed so update webviewlocation from prefs
-	  mainapp.webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
-//	  load_webview();		// reload url
+//** rdb moved this to onCreate & onSharedPreferencesChanged	  mainapp.webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+	  load_webview();		// update if url changed
 	  set_labels();			// handle labels
   }
 
   @Override
   public void onSaveInstanceState(Bundle outState) {
 	  super.onSaveInstanceState(outState);
-	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
 	  webView.saveState(outState);		// save history (on rotation)
   }
 
   @Override
   public void onPause() {
+	  mainapp.setThrotUrl(webView.getUrl());		// save url
 	  super.onPause();
   }
 
@@ -941,30 +952,24 @@ void start_select_loco_activity(char whichThrottle)
   public void onDestroy() {
 	  Log.d("Engine_Driver","throttle.onDestroy() called");
 
-	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
-	  mainapp.setThrotUrl(webView.getUrl());		// save url
+//	  webView.setInitialScale(100);				// restore scale for next use
 	  //load a bogus url to prevent javascript from continuing to run
 	  webView.loadUrl("file:///android_asset/blank_page.html");
-
 	  mainapp.throttle_msg_handler = null;
 
 	  super.onDestroy();
   }
 
-
-
   // load the url
   private void load_webview()
   {
-	  WebView webView = (WebView) findViewById(R.id.throttle_webview);
-	  if (!mainapp.webViewLocation.equals("none")) {			// if displaying webview
-		  if(!(mainapp.getThrotUrl().equals(webView.getUrl())))		// suppress load if url hasn't changed
-			  webView.loadUrl(mainapp.getThrotUrl());
-	  }
-	  else {
-		  Log.d("Engine_Driver","web view set to blank");
-		  webView.loadUrl("file:///android_asset/blank_page.html");
-	  }
+	  String url;
+	  if (!mainapp.webViewLocation.equals("none"))			// if displaying webview
+		  url = mainapp.getThrotUrl();
+	  else
+		  url = "file:///android_asset/blank_page.html";
+	  if(!url.equals(webView.getUrl()))			// suppress load if url hasn't changed
+		  webView.loadUrl(url);
   }
   
   
@@ -1212,8 +1217,7 @@ void start_select_loco_activity(char whichThrottle)
   public boolean onKeyDown(int key, KeyEvent event) {
 	  //Handle pressing of the back button to release the selected loco and end this activity
 	  if(key==KeyEvent.KEYCODE_BACK)  {
-		  WebView webView = (WebView) findViewById(R.id.throttle_webview);
-		  if(webView.canGoBack())
+		  if(webView.canGoBack() && !clearHistory)
 			  webView.goBack();
 		  else
 			  checkExit();

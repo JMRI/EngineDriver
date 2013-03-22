@@ -40,7 +40,7 @@ public class web_activity extends Activity {
   private threaded_application mainapp;  // hold pointer to mainapp
   private static SharedPreferences prefs;
   private Boolean clearHistory = false;
-
+  private WebView webView; 
   
   class web_handler extends Handler {
 
@@ -53,6 +53,7 @@ public class web_activity extends Activity {
 				  switch (com1) {
 					  case 'P': //panel info
 						  if (thrSel == 'W') {		// PW - web server port info
+							  mainapp.setWebUrl(null);
 							  clearHistory = true;
 							  load_webview();		// reload the page
 						  }
@@ -74,23 +75,16 @@ public class web_activity extends Activity {
 
     mainapp=(threaded_application)this.getApplication();
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+    //put pointer to this activity's handler in main app's shared variable
+	mainapp.web_msg_handler=new web_handler();
 
     setContentView(R.layout.web_activity);
   
-	WebView webView = (WebView) findViewById(R.id.webview);
-	if(savedInstanceState != null)
-		webView.restoreState(savedInstanceState);		// restore if possible
-	else
-	 	load_webview();									// else load the saved url
-
+	webView = (WebView) findViewById(R.id.webview);
 	webView.getSettings().setJavaScriptEnabled(true);
 	webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
 
-	webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out
-	webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
 
-	webView.getSettings().setLoadWithOverviewMode(true);	// zoomed-out when page is loaded
-	
 	// open all links inside the current view (don't start external web browser)
 	WebViewClient EDWebClient = new WebViewClient()	{
 		@Override
@@ -108,15 +102,23 @@ public class web_activity extends Activity {
 		}
 	};
 	webView.setWebViewClient(EDWebClient);
-		
+
+	if(savedInstanceState != null) {
+		webView.restoreState(savedInstanceState);		// restore if possible
+    }
+	else
+	{
+//		webView.setInitialScale(10);						// make image < width
+		webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out
+		webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+		webView.getSettings().setLoadWithOverviewMode(true);	// size image to fill width
+	 	load_webview();									// else load the saved url
+	}
   };
 
   @Override
   public void onStart() {
     super.onStart();
-
-    //put pointer to this activity's handler in main app's shared variable (If needed)
-  	  mainapp.web_msg_handler=new web_handler();
   }
 
   @Override
@@ -124,34 +126,31 @@ public class web_activity extends Activity {
 	  Log.d("Engine_Driver","web_activity.onResume() called");
  	  super.onResume();
 
- 	  setActivityOrientation(this);  //set screen orientation based on prefs
-// 	  load_webview();								// load the url
+ 	  setActivityOrientation(this);  	//set screen orientation based on prefs
+ 	  load_webview();					// update if url changed
   };
 
  @Override
   public void onSaveInstanceState(Bundle outState) {
 	  super.onSaveInstanceState(outState);
-	  WebView webView = (WebView) findViewById(R.id.webview);
 	  webView.saveState(outState);		// save history
   }
   
   @Override
   public void onPause() {
+	  mainapp.setWebUrl(webView.getUrl());		// save current url
 	  super.onPause();
   }
-  
-  
+   
   /** Called when the activity is finished. */
   @Override
   public void onDestroy() {
 	  Log.d("Engine_Driver","web_activity.onDestroy() called");
 
-      threaded_application mainapp = (threaded_application) getApplication();
-	  WebView webView = (WebView) findViewById(R.id.webview);
-	  mainapp.setWebUrl(webView.getUrl());		// save current url
+//	  webView.setInitialScale(100);				// restore scale for next use
 	  //load a bogus url to prevent javascript from continuing to run
 	  webView.loadUrl("file:///android_asset/blank_page.html");
-  	  mainapp.power_control_msg_handler = null;
+  	  mainapp.web_msg_handler = null;
 
 	  super.onDestroy();
   }
@@ -162,8 +161,7 @@ public class web_activity extends Activity {
   public boolean onKeyDown(int key, KeyEvent event) {
 	  if(key==KeyEvent.KEYCODE_BACK)
 	  {
-			WebView webView = (WebView) findViewById(R.id.webview);
-			if(webView.canGoBack()) {
+			if(webView.canGoBack() && !clearHistory) {
 				webView.goBack();
 				return true;
 			}
@@ -219,7 +217,6 @@ public class web_activity extends Activity {
   // load the url
   private void load_webview()
   {
-	  WebView webView = (WebView) findViewById(R.id.webview);
 	  if(!(mainapp.getWebUrl().equals(webView.getUrl())))		// suppress load if url hasn't changed
 		  webView.loadUrl(mainapp.getWebUrl());
   }

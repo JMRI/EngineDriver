@@ -286,18 +286,72 @@ public class connection_activity extends Activity {
     };
   }
 
-	@Override
-	public void onPause() {
-        super.onPause();
-		//shutdown server discovery listener
-	    Message msg=Message.obtain();
-	    msg.what=message_type.SET_LISTENER;
-	    msg.arg1 = 0; //zero turns it off
-	    if (mainapp.comm_msg_handler != null) {
-	    	mainapp.comm_msg_handler.sendMessage(msg);
-	    }
-}
-	
+ /** Called when the activity is first created. */
+  @Override
+  public void onCreate(Bundle savedInstanceState)
+  {
+    super.onCreate(savedInstanceState);
+//    timestamp = SystemClock.uptimeMillis();
+//    Log.d("Engine_Driver","CA onCreate " + timestamp);
+    mainapp=(threaded_application)this.getApplication();
+    mainapp.connection_msg_handler=new ui_handler();
+    isShuttingDown = false;
+    
+    //check for "default" throttle name and make it more unique
+    //TODO: move this and similar code in preferences.java into single routine
+    SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+    String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
+    String s = prefs.getString("throttle_name_preference", defaultName);
+    if (s.trim().equals("") || s.equals(defaultName)) {
+        String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+        if (deviceId != null && deviceId.length() >=4) {
+        	deviceId = deviceId.substring(deviceId.length() - 4);
+        } else {
+        	Random rand = new Random();
+        	deviceId = String.valueOf(rand.nextInt(9999));  //use random string
+        }
+        String uniqueDefaultName = defaultName + " " + deviceId;
+    	s = uniqueDefaultName;
+    	prefs.edit().putString("throttle_name_preference", s).commit();  //save new name to prefs
+
+    }
+    
+    setContentView(R.layout.connection);
+    
+    //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
+    discovery_list=new ArrayList<HashMap<String, String> >();
+    discovery_list_adapter=new SimpleAdapter(this, discovery_list, R.layout.connections_list_item,
+    		new String[] {"ip_address", "host_name", "port"},
+    		new int[] {R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
+    ListView discover_list=(ListView)findViewById(R.id.discovery_list);
+    discover_list.setAdapter(discovery_list_adapter);
+    discover_list.setOnItemClickListener(new connect_item(server_list_type.DISCOVERED_SERVER));
+    
+    //Set up a list adapter to allow adding the list of recent connections to the UI.
+    connections_list=new ArrayList<HashMap<String, String> >();
+    connection_list_adapter=new SimpleAdapter(this, connections_list, R.layout.connections_list_item, 
+    		new String[] {"ip_address", "host_name", "port"},
+    		new int[] {R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
+    ListView conn_list=(ListView)findViewById(R.id.connections_list);
+    conn_list.setAdapter(connection_list_adapter);
+    conn_list.setOnItemClickListener(new connect_item(server_list_type.RECENT_CONNECTION));
+
+    // suppress popup keyboard until EditText is touched
+	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+    //Set the button callback.
+    Button button=(Button)findViewById(R.id.connect);
+    button_listener click_listener=new button_listener();
+    button.setOnClickListener(click_listener);
+    
+//    set_labels();
+    DisplayMetrics dm = new DisplayMetrics();
+    getWindowManager().getDefaultDisplay().getMetrics(dm);
+    threaded_application.min_fling_distance = (int)(threaded_application.SWIPE_MIN_DISTANCE * dm.densityDpi / 160.0f);
+    threaded_application.min_fling_velocity = (int)(threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f); 
+
+  }
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -396,9 +450,6 @@ public class connection_activity extends Activity {
 	    	Log.e("Engine_Driver","ERROR in ca.onResume: comm thread not started.") ;
 	   	    Toast.makeText(getApplicationContext(), "ERROR in ca.onResume: comm thread not started.", Toast.LENGTH_SHORT).show();
 	    }    	
-
-// withrottle_list();  //debugging
-	    
 	}  //end of onResume
 
 	@Override
@@ -409,74 +460,40 @@ public class connection_activity extends Activity {
 	    	this.finish();
 	}
 	
- /** Called when the activity is first created. */
-  @Override
-  public void onCreate(Bundle savedInstanceState)
-  {
-    super.onCreate(savedInstanceState);
-//    timestamp = SystemClock.uptimeMillis();
-//    Log.d("Engine_Driver","CA onCreate " + timestamp);
-    mainapp=(threaded_application)this.getApplication();
-//    if(mainapp.connection_msg_handler == null)
-    mainapp.connection_msg_handler=new ui_handler();
-    isShuttingDown = false;
-    
-    //check for "default" throttle name and make it more unique
-    //TODO: move this and similar code in preferences.java into single routine
-    SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-    String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-    String s = prefs.getString("throttle_name_preference", defaultName);
-    if (s.trim().equals("") || s.equals(defaultName)) {
-        String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-        if (deviceId != null && deviceId.length() >=4) {
-        	deviceId = deviceId.substring(deviceId.length() - 4);
-        } else {
-        	Random rand = new Random();
-        	deviceId = String.valueOf(rand.nextInt(9999));  //use random string
-        }
-        String uniqueDefaultName = defaultName + " " + deviceId;
-    	s = uniqueDefaultName;
-    	prefs.edit().putString("throttle_name_preference", s).commit();  //save new name to prefs
+	@Override
+	public void onPause() {
+		//shutdown server discovery listener
+	    Message msg=Message.obtain();
+	    msg.what=message_type.SET_LISTENER;
+	    msg.arg1 = 0; //zero turns it off
+	    if (mainapp.comm_msg_handler != null) {
+	    	mainapp.comm_msg_handler.sendMessage(msg);
+	    }
+        super.onPause();
+	}
 
+	@Override
+	public void onDestroy() {
+		mainapp.connection_msg_handler = null;
+		super.onDestroy();
+	}
+	
+    //end all activity
+    private void startShutdown() {
+      isShuttingDown = true;
+  	  if (mainapp.comm_msg_handler != null) {
+  	  	  Message msg=Message.obtain();
+  	  	  msg.what=message_type.SHUTDOWN;
+  		  mainapp.comm_msg_handler.sendMessage(msg);
+  	  }
     }
     
-    setContentView(R.layout.connection);
-    
-    //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
-    discovery_list=new ArrayList<HashMap<String, String> >();
-    discovery_list_adapter=new SimpleAdapter(this, discovery_list, R.layout.connections_list_item,
-    		new String[] {"ip_address", "host_name", "port"},
-    		new int[] {R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
-    ListView discover_list=(ListView)findViewById(R.id.discovery_list);
-    discover_list.setAdapter(discovery_list_adapter);
-    discover_list.setOnItemClickListener(new connect_item(server_list_type.DISCOVERED_SERVER));
-    
-    //Set up a list adapter to allow adding the list of recent connections to the UI.
-    connections_list=new ArrayList<HashMap<String, String> >();
-    connection_list_adapter=new SimpleAdapter(this, connections_list, R.layout.connections_list_item, 
-    		new String[] {"ip_address", "host_name", "port"},
-    		new int[] {R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
-    ListView conn_list=(ListView)findViewById(R.id.connections_list);
-    conn_list.setAdapter(connection_list_adapter);
-    conn_list.setOnItemClickListener(new connect_item(server_list_type.RECENT_CONNECTION));
+    private void completeShutdown() {
+      this.finish();
+//	  System.exit(0);
+    }
 
-    // suppress popup keyboard until EditText is touched
-	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-    //Set the button callback.
-    Button button=(Button)findViewById(R.id.connect);
-    button_listener click_listener=new button_listener();
-    button.setOnClickListener(click_listener);
-    
-//    set_labels();
-    DisplayMetrics dm = new DisplayMetrics();
-    getWindowManager().getDefaultDisplay().getMetrics(dm);
-    threaded_application.min_fling_distance = (int)(threaded_application.SWIPE_MIN_DISTANCE * dm.densityDpi / 160.0f);
-    threaded_application.min_fling_velocity = (int)(threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f); 
-
-  }
-  
-  private void set_labels() {
+	private void set_labels() {
 	    SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 	    TextView v=(TextView)findViewById(R.id.ca_footer);
 	    String s = prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
@@ -529,23 +546,6 @@ public class connection_activity extends Activity {
 		}
 		return (super.onKeyDown(key, event));
 	};
-
-    //end all activity
-    private void startShutdown() {
-      isShuttingDown = true;
-  	  if (mainapp.comm_msg_handler != null) {
-  	  	  Message msg=Message.obtain();
-  	  	  msg.what=message_type.SHUTDOWN;
-  		  mainapp.comm_msg_handler.sendMessage(msg);
-  	  }
-    }
-    
-    private void completeShutdown() {
-      this.finish();
-//	  mainapp.connection_msg_handler = null;
-//	  System.exit(0);
-    }
-
 
 	//for debugging only
 /*	private void withrottle_list() {		

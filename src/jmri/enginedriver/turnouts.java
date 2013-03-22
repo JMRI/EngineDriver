@@ -216,30 +216,6 @@ public class turnouts extends Activity implements OnGestureListener {
   	return myGesture.onTouchEvent(event);
   }
 
-  @Override
-  public void onResume() {
-	  super.onResume();
-    //update turnout list
-    refresh_turnout_view();
-  }
-
-  @Override
-  public void onStart() {
-    super.onStart();
-
-    //put pointer to this activity's handler in main app's shared variable (If needed)
-//    if (mainapp.turnouts_msg_handler == null)
-  	  mainapp.turnouts_msg_handler=new turnouts_handler();
-  }
-  
-  /** Called when the activity is finished. */
-  @Override
-  public void onDestroy() {
-	  super.onDestroy();
-  	  mainapp.turnouts_msg_handler = null;
-  }
-  
-	  
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState)  {
@@ -248,8 +224,9 @@ public class turnouts extends Activity implements OnGestureListener {
     setContentView(R.layout.turnouts);
     
     mainapp=(threaded_application)getApplication();
-    
 	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+    //put pointer to this activity's handler in main app's shared variable (If needed)
+	mainapp.turnouts_msg_handler=new turnouts_handler();
 
     myGesture = new GestureDetector(this);
     
@@ -297,12 +274,29 @@ public class turnouts extends Activity implements OnGestureListener {
 
     	b=(Button)findViewById(R.id.turnout_throw);
    	    b.setVisibility(GONE);
-    	
     }
-    
   };
-
     
+  @Override
+  public void onStart() {
+    super.onStart();
+  }
+  
+  @Override
+  public void onResume() {
+	super.onResume();
+    //update turnout list
+    refresh_turnout_view();
+  }
+
+  /** Called when the activity is finished. */
+  @Override
+  public void onDestroy() {
+  	  mainapp.turnouts_msg_handler = null;
+	  super.onDestroy();
+  }
+  
+	  
   //Always go to throttle activity if back button pressed
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {

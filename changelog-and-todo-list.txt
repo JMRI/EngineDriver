@@ -1,8 +1,9 @@
 **Version 2.6
  * pref to "disable" on-the-fly consisting, and revert to dropping when a new one is added.
- * pref to only show one throttle 
- * reload last web page when auto-rotating (or don't reload at all)
- * separate prefs for throttle and web view
+ * pref to only show one throttle -- Robin Becker
+ * web pages no longer reset when rotating or navigating away -- Robin Becker
+ * back button now works for web pages -- Robin Becker
+ * separate prefs for throttle and web view -- Robin Becker
 **Version 2.5
  * return TargetSDKVersion to 10 to trigger "legacy overflow button" for menu (needed on ICS)
  * keep screen on in web view (prevent screen blanking)

@@ -373,34 +373,6 @@ public class select_loco extends Activity {
 		return (super.onKeyDown(key, event));
 	};
 
-	// end current activity
-	void end_this_activity() {
-		this.finish();
-		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-	}
-
-	@Override
-	public void onStart() {
-
-		super.onStart();
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			whichThrottle = extras.getString("whichThrottle");
-		}
-
-		// set address length if default is set in prefs
-		default_address_length = prefs.getString("default_address_length", this
-				.getResources().getString(
-						R.string.prefDefaultAddressLengthDefaultValue));
-		Spinner al = (Spinner) findViewById(R.id.address_length);
-		if (default_address_length.equals("Long")) {
-			al.setSelection(1);
-		} else if (default_address_length.equals("Short")) {
-			al.setSelection(0);
-		}
-
-	}
-
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -542,10 +514,41 @@ public class select_loco extends Activity {
 				return false;
 			};
 		});
-
 		set_labels();
-
 	};
+
+	@Override
+	public void onStart() {
+
+		super.onStart();
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			whichThrottle = extras.getString("whichThrottle");
+		}
+
+		// set address length if default is set in prefs
+		default_address_length = prefs.getString("default_address_length", this
+				.getResources().getString(
+						R.string.prefDefaultAddressLengthDefaultValue));
+		Spinner al = (Spinner) findViewById(R.id.address_length);
+		if (default_address_length.equals("Long")) {
+			al.setSelection(1);
+		} else if (default_address_length.equals("Short")) {
+			al.setSelection(0);
+		}
+	}
+
+	@Override
+	public void onDestroy() {
+		mainapp.select_loco_msg_handler = null; 
+		super.onDestroy();
+	}
+	
+	// end current activity
+	void end_this_activity() {
+		this.finish();
+		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	}
 
 	protected boolean onLongListItemClick(View v, int position, long id) {
 		if (mainapp.roster == null) {

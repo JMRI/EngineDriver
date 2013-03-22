@@ -71,8 +71,7 @@
             android:dialogTitle="@string/prefInitialThrotWebPageSummary"
             android:key="InitialThrotWebPage"
             android:summary="@string/prefInitialThrotWebPageSummary"
-            android:title="@string/prefInitialThrotWebPageTitle" /><CheckBoxPreference android:defaultValue="@string/prefWebThrotLockDefaultValue" android:dialogTitle="@string/prefWebThrotLockTitle" android:key="web_throt_lock_preference" android:summary="@string/prefWebThrotLockSummary" android:title="@string/prefWebThrotLockTitle">
-        </CheckBoxPreference>
+            android:title="@string/prefInitialThrotWebPageTitle" />
         
         
         </PreferenceCategory>

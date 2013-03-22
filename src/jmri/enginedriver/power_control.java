@@ -89,29 +89,6 @@ public class power_control extends Activity {
 		    b.setBackgroundDrawable(currentImage);
 		}
 
-  @Override
-  public void onResume() {
-	  super.onResume();
-    //update route list
-    refresh_power_control_view();
-  }
-
-  @Override
-  public void onStart() {
-    super.onStart();
-
-    //put pointer to this activity's handler in main app's shared variable (If needed)
-//    if (mainapp.power_control_msg_handler == null)
-    	mainapp.power_control_msg_handler=new power_control_handler();
-  }
-
-  /** Called when the activity is finished. */
-  @Override
-  public void onDestroy() {
-  	  mainapp.power_control_msg_handler = null;
-	  super.onDestroy();
-  }
-	  
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState)  {
@@ -120,6 +97,8 @@ public class power_control extends Activity {
     setContentView(R.layout.power_control);
     
     mainapp=(threaded_application)getApplication();
+    //put pointer to this activity's handler in main app's shared variable (If needed)
+   	mainapp.power_control_msg_handler=new power_control_handler();
     
     power_on_drawable=getResources().getDrawable(R.drawable.power_green);
     power_off_drawable=getResources().getDrawable(R.drawable.power_red);
@@ -133,6 +112,25 @@ public class power_control extends Activity {
 
   };
 
+  @Override
+  public void onStart() {
+    super.onStart();
+  }
+
+  @Override
+  public void onResume() {
+	  super.onResume();
+    //update route list
+    refresh_power_control_view();
+  }
+
+  /** Called when the activity is finished. */
+  @Override
+  public void onDestroy() {
+  	  mainapp.power_control_msg_handler = null;
+	  super.onDestroy();
+  }
+	  
   //Handle pressing of the back button to end this activity
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {

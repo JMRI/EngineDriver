@@ -85,13 +85,13 @@
     <string name="prefMaximumThrottleChangeTitle">Maximum Throttle Change</string>
     <string name="prefMaximumThrottleChangeDefaultValue">25</string>
     <string name="prefMaximumThrottleChangeSummary">Maximum Allowed throttle change in %</string>
-    <string name="prefWebViewLocationTitle">Web View Location?</string>
+    <string name="prefWebViewLocationTitle">Throttle Web View?</string>
     <string name="prefWebViewLocationDefaultValue">none</string>
-    <string name="prefWebViewLocationSummary">Include web view on Throttle pane?</string>
+    <string name="prefWebViewLocationSummary">Include web view on Throttle pane</string>
     <string name="prefInitialWebPageTitle">Initial Web Page</string>
     <string name="prefInitialWebPageDefaultValue">frame</string>
     <string name="prefInitialWebPageSummary">Initial Web Page (such as \'frame/My%20Layout.html\')</string>
-    <string name="prefInitialThrotWebPageTitle">Initial Throttle Web Page</string><string name="prefInitialThrotWebPageDefaultValue">frame</string><string name="prefInitialThrotWebPageSummary">Initial Throttle Web Page (such as \'frame/My%20Layout.html\')</string><string name="prefWebThrotLockTitle">Tie Web Views Together</string><string name="prefWebThrotLockDefaultValue">true</string><string name="prefWebThrotLockSummary">Keep both web views on the same url.</string><string name="prefDefaultAddressLengthTitle">Default Address Length</string>
+    <string name="prefInitialThrotWebPageTitle">Initial Throttle Web Page</string><string name="prefInitialThrotWebPageDefaultValue">frame</string><string name="prefInitialThrotWebPageSummary">Initial Throttle Web Page (such as \'frame/My%20Layout.html\')</string><string name="prefDefaultAddressLengthTitle">Default Address Length</string>
     <string name="prefDefaultAddressLengthDefaultValue">Auto</string>
     <string name="prefDefaultAddressLengthSummary">Default Loco Address Length, (Auto will set based on # of digits).</string>
     <string name="prefMaximumRecentConnectionsTitle">Maximum Recent Connections</string>

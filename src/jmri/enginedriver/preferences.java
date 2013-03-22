@@ -23,8 +23,10 @@ import java.util.Random;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.os.Message;
 import android.preference.PreferenceActivity;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.KeyEvent;
 
 public class preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
@@ -53,6 +55,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 	  }
 
 	  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		  threaded_application mainapp=(threaded_application)this.getApplication();
 		  if (key.equals("throttle_name_preference"))  {
 			  String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
 			  String currentValue = sharedPreferences.getString(key, defaultName).trim();
@@ -68,11 +71,40 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 				  String uniqueDefaultName = defaultName + " " + deviceId;
 				  sharedPreferences.edit().putString(key, uniqueDefaultName).commit();  //save new name to prefs
 			  }
-
-
 		  }
-
+		  else if(key.equals("WebViewLocation")) {
+			  mainapp.webViewLocation = sharedPreferences.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+			  mainapp.initThrotUrl();
+			  sendThrot(message_type.RESPONSE, "PW");
+			  if (mainapp.throttle_msg_handler != null) { 		// tell throt to redraw its web view and clear history
+				Message msg=Message.obtain(); 
+				msg.what = message_type.RESPONSE;
+				msg.obj = new String("PW");
+				try {
+					mainapp.throttle_msg_handler.sendMessage(msg);
+				}
+				catch(Exception e) {
+					msg.recycle();
+				}
+			}
+		  }
 	  }
+
+	  private void sendThrot(int msgType, String msgBody) {
+		threaded_application mainapp=(threaded_application)this.getApplication();
+		if (mainapp.throttle_msg_handler != null) {
+			Message msg=Message.obtain(); 
+			msg.what=msgType;
+			msg.obj=new String(msgBody);
+			try {
+				mainapp.throttle_msg_handler.sendMessage(msg);
+			}
+			catch(Exception e) {
+				msg.recycle();
+			}
+		}
+	  }
+	  
 	  //Handle pressing of the back button to end this activity
 	  @Override
 	  public boolean onKeyDown(int key, KeyEvent event) {
