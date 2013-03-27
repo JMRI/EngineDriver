@@ -32,6 +32,8 @@ import java.net.*;
 import java.io.*;
 
 import android.util.Log;
+import android.webkit.WebBackForwardList;
+
 import javax.jmdns.*;
 
 import android.net.ConnectivityManager;
@@ -89,7 +91,9 @@ public class threaded_application extends Application {
 	String webViewLocation = "none"; //pref value where user would like to see webview (or none)
 	private String webUrl = null;	//current web page url
 	private String throtUrl = null;	//current throttle page url
-
+	float webScale = 1.5f;		// used to restore web zoom level after rotation
+	float throtScale = 1.5f;	// used to restore throt web zoom level after rotation
+	
 	String power_state;
 
 	static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;	//minimum interval for outbound heartbeat generator
@@ -1640,5 +1644,13 @@ public class threaded_application extends Application {
 	public void setWebUrl(String url)
 	{
 		webUrl = url;
+	}
+
+	public void sendSpeedMsg(char whichThrottle, int speed) {
+		Message msg=Message.obtain();
+		msg.what=message_type.VELOCITY;
+		msg.arg1=speed;
+		msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
+		comm_msg_handler.sendMessage(msg);
 	}
 }

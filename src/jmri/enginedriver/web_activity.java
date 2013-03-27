@@ -18,8 +18,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import java.util.Set;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -31,6 +35,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.webkit.WebBackForwardList;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebSettings;
@@ -87,7 +92,7 @@ public class web_activity extends Activity {
 	webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
 	webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out
 	webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
-	webView.setInitialScale(150);
+	webView.setInitialScale((int)(100 * mainapp.webScale));
 //	webView.getSettings().setLoadWithOverviewMode(true);	// size image to fill width
 
 	// open all links inside the current view (don't start external web browser)
@@ -150,6 +155,7 @@ public class web_activity extends Activity {
   public void onDestroy() {
 	  Log.d("Engine_Driver","web_activity.onDestroy() called");
 
+	  mainapp.webScale = webView.getScale();
 	  //load a bogus url to prevent javascript from continuing to run
 	  webView.loadUrl("file:///android_asset/blank_page.html");
   	  mainapp.web_msg_handler = null;
@@ -186,30 +192,38 @@ public class web_activity extends Activity {
 	  // Handle all of the possible menu actions.
 	  Intent in;
 	  switch (item.getItemId()) {
-	  case R.id.about_menu:
-		  in=new Intent().setClass(this, about_page.class);
-		  startActivity(in);
+	  case R.id.throttle_mnu:
+		  this.finish();
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  break;
-	  case R.id.routes_menu:
+	  case R.id.turnouts_mnu:
+		  in = new Intent().setClass(this, turnouts.class);
+		  startActivity(in);
+		  this.finish();
+		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+		  break;
+	  case R.id.routes_mnu:
 		  in=new Intent().setClass(this, routes.class);
 		  startActivity(in);
 		  this.finish();
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  break;
-	  case R.id.power_control_menu:
+	  case R.id.exit_mnu:
+		  checkExit();
+		  break;
+	  case R.id.power_control_mnu:
 		  in=new Intent().setClass(this, power_control.class);
 		  startActivity(in);
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  break;
-	  case R.id.throttle:
-		  this.finish();
-		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-		  break;
-	  case R.id.turnouts:
-		  in = new Intent().setClass(this, turnouts.class);
+      case R.id.preferences_mnu:
+    	  in=new Intent().setClass(this, preferences.class);
+     	  startActivityForResult(in, 0);
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    	  break;
+	  case R.id.about_mnu:
+		  in=new Intent().setClass(this, about_page.class);
 		  startActivity(in);
-		  this.finish();
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  break;
 	  }
@@ -234,6 +248,25 @@ public class web_activity extends Activity {
 		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 	  else if (to.equals("Portrait")    && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
 		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+ }
+
+ private void checkExit() {
+	  final AlertDialog.Builder b = new AlertDialog.Builder(this); 
+	  b.setIcon(android.R.drawable.ic_dialog_alert); 
+	  b.setTitle(R.string.exit_title); 
+	  b.setMessage(R.string.exit_text);
+	  b.setCancelable(true);
+	  b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+		  public void onClick(DialogInterface dialog, int id) {
+			  //disconnect from throttle
+			  Message msg=Message.obtain();
+			  msg.what=message_type.DISCONNECT;
+			  mainapp.comm_msg_handler.sendMessage(msg);
+		  }
+	  } ); 
+	  b.setNegativeButton(R.string.no, null);
+	  AlertDialog alert = b.create();
+	  alert.show();
  }
 
  private void disconnect() {

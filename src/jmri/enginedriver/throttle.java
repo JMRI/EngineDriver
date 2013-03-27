@@ -756,11 +756,12 @@ void start_select_loco_activity(char whichThrottle)
 */
 
   private void sendSpeedMsg(char whichThrottle, int speed) {
-		Message msg=Message.obtain();
-		msg.what=message_type.VELOCITY;
-		msg.arg1=speed;
-		msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
-		mainapp.comm_msg_handler.sendMessage(msg);
+	  mainapp.sendSpeedMsg(whichThrottle, speed);
+//		Message msg=Message.obtain();
+//		msg.what=message_type.VELOCITY;
+//		msg.arg1=speed;
+//		msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
+//		mainapp.comm_msg_handler.sendMessage(msg);
   }
 
   // set throttle screen orientation based on prefs, check to avoid sending change when already there
@@ -876,11 +877,11 @@ void start_select_loco_activity(char whichThrottle)
 	webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
 	webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out
 	webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
-	webView.setInitialScale(150);
+	webView.setInitialScale((int)(100 * mainapp.throtScale));
 //	webView.getSettings().setLoadWithOverviewMode(true);	// size image to fill width
 
 	// open all links inside the current view (don't start external web browser)
-	WebViewClient EDWebClient = new WebViewClient()	{
+	WebViewClient EDWebClient = new WebViewClient() {
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView  view, String  url) {
 			return false;
@@ -950,13 +951,15 @@ void start_select_loco_activity(char whichThrottle)
   public void onDestroy() {
 	  Log.d("Engine_Driver","throttle.onDestroy() called");
 
+	  mainapp.throtScale = webView.getScale();
 	  //load a bogus url to prevent javascript from continuing to run
 	  webView.loadUrl("file:///android_asset/blank_page.html");
 	  mainapp.throttle_msg_handler = null;
 
 	  super.onDestroy();
   }
-
+  
+ 
   // load the url
   private void load_webview()
   {
@@ -1257,6 +1260,7 @@ void start_select_loco_activity(char whichThrottle)
 	  AlertDialog alert = b.create();
 	  alert.show();
   }
+
   private void disconnect() {
 	  //stop roster or metadata download if still in progress
 	  try {
@@ -1306,44 +1310,44 @@ void start_select_loco_activity(char whichThrottle)
       // Handle all of the possible menu actions.
 	  Intent in;
       switch (item.getItemId()) {
-      case R.id.settings_menu:
-    	  in=new Intent().setClass(this, function_settings.class);
-     	  startActivityForResult(in, 0);
-     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-     	  break;
-      case R.id.about_menu:
-    	  in=new Intent().setClass(this, about_page.class);
-     	  startActivity(in);
-     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-    	  break;
-      case R.id.exit:
-    	  checkExit();
-     	  break;
-      case R.id.web_menu:
-    	  in=new Intent().setClass(this, web_activity.class);
-     	  startActivity(in);
-     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-    	  break;
-      case R.id.preferences:
-    	  in=new Intent().setClass(this, preferences.class);
-     	  startActivityForResult(in, 0);
-     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-    	  break;
-      case R.id.power_control_menu:
-    	  in=new Intent().setClass(this, power_control.class);
-     	  startActivity(in);
-     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-    	  break;
-      case R.id.turnouts:
+      case R.id.turnouts_mnu:
     	  in=new Intent().setClass(this, turnouts.class);
      	  startActivity(in);
        	  connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
     	  break;
-      case R.id.routes:
+      case R.id.routes_mnu:
     	  in = new Intent().setClass(this, routes.class);
      	  startActivity(in);
        	  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
      	  break;
+      case R.id.web_mnu:
+    	  in=new Intent().setClass(this, web_activity.class);
+     	  startActivity(in);
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    	  break;
+      case R.id.exit_mnu:
+    	  checkExit();
+     	  break;
+      case R.id.power_control_mnu:
+    	  in=new Intent().setClass(this, power_control.class);
+     	  startActivity(in);
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    	  break;
+      case R.id.preferences_mnu:
+    	  in=new Intent().setClass(this, preferences.class);
+     	  startActivityForResult(in, 0);
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    	  break;
+      case R.id.settings_mnu:
+    	  in=new Intent().setClass(this, function_settings.class);
+     	  startActivityForResult(in, 0);
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+     	  break;
+      case R.id.about_mnu:
+    	  in=new Intent().setClass(this, about_page.class);
+     	  startActivity(in);
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    	  break;
       }
       return super.onOptionsItemSelected(item);
   }

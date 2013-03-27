@@ -24,6 +24,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -361,39 +363,65 @@ public class turnouts extends Activity implements OnGestureListener {
 	    // Handle all of the possible menu actions.
 		Intent in;
 	    switch (item.getItemId()) {
-	    case R.id.about_menu:
-	  	  in=new Intent().setClass(this, about_page.class);
-	   	  startActivity(in);
-	   	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-	  	  break;
-	    case R.id.web_menu:
-	  	  in=new Intent().setClass(this, web_activity.class);
-	   	  startActivity(in);
-	   	  this.finish();
-	   	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-	  	  break;
-	    case R.id.power_control_menu:
-	  	  in=new Intent().setClass(this, power_control.class);
-	   	  startActivity(in);
-	   	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-	  	  break;
-	    case R.id.throttle:
-	      this.finish();
-	   	  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-	  	  break;
-	    case R.id.routes:
-	  	  in = new Intent().setClass(this, routes.class);
-	   	  startActivity(in);
-	      this.finish();
-	   	  connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-	   	  break;
+	    case R.id.throttle_mnu:
+	    	this.finish();
+	    	connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+	    	break;
+	    case R.id.routes_mnu:
+	    	in = new Intent().setClass(this, routes.class);
+	    	startActivity(in);
+	    	this.finish();
+	    	connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+	    	break;
+	    case R.id.web_mnu:
+	    	in=new Intent().setClass(this, web_activity.class);
+	    	startActivity(in);
+	    	this.finish();
+	    	connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	    	break;
+		case R.id.exit_mnu:
+			checkExit();
+			break;
+	    case R.id.power_control_mnu:
+	    	in=new Intent().setClass(this, power_control.class);
+	    	startActivity(in);
+	    	connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	    	break;
+	    case R.id.preferences_mnu:
+	    	in=new Intent().setClass(this, preferences.class);
+	    	startActivityForResult(in, 0);
+	     	connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	    	break;
+	    case R.id.about_mnu:
+	    	in=new Intent().setClass(this, about_page.class);
+	    	startActivity(in);
+	    	connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	    	break;
 	    }
 	    return super.onOptionsItemSelected(item);
 	}
 	
+	private void checkExit() {
+		final AlertDialog.Builder b = new AlertDialog.Builder(this); 
+		b.setIcon(android.R.drawable.ic_dialog_alert); 
+		b.setTitle(R.string.exit_title); 
+		b.setMessage(R.string.exit_text);
+		b.setCancelable(true);
+		b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				//disconnect from throttle
+				Message msg=Message.obtain();
+				msg.what=message_type.DISCONNECT;
+				mainapp.comm_msg_handler.sendMessage(msg);
+			}
+		} ); 
+		b.setNegativeButton(R.string.no, null);
+		AlertDialog alert = b.create();
+		alert.show();
+	}
+
 	private void disconnect() {
 		this.finish();
 		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	}
-	  
 }
