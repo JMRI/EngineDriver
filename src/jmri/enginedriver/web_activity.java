@@ -22,11 +22,8 @@ import java.util.Set;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -35,7 +32,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.webkit.WebBackForwardList;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebSettings;
@@ -44,9 +40,15 @@ public class web_activity extends Activity {
 
   private threaded_application mainapp;  // hold pointer to mainapp
   private static SharedPreferences prefs;
-  private Boolean clearHistory = false;
-  private WebView webView; 
-  
+
+  private WebView webView;
+  private static final float initialScale = 1.5f;
+  private static float scale = initialScale;		// used to restore web zoom level
+  private static Boolean clearHistory = false;		// flags webViewClient to clear history when page load finishes
+  private static final String noUrl = "file:///android_asset/blank_page.html";
+  private static String currentUrl = null;
+  private Boolean currentUrlUpdate;
+ 
   class web_handler extends Handler {
 
 	  public void handleMessage(Message msg) {
@@ -58,10 +60,10 @@ public class web_activity extends Activity {
 				  switch (com1) {
 					  case 'P': //panel info
 						  if (thrSel == 'W') {		// PW - web server port info
-							  mainapp.setWebUrl(null);
-							  webView = (WebView) findViewById(R.id.webview);
+//							  mainapp.setWebUrl(null);
 							  webView.stopLoading();
 							  clearHistory = true;
+							  currentUrl = null;
 							  load_webview();		// reload the page
 						  }
 						  break;
@@ -82,8 +84,6 @@ public class web_activity extends Activity {
 
     mainapp=(threaded_application)this.getApplication();
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-    //put pointer to this activity's handler in main app's shared variable
-	mainapp.web_msg_handler=new web_handler();
 
     setContentView(R.layout.web_activity);
   
@@ -92,7 +92,7 @@ public class web_activity extends Activity {
 	webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
 	webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out
 	webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
-	webView.setInitialScale((int)(100 * mainapp.webScale));
+	webView.setInitialScale((int)(100 * scale));
 //	webView.getSettings().setLoadWithOverviewMode(true);	// size image to fill width
 
 	// open all links inside the current view (don't start external web browser)
@@ -109,15 +109,19 @@ public class web_activity extends Activity {
 				view.clearHistory();
 				clearHistory = false;
 			}
+			if(currentUrlUpdate && !noUrl.equals(url))
+				currentUrl = url;
 		}
 	};
 	webView.setWebViewClient(EDWebClient);
 
-	if(savedInstanceState != null) 
-		webView.restoreState(savedInstanceState);		// restore if possible
-	else
-	 	load_webview();									// else load the saved url
-  };
+	currentUrlUpdate = true;		// ok to update currentUrl
+	if(currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null)
+		load_webview();			// reload if no saved state or no page had loaded when state was saved
+	
+    //put pointer to this activity's handler in main app's shared variable
+	mainapp.web_msg_handler=new web_handler();
+};
 
   @Override
   public void onStart() {
@@ -129,7 +133,7 @@ public class web_activity extends Activity {
 	  Log.d("Engine_Driver","web_activity.onResume() called");
  	  super.onResume();
 
- 	  setActivityOrientation(this);  	//set screen orientation based on prefs
+ 	  mainapp.setActivityOrientation(this);  	//set screen orientation based on prefs
 
 // don't load here - onCreate already handled it.  Load might not be finished yet
 // in which case call load_webview here just creates extra work since url will still be null
@@ -146,7 +150,6 @@ public class web_activity extends Activity {
   
   @Override
   public void onPause() {
-	  mainapp.setWebUrl(webView.getUrl());		// save current url
 	  super.onPause();
   }
    
@@ -155,11 +158,12 @@ public class web_activity extends Activity {
   public void onDestroy() {
 	  Log.d("Engine_Driver","web_activity.onDestroy() called");
 
-	  mainapp.webScale = webView.getScale();
-	  //load a bogus url to prevent javascript from continuing to run
-	  webView.loadUrl("file:///android_asset/blank_page.html");
-  	  mainapp.web_msg_handler = null;
+	  scale = webView.getScale();
+	  currentUrlUpdate = false;		// disable currentUrl updates by onPageLoaded
+	  //load a static url to prevent any javascript on current url from continuing to run
+	  webView.loadUrl(noUrl);
 
+	  mainapp.web_msg_handler = null;
 	  super.onDestroy();
   }
 
@@ -209,7 +213,7 @@ public class web_activity extends Activity {
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  break;
 	  case R.id.exit_mnu:
-		  checkExit();
+		  mainapp.checkExit(this);
 		  break;
 	  case R.id.power_control_mnu:
 		  in=new Intent().setClass(this, power_control.class);
@@ -232,44 +236,20 @@ public class web_activity extends Activity {
   
   // load the url
   private void load_webview() {
-	  webView.loadUrl(mainapp.getWebUrl());
+//	  webView.loadUrl(mainapp.getWebUrl());
+	  String url = currentUrl;
+	  if(url == null)
+		  url = mainapp.createUrl(prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue)));
+
+	  if (url == null)					// if port is invalid 
+		  url = noUrl;
+	  webView.loadUrl(url);
   }
   
-
- //set throttle screen orientation based on prefs, check to avoid sending change when already there
- private static void setActivityOrientation(Activity activity) {
-
-	  String to = prefs.getString("WebOrientation", 
-			  activity.getApplicationContext().getResources().getString(R.string.prefWebOrientationDefaultValue));
-	  int co = activity.getRequestedOrientation();
-	  if      (to.equals("Landscape")   && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))  
-		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-	  else if (to.equals("Auto-Rotate") && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))  
-		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-	  else if (to.equals("Portrait")    && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
-		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
- }
-
- private void checkExit() {
-	  final AlertDialog.Builder b = new AlertDialog.Builder(this); 
-	  b.setIcon(android.R.drawable.ic_dialog_alert); 
-	  b.setTitle(R.string.exit_title); 
-	  b.setMessage(R.string.exit_text);
-	  b.setCancelable(true);
-	  b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-		  public void onClick(DialogInterface dialog, int id) {
-			  //disconnect from throttle
-			  Message msg=Message.obtain();
-			  msg.what=message_type.DISCONNECT;
-			  mainapp.comm_msg_handler.sendMessage(msg);
-		  }
-	  } ); 
-	  b.setNegativeButton(R.string.no, null);
-	  AlertDialog alert = b.create();
-	  alert.show();
- }
-
  private void disconnect() {
+	  webView.stopLoading();
+	  scale = initialScale;						// reinit statics in case app is restarted quickly
+	  currentUrl = null;
 	  this.finish();
 	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
  }

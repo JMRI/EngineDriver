@@ -20,9 +20,9 @@ package jmri.enginedriver;
 
 /* TODO: see changelog-and-todo-list.txt for complete list of project to-do's */
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -32,7 +32,6 @@ import java.net.*;
 import java.io.*;
 
 import android.util.Log;
-import android.webkit.WebBackForwardList;
 
 import javax.jmdns.*;
 
@@ -51,6 +50,7 @@ import jmri.jmrit.roster.RosterEntry;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
@@ -88,11 +88,6 @@ public class threaded_application extends Application {
 	HashMap<String, RosterEntry> roster;  //roster entries retrieved from roster.xml (null if not retrieved)
 	public static HashMap<String, String> metadata;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
 	ImageDownloader imageDownloader = new ImageDownloader();
-	String webViewLocation = "none"; //pref value where user would like to see webview (or none)
-	private String webUrl = null;	//current web page url
-	private String throtUrl = null;	//current throttle page url
-	float webScale = 1.5f;		// used to restore web zoom level after rotation
-	float throtScale = 1.5f;	// used to restore throt web zoom level after rotation
 	
 	String power_state;
 
@@ -329,8 +324,6 @@ public class threaded_application extends Application {
 					function_states_S = new boolean[32];
 					consist_allowed = false;
 					consist_entries = new LinkedHashMap<String, String>();
-					webUrl = null;
-					throtUrl = null;
 
 					//attempt connection to WiThrottle server
 					socketWiT = new socket_WiT();
@@ -1255,8 +1248,6 @@ public class threaded_application extends Application {
 					consist_allowed = false;
 					consist_entries = new LinkedHashMap<String, String>();
 					roster_entries = null;
-					webUrl = null;
-					throtUrl = null;
 
 					if (turnouts_msg_handler != null)   
 					{ 
@@ -1608,44 +1599,19 @@ public class threaded_application extends Application {
 		return result;
 	}
 	
-	//
-	// return the current url if it exists else returns the default one
-	//
-	public String getThrotUrl() 
-	{
-		return getUrl(throtUrl, prefs.getString("InitialThrotWebPage", getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue)));
-	}
-	
-	public String getWebUrl() 
-	{	
-		return getUrl(webUrl, prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue)));
-	}
-	
-	public String getUrl(String url, String defaultUrl)
-	{
-	    if(url == null)
-	    {
-		    if (web_server_port != null && web_server_port > 0) {
-		    	url = defaultUrl;
-		    	if (!url.startsWith("http")) {  //if url starts with http, use it as is, else prepend servername and port
-		    		url = "http://" + host_ip + ":" +  web_server_port + "/" + url;
-		    	}
-		    }
-		    else
-			    url = "file:///android_asset/blank_page.html";
+	// build a full url or return null if web_server_port hasn't been set
+	public String createUrl(String defaultUrl) {
+		String url = null;
+	    if (web_server_port != null && web_server_port > 0) {
+	    	url = defaultUrl;
+	    	if (!url.startsWith("http")) {  //if url starts with http, use it as is, else prepend servername and port
+	    		url = "http://" + host_ip + ":" +  web_server_port + "/" + url;
+	    	}
 	    }
 	    return url;
 	}
-	
-	public void setThrotUrl(String url)
-	{
-		throtUrl = url;
-	}
-	public void setWebUrl(String url)
-	{
-		webUrl = url;
-	}
 
+	// send a throttle speed message to WiT
 	public void sendSpeedMsg(char whichThrottle, int speed) {
 		Message msg=Message.obtain();
 		msg.what=message_type.VELOCITY;
@@ -1653,4 +1619,37 @@ public class threaded_application extends Application {
 		msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
 		comm_msg_handler.sendMessage(msg);
 	}
+
+	// set activity screen orientation based on prefs, check to avoid sending change when already there
+	  public int setActivityOrientation(Activity activity) {
+		  String to = prefs.getString("ThrottleOrientation", 
+				  activity.getApplicationContext().getResources().getString(R.string.prefThrottleOrientationDefaultValue));
+		  int co = activity.getRequestedOrientation();
+		  if(to.equals("Landscape")   && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))  
+			  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		  else if(to.equals("Auto-Rotate") && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))  
+			  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+		  else if(to.equals("Portrait")    && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
+			  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		  return activity.getWindow().getWindowManager().getDefaultDisplay().getOrientation();
+	  }
+
+	  public void checkExit(Activity activity) {
+		  final AlertDialog.Builder b = new AlertDialog.Builder(activity); 
+		  b.setIcon(android.R.drawable.ic_dialog_alert); 
+		  b.setTitle(R.string.exit_title); 
+		  b.setMessage(R.string.exit_text);
+		  b.setCancelable(true);
+		  b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+			 public void onClick(DialogInterface dialog, int id) {
+				  //disconnect from throttle
+				  Message msg=Message.obtain();
+				  msg.what=message_type.DISCONNECT;
+				  comm_msg_handler.sendMessage(msg);
+			 }
+		  } ); 
+		  b.setNegativeButton(R.string.no, null);
+		  AlertDialog alert = b.create();
+		  alert.show();
+	  }
 }

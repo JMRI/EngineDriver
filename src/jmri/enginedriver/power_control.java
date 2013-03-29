@@ -120,6 +120,7 @@ public class power_control extends Activity {
   @Override
   public void onResume() {
 	  super.onResume();
+	  mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
     //update route list
     refresh_power_control_view();
   }

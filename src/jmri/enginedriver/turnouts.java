@@ -24,8 +24,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -222,9 +220,7 @@ public class turnouts extends Activity implements OnGestureListener {
   @Override
   public void onCreate(Bundle savedInstanceState)  {
     super.onCreate(savedInstanceState);
-
     setContentView(R.layout.turnouts);
-    
     mainapp=(threaded_application)getApplication();
 	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     //put pointer to this activity's handler in main app's shared variable (If needed)
@@ -287,6 +283,7 @@ public class turnouts extends Activity implements OnGestureListener {
   @Override
   public void onResume() {
 	super.onResume();
+    mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
     //update turnout list
     refresh_turnout_view();
   }
@@ -380,7 +377,7 @@ public class turnouts extends Activity implements OnGestureListener {
 	    	connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	    	break;
 		case R.id.exit_mnu:
-			checkExit();
+			mainapp.checkExit(this);
 			break;
 	    case R.id.power_control_mnu:
 	    	in=new Intent().setClass(this, power_control.class);
@@ -401,25 +398,6 @@ public class turnouts extends Activity implements OnGestureListener {
 	    return super.onOptionsItemSelected(item);
 	}
 	
-	private void checkExit() {
-		final AlertDialog.Builder b = new AlertDialog.Builder(this); 
-		b.setIcon(android.R.drawable.ic_dialog_alert); 
-		b.setTitle(R.string.exit_title); 
-		b.setMessage(R.string.exit_text);
-		b.setCancelable(true);
-		b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				//disconnect from throttle
-				Message msg=Message.obtain();
-				msg.what=message_type.DISCONNECT;
-				mainapp.comm_msg_handler.sendMessage(msg);
-			}
-		} ); 
-		b.setNegativeButton(R.string.no, null);
-		AlertDialog alert = b.create();
-		alert.show();
-	}
-
 	private void disconnect() {
 		this.finish();
 		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

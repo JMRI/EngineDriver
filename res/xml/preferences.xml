@@ -10,14 +10,8 @@
         android:summary="@string/prefThrottleNameSummary"
         android:title="@string/prefThrottleNameTitle" >
     </EditTextPreference>
-    <PreferenceCategory android:title="Throttle Screen Preferences" >
-        <ListPreference
-            android:defaultValue="@string/prefThrottleOrientationDefaultValue"
-            android:entries="@array/OrientationOptions"
-            android:entryValues="@array/OrientationOptions"
-            android:key="ThrottleOrientation"
-            android:summary="@string/prefThrottleOrientationSummary"
-            android:title="@string/prefThrottleOrientationTitle" />
+    <ListPreference android:defaultValue="@string/prefThrottleOrientationDefaultValue" android:entries="@array/OrientationOptions" android:entryValues="@array/OrientationOptions" android:key="ThrottleOrientation" android:summary="@string/prefThrottleOrientationSummary" android:title="@string/prefThrottleOrientationTitle" />
+    <PreferenceCategory android:title="@string/prefThrottleTitle" >
         <EditTextPreference
             android:defaultValue="@string/prefMaximumThrottleDefaultValue"
             android:dialogTitle="@string/prefMaximumThrottleTitle"
@@ -44,7 +38,9 @@
             android:title="@string/prefIncreaseSliderHeightTitle" >
         </CheckBoxPreference><CheckBoxPreference android:defaultValue="@string/prefUseOneThrottleDefaultValue" android:dialogTitle="@string/prefUseOneThrottleTitle" android:key="use_one_throttle_preference" android:summary="@string/prefUseOneThrottleSummary" android:title="@string/prefUseOneThrottleTitle">
         </CheckBoxPreference>
-    </PreferenceCategory><PreferenceCategory android:title="Select Loco Preferences" >
+    	<ListPreference android:defaultValue="@string/prefWebViewLocationDefaultValue" android:entries="@array/WebViewLocation" android:entryValues="@array/WebViewLocation" android:key="WebViewLocation" android:summary="@string/prefWebViewLocationSummary" android:title="@string/prefWebViewLocationTitle" /><EditTextPreference android:defaultValue="@string/prefInitialThrotWebPageDefaultValue" android:dialogTitle="@string/prefInitialThrotWebPageSummary" android:key="InitialThrotWebPage" android:summary="@string/prefInitialThrotWebPageSummary" android:title="@string/prefInitialThrotWebPageTitle" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference
             android:defaultValue="@string/prefStopOnReleaseDefaultValue"
             android:dialogTitle="@string/prefStopOnReleaseTitle"
@@ -59,37 +55,18 @@
             android:summary="@string/prefDropOnAcquireSummary"
             android:title="@string/prefDropOnAcquireTitle" >
         </CheckBoxPreference>
-        </PreferenceCategory>
-    <PreferenceCategory android:title="Web Preferences" >
+        <ListPreference android:defaultValue="@string/prefDefaultAddressLengthDefaultValue" android:entries="@array/address_size_defaults" android:entryValues="@array/address_size_defaults" android:key="default_address_length" android:summary="@string/prefDefaultAddressLengthSummary" android:title="@string/prefDefaultAddressLengthTitle" /><CheckBoxPreference android:defaultValue="@string/prefHideRecentLocosDefaultValue" android:dialogTitle="@string/prefHideRecentLocosTitle" android:key="hide_recent_locos_preference" android:summary="@string/prefHideRecentLocosSummary" android:title="@string/prefHideRecentLocosTitle">
+        </CheckBoxPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefWebTitle" >
         <ListPreference android:defaultValue="@string/prefWebOrientationDefaultValue" android:entries="@array/OrientationOptions" android:entryValues="@array/OrientationOptions" android:key="WebOrientation" android:summary="@string/prefWebOrientationSummary" android:title="@string/prefWebOrientationTitle" /><EditTextPreference
             android:defaultValue="@string/prefInitialWebPageDefaultValue"
             android:dialogTitle="@string/prefInitialWebPageSummary"
             android:key="InitialWebPage"
             android:summary="@string/prefInitialWebPageSummary"
-            android:title="@string/prefInitialWebPageTitle" /><ListPreference android:defaultValue="@string/prefWebViewLocationDefaultValue" android:entries="@array/WebViewLocation" android:entryValues="@array/WebViewLocation" android:key="WebViewLocation" android:summary="@string/prefWebViewLocationSummary" android:title="@string/prefWebViewLocationTitle" /><EditTextPreference
-            android:defaultValue="@string/prefInitialThrotWebPageDefaultValue"
-            android:dialogTitle="@string/prefInitialThrotWebPageSummary"
-            android:key="InitialThrotWebPage"
-            android:summary="@string/prefInitialThrotWebPageSummary"
-            android:title="@string/prefInitialThrotWebPageTitle" />
-        
-        
-        </PreferenceCategory>
-    <PreferenceCategory android:title="Connect Screen Preferences" >
-        <ListPreference
-            android:defaultValue="@string/prefDefaultAddressLengthDefaultValue"
-            android:entries="@array/address_size_defaults"
-            android:entryValues="@array/address_size_defaults"
-            android:key="default_address_length"
-            android:summary="@string/prefDefaultAddressLengthSummary"
-            android:title="@string/prefDefaultAddressLengthTitle" />
-        <CheckBoxPreference
-            android:defaultValue="@string/prefHideRecentLocosDefaultValue"
-            android:dialogTitle="@string/prefHideRecentLocosTitle"
-            android:key="hide_recent_locos_preference"
-            android:summary="@string/prefHideRecentLocosSummary"
-            android:title="@string/prefHideRecentLocosTitle" >
-        </CheckBoxPreference>
+            android:title="@string/prefInitialWebPageTitle" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefConnectTitle" >
         <EditTextPreference
             android:defaultValue="@string/prefMaximumRecentConnectionsDefaultValue"
             android:dialogTitle="@string/prefMaximumRecentConnectionsTitle"
@@ -100,7 +77,7 @@
             android:title="@string/prefMaximumRecentConnectionsTitle" >
         </EditTextPreference>
     </PreferenceCategory>
-    <PreferenceCategory android:title="Turnouts and Routes Preferences" >
+    <PreferenceCategory android:title="@string/prefTurnoutsTitle" >
         <ListPreference
             android:defaultValue="@string/prefHardwareSystemDefaultValue"
             android:entries="@array/hardware_system_names"

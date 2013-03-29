@@ -31,17 +31,20 @@ import android.view.KeyEvent;
 
 public class preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
-	  /** Called when the activity is first created. */
+	private threaded_application mainapp;  // hold pointer to mainapp
+
+	/** Called when the activity is first created. */
 	  @Override
 	  public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
+	    mainapp=(threaded_application)getApplication();
 	    addPreferencesFromResource(R.xml.preferences);
 	  }
 	  
 	  @Override
 	  protected void onResume() {
 	      super.onResume();
-
+	      mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 	      // Set up a listener whenever a key changes            
 	      getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 	  }
@@ -73,11 +76,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 			  }
 		  }
 		  else if(key.equals("WebViewLocation")) {
-			  mainapp.webViewLocation = sharedPreferences.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
-			  if (mainapp.throttle_msg_handler != null) { 		// tell throt to redraw its web view and clear history
+			  if (mainapp.throttle_msg_handler != null) { 		// tell throt that web view location pref changed
 				Message msg=Message.obtain(); 
-				msg.what = message_type.RESPONSE;
-				msg.obj = new String("PW");
+				msg.what = message_type.INTERNAL;
+				msg.obj = new String("W");
 				try {
 					mainapp.throttle_msg_handler.sendMessage(msg);
 				}
@@ -85,6 +87,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 					msg.recycle();
 				}
 			}
+		  }
+		  else if(key.equals("ThrottleOrientation")) {
+			  //if mode was fixed (Port or Land) won't get callback so need explicit call here 
+			  mainapp.setActivityOrientation(this);
 		  }
 	  }
 

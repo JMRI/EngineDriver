@@ -24,10 +24,9 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -209,9 +208,13 @@ public class routes extends Activity  implements OnGestureListener {
   public void onCreate(Bundle savedInstanceState)  {
     super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.routes);
     
     mainapp=(threaded_application)getApplication();
+    int co = mainapp.setActivityOrientation(this);			//set screen orientation based on prefs
+//    if(co == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)  	//set screen orientation based on prefs
+//  	setContentView(R.layout.routes_horz);
+//    else
+    	setContentView(R.layout.routes);
 	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     //put pointer to this activity's handler in main app's shared variable (If needed)
   	  mainapp.routes_msg_handler=new routes_handler();
@@ -345,7 +348,7 @@ public class routes extends Activity  implements OnGestureListener {
      	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
 	  case R.id.exit_mnu:
-		  checkExit();
+		  mainapp.checkExit(this);
 		  break;
 	  case R.id.power_control_mnu:
     	  in=new Intent().setClass(this, power_control.class);
@@ -368,25 +371,6 @@ public class routes extends Activity  implements OnGestureListener {
   //handle return from menu items
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
       //since we always do the same action no need to distinguish between requests
-  }
-
-  private void checkExit() {
-	  final AlertDialog.Builder b = new AlertDialog.Builder(this); 
-	  b.setIcon(android.R.drawable.ic_dialog_alert); 
-	  b.setTitle(R.string.exit_title); 
-	  b.setMessage(R.string.exit_text);
-	  b.setCancelable(true);
-	  b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-		 public void onClick(DialogInterface dialog, int id) {
-			  //disconnect from throttle
-			  Message msg=Message.obtain();
-			  msg.what=message_type.DISCONNECT;
-			  mainapp.comm_msg_handler.sendMessage(msg);
-		 }
-	  } ); 
-	  b.setNegativeButton(R.string.no, null);
-	  AlertDialog alert = b.create();
-	  alert.show();
   }
 
   private void disconnect() {

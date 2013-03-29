@@ -24,17 +24,26 @@ import android.webkit.WebView;
 
 public class about_page extends Activity {
 
+	private threaded_application mainapp; // hold pointer to mainapp
 
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
+    mainapp=(threaded_application)this.getApplication();
     WebView webview = new WebView(this);
     webview.loadUrl("file:///android_asset/about_page.html");
     setContentView(webview);
     
   };
+
+  @Override
+  public void onResume() {
+	  super.onResume();
+	  mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+  };
+  
   //Handle pressing of the back button to end this activity
   @Override
   public boolean onKeyDown(int key, KeyEvent event) {

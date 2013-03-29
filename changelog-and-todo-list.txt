@@ -5,6 +5,7 @@
  * back button and zoom +/- now works for web pages -- Robin Becker
  * separate prefs for throttle and web view -- Robin Becker
  * made menus consistent across activities -- Robin Becker
+ * orientation prefs used for all activities -- Robin Becker
 **Version 2.5
  * return TargetSDKVersion to 10 to trigger "legacy overflow button" for menu (needed on ICS)
  * keep screen on in web view (prevent screen blanking)

@@ -355,6 +355,7 @@ public class connection_activity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 	    if (isShuttingDown)
 	    	return;
 

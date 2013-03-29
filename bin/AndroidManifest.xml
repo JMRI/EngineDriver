@@ -23,8 +23,7 @@
         android:theme="@style/app_theme" >
         <activity
             android:name=".connection_activity"
-            android:label="@string/app_name_connect"
-            android:screenOrientation="portrait" >
+            android:label="@string/app_name_connect" >
             <intent-filter android:label="@string/app_name" >
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,29 +31,24 @@
         </activity>
         <activity
             android:name=".select_loco"
-            android:label="@string/app_name_select_loco"
-            android:screenOrientation="portrait" >
+            android:label="@string/app_name_select_loco" >
         </activity>
         <activity
             android:name=".throttle"
-            android:label="@string/app_name_throttle"
-            android:screenOrientation="portrait" >
+            android:label="@string/app_name_throttle" >
          android:name=".throttle"
         </activity>
         <activity
             android:name=".function_settings"
-            android:label="@string/app_name_functions"
-            android:screenOrientation="portrait" >
+            android:label="@string/app_name_functions" >
         </activity>
         <activity
             android:name=".turnouts"
-            android:label="@string/app_name_turnouts"
-            android:screenOrientation="portrait" >
+            android:label="@string/app_name_turnouts" >
         </activity>
         <activity
             android:name=".routes"
-            android:label="@string/app_name_routes"
-            android:screenOrientation="portrait" >
+            android:label="@string/app_name_routes" >
         </activity>
         <activity
             android:name=".preferences"
@@ -70,8 +64,7 @@
         </activity>
         <activity
             android:name=".power_control"
-            android:label="@string/app_name_power_control"
-            android:screenOrientation="portrait" >
+            android:label="@string/app_name_power_control" >
         </activity>
     </application>
 </manifest>

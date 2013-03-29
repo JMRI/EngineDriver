@@ -43,4 +43,6 @@ interface message_type
   public static final int SERVICE_REMOVED=19; // ta(service removed) -> ca ipaddr, ,port  (removes from list)
   public static final int REQ_VELOCITY=20; 		// ed(delay after sliderchg) -> ta (requests velocity from WiT)
   public static final int REQ_DIRECTION=21; 	// ed -> ta (requests direction from WiT)
+  
+  public static final int INTERNAL=9999;		// internal message between threads
 }

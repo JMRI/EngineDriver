@@ -20,11 +20,8 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -112,16 +109,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private LinkedHashMap<Integer, Button> functionMapT;
 	private LinkedHashMap<Integer, Button> functionMapS;
 	
-	private DownloadRosterTask dlRosterTask;
-	private DownloadMetadataTask dlMetadataTask;
+	private static DownloadRosterTask dlRosterTask = null;
+	private static DownloadMetadataTask dlMetadataTask = null;
 
 	//current direction
 	private int dirT = 0;
 	private int dirS = 0;
 
-	private Boolean clearHistory = false;	// flag to webViewClient to clear history when page load finishes
-	
+	private static final String noUrl = "file:///android_asset/blank_page.html";
+	private static final float initialScale = 1.5f;
 	private WebView webView;
+	private static float scale = initialScale;			// used to restore throt web zoom level (after rotation)
+	private static Boolean clearHistory = false;		// flags webViewClient to clear history when page load finishes
+	private String webViewLocation;
+	private static String currentUrl = null;
+	private Boolean currentUrlUpdate;
 
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class throttle_handler extends Handler {
@@ -244,11 +246,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					  // try web-dependent items again
 					  dlMetadataTask.getMetadata();
 					  dlRosterTask.getRoster();
-					  mainapp.setThrotUrl(null);
 					  webView.stopLoading();
 					  clearHistory = true;
+					  currentUrl = null;
 					  load_webview();				//reload
-					  set_labels();					// update layout in case web loc pref changed
 				  }
 				  break;
 			  }  //end of switch
@@ -257,6 +258,19 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		  case message_type.DISCONNECT:
 			  disconnect();
 			  break;
+	  	  case message_type.INTERNAL:
+			  String response_str = msg.obj.toString();
+			  char com1 = response_str.charAt(0);
+			  if(com1 == 'W') {			// webview location changed
+				  if("none".equals(webViewLocation)) {		// check current location
+					  webView.stopLoading();
+					  clearHistory = true;					// clear hist if dummy page is loaded
+					  currentUrl = null;					// reload init url
+				  }
+				  webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));    
+				  load_webview();
+			  }
+	  		  break;
 		  }
 	  };
   }
@@ -603,7 +617,7 @@ void start_select_loco_activity(char whichThrottle)
             	if(sb.getProgress() != 0)
             		sb.setProgress(0);
             	else
-            		sendSpeedMsg(whichThrottle, 0);
+            		mainapp.sendSpeedMsg(whichThrottle, 0);
             	break;
             }
             // specify which throttle the volume button controls          	  
@@ -708,7 +722,7 @@ void start_select_loco_activity(char whichThrottle)
     	}
 
     	//send request for new speed to WiT server
-		sendSpeedMsg(whichThrottle, speed);
+		mainapp.sendSpeedMsg(whichThrottle, speed);
 
 		lastSpeed = speed;
 
@@ -755,41 +769,25 @@ void start_select_loco_activity(char whichThrottle)
 }
 */
 
-  private void sendSpeedMsg(char whichThrottle, int speed) {
-	  mainapp.sendSpeedMsg(whichThrottle, speed);
-//		Message msg=Message.obtain();
-//		msg.what=message_type.VELOCITY;
-//		msg.arg1=speed;
-//		msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
-//		mainapp.comm_msg_handler.sendMessage(msg);
-  }
-
-  // set throttle screen orientation based on prefs, check to avoid sending change when already there
-  private static void setActivityOrientation(Activity activity) {
-
-	  String to = prefs.getString("ThrottleOrientation", 
-			  activity.getApplicationContext().getResources().getString(R.string.prefThrottleOrientationDefaultValue));
-	  int co = activity.getRequestedOrientation();
-	  if      (to.equals("Landscape")   && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))  
-		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-	  else if (to.equals("Auto-Rotate") && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))  
-		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-	  else if (to.equals("Portrait")    && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
-		  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-  }
-
   @Override
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.throttle);
-
     mainapp=(threaded_application)this.getApplication();
-    prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-    //put pointer to this activity's handler in main app's shared variable (If needed)
-    mainapp.throttle_msg_handler=new throttle_handler();
+
+    setContentView(R.layout.throttle);
+//    mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
     
-    mainapp.webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));    
+    prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
+	if(dlMetadataTask == null)
+		dlMetadataTask = new DownloadMetadataTask();
+	if(dlRosterTask == null)
+		dlRosterTask = new DownloadRosterTask();
+	dlMetadataTask.getMetadata();		// if web port is already known, start background roster dl here
+	dlRosterTask.getRoster();			// if web port is already known, start background roster dl here
+
+    webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));    
 //    myGesture = new GestureDetector(this);
     GestureOverlayView ov = (GestureOverlayView)findViewById(R.id.throttle_overlay);
     ov.addOnGestureListener(this);
@@ -866,18 +864,12 @@ void start_select_loco_activity(char whichThrottle)
 		mVelocityTracker = VelocityTracker.obtain();
 	}
 
-	dlMetadataTask = new DownloadMetadataTask();
-	dlMetadataTask.getMetadata();		// if web port is already known, start background roster dl here
-
-	dlRosterTask = new DownloadRosterTask();
-	dlRosterTask.getRoster();		// if web port is already known, start background roster dl here
-
 	webView = (WebView) findViewById(R.id.throttle_webview);
 	webView.getSettings().setJavaScriptEnabled(true);
 	webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
 	webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out
 	webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
-	webView.setInitialScale((int)(100 * mainapp.throtScale));
+	webView.setInitialScale((int)(100 * scale));
 //	webView.getSettings().setLoadWithOverviewMode(true);	// size image to fill width
 
 	// open all links inside the current view (don't start external web browser)
@@ -893,15 +885,19 @@ void start_select_loco_activity(char whichThrottle)
 				view.clearHistory();
 				clearHistory = false;
 			}
+			if(currentUrlUpdate && !noUrl.equals(url))
+				currentUrl = url;
 		}
 	};
+
 	webView.setWebViewClient(EDWebClient);
+	currentUrlUpdate = true;		// ok to update currentUrl
+	if(currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null)
+		load_webview();			// reload if no saved state or no page had loaded when state was saved
 
-	if(savedInstanceState != null)
-		webView.restoreState(savedInstanceState);		// restore if possible
-	else
-		load_webview();	//reload
-
+	//put pointer to this activity's handler in main app's shared variable
+    mainapp.throttle_msg_handler=new throttle_handler();
+    
   } //end of onCreate()
 
   @Override
@@ -912,8 +908,7 @@ void start_select_loco_activity(char whichThrottle)
   @Override
   public void onResume() {
 	  super.onResume();
-
-	  setActivityOrientation(this);  //set throttle screen orientation based on prefs
+	  mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 
 	  // set max allowed change for throttles from prefs
 	  String s = prefs.getString("maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
@@ -930,19 +925,17 @@ void start_select_loco_activity(char whichThrottle)
 	  gestureFailed = false;
 	  gestureInProgress = false;
 
-//** rdb moved this to onCreate & onSharedPreferencesChanged	  mainapp.webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
-	  set_labels();			// handle labels
+	  set_labels();			// handle labels and update view
   }
 
   @Override
   public void onSaveInstanceState(Bundle outState) {
 	  super.onSaveInstanceState(outState);
-	  webView.saveState(outState);		// save history (on rotation)
+	  webView.saveState(outState);		// save history (on rotation) if at least one page has loaded
   }
 
   @Override
   public void onPause() {
-	  mainapp.setThrotUrl(webView.getUrl());		// save url
 	  super.onPause();
   }
 
@@ -951,11 +944,12 @@ void start_select_loco_activity(char whichThrottle)
   public void onDestroy() {
 	  Log.d("Engine_Driver","throttle.onDestroy() called");
 
-	  mainapp.throtScale = webView.getScale();
-	  //load a bogus url to prevent javascript from continuing to run
-	  webView.loadUrl("file:///android_asset/blank_page.html");
-	  mainapp.throttle_msg_handler = null;
+	  scale = webView.getScale();
+	  currentUrlUpdate = false;		// disable currentUrl updates by onPageLoaded
+	  //load a static url to prevent any javascript on current url from continuing to run
+	  webView.loadUrl(noUrl);
 
+	  mainapp.throttle_msg_handler = null;
 	  super.onDestroy();
   }
   
@@ -963,11 +957,13 @@ void start_select_loco_activity(char whichThrottle)
   // load the url
   private void load_webview()
   {
-	  String url;
-	  if (!mainapp.webViewLocation.equals("none"))			// if displaying webview
-		  url = mainapp.getThrotUrl();
-	  else
-		  url = "file:///android_asset/blank_page.html";
+	  String url = currentUrl;
+	  if(url == null)
+		  url = mainapp.createUrl(prefs.getString("InitialThrotWebPage", getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue)));
+
+	  if (url == null || webViewLocation.equals("none"))		// if port is invalid or not displaying webview
+		  url = noUrl;
+//	  webView.clearCache(true);
 	  webView.loadUrl(url);
   }
   
@@ -1160,7 +1156,7 @@ void start_select_loco_activity(char whichThrottle)
     }
 
     // save 1/2 the screen for webview
-    if (mainapp.webViewLocation.equals("Top") || mainapp.webViewLocation.equals("Bottom")) {
+    if (webViewLocation.equals("Top") || webViewLocation.equals("Bottom")) {
     	screenHeight *= 0.5; 
     }
     
@@ -1219,7 +1215,7 @@ void start_select_loco_activity(char whichThrottle)
 		  if(webView.canGoBack() && !clearHistory)
 			  webView.goBack();
 		  else
-			  checkExit();
+			  mainapp.checkExit(this);
           return (true);	//stop processing this key
 	  } 
 	  else if((key==KeyEvent.KEYCODE_VOLUME_UP) || (key==KeyEvent.KEYCODE_VOLUME_DOWN) ) { //use volume to change speed for specified loco
@@ -1240,25 +1236,6 @@ void start_select_loco_activity(char whichThrottle)
 		  return(true);  //stop processing this key
 	  }
 	  return(super.onKeyDown(key, event)); //continue with normal key processing
-  }
-
-  private void checkExit() {
-	  final AlertDialog.Builder b = new AlertDialog.Builder(this); 
-	  b.setIcon(android.R.drawable.ic_dialog_alert); 
-	  b.setTitle(R.string.exit_title); 
-	  b.setMessage(R.string.exit_text);
-	  b.setCancelable(true);
-	  b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-		 public void onClick(DialogInterface dialog, int id) {
-			  //disconnect from throttle
-			  Message msg=Message.obtain();
-			  msg.what=message_type.DISCONNECT;
-			  mainapp.comm_msg_handler.sendMessage(msg);
-		 }
-	  } ); 
-	  b.setNegativeButton(R.string.no, null);
-	  AlertDialog alert = b.create();
-	  alert.show();
   }
 
   private void disconnect() {
@@ -1288,7 +1265,15 @@ void start_select_loco_activity(char whichThrottle)
 		  msg.recycle();
 	  }
 
-//always go to Connection Activity
+	  currentUrl = webView.getUrl();
+	  webView.stopLoading();
+	  scale = initialScale;						// reinit statics in case app is restarted quickly
+	  currentUrl = webView.getUrl();
+	  currentUrl = null;
+	  dlRosterTask = null;
+	  dlMetadataTask = null;
+
+		//always go to Connection Activity
 //  	  Intent in=new Intent().setClass(this, connection_activity.class);
 //	  startActivity(in);
 
@@ -1326,7 +1311,7 @@ void start_select_loco_activity(char whichThrottle)
      	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
       case R.id.exit_mnu:
-    	  checkExit();
+    	  mainapp.checkExit(this);
      	  break;
       case R.id.power_control_mnu:
     	  in=new Intent().setClass(this, power_control.class);
