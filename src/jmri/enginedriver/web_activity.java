@@ -18,8 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import java.util.Set;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -42,12 +40,13 @@ public class web_activity extends Activity {
   private static SharedPreferences prefs;
 
   private WebView webView;
+  private static final String noUrl = "file:///android_asset/blank_page.html";
   private static final float initialScale = 1.5f;
   private static float scale = initialScale;		// used to restore web zoom level
   private static Boolean clearHistory = false;		// flags webViewClient to clear history when page load finishes
-  private static final String noUrl = "file:///android_asset/blank_page.html";
   private static String currentUrl = null;
-  private Boolean currentUrlUpdate;
+  private Boolean currentUrlUpdate = false;
+  private Boolean orientationChange = false;
  
   class web_handler extends Handler {
 
@@ -60,7 +59,6 @@ public class web_activity extends Activity {
 				  switch (com1) {
 					  case 'P': //panel info
 						  if (thrSel == 'W') {		// PW - web server port info
-//							  mainapp.setWebUrl(null);
 							  webView.stopLoading();
 							  clearHistory = true;
 							  currentUrl = null;
@@ -84,7 +82,7 @@ public class web_activity extends Activity {
 
     mainapp=(threaded_application)this.getApplication();
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-
+    orientationChange = false;
     setContentView(R.layout.web_activity);
   
 	webView = (WebView) findViewById(R.id.webview);
@@ -101,20 +99,24 @@ public class web_activity extends Activity {
 		public boolean shouldOverrideUrlLoading(WebView  view, String  url) {
 			return false;
 		}
+		
 		@Override
 		public void onPageFinished(WebView view, String url)
 		{
-			if(clearHistory)
-			{
-				view.clearHistory();
-				clearHistory = false;
+			if(!noUrl.equals(url)) {
+				if(clearHistory)
+				{
+					view.clearHistory();
+					clearHistory = false;
+				}
+				if(currentUrlUpdate)
+					currentUrl = url;
 			}
-			if(currentUrlUpdate && !noUrl.equals(url))
-				currentUrl = url;
+			else
+				clearHistory = true;
 		}
 	};
 	webView.setWebViewClient(EDWebClient);
-
 	currentUrlUpdate = true;		// ok to update currentUrl
 	if(currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null)
 		load_webview();			// reload if no saved state or no page had loaded when state was saved
@@ -133,7 +135,7 @@ public class web_activity extends Activity {
 	  Log.d("Engine_Driver","web_activity.onResume() called");
  	  super.onResume();
 
- 	  mainapp.setActivityOrientation(this);  	//set screen orientation based on prefs
+ 	  mainapp.setActivityOrientation(this, true);  	//set screen orientation based on prefs
 
 // don't load here - onCreate already handled it.  Load might not be finished yet
 // in which case call load_webview here just creates extra work since url will still be null
@@ -146,6 +148,8 @@ public class web_activity extends Activity {
   public void onSaveInstanceState(Bundle outState) {
 	  super.onSaveInstanceState(outState);
 	  webView.saveState(outState);		// save history
+	  orientationChange = true;
+	  
   }
   
   @Override
@@ -158,11 +162,10 @@ public class web_activity extends Activity {
   public void onDestroy() {
 	  Log.d("Engine_Driver","web_activity.onDestroy() called");
 
-	  scale = webView.getScale();
-	  currentUrlUpdate = false;		// disable currentUrl updates by onPageLoaded
-	  //load a static url to prevent any javascript on current url from continuing to run
-	  webView.loadUrl(noUrl);
-
+	  scale = webView.getScale();	// save scale for next onCreate
+	  if(!orientationChange) {		// screen is exiting
+		  webView.loadUrl(noUrl);	//load a static url else any javascript on current page would keep running
+	  }
 	  mainapp.web_msg_handler = null;
 	  super.onDestroy();
   }
@@ -248,10 +251,16 @@ public class web_activity extends Activity {
   
  private void disconnect() {
 	  webView.stopLoading();
-	  scale = initialScale;						// reinit statics in case app is restarted quickly
-	  currentUrl = null;
 	  this.finish();
 	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+ }
+ 
+ // helper app for TA to initial statics (in case GC has not run since app last shutdown)
+ // call before instantiating any instances of class
+ public static void initStatics() {
+	  scale = initialScale;
+	  clearHistory = false;
+	  currentUrl = null;
  }
 
 }

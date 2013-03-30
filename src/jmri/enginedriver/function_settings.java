@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.app.Activity;
-import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.KeyEvent;
@@ -31,9 +30,7 @@ import java.io.*;
 
 import android.util.Log;
 import android.widget.Button;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
-import android.widget.TextView;
 
 public class function_settings extends Activity {
 
@@ -280,4 +277,13 @@ public class function_settings extends Activity {
       }
       return(super.onKeyDown(key, event));
     };
+
+    // helper app for TA to initial statics (in case GC has not run since app last shutdown)
+    // call before instantiating any instances of class
+    public static void initStatics() {
+    	orientationChange = false;
+    	settingsChange = false;
+        aLbl.clear();
+        aFnc.clear();
+    }
 }

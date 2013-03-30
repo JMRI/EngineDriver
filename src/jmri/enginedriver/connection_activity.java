@@ -66,7 +66,7 @@ public class connection_activity extends Activity {
 	private SimpleAdapter discovery_list_adapter;
 
 	//pointer back to application
-	static threaded_application mainapp;
+	private threaded_application mainapp;
 
 	//The IP address and port that are used to connect.
 	private String connected_hostip;
@@ -296,6 +296,14 @@ public class connection_activity extends Activity {
     mainapp=(threaded_application)this.getApplication();
     mainapp.connection_msg_handler=new ui_handler();
     isShuttingDown = false;
+
+    //ensure statics in all activities are reinitialize since GC might not have run since app was last run.
+    //do this here instead of TA.onCreate() because that method won't be invoked if GC hasn't run 
+    //since ED exited (and FC wasn't done manually).
+	throttle.initStatics();
+	web_activity.initStatics();
+	function_settings.initStatics();
+    
     
     //check for "default" throttle name and make it more unique
     //TODO: move this and similar code in preferences.java into single routine

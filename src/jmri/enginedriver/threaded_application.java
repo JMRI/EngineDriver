@@ -32,6 +32,7 @@ import java.net.*;
 import java.io.*;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import javax.jmdns.*;
 
@@ -59,7 +60,6 @@ public class threaded_application extends Application {
 	String host_ip; //The IP address of the WiThrottle server.
 	int port; //The TCP port that the WiThrottle server is running on
 	//shared variables returned from the withrottle server, stored here for easy access by other activities
-	//	String host_name_string; //retrieved host name of connection
 	String loco_string_T = "Not Set"; //Loco Address string to display on first throttle
 	String loco_string_S = "Not Set"; //Loco Address string to display on second throttle
 	Double withrottle_version = 0.0; //version of withrottle server
@@ -298,32 +298,7 @@ public class threaded_application extends Application {
 					port=msg.arg1;
 
 					//clear app.thread shared variables so they can be reset
-					//            host_name_string = null;
-					withrottle_version = 0.0; 
-					web_server_port = 0;
-					roster_list_string = null;
-					power_state = null;
-					to_allowed = false;
-					to_states = null;
-					to_system_names = null;
-					to_user_names = null;
-					to_state_names = null;
-					rt_allowed = false;
-					rt_states = null;
-					rt_system_names = null;
-					rt_user_names = null;
-					rt_state_names = null;
-					roster_entries = null;
-					roster = null;
-					function_labels_S = new LinkedHashMap<Integer, String>();
-					function_labels_T = new LinkedHashMap<Integer, String>();
-					locos_on_T = new LinkedHashMap<String, String>();
-					locos_on_S = new LinkedHashMap<String, String>();
-					function_labels_default = new LinkedHashMap<Integer, String>();
-					function_states_T = new boolean[32];		// also allocated in onCreate() ???
-					function_states_S = new boolean[32];
-					consist_allowed = false;
-					consist_entries = new LinkedHashMap<String, String>();
+					initShared();
 
 					//attempt connection to WiThrottle server
 					socketWiT = new socket_WiT();
@@ -1140,8 +1115,6 @@ public class threaded_application extends Application {
 					}
 				}
 
-				//            host_name_string = host_address.getHostName();  //store host server name in app.thread shared variable
-
 				//socket
 				if (socketOk) {
 					try {
@@ -1225,29 +1198,7 @@ public class threaded_application extends Application {
 				{
 					// reinit shared variables then signal activities to refresh their views
 					// so that (potentially) invalid information is not displayed
-					power_state = null;
-					to_allowed = false;
-					to_states = null;
-					to_system_names = null;
-					to_user_names = null;
-					to_state_names = null;
-					rt_allowed = false;
-					rt_states = null;
-					rt_system_names = null;
-					rt_user_names = null;
-					rt_state_names = null;
-					loco_string_T = "Not Set";
-					loco_string_S = "Not Set";
-					locos_on_T = new LinkedHashMap<String, String>();
-					locos_on_S = new LinkedHashMap<String, String>();
-					function_labels_S = new LinkedHashMap<Integer, String>();
-					function_labels_T = new LinkedHashMap<Integer, String>();
-					function_labels_default = new LinkedHashMap<Integer, String>();
-					function_states_T = new boolean[32];		// also allocated in onCreate() ???
-					function_states_S = new boolean[32];
-					consist_allowed = false;
-					consist_entries = new LinkedHashMap<String, String>();
-					roster_entries = null;
+					initShared();
 
 					if (turnouts_msg_handler != null)   
 					{ 
@@ -1287,6 +1238,15 @@ public class threaded_application extends Application {
 						msg.obj=new String("MS-");		//tell throttle activity to release throttle S
 						try {
 							throttle_msg_handler.sendMessage(msg);
+						}
+						catch(Exception e) {
+							msg.recycle();
+						}
+						msg=Message.obtain(); 
+						msg.what=message_type.RESPONSE;
+						msg.obj=new String("PW"); 		//tell throttle activity that the port has changed
+						try {
+							web_msg_handler.sendMessage(msg);
 						}
 						catch(Exception e) {
 							msg.recycle();
@@ -1546,7 +1506,6 @@ public class threaded_application extends Application {
 
 	public void onCreate()  {
 		super.onCreate();
-
 		prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
 		function_states_T = new boolean[32];
@@ -1556,7 +1515,36 @@ public class threaded_application extends Application {
 		thread.start();
 	}
 
-
+	//initialize shared variables
+	private void initShared() {
+		withrottle_version = 0.0; 
+		web_server_port = 0;
+		power_state = null;
+		to_allowed = false;
+		to_states = null;
+		to_system_names = null;
+		to_user_names = null;
+		to_state_names = null;
+		rt_allowed = false;
+		rt_states = null;
+		rt_system_names = null;
+		rt_user_names = null;
+		rt_state_names = null;
+		loco_string_T = "Not Set";
+		loco_string_S = "Not Set";
+		locos_on_T = new LinkedHashMap<String, String>();
+		locos_on_S = new LinkedHashMap<String, String>();
+		function_labels_S = new LinkedHashMap<Integer, String>();
+		function_labels_T = new LinkedHashMap<Integer, String>();
+		function_labels_default = new LinkedHashMap<Integer, String>();
+		function_states_T = new boolean[32];		// also allocated in onCreate() ???
+		function_states_S = new boolean[32];
+		consist_allowed = false;
+		consist_entries = new LinkedHashMap<String, String>();
+		roster = null;
+		roster_entries = null;
+		roster_list_string = null;
+	}
 
 	/** ------ copied from jmri util code -------------------
 	 * Split a string into an array of Strings, at a particular
@@ -1620,10 +1608,26 @@ public class threaded_application extends Application {
 		comm_msg_handler.sendMessage(msg);
 	}
 
+		
 	// set activity screen orientation based on prefs, check to avoid sending change when already there
+
+	  // this form uses the Throttle Orientation pref
 	  public int setActivityOrientation(Activity activity) {
-		  String to = prefs.getString("ThrottleOrientation", 
+		  return setActivityOrientation(activity,false);
+	  }
+	  // this form uses either pref
+	  // webPref	true: use the Web Orientation pref
+	  // 			false: use the Throttle Orientation pref
+	  public int setActivityOrientation(Activity activity, Boolean webPref) {
+		  String to;
+		  if(webPref) {
+			  to = prefs.getString("WebOrientation", 
+					  activity.getApplicationContext().getResources().getString(R.string.prefWebOrientationDefaultValue));
+		  }
+		  else {
+			  to = prefs.getString("ThrottleOrientation", 
 				  activity.getApplicationContext().getResources().getString(R.string.prefThrottleOrientationDefaultValue));
+		  }
 		  int co = activity.getRequestedOrientation();
 		  if(to.equals("Landscape")   && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))  
 			  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);

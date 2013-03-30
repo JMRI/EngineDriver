@@ -182,7 +182,6 @@
 /*
  *   TODO: add visible menu/title-bar to all screens
  *   TODO: add e-stop button to all screens (enabled by pref)
- *   TODO: use pref for orientation of all screens, not just throttle
  *   TODO: show icon in notification bar if app is running but not visible
  *   TODO: allow user to configure side-by-side panels for pads, etc.
  *   TODO: add consist creation/editing features
@@ -238,6 +237,7 @@
  *   TODO: show error if invalid entry
  *
  * These require changes to WiThrottle
+ *   resend roster, turnout and routes when items are added or removed
  *   support resend of function and direction commands, even when WiT knows it has already sent
  *   WiT send MT-xxx when commands are received from a client for a loco that is not active.  (to get ED up to date with server after connection loss)
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)

@@ -26,7 +26,6 @@ import java.util.HashMap;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -210,14 +209,10 @@ public class routes extends Activity  implements OnGestureListener {
 
     
     mainapp=(threaded_application)getApplication();
-    int co = mainapp.setActivityOrientation(this);			//set screen orientation based on prefs
-//    if(co == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)  	//set screen orientation based on prefs
-//  	setContentView(R.layout.routes_horz);
-//    else
-    	setContentView(R.layout.routes);
+   	setContentView(R.layout.routes);
 	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-    //put pointer to this activity's handler in main app's shared variable (If needed)
-  	  mainapp.routes_msg_handler=new routes_handler();
+    //put pointer to this activity's handler in main app's shared variable
+  	mainapp.routes_msg_handler=new routes_handler();
     
 	myGesture = new GestureDetector(this);
         

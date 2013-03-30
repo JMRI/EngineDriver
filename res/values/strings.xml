@@ -119,7 +119,7 @@
     <string name="prefDefaultAddressLengthSummary">Default Loco Address Length, (Auto will set based on # of digits).</string>
     <string name="prefWebTitle">Web Preferences</string>
     <string name="prefWebOrientationTitle">Web screen orientation</string>
-    <string name="prefWebOrientationDefaultValue">Portrait</string>
+    <string name="prefWebOrientationDefaultValue">Auto-Rotate</string>
     <string name="prefWebOrientationSummary">Web screen orientation</string>
     <string name="prefInitialWebPageTitle">Initial Web Page</string>
     <string name="prefInitialWebPageDefaultValue">frame</string>

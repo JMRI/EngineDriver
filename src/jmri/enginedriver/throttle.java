@@ -70,11 +70,12 @@ import android.graphics.Typeface;
 public class throttle extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
 
 	private threaded_application mainapp;  // hold pointer to mainapp
+	private SharedPreferences prefs;
+
 	private static final int GONE = 8;
 	private static final int VISIBLE = 0;
 	private static final int throttleMargin = 8;	// margin between the throttles in dp
 	private static final int titleBar = 45;			// estimate of lost screen height in dp
-	private static SharedPreferences prefs;
 	private static final int MAX_SPEED_DISPLAY = 99;	// value to display at maximum speed setting 
 	private static int MAX_SPEED_VAL_T = 126;			// maximum DCC speed setting in current mode
 	private static int MAX_SPEED_VAL_S = 126;			// maximum DCC speed setting in current mode
@@ -119,11 +120,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static final String noUrl = "file:///android_asset/blank_page.html";
 	private static final float initialScale = 1.5f;
 	private WebView webView;
+	private String webViewLocation;
 	private static float scale = initialScale;			// used to restore throt web zoom level (after rotation)
 	private static Boolean clearHistory = false;		// flags webViewClient to clear history when page load finishes
-	private String webViewLocation;
 	private static String currentUrl = null;
 	private Boolean currentUrlUpdate;
+	Boolean orientationChange = false;
 
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class throttle_handler extends Handler {
@@ -263,8 +265,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			  char com1 = response_str.charAt(0);
 			  if(com1 == 'W') {			// webview location changed
 				  if("none".equals(webViewLocation)) {		// check current location
-					  webView.stopLoading();
-					  clearHistory = true;					// clear hist if dummy page is loaded
 					  currentUrl = null;					// reload init url
 				  }
 				  webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));    
@@ -774,11 +774,9 @@ void start_select_loco_activity(char whichThrottle)
   {
     super.onCreate(savedInstanceState);
     mainapp=(threaded_application)this.getApplication();
-
-    setContentView(R.layout.throttle);
-//    mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-    
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+    orientationChange = false;
+    setContentView(R.layout.throttle);
 
 	if(dlMetadataTask == null)
 		dlMetadataTask = new DownloadMetadataTask();
@@ -880,13 +878,17 @@ void start_select_loco_activity(char whichThrottle)
 		}
 		@Override
 		public void onPageFinished(WebView view, String url) {
-			if(clearHistory)
-			{
-				view.clearHistory();
-				clearHistory = false;
+			if(!noUrl.equals(url)) {
+				if(clearHistory)
+				{
+					view.clearHistory();
+					clearHistory = false;
+				}
+				if(currentUrlUpdate)
+					currentUrl = url;
 			}
-			if(currentUrlUpdate && !noUrl.equals(url))
-				currentUrl = url;
+			else
+				clearHistory = true;
 		}
 	};
 
@@ -932,6 +934,7 @@ void start_select_loco_activity(char whichThrottle)
   public void onSaveInstanceState(Bundle outState) {
 	  super.onSaveInstanceState(outState);
 	  webView.saveState(outState);		// save history (on rotation) if at least one page has loaded
+	  orientationChange = true;
   }
 
   @Override
@@ -943,12 +946,10 @@ void start_select_loco_activity(char whichThrottle)
   @Override
   public void onDestroy() {
 	  Log.d("Engine_Driver","throttle.onDestroy() called");
-
-	  scale = webView.getScale();
-	  currentUrlUpdate = false;		// disable currentUrl updates by onPageLoaded
-	  //load a static url to prevent any javascript on current url from continuing to run
-	  webView.loadUrl(noUrl);
-
+	  scale = webView.getScale();		// save current scale for next onCreate
+	  if(!orientationChange) {		// screen is exiting
+		  webView.loadUrl(noUrl);	//load a static url else any javascript on current page would keep running
+	  }
 	  mainapp.throttle_msg_handler = null;
 	  super.onDestroy();
   }
@@ -1265,13 +1266,7 @@ void start_select_loco_activity(char whichThrottle)
 		  msg.recycle();
 	  }
 
-	  currentUrl = webView.getUrl();
 	  webView.stopLoading();
-	  scale = initialScale;						// reinit statics in case app is restarted quickly
-	  currentUrl = webView.getUrl();
-	  currentUrl = null;
-	  dlRosterTask = null;
-	  dlMetadataTask = null;
 
 		//always go to Connection Activity
 //  	  Intent in=new Intent().setClass(this, connection_activity.class);
@@ -1637,6 +1632,12 @@ void start_select_loco_activity(char whichThrottle)
         }
     }
 
-
+	 // helper app for TA to initial statics (in case GC has not run since app last shutdown)
+	 // call before instantiating any instances of class
+	 public static void initStatics() {
+		  scale = initialScale;
+		  clearHistory = false;
+		  currentUrl = null;
+	 }
 }
 
