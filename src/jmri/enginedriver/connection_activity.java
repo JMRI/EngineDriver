@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +41,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import java.io.FileReader;
 import java.lang.reflect.Method;
-
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -57,9 +57,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.AdapterView;
 
-
 public class connection_activity extends Activity {
-
 	ArrayList<HashMap<String, String> > connections_list;
 	ArrayList<HashMap<String, String> > discovery_list;
 	private SimpleAdapter connection_list_adapter;
@@ -67,13 +65,15 @@ public class connection_activity extends Activity {
 
 	//pointer back to application
 	private threaded_application mainapp;
-
 	//The IP address and port that are used to connect.
 	private String connected_hostip;
 	private String connected_hostname;
 	private int connected_port;
 
-	//flag to indicate the app is shutting down, used to speed up the transition through the lifecycle 
+    private static final String example_host = "jmri.mstevetodd.com";
+    private static final String example_port = "44444";
+
+     //flag to indicate the app is shutting down, used to speed up the transition through the lifecycle 
 	private boolean isShuttingDown = false;
 
 	private static Method overridePendingTransition;
@@ -102,31 +102,15 @@ public class connection_activity extends Activity {
 	  }
   }
 
-
   //Request connection to the WiThrottle server.
   void connect()  {
-	  Message connect_msg=Message.obtain();
-	  connect_msg.what=message_type.CONNECT;
-	  connect_msg.arg1=connected_port;
-	  connect_msg.obj=new String(connected_hostip);
-	  if (mainapp.comm_msg_handler != null) {
-		  mainapp.comm_msg_handler.sendMessage(connect_msg);
-	  } else {
-		  connect_msg.recycle();
-		  Log.e("Engine_Driver","ERROR in ca.connect: comm thread not started.") ;
-		  Toast.makeText(getApplicationContext(), "ERROR in ca.connect: comm thread not started.", Toast.LENGTH_SHORT).show();
-	  }    	
+	  Message msg=Message.obtain();
+	  msg.what=message_type.CONNECT;
+	  msg.arg1=connected_port;
+	  msg.obj=new String(connected_hostip);
+	  sendMsg(msg, "ERROR in ca.connect: comm thread not started.");
   };
 
-
-/*  void start_select_loco_activity()
-  {
-//    multicast_lock.release();
-	Intent select_loco=new Intent().setClass(this, select_loco.class);
-	select_loco.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-	startActivity(select_loco);
-	};
-  */
 
   void start_throttle_activity()
   {
@@ -183,7 +167,6 @@ public class connection_activity extends Activity {
 		}
     };
   }
-
   //Handle messages from the communication thread back to the UI thread.
   class ui_handler extends Handler
   {
@@ -196,19 +179,21 @@ public class connection_activity extends Activity {
             HashMap<String, String> hm=new HashMap<String, String>();
             hm = (HashMap<String, String>) msg.obj;  //payload is already a hashmap
             String found_host_name = hm.get("host_name");
+            boolean entryExists = false;
 
             //stop if new address is already in the list
             HashMap<String, String> tm=new HashMap<String, String>();
             for(int index=0; index < discovery_list.size(); index++) {
             	tm = discovery_list.get(index);
-            	if (tm.get("host_name").equals(found_host_name)) {
-            		return;
-            	};
+            	if (tm.get("host_name").equals(found_host_name)) { 
+            		entryExists = true;
+            		break;
+            	}
             }
-                 	
-            // add to discovered list on screen          
-            discovery_list.add(hm);
-            discovery_list_adapter.notifyDataSetChanged();
+            if(!entryExists) {            	// if new host, add to discovered list on screen          
+            	discovery_list.add(hm);
+            	discovery_list_adapter.notifyDataSetChanged();
+            }
             break;
 
         case message_type.SERVICE_REMOVED:        
@@ -219,61 +204,19 @@ public class connection_activity extends Activity {
             	tm = discovery_list.get(index);
             	if (tm.get("host_name").equals(removed_host_name)) {
                     discovery_list.remove(index);
-            	};
-                discovery_list_adapter.notifyDataSetChanged();
+                    discovery_list_adapter.notifyDataSetChanged();
+                    break;
+            	}
             }
         	break;
 
         case message_type.CONNECTED:
         	start_throttle_activity();
-
-        	//Save the updated connection list to the connections_list.txt file
-        	try  {
-        		File sdcard_path=Environment.getExternalStorageDirectory();
-
-        		//First, determine if the engine_driver directory exists. If not, create it.
-        		File engine_driver_dir=new File(sdcard_path, "engine_driver");
-        		if(!engine_driver_dir.exists()) { engine_driver_dir.mkdir(); }
-
-        		File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
-        		PrintWriter list_output;
-        		list_output=new PrintWriter(connections_list_file);
-
-        		//Write selected connection to file, then write all others (skipping selected if found)
-        		list_output.format("%s:%s:%d\n", connected_hostname, connected_hostip, connected_port);
-
-        		SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        		String smrc = prefs.getString("maximum_recent_connections_preference", ""); //retrieve pref for max recents to show  
-        		if (smrc.equals("")) { //if no value or entry removed, set to default
-        			smrc = getApplicationContext().getResources().getString(R.string.prefMaximumRecentConnectionsDefaultValue);
-        		}
-        		int mrc = Integer.parseInt(smrc);  
-
-        		int clEntries =Math.min(connections_list.size(), mrc);  //don't keep more entries than specified in preference
-        		for(int i = 0; i < clEntries; i++)  {  //loop thru entries from connections list, up to max in prefs 
-        			HashMap <String, String> t = connections_list.get(i);
-        			String li = (String) t.get("ip_address");
-        			String lh = (String) t.get("host_name");
-        			Integer lp = Integer.valueOf((String) t.get("port"));
-//***        			if(connected_hostip != null && connected_port != 0)
-        			if(!connected_hostip.equals(li) || connected_port!=lp) {  //write it out if not same as selected 
-        				list_output.format("%s:%s:%d\n", lh, li, lp);
-        			}
-        		}
-        		list_output.flush();
-        		list_output.close();
-        	}
-        	catch(IOException except) 	{
-        		Log.e("connection_activity", "Error saving recent connection: "+except.getMessage());
-        		Toast.makeText(getApplicationContext(), "Error saving recent connection: "+except.getMessage(), Toast.LENGTH_SHORT).show();
-        	}
+        	//use asynctask to save the updated connections list to the connections_list.txt file
+        	new saveConnectionsList().execute();
         	break;
 
         case message_type.DISCONNECT:
-        	startShutdown();
-        	break;
-
-        case message_type.SHUTDOWN:
         	completeShutdown();
         	break;
 
@@ -292,7 +235,7 @@ public class connection_activity extends Activity {
   {
     super.onCreate(savedInstanceState);
 //    timestamp = SystemClock.uptimeMillis();
-//    Log.d("Engine_Driver","CA onCreate " + timestamp);
+    Log.d("Engine_Driver","connection.onCreate ");
     mainapp=(threaded_application)this.getApplication();
     mainapp.connection_msg_handler=new ui_handler();
     isShuttingDown = false;
@@ -307,6 +250,7 @@ public class connection_activity extends Activity {
     
     //check for "default" throttle name and make it more unique
     //TODO: move this and similar code in preferences.java into single routine
+	
     SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
     String s = prefs.getString("throttle_name_preference", defaultName);
@@ -348,7 +292,7 @@ public class connection_activity extends Activity {
 	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
     //Set the button callback.
-    Button button=(Button)findViewById(R.id.connect);
+	Button button=(Button)findViewById(R.id.connect);
     button_listener click_listener=new button_listener();
     button.setOnClickListener(click_listener);
     
@@ -356,95 +300,28 @@ public class connection_activity extends Activity {
     DisplayMetrics dm = new DisplayMetrics();
     getWindowManager().getDefaultDisplay().getMetrics(dm);
     threaded_application.min_fling_distance = (int)(threaded_application.SWIPE_MIN_DISTANCE * dm.densityDpi / 160.0f);
-    threaded_application.min_fling_velocity = (int)(threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f); 
+    threaded_application.min_fling_velocity = (int)(threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f);
 
   }
 
 	@Override
 	public void onResume() {
+		Log.d("Engine_Driver","connection.onResume() called");
 		super.onResume();
-		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-	    if (isShuttingDown)
+	    if (isShuttingDown) {
+	    	if(!this.isFinishing())
+	    		this.finish();
 	    	return;
-
+	    }
+		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 	    //start up server discovery listener
 	    Message msg=Message.obtain();
 	    msg.what=message_type.SET_LISTENER;
 	    msg.arg1 = 1; //one turns it on
-	    if (mainapp.comm_msg_handler != null) {
-	    	mainapp.comm_msg_handler.sendMessage(msg);
-	    } else {
-	    	Log.e("Engine_Driver","ERROR in ca.onResume: comm thread not started.") ;
-	   	    Toast.makeText(getApplicationContext(), "ERROR in ca.onResume: comm thread not started.", Toast.LENGTH_SHORT).show();
-	    }    	
+	    sendMsg(msg, "ERROR in ca.onResume: comm thread not started.") ;
 
-	    connections_list.clear();
-	    String example_host = "jmri.mstevetodd.com";
-	    String example_port = "44444";
-	    
-	    //Populate the ListView with the recent connections saved in a file. This will be stored in
-	    // /sdcard/engine_driver/connections_list.txt
-	    try    {
-	    	File sdcard_path=Environment.getExternalStorageDirectory();
-	    	File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
-
-	    	if(connections_list_file.exists())    {
-	    		BufferedReader list_reader=new BufferedReader(new FileReader(connections_list_file));
-	    		while(list_reader.ready())    {
-	    			String line=list_reader.readLine();
-	    			String ip_address;
-	    			String host_name;
-	    			String port_str = "";
-	    			Integer port = 0;
-	    			List<String> parts = new ArrayList<String>();
-	    			parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
-	    			if (parts.size() > 1) {  //skip if not split
-	    				if (parts.size() == 2) {  //old style, use part 1 for ip and host
-	    					host_name = parts.get(0);
-	    					ip_address = parts.get(0);
-	    					port_str = parts.get(1).toString();
-	    				} else { 						  //new style, get all 3 parts
-	    					host_name = parts.get(0);
-	    					ip_address = parts.get(1);
-	    					port_str = parts.get(2).toString();
-	    				}
-	    				try {  //attempt to convert port to integer
-	    					port = Integer.decode(port_str);
-	    				} 
-	    				catch (Exception e) {
-	    				}
-	    				if (port > 0) {  //skip if port not converted to integer
-	    					HashMap<String, String> hm=new HashMap<String, String>();
-	    					hm.put("ip_address", ip_address);
-	    					hm.put("host_name", host_name);
-	    					hm.put("port", port.toString());
-	    					connections_list.add(hm);
-	    					if (host_name.equals(example_host) && port.toString().equals(example_port)) {
-	    						example_host = "";  //clear if found, so as not to add twice
-	    					}
-	    				} //if pl>0
-
-	    			} // if la.length >0 
-	    		} //while list_reader
-	    		list_reader.close();
-	    	} //if file exists
-
-	    	//if example host not already in list, add it at end
-    		if (!example_host.equals("")) {
-    			HashMap<String, String> hm=new HashMap<String, String>();
-    			hm.put("ip_address", example_host);
-    			hm.put("host_name", example_host);
-    			hm.put("port", example_port);
-    			connections_list.add(hm);
-    		}
-
-    		connection_list_adapter.notifyDataSetChanged();
-
-	    }
-	    catch (IOException except) { 
-	    	Log.e("connection_activity", "Error reading recent connections list: "+except.getMessage());
-			Toast.makeText(getApplicationContext(), "Error reading recent connections list: "+except.getMessage(), Toast.LENGTH_SHORT).show();
-	    }
+	    //populate the ListView with the recent connections
+	    getConnectionsList();
     
 	    set_labels();
 
@@ -453,56 +330,54 @@ public class connection_activity extends Activity {
 	    msg=Message.obtain();
 	    msg.what=message_type.SET_LISTENER;
 	    msg.arg1 = 1; //one turns it on
-	    if (mainapp.comm_msg_handler != null) {
-	    	mainapp.comm_msg_handler.sendMessageDelayed(msg, 3000);
-	    } else {
-	    	Log.e("Engine_Driver","ERROR in ca.onResume: comm thread not started.") ;
-	   	    Toast.makeText(getApplicationContext(), "ERROR in ca.onResume: comm thread not started.", Toast.LENGTH_SHORT).show();
-	    }    	
+	    sendMsg(msg, "ERROR in ca.onResume: comm thread not started.") ;
 	}  //end of onResume
 
-	@Override
-	public void onRestart() {
-		super.onRestart();
-//	    Log.d("Engine_Driver","CA onRestart " + timestamp);
-	    if (this.isShuttingDown && !this.isFinishing())
-	    	this.finish();
-	}
+//	@Override
+//	public void onRestart() {
+//		super.onRestart();
+//	    Log.d("Engine_Driver","connection.onRestart() called");
+//	    if (isShuttingDown && !this.isFinishing())
+//	    	this.finish();
+//	}
 	
 	@Override
 	public void onPause() {
 		//shutdown server discovery listener
-	    Message msg=Message.obtain();
-	    msg.what=message_type.SET_LISTENER;
-	    msg.arg1 = 0; //zero turns it off
-	    if (mainapp.comm_msg_handler != null) {
-	    	mainapp.comm_msg_handler.sendMessage(msg);
-	    }
-        super.onPause();
+		Log.d("Engine_Driver","connection.onPause() called with "+isShuttingDown);
+		if(!isShuttingDown) {
+			Message msg=Message.obtain();
+		    msg.what=message_type.SET_LISTENER;
+		    msg.arg1 = 0; //zero turns it off
+		    sendMsg(msg, "");
+		}
+	    super.onPause();
 	}
 
 	@Override
 	public void onDestroy() {
+		Log.d("Engine_Driver","connection.onDestroy() called");
 		mainapp.connection_msg_handler = null;
 		super.onDestroy();
 	}
 	
-    //end all activity
+    //tell TA to exit
     private void startShutdown() {
-      isShuttingDown = true;
-  	  if (mainapp.comm_msg_handler != null) {
-  	  	  Message msg=Message.obtain();
-  	  	  msg.what=message_type.SHUTDOWN;
-  		  mainapp.comm_msg_handler.sendMessage(msg);
-  	  }
+	    Message msg=Message.obtain();
+    	msg.what=message_type.DISCONNECT;
+  	  	sendMsg(msg, "");
     }
     
+    //tell TA that CA is ending
     private void completeShutdown() {
-      this.finish();
+    	if(!isShuttingDown) {
+    		isShuttingDown = true;
+    		this.finish();
+    	}
 //	  System.exit(0);
     }
 
-	private void set_labels() {
+    private void set_labels() {
 	    SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 	    TextView v=(TextView)findViewById(R.id.ca_footer);
 	    String s = prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
@@ -556,6 +431,133 @@ public class connection_activity extends Activity {
 		return (super.onKeyDown(key, event));
 	};
 
+	private void sendMsg(Message msg, String errMsg) {
+	  if (mainapp.comm_msg_handler != null) {
+		  mainapp.comm_msg_handler.sendMessage(msg);
+	  } 
+	  else {
+		  msg.recycle();
+		  if(errMsg.length() > 0) {
+			  Log.e("Engine_Driver",errMsg) ;
+			  Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT).show();
+		  }
+	  }    	
+	}
+	
+	//save connections list in background using asynctask
+	 private class saveConnectionsList extends AsyncTask<Void, Void, String> {
+		 @Override
+		 protected String doInBackground(Void... params) {
+			String errMsg = "";
+	    	try  {
+	    		File sdcard_path=Environment.getExternalStorageDirectory();
+
+	    		//First, determine if the engine_driver directory exists. If not, create it.
+	    		File engine_driver_dir=new File(sdcard_path, "engine_driver");
+	    		if(!engine_driver_dir.exists()) { engine_driver_dir.mkdir(); }
+
+	    		File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
+	    		PrintWriter list_output;
+	    		list_output=new PrintWriter(connections_list_file);
+
+	    		//Write selected connection to file, then write all others (skipping selected if found)
+	    		list_output.format("%s:%s:%d\n", connected_hostname, connected_hostip, connected_port);
+
+	    		SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+	    		String smrc = prefs.getString("maximum_recent_connections_preference", ""); //retrieve pref for max recents to show  
+	    		if (smrc.equals("")) { //if no value or entry removed, set to default
+	    			smrc = getApplicationContext().getResources().getString(R.string.prefMaximumRecentConnectionsDefaultValue);
+	    		}
+	    		int mrc = Integer.parseInt(smrc);  
+	    		int clEntries =Math.min(connections_list.size(), mrc);  //don't keep more entries than specified in preference
+	    		for(int i = 0; i < clEntries; i++)  {  //loop thru entries from connections list, up to max in prefs 
+	    			HashMap <String, String> t = connections_list.get(i);
+	    			String li = (String) t.get("ip_address");
+	    			String lh = (String) t.get("host_name");
+	    			Integer lp = Integer.valueOf((String) t.get("port"));
+//***        			if(connected_hostip != null && connected_port != 0)
+	    			if(!connected_hostip.equals(li) || connected_port!=lp) {  //write it out if not same as selected 
+	    				list_output.format("%s:%s:%d\n", lh, li, lp);
+	    			}
+	    		}
+	    		list_output.flush();
+	    		list_output.close();
+	    	}
+	    	catch(IOException except) 	{
+	    		errMsg = except.getMessage();
+	    	}
+			 return errMsg;
+		 }
+		 @Override
+		 protected void onPostExecute(String errMsg) {
+			 if(errMsg.length() > 0)
+	    		Toast.makeText(getApplicationContext(), "Error saving recent connection: "+errMsg, Toast.LENGTH_SHORT).show();
+		 }
+	 }
+	  
+	private void getConnectionsList() {
+		boolean foundExampleHost = false;
+		String errMsg = "";
+	    try {
+	    	File sdcard_path=Environment.getExternalStorageDirectory();
+	    	File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
+
+	    	if(connections_list_file.exists())    {
+	    		BufferedReader list_reader=new BufferedReader(new FileReader(connections_list_file));
+	    		while(list_reader.ready())    {
+	    			String line=list_reader.readLine();
+	    			String ip_address;
+	    			String host_name;
+	    			String port_str = "";
+	    			Integer port = 0;
+	    			List<String> parts = new ArrayList<String>();
+	    			parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
+	    			if (parts.size() > 1) {  //skip if not split
+	    				if (parts.size() == 2) {  //old style, use part 1 for ip and host
+	    					host_name = parts.get(0);
+	    					ip_address = parts.get(0);
+	    					port_str = parts.get(1).toString();
+	    				} else { 						  //new style, get all 3 parts
+	    					host_name = parts.get(0);
+	    					ip_address = parts.get(1);
+	    					port_str = parts.get(2).toString();
+	    				}
+	    				try {  //attempt to convert port to integer
+	    					port = Integer.decode(port_str);
+	    				} 
+	    				catch (Exception e) {
+	    				}
+	    				if (port > 0) {  //skip if port not converted to integer
+		    					HashMap<String, String> hm=new HashMap<String, String>();
+		    					hm.put("ip_address", ip_address);
+		    					hm.put("host_name", host_name);
+		    					hm.put("port", port.toString());
+		    					connections_list.add(hm);
+	    					if (host_name.equals(example_host) && port.toString().equals(example_port)) {
+	    						foundExampleHost = true; 
+	    					}
+	    				}
+	    			} 
+	    		}
+	    		list_reader.close();
+	    	}
+	    }
+	    catch (IOException except) {
+	    	errMsg = except.getMessage();
+	    	Log.e("connection_activity", "Error reading recent connections list: "+errMsg);
+			Toast.makeText(getApplicationContext(), "Error reading recent connections list: "+errMsg, Toast.LENGTH_SHORT).show();
+	    }
+
+	    //if example host not already in list, add it at end
+		if (!foundExampleHost) {
+				HashMap<String, String> hm=new HashMap<String, String>();
+				hm.put("ip_address", example_host);
+				hm.put("host_name", example_host);
+				hm.put("port", example_port);
+				connections_list.add(hm);
+		}
+	}
+	
 	//for debugging only
 /*	private void withrottle_list() {		
 		try {

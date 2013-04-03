@@ -18,6 +18,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import java.lang.reflect.Method;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -30,6 +32,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebSettings;
@@ -43,10 +46,10 @@ public class web_activity extends Activity {
   private static final String noUrl = "file:///android_asset/blank_page.html";
   private static final float initialScale = 1.5f;
   private static float scale = initialScale;		// used to restore web zoom level
-  private static Boolean clearHistory = false;		// flags webViewClient to clear history when page load finishes
+  private static boolean clearHistory = false;		// flags webViewClient to clear history when page load finishes
   private static String currentUrl = null;
-  private Boolean currentUrlUpdate = false;
-  private Boolean orientationChange = false;
+  private boolean currentUrlUpdate = false;
+  private static boolean orientationChange = false;
  
   class web_handler extends Handler {
 
@@ -142,7 +145,10 @@ public class web_activity extends Activity {
 // causing load_webview to load the page again 
 //	  load_webview();
  	  
-  };
+	  if(!callHiddenWebViewOnResume())
+		  webView.resumeTimers();
+	  CookieSyncManager.getInstance().startSync();
+ };
 
  @Override
   public void onSaveInstanceState(Bundle outState) {
@@ -155,7 +161,10 @@ public class web_activity extends Activity {
   @Override
   public void onPause() {
 	  super.onPause();
-  }
+	  if(!callHiddenWebViewOnPause())
+		  	webView.pauseTimers();
+		  CookieSyncManager.getInstance().stopSync();
+}
    
   /** Called when the activity is finished. */
   @Override
@@ -170,6 +179,26 @@ public class web_activity extends Activity {
 	  super.onDestroy();
   }
 
+  private boolean callHiddenWebViewOnPause(){
+      try {
+          Method method = WebView.class.getMethod("onPause");
+          method.invoke(webView);
+      } 
+      catch (Exception e) {
+      	return false;
+      }
+	    return true;
+  }
+  private boolean callHiddenWebViewOnResume(){
+      try {
+          Method method = WebView.class.getMethod("onResume");
+          method.invoke(webView);
+      } 
+      catch (Exception e) {
+  	    return false;
+	    }
+      return true;
+  }
   
   //Handle pressing of the back button to end this activity
   @Override
@@ -255,7 +284,7 @@ public class web_activity extends Activity {
 	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
  }
  
- // helper app for TA to initial statics (in case GC has not run since app last shutdown)
+ // helper app to initialize statics (in case GC has not run since app last shutdown)
  // call before instantiating any instances of class
  public static void initStatics() {
 	  scale = initialScale;

@@ -55,7 +55,19 @@
             android:summary="@string/prefDropOnAcquireSummary"
             android:title="@string/prefDropOnAcquireTitle" >
         </CheckBoxPreference>
-        <ListPreference android:defaultValue="@string/prefDefaultAddressLengthDefaultValue" android:entries="@array/address_size_defaults" android:entryValues="@array/address_size_defaults" android:key="default_address_length" android:summary="@string/prefDefaultAddressLengthSummary" android:title="@string/prefDefaultAddressLengthTitle" /><CheckBoxPreference android:defaultValue="@string/prefHideRecentLocosDefaultValue" android:dialogTitle="@string/prefHideRecentLocosTitle" android:key="hide_recent_locos_preference" android:summary="@string/prefHideRecentLocosSummary" android:title="@string/prefHideRecentLocosTitle">
+        <ListPreference 
+            android:defaultValue="@string/prefDefaultAddressLengthDefaultValue" 
+            android:entries="@array/address_size_defaults" 
+            android:entryValues="@array/address_size_defaults" 
+            android:key="default_address_length" 
+            android:summary="@string/prefDefaultAddressLengthSummary" 
+            android:title="@string/prefDefaultAddressLengthTitle" />
+        <CheckBoxPreference 
+            android:defaultValue="@string/prefHideRecentLocosDefaultValue" 
+            android:dialogTitle="@string/prefHideRecentLocosTitle" 
+            android:key="hide_recent_locos_preference" 
+            android:summary="@string/prefHideRecentLocosSummary" 
+            android:title="@string/prefHideRecentLocosTitle">
         </CheckBoxPreference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefWebTitle" >

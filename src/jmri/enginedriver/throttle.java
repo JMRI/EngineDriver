@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.io.*;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -54,6 +55,7 @@ import jmri.jmrit.roster.RosterLoader;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -92,10 +94,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	int max_throttle_change = 99;  //maximum allowable change of the sliders, set in preferences
 	
 	//screen coordinates for throttle sliders, so we can ignore swipe on them
-	int T_top;  
-	int T_bottom;  
-	int S_top;  
-	int S_bottom;  
+	private int T_top;  
+	private int T_bottom;  
+	private int S_top;  
+	private int S_bottom;  
 	
 	//these are used for gesture tracking
 	private float gestureStartX = 0;
@@ -122,10 +124,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private WebView webView;
 	private String webViewLocation;
 	private static float scale = initialScale;			// used to restore throt web zoom level (after rotation)
-	private static Boolean clearHistory = false;		// flags webViewClient to clear history when page load finishes
+	private static boolean clearHistory = false;		// flags webViewClient to clear history when page load finishes
 	private static String currentUrl = null;
-	private Boolean currentUrlUpdate;
-	Boolean orientationChange = false;
+	private boolean currentUrlUpdate;
+	private boolean orientationChange = false;
 
   //Handle messages from the communication thread TO this thread (responses from withrottle)
   class throttle_handler extends Handler {
@@ -144,7 +146,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					  char com2 = response_str.charAt(2);
 					  if (com2 == '+' || com2 == 'L') {  //if loco added or function labels updated
 						  if(com2 == ('+')) {
-							  set_default_function_labels();
+//							  set_default_function_labels();
 							  enable_disable_buttons(thrSel);  //direction and slider: pass whichthrottle
 						  }
 						  // loop through all function buttons and
@@ -260,16 +262,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		  case message_type.DISCONNECT:
 			  disconnect();
 			  break;
-	  	  case message_type.INTERNAL:
-			  String response_str = msg.obj.toString();
-			  char com1 = response_str.charAt(0);
-			  if(com1 == 'W') {			// webview location changed
-				  if("none".equals(webViewLocation)) {		// check current location
-					  currentUrl = null;					// reload init url
-				  }
-				  webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));    
-				  load_webview();
+	  	  case message_type.NEW_WEBVIEW_LOC:				// webview location changed
+			  if("none".equals(webViewLocation)) {		// if not currently displayed 
+				  currentUrl = null;					// reload init url
 			  }
+			  // set new location
+			  webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));    
+			  load_webview();
 	  		  break;
 		  }
 	  };
@@ -777,7 +776,6 @@ void start_select_loco_activity(char whichThrottle)
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     orientationChange = false;
     setContentView(R.layout.throttle);
-
 	if(dlMetadataTask == null)
 		dlMetadataTask = new DownloadMetadataTask();
 	if(dlRosterTask == null)
@@ -852,7 +850,7 @@ void start_select_loco_activity(char whichThrottle)
     sb.setOnSeekBarChangeListener(th1);
     sb.setOnTouchListener(th1);
 
-    set_default_function_labels();
+//    set_default_function_labels();
     // loop through all function buttons and
     //   set label and dcc functions (based on settings) or hide if no label
     set_function_labels_and_listeners_for_view('T');
@@ -928,6 +926,9 @@ void start_select_loco_activity(char whichThrottle)
 	  gestureInProgress = false;
 
 	  set_labels();			// handle labels and update view
+	  if(!callHiddenWebViewOnResume())
+		  webView.resumeTimers();
+	  CookieSyncManager.getInstance().startSync();
   }
 
   @Override
@@ -940,21 +941,50 @@ void start_select_loco_activity(char whichThrottle)
   @Override
   public void onPause() {
 	  super.onPause();
+	  if(!callHiddenWebViewOnPause())
+	  	webView.pauseTimers();
+	  CookieSyncManager.getInstance().stopSync();
   }
 
 /** Called when the activity is finished. */
   @Override
   public void onDestroy() {
 	  Log.d("Engine_Driver","throttle.onDestroy() called");
-	  scale = webView.getScale();		// save current scale for next onCreate
-	  if(!orientationChange) {		// screen is exiting
-		  webView.loadUrl(noUrl);	//load a static url else any javascript on current page would keep running
+	  if(orientationChange) {			// rotation
+		  scale = webView.getScale();	// save current scale for next onCreate
+	  }
+	  else {							//screen is exiting
+		  webView.loadUrl(noUrl);		//load a static url else any javascript on current page would keep running
+		  webView.destroy();	//*** RDB test
+		  webView = null;		//*** RDB test
 	  }
 	  mainapp.throttle_msg_handler = null;
 	  super.onDestroy();
   }
   
- 
+  private boolean callHiddenWebViewOnPause(){
+        try {
+            Method method = WebView.class.getMethod("onPause");
+            method.invoke(webView);
+        } 
+        catch (Exception e) {
+        	return false;
+        }
+	    return true;
+	}
+  private boolean callHiddenWebViewOnResume(){
+        try {
+            Method method = WebView.class.getMethod("onResume");
+            method.invoke(webView);
+        } 
+        catch (Exception e) {
+    	    return false;
+	    }
+        return true;
+	}
+
+  
+  
   // load the url
   private void load_webview()
   {
@@ -969,7 +999,7 @@ void start_select_loco_activity(char whichThrottle)
   }
   
   
-  //set up text label and dcc function for each button from settings and setup listeners
+  //set up text label and dcc function for each button from settings
   //TODO: move file reading to another function and only do when needed
   private void set_default_function_labels() {
 
@@ -1098,7 +1128,8 @@ void start_select_loco_activity(char whichThrottle)
     sbS.setMax((int) Math.round(((double)(maxThrottle)/MAX_SPEED_DISPLAY) * MAX_SPEED_VAL_S));
 
  // increase height of throttle slider (if requested in preferences)
-    boolean ish = prefs.getBoolean("increase_slider_height_preference", false);  //TODO fix getting from strings
+    boolean ish = prefs.getBoolean("increase_slider_height_preference", 
+    		Boolean.valueOf(getString(R.string.prefIncreaseSliderHeightDefaultValue)));
     
     final DisplayMetrics dm = getResources().getDisplayMetrics();
  // Get the screen's density scale
@@ -1164,8 +1195,9 @@ void start_select_loco_activity(char whichThrottle)
     if (screenHeight > throttleMargin) {	//don't do this if height is invalid
 		//determine how to split the screen (evenly if both, 90/10 if only one)
     	screenHeight -= throttleMargin;
-        boolean use_S = prefs.getBoolean("use_one_throttle_preference", false);
-        if(use_S == true)
+        boolean useOneThrot = prefs.getBoolean("use_one_throttle_preference", 
+        		Boolean.valueOf(getApplication().getResources().getString(R.string.prefUseOneThrottleDefaultValue)));
+        if(useOneThrot == true)
         {
 	    	height_T = screenHeight;
 	    	height_S = 0;
@@ -1188,6 +1220,9 @@ void start_select_loco_activity(char whichThrottle)
 	            height_T);
 	    llLp.bottomMargin = (int)(throttleMargin * (dm.densityDpi/160.));
 	    ll.setLayoutParams(llLp);
+	    //update throttle top/bottom
+	    T_top= ll.getTop()+sbT.getTop();
+	    T_bottom= ll.getTop()+sbT.getBottom();
 	
 	    //set height of S area
 	    ll=(LinearLayout)findViewById(R.id.throttle_S);
@@ -1195,6 +1230,9 @@ void start_select_loco_activity(char whichThrottle)
 	            ViewGroup.LayoutParams.FILL_PARENT,
 	            height_S);
 	    ll.setLayoutParams(llLp);
+	    //update throttle top/bottom
+	    S_top= ll.getTop()+sbS.getTop();
+	    S_bottom= ll.getTop()+sbS.getBottom();
     }
 
     //update the direction indicators
@@ -1334,12 +1372,11 @@ void start_select_loco_activity(char whichThrottle)
   //handle return from menu items
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
       //since we always do the same action no need to distinguish between requests
-      set_default_function_labels();
+//      set_default_function_labels();
       // loop through all function buttons and
       //  set label and dcc functions (based on settings) or hide if no label
       set_function_labels_and_listeners_for_view('T');
       set_function_labels_and_listeners_for_view('S');
-      
       set_labels();
   }
   
@@ -1390,22 +1427,12 @@ void start_select_loco_activity(char whichThrottle)
 		gestureStartY = event.getY();
         //Log.d("Engine_Driver", "gestureStart y=" + gestureStartY);
         
-		//TODO: move the calc of slider coords elsewhere (for performance)
-		//TODO: if slider is disabled, don't consider it in this logic
-		//set global variables for slider tops and bottoms, so they can be ignored for swipe 
-        View tv=findViewById(R.id.throttle_T);
+  
+        //if gesture is attempting to start over an enabled slider, ignore it and return immediately.
         View sbT=findViewById(R.id.speed_T);
-        T_top= tv.getTop()+sbT.getTop();
-        T_bottom= tv.getTop()+sbT.getBottom();
-        tv=findViewById(R.id.throttle_S);
         View sbS=findViewById(R.id.speed_S);
-        S_top= tv.getTop()+sbS.getTop();
-        S_bottom= tv.getTop()+sbS.getBottom();
-        //Log.d("Engine_Driver","y="+gestureStartY+" T_top="+T_top+" T_bottom="+T_bottom+" S_top="+S_top+" S_bottom="+S_bottom);
-        
-        //if gesture is attempting to start over a slider, ignore it and return immediately.
-        if ((gestureStartY >= T_top && gestureStartY <= T_bottom) ||
-            (gestureStartY >= S_top && gestureStartY <= S_bottom)) {
+        if ((sbT.isEnabled() && gestureStartY >= T_top && gestureStartY <= T_bottom) ||
+            (sbS.isEnabled() && gestureStartY >= S_top && gestureStartY <= S_bottom)) {
         	//Log.d("Engine_Driver","exiting gestureStart");
         	return;
         }
@@ -1547,11 +1574,11 @@ void start_select_loco_activity(char whichThrottle)
         
         void getRoster() {
     		//attempt to get roster.xml if webserver port is known and not already retrieved 
-    		if (mainapp.web_server_port == 0) {
+    		if (!mainapp.isValidWebServerPort()) {
     			Log.d("Engine_Driver","DownloadRosterTask: web_server_port is not known (yet?)");
     		}
-    		if (mainapp.web_server_port > 0 && this.getStatus() == AsyncTask.Status.PENDING) {
-   				this.execute("http://"+mainapp.host_ip+":"+mainapp.web_server_port+"/prefs/roster.xml");
+    		else if (this.getStatus() == AsyncTask.Status.PENDING) {
+    			this.execute(mainapp.createUrl("prefs/roster.xml"));
     			//Log.d("Engine_Driver","executed roster download");
     		}
         }
@@ -1619,11 +1646,11 @@ void start_select_loco_activity(char whichThrottle)
         
         void getMetadata() {
     		//attempt to get roster.xml if webserver port is known and not already retrieved 
-    		if (mainapp.web_server_port == 0) {
+    		if (!mainapp.isValidWebServerPort()) {
     			Log.d("Engine_Driver","DownloadMetadataTask: web_server_port is not known (yet?)");
     		}
-    		if (mainapp.web_server_port > 0 && this.getStatus() == AsyncTask.Status.PENDING) {
-   				this.execute("http://"+mainapp.host_ip+":"+mainapp.web_server_port + "/xmlio/");
+    		else if (this.getStatus() == AsyncTask.Status.PENDING) {
+    			this.execute(mainapp.createUrl("xmlio/"));
     		}
         }
         void stopMetadata() {
@@ -1632,7 +1659,7 @@ void start_select_loco_activity(char whichThrottle)
         }
     }
 
-	 // helper app for TA to initial statics (in case GC has not run since app last shutdown)
+	 // helper app to initialize statics (in case GC has not run since app last shutdown)
 	 // call before instantiating any instances of class
 	 public static void initStatics() {
 		  scale = initialScale;

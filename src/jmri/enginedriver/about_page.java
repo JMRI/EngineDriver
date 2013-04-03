@@ -49,7 +49,6 @@ public class about_page extends Activity {
   public boolean onKeyDown(int key, KeyEvent event) {
   if(key==KeyEvent.KEYCODE_BACK)
   {
-//      mainapp.power_control_msg_handler = null; //clear out pointer to this activity  
       this.finish();  //end this activity
       connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
   }

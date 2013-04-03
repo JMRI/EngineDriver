@@ -29,6 +29,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
@@ -291,7 +292,8 @@ public class turnouts extends Activity implements OnGestureListener {
   /** Called when the activity is finished. */
   @Override
   public void onDestroy() {
-  	  mainapp.turnouts_msg_handler = null;
+	  Log.d("Engine_Driver","turnouts.onDestroy() called");
+	  mainapp.turnouts_msg_handler = null;
 	  super.onDestroy();
   }
   

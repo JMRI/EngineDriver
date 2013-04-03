@@ -91,7 +91,10 @@
     <string name="prefThrottleTitle">Throttle Preferences</string>
     <string name="prefIncreaseSliderHeightTitle">Increase Slider Height</string>
     <string name="prefIncreaseSliderHeightDefaultValue">false</string>
-    <string name="prefIncreaseSliderHeightSummary">Use a taller slider for throttles.</string><string name="prefUseOneThrottleTitle">Display One Throttle</string><string name="prefUseOneThrottleDefaultValue">false</string><string name="prefUseOneThrottleSummary">Display only one throttle.</string>
+    <string name="prefIncreaseSliderHeightSummary">Use a taller slider for throttles.</string>
+    <string name="prefUseOneThrottleTitle">Display One Throttle</string>
+    <string name="prefUseOneThrottleDefaultValue">false</string>
+    <string name="prefUseOneThrottleSummary">Display only one throttle.</string>
     <string name="prefMaximumThrottleTitle">Maximum Throttle Value</string>
     <string name="prefMaximumThrottleDefaultValue">99</string>
     <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value</string>

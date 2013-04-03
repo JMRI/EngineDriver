@@ -29,6 +29,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
@@ -78,7 +79,8 @@ public class routes extends Activity  implements OnGestureListener {
 
 	public void refresh_route_view() {
 		
-	    boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference", false);  //TODO fix getting from strings
+	    boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference", 
+	    		Boolean.valueOf(getString(R.string.prefHideSystemRouteNamesDefaultValue)));  //TODO fix getting from strings
 
 		//specify logic for sort comparison (by username)
 	    Comparator<HashMap<String, String>> route_comparator = new Comparator<HashMap<String, String>>() {
@@ -260,7 +262,8 @@ public class routes extends Activity  implements OnGestureListener {
   /** Called when the activity is finished. */
   @Override
   public void onDestroy() {
-  	  mainapp.routes_msg_handler = null;
+	  Log.d("Engine_Driver","routes.onDestroy() called");
+	  mainapp.routes_msg_handler = null;
 	  super.onDestroy();
   }
   

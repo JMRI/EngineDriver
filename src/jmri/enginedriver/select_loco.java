@@ -188,7 +188,8 @@ public class select_loco extends Activity {
 		}
 
 		// hide the recent locos list if selected in prefs
-	    boolean hrl = prefs.getBoolean("hide_recent_locos_preference", false);  //TODO fix getting from strings
+	    boolean hrl = prefs.getBoolean("hide_recent_locos_preference", 
+	    		Boolean.valueOf(getString(R.string.prefHideRecentLocosDefaultValue))); 
 	    if (hrl) {
 			View rlv = (View) findViewById(R.id.recent_engines_heading);
 			rlv.setVisibility(GONE);
@@ -203,7 +204,6 @@ public class select_loco extends Activity {
 				+ prefs.getString("throttle_name_preference", this
 						.getResources().getString(
 								R.string.prefThrottleNameDefaultValue));
-		//s += "\nHost: " + mainapp.host_name_string;
 		s += "\nWiThrottle: v" + mainapp.withrottle_version;
 		s += String.format("     Heartbeat: %d secs",
 				mainapp.heartbeatInterval);
@@ -212,7 +212,6 @@ public class select_loco extends Activity {
 			s += "\nJMRI: " + metadata.get("JMRIVERSION");
 		}
 
-//		 s += "\nPort: " + mainapp.web_server_port;
 		v.setText(s);
 
 		refresh_roster_list();
@@ -540,6 +539,7 @@ public class select_loco extends Activity {
 
 	@Override
 	public void onDestroy() {
+		Log.d("Engine_Driver","select_loco.onDestroy() called");
 		mainapp.select_loco_msg_handler = null; 
 		super.onDestroy();
 	}

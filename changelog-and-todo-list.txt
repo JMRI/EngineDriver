@@ -1,11 +1,18 @@
-**Version 2.6
- * pref to "disable" on-the-fly consisting, and revert to dropping when a new one is added.
- * pref to only show one throttle -- Robin Becker
- * web page history and zoom levels preserved through rotation and navigation -- Robin Becker
- * back button and zoom +/- now works for web pages -- Robin Becker
- * separate prefs for throttle and web view -- Robin Becker
- * made menus consistent across activities -- Robin Becker
- * orientation prefs used for all activities -- Robin Becker
+**Version 2.6 (all by Robin Becker unless noted)
+ * pref to "disable" on-the-fly consisting, and revert to dropping when a new one is added. - mstevetodd
+ * pref to only show one throttle
+ * web page history and zoom levels preserved through rotation and navigation
+ * back button and zoom +/- now works for web pages
+ * separate prefs for throttle and web view
+ * made menus consistent across activities
+ * orientation prefs used for all activities
+ * rewrote default function settings for performance
+ * send SHUTDOWN message after DISCONNECT plus a delay.
+ * Connect now uses worker thread (asynctask) to save connection list
+ * Throttle & Web pages: pause webView timers and stop CookieManager() in onPause, start them in onResume
+ * default preference values now use the associated DefaultValue strings
+ * moved calculation of speed slider top/bottom out of gesture Start() and into set_labels() so that the Top/Bottom calcs are only updated when the layout is updated.
+ * swipe now works over disabled sliders
 **Version 2.5
  * return TargetSDKVersion to 10 to trigger "legacy overflow button" for menu (needed on ICS)
  * keep screen on in web view (prevent screen blanking)
@@ -213,7 +220,6 @@
  *   TODO: add JMRI fast-clock to screens (in new title bar?)
  *   TODO: pref for throttle up/down buttons at ends of sliders, with setting for amount of change
  *   TODO: pref for additional left margin on throttle (obviated by preceding item?)
- *   TODO: move lots of stuff from set_labels() to OnResume (or maybe not, since that precedes the layout of views?)
  *   TODO: catch ArrayIndexOutOfBoundsException (reported to Market)
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: respect "Max Throttle %" from roster entry
@@ -221,7 +227,6 @@
  *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released" 
  *   TODO: make Forward, Stop, Reverse language-sensitive 
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
- *   TODO: reduce number of calls to set_labels()
  *   TODO: add preference to disable other hardware buttons in throttle screen
  *   TODO: add graphics (slider, stop, directions, functions?)  add colors
  *   TODO: add throttle name to title bar

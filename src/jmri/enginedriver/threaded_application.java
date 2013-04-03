@@ -23,6 +23,7 @@ package jmri.enginedriver;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -32,6 +33,7 @@ import java.net.*;
 import java.io.*;
 
 import android.util.Log;
+import android.webkit.CookieSyncManager;
 import android.widget.Toast;
 
 import javax.jmdns.*;
@@ -56,15 +58,15 @@ import android.content.pm.ActivityInfo;
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
 public class threaded_application extends Application {
-	public comm_thread thread;
+	public comm_thread commThread;
 	String host_ip; //The IP address of the WiThrottle server.
 	int port; //The TCP port that the WiThrottle server is running on
 	//shared variables returned from the withrottle server, stored here for easy access by other activities
 	String loco_string_T = "Not Set"; //Loco Address string to display on first throttle
 	String loco_string_S = "Not Set"; //Loco Address string to display on second throttle
 	Double withrottle_version = 0.0; //version of withrottle server
-	Integer web_server_port = 0; //default port for jmri web server
-	String roster_list_string; //roster list
+	private Integer web_server_port = 0; //default port for jmri web server
+//	String roster_list_string; //roster list
 	LinkedHashMap<Integer, String> function_labels_T;  //function#s and labels from roster for throttle #1
 	LinkedHashMap<Integer, String> function_labels_S;  //function#s and labels from roster for throttle #2
 	LinkedHashMap<String, String> locos_on_T;  //list of locos currently assigned to throttle #1
@@ -97,7 +99,7 @@ public class threaded_application extends Application {
 
 	String client_address; //address string of the client address
 	//For communication to the comm_thread.
-	public comm_handler comm_msg_handler;
+	public comm_handler comm_msg_handler = null;
 	//For communication to each of the activities (set and unset by the activity)
 	public Handler connection_msg_handler;
 	public Handler throttle_msg_handler;
@@ -122,7 +124,7 @@ public class threaded_application extends Application {
 		withrottle_listener listener;
 		android.net.wifi.WifiManager.MulticastLock multicast_lock;
 		socket_WiT socketWiT;
-		heartbeat heart  = new heartbeat();
+		heartbeat heart = new heartbeat();
 
 		private String last_roster_entry_requested = ""; //"remember" last entry, for use in response
 
@@ -144,7 +146,7 @@ public class threaded_application extends Application {
 			};
 
 			public void serviceRemoved(ServiceEvent event)      {
-				//Tell the UI thread so as to remove from the list of services available.
+				//Tell the UI thread to remove from the list of services available.
 				Message service_message=Message.obtain();
 				service_message.what=message_type.SERVICE_REMOVED;
 				service_message.obj=event.getName();  //send the service name to be removed
@@ -160,7 +162,7 @@ public class threaded_application extends Application {
 				Inet4Address[] ip_addresses = event.getInfo().getInet4Addresses();  //only get ipV4 address
 				String ip_address = ip_addresses[0].toString().substring(1);  //use first one, since WiThrottle is only putting one in (for now), and remove leading slash
 
-				//Tell the UI thread so as to update the list of services available.
+				//Tell the UI thread to update the list of services available.
 				HashMap<String, String> hm=new HashMap<String, String>();
 				hm.put("ip_address", ip_address);
 				hm.put("port", ((Integer)port).toString());
@@ -223,10 +225,19 @@ public class threaded_application extends Application {
 				@Override
 				public void run() {
 					try {
+						Log.d("Engine_Driver","removing jmdns listener");
+						jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
+						multicast_lock.release();
+					}
+					catch(Exception e) {
+						Log.d("Engine_Driver","exception in jmdns.removeServiceListener()");
+					}
+					try {
 						Log.d("Engine_Driver","calling jmdns.close()");
 						jmdns.close();
 						Log.d("Engine_Driver","after jmdns.close()");
-					} catch (Exception e) {
+					} 
+					catch (Exception e) {
 						Log.d("Engine_Driver","exception in jmdns.close()");
 					}
 					jmdns = null;
@@ -254,16 +265,9 @@ public class threaded_application extends Application {
 				case message_type.SET_LISTENER:
 					//arg1= 1 to turn on, arg1=0 to turn off
 					if (msg.arg1 == 0) {
-						if (jmdnsIsActive()) { 
-							try {
-								jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
-								multicast_lock.release();
-							}
-							catch(Exception e) {	//just catch any exception and proceed to end_jmdns
-							}
-							end_jmdns();
-						}
-					} else {
+						end_jmdns();
+					} 
+					else {
 						if (jmdns == null) {   //start jmdns if not started
 							Log.d("Engine_Driver","comm_handler: jmdns not started, starting");
 							start_jmdns();
@@ -292,13 +296,13 @@ public class threaded_application extends Application {
 						return;
 					}
 
+					//clear app.thread shared variables so they can be reinitialized
+					initShared();
+
 					//The IP address is stored in the obj as a String, the port is stored in arg1.
 					host_ip=new String((String)msg.obj);
 					host_ip = host_ip.trim();
 					port=msg.arg1;
-
-					//clear app.thread shared variables so they can be reset
-					initShared();
 
 					//attempt connection to WiThrottle server
 					socketWiT = new socket_WiT();
@@ -336,8 +340,8 @@ public class threaded_application extends Application {
 						locos_on_S = new LinkedHashMap<String, String>();
 					}
 					if (doRelease) {
-						//        	Boolean f = getApplicationContext().getResources().getBoolean(R.string.prefStopOnReleaseDefaultValue); TODO: fix this
-						if (prefs.getBoolean("stop_on_release_preference", true )) {
+						if (prefs.getBoolean("stop_on_release_preference", 
+								Boolean.valueOf(getString(R.string.prefStopOnReleaseDefaultValue)))) {
 							withrottle_send(whichThrottle+"V0");  //send stop command before releasing (if set in prefs)
 						}
 						withrottle_send(whichThrottle+"r");  //send release command
@@ -364,21 +368,24 @@ public class threaded_application extends Application {
 
 					//Disconnect from the WiThrottle server.
 				case message_type.DISCONNECT:
+					Log.d("Engine_Driver","TA Disconnect");
 					heart.stopHeartbeat();
 					withrottle_send("Q");
-					alert_activities(message_type.DISCONNECT,"");
 					if (heart.getInboundInterval() > 0) {
 						withrottle_send("*-");     //request to turn off heartbeat (if enabled in server prefs)
 					}
-					try { 
-						Thread.sleep(250L);			//give msgs a chance to xmit before closing socket
-					}
-					catch (Exception e) { 
-					}
-					//				heart.stopHeartbeat();
-					if (socketWiT != null) socketWiT.disconnect(true);		//stop reading from the socket
-					socketWiT = null;
-					host_ip = null;
+//					try {
+//					this.wait(250L);
+//						Thread.sleep(250L);			//give msgs a chance to xmit before closing socket
+//					}
+//					catch (Exception e) { 
+//					}
+					end_jmdns();
+					alert_activities(message_type.DISCONNECT,"");
+			    	//give msgs a chance to xmit before closing socket
+					Message nmsg=Message.obtain(); 
+					nmsg.what=message_type.SHUTDOWN;
+			    	comm_msg_handler.sendMessageDelayed(nmsg, 1000);	
 					break;
 
 					//Set up an engine to control. The address of the engine is given in arg1, and the address type (long or short) is given in arg2.
@@ -392,7 +399,8 @@ public class threaded_application extends Application {
 						if (!pipeentry.equals("")) {
 							last_roster_entry_requested = pipeentry.substring(1);  //remember for use in response, stripping off bang 
 						}
-						if (prefs.getBoolean("drop_on_acquire_preference", false )) {
+						if (prefs.getBoolean("drop_on_acquire_preference", 
+								Boolean.valueOf(getString(R.string.prefDropOnAcquireDefaultValue)))) {
 							withrottle_send(whichThrottle+"r");  //send release command for any already acquired locos (if set in prefs)
 						}
 }
@@ -454,10 +462,17 @@ public class threaded_application extends Application {
 					withrottle_send(String.format("PPA%d", msg.arg1));
 					break;
 
-					// terminate jmdns and send activities a SHUTDOWN msg
+					// SHUTDOWN - terminate socketWiT and it's done
 				case message_type.SHUTDOWN:
-					end_jmdns();
-					alert_activities(message_type.SHUTDOWN,"");	//only connection_activity should still be running
+					Log.d("Engine_Driver","TA Shutdown");
+					end_jmdns();						//jmdns should already be down but no harm in making call
+			    	if (socketWiT != null) {
+						socketWiT.disconnect(true);		//stop reading from the socket
+						socketWiT = null;
+					}
+//*** no activities should be running at this point					alert_activities(message_type.SHUTDOWN,"");
+//*** don't kill msg thread - it'sneeded if ED restarted			Looper.myLooper().quit();
+//*** same as previous												comm_msg_handler = null;
 					break;
 				}
 			};
@@ -615,7 +630,7 @@ public class threaded_application extends Application {
 					break;
 
 				case 'L': 
-					roster_list_string = response_str.substring(2);  //set app variable
+//					roster_list_string = response_str.substring(2);  //set app variable
 					process_roster_list(response_str);  //process roster list
 					break;
 
@@ -1172,9 +1187,9 @@ public class threaded_application extends Application {
 			public void disconnect(boolean shutdown) {
 				if (shutdown) {
 					endRead = true;
-					for(int i = 0; i < 3 && this.isAlive(); i++) {
+					for(int i = 0; i < 4 && this.isAlive(); i++) {
 						try { 
-							Thread.sleep(300);    			//  give run() a chance to exit
+							Thread.sleep(300);    			//  give run() a chance to see endRead and exit
 						}
 						catch (InterruptedException e) { 
 							process_comm_error("Error sleeping the thread, InterruptedException: "+e.getMessage());
@@ -1194,11 +1209,11 @@ public class threaded_application extends Application {
 					}
 				}
 
-				//			if (!shutdown) {
+				initShared();
+				if (!shutdown)			//***RDB  was commented out
 				{
 					// reinit shared variables then signal activities to refresh their views
 					// so that (potentially) invalid information is not displayed
-					initShared();
 
 					if (turnouts_msg_handler != null)   
 					{ 
@@ -1290,9 +1305,6 @@ public class threaded_application extends Application {
 
 			//read the input buffer
 			public void run() {
-
-				//       	Looper.prepare();
-
 				String str = null;
 				//continue reading until signalled to exit by endRead
 				while(!endRead) {
@@ -1319,7 +1331,7 @@ public class threaded_application extends Application {
 						SystemClock.sleep(1000L);	//don't become compute bound here when the socket is down
 					}
 				}
-				//        	Looper.loop();  
+				heart.stopHeartbeat();
 			}
 
 			public void Send(String msg) {
@@ -1504,20 +1516,64 @@ public class threaded_application extends Application {
 		}
 	}
 
+	@Override
 	public void onCreate()  {
+	    Log.d("Engine_Driver","TA.onCreate ");
 		super.onCreate();
 		prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
 		function_states_T = new boolean[32];
 		function_states_S = new boolean[32];
 
-		thread=new comm_thread();
-		thread.start();
+		commThread=new comm_thread();
+		commThread.start();
+
+		//use worker thread to initialize default function labels from file so UI can continue
+		new Thread(new Runnable() {
+			public void run() {
+				set_default_function_labels();
+			}
+		}).start();	
+
+		CookieSyncManager.createInstance(this);		//create this here so onPause/onResume for webViews can control it
+	}
+	
+	//init default function labels from the settings files or set to default
+	private void set_default_function_labels() {
+		function_labels_default = new LinkedHashMap<Integer, String>();
+		try {
+			File sdcard_path=Environment.getExternalStorageDirectory();
+	
+			File settings_file=new File(sdcard_path + "/engine_driver/function_settings.txt");
+			if(settings_file.exists()) {  //if file found, use it for settings arrays
+				BufferedReader settings_reader=new BufferedReader(new FileReader(settings_file));
+				//read settings into local arrays
+				while(settings_reader.ready()) {
+					String line=settings_reader.readLine();
+					String temp[] = line.split(":");
+					function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
+				}
+				settings_reader.close();
+			} 
+			else {  		//hard-code some buttons and default the rest
+				function_labels_default.put(0, "Light");
+				function_labels_default.put(1, "Bell");
+				function_labels_default.put(2, "Horn");
+				for(int k = 3; k <= 27; k++) {
+					function_labels_default.put(k, String.format("%d",k));
+				}
+			}
+		}
+		catch (IOException except) { 
+			Log.e("settings_activity", "Could not read file "+except.getMessage()); 
+		}  
 	}
 
 	//initialize shared variables
 	private void initShared() {
 		withrottle_version = 0.0; 
+		port = 0;
+		host_ip = null;
 		web_server_port = 0;
 		power_state = null;
 		to_allowed = false;
@@ -1536,14 +1592,14 @@ public class threaded_application extends Application {
 		locos_on_S = new LinkedHashMap<String, String>();
 		function_labels_S = new LinkedHashMap<Integer, String>();
 		function_labels_T = new LinkedHashMap<Integer, String>();
-		function_labels_default = new LinkedHashMap<Integer, String>();
+//		function_labels_default = new LinkedHashMap<Integer, String>();
 		function_states_T = new boolean[32];		// also allocated in onCreate() ???
 		function_states_S = new boolean[32];
 		consist_allowed = false;
 		consist_entries = new LinkedHashMap<String, String>();
 		roster = null;
 		roster_entries = null;
-		roster_list_string = null;
+//		roster_list_string = null;
 	}
 
 	/** ------ copied from jmri util code -------------------
@@ -1590,7 +1646,7 @@ public class threaded_application extends Application {
 	// build a full url or return null if web_server_port hasn't been set
 	public String createUrl(String defaultUrl) {
 		String url = null;
-	    if (web_server_port != null && web_server_port > 0) {
+	    if (isValidWebServerPort()) {
 	    	url = defaultUrl;
 	    	if (!url.startsWith("http")) {  //if url starts with http, use it as is, else prepend servername and port
 	    		url = "http://" + host_ip + ":" +  web_server_port + "/" + url;
@@ -1598,7 +1654,11 @@ public class threaded_application extends Application {
 	    }
 	    return url;
 	}
-
+	
+	public boolean isValidWebServerPort() {
+		return (web_server_port != null && web_server_port > 0);
+	}
+	
 	// send a throttle speed message to WiT
 	public void sendSpeedMsg(char whichThrottle, int speed) {
 		Message msg=Message.obtain();

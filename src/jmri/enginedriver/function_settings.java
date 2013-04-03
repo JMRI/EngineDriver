@@ -26,17 +26,19 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.io.*;
 
+import android.text.method.TextKeyListener;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class function_settings extends Activity {
+public class function_settings extends Activity{
 
 	private threaded_application mainapp;
-	private static Boolean orientationChange = false;
-	private static Boolean settingsChange = false;
+	private static boolean orientationChange = false;
+	private static boolean settingsChange = false;
 
 	//set up label, dcc function, toggle setting for each button
     private static ArrayList<String> aLbl = new ArrayList<String>();
@@ -49,20 +51,14 @@ public class function_settings extends Activity {
         mainapp=(threaded_application)getApplication();  //save pointer to main app
        	setContentView(R.layout.function_settings);
 
-       	if(!orientationChange) { 			//if not an orientation change 
-	       	if(get_settings_from_file()) {  //if settings file exists, load labels and functions
-	       		move_settings_to_view();    //and copy setting array to view
-	       		settingsChange = false;		//indicate settings file is current
-	       	}
-	       	else {
-	       		move_view_to_settings();	//copy default values to settings array
-	       		settingsChange = true;		//indicate settings file needs to be stored
-	       	}
+       	if(!orientationChange) {			//if not an orientation change then settings array need initialization
+       		initSettings();					//set settings array from the settings file
+       		settingsChange = false;			//indicate settings array matches file 
        	}
        	else {								//else it is an orientation change and settings array is current
-       		move_settings_to_view();		//so copy settings array to view
 	       	orientationChange = false;
        	}
+   		move_settings_to_view();			//copy settings array to view
        	
     	// suppress popup keyboard until EditText is touched
     	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -87,6 +83,7 @@ public class function_settings extends Activity {
 
     @Override
     public void onDestroy() {
+		Log.d("Engine_Driver","function_settings.onDestroy() called");
     	super.onDestroy();
     }
   
@@ -98,58 +95,18 @@ public class function_settings extends Activity {
 
    
   	//build the arrays from the function_settings file
-    boolean get_settings_from_file() {
-    	boolean settingsFound = false; //set if any user settings found
-        try
-        {
-          File sdcard_path=Environment.getExternalStorageDirectory();
-          if(sdcard_path.canWrite())
-          {
-            //First, determine if the engine_driver directory exists. If not, create it.
-            File engine_driver_dir=new File(sdcard_path, "engine_driver");
-            if(!engine_driver_dir.exists()) { engine_driver_dir.mkdir(); }
-
-            if(engine_driver_dir.exists() && engine_driver_dir.isDirectory())
-            {
-              //TODO: Fix things if the path is not a directory.
-              File settings_file=new File(engine_driver_dir, "function_settings.txt");
-              if(settings_file.exists())
-              {
-                BufferedReader settings_reader=new BufferedReader(new FileReader(settings_file));
-                //read settings into local arrays
-                while(settings_reader.ready())
-                {
-	              String line=settings_reader.readLine();
-	              String temp[] = line.split(":");
-	              String label = temp[0];
-	              if(label.length() > 0) {
-	                  int func;
-	                  try {
-	                	  func = Integer.parseInt(temp[1]);
-	                	  if(func >= 0 || func <= 28) {
-	                    	  if(!settingsFound) {		//if this is the first valid entry, clear array
-	                    		  aLbl.clear();
-	                    		  aFnc.clear();
-	                        	  settingsFound = true;
-	                    	  }
-	                    	  aLbl.add(label);			// add data from file to array
-	                    	  aFnc.add(func);
-	                      }
-	                  }
-	                  catch(Exception e) {
-	                  }
-	              }
-                }
-              }
-            }
-          }
+    //function_labels_default was loaded from settings file by TA
+    //(and updated saveSettings() when required) so just copy it
+    void initSettings() {
+		aLbl.clear();
+		aFnc.clear();
+		//read settings into local arrays
+		for (Integer f : mainapp.function_labels_default.keySet()) {
+			aFnc.add(f);
+			aLbl.add(mainapp.function_labels_default.get(f));
         }
-        catch (IOException except) { 
-        	Log.e("settings_activity", "Could not read file "+except.getMessage()); 
-        }
-        return settingsFound;
     }
-    
+
     //replace arrays using data from roster entry (called by button)
     void get_settings_from_roster() {
     	aLbl.clear();
@@ -176,8 +133,12 @@ public class function_settings extends Activity {
 	    	ndx++;
 		}
 		else {
-			((EditText)r.getChildAt(0)).setText("");
-			((EditText)r.getChildAt(1)).setText("");
+//			
+// work around for known EditText bug - see http://code.google.com/p/android/issues/detail?id=17508
+//			((EditText)r.getChildAt(0)).setText("");
+//			((EditText)r.getChildAt(1)).setText("");
+			TextKeyListener.clear(((EditText)r.getChildAt(0)).getText());
+			TextKeyListener.clear(((EditText)r.getChildAt(1)).getText());
 		}
 	  }
    }
@@ -235,50 +196,55 @@ public class function_settings extends Activity {
       };
     }
 
-    void save_settings() {
-        //Save the valid function labels to the settings.txt file.
-    	File sdcard_path=Environment.getExternalStorageDirectory();
-    	File settings_file=new File(sdcard_path, "engine_driver/function_settings.txt");
-    	PrintWriter settings_output;
-    	try
-    	{
-    		settings_output=new PrintWriter(settings_file);
-    		for(int i = 0; i < aFnc.size(); i++) {
-    			String label = aLbl.get(i);
-    			if(label.length() > 0)
-    				settings_output.format("%s:%s\n", label, aFnc.get(i));
-    		}
-			settings_output.flush();
-	        settings_output.close();
-        }
-        catch(IOException except)
-        {
-          Log.e("settings_activity", "Error creating a PrintWriter, IOException: "+except.getMessage());
-          Toast.makeText(getApplicationContext(), "Save Settings Failed." +except.getMessage(), Toast.LENGTH_LONG).show();
-        }
-    }
-    
     //Handle pressing of the back button to save settings
     @Override
     public boolean onKeyDown(int key, KeyEvent event)
     {
-      if(key==KeyEvent.KEYCODE_BACK)
-      {
+      if(key==KeyEvent.KEYCODE_BACK) {
     	  move_view_to_settings();		//sync settings array to view
     	  if(settingsChange) {
-    		  save_settings();
-    		  Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();
+    		saveSettings();				//save function labels to file
     	  }
     	  orientationChange = false;			//static - should already be false
-    	  aLbl.clear();							//statics - free array memory
-    	  aFnc.clear();
-          this.finish();  //end this activity
-          connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    	  this.finish();  //end this activity
+/*          connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+ */
       }
       return(super.onKeyDown(key, event));
     };
 
-    // helper app for TA to initial statics (in case GC has not run since app last shutdown)
+	//save function and labels to file
+    void saveSettings() {
+        //Save the valid function labels to the settings.txt file.
+    	File sdcard_path=Environment.getExternalStorageDirectory();
+    	File settings_file=new File(sdcard_path, "engine_driver/function_settings.txt");
+    	PrintWriter settings_output;
+    	String errMsg = "";
+    	try {
+    		settings_output=new PrintWriter(settings_file);
+    		mainapp.function_labels_default.clear();
+    		for(int i = 0; i < aFnc.size(); i++) {
+    			String label = aLbl.get(i);
+    			if(label.length() > 0) {
+    				Integer fnc = aFnc.get(i);
+    				settings_output.format("%s:%s\n", label, fnc);
+    				mainapp.function_labels_default.put(fnc, label);
+    			}
+    		}
+			settings_output.flush();
+	        settings_output.close();
+        }
+        catch(IOException except) {
+          errMsg = except.getMessage();
+          Log.e("settings_activity", "Error creating a PrintWriter, IOException: "+errMsg);
+        }
+		if(errMsg.length() != 0)
+			Toast.makeText(getApplicationContext(), "Save Settings Failed." +errMsg, Toast.LENGTH_LONG).show();
+		else
+			Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();
+	}
+    	
+    // helper app to initialize statics (in case GC has not run since app last shutdown)
     // call before instantiating any instances of class
     public static void initStatics() {
     	orientationChange = false;

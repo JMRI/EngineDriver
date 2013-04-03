@@ -57,6 +57,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 	      getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);    
 	  }
 
+	  @Override
+	  protected void onDestroy() {
+		  Log.d("Engine_Driver","preferences.onDestroy() called");
+	      super.onDestroy();
+	  }
+	  
 	  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		  threaded_application mainapp=(threaded_application)this.getApplication();
 		  if (key.equals("throttle_name_preference"))  {
@@ -78,7 +84,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 		  else if(key.equals("WebViewLocation")) {
 			  if (mainapp.throttle_msg_handler != null) { 		// tell throt that web view location pref changed
 				Message msg=Message.obtain(); 
-				msg.what = message_type.INTERNAL;
+				msg.what = message_type.NEW_WEBVIEW_LOC;
 				msg.obj = new String("W");
 				try {
 					mainapp.throttle_msg_handler.sendMessage(msg);
