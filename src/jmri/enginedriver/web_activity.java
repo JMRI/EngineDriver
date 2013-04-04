@@ -206,7 +206,9 @@ public class web_activity extends Activity {
 	  if(key==KeyEvent.KEYCODE_BACK)
 	  {
 			if(webView.canGoBack() && !clearHistory) {
+				scale = webView.getScale();	// save scale
 				webView.goBack();
+				webView.setInitialScale((int)(100 * scale));	// restore scale
 				return true;
 			}
 	  

@@ -1251,8 +1251,11 @@ void start_select_loco_activity(char whichThrottle)
   public boolean onKeyDown(int key, KeyEvent event) {
 	  //Handle pressing of the back button to release the selected loco and end this activity
 	  if(key==KeyEvent.KEYCODE_BACK)  {
-		  if(webView.canGoBack() && !clearHistory)
+		  if(webView.canGoBack() && !clearHistory) {
+			  scale = webView.getScale();	// save scale
 			  webView.goBack();
+			  webView.setInitialScale((int)(100 * scale));	// restore scale
+		  }
 		  else
 			  mainapp.checkExit(this);
           return (true);	//stop processing this key
