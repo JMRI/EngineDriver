@@ -240,12 +240,10 @@ public class connection_activity extends Activity {
     mainapp.connection_msg_handler=new ui_handler();
     isShuttingDown = false;
 
-    //ensure statics in all activities are reinitialize since GC might not have run since app was last run.
-    //do this here instead of TA.onCreate() because that method won't be invoked if GC hasn't run 
-    //since ED exited (and FC wasn't done manually).
+    //ensure statics in all activities are reinitialize since Android might not have killed app since it was last Exited.
+    //do this here instead of TA.onCreate() because that method won't be invoked if app is still running. 
 	throttle.initStatics();
 	web_activity.initStatics();
-	function_settings.initStatics();
     
     
     //check for "default" throttle name and make it more unique
@@ -306,7 +304,6 @@ public class connection_activity extends Activity {
 
 	@Override
 	public void onResume() {
-		Log.d("Engine_Driver","connection.onResume() called");
 		super.onResume();
 	    if (isShuttingDown) {
 	    	if(!this.isFinishing())

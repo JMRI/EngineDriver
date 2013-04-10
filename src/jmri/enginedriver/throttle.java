@@ -22,7 +22,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -36,22 +35,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.io.*;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLConnection;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import jmri.jmrit.roster.RosterLoader;
-
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -112,9 +98,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private LinkedHashMap<Integer, Button> functionMapT;
 	private LinkedHashMap<Integer, Button> functionMapS;
 	
-	private static DownloadRosterTask dlRosterTask = null;
-	private static DownloadMetadataTask dlMetadataTask = null;
-
 	//current direction
 	private int dirT = 0;
 	private int dirS = 0;
@@ -227,11 +210,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					  enable_disable_buttons_for_view(tv, true);
 					  set_labels();
 
-				  } else if (thrSel == 'L') { //roster list received, request details from web server
-					  //Log.d("Engine_Driver", "got updated roster list, requesting details");
-					  dlRosterTask = new DownloadRosterTask();
-					  dlRosterTask.getRoster();
-					  
 				  } else {
 					  try {
 						  String scom2 = response_str.substring(1,6);
@@ -248,8 +226,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			  case 'P': //panel info
 				  if (thrSel == 'W') {		// PW - web server port info
 					  // try web-dependent items again
-					  dlMetadataTask.getMetadata();
-					  dlRosterTask.getRoster();
 					  webView.stopLoading();
 					  clearHistory = true;
 					  currentUrl = null;
@@ -616,7 +592,7 @@ void start_select_loco_activity(char whichThrottle)
             	if(sb.getProgress() != 0)
             		sb.setProgress(0);
             	else
-            		mainapp.sendSpeedMsg(whichThrottle, 0);
+            		sendSpeedMsg(whichThrottle, 0);
             	break;
             }
             // specify which throttle the volume button controls          	  
@@ -721,7 +697,7 @@ void start_select_loco_activity(char whichThrottle)
     	}
 
     	//send request for new speed to WiT server
-		mainapp.sendSpeedMsg(whichThrottle, speed);
+		sendSpeedMsg(whichThrottle, speed);
 
 		lastSpeed = speed;
 
@@ -760,6 +736,15 @@ void start_select_loco_activity(char whichThrottle)
 */
   }
 
+	// send a throttle speed message to WiT
+	public void sendSpeedMsg(char whichThrottle, int speed) {
+		Message msg=Message.obtain();
+		msg.what=message_type.VELOCITY;
+		msg.arg1=speed;
+		msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
+		mainapp.comm_msg_handler.sendMessage(msg);
+	}
+
 /*  private void requestSpeedMsg(char whichThrottle) {
 		Message msg=Message.obtain();
 		msg.what=message_type.REQ_VELOCITY;
@@ -774,14 +759,8 @@ void start_select_loco_activity(char whichThrottle)
     super.onCreate(savedInstanceState);
     mainapp=(threaded_application)this.getApplication();
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-    orientationChange = false;
     setContentView(R.layout.throttle);
-	if(dlMetadataTask == null)
-		dlMetadataTask = new DownloadMetadataTask();
-	if(dlRosterTask == null)
-		dlRosterTask = new DownloadRosterTask();
-	dlMetadataTask.getMetadata();		// if web port is already known, start background roster dl here
-	dlRosterTask.getRoster();			// if web port is already known, start background roster dl here
+    orientationChange = false;
 
     webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));    
 //    myGesture = new GestureDetector(this);
@@ -950,13 +929,9 @@ void start_select_loco_activity(char whichThrottle)
   @Override
   public void onDestroy() {
 	  Log.d("Engine_Driver","throttle.onDestroy() called");
-	  if(orientationChange) {			// rotation
-		  scale = webView.getScale();	// save current scale for next onCreate
-	  }
-	  else {							//screen is exiting
+	  scale = webView.getScale();		// save current scale for next onCreate
+	  if(!orientationChange) {			// if screen is exiting
 		  webView.loadUrl(noUrl);		//load a static url else any javascript on current page would keep running
-		  webView.destroy();	//*** RDB test
-		  webView = null;		//*** RDB test
 	  }
 	  mainapp.throttle_msg_handler = null;
 	  super.onDestroy();
@@ -1134,13 +1109,13 @@ void start_select_loco_activity(char whichThrottle)
     final DisplayMetrics dm = getResources().getDisplayMetrics();
  // Get the screen's density scale
     
-    final float scale = dm.density;
+    final float denScale = dm.density;
     // Convert the dps to pixels, based on density scale
     int newHeight;
     if (ish) {
-    	newHeight = (int) (80 * scale + 0.5f) ;  //increased height
+    	newHeight = (int) (80 * denScale + 0.5f) ;  //increased height
     } else {
-    	newHeight = (int) (50 * scale + 0.5f );  //normal height
+    	newHeight = (int) (50 * denScale + 0.5f );  //normal height
     }    	
     LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(
     		ViewGroup.LayoutParams.FILL_PARENT,  newHeight); 
@@ -1281,14 +1256,6 @@ void start_select_loco_activity(char whichThrottle)
   }
 
   private void disconnect() {
-	  //stop roster or metadata download if still in progress
-	  try {
-		  dlMetadataTask.stopMetadata();
-		  dlRosterTask.stopRoster();
-	  }
-	  catch(Exception e){
-	  }
-	  
 	  //release the locos
 	  Message msg=Message.obtain();
 	  try {
@@ -1552,122 +1519,12 @@ void start_select_loco_activity(char whichThrottle)
 		}
 	};
 
-	class DownloadRosterTask extends AsyncTask<String, Void, Integer> {
-    	@Override    
-    	protected Integer doInBackground(String... params) {
-    		Log.d("Engine_Driver","Background loading roster from " + params[0].toString());
-    		RosterLoader rl = new RosterLoader(params[0].toString());
-    		//if (mainapp.roster != null) mainapp.roster.clear();
-    		mainapp.roster = rl.parse();
-    		Integer re = 0;
-    		if (mainapp.roster != null) {
-    			re = mainapp.roster.size();
-    		} else {
-    			Log.d("Engine_Driver","Failed to load roster.xml.");
-    		}
-    		return re;  //return the count of entries loaded
-    	}
-        /**
-         * background load of roster completed
-         */
-        @Override
-        protected void onPostExecute(Integer entries) {
-			Log.d("Engine_Driver","Loaded " + entries +" entries from roster.xml.");
-        }
-        
-        void getRoster() {
-    		//attempt to get roster.xml if webserver port is known and not already retrieved 
-    		if (!mainapp.isValidWebServerPort()) {
-    			Log.d("Engine_Driver","DownloadRosterTask: web_server_port is not known (yet?)");
-    		}
-    		else if (this.getStatus() == AsyncTask.Status.PENDING) {
-    			this.execute(mainapp.createUrl("prefs/roster.xml"));
-    			//Log.d("Engine_Driver","executed roster download");
-    		}
-        }
-        void stopRoster() {
-        	if (this.getStatus() == AsyncTask.Status.RUNNING)
-        		this.cancel(true);
-        }
-    }
-
-	class DownloadMetadataTask extends AsyncTask<String, Void, Integer> {
-    	@Override    
-    	protected Integer doInBackground(String... params) {
-    		Log.d("Engine_Driver","Background loading metadata from " + params[0].toString());
-    		// retrieve JMRI metadata, and place in global hashmap 
-    		threaded_application.metadata = new HashMap<String, String>();
-    		String xmlioURL = params[0].toString();
-    		Log.d("Engine_Driver", "Fetching JMRI metadata from: " + xmlioURL);
-    		Integer re = 0;
-    		try  {
-    			URL url = new URL( xmlioURL );
-    			URLConnection con = url.openConnection();
-
-    			// specify that we will send output and accept input
-    			con.setDoInput(true);
-    			con.setDoOutput(true);
-    			con.setConnectTimeout( 2000 );
-    			con.setReadTimeout( 2000 );
-    			con.setUseCaches (false);
-    			con.setDefaultUseCaches (false);
-
-    			// tell the web server to expect xml text
-    			con.setRequestProperty ( "Content-Type", "text/xml" );
-
-    			OutputStreamWriter writer = new OutputStreamWriter( con.getOutputStream() );
-    			writer.write( "<XMLIO><list type='metadata' /></XMLIO>" );  //ask for metadata info
-    			writer.flush();
-    			writer.close();
-
-    			//read response and treat as xml doc
-    			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    			DocumentBuilder builder = factory.newDocumentBuilder();
-    			Document dom = builder.parse( con.getInputStream() );
-    			Element root = dom.getDocumentElement();
-    			//get list of metadata children and loop thru, putting each in global variable metadata
-    			NodeList items = root.getElementsByTagName("metadata");
-    			for (int i=0;i<items.getLength();i++){
-    				String metadataName = items.item(i).getAttributes().getNamedItem("name").getNodeValue(); 
-    				String metadataValue = items.item(i).getAttributes().getNamedItem("value").getNodeValue(); 
-    				threaded_application.metadata.put(metadataName, metadataValue);
-    				re++;
-    			}
-    			Log.d("Engine_Driver", "Metadata retrieved: " + threaded_application.metadata.toString());
-
-    		}
-    		catch( Throwable t )	  {
-    			Log.d("Engine_Driver", "Metadata fetch failed: " + t.getMessage());
-    		}	  
-    		return re;  //return the count of entries loaded
-    	}
-        // background load of Metadata completed
-        @Override
-        protected void onPostExecute(Integer entries) {
-			Log.d("Engine_Driver","Loaded " + entries +" metadata entries from xmlio server.");
-        }
-        
-        void getMetadata() {
-    		//attempt to get roster.xml if webserver port is known and not already retrieved 
-    		if (!mainapp.isValidWebServerPort()) {
-    			Log.d("Engine_Driver","DownloadMetadataTask: web_server_port is not known (yet?)");
-    		}
-    		else if (this.getStatus() == AsyncTask.Status.PENDING) {
-    			this.execute(mainapp.createUrl("xmlio/"));
-    		}
-        }
-        void stopMetadata() {
-        	if (this.getStatus() == AsyncTask.Status.RUNNING)
-        		this.cancel(true);
-        }
-    }
-
 	 // helper app to initialize statics (in case GC has not run since app last shutdown)
 	 // call before instantiating any instances of class
 	 public static void initStatics() {
-		  scale = initialScale;
-		  clearHistory = false;
-		  currentUrl = null;
+		 scale = initialScale;
+		 clearHistory = false;
+		 currentUrl = null;
 	 }
 }
 

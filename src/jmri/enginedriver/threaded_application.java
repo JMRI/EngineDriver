@@ -23,6 +23,7 @@ package jmri.enginedriver;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
@@ -37,6 +38,12 @@ import android.webkit.CookieSyncManager;
 import android.widget.Toast;
 
 import javax.jmdns.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -50,6 +57,7 @@ import java.util.LinkedHashMap;
 import jmri.enginedriver.message_type;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterLoader;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -65,7 +73,7 @@ public class threaded_application extends Application {
 	String loco_string_T = "Not Set"; //Loco Address string to display on first throttle
 	String loco_string_S = "Not Set"; //Loco Address string to display on second throttle
 	Double withrottle_version = 0.0; //version of withrottle server
-	private Integer web_server_port = 0; //default port for jmri web server
+	private int web_server_port = 0; //default port for jmri web server
 //	String roster_list_string; //roster list
 	LinkedHashMap<Integer, String> function_labels_T;  //function#s and labels from roster for throttle #1
 	LinkedHashMap<Integer, String> function_labels_S;  //function#s and labels from roster for throttle #2
@@ -77,16 +85,15 @@ public class threaded_application extends Application {
 	String[] to_system_names;
 	String[] to_user_names;
 	String[] to_states;
-	boolean to_allowed = false;  //default turnout support to off
 	HashMap<String, String> to_state_names;
 	String[] rt_system_names;
 	String[] rt_user_names;
 	String[] rt_states;
-	boolean rt_allowed = false;  //default route support to off
 	HashMap<String, String> rt_state_names;
 	HashMap<String, String> roster_entries;  //roster sent by WiThrottle
-	boolean consist_allowed = false;  //default consist support to off
 	LinkedHashMap<String, String> consist_entries;
+	private static DownloadRosterTask dlRosterTask = null;
+	private static DownloadMetaTask dlMetadataTask = null;
 	HashMap<String, RosterEntry> roster;  //roster entries retrieved from roster.xml (null if not retrieved)
 	public static HashMap<String, String> metadata;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
 	ImageDownloader imageDownloader = new ImageDownloader();
@@ -120,7 +127,7 @@ public class threaded_application extends Application {
 
 	class comm_thread extends Thread  {
 		JmDNS jmdns = null;
-		boolean endingJmdns = false;
+		volatile boolean endingJmdns = false;
 		withrottle_listener listener;
 		android.net.wifi.WifiManager.MulticastLock multicast_lock;
 		socket_WiT socketWiT;
@@ -374,13 +381,9 @@ public class threaded_application extends Application {
 					if (heart.getInboundInterval() > 0) {
 						withrottle_send("*-");     //request to turn off heartbeat (if enabled in server prefs)
 					}
-//					try {
-//					this.wait(250L);
-//						Thread.sleep(250L);			//give msgs a chance to xmit before closing socket
-//					}
-//					catch (Exception e) { 
-//					}
 					end_jmdns();
+					dlMetadataTask.stop();
+					dlRosterTask.stop();
 					alert_activities(message_type.DISCONNECT,"");
 			    	//give msgs a chance to xmit before closing socket
 					Message nmsg=Message.obtain(); 
@@ -471,8 +474,13 @@ public class threaded_application extends Application {
 						socketWiT = null;
 					}
 //*** no activities should be running at this point					alert_activities(message_type.SHUTDOWN,"");
-//*** don't kill msg thread - it'sneeded if ED restarted			Looper.myLooper().quit();
+//*** don't kill msg thread - it's needed if ED restarted			Looper.myLooper().quit();
 //*** same as previous												comm_msg_handler = null;
+					break;
+					
+					// update of roster-related data completed in background
+				case message_type.ROSTER_UPDATE:
+					alert_activities(message_type.ROSTER_UPDATE,"");
 					break;
 				}
 			};
@@ -620,18 +628,19 @@ public class threaded_application extends Application {
 				switch (response_str.charAt(1)) {
 
 				case 'C': 
-					if 	(response_str.charAt(2) == 'C' || response_str.charAt(2) == 'L') {  //RCC1 or RCL1 (treated the same in ED)
-						consist_allowed = true;  //set app variable
+					if(response_str.charAt(2) == 'C' || response_str.charAt(2) == 'L') {  //RCC1 or RCL1 (treated the same in ED)
 						clear_consist_list();
-					} else	if 	(response_str.charAt(2) == 'D') {  //RCD}|{88(S)}|{88(S)]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
+					} 
+					else if(response_str.charAt(2) == 'D') {  //RCD}|{88(S)}|{88(S)]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
 						process_consist_list(response_str);
 					}
-
 					break;
 
 				case 'L': 
 //					roster_list_string = response_str.substring(2);  //set app variable
 					process_roster_list(response_str);  //process roster list
+					dlMetadataTask.get();			// run background metadata update if web server port is know
+					dlRosterTask.get();			// run background roster update if web server port is known
 					break;
 
 				case 'F':   //RF29}|{2591(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
@@ -653,7 +662,6 @@ public class threaded_application extends Application {
 				switch (response_str.charAt(1)) {
 				case 'T': //turnouts
 					if (response_str.charAt(2) == 'T') {  //turnout control allowed
-						to_allowed = true;
 						process_turnout_titles(response_str);
 					}
 					if (response_str.charAt(2) == 'L') {  //list of turnouts
@@ -666,7 +674,6 @@ public class threaded_application extends Application {
 
 				case 'R':  //routes 
 					if (response_str.charAt(2) == 'T') {  //route  control allowed
-						rt_allowed = true;
 						process_route_titles(response_str);
 					}
 					if (response_str.charAt(2) == 'L') {  //list of routes
@@ -691,6 +698,8 @@ public class threaded_application extends Application {
 						Log.d("Engine_Driver", "process response: invalid web server port string");
 						web_server_port = 0;
 					}
+					dlMetadataTask.get();			// start background metadata update
+					dlRosterTask.get();				// start background metadata update
 
 					break;
 				}  //end switch inside P
@@ -986,8 +995,6 @@ public class threaded_application extends Application {
 				catch(Exception e) {
 					msg.recycle();
 				}
-			} else {
-				Log.d("Engine_Driver", "Throttle activity not active, did not forward: " + msgBody);
 			}
 			if (web_msg_handler != null) { 
 				Message msg=Message.obtain(); 
@@ -1107,8 +1114,8 @@ public class threaded_application extends Application {
 			protected Socket clientSocket = null;
 			protected BufferedReader inputBR = null;
 			protected PrintWriter outputPW = null;
-			private boolean endRead = false;			//signals rcvr to terminate
-			private boolean socketGood = false;			//indicates socket condition
+			private volatile boolean endRead = false;			//signals rcvr to terminate
+			private volatile boolean socketGood = false;		//indicates socket condition
 
 			socket_WiT() {
 				super("socket_WiT");
@@ -1181,7 +1188,7 @@ public class threaded_application extends Application {
 					}
 				}
 				socketGood = socketOk;
-				return socketGood;
+				return socketOk;
 			}
 
 			public void disconnect(boolean shutdown) {
@@ -1349,7 +1356,7 @@ public class threaded_application extends Application {
 				}
 
 				//send the message
-				if (socketGood) {
+				if(socketGood) {
 					try {
 						outputPW.println(msg);
 						outputPW.flush();
@@ -1528,6 +1535,9 @@ public class threaded_application extends Application {
 		commThread=new comm_thread();
 		commThread.start();
 
+		dlMetadataTask = new DownloadMetaTask();
+		dlRosterTask = new DownloadRosterTask();
+
 		//use worker thread to initialize default function labels from file so UI can continue
 		new Thread(new Runnable() {
 			public void run() {
@@ -1569,6 +1579,153 @@ public class threaded_application extends Application {
 		}  
 	}
 
+	public class DownloadRosterTask extends DownloadDataTask {
+		@Override
+		void runMethod(Download dl) throws IOException {
+        	String rosterUrl = createUrl("prefs/roster.xml");
+        	HashMap<String, RosterEntry> rosterTemp = null;
+    		if(rosterUrl == null || dl.cancel)
+    			return;
+    		Log.d("Engine_Driver","Background loading roster from " + rosterUrl);
+    		int rosterSize = 0;
+    		try {
+	    		RosterLoader rl = new RosterLoader(rosterUrl);
+	    		if(dl.cancel)
+	    			return;
+	    		rosterTemp = rl.parse();
+	    		rosterSize = rosterTemp.size();		//throws exception if null
+	    		if(!dl.cancel)
+	    			roster = (HashMap<String, RosterEntry>) rosterTemp.clone();
+    		}
+    		catch(Exception e) {
+    			throw new IOException();
+    		}
+			Log.d("Engine_Driver","Loaded " + rosterSize +" entries from roster.xml.");
+		}
+	}
+
+	public class DownloadMetaTask extends DownloadDataTask {
+		@Override
+		void runMethod(Download dl) throws IOException   {
+			String metaUrl = createUrl("xmlio/");
+			if(metaUrl == null || dl.cancel)
+				return;
+			Log.d("Engine_Driver","Background loading metadata from " + metaUrl);
+			threaded_application.metadata = new HashMap<String, String>();
+			int re = 0;
+			HashMap<String, String> metadataTemp = null;
+			int metaSize = 0;
+			try {
+				URL url = new URL( metaUrl );
+				URLConnection con = url.openConnection();
+		
+				// specify that we will send output and accept input
+				con.setDoInput(true);
+				con.setDoOutput(true);
+				con.setConnectTimeout( 2000 );
+				con.setReadTimeout( 2000 );
+				con.setUseCaches (false);
+				con.setDefaultUseCaches (false);
+		
+				// tell the web server to expect xml text
+				con.setRequestProperty ( "Content-Type", "text/xml" );
+		
+				OutputStreamWriter writer = new OutputStreamWriter( con.getOutputStream() );
+				writer.write( "<XMLIO><list type='metadata' /></XMLIO>" );  //ask for metadata info
+				writer.flush();
+				writer.close();
+		
+				//read response and treat as xml doc
+				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder builder = factory.newDocumentBuilder();
+				Document dom = builder.parse( con.getInputStream() );
+				Element root = dom.getDocumentElement();
+				//get list of metadata children and loop thru, putting each in global variable metadata
+				NodeList items = root.getElementsByTagName("metadata");
+				for (int i=0; i<items.getLength() & !dl.cancel; i++){
+					String metadataName = items.item(i).getAttributes().getNamedItem("name").getNodeValue(); 
+					String metadataValue = items.item(i).getAttributes().getNamedItem("value").getNodeValue(); 
+					metadataTemp.put(metadataName, metadataValue);
+					re++;
+				}
+	    		metaSize = metadataTemp.size();		//throws exception if null
+				if(dl.cancel)
+					return;
+				metadata = (HashMap<String, String>) metadataTemp.clone();
+			}
+			catch(Exception e) {
+    			throw new IOException();
+			}
+			Log.d("Engine_Driver", "Metadata retrieved: " + threaded_application.metadata.toString());
+			Log.d("Engine_Driver","Loaded " + metaSize +" metadata entries from xmlio server.");
+		}
+	}
+	
+	abstract public class DownloadDataTask {
+		volatile boolean running = false;
+		private Download dl = null;
+		abstract void runMethod(Download dl) throws IOException;
+		
+		public class Download extends Thread {
+			public volatile boolean cancel = false;
+			public volatile boolean waiting = true;
+
+			@Override
+	    	public void run() {
+	    		// retrieve JMRI metadata, and place in global hashmap 
+	    		try {
+	    			while(running) {
+	    				Log.d("Engine_Driver", "Metadata fetch waiting");
+	    				Thread.sleep(1000);
+	    				if(cancel)
+	    					return;
+	    			}
+	    			running = true;
+	    			waiting = false;
+	    			runMethod(this);
+	    			if(cancel)
+    					return;
+	    			Message msg=Message.obtain();		//send roster response message to alert other activities
+	    			msg.what=message_type.ROSTER_UPDATE;
+	    			comm_msg_handler.sendMessage(msg);
+	    		}
+	    		catch(Throwable t) {
+	    			Log.d("Engine_Driver", "Data fetch failed: " + t.getMessage());
+	    		}	  
+	
+	    		// background load of Data completed
+	    		finally {
+	    			running = false;
+	    			if(cancel)
+	    				Log.d("Engine_Driver", "Data fetch cancelled");
+	    		}
+	    	}
+		}
+
+	    void get() {
+			try {
+				if(dl == null || !dl.waiting) {
+					if(dl != null)
+						dl.cancel = true;	// try to stop any update that is in progress
+					dl = new Download();
+					dl.start();				// start new update
+				}
+			}
+			catch(Exception e) {
+			}
+        }
+
+        void stop() {
+        	try {
+        		dl.cancel = true;
+        	}
+        	catch(Exception e) {
+        	}
+        }
+    }
+
+/**/
+	
 	//initialize shared variables
 	private void initShared() {
 		withrottle_version = 0.0; 
@@ -1576,12 +1733,10 @@ public class threaded_application extends Application {
 		host_ip = null;
 		web_server_port = 0;
 		power_state = null;
-		to_allowed = false;
 		to_states = null;
 		to_system_names = null;
 		to_user_names = null;
 		to_state_names = null;
-		rt_allowed = false;
 		rt_states = null;
 		rt_system_names = null;
 		rt_user_names = null;
@@ -1595,7 +1750,6 @@ public class threaded_application extends Application {
 //		function_labels_default = new LinkedHashMap<Integer, String>();
 		function_states_T = new boolean[32];		// also allocated in onCreate() ???
 		function_states_S = new boolean[32];
-		consist_allowed = false;
 		consist_entries = new LinkedHashMap<String, String>();
 		roster = null;
 		roster_entries = null;
@@ -1615,7 +1769,7 @@ public class threaded_application extends Application {
 		String temp = input;
 
 		// count entries
-		while (temp.length() > 0) {
+		while(temp.length() > 0) {
 			size++;
 			int index = temp.indexOf(divider);
 			if (index < 0) break;    // break not found
@@ -1631,7 +1785,7 @@ public class threaded_application extends Application {
 		// find entries
 		temp = input;
 		size = 0;
-		while (temp.length() > 0) {
+		while(temp.length() > 0) {
 			int index = temp.indexOf(divider);
 			if (index < 0) break;    // done with all but last
 			result[size] = temp.substring(0,index);
@@ -1643,32 +1797,25 @@ public class threaded_application extends Application {
 		return result;
 	}
 	
-	// build a full url or return null if web_server_port hasn't been set
+	//
+	// methods for use by Activities
+	//
+	
+	// build a full url
+	// returns:	full url 	if web_server_port is valid
+	//			null	 otherwise
 	public String createUrl(String defaultUrl) {
 		String url = null;
-	    if (isValidWebServerPort()) {
-	    	url = defaultUrl;
-	    	if (!url.startsWith("http")) {  //if url starts with http, use it as is, else prepend servername and port
-	    		url = "http://" + host_ip + ":" +  web_server_port + "/" + url;
-	    	}
+		int port = web_server_port;
+	    if (port > 0) {
+	    	if (defaultUrl.startsWith("http"))  //if url starts with http, use it as is, else prepend servername and port
+		    	url = defaultUrl;
+	    	else
+	    		url = "http://" + host_ip + ":" + port + "/" + defaultUrl;
 	    }
 	    return url;
 	}
 	
-	public boolean isValidWebServerPort() {
-		return (web_server_port != null && web_server_port > 0);
-	}
-	
-	// send a throttle speed message to WiT
-	public void sendSpeedMsg(char whichThrottle, int speed) {
-		Message msg=Message.obtain();
-		msg.what=message_type.VELOCITY;
-		msg.arg1=speed;
-		msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
-		comm_msg_handler.sendMessage(msg);
-	}
-
-		
 	// set activity screen orientation based on prefs, check to avoid sending change when already there
 
 	  // this form uses the Throttle Orientation pref
@@ -1698,6 +1845,8 @@ public class threaded_application extends Application {
 		  return activity.getWindow().getWindowManager().getDefaultDisplay().getOrientation();
 	  }
 
+	  // prompt for Exit
+	  // must be called on the UI thread
 	  public void checkExit(Activity activity) {
 		  final AlertDialog.Builder b = new AlertDialog.Builder(activity); 
 		  b.setIcon(android.R.drawable.ic_dialog_alert); 

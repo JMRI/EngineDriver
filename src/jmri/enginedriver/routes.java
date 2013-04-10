@@ -80,7 +80,7 @@ public class routes extends Activity  implements OnGestureListener {
 	public void refresh_route_view() {
 		
 	    boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference", 
-	    		Boolean.valueOf(getString(R.string.prefHideSystemRouteNamesDefaultValue)));  //TODO fix getting from strings
+	    		Boolean.valueOf(getString(R.string.prefHideSystemRouteNamesDefaultValue)));
 
 		//specify logic for sort comparison (by username)
 	    Comparator<HashMap<String, String>> route_comparator = new Comparator<HashMap<String, String>>() {

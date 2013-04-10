@@ -141,16 +141,16 @@ public class select_loco extends Activity {
 			Collections.sort(roster_list, comparator);
 			
 			roster_list_adapter.notifyDataSetChanged();
-			View v = (View) findViewById(R.id.roster_list_heading);
+			View v = findViewById(R.id.roster_list_heading);
 			v.setVisibility(VISIBLE);
-			v = (View) findViewById(R.id.roster_list);
+			v = findViewById(R.id.roster_list);
 			v.setVisibility(VISIBLE);
 
 		} 
 		else { // hide roster section if nothing to show
-			View v = (View) findViewById(R.id.roster_list_heading);
+			View v = findViewById(R.id.roster_list_heading);
 			v.setVisibility(GONE);
-			v = (View) findViewById(R.id.roster_list);
+			v = findViewById(R.id.roster_list);
 			v.setVisibility(GONE);
 		} // if roster_entries not null
 	}
@@ -224,12 +224,19 @@ public class select_loco extends Activity {
 
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
+				case message_type.ROSTER_UPDATE:
+      				//refresh labels when any roster response is received
+   					roster_list_adapter.notifyDataSetChanged();
+   					set_labels();
+					break;
 				case message_type.RESPONSE:
 	      			String response_str = msg.obj.toString();
 	      			if (response_str.length() >= 1) {
 	      				char com1 = response_str.charAt(0);
-	      			    //refresh labels when any roster response is received
+
+	      				//refresh labels when any roster response is received
 	      				if (com1 == 'R') {
+	      					roster_list_adapter.notifyDataSetChanged();
 	    					set_labels();
 	      				}
 	      			}
@@ -295,7 +302,7 @@ public class select_loco extends Activity {
 		public void onClick(View v) {
 			EditText entry = (EditText) findViewById(R.id.loco_address);
 			try {
-				engine_address = new Integer(entry.getText().toString());
+				engine_address = Integer.valueOf(entry.getText().toString());
 			} catch (NumberFormatException e) {
 				Toast.makeText(getApplicationContext(), "ERROR - Please enter a valid DCC address.\n"+e.getMessage(), Toast.LENGTH_SHORT).show();
 				return;
@@ -349,7 +356,7 @@ public class select_loco extends Activity {
 						: address_type.SHORT; // convert S/L to 0/1
 				Message msg = Message.obtain();
 				msg.what = message_type.LOCO_ADDR;
-				msg.arg1 = new Integer(ras[0]); // convert address to int and pass in arg1
+				msg.arg1 = Integer.valueOf(ras[0]); // convert address to int and pass in arg1
 				msg.arg2 = addresslength;
 				String t = whichThrottle;
 				if (rosterentrytype.equals("loco")) { 

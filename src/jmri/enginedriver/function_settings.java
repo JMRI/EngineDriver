@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.io.*;
 
 import android.text.method.TextKeyListener;
@@ -37,10 +36,10 @@ import android.widget.Toast;
 public class function_settings extends Activity{
 
 	private threaded_application mainapp;
-	private static boolean orientationChange = false;
-	private static boolean settingsChange = false;
+	private boolean orientationChange = false;
 
 	//set up label, dcc function, toggle setting for each button
+	private static boolean settingsCurrent = false;
     private static ArrayList<String> aLbl = new ArrayList<String>();
     private static ArrayList<Integer> aFnc = new ArrayList<Integer>();
 
@@ -50,13 +49,11 @@ public class function_settings extends Activity{
         super.onCreate(savedInstanceState);
         mainapp=(threaded_application)getApplication();  //save pointer to main app
        	setContentView(R.layout.function_settings);
+       	orientationChange = false;
 
-       	if(!orientationChange) {			//if not an orientation change then settings array need initialization
-       		initSettings();					//set settings array from the settings file
-       		settingsChange = false;			//indicate settings array matches file 
-       	}
-       	else {								//else it is an orientation change and settings array is current
-	       	orientationChange = false;
+       	if(savedInstanceState == null) {	//if not an orientation change then init settings array
+       		initSettings();
+            settingsCurrent = true;
        	}
    		move_settings_to_view();			//copy settings array to view
        	
@@ -82,21 +79,25 @@ public class function_settings extends Activity{
     }
 
     @Override
-    public void onDestroy() {
-		Log.d("Engine_Driver","function_settings.onDestroy() called");
-    	super.onDestroy();
-    }
-  
-    @Override
     public void onSaveInstanceState(Bundle saveState) {		//orientation change
     	move_view_to_settings();		//update settings array so onCreate can use it to initialize
     	orientationChange = true;
     }
 
-   
+    @Override
+    public void onDestroy() {
+		Log.d("Engine_Driver","function_settings.onDestroy() called");
+		if(!orientationChange)
+		{
+			aLbl.clear();
+			aFnc.clear();
+		}
+    	super.onDestroy();
+    }
+  
   	//build the arrays from the function_settings file
     //function_labels_default was loaded from settings file by TA
-    //(and updated saveSettings() when required) so just copy it
+    //(and updated by saveSettings() when required) so just copy it
     void initSettings() {
 		aLbl.clear();
 		aFnc.clear();
@@ -105,16 +106,6 @@ public class function_settings extends Activity{
 			aFnc.add(f);
 			aLbl.add(mainapp.function_labels_default.get(f));
         }
-    }
-
-    //replace arrays using data from roster entry (called by button)
-    void get_settings_from_roster() {
-    	aLbl.clear();
-    	aFnc.clear();
-    	for (Integer f : mainapp.function_labels_T.keySet()) {
-   			aLbl.add(mainapp.function_labels_T.get(f));
-   			aFnc.add(f);
-    	}
     }
 
     //take data from arrays and update the editing view
@@ -165,12 +156,12 @@ public class function_settings extends Activity{
 						if(aFnc.size() <= ndx) {
 							aLbl.add(label);
 							aFnc.add(func);
-							settingsChange = true;
+							settingsCurrent = false;
 						}
 						else if(!label.equals(aLbl.get(ndx)) || func != aFnc.get(ndx)) {
 							aLbl.set(ndx, label);
 							aFnc.set(ndx, func);
-							settingsChange = true;
+							settingsCurrent = false;
 						}
 						ndx++;
 					}
@@ -183,15 +174,42 @@ public class function_settings extends Activity{
 		while(aFnc.size() > ndx) {			//if array remains then trim it
 			aFnc.remove(ndx);
 			aLbl.remove(ndx);
-			settingsChange = true;
+			settingsCurrent = false;
 		}
     }
     
+    //replace arrays using data from roster entry (called by button)
+    void move_roster_to_settings() {
+		int ndx = 0;
+    	for (Integer func : mainapp.function_labels_T.keySet()) {
+			String label = mainapp.function_labels_T.get(func);
+			if(label.length() > 0 && func >= 0 && func <= 28) {
+				if(aFnc.size() <= ndx) {
+					aLbl.add(label);
+					aFnc.add(func);
+						settingsCurrent = false;
+				}
+				else if(!label.equals(aLbl.get(ndx)) || func != aFnc.get(ndx)) {
+					aLbl.set(ndx, label);
+					aFnc.set(ndx, func);
+					settingsCurrent = false;
+				}
+				ndx++;
+			}
+		}
+		
+		while(aFnc.size() > ndx) {			//if array remains then trim it
+			aFnc.remove(ndx);
+			aLbl.remove(ndx);
+			settingsCurrent = false;
+		}
+    }
+
    	public class button_listener implements View.OnClickListener
     {
       public void onClick(View v)
       {
-    	  get_settings_from_roster();
+    	  move_roster_to_settings();
     	  move_settings_to_view();
       };
     }
@@ -202,10 +220,8 @@ public class function_settings extends Activity{
     {
       if(key==KeyEvent.KEYCODE_BACK) {
     	  move_view_to_settings();		//sync settings array to view
-    	  if(settingsChange) {
-    		saveSettings();				//save function labels to file
-    	  }
-    	  orientationChange = false;			//static - should already be false
+    	  if(!settingsCurrent)			//if settings array is not current
+    		  saveSettings();			//save function labels to file
     	  this.finish();  //end this activity
 /*          connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
  */
@@ -243,13 +259,4 @@ public class function_settings extends Activity{
 		else
 			Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();
 	}
-    	
-    // helper app to initialize statics (in case GC has not run since app last shutdown)
-    // call before instantiating any instances of class
-    public static void initStatics() {
-    	orientationChange = false;
-    	settingsChange = false;
-        aLbl.clear();
-        aFnc.clear();
-    }
 }

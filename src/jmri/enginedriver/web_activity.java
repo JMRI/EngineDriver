@@ -40,7 +40,7 @@ import android.webkit.WebSettings;
 public class web_activity extends Activity {
 
   private threaded_application mainapp;  // hold pointer to mainapp
-  private static SharedPreferences prefs;
+  private SharedPreferences prefs;
 
   private WebView webView;
   private static final String noUrl = "file:///android_asset/blank_page.html";
@@ -49,7 +49,7 @@ public class web_activity extends Activity {
   private static boolean clearHistory = false;		// flags webViewClient to clear history when page load finishes
   private static String currentUrl = null;
   private boolean currentUrlUpdate = false;
-  private static boolean orientationChange = false;
+  private boolean orientationChange = false;
  
   class web_handler extends Handler {
 
@@ -85,8 +85,8 @@ public class web_activity extends Activity {
 
     mainapp=(threaded_application)this.getApplication();
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-    orientationChange = false;
     setContentView(R.layout.web_activity);
+    orientationChange = false;
   
 	webView = (WebView) findViewById(R.id.webview);
 	webView.getSettings().setJavaScriptEnabled(true);
@@ -295,5 +295,3 @@ public class web_activity extends Activity {
  }
 
 }
-
-
