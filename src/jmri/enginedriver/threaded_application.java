@@ -1508,7 +1508,7 @@ public class threaded_application extends Application {
 	    		if(dl.cancel)
 	    			return;
 	    		rosterTemp = rl.parse();
-	    		rosterSize = rosterTemp.size();		//throws exception if null
+	    		rosterSize = rosterTemp.size();		//throws exception if still null
 	    		if(!dl.cancel)
 	    			roster = (HashMap<String, RosterEntry>) rosterTemp.clone();
     		}
@@ -1526,10 +1526,6 @@ public class threaded_application extends Application {
 			if(metaUrl == null || dl.cancel)
 				return;
 			Log.d("Engine_Driver","Background loading metadata from " + metaUrl);
-			metadata = new HashMap<String, String>();
-			int re = 0;
-			HashMap<String, String> metadataTemp = new HashMap<String, String>();
-			int metaSize = 0;
 			try {
 				URL url = new URL( metaUrl );
 				URLConnection con = url.openConnection();
@@ -1555,16 +1551,15 @@ public class threaded_application extends Application {
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				Document dom = builder.parse( con.getInputStream() );
 				Element root = dom.getDocumentElement();
+				HashMap<String, String> metadataTemp = new HashMap<String, String>();
 				//get list of metadata children and loop thru, putting each in global variable metadata
 				NodeList items = root.getElementsByTagName("metadata");
 				for (int i=0; i<items.getLength() & !dl.cancel; i++){
 					String metadataName = items.item(i).getAttributes().getNamedItem("name").getNodeValue(); 
 					String metadataValue = items.item(i).getAttributes().getNamedItem("value").getNodeValue(); 
 					metadataTemp.put(metadataName, metadataValue);
-					re++;
 				}
-				metaSize = metadataTemp.size();
-	    		if(metaSize == 0)		//throw exception if empty
+	    		if(metadataTemp.size() == 0)		//throw exception if empty
 	    			throw new IOException();
 				if(dl.cancel)
 					return;
@@ -1574,7 +1569,7 @@ public class threaded_application extends Application {
     			throw new IOException();
 			}
 			Log.d("Engine_Driver", "Metadata retrieved: " + threaded_application.metadata.toString());
-			Log.d("Engine_Driver","Loaded " + metaSize +" metadata entries from xmlio server.");
+			Log.d("Engine_Driver","Loaded " + metadata.size() +" metadata entries from xmlio server.");
 		}
 	}
 	
