@@ -241,6 +241,10 @@ public class select_loco extends Activity {
 	      				}
 	      			}
 					break;
+				case message_type.WIT_CON_RETRY:
+  					roster_list_adapter.notifyDataSetChanged();
+					set_labels();
+					break;
 	  		  	case message_type.DISCONNECT:
 	  		  		end_this_activity();
 	  		  		break;

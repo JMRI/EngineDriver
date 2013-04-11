@@ -145,16 +145,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 						  set_labels();
 					  } 
 					  else if (com2 == '-') {  		//if loco removed
-						  ViewGroup tv;
-						  if (thrSel == 'T') {
-							  tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
-						  } else {
-							  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
-						  }
-						  enable_disable_buttons(thrSel);  //direction and slider
-						  set_function_labels_and_listeners_for_view(thrSel);
-						  enable_disable_buttons_for_view(tv, false);
-						  set_labels();
+						  if (thrSel == 'T')
+							  removeLoco('T');
+						  else
+							  removeLoco('S');
 					  } 
 					  else if (com2 == 'A') {	  		//e.g. MTAL2608<;>R1
 						  String[] ls = threaded_application.splitByString(response_str,"<;>");
@@ -225,16 +219,17 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				  break;
 			  case 'P': //panel info
 				  if (thrSel == 'W') {		// PW - web server port info
-					  // try web-dependent items again
-					  webView.stopLoading();
-					  clearHistory = true;
-					  currentUrl = null;
-					  load_webview();				//reload
+					  portChange();
 				  }
 				  break;
 			  }  //end of switch
 		  }
 		  break;
+		  case message_type.WIT_CON_RETRY:
+			  removeLoco('T');
+			  removeLoco('S');
+			  portChange();
+			  break;
 		  case message_type.DISCONNECT:
 			  disconnect();
 			  break;
@@ -250,6 +245,25 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	  };
   }
 
+  private void portChange() {
+	  // try web-dependent items again
+	  webView.stopLoading();
+	  clearHistory = true;
+	  currentUrl = null;
+	  load_webview();				//reload
+  }
+  private void removeLoco(char whichThrottle) {
+	  ViewGroup tv;
+	  if (whichThrottle == 'T') {
+		  tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
+	  } else {
+		  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
+	  }
+	  enable_disable_buttons(whichThrottle);  //direction and slider
+	  set_function_labels_and_listeners_for_view(whichThrottle);
+	  enable_disable_buttons_for_view(tv, false);
+	  set_labels();
+  }
   void updateMaxSpeed(char whichThrottle, int maxSpeed) {
 	if(whichThrottle == 'T') {
 		if(maxSpeed != MAX_SPEED_VAL_T) {

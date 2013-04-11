@@ -1216,97 +1216,12 @@ public class threaded_application extends Application {
 					}
 				}
 
-				initShared();
-				if (!shutdown)			//***RDB  was commented out
+				if (!shutdown)	// retry the connection
 				{
 					// reinit shared variables then signal activities to refresh their views
 					// so that (potentially) invalid information is not displayed
-
-					if (turnouts_msg_handler != null)   
-					{ 
-						Message msg=Message.obtain(); 
-						msg.what=message_type.RESPONSE;
-						msg.obj=new String("PTL");		//tell turnout activity that there is a new turnout list
-						try {
-							turnouts_msg_handler.sendMessage(msg);
-						}
-						catch(Exception e) {
-							msg.recycle();
-						}
-					}
-					if (routes_msg_handler != null)   { 
-						Message msg=Message.obtain(); 
-						msg.what=message_type.RESPONSE;
-						msg.obj=new String("PRL"); 		//tell route activity that there is a new route list
-						try {
-							routes_msg_handler.sendMessage(msg);
-						}
-						catch(Exception e) {
-							msg.recycle();
-						}
-					}
-					if (throttle_msg_handler != null) {
-						Message msg=Message.obtain(); 
-						msg.what=message_type.RESPONSE;
-						msg.obj=new String("MT-");		//tell throttle activity to release throttle T
-						try {
-							throttle_msg_handler.sendMessage(msg);
-						}
-						catch(Exception e) {
-							msg.recycle();
-						}
-						msg=Message.obtain(); 
-						msg.what=message_type.RESPONSE;
-						msg.obj=new String("MS-");		//tell throttle activity to release throttle S
-						try {
-							throttle_msg_handler.sendMessage(msg);
-						}
-						catch(Exception e) {
-							msg.recycle();
-						}
-						msg=Message.obtain(); 
-						msg.what=message_type.RESPONSE;
-						msg.obj=new String("PW"); 		//tell throttle activity that the port has changed
-						try {
-							web_msg_handler.sendMessage(msg);
-						}
-						catch(Exception e) {
-							msg.recycle();
-						}
-					}
-					if (web_msg_handler != null) { 
-						Message msg=Message.obtain(); 
-						msg.what=message_type.RESPONSE;
-						msg.obj=new String("PW"); 		//tell web activity that the port has changed
-						try {
-							web_msg_handler.sendMessage(msg);
-						}
-						catch(Exception e) {
-							msg.recycle();
-						}
-					}
-					if (power_control_msg_handler != null) { 
-						Message msg=Message.obtain(); 
-						msg.what=message_type.RESPONSE;
-						msg.obj=new String("PPA"); 		//tell power activity that the power state has changed
-						try {
-							power_control_msg_handler.sendMessage(msg);
-						}
-						catch(Exception e) {
-							msg.recycle();
-						}
-					}
-					if (select_loco_msg_handler != null) { 
-						Message msg=Message.obtain(); 
-						msg.what=message_type.RESPONSE;
-						msg.obj=new String("R"); 		//tell select loco activity that the roster has changed
-						try {
-							select_loco_msg_handler.sendMessage(msg);
-						}
-						catch(Exception e) {
-							msg.recycle();
-						}
-					}
+					initShared();
+					alert_activities(message_type.WIT_CON_RETRY,"");
 				}
 			}
 
@@ -1611,9 +1526,9 @@ public class threaded_application extends Application {
 			if(metaUrl == null || dl.cancel)
 				return;
 			Log.d("Engine_Driver","Background loading metadata from " + metaUrl);
-			threaded_application.metadata = new HashMap<String, String>();
+			metadata = new HashMap<String, String>();
 			int re = 0;
-			HashMap<String, String> metadataTemp = null;
+			HashMap<String, String> metadataTemp = new HashMap<String, String>();
 			int metaSize = 0;
 			try {
 				URL url = new URL( metaUrl );
@@ -1648,7 +1563,9 @@ public class threaded_application extends Application {
 					metadataTemp.put(metadataName, metadataValue);
 					re++;
 				}
-	    		metaSize = metadataTemp.size();		//throws exception if null
+				metaSize = metadataTemp.size();
+	    		if(metaSize == 0)		//throw exception if empty
+	    			throw new IOException();
 				if(dl.cancel)
 					return;
 				metadata = (HashMap<String, String>) metadataTemp.clone();

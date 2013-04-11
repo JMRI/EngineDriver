@@ -168,7 +168,10 @@ public class turnouts extends Activity implements OnGestureListener {
 	      				}
 	      			}
 	      			break;
-	  		  	case message_type.DISCONNECT:
+	      		case message_type.WIT_CON_RETRY:
+					refresh_turnout_view(); 
+	      			break;
+	      		case message_type.DISCONNECT:
 	  		  		disconnect();
 	  		  		break;
 			};

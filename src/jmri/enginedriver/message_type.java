@@ -45,4 +45,5 @@ interface message_type
   public static final int REQ_DIRECTION=21; 	// ed -> ta (requests direction from WiT)
   public static final int NEW_WEBVIEW_LOC=22;	// pref -> throt  user changed webview location pref
   public static final int ROSTER_UPDATE=23;		// ta -> ed  roster-related data updated in background
+  public static final int WIT_CON_RETRY=24;		// ta -> ed  WiT connection lost and trying to reconnect
 }

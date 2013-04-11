@@ -46,6 +46,9 @@ public class power_control extends Activity {
 						refresh_power_control_view(); 
 					}
 					break;
+				case message_type.WIT_CON_RETRY:
+					refresh_power_control_view(); 
+					break;
 	  		  	case message_type.DISCONNECT:
 	  			  disconnect();
 	  			  break;
