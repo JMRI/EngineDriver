@@ -298,7 +298,8 @@ public class threaded_application extends Application {
 				case message_type.CONNECT:
 
 					//avoid duplicate connects, seen when user clicks address multiple times quickly
-					if (host_ip != null) {
+					if (socketWiT != null && socketWiT.socketGood) {
+//					if (host_ip != null) {
 						Log.d("Engine_Driver","Duplicate CONNECT message received.  Ignoring.");
 						return;
 					}
