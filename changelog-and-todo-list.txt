@@ -1,8 +1,7 @@
 **Version 2.6 (all by Robin Becker unless noted)
  * pref to "disable" on-the-fly consisting, and revert to dropping when a new one is added. - mstevetodd
  * pref to only show one throttle
- * web page history and zoom levels preserved through rotation and navigation
- * back button and zoom +/- now works for web pages
+ * web page history and zoom levels preserved through rotation, navigation and back button
  * separate prefs for throttle and web view
  * made menus consistent across activities
  * orientation prefs used for all activities
@@ -13,6 +12,8 @@
  * default preference values now use the associated DefaultValue strings
  * moved calculation of speed slider top/bottom out of gesture Start() and into set_labels() so that the Top/Bottom calcs are only updated when the layout is updated.
  * swipe now works over disabled sliders
+ * moved roster loading, now updates as roster arrives
+ * multiple changes to improve performance and shutdown properly
 **Version 2.5
  * return TargetSDKVersion to 10 to trigger "legacy overflow button" for menu (needed on ICS)
  * keep screen on in web view (prevent screen blanking)
@@ -220,6 +221,7 @@
  *   TODO: add JMRI fast-clock to screens (in new title bar?)
  *   TODO: pref for throttle up/down buttons at ends of sliders, with setting for amount of change
  *   TODO: pref for additional left margin on throttle (obviated by preceding item?)
+ *   TODO: retrieve vsDecoder sounds and play when appropriate
  *   TODO: catch ArrayIndexOutOfBoundsException (reported to Market)
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: respect "Max Throttle %" from roster entry
