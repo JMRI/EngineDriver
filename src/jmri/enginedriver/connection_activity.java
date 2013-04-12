@@ -104,11 +104,7 @@ public class connection_activity extends Activity {
 
   //Request connection to the WiThrottle server.
   void connect()  {
-	  Message msg=Message.obtain();
-	  msg.what=message_type.CONNECT;
-	  msg.arg1=connected_port;
-	  msg.obj=new String(connected_hostip);
-	  sendMsg(msg, "ERROR in ca.connect: comm thread not started.");
+	  sendMsgErr(message_type.CONNECT, connected_hostip, connected_port, "ERROR in ca.connect: comm thread not started.");
   };
 
 
@@ -211,9 +207,10 @@ public class connection_activity extends Activity {
         	break;
 
         case message_type.CONNECTED:
-        	start_throttle_activity();
         	//use asynctask to save the updated connections list to the connections_list.txt file
         	new saveConnectionsList().execute();
+        	
+        	start_throttle_activity();
         	break;
 
         case message_type.DISCONNECT:
@@ -312,10 +309,7 @@ public class connection_activity extends Activity {
 	    }
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 	    //start up server discovery listener
-	    Message msg=Message.obtain();
-	    msg.what=message_type.SET_LISTENER;
-	    msg.arg1 = 1; //one turns it on
-	    sendMsg(msg, "ERROR in ca.onResume: comm thread not started.") ;
+	    sendMsgErr(message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
 
 	    //populate the ListView with the recent connections
 	    getConnectionsList();
@@ -324,10 +318,7 @@ public class connection_activity extends Activity {
 
 	    //start up server discovery listener again (after a 1 second delay)
 	    //TODO: this is a rig, figure out why this is needed for ubuntu servers
-	    msg=Message.obtain();
-	    msg.what=message_type.SET_LISTENER;
-	    msg.arg1 = 1; //one turns it on
-	    sendMsg(msg, "ERROR in ca.onResume: comm thread not started.") ;
+	    sendMsgErr(message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
 	}  //end of onResume
 
 //	@Override
@@ -343,10 +334,7 @@ public class connection_activity extends Activity {
 		//shutdown server discovery listener
 		Log.d("Engine_Driver","connection.onPause() called with "+isShuttingDown);
 		if(!isShuttingDown) {
-			Message msg=Message.obtain();
-		    msg.what=message_type.SET_LISTENER;
-		    msg.arg1 = 0; //zero turns it off
-		    sendMsg(msg, "");
+		    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 0);
 		}
 	    super.onPause();
 	}
@@ -360,9 +348,7 @@ public class connection_activity extends Activity {
 	
     //tell TA to exit
     private void startShutdown() {
-	    Message msg=Message.obtain();
-    	msg.what=message_type.DISCONNECT;
-  	  	sendMsg(msg, "");
+	    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISCONNECT);
     }
     
     //tell TA that CA is ending
@@ -428,17 +414,11 @@ public class connection_activity extends Activity {
 		return (super.onKeyDown(key, event));
 	};
 
-	private void sendMsg(Message msg, String errMsg) {
-	  if (mainapp.comm_msg_handler != null) {
-		  mainapp.comm_msg_handler.sendMessage(msg);
-	  } 
-	  else {
-		  msg.recycle();
-		  if(errMsg.length() > 0) {
-			  Log.e("Engine_Driver",errMsg) ;
-			  Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT).show();
-		  }
-	  }    	
+	private void sendMsgErr(int msgType, String msgBody, int msgArg1, String errMsg) {
+		if(!mainapp.sendMsg(mainapp.comm_msg_handler, msgType, msgBody, msgArg1)) {
+			Log.e("Engine_Driver",errMsg) ;
+			Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT).show();
+		}    	
 	}
 	
 	//save connections list in background using asynctask

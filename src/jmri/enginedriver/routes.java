@@ -68,12 +68,7 @@ public class routes extends Activity  implements OnGestureListener {
 	    	ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
 	    	TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
 	    	String systemname = (String) snv.getText();
-	        Message msg=Message.obtain();  
-        	msg.what=message_type.ROUTE;
-        	msg.arg1=2; // 2 = toggle        	
-        	msg.arg2=0; // not used 
-            msg.obj=new String(systemname);    // load system name for route into message
-            mainapp.comm_msg_handler.sendMessage(msg);
+		    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, systemname, 2);	// toggle
 	    };
 	  }	  
 
@@ -189,12 +184,7 @@ public class routes extends Activity  implements OnGestureListener {
 */		        
 //		        String systemname ="R" + entrytext;
 		        String systemname = entrytext;
-		        Message msg=Message.obtain();  
-	        	msg.what=message_type.ROUTE;
-	        	msg.arg1=whichCommand;
-	        	msg.arg2=0; // not used 
-	            msg.obj=new String(systemname);    // load system name for route into message
-	            mainapp.comm_msg_handler.sendMessage(msg);
+			    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, systemname, whichCommand);
 //	            entryv.setText(""); //clear the text after send
 		      } else {
 		    	    Toast.makeText(getApplicationContext(), "Enter a route # to set", Toast.LENGTH_SHORT).show();

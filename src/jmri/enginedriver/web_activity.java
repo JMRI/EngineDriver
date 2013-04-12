@@ -55,20 +55,16 @@ public class web_activity extends Activity {
 
   public void handleMessage(Message msg) {
 	  switch(msg.what) {
-		  case message_type.RESPONSE: {  //handle messages from WiThrottle server
-		  String response_str = msg.obj.toString();
-		  char com1 = response_str.charAt(0);
-		  char thrSel = response_str.charAt(1);
-		  switch (com1) {
-			  case 'P': //panel info
-				  if (thrSel == 'W')		// PW - web server port info
-					  portChange();
-				  break;
-			  }
+		  case message_type.RESPONSE: {  	//handle messages from WiThrottle server
+			  String s = msg.obj.toString();
+			  String response_str = s.substring(0, Math.min(s.length(), 2));
+			  if("PW".equals(response_str))		// PW - web server port info
+				  reloadWebpage();
+			  break;
 		  }
-		  break;
 		  case message_type.WIT_CON_RETRY:
-			  portChange(); 
+	  	  case message_type.INITIAL_WEBPAGE:
+			  reloadWebpage(); 
 			  break;
 		  case message_type.DISCONNECT:
 			  disconnect();
@@ -77,12 +73,13 @@ public class web_activity extends Activity {
 	  };
   }
 
-  private void portChange() {
+  private void reloadWebpage() {
 	  webView.stopLoading();
 	  clearHistory = true;
 	  currentUrl = null;
 	  load_webview();		// reload the page
   }
+  
   /** Called when the activity is first created. */
   @SuppressLint("SetJavaScriptEnabled") @Override
   public void onCreate(Bundle savedInstanceState) {

@@ -262,19 +262,11 @@ public class select_loco extends Activity {
 
 	// request release of specified loco
 	void release_loco(String whichThrottle) {
-		Message msg = Message.obtain();
-		msg.what = message_type.RELEASE;
-		msg.obj = new String(whichThrottle); // pass T or S in message
-		mainapp.comm_msg_handler.sendMessage(msg);
+		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, new String(whichThrottle)); // pass T or S in message 
 	}
 
 	void acquire_engine() {
-		Message acquire_msg = Message.obtain();
-		acquire_msg.what = message_type.LOCO_ADDR;
-		acquire_msg.arg1 = engine_address;
-		acquire_msg.arg2 = address_size;
-		acquire_msg.obj = new String(whichThrottle); // pass T or S in message
-		mainapp.comm_msg_handler.sendMessage(acquire_msg);
+    	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, whichThrottle, engine_address, address_size);
 
 		// Save the engine list to the recent_engine_list.txt file.
 		File sdcard_path = Environment.getExternalStorageDirectory();
@@ -358,16 +350,12 @@ public class select_loco extends Activity {
 			if (ras[0].length() > 0) {  //only process if address found
 				Integer addresslength = (ras[1].charAt(0) == 'L') ? address_type.LONG
 						: address_type.SHORT; // convert S/L to 0/1
-				Message msg = Message.obtain();
-				msg.what = message_type.LOCO_ADDR;
-				msg.arg1 = Integer.valueOf(ras[0]); // convert address to int and pass in arg1
-				msg.arg2 = addresslength;
+				int address = Integer.valueOf(ras[0]); // convert address to int
 				String t = whichThrottle;
 				if (rosterentrytype.equals("loco")) { 
 					t += "|" + rosternamestring;  //append rostername if type is loco (not consist) 
 				}
-				msg.obj = new String(t); // pass throttle and rostername
-				mainapp.comm_msg_handler.sendMessage(msg);
+		    	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, t, address, addresslength);
 
 				end_this_activity();
 			}

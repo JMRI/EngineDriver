@@ -10,7 +10,13 @@
         android:summary="@string/prefThrottleNameSummary"
         android:title="@string/prefThrottleNameTitle" >
     </EditTextPreference>
-    <ListPreference android:defaultValue="@string/prefThrottleOrientationDefaultValue" android:entries="@array/OrientationOptions" android:entryValues="@array/OrientationOptions" android:key="ThrottleOrientation" android:summary="@string/prefThrottleOrientationSummary" android:title="@string/prefThrottleOrientationTitle" />
+    <ListPreference 
+        android:defaultValue="@string/prefThrottleOrientationDefaultValue" 
+        android:entries="@array/OrientationOptions" 
+        android:entryValues="@array/OrientationOptions" 
+        android:key="ThrottleOrientation" 
+        android:summary="@string/prefThrottleOrientationSummary" 
+        android:title="@string/prefThrottleOrientationTitle" />
     <PreferenceCategory android:title="@string/prefThrottleTitle" >
         <EditTextPreference
             android:defaultValue="@string/prefMaximumThrottleDefaultValue"
@@ -36,9 +42,26 @@
             android:key="increase_slider_height_preference"
             android:summary="@string/prefIncreaseSliderHeightSummary"
             android:title="@string/prefIncreaseSliderHeightTitle" >
-        </CheckBoxPreference><CheckBoxPreference android:defaultValue="@string/prefUseOneThrottleDefaultValue" android:dialogTitle="@string/prefUseOneThrottleTitle" android:key="use_one_throttle_preference" android:summary="@string/prefUseOneThrottleSummary" android:title="@string/prefUseOneThrottleTitle">
+        </CheckBoxPreference><CheckBoxPreference 
+            android:defaultValue="@string/prefUseOneThrottleDefaultValue" 
+            android:dialogTitle="@string/prefUseOneThrottleTitle" 
+            android:key="use_one_throttle_preference" 
+            android:summary="@string/prefUseOneThrottleSummary" 
+            android:title="@string/prefUseOneThrottleTitle">
         </CheckBoxPreference>
-    	<ListPreference android:defaultValue="@string/prefWebViewLocationDefaultValue" android:entries="@array/WebViewLocation" android:entryValues="@array/WebViewLocation" android:key="WebViewLocation" android:summary="@string/prefWebViewLocationSummary" android:title="@string/prefWebViewLocationTitle" /><EditTextPreference android:defaultValue="@string/prefInitialThrotWebPageDefaultValue" android:dialogTitle="@string/prefInitialThrotWebPageSummary" android:key="InitialThrotWebPage" android:summary="@string/prefInitialThrotWebPageSummary" android:title="@string/prefInitialThrotWebPageTitle" />
+    	<ListPreference 
+    	    android:defaultValue="@string/prefWebViewLocationDefaultValue" 
+    	    android:entries="@array/WebViewLocation" 
+    	    android:entryValues="@array/WebViewLocation" 
+    	    android:key="WebViewLocation" 
+    	    android:summary="@string/prefWebViewLocationSummary" 
+    	    android:title="@string/prefWebViewLocationTitle" />
+    	<EditTextPreference 
+    	    android:defaultValue="@string/prefInitialThrotWebPageDefaultValue" 
+    	    android:dialogTitle="@string/prefInitialThrotWebPageSummary" 
+    	    android:key="InitialThrotWebPage" 
+    	    android:summary="@string/prefInitialThrotWebPageSummary" 
+    	    android:title="@string/prefInitialThrotWebPageTitle" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference
@@ -71,7 +94,14 @@
         </CheckBoxPreference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefWebTitle" >
-        <ListPreference android:defaultValue="@string/prefWebOrientationDefaultValue" android:entries="@array/OrientationOptions" android:entryValues="@array/OrientationOptions" android:key="WebOrientation" android:summary="@string/prefWebOrientationSummary" android:title="@string/prefWebOrientationTitle" /><EditTextPreference
+        <ListPreference 
+            android:defaultValue="@string/prefWebOrientationDefaultValue" 
+            android:entries="@array/OrientationOptions" 
+            android:entryValues="@array/OrientationOptions" 
+            android:key="WebOrientation" 
+            android:summary="@string/prefWebOrientationSummary" 
+            android:title="@string/prefWebOrientationTitle" />
+        <EditTextPreference
             android:defaultValue="@string/prefInitialWebPageDefaultValue"
             android:dialogTitle="@string/prefInitialWebPageSummary"
             android:key="InitialWebPage"

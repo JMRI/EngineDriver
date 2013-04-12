@@ -72,12 +72,7 @@ public class turnouts extends Activity implements OnGestureListener {
 	    	ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
 	    	TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
 	    	String systemname = (String) snv.getText();
-	        Message msg=Message.obtain();  
-        	msg.what=message_type.TURNOUT;
-        	msg.arg1=2; // 2 = toggle        	
-        	msg.arg2=0; // not used 
-            msg.obj=new String(systemname);    // load system name for turnout into message
-            mainapp.comm_msg_handler.sendMessage(msg);
+        	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, systemname, 2);	// 2=toggle
 	    };
 	  }	  
 
@@ -200,13 +195,7 @@ public class turnouts extends Activity implements OnGestureListener {
 		        //use preference for system name in command string
 		        String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
 		        String systemname = hs + "T" + entrytext;
-		        
-		        Message msg=Message.obtain();  
-	        	msg.what=message_type.TURNOUT;
-	        	msg.arg1=whichCommand;
-	        	msg.arg2=0; // not used 
-	            msg.obj=new String(systemname);    // load system name for turnout into message
-	            mainapp.comm_msg_handler.sendMessage(msg);
+	        	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, systemname, whichCommand);
 //	            entryv.setText(""); //clear the text after send
 		      } 
 		      else {

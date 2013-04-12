@@ -218,9 +218,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				  }
 				  break;
 			  case 'P': //panel info
-				  if (thrSel == 'W') {		// PW - web server port info
-					  portChange();
-				  }
+				  if (thrSel == 'W')		// PW - web server port info
+					  reloadWeb();
 				  break;
 			  }  //end of switch
 		  }
@@ -228,12 +227,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		  case message_type.WIT_CON_RETRY:
 			  removeLoco('T');
 			  removeLoco('S');
-			  portChange();
+			  reloadWeb();
 			  break;
 		  case message_type.DISCONNECT:
 			  disconnect();
 			  break;
-	  	  case message_type.NEW_WEBVIEW_LOC:				// webview location changed
+	  	  case message_type.WEBVIEW_LOC:				// webview location changed
 			  if("none".equals(webViewLocation)) {		// if not currently displayed 
 				  currentUrl = null;					// reload init url
 			  }
@@ -241,17 +240,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			  webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));    
 			  load_webview();
 	  		  break;
+	  	  case message_type.INITIAL_WEBPAGE:
+	  		  reloadWeb();
+	  		  break;
 		  }
 	  };
   }
 
-  private void portChange() {
+  private void reloadWeb() {
 	  // try web-dependent items again
 	  webView.stopLoading();
 	  clearHistory = true;
 	  currentUrl = null;
 	  load_webview();				//reload
   }
+  
   private void removeLoco(char whichThrottle) {
 	  ViewGroup tv;
 	  if (whichThrottle == 'T') {
@@ -376,10 +379,8 @@ private void setDisplayedSpeed(char whichThrottle, int speed) {
 		  set_direction_indication(whichThrottle, direction);
 	  }
   	  else {
-  			Message msg=Message.obtain();
-  			msg.what=message_type.REQ_DIRECTION;
-  			msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
-  			mainapp.comm_msg_handler.sendMessage(msg);
+  			// always load whichThrottle into message
+			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_DIRECTION, Character.toString(whichThrottle));
   	}
 *
 *  for now just track the setting:
@@ -565,28 +566,21 @@ void start_select_loco_activity(char whichThrottle)
     private void handleAction(int action) 
     {
 //      Log.d("Engine_Driver", "handleAction func" + function + " action " + action);
+      String throt = Character.toString(whichThrottle);
       switch(action)
       {
         case MotionEvent.ACTION_DOWN:
         {
-          Message function_msg=Message.obtain();  //create a message to be used by many of the buttons below
-          function_msg.what = message_type.NONE;
-
           switch (function) {
             case function_button.FORWARD : {
-            	function_msg.what=message_type.DIRECTION;
-                function_msg.arg1=1;
-            	function_msg.arg2=1;  //forward is 1
-
+            	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, throt, 1, 1);	//forward is 1
             	//show pressed image on current button, and turn off pressed image on "other" button 
             	set_direction_request(whichThrottle, 1);
             }
               break;
 
             case function_button.REVERSE : {
-            	function_msg.what=message_type.DIRECTION;
-                function_msg.arg1=1;
-            	function_msg.arg2=0;  //reverse is 0
+            	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, throt, 1, 0);	//reverse is 0
             	//show pressed image on current button, and turn off pressed image on "other" button 
             	set_direction_request(whichThrottle, 0);
             	//            	v.setPressed(true);
@@ -621,21 +615,10 @@ void start_select_loco_activity(char whichThrottle)
               break;
 
             default : {  //handle the function buttons
-              function_msg.what=message_type.FUNCTION;
-              function_msg.arg1=function;
-              function_msg.arg2=1;
+            	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, throt, function, 1);
 //              set_function_request(whichThrottle, function, 1);
             }
           }  //end of function switch
-          
-          if (function_msg.what != message_type.NONE) {  //don't send if no payload
-            function_msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
-            mainapp.comm_msg_handler.sendMessage(function_msg);            //send the message to comm thread
-          }
-          else {
-        	  function_msg.recycle();
-          }
-
         }
         break;
         //handle stopping of function on key-up 
@@ -647,12 +630,7 @@ void start_select_loco_activity(char whichThrottle)
         	}
         	// only process UP for function buttons
         	else if(function < function_button.FORWARD)   {
-        		Message function_msg=Message.obtain();
-        		function_msg.what=message_type.FUNCTION;
-        		function_msg.arg1=function;
-        		function_msg.arg2=0;
-        		function_msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
-        		mainapp.comm_msg_handler.sendMessage(function_msg);
+            	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, throt, function, 0);
 //                set_function_request(whichThrottle, function, 0);
         	}
         	break;
@@ -752,18 +730,12 @@ void start_select_loco_activity(char whichThrottle)
 
 	// send a throttle speed message to WiT
 	public void sendSpeedMsg(char whichThrottle, int speed) {
-		Message msg=Message.obtain();
-		msg.what=message_type.VELOCITY;
-		msg.arg1=speed;
-		msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
-		mainapp.comm_msg_handler.sendMessage(msg);
+    	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, Character.toString(whichThrottle), speed);
 	}
 
 /*  private void requestSpeedMsg(char whichThrottle) {
-		Message msg=Message.obtain();
-		msg.what=message_type.REQ_VELOCITY;
-		msg.obj=new String(Character.toString(whichThrottle));    // always load whichThrottle into message
-		mainapp.comm_msg_handler.sendMessage(msg);
+		// always load whichThrottle into message
+		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_VELOCITY, Character.toString(whichThrottle));
 }
 */
 
@@ -1271,22 +1243,8 @@ void start_select_loco_activity(char whichThrottle)
 
   private void disconnect() {
 	  //release the locos
-	  Message msg=Message.obtain();
-	  try {
-		  //release first loco
-		  msg.what=message_type.RELEASE;
-		  msg.obj=new String("T");
-		  mainapp.comm_msg_handler.sendMessage(msg);
-		  
-		  //release second loco
-		  msg=Message.obtain();
-		  msg.what=message_type.RELEASE;
-		  msg.obj=new String("S");
-		  mainapp.comm_msg_handler.sendMessage(msg);
-	  }
-	  catch(Exception e) {
-		  msg.recycle();
-	  }
+	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "T");	  //release first loco
+	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "S");	  //release second loco
 
 	  webView.stopLoading();
 

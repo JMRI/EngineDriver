@@ -59,15 +59,11 @@ public class power_control extends Activity {
 	  public class button_listener implements View.OnClickListener	  {
 		  
 	    public void onClick(View v) {
-	        Message msg=Message.obtain();  
-        	msg.what=message_type.POWER_CONTROL;
         	int newState = 1;
         	if (mainapp.power_state.equals("1")) { //toggle to opposite value 0=off, 1=on
         		newState = 0;
         	}
-        	msg.arg1=newState;
-        	msg.arg2=0; // not used 
-            mainapp.comm_msg_handler.sendMessage(msg);
+		    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.POWER_CONTROL, "", newState);
 	    };
 	  }
 	  

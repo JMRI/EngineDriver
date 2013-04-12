@@ -43,7 +43,8 @@ interface message_type
   public static final int SERVICE_REMOVED=19; 	// ta(service removed) -> ca ipaddr, ,port  (removes from list)
   public static final int REQ_VELOCITY=20; 		// ed(delay after sliderchg) -> ta (requests velocity from WiT)
   public static final int REQ_DIRECTION=21; 	// ed -> ta (requests direction from WiT)
-  public static final int NEW_WEBVIEW_LOC=22;	// pref -> throt  user changed webview location pref
+  public static final int WEBVIEW_LOC=22;		// pref -> throt  user changed webview location pref
   public static final int ROSTER_UPDATE=23;		// ta -> ed  roster-related data updated in background
   public static final int WIT_CON_RETRY=24;		// ta -> ed  WiT connection lost and trying to reconnect
+  public static final int INITIAL_WEBPAGE=25;	// pref -> throt or web  user changed initial webpage
 }

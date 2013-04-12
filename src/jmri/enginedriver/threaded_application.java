@@ -67,8 +67,8 @@ import android.content.pm.ActivityInfo;
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
 public class threaded_application extends Application {
 	public comm_thread commThread;
-	String host_ip; //The IP address of the WiThrottle server.
-	int port; //The TCP port that the WiThrottle server is running on
+	String host_ip = null; //The IP address of the WiThrottle server.
+	int port = 0; //The TCP port that the WiThrottle server is running on
 	//shared variables returned from the withrottle server, stored here for easy access by other activities
 	String loco_string_T = "Not Set"; //Loco Address string to display on first throttle
 	String loco_string_S = "Not Set"; //Loco Address string to display on second throttle
@@ -154,10 +154,7 @@ public class threaded_application extends Application {
 
 			public void serviceRemoved(ServiceEvent event)      {
 				//Tell the UI thread to remove from the list of services available.
-				Message service_message=Message.obtain();
-				service_message.what=message_type.SERVICE_REMOVED;
-				service_message.obj=event.getName();  //send the service name to be removed
-				connection_msg_handler.sendMessage(service_message);
+		    	sendMsg(connection_msg_handler, message_type.SERVICE_REMOVED, event.getName());	//send the service name to be removed
 				Log.d("Engine_Driver", String.format("serviceRemoved: '%s'", event.getName()));
 			};
 
@@ -179,7 +176,14 @@ public class threaded_application extends Application {
 				service_message.what=message_type.SERVICE_RESOLVED;
 				service_message.arg1=port;
 				service_message.obj=hm;  //send the hashmap as the payload
-				connection_msg_handler.sendMessage(service_message);
+				boolean sent = false;
+				try {
+					sent = connection_msg_handler.sendMessage(service_message);
+				}
+				catch(Exception e) {
+				}
+				if(!sent)
+					service_message.recycle();
 
 				Log.d("Engine_Driver", String.format("serviceResolved - %s(%s):%d -- %s", host_name, ip_address, port, event.toString().replace(System.getProperty("line.separator"), "")));
 
@@ -299,7 +303,6 @@ public class threaded_application extends Application {
 
 					//avoid duplicate connects, seen when user clicks address multiple times quickly
 					if (socketWiT != null && socketWiT.socketGood) {
-//					if (host_ip != null) {
 						Log.d("Engine_Driver","Duplicate CONNECT message received.  Ignoring.");
 						return;
 					}
@@ -316,9 +319,7 @@ public class threaded_application extends Application {
 					socketWiT = new socket_WiT();
 					if(socketWiT.connect() == true) {
 						sendThrottleName();
-						Message connection_message=Message.obtain();
-						connection_message.what=message_type.CONNECTED;
-						connection_msg_handler.sendMessage(connection_message);
+				    	sendMsg(connection_msg_handler, message_type.CONNECTED);
 					}
 					else {
 						host_ip = null;  //clear vars if failed to connect
@@ -389,7 +390,16 @@ public class threaded_application extends Application {
 			    	//give msgs a chance to xmit before closing socket
 					Message nmsg=Message.obtain(); 
 					nmsg.what=message_type.SHUTDOWN;
-			    	comm_msg_handler.sendMessageDelayed(nmsg, 1000);	
+					boolean sent = false;
+					try {
+						sent = comm_msg_handler.sendMessageDelayed(nmsg, 1000);
+					}
+					catch(Exception e) {
+					}
+					if(!sent) {
+						msg.recycle();
+						shutdown();
+					}
 					break;
 
 					//Set up an engine to control. The address of the engine is given in arg1, and the address type (long or short) is given in arg2.
@@ -468,15 +478,7 @@ public class threaded_application extends Application {
 
 					// SHUTDOWN - terminate socketWiT and it's done
 				case message_type.SHUTDOWN:
-					Log.d("Engine_Driver","TA Shutdown");
-					end_jmdns();						//jmdns should already be down but no harm in making call
-			    	if (socketWiT != null) {
-						socketWiT.disconnect(true);		//stop reading from the socket
-						socketWiT = null;
-					}
-//*** no activities should be running at this point					alert_activities(message_type.SHUTDOWN,"");
-//*** don't kill msg thread - it's needed if ED restarted			Looper.myLooper().quit();
-//*** same as previous												comm_msg_handler = null;
+					shutdown();
 					break;
 					
 					// update of roster-related data completed in background
@@ -487,6 +489,18 @@ public class threaded_application extends Application {
 			};
 		}
 
+		private void shutdown() {
+			Log.d("Engine_Driver","TA Shutdown");
+			end_jmdns();						//jmdns should already be down but no harm in making call
+	    	if (socketWiT != null) {
+				socketWiT.disconnect(true);		//stop reading from the socket
+				socketWiT = null;
+			}
+//*** no activities should be running at this point					alert_activities(message_type.SHUTDOWN,"");
+//*** don't kill msg thread - it's needed if ED restarted			Looper.myLooper().quit();
+//*** same as previous												comm_msg_handler = null;
+		}
+		
 		private void sendThrottleName() {
 			sendThrottleName(true);
 		}
@@ -500,12 +514,7 @@ public class threaded_application extends Application {
 
 		private void process_comm_error(String msg_txt) {
 			Log.d("Engine_Driver", "comm_handler.handleMessage: " + msg_txt);
-			if (connection_msg_handler!= null) {
-				Message ui_msg=Message.obtain();
-				ui_msg.what=message_type.ERROR;
-				ui_msg.obj = new String(msg_txt);  //put error message text in message
-				connection_msg_handler.sendMessage(ui_msg); //send message to ui thread for display
-			}
+	    	sendMsg(connection_msg_handler, message_type.ERROR, msg_txt);	//send error message to ui thread for display
 		}
 
 		private String setLocoString(LinkedHashMap<String,String> locos) {
@@ -951,90 +960,16 @@ public class threaded_application extends Application {
 
 		// forward a message to all running activities 
 		private void alert_activities(int msgType, String msgBody) {
-			if (connection_msg_handler != null)   
-			{ 
-				Message msg=Message.obtain(); 
-				msg.what=msgType;
-				msg.obj=new String(msgBody);
-				try {
-					connection_msg_handler.sendMessage(msg);
-				}
-				catch(Exception e) {
-					msg.recycle();
-				}
-			}
-			if (turnouts_msg_handler != null)   
-			{ 
-				Message msg=Message.obtain(); 
-				msg.what=msgType;
-				msg.obj=new String(msgBody);
-				try {
-					turnouts_msg_handler.sendMessage(msg);
-				}
-				catch(Exception e) {
-					msg.recycle();
-				}
-			}
-			if (routes_msg_handler != null)   { 
-				Message msg=Message.obtain(); 
-				msg.what=msgType;
-				msg.obj=new String(msgBody); 
-				try {
-					routes_msg_handler.sendMessage(msg);
-				}
-				catch(Exception e) {
-					msg.recycle();
-				}
-			}
-			if (throttle_msg_handler != null) {
-				Message msg=Message.obtain(); 
-				msg.what=msgType;
-				msg.obj=new String(msgBody);
-				try {
-					throttle_msg_handler.sendMessage(msg);
-				}
-				catch(Exception e) {
-					msg.recycle();
-				}
-			}
-			if (web_msg_handler != null) { 
-				Message msg=Message.obtain(); 
-				msg.what=msgType;
-				msg.obj=new String(msgBody); 
-				try {
-					web_msg_handler.sendMessage(msg);
-				}
-				catch(Exception e) {
-					msg.recycle();
-				}
-			}
-			if (power_control_msg_handler != null) { 
-				Message msg=Message.obtain(); 
-				msg.what=msgType;
-				msg.obj=new String(msgBody); 
-				try {
-					power_control_msg_handler.sendMessage(msg);
-				}
-				catch(Exception e) {
-					msg.recycle();
-				}
-			}
-
-			if (select_loco_msg_handler != null) { 
-				Message msg=Message.obtain(); 
-				msg.what=msgType;
-				msg.obj=new String(msgBody); 
-				try {
-					select_loco_msg_handler.sendMessage(msg);
-				}
-				catch(Exception e) {
-					msg.recycle();
-				}
-			}
+			sendMsg(connection_msg_handler, msgType, msgBody);
+			sendMsg(turnouts_msg_handler, msgType, msgBody);
+			sendMsg(routes_msg_handler, msgType, msgBody);
+			sendMsg(throttle_msg_handler, msgType, msgBody);
+			sendMsg(web_msg_handler, msgType, msgBody);
+			sendMsg(power_control_msg_handler, msgType, msgBody);
+			sendMsg(select_loco_msg_handler, msgType, msgBody);
 		}
 
-		
-		
+			
 		// get the roster name from address string 123(L).  Return input if not found in roster or in consist
 		private String get_loconame_from_address_string(String response_str) {
 
@@ -1217,7 +1152,7 @@ public class threaded_application extends Application {
 					}
 				}
 
-				if (!shutdown)	// retry the connection
+				if (!shutdown)	// going to retry the connection
 				{
 					// reinit shared variables then signal activities to refresh their views
 					// so that (potentially) invalid information is not displayed
@@ -1267,7 +1202,7 @@ public class threaded_application extends Application {
 					}
 					else {
 						process_comm_error("Warning: Lost connection to WiThrottle server " + host_ip + ".\nAttempting to reconnect.");
-						comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 5000L);	//try connection again in 5 seconds
+						comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 6000L);	//try connection again in 6 seconds
 					}
 				}
 
@@ -1598,9 +1533,7 @@ public class threaded_application extends Application {
 	    			runMethod(this);
 	    			if(cancel)
     					return;
-	    			Message msg=Message.obtain();		//send roster response message to alert other activities
-	    			msg.what=message_type.ROSTER_UPDATE;
-	    			comm_msg_handler.sendMessage(msg);
+	    			sendMsg(comm_msg_handler, message_type.ROSTER_UPDATE);		//send message to alert other activities
 	    		}
 	    		catch(Throwable t) {
 	    			Log.d("Engine_Driver", "Data fetch failed: " + t.getMessage());
@@ -1642,8 +1575,6 @@ public class threaded_application extends Application {
 	//initialize shared variables
 	private void initShared() {
 		withrottle_version = 0.0; 
-		port = 0;
-		host_ip = null;
 		web_server_port = 0;
 		power_state = null;
 		to_states = null;
@@ -1660,15 +1591,17 @@ public class threaded_application extends Application {
 		locos_on_S = new LinkedHashMap<String, String>();
 		function_labels_S = new LinkedHashMap<Integer, String>();
 		function_labels_T = new LinkedHashMap<Integer, String>();
-//		function_labels_default = new LinkedHashMap<Integer, String>();
 		function_states_T = new boolean[32];		// also allocated in onCreate() ???
 		function_states_S = new boolean[32];
 		consist_entries = new LinkedHashMap<String, String>();
 		roster = null;
 		roster_entries = null;
-//		roster_list_string = null;
 	}
-
+	
+	//
+	// utilities
+	//
+	
 	/** ------ copied from jmri util code -------------------
 	 * Split a string into an array of Strings, at a particular
 	 * divider.  This is similar to the new String.split method,
@@ -1710,6 +1643,36 @@ public class threaded_application extends Application {
 		return result;
 	}
 	
+	public boolean sendMsg(Handler h, int msgType) {
+		return sendMsg(h, msgType, "", 0, 0);
+	}
+
+	public boolean sendMsg(Handler h, int msgType, String msgBody) {
+		return sendMsg(h, msgType, msgBody, 0, 0);
+	}
+	
+	public boolean sendMsg(Handler h, int msgType, String msgBody, int msgArg1) {
+		return sendMsg(h, msgType, msgBody, msgArg1, 0);
+	}
+	public boolean sendMsg(Handler h, int msgType, String msgBody, int msgArg1, int msgArg2) {
+		boolean sent = false;
+		if(h != null) {
+			Message msg=Message.obtain(); 
+			msg.what=msgType;
+			msg.obj=new String(msgBody); 
+			msg.arg1 = msgArg1;
+			msg.arg2 = msgArg2;
+			try {
+				sent = h.sendMessage(msg);
+			}
+			catch(Exception e) {
+			}
+			if(!sent)
+				msg.recycle();
+		}
+		return sent;
+	}
+
 	//
 	// methods for use by Activities
 	//
@@ -1767,11 +1730,8 @@ public class threaded_application extends Application {
 		  b.setMessage(R.string.exit_text);
 		  b.setCancelable(true);
 		  b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-			 public void onClick(DialogInterface dialog, int id) {
-				  //disconnect from throttle
-				  Message msg=Message.obtain();
-				  msg.what=message_type.DISCONNECT;
-				  comm_msg_handler.sendMessage(msg);
+			  public void onClick(DialogInterface dialog, int id) {
+				 sendMsg(comm_msg_handler, message_type.DISCONNECT, "");  //trigger disconnect / shutdown sequence
 			 }
 		  } ); 
 		  b.setNegativeButton(R.string.no, null);
