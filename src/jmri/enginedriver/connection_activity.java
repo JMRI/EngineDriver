@@ -481,6 +481,8 @@ public class connection_activity extends Activity {
 
 	    	if(connections_list_file.exists())    {
 	    		BufferedReader list_reader=new BufferedReader(new FileReader(connections_list_file));
+				connections_list.clear();
+				connection_list_adapter.notifyDataSetChanged();
 	    		while(list_reader.ready())    {
 	    			String line=list_reader.readLine();
 	    			String ip_address;
@@ -509,7 +511,10 @@ public class connection_activity extends Activity {
 		    					hm.put("ip_address", ip_address);
 		    					hm.put("host_name", host_name);
 		    					hm.put("port", port.toString());
-		    					connections_list.add(hm);
+		    					if(!connections_list.contains(hm)) {	// suppress dups
+		    						connections_list.add(hm);
+		    						connection_list_adapter.notifyDataSetChanged();
+		    					}
 	    					if (host_name.equals(example_host) && port.toString().equals(example_port)) {
 	    						foundExampleHost = true; 
 	    					}
@@ -532,6 +537,7 @@ public class connection_activity extends Activity {
 				hm.put("host_name", example_host);
 				hm.put("port", example_port);
 				connections_list.add(hm);
+				connection_list_adapter.notifyDataSetChanged();
 		}
 	}
 	
