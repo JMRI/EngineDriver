@@ -248,8 +248,9 @@ public class routes extends Activity  implements OnGestureListener {
   @Override
   public void onResume() {
 	  super.onResume();
-    //update route list
-    refresh_route_view();
+	  mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+	  //update route list
+	  refresh_route_view();
   }
 
   /** Called when the activity is finished. */

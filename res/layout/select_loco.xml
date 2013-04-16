@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
         <TextView
-            android:id="@+id/current_locos_header"
+            android:id="@+id/throttle_name_header"
             style="@style/small_heading_style"
-            android:text="@string/current_locos" />
+            android:text="@string/none" />
         <LinearLayout
             android:id="@+id/current_locos_row"
             android:layout_width="fill_parent"
@@ -123,10 +123,4 @@
             android:layout_height="wrap_content" >
         </ListView>
     </LinearLayout>
-    <TextView
-        android:id="@+id/sl_footer"
-        style="@style/floating_text_style"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/none" />
 </LinearLayout>

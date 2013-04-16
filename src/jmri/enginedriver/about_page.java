@@ -17,10 +17,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import java.util.HashMap;
+
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.webkit.WebView;
+import android.widget.TextView;
 
 public class about_page extends Activity {
 
@@ -32,9 +36,32 @@ public class about_page extends Activity {
   {
     super.onCreate(savedInstanceState);
     mainapp=(threaded_application)this.getApplication();
-    WebView webview = new WebView(this);
+    setContentView(R.layout.about_page);
+
+    // format and show version info
+	TextView v = (TextView) findViewById(R.id.about_info);
+	String s;
+	// ED version info
+	try {
+		s = "Engine Driver: v" 
+			+ mainapp.getPackageManager().getPackageInfo(mainapp.getPackageName(), 0 ).versionName;
+	}
+	catch(Exception e) {
+		s = "";
+	}
+	// JMRI version info
+    HashMap<String, String> metadata = threaded_application.metadata;
+	if (metadata != null && metadata.size() > 0)
+		s += "\nJMRI v: " + metadata.get("JMRIVERCANON") + "    build: " + metadata.get("JMRIVERSION");
+	// WiT info
+	s += "\nWiThrottle: v" + mainapp.withrottle_version;
+	s += String.format("    Heartbeat: %d secs\n", mainapp.heartbeatInterval);
+	// show info
+	v.setText(s);
+
+	// show ED webpage
+	WebView webview = (WebView) findViewById(R.id.about_webview);
     webview.loadUrl("file:///android_asset/about_page.html");
-    setContentView(webview);
     
   };
 

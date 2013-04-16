@@ -50,6 +50,9 @@ import android.view.View.OnKeyListener;
 import android.os.Environment;
 import java.io.BufferedReader;
 import java.io.IOException;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 
@@ -78,9 +81,8 @@ public class select_loco extends Activity {
 
 	int engine_address;
 	int address_size;
-	private String whichThrottle; // "T" or "S" to distinguish which throttle
-									// we're asking for
-
+	private String whichThrottle = ""; // "T" or "S"
+	
 	private threaded_application mainapp; // hold pointer to mainapp
 
 	private SharedPreferences prefs;
@@ -158,9 +160,15 @@ public class select_loco extends Activity {
 	// lookup and set values of various text labels
 	private void set_labels() {
 
+		TextView v = (TextView) findViewById(R.id.throttle_name_header);
+		// show throttle name
+		String s = "Throttle Name: "
+			+ prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
+		v.setText(s);
+
 		// format and show currently selected locos, and hide or show Release
 		// buttons
-		TextView v = (TextView) findViewById(R.id.sl_loco_T);
+		v = (TextView) findViewById(R.id.sl_loco_T);
 		if (mainapp.loco_string_T.length() > 7) {  //shrink text if long
 			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
 		} else {
@@ -197,24 +205,7 @@ public class select_loco extends Activity {
 			rlv.setVisibility(GONE);
 	    }
 
-		// format and show footer info
-		v = (TextView) findViewById(R.id.sl_footer);
-
-		String s = "Throttle Name: "
-				+ prefs.getString("throttle_name_preference", this
-						.getResources().getString(
-								R.string.prefThrottleNameDefaultValue));
-		s += "\nWiThrottle: v" + mainapp.withrottle_version;
-		s += String.format("     Heartbeat: %d secs",
-				mainapp.heartbeatInterval);
-	    HashMap<String, String> metadata = threaded_application.metadata;
-		if (metadata != null && metadata.size() > 0) {
-			s += "\nJMRI: " + metadata.get("JMRIVERSION");
-		}
-
-		v.setText(s);
-
-		refresh_roster_list();
+	    refresh_roster_list();
 
 	}
 
@@ -262,7 +253,7 @@ public class select_loco extends Activity {
 
 	// request release of specified loco
 	void release_loco(String whichThrottle) {
-		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, new String(whichThrottle)); // pass T or S in message 
+		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, whichThrottle); // pass T or S in message 
 	}
 
 	void acquire_engine() {
@@ -484,56 +475,45 @@ public class select_loco extends Activity {
 		default_address_length = prefs.getString("default_address_length", this
 				.getResources().getString(
 						R.string.prefDefaultAddressLengthDefaultValue));
-
-		// set long/short based on length of text entered (but user can override
-		// if needed)
-		EditText la = (EditText) findViewById(R.id.loco_address);
-		la.setOnKeyListener(new OnKeyListener() {
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				Button ba = (Button) findViewById(R.id.acquire);
-				EditText la = (EditText) findViewById(R.id.loco_address);
-				Spinner al = (Spinner) findViewById(R.id.address_length);
-
-				// don't allow acquire button if nothing entered
-				if (la.getText().toString().length() > 0) {
-					ba.setEnabled(true);
-				} else {
-					ba.setEnabled(false);
-				}
-
-				// auto-set address length if requested
-				if (default_address_length.equals("Auto")) {
-					if (la.getText().toString().length() > 2) {
-						al.setSelection(1);
-					} else {
-						al.setSelection(0);
-					}
-				}
-				return false;
-			};
-		});
-		set_labels();
-	};
-
-	@Override
-	public void onStart() {
-
-		super.onStart();
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			whichThrottle = extras.getString("whichThrottle");
 		}
 
-		// set address length if default is set in prefs
+		// set long/short based on length of text entered (but user can override
+		// if needed)
+		EditText la = (EditText) findViewById(R.id.loco_address);
+		la.addTextChangedListener(new TextWatcher() {
+			public void afterTextChanged(Editable s) {
+				Button ba = (Button) findViewById(R.id.acquire);
+				EditText la = (EditText) findViewById(R.id.loco_address);
+
+				// don't allow acquire button if nothing entered
+				int txtLen = la.getText().length();
+				if (la.getText().length() > 0) {
+					ba.setEnabled(true);
+				} else {
+					ba.setEnabled(false);
+				}
+				updateAddressLength(txtLen);
+			}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+		});
+		set_labels();
+	};
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+
+		// checking address length here covers (future) case where prefs changed while paused
 		default_address_length = prefs.getString("default_address_length", this
-				.getResources().getString(
-						R.string.prefDefaultAddressLengthDefaultValue));
-		Spinner al = (Spinner) findViewById(R.id.address_length);
-		if (default_address_length.equals("Long")) {
-			al.setSelection(1);
-		} else if (default_address_length.equals("Short")) {
-			al.setSelection(0);
-		}
+				.getResources().getString(R.string.prefDefaultAddressLengthDefaultValue));
+		updateAddressLength(((EditText)findViewById(R.id.loco_address)).getText().length());
 	}
 
 	@Override
@@ -549,6 +529,17 @@ public class select_loco extends Activity {
 		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	}
 
+	private void updateAddressLength(int txtLen) {
+		Spinner al = (Spinner) findViewById(R.id.address_length);
+		if (default_address_length.equals("Long") 
+				|| (default_address_length.equals("Auto") && txtLen > 2)) {
+			al.setSelection(1);
+		} 
+		else {
+			al.setSelection(0);
+		}
+	}
+	
 	protected boolean onLongListItemClick(View v, int position, long id) {
 		if (mainapp.roster == null) {
 			Log.w("Engine_Driver", "No roster details found.");
