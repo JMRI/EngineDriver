@@ -47,6 +47,7 @@ import android.widget.ListView;
 import java.io.File;
 import android.view.View;
 import android.view.View.OnKeyListener;
+import android.view.inputmethod.InputMethodManager;
 import android.os.Environment;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -459,9 +460,6 @@ public class select_loco extends Activity {
 					+ except.getMessage());
 		}
 
-	    // suppress popup keyboard until EditText is touched
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
 		// Set the button callbacks.
 		Button button = (Button) findViewById(R.id.acquire);
 		button_listener click_listener = new button_listener();
@@ -480,22 +478,10 @@ public class select_loco extends Activity {
 			whichThrottle = extras.getString("whichThrottle");
 		}
 
-		// set long/short based on length of text entered (but user can override
-		// if needed)
 		EditText la = (EditText) findViewById(R.id.loco_address);
 		la.addTextChangedListener(new TextWatcher() {
 			public void afterTextChanged(Editable s) {
-				Button ba = (Button) findViewById(R.id.acquire);
-				EditText la = (EditText) findViewById(R.id.loco_address);
-
-				// don't allow acquire button if nothing entered
-				int txtLen = la.getText().length();
-				if (la.getText().length() > 0) {
-					ba.setEnabled(true);
-				} else {
-					ba.setEnabled(false);
-				}
-				updateAddressLength(txtLen);
+				updateAddressEntry();
 			}
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 			}
@@ -513,7 +499,19 @@ public class select_loco extends Activity {
 		// checking address length here covers (future) case where prefs changed while paused
 		default_address_length = prefs.getString("default_address_length", this
 				.getResources().getString(R.string.prefDefaultAddressLengthDefaultValue));
-		updateAddressLength(((EditText)findViewById(R.id.loco_address)).getText().length());
+		int txtLen = updateAddressEntry();
+		if(txtLen == 0) {
+			// suppress popup keyboard until EditText is touched
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		}
+		
+
+		// if text has been entered, put the cursor in the EditText at the end
+//		if(txtLen > 0) {
+//			EditText la = (EditText) findViewById(R.id.loco_address);
+//			la.setSelection(txtLen);
+//			((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+//		}
 	}
 
 	@Override
@@ -529,7 +527,20 @@ public class select_loco extends Activity {
 		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	}
 
-	private void updateAddressLength(int txtLen) {
+	private int updateAddressEntry() {
+		Button ba = (Button) findViewById(R.id.acquire);
+		EditText la = (EditText) findViewById(R.id.loco_address);
+		int txtLen = la.getText().length();
+
+		// don't allow acquire button if nothing entered
+		if (txtLen > 0) {
+			ba.setEnabled(true);
+		} 
+		else {
+			ba.setEnabled(false);
+		}
+		
+		// set address length
 		Spinner al = (Spinner) findViewById(R.id.address_length);
 		if (default_address_length.equals("Long") 
 				|| (default_address_length.equals("Auto") && txtLen > 2)) {
@@ -538,6 +549,7 @@ public class select_loco extends Activity {
 		else {
 			al.setSelection(0);
 		}
+		return txtLen;
 	}
 	
 	protected boolean onLongListItemClick(View v, int position, long id) {

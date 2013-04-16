@@ -49,13 +49,15 @@ public class about_page extends Activity {
 	catch(Exception e) {
 		s = "";
 	}
-	// JMRI version info
-    HashMap<String, String> metadata = threaded_application.metadata;
-	if (metadata != null && metadata.size() > 0)
-		s += "\nJMRI v: " + metadata.get("JMRIVERCANON") + "    build: " + metadata.get("JMRIVERSION");
-	// WiT info
-	s += "\nWiThrottle: v" + mainapp.withrottle_version;
-	s += String.format("    Heartbeat: %d secs\n", mainapp.heartbeatInterval);
+	if(mainapp.host_ip != null) {
+		// JMRI version info
+	    HashMap<String, String> metadata = threaded_application.metadata;
+		if (metadata != null && metadata.size() > 0)
+			s += "\nJMRI v: " + metadata.get("JMRIVERCANON") + "    build: " + metadata.get("JMRIVERSION");
+		// WiT info
+		s += "\nWiThrottle: v" + mainapp.withrottle_version;
+		s += String.format("    Heartbeat: %d secs\n", mainapp.heartbeatInterval);
+	}
 	// show info
 	v.setText(s);
 

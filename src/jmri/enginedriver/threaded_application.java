@@ -496,6 +496,8 @@ public class threaded_application extends Application {
 				socketWiT.disconnect(true);		//stop reading from the socket
 				socketWiT = null;
 			}
+	    	host_ip = null;
+	    	port = 0;
 //*** no activities should be running at this point					alert_activities(message_type.SHUTDOWN,"");
 //*** don't kill msg thread - it's needed if ED restarted			Looper.myLooper().quit();
 //*** same as previous												comm_msg_handler = null;
@@ -1520,7 +1522,6 @@ public class threaded_application extends Application {
 
 			@Override
 	    	public void run() {
-	    		// retrieve JMRI metadata, and place in global hashmap 
 	    		try {
 	    			while(running) {
 	    				Log.d("Engine_Driver", "Metadata fetch waiting");
@@ -1596,6 +1597,7 @@ public class threaded_application extends Application {
 		consist_entries = new LinkedHashMap<String, String>();
 		roster = null;
 		roster_entries = null;
+		metadata = null;
 	}
 	
 	//
