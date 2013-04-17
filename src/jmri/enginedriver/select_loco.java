@@ -46,6 +46,8 @@ import android.widget.SimpleAdapter;
 import android.widget.ListView;
 import java.io.File;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.os.Environment;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -62,6 +64,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.Button;
 import android.widget.AdapterView;
+import android.widget.TextView.OnEditorActionListener;
+
 import java.io.PrintWriter;
 
 import jmri.jmrit.roster.RosterEntry;
@@ -484,6 +488,19 @@ public class select_loco extends Activity {
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 			}
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+		});
+		la.setOnEditorActionListener(new OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
+					InputMethodManager imm = 
+			              (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+					return true;
+				}
+				else
+					return false;
 			}
 		});
 		set_labels();

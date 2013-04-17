@@ -24,6 +24,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -44,6 +45,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -53,6 +56,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.TextView.OnEditorActionListener;
 
 public class turnouts extends Activity implements OnGestureListener {
 
@@ -268,6 +272,19 @@ public class turnouts extends Activity implements OnGestureListener {
 		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 		}
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
+		}
+	});
+	trn.setOnEditorActionListener(new OnEditorActionListener() {
+		@Override
+		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+			if((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
+				InputMethodManager imm = 
+		              (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+				return true;
+			}
+			else
+				return false;
 		}
 	});
 	
