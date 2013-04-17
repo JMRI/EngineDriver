@@ -26,9 +26,14 @@ import java.util.HashMap;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -52,7 +57,6 @@ import android.widget.Toast;
 public class turnouts extends Activity implements OnGestureListener {
 
 	private threaded_application mainapp;  // hold pointer to mainapp
-	
 	private SharedPreferences prefs;
 	
 	private static final int GONE = 8;
@@ -86,15 +90,9 @@ public class turnouts extends Activity implements OnGestureListener {
 			}
 		};
 
-		//show selected hardware system
-	    String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
-		TextView hstv =(TextView)findViewById(R.id.hardware_system);
-		hstv.setText(hs);
-	
 		//clear and rebuild, or disable if not allowed
 		turnouts_list.clear();
 		if (mainapp.to_state_names != null) {  //not allowed
-
 			if (mainapp.to_user_names != null) { //none defined
 				int pos = 0;
 				for (String username : mainapp.to_user_names) {
@@ -120,27 +118,8 @@ public class turnouts extends Activity implements OnGestureListener {
 					pos++;
 				}  //end for loop
 			}  //if usernames is null
-			EditText te =(EditText)findViewById(R.id.turnout_entry);  // enable the buttons
-			te.setEnabled(true);
-			Button b =(Button)findViewById(R.id.turnout_throw);
-			b.setEnabled(true);
-			b =(Button)findViewById(R.id.turnout_close);
-			b.setEnabled(true);
-			b =(Button)findViewById(R.id.turnout_toggle);
-			b.setEnabled(true);
-			b.setText(getString(R.string.toggle_button));
-		}  else {
-			EditText te =(EditText)findViewById(R.id.turnout_entry);
-			te.setEnabled(false);
-			Button b =(Button)findViewById(R.id.turnout_throw);
-			b.setEnabled(false);
-			b =(Button)findViewById(R.id.turnout_close);
-			b.setEnabled(false);
-			b =(Button)findViewById(R.id.turnout_toggle);
-			b.setEnabled(false);
-			b.setText(getString(R.string.not_allowed));
-
 		}  //end statenames is null
+		updateTurnoutEntry();
 		
 		//sort by username
 		Collections.sort(turnouts_list, route_comparator);
@@ -148,6 +127,46 @@ public class turnouts extends Activity implements OnGestureListener {
 		turnouts_list_adapter.notifyDataSetChanged();  //update the list
 	}
 	  
+	private int updateTurnoutEntry() {
+		Button butTog = (Button) findViewById(R.id.turnout_toggle);
+    	Button butClose = (Button)findViewById(R.id.turnout_close);
+    	Button butThrow = (Button)findViewById(R.id.turnout_throw);
+		EditText trn = (EditText) findViewById(R.id.turnout_entry);
+		TextView trnPrefix =(TextView)findViewById(R.id.turnout_prefix);
+		String turnout = trn.getText().toString().trim();
+		int txtLen = turnout.length();
+		if (mainapp.to_state_names != null) {
+			trn.setEnabled(true);
+			// don't allow buttons if nothing entered
+			if(txtLen > 0) {
+				butThrow.setEnabled(true);
+				butClose.setEnabled(true);
+				butTog.setEnabled(true);
+				if(Character.isDigit(turnout.charAt(0))) //show hardware system prefix if numeric entry
+					trnPrefix.setEnabled(true);
+				else
+					trnPrefix.setEnabled(false);
+			}
+			else {
+				butThrow.setEnabled(false);
+				butClose.setEnabled(false);
+				butTog.setEnabled(false);
+				trnPrefix.setEnabled(false);
+			}
+		} 
+		else {
+			trn.setEnabled(false);
+			butThrow.setEnabled(false);
+			butClose.setEnabled(false);
+			butTog.setEnabled(false);
+			//set text to "Disabled", but only do this once to avoid getting stuck in this callback
+			if(!trn.getText().toString().equals(getString(R.string.disabled)))
+				trn.setText(getString(R.string.disabled));
+			trnPrefix.setEnabled(false);
+		}
+		return txtLen;
+	}
+
 	  //Handle messages from the communication thread back to this thread (responses from withrottle)
 	  class turnouts_handler extends Handler {
 
@@ -181,27 +200,28 @@ public class turnouts extends Activity implements OnGestureListener {
 			  whichCommand = new_command;
 		  }
 		  
-		    public void onClick(View v) {
+		  public void onClick(View v) {
 		      EditText entryv=(EditText)findViewById(R.id.turnout_entry);
-		      String entrytext = new String(entryv.getText().toString());
-		      if (entrytext.trim().length() > 0 ) {
-		        try {
-		          new Integer(entrytext);  //edit check address by attempting conversion to int
-		        } 
-		        catch(Exception except) { 
-		       	    Toast.makeText(getApplicationContext(), "Turnout # must be numeric, reenter.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
-		         	return;
-		        }
-		        //use preference for system name in command string
-		        String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
-		        String systemname = hs + "T" + entrytext;
-	        	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, systemname, whichCommand);
-//	            entryv.setText(""); //clear the text after send
+		      String entrytext = new String(entryv.getText().toString().trim());
+		      if (entrytext.length() > 0 ) {
+		    	  //if text starts with a digit, check number and prefix with hardware_system and "T"
+		    	  //otherwise send the text as is
+		    	  if(Character.isDigit(entrytext.charAt(0)))
+		    	  {
+		    		  try {
+		    			  new Integer(entrytext);  //edit check address by attempting conversion to int
+		    		  } 
+		    		  catch(Exception except) { 
+		    			  Toast.makeText(getApplicationContext(), "Invalid turnout number.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
+		    			  return;
+		    		  }
+		    		  //use preference for system name in command string
+		    		  String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
+		    		  entrytext = hs + "T" + entrytext;
+		    	  }
+	    		  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, entrytext, whichCommand);
 		      } 
-		      else {
-		    	    Toast.makeText(getApplicationContext(), "Enter a turnout # to control", Toast.LENGTH_SHORT).show();
-		      }
-		    };
+		  };
 	  }
 
   @Override
@@ -240,9 +260,17 @@ public class turnouts extends Activity implements OnGestureListener {
     };
     turnouts_lv.setOnTouchListener(gestureListener);
 
-    // suppress popup keyboard until EditText is touched
-	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-    
+	EditText trn =(EditText)findViewById(R.id.turnout_entry);
+	trn.addTextChangedListener(new TextWatcher() {
+		public void afterTextChanged(Editable s) {
+			updateTurnoutEntry();
+		}
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		}
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+		}
+	});
+	
     //Set the button callbacks, storing the command to pass for each
     Button b=(Button)findViewById(R.id.turnout_toggle);
     button_listener click_listener=new button_listener(2);
@@ -266,19 +294,24 @@ public class turnouts extends Activity implements OnGestureListener {
     	b=(Button)findViewById(R.id.turnout_throw);
    	    b.setVisibility(GONE);
     }
-  };
-    
-  @Override
-  public void onStart() {
-    super.onStart();
+	((EditText) findViewById(R.id.turnout_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
+    //update turnout list
+    refresh_turnout_view();
   }
-  
+    
   @Override
   public void onResume() {
 	super.onResume();
     mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-    //update turnout list
-    refresh_turnout_view();
+    //update hardware system prefix
+    String cmdPrefix= prefs.getString("hardware_system", getApplicationContext().getResources()
+    		.getString(R.string.prefHardwareSystemDefaultValue));
+	TextView trnPrefix =(TextView)findViewById(R.id.turnout_prefix);
+	trnPrefix.setText(cmdPrefix + "T");
+	// enable/disable buttons
+	updateTurnoutEntry();
+	// suppress popup keyboard until EditText is touched
+   	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
   }
 
   /** Called when the activity is finished. */

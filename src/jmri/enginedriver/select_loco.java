@@ -46,8 +46,6 @@ import android.widget.SimpleAdapter;
 import android.widget.ListView;
 import java.io.File;
 import android.view.View;
-import android.view.View.OnKeyListener;
-import android.view.inputmethod.InputMethodManager;
 import android.os.Environment;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -499,19 +497,9 @@ public class select_loco extends Activity {
 		// checking address length here covers (future) case where prefs changed while paused
 		default_address_length = prefs.getString("default_address_length", this
 				.getResources().getString(R.string.prefDefaultAddressLengthDefaultValue));
-		int txtLen = updateAddressEntry();
-		if(txtLen == 0) {
-			// suppress popup keyboard until EditText is touched
-			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		}
-		
-
-		// if text has been entered, put the cursor in the EditText at the end
-//		if(txtLen > 0) {
-//			EditText la = (EditText) findViewById(R.id.loco_address);
-//			la.setSelection(txtLen);
-//			((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-//		}
+		updateAddressEntry();	// enable/disable buttons
+		// suppress popup keyboard until EditText is touched
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	}
 
 	@Override
@@ -530,7 +518,7 @@ public class select_loco extends Activity {
 	private int updateAddressEntry() {
 		Button ba = (Button) findViewById(R.id.acquire);
 		EditText la = (EditText) findViewById(R.id.loco_address);
-		int txtLen = la.getText().length();
+		int txtLen = la.getText().toString().trim().length();
 
 		// don't allow acquire button if nothing entered
 		if (txtLen > 0) {

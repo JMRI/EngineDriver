@@ -60,7 +60,8 @@
     <string name="turnouts_direct_entry_label">Enter turnout# and Close, Throw or Toggle</string>
     <string name="routes">Routes</string>
     <string name="routes_label">Control Routes</string>
-    <string name="routes_direct_entry_label">Enter route# and press Toggle</string>
+    <string name="routes_direct_entry_label">Enter route# and press Set</string>
+    <string name="routes_default_prefix">R</string>
     <string name="throw_button">Throw</string>
     <string name="close_button">Close</string>
     <string name="toggle_button">Toggle</string>
@@ -73,7 +74,7 @@
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="set">Set</string>
-    <string name="not_allowed">Not Allowed</string>
+    <string name="disabled">Disabled</string>
     <string name="volume_indicator">v</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

@@ -13,11 +13,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="4dp" >
+        <TextView
+            android:id="@+id/route_prefix"
+            style="@style/floating_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/routes_default_prefix" />
         <EditText
             android:id="@+id/route_entry"
             android:layout_width="80sp"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
+            android:inputType="text"
             android:singleLine="true" />
         <Button
             android:id="@+id/route_toggle"

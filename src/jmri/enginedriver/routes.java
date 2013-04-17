@@ -29,6 +29,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -46,6 +49,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -117,25 +121,44 @@ public class routes extends Activity  implements OnGestureListener {
 				}  //if username blank
 //				routes_list_adapter.notifyDataSetChanged();
 			}  //if usernames is null
-			EditText te =(EditText)findViewById(R.id.route_entry);  // enable the buttons
-			te.setEnabled(true);
-			Button b =(Button)findViewById(R.id.route_toggle);
-			b.setEnabled(true);
-			b.setText(getString(R.string.set));
-		}  
-		else {
-			EditText te =(EditText)findViewById(R.id.route_entry);
-			te.setEnabled(false);
-			Button b =(Button)findViewById(R.id.route_toggle);
-			b.setEnabled(false);
-			b.setText(getString(R.string.not_allowed));
 		}  //end statenames  is null
+		updateRouteEntry();
 		
 		//sort by username
 		Collections.sort(routes_list, route_comparator);
-
 		routes_list_adapter.notifyDataSetChanged();
+	}
 
+	private int updateRouteEntry() {
+		Button butSet = (Button) findViewById(R.id.route_toggle);
+		EditText rte = (EditText) findViewById(R.id.route_entry);
+		TextView rtePrefix =(TextView)findViewById(R.id.route_prefix);
+		String route = rte.getText().toString().trim();
+		int txtLen = route.length();
+		if (mainapp.rt_state_names != null) {
+			rte.setEnabled(true);
+			butSet.setText(getString(R.string.set));
+			// don't allow Set button if nothing entered
+			if(txtLen > 0) {
+				butSet.setEnabled(true);
+				if(Character.isDigit(route.charAt(0))) // show default route prefix if numeric entry
+					rtePrefix.setEnabled(true);
+				else
+					rtePrefix.setEnabled(false);
+			}
+			else {
+				butSet.setEnabled(false);
+				rtePrefix.setEnabled(false);
+			}
+		} 
+		else {
+			rte.setEnabled(false);
+			butSet.setEnabled(false);
+			if(!rte.getText().toString().equals(getString(R.string.disabled)))
+				rte.setText(getString(R.string.disabled));
+			rtePrefix.setEnabled(false);
+		}
+		return txtLen;
 	}
 
 	  //Handle messages from the communication thread back to this thread (responses from withrottle)
@@ -171,25 +194,17 @@ public class routes extends Activity  implements OnGestureListener {
 			  whichCommand = new_command;
 		  }
 		  
-		    public void onClick(View v) {
+		  public void onClick(View v) {
 		      EditText entryv=(EditText)findViewById(R.id.route_entry);
-		      String entrytext = new String(entryv.getText().toString());
-		      if (entrytext.trim().length() > 0 ) {
-/*		        try {
-		          new Integer(entrytext);  //edit check address by attempting conversion to int
-		        } catch(Exception except) { 
-		       	    Toast.makeText(getApplicationContext(), "route # must be numeric, reenter.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
-		         	return;
-		        }
-*/		        
-//		        String systemname ="R" + entrytext;
-		        String systemname = entrytext;
-			    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, systemname, whichCommand);
-//	            entryv.setText(""); //clear the text after send
-		      } else {
-		    	    Toast.makeText(getApplicationContext(), "Enter a route # to set", Toast.LENGTH_SHORT).show();
+		      String entrytext = new String(entryv.getText().toString().trim());
+		      if (entrytext.length() > 0 ) {
+		    	  //if text starts with a digit then use default prefix
+		    	  //otherwise send the text as is
+		    	  if(Character.isDigit(entrytext.charAt(0)))
+		    		  entrytext = getString(R.string.routes_default_prefix) + entrytext;
+		    	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, entrytext, whichCommand);
 		      }
-		    };
+		  };
 	  }
 
   @Override
@@ -230,27 +245,34 @@ public class routes extends Activity  implements OnGestureListener {
     };
     routes_lv.setOnTouchListener(gestureListener);
     
-    // suppress popup keyboard until EditText is touched
-    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
+	EditText rte =(EditText)findViewById(R.id.route_entry);
+	rte.addTextChangedListener(new TextWatcher() {
+		public void afterTextChanged(Editable s) {
+			updateRouteEntry();
+		}
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		}
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+		}
+	});
+	
     //Set the button callbacks, storing the command to pass for each
     Button b=(Button)findViewById(R.id.route_toggle);
     button_listener click_listener=new button_listener(2);
     b.setOnClickListener(click_listener);
 
+	((EditText) findViewById(R.id.route_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
+    //update route list
+	refresh_route_view();
   };
-
-  @Override
-  public void onStart() {
-    super.onStart();
-  }
 
   @Override
   public void onResume() {
 	  super.onResume();
 	  mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-	  //update route list
-	  refresh_route_view();
+	  updateRouteEntry();	// enable/disable button
+	  // suppress popup keyboard until EditText is touched
+	  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
   }
 
   /** Called when the activity is finished. */
