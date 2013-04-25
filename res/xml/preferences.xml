@@ -37,14 +37,12 @@
             android:title="@string/prefMaximumThrottleChangeTitle" >
         </EditTextPreference>
         <CheckBoxPreference
-            android:defaultValue="@string/prefIncreaseSliderHeightDefaultValue"
-            android:dialogTitle="@string/prefIncreaseSliderHeightTitle"
+            android:defaultValue="@bool/prefIncreaseSliderHeightDefaultValue"
             android:key="increase_slider_height_preference"
             android:summary="@string/prefIncreaseSliderHeightSummary"
             android:title="@string/prefIncreaseSliderHeightTitle" >
         </CheckBoxPreference><CheckBoxPreference 
-            android:defaultValue="@string/prefUseOneThrottleDefaultValue" 
-            android:dialogTitle="@string/prefUseOneThrottleTitle" 
+            android:defaultValue="@bool/prefUseOneThrottleDefaultValue" 
             android:key="use_one_throttle_preference" 
             android:summary="@string/prefUseOneThrottleSummary" 
             android:title="@string/prefUseOneThrottleTitle">
@@ -65,15 +63,13 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference
-            android:defaultValue="@string/prefStopOnReleaseDefaultValue"
-            android:dialogTitle="@string/prefStopOnReleaseTitle"
+            android:defaultValue="@bool/prefStopOnReleaseDefaultValue"
             android:key="stop_on_release_preference"
             android:summary="@string/prefStopOnReleaseSummary"
             android:title="@string/prefStopOnReleaseTitle" >
         </CheckBoxPreference>
         <CheckBoxPreference
-            android:defaultValue="@string/prefDropOnAcquireDefaultValue"
-            android:dialogTitle="@string/prefDropOnAcquireTitle"
+            android:defaultValue="@bool/prefDropOnAcquireDefaultValue"
             android:key="drop_on_acquire_preference"
             android:summary="@string/prefDropOnAcquireSummary"
             android:title="@string/prefDropOnAcquireTitle" >
@@ -86,12 +82,25 @@
             android:summary="@string/prefDefaultAddressLengthSummary" 
             android:title="@string/prefDefaultAddressLengthTitle" />
         <CheckBoxPreference 
-            android:defaultValue="@string/prefHideRecentLocosDefaultValue" 
-            android:dialogTitle="@string/prefHideRecentLocosTitle" 
+            android:defaultValue="@bool/prefHideRecentLocosDefaultValue" 
             android:key="hide_recent_locos_preference" 
             android:summary="@string/prefHideRecentLocosSummary" 
             android:title="@string/prefHideRecentLocosTitle">
+        </CheckBoxPreference><CheckBoxPreference 
+            android:defaultValue="@bool/prefRosterRecentLocosDefaultValue" 
+            android:key="roster_recent_locos_preference" 
+            android:summary="@string/prefRosterRecentLocosSummary" 
+            android:title="@string/prefRosterRecentLocosTitle">
         </CheckBoxPreference>
+		<EditTextPreference 
+			android:defaultValue="@string/prefMaximumRecentLocosDefaultValue" 
+			android:dialogTitle="@string/prefMaximumRecentLocosTitle" 
+			android:key="maximum_recent_locos_preference" 
+			android:maxLength="2" 
+			android:numeric="integer" 
+			android:summary="@string/prefMaximumRecentLocosSummary" 
+			android:title="@string/prefMaximumRecentLocosTitle">
+        </EditTextPreference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefWebTitle" >
         <ListPreference 
@@ -128,8 +137,7 @@
             android:summary="@string/prefHardwareSystemSummary"
             android:title="@string/prefHardwareSystemTitle" />
         <CheckBoxPreference
-            android:defaultValue="@string/prefHideSystemRouteNamesDefaultValue"
-            android:dialogTitle="@string/prefHideSystemRouteNamesTitle"
+            android:defaultValue="@bool/prefHideSystemRouteNamesDefaultValue"
             android:key="hide_system_route_names_preference"
             android:summary="@string/prefHideSystemRouteNamesSummary"
             android:title="@string/prefHideSystemRouteNamesTitle" >

@@ -73,9 +73,6 @@ public class connection_activity extends Activity {
     private static final String example_host = "jmri.mstevetodd.com";
     private static final String example_port = "44444";
 
-     //flag to indicate the app is shutting down, used to speed up the transition through the lifecycle 
-	private boolean isShuttingDown = false;
-
 	private static Method overridePendingTransition;
 	static {
 		try {
@@ -104,15 +101,21 @@ public class connection_activity extends Activity {
 
   //Request connection to the WiThrottle server.
   void connect()  {
-	  sendMsgErr(message_type.CONNECT, connected_hostip, connected_port, "ERROR in ca.connect: comm thread not started.");
+	  sendMsgErr(0, message_type.CONNECT, connected_hostip, connected_port, "ERROR in ca.connect: comm thread not started.");
   };
 
 
   void start_throttle_activity()
   {
 	Intent throttle=new Intent().setClass(this, throttle.class);
+/***future Notification
+	//set flags to ensure there is just one throttle activity
+	throttle.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+***/	
 	startActivity(throttle);
-//    this.finish();
+/***future		
+ 	this.finish();
+***/
     overridePendingTransition(this,R.anim.fade_in, R.anim.fade_out);
  };
   
@@ -213,15 +216,9 @@ public class connection_activity extends Activity {
         	start_throttle_activity();
         	break;
 
-        case message_type.DISCONNECT:
-        	completeShutdown();
+        case message_type.SHUTDOWN:
+        	shutdown();
         	break;
-
-        case message_type.ERROR:
-          //display error message from msg.obj
-          String msg_txt = new String((String)msg.obj);
-      	  Toast.makeText(getApplicationContext(), msg_txt, Toast.LENGTH_SHORT).show();
-      	  break;
       }
     };
   }
@@ -235,7 +232,6 @@ public class connection_activity extends Activity {
     Log.d("Engine_Driver","connection.onCreate ");
     mainapp=(threaded_application)this.getApplication();
     mainapp.connection_msg_handler=new ui_handler();
-    isShuttingDown = false;
 
     //ensure statics in all activities are reinitialize since Android might not have killed app since it was last Exited.
     //do this here instead of TA.onCreate() because that method won't be invoked if app is still running. 
@@ -298,66 +294,47 @@ public class connection_activity extends Activity {
     threaded_application.min_fling_velocity = (int)(threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f);
 
   }
-
-	@Override
+  
+    @Override
 	public void onResume() {
 		super.onResume();
-	    if (isShuttingDown) {
-	    	if(!this.isFinishing())
-	    		this.finish();
-	    	return;
-	    }
+		if(this.isFinishing()) {		//if finishing, expedite it
+			return;
+		}
+
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 	    //start up server discovery listener
-	    sendMsgErr(message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
-
+	    sendMsgErr(0, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
 	    //populate the ListView with the recent connections
 	    getConnectionsList();
-    
 	    set_labels();
-
 	    //start up server discovery listener again (after a 1 second delay)
 	    //TODO: this is a rig, figure out why this is needed for ubuntu servers
-	    sendMsgErr(message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
+	    sendMsgErr(1000, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
 	}  //end of onResume
 
-//	@Override
-//	public void onRestart() {
-//		super.onRestart();
-//	    Log.d("Engine_Driver","connection.onRestart() called");
-//	    if (isShuttingDown && !this.isFinishing())
-//	    	this.finish();
-//	}
-	
 	@Override
 	public void onPause() {
-		//shutdown server discovery listener
-		Log.d("Engine_Driver","connection.onPause() called with "+isShuttingDown);
-		if(!isShuttingDown) {
-		    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 0);
-		}
 	    super.onPause();
 	}
 
 	@Override
+	public void onStop() {
+		Log.d("Engine_Driver","connection.onStop()");
+		//shutdown server discovery listener
+	    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 0);
+		super.onStop();
+	}
+	
+	@Override
 	public void onDestroy() {
-		Log.d("Engine_Driver","connection.onDestroy() called");
+		Log.d("Engine_Driver","connection.onDestroy()");
 		mainapp.connection_msg_handler = null;
 		super.onDestroy();
 	}
 	
-    //tell TA to exit
-    private void startShutdown() {
-	    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISCONNECT);
-    }
-    
-    //tell TA that CA is ending
-    private void completeShutdown() {
-    	if(!isShuttingDown) {
-    		isShuttingDown = true;
-    		this.finish();
-    	}
-//	  System.exit(0);
+    private void shutdown() {
+    	this.finish();
     }
 
     private void set_labels() {
@@ -377,6 +354,9 @@ public class connection_activity extends Activity {
   public boolean onOptionsItemSelected(MenuItem item) {
       // Handle all of the possible menu actions.
       switch (item.getItemId()) {
+      case R.id.exit_mnu:
+    	  mainapp.checkExit(this);
+     	  break;
       case R.id.settings_menu:
     	  Intent settings=new Intent().setClass(this, function_settings.class);
 //	  	  settings.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -409,13 +389,13 @@ public class connection_activity extends Activity {
 	@Override
 	public boolean onKeyDown(int key, KeyEvent event) {
 		if (key == KeyEvent.KEYCODE_BACK) {
-			startShutdown();	// close activity and app
+			mainapp.checkExit(this);
 		}
 		return (super.onKeyDown(key, event));
 	};
 
-	private void sendMsgErr(int msgType, String msgBody, int msgArg1, String errMsg) {
-		if(!mainapp.sendMsg(mainapp.comm_msg_handler, msgType, msgBody, msgArg1)) {
+	private void sendMsgErr(long delayMs, int msgType, String msgBody, int msgArg1, String errMsg) {
+		if(!mainapp.sendMsgDelay(mainapp.comm_msg_handler, delayMs, msgType, msgBody, msgArg1, 0)) {
 			Log.e("Engine_Driver",errMsg) ;
 			Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT).show();
 		}    	

@@ -104,7 +104,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 	private static final String noUrl = "file:///android_asset/blank_page.html";
 	private static final float initialScale = 1.5f;
-	private WebView webView;
+	private WebView webView = null;
 	private String webViewLocation;
 	private static float scale = initialScale;			// used to restore throt web zoom level (after rotation)
 	private static boolean clearHistory = false;		// flags webViewClient to clear history when page load finishes
@@ -230,6 +230,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			  reloadWeb();
 			  break;
 		  case message_type.DISCONNECT:
+		  case message_type.SHUTDOWN:
 			  disconnect();
 			  break;
 	  	  case message_type.WEBVIEW_LOC:				// webview location changed
@@ -745,9 +746,12 @@ void start_select_loco_activity(char whichThrottle)
     super.onCreate(savedInstanceState);
     mainapp=(threaded_application)this.getApplication();
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-    setContentView(R.layout.throttle);
     orientationChange = false;
-
+    if(mainapp.doFinish) {		// expedite
+    	this.finish();
+    	return;
+    }
+    setContentView(R.layout.throttle);
     webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));    
 //    myGesture = new GestureDetector(this);
     GestureOverlayView ov = (GestureOverlayView)findViewById(R.id.throttle_overlay);
@@ -866,13 +870,13 @@ void start_select_loco_activity(char whichThrottle)
   } //end of onCreate()
 
   @Override
-  public void onStart() {
-    super.onStart();
-  }
-
-  @Override
   public void onResume() {
 	  super.onResume();
+	  if(mainapp.doFinish)
+		  this.finish();
+	  if(this.isFinishing())		//expedite
+		  return;
+
 	  mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 
 	  // set max allowed change for throttles from prefs
@@ -891,8 +895,10 @@ void start_select_loco_activity(char whichThrottle)
 	  gestureInProgress = false;
 
 	  set_labels();			// handle labels and update view
-	  if(!callHiddenWebViewOnResume())
-		  webView.resumeTimers();
+	  if(webView != null) {
+		  if(!callHiddenWebViewOnResume())
+			  webView.resumeTimers();
+	  }
 	  CookieSyncManager.getInstance().startSync();
   }
 
@@ -906,18 +912,22 @@ void start_select_loco_activity(char whichThrottle)
   @Override
   public void onPause() {
 	  super.onPause();
-	  if(!callHiddenWebViewOnPause())
-	  	webView.pauseTimers();
+	  if(webView != null) {
+		  if(!callHiddenWebViewOnPause())
+		  	webView.pauseTimers();
+	  }
 	  CookieSyncManager.getInstance().stopSync();
   }
 
 /** Called when the activity is finished. */
   @Override
   public void onDestroy() {
-	  Log.d("Engine_Driver","throttle.onDestroy() called");
-	  scale = webView.getScale();		// save current scale for next onCreate
-	  if(!orientationChange) {			// if screen is exiting
-		  webView.loadUrl(noUrl);		//load a static url else any javascript on current page would keep running
+	  Log.d("Engine_Driver","throttle.onDestroy()");
+	  if(webView != null) {
+		  scale = webView.getScale();		// save current scale for next onCreate
+		  if(!orientationChange) {			// if screen is exiting
+			  webView.loadUrl(noUrl);		//load a static url else any javascript on current page would keep running
+		  }
 	  }
 	  mainapp.throttle_msg_handler = null;
 	  super.onDestroy();
@@ -1090,7 +1100,7 @@ void start_select_loco_activity(char whichThrottle)
 
  // increase height of throttle slider (if requested in preferences)
     boolean ish = prefs.getBoolean("increase_slider_height_preference", 
-    		Boolean.valueOf(getString(R.string.prefIncreaseSliderHeightDefaultValue)));
+    		getResources().getBoolean(R.bool.prefIncreaseSliderHeightDefaultValue));
     
     final DisplayMetrics dm = getResources().getDisplayMetrics();
  // Get the screen's density scale
@@ -1156,8 +1166,8 @@ void start_select_loco_activity(char whichThrottle)
     if (screenHeight > throttleMargin) {	//don't do this if height is invalid
 		//determine how to split the screen (evenly if both, 90/10 if only one)
     	screenHeight -= throttleMargin;
-        boolean useOneThrot = prefs.getBoolean("use_one_throttle_preference", 
-        		Boolean.valueOf(getApplication().getResources().getString(R.string.prefUseOneThrottleDefaultValue)));
+        boolean useOneThrot = prefs.getBoolean("use_one_throttle_preference",
+        		getResources().getBoolean(R.bool.prefUseOneThrottleDefaultValue));
         if(useOneThrot == true)
         {
 	    	height_T = screenHeight;
@@ -1247,19 +1257,10 @@ void start_select_loco_activity(char whichThrottle)
 	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "S");	  //release second loco
 
 	  webView.stopLoading();
-
-		//always go to Connection Activity
-//  	  Intent in=new Intent().setClass(this, connection_activity.class);
-//	  startActivity(in);
-
 	  this.finish();  //end this activity
-//	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-
-	  //	  connection_activity.end_all_activity();
   }
 
-	  
-@Override
+  @Override
   public boolean onCreateOptionsMenu(Menu menu){
 	  MenuInflater inflater = getMenuInflater();
 	  inflater.inflate(R.menu.throttle_menu, menu);

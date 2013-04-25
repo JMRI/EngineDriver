@@ -27,8 +27,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -127,7 +125,6 @@ public class turnouts extends Activity implements OnGestureListener {
 		
 		//sort by username
 		Collections.sort(turnouts_list, route_comparator);
-
 		turnouts_list_adapter.notifyDataSetChanged();  //update the list
 	}
 	  
@@ -190,6 +187,7 @@ public class turnouts extends Activity implements OnGestureListener {
 					refresh_turnout_view(); 
 	      			break;
 	      		case message_type.DISCONNECT:
+	      		case message_type.SHUTDOWN:
 	  		  		disconnect();
 	  		  		break;
 			};
@@ -237,9 +235,13 @@ public class turnouts extends Activity implements OnGestureListener {
   @Override
   public void onCreate(Bundle savedInstanceState)  {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.turnouts);
     mainapp=(threaded_application)getApplication();
 	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+    if(mainapp.doFinish) {		// expedite
+    	this.finish();
+    	return;
+    }
+    setContentView(R.layout.turnouts);
     //put pointer to this activity's handler in main app's shared variable (If needed)
 	mainapp.turnouts_msg_handler=new turnouts_handler();
 
@@ -287,8 +289,8 @@ public class turnouts extends Activity implements OnGestureListener {
 				return false;
 		}
 	});
-	
-    //Set the button callbacks, storing the command to pass for each
+
+	//Set the button callbacks, storing the command to pass for each
     Button b=(Button)findViewById(R.id.turnout_toggle);
     button_listener click_listener=new button_listener(2);
     b.setOnClickListener(click_listener);
@@ -319,6 +321,10 @@ public class turnouts extends Activity implements OnGestureListener {
   @Override
   public void onResume() {
 	super.onResume();
+	if(mainapp.doFinish)
+		this.finish();
+	if(this.isFinishing())		// expedite
+		return;
     mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
     //update hardware system prefix
     String cmdPrefix= prefs.getString("hardware_system", getApplicationContext().getResources()
@@ -330,11 +336,11 @@ public class turnouts extends Activity implements OnGestureListener {
 	// suppress popup keyboard until EditText is touched
    	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
   }
-
+  
   /** Called when the activity is finished. */
   @Override
   public void onDestroy() {
-	  Log.d("Engine_Driver","turnouts.onDestroy() called");
+	  Log.d("Engine_Driver","turnouts.onDestroy()");
 	  mainapp.turnouts_msg_handler = null;
 	  super.onDestroy();
   }
@@ -444,6 +450,5 @@ public class turnouts extends Activity implements OnGestureListener {
 	
 	private void disconnect() {
 		this.finish();
-		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	}
 }

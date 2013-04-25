@@ -200,7 +200,7 @@ public class select_loco extends Activity {
 
 		// hide the recent locos list if selected in prefs
 	    boolean hrl = prefs.getBoolean("hide_recent_locos_preference", 
-	    		Boolean.valueOf(getString(R.string.prefHideRecentLocosDefaultValue))); 
+	    		getResources().getBoolean(R.bool.prefHideRecentLocosDefaultValue)); 
 	    if (hrl) {
 			View rlv = (View) findViewById(R.id.recent_engines_heading);
 			rlv.setVisibility(GONE);
@@ -259,29 +259,38 @@ public class select_loco extends Activity {
 		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, whichThrottle); // pass T or S in message 
 	}
 
-	void acquire_engine() {
+	void acquire_engine(boolean bUpdateList) {
     	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, whichThrottle, engine_address, address_size);
+    	if(!bUpdateList)
+    		return;
 
 		// Save the engine list to the recent_engine_list.txt file.
 		File sdcard_path = Environment.getExternalStorageDirectory();
 		File connections_list_file = new File(sdcard_path,
 				"engine_driver/recent_engine_list.txt");
 		PrintWriter list_output;
+		String smrl = prefs.getString("maximum_recent_locos_preference", ""); //retrieve pref for max recent locos to show  
+		if (smrl.equals("")) { //if no value or entry removed, set to default
+			smrl = getApplicationContext().getResources().getString(R.string.prefMaximumRecentLocosDefaultValue);
+		}
 		try {
+			int mrl = Integer.parseInt(smrl);
 			list_output = new PrintWriter(connections_list_file);
-			// Add this connection to the head of connections list.
-			list_output.format("%d:%d\n", engine_address, address_size);
-			for (int i = 0; i < engine_address_list.size(); i += 1) {
-				if (engine_address == engine_address_list.get(i)
-						&& address_size == address_size_list.get(i)) {
-					continue;
+			if(mrl > 0) {
+				// Add this connection to the head of connections list.
+				mrl--;
+				list_output.format("%d:%d\n", engine_address, address_size);
+				for (int i = 0; i < engine_address_list.size() && mrl > 0; i++) {
+					if (engine_address != engine_address_list.get(i) || address_size != address_size_list.get(i)) {
+						list_output.format("%d:%d\n", engine_address_list.get(i), address_size_list.get(i));
+						mrl--;
+					}
 				}
-				list_output.format("%d:%d\n", engine_address_list.get(i),
-						address_size_list.get(i));
 			}
 			list_output.flush();
 			list_output.close();
-		} catch (IOException except) {
+		} 
+		catch (IOException except) {
 			Log.e("Engine_Driver",
 					"select_loco - Error creating a PrintWriter, IOException: "
 							+ except.getMessage());
@@ -299,7 +308,7 @@ public class select_loco extends Activity {
 			}
 			Spinner spinner = (Spinner) findViewById(R.id.address_length);
 			address_size = spinner.getSelectedItemPosition();
-			acquire_engine();
+			acquire_engine(true);
 			end_this_activity();
 		};
 	}
@@ -324,7 +333,7 @@ public class select_loco extends Activity {
 				long id) {
 			engine_address = engine_address_list.get(position);
 			address_size = address_size_list.get(position);
-			acquire_engine();
+			acquire_engine(true);
 			end_this_activity();
 		};
 	}
@@ -336,21 +345,22 @@ public class select_loco extends Activity {
 			
 			//use clicked position in list to retrieve roster item object from roster_list
 			HashMap<String, String> hm 	= roster_list.get(position);
-			String rosternamestring 	= hm.get("roster_name");
-			String rosteraddressstring 	= hm.get("roster_address");
-			String rosterentrytype 		= hm.get("roster_entry_type");
+			String rosterNameString 	= hm.get("roster_name");
+			String rosterAddressString 	= hm.get("roster_address");
+			String rosterEntryType 		= hm.get("roster_entry_type");
 			// parse address and length from string, e.g. 2591(L)
-			String ras[] = threaded_application.splitByString(rosteraddressstring, "(");
+			String ras[] = threaded_application.splitByString(rosterAddressString, "(");
 			if (ras[0].length() > 0) {  //only process if address found
-				Integer addresslength = (ras[1].charAt(0) == 'L') ? address_type.LONG
-						: address_type.SHORT; // convert S/L to 0/1
-				int address = Integer.valueOf(ras[0]); // convert address to int
-				String t = whichThrottle;
-				if (rosterentrytype.equals("loco")) { 
-					t += "|" + rosternamestring;  //append rostername if type is loco (not consist) 
+				address_size = (ras[1].charAt(0) == 'L') 
+									? address_type.LONG
+									: address_type.SHORT; // convert S/L to 0/1
+				engine_address = Integer.valueOf(ras[0]); // convert address to int
+				if (rosterEntryType.equals("loco")) { 
+					whichThrottle += "|" + rosterNameString;  //append rostername if type is loco (not consist) 
 				}
-		    	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, t, address, addresslength);
-
+			    boolean bRoster = prefs.getBoolean("roster_recent_locos_preference", 
+			    		getResources().getBoolean(R.bool.prefRosterRecentLocosDefaultValue)); 
+				acquire_engine(bRoster);
 				end_this_activity();
 			}
 		};

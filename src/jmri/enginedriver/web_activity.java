@@ -67,6 +67,7 @@ public class web_activity extends Activity {
 			  reloadWebpage(); 
 			  break;
 		  case message_type.DISCONNECT:
+		  case message_type.SHUTDOWN:
 			  disconnect();
 			  break;
 		  }
@@ -87,8 +88,12 @@ public class web_activity extends Activity {
 
     mainapp=(threaded_application)this.getApplication();
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-    setContentView(R.layout.web_activity);
     orientationChange = false;
+    if(mainapp.doFinish) {		// expedite
+    	this.finish();
+    	return;
+    }
+    setContentView(R.layout.web_activity);
   
 	webView = (WebView) findViewById(R.id.webview);
 	webView.getSettings().setJavaScriptEnabled(true);
@@ -139,6 +144,10 @@ public class web_activity extends Activity {
   public void onResume() {
 	  Log.d("Engine_Driver","web_activity.onResume() called");
  	  super.onResume();
+	  if(mainapp.doFinish)
+		  this.finish();
+	  if(this.isFinishing())		// expedite
+		  return;
 
  	  mainapp.setActivityOrientation(this, true);  	//set screen orientation based on prefs
 
@@ -155,7 +164,8 @@ public class web_activity extends Activity {
  @Override
   public void onSaveInstanceState(Bundle outState) {
 	  super.onSaveInstanceState(outState);
-	  webView.saveState(outState);		// save history
+	  if(webView != null)
+		  webView.saveState(outState);		// save history
 	  orientationChange = true;
 	  
   }
@@ -163,9 +173,11 @@ public class web_activity extends Activity {
   @Override
   public void onPause() {
 	  super.onPause();
-	  if(!callHiddenWebViewOnPause())
-		  	webView.pauseTimers();
-		  CookieSyncManager.getInstance().stopSync();
+	  if(webView != null) {
+		  if(!callHiddenWebViewOnPause())
+			  webView.pauseTimers();
+	  }
+	  CookieSyncManager.getInstance().stopSync();
 }
    
   /** Called when the activity is finished. */
@@ -173,9 +185,11 @@ public class web_activity extends Activity {
   public void onDestroy() {
 	  Log.d("Engine_Driver","web_activity.onDestroy() called");
 
-	  scale = webView.getScale();	// save scale for next onCreate
-	  if(!orientationChange) {		// screen is exiting
-		  webView.loadUrl(noUrl);	//load a static url else any javascript on current page would keep running
+	  if(webView != null) {
+		  scale = webView.getScale();	// save scale for next onCreate
+		  if(!orientationChange) {		// screen is exiting
+			  webView.loadUrl(noUrl);	//load a static url else any javascript on current page would keep running
+		  }
 	  }
 	  mainapp.web_msg_handler = null;
 	  super.onDestroy();
@@ -285,7 +299,6 @@ public class web_activity extends Activity {
  private void disconnect() {
 	  webView.stopLoading();
 	  this.finish();
-	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
  }
  
  // helper app to initialize statics (in case GC has not run since app last shutdown)

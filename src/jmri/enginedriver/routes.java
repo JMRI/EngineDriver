@@ -52,7 +52,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -83,7 +82,7 @@ public class routes extends Activity  implements OnGestureListener {
 	public void refresh_route_view() {
 		
 	    boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference", 
-	    		Boolean.valueOf(getString(R.string.prefHideSystemRouteNamesDefaultValue)));
+	    		getResources().getBoolean(R.bool.prefHideSystemRouteNamesDefaultValue));
 
 		//specify logic for sort comparison (by username)
 	    Comparator<HashMap<String, String>> route_comparator = new Comparator<HashMap<String, String>>() {
@@ -185,6 +184,7 @@ public class routes extends Activity  implements OnGestureListener {
 				refresh_route_view(); 
       			break;
 		  	case message_type.DISCONNECT:
+		  	case message_type.SHUTDOWN:
 	  			  disconnect();
 	  			  break;
 		};
@@ -220,14 +220,16 @@ public class routes extends Activity  implements OnGestureListener {
   @Override
   public void onCreate(Bundle savedInstanceState)  {
     super.onCreate(savedInstanceState);
-
-    
+  
     mainapp=(threaded_application)getApplication();
-   	setContentView(R.layout.routes);
 	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+    if(mainapp.doFinish) {		// expedite
+    	this.finish();
+    	return;
+    }
+   	setContentView(R.layout.routes);
     //put pointer to this activity's handler in main app's shared variable
   	mainapp.routes_msg_handler=new routes_handler();
-    
 	myGesture = new GestureDetector(this);
         
 	//Set up a list adapter to allow adding the list of recent connections to the UI.
@@ -286,6 +288,10 @@ public class routes extends Activity  implements OnGestureListener {
   @Override
   public void onResume() {
 	  super.onResume();
+	  if(mainapp.doFinish)
+		  this.finish();
+	  if(this.isFinishing())		// expedite
+		  return;
 	  mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 	  updateRouteEntry();	// enable/disable button
 	  // suppress popup keyboard until EditText is touched
@@ -295,7 +301,7 @@ public class routes extends Activity  implements OnGestureListener {
   /** Called when the activity is finished. */
   @Override
   public void onDestroy() {
-	  Log.d("Engine_Driver","routes.onDestroy() called");
+	  Log.d("Engine_Driver","routes.onDestroy()");
 	  mainapp.routes_msg_handler = null;
 	  super.onDestroy();
   }
@@ -322,15 +328,15 @@ public class routes extends Activity  implements OnGestureListener {
 		 (Math.abs(velocityX) > threaded_application.min_fling_velocity)) {
 		  // left to right swipe goes to throttle
 		  if(e2.getX() > e1.getX()) {
-			  this.finish();  //don't keep on return stack
+			  this.finish();
 			  connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
 		  }
 		  // right to left swipe goes to turnouts
 		  else {
 			  Intent in=new Intent().setClass(this, turnouts.class);
 			  startActivity(in);
+			  this.finish();
 			  connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-			  this.finish();  //don't keep on return stack
 		  }
 		  return true;
 	  }
@@ -406,7 +412,6 @@ public class routes extends Activity  implements OnGestureListener {
 
   private void disconnect() {
 	  this.finish();
-	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
   }
   
 };

@@ -50,8 +50,9 @@ public class power_control extends Activity {
 					refresh_power_control_view(); 
 					break;
 	  		  	case message_type.DISCONNECT:
-	  			  disconnect();
-	  			  break;
+	  		  	case message_type.SHUTDOWN:
+	  		  		disconnect();
+	  		  		break;
 			};
 		}
 	  }
@@ -92,10 +93,12 @@ public class power_control extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState)  {
     super.onCreate(savedInstanceState);
-
-    setContentView(R.layout.power_control);
-    
     mainapp=(threaded_application)getApplication();
+    if(mainapp.doFinish) {		// expedite
+    	this.finish();
+    	return;
+    }
+    setContentView(R.layout.power_control);
     //put pointer to this activity's handler in main app's shared variable (If needed)
    	mainapp.power_control_msg_handler=new power_control_handler();
     
@@ -112,13 +115,12 @@ public class power_control extends Activity {
   };
 
   @Override
-  public void onStart() {
-    super.onStart();
-  }
-
-  @Override
   public void onResume() {
 	  super.onResume();
+	  if(mainapp.doFinish)
+		  this.finish();
+	  if(this.isFinishing())		// expedite
+		  return;
 	  mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
     //update route list
     refresh_power_control_view();
@@ -143,8 +145,7 @@ public class power_control extends Activity {
   };
 
   private void disconnect() {
-	this.finish();
-	connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	  this.finish();
   }
 
 }

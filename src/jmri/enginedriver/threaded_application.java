@@ -23,11 +23,15 @@ package jmri.enginedriver;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.PowerManager;
 import android.os.SystemClock;
 
 import java.net.*;
@@ -49,17 +53,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
-
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-
 import jmri.enginedriver.message_type;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 
@@ -68,7 +71,8 @@ import android.content.pm.ActivityInfo;
 public class threaded_application extends Application {
 	public comm_thread commThread;
 	String host_ip = null; //The IP address of the WiThrottle server.
-	int port = 0; //The TCP port that the WiThrottle server is running on
+	volatile int port = 0; //The TCP port that the WiThrottle server is running on
+	volatile boolean doFinish = false;
 	//shared variables returned from the withrottle server, stored here for easy access by other activities
 	String loco_string_T = "Not Set"; //Loco Address string to display on first throttle
 	String loco_string_S = "Not Set"; //Loco Address string to display on second throttle
@@ -97,7 +101,8 @@ public class threaded_application extends Application {
 	HashMap<String, RosterEntry> roster;  //roster entries retrieved from roster.xml (null if not retrieved)
 	public static HashMap<String, String> metadata;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
 	ImageDownloader imageDownloader = new ImageDownloader();
-	
+	private int NOTI_ID= 10000;
+	private boolean isNotified = false;
 	String power_state;
 
 	static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;	//minimum interval for outbound heartbeat generator
@@ -268,8 +273,10 @@ public class threaded_application extends Application {
 
 
 		class comm_handler extends Handler    {
-
 			//All of the work of the communications thread is initiated from this function.
+/***future PowerLock
+  			private PowerManager.WakeLock wl = null;
+ */
 			public void handleMessage(Message msg)      {
 				switch(msg.what)        {
 				//Start or Stop the WiThrottle listener and required jmdns stuff
@@ -303,7 +310,7 @@ public class threaded_application extends Application {
 
 					//avoid duplicate connects, seen when user clicks address multiple times quickly
 					if (socketWiT != null && socketWiT.socketGood) {
-						Log.d("Engine_Driver","Duplicate CONNECT message received.  Ignoring.");
+						Log.d("Engine_Driver","Duplicate CONNECT message received.");
 						return;
 					}
 
@@ -311,15 +318,23 @@ public class threaded_application extends Application {
 					initShared();
 
 					//The IP address is stored in the obj as a String, the port is stored in arg1.
-					host_ip=new String((String)msg.obj);
+					host_ip = new String((String)msg.obj);
 					host_ip = host_ip.trim();
-					port=msg.arg1;
+					port = msg.arg1;
 
 					//attempt connection to WiThrottle server
 					socketWiT = new socket_WiT();
 					if(socketWiT.connect() == true) {
 						sendThrottleName();
 				    	sendMsg(connection_msg_handler, message_type.CONNECTED);
+/***future Notification
+  				    	showNotification();
+***/
+/***future	PowerLock
+ 			    		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+				    	wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Engine_Driver");
+			    		wl.acquire();
+***/			    	
 					}
 					else {
 						host_ip = null;  //clear vars if failed to connect
@@ -350,7 +365,7 @@ public class threaded_application extends Application {
 					}
 					if (doRelease) {
 						if (prefs.getBoolean("stop_on_release_preference", 
-								Boolean.valueOf(getString(R.string.prefStopOnReleaseDefaultValue)))) {
+								getResources().getBoolean(R.bool.prefStopOnReleaseDefaultValue))) {
 							withrottle_send(whichThrottle+"V0");  //send stop command before releasing (if set in prefs)
 						}
 						withrottle_send(whichThrottle+"r");  //send release command
@@ -378,6 +393,7 @@ public class threaded_application extends Application {
 					//Disconnect from the WiThrottle server.
 				case message_type.DISCONNECT:
 					Log.d("Engine_Driver","TA Disconnect");
+					doFinish = true;
 					heart.stopHeartbeat();
 					withrottle_send("Q");
 					if (heart.getInboundInterval() > 0) {
@@ -386,18 +402,16 @@ public class threaded_application extends Application {
 					end_jmdns();
 					dlMetadataTask.stop();
 					dlRosterTask.stop();
-					alert_activities(message_type.DISCONNECT,"");
+/***future Notification
+					hideNotification();
+***/					
+					alert_activities(message_type.SHUTDOWN,"");	//tell all activities to finish()
+/***future PowerLock
+					if(wl != null && wl.isHeld())
+						wl.release();
+***/						
 			    	//give msgs a chance to xmit before closing socket
-					Message nmsg=Message.obtain(); 
-					nmsg.what=message_type.SHUTDOWN;
-					boolean sent = false;
-					try {
-						sent = comm_msg_handler.sendMessageDelayed(nmsg, 1000);
-					}
-					catch(Exception e) {
-					}
-					if(!sent) {
-						msg.recycle();
+					if(!sendMsgDelay(comm_msg_handler, 1500, message_type.SHUTDOWN)) {
 						shutdown();
 					}
 					break;
@@ -414,7 +428,7 @@ public class threaded_application extends Application {
 							last_roster_entry_requested = pipeentry.substring(1);  //remember for use in response, stripping off bang 
 						}
 						if (prefs.getBoolean("drop_on_acquire_preference", 
-								Boolean.valueOf(getString(R.string.prefDropOnAcquireDefaultValue)))) {
+								getResources().getBoolean(R.bool.prefDropOnAcquireDefaultValue))) {
 							withrottle_send(whichThrottle+"r");  //send release command for any already acquired locos (if set in prefs)
 						}
 }
@@ -485,6 +499,23 @@ public class threaded_application extends Application {
 				case message_type.ROSTER_UPDATE:
 					alert_activities(message_type.ROSTER_UPDATE,"");
 					break;
+					
+					// WiT socket is down and reconnect attempt in prog 
+				case message_type.WIT_CON_RETRY:
+/***future Notification
+  					hideNotification();
+***/
+					alert_activities(message_type.WIT_CON_RETRY,"");
+					
+					break;
+
+					// WiT socket is back up
+				case message_type.WIT_CON_RECONNECT:
+/***future Notification
+					showNotification();
+***/
+					alert_activities(message_type.WIT_CON_RECONNECT,"");
+					break;
 				}
 			};
 		}
@@ -498,9 +529,10 @@ public class threaded_application extends Application {
 			}
 	    	host_ip = null;
 	    	port = 0;
-//*** no activities should be running at this point					alert_activities(message_type.SHUTDOWN,"");
-//*** don't kill msg thread - it's needed if ED restarted			Looper.myLooper().quit();
-//*** same as previous												comm_msg_handler = null;
+//	    	alert_activities(message_type.SHUTDOWN,"");	//be sure activities shutdown 
+//*** note: don't kill msg thread - it's needed if ED restarted			Looper.myLooper().quit();
+//*** note: same as previous												comm_msg_handler = null;
+			doFinish = false;					//ok for activities to run if restarted after this 
 		}
 		
 		private void sendThrottleName() {
@@ -514,9 +546,17 @@ public class threaded_application extends Application {
 				withrottle_send("HU" + s);  //also send throttle name as the UDID
 		}
 
-		private void process_comm_error(String msg_txt) {
-			Log.d("Engine_Driver", "comm_handler.handleMessage: " + msg_txt);
-	    	sendMsg(connection_msg_handler, message_type.ERROR, msg_txt);	//send error message to ui thread for display
+		//display error msg using Toast()
+		private void process_comm_error(final String msg_txt) {
+			Log.d("Engine_Driver", "TA comm error: " + msg_txt);
+			//need to do Toast() on the main thread so create a handler
+			Handler h =  new Handler(Looper.getMainLooper());
+			h.post(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(getApplicationContext(), msg_txt, Toast.LENGTH_SHORT).show();
+				}
+			});
 		}
 
 		private String setLocoString(LinkedHashMap<String,String> locos) {
@@ -960,18 +1000,6 @@ public class threaded_application extends Application {
 			}
 		}
 
-		// forward a message to all running activities 
-		private void alert_activities(int msgType, String msgBody) {
-			sendMsg(connection_msg_handler, msgType, msgBody);
-			sendMsg(turnouts_msg_handler, msgType, msgBody);
-			sendMsg(routes_msg_handler, msgType, msgBody);
-			sendMsg(throttle_msg_handler, msgType, msgBody);
-			sendMsg(web_msg_handler, msgType, msgBody);
-			sendMsg(power_control_msg_handler, msgType, msgBody);
-			sendMsg(select_loco_msg_handler, msgType, msgBody);
-		}
-
-			
 		// get the roster name from address string 123(L).  Return input if not found in roster or in consist
 		private String get_loconame_from_address_string(String response_str) {
 
@@ -1132,7 +1160,7 @@ public class threaded_application extends Application {
 			public void disconnect(boolean shutdown) {
 				if (shutdown) {
 					endRead = true;
-					for(int i = 0; i < 4 && this.isAlive(); i++) {
+					for(int i = 0; i < 5 && this.isAlive(); i++) {
 						try { 
 							Thread.sleep(300);    			//  give run() a chance to see endRead and exit
 						}
@@ -1159,7 +1187,7 @@ public class threaded_application extends Application {
 					// reinit shared variables then signal activities to refresh their views
 					// so that (potentially) invalid information is not displayed
 					initShared();
-					alert_activities(message_type.WIT_CON_RETRY,"");
+					sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY);
 				}
 			}
 
@@ -1201,6 +1229,7 @@ public class threaded_application extends Application {
 					this.connect();				//attempt to reestablish connection
 					if(socketGood) {
 						process_comm_error("Success: Restored connection to WiThrottle server " + host_ip + ".\n");
+						sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT);
 					}
 					else {
 						process_comm_error("Warning: Lost connection to WiThrottle server " + host_ip + ".\nAttempting to reconnect.");
@@ -1378,28 +1407,77 @@ public class threaded_application extends Application {
 
 	@Override
 	public void onCreate()  {
-	    Log.d("Engine_Driver","TA.onCreate ");
 		super.onCreate();
-		prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+	    Log.d("Engine_Driver","TA.onCreate()");
+	    
+	    //When starting ED after it has been killed in the bkg, the OS restarts any activities that were running.
+	    //Since we aren't connected at this point, we want all those activities to finish() so we do 2 things:
+	    // doFinish=true tells activities (except CA) that aren't running yet to finish() when they reach onResume()
+	    // DISCONNECT message tells any activities (except CA) that are already running to finish()
+	    doFinish = true;
+	    port = 0;				//indicate that no connection exists
+		commThread=new comm_thread();
+		commThread.start();
+	    alert_activities(message_type.DISCONNECT,"");	
+	    
+/***future Notification
+		hideNotification();		// if TA was killed in bkg, icon might still be up
+***/
 
+/***future Recovery
+	    //Normally CA is run via the manifest when ED is launched.
+	    //However when starting ED after it has been killed in the bkg,
+	    //CA may not be running (or may not be on top).
+	    //We need to ensure CA is running at this point in the code,
+	    //so start CA if it is not running else bring to top if already running.
+		final Intent caIntent = new Intent(this, connection_activity.class);
+		caIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		startActivity(caIntent);
+***/
+	    
+		prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 		function_states_T = new boolean[32];
 		function_states_S = new boolean[32];
 
-		commThread=new comm_thread();
-		commThread.start();
-
 		dlMetadataTask = new DownloadMetaTask();
 		dlRosterTask = new DownloadRosterTask();
-
 		//use worker thread to initialize default function labels from file so UI can continue
 		new Thread(new Runnable() {
 			public void run() {
 				set_default_function_labels();
 			}
 		}).start();	
-
 		CookieSyncManager.createInstance(this);		//create this here so onPause/onResume for webViews can control it
 	}
+	
+/***future Notification
+	// notification bar 
+	void showNotification() {
+		if(!isNotified) {
+			String appName = (String)getText(R.string.app_name);
+			String msg = "Connected to "+host_ip+" port: "+port;
+			Notification noti = new Notification(R.drawable.ic_stat_noti, msg, System.currentTimeMillis());
+			noti.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
+			final Intent notiIntent = new Intent(this, connection_activity.class);
+			notiIntent.setAction(Intent.ACTION_MAIN);
+			notiIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+			notiIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notiIntent, 0);
+			msg = host_ip + " port " + port;
+			noti.setLatestEventInfo(getApplicationContext(), appName, msg, contentIntent);
+			NotificationManager notifier = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+			notifier.notify(NOTI_ID, noti);
+			isNotified = true;
+		}
+	}
+	void hideNotification() {
+		if(isNotified) {
+			((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE)).cancel(NOTI_ID);
+			isNotified = false;
+		}
+	}
+***/	
+
 	
 	//init default function labels from the settings files or set to default
 	private void set_default_function_labels() {
@@ -1571,8 +1649,6 @@ public class threaded_application extends Application {
         }
     }
 
-/**/
-	
 	//initialize shared variables
 	private void initShared() {
 		withrottle_version = 0.0; 
@@ -1598,6 +1674,7 @@ public class threaded_application extends Application {
 		roster = null;
 		roster_entries = null;
 		metadata = null;
+		doFinish = false;
 	}
 	
 	//
@@ -1645,27 +1722,47 @@ public class threaded_application extends Application {
 		return result;
 	}
 	
+	// forward a message to all running activities 
+	private void alert_activities(int msgType, String msgBody) {
+		sendMsg(connection_msg_handler, msgType, msgBody);
+		sendMsg(turnouts_msg_handler, msgType, msgBody);
+		sendMsg(routes_msg_handler, msgType, msgBody);
+		sendMsg(throttle_msg_handler, msgType, msgBody);
+		sendMsg(web_msg_handler, msgType, msgBody);
+		sendMsg(power_control_msg_handler, msgType, msgBody);
+		sendMsg(select_loco_msg_handler, msgType, msgBody);
+	}
+
 	public boolean sendMsg(Handler h, int msgType) {
-		return sendMsg(h, msgType, "", 0, 0);
+		return sendMsgDelay(h, 0, msgType, "", 0, 0);
 	}
 
 	public boolean sendMsg(Handler h, int msgType, String msgBody) {
-		return sendMsg(h, msgType, msgBody, 0, 0);
+		return sendMsgDelay(h, 0, msgType, msgBody, 0, 0);
 	}
 	
 	public boolean sendMsg(Handler h, int msgType, String msgBody, int msgArg1) {
-		return sendMsg(h, msgType, msgBody, msgArg1, 0);
+		return sendMsgDelay(h, 0, msgType, msgBody, msgArg1, 0);
 	}
+	
 	public boolean sendMsg(Handler h, int msgType, String msgBody, int msgArg1, int msgArg2) {
+		return sendMsgDelay(h, 0, msgType, msgBody, msgArg1, msgArg2);
+	}
+	
+	public boolean sendMsgDelay(Handler h, long delayMs, int msgType) {
+		return sendMsgDelay(h, delayMs, msgType, "", 0, 0);
+	}
+
+	public boolean sendMsgDelay(Handler h, long delayMs, int msgType, String msgBody, int msgArg1, int msgArg2) {
 		boolean sent = false;
 		if(h != null) {
-			Message msg=Message.obtain(); 
+			Message msg=Message.obtain();
 			msg.what=msgType;
 			msg.obj=new String(msgBody); 
 			msg.arg1 = msgArg1;
 			msg.arg2 = msgArg2;
 			try {
-				sent = h.sendMessage(msg);
+				sent = h.sendMessageDelayed(msg, delayMs);
 			}
 			catch(Exception e) {
 			}
@@ -1725,7 +1822,7 @@ public class threaded_application extends Application {
 
 	  // prompt for Exit
 	  // must be called on the UI thread
-	  public void checkExit(Activity activity) {
+	  public void checkExit(final Activity activity) {
 		  final AlertDialog.Builder b = new AlertDialog.Builder(activity); 
 		  b.setIcon(android.R.drawable.ic_dialog_alert); 
 		  b.setTitle(R.string.exit_title); 
