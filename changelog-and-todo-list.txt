@@ -14,6 +14,11 @@
  * swipe now works over disabled sliders
  * moved roster loading, now updates as roster arrives
  * multiple changes to improve performance and shutdown properly
+ * multi-system turnout system names can be directly entered
+ * move system info from SelectLoco to About
+ * improvements to all direct text and numeric entry
+ * new webpage is loaded after changes in Prefs
+ * initial version of Debug log viewer - mstevetodd
 **Version 2.5
  * return TargetSDKVersion to 10 to trigger "legacy overflow button" for menu (needed on ICS)
  * keep screen on in web view (prevent screen blanking)
@@ -205,7 +210,6 @@
  *   TODO: use PRT titles for Active/inactive
  * turnouts
  *   TODO: default "system" based on items in use
- *   TODO: if system is blank, allow (force) entry of entire name "LT12"
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
  *   TODO: add pref for auto-connect to first discovered server

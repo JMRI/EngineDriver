@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.io.*;
 import java.lang.reflect.Method;
+
+import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -1308,6 +1310,11 @@ void start_select_loco_activity(char whichThrottle)
     	  in=new Intent().setClass(this, about_page.class);
      	  startActivity(in);
      	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    	  break;
+      case R.id.logviewer_menu:
+    	  Intent logviewer=new Intent().setClass(this, LogViewerActivity.class);
+    	  startActivity(logviewer);
+    	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
       }
       return super.onOptionsItemSelected(item);
