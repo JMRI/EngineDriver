@@ -95,7 +95,6 @@ public class power_control extends Activity {
     super.onCreate(savedInstanceState);
     mainapp=(threaded_application)getApplication();
     if(mainapp.doFinish) {		// expedite
-    	this.finish();
     	return;
     }
     setContentView(R.layout.power_control);
@@ -117,10 +116,10 @@ public class power_control extends Activity {
   @Override
   public void onResume() {
 	  super.onResume();
-	  if(mainapp.doFinish)
+	  if(mainapp.doFinish) {	//expedite
 		  this.finish();
-	  if(this.isFinishing())		// expedite
 		  return;
+	  }
 	  mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
     //update route list
     refresh_power_control_view();

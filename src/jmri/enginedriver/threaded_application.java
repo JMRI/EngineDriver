@@ -72,7 +72,7 @@ public class threaded_application extends Application {
 	public comm_thread commThread;
 	String host_ip = null; //The IP address of the WiThrottle server.
 	volatile int port = 0; //The TCP port that the WiThrottle server is running on
-	volatile boolean doFinish = false;
+	volatile boolean doFinish = false;	// when true, tells any Activities that are being created/resumed to finish()
 	//shared variables returned from the withrottle server, stored here for easy access by other activities
 	String loco_string_T = "Not Set"; //Loco Address string to display on first throttle
 	String loco_string_S = "Not Set"; //Loco Address string to display on second throttle
@@ -411,7 +411,7 @@ public class threaded_application extends Application {
 						wl.release();
 ***/						
 			    	//give msgs a chance to xmit before closing socket
-					if(!sendMsgDelay(comm_msg_handler, 1500, message_type.SHUTDOWN)) {
+					if(!sendMsgDelay(comm_msg_handler, 1000, message_type.SHUTDOWN)) {
 						shutdown();
 					}
 					break;
@@ -529,9 +529,6 @@ public class threaded_application extends Application {
 			}
 	    	host_ip = null;
 	    	port = 0;
-//	    	alert_activities(message_type.SHUTDOWN,"");	//be sure activities shutdown 
-//*** note: don't kill msg thread - it's needed if ED restarted			Looper.myLooper().quit();
-//*** note: same as previous												comm_msg_handler = null;
 			doFinish = false;					//ok for activities to run if restarted after this 
 		}
 		
@@ -1418,7 +1415,7 @@ public class threaded_application extends Application {
 	    port = 0;				//indicate that no connection exists
 		commThread=new comm_thread();
 		commThread.start();
-	    alert_activities(message_type.DISCONNECT,"");	
+	    alert_activities(message_type.DISCONNECT,"");
 	    
 /***future Notification
 		hideNotification();		// if TA was killed in bkg, icon might still be up

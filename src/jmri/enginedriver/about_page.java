@@ -36,6 +36,9 @@ public class about_page extends Activity {
   {
     super.onCreate(savedInstanceState);
     mainapp=(threaded_application)this.getApplication();
+    if(mainapp.doFinish) {		// expedite
+    	return;
+    }
     setContentView(R.layout.about_page);
 
     // format and show version info
@@ -70,6 +73,10 @@ public class about_page extends Activity {
   @Override
   public void onResume() {
 	  super.onResume();
+	  if(mainapp.doFinish) {		//expedite
+		  this.finish();
+		  return;
+	  }
 	  mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
   };
   

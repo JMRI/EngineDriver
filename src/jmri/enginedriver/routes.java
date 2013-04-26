@@ -224,7 +224,6 @@ public class routes extends Activity  implements OnGestureListener {
     mainapp=(threaded_application)getApplication();
 	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     if(mainapp.doFinish) {		// expedite
-    	this.finish();
     	return;
     }
    	setContentView(R.layout.routes);
@@ -288,10 +287,10 @@ public class routes extends Activity  implements OnGestureListener {
   @Override
   public void onResume() {
 	  super.onResume();
-	  if(mainapp.doFinish)
+	  if(mainapp.doFinish) {		//expedite
 		  this.finish();
-	  if(this.isFinishing())		// expedite
 		  return;
+	  }
 	  mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 	  updateRouteEntry();	// enable/disable button
 	  // suppress popup keyboard until EditText is touched

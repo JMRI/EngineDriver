@@ -113,9 +113,7 @@ public class connection_activity extends Activity {
 	throttle.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 ***/	
 	startActivity(throttle);
-/***future		
  	this.finish();
-***/
     overridePendingTransition(this,R.anim.fade_in, R.anim.fade_out);
  };
   

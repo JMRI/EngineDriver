@@ -379,14 +379,14 @@ public class select_loco extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.select_loco);
-
-		// save pointer to main app
 		mainapp = (threaded_application) getApplication();
+		prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+	    if(mainapp.doFinish) {		// expedite
+	    	return;
+	    }
+		setContentView(R.layout.select_loco);
 		// put pointer to this activity's handler in main app's shared variable
 		mainapp.select_loco_msg_handler = new select_loco_handler();
-
-		prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
 		// Set the options for the address length.
 		Spinner address_spinner = (Spinner) findViewById(R.id.address_length);
@@ -519,6 +519,10 @@ public class select_loco extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		if(mainapp.doFinish) {		//expedite
+			this.finish();
+			return;
+		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 
 		// checking address length here covers (future) case where prefs changed while paused

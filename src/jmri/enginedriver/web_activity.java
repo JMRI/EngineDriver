@@ -90,7 +90,6 @@ public class web_activity extends Activity {
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     orientationChange = false;
     if(mainapp.doFinish) {		// expedite
-    	this.finish();
     	return;
     }
     setContentView(R.layout.web_activity);
@@ -144,11 +143,10 @@ public class web_activity extends Activity {
   public void onResume() {
 	  Log.d("Engine_Driver","web_activity.onResume() called");
  	  super.onResume();
-	  if(mainapp.doFinish)
+	  if(mainapp.doFinish) {	//expedite
 		  this.finish();
-	  if(this.isFinishing())		// expedite
 		  return;
-
+	  }
  	  mainapp.setActivityOrientation(this, true);  	//set screen orientation based on prefs
 
 // don't load here - onCreate already handled it.  Load might not be finished yet

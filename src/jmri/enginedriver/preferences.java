@@ -38,12 +38,19 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 	  public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    mainapp=(threaded_application)getApplication();
+		  if(mainapp.doFinish) {	//expedite
+			  return;
+		  }
 	    addPreferencesFromResource(R.xml.preferences);
 	  }
 	  
 	  @Override
 	  protected void onResume() {
 	      super.onResume();
+		  if(mainapp.doFinish) {	//expedite
+			  this.finish();
+			  return;
+		  }
 	      mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 	      // Set up a listener whenever a key changes            
 	      getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
