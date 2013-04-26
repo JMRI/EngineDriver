@@ -223,7 +223,7 @@ public class routes extends Activity  implements OnGestureListener {
   
     mainapp=(threaded_application)getApplication();
 	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-    if(mainapp.doFinish) {		// expedite
+    if(mainapp.isForcingFinish()) {		// expedite
     	return;
     }
    	setContentView(R.layout.routes);
@@ -287,7 +287,7 @@ public class routes extends Activity  implements OnGestureListener {
   @Override
   public void onResume() {
 	  super.onResume();
-	  if(mainapp.doFinish) {		//expedite
+	  if(mainapp.isForcingFinish()) {		//expedite
 		  this.finish();
 		  return;
 	  }

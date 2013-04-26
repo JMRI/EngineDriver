@@ -381,7 +381,7 @@ public class select_loco extends Activity {
 		super.onCreate(savedInstanceState);
 		mainapp = (threaded_application) getApplication();
 		prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-	    if(mainapp.doFinish) {		// expedite
+	    if(mainapp.isForcingFinish()) {		// expedite
 	    	return;
 	    }
 		setContentView(R.layout.select_loco);
@@ -519,7 +519,7 @@ public class select_loco extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if(mainapp.doFinish) {		//expedite
+		if(mainapp.isForcingFinish()) {		//expedite
 			this.finish();
 			return;
 		}

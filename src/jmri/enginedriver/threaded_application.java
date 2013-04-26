@@ -72,7 +72,7 @@ public class threaded_application extends Application {
 	public comm_thread commThread;
 	String host_ip = null; //The IP address of the WiThrottle server.
 	volatile int port = 0; //The TCP port that the WiThrottle server is running on
-	volatile boolean doFinish = false;	// when true, tells any Activities that are being created/resumed to finish()
+	private volatile boolean doFinish = false;	// when true, tells any Activities that are being created/resumed to finish()
 	//shared variables returned from the withrottle server, stored here for easy access by other activities
 	String loco_string_T = "Not Set"; //Loco Address string to display on first throttle
 	String loco_string_S = "Not Set"; //Loco Address string to display on second throttle
@@ -1445,6 +1445,10 @@ public class threaded_application extends Application {
 			}
 		}).start();	
 		CookieSyncManager.createInstance(this);		//create this here so onPause/onResume for webViews can control it
+	}
+	
+	public boolean isForcingFinish() {
+		return doFinish;
 	}
 	
 /***future Notification

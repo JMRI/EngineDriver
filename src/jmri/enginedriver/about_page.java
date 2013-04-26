@@ -36,7 +36,7 @@ public class about_page extends Activity {
   {
     super.onCreate(savedInstanceState);
     mainapp=(threaded_application)this.getApplication();
-    if(mainapp.doFinish) {		// expedite
+    if(mainapp.isForcingFinish()) {		// expedite
     	return;
     }
     setContentView(R.layout.about_page);
@@ -73,7 +73,7 @@ public class about_page extends Activity {
   @Override
   public void onResume() {
 	  super.onResume();
-	  if(mainapp.doFinish) {		//expedite
+	  if(mainapp.isForcingFinish()) {		//expedite
 		  this.finish();
 		  return;
 	  }

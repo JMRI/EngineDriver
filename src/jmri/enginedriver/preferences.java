@@ -38,7 +38,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 	  public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    mainapp=(threaded_application)getApplication();
-		  if(mainapp.doFinish) {	//expedite
+		  if(mainapp.isForcingFinish()) {	//expedite
 			  return;
 		  }
 	    addPreferencesFromResource(R.xml.preferences);
@@ -47,7 +47,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 	  @Override
 	  protected void onResume() {
 	      super.onResume();
-		  if(mainapp.doFinish) {	//expedite
+		  if(mainapp.isForcingFinish()) {	//expedite
 			  this.finish();
 			  return;
 		  }

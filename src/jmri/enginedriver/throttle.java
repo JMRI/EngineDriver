@@ -749,7 +749,7 @@ void start_select_loco_activity(char whichThrottle)
     mainapp=(threaded_application)this.getApplication();
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     orientationChange = false;
-    if(mainapp.doFinish) {		// expedite
+    if(mainapp.isForcingFinish()) {		// expedite
     	return;
     }
     setContentView(R.layout.throttle);
@@ -873,7 +873,7 @@ void start_select_loco_activity(char whichThrottle)
   @Override
   public void onResume() {
 	  super.onResume();
-	  if(mainapp.doFinish) {		//expedite
+	  if(mainapp.isForcingFinish()) {		//expedite
 		  this.finish();
 		  return;
 	  }

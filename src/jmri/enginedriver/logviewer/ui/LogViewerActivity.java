@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -27,10 +28,15 @@ public class LogViewerActivity extends ListActivity{
 	private LogStringAdaptor adaptor = null;
 	private ArrayList<String> logarray = null;
 	private LogReaderTask logReaderTask = null;
-	
+	private threaded_application mainapp;  // hold pointer to mainapp
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.log_main);
+        mainapp=(threaded_application)getApplication();
+        if(mainapp.isForcingFinish()) {		// expedite
+        	return;
+        }
+       setContentView(R.layout.log_main);
         
         logarray = new ArrayList<String>();
         adaptor = new LogStringAdaptor(this, R.id.txtLogString, logarray);
@@ -42,6 +48,14 @@ public class LogViewerActivity extends ListActivity{
         logReaderTask.execute();
     }
 
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	if(mainapp.isForcingFinish()) {		//expedite
+    		this.finish();
+    		return;
+    	}
+    }
 	@Override
 	protected void onDestroy() {
 		logReaderTask.stopTask();

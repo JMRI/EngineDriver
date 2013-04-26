@@ -89,7 +89,7 @@ public class web_activity extends Activity {
     mainapp=(threaded_application)this.getApplication();
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     orientationChange = false;
-    if(mainapp.doFinish) {		// expedite
+    if(mainapp.isForcingFinish()) {		// expedite
     	return;
     }
     setContentView(R.layout.web_activity);
@@ -143,7 +143,7 @@ public class web_activity extends Activity {
   public void onResume() {
 	  Log.d("Engine_Driver","web_activity.onResume() called");
  	  super.onResume();
-	  if(mainapp.doFinish) {	//expedite
+	  if(mainapp.isForcingFinish()) {	//expedite
 		  this.finish();
 		  return;
 	  }

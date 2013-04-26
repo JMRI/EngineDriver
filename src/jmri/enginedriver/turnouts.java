@@ -237,7 +237,7 @@ public class turnouts extends Activity implements OnGestureListener {
     super.onCreate(savedInstanceState);
     mainapp=(threaded_application)getApplication();
 	prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-    if(mainapp.doFinish) {		// expedite
+    if(mainapp.isForcingFinish()) {		// expedite
     	return;
     }
     setContentView(R.layout.turnouts);
@@ -320,7 +320,7 @@ public class turnouts extends Activity implements OnGestureListener {
   @Override
   public void onResume() {
 	super.onResume();
-	if(mainapp.doFinish) {		//expedite
+	if(mainapp.isForcingFinish()) {		//expedite
 		this.finish();
 		return;
 	}

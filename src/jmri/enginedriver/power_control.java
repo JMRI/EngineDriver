@@ -94,7 +94,7 @@ public class power_control extends Activity {
   public void onCreate(Bundle savedInstanceState)  {
     super.onCreate(savedInstanceState);
     mainapp=(threaded_application)getApplication();
-    if(mainapp.doFinish) {		// expedite
+    if(mainapp.isForcingFinish()) {		// expedite
     	return;
     }
     setContentView(R.layout.power_control);
@@ -116,7 +116,7 @@ public class power_control extends Activity {
   @Override
   public void onResume() {
 	  super.onResume();
-	  if(mainapp.doFinish) {	//expedite
+	  if(mainapp.isForcingFinish()) {	//expedite
 		  this.finish();
 		  return;
 	  }
