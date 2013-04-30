@@ -101,7 +101,8 @@ public class connection_activity extends Activity {
 
   //Request connection to the WiThrottle server.
   void connect()  {
-	  sendMsgErr(0, message_type.CONNECT, connected_hostip, connected_port, "ERROR in ca.connect: comm thread not started.");
+//	  sendMsgErr(0, message_type.CONNECT, connected_hostip, connected_port, "ERROR in ca.connect: comm thread not started.");
+	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CONNECT, connected_hostip, connected_port);
   };
 
 
@@ -302,13 +303,15 @@ public class connection_activity extends Activity {
 
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 	    //start up server discovery listener
-	    sendMsgErr(0, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
+//	    sendMsgErr(0, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
+		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 1);
 	    //populate the ListView with the recent connections
 	    getConnectionsList();
 	    set_labels();
 	    //start up server discovery listener again (after a 1 second delay)
 	    //TODO: this is a rig, figure out why this is needed for ubuntu servers
-	    sendMsgErr(1000, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
+//	    sendMsgErr(1000, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
+		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 1);
 	}  //end of onResume
 
 	@Override
@@ -392,12 +395,14 @@ public class connection_activity extends Activity {
 		return (super.onKeyDown(key, event));
 	};
 
+/***	
 	private void sendMsgErr(long delayMs, int msgType, String msgBody, int msgArg1, String errMsg) {
 		if(!mainapp.sendMsgDelay(mainapp.comm_msg_handler, delayMs, msgType, msgBody, msgArg1, 0)) {
 			Log.e("Engine_Driver",errMsg) ;
 			Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT).show();
 		}    	
 	}
+***/
 	
 	//save connections list in background using asynctask
 	 private class saveConnectionsList extends AsyncTask<Void, Void, String> {

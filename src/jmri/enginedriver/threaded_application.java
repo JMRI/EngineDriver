@@ -113,13 +113,13 @@ public class threaded_application extends Application {
 	//For communication to the comm_thread.
 	public comm_handler comm_msg_handler = null;
 	//For communication to each of the activities (set and unset by the activity)
-	public Handler connection_msg_handler;
-	public Handler throttle_msg_handler;
-	public Handler web_msg_handler;
-	public Handler select_loco_msg_handler;
-	public Handler turnouts_msg_handler;
-	public Handler routes_msg_handler;
-	public Handler power_control_msg_handler;
+	public volatile Handler connection_msg_handler;
+	public volatile Handler throttle_msg_handler;
+	public volatile Handler web_msg_handler;
+	public volatile Handler select_loco_msg_handler;
+	public volatile Handler turnouts_msg_handler;
+	public volatile Handler routes_msg_handler;
+	public volatile Handler power_control_msg_handler;
 
 	//these constants are used for onFling
 	public static final int SWIPE_MIN_DISTANCE = 120;
