@@ -153,13 +153,13 @@ public class LogViewerActivity extends ListActivity{
 	private class LogReaderTask extends AsyncTask<Void, String, Void>
     {
 		private final String[] LOGCAT_CMD = new String[] { "logcat", "Engine_Driver:D", "*:S" };
-		private final int BUFFER_SIZE = 1024;
+//		private final int BUFFER_SIZE = 1024;
 		
 		private boolean isRunning = true;
 		private Process logprocess = null;
 		private BufferedReader reader = null;
-		private String[] line = null;
-		private String lastLine = "";
+		private String line = "";
+//		private String lastLine = "";
 		
 		@Override
 		protected Void doInBackground(Void... params) {
@@ -172,8 +172,10 @@ public class LogViewerActivity extends ListActivity{
 			}
 			
 			try {
+//				reader = new BufferedReader(new InputStreamReader(
+//						logprocess.getInputStream()),BUFFER_SIZE);
 				reader = new BufferedReader(new InputStreamReader(
-						logprocess.getInputStream()),BUFFER_SIZE);
+						logprocess.getInputStream()));
 			}
 			catch(IllegalArgumentException e){
 				e.printStackTrace();
@@ -181,13 +183,13 @@ public class LogViewerActivity extends ListActivity{
 				isRunning = false;
 			}
 			
-			line = new String[1];
+			line = "";
 //			lastLine = new String;
 			
 			try {
 				while(isRunning)
 				{
-					line[0] = reader.readLine();
+					line = reader.readLine();
 					publishProgress(line);
 				}
 			} 
@@ -218,10 +220,11 @@ public class LogViewerActivity extends ListActivity{
 		@Override
 		protected void onProgressUpdate(String... values) {
 			super.onProgressUpdate(values);
-			if ((values[0] != null) && !values[0].equals(lastLine)) {
+//			if ((values[0] != null) && !values[0].equals(lastLine)) {
+			if ((values[0] != null)) {
 				adaptor.add(values[0]);
 			}
-			lastLine = values[0];
+//			lastLine = values[0];
 		}
 		
 		public void stopTask(){

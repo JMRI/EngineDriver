@@ -327,7 +327,7 @@ public class connection_activity extends Activity {
 	@Override
 	public void onDestroy() {
 		Log.d("Engine_Driver","connection.onDestroy()");
-		mainapp.connection_msg_handler = null;
+//		mainapp.connection_msg_handler = null;
 		super.onDestroy();
 	}
 	

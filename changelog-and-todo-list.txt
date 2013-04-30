@@ -207,12 +207,15 @@
  *   TODO: allow user to specify multiple web URLs
  *   TODO: optionally add web to fling logic  (multiples?)
  * routes
+ *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
  *   TODO: use PRT titles for Active/inactive
  * turnouts
+ *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
  *   TODO: default "system" based on items in use
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
  *   TODO: add pref for auto-connect to first discovered server
+ *   TODO: change Connect from an Activity to a "pop-up" or "prompt" to be called from any Activity when needed
  *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
  * threaded_application
  *   TODO: remember consist details
@@ -248,7 +251,7 @@
  *   TODO: show error if invalid entry
  *
  * These require changes to WiThrottle
- *   resend roster, turnout and routes when items are added or removed
+ *   resend roster, turnout and routes when items are added or removed, by adding listeners to WiT
  *   support resend of function and direction commands, even when WiT knows it has already sent
  *   WiT send MT-xxx when commands are received from a client for a loco that is not active.  (to get ED up to date with server after connection loss)
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
