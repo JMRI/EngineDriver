@@ -15,10 +15,12 @@
         android:smallScreens="true" />
     <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="10">
     </uses-sdk>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    
     <application
         android:name="jmri.enginedriver.threaded_application"
         android:description="@string/app_description"
-        android:icon="@drawable/icon"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/app_theme" >
         <activity
@@ -66,5 +68,6 @@
             android:name=".power_control"
             android:label="@string/app_name_power_control" >
         </activity>
+        <activity android:name=".logviewer.ui.LogViewerActivity" android:label="LogViewerActivity"></activity>
     </application>
 </manifest>

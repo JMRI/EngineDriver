@@ -19,7 +19,8 @@
  * improvements to all direct text and numeric entry
  * new webpage is loaded after changes in Prefs
  * added Debug log viewer - mstevetodd
- * new launcher and notification icons
+ * new launcher icons
+ * new pref to limit number of recent locos
 **Version 2.5
  * return TargetSDKVersion to 10 to trigger "legacy overflow button" for menu (needed on ICS)
  * keep screen on in web view (prevent screen blanking)
