@@ -21,6 +21,7 @@
  * added Debug log viewer - mstevetodd
  * new launcher icons
  * new pref to limit number of recent locos
+ * prevent duplicate jmdns listener - mstevetodd
 **Version 2.5
  * return TargetSDKVersion to 10 to trigger "legacy overflow button" for menu (needed on ICS)
  * keep screen on in web view (prevent screen blanking)

@@ -150,10 +150,11 @@ public class threaded_application extends Application {
 			public void serviceAdded(ServiceEvent event)  	{
 				//    		Log.d("Engine_Driver", String.format("serviceAdded fired"));
 				//A service has been added. If no details, ask for them 
+				Log.d("Engine_Driver", String.format("serviceAdded for '%s', Type='%s'", event.getName(), event.getType()));
 				ServiceInfo si = jmdns.getServiceInfo(event.getType(), event.getName(), 0);
 				if (si == null || si.getPort() == 0 ) { 
-					jmdns.requestServiceInfo(event.getType(), event.getName(), 1);
 					Log.d("Engine_Driver", String.format("serviceAdded, requesting details: '%s', Type='%s'", event.getName(), event.getType()));
+					jmdns.requestServiceInfo(event.getType(), event.getName(), true, (long)1000);
 				}
 			};
 
@@ -190,7 +191,7 @@ public class threaded_application extends Application {
 				if(!sent)
 					service_message.recycle();
 
-				Log.d("Engine_Driver", String.format("serviceResolved - %s(%s):%d -- %s", host_name, ip_address, port, event.toString().replace(System.getProperty("line.separator"), "")));
+				Log.d("Engine_Driver", String.format("serviceResolved - %s(%s):%d -- %s", host_name, ip_address, port, event.toString().replace(System.getProperty("line.separator"), " ")));
 
 			};
 		}
@@ -209,7 +210,7 @@ public class threaded_application extends Application {
 					if (multicast_lock == null) {  //do this only as needed
 						multicast_lock=wifi.createMulticastLock("engine_driver");
 						multicast_lock.setReferenceCounted(true);
-						multicast_lock.acquire();
+//						multicast_lock.acquire();
 					}
 
 					byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
@@ -222,8 +223,9 @@ public class threaded_application extends Application {
 					//    				jmdns=JmDNS.create(addr);
 
 					listener=new withrottle_listener();
+					Log.d("Engine_Driver","start_jmdns: listener created");
 
-					jmdns.addServiceListener("_withrottle._tcp.local.", listener);
+//					jmdns.addServiceListener("_withrottle._tcp.local.", listener);
 
 				} else {
 					process_comm_error("No local IP Address found.\nCheck your WiFi connection.");
@@ -287,20 +289,22 @@ public class threaded_application extends Application {
 					} 
 					else {
 						if (jmdns == null) {   //start jmdns if not started
-							Log.d("Engine_Driver","comm_handler: jmdns not started, starting");
+//							Log.d("Engine_Driver","comm_handler: jmdns not started, starting");
 							start_jmdns();
+							if (jmdns != null) {  //don't bother if jmdns didn't start
+								try {
+									multicast_lock.acquire();
+								} catch (Exception e) {
+									//log message, but keep going if this fails
+									Log.d("Engine_Driver","comm_handler: multicast_lock.acquire() failed");
+								}
+								jmdns.addServiceListener("_withrottle._tcp.local.", listener);
+								Log.d("Engine_Driver","comm_handler: jmdns listener added");
+							} else {
+								Log.d("Engine_Driver","comm_handler: jmdns not running, didn't start listener");
+							}
 						} else {
 							Log.d("Engine_Driver","comm_handler: jmdns already running");
-						}
-						if (jmdns != null) {  //don't bother if jmdns didn't start
-							try {
-								multicast_lock.acquire();
-							} catch (Exception e) {
-								//keep going if this fails
-							}
-							jmdns.addServiceListener("_withrottle._tcp.local.", listener);
-						} else {
-							Log.d("Engine_Driver","comm_handler: jmdns not running, didn't start listener");
 						}
 					}
 					break;
