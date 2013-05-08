@@ -1407,7 +1407,7 @@ public class threaded_application extends Application {
 	    //Since we aren't connected at this point, we want all those activities to finish() so we do 2 things:
 	    // doFinish=true tells activities (except CA) that aren't running yet to finish() when they reach onResume()
 	    // DISCONNECT message tells any activities (except CA) that are already running to finish()
-	    doFinish = true;
+	    doFinish = false;
 	    port = 0;				//indicate that no connection exists
 		commThread=new comm_thread();
 		commThread.start();

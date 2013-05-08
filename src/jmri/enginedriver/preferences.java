@@ -56,6 +56,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
 	  @Override
 	  protected void onPause() {
+		  Log.d("Engine_Driver","preferences.onPause() called");
 	      super.onPause();
 
 	      // Unregister the listener            
