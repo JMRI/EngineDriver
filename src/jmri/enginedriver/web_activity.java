@@ -1,5 +1,4 @@
-/*Copyright (C) 2012 M. Steve Todd
-  mstevetodd@enginedriver.rrclubs.org
+/*Copyright (C) 2013 M. Steve Todd mstevetodd@enginedriver.rrclubs.org
   
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

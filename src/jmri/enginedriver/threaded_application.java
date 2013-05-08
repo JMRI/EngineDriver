@@ -1,4 +1,4 @@
-/*Copyright (C) 2012 M. Steve Todd
+/*Copyright (C) 2013 M. Steve Todd
   mstevetodd@enginedriver.rrclubs.org
 
 This program is free software; you can redistribute it and/or modify
@@ -23,15 +23,10 @@ package jmri.enginedriver;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.PowerManager;
 import android.os.SystemClock;
 
 import java.net.*;
@@ -62,7 +57,6 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 
@@ -101,8 +95,6 @@ public class threaded_application extends Application {
 	HashMap<String, RosterEntry> roster;  //roster entries retrieved from roster.xml (null if not retrieved)
 	public static HashMap<String, String> metadata;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
 	ImageDownloader imageDownloader = new ImageDownloader();
-	private int NOTI_ID= 10000;
-	private boolean isNotified = false;
 	String power_state;
 
 	static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;	//minimum interval for outbound heartbeat generator

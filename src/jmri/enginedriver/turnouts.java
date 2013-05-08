@@ -1,5 +1,4 @@
-/*Copyright (C) 2012 M. Steve Todd
-  mstevetodd@enginedriver.rrclubs.org
+/*Copyright (C) 2013 M. Steve Todd mstevetodd@enginedriver.rrclubs.org
   
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -211,7 +210,7 @@ public class turnouts extends Activity implements OnGestureListener {
 		    	  if(Character.isDigit(entrytext.charAt(0)))
 		    	  {
 		    		  try {
-		    			  new Integer(entrytext);  //edit check address by attempting conversion to int
+		    			  Integer.valueOf(entrytext);  //edit check address by attempting conversion to int
 		    		  } 
 		    		  catch(Exception except) { 
 		    			  Toast.makeText(getApplicationContext(), "Invalid turnout number.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();

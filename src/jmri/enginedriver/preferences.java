@@ -1,5 +1,4 @@
-/*Copyright (C) 2012 M. Steve Todd
-  mstevetodd@enginedriver.rrclubs.org
+/*Copyright (C) 2013 M. Steve Todd mstevetodd@enginedriver.rrclubs.org
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,7 +22,6 @@ import java.util.Random;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.os.Message;
 import android.preference.PreferenceActivity;
 import android.provider.Settings;
 import android.util.Log;

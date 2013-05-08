@@ -1,5 +1,4 @@
-/*Copyright (C) 2012 M. Steve Todd
-  mstevetodd@enginedriver.rrclubs.org
+/*Copyright (C) 2013 M. Steve Todd mstevetodd@enginedriver.rrclubs.org
   
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,12 +17,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.KeyEvent;
@@ -36,7 +33,6 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.io.*;
 import java.lang.reflect.Method;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
@@ -968,39 +964,6 @@ void start_select_loco_activity(char whichThrottle)
 	  webView.loadUrl(url);
   }
   
-  
-  //set up text label and dcc function for each button from settings
-  //TODO: move file reading to another function and only do when needed
-  private void set_default_function_labels() {
-
-	  mainapp.function_labels_default = new LinkedHashMap<Integer, String>();
-
-	  try	  {
-		  File sdcard_path=Environment.getExternalStorageDirectory();
-
-		  File settings_file=new File(sdcard_path + "/engine_driver/function_settings.txt");
-		  if(settings_file.exists()) {  //if file found, use it for settings arrays
-			  BufferedReader settings_reader=new BufferedReader(new FileReader(settings_file));
-			  //read settings into local arrays
-			  while(settings_reader.ready()) {
-				  String line=settings_reader.readLine();
-				  String temp[] = line.split(":");
-				  mainapp.function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
-			  }
-			  settings_reader.close();
-		  } else {  //hard-code some buttons and default the rest
-			  mainapp.function_labels_default.put(0, "Light");
-			  mainapp.function_labels_default.put(1, "Bell");
-			  mainapp.function_labels_default.put(2, "Horn");
-			  for(int k = 3; k <= 27; k++) {
-				  mainapp.function_labels_default.put(k, String.format("%d",k));
-			  }
-		  }
-	  }
-	  catch (IOException except) { Log.e("settings_activity", "Could not read file "+except.getMessage()); }  
-
-  }
-
   //helper function to set up function buttons for each throttle
   void set_function_labels_and_listeners_for_view(char whichThrottle)  {
 //	  Log.d("Engine_Driver","starting set_function_labels_and_listeners_for_view");
