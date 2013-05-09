@@ -684,7 +684,7 @@ public class threaded_application extends Application {
 				case 'L': 
 //					roster_list_string = response_str.substring(2);  //set app variable
 					process_roster_list(response_str);  //process roster list
-					dlMetadataTask.get();			// run background metadata update if web server port is know
+					dlMetadataTask.get();		// run background metadata update if web server port is known
 					dlRosterTask.get();			// run background roster update if web server port is known
 					break;
 
@@ -1407,7 +1407,7 @@ public class threaded_application extends Application {
 	    //Since we aren't connected at this point, we want all those activities to finish() so we do 2 things:
 	    // doFinish=true tells activities (except CA) that aren't running yet to finish() when they reach onResume()
 	    // DISCONNECT message tells any activities (except CA) that are already running to finish()
-	    doFinish = false;
+	    doFinish = true;
 	    port = 0;				//indicate that no connection exists
 		commThread=new comm_thread();
 		commThread.start();
@@ -1572,11 +1572,11 @@ public class threaded_application extends Application {
 					String metadataValue = items.item(i).getAttributes().getNamedItem("value").getNodeValue(); 
 					metadataTemp.put(metadataName, metadataValue);
 				}
-	    		if(metadataTemp.size() == 0)		//throw exception if empty
-	    			throw new IOException();
-				if(dl.cancel)
-					return;
-				metadata = (HashMap<String, String>) metadataTemp.clone();
+				if(!dl.cancel) {
+		    		if(metadataTemp.size() == 0)		//throw exception if empty
+		    			throw new IOException();
+		    		metadata = (HashMap<String, String>) metadataTemp.clone();
+				}
 			}
 			catch(Exception e) {
     			throw new IOException();
@@ -1587,29 +1587,18 @@ public class threaded_application extends Application {
 	}
 	
 	abstract public class DownloadDataTask {
-		volatile boolean running = false;
 		private Download dl = null;
 		abstract void runMethod(Download dl) throws IOException;
 		
 		public class Download extends Thread {
 			public volatile boolean cancel = false;
-			public volatile boolean waiting = true;
 
 			@Override
 	    	public void run() {
 	    		try {
-	    			while(running) {
-	    				Log.d("Engine_Driver", "Metadata fetch waiting");
-	    				Thread.sleep(1000);
-	    				if(cancel)
-	    					return;
-	    			}
-	    			running = true;
-	    			waiting = false;
 	    			runMethod(this);
-	    			if(cancel)
-    					return;
-	    			sendMsg(comm_msg_handler, message_type.ROSTER_UPDATE);		//send message to alert other activities
+	    			if(!cancel)
+	    				sendMsg(comm_msg_handler, message_type.ROSTER_UPDATE);		//send message to alert other activities
 	    		}
 	    		catch(Throwable t) {
 	    			Log.d("Engine_Driver", "Data fetch failed: " + t.getMessage());
@@ -1617,7 +1606,6 @@ public class threaded_application extends Application {
 	
 	    		// background load of Data completed
 	    		finally {
-	    			running = false;
 	    			if(cancel)
 	    				Log.d("Engine_Driver", "Data fetch cancelled");
 	    		}
@@ -1625,23 +1613,16 @@ public class threaded_application extends Application {
 		}
 
 	    void get() {
-			try {
-				if(dl == null || !dl.waiting) {
-					if(dl != null)
-						dl.cancel = true;	// try to stop any update that is in progress
-					dl = new Download();
-					dl.start();				// start new update
-				}
+			if(dl != null) {
+				dl.cancel = true;	// try to stop any update that is in progress on old download thread
 			}
-			catch(Exception e) {
-			}
+			dl = new Download();	// create new download thread
+			dl.start();				// start an update
         }
 
         void stop() {
-        	try {
+        	if(dl != null) {
         		dl.cancel = true;
-        	}
-        	catch(Exception e) {
         	}
         }
     }

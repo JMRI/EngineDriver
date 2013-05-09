@@ -211,7 +211,6 @@ public class connection_activity extends Activity {
         case message_type.CONNECTED:
         	//use asynctask to save the updated connections list to the connections_list.txt file
         	new saveConnectionsList().execute();
-        	
         	start_throttle_activity();
         	break;
 
@@ -358,24 +357,6 @@ public class connection_activity extends Activity {
       case R.id.exit_mnu:
     	  mainapp.checkExit(this);
      	  break;
-      case R.id.settings_menu:
-    	  Intent settings=new Intent().setClass(this, function_settings.class);
-//	  	  settings.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-    	  startActivityForResult(settings, 0);
-     	  overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-    	  break;
-      case R.id.about_menu:
-    	  Intent about_page=new Intent().setClass(this, about_page.class);
-//	  	  about_page.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-    	  startActivity(about_page);
-     	  overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-    	  break;
-        case R.id.preferences:
-    	  Intent preferences=new Intent().setClass(this, preferences.class);
-//	  	  preferences.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-    	  startActivityForResult(preferences, 0);
-     	  overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-    	  break;
       }
       return super.onOptionsItemSelected(item);
   }
@@ -446,7 +427,7 @@ public class connection_activity extends Activity {
 	    	catch(IOException except) 	{
 	    		errMsg = except.getMessage();
 	    	}
-			 return errMsg;
+			return errMsg;
 		 }
 		 @Override
 		 protected void onPostExecute(String errMsg) {
