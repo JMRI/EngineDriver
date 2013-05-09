@@ -358,6 +358,11 @@ public class connection_activity extends Activity {
       case R.id.exit_mnu:
     	  mainapp.checkExit(this);
      	  break;
+      case R.id.preferences_mnu:
+    	  in=new Intent().setClass(this, preferences.class);
+     	  startActivityForResult(in, 0);
+     	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    	  break;
 	  case R.id.about_mnu:
 		  in=new Intent().setClass(this, about_page.class);
 	 	  startActivity(in);
