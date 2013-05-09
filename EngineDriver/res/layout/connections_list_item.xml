@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+    <TextView
+        android:id="@+id/ip_item_label"
+        style="@style/list_id_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test.test.test" />
+    <TextView
+        android:id="@+id/host_item_label"
+        style="@style/list_item_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="test.test.test"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:id="@+id/port_item_label"
+        style="@style/list_item_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:paddingTop="10dp"
+        android:text="test"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+</RelativeLayout>
