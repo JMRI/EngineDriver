@@ -35,9 +35,6 @@ public class about_page extends Activity {
   {
     super.onCreate(savedInstanceState);
     mainapp=(threaded_application)this.getApplication();
-    if(mainapp.isForcingFinish()) {		// expedite
-    	return;
-    }
     setContentView(R.layout.about_page);
 
     // format and show version info
@@ -57,8 +54,10 @@ public class about_page extends Activity {
 		if (metadata != null && metadata.size() > 0)
 			s += "\nJMRI v: " + metadata.get("JMRIVERCANON") + "    build: " + metadata.get("JMRIVERSION");
 		// WiT info
-		s += "\nWiThrottle: v" + mainapp.withrottle_version;
-		s += String.format("    Heartbeat: %d secs\n", mainapp.heartbeatInterval);
+		if(mainapp.withrottle_version != 0.0) {
+			s += "\nWiThrottle: v" + mainapp.withrottle_version;
+			s += String.format("    Heartbeat: %d secs\n", mainapp.heartbeatInterval);
+		}
 	}
 	// show info
 	v.setText(s);
@@ -72,10 +71,6 @@ public class about_page extends Activity {
   @Override
   public void onResume() {
 	  super.onResume();
-	  if(mainapp.isForcingFinish()) {		//expedite
-		  this.finish();
-		  return;
-	  }
 	  mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
   };
   

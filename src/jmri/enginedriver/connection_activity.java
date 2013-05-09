@@ -353,10 +353,16 @@ public class connection_activity extends Activity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
       // Handle all of the possible menu actions.
+	  Intent in;
       switch (item.getItemId()) {
       case R.id.exit_mnu:
     	  mainapp.checkExit(this);
      	  break;
+	  case R.id.about_mnu:
+		  in=new Intent().setClass(this, about_page.class);
+	 	  startActivity(in);
+	 	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+		  break;
       }
       return super.onOptionsItemSelected(item);
   }
