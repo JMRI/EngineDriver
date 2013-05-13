@@ -1,15 +1,22 @@
 package jmri.enginedriver.enginedriver3;
 
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.app.SherlockListFragment;
+
 import jmri.enginedriver.enginedriver3.R;
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.ListFragment;
+//import android.support.v4.app.Fragment;
+//import android.support.v4.app.FragmentActivity;
+//import android.support.v4.app.FragmentManager;
+//import android.support.v4.app.FragmentPagerAdapter;
+//import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
@@ -20,7 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class EngineDriver3Activity extends FragmentActivity {
+public class EngineDriver3Activity extends SherlockFragmentActivity {
 	/** Called when the activity is first created. */
 	public static final String DEBUG_TAG = "EngineDriver";  //TODO: remove duplicates of this
 
@@ -41,7 +48,7 @@ public class EngineDriver3Activity extends FragmentActivity {
 		
 		try {
 			setContentView(R.layout.main);
-			mActionBar = getActionBar();
+			mActionBar = getSupportActionBar();
 			mAdapter = new MyAdapter(getSupportFragmentManager());
 			mAdapter.setActionBar(mActionBar);
 			mPager = (ViewPager)findViewById(R.id.pager);
@@ -73,7 +80,7 @@ public class EngineDriver3Activity extends FragmentActivity {
 						.newTab()
 						.setText(mainapp.EDFrags[i].getName())
 						.setTabListener(
-								new TabListener<android.support.v4.app.Fragment>(this, i + "", mPager));
+								new TabListener<SherlockFragment>(this, i + "", mPager));
 				mActionBar.addTab(tab);
 			}
 
@@ -106,7 +113,7 @@ public class EngineDriver3Activity extends FragmentActivity {
 		}
 
 		@Override
-		public Fragment getItem(int position) {
+		public ArrayListFragment getItem(int position) {
 			//mActionBar.getTabAt(position).select();
 			return ArrayListFragment.newInstance(position);
 		}
@@ -117,13 +124,12 @@ public class EngineDriver3Activity extends FragmentActivity {
 
 		@Override
 		public float getPageWidth(final int position) {
-			//TODO: check screen width and set appropriately
 			//return fraction of screen used by this fragment#
 			return (float) mainapp.EDFrags[position].getWidth()/fragmentsPerScreen;
 		}
 	}
 
-	public static class ArrayListFragment extends ListFragment {
+	public static class ArrayListFragment extends SherlockListFragment {
 		int mNum;
 
 		/**
@@ -172,7 +178,7 @@ public class EngineDriver3Activity extends FragmentActivity {
 
 		@Override
 		public void onListItemClick(ListView l, View v, int position, long id) {
-			Log.i("FragmentList", "Item clicked: " + id + " on " + mainapp.EDFrags[mNum] + " (" + mNum + ")");
+			Log.i("FragmentList", "Item clicked: " + id + " on " + mainapp.EDFrags[mNum].getName() + " (" + mNum + ")");
 		}
 	}
 
