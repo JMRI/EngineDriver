@@ -8,8 +8,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
 public class TabListener<T extends Fragment> implements ActionBar.TabListener {
-    private Fragment mFragment;
-    private final Activity mActivity;
+//    private Fragment mFragment;
+//    private final Activity mActivity;
     private final String mTag;
     //private final Class<T> mClass;
     private ViewPager mPager;
@@ -20,7 +20,7 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
       * @param clz  The fragment's Class, used to instantiate the fragment
       */
     public TabListener(Activity activity, String tag, ViewPager pager) {
-        mActivity = activity;
+//        mActivity = activity;
         mTag = tag;
         //mClass = clz;
         mPager = pager;

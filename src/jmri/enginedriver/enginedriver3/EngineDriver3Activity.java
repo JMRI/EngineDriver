@@ -1,7 +1,6 @@
 package jmri.enginedriver.enginedriver3;
 
 import jmri.enginedriver.enginedriver3.R;
-
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.content.res.Configuration;
@@ -23,16 +22,23 @@ import android.widget.TextView;
 
 public class EngineDriver3Activity extends FragmentActivity {
 	/** Called when the activity is first created. */
+	public static final String DEBUG_TAG = "EngineDriver";  //TODO: remove duplicates of this
 
-	private static final int NUM_ITEMS = 5;
 	private MyAdapter mAdapter;
 	private ViewPager mPager;
 	public ActionBar mActionBar;
-	private static float fragmentsPerScreen = 1; 
+	private static int fragmentsPerScreen = 1; //will be changed later
+
+	private static EngineDriver3Application mainapp; // hold pointer to mainapp
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+	    Log.d(DEBUG_TAG,"in EngineDriver3Activity.onCreate()");
+
 		super.onCreate(savedInstanceState);
+
+		mainapp=(EngineDriver3Application)getApplication();
+		
 		try {
 			setContentView(R.layout.main);
 			mActionBar = getActionBar();
@@ -46,70 +52,45 @@ public class EngineDriver3Activity extends FragmentActivity {
 				@Override
 				public void onPageScrollStateChanged(int arg0) {
 					// TODO Auto-generated method stub
-
 				}
-
 				@Override
 				public void onPageScrolled(int arg0, float arg1, int arg2) {
 					// TODO Auto-generated method stub
-
 				}
-
 				@Override
 				public void onPageSelected(int arg0) {
-					// TODO Auto-generated method stub
 					Log.d("ViewPager", "onPageSelected: " + arg0);
-
 					mActionBar.getTabAt(arg0).select();
 				}
-
 			} );
 
 			mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 			mActionBar.setDisplayShowTitleEnabled(false);
-			Tab tab = mActionBar
-					.newTab()
-					.setText("Throttle")
-					.setTabListener(
-							new TabListener<android.support.v4.app.Fragment>(this, 0 + "", mPager));
-			mActionBar.addTab(tab);
-			tab = mActionBar
-					.newTab()
-					.setText("Turnouts")
-					.setTabListener(
-							new TabListener<android.support.v4.app.Fragment>(this, 1 + "", mPager));
-			mActionBar.addTab(tab);
-			tab = mActionBar
-					.newTab()
-					.setText("Routes")
-					.setTabListener(
-							new TabListener<android.support.v4.app.Fragment>(this, 2 + "", mPager));
-			mActionBar.addTab(tab);
-			tab = mActionBar
-					.newTab()
-					.setText("Web1")
-					.setTabListener(
-							new TabListener<android.support.v4.app.Fragment>(this, 3 + "", mPager));
-			mActionBar.addTab(tab);
-
-			tab = mActionBar
-					.newTab()
-					.setText("Web2")
-					.setTabListener(
-							new TabListener<android.support.v4.app.Fragment>(this, 4 + "", mPager));
-			mActionBar.addTab(tab);
+			
+			//build tabs for each defined fragment
+			for (int i = 0; i < mainapp.EDFrags.length; i++) {
+				Tab tab = mActionBar
+						.newTab()
+						.setText(mainapp.EDFrags[i].getName())
+						.setTabListener(
+								new TabListener<android.support.v4.app.Fragment>(this, i + "", mPager));
+				mActionBar.addTab(tab);
+			}
 
 			//mActionBar.getTabAt(index).select();
 		} 
 		catch (Exception e) {
-			Log.e("ViewPager", e.toString());
+			Log.e("ViewPager exception:", e.toString());
 		}
 
+		//for testing, hard-code the available screen width based on orientation  TODO: replace this with calculation
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			fragmentsPerScreen = 0.32f;
+			fragmentsPerScreen = 4;
 		} else {
-			fragmentsPerScreen = 1.0f;
+			fragmentsPerScreen = 2;
 		}
+		
+		mActionBar.getTabAt(2).select();  //always start up with the connection tab  TODO: do this only when disconnected
 	}
 
 	public static class MyAdapter extends FragmentPagerAdapter {
@@ -121,7 +102,7 @@ public class EngineDriver3Activity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			return NUM_ITEMS;
+			return mainapp.EDFrags.length;
 		}
 
 		@Override
@@ -137,8 +118,8 @@ public class EngineDriver3Activity extends FragmentActivity {
 		@Override
 		public float getPageWidth(final int position) {
 			//TODO: check screen width and set appropriately
-			// this will have 2 pages in a single view
-			return fragmentsPerScreen;
+			//return fraction of screen used by this fragment#
+			return (float) mainapp.EDFrags[position].getWidth()/fragmentsPerScreen;
 		}
 	}
 
@@ -146,27 +127,27 @@ public class EngineDriver3Activity extends FragmentActivity {
 		int mNum;
 
 		/**
-		 * Create a new instance of CountingFragment, providing "num"
+		 * Create a new instance of CountingFragment, providing "fragNum"
 		 * as an argument.
 		 */
-		static ArrayListFragment newInstance(int num) {
+		static ArrayListFragment newInstance(int fragNum) {
 			ArrayListFragment f = new ArrayListFragment();
 
-			// Supply num input as an argument.
+			// Supply fragNum input as an argument, use as key to EDFrags.
 			Bundle args = new Bundle();
-			args.putInt("num", num);
+			args.putInt("fragNum", fragNum);
 			f.setArguments(args);
 
 			return f;
 		}
 
 		/**
-		 * When creating, retrieve this instance's number from its arguments.
+		 * When creating, retrieve this instance's fragNumber from its arguments.
 		 */
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			mNum = (getArguments() != null ? getArguments().getInt("num") : 1) + 1;
+			mNum =  (getArguments() != null ? getArguments().getInt("fragNum") : 1);
 		}
 
 		/**
@@ -178,7 +159,7 @@ public class EngineDriver3Activity extends FragmentActivity {
 				Bundle savedInstanceState) {
 			View v = inflater.inflate(R.layout.fragment_pager_list, container, false);
 			View tv = v.findViewById(R.id.text);
-			((TextView)tv).setText("Fragment #" + mNum);
+			((TextView)tv).setText(mainapp.EDFrags[mNum].getName() + " (" + mNum + ")");
 			return v;
 		}
 
@@ -191,7 +172,7 @@ public class EngineDriver3Activity extends FragmentActivity {
 
 		@Override
 		public void onListItemClick(ListView l, View v, int position, long id) {
-			Log.i("FragmentList", "Item clicked: " + id + " on Fragment #" + mNum);
+			Log.i("FragmentList", "Item clicked: " + id + " on " + mainapp.EDFrags[mNum] + " (" + mNum + ")");
 		}
 	}
 
