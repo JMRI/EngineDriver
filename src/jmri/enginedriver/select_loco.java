@@ -260,10 +260,11 @@ public class select_loco extends Activity {
 
 	void acquire_engine(boolean bUpdateList) {
     	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, whichThrottle, engine_address, address_size);
-    	if(!bUpdateList)
+    	//if not updating list or no SD Card present then nothing else to do
+    	if(!bUpdateList || !android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
     		return;
 
-		// Save the engine list to the recent_engine_list.txt file.
+   		// Save the engine list to the recent_engine_list.txt file
 		File sdcard_path = Environment.getExternalStorageDirectory();
 		File connections_list_file = new File(sdcard_path,
 				"engine_driver/recent_engine_list.txt");
@@ -427,10 +428,14 @@ public class select_loco extends Activity {
 
 		engine_address_list = new ArrayList<Integer>();
 		address_size_list = new ArrayList<Integer>();
-		// Populate the ListView with the recent engines saved in a file. This
-		// will be stored in /sdcard/engine_driver/recent_engine_list.txt
-		// entries not matching the assumptions will be ignored
-		try {
+		//if no SD Card present then there is no recent locos list
+    	if(!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+			Toast.makeText(getApplicationContext(), "Recent locos list requires an SD Card", Toast.LENGTH_SHORT).show();
+    	}
+		else try {
+			// Populate the ListView with the recent engines saved in a file. This
+			// will be stored in /sdcard/engine_driver/recent_engine_list.txt
+			// entries not matching the assumptions will be ignored
 			File sdcard_path = Environment.getExternalStorageDirectory();
 			File engine_list_file = new File(sdcard_path + "/engine_driver/recent_engine_list.txt");
 			if (engine_list_file.exists()) {
@@ -466,7 +471,8 @@ public class select_loco extends Activity {
 				recent_list_adapter.notifyDataSetChanged();
 			}
 
-		} catch (IOException except) {
+		} 
+		catch (IOException except) {
 			Log.e("Engine_Driver", "select_loco - Error reading recent loco file. "
 					+ except.getMessage());
 		}

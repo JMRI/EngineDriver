@@ -401,12 +401,17 @@ public class connection_activity extends Activity {
 		 @Override
 		 protected String doInBackground(Void... params) {
 			String errMsg = "";
+			//if no SD Card present then nothing to do
+	    	if(!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
+	    		return errMsg;
 	    	try  {
 	    		File sdcard_path=Environment.getExternalStorageDirectory();
 
 	    		//First, determine if the engine_driver directory exists. If not, create it.
 	    		File engine_driver_dir=new File(sdcard_path, "engine_driver");
-	    		if(!engine_driver_dir.exists()) { engine_driver_dir.mkdir(); }
+	    		if(!engine_driver_dir.exists()) { 
+	    			engine_driver_dir.mkdir(); 
+	    		}
 
 	    		File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
 	    		PrintWriter list_output;
@@ -450,7 +455,10 @@ public class connection_activity extends Activity {
 	private void getConnectionsList() {
 		boolean foundExampleHost = false;
 		String errMsg = "";
-	    try {
+    	if(!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+			Toast.makeText(getApplicationContext(), "Recent connections list requires an SD Card", Toast.LENGTH_SHORT).show();
+    	}
+    	else try {
 	    	File sdcard_path=Environment.getExternalStorageDirectory();
 	    	File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
 
@@ -500,11 +508,11 @@ public class connection_activity extends Activity {
 	    	}
 	    }
 	    catch (IOException except) {
-	    	errMsg = except.getMessage();
-	    	Log.e("connection_activity", "Error reading recent connections list: "+errMsg);
+			errMsg = except.getMessage();
+			Log.e("connection_activity", "Error reading recent connections list: "+errMsg);
 			Toast.makeText(getApplicationContext(), "Error reading recent connections list: "+errMsg, Toast.LENGTH_SHORT).show();
 	    }
-
+    	
 	    //if example host not already in list, add it at end
 		if (!foundExampleHost) {
 				HashMap<String, String> hm=new HashMap<String, String>();
