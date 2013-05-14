@@ -53,6 +53,7 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.os.Handler;
 import android.provider.Settings;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.AdapterView;
@@ -401,21 +402,17 @@ public class connection_activity extends Activity {
 		 @Override
 		 protected String doInBackground(Void... params) {
 			String errMsg = "";
+			
 			//if no SD Card present then nothing to do
 	    	if(!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
 	    		return errMsg;
 	    	try  {
-	    		File sdcard_path=Environment.getExternalStorageDirectory();
+		    	File path=Environment.getExternalStorageDirectory();
+	    		File engine_driver_dir=new File(path, "engine_driver");
+    			engine_driver_dir.mkdir();			// create directory if it doesn't exist 
 
-	    		//First, determine if the engine_driver directory exists. If not, create it.
-	    		File engine_driver_dir=new File(sdcard_path, "engine_driver");
-	    		if(!engine_driver_dir.exists()) { 
-	    			engine_driver_dir.mkdir(); 
-	    		}
-
-	    		File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
-	    		PrintWriter list_output;
-	    		list_output=new PrintWriter(connections_list_file);
+	    		File connections_list_file=new File(path, "engine_driver/connections_list.txt");
+	    		PrintWriter list_output=new PrintWriter(connections_list_file);
 
 	    		//Write selected connection to file, then write all others (skipping selected if found)
 	    		list_output.format("%s:%s:%d\n", connected_hostname, connected_hostip, connected_port);
@@ -454,64 +451,66 @@ public class connection_activity extends Activity {
 	  
 	private void getConnectionsList() {
 		boolean foundExampleHost = false;
+		connections_list.clear();
 		String errMsg = "";
     	if(!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-			Toast.makeText(getApplicationContext(), "Recent connections list requires an SD Card", Toast.LENGTH_SHORT).show();
+        	//alert user that recent connections list requires SD Card
+       	    TextView v=(TextView)findViewById(R.id.recent_connections_heading);
+       	    v.setText(getString(R.string.ca_recent_conn_notice));
     	}
-    	else try {
-	    	File sdcard_path=Environment.getExternalStorageDirectory();
-	    	File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
-
-	    	if(connections_list_file.exists())    {
-	    		BufferedReader list_reader=new BufferedReader(new FileReader(connections_list_file));
-				connections_list.clear();
-				connection_list_adapter.notifyDataSetChanged();
-	    		while(list_reader.ready())    {
-	    			String line=list_reader.readLine();
-	    			String ip_address;
-	    			String host_name;
-	    			String port_str = "";
-	    			Integer port = 0;
-	    			List<String> parts = new ArrayList<String>();
-	    			parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
-	    			if (parts.size() > 1) {  //skip if not split
-	    				if (parts.size() == 2) {  //old style, use part 1 for ip and host
-	    					host_name = parts.get(0);
-	    					ip_address = parts.get(0);
-	    					port_str = parts.get(1).toString();
-	    				} else { 						  //new style, get all 3 parts
-	    					host_name = parts.get(0);
-	    					ip_address = parts.get(1);
-	    					port_str = parts.get(2).toString();
-	    				}
-	    				try {  //attempt to convert port to integer
-	    					port = Integer.decode(port_str);
-	    				} 
-	    				catch (Exception e) {
-	    				}
-	    				if (port > 0) {  //skip if port not converted to integer
-		    					HashMap<String, String> hm=new HashMap<String, String>();
-		    					hm.put("ip_address", ip_address);
-		    					hm.put("host_name", host_name);
-		    					hm.put("port", port.toString());
-		    					if(!connections_list.contains(hm)) {	// suppress dups
-		    						connections_list.add(hm);
-		    						connection_list_adapter.notifyDataSetChanged();
+    	else {
+    		try {
+		    	File sdcard_path=Environment.getExternalStorageDirectory();
+		    	File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
+	
+		    	if(connections_list_file.exists())    {
+		    		BufferedReader list_reader=new BufferedReader(new FileReader(connections_list_file));
+		    		while(list_reader.ready())    {
+		    			String line=list_reader.readLine();
+		    			String ip_address;
+		    			String host_name;
+		    			String port_str = "";
+		    			Integer port = 0;
+		    			List<String> parts = new ArrayList<String>();
+		    			parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
+		    			if (parts.size() > 1) {  //skip if not split
+		    				if (parts.size() == 2) {  //old style, use part 1 for ip and host
+		    					host_name = parts.get(0);
+		    					ip_address = parts.get(0);
+		    					port_str = parts.get(1).toString();
+		    				} else { 						  //new style, get all 3 parts
+		    					host_name = parts.get(0);
+		    					ip_address = parts.get(1);
+		    					port_str = parts.get(2).toString();
+		    				}
+		    				try {  //attempt to convert port to integer
+		    					port = Integer.decode(port_str);
+		    				} 
+		    				catch (Exception e) {
+		    				}
+		    				if (port > 0) {  //skip if port not converted to integer
+			    					HashMap<String, String> hm=new HashMap<String, String>();
+			    					hm.put("ip_address", ip_address);
+			    					hm.put("host_name", host_name);
+			    					hm.put("port", port.toString());
+			    					if(!connections_list.contains(hm)) {	// suppress dups
+			    						connections_list.add(hm);
+			    					}
+		    					if (host_name.equals(example_host) && port.toString().equals(example_port)) {
+		    						foundExampleHost = true; 
 		    					}
-	    					if (host_name.equals(example_host) && port.toString().equals(example_port)) {
-	    						foundExampleHost = true; 
-	    					}
-	    				}
-	    			} 
-	    		}
-	    		list_reader.close();
-	    	}
-	    }
-	    catch (IOException except) {
-			errMsg = except.getMessage();
-			Log.e("connection_activity", "Error reading recent connections list: "+errMsg);
-			Toast.makeText(getApplicationContext(), "Error reading recent connections list: "+errMsg, Toast.LENGTH_SHORT).show();
-	    }
+		    				}
+		    			} 
+		    		}
+		    		list_reader.close();
+		    	}
+		    }
+		    catch (IOException except) {
+				errMsg = except.getMessage();
+				Log.e("connection_activity", "Error reading recent connections list: "+errMsg);
+				Toast.makeText(getApplicationContext(), "Error reading recent connections list: "+errMsg, Toast.LENGTH_SHORT).show();
+		    }
+    	}
     	
 	    //if example host not already in list, add it at end
 		if (!foundExampleHost) {
@@ -520,8 +519,8 @@ public class connection_activity extends Activity {
 				hm.put("host_name", example_host);
 				hm.put("port", example_port);
 				connections_list.add(hm);
-				connection_list_adapter.notifyDataSetChanged();
 		}
+		connection_list_adapter.notifyDataSetChanged();
 	}
 	
 	//for debugging only

@@ -1481,7 +1481,6 @@ public class threaded_application extends Application {
 		function_labels_default = new LinkedHashMap<Integer, String>();
 		try {
 			File sdcard_path=Environment.getExternalStorageDirectory();
-	
 			File settings_file=new File(sdcard_path + "/engine_driver/function_settings.txt");
 			if(settings_file.exists()) {  //if file found, use it for settings arrays
 				BufferedReader settings_reader=new BufferedReader(new FileReader(settings_file));
@@ -1498,7 +1497,7 @@ public class threaded_application extends Application {
 				function_labels_default.put(1, "Bell");
 				function_labels_default.put(2, "Horn");
 				for(int k = 3; k <= 27; k++) {
-					function_labels_default.put(k, String.format("%d",k));
+					function_labels_default.put(k, Integer.toString(k));		//String.format("%d",k));
 				}
 			}
 		}

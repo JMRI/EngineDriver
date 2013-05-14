@@ -103,6 +103,7 @@ public class routes extends Activity  implements OnGestureListener {
 		if (mainapp.rt_state_names != null) {  //not allowed
 			if (mainapp.rt_user_names != null) { //none defined
 				int pos = 0;
+				String del = prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
 				for (String username : mainapp.rt_user_names) {
 					if (!username.equals(""))  {  //skip routes without usernames
 						//get values from global array
@@ -124,12 +125,13 @@ public class routes extends Activity  implements OnGestureListener {
 						routesFullList.add(hm);
 
 						//if location is new, add to list
-						String del = prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
-						int delim = username.indexOf(del);
-						if(delim >= 0) {
-							String loc = username.substring(0, delim);
-							if(!locationList.contains(loc))
-								locationList.add(loc);
+						if(del.length() > 0) {
+							int delim = username.indexOf(del);
+							if(delim >= 0) {
+								String loc = username.substring(0, delim);
+								if(!locationList.contains(loc))
+									locationList.add(loc);
+							}
 						}
 						//
 					}

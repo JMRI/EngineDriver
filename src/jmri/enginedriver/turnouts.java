@@ -104,6 +104,7 @@ public class turnouts extends Activity implements OnGestureListener {
 		if (mainapp.to_state_names != null) {  //not allowed
 			if (mainapp.to_user_names != null) { //none defined
 				int pos = 0;
+				String del = prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
 				for (String username : mainapp.to_user_names) {
 					if (!username.equals(""))  {  //skip turnouts without usernames
 						//get values from global array
@@ -122,12 +123,13 @@ public class turnouts extends Activity implements OnGestureListener {
 						turnoutsFullList.add(hm);
 						
 						//if location is new, add to list
-						String del = prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
-						int delim = username.indexOf(del);
-						if(delim >= 0) {
-							String loc = username.substring(0, delim);
-							if(!locationList.contains(loc))
-								locationList.add(loc);
+						if(del.length() > 0) {
+							int delim = username.indexOf(del);
+							if(delim >= 0) {
+								String loc = username.substring(0, delim);
+								if(!locationList.contains(loc))
+									locationList.add(loc);
+							}
 						}
 					}
 					pos++;

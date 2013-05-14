@@ -31,6 +31,7 @@ import java.io.*;
 import android.text.method.TextKeyListener;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class function_settings extends Activity{
@@ -70,6 +71,12 @@ public class function_settings extends Activity{
         	b.setOnClickListener(click_listener);
         	b.setEnabled(true);
         }
+
+    	if(!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+        	//warn user that saving Default Function Settings requires SD Card
+       	    TextView v=(TextView)findViewById(R.id.fs_heading);
+       	    v.setText(getString(R.string.fs_edit_notice));
+    	}
      }
 
     @Override
@@ -231,6 +238,9 @@ public class function_settings extends Activity{
 
 	//save function and labels to file
     void saveSettings() {
+    	//SD Card required to save settings
+    	if(!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
+    		return;
         //Save the valid function labels to the settings.txt file.
     	File sdcard_path=Environment.getExternalStorageDirectory();
     	File settings_file=new File(sdcard_path, "engine_driver/function_settings.txt");

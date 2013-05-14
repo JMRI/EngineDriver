@@ -263,7 +263,6 @@ public class select_loco extends Activity {
     	//if not updating list or no SD Card present then nothing else to do
     	if(!bUpdateList || !android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
     		return;
-
    		// Save the engine list to the recent_engine_list.txt file
 		File sdcard_path = Environment.getExternalStorageDirectory();
 		File connections_list_file = new File(sdcard_path,
@@ -430,53 +429,57 @@ public class select_loco extends Activity {
 		address_size_list = new ArrayList<Integer>();
 		//if no SD Card present then there is no recent locos list
     	if(!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-			Toast.makeText(getApplicationContext(), "Recent locos list requires an SD Card", Toast.LENGTH_SHORT).show();
+        	//alert user that recent locos list requires SD Card
+       	    TextView v=(TextView)findViewById(R.id.recent_engines_heading);
+       	    v.setText(getString(R.string.sl_recent_engine_notice));
     	}
-		else try {
-			// Populate the ListView with the recent engines saved in a file. This
-			// will be stored in /sdcard/engine_driver/recent_engine_list.txt
-			// entries not matching the assumptions will be ignored
-			File sdcard_path = Environment.getExternalStorageDirectory();
-			File engine_list_file = new File(sdcard_path + "/engine_driver/recent_engine_list.txt");
-			if (engine_list_file.exists()) {
-				BufferedReader list_reader = new BufferedReader(
-						new FileReader(engine_list_file));
-				while (list_reader.ready()) {
-					String line = list_reader.readLine();
-	    			Integer splitPos = line.indexOf(':');
-	    			if (splitPos > 0) {
-	    				Integer ea, as;
-	    				try {	
-	    					ea = Integer.decode(line.substring(0, splitPos));
-	    					as = Integer.decode(line.substring(splitPos + 1, line.length()));
-						} 
-	    				catch (Exception e) {
-	    					ea = -1;
-	    					as = -1;
-						}
-
-						if ((ea >= 0) && (as >= 0)) {
-							engine_address_list.add(ea);
-							address_size_list.add(as);
-							HashMap<String, String> hm = new HashMap<String, String>();
-							String addressLengthString = ((as == 0) ? "S" : "L");  //show L or S based on length from file
-							String engineAddressString = String.format("%s(%s)",engine_address_list.get(
-									engine_address_list.size() - 1).toString(), addressLengthString);
-							hm.put("engine", engineAddressString);
-							recent_engine_list.add(hm);
-						} //if ea>=0&&as>=0
-	    			} //if splitPos>0
+		else {
+			try {
+				// Populate the ListView with the recent engines saved in a file. This
+				// will be stored in /sdcard/engine_driver/recent_engine_list.txt
+				// entries not matching the assumptions will be ignored
+				File sdcard_path = Environment.getExternalStorageDirectory();
+				File engine_list_file = new File(sdcard_path + "/engine_driver/recent_engine_list.txt");
+				if (engine_list_file.exists()) {
+					BufferedReader list_reader = new BufferedReader(
+							new FileReader(engine_list_file));
+					while (list_reader.ready()) {
+						String line = list_reader.readLine();
+		    			Integer splitPos = line.indexOf(':');
+		    			if (splitPos > 0) {
+		    				Integer ea, as;
+		    				try {	
+		    					ea = Integer.decode(line.substring(0, splitPos));
+		    					as = Integer.decode(line.substring(splitPos + 1, line.length()));
+							} 
+		    				catch (Exception e) {
+		    					ea = -1;
+		    					as = -1;
+							}
+	
+							if ((ea >= 0) && (as >= 0)) {
+								engine_address_list.add(ea);
+								address_size_list.add(as);
+								HashMap<String, String> hm = new HashMap<String, String>();
+								String addressLengthString = ((as == 0) ? "S" : "L");  //show L or S based on length from file
+								String engineAddressString = String.format("%s(%s)",engine_address_list.get(
+										engine_address_list.size() - 1).toString(), addressLengthString);
+								hm.put("engine", engineAddressString);
+								recent_engine_list.add(hm);
+							} //if ea>=0&&as>=0
+		    			} //if splitPos>0
+					}
+					list_reader.close();
+					recent_list_adapter.notifyDataSetChanged();
 				}
-				list_reader.close();
-				recent_list_adapter.notifyDataSetChanged();
+	
+			} 
+			catch (IOException except) {
+				Log.e("Engine_Driver", "select_loco - Error reading recent loco file. "
+						+ except.getMessage());
 			}
-
-		} 
-		catch (IOException except) {
-			Log.e("Engine_Driver", "select_loco - Error reading recent loco file. "
-					+ except.getMessage());
 		}
-
+    	
 		// Set the button callbacks.
 		Button button = (Button) findViewById(R.id.acquire);
 		button_listener click_listener = new button_listener();
