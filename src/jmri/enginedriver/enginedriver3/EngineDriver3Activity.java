@@ -5,51 +5,49 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.SherlockListFragment;
-
 import jmri.enginedriver.enginedriver3.R;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-//import android.support.v4.app.Fragment;
-//import android.support.v4.app.FragmentActivity;
-//import android.support.v4.app.FragmentManager;
-//import android.support.v4.app.FragmentPagerAdapter;
-//import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class EngineDriver3Activity extends SherlockFragmentActivity {
-	/** Called when the activity is first created. */
-	public static final String DEBUG_TAG = "EngineDriver";  //TODO: remove duplicates of this
 
-	private MyAdapter mAdapter;
+	public static final String DEBUG_TAG = "EngineDriver";  //TODO: find single, better place for these
+	public static final String WEB = "web";
+	public static final String DIALOG = "dialog";
+	public static final String LIST = "list";
+
+	private ED3FragmentPagerAdapter mAdapter;
 	private ViewPager mPager;
 	public ActionBar mActionBar;
 	private static int fragmentsPerScreen = 1; //will be changed later
 
 	private static EngineDriver3Application mainapp; // hold pointer to mainapp
 
+	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-	    Log.d(DEBUG_TAG,"in EngineDriver3Activity.onCreate()");
+		Log.d(DEBUG_TAG,"in EngineDriver3Activity.onCreate()");
 
 		super.onCreate(savedInstanceState);
 
 		mainapp=(EngineDriver3Application)getApplication();
-		
+
 		try {
 			setContentView(R.layout.main);
 			mActionBar = getSupportActionBar();
-			mAdapter = new MyAdapter(getSupportFragmentManager());
+			mAdapter = new ED3FragmentPagerAdapter(getSupportFragmentManager());
 			mAdapter.setActionBar(mActionBar);
 			mPager = (ViewPager)findViewById(R.id.pager);
 			mPager.setAdapter(mAdapter);
@@ -73,7 +71,7 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 
 			mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 			mActionBar.setDisplayShowTitleEnabled(false);
-			
+
 			//build tabs for each defined fragment
 			for (int i = 0; i < mainapp.EDFrags.length; i++) {
 				Tab tab = mActionBar
@@ -83,10 +81,7 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 								new TabListener<SherlockFragment>(this, i + "", mPager));
 				mActionBar.addTab(tab);
 			}
-
-			//mActionBar.getTabAt(index).select();
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			Log.e("ViewPager exception:", e.toString());
 		}
 
@@ -96,14 +91,14 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 		} else {
 			fragmentsPerScreen = 2;
 		}
-		
+
 		mActionBar.getTabAt(2).select();  //always start up with the connection tab  TODO: do this only when disconnected
 	}
 
-	public static class MyAdapter extends FragmentPagerAdapter {
+	public static class ED3FragmentPagerAdapter extends FragmentPagerAdapter {
 		ActionBar mActionBar;
 
-		public MyAdapter(FragmentManager fm) {
+		public ED3FragmentPagerAdapter(FragmentManager fm) {
 			super(fm);
 		}
 
@@ -113,9 +108,11 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 		}
 
 		@Override
-		public ArrayListFragment getItem(int position) {
-			//mActionBar.getTabAt(position).select();
-			return ArrayListFragment.newInstance(position);
+		public SherlockFragment getItem(int position) {
+			ED3Fragment f = null;
+			f = ED3Fragment.newInstance(position);
+			return f;
+
 		}
 
 		public void setActionBar( ActionBar bar ) {
@@ -124,20 +121,23 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 
 		@Override
 		public float getPageWidth(final int position) {
-			//return fraction of screen used by this fragment#
+			//return fraction of screen used by this fragment#, based on width
 			return (float) mainapp.EDFrags[position].getWidth()/fragmentsPerScreen;
 		}
 	}
 
-	public static class ArrayListFragment extends SherlockListFragment {
-		int mNum;
+	public static class ED3Fragment extends SherlockFragment {
+		int 	mNum;  //fragment's index (key)
+		String 	mName; //fragment's title
+		String 	mType; //fragment's type (WEB, LIST, 
+		View	mView; //the view object for this fragment
 
 		/**
-		 * Create a new instance of CountingFragment, providing "fragNum"
+		 * Create a new instance of Fragment, providing "fragNum"
 		 * as an argument.
 		 */
-		static ArrayListFragment newInstance(int fragNum) {
-			ArrayListFragment f = new ArrayListFragment();
+		static ED3Fragment newInstance(int fragNum) {
+			ED3Fragment f = new ED3Fragment();
 
 			// Supply fragNum input as an argument, use as key to EDFrags.
 			Bundle args = new Bundle();
@@ -148,38 +148,67 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 		}
 
 		/**
-		 * When creating, retrieve this instance's fragNumber from its arguments.
+		 * When creating, retrieve this instance's fragNumber from its arguments, and store
+		 *   it, the fragment name, and fragment type for quick reference later.
 		 */
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
+			Log.d(DEBUG_TAG,"in ArrayListFragment.onCreate()");
 			super.onCreate(savedInstanceState);
 			mNum =  (getArguments() != null ? getArguments().getInt("fragNum") : 1);
+			mType = mainapp.EDFrags[mNum].getType();
+			mName = mainapp.EDFrags[mNum].getName();
 		}
 
-		/**
-		 * The Fragment's UI is just a simple text view showing its
-		 * instance number.
-		 */
+		/** inflate the proper xml layout for the fragment type
+		 *    runs before activity starts		 */
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View v = inflater.inflate(R.layout.fragment_pager_list, container, false);
-			View tv = v.findViewById(R.id.text);
-			((TextView)tv).setText(mainapp.EDFrags[mNum].getName() + " (" + mNum + ")");
-			return v;
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			//choose the proper layout xml for this fragment's type
+			int rx = R.layout.list_fragment;
+			if (mType == WEB) {
+				rx = R.layout.web_fragment;
+			} else if (mType == LIST) {
+				rx = R.layout.list_fragment;
+			}
+			//inflate the proper layout xml and remember it in fragment
+			mView = inflater.inflate(rx, container, false);  
+			View tv = mView.findViewById(R.id.title);  //all fragment views currently have title element
+			if (tv != null) {
+				((TextView)tv).setText(mName + " (" + mNum + ")");
+			}
+			return mView;
 		}
 
+		/** set up proper data and processing for this fragment type
+		 *    runs after activity starts		 */
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
-			setListAdapter(new ArrayAdapter<String>(getActivity(),
-					android.R.layout.simple_list_item_1, sCheeseStrings));
+
+			if (mType == WEB) {
+				WebView webview =   (WebView)  mView.findViewById(R.id.webview);
+				webview.loadUrl("file:///android_asset/about_page.html");
+			}
+			if (mType == LIST) {
+				ListView listview = (ListView) mView.findViewById(R.id.listview);
+				int liid = android.R.layout.simple_list_item_1;  //use default layout and populate with some data
+				listview.setAdapter(new ArrayAdapter<String>(getActivity(), liid, sCheeseStrings));
+				listview.setOnItemClickListener(new viewlist_item());
+				//hide the empty message (since we know we put stuff into the good list above)
+				View ev = mView.findViewById(android.R.id.empty);
+				ev.setVisibility(View.GONE);
+			}
 		}
 
-		@Override
-		public void onListItemClick(ListView l, View v, int position, long id) {
-			Log.i("FragmentList", "Item clicked: " + id + " on " + mainapp.EDFrags[mNum].getName() + " (" + mNum + ")");
-		}
+		//available click listeners for a viewlist item
+		public class viewlist_item implements android.widget.AdapterView.OnItemClickListener	  {
+
+			public void onItemClick(android.widget.AdapterView<?> parent, View v, int position, long id)	    {
+				Log.i("FragmentList", "Item clicked: " + id + " on " + mainapp.EDFrags[mNum].getName() + " (" + mNum + ")");	    
+			};
+		}	  
+
 	}
 
 	public static final String[] sCheeseStrings = {
