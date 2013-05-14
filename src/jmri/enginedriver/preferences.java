@@ -81,20 +81,20 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 			  }
 		  }
 		  else if(key.equals("WebViewLocation")) {
-			  // tell throt that web view location pref changed
-				mainapp.sendMsg(mainapp.throttle_msg_handler, message_type.WEBVIEW_LOC); 
+				mainapp.alert_activities(message_type.WEBVIEW_LOC,""); 
 		  }
 		  else if(key.equals("ThrottleOrientation")) {
 			  //if mode was fixed (Port or Land) won't get callback so need explicit call here 
 			  mainapp.setActivityOrientation(this);
 		  }
 		  else if(key.equals("InitialWebPage")) {
-			  // tell web that initial webpage pref changed
-			  mainapp.sendMsg(mainapp.web_msg_handler, message_type.INITIAL_WEBPAGE); 
+			  mainapp.alert_activities(message_type.INITIAL_WEBPAGE,""); 
 		  }
 		  else if(key.equals("InitialThrotWebPage")) {
-			  // tell throttle that initial webpage pref changed
-			  mainapp.sendMsg(mainapp.throttle_msg_handler, message_type.INITIAL_WEBPAGE); 
+			  mainapp.alert_activities(message_type.INITIAL_WEBPAGE,""); 
+		  }
+		  else if(key.equals("DelimiterPreference")) {
+			  mainapp.alert_activities(message_type.LOCATION_DELIMITER,""); 
 		  }
 	  }
 

@@ -47,10 +47,12 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -60,8 +62,13 @@ public class routes extends Activity  implements OnGestureListener {
 
 	private SharedPreferences prefs;
 	
-	ArrayList<HashMap<String, String> > routes_list;
+	private ArrayList<HashMap<String, String>> routesFullList;
+	private ArrayList<HashMap<String, String> > routes_list;
 	private SimpleAdapter routes_list_adapter;
+	private ArrayList<String> locationList;
+	private ArrayAdapter<String> locationListAdapter;
+	private static String location = null;
+	private Spinner locationSpinner;
 
 	private GestureDetector myGesture ;
 
@@ -86,12 +93,13 @@ public class routes extends Activity  implements OnGestureListener {
 	    Comparator<HashMap<String, String>> route_comparator = new Comparator<HashMap<String, String>>() {
 			@Override
 			public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
-				return arg0.get("rt_user_name").compareToIgnoreCase(arg1.get("rt_user_name"));
+				return arg0.get("rt_user_name").compareTo(arg1.get("rt_user_name"));	//*** was compareToIgnoreCase
 			}
 		};
 
 		//clear and rebuild
-		routes_list.clear();
+		routesFullList.clear();
+		locationList.clear();
 		if (mainapp.rt_state_names != null) {  //not allowed
 			if (mainapp.rt_user_names != null) { //none defined
 				int pos = 0;
@@ -113,23 +121,53 @@ public class routes extends Activity  implements OnGestureListener {
 							hm.put("rt_system_name", systemname);
 						}
 						hm.put("rt_current_state_desc", currentstatedesc);
+						routesFullList.add(hm);
 
-						//add temp hashmap to list which view is hooked to
-						routes_list.add(hm);
+						//if location is new, add to list
+						String del = prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
+						int delim = username.indexOf(del);
+						if(delim >= 0) {
+							String loc = username.substring(0, delim);
+							if(!locationList.contains(loc))
+								locationList.add(loc);
+						}
 						//
 					}
 					pos++;
-				}  //if username blank
+				}
 //				routes_list_adapter.notifyDataSetChanged();
-			}  //if usernames is null
-		}  //end statenames  is null
+			}
+		}
 		updateRouteEntry();
 		
-		//sort by username
-		Collections.sort(routes_list, route_comparator);
-		routes_list_adapter.notifyDataSetChanged();
+		//sort lists by username
+		Collections.sort(routesFullList, route_comparator);
+		Collections.sort(locationList);
+		locationList.add(0,getString(R.string.location_all));	// this entry goes at the top of the list
+		locationListAdapter.notifyDataSetChanged();
+		if(!locationList.contains(location))
+			location = getString(R.string.location_all);
+		locationSpinner.setSelection(locationListAdapter.getPosition(location));
+
+		filterRouteView();
 	}
 
+	private void filterRouteView() {
+		final String loc = location + prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
+		final boolean useAllLocations = getString(R.string.location_all).equals(location);
+		routes_list.clear();
+		for(HashMap<String, String> hm : routesFullList) {
+			String userName = hm.get("rt_user_name");
+			if(useAllLocations || userName.startsWith(loc)) {
+				HashMap<String, String> hmFilt = (HashMap<String, String>) hm.clone(); 
+				if(!useAllLocations)
+					hmFilt.put("rt_user_name", userName.substring(loc.length()));
+				routes_list.add(hmFilt);
+			}
+		}
+		routes_list_adapter.notifyDataSetChanged();  //update the list
+	}
+	  
 	private int updateRouteEntry() {
 		Button butSet = (Button) findViewById(R.id.route_toggle);
 		EditText rte = (EditText) findViewById(R.id.route_entry);
@@ -178,6 +216,9 @@ public class routes extends Activity  implements OnGestureListener {
 	        	}
 	        }
 	        break;
+    		case message_type.LOCATION_DELIMITER:
+      			refresh_route_view();
+      			break;
     		case message_type.WIT_CON_RETRY:
 				refresh_route_view(); 
       			break;
@@ -229,6 +270,7 @@ public class routes extends Activity  implements OnGestureListener {
   	mainapp.routes_msg_handler=new routes_handler();
 	myGesture = new GestureDetector(this);
         
+    routesFullList=new ArrayList<HashMap<String, String> >();
 	//Set up a list adapter to allow adding the list of recent connections to the UI.
     routes_list=new ArrayList<HashMap<String, String> >();
     routes_list_adapter=new SimpleAdapter(this, routes_list, R.layout.routes_item, 
@@ -278,7 +320,23 @@ public class routes extends Activity  implements OnGestureListener {
     b.setOnClickListener(click_listener);
 
 	((EditText) findViewById(R.id.route_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
-    //update route list
+
+	locationList = new ArrayList<String>();
+	locationSpinner = (Spinner) findViewById(R.id.routes_location);
+	locationListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, locationList);
+	locationListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	locationSpinner.setAdapter(locationListAdapter);
+	
+    locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            location = (String)parent.getSelectedItem();
+            filterRouteView();
+        }
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    });
+	
+	//update route list
 	refresh_route_view();
   };
 

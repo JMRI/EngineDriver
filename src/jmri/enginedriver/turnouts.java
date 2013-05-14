@@ -47,10 +47,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
@@ -63,8 +65,13 @@ public class turnouts extends Activity implements OnGestureListener {
 	private static final int GONE = 8;
 //	private static final int VISIBLE = 0;
 
-	ArrayList<HashMap<String, String> > turnouts_list;
+	private ArrayList<HashMap<String, String>> turnoutsFullList;
+	private ArrayList<HashMap<String, String>> turnouts_list;
 	private SimpleAdapter turnouts_list_adapter;
+	private ArrayList<String> locationList;
+	private ArrayAdapter<String> locationListAdapter;
+	private static String location = null;
+	private Spinner locationSpinner;
 
 	private GestureDetector myGesture ;
 
@@ -84,15 +91,16 @@ public class turnouts extends Activity implements OnGestureListener {
 	public void refresh_turnout_view() {
 		
 		//specify logic for sort comparison (by username)
-	    Comparator<HashMap<String, String>> route_comparator = new Comparator<HashMap<String, String>>() {
+	    Comparator<HashMap<String, String>> turnout_comparator = new Comparator<HashMap<String, String>>() {
 			@Override
 			public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
-				return arg0.get("to_user_name").compareToIgnoreCase(arg1.get("to_user_name"));
+				return arg0.get("to_user_name").compareTo(arg1.get("to_user_name"));	//*** was compareToIgnoreCase()
 			}
 		};
 
 		//clear and rebuild, or disable if not allowed
-		turnouts_list.clear();
+		turnoutsFullList.clear();
+		locationList.clear();
 		if (mainapp.to_state_names != null) {  //not allowed
 			if (mainapp.to_user_names != null) { //none defined
 				int pos = 0;
@@ -107,23 +115,53 @@ public class turnouts extends Activity implements OnGestureListener {
 						}
 
 						//put values into temp hashmap
-						HashMap<String, String> hm=new HashMap<String, String>();
+						HashMap<String, String> hm = new HashMap<String, String>();
 						hm.put("to_user_name", username);
 						hm.put("to_system_name", systemname);
 						hm.put("to_current_state_desc", currentstatedesc);
-
-						//add temp hashmap to list which view is hooked to
-						turnouts_list.add(hm);
-
-					}  //if username blank
+						turnoutsFullList.add(hm);
+						
+						//if location is new, add to list
+						String del = prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
+						int delim = username.indexOf(del);
+						if(delim >= 0) {
+							String loc = username.substring(0, delim);
+							if(!locationList.contains(loc))
+								locationList.add(loc);
+						}
+					}
 					pos++;
-				}  //end for loop
-			}  //if usernames is null
-		}  //end statenames is null
+				}
+			}
+		}
+
 		updateTurnoutEntry();
 		
 		//sort by username
-		Collections.sort(turnouts_list, route_comparator);
+		Collections.sort(turnoutsFullList, turnout_comparator);
+		Collections.sort(locationList);
+		locationList.add(0,getString(R.string.location_all));	// this entry goes at the top of the list
+		locationListAdapter.notifyDataSetChanged();
+		if(!locationList.contains(location))
+			location = getString(R.string.location_all);
+		locationSpinner.setSelection(locationListAdapter.getPosition(location));
+
+		filterTurnoutView();
+	}
+	
+	private void filterTurnoutView() {
+		final String loc = location + prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
+		final boolean useAllLocations = getString(R.string.location_all).equals(location);
+		turnouts_list.clear();
+		for(HashMap<String, String> hm : turnoutsFullList) {
+			String userName = hm.get("to_user_name");
+			if(useAllLocations || userName.startsWith(loc)) {
+				HashMap<String, String> hmFilt = (HashMap<String, String>) hm.clone(); 
+				if(!useAllLocations)
+					hmFilt.put("to_user_name", userName.substring(loc.length()));
+				turnouts_list.add(hmFilt);
+			}
+		}
 		turnouts_list_adapter.notifyDataSetChanged();  //update the list
 	}
 	  
@@ -181,6 +219,9 @@ public class turnouts extends Activity implements OnGestureListener {
 	      					refresh_turnout_view(); 
 	      				}
 	      			}
+	      			break;
+	      		case message_type.LOCATION_DELIMITER:
+	      			refresh_turnout_view();
 	      			break;
 	      		case message_type.WIT_CON_RETRY:
 					refresh_turnout_view(); 
@@ -245,6 +286,7 @@ public class turnouts extends Activity implements OnGestureListener {
 
     myGesture = new GestureDetector(this);
     
+    turnoutsFullList=new ArrayList<HashMap<String, String> >();
     //Set up a list adapter to allow adding the list of recent connections to the UI.
     turnouts_list=new ArrayList<HashMap<String, String> >();
     turnouts_list_adapter=new SimpleAdapter(this, turnouts_list, R.layout.turnouts_item, 
@@ -312,6 +354,22 @@ public class turnouts extends Activity implements OnGestureListener {
    	    b.setVisibility(GONE);
     }
 	((EditText) findViewById(R.id.turnout_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
+
+	locationList = new ArrayList<String>();
+	locationSpinner = (Spinner) findViewById(R.id.turnouts_location);
+	locationListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, locationList);
+	locationListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	locationSpinner.setAdapter(locationListAdapter);
+	
+    locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            location = (String)parent.getSelectedItem();
+            filterTurnoutView();
+        }
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    });
+	
     //update turnout list
     refresh_turnout_view();
   }

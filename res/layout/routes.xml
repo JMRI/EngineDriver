@@ -34,6 +34,23 @@
             android:text="@string/set"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
+    <TextView
+        android:id="@+id/routes_location_label"
+        style="@style/small_heading_style"
+        android:text="@string/routes_location_label" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="4dp" >
+	    <Spinner
+	        android:id="@+id/routes_location"
+            android:layout_width="wrap_content"
+	        android:layout_height="49dp"
+            android:layout_weight="1.0"
+	        android:singleLine="true" />
+
+    </LinearLayout>
     <ListView
         android:id="@+id/routes_list"
         android:layout_width="fill_parent"

@@ -1701,7 +1701,7 @@ public class threaded_application extends Application {
 	}
 	
 	// forward a message to all running activities 
-	private void alert_activities(int msgType, String msgBody) {
+	void alert_activities(int msgType, String msgBody) {
 		sendMsg(connection_msg_handler, msgType, msgBody);
 		sendMsg(turnouts_msg_handler, msgType, msgBody);
 		sendMsg(routes_msg_handler, msgType, msgBody);

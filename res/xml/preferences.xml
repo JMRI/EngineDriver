@@ -142,5 +142,13 @@
             android:summary="@string/prefHideSystemRouteNamesSummary"
             android:title="@string/prefHideSystemRouteNamesTitle" >
         </CheckBoxPreference>
-    </PreferenceCategory>
+	    <EditTextPreference
+	        android:defaultValue="@string/prefDelimiterDefaultValue"
+	        android:dialogTitle="@string/prefDelimiterTitle"
+	        android:key="DelimiterPreference"
+            android:maxLength="1"
+	        android:summary="@string/prefDelimiterSummary"
+	        android:title="@string/prefDelimiterTitle" >
+	    </EditTextPreference>
+        </PreferenceCategory>
 </PreferenceScreen>
