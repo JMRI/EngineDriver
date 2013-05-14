@@ -1,3 +1,7 @@
+**Version 2.8 (Robin Becker)
+ * Quick list filter for turnouts and routes, with new preference for location delimiter.
+**Version 2.7 (Robin Becker)
+ * prevent crash when going to About or Prefs prior to any connections
 **Version 2.6 (all by Robin Becker unless noted)
  * pref to "disable" on-the-fly consisting, and revert to dropping when a new one is added. - mstevetodd
  * pref to only show one throttle
