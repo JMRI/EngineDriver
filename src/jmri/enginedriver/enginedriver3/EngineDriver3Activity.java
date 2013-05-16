@@ -6,6 +6,8 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import jmri.enginedriver.enginedriver3.R;
+import jmri.enginedriver.enginedriver3.Consts;
+import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -16,17 +18,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EngineDriver3Activity extends SherlockFragmentActivity {
-
-	public static final String DEBUG_TAG = "EngineDriver";  //TODO: find single, better place for these
-	public static final String WEB = "web";
-	public static final String DIALOG = "dialog";
-	public static final String LIST = "list";
 
 	private ED3FragmentPagerAdapter mAdapter;
 	private ViewPager mPager;
@@ -38,7 +38,7 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Log.d(DEBUG_TAG,"in EngineDriver3Activity.onCreate()");
+		Log.d(Consts.DEBUG_TAG,"in EngineDriver3Activity.onCreate()");
 
 		super.onCreate(savedInstanceState);
 
@@ -70,13 +70,12 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 			} );
 
 			mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-			mActionBar.setDisplayShowTitleEnabled(false);
 
 			//build tabs for each defined fragment
-			for (int i = 0; i < mainapp.EDFrags.length; i++) {
+			for (int i = 0; i < mainapp.EDFrags.size(); i++) {
 				Tab tab = mActionBar
 						.newTab()
-						.setText(mainapp.EDFrags[i].getName())
+						.setText(mainapp.EDFrags.get(i).getName())
 						.setTabListener(
 								new TabListener<SherlockFragment>(this, i + "", mPager));
 				mActionBar.addTab(tab);
@@ -87,9 +86,11 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 
 		//for testing, hard-code the available screen width based on orientation  TODO: replace this with calculation
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			fragmentsPerScreen = 4;
+			fragmentsPerScreen = 5;
+			mActionBar.setDisplayShowTitleEnabled(false);  //this interferes with the actionbar's fling
 		} else {
 			fragmentsPerScreen = 2;
+			mActionBar.setDisplayShowTitleEnabled(true);
 		}
 
 		mActionBar.getTabAt(2).select();  //always start up with the connection tab  TODO: do this only when disconnected
@@ -104,7 +105,7 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 
 		@Override
 		public int getCount() {
-			return mainapp.EDFrags.length;
+			return mainapp.EDFrags.size();
 		}
 
 		@Override
@@ -122,7 +123,7 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 		@Override
 		public float getPageWidth(final int position) {
 			//return fraction of screen used by this fragment#, based on width
-			return (float) mainapp.EDFrags[position].getWidth()/fragmentsPerScreen;
+			return (float) mainapp.EDFrags.get(position).getWidth()/fragmentsPerScreen;
 		}
 	}
 
@@ -153,22 +154,23 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 		 */
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
-			Log.d(DEBUG_TAG,"in ArrayListFragment.onCreate()");
 			super.onCreate(savedInstanceState);
 			mNum =  (getArguments() != null ? getArguments().getInt("fragNum") : 1);
-			mType = mainapp.EDFrags[mNum].getType();
-			mName = mainapp.EDFrags[mNum].getName();
+			mType = mainapp.EDFrags.get(mNum).getType();
+			mName = mainapp.EDFrags.get(mNum).getName();
+			Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onCreate() for " + mName + " (" + mNum + ")" + " type " + mType);
 		}
 
 		/** inflate the proper xml layout for the fragment type
 		 *    runs before activity starts		 */
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onCreateView() for " + mName + " (" + mNum + ")" + " type " + mType);
 			//choose the proper layout xml for this fragment's type
-			int rx = R.layout.list_fragment;
-			if (mType == WEB) {
+			int rx = R.layout.list_fragment;  //default to list for now
+			if (mType == Consts.WEB) {
 				rx = R.layout.web_fragment;
-			} else if (mType == LIST) {
+			} else if (mType == Consts.LIST) {
 				rx = R.layout.list_fragment;
 			}
 			//inflate the proper layout xml and remember it in fragment
@@ -182,15 +184,38 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 
 		/** set up proper data and processing for this fragment type
 		 *    runs after activity starts		 */
+		@SuppressLint("SetJavaScriptEnabled")
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
+			Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onActivityCreated() for " + mName + " (" + mNum + ")" + " type " + mType);
 			super.onActivityCreated(savedInstanceState);
 
-			if (mType == WEB) {
-				WebView webview =   (WebView)  mView.findViewById(R.id.webview);
-				webview.loadUrl("file:///android_asset/about_page.html");
+			if (mType == Consts.WEB) {
+				WebView webview = (WebView)mView.findViewById(R.id.webview);
+				String url = mainapp.EDFrags.get(mNum).getData();
+				Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onActivityCreated() setting url= " + url);
+				webview.getSettings().setJavaScriptEnabled(true);
+				webview.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
+				webview.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out
+//				webview.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+//				webview.setInitialScale((int)(100 * scale));
+				webview.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+				webview.getSettings().setDomStorageEnabled(true);
+
+				// open all links inside the current view (don't start external web browser)
+				WebViewClient EDWebClient = new WebViewClient()	{
+					@Override
+					public boolean shouldOverrideUrlLoading(WebView view, String  url) {
+						return false;
+					}
+					public void onReceivedError(WebView view, int errorCod,String description, String failingUrl) {
+						Log.e(Consts.DEBUG_TAG, "webview error: " + description + " url: " + failingUrl);
+			        }
+				};
+				webview.setWebViewClient(EDWebClient);
+				webview.loadUrl(url);
 			}
-			if (mType == LIST) {
+			if (mType == Consts.LIST) {
 				ListView listview = (ListView) mView.findViewById(R.id.listview);
 				int liid = android.R.layout.simple_list_item_1;  //use default layout and populate with some data
 				listview.setAdapter(new ArrayAdapter<String>(getActivity(), liid, sCheeseStrings));
@@ -205,7 +230,7 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 		public class viewlist_item implements android.widget.AdapterView.OnItemClickListener	  {
 
 			public void onItemClick(android.widget.AdapterView<?> parent, View v, int position, long id)	    {
-				Log.i("FragmentList", "Item clicked: " + id + " on " + mainapp.EDFrags[mNum].getName() + " (" + mNum + ")");	    
+				Log.i("FragmentList", "Item clicked: " + id + " on " + mName + "(" + mNum + ")");	    
 			};
 		}	  
 
