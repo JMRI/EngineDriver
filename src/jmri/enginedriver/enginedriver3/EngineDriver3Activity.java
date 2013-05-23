@@ -122,6 +122,10 @@ public class EngineDriver3Activity extends SherlockFragmentActivity {
 				ThrottleFragment f = null;
 				f = ThrottleFragment.newInstance(position, t, n);
 				return f;
+			} else if (t == Consts.LIST) {
+				ListFragment f = null;
+				f = ListFragment.newInstance(position, t, n);
+				return f;
 			} else {
 				ED3Fragment f = null;
 				f = ED3Fragment.newInstance(position, t, n);

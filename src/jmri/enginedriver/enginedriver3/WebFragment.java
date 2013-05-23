@@ -3,7 +3,9 @@ package jmri.enginedriver.enginedriver3;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -12,16 +14,19 @@ import android.widget.TextView;
 @SuppressLint("SetJavaScriptEnabled")
 class WebFragment extends ED3Fragment {
 	
-	private String url;
+	private String _url;
 	
 	public String getUrl() {
-		return url;
+		return _url;
 	}
 
 	public void setUrl(String url) {
-		this.url = url;
+		this._url = url;
 	}
 
+	/**---------------------------------------------------------------------------------------------**
+	 * create a new fragment of this type, and populate basic settings in bundle 
+	 * Note: this is a static method, called from the activity's getItem() when new ones are needed */	
 	static WebFragment newInstance(int fragNum, String fragType, String fragName, String fragData) {
 		Log.d(Consts.DEBUG_TAG, "in WebFragment.newInstance()for " + fragName + " (" + fragNum + ")" + " type " + fragType);
 		WebFragment f = new WebFragment();
@@ -31,26 +36,56 @@ class WebFragment extends ED3Fragment {
 		args.putInt("fragNum", fragNum);
 		args.putString("fragType", fragType);
 		args.putString("fragName", fragName);
-		args.putString("fragData", fragName);
+		args.putString("fragData", fragData);
 		f.setArguments(args);
 
 		return f;
 	}
+	/**---------------------------------------------------------------------------------------------**
+	 * Called when new fragment is created, retrieves stuff from bundle and sets instance members	 
+	 * Note: only override if extra values are needed                                               */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Log.d(Consts.DEBUG_TAG, "in WebFragment.onCreate() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+		
+		//fetch additional stored data from bundle and copy into member variable _url
+		_url =  (getArguments() != null ? getArguments().getString("fragData") : "");
+
+	}
+
+	/**---------------------------------------------------------------------------------------------**
+	 * inflate and populate the proper xml layout for this fragment type
+	 *    runs before activity starts, note does not call super		 */
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onCreateView() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+		//choose the proper layout xml for this fragment's type
+		int rx = R.layout.web_fragment;
+		//inflate the proper layout xml and remember it in fragment
+		view = inflater.inflate(rx, container, false);  
+		View tv = view.findViewById(R.id.title);  //all fragment views currently have title element
+		if (tv != null) {
+			((TextView)tv).setText(getName() + " (" + getNum() + ")");
+		}
+		return view;
+	}
+	/**---------------------------------------------------------------------------------------------**
+	 * tells the fragment that its activity has completed its own Activity.onCreate().	 
+	 * Note: calls super.  Only override if additional processing is needed                           */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onActivityCreated() for " + getName() + " (" + getNum() + ")" + " type " + getType());
-		super.onActivityCreated(savedInstanceState);
-		mainapp=(EngineDriver3Application)getActivity().getApplication();  //set pointer to app
+		Log.d(Consts.DEBUG_TAG, "in WebFragment.onActivityCreated() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+		super.onActivityCreated(savedInstanceState);	
 
 		WebView webview = (WebView)view.findViewById(R.id.webview);
-		String url = mainapp.EDFrags.get(getNum()).getData();
-		if (url.indexOf("://") < 0) {  //if protocol included, use url as is, else append protocol and port
-			url = "http://" + mainapp.getServer() + ":" + mainapp.getWebPort() + url;
+		if (_url.indexOf("://") < 0) {  //if protocol included, use _url as is, else append protocol and port
+			_url = "http://" + mainapp.getServer() + ":" + mainapp.getWebPort() + _url;
 		}
-		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onActivityCreated() setting url= " + url);
-		View tv = view.findViewById(R.id.title);  //put the url as the title TODO: remove this after testing
+		Log.d(Consts.DEBUG_TAG, "in WebFragment.onActivityCreated() setting url= " + _url);
+		View tv = view.findViewById(R.id.title);  //put the _url as the title TODO: remove this after testing
 		if (tv != null) {
-			((TextView)tv).setText(getName() + " (" + getNum() + ") " + url);
+			((TextView)tv).setText(getName() + " (" + getNum() + ") " + _url);
 		}
 		webview.getSettings().setJavaScriptEnabled(true);
 		webview.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
@@ -71,10 +106,7 @@ class WebFragment extends ED3Fragment {
 			}
 		};
 		webview.setWebViewClient(EDWebClient);
-		webview.loadUrl(url);
+		webview.loadUrl(_url);
 	}
 
-//	public WebFragment() {
-//		super();
-//	}
 }

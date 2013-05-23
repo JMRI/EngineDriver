@@ -4,6 +4,7 @@
 4) add webviewFragment, with hard-coded url, and begin to understand how to handle the loading and running of differing fragments.  also understand webview fling vs. fragment fling
 5) set up webviewFragments for About, Turnout and Routes (using the JMRIMobile pages)  url still hard-coded
 6) set Throttle to use InControl
+7) create separate classes for each fragment type, with unique data and methods in each
 ) add Connect fragment, to simply set the server name, to be used by web fragments
 ) add refresh button to web fragments 
 ) add settings icon to each fragment, (dropping hard-coded urls) and deal with persistent storage.  also add mechanism to add new fragments and delete unneeded ones.  fragment list+settings should be restored on app start.

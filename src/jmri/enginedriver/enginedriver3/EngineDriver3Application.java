@@ -36,14 +36,14 @@ public class EngineDriver3Application extends Application {
 		super.onCreate();
 	    Log.d(Consts.DEBUG_TAG,"in EngineDriver3Application.onCreate()");
 		//TODO: load from storage, once save is implemented
-	    //TODO: set base url from connection
+	    //TODO: set base url in connection fragment
 //	    setServer("10.10.3.131");
 //	    setServer("192.168.1.247");
 	    setServer("jmri.mstevetodd.com");
 	    setWiThrottlePort(44444);
 	    setWebPort(1080);
 	    
-	    //initialize the fragment list, for now, key is 0-n, cannot leave "holes"
+	    //initialize the temporary fragment list, for now, key is 0-n, cannot leave "holes"
 	    int fragKey = 0;
 	    EDFrags = new HashMap<Integer, FragmentEntry>();
 		EDFrags.put(fragKey++, new FragmentEntry("Prefs", Consts.PREFS, 2));
@@ -67,8 +67,7 @@ public class EngineDriver3Application extends Application {
 		tFrag.setData("/web/operationsTrains.html");
 	    EDFrags.put(fragKey++, tFrag);
 
-	    tFrag = new FragmentEntry("Turnouts", Consts.WEB, 2); 
-		tFrag.setData("/web/JMRIMobile.html#type-turnout");
+	    tFrag = new FragmentEntry("Turnouts", Consts.LIST, 1); 
 	    EDFrags.put(fragKey++, tFrag);
 
 	}
