@@ -80,7 +80,7 @@ public class routes extends Activity  implements OnGestureListener {
 	    	ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
 	    	TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
 	    	String systemname = (String) snv.getText();
-		    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, systemname, 2);	// toggle
+		    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, '2'+systemname);	// toggle
 	    };
 	  }	  
 
@@ -233,9 +233,9 @@ public class routes extends Activity  implements OnGestureListener {
 	  }
 
 	  public class button_listener implements View.OnClickListener  {
-		  Integer whichCommand; //command to send for button instance 'C'lose, 'T'hrow or '2' for toggle
+		  char whichCommand; //command to send for button instance 'C'lose, 'T'hrow or '2' for toggle
 		  
-		  public button_listener(Integer new_command) {
+		  public button_listener(char new_command) {
 			  whichCommand = new_command;
 		  }
 		  
@@ -247,7 +247,7 @@ public class routes extends Activity  implements OnGestureListener {
 		    	  //otherwise send the text as is
 		    	  if(Character.isDigit(entrytext.charAt(0)))
 		    		  entrytext = getString(R.string.routes_default_prefix) + entrytext;
-		    	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, entrytext, whichCommand);
+		    	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, whichCommand+entrytext);
 		      }
 		  };
 	  }
@@ -292,7 +292,7 @@ public class routes extends Activity  implements OnGestureListener {
     };
     routes_lv.setOnTouchListener(gestureListener);
     
-	EditText rte =(EditText)findViewById(R.id.route_entry);
+	EditText rte = (EditText)findViewById(R.id.route_entry);
 	rte.addTextChangedListener(new TextWatcher() {
 		public void afterTextChanged(Editable s) {
 			updateRouteEntry();
@@ -318,7 +318,7 @@ public class routes extends Activity  implements OnGestureListener {
 	
     //Set the button callbacks, storing the command to pass for each
     Button b=(Button)findViewById(R.id.route_toggle);
-    button_listener click_listener=new button_listener(2);
+    button_listener click_listener=new button_listener('2');
     b.setOnClickListener(click_listener);
 
 	((EditText) findViewById(R.id.route_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);

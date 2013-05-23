@@ -67,6 +67,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 import java.io.PrintWriter;
 
+import jmri.enginedriver.Consist;
 import jmri.jmrit.roster.RosterEntry;
 
 public class select_loco extends Activity {
@@ -78,12 +79,13 @@ public class select_loco extends Activity {
 	ArrayList<HashMap<String, String>> roster_list;
 	private RosterSimpleAdapter roster_list_adapter;
 	
-	ArrayList<Integer> engine_address_list;
-	ArrayList<Integer> address_size_list; // Look at address_type.java
+	private ArrayList<Integer> engine_address_list;
+	private ArrayList<Integer> address_size_list; // Look at address_type.java
 
-	int engine_address;
-	int address_size;
-	private String whichThrottle = ""; // "T" or "S"
+	private int engine_address;
+	private int address_size;
+	private String sWhichThrottle = "T"; // "T" or "S" + roster name
+	private int result;
 	
 	private threaded_application mainapp; // hold pointer to mainapp
 
@@ -101,24 +103,20 @@ public class select_loco extends Activity {
 
 			//put roster entries into screen list
 			if (mainapp.roster_entries != null) {
-				Set<String> res = mainapp.roster_entries.keySet();
-				for (String rostername : res) {
+				for (String rostername : mainapp.roster_entries.keySet()) {
 					// put key and values into temp hashmap
 					HashMap<String, String> hm = new HashMap<String, String>();
 					hm.put("roster_name", rostername);
 					hm.put("roster_address", mainapp.roster_entries.get(rostername));
 					hm.put("roster_entry_type", "loco");
-					
 					//add icon if url set
 					if ((mainapp.roster != null) && (mainapp.roster.get(rostername)!=null) && (mainapp.roster.get(rostername).getIconPath()!=null)) {
 						hm.put("roster_icon", mainapp.roster.get(rostername).getIconPath() + "?maxHeight=52");  //include sizing instructions	
 					}
-					
 					// add temp hashmap to list which view is hooked to
 					roster_list.add(hm);
-
-				} // for rostername
-			} //if roster_entries not null
+				}
+			}
 
 			//add consist entries to screen list
 			if (mainapp.consist_entries != null) {
@@ -171,27 +169,27 @@ public class select_loco extends Activity {
 		// format and show currently selected locos, and hide or show Release
 		// buttons
 		v = (TextView) findViewById(R.id.sl_loco_T);
-		if (mainapp.loco_string_T.length() > 7) {  //shrink text if long
+		if (mainapp.consistT.toString().length() > 7) {  //shrink text if long
 			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
 		} else {
 			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
 		}
-		v.setText(mainapp.loco_string_T);
+		v.setText(mainapp.consistT.toString());
 		Button b = (Button) findViewById(R.id.sl_release_T);
-		if (mainapp.loco_string_T.equals("Not Set")) {
+		if (mainapp.consistT.isEmpty()) {
 			b.setEnabled(false);
 		} else {
 			b.setEnabled(true);
 		}
 		v = (TextView) findViewById(R.id.sl_loco_S);
-		if (mainapp.loco_string_S.length() > 7) {  //shrink text if long
+		if (mainapp.consistS.toString().length() > 7) {  //shrink text if long
 			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
 		} else {
 			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
 		}
-		v.setText(mainapp.loco_string_S);
+		v.setText(mainapp.consistS.toString());
 		b = (Button) findViewById(R.id.sl_release_S);
-		if (mainapp.loco_string_S.equals("Not Set")) {
+		if (mainapp.consistS.isEmpty()) {
 			b.setEnabled(false);
 		} else {
 			b.setEnabled(true);
@@ -245,22 +243,65 @@ public class select_loco extends Activity {
 		}
 	}
 
-
-	// handle return from throttle activity
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// since we always do the same action no need to distinguish between
-		// requests
-		set_labels();
+	// request release of specified throttle
+	void release_loco(char whichThrottle) {
+		if(whichThrottle == 'T')
+			mainapp.consistT.release();
+		else
+			mainapp.consistS.release();
+		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "",(int) whichThrottle); // pass T or S in message 
 	}
 
-	// request release of specified loco
-	void release_loco(String whichThrottle) {
-		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, whichThrottle); // pass T or S in message 
-	}
-
+	boolean saveUpdateList;			// save value across ConsistEdit activity 
+	boolean newEngine;				// save value across ConsistEdit activity
+	
 	void acquire_engine(boolean bUpdateList) {
-    	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, whichThrottle, engine_address, address_size);
-    	//if not updating list or no SD Card present then nothing else to do
+		char whichThrottle = sWhichThrottle.charAt(0);
+		String addr = (address_size== address_type.LONG ? "L" : "S") + engine_address;
+		Loco l = new Loco(addr);
+		l.setDesc(mainapp.getRosterNameFromAddress(l.toString()));	//use rosterName if present
+		Consist consist;
+		if(whichThrottle == 'T')
+			consist = mainapp.consistT;
+		else
+			consist = mainapp.consistS;
+		if(sWhichThrottle.length() > 1)				// add roster selection info if present
+			addr += "<;>" + sWhichThrottle.substring(1);
+		if(consist.size() == 0) {					// just this loco so tell WiT and exit
+			consist.add(l);
+			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
+			updateRecentEngines(bUpdateList);
+			result = RESULT_OK;
+			end_this_activity();
+		}
+		else {										// consist exists, bring up editor
+			newEngine = (consist.getLoco(addr) == null);
+			if(newEngine) {
+				consist.add(l);
+				mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
+			}
+			saveUpdateList = bUpdateList;
+			Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
+			consistEdit.putExtra("address", addr);
+			consistEdit.putExtra("whichThrottle", whichThrottle);
+		    startActivityForResult(consistEdit, 0);
+		    connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+		}
+	}
+	
+	//handle return from ConsistEdit
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(resultCode == RESULT_OK) {						// something in consist was changed
+			if(newEngine) {
+				updateRecentEngines(saveUpdateList);
+			}
+			result = RESULT_FIRST_USER;						//tell Throttle to update loco directions
+		}
+		end_this_activity();
+	}
+	
+	void updateRecentEngines(boolean bUpdateList) {
+		//if not updating list or no SD Card present then nothing else to do
     	if(!bUpdateList || !android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
     		return;
    		// Save the engine list to the recent_engine_list.txt file
@@ -276,7 +317,7 @@ public class select_loco extends Activity {
 			int mrl = Integer.parseInt(smrl);
 			list_output = new PrintWriter(connections_list_file);
 			if(mrl > 0) {
-				// Add this connection to the head of connections list.
+				// Add this engine to the head of recent engines list.
 				mrl--;
 				list_output.format("%d:%d\n", engine_address, address_size);
 				for (int i = 0; i < engine_address_list.size() && mrl > 0; i++) {
@@ -296,6 +337,37 @@ public class select_loco extends Activity {
 		}
 	};
 
+/***
+	void getConsistLocoDirection() {
+		final AlertDialog.Builder b = new AlertDialog.Builder(this);
+		b.setIcon(android.R.drawable.ic_dialog_alert); 
+		b.setTitle("Direction relative to Lead engine");
+		b.setMessage(R.string.exit_text);
+		forwardDirection = false;
+		b.setCancelable(true);
+		b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				forwardDirection = true;
+				Intent intent = new Intent();
+				setResult(1,intent);
+			}
+		});
+		b.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				forwardDirection = true;
+				Intent intent = new Intent();
+				setResult(0,intent);
+			}
+		});
+
+		AlertDialog alert = b.create();
+		alert.show();
+//		b.create().show();
+	}
+/****/
+	
 	public class button_listener implements View.OnClickListener {
 		public void onClick(View v) {
 			EditText entry = (EditText) findViewById(R.id.loco_address);
@@ -308,20 +380,19 @@ public class select_loco extends Activity {
 			Spinner spinner = (Spinner) findViewById(R.id.address_length);
 			address_size = spinner.getSelectedItemPosition();
 			acquire_engine(true);
-			end_this_activity();
 		};
 	}
 
 	public class release_button_listener_T implements View.OnClickListener {
 		public void onClick(View v) {
-			release_loco("T");
+			release_loco('T');
 			end_this_activity();
 		};
 	}
 
 	public class release_button_listener_S implements View.OnClickListener {
 		public void onClick(View v) {
-			release_loco("S");
+			release_loco('S');
 			end_this_activity();
 		};
 	}
@@ -333,7 +404,6 @@ public class select_loco extends Activity {
 			engine_address = engine_address_list.get(position);
 			address_size = address_size_list.get(position);
 			acquire_engine(true);
-			end_this_activity();
 		};
 	}
 
@@ -352,15 +422,14 @@ public class select_loco extends Activity {
 			if (ras[0].length() > 0) {  //only process if address found
 				address_size = (ras[1].charAt(0) == 'L') 
 									? address_type.LONG
-									: address_type.SHORT; // convert S/L to 0/1
-				engine_address = Integer.valueOf(ras[0]); // convert address to int
-				if (rosterEntryType.equals("loco")) { 
-					whichThrottle += "|" + rosterNameString;  //append rostername if type is loco (not consist) 
+									: address_type.SHORT; 	// convert S/L to 0/1
+				engine_address = Integer.valueOf(ras[0]); 	// convert address to int
+				if("loco".equals(rosterEntryType)) {
+					sWhichThrottle += rosterNameString;  	//append rostername if type is loco (not consist) 
 				}
-			    boolean bRoster = prefs.getBoolean("roster_recent_locos_preference", 
+			    boolean bRosterRecent = prefs.getBoolean("roster_recent_locos_preference", 
 			    		getResources().getBoolean(R.bool.prefRosterRecentLocosDefaultValue)); 
-				acquire_engine(bRoster);
-				end_this_activity();
+				acquire_engine(bRosterRecent);
 			}
 		};
 	}
@@ -380,6 +449,7 @@ public class select_loco extends Activity {
 		super.onCreate(savedInstanceState);
 		mainapp = (threaded_application) getApplication();
 		prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+		result = RESULT_CANCELED;
 	    if(mainapp.isForcingFinish()) {		// expedite
 	    	return;
 	    }
@@ -495,7 +565,7 @@ public class select_loco extends Activity {
 						R.string.prefDefaultAddressLengthDefaultValue));
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			whichThrottle = extras.getString("whichThrottle");
+			sWhichThrottle = extras.getString("sWhichThrottle");
 		}
 
 		EditText la = (EditText) findViewById(R.id.loco_address);
@@ -550,6 +620,9 @@ public class select_loco extends Activity {
 	
 	// end current activity
 	void end_this_activity() {
+		Intent resultIntent = new Intent();
+	    resultIntent.putExtra("whichThrottle", sWhichThrottle);  //pass whichThrottle as an extra
+	    setResult(result, resultIntent);
 		this.finish();
 		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	}

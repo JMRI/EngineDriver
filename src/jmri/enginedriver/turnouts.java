@@ -84,7 +84,7 @@ public class turnouts extends Activity implements OnGestureListener {
 	    	ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
 	    	TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
 	    	String systemname = (String) snv.getText();
-        	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, systemname, 2);	// 2=toggle
+        	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, '2'+systemname);	// 2=toggle
 	    };
 	  }	  
 
@@ -238,9 +238,9 @@ public class turnouts extends Activity implements OnGestureListener {
 
 	  
 	  public class button_listener implements View.OnClickListener  {
-		  Integer whichCommand; //command to send for button instance 'C'lose, 'T'hrow or '2' for toggle
+		  char whichCommand; //command to send for button instance 'C'lose, 'T'hrow or '2' for toggle
 		  
-		  public button_listener(Integer new_command) {
+		  public button_listener(char new_command) {
 			  whichCommand = new_command;
 		  }
 		  
@@ -263,7 +263,7 @@ public class turnouts extends Activity implements OnGestureListener {
 		    		  String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
 		    		  entrytext = hs + "T" + entrytext;
 		    	  }
-	    		  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, entrytext, whichCommand);
+	    		  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, whichCommand + entrytext);
 		      } 
 		  };
 	  }
@@ -334,17 +334,17 @@ public class turnouts extends Activity implements OnGestureListener {
 
 	//Set the button callbacks, storing the command to pass for each
     Button b=(Button)findViewById(R.id.turnout_toggle);
-    button_listener click_listener=new button_listener(2);
+    button_listener click_listener=new button_listener('2');
     b.setOnClickListener(click_listener);
 
     //don't show throw and close buttons if withrottle version < 1.6
     if (mainapp.withrottle_version >= 1.6) {
     	b=(Button)findViewById(R.id.turnout_close);
-    	click_listener=new button_listener(8);
+    	click_listener=new button_listener('C');
     	b.setOnClickListener(click_listener);
 
     	b=(Button)findViewById(R.id.turnout_throw);
-    	click_listener=new button_listener(9);
+    	click_listener=new button_listener('T');
     	b.setOnClickListener(click_listener);
 
     } else {

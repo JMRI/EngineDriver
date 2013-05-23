@@ -24,8 +24,7 @@ public class Loco {
 	private final String addr;					//L2531 form
 	private final String formatAddr;			//2531(L) form
 												//TODO: eliminate stored formatted address and create on the fly?
-	private String desc;						//roster name if present
-												//TODO: eliminate stored desc and create on the fly?
+	private String desc;						//typically the roster name
 	private boolean confirmed;					//set after WiT responds that engine is assigned to throttle
 	
 
@@ -41,17 +40,14 @@ public class Loco {
 
 	public Loco(String address, String rosterName) {
 		this(address);
-		desc = rosterName;
-	}
-	
-	public Loco(String address, String rosterName, boolean confirmed) {
-		this(address);
-		desc = rosterName;
-		this.confirmed = confirmed;
+		if(rosterName != null)
+			desc = rosterName;
 	}
 	
 	public Loco (Loco l) {
-		this(l.addr, l.desc, l.confirmed);
+		this(l.addr);
+		desc = l.desc;
+		confirmed = l.confirmed;
 	}
 	
 	

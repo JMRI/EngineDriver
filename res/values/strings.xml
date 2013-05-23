@@ -30,6 +30,7 @@
     <string name="app_name_functions">Engine Driver - Default Function Settings</string>
     <string name="app_name_preferences">Engine Driver - Preferences</string>
     <string name="app_name_select_loco">Engine Driver - Select Loco</string>
+    <string name="app_name_ConsistEdit">Engine Driver - Consist Edit</string>
     <string name="host_ip">Host Name or Address</string>
     <string name="port">Port</string>
     <string name="loco_address">Loco Address</string>
@@ -65,6 +66,8 @@
     <string name="routes_direct_entry_label">Enter route# and press Set</string>
     <string name="routes_location_label">Selected Location</string>
     <string name="routes_default_prefix">R</string>
+    <string name="consist_lead_label">Lead Loco</string>
+    <string name="consist_list_label">Consist Top</string>
     <string name="throw_button">Throw</string>
     <string name="close_button">Close</string>
     <string name="toggle_button">Toggle</string>

@@ -97,8 +97,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private LinkedHashMap<Integer, Button> functionMapS;
 	
 	//current direction
-	private int dirT = 0;
-	private int dirS = 0;
+	private int dirT = 1;									//request direction for each throttle (single or multiple engines)
+	private int dirS = 1;
 
 	private static final String noUrl = "file:///android_asset/blank_page.html";
 	private static final float initialScale = 1.5f;
@@ -118,52 +118,87 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		  case message_type.RESPONSE: {  //handle messages from WiThrottle server
 			  String response_str = msg.obj.toString();
 			  char com1 = response_str.charAt(0);
-			  char thrSel = response_str.charAt(1);
+			  char whichThrottle = response_str.charAt(1);
 			  switch (com1) {
-			  //various MultiThrottle responses
+			  //various MultiThrottle messages
 			  case 'M':
-				  if(thrSel == 'T' || thrSel == 'S') {
-
-					  char com2 = response_str.charAt(2);
+				  char com2 = response_str.charAt(2);
+				  String[] ls = threaded_application.splitByString(response_str,"<;>");
+				  String addr;
+				  try {
+				  	addr = ls[0].substring(3);
+				  }
+				  catch(Exception e) {
+				  	addr = "";
+				  }
+				  if(whichThrottle == 'T' || whichThrottle == 'S') {
 					  if (com2 == '+' || com2 == 'L') {  //if loco added or function labels updated
 						  if(com2 == ('+')) {
 //							  set_default_function_labels();
-							  enable_disable_buttons(thrSel);  //direction and slider: pass whichthrottle
+							  enable_disable_buttons(whichThrottle);  //direction and slider: pass whichthrottle
 						  }
 						  // loop through all function buttons and
 						  //   set label and dcc functions (based on settings) or hide if no label
 						  ViewGroup tv;
-						  if (thrSel == 'T') {
+						  if (whichThrottle == 'T') {
 							  tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
 						  } else {
 							  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
 						  }
-						  set_function_labels_and_listeners_for_view(thrSel);
+						  set_function_labels_and_listeners_for_view(whichThrottle);
 						  enable_disable_buttons_for_view(tv, true);
 						  set_labels();
 					  } 
 					  else if (com2 == '-') {  		//if loco removed
-						  if (thrSel == 'T')
+						  if (whichThrottle == 'T') {
 							  removeLoco('T');
-						  else
+						  }
+						  else {
 							  removeLoco('S');
+						  }
 					  } 
 					  else if (com2 == 'A') {	  		//e.g. MTAL2608<;>R1
-						  String[] ls = threaded_application.splitByString(response_str,"<;>");
 						  char com3 = ls[1].charAt(0);
 						  if (com3 == 'R') {
+							  int dir;
 							  try {
-								  int dir = Integer.valueOf(ls[1].substring(1,2));
-								  set_direction_indication(thrSel, dir); //set direction button 
+								  dir = Integer.valueOf(ls[1].substring(1,2));
 							  }
 							  catch(Exception e) {
+								  dir = 1;
+							  }
+
+							  Consist con;
+							  int curDir;
+							  if(whichThrottle == 'T') {
+								  con = mainapp.consistT;
+								  curDir = dirT;
+							  }
+							  else {
+								  con = mainapp.consistS;
+								  curDir = dirS;
+							  }
+							  
+							  if(addr.equals(con.getLeadAddr())) {
+								  if(dir != curDir) {									//lead/consist direction changed from outside of ED
+									  showDirectionRequest(whichThrottle, dir);			//update requested direction indication
+									  setEngineDirection(whichThrottle, dir, true);		//update rest of consist to match new direction
+								  }
+							  }
+							  else {
+								  int locoDir = curDir;								//calc correct direction for this (non-lead) loco
+								  if(con.isReverseOfLead(addr))
+									  locoDir ^= 1;
+								  if(locoDir != dir) {								//if loco has wrong direction then correct it
+									  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, (int) whichThrottle, locoDir);
+								  }
 							  }
 						  } 
 						  else if (com3 == 'V') {
 							  try {
 								  int speed = Integer.parseInt(ls[1].substring(1));
 								  slider_moved_by_server = true;
-								  set_speed_slider(thrSel, speed);	//update speed slider and indicator
+								  set_speed_slider(whichThrottle, speed);			//update speed slider and indicator
 								  slider_moved_by_server = false;
 							  }
 							  catch(Exception e) {
@@ -172,7 +207,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 						  else if (com3 == 'F') {
 							  try {
 								  int function = Integer.valueOf(ls[1].substring(2));
-								  set_function_state(thrSel, function);
+								  set_function_state(whichThrottle, function);
 							  }
 							  catch(Exception e) {
 							  }
@@ -190,15 +225,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				  break;
 
 			  case 'R': 
-				  if(thrSel == 'F' || thrSel == 'S') { //roster function labels - legacy
+				  if(whichThrottle == 'F' || whichThrottle == 'S') { //roster function labels - legacy
 					  ViewGroup tv;
-					  if (thrSel == 'F') {			// used to use 'F' instead of 'T'
+					  if (whichThrottle == 'F') {			// used to use 'F' instead of 'T'
 						  tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
-						  thrSel = 'T';
+						  whichThrottle = 'T';
 					  } else {
 						  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
 					  }
-					  set_function_labels_and_listeners_for_view(thrSel);
+					  set_function_labels_and_listeners_for_view(whichThrottle);
 					  enable_disable_buttons_for_view(tv, true);
 					  set_labels();
 
@@ -207,8 +242,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 						  String scom2 = response_str.substring(1,6);
 						  if(scom2.equals("PF}|{"))
 						  {
-							  thrSel = response_str.charAt(6);
-							  set_all_function_states(thrSel);
+							  whichThrottle = response_str.charAt(6);
+							  set_all_function_states(whichThrottle);
 						  }
 					  }
 					  catch(IndexOutOfBoundsException e){
@@ -216,7 +251,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				  }
 				  break;
 			  case 'P': //panel info
-				  if (thrSel == 'W')		// PW - web server port info
+				  if (whichThrottle == 'W')		// PW - web server port info
 					  reloadWeb();
 				  break;
 			  }  //end of switch
@@ -309,82 +344,107 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 private void setDisplayedSpeed(char whichThrottle, int speed) {
 	  	TextView speed_label;
-	  	String loco;
+	  	Consist con;
 	  	double speedScale;
 	  	if (whichThrottle == 'T') {
 			speedScale = SPEED_TO_DISPLAY_T;
 			speed_label=(TextView)findViewById(R.id.speed_value_label_T);
-	  		loco = mainapp.loco_string_T;
+	  		con = mainapp.consistT;
 		} 
 		else {
 			speedScale = SPEED_TO_DISPLAY_S;
 			speed_label=(TextView)findViewById(R.id.speed_value_label_S);
-	  		loco = mainapp.loco_string_S;
+	  		con = mainapp.consistS;
 	  	}
 	  	if(speed < 0) {
-	  		Toast.makeText(getApplicationContext(), "Alert: Engine " + loco + " is set to ESTOP", Toast.LENGTH_LONG).show();
+	  		Toast.makeText(getApplicationContext(), "Alert: Engine " + con.toString() + " is set to ESTOP", Toast.LENGTH_LONG).show();
 	  		speed = 0;
 	  	}
 		int displayedSpeed = (int)Math.round(speed * speedScale);
 		speed_label.setText(Integer.toString(displayedSpeed));
   }
 
- // indicate actual direction
-  void set_direction_indication(char whichThrottle, Integer direction) {
+	// set the direction for all engines on the throttle
+	// if skipLead is true, the direction is not set for the lead engine
+	void setEngineDirection(char whichThrottle, int direction, boolean skipLead) {
+		Consist con;
+		if(whichThrottle == 'T')
+			con = mainapp.consistT;
+		else
+			con = mainapp.consistS;
+		String leadAddr = con.getLeadAddr();
+		for(String addr : con.getList()) {			// loop through each engine in consist
+			if(!skipLead || !addr.equals(leadAddr)) {
+				int locoDir = direction;
+				if(con.isReverseOfLead(addr))			//if engine faces opposite of lead loco
+					locoDir ^= 1;						//then reverse the commanded direction
+				mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, (int) whichThrottle, locoDir);
+			}
+    	}
+	}
+	
+	// indicate direction using the button pressed state
+	void showDirectionIndication(char whichThrottle, int direction) {
+		Button bFwd;
+		Button bRev;
+		if (whichThrottle == 'T') {
+			bFwd = (Button)findViewById(R.id.button_fwd_T);
+			bRev = (Button)findViewById(R.id.button_rev_T);
+		}
+		else {
+			bFwd = (Button)findViewById(R.id.button_fwd_S);
+			bRev = (Button)findViewById(R.id.button_rev_S);
+		}
+	  
+		if (direction == 0) {
+			bFwd.setPressed(false);
+			bRev.setPressed(true);
+		} 
+		else {
+			bFwd.setPressed(true);
+			bRev.setPressed(false);
+		}
+	}
+
+  // indicate requested direction using the button typeface
+  void showDirectionRequest(char whichThrottle, int direction) {
 	  Button bFwd;
 	  Button bRev;
 	  if (whichThrottle == 'T') {
 		  bFwd = (Button)findViewById(R.id.button_fwd_T);
 		  bRev = (Button)findViewById(R.id.button_rev_T);
 		  dirT = direction;
-	  } else {
+	  } 
+	  else {
 		  bFwd = (Button)findViewById(R.id.button_fwd_S);
 		  bRev = (Button)findViewById(R.id.button_rev_S);
 		  dirS = direction;
 	  }
-	  if (direction == 0) {
-		  bFwd.setPressed(false);
-		  bRev.setPressed(true);
-	  } else {
-		  bFwd.setPressed(true);
-		  bRev.setPressed(false);
-	  }
-  }
 
-// indicate requested direction
-  void set_direction_request(char whichThrottle, Integer direction) {
-	  Button bFwd;
-	  Button bRev;
-	  if (whichThrottle == 'T') {
-		  bFwd = (Button)findViewById(R.id.button_fwd_T);
-		  bRev = (Button)findViewById(R.id.button_rev_T);
-	  } else {
-		  bFwd = (Button)findViewById(R.id.button_fwd_S);
-		  bRev = (Button)findViewById(R.id.button_rev_S);
-	  }
 	  if (direction == 0) {
 		  bFwd.setTypeface(null, Typeface.NORMAL);
 		  bRev.setTypeface(null, Typeface.ITALIC);
-	  } else {
+	  } 
+	  else {
 		  bFwd.setTypeface(null, Typeface.ITALIC);
 		  bRev.setTypeface(null, Typeface.NORMAL);
 	  }
+
 /*
  * this code gathers direction feedback for the direction indication
  *
  *  
 	  if (mainapp.withrottle_version < 2.0) {
 		  // no feedback avail so just let indication follow request
-		  set_direction_indication(whichThrottle, direction);
+		  showDirectionIndication(whichThrottle, direction);
 	  }
-  	  else {
-  			// always load whichThrottle into message
-			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_DIRECTION, Character.toString(whichThrottle));
-  	}
+      else {				//get confirmation of direction changes
+          mainapp.sendMsgDelay(mainapp.comm_msg_handler, 100, message_type.REQ_DIRECTION, "", (int) whichThrottle, 0);
+      }
 *
-*  for now just track the setting:
+*  due to response lags, for now just track the setting:	//******
 */  	
-		  set_direction_indication(whichThrottle, direction);
+	  showDirectionIndication(whichThrottle, direction);
   }
   
   void set_stop_button(char whichThrottle, boolean pressed) {
@@ -403,7 +463,8 @@ private void setDisplayedSpeed(char whichThrottle, int speed) {
 		  bStop.setTypeface(null, Typeface.NORMAL);
 	  }
   }
-void start_select_loco_activity(char whichThrottle)
+  
+  void start_select_loco_activity(char whichThrottle)
   {
 	Button bSel;
 	if (whichThrottle == 'T') {
@@ -415,17 +476,16 @@ void start_select_loco_activity(char whichThrottle)
 	bSel.setPressed(true);	//give feedback that select button was pressed
 
 	Intent select_loco=new Intent().setClass(this, select_loco.class);
-    select_loco.putExtra("whichThrottle", Character.toString(whichThrottle));  //pass whichThrottle as an extra to activity
+    select_loco.putExtra("sWhichThrottle", Character.toString(whichThrottle));  //pass whichThrottle as an extra to activity
 //    select_loco.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-    startActivityForResult(select_loco, 0);
+    startActivityForResult(select_loco, 1);
     connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
   };
 
   void enable_disable_buttons(char whichThrottle)  {
       boolean newEnabledState;
-//      Log.d("Engine_Driver", "e/d buttons "+mainapp.loco_string_T);
 	  if (whichThrottle == 'T') {
-		  newEnabledState = !(mainapp.loco_string_T.equals("Not Set"));  //set false if loco is "Not Set"
+		  newEnabledState = !mainapp.consistT.isEmpty();  				//set false if no locos assigned
           findViewById(R.id.button_fwd_T).setEnabled(newEnabledState);
           findViewById(R.id.button_stop_T).setEnabled(newEnabledState);
           findViewById(R.id.button_rev_T).setEnabled(newEnabledState);
@@ -438,7 +498,7 @@ void start_select_loco_activity(char whichThrottle)
           }
           sb.setEnabled(newEnabledState);
 	  } else {
-		  newEnabledState = !(mainapp.loco_string_S.equals("Not Set"));  //set false if loco is "Not Set"
+		  newEnabledState = !(mainapp.consistS.isEmpty());  			//set false if no locos assigned
           findViewById(R.id.button_fwd_S).setEnabled(newEnabledState);
           findViewById(R.id.button_stop_S).setEnabled(newEnabledState);
           findViewById(R.id.button_rev_S).setEnabled(newEnabledState);
@@ -562,80 +622,76 @@ void start_select_loco_activity(char whichThrottle)
       handleAction(event.getAction());
       return(true);
     }
+    
     private void handleAction(int action) 
     {
 //      Log.d("Engine_Driver", "handleAction func" + function + " action " + action);
-      String throt = Character.toString(whichThrottle);
-      switch(action)
-      {
-        case MotionEvent.ACTION_DOWN:
-        {
-          switch (function) {
-            case function_button.FORWARD : {
-            	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, throt, 1, 1);	//forward is 1
-            	//show pressed image on current button, and turn off pressed image on "other" button 
-            	set_direction_request(whichThrottle, 1);
-            }
-              break;
-
-            case function_button.REVERSE : {
-            	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, throt, 1, 0);	//reverse is 0
-            	//show pressed image on current button, and turn off pressed image on "other" button 
-            	set_direction_request(whichThrottle, 0);
-            	//            	v.setPressed(true);
-              }
-              break;
-
-            case function_button.STOP : { 
-            	set_stop_button(whichThrottle, true);
-            	SeekBar sb;
-            	if (whichThrottle == 'T') {
-            	  sb=(SeekBar)findViewById(R.id.speed_T);
-            	} else {
-              	  sb=(SeekBar)findViewById(R.id.speed_S);
-            	}
-                // changing the throttle slider to 0 sends a velocity change to the withrottle
-            	// otherwise explicitly send 0 speed message
-            	if(sb.getProgress() != 0)
-            		sb.setProgress(0);
-            	else
-            		sendSpeedMsg(whichThrottle, 0);
-            	break;
-            }
-            // specify which throttle the volume button controls          	  
-            case function_button.SPEED_LABEL: { 
-            	whichVolume = whichThrottle;  //use whichever was clicked
-            	set_labels();
-        	  break;
-            }
-            case function_button.SELECT_LOCO : {
-            	start_select_loco_activity(whichThrottle);  //pass throttle #
-              }
-              break;
-
-            default : {  //handle the function buttons
-            	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, throt, function, 1);
-//              set_function_request(whichThrottle, function, 1);
-            }
-          }  //end of function switch
-        }
-        break;
-        //handle stopping of function on key-up 
-        case MotionEvent.ACTION_UP:
-        case MotionEvent.ACTION_CANCEL:
-
-        	if(function == function_button.STOP) { 
-        		set_stop_button(whichThrottle, false);
-        	}
-        	// only process UP for function buttons
-        	else if(function < function_button.FORWARD)   {
-            	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, throt, function, 0);
-//                set_function_request(whichThrottle, function, 0);
-        	}
-        	break;
-      }
-    };
-  }
+    	String throt = Character.toString(whichThrottle);
+    	switch(action)
+    	{
+        	case MotionEvent.ACTION_DOWN:
+        	{
+        		switch (this.function) {
+        			case function_button.FORWARD :
+        			case function_button.REVERSE : {
+		            	int dir = (function == function_button.FORWARD ? 1 : 0);
+		        		showDirectionRequest(whichThrottle, dir);		//update requested direction indication
+		        		setEngineDirection(whichThrottle, dir, false);	//update direction for each engine on this throttle
+		            	break;
+        			}	
+		            case function_button.STOP : { 
+		            	set_stop_button(whichThrottle, true);
+		            	SeekBar sb;
+		            	if (whichThrottle == 'T') {
+		            	  sb=(SeekBar)findViewById(R.id.speed_T);
+		            	} else {
+		              	  sb=(SeekBar)findViewById(R.id.speed_S);
+		            	}
+		                // changing the throttle slider to 0 sends a velocity change to the withrottle
+		            	// otherwise explicitly send 0 speed message
+		            	if(sb.getProgress() != 0)
+		            		sb.setProgress(0);
+		            	else
+		            		sendSpeedMsg(whichThrottle, 0);
+		            	break;
+		            }
+		            case function_button.SPEED_LABEL: {			            // specify which throttle the volume button controls          	  
+		            	whichVolume = whichThrottle;  				//use whichever was clicked
+		            	set_labels();
+		            	break;
+		            }
+		            case function_button.SELECT_LOCO : {
+		            	start_select_loco_activity(whichThrottle);  //pass throttle #
+		            	break;
+		            }
+		
+		            default : {  //handle the function buttons
+		            	Consist con = (whichThrottle == 'T') ? mainapp.consistT : mainapp.consistS;
+		            	String addr = con.getLeadAddr();
+		            	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+addr, this.function, 1);
+		//              set_function_request(whichThrottle, function, 1);
+		            }
+        		}
+	        }
+	        break;
+	        //handle stopping of function on key-up 
+	        case MotionEvent.ACTION_UP:
+	        case MotionEvent.ACTION_CANCEL:
+	
+	        	if(function == function_button.STOP) { 
+	        		set_stop_button(whichThrottle, false);
+	        	}
+	        	// only process UP for function buttons
+	        	else if(function < function_button.FORWARD)   {
+	            	Consist con = (whichThrottle == 'T') ? mainapp.consistT : mainapp.consistS;
+	            	String addr = con.getLeadAddr();
+	            	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, throt+addr, function, 0);
+	//                set_function_request(whichThrottle, function, 0);
+	        	}
+	        	break;
+    		}
+    	};
+  	}
 
   public class throttle_listener implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener
   {
@@ -729,12 +785,12 @@ void start_select_loco_activity(char whichThrottle)
 
 	// send a throttle speed message to WiT
 	public void sendSpeedMsg(char whichThrottle, int speed) {
-    	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, Character.toString(whichThrottle), speed);
+    	mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "",(int) whichThrottle, speed);
 	}
 
 /*  private void requestSpeedMsg(char whichThrottle) {
 		// always load whichThrottle into message
-		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_VELOCITY, Character.toString(whichThrottle));
+		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_VELOCITY, "", (int) whichThrottle);
 }
 */
 
@@ -982,12 +1038,13 @@ void start_select_loco_activity(char whichThrottle)
 		  tv = (ViewGroup) findViewById(R.id.function_buttons_table_S); //table
 	  }
 	  
+	  //note: we make a copy of function_labels_x because TA might change it while we are using it (causing issues during button update below)
 	  if (whichThrottle == 'T' && mainapp.function_labels_T != null && mainapp.function_labels_T.size()>0) {
-		  function_labels_temp = mainapp.function_labels_T;  //point temp to T
+		  function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_T);
 	  } else if (whichThrottle == 'S' && mainapp.function_labels_S != null  && mainapp.function_labels_S.size()>0) {
-		  function_labels_temp = mainapp.function_labels_S;  //point temp to S
+		  function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_S);
 	  } else {
-		  function_labels_temp = mainapp.function_labels_default;  //point temp to default
+		  function_labels_temp = mainapp.function_labels_default;
 	  }
 
 	  //put values in array for indexing in next step TODO: find direct way to do this
@@ -1081,33 +1138,33 @@ void start_select_loco_activity(char whichThrottle)
     sbT.setLayoutParams(llLp);
 
     Button b=(Button)findViewById(R.id.button_select_loco_T);
-	if (mainapp.loco_string_T.length() > 18) {  //shrink text if long
+	if (mainapp.consistT.toString().length() > 18) {  //shrink text if long
 		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 	} else {
 		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
 	}
 
-    if (mainapp.loco_string_T.equals("Not Set")) {
+    if (mainapp.consistT.isEmpty()) {
         b.setText("Press to select");
         whichVolume = 'S';  //set the "other" one to use volume control 
     } else {
-    	b.setText(mainapp.loco_string_T);
+    	b.setText(mainapp.consistT.toString());
     	throttle_count++;
     }
     b.setSelected(false);
     b.setPressed(false);
- 
+    
     b=(Button)findViewById(R.id.button_select_loco_S);
-	if (mainapp.loco_string_S.length() > 18) {  //shrink text if long
+	if (mainapp.consistS.toString().length() > 18) {  //shrink text if long
 		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 	} else {
 		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
 	}
-    if (mainapp.loco_string_S.equals("Not Set")) {
+    if (mainapp.consistS.isEmpty()) {
         b.setText("Press to select");
         whichVolume = 'T';  //set the "other" one to use volume control 
     } else {
-      	b.setText(mainapp.loco_string_S);
+      	b.setText(mainapp.consistS.toString());
     	throttle_count++;
     }
     b.setSelected(false);
@@ -1138,7 +1195,7 @@ void start_select_loco_activity(char whichThrottle)
         else if (throttle_count == 0 || throttle_count == 2)  {
 	    	height_T = (int) (screenHeight * 0.5);
 	    	height_S = (int) (screenHeight * 0.5);
-	    } else if (mainapp.loco_string_T.equals("Not Set")) {
+	    } else if (mainapp.consistT.isEmpty()) {
 	    	height_T = (int) (screenHeight * 0.10);
 	    	height_S = (int) (screenHeight * 0.90);
 	    } else {
@@ -1169,8 +1226,8 @@ void start_select_loco_activity(char whichThrottle)
     }
 
     //update the direction indicators
-    set_direction_indication('T', dirT);
-    set_direction_indication('S', dirS);
+    showDirectionIndication('T', dirT);
+    showDirectionIndication('S', dirS);
 
     //update the state of each function button based on shared variable
     set_all_function_states('T');
@@ -1195,10 +1252,10 @@ void start_select_loco_activity(char whichThrottle)
 	  } 
 	  else if((key==KeyEvent.KEYCODE_VOLUME_UP) || (key==KeyEvent.KEYCODE_VOLUME_DOWN) ) { //use volume to change speed for specified loco
 		  SeekBar sb = null;
-		  if (whichVolume == 'T' && !mainapp.loco_string_T.equals("Not Set")) {
+		  if (whichVolume == 'T' && !mainapp.consistT.isEmpty()) {
 			  sb=(SeekBar)findViewById(R.id.speed_T);
 		  }
-		  if (whichVolume == 'S' && !mainapp.loco_string_S.equals("Not Set")) {
+		  if (whichVolume == 'S' && !mainapp.consistS.isEmpty()) {
 			  sb=(SeekBar)findViewById(R.id.speed_S);
 		  }
 		  if (sb != null) {
@@ -1215,8 +1272,10 @@ void start_select_loco_activity(char whichThrottle)
 
   private void disconnect() {
 	  //release the locos
-	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "T");	  //release first loco
-	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "S");	  //release second loco
+	  mainapp.consistT.release();
+	  mainapp.consistS.release();
+	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", (int) 'T');	  //release first loco
+	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", (int) 'S');	  //release second loco
 
 	  webView.stopLoading();
 	  this.finish();  //end this activity
@@ -1281,8 +1340,17 @@ void start_select_loco_activity(char whichThrottle)
   }
   //handle return from menu items
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-      //since we always do the same action no need to distinguish between requests
-//      set_default_function_labels();
+	  if(requestCode == 1) {					// select loco
+		  if(resultCode == RESULT_FIRST_USER) {									//something about consist was changed
+			  Bundle extras = data.getExtras();
+			  if (extras != null) {
+				  char whichThrottle = extras.getString("whichThrottle").charAt(0);
+				  int dir = (whichThrottle == 'T') ? dirT : dirS;
+				  setEngineDirection(whichThrottle, dir, false);				//update direction for each loco in consist
+				  //update loco name
+			  }
+		  }
+	  }
       // loop through all function buttons and
       //  set label and dcc functions (based on settings) or hide if no label
       set_function_labels_and_listeners_for_view('T');
