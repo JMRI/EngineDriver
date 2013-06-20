@@ -53,7 +53,6 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.os.Handler;
 import android.provider.Settings;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.AdapterView;
@@ -231,7 +230,8 @@ public class connection_activity extends Activity {
     Log.d("Engine_Driver","connection.onCreate ");
     mainapp=(threaded_application)this.getApplication();
     mainapp.connection_msg_handler=new ui_handler();
-
+    setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));	//set title to long form of label
+    
     //ensure statics in all activities are reinitialize since Android might not have killed app since it was last Exited.
     //do this here instead of TA.onCreate() because that method won't be invoked if app is still running. 
 	throttle.initStatics();
