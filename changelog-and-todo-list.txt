@@ -1,5 +1,6 @@
 **Version 2.8 (Robin Becker)
  * Quick list filter for turnouts and routes, with new preference for location delimiter.
+ * New consist editing dialog, for choosing lead loco and setting direction of each loco in consist.
 **Version 2.7 (Robin Becker)
  * prevent crash when going to About or Prefs prior to any connections
 **Version 2.6 (all by Robin Becker unless noted)
@@ -251,7 +252,6 @@
  *   TODO: unset all states when loco not selected
  * select_loco:
  *   TODO: add close button and roster image to details dialog
- *   TODO: handle direction of locos in MT consist 
  *   TODO: clean up code for  new MT (Multi-throttle) feature 
  *   TODO: simplify select_loco by removing handler
  * preferences:
