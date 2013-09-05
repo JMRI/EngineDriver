@@ -13,13 +13,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+ */
 
 package jmri.enginedriver;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import jmri.enginedriver.Consist.ConLoco;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,13 +52,12 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 	private ArrayAdapter<ConLoco> consistObjListAdapter;
 	private Spinner consistSpinner;
 	private Consist consist;
-	
+
 	private char whichThrottle;
 
 	private GestureDetector myGesture ;
 
 	public void refreshConsistLists() {
-		
 		//clear and rebuild
 		consistObjList.clear();
 		int pos = 0;
@@ -68,7 +68,7 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 			pos++;
 		}
 		consistObjListAdapter.notifyDataSetChanged();
-		
+
 		consistList.clear();
 		for (ConLoco l : consist.getLocos()) {
 			//put values into temp hashmap
@@ -81,177 +81,193 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 		}
 		consistListAdapter.notifyDataSetChanged();
 	}
-	  
 
-	  //Handle messages from the communication thread back to this thread (responses from withrottle)
-	  class ConsistEditHandler extends Handler {
+
+	//Handle messages from the communication thread back to this thread (responses from withrottle)
+	@SuppressLint("HandlerLeak")
+	class ConsistEditHandler extends Handler {
 
 		public void handleMessage(Message msg) {
-	      switch(msg.what) {
-    		case message_type.WIT_CON_RETRY:
+			switch(msg.what) {
+			case message_type.WIT_CON_RETRY:
 				refreshConsistLists(); 
-      			break;
-		  	case message_type.DISCONNECT:
-		  	case message_type.SHUTDOWN:
-	  			  disconnect();
-	  			  break;
-		};
+				break;
+			case message_type.DISCONNECT:
+			case message_type.SHUTDOWN:
+				disconnect();
+				break;
+			};
 		}
-	  }
-
-  @Override
-  public boolean onTouchEvent(MotionEvent event){
-  	return myGesture.onTouchEvent(event);
-  }
-
-  /** Called when the activity is first created. */
-  @Override
-  public void onCreate(Bundle savedInstanceState)  {
-    super.onCreate(savedInstanceState);
-  
-    mainapp=(threaded_application)getApplication();
-    if(mainapp.isForcingFinish()) {		// expedite
-    	return;
-    }
-   	setContentView(R.layout.consist);
-    //put pointer to this activity's handler in main app's shared variable
-  	mainapp.consist_edit_msg_handler=new ConsistEditHandler();
-	myGesture = new GestureDetector(this);
-        
-	Bundle extras = getIntent().getExtras();
-	if (extras != null) {
-		whichThrottle = extras.getChar("whichThrottle");
 	}
 
-	consist = (whichThrottle == 'T') ? mainapp.consistT : mainapp.consistS;
+	@Override
+	public boolean onTouchEvent(MotionEvent event){
+		return myGesture.onTouchEvent(event);
+	}
 
-	//Set up a list adapter to allow adding the list of recent connections to the UI.
-    consistList=new ArrayList<HashMap<String, String> >();
-    consistListAdapter=new SimpleAdapter(this, consistList, R.layout.consist_item, 
-    		new String[] {"loco_name", "loco_addr", "lead_label", "loco_facing"},
-            new int[] {R.id.con_loco_name, R.id.con_loco_addr_hidden, R.id.con_lead_label, R.id.con_loco_facing});
-    ListView consistLV=(ListView)findViewById(R.id.consist_list);
-    consistLV.setAdapter(consistListAdapter);
-    consistLV.setOnItemClickListener(new OnItemClickListener() {
-		//When an entry is clicked, toggle the facing state
-    	@Override
-	    public void onItemClick(AdapterView<?> parent, View v, int position, long id)	    {
-	    	ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
-	    	ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
-	    	TextView addrv = (TextView) rl.getChildAt(1); // get address text from 2nd box
-	    	String address = (String)addrv.getText();
-	    	
-    		consist.setBackward(address, !consist.isBackward(address));
-    		refreshConsistLists();
-	    }
-	});	  
-    consistLV.setOnItemLongClickListener(new OnItemLongClickListener() {
-    	//When an entry is long-clicked, remove it from the consist
-    	@Override
-    	public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id) {
-	    	ViewGroup vg = (ViewGroup) v;
-	    	ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
-	    	TextView addrv = (TextView) rl.getChildAt(1); // get address text from 2nd box
-	    	String addr = (String)addrv.getText();
-	    	
-	    	if(!consist.getLeadAddr().equals(addr)) {
-	    		consist.remove(addr);
-	    		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, addr, (int) whichThrottle);	  //release the loco
-	    		refreshConsistLists();
-	    	}
-	    	return true;
-    	}
-    });
-    
-    OnTouchListener gestureListener = new ListView.OnTouchListener() {
-        public boolean onTouch(View v, MotionEvent event) {
-            if (myGesture.onTouchEvent(event)) {
-                return true;
-            }
-            return false;
-        }
-    };
-    consistLV.setOnTouchListener(gestureListener);
-	
-	consistObjList = new ArrayList<ConLoco>();
-	consistSpinner = (Spinner) findViewById(R.id.consist_lead);
-	consistObjListAdapter = new ArrayAdapter<ConLoco>(this, android.R.layout.simple_spinner_item, consistObjList);
-	consistObjListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	consistSpinner.setAdapter(consistObjListAdapter);
-	
-    consistSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            ConLoco l = (ConLoco)parent.getSelectedItem();
-            consist.setLeadAddr(l.getAddress());
-            refreshConsistLists();
-        }
-        public void onNothingSelected(AdapterView<?> parent) {
-        }
-    });
-	
-	//update consist list
-	refreshConsistLists();
-  };
+	/** Called when the activity is first created. */
+	@SuppressWarnings("deprecation")
+	@Override
+	public void onCreate(Bundle savedInstanceState)  {
+		super.onCreate(savedInstanceState);
+		mainapp=(threaded_application)getApplication();
+		if(mainapp.isForcingFinish()) {		// expedite
+			return;
+		}
 
-  @Override
-  public void onResume() {
-	  super.onResume();
-	  if(mainapp.isForcingFinish()) {		//expedite
-		  this.finish();
-		  return;
-	  }
-	  mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-	  // suppress popup keyboard until EditText is touched
-	  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-  }
+		setContentView(R.layout.consist);
+		//put pointer to this activity's handler in main app's shared variable
+		mainapp.consist_edit_msg_handler=new ConsistEditHandler();
+		myGesture = new GestureDetector(this);
 
-  /** Called when the activity is finished. */
-  @Override
-  public void onDestroy() {
-	  Log.d("Engine_Driver","ConsistedEdit.onDestroy()");
-	  mainapp.consist_edit_msg_handler = null;
-	  super.onDestroy();
-  }
-  
-  //Always go to select_loco if back button pressed
-  @Override
-  public boolean onKeyDown(int key, KeyEvent event) {
-	  if(key==KeyEvent.KEYCODE_BACK) {
-		  setResult(RESULT_OK);
-		  this.finish();  //end this activity
-		  connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-		  return true;
-	  }
-	  return(super.onKeyDown(key, event));
-  }
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			whichThrottle = extras.getChar("whichThrottle");
+		}
 
-  @Override
-  public boolean onDown(MotionEvent e) {
-	  return false;
-  }
+		//consist = (whichThrottle == 'T') ? mainapp.consistT : mainapp.consistS;
+		if(whichThrottle == 'T')
+		{
+			consist =  mainapp.consistT;
+		}
+		else if(whichThrottle == 'S')
+		{
+			consist =  mainapp.consistS;
+		}
+		else
+		{
+			consist =  mainapp.consistG;
+		}
 
-  @Override
-  public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-	  return false;
-  }
+		//Set up a list adapter to allow adding the list of recent connections to the UI.
+		consistList=new ArrayList<HashMap<String, String> >();
+		consistListAdapter=new SimpleAdapter(this, consistList, R.layout.consist_item, 
+				new String[] {"loco_name", "loco_addr", "lead_label", "loco_facing"},
+				new int[] {R.id.con_loco_name, R.id.con_loco_addr_hidden, R.id.con_lead_label, R.id.con_loco_facing});
+		ListView consistLV=(ListView)findViewById(R.id.consist_list);
+		consistLV.setAdapter(consistListAdapter);
+		consistLV.setOnItemClickListener(new OnItemClickListener() {
+			//When an entry is clicked, toggle the facing state
+			@Override
+			public void onItemClick(AdapterView<?> parent, View v, int position, long id)	    {
+				ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
+				ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
+				TextView addrv = (TextView) rl.getChildAt(1); // get address text from 2nd box
+				String address = (String)addrv.getText();
 
-  @Override
-  public void onLongPress(MotionEvent e) {
-  }
-  @Override
-  public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-	  return false;
-  }
-  @Override
-  public void onShowPress(MotionEvent e) {
-  }
-  @Override
-  public boolean onSingleTapUp(MotionEvent e) {
-	  return false;
-  }
+				consist.setBackward(address, !consist.isBackward(address));
+				refreshConsistLists();
+			}
+		});	  
+		consistLV.setOnItemLongClickListener(new OnItemLongClickListener() {
+			//When an entry is long-clicked, remove it from the consist
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id) {
+				ViewGroup vg = (ViewGroup) v;
+				ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
+				TextView addrv = (TextView) rl.getChildAt(1); // get address text from 2nd box
+				String addr = (String)addrv.getText();
 
-  private void disconnect() {
-	  this.finish();
-  }
-  
+				if(!consist.getLeadAddr().equals(addr)) {
+					consist.remove(addr);
+					mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, addr, (int) whichThrottle);	  //release the loco
+					refreshConsistLists();
+				}
+				return true;
+			}
+		});
+
+		OnTouchListener gestureListener = new ListView.OnTouchListener() {
+			public boolean onTouch(View v, MotionEvent event) {
+				if (myGesture.onTouchEvent(event)) {
+					return true;
+				}
+				return false;
+			}
+		};
+
+		consistLV.setOnTouchListener(gestureListener);
+
+		consistObjList = new ArrayList<ConLoco>();
+		consistSpinner = (Spinner) findViewById(R.id.consist_lead);
+		consistObjListAdapter = new ArrayAdapter<ConLoco>(this, android.R.layout.simple_spinner_item, consistObjList);
+		consistObjListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		consistSpinner.setAdapter(consistObjListAdapter);
+
+		consistSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				ConLoco l = (ConLoco)parent.getSelectedItem();
+				consist.setLeadAddr(l.getAddress());
+				refreshConsistLists();
+			}
+			public void onNothingSelected(AdapterView<?> parent) {
+			}
+		});
+
+		//update consist list
+		refreshConsistLists();
+	};
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		if(mainapp.isForcingFinish()) {		//expedite
+			this.finish();
+			return;
+		}
+		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+		// suppress popup keyboard until EditText is touched
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+	}
+
+	/** Called when the activity is finished. */
+	@Override
+	public void onDestroy() {
+		Log.d("Engine_Driver","ConsistedEdit.onDestroy()");
+
+		mainapp.consist_edit_msg_handler = null;
+		super.onDestroy();
+	}
+
+	//Always go to throttle if back button pressed
+	@Override
+	public boolean onKeyDown(int key, KeyEvent event) {
+		if(key==KeyEvent.KEYCODE_BACK) {
+			setResult(RESULT_OK);
+			this.finish();  //end this activity
+			connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+			return true;
+		}
+		return(super.onKeyDown(key, event));
+	}
+
+	@Override
+	public boolean onDown(MotionEvent e) {
+		return false;
+	}
+
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+		return false;
+	}
+
+	@Override
+	public void onLongPress(MotionEvent e) {
+	}
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+		return false;
+	}
+	@Override
+	public void onShowPress(MotionEvent e) {
+	}
+	@Override
+	public boolean onSingleTapUp(MotionEvent e) {
+		return false;
+	}
+
+	private void disconnect() {
+		this.finish();
+	}
 };

@@ -16,9 +16,14 @@
 <resources>
     <bool name="prefIncreaseSliderHeightDefaultValue">false</bool>
     <bool name="prefUseOneThrottleDefaultValue">false</bool>
+    <bool name="prefUseTwoThrottleDefaultValue">false</bool>
     <bool name="prefStopOnReleaseDefaultValue">true</bool>
     <bool name="prefDropOnAcquireDefaultValue">false</bool>
     <bool name="prefHideRecentLocosDefaultValue">false</bool>
     <bool name="prefRosterRecentLocosDefaultValue">false</bool>
     <bool name="prefHideSystemRouteNamesDefaultValue">false</bool>
+    <bool name="prefShowEmergencyStopButtonDefaultValue">false</bool>
+    <bool name="prefLayoutPowerButtonDefaultValue">false</bool>
+    <bool name="prefConnectToFirstServer">false</bool>
+    <bool name="prefDisplaySpeedArrows">false</bool>
 </resources>

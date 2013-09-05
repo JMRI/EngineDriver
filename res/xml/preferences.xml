@@ -17,7 +17,7 @@
         android:key="ThrottleOrientation" 
         android:summary="@string/prefThrottleOrientationSummary" 
         android:title="@string/prefThrottleOrientationTitle" />
-    <PreferenceCategory android:title="@string/prefThrottleTitle" >
+    <CheckBoxPreference android:key="show_emergency_stop_button_preference" android:summary="@string/prefEmerStopSummary" android:title="@string/prefEmerStopTitle" android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"/><CheckBoxPreference android:summary="@string/prefPowerButtonBarSummary" android:title="@string/prefPowerButtonBarTitle" android:key="show_layout_power_button_preference" android:defaultValue="@bool/prefLayoutPowerButtonDefaultValue"/><PreferenceCategory android:title="@string/prefThrottleTitle" >
         <EditTextPreference
             android:defaultValue="@string/prefMaximumThrottleDefaultValue"
             android:dialogTitle="@string/prefMaximumThrottleTitle"
@@ -41,13 +41,31 @@
             android:key="increase_slider_height_preference"
             android:summary="@string/prefIncreaseSliderHeightSummary"
             android:title="@string/prefIncreaseSliderHeightTitle" >
-        </CheckBoxPreference><CheckBoxPreference 
-            android:defaultValue="@bool/prefUseOneThrottleDefaultValue" 
-            android:key="use_one_throttle_preference" 
-            android:summary="@string/prefUseOneThrottleSummary" 
-            android:title="@string/prefUseOneThrottleTitle">
         </CheckBoxPreference>
-    	<ListPreference 
+        <EditTextPreference 
+            android:key="left_slider_margin" 
+            android:numeric="integer"
+            android:maxLength="2"
+            android:title="@string/prefSliderLeftMarginTitle" 
+            android:defaultValue="@string/prefSliderLeftMarginDefaultValue" 
+            android:dialogTitle="@string/prefSliderLeftMarginTitle" 
+            android:summary="@string/prefSliderLeftMarginSummary"/>
+        <EditTextPreference 
+            android:key="right_slider_margin" 
+            android:numeric="integer"
+            android:maxLength="2"
+            android:title="@string/prefSliderRightMarginTitle" 
+            android:defaultValue="@string/prefSliderRightMarginDefaultValue" 
+            android:dialogTitle="@string/prefSliderRightMarginTitle" 
+            android:summary="@string/prefSliderRightMarginSummary"/>
+        <ListPreference 
+            android:key="NumThrottle" 
+            android:summary="@string/prefNumOfThrottlesSummary" 
+            android:title="@string/prefNumOfThrottles" 
+            android:entries="@array/NumOfThrottlesOptions" 
+            android:entryValues="@array/NumOfThrottlesOptions" 
+            android:defaultValue="Two" />
+        <ListPreference 
     	    android:defaultValue="@string/prefWebViewLocationDefaultValue" 
     	    android:entries="@array/WebViewLocation" 
     	    android:entryValues="@array/WebViewLocation" 
@@ -60,6 +78,23 @@
     	    android:key="InitialThrotWebPage" 
     	    android:summary="@string/prefInitialThrotWebPageSummary" 
     	    android:title="@string/prefInitialThrotWebPageTitle" />
+    	<CheckBoxPreference 
+    	    android:title="@string/prefDisplaySpeedArrowsTitle" 
+    	    android:defaultValue="@bool/prefDisplaySpeedArrows" 
+    	    android:summary="@string/prefDisplaySpeedArrowsSummary" 
+    	    android:key="display_speed_arrows_buttons"/>
+    	<EditTextPreference 
+    	    android:title="@string/prefSpeedButtonsSpeedStepTitle" 
+    	    android:summary="@string/prefSpeedButtonsSpeedStepSummary" 
+    	    android:defaultValue="@string/prefSpeedButtonsSpeedStepDefaultValue" 
+    	    android:dialogTitle="@string/prefSpeedButtonsSpeedStepTitle" 
+    	    android:key="speed_arrows_throttle_change"
+    	    android:maxLength="4"
+            android:numeric="integer"/>
+    	
+
+    	
+    	
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference
@@ -127,6 +162,7 @@
             android:summary="@string/prefMaximumRecentConnectionsSummary"
             android:title="@string/prefMaximumRecentConnectionsTitle" >
         </EditTextPreference>
+        <CheckBoxPreference android:defaultValue="@bool/prefConnectToFirstServer" android:key="connect_to_first_server_preference" android:title="@string/PrefConnectToFirstServerTitle" android:summary="@string/PrefConnectToFirstServerSummary"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefTurnoutsTitle" >
         <ListPreference

@@ -27,7 +27,6 @@ public class Loco {
 	private String desc;						//typically the roster name
 	private boolean confirmed;					//set after WiT responds that engine is assigned to throttle
 	
-
 	public Loco(String address) {
 		if(address != null)
 			addr = address;
@@ -49,7 +48,6 @@ public class Loco {
 		desc = l.desc;
 		confirmed = l.confirmed;
 	}
-	
 	
 	public boolean isConfirmed() {
 		return confirmed;
@@ -84,6 +82,5 @@ public class Loco {
 	private String formatAddress() {
 		return addr.substring(1) + "(" + addr.substring(0,1) + ")";  //reformat from L2591 to 2591(L)
 	}
-
 }
 	

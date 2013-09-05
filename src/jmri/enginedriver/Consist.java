@@ -47,53 +47,55 @@ public final class Consist {
 		public boolean isBackward() {
 			return backward;
 		}
-		
+
 	}
 
-	private LinkedHashMap<String, ConLoco> con;			//locos assigned to this consist (i.e. this throttle)
+	public LinkedHashMap<String, ConLoco> con;			//locos assigned to this consist (i.e. this throttle)
 	private String leadAddr;							//address of lead loco 
-														//TODO: eliminate stored leadAddr and create on the fly?
+	//TODO: eliminate stored leadAddr and create on the fly?
 	private String desc;								//composite of rosternames (or formatted addresses) of locos in consist
-														//TODO: eliminate stored desc and create on the fly?
-	
+	//TODO: eliminate stored desc and create on the fly?
+
 
 	public Consist() {
 		con = new LinkedHashMap<String, ConLoco>();
 		desc = "";
 		leadAddr = "";
 	}
-	
+
 	public Consist(Loco l) {
 		this();
+
 		this.add(l);
 		leadAddr = l.getAddress();
 	}
-	
+
 	public Consist(Consist c) {
 		this();
 		for(ConLoco l : c.con.values()) {
-			
+
 			this.add(l);
 		}
 		leadAddr = c.leadAddr;
 	}
-	
+
 	//
 	public void release() {
+
 		con.clear();
 		leadAddr = "";
 		desc = "";
 	}
-	
+
 	public void add(String addr) {
 		this.add(new ConLoco(addr));
 	}
-	
+
 	public void add(Loco l) {
 		Loco nl = new Loco(l);
 		this.add(new ConLoco(nl));
 	}
-	
+
 	public void add(ConLoco l) {
 		String addr = l.getAddress();
 		if(!con.containsKey(addr)) {
@@ -101,6 +103,7 @@ public final class Consist {
 				leadAddr = addr;
 			con.put(addr, new ConLoco(l));						//this ctor makes copy as objects are immutable
 			desc = this.formatConsist();						//update consist description
+			
 		}
 	}
 	
@@ -108,11 +111,11 @@ public final class Consist {
 		con.remove(address);
 		desc = this.formatConsist();
 	}
-	
+
 	public ConLoco getLoco(String address) {
 		return con.get(address);
 	}
-	
+
 	//
 	// report direction of this engine relative to the _current_ lead engine
 	//
@@ -124,7 +127,7 @@ public final class Consist {
 		boolean leadDir = con.get(leadAddr).backward;		//orientation of current lead loco
 		return dir != leadDir;								//return true if orientation of this loco is different from the lead
 	}
-	
+
 	//
 	// report direction of this engine relative to the top of the consist
 	//
@@ -134,12 +137,14 @@ public final class Consist {
 			return null;
 		return l.backward;
 	}
-	
+
 	public void setBackward(String address) {
+
 		setBackward(address, true);
 	}
-	
+
 	public void setBackward(String address, boolean state) {
+
 		ConLoco l = con.get(address);
 		if(l != null)
 			l.backward = state;
@@ -149,11 +154,11 @@ public final class Consist {
 		ConLoco l = con.get(address);
 		return (l != null) ? l.isConfirmed() : null;
 	}
-	
+
 	public void setConfirmed(String address) {
 		setConfirmed(address, true);
 	}
-	
+
 	public void setConfirmed(String address, boolean state) {
 		ConLoco l = con.get(address);
 		if(l != null)
@@ -164,37 +169,37 @@ public final class Consist {
 	public Set<String> getList() {
 		return con.keySet();
 	}
-	
+
 	//get Set containing all locos in consist
 	public Collection<ConLoco> getLocos() {
 		return con.values();
 	}
-	
+
 	public boolean isEmpty() {
 		return con.size() == 0;
 	}
-	
+
 	public int size() {
 		return con.size();
 	}
-	
+
 	public String getLeadAddr() {
 		return leadAddr;
 	}
-	
+
 	public String setLeadAddr(String addr) {
 		if(con.containsKey(addr) && !leadAddr.equals(addr)) {
 			leadAddr = addr;
 		}
 		return leadAddr;
 	}
-	
+
 	//create string description of the consist
 	@Override
 	public String toString() {
 		return desc;  
 	}
-	
+
 	private String formatConsist() {
 		String formatCon;
 		if(con.size() > 0) {
@@ -211,4 +216,3 @@ public final class Consist {
 		return formatCon;
 	}
 }
-	

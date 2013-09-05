@@ -1,3 +1,23 @@
+**Version 2.8 (continued) (Jeffrey Machacek)
+ * User can display EStop Button in prefs.
+ * Changed display theme to Holo to display action bar.
+ * Estop can be visible in all screens.
+ * Estop stops all locos controlled by EngineDriver.
+ * All screens have action bar and menu.
+ * Lets user see and control Layout power with icon in menu bar in Throttle, Turnouts, and Routes screens.
+ * If Engine Driver is not allowed to control layout power, menu bar layout power icon not visible after first press.
+ * Pref to display layout Power icon or words depending on API version.
+ * Pref to set right and left padding of all throttle's speed slider.
+ * Pref to connect to first discovered JMRI WiThrottle Server.
+ * pref for throttle up/down speed buttons at ends of sliders, with setting for amount of change.
+ * Fixed nullPointException for new ConsistEdit, user can't consist with drop loco before acquire pref On.
+ * Fixed, Selecting same loco in Engine Driver resulting in showing ConsistEdit screen.
+ * Can go to ConsistEdit screen from throttle menu when there is a consist for a throttle slot and can choose which throttle to edit.
+ * Can now clear recent connection and locos list with button.
+ * Added third throttle slot. 
+ * User can select how many throttles to display (1 to 3).
+ * Fixed problem when sending the quit "Q" command to JMRI, now the throttle name is removed from JMRI WiFi Throttle list.
+ * Displays OnGoing Notification to user that Engine Driver is running.
 **Version 2.8 (Robin Becker)
  * Quick list filter for turnouts and routes, with new preference for location delimiter.
  * New consist editing dialog, for choosing lead loco and setting direction of each loco in consist.
@@ -135,7 +155,7 @@
  *  improved default throttle naming to prevent duplicate connections (mstevetodd)
  *  updated jmDNS again (mstevetodd)
  *  changed discovery code to take advantage of jmdns changes, works better with ubuntu (mstevetodd)
-  *Version 1.3
+ *Version 1.3
  *  suppressed popup soft keyboard on Turnout and Route panels until EditText view is touched (added by rbecker)
  *  fixed another NPE reported to market (mstevetodd)
  *  updated jmDNS again (mstevetodd)
@@ -201,9 +221,6 @@
  *   added html About page
  */
 /*
- *   TODO: add visible menu/title-bar to all screens
- *   TODO: add e-stop button to all screens (enabled by pref)
- *   TODO: show icon in notification bar if app is running but not visible
  *   TODO: allow user to configure side-by-side panels for pads, etc.
  *   TODO: add consist creation/editing features
  *   TODO: change config files to use db instead of .txt files
@@ -211,6 +228,9 @@
  *   TODO: make private stuff private
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
+ *   TODO: get power_state from WiThrottle on thread_application start.
+ *   TODO: Add ability to let user resume EngineDriver from routes, Turnouts or Throttles by touching notification.
+ * 	 TODO: Make action bar animate text left to right and include throttle name in action bar tile and do it on every page.
  * web
  *   TODO: allow user to specify multiple web URLs
  *   TODO: optionally add web to fling logic  (multiples?)
@@ -222,7 +242,6 @@
  *   TODO: default "system" based on items in use
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
- *   TODO: add pref for auto-connect to first discovered server
  *   TODO: change Connect from an Activity to a "pop-up" or "prompt" to be called from any Activity when needed
  *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
  * threaded_application
@@ -233,9 +252,9 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: Change padding for throttle sliders without restarting Engine Driver, 
+              because blue dot and line did not match slider view.
  *   TODO: add JMRI fast-clock to screens (in new title bar?)
- *   TODO: pref for throttle up/down buttons at ends of sliders, with setting for amount of change
- *   TODO: pref for additional left margin on throttle (obviated by preceding item?)
  *   TODO: retrieve vsDecoder sounds and play when appropriate
  *   TODO: catch ArrayIndexOutOfBoundsException (reported to Market)
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
@@ -246,10 +265,11 @@
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
  *   TODO: add preference to disable other hardware buttons in throttle screen
  *   TODO: add graphics (slider, stop, directions, functions?)  add colors
- *   TODO: add throttle name to title bar
  *   TODO: in ed exit, don't send release if "Not Set"
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
+ *   TODO: If add ability to resume from notification, add a way for Thottle to retain controlled locos speed and 
+ *           get new speed if JMRI server changed speed.
  * select_loco:
  *   TODO: add close button and roster image to details dialog
  *   TODO: clean up code for  new MT (Multi-throttle) feature 

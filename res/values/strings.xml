@@ -79,7 +79,7 @@
 	<string name="fs_edit_notice">WARNING: changes to Default Functions Setttings will be lost on exit - No SD Card found.</string>
 	<string name="ca_recent_conn_notice">Recent Connections unavailable - No SD Card found.</string>
 	<string name="sl_recent_engine_notice">Recent Locos unavailable - No SD Card found.</string>
-		<string name="power">Power</string>
+	<string name="power">Power</string>
     <string name="throttle">Throttle</string>
     <string name="on">On</string>
     <string name="off">Off</string>
@@ -102,8 +102,9 @@
     <string name="prefThrottleTitle">Throttle Preferences</string>
     <string name="prefIncreaseSliderHeightTitle">Increase Slider Height</string>
     <string name="prefIncreaseSliderHeightSummary">Use a taller slider for throttles.</string>
-    <string name="prefUseOneThrottleTitle">Display One Throttle</string>
-    <string name="prefUseOneThrottleSummary">Display only one throttle.</string>
+    <string name="prefNumOfThrottles">Number of throttles</string>
+    <string name="prefNumOfThrottlesSummary">Choose how many throttles you want to display.</string>
+    <string name="prefNumOfThrottlesDefault">Two</string>
     <string name="prefMaximumThrottleTitle">Maximum Throttle Value</string>
     <string name="prefMaximumThrottleDefaultValue">99</string>
     <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value</string>
@@ -120,7 +121,7 @@
     <string name="prefStopOnReleaseTitle">Stop On Release</string>
     <string name="prefStopOnReleaseSummary">Stop loco(s) when releasing from throttle</string>
     <string name="prefDropOnAcquireTitle">Drop Loco Before Acquire</string>
-    <string name="prefDropOnAcquireSummary">Drop current loco before acquiring new loco</string>
+    <string name="prefDropOnAcquireSummary">Drop current loco before acquiring new loco.</string>
     <string name="prefHideRecentLocosTitle">Hide Recent Locos panel</string>
     <string name="prefHideRecentLocosSummary">Leave more room for roster locos.</string>
     <string name="prefRosterRecentLocosTitle">Roster in Recent Locos</string>
@@ -152,6 +153,27 @@
     <string name="prefDelimiterDefaultValue">:</string>
     <string name="prefDelimiterSummary">Set the character that marks the end of the Location portion of Turnout and Route names</string>
     <string name="logViewer">View Log</string>
-    
-    
+    <string name="clearLocoList">Clear List</string>
+    <string name="ClearConnList">Clear Recent List</string>
+    <string name="prefEmerStopTitle">Show Emergency Stop Button</string>
+    <string name="prefEmerStopSummary">Show loco emergency stop button in action bar.</string>
+    <string name="EStop">Estop</string>
+    <string name="PowerButtonBar">power_button</string>
+    <string name="prefPowerButtonBarTitle">Show layout power button</string>
+    <string name="prefPowerButtonBarSummary">Display layout power button in Throttle, Turnout and Routes screens.</string>
+    <string name="prefSliderLeftMarginTitle">Throttle Speed Slider Left Margin</string>
+    <string name="prefSliderLeftMarginSummary">Number of pixels to offset left side of throttle speed sliders.  WARNING: Requires restart.</string>
+    <string name="prefSliderLeftMarginDefaultValue">8</string>
+    <string name="prefSliderRightMarginTitle">Throttle Speed Slider Right Margin</string>
+    <string name="prefSliderRightMarginSummary">Number of pixels to offset right side of throttle speed sliders.  WARNING: Requires restart.</string>
+    <string name="prefSliderRightMarginDefaultValue">8</string>
+    <string name="PrefConnectToFirstServerTitle">Auto-Connect to First WiThrottle Server</string>
+    <string name="PrefConnectToFirstServerSummary">Connect automatically to first JMRI WIThrottle Server identified.</string>
+    <string name="LeftButton">&lt;</string>
+    <string name="RightButton">&gt;</string>
+    <string name="prefDisplaySpeedArrowsTitle">Display Speed arrow buttons</string>
+    <string name="prefDisplaySpeedArrowsSummary">Display arrow buttons next to speed sliders to change loco speed.</string>
+    <string name="prefSpeedButtonsSpeedStepTitle">Speed button change amount</string>
+    <string name="prefSpeedButtonsSpeedStepSummary">How much the Speed arrow buttons should change throttle speed.  The lower the number the faster the change.</string>
+	<string name="prefSpeedButtonsSpeedStepDefaultValue">100</string>
 </resources>

@@ -81,4 +81,9 @@
         <item>Landscape</item>
         <item>Auto-Rotate</item>
     </string-array>
+    <string-array name="NumOfThrottlesOptions">
+        <item >One</item>
+        <item >Two</item>
+        <item >Three</item>
+    </string-array>
 </resources>

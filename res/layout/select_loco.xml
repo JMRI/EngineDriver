@@ -13,12 +13,14 @@
             android:id="@+id/throttle_name_header"
             style="@style/small_heading_style"
             android:text="@string/none" />
+
         <LinearLayout
             android:id="@+id/current_locos_row"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="68dp"
             android:orientation="horizontal"
             android:paddingTop="2dp" >
+
             <TextView
                 android:id="@+id/sl_loco_T"
                 android:layout_width="0dp"
@@ -51,6 +53,23 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/release" />
+            
+            <TextView
+                android:id="@+id/sl_loco_G"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.3"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:padding="0dp"
+                android:text="@string/none"
+                android:textColor="#FFFFFF" />
+            <Button
+                android:id="@+id/sl_release_G"
+                style="@style/normal_button_style"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/release" />
         </LinearLayout>
     </LinearLayout>
     <RelativeLayout
@@ -75,12 +94,15 @@
             android:shadowDy="1"
             android:shadowRadius="0.2"
             android:singleLine="true" />
+
         <Spinner
             android:id="@+id/address_length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/loco_address"
+            android:layout_below="@+id/select_loco_label"
             android:layout_toRightOf="@id/loco_address" />
+
         <Button
             android:id="@+id/acquire"
             style="@style/normal_button_style"
@@ -96,27 +118,55 @@
         android:id="@+id/roster_list_heading"
         style="@style/small_heading_style"
         android:text="@string/roster_list" />
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.6"
+        android:layout_weight="0.44"
         android:orientation="vertical" >
+
         <jmri.enginedriver.TransparentListView
             android:id="@+id/roster_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
         </jmri.enginedriver.TransparentListView>
     </LinearLayout>
-    <TextView
-        android:id="@+id/recent_engines_heading"
-        style="@style/small_heading_style"
-        android:text="@string/recent_engines" />
+
+     <RelativeLayout
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:paddingBottom="2dp"
+         android:paddingTop="2dp" >
+
+        <TextView
+            android:id="@+id/recent_engines_heading"
+            style="@style/small_heading_style"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignBottom="@+id/clear_Loco_List_button"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/clear_Loco_List_button"
+            android:text="@string/recent_engines" />
+
+        <Button
+            android:id="@+id/clear_Loco_List_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/clearLocoList"
+            android:textSize="16sp" />
+        
+</RelativeLayout>
+        
+        
     <LinearLayout
         android:id="@+id/engine_list_wrapper"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.4"
         android:orientation="vertical" >
+
         <ListView
             android:id="@+id/engine_list"
             android:layout_width="fill_parent"

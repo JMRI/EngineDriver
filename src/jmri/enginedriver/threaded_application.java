@@ -18,40 +18,42 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+// Main java file.
 /* TODO: see changelog-and-todo-list.txt for complete list of project to-do's */
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.app.Notification.Builder;
+import android.app.NotificationManager;
+//import android.app.PendingIntent;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
-
 import java.net.*;
 import java.io.*;
-
 import android.util.Log;
+import android.view.Menu;
 import android.webkit.CookieSyncManager;
 import android.widget.Toast;
-
 import javax.jmdns.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-
+import java.util.List;
 import jmri.enginedriver.message_type;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.enginedriver.Consist;
@@ -59,11 +61,13 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
+@SuppressLint("NewApi")
 public class threaded_application extends Application {
 	public comm_thread commThread;
 	String host_ip = null; //The IP address of the WiThrottle server.
@@ -74,13 +78,18 @@ public class threaded_application extends Application {
 	//shared variables returned from the withrottle server, stored here for easy access by other activities
 	volatile Consist consistT;
 	volatile Consist consistS;
-	
-//	String roster_list_string; //roster list
+	volatile Consist consistG;
+	NotificationManager mNotificationManager; //Displays OnGoing Notification that displays EngineDriver is Running
+	Builder mBuilder; //For setContentIntentNotification Method.
+
+	//	String roster_list_string; //roster list
 	LinkedHashMap<Integer, String> function_labels_T;  //function#s and labels from roster for throttle #1
 	LinkedHashMap<Integer, String> function_labels_S;  //function#s and labels from roster for throttle #2
+	LinkedHashMap<Integer, String> function_labels_G;  //function#s and labels from roster for throttle #3
 	LinkedHashMap<Integer, String> function_labels_default;  //function#s and labels from local settings
 	boolean[] function_states_T;  //current function states for first throttle
 	boolean[] function_states_S;  //current function states for second throttle
+	boolean[] function_states_G;  //current function states for second throttle
 	String[] to_system_names;
 	String[] to_user_names;
 	String[] to_states;
@@ -124,6 +133,17 @@ public class threaded_application extends Application {
 
 	private SharedPreferences prefs;
 
+	public boolean EStopActivated = false;  // Used to determine if user pressed the EStop button.
+
+	public List <Loco> locosList = new ArrayList<Loco>();  //Keeps track of currently controlled locos by the single Engine Driver.
+
+	//Used to tell set_Labels in Throttle not to update padding for throttle sliders after onCreate.
+	public boolean firstCreate = true;  
+
+
+	//TODO: For future use with setContentIntentNotification.
+	//	public PendingIntent resultPendingIntent;
+
 	class comm_thread extends Thread  {
 		JmDNS jmdns = null;
 		volatile boolean endingJmdns = false;
@@ -152,7 +172,7 @@ public class threaded_application extends Application {
 
 			public void serviceRemoved(ServiceEvent event)      {
 				//Tell the UI thread to remove from the list of services available.
-		    	sendMsg(connection_msg_handler, message_type.SERVICE_REMOVED, event.getName());	//send the service name to be removed
+				sendMsg(connection_msg_handler, message_type.SERVICE_REMOVED, event.getName());	//send the service name to be removed
 				Log.d("Engine_Driver", String.format("serviceRemoved: '%s'", event.getName()));
 			};
 
@@ -202,7 +222,7 @@ public class threaded_application extends Application {
 					if (multicast_lock == null) {  //do this only as needed
 						multicast_lock=wifi.createMulticastLock("engine_driver");
 						multicast_lock.setReferenceCounted(true);
-//						multicast_lock.acquire();
+						//						multicast_lock.acquire();
 					}
 
 					byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
@@ -217,7 +237,7 @@ public class threaded_application extends Application {
 					listener=new withrottle_listener();
 					Log.d("Engine_Driver","start_jmdns: listener created");
 
-//					jmdns.addServiceListener("_withrottle._tcp.local.", listener);
+					//					jmdns.addServiceListener("_withrottle._tcp.local.", listener);
 
 				} else {
 					process_comm_error("No local IP Address found.\nCheck your WiFi connection.");
@@ -266,11 +286,12 @@ public class threaded_application extends Application {
 		}
 
 
+		@SuppressLint("HandlerLeak")
 		class comm_handler extends Handler    {
 			//All of the work of the communications thread is initiated from this function.
-/***future PowerLock
+			/***future PowerLock
   			private PowerManager.WakeLock wl = null;
- */
+			 */
 			public void handleMessage(Message msg)      {
 				switch(msg.what)        {
 				//Start or Stop the WiThrottle listener and required jmdns stuff
@@ -281,7 +302,7 @@ public class threaded_application extends Application {
 					} 
 					else {
 						if (jmdns == null) {   //start jmdns if not started
-//							Log.d("Engine_Driver","comm_handler: jmdns not started, starting");
+							//							Log.d("Engine_Driver","comm_handler: jmdns not started, starting");
 							start_jmdns();
 							if (jmdns != null) {  //don't bother if jmdns didn't start
 								try {
@@ -322,15 +343,15 @@ public class threaded_application extends Application {
 					socketWiT = new socket_WiT();
 					if(socketWiT.connect() == true) {
 						sendThrottleName();
-				    	sendMsg(connection_msg_handler, message_type.CONNECTED);
-/***future Notification
+						sendMsg(connection_msg_handler, message_type.CONNECTED);
+						/***future Notification
   				    	showNotification();
-***/
-/***future	PowerLock
+						 ***/
+						/***future	PowerLock
  			    		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 				    	wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Engine_Driver");
 			    		wl.acquire();
-***/			    	
+						 ***/			    	
 					}
 					else {
 						host_ip = null;  //clear vars if failed to connect
@@ -351,11 +372,19 @@ public class threaded_application extends Application {
 							function_states_T = new boolean[32];
 						}
 					} 
-					else {
+					else if(whichThrottle == 'S')
+					{
 						if (releaseAll || consistS.isEmpty()) {
 							addr = "";
 							function_labels_S = new LinkedHashMap<Integer, String>();
 							function_states_S = new boolean[32];
+						}
+					}
+					else {
+						if (releaseAll || consistG.isEmpty()) {
+							addr = "";
+							function_labels_G = new LinkedHashMap<Integer, String>();
+							function_states_G = new boolean[32];
 						}
 					}
 					if (prefs.getBoolean("stop_on_release_preference", 
@@ -365,22 +394,22 @@ public class threaded_application extends Application {
 					withrottle_send(whichThrottle+"r<;>"+addr);  //send release command
 					break;
 				}
-					//request speed. arg1 holds whichThrottle
+				//request speed. arg1 holds whichThrottle
 				case message_type.REQ_VELOCITY: {
 					final char whichThrottle = (char) msg.arg1;
 					withrottle_send(whichThrottle+"qV");
 					break;
 				}
 
-					//request direction.  arg1 hold whichThrottle
+				//request direction.  arg1 hold whichThrottle
 				case message_type.REQ_DIRECTION: {
 					final char whichThrottle = (char) msg.arg1;
-						//        		withrottle_send(whichThrottle+"qR");  //request updated direction
+					//        		withrottle_send(whichThrottle+"qR");  //request updated direction
 					withrottle_send(whichThrottle+"qR");  //request updated direction
 					break;
 				}
 
-					//Disconnect from the WiThrottle server.
+				//Disconnect from the WiThrottle server.
 				case message_type.DISCONNECT: {
 					Log.d("Engine_Driver","TA Disconnect");
 					doFinish = true;
@@ -392,23 +421,23 @@ public class threaded_application extends Application {
 					end_jmdns();
 					dlMetadataTask.stop();
 					dlRosterTask.stop();
-/***future Notification
+					/***future Notification
 					hideNotification();
-***/					
+					 ***/					
 					alert_activities(message_type.SHUTDOWN,"");	//tell all activities to finish()
-/***future PowerLock
+					/***future PowerLock
 					if(wl != null && wl.isHeld())
 						wl.release();
-***/						
-			    	//give msgs a chance to xmit before closing socket
+					 ***/						
+					//give msgs a chance to xmit before closing socket
 					if(!sendMsgDelay(comm_msg_handler, 1000, message_type.SHUTDOWN)) {
 						shutdown();
 					}
 					break;
 				}
 
-					//Set up an engine to control. The address of the engine is given in msg.obj and whichThrottle is in arg1
-					//Optional rostername if present is separated from the address by the proper delimiter 
+				//Set up an engine to control. The address of the engine is given in msg.obj and whichThrottle is in arg1
+				//Optional rostername if present is separated from the address by the proper delimiter 
 				case message_type.LOCO_ADDR: {
 					final String addr = msg.obj.toString();  
 					final char whichThrottle = (char) msg.arg1;
@@ -416,9 +445,11 @@ public class threaded_application extends Application {
 						if (prefs.getBoolean("drop_on_acquire_preference", 
 								getResources().getBoolean(R.bool.prefDropOnAcquireDefaultValue))) {
 							withrottle_send(whichThrottle+"r");  //send release command for any already acquired locos (if set in prefs)
+
 						}
 					}
 					withrottle_send(whichThrottle + addr);
+
 					if (withrottle_version >= 2.0) {
 						//request current direction and speed (WiT 2.0+)
 						withrottle_send("M" + whichThrottle+"A*<;>qV");
@@ -430,23 +461,23 @@ public class threaded_application extends Application {
 					}
 					break;
 				}
-					//          case message_type.ERROR:
-					//            break;
+				//          case message_type.ERROR:
+				//            break;
 
-					//Adjust the locomotive's speed. whichThrottle is in arg 1 and arg2 holds the value of the speed to set. //TODO: Allow 14 and 28 speed steps (might need a change on the server side).
+				//Adjust the locomotive's speed. whichThrottle is in arg 1 and arg2 holds the value of the speed to set. //TODO: Allow 14 and 28 speed steps (might need a change on the server side).
 				case message_type.VELOCITY: {
 					final char whichThrottle = (char) msg.arg1;
 					withrottle_send(String.format(whichThrottle+"V%d", msg.arg2));
 					break;
 				}
-					//Change direction. address in in msg, whichThrottle is in arg 1 and arg2 holds the direction to change to. 
+				//Change direction. address in in msg, whichThrottle is in arg 1 and arg2 holds the direction to change to. 
 				case message_type.DIRECTION: {
 					final String addr = msg.obj.toString();
 					final char whichThrottle = (char) msg.arg1;
 					withrottle_send(String.format(whichThrottle+"R%d<;>"+addr, msg.arg2));
 					break;
 				}
-					//Set or unset a function. whichThrottle+addr is in the msg, arg1 is the function number, arg2 is set or unset.
+				//Set or unset a function. whichThrottle+addr is in the msg, arg1 is the function number, arg2 is set or unset.
 				case message_type.FUNCTION: {
 					String addr = msg.obj.toString();
 					final char whichThrottle = (char) addr.charAt(0);
@@ -454,19 +485,19 @@ public class threaded_application extends Application {
 					withrottle_send(String.format(whichThrottle+"F%d%d<;>"+addr, msg.arg2, msg.arg1));
 					break;
 				}
-					//send command to change turnout.  msg = (T)hrow, (C)lose or (2)(toggle) + systemName 
+				//send command to change turnout.  msg = (T)hrow, (C)lose or (2)(toggle) + systemName 
 				case message_type.TURNOUT: {
 					final String cmd = msg.obj.toString();
 					withrottle_send("PTA" + cmd);
 					break;
 				}
-					//send command to route turnout.  msg = 2(toggle) + systemName
+				//send command to route turnout.  msg = 2(toggle) + systemName
 				case message_type.ROUTE: {
 					final String cmd = msg.obj.toString();
 					withrottle_send("PRA" + cmd);
 					break;
 				}
-					//send command to change power setting, new state is passed in arg1
+				//send command to change power setting, new state is passed in arg1
 				case message_type.POWER_CONTROL:
 					withrottle_send(String.format("PPA%d", msg.arg1));
 					break;
@@ -475,26 +506,25 @@ public class threaded_application extends Application {
 				case message_type.SHUTDOWN:
 					shutdown();
 					break;
-					
+
 					// update of roster-related data completed in background
 				case message_type.ROSTER_UPDATE:
 					alert_activities(message_type.ROSTER_UPDATE,"");
 					break;
-					
+
 					// WiT socket is down and reconnect attempt in prog 
 				case message_type.WIT_CON_RETRY:
-/***future Notification
+					/***future Notification
   					hideNotification();
-***/
+					 ***/
 					alert_activities(message_type.WIT_CON_RETRY,"");
-					
 					break;
 
 					// WiT socket is back up
 				case message_type.WIT_CON_RECONNECT:
-/***future Notification
+					/***future Notification
 					showNotification();
-***/
+					 ***/
 					alert_activities(message_type.WIT_CON_RECONNECT,"");
 					break;
 				}
@@ -504,15 +534,15 @@ public class threaded_application extends Application {
 		private void shutdown() {
 			Log.d("Engine_Driver","TA Shutdown");
 			end_jmdns();						//jmdns should already be down but no harm in making call
-	    	if (socketWiT != null) {
+			if (socketWiT != null) {
 				socketWiT.disconnect(true);		//stop reading from the socket
 				socketWiT = null;
 			}
-	    	host_ip = null;
-	    	port = 0;
+			host_ip = null;
+			port = 0;
 			doFinish = false;					//ok for activities to run if restarted after this 
 		}
-		
+
 		private void sendThrottleName() {
 			sendThrottleName(true);
 		}
@@ -566,7 +596,7 @@ public class threaded_application extends Application {
 				char com2 = response_str.charAt(2);
 				//loco was successfully added to a throttle
 				if(com2 == '+') {  //"MT+L2591<;>"  loco was added
-/****
+					/****
 					String formatAddr = addr.substring(1) + "(" + addr.substring(0,1) + ")";  //reformat from L2591 to 2591(L)  
 					String rosterName;
 					if (last_roster_entry_requested.equals("")) {  //use remembered name, or look up from address
@@ -578,11 +608,14 @@ public class threaded_application extends Application {
 					}
 					Loco l = new Loco(addr, rosterName);
 /****/					
+
 					Consist con;
 					if(whichThrottle == 'T')				// indicate loco was Confirmed by WiT
 						con = consistT;
-					else
+					else if(whichThrottle == 'S')
 						con = consistS;
+					else
+						con = consistG;
 					if(con.getLoco(addr) != null)
 						con.setConfirmed(addr);
 					else
@@ -592,8 +625,12 @@ public class threaded_application extends Application {
 					if(whichThrottle == 'T') {
 						consistT.remove(addr);
 					} 
-					else {
+					else if(whichThrottle == 'S')
+					{
 						consistS.remove(addr);
+					}
+					else {
+						consistG.remove(addr);
 					}
 					Log.d("Engine_Driver", "loco " + addr + " dropped from " + whichThrottle);
 
@@ -602,19 +639,23 @@ public class threaded_application extends Application {
 					String lead;
 					if ('T' == whichThrottle) 
 						lead = consistT.getLeadAddr();
-					else
+					else if('S' == whichThrottle)
 						lead = consistS.getLeadAddr();
+					else
+						lead = consistG.getLeadAddr();
 					if(lead.equals(addr))						//*** temp - only process if for lead engine in consist
 						process_roster_function_string("RF29}|{1234(L)" + ls[1], sWhichThrottle);  //prepend some stuff to match old-style
 				} 
+
 				else if(com2 == 'A') { //process change in function value  MTAL4805<;>F028
 					if ("F".equals(ls[1].substring(0,1))) {
 						process_function_state_20(sWhichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1,2)) ? true : false);  
 					}	    	  			
 				}
+
 				break;
 			}
-/*** old
+			/*** old
 			case 'T': 
 				loco_string_T = getRosterNameFromAddress(response_str.substring(1));  //set app variable
 				Log.d("Engine_Driver", "comm_handler loco MT "+loco_string_T);
@@ -657,7 +698,7 @@ public class threaded_application extends Application {
 					break;
 
 				case 'L': 
-//					roster_list_string = response_str.substring(2);  //set app variable
+					//					roster_list_string = response_str.substring(2);  //set app variable
 					process_roster_list(response_str);  //process roster list
 					dlMetadataTask.get();		// run background metadata update if web server port is known
 					dlRosterTask.get();			// run background roster update if web server port is known
@@ -738,8 +779,13 @@ public class threaded_application extends Application {
 			//clear the appropriate global variable
 			if ("T".equals(whichThrottle)) {
 				function_labels_T = new LinkedHashMap<Integer, String>();
-			} else {
+			} 
+			else if("S".equals(whichThrottle))
+			{
 				function_labels_S = new LinkedHashMap<Integer, String>();
+			}
+			else {
+				function_labels_G = new LinkedHashMap<Integer, String>();
 			}
 
 			//initialize app arrays (skipping first)
@@ -748,8 +794,13 @@ public class threaded_application extends Application {
 				if (i > 0 && !"".equals(ts)) { //skip first chunk, which is length, and skip any blank entries
 					if ("T".equals(whichThrottle)) {  //populate the appropriate hashmap
 						function_labels_T.put(i-1,ts); //index is hashmap key, value is label string
-					} else {
+					} 
+					else if("S".equals(whichThrottle))
+					{
 						function_labels_S.put(i-1,ts); //index is hashmap key, value is label string
+					}
+					else {
+						function_labels_G.put(i-1,ts); //index is hashmap key, value is label string
 					}
 				}  //end if i>0
 				i++;
@@ -950,8 +1001,13 @@ public class threaded_application extends Application {
 
 					if ("T".equals(whichThrottle)) {
 						function_states_T[fn] = fState;
-					}  else {
+					}  
+					else if("S".equals(whichThrottle))
+					{
 						function_states_S[fn] = fState;
+					}
+					else {
+						function_states_G[fn] = fState;
 					}
 				}  //end if i==0
 				i++;
@@ -963,8 +1019,13 @@ public class threaded_application extends Application {
 
 			if ("T".equals(whichThrottle)) {
 				function_states_T[fn] = fState;
-			}  else {
+			}  
+			else if ("S".equals(whichThrottle))
+			{
 				function_states_S[fn] = fState;
+			}
+			else {
+				function_states_G[fn] = fState;
 			}
 		}
 
@@ -1000,7 +1061,7 @@ public class threaded_application extends Application {
 					}
 				}
 				String prefix = "M" + whichThrottle;					// use a multithrottle command
-				if ('T' == whichThrottle || 'S' == whichThrottle) { 	//acquire loco
+				if ('T' == whichThrottle || 'S' == whichThrottle || 'G' == whichThrottle) { 	//acquire loco
 					if ('L' == com || 'S' == com) { 					//if address length
 						String rosterName = new String(addr);
 						addr = cmd;
@@ -1034,8 +1095,15 @@ public class threaded_application extends Application {
 				}
 			}
 			catch(Exception e) {
-				Log.d("Engine_Driver", "--> invalid msg: " + newMsg);
 				validMsg = false;
+				if((socketWiT != null) && newMsg.equals("Q")) {
+					Log.d("Sent Q command", "Sent " + newMsg + " command to jmri WiFi Throttle");
+					socketWiT.Send(newMsg); //Sends quit command to JMRI.
+				}
+				else
+				{
+					Log.d("Engine_Driver", "--> invalid msg: " + newMsg);
+				}
 			}
 
 			if (validMsg) {
@@ -1253,10 +1321,14 @@ public class threaded_application extends Application {
 				{
 					if ("WIFI".equalsIgnoreCase(ni.getTypeName()))
 						if (ni.isConnected())
+						{
 							haveConnectedWifi = true;
+						}
 					if ("MOBILE".equalsIgnoreCase(ni.getTypeName()))
 						if (ni.isConnected())
+						{
 							haveConnectedMobile = true;
+						}
 				}
 				return haveConnectedWifi || haveConnectedMobile;
 			}
@@ -1387,26 +1459,74 @@ public class threaded_application extends Application {
 		}
 	}
 
+	//Displays OnGoing Notification that displays EngineDriver is Running
+	@SuppressLint("NewApi")
+	public void stillRunningNotify()
+	{
+		try
+		{
+			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+				// only for JellyBean and newer versions
+
+				mBuilder =
+					new Builder(this)
+				.setSmallIcon(R.drawable.icon)
+				.setContentTitle("Engine Driver")
+				.setContentText("Engine Driver is Running!");
+				mBuilder.setOngoing(true);
+
+				//mBuilder.setContentIntent(this);
+				
+				mNotificationManager =
+					(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+				mNotificationManager.notify(1, mBuilder.build());
+			}
+		}
+		catch(Exception ex)
+		{
+			Log.d("debug", "Notification creation error: " + ex.getMessage());
+		}
+	}
+
+	//TODO: Add ability to let user resume EngineDriver from routes, Turnouts or Throttles by touching notification.
+	//TODO: If add ability to resume, add a way for Thottle to retain controlled locos speed 
+	//        and get new speed if JMRI server changed speed.
+	public void setContentIntentNotification(Intent resultIntent)
+	{
+		try
+		{
+			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+				//resultPendingIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, resultIntent, 0);
+				//mBuilder.setContentIntent(resultPendingIntent);
+				//	mNotificationManager.notify(1, mBuilder.build());
+			}
+		}
+		catch(Exception ex)
+		{
+			Log.d("debug", "Notification error: " + ex.getMessage());
+		}
+	}
+
 	@Override
 	public void onCreate()  {
 		super.onCreate();
-	    Log.d("Engine_Driver","TA.onCreate()");
-	    
-	    //When starting ED after it has been killed in the bkg, the OS restarts any activities that were running.
-	    //Since we aren't connected at this point, we want all those activities to finish() so we do 2 things:
-	    // doFinish=true tells activities (except CA) that aren't running yet to finish() when they reach onResume()
-	    // DISCONNECT message tells any activities (except CA) that are already running to finish()
-	    doFinish = true;
-	    port = 0;				//indicate that no connection exists
+		Log.d("Engine_Driver","TA.onCreate()");
+
+		//When starting ED after it has been killed in the bkg, the OS restarts any activities that were running.
+		//Since we aren't connected at this point, we want all those activities to finish() so we do 2 things:
+		// doFinish=true tells activities (except CA) that aren't running yet to finish() when they reach onResume()
+		// DISCONNECT message tells any activities (except CA) that are already running to finish()
+		doFinish = true;
+		port = 0;				//indicate that no connection exists
 		commThread=new comm_thread();
 		commThread.start();
-	    alert_activities(message_type.DISCONNECT,"");
-	    
-/***future Notification
+		alert_activities(message_type.DISCONNECT,"");
+		/***future Notification
 		hideNotification();		// if TA was killed in bkg, icon might still be up
-***/
+		 ***/
 
-/***future Recovery
+		/***future Recovery
 	    //Normally CA is run via the manifest when ED is launched.
 	    //However when starting ED after it has been killed in the bkg,
 	    //CA may not be running (or may not be on top).
@@ -1415,11 +1535,13 @@ public class threaded_application extends Application {
 		final Intent caIntent = new Intent(this, connection_activity.class);
 		caIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		startActivity(caIntent);
-***/
-	    
+		 ***/
+
 		prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
 		function_states_T = new boolean[32];
 		function_states_S = new boolean[32];
+		function_states_G = new boolean[32];
 
 		dlMetadataTask = new DownloadMetaTask();
 		dlRosterTask = new DownloadRosterTask();
@@ -1431,12 +1553,12 @@ public class threaded_application extends Application {
 		}).start();	
 		CookieSyncManager.createInstance(this);		//create this here so onPause/onResume for webViews can control it
 	}
-	
+
 	public boolean isForcingFinish() {
 		return doFinish;
 	}
-	
-/***future Notification
+
+	/***future Notification
 	// notification bar 
 	void showNotification() {
 		if(!isNotified) {
@@ -1462,9 +1584,9 @@ public class threaded_application extends Application {
 			isNotified = false;
 		}
 	}
-***/	
+	 ***/	
 
-	
+
 	//init default function labels from the settings files or set to default
 	private void set_default_function_labels() {
 		function_labels_default = new LinkedHashMap<Integer, String>();
@@ -1496,31 +1618,33 @@ public class threaded_application extends Application {
 	}
 
 	public class DownloadRosterTask extends DownloadDataTask {
+		@SuppressWarnings("unchecked")
 		@Override
 		void runMethod(Download dl) throws IOException {
-        	String rosterUrl = createUrl("prefs/roster.xml");
-        	HashMap<String, RosterEntry> rosterTemp = null;
-    		if(rosterUrl == null || dl.cancel)
-    			return;
-    		Log.d("Engine_Driver","Background loading roster from " + rosterUrl);
-    		int rosterSize = 0;
-    		try {
-	    		RosterLoader rl = new RosterLoader(rosterUrl);
-	    		if(dl.cancel)
-	    			return;
-	    		rosterTemp = rl.parse();
-	    		rosterSize = rosterTemp.size();		//throws exception if still null
-	    		if(!dl.cancel)
-	    			roster = (HashMap<String, RosterEntry>) rosterTemp.clone();
-    		}
-    		catch(Exception e) {
-    			throw new IOException();
-    		}
+			String rosterUrl = createUrl("prefs/roster.xml");
+			HashMap<String, RosterEntry> rosterTemp = null;
+			if(rosterUrl == null || dl.cancel)
+				return;
+			Log.d("Engine_Driver","Background loading roster from " + rosterUrl);
+			int rosterSize = 0;
+			try {
+				RosterLoader rl = new RosterLoader(rosterUrl);
+				if(dl.cancel)
+					return;
+				rosterTemp = rl.parse();
+				rosterSize = rosterTemp.size();		//throws exception if still null
+				if(!dl.cancel)
+					roster = (HashMap<String, RosterEntry>) rosterTemp.clone();
+			}
+			catch(Exception e) {
+				throw new IOException();
+			}
 			Log.d("Engine_Driver","Loaded " + rosterSize +" entries from roster.xml.");
 		}
 	}
 
 	public class DownloadMetaTask extends DownloadDataTask {
+		@SuppressWarnings("unchecked")
 		@Override
 		void runMethod(Download dl) throws IOException   {
 			String metaUrl = createUrl("xmlio/");
@@ -1530,7 +1654,7 @@ public class threaded_application extends Application {
 			try {
 				URL url = new URL( metaUrl );
 				URLConnection con = url.openConnection();
-		
+
 				// specify that we will send output and accept input
 				con.setDoInput(true);
 				con.setDoOutput(true);
@@ -1538,15 +1662,15 @@ public class threaded_application extends Application {
 				con.setReadTimeout( 2000 );
 				con.setUseCaches (false);
 				con.setDefaultUseCaches (false);
-		
+
 				// tell the web server to expect xml text
 				con.setRequestProperty ( "Content-Type", "text/xml" );
-		
+
 				OutputStreamWriter writer = new OutputStreamWriter( con.getOutputStream() );
 				writer.write( "<XMLIO><list type='metadata' /></XMLIO>" );  //ask for metadata info
 				writer.flush();
 				writer.close();
-		
+
 				//read response and treat as xml doc
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder builder = factory.newDocumentBuilder();
@@ -1561,59 +1685,59 @@ public class threaded_application extends Application {
 					metadataTemp.put(metadataName, metadataValue);
 				}
 				if(!dl.cancel) {
-		    		if(metadataTemp.size() == 0)		//throw exception if empty
-		    			throw new IOException();
-		    		metadata = (HashMap<String, String>) metadataTemp.clone();
+					if(metadataTemp.size() == 0)		//throw exception if empty
+						throw new IOException();
+					metadata = (HashMap<String, String>) metadataTemp.clone();
 				}
 			}
 			catch(Exception e) {
-    			throw new IOException();
+				throw new IOException();
 			}
 			Log.d("Engine_Driver", "Metadata retrieved: " + threaded_application.metadata.toString());
 			Log.d("Engine_Driver","Loaded " + metadata.size() +" metadata entries from xmlio server.");
 		}
 	}
-	
+
 	abstract public class DownloadDataTask {
 		private Download dl = null;
 		abstract void runMethod(Download dl) throws IOException;
-		
+
 		public class Download extends Thread {
 			public volatile boolean cancel = false;
 
 			@Override
-	    	public void run() {
-	    		try {
-	    			runMethod(this);
-	    			if(!cancel)
-	    				sendMsg(comm_msg_handler, message_type.ROSTER_UPDATE);		//send message to alert other activities
-	    		}
-	    		catch(Throwable t) {
-	    			Log.d("Engine_Driver", "Data fetch failed: " + t.getMessage());
-	    		}	  
-	
-	    		// background load of Data completed
-	    		finally {
-	    			if(cancel)
-	    				Log.d("Engine_Driver", "Data fetch cancelled");
-	    		}
-	    	}
+			public void run() {
+				try {
+					runMethod(this);
+					if(!cancel)
+						sendMsg(comm_msg_handler, message_type.ROSTER_UPDATE);		//send message to alert other activities
+				}
+				catch(Throwable t) {
+					Log.d("Engine_Driver", "Data fetch failed: " + t.getMessage());
+				}	  
+
+				// background load of Data completed
+				finally {
+					if(cancel)
+						Log.d("Engine_Driver", "Data fetch cancelled");
+				}
+			}
 		}
 
-	    void get() {
+		void get() {
 			if(dl != null) {
 				dl.cancel = true;	// try to stop any update that is in progress on old download thread
 			}
 			dl = new Download();	// create new download thread
 			dl.start();				// start an update
-        }
+		}
 
-        void stop() {
-        	if(dl != null) {
-        		dl.cancel = true;
-        	}
-        }
-    }
+		void stop() {
+			if(dl != null) {
+				dl.cancel = true;
+			}
+		}
+	}
 
 	// get the roster name from address string 123(L).  Return input if not found in roster or in consist
 	public String getRosterNameFromAddress(String response_str) {
@@ -1649,21 +1773,24 @@ public class threaded_application extends Application {
 		rt_state_names = null;
 		consistT = new Consist();
 		consistS = new Consist();
+		consistG = new Consist();
 		function_labels_S = new LinkedHashMap<Integer, String>();
 		function_labels_T = new LinkedHashMap<Integer, String>();
+		function_labels_G = new LinkedHashMap<Integer, String>();
 		function_states_T = new boolean[32];		// also allocated in onCreate() ???
 		function_states_S = new boolean[32];
+		function_states_G = new boolean[32];
 		consist_entries = new LinkedHashMap<String, String>();
 		roster = null;
 		roster_entries = null;
 		metadata = null;
 		doFinish = false;
 	}
-	
+
 	//
 	// utilities
 	//
-	
+
 	/** ------ copied from jmri util code -------------------
 	 * Split a string into an array of Strings, at a particular
 	 * divider.  This is similar to the new String.split method,
@@ -1704,7 +1831,92 @@ public class threaded_application extends Application {
 
 		return result;
 	}
-	
+
+	public void powerStateMenuButton()
+	{
+		int newState = 1;
+		if (power_state.equals("1")) { //toggle to opposite value 0=off, 1=on
+			newState = 0;
+		}
+		sendMsg(comm_msg_handler, message_type.POWER_CONTROL, "", newState);
+	}
+
+	//TODO: get power_state from JMRI WiThrottle before UI starts up to display Power Layout Icon. 
+	//Then can remove displayPowerStateMenuButton2.
+	// Also change in throttle, routes and turnouts.
+	public void displayPowerStateMenuButton2(Menu menu)
+	{
+		if(prefs.getBoolean("show_layout_power_button_preference", false))
+		{
+			menu.findItem(R.id.power_layout_button).setVisible(true);
+		}
+		else
+		{
+			menu.findItem(R.id.power_layout_button).setVisible(false);
+		}
+	}
+
+	public void displayPowerStateMenuButton(Menu menu)
+	{
+		if(prefs.getBoolean("show_layout_power_button_preference", false) && (power_state != null))
+		{
+			menu.findItem(R.id.power_layout_button).setVisible(true);
+		}
+		else
+		{
+			menu.findItem(R.id.power_layout_button).setVisible(false);
+		}
+	}
+
+	public void setPowerStateButton(Menu menu)
+	{
+		if((power_state == null) || (power_state.equals("2")))
+		{
+			menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_yellow);
+			if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
+			{
+				menu.findItem(R.id.power_layout_button).setTitle("Layout Power is UnKnown");
+			}
+		}
+		else if(power_state.equals("1"))
+		{
+			menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_green);
+			if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
+			{
+				menu.findItem(R.id.power_layout_button).setTitle("Layout Power is ON");
+			}
+		}
+		else
+		{
+			menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_red);
+			if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
+			{
+				menu.findItem(R.id.power_layout_button).setTitle("Layout Power is Off");
+			}
+		}
+	}
+
+	public void displayEStop(Menu menu)
+	{
+		if(prefs.getBoolean("show_emergency_stop_button_preference", false))
+		{
+			menu.findItem(R.id.EmerStop).setVisible(true);
+		}
+		else
+		{
+			menu.findItem(R.id.EmerStop).setVisible(false);
+		}
+
+	}
+
+	public void sendEStopMsg()
+	{
+		sendMsgDelay(comm_msg_handler,0, message_type.VELOCITY, "",(int) 'T', 0);
+		sendMsgDelay(comm_msg_handler,0, message_type.VELOCITY, "",(int) 'S', 0);
+		sendMsgDelay(comm_msg_handler,0, message_type.VELOCITY, "",(int) 'G', 0);
+		EStopActivated = true;
+	}
+
 	// forward a message to all running activities 
 	void alert_activities(int msgType, String msgBody) {
 		sendMsg(connection_msg_handler, msgType, msgBody);
@@ -1724,15 +1936,15 @@ public class threaded_application extends Application {
 	public boolean sendMsg(Handler h, int msgType, String msgBody) {
 		return sendMsgDelay(h, 0, msgType, msgBody, 0, 0);
 	}
-	
+
 	public boolean sendMsg(Handler h, int msgType, String msgBody, int msgArg1) {
 		return sendMsgDelay(h, 0, msgType, msgBody, msgArg1, 0);
 	}
-	
+
 	public boolean sendMsg(Handler h, int msgType, String msgBody, int msgArg1, int msgArg2) {
 		return sendMsgDelay(h, 0, msgType, msgBody, msgArg1, msgArg2);
 	}
-	
+
 	public boolean sendMsgDelay(Handler h, long delayMs, int msgType) {
 		return sendMsgDelay(h, delayMs, msgType, "", 0, 0);
 	}
@@ -1759,66 +1971,73 @@ public class threaded_application extends Application {
 	//
 	// methods for use by Activities
 	//
-	
+
 	// build a full url
 	// returns:	full url 	if web_server_port is valid
 	//			null	 otherwise
 	public String createUrl(String defaultUrl) {
 		String url = null;
 		int port = web_server_port;
-	    if (port > 0) {
-	    	if (defaultUrl.startsWith("http"))  //if url starts with http, use it as is, else prepend servername and port
-		    	url = defaultUrl;
-	    	else
-	    		url = "http://" + host_ip + ":" + port + "/" + defaultUrl;
-	    }
-	    return url;
+		if (port > 0) {
+			if (defaultUrl.startsWith("http"))  //if url starts with http, use it as is, else prepend servername and port
+				url = defaultUrl;
+			else
+				url = "http://" + host_ip + ":" + port + "/" + defaultUrl;
+		}
+		return url;
 	}
-	
+
 	// set activity screen orientation based on prefs, check to avoid sending change when already there
 
-	  // this form uses the Throttle Orientation pref
-	  public int setActivityOrientation(Activity activity) {
-		  return setActivityOrientation(activity,false);
-	  }
-	  // this form uses either pref
-	  // webPref	true: use the Web Orientation pref
-	  // 			false: use the Throttle Orientation pref
-	  public int setActivityOrientation(Activity activity, Boolean webPref) {
-		  String to;
-		  if(webPref) {
-			  to = prefs.getString("WebOrientation", 
-					  activity.getApplicationContext().getResources().getString(R.string.prefWebOrientationDefaultValue));
-		  }
-		  else {
-			  to = prefs.getString("ThrottleOrientation", 
-				  activity.getApplicationContext().getResources().getString(R.string.prefThrottleOrientationDefaultValue));
-		  }
-		  int co = activity.getRequestedOrientation();
-		  if(to.equals("Landscape")   && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))  
-			  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		  else if(to.equals("Auto-Rotate") && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))  
-			  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-		  else if(to.equals("Portrait")    && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
-			  activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		  return activity.getWindow().getWindowManager().getDefaultDisplay().getOrientation();
-	  }
+	// this form uses the Throttle Orientation pref
+	public int setActivityOrientation(Activity activity) {
+		return setActivityOrientation(activity,false);
+	}
+	// this form uses either pref
+	// webPref	true: use the Web Orientation pref
+	// 			false: use the Throttle Orientation pref
+	@SuppressWarnings("deprecation")
+	public int setActivityOrientation(Activity activity, Boolean webPref) {
+		String to;
+		if(webPref) {
+			to = prefs.getString("WebOrientation", 
+					activity.getApplicationContext().getResources().getString(R.string.prefWebOrientationDefaultValue));
+		}
+		else {
+			to = prefs.getString("ThrottleOrientation", 
+					activity.getApplicationContext().getResources().getString(R.string.prefThrottleOrientationDefaultValue));
+		}
+		int co = activity.getRequestedOrientation();
+		if(to.equals("Landscape")   && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))  
+			activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		else if(to.equals("Auto-Rotate") && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))  
+			activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+		else if(to.equals("Portrait")    && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
+			activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		return activity.getWindow().getWindowManager().getDefaultDisplay().getOrientation();
+	}
 
-	  // prompt for Exit
-	  // must be called on the UI thread
-	  public void checkExit(final Activity activity) {
-		  final AlertDialog.Builder b = new AlertDialog.Builder(activity); 
-		  b.setIcon(android.R.drawable.ic_dialog_alert); 
-		  b.setTitle(R.string.exit_title); 
-		  b.setMessage(R.string.exit_text);
-		  b.setCancelable(true);
-		  b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-			  public void onClick(DialogInterface dialog, int id) {
-				 sendMsg(comm_msg_handler, message_type.DISCONNECT, "");  //trigger disconnect / shutdown sequence
-			 }
-		  } ); 
-		  b.setNegativeButton(R.string.no, null);
-		  AlertDialog alert = b.create();
-		  alert.show();
-	  }
+	// prompt for Exit
+	// must be called on the UI thread
+	public void checkExit(final Activity activity) {
+		final AlertDialog.Builder b = new AlertDialog.Builder(activity); 
+		b.setIcon(android.R.drawable.ic_dialog_alert); 
+		b.setTitle(R.string.exit_title); 
+		b.setMessage(R.string.exit_text);
+		b.setCancelable(true);
+		b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+					mNotificationManager.cancel(1); //Removes EngineDriver OnGoing Notification.
+				}
+				locosList.clear();
+				sendMsg(comm_msg_handler, message_type.DISCONNECT, "");  //trigger disconnect / shutdown sequence
+			}
+		} ); 
+		b.setNegativeButton(R.string.no, null);
+		AlertDialog alert = b.create();
+		alert.show();
+	}
 }
+
+

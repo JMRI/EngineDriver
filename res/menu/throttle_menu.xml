@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/throttle_mnu" android:enabled="false" android:title=""></item>
+    
     <item android:id="@+id/turnouts_mnu" android:title="@string/turnouts"></item>
     <item android:id="@+id/routes_mnu" android:title="@string/routes"></item>
     <item android:id="@+id/web_mnu" android:title="@string/web"></item>
@@ -24,4 +24,9 @@
     <item android:id="@+id/settings_mnu" android:title="@string/settings"></item>
     <item android:id="@+id/about_mnu" android:title="@string/about"></item>
     <item android:id="@+id/logviewer_menu" android:title="@string/logViewer"></item>
+	<item android:id="@+id/power_layout_button" android:showAsAction="ifRoom" android:title="@string/PowerButtonBar" android:visible="false"></item>
+	<item android:id="@+id/EmerStop" android:title="@string/EStop" android:visible="false" android:showAsAction="ifRoom"></item>
+	<item android:id="@+id/EditConsistT_menu" android:title="Edit Consist Throttle 1" android:visible="false"></item>
+ 	<item android:id="@+id/EditConsistS_menu" android:title="Edit Consist Throttle 2" android:visible="false"></item>
+	<item android:id="@+id/EditConsistG_menu" android:title="Edit Consist Throttle 3" android:visible="false"></item>
 </menu> 

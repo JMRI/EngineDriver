@@ -62,12 +62,14 @@ public class RosterEntry {
 	public String getDecoderModel() { return _decoderModel; }
 	public String getDecoderFamily() { return _decoderFamily; }
 	public String getDecoderComment() { return _decoderComment; }
+	@SuppressWarnings("deprecation")
 	public String getImagePath() {
 		if ((_imageFilePath != null) && (_imageFilePath.length()>0))
 			return resourcesURL+URLEncoder.encode(_imageFilePath);
 		return null;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public String getIconPath() { 
 		if ((_iconFilePath != null) && (_iconFilePath.length()>0) && (!_iconFilePath.equals("__noIcon.jpg"))) {			
 			//decide which icon path to use, path was changed with jetty upgrade, 2.99.5
@@ -291,7 +293,7 @@ public class RosterEntry {
 	 */
 	public String getFunctionLabel(int fn) {
 		if (functionLabels == null) return null;
-		if (fn <0 || fn >MAXFNNUM)
+		if (fn < 0 || fn > MAXFNNUM)
 			throw new IllegalArgumentException("number out of range: "+fn);
 		return functionLabels[fn];
 	}

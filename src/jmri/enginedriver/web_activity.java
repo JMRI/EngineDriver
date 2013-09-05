@@ -50,7 +50,8 @@ public class web_activity extends Activity {
   private boolean currentUrlUpdate = false;
   private boolean orientationChange = false;
  
-  class web_handler extends Handler {
+  @SuppressLint("HandlerLeak")
+class web_handler extends Handler {
 
   public void handleMessage(Message msg) {
 	  switch(msg.what) {
@@ -178,7 +179,8 @@ public class web_activity extends Activity {
 }
    
   /** Called when the activity is finished. */
-  @Override
+  @SuppressWarnings("deprecation")
+@Override
   public void onDestroy() {
 	  Log.d("Engine_Driver","web_activity.onDestroy() called");
 
@@ -214,7 +216,8 @@ public class web_activity extends Activity {
   }
   
   //Handle pressing of the back button to end this activity
-  @Override
+  @SuppressWarnings("deprecation")
+@Override
   public boolean onKeyDown(int key, KeyEvent event) {
 	  if(key==KeyEvent.KEYCODE_BACK)
 	  {

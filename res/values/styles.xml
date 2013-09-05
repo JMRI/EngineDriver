@@ -101,7 +101,7 @@
   <item name="android:shadowRadius">1</item>
 </style>
 
-    <style name="app_theme" parent="android:Theme">
+    <style name="app_theme" parent="@android:Theme.Holo">
         <item name="android:windowBackground">@drawable/app_background</item>
         <item name="android:windowTitleStyle">@style/app_title</item>
         <item name="android:listViewStyle">@style/EDListView</item>
