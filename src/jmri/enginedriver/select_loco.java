@@ -224,9 +224,9 @@ public class select_loco extends Activity {
 			mainapp.displayEStop(SMenu);
 		}
 
-//		String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-//		setTitle(getApplicationContext().getResources().getString(R.string.app_name_select_loco) + "    |    Throttle Name: " + 
-//				prefs.getString("throttle_name_preference", defaultName));
+		//		String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
+		//		setTitle(getApplicationContext().getResources().getString(R.string.app_name_select_loco) + "    |    Throttle Name: " + 
+		//				prefs.getString("throttle_name_preference", defaultName));
 
 		refresh_roster_list();
 	}
@@ -270,39 +270,14 @@ public class select_loco extends Activity {
 	void release_loco(char whichThrottle) {
 		if(whichThrottle == 'T')
 		{
-			for(int i = 0, t = (mainapp.consistT.size() - 1); i < mainapp.consistT.size(); i++, t--)
-			{
-				if(mainapp.consistT.getLoco(mainapp.locosList.get(t).getAddress()) != null)
-				{
-
-					mainapp.locosList.remove(t);
-				}
-			}
-
 			mainapp.consistT.release();
-
 		}
 		else if(whichThrottle == 'S')
 		{
-			for(int i = 0, s = (mainapp.consistS.size() - 1); i < mainapp.consistS.size(); i++, s--)
-			{
-				if(mainapp.consistS.getLoco(mainapp.locosList.get(s).getAddress()) != null)
-				{
-					mainapp.locosList.remove(s);
-				}
-			}
-
 			mainapp.consistS.release();
 		}
 		else
 		{
-			for(int i = 0, g = (mainapp.consistG.size() - 1); i < mainapp.consistG.size(); i++, g--)
-			{
-				if(mainapp.consistG.getLoco(mainapp.locosList.get(g).getAddress()) != null)
-				{
-					mainapp.locosList.remove(g);
-				}
-			}
 			mainapp.consistG.release();
 		}
 
@@ -336,28 +311,10 @@ public class select_loco extends Activity {
 			addr += "<;>" + sWhichThrottle.substring(1);
 		if(consist.size() == 0) {					// just this loco so tell WiT and exit
 
-			boolean quit = true;
+			consist.add(l);
 
-			for(int i = 0; i < (mainapp.locosList.size()); i++)
-			{
-				if(l.getFormatAddress().equals(mainapp.locosList.get(i).getFormatAddress()))
-				{
-					quit = false;
-					break;
-				}
-			}
-
-			if(quit)
-			{
-				consist.add(l);
-				mainapp.locosList.add(l);
-				mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
-				updateRecentEngines(bUpdateList);
-			}
-			else
-			{
-				Toast.makeText(getApplicationContext(), "Loco " + l.toString() + " already selected.", Toast.LENGTH_SHORT).show();
-			}
+			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
+			updateRecentEngines(bUpdateList);
 
 			result = RESULT_OK;
 			end_this_activity();
@@ -367,24 +324,11 @@ public class select_loco extends Activity {
 			{
 				newEngine = (consist.getLoco(addr) == null);
 
-				boolean quit = true;
 
-				for(int i = 0; i < mainapp.locosList.size(); i++)
-				{
-					if(l.getFormatAddress().equals(mainapp.locosList.get(i).getFormatAddress()))
-					{
-						quit = false;
-						break;
-					}
-				}
+				if(newEngine) {
+					consist.add(l);
+					mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
 
-				if(quit)
-				{
-					if(newEngine) {
-						consist.add(l);
-						mainapp.locosList.add(l);
-						mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
-					}
 
 					saveUpdateList = bUpdateList;
 					Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
@@ -393,53 +337,29 @@ public class select_loco extends Activity {
 					startActivityForResult(consistEdit, 0);
 					connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 				}
-				else
-				{
-					Toast.makeText(getApplicationContext(), "Loco " + l.toString() + " already selected", Toast.LENGTH_SHORT).show();
-					result = RESULT_OK;
-					end_this_activity();
-				}
 			}
 			else
 			{
-				boolean quit = true;
 
-				for(int i = 0; i < mainapp.locosList.size(); i++)
+				release_loco(whichThrottle);
+
+				if(whichThrottle == 'T')
 				{
-					if(l.getFormatAddress().equals(mainapp.locosList.get(i).getFormatAddress()))
-					{
-						quit = false;
-						break;
-					}
+					consist = mainapp.consistT;
 				}
-
-				if(quit)
+				else if(whichThrottle == 'S')
 				{
-					release_loco(whichThrottle);
-
-					if(whichThrottle == 'T')
-					{
-						consist = mainapp.consistT;
-					}
-					else if(whichThrottle == 'S')
-					{
-						consist = mainapp.consistS;
-					}
-					else
-					{
-						consist = mainapp.consistG;
-					}
-
-					consist.add(l);
-					mainapp.locosList.add(l);
-					consist.setLeadAddr(addr);
-					mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
-					updateRecentEngines(bUpdateList);
+					consist = mainapp.consistS;
 				}
 				else
 				{
-					Toast.makeText(getApplicationContext(), "Loco " + l.toString() + " already selected", Toast.LENGTH_SHORT).show();
+					consist = mainapp.consistG;
 				}
+
+				consist.add(l);
+				consist.setLeadAddr(addr);
+				mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
+				updateRecentEngines(bUpdateList);
 
 				result = RESULT_OK;
 				end_this_activity();

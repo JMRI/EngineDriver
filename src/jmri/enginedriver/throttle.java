@@ -396,7 +396,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				setDisplayedSpeed('T', newSetting);
 			}
 		}
-
 		else if(whichThrottle == 'S')
 		{
 			if(maxSpeed != MAX_SPEED_VAL_S) {
@@ -1231,7 +1230,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			b.setOnClickListener(asbl);
 
 
-
+			
 			//Throttle G speed buttons.
 			b = (Button) findViewById(R.id.Right_speed_button_G);
 			b.setClickable(true);asbl = new arrow_speed_button_touch_listener('G', "right");
@@ -1755,7 +1754,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			bRS.setLayoutParams(llLp);
 			bLG.setLayoutParams(llLp);
 			bRG.setLayoutParams(llLp);
-
+			
 			llLp = new LinearLayout.LayoutParams(
 					pS,  newHeight); 
 
@@ -1896,9 +1895,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					height_T);
 			llLp.bottomMargin = (int)(throttleMargin * (dm.densityDpi/160.));
 			ll.setLayoutParams(llLp);
+			
+			//Used to get speed slider top and bottom.
+			b=(Button)findViewById(R.id.button_select_loco_T);
+			Button b2=(Button)findViewById(R.id.button_fwd_T);
+			
 			//update throttle top/bottom
-			T_top= ll.getTop()+sbT.getTop();
-			T_bottom= ll.getTop()+sbT.getBottom();
+			T_top= ll.getTop()+ sbT.getTop();
+			T_bottom= ll.getTop()+ sbT.getBottom() + b.getHeight() + b2.getHeight();
 
 			//set height of S area
 			ll=(LinearLayout)findViewById(R.id.throttle_S);
@@ -1906,9 +1910,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					ViewGroup.LayoutParams.FILL_PARENT,
 					height_S);
 			ll.setLayoutParams(llLp);
+			
+			//Used to get speed slider top and bottom.
+			b=(Button)findViewById(R.id.button_select_loco_S);
+			b2=(Button)findViewById(R.id.button_fwd_S);
+			
 			//update throttle top/bottom
 			S_top= ll.getTop()+sbS.getTop();
-			S_bottom= ll.getTop()+sbS.getBottom();
+			S_bottom= ll.getTop()+sbS.getBottom() + b.getHeight() + b2.getHeight();
 
 			//set height of G area
 			ll=(LinearLayout)findViewById(R.id.throttle_G);
@@ -1916,9 +1925,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					ViewGroup.LayoutParams.FILL_PARENT,
 					height_G);
 			ll.setLayoutParams(llLp);
+			
+			//Used to get speed slider top and bottom.
+			b=(Button)findViewById(R.id.button_select_loco_G);
+			b2=(Button)findViewById(R.id.button_fwd_G);
+			
 			//update throttle top/bottom
 			G_top= ll.getTop()+sbS.getTop();
-			G_bottom= ll.getTop()+sbS.getBottom();
+			G_bottom= ll.getTop()+sbS.getBottom() + b.getHeight() + b2.getHeight();
 		}
 
 		//update the direction indicators
@@ -2227,8 +2241,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		View sbT=findViewById(R.id.speed_T);
 		View sbS=findViewById(R.id.speed_S);
 		View sbG=findViewById(R.id.speed_G);
-		if ((sbT.isEnabled() && gestureStartY >= T_top && gestureStartY <= T_bottom) || (sbS.isEnabled() && gestureStartY >= S_top && gestureStartY <= S_bottom) ||  
-				(sbG.isEnabled() && gestureStartY >= G_top && gestureStartY <= G_bottom)){
+		
+		if ((sbT.isEnabled() && gestureStartY >= T_top && gestureStartY <= T_bottom)
+				|| (sbS.isEnabled() && gestureStartY >= S_top && gestureStartY <= S_bottom)
+				|| (sbG.isEnabled() && gestureStartY >= G_top && gestureStartY <= G_bottom))
+		{
 			//Log.d("Engine_Driver","exiting gestureStart");
 			return;
 		}
@@ -2237,6 +2254,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		gestureFailed = false;
 		gestureLastCheckTime = event.getEventTime();
 		mVelocityTracker.clear();
+		
 		// start the gesture timeout timer
 		if (mainapp.throttle_msg_handler != null)
 			mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);

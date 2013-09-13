@@ -11,7 +11,6 @@
  * Pref to connect to first discovered JMRI WiThrottle Server.
  * pref for throttle up/down speed buttons at ends of sliders, with setting for amount of change.
  * Fixed nullPointException for new ConsistEdit, user can't consist with drop loco before acquire pref On.
- * Fixed, Selecting same loco in Engine Driver resulting in showing ConsistEdit screen.
  * Can go to ConsistEdit screen from throttle menu when there is a consist for a throttle slot and can choose which throttle to edit.
  * Can now clear recent connection and locos list with button.
  * Added third throttle slot. 

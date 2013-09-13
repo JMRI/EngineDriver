@@ -50,10 +50,8 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
 import java.net.InetAddress;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import jmri.enginedriver.message_type;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.enginedriver.Consist;
@@ -134,8 +132,6 @@ public class threaded_application extends Application {
 	private SharedPreferences prefs;
 
 	public boolean EStopActivated = false;  // Used to determine if user pressed the EStop button.
-
-	public List <Loco> locosList = new ArrayList<Loco>();  //Keeps track of currently controlled locos by the single Engine Driver.
 
 	//Used to tell set_Labels in Throttle not to update padding for throttle sliders after onCreate.
 	public boolean firstCreate = true;  
@@ -2030,7 +2026,6 @@ public class threaded_application extends Application {
 				if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 					mNotificationManager.cancel(1); //Removes EngineDriver OnGoing Notification.
 				}
-				locosList.clear();
 				sendMsg(comm_msg_handler, message_type.DISCONNECT, "");  //trigger disconnect / shutdown sequence
 			}
 		} ); 
