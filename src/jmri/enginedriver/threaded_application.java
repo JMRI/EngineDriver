@@ -1472,7 +1472,7 @@ public class threaded_application extends Application {
 				mBuilder.setOngoing(true);
 
 				//mBuilder.setContentIntent(this);
-				
+
 				mNotificationManager =
 					(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -1866,28 +1866,31 @@ public class threaded_application extends Application {
 
 	public void setPowerStateButton(Menu menu)
 	{
-		if((power_state == null) || (power_state.equals("2")))
+		if(menu != null)
 		{
-			menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_yellow);
-			if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
+			if((power_state == null) || (power_state.equals("2")))
 			{
-				menu.findItem(R.id.power_layout_button).setTitle("Layout Power is UnKnown");
+				menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_yellow);
+				if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
+				{
+					menu.findItem(R.id.power_layout_button).setTitle("Layout Power is UnKnown");
+				}
 			}
-		}
-		else if(power_state.equals("1"))
-		{
-			menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_green);
-			if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
+			else if(power_state.equals("1"))
 			{
-				menu.findItem(R.id.power_layout_button).setTitle("Layout Power is ON");
+				menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_green);
+				if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
+				{
+					menu.findItem(R.id.power_layout_button).setTitle("Layout Power is ON");
+				}
 			}
-		}
-		else
-		{
-			menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_red);
-			if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
+			else
 			{
-				menu.findItem(R.id.power_layout_button).setTitle("Layout Power is Off");
+				menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_red);
+				if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
+				{
+					menu.findItem(R.id.power_layout_button).setTitle("Layout Power is Off");
+				}
 			}
 		}
 	}
