@@ -2029,6 +2029,7 @@ public class threaded_application extends Application {
 				if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 					mNotificationManager.cancel(1); //Removes EngineDriver OnGoing Notification.
 				}
+				firstCreate = true;
 				sendMsg(comm_msg_handler, message_type.DISCONNECT, "");  //trigger disconnect / shutdown sequence
 			}
 		} ); 

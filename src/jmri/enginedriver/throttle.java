@@ -1808,6 +1808,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			sbS.setPadding(left, 0, right, 0);
 			sbG.setPadding(left, 0, right, 0);
 			sbT.setPadding(left, 0, right, 0);
+			
+			sbT.setLayoutParams(llLp);
+			sbS.setLayoutParams(llLp);
+			sbG.setLayoutParams(llLp);
 
 			mainapp.firstCreate = false;
 		}
