@@ -166,10 +166,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				char com1 = response_str.charAt(0);
 				char whichThrottle = response_str.charAt(1);
 
-				if (response_str.charAt(2) == 'A') {  //change power state icon
-					mainapp.setPowerStateButton(TMenu);
-				}
-
 				switch (com1) {
 				//various MultiThrottle messages
 				case 'M':
@@ -328,6 +324,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				case 'P': //panel info
 					if (whichThrottle == 'W')		// PW - web server port info
 						reloadWeb();
+					if (whichThrottle == 'P')		// PP - power state change
+						mainapp.setPowerStateButton(TMenu);  //update the power state button
 					break;
 				}  //end of switch
 			}

@@ -226,15 +226,15 @@ public class turnouts extends Activity implements OnGestureListener {
 			case message_type.RESPONSE:
 				String response_str = msg.obj.toString();
 				
-				if (response_str.charAt(2) == 'A') {  //change power state icon
-					mainapp.setPowerStateButton(TuMenu);
-				}
-				
 				if (response_str.length() >= 3) {
 					String com1 = response_str.substring(0,3);
 					//refresh turnouts if any have changed or if turnout list has changed
 					if ("PTA".equals(com1) || "PTL".equals(com1)) {
 						refresh_turnout_view(); 
+					}
+					//update power icon
+					if ("PPA".equals(com1)) {
+						mainapp.setPowerStateButton(TuMenu);
 					}
 				}
 				break;

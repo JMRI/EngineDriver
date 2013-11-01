@@ -220,15 +220,15 @@ public class routes extends Activity  implements OnGestureListener {
 			case message_type.RESPONSE: {
 				String response_str = msg.obj.toString();
 
-				if (response_str.charAt(2) == 'A') {  //change power state icon
-					mainapp.setPowerStateButton(RMenu);
-				}
-
 				if (response_str.length() >= 3) {
 					String com1 = response_str.substring(0,3);
 					//refresh routes if any have changed state or if route list changed
 					if ("PRA".equals(com1) || "PRL".equals(com1)) {
 						refresh_route_view();
+					}
+					//update power icon
+					if ("PPA".equals(com1)) {
+						mainapp.setPowerStateButton(RMenu);
 					}
 				}
 			}
