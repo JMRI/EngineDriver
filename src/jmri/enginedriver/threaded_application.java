@@ -62,6 +62,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
@@ -1987,25 +1988,35 @@ public class threaded_application extends Application {
 	}
 
 	// set activity screen orientation based on prefs, check to avoid sending change when already there
-
+	// checks "auto Web on landscape" preference and returns false if orientation requires activity switch
+	//
 	// this form uses the Throttle Orientation pref
-	public int setActivityOrientation(Activity activity) {
+	public boolean setActivityOrientation(Activity activity) {
 		return setActivityOrientation(activity,false);
 	}
 	// this form uses either pref
 	// webPref	true: use the Web Orientation pref
 	// 			false: use the Throttle Orientation pref
+	//
+	// return:	false - "auto web on landscape" is enabled and new orientation requires activity swtich
+	//			true - orientation is ok for this activity
+	//
 	@SuppressWarnings("deprecation")
-	public int setActivityOrientation(Activity activity, Boolean webPref) {
+	public boolean setActivityOrientation(Activity activity, Boolean webPref) {
 		String to;
-		if(webPref) {
+		to = prefs.getString("ThrottleOrientation", 
+				activity.getApplicationContext().getResources().getString(R.string.prefThrottleOrientationDefaultValue));
+		if(to.equals("Auto-Web")) {
+			int orient = activity.getResources().getConfiguration().orientation;
+			if((webPref && orient == Configuration.ORIENTATION_PORTRAIT)
+					|| (!webPref && orient == Configuration.ORIENTATION_LANDSCAPE))
+				return(false);
+		}
+		else if(webPref) {
 			to = prefs.getString("WebOrientation", 
 					activity.getApplicationContext().getResources().getString(R.string.prefWebOrientationDefaultValue));
 		}
-		else {
-			to = prefs.getString("ThrottleOrientation", 
-					activity.getApplicationContext().getResources().getString(R.string.prefThrottleOrientationDefaultValue));
-		}
+		
 		int co = activity.getRequestedOrientation();
 		if(to.equals("Landscape")   && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))  
 			activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -2013,7 +2024,7 @@ public class threaded_application extends Application {
 			activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 		else if(to.equals("Portrait")    && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
 			activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		return activity.getWindow().getWindowManager().getDefaultDisplay().getOrientation();
+		return true;
 	}
 
 	// prompt for Exit

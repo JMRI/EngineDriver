@@ -376,7 +376,14 @@ public class routes extends Activity  implements OnGestureListener {
 			this.finish();
 			return;
 		}
-		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+		if(!mainapp.setActivityOrientation(this))  //set screen orientation based on prefs
+		{
+			Intent in=new Intent().setClass(this, web_activity.class);		// if autoWeb and landscape, switch to Web activity
+			startActivity(in);
+			this.finish();
+			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+			return;
+		}
 //		setTitleToIncludeThrotName();
 		if(RMenu != null)
 		{

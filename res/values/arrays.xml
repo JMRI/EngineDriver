@@ -80,6 +80,7 @@
         <item>Portrait</item>
         <item>Landscape</item>
         <item>Auto-Rotate</item>
+        <item>Auto-Web</item>
     </string-array>
     <string-array name="NumOfThrottlesOptions">
         <item >One</item>

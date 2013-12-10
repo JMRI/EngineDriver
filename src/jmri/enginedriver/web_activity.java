@@ -147,7 +147,13 @@ class web_handler extends Handler {
 		  this.finish();
 		  return;
 	  }
- 	  mainapp.setActivityOrientation(this, true);  	//set screen orientation based on prefs
+ 	  if(!mainapp.setActivityOrientation(this, true))  	//set screen orientation based on prefs
+ 	  {
+		  this.finish();								// if autoweb and portrait, switch to throttle screen
+		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+		  return;
+ 	  }
+
 
 // don't load here - onCreate already handled it.  Load might not be finished yet
 // in which case call load_webview here just creates extra work since url will still be null
