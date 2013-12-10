@@ -123,6 +123,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	int lastSpeedS;
 	int lastSpeedG;
 	static int REP_DELAY = 25;
+	static int BUTTON_SPEED_STEP = 4;
 
 	private Handler repeatUpdateHandler = new Handler();
 	private boolean mAutoIncrement = false;
@@ -132,16 +133,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	class RptUpdater implements Runnable {
 		char whichThrottle;
 
-		public RptUpdater(char WhichThrottle)
-		{
+		public RptUpdater(char WhichThrottle) {
 			whichThrottle = WhichThrottle;
 
-			try
-			{
-				REP_DELAY = Integer.parseInt(prefs.getString("speed_arrows_throttle_change", "25"));
+			try	{
+				REP_DELAY = Integer.parseInt(prefs.getString("speed_arrows_throttle_repeat_delay", "100"));
 			}
-			catch(Exception ex)
-			{
+			catch(Exception ex)	{
 				REP_DELAY = 100;
 			}
 		}
@@ -1104,47 +1102,36 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 		SeekBar speed_slider;
 
-		if(whichThrottle == 'T')
-		{
+		if(whichThrottle == 'T') {
 			speed_slider=(SeekBar)findViewById(R.id.speed_T);
-			lastSpeedT--;
+			lastSpeedT -= Math.round(BUTTON_SPEED_STEP / SPEED_TO_DISPLAY_T);
 			speed_slider.setProgress(lastSpeedT);
 
-		}
-		else if(whichThrottle == 'S')
-		{
+		} else if(whichThrottle == 'S') {
 			speed_slider=(SeekBar)findViewById(R.id.speed_S);
-			lastSpeedS--;
+			lastSpeedS -= Math.round(BUTTON_SPEED_STEP / SPEED_TO_DISPLAY_S);
 			speed_slider.setProgress(lastSpeedS);
-		}
-		else
-		{
+		} else {
 			speed_slider=(SeekBar)findViewById(R.id.speed_G);
-			lastSpeedG--;
+			lastSpeedG -= Math.round(BUTTON_SPEED_STEP / SPEED_TO_DISPLAY_G);
 			speed_slider.setProgress(lastSpeedG);
 		}
 	}
 
-	public void increment(char whichThrottle)
-	{
+	public void increment(char whichThrottle) {
 		SeekBar speed_slider;
 
-		if(whichThrottle == 'T')
-		{
+		if(whichThrottle == 'T') {
 			speed_slider=(SeekBar)findViewById(R.id.speed_T);
-			lastSpeedT++;
+			lastSpeedT += Math.round(BUTTON_SPEED_STEP / SPEED_TO_DISPLAY_T);
 			speed_slider.setProgress(lastSpeedT);
-		}
-		else if(whichThrottle == 'S')
-		{
+		} else if(whichThrottle == 'S')	{
 			speed_slider=(SeekBar)findViewById(R.id.speed_S);
-			lastSpeedS++;
+			lastSpeedS += Math.round(BUTTON_SPEED_STEP / SPEED_TO_DISPLAY_S);
 			speed_slider.setProgress(lastSpeedS);
-		}
-		else
-		{
+		} else {
 			speed_slider=(SeekBar)findViewById(R.id.speed_G);
-			lastSpeedG++;
+			lastSpeedG += Math.round(BUTTON_SPEED_STEP / SPEED_TO_DISPLAY_G);
 			speed_slider.setProgress(lastSpeedG);
 		}
 	}
@@ -1378,6 +1365,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		catch (Exception e) {
 			max_throttle_change = 25;
 		}
+		
+		// set speed buttons speed step
+		try	{
+			BUTTON_SPEED_STEP = Integer.parseInt(prefs.getString("speed_arrows_throttle_speed_step", "4"));
+		}
+		catch(Exception ex)	{
+			BUTTON_SPEED_STEP = 4;
+		}
+
 
 		//format the screen area
 		enable_disable_buttons('T'); 

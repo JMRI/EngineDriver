@@ -173,7 +173,10 @@
     <string name="RightButton">&gt;</string>
     <string name="prefDisplaySpeedArrowsTitle">Display Speed arrow buttons</string>
     <string name="prefDisplaySpeedArrowsSummary">Display arrow buttons next to speed sliders to change loco speed.</string>
+    <string name="prefSpeedButtonsRepeatTitle">Speed button repeat delay</string>
+    <string name="prefSpeedButtonsRepeatSummary">How long between repeats on speed buttons.  Smaller is faster.</string>
+	<string name="prefSpeedButtonsRepeatDefaultValue">100</string>
     <string name="prefSpeedButtonsSpeedStepTitle">Speed button change amount</string>
-    <string name="prefSpeedButtonsSpeedStepSummary">How much the Speed arrow buttons should change throttle speed.  The lower the number the faster the change.</string>
-	<string name="prefSpeedButtonsSpeedStepDefaultValue">100</string>
+    <string name="prefSpeedButtonsSpeedStepSummary">How much Speed arrows jump throttle speed.</string>
+	<string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>
 </resources>

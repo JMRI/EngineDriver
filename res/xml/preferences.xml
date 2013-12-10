@@ -84,17 +84,22 @@
     	    android:summary="@string/prefDisplaySpeedArrowsSummary" 
     	    android:key="display_speed_arrows_buttons"/>
     	<EditTextPreference 
+    	    android:title="@string/prefSpeedButtonsRepeatTitle" 
+    	    android:summary="@string/prefSpeedButtonsRepeatSummary" 
+    	    android:defaultValue="@string/prefSpeedButtonsRepeatDefaultValue" 
+    	    android:dialogTitle="@string/prefSpeedButtonsRepeatTitle" 
+    	    android:key="speed_arrows_throttle_repeat_delay"
+    	    android:maxLength="4"
+            android:numeric="integer"/>
+    	<EditTextPreference 
     	    android:title="@string/prefSpeedButtonsSpeedStepTitle" 
     	    android:summary="@string/prefSpeedButtonsSpeedStepSummary" 
     	    android:defaultValue="@string/prefSpeedButtonsSpeedStepDefaultValue" 
     	    android:dialogTitle="@string/prefSpeedButtonsSpeedStepTitle" 
-    	    android:key="speed_arrows_throttle_change"
-    	    android:maxLength="4"
+    	    android:key="speed_arrows_throttle_speed_step"
+    	    android:maxLength="2"
             android:numeric="integer"/>
-    	
-
-    	
-    	
+    		
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference

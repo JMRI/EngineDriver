@@ -1,3 +1,7 @@
+**Version 2.8 (Robin Becker)
+ * New rotation option to auto-jump to web view in landscape mode.
+ * Quick list filter for turnouts and routes, with new preference for location delimiter.
+ * New consist editing dialog, for choosing lead loco and setting direction of each loco in consist.
 **Version 2.8 (continued) (Jeffrey Machacek)
  * User can display EStop Button in prefs.
  * Changed display theme to Holo to display action bar.
@@ -17,9 +21,6 @@
  * User can select how many throttles to display (1 to 3).
  * Fixed problem when sending the quit "Q" command to JMRI, now the throttle name is removed from JMRI WiFi Throttle list.
  * Displays OnGoing Notification to user that Engine Driver is running.
-**Version 2.8 (Robin Becker)
- * Quick list filter for turnouts and routes, with new preference for location delimiter.
- * New consist editing dialog, for choosing lead loco and setting direction of each loco in consist.
 **Version 2.7 (Robin Becker)
  * prevent crash when going to About or Prefs prior to any connections
 **Version 2.6 (all by Robin Becker unless noted)
