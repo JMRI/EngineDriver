@@ -243,6 +243,11 @@ public final class DNSOutgoing extends DNSMessage {
         MessageOutputStream record = new MessageOutputStream(512, this);
         record.writeQuestion(rec);
         byte[] byteArray = record.toByteArray();
+        try {
+			record.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         if (byteArray.length < this.availableSpace()) {
             _questions.add(rec);
             _questionsBytes.write(byteArray, 0, byteArray.length);
@@ -277,6 +282,11 @@ public final class DNSOutgoing extends DNSMessage {
                 MessageOutputStream record = new MessageOutputStream(512, this);
                 record.writeRecord(rec, now);
                 byte[] byteArray = record.toByteArray();
+                try {
+        			record.close();
+        		} catch (IOException e) {
+        			e.printStackTrace();
+        		}
                 if (byteArray.length < this.availableSpace()) {
                     _answers.add(rec);
                     _answersBytes.write(byteArray, 0, byteArray.length);
@@ -297,6 +307,11 @@ public final class DNSOutgoing extends DNSMessage {
         MessageOutputStream record = new MessageOutputStream(512, this);
         record.writeRecord(rec, 0);
         byte[] byteArray = record.toByteArray();
+        try {
+			record.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         if (byteArray.length < this.availableSpace()) {
             _authoritativeAnswers.add(rec);
             _authoritativeAnswersBytes.write(byteArray, 0, byteArray.length);
@@ -316,6 +331,11 @@ public final class DNSOutgoing extends DNSMessage {
         MessageOutputStream record = new MessageOutputStream(512, this);
         record.writeRecord(rec, 0);
         byte[] byteArray = record.toByteArray();
+		try {
+			record.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         if (byteArray.length < this.availableSpace()) {
             _additionals.add(rec);
             _additionalsAnswersBytes.write(byteArray, 0, byteArray.length);
@@ -325,7 +345,7 @@ public final class DNSOutgoing extends DNSMessage {
     }
 
     /**
-     * Builds the final message buffer to be send and returns it.
+     * Builds the final message buffer to be sent and returns it.
      *
      * @return bytes to send.
      */
@@ -352,7 +372,14 @@ public final class DNSOutgoing extends DNSMessage {
         for (DNSRecord record : _additionals) {
             message.writeRecord(record, now);
         }
-        return message.toByteArray();
+        byte byteArray[] = message.toByteArray();
+		try {
+			message.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        return byteArray;
+//        return message.toByteArray();
     }
 
     /**
