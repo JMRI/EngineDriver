@@ -1456,9 +1456,14 @@ public class threaded_application extends Application {
 		}
 	}
 
-	//Displays OnGoing Notification that displays EngineDriver is Running
+    /**
+     * Displays OnGoing Notification that indicates EngineDriver is Running.
+	 * Should only be called when ED is going into the background.
+	 * Currently call this from each activity onPause (via setContentIntentNotification).  
+	 * Is this the correct approach to notification?
+     */
 	@SuppressLint("NewApi")
-	public void stillRunningNotify()
+	public void showRunningNotify()
 	{
 		try
 		{
@@ -1471,6 +1476,7 @@ public class threaded_application extends Application {
 				.setContentTitle("Engine Driver")
 				.setContentText("Engine Driver is Running!");
 				mBuilder.setOngoing(true);
+//*** ?				mBuilder.setAutoCancel(true);
 
 				//mBuilder.setContentIntent(this);
 
@@ -1486,15 +1492,41 @@ public class threaded_application extends Application {
 		}
 	}
 
+	/**
+	 * Cancels the notification when the app resumes.
+	 * Currently call this from each activity onResume.  
+	 * Is this the correct approach to notification?
+	 */
+	public void cancelRunningNotify()
+	{
+		try
+		{
+			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+				// only for JellyBean and newer versions
+
+				mNotificationManager =	(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+				mNotificationManager.cancel(1);
+			}
+		}
+		catch(Exception ex)
+		{
+			Log.d("debug", "Notification removal error: " + ex.getMessage());
+		}
+	}
+
 	//TODO: Add ability to let user resume EngineDriver from routes, Turnouts or Throttles by touching notification.
 	//TODO: If add ability to resume, add a way for Thottle to retain controlled locos speed 
 	//        and get new speed if JMRI server changed speed.
+	//
+	// Currently call this from each activity onPause.  
+	// Is this the correct approach to notification?
+	//
 	public void setContentIntentNotification(Intent resultIntent)
 	{
 		try
 		{
 			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-				//resultPendingIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, resultIntent, 0);
+				//resultPendingIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, resultIntent, 1);
 				//mBuilder.setContentIntent(resultPendingIntent);
 				//	mNotificationManager.notify(1, mBuilder.build());
 			}
@@ -1503,6 +1535,8 @@ public class threaded_application extends Application {
 		{
 			Log.d("debug", "Notification error: " + ex.getMessage());
 		}
+
+		showRunningNotify();			// show the notification icon
 	}
 
 	@Override
@@ -1987,21 +2021,20 @@ public class threaded_application extends Application {
 		return url;
 	}
 
-	// set activity screen orientation based on prefs, check to avoid sending change when already there
-	// checks "auto Web on landscape" preference and returns false if orientation requires activity switch
-	//
-	// this form uses the Throttle Orientation pref
+	/**
+	 * Set activity screen orientation based on prefs, check to avoid sending change when already there.
+	 * checks "auto Web on landscape" preference and returns false if orientation requires activity switch
+	 *
+     * @param activity	calling activity
+     * @param webPref	if absent or false, uses Throttle Orientation pref.
+     * 					if true, uses Web Orientation pref
+	 * 
+	 * @return 	true if the new orientation is ok for this activity.
+	 * 			false if "Auto Web on Landscape" is enabled and new orientation requires activity switch
+	 * */
 	public boolean setActivityOrientation(Activity activity) {
 		return setActivityOrientation(activity,false);
 	}
-	// this form uses either pref
-	// webPref	true: use the Web Orientation pref
-	// 			false: use the Throttle Orientation pref
-	//
-	// return:	false - "auto web on landscape" is enabled and new orientation requires activity swtich
-	//			true - orientation is ok for this activity
-	//
-	@SuppressWarnings("deprecation")
 	public boolean setActivityOrientation(Activity activity, Boolean webPref) {
 		String to;
 		to = prefs.getString("ThrottleOrientation", 
@@ -2037,9 +2070,6 @@ public class threaded_application extends Application {
 		b.setCancelable(true);
 		b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-					mNotificationManager.cancel(1); //Removes EngineDriver OnGoing Notification.
-				}
 				firstCreate = true;
 				sendMsg(comm_msg_handler, message_type.DISCONNECT, "");  //trigger disconnect / shutdown sequence
 			}

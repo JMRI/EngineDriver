@@ -104,6 +104,7 @@ public class function_settings extends Activity{
 	public void onResume() {
 		super.onResume();
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+		mainapp.cancelRunningNotify();
 		if(FMenu != null)
 		{
 			mainapp.displayEStop(FMenu);
@@ -114,6 +115,16 @@ public class function_settings extends Activity{
 	public void onSaveInstanceState(Bundle saveState) {		//orientation change
 		move_view_to_settings();		//update settings array so onCreate can use it to initialize
 		orientationChange = true;
+	}
+
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
+			return;
+		}
+		mainapp.setContentIntentNotification(this.getIntent());
 	}
 
 	@Override

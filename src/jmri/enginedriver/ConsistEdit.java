@@ -217,8 +217,19 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 			return;
 		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+		mainapp.cancelRunningNotify();
 		// suppress popup keyboard until EditText is touched
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+	}
+
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
+			return;
+		}
+		mainapp.setContentIntentNotification(this.getIntent());
 	}
 
 	/** Called when the activity is finished. */

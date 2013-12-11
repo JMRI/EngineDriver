@@ -146,6 +146,8 @@ public class power_control extends Activity {
 			return;
 		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+		mainapp.cancelRunningNotify();
+		
 		if(PMenu != null)
 		{
 			mainapp.displayEStop(PMenu);
@@ -154,7 +156,17 @@ public class power_control extends Activity {
 		refresh_power_control_view();
 	}
 
-	/** Called when the activity is finished. */
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
+			return;
+		}
+		mainapp.setContentIntentNotification(this.getIntent());
+	}
+
+		/** Called when the activity is finished. */
 	@Override
 	public void onDestroy() {
 		mainapp.power_control_msg_handler = null;

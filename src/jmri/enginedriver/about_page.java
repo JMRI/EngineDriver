@@ -83,12 +83,23 @@ public class about_page extends Activity {
 	public void onResume() {
 		super.onResume();
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+		mainapp.cancelRunningNotify();
 
 		if(AMenu != null)
 		{
 			mainapp.displayEStop(AMenu);
 		}
 	};
+
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
+			return;
+		}
+		mainapp.setContentIntentNotification(this.getIntent());
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){

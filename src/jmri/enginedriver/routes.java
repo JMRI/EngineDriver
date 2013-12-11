@@ -376,6 +376,7 @@ public class routes extends Activity  implements OnGestureListener {
 			this.finish();
 			return;
 		}
+	
 		if(!mainapp.setActivityOrientation(this))  //set screen orientation based on prefs
 		{
 			Intent in=new Intent().setClass(this, web_activity.class);		// if autoWeb and landscape, switch to Web activity
@@ -384,6 +385,8 @@ public class routes extends Activity  implements OnGestureListener {
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			return;
 		}
+		mainapp.cancelRunningNotify();
+		
 //		setTitleToIncludeThrotName();
 		if(RMenu != null)
 		{
@@ -411,7 +414,7 @@ public class routes extends Activity  implements OnGestureListener {
 			return;
 		}
 		mainapp.setContentIntentNotification(this.getIntent());
-		this.finish(); //don't keep on return stack
+//***		this.finish(); //don't keep on return stack
 	}
 
 	//Always go to throttle activity if back button pressed

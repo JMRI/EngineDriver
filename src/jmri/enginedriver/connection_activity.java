@@ -338,7 +338,6 @@ public class connection_activity extends Activity {
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		threaded_application.min_fling_distance = (int)(threaded_application.SWIPE_MIN_DISTANCE * dm.densityDpi / 160.0f);
 		threaded_application.min_fling_velocity = (int)(threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f);
-		mainapp.stillRunningNotify();
 	}
 
 	@Override
@@ -349,6 +348,7 @@ public class connection_activity extends Activity {
 		}
 
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+		mainapp.cancelRunningNotify();
 		//start up server discovery listener
 		//	    sendMsgErr(0, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
 		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 1);

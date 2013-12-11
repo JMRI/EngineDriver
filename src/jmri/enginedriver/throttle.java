@@ -75,6 +75,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 	//	private static final long speedUpdateDelay = 500;	// idle time in milliseconds after speed change before requesting speed update 
 
+	private static boolean navigatingAway = false;			// true if another activity was selected (can't use isFinishing() because Throttle only finishes on exit)
 	private char whichVolume = 'T';
 
 	private boolean slider_moved_by_server = false;			// true if the slider was moved due to a processed response
@@ -1352,11 +1353,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 		if(!mainapp.setActivityOrientation(this))  //set screen orientation based on prefs
 		{
+			navigatingAway = true;
 			Intent in=new Intent().setClass(this, web_activity.class);		// if autoWeb and landscape, switch to Web activity
 			startActivity(in);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			return;
 		}
+		navigatingAway = false;
+		mainapp.cancelRunningNotify();
 		// set max allowed change for throttles from prefs
 		String s = prefs.getString("maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
 		try {
@@ -1455,10 +1459,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 		CookieSyncManager.getInstance().stopSync();
 
-		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
+		if(this.isFinishing() || navigatingAway) {		//if finishing or navigating away, don't invoke setContentIntentNotification
 			return;
 		}
-
 		mainapp.setContentIntentNotification(this.getIntent());
 	}
 
@@ -2023,6 +2026,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle all of the possible menu actions.
 		Intent in;
+		navigatingAway = true;
 		switch (item.getItemId()) {
 		case R.id.turnouts_mnu:
 			in=new Intent().setClass(this, turnouts.class);
@@ -2147,7 +2151,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			startActivityForResult(consistEdit3, 0);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
+		default:
+			navigatingAway = false;
+			break;
 		}
+			
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -2304,6 +2312,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				// valid gesture.  Change the event action to CANCEL so that it isn't processed by
 				// any control below the gesture overlay 
 				event.setAction(MotionEvent.ACTION_CANCEL);
+				navigatingAway = true;
 				// left to right swipe goes to turnouts
 				if(event.getRawX() > gestureStartX) {
 					Intent in=new Intent().setClass(this, turnouts.class);

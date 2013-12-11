@@ -724,6 +724,7 @@ public class select_loco extends Activity {
 			return;
 		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+		mainapp.cancelRunningNotify();
 
 		// checking address length here covers (future) case where prefs changed while paused
 		default_address_length = prefs.getString("default_address_length", this
@@ -731,6 +732,16 @@ public class select_loco extends Activity {
 		updateAddressEntry();	// enable/disable buttons
 		// suppress popup keyboard until EditText is touched
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+	}
+
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
+			return;
+		}
+		mainapp.setContentIntentNotification(this.getIntent());
 	}
 
 	@Override

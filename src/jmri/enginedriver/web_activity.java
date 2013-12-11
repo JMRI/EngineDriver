@@ -153,6 +153,7 @@ class web_handler extends Handler {
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  return;
  	  }
+	  mainapp.cancelRunningNotify();
 
 
 // don't load here - onCreate already handled it.  Load might not be finished yet
@@ -182,6 +183,10 @@ class web_handler extends Handler {
 			  webView.pauseTimers();
 	  }
 	  CookieSyncManager.getInstance().stopSync();
+	  if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
+		  return;
+	  }
+	  mainapp.setContentIntentNotification(this.getIntent());
 }
    
   /** Called when the activity is finished. */
