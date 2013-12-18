@@ -2,6 +2,8 @@
  * New rotation option to auto-jump to web view in landscape mode.
  * Quick list filter for turnouts and routes, with new preference for location delimiter.
  * New consist editing dialog, for choosing lead loco and setting direction of each loco in consist.
+ * only show Ongoing Notification when ED is in background
+ * removed several warnings in JmDNS
 **Version 2.8 (continued) (Jeffrey Machacek)
  * User can display EStop Button in prefs.
  * Changed display theme to Holo to display action bar.
