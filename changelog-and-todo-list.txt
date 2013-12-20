@@ -1,3 +1,5 @@
+**Version 2.8 (mstevetodd)
+ * only show loco and release button for # of throttles allowed
 **Version 2.8 (Robin Becker)
  * New rotation option to auto-jump to web view in landscape mode.
  * Quick list filter for turnouts and routes, with new preference for location delimiter.
@@ -223,19 +225,15 @@
  *   added html About page
  */
 /*
- *   TODO: allow user to configure side-by-side panels for pads, etc.
- *   TODO: add consist creation/editing features
  *   TODO: change config files to use db instead of .txt files
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: make private stuff private
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  *   TODO: get power_state from WiThrottle on thread_application start.
- *   TODO: Add ability to let user resume EngineDriver from routes, Turnouts or Throttles by touching notification.
- * 	 TODO: Make action bar animate text left to right and include throttle name in action bar tile and do it on every page.
+ *   TODO: Add ability to let user reopen backgrounded EngineDriver by touching notification.
  * web
- *   TODO: allow user to specify multiple web URLs
- *   TODO: optionally add web to fling logic  (multiples?)
+ *   TODO: allow user to specify initial zoom-level of each web view
  * routes
  *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
  *   TODO: use PRT titles for Active/inactive
@@ -244,7 +242,7 @@
  *   TODO: default "system" based on items in use
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
- *   TODO: change Connect from an Activity to a "pop-up" or "prompt" to be called from any Activity when needed
+ *   TODO: debug "Success: Restored connection to ..." message seen (sometimes) after exiting from Throttle
  *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
  * threaded_application
  *   TODO: remember consist details
@@ -254,14 +252,13 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
- *   TODO: Change padding for throttle sliders without restarting Engine Driver, 
-              because blue dot and line did not match slider view.
+ *   TODO: fix issues with padding (requires restart and does not work sometimes)
+ *   TODO: determine why some buttons have audible "click" and others do not (when enabled on device)
  *   TODO: add JMRI fast-clock to screens (in new title bar?)
  *   TODO: retrieve vsDecoder sounds and play when appropriate
  *   TODO: catch ArrayIndexOutOfBoundsException (reported to Market)
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: respect "Max Throttle %" from roster entry
- *   TODO: use notched slider using speedstep value returned from WiT (pref?)
  *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released" 
  *   TODO: make Forward, Stop, Reverse language-sensitive 
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
@@ -270,8 +267,6 @@
  *   TODO: in ed exit, don't send release if "Not Set"
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
- *   TODO: If add ability to resume from notification, add a way for Thottle to retain controlled locos speed and 
- *           get new speed if JMRI server changed speed.
  * select_loco:
  *   TODO: add close button and roster image to details dialog
  *   TODO: clean up code for  new MT (Multi-throttle) feature 
@@ -287,4 +282,8 @@
  *   disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
  *   add "E"rror response
  * 
+ * These changes are likely to wait until ED3
+ *   allow user to configure side-by-side panels for pads, etc.
+ *   allow user to specify multiple web URLs
+ *   change Connect to allow to be called from any Activity when needed
  * */

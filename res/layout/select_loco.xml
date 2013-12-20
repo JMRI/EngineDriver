@@ -35,7 +35,6 @@
                 android:id="@+id/sl_release_T"
                 style="@style/normal_button_style"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
                 android:text="@string/release" />
             <TextView
                 android:id="@+id/sl_loco_S"
@@ -51,7 +50,6 @@
                 android:id="@+id/sl_release_S"
                 style="@style/normal_button_style"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
                 android:text="@string/release" />
             
             <TextView
@@ -68,7 +66,6 @@
                 android:id="@+id/sl_release_G"
                 style="@style/normal_button_style"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
                 android:text="@string/release" />
         </LinearLayout>
     </LinearLayout>

@@ -36,6 +36,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -43,20 +44,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
+
 import java.io.File;
+
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.os.Environment;
+
 import java.io.BufferedReader;
 import java.io.IOException;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
+
 import java.io.FileReader;
+
 import android.widget.EditText;
 import android.content.Context;
 import android.content.Intent;
@@ -64,7 +72,9 @@ import android.content.SharedPreferences;
 import android.widget.Button;
 import android.widget.AdapterView;
 import android.widget.TextView.OnEditorActionListener;
+
 import java.io.PrintWriter;
+
 import jmri.enginedriver.Consist;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.jmrit.roster.RosterEntry;
@@ -210,6 +220,21 @@ public class select_loco extends Activity {
 			b.setEnabled(true);
 		}
 
+		// only show loco text and release buttons for allowed # of locos
+		String numThrot = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumOfThrottlesDefault));
+		if(numThrot.matches("One") || numThrot.matches("Two")) {
+			View rlv = (View) findViewById(R.id.sl_loco_G);
+			rlv.setVisibility(GONE);
+			rlv = (View) findViewById(R.id.sl_release_G);
+			rlv.setVisibility(GONE);
+		}
+		if(numThrot.matches("One")) {
+			View rlv = (View) findViewById(R.id.sl_loco_S);
+			rlv.setVisibility(GONE);
+			rlv = (View) findViewById(R.id.sl_release_S);
+			rlv.setVisibility(GONE);
+		}
+		
 		// hide the recent locos list if selected in prefs
 		boolean hrl = prefs.getBoolean("hide_recent_locos_preference", 
 				getResources().getBoolean(R.bool.prefHideRecentLocosDefaultValue)); 
@@ -217,6 +242,8 @@ public class select_loco extends Activity {
 			View rlv = (View) findViewById(R.id.recent_engines_heading);
 			rlv.setVisibility(GONE);
 			rlv = (View) findViewById(R.id.engine_list_wrapper);
+			rlv.setVisibility(GONE);
+			rlv = (View) findViewById(R.id.clear_Loco_List_button);
 			rlv.setVisibility(GONE);
 		}
 		if(SMenu != null)
