@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="engine_driver_preference"
+    android:summary="@string/prefSummary"
+    android:title="@string/prefTitle" >
+    <EditTextPreference
+        android:defaultValue="@string/prefThrottleNameDefaultValue"
+        android:dialogTitle="@string/prefThrottleNameTitle"
+        android:key="throttle_name_preference"
+        android:summary="@string/prefThrottleNameSummary"
+        android:title="@string/prefThrottleNameTitle" >
+    </EditTextPreference>
+    <ListPreference 
+        android:defaultValue="@string/prefThrottleOrientationDefaultValue" 
+        android:entries="@array/OrientationOptions" 
+        android:entryValues="@array/OrientationOptions" 
+        android:key="ThrottleOrientation" 
+        android:summary="@string/prefThrottleOrientationSummary" 
+        android:title="@string/prefThrottleOrientationTitle" />
+    <CheckBoxPreference android:key="show_emergency_stop_button_preference" android:summary="@string/prefEmerStopSummary" android:title="@string/prefEmerStopTitle" android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"/><CheckBoxPreference android:summary="@string/prefPowerButtonBarSummary" android:title="@string/prefPowerButtonBarTitle" android:key="show_layout_power_button_preference" android:defaultValue="@bool/prefLayoutPowerButtonDefaultValue"/><PreferenceCategory android:title="@string/prefThrottleTitle" >
+        <EditTextPreference
+            android:defaultValue="@string/prefMaximumThrottleDefaultValue"
+            android:dialogTitle="@string/prefMaximumThrottleTitle"
+            android:key="maximum_throttle_preference"
+            android:maxLength="2"
+            android:numeric="integer"
+            android:summary="@string/prefMaximumThrottleSummary"
+            android:title="@string/prefMaximumThrottleTitle" >
+        </EditTextPreference>
+        <EditTextPreference
+            android:defaultValue="@string/prefMaximumThrottleChangeDefaultValue"
+            android:dialogTitle="@string/prefMaximumThrottleChangeTitle"
+            android:key="maximum_throttle_change_preference"
+            android:maxLength="2"
+            android:numeric="integer"
+            android:summary="@string/prefMaximumThrottleChangeSummary"
+            android:title="@string/prefMaximumThrottleChangeTitle" >
+        </EditTextPreference>
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefIncreaseSliderHeightDefaultValue"
+            android:key="increase_slider_height_preference"
+            android:summary="@string/prefIncreaseSliderHeightSummary"
+            android:title="@string/prefIncreaseSliderHeightTitle" >
+        </CheckBoxPreference>
+        <EditTextPreference 
+            android:key="left_slider_margin" 
+            android:numeric="integer"
+            android:maxLength="2"
+            android:title="@string/prefSliderLeftMarginTitle" 
+            android:defaultValue="@string/prefSliderLeftMarginDefaultValue" 
+            android:dialogTitle="@string/prefSliderLeftMarginTitle" 
+            android:summary="@string/prefSliderLeftMarginSummary"/>
+        <EditTextPreference 
+            android:key="right_slider_margin" 
+            android:numeric="integer"
+            android:maxLength="2"
+            android:title="@string/prefSliderRightMarginTitle" 
+            android:defaultValue="@string/prefSliderRightMarginDefaultValue" 
+            android:dialogTitle="@string/prefSliderRightMarginTitle" 
+            android:summary="@string/prefSliderRightMarginSummary"/>
+        <ListPreference 
+            android:key="NumThrottle" 
+            android:summary="@string/prefNumOfThrottlesSummary" 
+            android:title="@string/prefNumOfThrottles" 
+            android:entries="@array/NumOfThrottlesOptions" 
+            android:entryValues="@array/NumOfThrottlesOptions" 
+            android:defaultValue="Two" />
+        <ListPreference 
+    	    android:defaultValue="@string/prefWebViewLocationDefaultValue" 
+    	    android:entries="@array/WebViewLocation" 
+    	    android:entryValues="@array/WebViewLocation" 
+    	    android:key="WebViewLocation" 
+    	    android:summary="@string/prefWebViewLocationSummary" 
+    	    android:title="@string/prefWebViewLocationTitle" />
+    	<EditTextPreference 
+    	    android:defaultValue="@string/prefInitialThrotWebPageDefaultValue" 
+    	    android:dialogTitle="@string/prefInitialThrotWebPageSummary" 
+    	    android:key="InitialThrotWebPage" 
+    	    android:summary="@string/prefInitialThrotWebPageSummary" 
+    	    android:title="@string/prefInitialThrotWebPageTitle" />
+    	<CheckBoxPreference 
+    	    android:title="@string/prefDisplaySpeedArrowsTitle" 
+    	    android:defaultValue="@bool/prefDisplaySpeedArrows" 
+    	    android:summary="@string/prefDisplaySpeedArrowsSummary" 
+    	    android:key="display_speed_arrows_buttons"/>
+    	<EditTextPreference 
+    	    android:title="@string/prefSpeedButtonsRepeatTitle" 
+    	    android:summary="@string/prefSpeedButtonsRepeatSummary" 
+    	    android:defaultValue="@string/prefSpeedButtonsRepeatDefaultValue" 
+    	    android:dialogTitle="@string/prefSpeedButtonsRepeatTitle" 
+    	    android:key="speed_arrows_throttle_repeat_delay"
+    	    android:maxLength="4"
+            android:numeric="integer"/>
+    	<EditTextPreference 
+    	    android:title="@string/prefSpeedButtonsSpeedStepTitle" 
+    	    android:summary="@string/prefSpeedButtonsSpeedStepSummary" 
+    	    android:defaultValue="@string/prefSpeedButtonsSpeedStepDefaultValue" 
+    	    android:dialogTitle="@string/prefSpeedButtonsSpeedStepTitle" 
+    	    android:key="speed_arrows_throttle_speed_step"
+    	    android:maxLength="2"
+            android:numeric="integer"/>
+    		
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefStopOnReleaseDefaultValue"
+            android:key="stop_on_release_preference"
+            android:summary="@string/prefStopOnReleaseSummary"
+            android:title="@string/prefStopOnReleaseTitle" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefDropOnAcquireDefaultValue"
+            android:key="drop_on_acquire_preference"
+            android:summary="@string/prefDropOnAcquireSummary"
+            android:title="@string/prefDropOnAcquireTitle" >
+        </CheckBoxPreference>
+        <ListPreference 
+            android:defaultValue="@string/prefDefaultAddressLengthDefaultValue" 
+            android:entries="@array/address_size_defaults" 
+            android:entryValues="@array/address_size_defaults" 
+            android:key="default_address_length" 
+            android:summary="@string/prefDefaultAddressLengthSummary" 
+            android:title="@string/prefDefaultAddressLengthTitle" />
+        <CheckBoxPreference 
+            android:defaultValue="@bool/prefHideRecentLocosDefaultValue" 
+            android:key="hide_recent_locos_preference" 
+            android:summary="@string/prefHideRecentLocosSummary" 
+            android:title="@string/prefHideRecentLocosTitle">
+        </CheckBoxPreference><CheckBoxPreference 
+            android:defaultValue="@bool/prefRosterRecentLocosDefaultValue" 
+            android:key="roster_recent_locos_preference" 
+            android:summary="@string/prefRosterRecentLocosSummary" 
+            android:title="@string/prefRosterRecentLocosTitle">
+        </CheckBoxPreference>
+		<EditTextPreference 
+			android:defaultValue="@string/prefMaximumRecentLocosDefaultValue" 
+			android:dialogTitle="@string/prefMaximumRecentLocosTitle" 
+			android:key="maximum_recent_locos_preference" 
+			android:maxLength="2" 
+			android:numeric="integer" 
+			android:summary="@string/prefMaximumRecentLocosSummary" 
+			android:title="@string/prefMaximumRecentLocosTitle">
+        </EditTextPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefWebTitle" >
+        <ListPreference 
+            android:defaultValue="@string/prefWebOrientationDefaultValue" 
+            android:entries="@array/OrientationOptions" 
+            android:entryValues="@array/OrientationOptions" 
+            android:key="WebOrientation" 
+            android:summary="@string/prefWebOrientationSummary" 
+            android:title="@string/prefWebOrientationTitle" />
+        <EditTextPreference
+            android:defaultValue="@string/prefInitialWebPageDefaultValue"
+            android:dialogTitle="@string/prefInitialWebPageSummary"
+            android:key="InitialWebPage"
+            android:summary="@string/prefInitialWebPageSummary"
+            android:title="@string/prefInitialWebPageTitle" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefConnectTitle" >
+        <EditTextPreference
+            android:defaultValue="@string/prefMaximumRecentConnectionsDefaultValue"
+            android:dialogTitle="@string/prefMaximumRecentConnectionsTitle"
+            android:key="maximum_recent_connections_preference"
+            android:maxLength="2"
+            android:numeric="integer"
+            android:summary="@string/prefMaximumRecentConnectionsSummary"
+            android:title="@string/prefMaximumRecentConnectionsTitle" >
+        </EditTextPreference>
+        <CheckBoxPreference android:defaultValue="@bool/prefConnectToFirstServer" android:key="connect_to_first_server_preference" android:title="@string/PrefConnectToFirstServerTitle" android:summary="@string/PrefConnectToFirstServerSummary"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefTurnoutsTitle" >
+        <ListPreference
+            android:defaultValue="@string/prefHardwareSystemDefaultValue"
+            android:entries="@array/hardware_system_names"
+            android:entryValues="@array/hardware_systems"
+            android:key="hardware_system"
+            android:summary="@string/prefHardwareSystemSummary"
+            android:title="@string/prefHardwareSystemTitle" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefHideSystemRouteNamesDefaultValue"
+            android:key="hide_system_route_names_preference"
+            android:summary="@string/prefHideSystemRouteNamesSummary"
+            android:title="@string/prefHideSystemRouteNamesTitle" >
+        </CheckBoxPreference>
+	    <EditTextPreference
+	        android:defaultValue="@string/prefDelimiterDefaultValue"
+	        android:dialogTitle="@string/prefDelimiterTitle"
+	        android:key="DelimiterPreference"
+            android:maxLength="1"
+	        android:summary="@string/prefDelimiterSummary"
+	        android:title="@string/prefDelimiterTitle" >
+	    </EditTextPreference>
+        </PreferenceCategory>
+</PreferenceScreen>

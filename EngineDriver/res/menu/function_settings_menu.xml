@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/EmerStop" android:title="@string/EStop" android:visible="false"></item>
+    <item android:id="@+id/power_layout_button" android:title="@string/PowerButtonBar" android:visible="false"></item>
+    <item android:id="@+id/throttle_mnu" android:title="@string/throttle"></item>
+    <item android:id="@+id/turnouts_mnu" android:title="@string/turnouts"></item>
+    <item android:id="@+id/routes_mnu" android:title="@string/routes"></item>
+    <item android:id="@+id/web_mnu" android:title="@string/web"></item>
+    <item android:id="@+id/preferences_mnu" android:title="@string/preferences"></item>
+    <item android:id="@+id/about_mnu" android:title="@string/about"></item>
+    <item android:id="@+id/logviewer_menu" android:title="@string/logViewer"></item>
+</menu>

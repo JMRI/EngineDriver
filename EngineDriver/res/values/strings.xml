@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+      Copyright (C) 2013 M. Steve Todd mstevetodd@enginedriver.rrclubs.org
+      This program is free software; you can redistribute it and/or modify it 
+      under the terms of the GNU General Public License as published by the 
+      Free Software Foundation;
+      either version 3 of the License, or (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+      for more details. You should have received a copy of the GNU General
+      Public License along with this program; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+<resources>
+    <string name="exit">Exit</string>
+    <string name="settings">Function Defaults</string>
+    <string name="fb_label">Function Label</string>
+    <string name="function_buttons">function_buttons</string>
+    <string name="app_name">Engine Driver</string>
+    <string name="app_description">Engine Driver - JMRI Throttle for your Android phone.  This application can connect to a JMRI WiThrottle server running on a PC, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one or two locomotives. </string>
+    <string name="app_name_connect">Engine Driver - Connect to JMRI WiThrottle</string>
+    <string name="app_name_throttle">Engine Driver - Throttle</string>
+    <string name="app_name_power_control">Engine Driver - Power Control</string>
+    <string name="app_name_routes">Engine Driver - Routes</string>
+    <string name="app_name_turnouts">Engine Driver - Turnouts</string>
+    <string name="app_name_about">Engine Driver - About</string>
+    <string name="app_name_web">Engine Driver - Web</string>
+    <string name="app_name_functions">Engine Driver - Default Function Settings</string>
+    <string name="app_name_preferences">Engine Driver - Preferences</string>
+    <string name="app_name_select_loco">Engine Driver - Select Loco</string>
+    <string name="app_name_ConsistEdit">Engine Driver - Consist Edit</string>
+    <string name="host_ip">Host Name or Address</string>
+    <string name="port">Port</string>
+    <string name="loco_address">Loco Address</string>
+    <string name="connect_button">Connect</string>
+    <string name="recent_connections">Recent Connections</string>
+    <string name="select_loco">Enter Locomotive Address to Acquire</string>
+    <string name="acquire_button">Acquire</string>
+    <string name="roster_list">-OR- Select from Roster/Consist Entries</string>
+    <string name="recent_engines">-OR- Select from Recent Locomotives</string>
+    <string name="direction">Fwd</string>
+    <string name="speed">Speed:</string>
+    <string name="discovered_services">Discovered Servers</string>
+    <string name="save_settings">Save Settings</string>
+    <string name="stop">Stop</string>
+    <string name="forward">Forward</string>
+    <string name="reverse">Reverse</string>
+    <string name="none">None</string>
+    <string name="fb_helptext">Enter labels and function#s in list at right.  Leave label blank to hide button.  These are used when roster functions are not available.</string>
+    <string name="copy_function_labels">Copy Labels from Roster</string>
+    <string name="fb_header">Edit Functions</string>
+	<string name="consist_help">Click an engine to change its direction with respect to the top of the consist.  Long press an engine to remove it from the consist.  Press Back Arrow when done.</string>
+	<string name="about">About</string>
+    <string name="web">Web</string>
+    <string name="loco">Loco:</string>
+    <string name="current_locos">Currently Selected Locos</string>
+    <string name="release">Release</string>
+    <string name="turnouts">Turnouts</string>
+    <string name="turnouts_label">Control Turnouts</string>
+    <string name="turnouts_direct_entry_label">Enter turnout# and Close, Throw or Toggle</string>
+    <string name="turnouts_location_label">Selected Location</string>
+    <string name="location_all">ALL LOCATIONS</string>
+    <string name="routes">Routes</string>
+    <string name="routes_label">Control Routes</string>
+    <string name="routes_direct_entry_label">Enter route# and press Set</string>
+    <string name="routes_location_label">Selected Location</string>
+    <string name="routes_default_prefix">R</string>
+    <string name="consist_lead_label">Lead Loco</string>
+    <string name="consist_list_label">Consist Top</string>
+    <string name="throw_button">Throw</string>
+    <string name="close_button">Close</string>
+    <string name="toggle_button">Toggle</string>
+    <string name="power_control_label">Control Layout Power Setting</string>
+    <string name="power_control_button">unknown</string>
+    <string name="press_to_toggle">Press button to toggle layout power state.</string>
+    <string name="power_control_not_allowed">Power Control not allowed.  Change in WiThrottle Preferences in JMRI.</string>
+	<string name="fs_edit_notice">WARNING: changes to Default Functions Setttings will be lost on exit - No SD Card found.</string>
+	<string name="ca_recent_conn_notice">Recent Connections unavailable - No SD Card found.</string>
+	<string name="sl_recent_engine_notice">Recent Locos unavailable - No SD Card found.</string>
+	<string name="power">Power</string>
+    <string name="throttle">Throttle</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="set">Set</string>
+    <string name="disabled">Disabled</string>
+    <string name="volume_indicator">v</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="exit_text">Exit Engine Driver?</string>
+    <string name="exit_title">Exit</string>
+    <string name="prefTitle">Preferences</string>
+    <string name="prefSummary">Preferences for Engine Driver</string>
+    <string name="preferences">Preferences</string>
+    <string name="prefThrottleNameTitle">Throttle Name</string>
+    <string name="prefThrottleNameDefaultValue">Engine Driver</string>
+    <string name="prefThrottleNameSummary">Set a name for this device (shown on WiThrottle screen)</string>
+    <string name="prefThrottleOrientationTitle">Screen orientation</string>
+    <string name="prefThrottleOrientationDefaultValue">Portrait</string>
+    <string name="prefThrottleOrientationSummary">Screen orientation (except Web)</string>
+    <string name="prefThrottleTitle">Throttle Preferences</string>
+    <string name="prefIncreaseSliderHeightTitle">Increase Slider Height</string>
+    <string name="prefIncreaseSliderHeightSummary">Use a taller slider for throttles.</string>
+    <string name="prefNumOfThrottles">Number of throttles</string>
+    <string name="prefNumOfThrottlesSummary">Choose how many throttles you want to display.</string>
+    <string name="prefNumOfThrottlesDefault">Two</string>
+    <string name="prefMaximumThrottleTitle">Maximum Throttle Value</string>
+    <string name="prefMaximumThrottleDefaultValue">99</string>
+    <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value</string>
+    <string name="prefMaximumThrottleChangeTitle">Maximum Throttle Change</string>
+    <string name="prefMaximumThrottleChangeDefaultValue">25</string>
+    <string name="prefMaximumThrottleChangeSummary">Maximum Allowed throttle change in %</string>
+    <string name="prefInitialThrotWebPageTitle">Initial Throttle Web Page</string>
+    <string name="prefInitialThrotWebPageDefaultValue">frame</string>
+    <string name="prefInitialThrotWebPageSummary">Initial Throttle Web Page (such as \'frame/My%20Layout.html\')</string>
+    <string name="prefWebViewLocationTitle">Throttle Web View?</string>
+    <string name="prefWebViewLocationDefaultValue">none</string>
+    <string name="prefWebViewLocationSummary">Include web view on Throttle pane</string>
+    <string name="prefSelectLocoTitle">Select Loco Preferences</string>
+    <string name="prefStopOnReleaseTitle">Stop On Release</string>
+    <string name="prefStopOnReleaseSummary">Stop loco(s) when releasing from throttle</string>
+    <string name="prefDropOnAcquireTitle">Drop Loco Before Acquire</string>
+    <string name="prefDropOnAcquireSummary">Drop current loco before acquiring new loco.</string>
+    <string name="prefHideRecentLocosTitle">Hide Recent Locos panel</string>
+    <string name="prefHideRecentLocosSummary">Leave more room for roster locos.</string>
+    <string name="prefRosterRecentLocosTitle">Roster in Recent Locos</string>
+    <string name="prefRosterRecentLocosSummary">Include roster selections in list.</string>
+    <string name="prefMaximumRecentLocosTitle">Maximum Recent Locos</string>
+    <string name="prefMaximumRecentLocosDefaultValue">10</string>
+    <string name="prefMaximumRecentLocosSummary">Maximum Recent Locos to show in list</string>
+    <string name="prefDefaultAddressLengthTitle">Default Address Length</string>
+    <string name="prefDefaultAddressLengthDefaultValue">Auto</string>
+    <string name="prefDefaultAddressLengthSummary">Default Loco Address Length, (Auto will set based on # of digits).</string>
+    <string name="prefWebTitle">Web Preferences</string>
+    <string name="prefWebOrientationTitle">Web screen orientation</string>
+    <string name="prefWebOrientationDefaultValue">Auto-Rotate</string>
+    <string name="prefWebOrientationSummary">Web screen orientation</string>
+    <string name="prefInitialWebPageTitle">Initial Web Page</string>
+    <string name="prefInitialWebPageDefaultValue">frame</string>
+    <string name="prefInitialWebPageSummary">Initial Web Page (such as \'frame/My%20Layout.html\')</string>
+    <string name="prefConnectTitle">Connect Preferences</string>
+    <string name="prefMaximumRecentConnectionsTitle">Maximum Recent Connections</string>
+    <string name="prefMaximumRecentConnectionsDefaultValue">10</string>
+    <string name="prefMaximumRecentConnectionsSummary">Maximum Recent Connections to show in list</string>
+    <string name="prefTurnoutsTitle">Turnouts and Routes Preferences</string>
+    <string name="prefHardwareSystemTitle">Turnout Hardware System</string>
+    <string name="prefHardwareSystemDefaultValue">L</string>
+    <string name="prefHardwareSystemSummary">Select hardware system to use for direct entry turnout commands</string>
+    <string name="prefHideSystemRouteNamesTitle">Hide Sys Route Names?</string>
+    <string name="prefHideSystemRouteNamesSummary">Hide system names for Routes, used to save space on Route list.</string>
+    <string name="prefDelimiterTitle">Location Delimiter</string>
+    <string name="prefDelimiterDefaultValue">:</string>
+    <string name="prefDelimiterSummary">Set the character that marks the end of the Location portion of Turnout and Route names</string>
+    <string name="logViewer">View Log</string>
+    <string name="clearLocoList">Clear List</string>
+    <string name="ClearConnList">Clear Recent List</string>
+    <string name="prefEmerStopTitle">Show Emergency Stop Button</string>
+    <string name="prefEmerStopSummary">Show loco emergency stop button in action bar.</string>
+    <string name="EStop">Estop</string>
+    <string name="PowerButtonBar">power_button</string>
+    <string name="prefPowerButtonBarTitle">Show layout power button</string>
+    <string name="prefPowerButtonBarSummary">Display layout power button in Throttle, Turnout and Routes screens.</string>
+    <string name="prefSliderLeftMarginTitle">Throttle Speed Slider Left Margin</string>
+    <string name="prefSliderLeftMarginSummary">Number of pixels to offset left side of throttle speed sliders.  WARNING: Requires restart.</string>
+    <string name="prefSliderLeftMarginDefaultValue">8</string>
+    <string name="prefSliderRightMarginTitle">Throttle Speed Slider Right Margin</string>
+    <string name="prefSliderRightMarginSummary">Number of pixels to offset right side of throttle speed sliders.  WARNING: Requires restart.</string>
+    <string name="prefSliderRightMarginDefaultValue">8</string>
+    <string name="PrefConnectToFirstServerTitle">Auto-Connect to First WiThrottle Server</string>
+    <string name="PrefConnectToFirstServerSummary">Connect automatically to first JMRI WIThrottle Server identified.</string>
+    <string name="LeftButton">&lt;</string>
+    <string name="RightButton">&gt;</string>
+    <string name="prefDisplaySpeedArrowsTitle">Display Speed arrow buttons</string>
+    <string name="prefDisplaySpeedArrowsSummary">Display arrow buttons next to speed sliders to change loco speed.</string>
+    <string name="prefSpeedButtonsRepeatTitle">Speed button repeat delay</string>
+    <string name="prefSpeedButtonsRepeatSummary">How long between repeats on speed buttons.  Smaller is faster.</string>
+	<string name="prefSpeedButtonsRepeatDefaultValue">100</string>
+    <string name="prefSpeedButtonsSpeedStepTitle">Speed button change amount</string>
+    <string name="prefSpeedButtonsSpeedStepSummary">How much Speed arrows jump throttle speed.</string>
+	<string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>
+</resources>
