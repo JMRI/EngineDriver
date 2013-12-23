@@ -1,0 +1,230 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - for Unified Software -->
+<pane name="Servos">
+  <column>
+    <row>
+      <column>
+        <display item="Servo Protocol" format="radiobuttons"/>
+      </column>
+      <column>
+        <label label="                          ">
+          <label>                          </label>
+        </label>
+      </column>
+      <column>
+        <display item="Servo Control Signal" format="radiobuttons"/>
+      </column>
+    </row>
+    <display item="Servo Centering" format="radiobuttons"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <separator/>
+    <row>
+      <column>
+        <label label="Servo 1">
+          <label>Servo 1</label>
+        </label>
+      </column>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Servo 1 Function Allocation" label="Function Allocation">
+          <label>Function Allocation</label>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <column>
+            <display item="Servo 1 Rotation Speed" label="Rotation Speed">
+              <label>Rotation Speed</label>
+            </display>
+          </column>
+          <column>
+            <label label="Tenths of a second">
+              <label>Tenths of a second</label>
+            </label>
+          </column>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Servo 1 Left Stop" label="Left Stop">
+          <label>Left Stop</label>
+        </display>
+        <display item="Servo 1 Centre" label="Centre">
+          <label>Centre</label>
+        </display>
+        <display item="Servo 1 Right Stop" label="Right Stop">
+          <label>Right Stop</label>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <column>
+        <label label="      ">
+          <label>      </label>
+        </label>
+      </column>
+      <separator/>
+      <column>
+        <label label="      ">
+          <label>      </label>
+        </label>
+      </column>
+      <column>
+        <label label="Servo 2">
+          <label>Servo 2</label>
+        </label>
+      </column>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Servo 2 Function Allocation" label="Function Allocation">
+          <label>Function Allocation</label>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <column>
+            <display item="Servo 2 Rotation Speed" label="Rotation Speed">
+              <label>Rotation Speed</label>
+            </display>
+          </column>
+          <column>
+            <label label="Tenths of a second">
+              <label>Tenths of a second</label>
+            </label>
+          </column>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Servo 2 Left Stop" label="Left Stop">
+          <label>Left Stop</label>
+        </display>
+        <display item="Servo 2 Centre" label="Centre">
+          <label>Centre</label>
+        </display>
+        <display item="Servo 2 Right Stop" label="Right Stop">
+          <label>Right Stop</label>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <label label="Servo 3">
+          <label>Servo 3</label>
+        </label>
+      </column>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Servo 3 Function Allocation" label="Function Allocation">
+          <label>Function Allocation</label>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <column>
+            <display item="Servo 3 Rotation Speed" label="Rotation Speed">
+              <label>Rotation Speed</label>
+            </display>
+          </column>
+          <column>
+            <label label="Tenths of a second">
+              <label>Tenths of a second</label>
+            </label>
+          </column>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Servo 3 Left Stop" label="Left Stop">
+          <label>Left Stop</label>
+        </display>
+        <display item="Servo 3 Centre" label="Centre">
+          <label>Centre</label>
+        </display>
+        <display item="Servo 3 Right Stop" label="Right Stop">
+          <label>Right Stop</label>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <column>
+        <label label="      ">
+          <label>      </label>
+        </label>
+      </column>
+      <separator/>
+      <column>
+        <label label="      ">
+          <label>      </label>
+        </label>
+      </column>
+      <column>
+        <label label="Servo 4">
+          <label>Servo 4</label>
+        </label>
+      </column>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Servo 4 Function Allocation" label="Function Allocation">
+          <label>Function Allocation</label>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <column>
+            <display item="Servo 4 Rotation Speed" label="Rotation Speed">
+              <label>Rotation Speed</label>
+            </display>
+          </column>
+          <column>
+            <label label="Tenths of a second">
+              <label>Tenths of a second</label>
+            </label>
+          </column>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Servo 4 Left Stop" label="Left Stop">
+          <label>Left Stop</label>
+        </display>
+        <display item="Servo 4 Centre" label="Centre">
+          <label>Centre</label>
+        </display>
+        <display item="Servo 4 Right Stop" label="Right Stop">
+          <label>Right Stop</label>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Special Assignment for Live Steam" format="radiobuttons" tooltip="185"/>
+  </column>
+  <name>Servos</name>
+</pane>

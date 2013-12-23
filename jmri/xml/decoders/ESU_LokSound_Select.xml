@@ -1,0 +1,1640 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <!-- made from the ESU_LokSoundV3_5.file -->
+  <!-- ver1 new file -->
+  <version author="Michael Mosher" version="1" lastUpdated="20100301"/>
+  <!-- ver2 correction to CV124 definition -->
+  <version author="Matthew Harris" version="2" lastUpdated="20100329"/>
+  <!-- ver3 fix bug in sanding volume CV -->
+  <version author="Michael Mosher" version="3" lastUpdated="20101216"/>
+  <!-- ver4 fixed range and default values CVs 5 and 6 -->
+  <version author="Dave Heap" version="4" lastUpdated="20120929"/>
+  <!-- ver5 add new models -->
+  <version author="Michael Mosher" version="5" lastUpdated="20121205"/>
+  <!-- ver6 fixed incorrect PI & SI in all indexed CVs -->
+  <version author="Dave Heap" version="6" lastUpdated="20121230"/>
+  <!-- ver7 added support for new mfx&reg; speed table -->
+  <version author="Dave Heap" version="7" lastUpdated="20130105"/>
+  <!-- ver8 created new xi:include /xml/decoders/esu/v4standardCVs.xml 
+            moved all non-indexed CVs to v4standardCVs.xml 
+            created new xi:include /xml/decoders/esu/v4cv21.22.xml 
+            created new pane xi:include /xml/decoders/esu/v4extraPane.xml 
+            added new items to /xml/programmers/parts/AnalogControlsPane.xml 
+            corrected minor problem in /xml/programmers/parts/ConsistPane.xml 
+            moved many items to more appropriate panes 
+            updated all non-indexed CVs to match LokProgrammer V4.4.3 definitions -->
+  <version author="Dave Heap" version="8" lastUpdated="20130429"/>
+  <!-- ver9 indexed CV fixes -->
+  <version author="Dave Heap" version="9" lastUpdated="20130606"/>
+  <!-- ver10 Add warning to CV reset -->
+  <version author="Dave Heap" version="10" lastUpdated="20130626"/>
+  <!-- ver11 new Function Outputs and Info panes, miscellaneous changes and corrections -->
+  <version author="Dave Heap" version="11" lastUpdated="20130910"/>
+  <!-- ver12 new Sound pane, many changes and corrections -->
+  <version author="Dave Heap" version="12" lastUpdated="20130926"/>
+  <!-- ver13 add new capability section to define high CV alternate write method -->
+  <version author="Dave Heap" version="13" lastUpdated="20131028"/>
+  <decoder>
+    <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168">
+      <model model="LokSound Select Alco 244" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73401">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select Alco 251" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73402">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select Alco 251-16" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73427">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select Alco 539T" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73411">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select Baldwin 606_606NA" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73446">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select Baldwin 606SC_606A" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73447">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select Baldwin VO-6" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73405">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select EMD 567" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73406">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select EMD 645E" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73407">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select EMD 12-645 non turbo" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73443">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select EMD 12-645E3" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73439">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select EMD 16-645 non turbo" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73426">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select EMD F40PH" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73430">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select EMD 16-645F" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73450">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select EMD 645E/F" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73408">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select EMD 710GB" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73410">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select EMD SD70M-2" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73425">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select EMD SD80MAC" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73461">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select EMD SD90MAC" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73431">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select EMD MP40PH-2C" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73428">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select GE Cat-44" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73444">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select GE FDL" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73403">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select GE FDL-16" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73445">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select GE 7FDL" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73404">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select Baldwin" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73405">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select PCC trolley steetcar" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73418">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="DB"/>
+        <output name="20" label="Comp"/>
+        <output name="21" label="Fan"/>
+        <output name="22" label="Det"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Air"/>
+        <output name="28" label="Pop"/>
+        <output name="29" label="S Horn"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Light</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="false">Horn</functionlabel>
+        <functionlabel num="3" lockable="false">Coupler</functionlabel>
+        <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+        <functionlabel num="5" lockable="false">AUX3</functionlabel>
+        <functionlabel num="6" lockable="false">AUX1+AUX2</functionlabel>
+        <functionlabel num="7" lockable="true">Switching</functionlabel>
+        <functionlabel num="8" lockable="true">Mute</functionlabel>
+        <functionlabel num="9" lockable="true">Dimmer</functionlabel>
+        <functionlabel num="10" lockable="false">Compressor</functionlabel>
+        <functionlabel num="11" lockable="true">Fan</functionlabel>
+        <functionlabel num="12" lockable="false">Notching</functionlabel>
+        <functionlabel num="13" lockable="false">AUX4</functionlabel>
+        <functionlabel num="14" lockable="false">Detector</functionlabel>
+        <functionlabel num="15" lockable="false">Crossing</functionlabel>
+        <functionlabel num="16" lockable="false">Rail Clack</functionlabel>
+        <functionlabel num="17" lockable="false">Brake Set/Rel</functionlabel>
+        <functionlabel num="18" lockable="false">Sanding</functionlabel>
+        <functionlabel num="19" lockable="false">Air</functionlabel>
+        <functionlabel num="20" lockable="false">Short Horn</functionlabel>
+        <functionlabel num="21" lockable="false">pop Valve</functionlabel>
+      </functionlabels>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes">
+        <capability>
+            <name>High Access via Double Index</name>
+            <parameter name="Max Regular CV address">256</parameter>
+            <parameter name="High Address CV">96</parameter>
+            <parameter name="Low Address CV">97</parameter>
+            <parameter name="Access Register CV">99</parameter>
+            <parameter name="Modulo">100</parameter>
+        </capability>
+    </programming>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
+      <variable label="Airhorn" CV="48" mask="XXXXVVVV" default="3" item="Sound Select 1">
+        <enumVal>
+          <enumChoice choice="Nathan K5LA">
+            <choice>Nathan K5LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3">
+            <choice>Nathan K3</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan M5">
+            <choice>Nathan M5</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P3">
+            <choice>Nathan P3</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P5A">
+            <choice>Nathan P5A</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie S2B">
+            <choice>Leslie S2B</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200">
+            <choice>Leslie A200</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie S3">
+            <choice>Leslie S3</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie S5">
+            <choice>Leslie S5</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie M3">
+            <choice>Leslie M3</choice>
+          </enumChoice>
+          <enumChoice choice="Wabco A2">
+            <choice>Wabco A2</choice>
+          </enumChoice>
+          <enumChoice choice="Wabco E2">
+            <choice>Wabco E2</choice>
+          </enumChoice>
+          <enumChoice choice="Holden K5H">
+            <choice>Holden K5H</choice>
+          </enumChoice>
+          <enumChoice choice="Hancock Air Whistle">
+            <choice>Hancock Air Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Fairbanks Morse Trainmaster">
+            <choice>Fairbanks Morse Trainmaster</choice>
+          </enumChoice>
+          <enumChoice choice="Baldwin Switcher 3 Chime">
+            <choice>Baldwin Switcher 3 Chime</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Airhorn</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73401" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="Alco 244 V12">
+            <choice>Alco 244 V12</choice>
+          </enumChoice>
+          <enumChoice choice="Alco 244 V16">
+            <choice>Alco 244 V16</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73402" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="Alco 251 V12">
+            <choice>Alco 251 V12</choice>
+          </enumChoice>
+          <enumChoice choice="Alco 251 V16">
+            <choice>Alco 251 V16</choice>
+          </enumChoice>
+          <enumChoice choice="Alco 251 6T">
+            <choice>Alco 251 6T</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73403" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="GE FDL 12">
+            <choice>GE FDL 12</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73404" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="GE 7FDL-12">
+            <choice>GE 7FDL-12</choice>
+          </enumChoice>
+          <enumChoice choice="GE 7FDL-12">
+            <choice>GE 7FDL-12</choice>
+          </enumChoice>
+          <enumChoice choice="GE 7FDL-16A">
+            <choice>GE 7FDL-16A</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73405" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="Baldwin VO 6">
+            <choice>Baldwin VO 6</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73406" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="EMD 567 16">
+            <choice>EMD 567 16</choice>
+          </enumChoice>
+          <enumChoice choice="EMD 567 16T">
+            <choice>EMD 567 16T</choice>
+          </enumChoice>
+          <enumChoice choice="EMD 567 12">
+            <choice>EMD 567 12</choice>
+          </enumChoice>
+          <enumChoice choice="EMD 567 12T">
+            <choice>EMD 567 12T</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73407" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="EMD 8-645E">
+            <choice>EMD 8-645E</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73408" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="EMD 16-645E">
+            <choice>EMD 16-645E</choice>
+          </enumChoice>
+          <enumChoice choice="EMD 16-645F">
+            <choice>EMD 16-645F</choice>
+          </enumChoice>
+          <enumChoice choice="EMD 20-645E">
+            <choice>EMD 20-645E</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73410" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="EMD 12-710GB">
+            <choice>EMD 12-710GB</choice>
+          </enumChoice>
+          <enumChoice choice="EMD 16-710GB">
+            <choice>EMD 16-710GB</choice>
+          </enumChoice>
+          <enumChoice choice="EMD 20-710GB">
+            <choice>EMD 20-710GB</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73411" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="Alco 539T">
+            <choice>Alco 539T</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73418" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="PCC trolley steetcar">
+            <choice>PCC trolley steetcar</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73425" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="EMD 16-710G3C-T2">
+            <choice>EMD 16-710G3C-T2</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73426" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="regular start">
+            <choice>regular start</choice>
+          </enumChoice>
+          <enumChoice choice="automatic start">
+            <choice>automatic start</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73427" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="air start">
+            <choice>air start</choice>
+          </enumChoice>
+          <enumChoice choice="normal start">
+            <choice>normal start</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73428" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="EMD 16-710GB">
+            <choice>EMD 16-710GB</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73430" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="EMD 16-645E3">
+            <choice>EMD 16-645E3</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73431" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="EMD 16-710GB">
+            <choice>EMD 16-710GB</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73439" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="EMD 12-645E3">
+            <choice>EMD 12-645E3</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73443" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="EMD 12-645 non turbo">
+            <choice>EMD 12-645 non turbo</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73444" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="GE Cat-44T">
+            <choice>GE Cat-44T</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73445" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="GE FDL-16cyl">
+            <choice>GE FDL-16cyl</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73446" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="Baldwin 606_606NA">
+            <choice>Baldwin 606_606NA</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73447" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="Baldwin 606SC_606A">
+            <choice>Baldwin 606SC_606A</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73450" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="EMD 16-645F">
+            <choice>EMD 16-645F</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73461" item="Sound Select 2">
+        <enumVal>
+          <enumChoice choice="EMD 20-710G3B-ES">
+            <choice>EMD 20-710G3B-ES</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Bell" CV="48" mask="XVXXXXXX" default="0" item="Sound Select 3">
+        <enumVal>
+          <enumChoice choice="Fast">
+            <choice>Fast</choice>
+          </enumChoice>
+          <enumChoice choice="Slow">
+            <choice>Slow</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Bell</label>
+      </variable>
+      <variable label="Brake Squeal" CV="48" mask="VXXXXXXX" default="0" item="Sound Select 4">
+        <enumVal>
+          <enumChoice choice="Squeal #1">
+            <choice>Squeal #1</choice>
+          </enumChoice>
+          <enumChoice choice="Squeal #2">
+            <choice>Squeal #2</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Brake Squeal</label>
+      </variable>
+      <!-- Volumes -->
+      <ivariable label="Diesel volume" CVname="259.16.1" CV="259" PI="16" SI="1" default="99" item="Sound Volume 1">
+        <indexedVal max="128"/>
+      </ivariable>
+      <ivariable label="Airhorn volume" CVname="275.16.1" CV="275" PI="16" SI="1" default="128" item="Sound Volume 3">
+        <indexedVal max="128"/>
+      </ivariable>
+      <ivariable label="Bell volume" CVname="283.16.1" CV="283" PI="16" SI="1" default="99" item="Sound Volume 4">
+        <indexedVal max="128"/>
+      </ivariable>
+      <ivariable label="Coupler volume" CVname="291.16.1" CV="291" PI="16" SI="1" default="128" item="Sound Volume 5">
+        <indexedVal max="128"/>
+      </ivariable>
+      <ivariable label="Dynamic Brake volume" CVname="299.16.1" CV="299" PI="16" SI="1" default="128" item="Sound Volume 6">
+        <indexedVal max="128"/>
+      </ivariable>
+      <ivariable label="Air Compressor volume" CVname="307.16.1" CV="307" PI="16" SI="1" default="100" item="Sound Volume 7">
+        <indexedVal max="128"/>
+      </ivariable>
+      <ivariable label="Radiator Fan volume" CVname="315.16.1" CV="315" PI="16" SI="1" default="128" item="Sound Volume 8">
+        <indexedVal max="128"/>
+      </ivariable>
+      <ivariable label="Detector volume" CVname="323.16.1" CV="323" PI="16" SI="1" default="128" item="Sound Volume 9">
+        <indexedVal max="128"/>
+      </ivariable>
+      <ivariable label="Crossing Comm volume" CVname="331.16.1" CV="331" PI="16" SI="1" default="128" item="Sound Volume 10">
+        <indexedVal max="128"/>
+      </ivariable>
+      <ivariable label="Railclack volume" CVname="339.16.1" CV="339" PI="16" SI="1" default="128" item="Sound Volume 11">
+        <indexedVal max="128"/>
+      </ivariable>
+      <ivariable label="Brake Set/Release volume" CVname="347.16.1" CV="347" PI="16" SI="1" default="128" item="Sound Volume 12">
+        <indexedVal max="128"/>
+      </ivariable>
+      <ivariable label="Sanding Valve volume" CVname="355.16.1" CV="355" PI="16" SI="1" default="128" item="Sound Volume 13">
+        <indexedVal max="128"/>
+      </ivariable>
+      <ivariable label="Short Air Let Off volume" CVname="363.16.1" CV="363" PI="16" SI="1" default="128" item="Sound Volume 14">
+        <indexedVal max="128"/>
+      </ivariable>
+      <ivariable label="Pop Valve volume" CVname="371.16.1" CV="371" PI="16" SI="1" default="128" item="Sound Volume 15">
+        <indexedVal max="128"/>
+      </ivariable>
+      <ivariable label="Short Airhorn volume" CVname="379.16.1" CV="379" PI="16" SI="1" default="128" item="Sound Volume 16">
+        <indexedVal max="128"/>
+      </ivariable>
+      <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/esu/v4functionMap.xml"/>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs. WARNING: May render sounds inoperable! Not recommended." CV="8" default="8"/>
+    </resets>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
+  <pane name="Indexed CVs">
+    <column>
+      <row>
+        <column>
+          <label label="JMRI 2.8 or later is required to use this definition">
+            <label>JMRI 2.8 or later is required to use this definition</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <indxcvtable/>
+        </column>
+      </row>
+    </column>
+    <name>Indexed CVs</name>
+  </pane>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4extraPane.xml"/>
+  <pane name="Output Map">
+    <column>
+      <row>
+        <column>
+          <label label="                              Headlight"/>
+          <display item="FS(f) controls output 1" format="checkbox" label="FS(f) stand forward"/>
+          <display item="FS(r) controls output 1" format="checkbox" label="FS(r) stand reverse"/>
+          <display item="FF(f) controls output 1" format="checkbox" label="FF(f) drive forward"/>
+          <display item="FF(r) controls output 1" format="checkbox" label="FF(r) drive reverse"/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label="Rear light"/>
+          <display item="FS(f) controls output 2" format="checkbox" label=""/>
+          <display item="FS(r) controls output 2" format="checkbox" label=""/>
+          <display item="FF(f) controls output 2" format="checkbox" label=""/>
+          <display item="FF(r) controls output 2" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label="AUX 1"/>
+          <display item="FS(f) controls output 3" format="checkbox" label=""/>
+          <display item="FS(r) controls output 3" format="checkbox" label=""/>
+          <display item="FF(f) controls output 3" format="checkbox" label=""/>
+          <display item="FF(r) controls output 3" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label="AUX 2"/>
+          <display item="FS(f) controls output 4" format="checkbox" label=""/>
+          <display item="FS(r) controls output 4" format="checkbox" label=""/>
+          <display item="FF(f) controls output 4" format="checkbox" label=""/>
+          <display item="FF(r) controls output 4" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label="AUX 3"/>
+          <display item="FS(f) controls output 5" format="checkbox" label=""/>
+          <display item="FS(r) controls output 5" format="checkbox" label=""/>
+          <display item="FF(f) controls output 5" format="checkbox" label=""/>
+          <display item="FF(r) controls output 5" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label="AUX 4"/>
+          <display item="FS(f) controls output 6" format="checkbox" label=""/>
+          <display item="FS(r) controls output 6" format="checkbox" label=""/>
+          <display item="FF(f) controls output 6" format="checkbox" label=""/>
+          <display item="FF(r) controls output 6" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label="AUX 5"/>
+          <display item="FS(f) controls output 7" format="checkbox" label=""/>
+          <display item="FS(r) controls output 7" format="checkbox" label=""/>
+          <display item="FF(f) controls output 7" format="checkbox" label=""/>
+          <display item="FF(r) controls output 7" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label="AUX 6"/>
+          <display item="FS(f) controls output 8" format="checkbox" label=""/>
+          <display item="FS(r) controls output 8" format="checkbox" label=""/>
+          <display item="FF(f) controls output 8" format="checkbox" label=""/>
+          <display item="FF(r) controls output 8" format="checkbox" label=""/>
+        </column>
+        <label label="    "/>
+        <column>
+          <label label=" ABV"/>
+          <display item="FS(f) controls output 9" format="checkbox" label=""/>
+          <display item="FS(r) controls output 9" format="checkbox" label=""/>
+          <display item="FF(f) controls output 9" format="checkbox" label=""/>
+          <display item="FF(r) controls output 9" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label="Shunt"/>
+          <display item="FS(f) controls output 10" format="checkbox" label=""/>
+          <display item="FS(r) controls output 10" format="checkbox" label=""/>
+          <display item="FF(f) controls output 10" format="checkbox" label=""/>
+          <display item="FF(r) controls output 10" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" DB"/>
+          <display item="FS(f) controls output 11" format="checkbox" label=""/>
+          <display item="FS(r) controls output 11" format="checkbox" label=""/>
+          <display item="FF(f) controls output 11" format="checkbox" label=""/>
+          <display item="FF(r) controls output 11" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" Dim"/>
+          <display item="FS(f) controls output 12" format="checkbox" label=""/>
+          <display item="FS(r) controls output 12" format="checkbox" label=""/>
+          <display item="FF(f) controls output 12" format="checkbox" label=""/>
+          <display item="FF(r) controls output 12" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label="Cross"/>
+          <display item="FS(f) controls output 13" format="checkbox" label=""/>
+          <display item="FS(r) controls output 13" format="checkbox" label=""/>
+          <display item="FF(f) controls output 13" format="checkbox" label=""/>
+          <display item="FF(r) controls output 13" format="checkbox" label=""/>
+        </column>
+        <label label="    "/>
+        <column>
+          <label label="Notch"/>
+          <display item="FS(f) controls output 14" format="checkbox" label=""/>
+          <display item="FS(r) controls output 14" format="checkbox" label=""/>
+          <display item="FF(f) controls output 14" format="checkbox" label=""/>
+          <display item="FF(r) controls output 14" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" Dop"/>
+          <display item="FS(f) controls output 15" format="checkbox" label=""/>
+          <display item="FS(r) controls output 15" format="checkbox" label=""/>
+          <display item="FF(f) controls output 15" format="checkbox" label=""/>
+          <display item="FF(r) controls output 15" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label="Shift"/>
+          <display item="FS(f) controls output 16" format="checkbox" label=""/>
+          <display item="FS(r) controls output 16" format="checkbox" label=""/>
+          <display item="FF(f) controls output 16" format="checkbox" label=""/>
+          <display item="FF(r) controls output 16" format="checkbox" label=""/>
+        </column>
+        <label label="    "/>
+        <column>
+          <label label=" Snd"/>
+          <display item="FS(f) controls output 17" format="checkbox" label=""/>
+          <display item="FS(r) controls output 17" format="checkbox" label=""/>
+          <display item="FF(f) controls output 17" format="checkbox" label=""/>
+          <display item="FF(r) controls output 17" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS2"/>
+          <display item="FS(f) controls output 18" format="checkbox" label=""/>
+          <display item="FS(r) controls output 18" format="checkbox" label=""/>
+          <display item="FF(f) controls output 18" format="checkbox" label=""/>
+          <display item="FF(r) controls output 18" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS3"/>
+          <display item="FS(f) controls output 19" format="checkbox" label=""/>
+          <display item="FS(r) controls output 19" format="checkbox" label=""/>
+          <display item="FF(f) controls output 19" format="checkbox" label=""/>
+          <display item="FF(r) controls output 19" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS4"/>
+          <display item="FS(f) controls output 20" format="checkbox" label=""/>
+          <display item="FS(r) controls output 20" format="checkbox" label=""/>
+          <display item="FF(f) controls output 20" format="checkbox" label=""/>
+          <display item="FF(r) controls output 20" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS5"/>
+          <display item="FS(f) controls output 21" format="checkbox" label=""/>
+          <display item="FS(r) controls output 21" format="checkbox" label=""/>
+          <display item="FF(f) controls output 21" format="checkbox" label=""/>
+          <display item="FF(r) controls output 21" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS6"/>
+          <display item="FS(f) controls output 22" format="checkbox" label=""/>
+          <display item="FS(r) controls output 22" format="checkbox" label=""/>
+          <display item="FF(f) controls output 22" format="checkbox" label=""/>
+          <display item="FF(r) controls output 22" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label="  SS7"/>
+          <display item="FS(f) controls output 23" format="checkbox" label=""/>
+          <display item="FS(r) controls output 23" format="checkbox" label=""/>
+          <display item="FF(f) controls output 23" format="checkbox" label=""/>
+          <display item="FF(r) controls output 23" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label="  SS8"/>
+          <display item="FS(f) controls output 24" format="checkbox" label=""/>
+          <display item="FS(r) controls output 24" format="checkbox" label=""/>
+          <display item="FF(f) controls output 24" format="checkbox" label=""/>
+          <display item="FF(r) controls output 24" format="checkbox" label=""/>
+        </column>
+        <label label="    "/>
+        <column>
+          <label label="  SS9"/>
+          <display item="FS(f) controls output 25" format="checkbox" label=""/>
+          <display item="FS(r) controls output 25" format="checkbox" label=""/>
+          <display item="FF(f) controls output 25" format="checkbox" label=""/>
+          <display item="FF(r) controls output 25" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS10"/>
+          <display item="FS(f) controls output 26" format="checkbox" label=""/>
+          <display item="FS(r) controls output 26" format="checkbox" label=""/>
+          <display item="FF(f) controls output 26" format="checkbox" label=""/>
+          <display item="FF(r) controls output 26" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS11"/>
+          <display item="FS(f) controls output 27" format="checkbox" label=""/>
+          <display item="FS(r) controls output 27" format="checkbox" label=""/>
+          <display item="FF(f) controls output 27" format="checkbox" label=""/>
+          <display item="FF(r) controls output 27" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS12"/>
+          <display item="FS(f) controls output 28" format="checkbox" label=""/>
+          <display item="FS(r) controls output 28" format="checkbox" label=""/>
+          <display item="FF(f) controls output 28" format="checkbox" label=""/>
+          <display item="FF(r) controls output 28" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS13"/>
+          <display item="FS(f) controls output 29" format="checkbox" label=""/>
+          <display item="FS(r) controls output 29" format="checkbox" label=""/>
+          <display item="FF(f) controls output 29" format="checkbox" label=""/>
+          <display item="FF(r) controls output 29" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS14"/>
+          <display item="FS(f) controls output 30" format="checkbox" label=""/>
+          <display item="FS(r) controls output 30" format="checkbox" label=""/>
+          <display item="FF(f) controls output 30" format="checkbox" label=""/>
+          <display item="FF(r) controls output 30" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS15"/>
+          <display item="FS(f) controls output 31" format="checkbox" label=""/>
+          <display item="FS(r) controls output 31" format="checkbox" label=""/>
+          <display item="FF(f) controls output 31" format="checkbox" label=""/>
+          <display item="FF(r) controls output 31" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS16"/>
+          <display item="FS(f) controls output 32" format="checkbox" label=""/>
+          <display item="FS(r) controls output 32" format="checkbox" label=""/>
+          <display item="FF(f) controls output 32" format="checkbox" label=""/>
+          <display item="FF(r) controls output 32" format="checkbox" label=""/>
+        </column>
+        <label label="    "/>
+        <column>
+          <label label=" SS17"/>
+          <display item="FS(f) controls output 33" format="checkbox" label=""/>
+          <display item="FS(r) controls output 33" format="checkbox" label=""/>
+          <display item="FF(f) controls output 33" format="checkbox" label=""/>
+          <display item="FF(r) controls output 33" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS18"/>
+          <display item="FS(f) controls output 34" format="checkbox" label=""/>
+          <display item="FS(r) controls output 34" format="checkbox" label=""/>
+          <display item="FF(f) controls output 34" format="checkbox" label=""/>
+          <display item="FF(r) controls output 34" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS19"/>
+          <display item="FS(f) controls output 35" format="checkbox" label=""/>
+          <display item="FS(r) controls output 35" format="checkbox" label=""/>
+          <display item="FF(f) controls output 35" format="checkbox" label=""/>
+          <display item="FF(r) controls output 35" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS20"/>
+          <display item="FS(f) controls output 36" format="checkbox" label=""/>
+          <display item="FS(r) controls output 36" format="checkbox" label=""/>
+          <display item="FF(f) controls output 36" format="checkbox" label=""/>
+          <display item="FF(r) controls output 36" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS21"/>
+          <display item="FS(f) controls output 37" format="checkbox" label=""/>
+          <display item="FS(r) controls output 37" format="checkbox" label=""/>
+          <display item="FF(f) controls output 37" format="checkbox" label=""/>
+          <display item="FF(r) controls output 37" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS22"/>
+          <display item="FS(f) controls output 38" format="checkbox" label=""/>
+          <display item="FS(r) controls output 38" format="checkbox" label=""/>
+          <display item="FF(f) controls output 38" format="checkbox" label=""/>
+          <display item="FF(r) controls output 38" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS23"/>
+          <display item="FS(f) controls output 39" format="checkbox" label=""/>
+          <display item="FS(r) controls output 39" format="checkbox" label=""/>
+          <display item="FF(f) controls output 39" format="checkbox" label=""/>
+          <display item="FF(r) controls output 39" format="checkbox" label=""/>
+        </column>
+        <label label="  "/>
+        <column>
+          <label label=" SS24"/>
+          <display item="FS(f) controls output 40" format="checkbox" label=""/>
+          <display item="FS(r) controls output 40" format="checkbox" label=""/>
+          <display item="FF(f) controls output 40" format="checkbox" label=""/>
+          <display item="FF(r) controls output 40" format="checkbox" label=""/>
+        </column>
+      </row>
+    </column>
+    <name>Output Map</name>
+  </pane>
+</decoder-config>

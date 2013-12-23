@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - for Unified Software -->
+<pane name="Zimo Specific">
+  <column>
+    <display item="Pulse Chain Recognition (LGB)"/>
+    <display item="NMRA"/>
+    <display item="Loco Number Recognition"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <separator/>
+    <row>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Signal Dependent Acceleration"/>
+        <display item="Signal Dependent Deceleration"/>
+        <display item="Signal Dependent Reaction Time"/>
+      </column>
+      <column>
+        <label label="Signal Dependent Speed Limits">
+          <label>Signal Dependent Speed Limits</label>
+        </label>
+        <separator/>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="-1-" label="             -1-">
+          <label>             -1-</label>
+        </display>
+        <display item="-U-"/>
+        <display item="-2-"/>
+        <display item="-L-"/>
+        <display item="-3-"/>
+      </column>
+    </row>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="MAN Key Extension (Disable HLU or ABC signal control)" label="Set Function Key to Disable HLU Signal Control"/>
+    <display item="Distance controlled stopping"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <row>
+      <column>
+        <display item="Distance controlled stopping Distance"/>
+        <display item="Distance controlled stopping speed correction (HLU)"/>
+      </column>
+      <column>
+        <display item="Distance controlled stopping Distance" label="" format="hslider">
+          <label/>
+        </display>
+        <display item="Distance controlled stopping speed correction (HLU)" label="" format="hslider">
+          <label/>
+        </display>
+      </column>
+    </row>
+  </column>
+  <name>Zimo Specific</name>
+</pane>
