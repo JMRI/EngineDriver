@@ -29,9 +29,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SoundEffectConstants;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.lang.reflect.Method;
@@ -851,25 +853,28 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		char whichThrottle;  //T for first throttle, S for second, G for third
 
 		//    public function_button_touch_listener(int new_function, boolean new_toggle_type, String new_whichThrottle)
-		public function_button_touch_listener(int new_function, char new_whichThrottle)
-		{
+		public function_button_touch_listener(int new_function, char new_whichThrottle)	{
 			function=new_function;  //store these values for this button
 			whichThrottle = new_whichThrottle;
-
 		}
 
-		public boolean onTouch(View v, MotionEvent event)
-		{
-			//      Log.d("Engine_Driver", "onTouch func" + function + " action " + event.getAction());
+		public boolean onTouch(View v, MotionEvent event) {
+			//Log.d("Engine_Driver", "onTouch func " + function + " action " + event.getAction());
+
+			// make the click sound once
+			if(event.getAction() == MotionEvent.ACTION_DOWN) {
+				v.playSoundEffect(SoundEffectConstants.CLICK);
+			}
+			
 			//if gesture in progress, skip button processing
-			if(gestureInProgress == true)
-			{
+			if(gestureInProgress == true) {
 				return(true);
 			}
 
+			Log.d("Engine_Driver", "onTouch func " + function + " action " + event.getAction());
+			
 			// if gesture just failed, insert one DOWN event on this control
-			if(gestureFailed == true)
-			{
+			if(gestureFailed == true) {
 				handleAction(MotionEvent.ACTION_DOWN);
 				gestureFailed = false;	// just do this once
 			}

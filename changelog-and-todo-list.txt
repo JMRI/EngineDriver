@@ -1,3 +1,6 @@
+**Version 2.8.1
+ * fix default for "Drop Before Acquire" if never set, should be off
+ * add click sounds to function and direction buttons, to match other buttons 
 **Version 2.8 (mstevetodd)
  * only show loco and release button for # of throttles allowed
 **Version 2.8 (Robin Becker)
@@ -6,7 +9,7 @@
  * New consist editing dialog, for choosing lead loco and setting direction of each loco in consist.
  * only show Ongoing Notification when ED is in background
  * removed several warnings in JmDNS
-**Version 2.8 (continued) (Jeffrey Machacek)
+**Version 2.8 (Jeffrey Machacek)
  * User can display EStop Button in prefs.
  * Changed display theme to Holo to display action bar.
  * Estop can be visible in all screens.
@@ -238,6 +241,7 @@
  *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
  *   TODO: use PRT titles for Active/inactive
  * turnouts
+ *   TODO: pref to sort by system name vs. user name
  *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
  *   TODO: default "system" based on items in use
  *   TODO: use PTT titles for Turnouts/Turnout
@@ -253,10 +257,10 @@
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
  *   TODO: fix issues with padding (requires restart and does not work sometimes)
+ *   TODO: option to use "speed steps" instead of 1-99.
  *   TODO: determine why some buttons have audible "click" and others do not (when enabled on device)
  *   TODO: add JMRI fast-clock to screens (in new title bar?)
  *   TODO: retrieve vsDecoder sounds and play when appropriate
- *   TODO: catch ArrayIndexOutOfBoundsException (reported to Market)
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: respect "Max Throttle %" from roster entry
  *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released" 

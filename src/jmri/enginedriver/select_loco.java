@@ -336,7 +336,9 @@ public class select_loco extends Activity {
 
 		if(sWhichThrottle.length() > 1)				// add roster selection info if present
 			addr += "<;>" + sWhichThrottle.substring(1);
-		if(consist.size() == 0) {					// just this loco so tell WiT and exit
+
+		// just this loco so tell WiT and exit
+		if(consist.size() == 0) {					
 
 			consist.add(l);
 
@@ -345,51 +347,42 @@ public class select_loco extends Activity {
 
 			result = RESULT_OK;
 			end_this_activity();
-		}
-		else {										// consist exists, bring up editor
-			if(prefs.getBoolean("drop_on_acquire_preference", true) == false)
-			{
-				newEngine = (consist.getLoco(addr) == null);
+		
+		//user preference set to not consist, so drop before adding
+		} else if(prefs.getBoolean("drop_on_acquire_preference", false) == true) {
 
+			release_loco(whichThrottle);
 
-				if(newEngine) {
-					consist.add(l);
-					mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
-
-
-					saveUpdateList = bUpdateList;
-					Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
-					consistEdit.putExtra("address", addr);
-					consistEdit.putExtra("whichThrottle", whichThrottle);
-					startActivityForResult(consistEdit, 0);
-					connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-				}
+			if(whichThrottle == 'T') {
+				consist = mainapp.consistT;
+			} else if(whichThrottle == 'S')	{
+				consist = mainapp.consistS;
+			} else {
+				consist = mainapp.consistG;
 			}
-			else
-			{
 
-				release_loco(whichThrottle);
+			consist.add(l);
+			consist.setLeadAddr(addr);
+			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
+			updateRecentEngines(bUpdateList);
 
-				if(whichThrottle == 'T')
-				{
-					consist = mainapp.consistT;
-				}
-				else if(whichThrottle == 'S')
-				{
-					consist = mainapp.consistS;
-				}
-				else
-				{
-					consist = mainapp.consistG;
-				}
+			result = RESULT_OK;
+			end_this_activity();
 
+		// consist exists, bring up editor
+		} else { 
+			newEngine = (consist.getLoco(addr) == null);
+
+			if(newEngine) {
 				consist.add(l);
-				consist.setLeadAddr(addr);
 				mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
-				updateRecentEngines(bUpdateList);
 
-				result = RESULT_OK;
-				end_this_activity();
+				saveUpdateList = bUpdateList;
+				Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
+				consistEdit.putExtra("address", addr);
+				consistEdit.putExtra("whichThrottle", whichThrottle);
+				startActivityForResult(consistEdit, 0);
+				connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			}
 		}
 	}
