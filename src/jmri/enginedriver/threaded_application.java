@@ -1045,61 +1045,63 @@ public class threaded_application extends Application {
 				Log.d("Engine_Driver", "--> null msg");
 			}
 			//convert msg to new MultiThrottle format if version >= 2.0
-			try {
-				char whichThrottle = msg.charAt(0);
-				String cmd = msg.substring(1);
-				char com = cmd.charAt(0);
-				String addr = "";
-				if(cmd.length() > 0) {									//check for loco address after the command
-					String[] as = splitByString(cmd,"<;>");
-					if(as.length > 1) {
-						addr = as[1];
-						cmd = as[0];
-					}
-				}
-				String prefix = "M" + whichThrottle;					// use a multithrottle command
-				if ('T' == whichThrottle || 'S' == whichThrottle || 'G' == whichThrottle) { 	//acquire loco
-					if ('L' == com || 'S' == com) { 					//if address length
-						String rosterName = new String(addr);
-						addr = cmd;
-						if(rosterName.length() > 0) {
-							rosterName = "E" + rosterName;  //use E to indicate rostername
-						} 
-						else {
-							rosterName = addr;
+			else if (withrottle_version >= 2.0) {
+				try {
+					char whichThrottle = msg.charAt(0);
+					String cmd = msg.substring(1);
+					char com = cmd.charAt(0);
+					String addr = "";
+					if(cmd.length() > 0) {									//check for loco address after the command
+						String[] as = splitByString(cmd,"<;>");
+						if(as.length > 1) {
+							addr = as[1];
+							cmd = as[0];
 						}
-						newMsg = prefix + "+" + addr + "<;>" + rosterName;  //add requested loco to this throttle
-					} 
-					else if ('r' == com) {							//if release loco(s)
-						if(addr.length() > 0)
-							newMsg = prefix + "-" + addr + "<;> + addr";		//release one loco
-						else
-							newMsg = prefix + "-*<;>r";  						//release all locos from this throttle
-					} 
-					else if('V' == com) {							//if set speed
-						if(addr.length() == 0)
-							addr = "*";
-						newMsg = prefix + "A" + addr + "<;>" + cmd;  
 					}
-					else if('R' == com) {							//if set direction
-						if(addr.length() == 0)
-							addr = "*";
-						newMsg = prefix + "A" + addr + "<;>" + cmd;
-					}
-					else {												//if anything else
-						newMsg = prefix + "A*<;>" + cmd;  				//pass all action commands along
+					String prefix = "M" + whichThrottle;					// use a multithrottle command
+					if ('T' == whichThrottle || 'S' == whichThrottle || 'G' == whichThrottle) { 	//acquire loco
+						if ('L' == com || 'S' == com) { 					//if address length
+							String rosterName = new String(addr);
+							addr = cmd;
+							if(rosterName.length() > 0) {
+								rosterName = "E" + rosterName;  //use E to indicate rostername
+							} 
+							else {
+								rosterName = addr;
+							}
+							newMsg = prefix + "+" + addr + "<;>" + rosterName;  //add requested loco to this throttle
+						} 
+						else if ('r' == com) {							//if release loco(s)
+							if(addr.length() > 0)
+								newMsg = prefix + "-" + addr + "<;> + addr";		//release one loco
+							else
+								newMsg = prefix + "-*<;>r";  						//release all locos from this throttle
+						} 
+						else if('V' == com) {							//if set speed
+							if(addr.length() == 0)
+								addr = "*";
+							newMsg = prefix + "A" + addr + "<;>" + cmd;  
+						}
+						else if('R' == com) {							//if set direction
+							if(addr.length() == 0)
+								addr = "*";
+							newMsg = prefix + "A" + addr + "<;>" + cmd;
+						}
+						else {												//if anything else
+							newMsg = prefix + "A*<;>" + cmd;  				//pass all action commands along
+						}
 					}
 				}
-			}
-			catch(Exception e) {
-				validMsg = false;
-				if((socketWiT != null) && newMsg.equals("Q")) {
-					Log.d("Sent Q command", "Sent " + newMsg + " command to jmri WiFi Throttle");
-					socketWiT.Send(newMsg); //Sends quit command to JMRI.
-				}
-				else
-				{
-					Log.d("Engine_Driver", "--> invalid msg: " + newMsg);
+				catch(Exception e) {
+					validMsg = false;
+					if((socketWiT != null) && newMsg.equals("Q")) {
+						Log.d("Sent Q command", "Sent " + newMsg + " command to jmri WiFi Throttle");
+						socketWiT.Send(newMsg); //Sends quit command to JMRI.
+					}
+					else
+					{
+						Log.d("Engine_Driver", "--> invalid msg: " + newMsg);
+					}
 				}
 			}
 

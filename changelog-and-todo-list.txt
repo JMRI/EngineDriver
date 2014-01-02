@@ -1,3 +1,5 @@
+**Version 2.9
+ * restore functionality for very old JMRI (pre-multi-throttle)
 **Version 2.8.1
  * fix default for "Drop Before Acquire" if never set, should be off
  * add click sounds to function and direction buttons, to match other buttons 
@@ -228,13 +230,13 @@
  *   added html About page
  */
 /*
+ *   TODO: Add ability to let user reopen backgrounded EngineDriver by touching notification.
  *   TODO: change config files to use db instead of .txt files
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: make private stuff private
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  *   TODO: get power_state from WiThrottle on thread_application start.
- *   TODO: Add ability to let user reopen backgrounded EngineDriver by touching notification.
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
  * routes
@@ -256,10 +258,9 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
- *   TODO: fix issues with padding (requires restart and does not work sometimes)
- *   TODO: option to use "speed steps" instead of 1-99.
- *   TODO: determine why some buttons have audible "click" and others do not (when enabled on device)
- *   TODO: add JMRI fast-clock to screens (in new title bar?)
+ *   TODO: fix issues with slider padding (requires restart and does not work sometimes)
+ *   TODO: option to show "speed steps" instead of 1-99.
+ *   TODO: add JMRI fast-clock to title bar
  *   TODO: retrieve vsDecoder sounds and play when appropriate
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: respect "Max Throttle %" from roster entry

@@ -5,21 +5,9 @@
 </head>
 <h1>JMRI: Engine Driver Throttle for Android</h1>
 <img src="file:///android_asset/engine_driver_icon.png" height="144" width="166" style="float:left;padding:0 8px 8px 0"/>
-<p>Engine Driver version 2.8.1   Changes include: 
-new look, 
-new speed buttons,
-pref to connect to first available JMRI WiThrottle server, 
-emergency stop button for Engine Driver controlled Locos, 
-third throttle slot, layout power button, 
-clear recent loco list and connections,
-specify loco direction in consists, and drop a loco from consist, 
-rotation pref for auto-web,
-notification icon when ED is running in background,
-quick "location" filter for turnouts and routes lists with user settable location delimiter character, 
-and several bug-fixes.
-Changes by Robin Becker and Jeffrey Machacek.
-NOTE: 2.8.1 is a bug fix for 2.8.
-  <br /><em><a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/EngineDriver/changelog-and-todo-list.txt" target="_blank" title="View complete EngineDriver changelog">[view complete changelog]</a></em></p>
+<p>Engine Driver version 2.9   Changes include: 
+restore some functionality for very old JMRI (pre-multi-throttle) 
+<br /><em><a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/EngineDriver/changelog-and-todo-list.txt" target="_blank" title="View complete EngineDriver changelog">[view complete changelog]</a></em></p>
 <p>This free application can connect to a <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml" target="_blank">JMRI WiThrottle</a> server running on a computer, 
 and in turn control your DCC locomotives and other devices. 
 Speed, direction, and up to 29 DCC functions are supported for one or two locos or consists.
@@ -27,7 +15,9 @@ You can also control layout power, turnouts and routes, and display panels and o
 <p>For more details, visit <a href="http://enginedriver.rrclubs.org" target="_blank">[EngineDriver&nbsp;site]</a>. For screenshots, click <a href="http://enginedriver.rrclubs.org/content/screenshots" target="_blank">[here]</a>.</p>
 <h3>Prerequisites:</h3>
 <p>Verify your Android device can connect to your PC network via WiFi and obtain an IP address.<br />Make sure you are running one of the latest versions of <a href="http://jmri.sourceforge.net/" target="_blank">JMRI</a> (2.8 works, 3.0+ works much better) on your PC, connected to your layout.&nbsp; Start up JMRI and verify you can use the included "Throttle" app to control a loco on your layout.</p>
-<p>Start the <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml" target="_blank">WiThrottle</a> function of JMRI, located in DecoderPro under Tools, Throttles.&nbsp; It is also hghly recommended that you start the <a href="http://jmri.sourceforge.net/help/en/html/web/index.shtml" target="_blank" title="Learn more about Mini Web Server">Mini Web Server</a>&nbsp;function (Tools, Start Mini Web Server).&nbsp; Both of these should be added to Preferences, Start Up as well.</p>
+<p>Start the <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml" target="_blank">WiThrottle</a> function of JMRI, located in DecoderPro under Tools, Throttles.&nbsp; It is also hghly recommended that you start the <a href="http://jmri.sourceforge.net/help/en/html/web/index.shtml" target="_blank" title="Learn more about JMRI Web Server">JMRI Web Server</a>
+function (Tools, Start JMRI Web Server).&nbsp; 
+Both of these should be added to Preferences, Start Up as well.</p>
 <h3>Operation:</h3>
 <p>On your phone, start the Engine Driver app and wait for your PC's address to show up in "Discovered Services".&nbsp;</p>
 <p>Click on the discovered address, or you can enter the address and port of your WiThrottle server directly.&nbsp; 

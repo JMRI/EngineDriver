@@ -870,8 +870,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			if(gestureInProgress == true) {
 				return(true);
 			}
-
-			Log.d("Engine_Driver", "onTouch func " + function + " action " + event.getAction());
 			
 			// if gesture just failed, insert one DOWN event on this control
 			if(gestureFailed == true) {
@@ -884,7 +882,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 		private void handleAction(int action) 
 		{
-			//      Log.d("Engine_Driver", "handleAction func" + function + " action " + action);
 			String throt = Character.toString(whichThrottle);
 
 			switch(action)
