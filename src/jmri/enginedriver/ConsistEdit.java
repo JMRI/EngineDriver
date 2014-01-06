@@ -126,17 +126,12 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 		}
 
 		//consist = (whichThrottle == 'T') ? mainapp.consistT : mainapp.consistS;
-		if(whichThrottle == 'T')
-		{
+		if(whichThrottle == 'T') {
 			consist =  mainapp.consistT;
-		}
-		else if(whichThrottle == 'S')
-		{
-			consist =  mainapp.consistS;
-		}
-		else
-		{
+		} else if(whichThrottle == 'G') 	{
 			consist =  mainapp.consistG;
+		} else {
+			consist =  mainapp.consistS;
 		}
 
 		//Set up a list adapter to allow adding the list of recent connections to the UI.

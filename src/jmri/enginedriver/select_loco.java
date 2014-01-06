@@ -93,7 +93,7 @@ public class select_loco extends Activity {
 
 	private int engine_address;
 	private int address_size;
-	private String sWhichThrottle = "T"; // "T" or "S" + roster name
+	private String sWhichThrottle = "T"; // "T" or "S" or "G" + roster name
 	private int result;
 
 	private threaded_application mainapp; // hold pointer to mainapp
@@ -246,8 +246,7 @@ public class select_loco extends Activity {
 			rlv = (View) findViewById(R.id.clear_Loco_List_button);
 			rlv.setVisibility(GONE);
 		}
-		if(SMenu != null)
-		{
+		if(SMenu != null) {
 			mainapp.displayEStop(SMenu);
 		}
 
@@ -295,17 +294,12 @@ public class select_loco extends Activity {
 
 	// request release of specified throttle
 	void release_loco(char whichThrottle) {
-		if(whichThrottle == 'T')
-		{
+		if(whichThrottle == 'T') {
 			mainapp.consistT.release();
-		}
-		else if(whichThrottle == 'S')
-		{
-			mainapp.consistS.release();
-		}
-		else
-		{
+		} else if(whichThrottle == 'G')	{
 			mainapp.consistG.release();
+		} else {
+			mainapp.consistS.release();
 		}
 
 		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "",(int) whichThrottle); // pass T, S or G in message 
@@ -316,22 +310,22 @@ public class select_loco extends Activity {
 
 	void acquire_engine(boolean bUpdateList) {
 		char whichThrottle = sWhichThrottle.charAt(0);
+		String roster_name = sWhichThrottle.substring(1);
 		String addr = (address_size== address_type.LONG ? "L" : "S") + engine_address;
 		Loco l = new Loco(addr);
-		l.setDesc(mainapp.getRosterNameFromAddress(l.toString()));	//use rosterName if present
+		if (!roster_name.equals("")) {
+			l.setDesc(roster_name);	//use rosterName if present
+		} else {
+			l.setDesc(mainapp.getRosterNameFromAddress(l.toString()));	//lookup rostername from address if not set
+		}
 		Consist consist;
 
-		if(whichThrottle == 'T')
-		{
+		if(whichThrottle == 'T') {
 			consist = mainapp.consistT;
-		}
-		else if(whichThrottle == 'S')
-		{
-			consist = mainapp.consistS;
-		}
-		else
-		{
+		} else if(whichThrottle == 'G') {
 			consist = mainapp.consistG;
+		} else {
+			consist = mainapp.consistS;
 		}
 
 		if(sWhichThrottle.length() > 1)				// add roster selection info if present
@@ -348,17 +342,18 @@ public class select_loco extends Activity {
 			result = RESULT_OK;
 			end_this_activity();
 		
-		//user preference set to not consist, so drop before adding
-		} else if(prefs.getBoolean("drop_on_acquire_preference", false) == true) {
+		//user preference set to not consist, or consisting not supported in this JMRI, so drop before adding
+		} else if((prefs.getBoolean("drop_on_acquire_preference", false) == true) 
+				|| (mainapp.withrottle_version < 2.0)) {
 
 			release_loco(whichThrottle);
 
 			if(whichThrottle == 'T') {
 				consist = mainapp.consistT;
-			} else if(whichThrottle == 'S')	{
-				consist = mainapp.consistS;
-			} else {
+			} else if(whichThrottle == 'G')	{
 				consist = mainapp.consistG;
+			} else {
+				consist = mainapp.consistS;
 			}
 
 			consist.add(l);

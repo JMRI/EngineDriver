@@ -190,13 +190,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 							ViewGroup tv;
 							if (whichThrottle == 'T') {
 								tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
-							} 
-							else if(whichThrottle == 'S')
-							{
-								tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
-							}
-							else {
+							} else if(whichThrottle == 'G')	{
 								tv = (ViewGroup) findViewById(R.id.function_buttons_table_G);
+							} else {
+								tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
 							}
 							set_function_labels_and_listeners_for_view(whichThrottle);
 							enable_disable_buttons_for_view(tv, true);
@@ -205,13 +202,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 						else if (com2 == '-') {  		//if loco removed
 							if (whichThrottle == 'T') {
 								removeLoco('T');
-							}
-							else if(whichThrottle == 'S')
-							{
-								removeLoco('S');
-							}
-							else {
+							} else if(whichThrottle == 'G') {
 								removeLoco('G');
+							} else {
+								removeLoco('S');
 							}
 						} 
 						else if (com2 == 'A') {	  		//e.g. MTAL2608<;>R1
@@ -230,15 +224,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 								if(whichThrottle == 'T') {
 									con = mainapp.consistT;
 									curDir = dirT;
-								}
-								else if(whichThrottle == 'S'){
-									con = mainapp.consistS;
-									curDir = dirS;
-								}
-								else
-								{
+								} else if(whichThrottle == 'G'){
 									con = mainapp.consistG;
 									curDir = dirG;
+								} else {
+									con = mainapp.consistS;
+									curDir = dirS;
 								}
 
 								if(addr.equals(con.getLeadAddr())) {
@@ -249,8 +240,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 								}
 								else {
 									int locoDir = curDir;								//calc correct direction for this (non-lead) loco
-									if(con != null)
-									{
+									if(con != null) {
 										if(con.isReverseOfLead(addr))
 											locoDir ^= 1;
 										if(locoDir != dir) {								//if loco has wrong direction then correct it
@@ -297,13 +287,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 						if (whichThrottle == 'F') {			// used to use 'F' instead of 'T'
 							tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
 							whichThrottle = 'T';
-						} 
-						else if(whichThrottle == 'S')
-						{
-							tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
-						}
-						else {
+						} else if(whichThrottle == 'G')	{
 							tv = (ViewGroup) findViewById(R.id.function_buttons_table_G);
+						} else {
+							tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
 						}
 						set_function_labels_and_listeners_for_view(whichThrottle);
 						enable_disable_buttons_for_view(tv, true);
@@ -368,13 +355,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		ViewGroup tv;
 		if (whichThrottle == 'T') {
 			tv = (ViewGroup) findViewById(R.id.function_buttons_table_T);
-		} 
-		else if(whichThrottle == 'S')
-		{
-			tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
-		}
-		else {
+		} else if(whichThrottle == 'G') {
 			tv = (ViewGroup) findViewById(R.id.function_buttons_table_G);
+		} else {
+			tv = (ViewGroup) findViewById(R.id.function_buttons_table_S);
 		}
 		enable_disable_buttons(whichThrottle);  //direction and slider
 		set_function_labels_and_listeners_for_view(whichThrottle);
@@ -394,9 +378,18 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				throttleSlider.setProgress(newSetting);
 				setDisplayedSpeed('T', newSetting);
 			}
-		}
-		else if(whichThrottle == 'S')
-		{
+		} else if(whichThrottle == 'G')	{
+			if(maxSpeed != MAX_SPEED_VAL_G) {
+				double rescale = ((double)maxSpeed) / MAX_SPEED_VAL_G; 
+				SPEED_TO_DISPLAY_G = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL_G);
+				MAX_SPEED_VAL_G = maxSpeed;
+				SeekBar throttleSlider=(SeekBar)findViewById(R.id.speed_G);
+				int newSetting = (int)(throttleSlider.getProgress() * rescale);
+				throttleSlider.setMax(maxSpeed);
+				throttleSlider.setProgress(newSetting);
+				setDisplayedSpeed('G', newSetting);
+			}
+		} else {
 			if(maxSpeed != MAX_SPEED_VAL_S) {
 				double rescale = ((double)maxSpeed) / MAX_SPEED_VAL_S; 
 				SPEED_TO_DISPLAY_S = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL_S);
@@ -408,18 +401,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				setDisplayedSpeed('S', newSetting);
 			}
 		}
-		else {
-			if(maxSpeed != MAX_SPEED_VAL_G) {
-				double rescale = ((double)maxSpeed) / MAX_SPEED_VAL_G; 
-				SPEED_TO_DISPLAY_G = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL_G);
-				MAX_SPEED_VAL_G = maxSpeed;
-				SeekBar throttleSlider=(SeekBar)findViewById(R.id.speed_G);
-				int newSetting = (int)(throttleSlider.getProgress() * rescale);
-				throttleSlider.setMax(maxSpeed);
-				throttleSlider.setProgress(newSetting);
-				setDisplayedSpeed('G', newSetting);
-			}
-		}
 	}
 
 	void set_speed_slider(char whichThrottle, int speed) {
@@ -429,30 +410,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			throttle_slider=(SeekBar)findViewById(R.id.speed_T);
 			lastSpeedT = speed;
 			prefs.edit().putInt("T", lastSpeedT).commit();
-		} 
-		else if(whichThrottle == 'S')
-		{
+		} else if(whichThrottle == 'G') {
+			throttle_slider=(SeekBar)findViewById(R.id.speed_G);
+			lastSpeedG = speed;
+		} else {
 			throttle_slider=(SeekBar)findViewById(R.id.speed_S);
 			lastSpeedS = speed;
 		}
-		else {
-			throttle_slider=(SeekBar)findViewById(R.id.speed_G);
-			lastSpeedG = speed;
-		}
-		if(speed < 0)
-		{
+		if(speed < 0) {
 			//Check to confirm.
-			if(whichThrottle == 'T')
-			{
+			if(whichThrottle == 'T') {
 				lastSpeedT = 0;
-			}
-			else if(whichThrottle == 'S')
-			{
-				lastSpeedS = 0;
-			}
-			else
-			{
+			} else if(whichThrottle == 'G')	{
 				lastSpeedG = 0;
+			} else {
+				lastSpeedS = 0;
 			}
 
 			speed = 0;
@@ -468,17 +440,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			speedScale = SPEED_TO_DISPLAY_T;
 			speed_label=(TextView)findViewById(R.id.speed_value_label_T);
 			con = mainapp.consistT;
-		} 
-
-		else if(whichThrottle == 'S')
-		{
-			speedScale = SPEED_TO_DISPLAY_S;
-			speed_label=(TextView)findViewById(R.id.speed_value_label_S);
-			con = mainapp.consistS;
-		}
-		else {
+		} else if(whichThrottle == 'G')	{
 			speedScale = SPEED_TO_DISPLAY_G;
 			speed_label=(TextView)findViewById(R.id.speed_value_label_G);
+			con = mainapp.consistG;
+		} else {
+			speedScale = SPEED_TO_DISPLAY_S;
+			speed_label=(TextView)findViewById(R.id.speed_value_label_S);
 			con = mainapp.consistS;
 		}
 		if(speed < 0) {
@@ -495,10 +463,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		Consist con;
 		if(whichThrottle == 'T')
 			con = mainapp.consistT;
-		else if(whichThrottle == 'S')
-			con = mainapp.consistS;
-		else
+		else if(whichThrottle == 'G')
 			con = mainapp.consistG;
+		else
+			con = mainapp.consistS;
 		String leadAddr = con.getLeadAddr();
 		for(String addr : con.getList()) {			// loop through each engine in consist
 			if(!skipLead || !addr.equals(leadAddr)) {
@@ -517,22 +485,18 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		if (whichThrottle == 'T') {
 			bFwd = (Button)findViewById(R.id.button_fwd_T);
 			bRev = (Button)findViewById(R.id.button_rev_T);
-		}
-		else if(whichThrottle == 'S')
-		{
-			bFwd = (Button)findViewById(R.id.button_fwd_S);
-			bRev = (Button)findViewById(R.id.button_rev_S);
-		}
-		else {
+		} else if(whichThrottle == 'G')	{
 			bFwd = (Button)findViewById(R.id.button_fwd_G);
 			bRev = (Button)findViewById(R.id.button_rev_G);
+		} else {
+			bFwd = (Button)findViewById(R.id.button_fwd_S);
+			bRev = (Button)findViewById(R.id.button_rev_S);
 		}
 
 		if (direction == 0) {
 			bFwd.setPressed(false);
 			bRev.setPressed(true);
-		} 
-		else {
+		} else {
 			bFwd.setPressed(true);
 			bRev.setPressed(false);
 		}
@@ -546,17 +510,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			bFwd = (Button)findViewById(R.id.button_fwd_T);
 			bRev = (Button)findViewById(R.id.button_rev_T);
 			dirT = direction;
-		} 
-		else if(whichThrottle == 'S')
-		{
-			bFwd = (Button)findViewById(R.id.button_fwd_S);
-			bRev = (Button)findViewById(R.id.button_rev_S);
-			dirS = direction;
-		}
-		else {
+		} else if (whichThrottle == 'G') {
 			bFwd = (Button)findViewById(R.id.button_fwd_G);
 			bRev = (Button)findViewById(R.id.button_rev_G);
 			dirG = direction;
+		} else {
+			bFwd = (Button)findViewById(R.id.button_fwd_S);
+			bRev = (Button)findViewById(R.id.button_rev_S);
+			dirS = direction;
 		}
 
 		if (direction == 0) {
@@ -589,13 +550,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		Button bStop;
 		if (whichThrottle == 'T') {
 			bStop = (Button)findViewById(R.id.button_stop_T);
-		} 
-		else if(whichThrottle == 'S')
-		{
-			bStop = (Button)findViewById(R.id.button_stop_S);
-		}
-		else {
+		} else if(whichThrottle == 'G')	{
 			bStop = (Button)findViewById(R.id.button_stop_G);
+		} else {
+			bStop = (Button)findViewById(R.id.button_stop_S);
 		}
 		if (pressed == true) {
 			bStop.setPressed(true);
@@ -611,24 +569,18 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		Button bSel;
 		if (whichThrottle == 'T') {
 			bSel = (Button)findViewById(R.id.button_select_loco_T);
-		} 
-		else if(whichThrottle == 'S')
-		{
+		} else if(whichThrottle == 'G') {
+			bSel = (Button)findViewById(R.id.button_select_loco_G);
+		} else {
 			bSel = (Button)findViewById(R.id.button_select_loco_S);
 		}
-		else {
-			bSel = (Button)findViewById(R.id.button_select_loco_G);
-		}
 		bSel.setPressed(true);	//give feedback that select button was pressed
-		try
-		{
+		try {
 			Intent select_loco = new Intent().setClass(this, select_loco.class);
 			select_loco.putExtra("sWhichThrottle", Character.toString(whichThrottle));  //pass whichThrottle as an extra to activity
 			startActivityForResult(select_loco, 1);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-		}
-		catch(Exception ex)
-		{
+		} catch(Exception ex) {
 			Log.d("debug", ex.getMessage());
 		}
 	};
@@ -650,26 +602,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				sb.setProgress(0);  //set slider to 0 if disabled
 			}
 			sb.setEnabled(newEnabledState);
-		} 
-		else if(whichThrottle == 'S')
-		{
-			newEnabledState = !(mainapp.consistS.isEmpty());  			//set false if no locos assigned
-			findViewById(R.id.button_fwd_S).setEnabled(newEnabledState);
-			findViewById(R.id.button_stop_S).setEnabled(newEnabledState);
-			findViewById(R.id.button_rev_S).setEnabled(newEnabledState);
-			findViewById(R.id.speed_label_S).setEnabled(newEnabledState);
-			findViewById(R.id.speed_value_label_S).setEnabled(newEnabledState);
-			findViewById(R.id.Left_speed_button_S).setEnabled(newEnabledState);
-			findViewById(R.id.Right_speed_button_S).setEnabled(newEnabledState);
-			enable_disable_buttons_for_view((ViewGroup)findViewById(R.id.function_buttons_table_S),newEnabledState);
-			SeekBar sb = (SeekBar)findViewById(R.id.speed_S);
-			if (!newEnabledState) {
-				sb.setProgress(0);  //set slider to 0 if disabled
-			}
-			sb.setEnabled(newEnabledState);
-		}
-		else {
-
+		} else if(whichThrottle == 'G') {
 			newEnabledState = !(mainapp.consistG.isEmpty());  			//set false if no locos assigned
 			findViewById(R.id.button_fwd_G).setEnabled(newEnabledState);
 			findViewById(R.id.button_stop_G).setEnabled(newEnabledState);
@@ -680,6 +613,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			findViewById(R.id.Right_speed_button_G).setEnabled(newEnabledState);
 			enable_disable_buttons_for_view((ViewGroup)findViewById(R.id.function_buttons_table_G),newEnabledState);
 			SeekBar sb = (SeekBar)findViewById(R.id.speed_G);
+			if (!newEnabledState) {
+				sb.setProgress(0);  //set slider to 0 if disabled
+			}
+			sb.setEnabled(newEnabledState);
+		} else {
+			newEnabledState = !(mainapp.consistS.isEmpty());  			//set false if no locos assigned
+			findViewById(R.id.button_fwd_S).setEnabled(newEnabledState);
+			findViewById(R.id.button_stop_S).setEnabled(newEnabledState);
+			findViewById(R.id.button_rev_S).setEnabled(newEnabledState);
+			findViewById(R.id.speed_label_S).setEnabled(newEnabledState);
+			findViewById(R.id.speed_value_label_S).setEnabled(newEnabledState);
+			findViewById(R.id.Left_speed_button_S).setEnabled(newEnabledState);
+			findViewById(R.id.Right_speed_button_S).setEnabled(newEnabledState);
+			enable_disable_buttons_for_view((ViewGroup)findViewById(R.id.function_buttons_table_S),newEnabledState);
+			SeekBar sb = (SeekBar)findViewById(R.id.speed_S);
 			if (!newEnabledState) {
 				sb.setProgress(0);  //set slider to 0 if disabled
 			}
@@ -707,14 +655,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		//	  Log.d("Engine_Driver","set_function_states");
 
 		LinkedHashMap<Integer, Button> fMap;
-		if(whichThrottle == 'T')
+		if(whichThrottle == 'T') {
 			fMap = functionMapT;
-		else if(whichThrottle == 'S')
-		{
+		} else if(whichThrottle == 'G') {
+			fMap = functionMapG;
+		} else {
 			fMap = functionMapS;
 		}
-		else
-			fMap = functionMapG;
 
 		for(Integer f : fMap.keySet()) {
 			set_function_state(whichThrottle, f);
@@ -729,15 +676,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		if(whichThrottle == 'T') {
 			b = functionMapT.get(function);
 			fs = mainapp.function_states_T;
-		}
-		else if(whichThrottle == 'S')
-		{
-			b = functionMapS.get(function);
-			fs = mainapp.function_states_S;
-		}
-		else {
+		} else if(whichThrottle == 'G')	{
 			b = functionMapG.get(function);
 			fs = mainapp.function_states_G;
+		} else {
+			b = functionMapS.get(function);
+			fs = mainapp.function_states_S;
 		}
 		if(b != null && fs != null) {
 			if(fs[function] == true) {
@@ -760,19 +704,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		Button b;
 		if(whichThrottle == 'T') {
 			b = functionMapT.get(function);
-		}
-		else if(whichThrottle == 'S')
-		{
-			b = functionMapS.get(function);
-		}
-		else {
+		} else if(whichThrottle == 'G') {
 			b = functionMapG.get(function);
+		} else {
+			b = functionMapS.get(function);
 		}
 		if(b != null) {
 			if(reqState != 0) {
 				b.setTypeface(null, Typeface.ITALIC);
-			} 
-			else {
+			} else {
 				b.setTypeface(null, Typeface.NORMAL);
 			}
 		}
@@ -880,14 +820,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			return(true);
 		}
 
-		private void handleAction(int action) 
-		{
+		private void handleAction(int action) {
 			String throt = Character.toString(whichThrottle);
 
-			switch(action)
-			{
-			case MotionEvent.ACTION_DOWN:
-			{
+			switch(action) {
+			case MotionEvent.ACTION_DOWN: {
 				switch (this.function) {
 				case function_button.FORWARD :
 				case function_button.REVERSE : {
@@ -901,13 +838,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					SeekBar sb;
 					if (whichThrottle == 'T') {
 						sb=(SeekBar)findViewById(R.id.speed_T);
-					} 
-					else if(whichThrottle == 'S')
-					{
-						sb=(SeekBar)findViewById(R.id.speed_S);
-					}
-					else {
+					} else if(whichThrottle == 'G')	{
 						sb=(SeekBar)findViewById(R.id.speed_G);
+					} else {
+						sb=(SeekBar)findViewById(R.id.speed_S);
 					}
 					// changing the throttle slider to 0 sends a velocity change to the withrottle
 					// otherwise explicitly send 0 speed message
@@ -933,17 +867,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				default : {  //handle the function buttons
 					//Consist con = (whichThrottle == 'T') ? mainapp.consistT : mainapp.consistS;
 					Consist con;
-					if(whichThrottle == 'T')
-					{
+					if(whichThrottle == 'T') {
 						con = mainapp.consistT;
-					}
-					else if(whichThrottle == 'S')
-					{
-						con = mainapp.consistS;
-					}
-					else
-					{
+					} else if(whichThrottle == 'G')	{
 						con = mainapp.consistG;
+					} else {
+						con = mainapp.consistS;
 					}
 
 					String addr = con.getLeadAddr();
@@ -965,17 +894,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				else if(function < function_button.FORWARD)   {
 					//Consist con = (whichThrottle == 'T') ? mainapp.consistT : mainapp.consistS;
 					Consist con;
-					if(whichThrottle == 'T')
-					{
+					if(whichThrottle == 'T') {
 						con = mainapp.consistT;
-					}
-					else if(whichThrottle == 'S')
-					{
-						con = mainapp.consistS;
-					}
-					else
-					{
+					} else if(whichThrottle == 'G') {
 						con = mainapp.consistG;
+					} else {
+						con = mainapp.consistS;
 					}
 					String addr = con.getLeadAddr();
 					mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, throt+addr, function, 0);
@@ -996,13 +920,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			whichThrottle = new_whichThrottle;   	//store values for this listener
 			if (whichThrottle == 'T') {
 				speed_slider=(SeekBar)findViewById(R.id.speed_T);
-			} 
-			else if(whichThrottle == 'S')
-			{
-				speed_slider=(SeekBar)findViewById(R.id.speed_S);
-			}
-			else {
+			} else if(whichThrottle == 'G') {
 				speed_slider=(SeekBar)findViewById(R.id.speed_G);
+			} else {
+				speed_slider=(SeekBar)findViewById(R.id.speed_S);
 			}
 		}
 
@@ -1048,13 +969,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		double speedScale;
 		if (whichThrottle == 'T') {
 			speedScale = SPEED_TO_DISPLAY_T;
-		} 
-		else if(whichThrottle == 'S')
-		{
-			speedScale = SPEED_TO_DISPLAY_S;
-		}
-		else {
+		} else if(whichThrottle == 'G') {
 			speedScale = SPEED_TO_DISPLAY_G;
+		} else {
+			speedScale = SPEED_TO_DISPLAY_S;
 		}
 		if ((speed - lastSpeed) > (max_throttle_change / speedScale)) { 
 			//Log.d("Engine_Driver", "onProgressChanged -- throttling change");
@@ -1068,17 +986,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		lastSpeed = speed;
 
 		//Check to confirm.
-		if(whichThrottle == 'T')
-		{
+		if(whichThrottle == 'T') {
 			lastSpeedT = speed;
-		}
-		else if(whichThrottle == 'S')
-		{
-			lastSpeedS = speed;
-		}
-		else
-		{
+		} else if(whichThrottle == 'G')	{
 			lastSpeedG = speed;
+		} else {
+			lastSpeedS = speed;
 		}
 	}
 
@@ -1110,14 +1023,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			lastSpeedT -= Math.round(BUTTON_SPEED_STEP / SPEED_TO_DISPLAY_T);
 			speed_slider.setProgress(lastSpeedT);
 
-		} else if(whichThrottle == 'S') {
-			speed_slider=(SeekBar)findViewById(R.id.speed_S);
-			lastSpeedS -= Math.round(BUTTON_SPEED_STEP / SPEED_TO_DISPLAY_S);
-			speed_slider.setProgress(lastSpeedS);
-		} else {
+		} else if(whichThrottle == 'G') {
 			speed_slider=(SeekBar)findViewById(R.id.speed_G);
 			lastSpeedG -= Math.round(BUTTON_SPEED_STEP / SPEED_TO_DISPLAY_G);
 			speed_slider.setProgress(lastSpeedG);
+		} else {
+			speed_slider=(SeekBar)findViewById(R.id.speed_S);
+			lastSpeedS -= Math.round(BUTTON_SPEED_STEP / SPEED_TO_DISPLAY_S);
+			speed_slider.setProgress(lastSpeedS);
 		}
 	}
 
@@ -1128,14 +1041,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			speed_slider=(SeekBar)findViewById(R.id.speed_T);
 			lastSpeedT += Math.round(BUTTON_SPEED_STEP / SPEED_TO_DISPLAY_T);
 			speed_slider.setProgress(lastSpeedT);
-		} else if(whichThrottle == 'S')	{
-			speed_slider=(SeekBar)findViewById(R.id.speed_S);
-			lastSpeedS += Math.round(BUTTON_SPEED_STEP / SPEED_TO_DISPLAY_S);
-			speed_slider.setProgress(lastSpeedS);
-		} else {
+		} else if(whichThrottle == 'G')	{
 			speed_slider=(SeekBar)findViewById(R.id.speed_G);
 			lastSpeedG += Math.round(BUTTON_SPEED_STEP / SPEED_TO_DISPLAY_G);
 			speed_slider.setProgress(lastSpeedG);
+		} else {
+			speed_slider=(SeekBar)findViewById(R.id.speed_S);
+			lastSpeedS += Math.round(BUTTON_SPEED_STEP / SPEED_TO_DISPLAY_S);
+			speed_slider.setProgress(lastSpeedS);
 		}
 	}
 
@@ -1201,7 +1114,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			b.setOnTouchListener(asbl);
 			b.setOnClickListener(asbl);
 
-
 			// Throttle S speed buttons
 			b = (Button) findViewById(R.id.Right_speed_button_S);
 			b.setClickable(true);
@@ -1217,8 +1129,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			b.setOnTouchListener(asbl);
 			b.setOnClickListener(asbl);
 
-
-			
 			//Throttle G speed buttons.
 			b = (Button) findViewById(R.id.Right_speed_button_G);
 			b.setClickable(true);asbl = new arrow_speed_button_touch_listener('G', "right");
@@ -1547,14 +1457,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		//note: we make a copy of function_labels_x because TA might change it while we are using it (causing issues during button update below)
 		if (whichThrottle == 'T' && mainapp.function_labels_T != null && mainapp.function_labels_T.size()>0) {
 			function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_T);
+		} else if (whichThrottle == 'G' && mainapp.function_labels_G != null  && mainapp.function_labels_G.size()>0)	{
+			function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_G);
 		} else if (whichThrottle == 'S' && mainapp.function_labels_S != null  && mainapp.function_labels_S.size()>0) {
 			function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_S);
-		} 
-		else if(whichThrottle == 'G' && mainapp.function_labels_G != null  && mainapp.function_labels_G.size()>0)
-		{
-			function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_G);
-		}
-		else {
+		} else {
 			function_labels_temp = mainapp.function_labels_default;
 		}
 
@@ -1587,12 +1494,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		//update the function-to-button map for the current throttle
 		if(whichThrottle == 'T')
 			functionMapT = functionButtonMap;
-		else if(whichThrottle == 'S')
-		{
-			functionMapS = functionButtonMap;
-		}
-		else
+		else if(whichThrottle == 'G') {
 			functionMapG = functionButtonMap;
+		} else
+			functionMapS = functionButtonMap;
 	}
 
 	//lookup and set values of various informational text labels and size the screen elements 
@@ -1614,17 +1519,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			viT.setVisibility(VISIBLE);
 			viS.setVisibility(GONE);
 			viG.setVisibility(GONE);
-		} 
-		else if(whichVolume == 'S')
-		{
-			viT.setVisibility(GONE);
-			viS.setVisibility(VISIBLE);
-			viG.setVisibility(GONE);
-		}
-		else {
+		} else if(whichVolume == 'G') {
 			viT.setVisibility(GONE);
 			viS.setVisibility(GONE);
 			viG.setVisibility(VISIBLE);
+		} else {
+			viT.setVisibility(GONE);
+			viS.setVisibility(VISIBLE);
+			viG.setVisibility(GONE);
 		}
 
 		SeekBar sbT=(SeekBar)findViewById(R.id.speed_T);
@@ -1824,9 +1726,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		if (screenHeight > throttleMargin) {	//don't do this if height is invalid
 			//determine how to split the screen (evenly if all three, 45/45/10 for two, 80/10/10 if only one)
 			screenHeight -= throttleMargin;
-			/*boolean useOneThrot = prefs.getBoolean("use_one_throttle_preference",
-        		getResources().getBoolean(R.bool.prefUseOneThrottleDefaultValue));*/
 			String numThrot = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumOfThrottlesDefault));
+			
+			//don't allow third throttle if not supported in JMRI (prior to multithrottle change)
+			if (mainapp.withrottle_version < 2.0 && numThrot.matches("Three")) {
+				numThrot = "Two";
+			}
 
 			if(numThrot.matches("One"))
 			{

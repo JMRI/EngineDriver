@@ -369,19 +369,18 @@ public class threaded_application extends Application {
 							function_states_T = new boolean[32];
 						}
 					} 
-					else if(whichThrottle == 'S')
-					{
-						if (releaseAll || consistS.isEmpty()) {
-							addr = "";
-							function_labels_S = new LinkedHashMap<Integer, String>();
-							function_states_S = new boolean[32];
-						}
-					}
-					else {
+					else if(whichThrottle == 'G') {
 						if (releaseAll || consistG.isEmpty()) {
 							addr = "";
 							function_labels_G = new LinkedHashMap<Integer, String>();
 							function_states_G = new boolean[32];
+						}
+					}
+					else {
+						if (releaseAll || consistS.isEmpty()) {
+							addr = "";
+							function_labels_S = new LinkedHashMap<Integer, String>();
+							function_states_S = new boolean[32];
 						}
 					}
 					if (prefs.getBoolean("stop_on_release_preference", 
@@ -593,26 +592,13 @@ public class threaded_application extends Application {
 				char com2 = response_str.charAt(2);
 				//loco was successfully added to a throttle
 				if(com2 == '+') {  //"MT+L2591<;>"  loco was added
-					/****
-					String formatAddr = addr.substring(1) + "(" + addr.substring(0,1) + ")";  //reformat from L2591 to 2591(L)  
-					String rosterName;
-					if (last_roster_entry_requested.equals("")) {  //use remembered name, or look up from address
-						//look up name from address
-						rosterName = getRosterNameFromAddress(formatAddr);  //lookup name in roster
-					} 
-					else {
-						rosterName = last_roster_entry_requested;
-					}
-					Loco l = new Loco(addr, rosterName);
-/****/					
-
 					Consist con;
 					if(whichThrottle == 'T')				// indicate loco was Confirmed by WiT
 						con = consistT;
-					else if(whichThrottle == 'S')
-						con = consistS;
-					else
+					else if(whichThrottle == 'G')
 						con = consistG;
+					else
+						con = consistS;
 					if(con.getLoco(addr) != null)
 						con.setConfirmed(addr);
 					else
@@ -621,13 +607,10 @@ public class threaded_application extends Application {
 				else if(com2 == '-') { //"MS-L6318<;>"  loco removed from throttle
 					if(whichThrottle == 'T') {
 						consistT.remove(addr);
-					} 
-					else if(whichThrottle == 'S')
-					{
-						consistS.remove(addr);
-					}
-					else {
+					} else if(whichThrottle == 'G') {
 						consistG.remove(addr);
+					} else {
+						consistS.remove(addr);
 					}
 					Log.d("Engine_Driver", "loco " + addr + " dropped from " + whichThrottle);
 
@@ -636,10 +619,10 @@ public class threaded_application extends Application {
 					String lead;
 					if ('T' == whichThrottle) 
 						lead = consistT.getLeadAddr();
-					else if('S' == whichThrottle)
-						lead = consistS.getLeadAddr();
-					else
+					else if('G' == whichThrottle)
 						lead = consistG.getLeadAddr();
+					else
+						lead = consistS.getLeadAddr();
 					if(lead.equals(addr))						//*** temp - only process if for lead engine in consist
 						process_roster_function_string("RF29}|{1234(L)" + ls[1], sWhichThrottle);  //prepend some stuff to match old-style
 				} 
@@ -652,16 +635,6 @@ public class threaded_application extends Application {
 
 				break;
 			}
-			/*** old
-			case 'T': 
-				loco_string_T = getRosterNameFromAddress(response_str.substring(1));  //set app variable
-				Log.d("Engine_Driver", "comm_handler loco MT "+loco_string_T);
-				break;
-
-			case 'S': 
-				loco_string_S = getRosterNameFromAddress(response_str.substring(1));  //set app variable
-				break;
-/***/
 			case 'V': 
 				try {
 					withrottle_version= Double.parseDouble(response_str.substring(2));
@@ -1431,6 +1404,11 @@ public class threaded_application extends Application {
 							if (!consistS.isEmpty()) {  
 								withrottle_send("MSA*<;>qV"); //request speed
 								withrottle_send("MSA*<;>qR"); //request direction
+								anySent = true;
+							}
+							if (!consistG.isEmpty()) {  
+								withrottle_send("MGA*<;>qV"); //request speed
+								withrottle_send("MGA*<;>qR"); //request direction
 								anySent = true;
 							}
 						}

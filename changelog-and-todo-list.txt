@@ -1,5 +1,8 @@
 **Version 2.9
  * restore functionality for very old JMRI (pre-multi-throttle)
+ * only show third throttle when supported by JMRI
+ * rearrange the third throttle code to lower chance of NPE reported to Play Store
+ * request heartbeat update on third throttle as well
 **Version 2.8.1
  * fix default for "Drop Before Acquire" if never set, should be off
  * add click sounds to function and direction buttons, to match other buttons 
