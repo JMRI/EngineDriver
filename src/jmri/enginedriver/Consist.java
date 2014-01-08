@@ -50,7 +50,7 @@ public final class Consist {
 
 	}
 
-	public LinkedHashMap<String, ConLoco> con;			//locos assigned to this consist (i.e. this throttle)
+	private LinkedHashMap<String, ConLoco> con;			//locos assigned to this consist (i.e. this throttle)
 	private String leadAddr;							//address of lead loco 
 	//TODO: eliminate stored leadAddr and create on the fly?
 	private String desc;								//composite of rosternames (or formatted addresses) of locos in consist
@@ -119,6 +119,8 @@ public final class Consist {
 	//
 	// report direction of this engine relative to the _current_ lead engine
 	//
+	// caller should catch null returned value indicating address is not in the consist
+	//
 	public Boolean isReverseOfLead(String address) {
 		ConLoco l = con.get(address);
 		if(l == null)
@@ -130,6 +132,8 @@ public final class Consist {
 
 	//
 	// report direction of this engine relative to the top of the consist
+	//
+	// caller should catch null returned value indicating address is not in the consist
 	//
 	public Boolean isBackward(String address) {
 		ConLoco l = con.get(address);
@@ -150,6 +154,9 @@ public final class Consist {
 			l.backward = state;
 	}
 
+	//
+	// caller should catch null returned value indicating address is not in the consist
+	//
 	public Boolean isConfirmed(String address) {
 		ConLoco l = con.get(address);
 		return (l != null) ? l.isConfirmed() : null;

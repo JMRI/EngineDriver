@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -95,6 +96,8 @@ class web_handler extends Handler {
     setContentView(R.layout.web_activity);
   
 	webView = (WebView) findViewById(R.id.webview);
+	String databasePath = webView.getContext().getDir("databases",Context.MODE_PRIVATE).getPath(); 
+	webView.getSettings().setDatabasePath(databasePath);
 	webView.getSettings().setJavaScriptEnabled(true);
 	webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
 	webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out

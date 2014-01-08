@@ -20,6 +20,7 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -241,10 +242,16 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 								else {
 									int locoDir = curDir;								//calc correct direction for this (non-lead) loco
 									if(con != null) {
-										if(con.isReverseOfLead(addr))
-											locoDir ^= 1;
-										if(locoDir != dir) {								//if loco has wrong direction then correct it
-											mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, (int) whichThrottle, locoDir);
+										try {
+											if(con.isReverseOfLead(addr))
+												locoDir ^= 1;
+											if(locoDir != dir) {						//if loco has wrong direction then correct it
+												mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, (int) whichThrottle, locoDir);
+											}
+										}
+										catch(Exception e) {	// isReverseOfLead returns null if addr is not in con
+																// - should not happen unless WiT is reporting on engine user just dropped from ED consist? 
+											Log.d("Engine_Driver","throttle "+whichThrottle+" loco "+addr+" direction reported by WiT but engine is not assigned");
 										}
 									}
 								}
@@ -471,9 +478,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		for(String addr : con.getList()) {			// loop through each engine in consist
 			if(!skipLead || !addr.equals(leadAddr)) {
 				int locoDir = direction;
-				if(con.isReverseOfLead(addr))			//if engine faces opposite of lead loco
-					locoDir ^= 1;						//then reverse the commanded direction
-				mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, (int) whichThrottle, locoDir);
+				try {
+					if(con.isReverseOfLead(addr))			//if engine faces opposite of lead loco
+						locoDir ^= 1;						//then reverse the commanded direction
+					mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, (int) whichThrottle, locoDir);
+				}
+				catch(Exception e) {	// isReverseOfLead returns null if addr is not in con - should never happen since we are walking through consist list
+					Log.d("Engine_Driver","throttle "+whichThrottle+" direction change for unselected loco "+addr);
+				}
 			}
 		}
 	}
@@ -1218,6 +1230,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 
 		webView = (WebView) findViewById(R.id.throttle_webview);
+		String databasePath = webView.getContext().getDir("databases",Context.MODE_PRIVATE).getPath(); 
+		webView.getSettings().setDatabasePath(databasePath);
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
 		webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out

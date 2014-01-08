@@ -150,7 +150,12 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 				TextView addrv = (TextView) rl.getChildAt(1); // get address text from 2nd box
 				String address = (String)addrv.getText();
 
-				consist.setBackward(address, !consist.isBackward(address));
+				try {
+					consist.setBackward(address, !consist.isBackward(address));
+				}
+				catch(Exception e) {	// isBackward returns null if address is not in consist - should not happen since address was selected from consist list
+					Log.d("Engine_Driver","ConsistEdit selected engine "+address+" that is not in consist");
+				}
 				refreshConsistLists();
 			}
 		});	  
