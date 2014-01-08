@@ -1,8 +1,10 @@
 **Version 2.9
  * restore functionality for very old JMRI (pre-multi-throttle)
+ * fix selection/display of roster entry when same address is used for multiple entries
  * only show third throttle when supported by JMRI
  * rearrange the third throttle code to lower chance of NPE reported to Play Store
  * request heartbeat update on third throttle as well
+ * avoid NPE when heartbeat comes as loco removed (Robin Becker)
 **Version 2.8.1
  * fix default for "Drop Before Acquire" if never set, should be off
  * add click sounds to function and direction buttons, to match other buttons 
@@ -254,6 +256,7 @@
  *   TODO: debug "Success: Restored connection to ..." message seen (sometimes) after exiting from Throttle
  *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
  * threaded_application
+ *	 TODO: process_comm_error() no longer sending connection lost messages (maybe others)
  *   TODO: remember consist details
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
