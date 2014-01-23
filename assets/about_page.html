@@ -5,15 +5,21 @@
 </head>
 <h1>JMRI: Engine Driver Throttle for Android</h1>
 <img src="file:///android_asset/engine_driver_icon.png" height="144" width="166" style="float:left;padding:0 8px 8px 0"/>
-<p>Engine Driver version 2.9-test1   Changes include: 
-fix selection/display of roster entry when same address is used for multiple entries, 
-restore some functionality for very old JMRI (pre-multi-throttle),  
-only show third throttle when supported by JMRI, 
-prevent crash reported to Store (Robin Becker)
+<p>Engine Driver version 2.8.2 is a bug-fix for 2.8, which includes:
+pref to auto-connect to first available JMRI WiThrottle server,
+pref to quickly flip between throttle and web view on rotation
+optional speed up/down buttons, with prefs for step and repeat
+emergency stop button for Engine Driver controlled Locos,
+third throttle slot,
+layout power button,
+clear recent loco list and connections,
+specify loco direction in consists, and drop a loco from consist, quick "location" filter for turnouts and routes lists,
+Notification bar icon when EngineDriver is running in the background
+several bug-fixes.
 <br /><em><a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/EngineDriver/changelog-and-todo-list.txt" target="_blank" title="View complete EngineDriver changelog">[view complete changelog]</a></em></p>
 <p>This free application can connect to a <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml" target="_blank">JMRI WiThrottle</a> server running on a computer, 
 and in turn control your DCC locomotives and other devices. 
-Speed, direction, and up to 29 DCC functions are supported for one or two locos or consists.
+Speed, direction, and up to 29 DCC functions are supported for one to three locos or consists.
 You can also control layout power, turnouts and routes, and display panels and other JMRI windows using the web views.</p>
 <p>For more details, visit <a href="http://enginedriver.rrclubs.org" target="_blank">[EngineDriver&nbsp;site]</a>. For screenshots, click <a href="http://enginedriver.rrclubs.org/content/screenshots" target="_blank">[here]</a>.</p>
 <h3>Prerequisites:</h3>
@@ -39,12 +45,17 @@ Release will release all for that throttle.</p>
 <p>Press your phone's Menu button to access screens for Turnout, Route and Power control, as well as adjust settings and set numerous preferences.</p>
 <p>You can also "fling" left or right to jump quickly back and forth between the Throttle, Routes and Turnouts pages.</p>
 <h3>Configuration:</h3>
-<p>Under Preferences, you can turn off the "stop on release" feature if desired, and you can set a Maximum value and Maximum change% for the throttle sliders.&nbsp; If you're planning to manually enter Turnout numbers, select the correct Hardware System to use as the prefix.&nbsp; If the throttle slider is too small for your fingers, increase the size in Preferences.&nbsp; 
-You can also set the initial web page for the full-size web panel, and enable the smaller web view on the throttle screen.&nbsp; There are also settings
-to help maximize the use of your device's smaller screen by hiding items not relevant to you.</p>
+<p>Under Preferences, there is an extensive list of options where you can customize the screens 
+and actions of EngineDriver to work best with your device, your layout and your personal style.
+These include web views, button size, additional buttons, slider size and behavior, number of throttles to display, 
+stop on release, allow/disallow on-the-fly consisting, autoconnect, and many more.  
+</p>
 <p>If you have entered function labels for a roster entry in JMRI, these labels will be used.  
 If not, you can use the Function Defaults menu option to set default labels and function numbers to display.&nbsp; Remove buttons by blanking out the labels.&nbsp; </p>
-<p>On the JMRI computer side, check your WiThrottle preferences to insure you allow or disallow the control features desired.&nbsp; If you've defined your turnouts and routes in a panel, make sure to specify "user names" for those you'd like to see listed on your throttle.&nbsp; You can also "filter" the turnouts shown using the WiThrottle-&gt;Filter Controls option in the WiThrottle window.&nbsp; Turning on "Use eStop" and "Use fixed port#" are also recommended.</p>
+<p>On the JMRI computer side, check your WiThrottle preferences to insure you allow or disallow the control features desired.&nbsp; 
+If you've defined your turnouts and routes in a panel, make sure to specify "user names" for those you'd like to see listed on your throttle.&nbsp; 
+You can also "filter" the turnouts shown using the WiThrottle-&gt;Filter Controls option in the WiThrottle window.&nbsp; 
+Turning on "Use eStop" and "Use fixed port#" are also recommended.</p>
 <p>Entering roster entries, and defining routes and turnouts in JMRI will all make your Engine Driver throttle more powerful and easier to use (though not required).&nbsp; EngineDriver will show additional info if the JMRI Web Server is started (such as roster details and icon images).</p>
 <p>You can browse the current development source code (with tags for earlier releases) 
 <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/EngineDriver/" target="_blank">[HERE].</a></p>
