@@ -1,3 +1,10 @@
+**Version 2.9 (Robin Becker unless noted)
+ * update system list for turnout prefixes - mstevetodd
+ * Modified handling of consists so that Locos are not visible unless WiT reports that they have been acquired (via the MT+ message).  
+ * Also TA does not pulse the outbound heartbeat for a throttle unless the lead loco has been acquired.  
+ * Adjusted the scaling of loco/consist on Throttle and SelectLoco screens to better utilize the actual textView size.  
+ * Widened the Throw, Close and Toggle buttons on the Turnouts screen so the label text does not wrap.  
+ * Adjusted size of the Power icon so it is square.
 **Version 2.8.2
  * restore functionality for very old JMRI (pre-multi-throttle)
  * fix selection/display of roster entry when same address is used for multiple entries
