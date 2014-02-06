@@ -76,6 +76,7 @@ import android.widget.TextView.OnEditorActionListener;
 import java.io.PrintWriter;
 
 import jmri.enginedriver.Consist;
+import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.jmrit.roster.RosterEntry;
 
@@ -95,6 +96,7 @@ public class select_loco extends Activity {
 	private int address_size;
 	private String sWhichThrottle = "T"; // "T" or "S" or "G" + roster name
 	private int result;
+	private boolean selectLocoRendered = false;			// this will be true once set_labels() runs following rendering of the loco select textViews
 
 	private threaded_application mainapp; // hold pointer to mainapp
 
@@ -176,48 +178,77 @@ public class select_loco extends Activity {
 			+ prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
 		v.setText(s);
 
-		// format and show currently selected locos, and hide or show Release
-		// buttons
-		v = (TextView) findViewById(R.id.sl_loco_T);
-		if (mainapp.consistT.toString().length() > 7) {  //shrink text if long
-			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-		} else {
-			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-		}
-		v.setText(mainapp.consistT.toString());
+		// format and show currently selected locos, and hide or show Release buttons
+		final int conNomTextSize = 16;
+		final int conSmallTextSize = 10;
+
 		Button b = (Button) findViewById(R.id.sl_release_T);
-		if (mainapp.consistT.isEmpty()) {
-			b.setEnabled(false);
-		} else {
+		v = (TextView) findViewById(R.id.sl_loco_T);
+		if(mainapp.consistT.isActive()) {
+			String vLabel = mainapp.consistT.toString();
+			int vWidth = v.getWidth();				// scale text if required to fit the textView
+			v.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+			double textWidth = v.getPaint().measureText(vLabel);
+			if(vWidth == 0)
+				selectLocoRendered = false;
+			else {
+				selectLocoRendered = true;
+				if(textWidth > vWidth) {
+					v.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
+				}
+			}
+			v.setText(vLabel);
 			b.setEnabled(true);
 		}
-
-		v = (TextView) findViewById(R.id.sl_loco_S);
-		if (mainapp.consistS.toString().length() > 7) {  //shrink text if long
-			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-		} else {
-			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+		else {
+			v.setText("");
+			b.setEnabled(false);
 		}
-		v.setText(mainapp.consistS.toString());
+
 		b = (Button) findViewById(R.id.sl_release_S);
-		if (mainapp.consistS.isEmpty()) {
-			b.setEnabled(false);
-		} else {
+		v = (TextView) findViewById(R.id.sl_loco_S);
+		if(mainapp.consistS.isActive()) {
+			String vLabel = mainapp.consistS.toString();
+			int vWidth = v.getWidth();				// scale text if required to fit the textView
+			v.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+			double textWidth = v.getPaint().measureText(vLabel);
+			if(vWidth == 0)
+				selectLocoRendered = false;
+			else {
+				selectLocoRendered = true;
+				if(textWidth > vWidth) {
+					v.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
+				}
+			}
+			v.setText(vLabel);
 			b.setEnabled(true);
+		}
+		else {
+			v.setText("");
+			b.setEnabled(false);
 		}
 
-		v = (TextView) findViewById(R.id.sl_loco_G);
-		if (mainapp.consistG.toString().length() > 7) {  //shrink text if long
-			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-		} else {
-			v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-		}
-		v.setText(mainapp.consistG.toString());
 		b = (Button) findViewById(R.id.sl_release_G);
-		if (mainapp.consistG.isEmpty()) {
-			b.setEnabled(false);
-		} else {
+		v = (TextView) findViewById(R.id.sl_loco_G);
+		if(mainapp.consistG.isActive()) {
+			String vLabel = mainapp.consistG.toString();
+			int vWidth = v.getWidth();				// scale text if required to fit the textView
+			v.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+			double textWidth = v.getPaint().measureText(vLabel);
+			if(vWidth == 0)
+				selectLocoRendered = false;
+			else {
+				selectLocoRendered = true;
+				if(textWidth > vWidth) {
+					v.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
+				}
+			}
+			v.setText(vLabel);
 			b.setEnabled(true);
+		}
+		else {
+			v.setText("");
+			b.setEnabled(false);
 		}
 
 		// only show loco text and release buttons for allowed # of locos
@@ -273,13 +304,18 @@ public class select_loco extends Activity {
 				String response_str = msg.obj.toString();
 				if (response_str.length() >= 1) {
 					char com1 = response_str.charAt(0);
-
-					//refresh labels when any roster response is received
-					if (com1 == 'R') {
+					if (com1 == 'R') {									//refresh labels when any roster response is received 
 						roster_list_adapter.notifyDataSetChanged();
 						set_labels();
 					}
+					else if(com1 == 'M' && response_str.length() >= 3) { // refresh Release buttons if loco is added or removed from a consist
+						char com2 = response_str.charAt(2);
+						if(com2 == '+' || com2 == '-')
+							set_labels(); 
+					}
 				}
+				if(!selectLocoRendered)			// call set_labels if the select loco textViews had not rendered the last time it was called
+					set_labels();
 				break;
 			case message_type.WIT_CON_RETRY:
 				roster_list_adapter.notifyDataSetChanged();
@@ -331,44 +367,25 @@ public class select_loco extends Activity {
 		if(sWhichThrottle.length() > 1)				// add roster selection info if present
 			addr += "<;>" + sWhichThrottle.substring(1);
 
-		// just this loco so tell WiT and exit
-		if(consist.size() == 0) {					
 
-			consist.add(l);
-
-			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
-			updateRecentEngines(bUpdateList);
-
-			result = RESULT_OK;
-			end_this_activity();
-		
 		//user preference set to not consist, or consisting not supported in this JMRI, so drop before adding
-		} else if((prefs.getBoolean("drop_on_acquire_preference", false) == true) 
+		if((prefs.getBoolean("drop_on_acquire_preference", false) == true) 
 				|| (mainapp.withrottle_version < 2.0)) {
-
 			release_loco(whichThrottle);
-
-			if(whichThrottle == 'T') {
-				consist = mainapp.consistT;
-			} else if(whichThrottle == 'G')	{
-				consist = mainapp.consistG;
-			} else {
-				consist = mainapp.consistS;
-			}
-
+		}
+		
+		if(!consist.isActive()) {				// if this is the only loco in consist then just tell WiT and exit
 			consist.add(l);
-			consist.setLeadAddr(addr);
+			consist.setLeadAddr(l.getAddress());
 			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
 			updateRecentEngines(bUpdateList);
-
 			result = RESULT_OK;
 			end_this_activity();
 
-		// consist exists, bring up editor
-		} else { 
-			newEngine = (consist.getLoco(addr) == null);
-
-			if(newEngine) {
+		} else {								// else consist exists so bring up editor
+			ConLoco cl = consist.getLoco(addr);
+			newEngine = (cl == null);
+			if(newEngine || !cl.isConfirmed()) {		// if engine is not already in the consist, or if it is but never got acquired
 				consist.add(l);
 				mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
 

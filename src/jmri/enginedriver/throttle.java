@@ -133,6 +133,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private boolean mAutoIncrement = false;
 	private boolean mAutoDecrement = false;
 
+	private boolean selectLocoRendered = false;				// this will be true once set_labels() runs following rendering of the loco select textViews
+	
 	//For speed slider speed buttons.
 	class RptUpdater implements Runnable {
 		char whichThrottle;
@@ -284,7 +286,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				case 'S':
 				case 'G':
 					enable_disable_buttons(com1);  //pass whichthrottle
-
 					set_labels();
 					break;
 
@@ -323,6 +324,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 						mainapp.setPowerStateButton(TMenu);  //update the power state button
 					break;
 				}  //end of switch
+				if(!selectLocoRendered)			// call set_labels if the select loco textViews had not rendered the last time it was called
+					set_labels();
 			}
 			break;
 			case message_type.WIT_CON_RETRY:
@@ -600,7 +603,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	void enable_disable_buttons(char whichThrottle)  {
 		boolean newEnabledState;
 		if (whichThrottle == 'T') {
-			newEnabledState = !mainapp.consistT.isEmpty();  				//set false if no locos assigned
+			newEnabledState = mainapp.consistT.isActive();  				//set false if lead loco is not assigned
 			findViewById(R.id.button_fwd_T).setEnabled(newEnabledState);
 			findViewById(R.id.button_stop_T).setEnabled(newEnabledState);
 			findViewById(R.id.button_rev_T).setEnabled(newEnabledState);
@@ -615,7 +618,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			}
 			sb.setEnabled(newEnabledState);
 		} else if(whichThrottle == 'G') {
-			newEnabledState = !(mainapp.consistG.isEmpty());  			//set false if no locos assigned
+			newEnabledState = (mainapp.consistG.isActive());  			//set false if lead loco is not assigned
 			findViewById(R.id.button_fwd_G).setEnabled(newEnabledState);
 			findViewById(R.id.button_stop_G).setEnabled(newEnabledState);
 			findViewById(R.id.button_rev_G).setEnabled(newEnabledState);
@@ -630,7 +633,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			}
 			sb.setEnabled(newEnabledState);
 		} else {
-			newEnabledState = !(mainapp.consistS.isEmpty());  			//set false if no locos assigned
+			newEnabledState = (mainapp.consistS.isActive());  			//set false if lead loco is not assigned
 			findViewById(R.id.button_fwd_S).setEnabled(newEnabledState);
 			findViewById(R.id.button_stop_S).setEnabled(newEnabledState);
 			findViewById(R.id.button_rev_S).setEnabled(newEnabledState);
@@ -1337,33 +1340,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 		if(TMenu != null)
 		{
-			if(mainapp.consistT.size() >= 2)
-			{
-				TMenu.findItem(R.id.EditConsistT_menu).setVisible(true);
-			}
-			else
-			{
-				TMenu.findItem(R.id.EditConsistT_menu).setVisible(false);
-			}
-
-
-			if(mainapp.consistS.size() >= 2)
-			{
-				TMenu.findItem(R.id.EditConsistS_menu).setVisible(true);
-			}
-			else
-			{
-				TMenu.findItem(R.id.EditConsistS_menu).setVisible(false);
-			}
-
-			if(mainapp.consistG.size() >= 2)
-			{
-				TMenu.findItem(R.id.EditConsistG_menu).setVisible(true);
-			}
-			else
-			{
-				TMenu.findItem(R.id.EditConsistG_menu).setVisible(false);
-			}
+			TMenu.findItem(R.id.EditConsistT_menu).setVisible(mainapp.consistT.isMulti());
+			TMenu.findItem(R.id.EditConsistS_menu).setVisible(mainapp.consistS.isMulti());
+			TMenu.findItem(R.id.EditConsistG_menu).setVisible(mainapp.consistG.isMulti());
 		}
 
 		CookieSyncManager.getInstance().startSync();
@@ -1577,55 +1556,85 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			newHeight = (int) (50 * denScale + 0.5f );  //normal height
 		}
 
+		final int conNomTextSize = 24;
+		final double minTextScale = 0.5;
+		String bLabel;
 		Button b=(Button)findViewById(R.id.button_select_loco_T);
-		if (mainapp.consistT.toString().length() > 18) {  //shrink text if long
-			b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-		} else {
-			b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-		}
-
-		if (mainapp.consistT.isEmpty()) {
-			b.setText("Press to select");
-			whichVolume = 'S';  //set the "other" one to use volume control 
-		} else {
-			b.setText(mainapp.consistT.toString());
+		if (mainapp.consistT.isActive()) {
+			bLabel = mainapp.consistT.toString();
 			throttle_count++;
 		}
-
+		else {
+			bLabel = "Press to select";
+			whichVolume = 'S';  //set the next throttle to use volume control 
+		}
+		double textScale = 1.0;	
+		int bWidth = b.getWidth();				// scale text if required to fit the textView
+		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+		double textWidth = b.getPaint().measureText(bLabel);
+		if(bWidth == 0)
+			selectLocoRendered = false;
+		else {
+			selectLocoRendered = true;
+			if(textWidth > 0 && textWidth > bWidth) {
+				textScale = bWidth / textWidth;
+				if(textScale < minTextScale)
+					textScale = minTextScale;
+			}
+		}
+		int textSize = (int)(conNomTextSize * textScale);
+		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+		b.setText(bLabel);
 		b.setSelected(false);
 		b.setPressed(false);
 
 		b=(Button)findViewById(R.id.button_select_loco_S);
-		if (mainapp.consistS.toString().length() > 18) {  //shrink text if long
-			b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-		} else {
-			b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-		}
-		if (mainapp.consistS.isEmpty()) {
-			b.setText("Press to select");
-			whichVolume = 'G';  //set the "other" one to use volume control 
-		} else {
-			b.setText(mainapp.consistS.toString());
+		if (mainapp.consistS.isActive()) {
+			bLabel = mainapp.consistS.toString();
 			throttle_count++;
 		}
-
+		else {
+			bLabel = "Press to select";
+			if(whichVolume == 'S')
+				whichVolume = 'G';  //set the next throttle to use volume control 
+		}
+		textScale = 1.0;	
+		bWidth = b.getWidth();				// scale text if required to fit the textView
+		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+		textWidth = b.getPaint().measureText(bLabel);
+		if(bWidth != 0 && textWidth > 0 && textWidth > bWidth) {
+			textScale = bWidth / textWidth;
+			if(textScale < minTextScale)
+				textScale = minTextScale;
+		}
+		textSize = (int)(conNomTextSize * textScale);
+		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+		b.setText(bLabel);
 		b.setSelected(false);
 		b.setPressed(false);
 
 		b=(Button)findViewById(R.id.button_select_loco_G);
-		if (mainapp.consistG.toString().length() > 18) {  //shrink text if long
-			b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-		} else {
-			b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-		}
-		if (mainapp.consistG.isEmpty()) {
-			b.setText("Press to select");
-			whichVolume = 'T';  //set the "other" one to use volume control 
-		} else {
-			b.setText(mainapp.consistG.toString());
+		if (mainapp.consistG.isActive()) {
+			bLabel = mainapp.consistG.toString();
 			throttle_count++;
 		}
-
+		else {
+			bLabel = "Press to select";
+			if(whichVolume == 'G')
+				whichVolume = 'T';  //set the first throttle to use volume control 
+		}
+		textScale = 1.0;	
+		bWidth = b.getWidth();				// scale text if required to fit the textView
+		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+		textWidth = b.getPaint().measureText(bLabel);
+		if(bWidth != 0 && textWidth > 0 && textWidth > bWidth) {
+			textScale = bWidth / textWidth;
+			if(textScale < 0.5)
+				textScale = 0.5;
+		}
+		textSize = (int)(conNomTextSize * textScale);
+		b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+		b.setText(bLabel);
 		b.setSelected(false);
 		b.setPressed(false);
 
@@ -1753,13 +1762,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				height_S = 0;
 				height_G = 0;
 			}
-			else if(numThrot.matches("Two") && mainapp.consistS.isEmpty())
+			else if(numThrot.matches("Two") && !mainapp.consistS.isActive())
 			{
 				height_T = (int) (screenHeight * 0.9);
 				height_S = (int) (screenHeight * 0.10);
 				height_G = 0;
 			}
-			else if(numThrot.matches("Two") && mainapp.consistT.isEmpty())
+			else if(numThrot.matches("Two") && !mainapp.consistT.isActive())
 			{
 				height_T = (int) (screenHeight * 0.10);
 				height_S = (int) (screenHeight * 0.9);
@@ -1776,34 +1785,34 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				height_S = (int) (screenHeight * 0.33);
 				height_G = (int) (screenHeight * 0.33);
 
-			} else if (mainapp.consistT.isEmpty() && mainapp.consistS.isEmpty()) {
+			} else if (!mainapp.consistT.isActive() && !mainapp.consistS.isActive()) {
 				height_T = (int) (screenHeight * 0.10);
 				height_S = (int) (screenHeight * 0.10);
 				height_G = (int) (screenHeight * 0.80);
 			} 
 
-			else if(mainapp.consistT.isEmpty() && mainapp.consistG.isEmpty())
+			else if(!mainapp.consistT.isActive() && !mainapp.consistG.isActive())
 			{
 				height_T = (int) (screenHeight * 0.10);
 				height_S = (int) (screenHeight * 0.80);
 				height_G = (int) (screenHeight * 0.10);
 			}
 
-			else if(mainapp.consistS.isEmpty() && mainapp.consistG.isEmpty())
+			else if(!mainapp.consistS.isActive() && !mainapp.consistG.isActive())
 			{
 				height_T = (int) (screenHeight * 0.80);
 				height_S = (int) (screenHeight * 0.10);
 				height_G = (int) (screenHeight * 0.10);
 			}
 
-			else if(mainapp.consistT.isEmpty())
+			else if(!mainapp.consistT.isActive())
 			{
 				height_T = (int) (screenHeight * 0.10);
 				height_S = (int) (screenHeight * 0.45);
 				height_G = (int) (screenHeight * 0.45);
 			}
 
-			else if(mainapp.consistS.isEmpty())
+			else if(!mainapp.consistS.isActive())
 			{
 				height_T = (int) (screenHeight * 0.45);
 				height_S = (int) (screenHeight * 0.10);
@@ -1899,13 +1908,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		} 
 		else if((key==KeyEvent.KEYCODE_VOLUME_UP) || (key==KeyEvent.KEYCODE_VOLUME_DOWN) ) { //use volume to change speed for specified loco
 			SeekBar sb = null;
-			if (whichVolume == 'T' && !mainapp.consistT.isEmpty()) {
+			if (whichVolume == 'T' && mainapp.consistT.isActive()) {
 				sb=(SeekBar)findViewById(R.id.speed_T);
 			}
-			if (whichVolume == 'S' && !mainapp.consistS.isEmpty()) {
+			if (whichVolume == 'S' && mainapp.consistS.isActive()) {
 				sb=(SeekBar)findViewById(R.id.speed_S);
 			}
-			if (whichVolume == 'G' && !mainapp.consistG.isEmpty()) {
+			if (whichVolume == 'G' && mainapp.consistG.isActive()) {
 				sb=(SeekBar)findViewById(R.id.speed_G);
 			}
 			if (sb != null) {

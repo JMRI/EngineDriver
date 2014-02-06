@@ -28,19 +28,19 @@
             android:singleLine="true" />
         <Button
             android:id="@+id/turnout_throw"
-            android:layout_width="40sp"
+            android:layout_width="60sp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:text="@string/throw_button" />
         <Button
             android:id="@+id/turnout_close"
-            android:layout_width="40sp"
+            android:layout_width="60sp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:text="@string/close_button" />
         <Button
             android:id="@+id/turnout_toggle"
-            android:layout_width="40sp"
+            android:layout_width="60sp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:text="@string/toggle_button" />

@@ -53,13 +53,10 @@ public final class Consist {
 	private LinkedHashMap<String, ConLoco> con;			//locos assigned to this consist (i.e. this throttle)
 	private String leadAddr;							//address of lead loco 
 	//TODO: eliminate stored leadAddr and create on the fly?
-	private String desc;								//composite of rosternames (or formatted addresses) of locos in consist
-	//TODO: eliminate stored desc and create on the fly?
 
 
 	public Consist() {
 		con = new LinkedHashMap<String, ConLoco>();
-		desc = "";
 		leadAddr = "";
 	}
 
@@ -84,7 +81,6 @@ public final class Consist {
 
 		con.clear();
 		leadAddr = "";
-		desc = "";
 	}
 
 	public void add(String addr) {
@@ -99,17 +95,15 @@ public final class Consist {
 	public void add(ConLoco l) {
 		String addr = l.getAddress();
 		if(!con.containsKey(addr)) {
-			if(con.size() == 0)
+			if(isEmpty())
 				leadAddr = addr;
 			con.put(addr, new ConLoco(l));						//this ctor makes copy as objects are immutable
-			desc = this.formatConsist();						//update consist description
 			
 		}
 	}
 	
 	public void remove(String address) {
 		con.remove(address);
-		desc = this.formatConsist();
 	}
 
 	public ConLoco getLoco(String address) {
@@ -155,6 +149,19 @@ public final class Consist {
 	}
 
 	//
+	// returns true if consist is not empty and the lead loco has been confirmed
+	public Boolean isActive()
+	{
+		boolean conGood = false;
+		if(!isEmpty() && leadAddr != null) {
+			ConLoco l = con.get(leadAddr);
+			if(l != null && l.isConfirmed())
+				conGood = true;
+		}
+		return conGood;
+	}
+	
+	//
 	// caller should catch null returned value indicating address is not in the consist
 	//
 	public Boolean isConfirmed(String address) {
@@ -185,6 +192,10 @@ public final class Consist {
 	public boolean isEmpty() {
 		return con.size() == 0;
 	}
+	
+	public boolean isMulti() {
+		return (con.size() > 1 && isActive());
+	}
 
 	public int size() {
 		return con.size();
@@ -204,7 +215,7 @@ public final class Consist {
 	//create string description of the consist
 	@Override
 	public String toString() {
-		return desc;  
+		return formatConsist();
 	}
 
 	private String formatConsist() {
@@ -213,8 +224,10 @@ public final class Consist {
 			formatCon = "";
 			String sep = "";
 			for(Map.Entry<String, ConLoco> l : con.entrySet()) {		// loop through locos in consist
-				formatCon += sep + l.getValue().toString();
-				sep = " +";
+				if(l.getValue().isConfirmed()) { 
+					formatCon += sep + l.getValue().toString();
+					sep = " +";
+				}
 			}
 		}
 		else {

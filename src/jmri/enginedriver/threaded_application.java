@@ -1395,18 +1395,18 @@ public class threaded_application extends Application {
 					comm_msg_handler.removeCallbacks(this);				//remove pending requests
 					if(heartbeatOutboundInterval != 0) {
 						boolean anySent = false;
-						if (withrottle_version >= 2.0) { 
-							if (!consistT.isEmpty()) {  
+						if (withrottle_version >= 2.0) {
+							if (consistT.isActive()) {  
 								withrottle_send("MTA*<;>qV"); //request speed
 								withrottle_send("MTA*<;>qR"); //request direction
 								anySent = true;
 							}
-							if (!consistS.isEmpty()) {  
+							if (consistS.isActive()) {  
 								withrottle_send("MSA*<;>qV"); //request speed
 								withrottle_send("MSA*<;>qR"); //request direction
 								anySent = true;
 							}
-							if (!consistG.isEmpty()) {  
+							if (consistG.isActive()) {  
 								withrottle_send("MGA*<;>qV"); //request speed
 								withrottle_send("MGA*<;>qR"); //request direction
 								anySent = true;

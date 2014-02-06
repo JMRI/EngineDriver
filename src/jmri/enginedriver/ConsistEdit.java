@@ -62,22 +62,26 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 		consistObjList.clear();
 		int pos = 0;
 		for(ConLoco l : consist.getLocos()) {
-			consistObjList.add(l);
-			if(l.getAddress().equals(consist.getLeadAddr()))
-				consistSpinner.setSelection(pos);
-			pos++;
+			if(l.isConfirmed()) {
+				consistObjList.add(l);
+				if(l.getAddress().equals(consist.getLeadAddr()))
+					consistSpinner.setSelection(pos);
+				pos++;
+			}
 		}
 		consistObjListAdapter.notifyDataSetChanged();
 
 		consistList.clear();
 		for (ConLoco l : consist.getLocos()) {
-			//put values into temp hashmap
-			HashMap<String, String> hm=new HashMap<String, String>();
-			hm.put("lead_label", consist.getLeadAddr().equals(l.getAddress()) ? "LEAD" : "");
-			hm.put("loco_addr", l.getAddress());
-			hm.put("loco_name", l.toString());
-			hm.put("loco_facing", l.isBackward() ? "Rear" : "Front");
-			consistList.add(hm);
+			if(l.isConfirmed()) {
+				//put values into temp hashmap
+				HashMap<String, String> hm=new HashMap<String, String>();
+				hm.put("lead_label", consist.getLeadAddr().equals(l.getAddress()) ? "LEAD" : "");
+				hm.put("loco_addr", l.getAddress());
+				hm.put("loco_name", l.toString());
+				hm.put("loco_facing", l.isBackward() ? "Rear" : "Front");
+				consistList.add(hm);
+			}
 		}
 		consistListAdapter.notifyDataSetChanged();
 	}
@@ -89,6 +93,15 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 
 		public void handleMessage(Message msg) {
 			switch(msg.what) {
+			case message_type.RESPONSE: 					  // see if loco added to or removed from any throttle
+				String response_str = msg.obj.toString();
+				if(response_str.length() >= 3) {
+					char com1 = response_str.charAt(0);
+					char com2 = response_str.charAt(2);
+					if(com1 == 'M' && (com2 == '+' || com2 == '-'))
+						refreshConsistLists();
+				}
+				break;
 			case message_type.WIT_CON_RETRY:
 				refreshConsistLists(); 
 				break;
