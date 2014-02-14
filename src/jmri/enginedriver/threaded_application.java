@@ -219,7 +219,6 @@ public class threaded_application extends Application {
 					if (multicast_lock == null) {  //do this only as needed
 						multicast_lock=wifi.createMulticastLock("engine_driver");
 						multicast_lock.setReferenceCounted(true);
-						//						multicast_lock.acquire();
 					}
 
 					byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
@@ -229,22 +228,18 @@ public class threaded_application extends Application {
 					Log.d("Engine_Driver","start_jmdns: local IP addr " + client_address);
 
 					jmdns=JmDNS.create(addr, client_address);  //pass ip as name to avoid hostname lookup attempt
-					//    				jmdns=JmDNS.create(addr);
 
 					listener=new withrottle_listener();
 					Log.d("Engine_Driver","start_jmdns: listener created");
 
-					//					jmdns.addServiceListener("_withrottle._tcp.local.", listener);
-
 				} else {
 					process_comm_error("No local IP Address found.\nCheck your WiFi connection.");
-				}  //end of if intaddr==0
-			}  catch(IOException except) { 
+				}  //end of if intaddr!=0
+			}  catch(Exception except) { 
 				Log.e("Engine_Driver", "start_jmdns - Error creating withrottle listener: "+except.getMessage()); 
-				process_comm_error("Error creating withrottle listener: IOException: \n"+except.getMessage()); 
+				process_comm_error("Error creating withrottle zeroconf listener: IOException: \n"+except.getMessage()); 
 			}
 		}
-
 
 		//end_jmdns() takes a long time, so put it in its own thread
 		void end_jmdns() {

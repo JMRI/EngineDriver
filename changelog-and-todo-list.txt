@@ -1,10 +1,12 @@
-**Version 2.9 (Robin Becker unless noted)
+**Version 2.9
+ * fix issue with volume button changing wrong loco speed when unused throttle has the "v" - mstevetodd
+ * Catch additional exceptions when starting jmDNS listener (NoSuchMethodError reported to Store) - mstevetodd
  * update system list for turnout prefixes - mstevetodd
- * Modified handling of consists so that Locos are not visible unless WiT reports that they have been acquired (via the MT+ message).  
- * Also TA does not pulse the outbound heartbeat for a throttle unless the lead loco has been acquired.  
- * Adjusted the scaling of loco/consist on Throttle and SelectLoco screens to better utilize the actual textView size.  
- * Widened the Throw, Close and Toggle buttons on the Turnouts screen so the label text does not wrap.  
- * Adjusted size of the Power icon so it is square.
+ * Modified handling of consists so that Locos are not visible unless WiT reports that they have been acquired (via the MT+ message). - Robin Becker  
+ * Also TA does not pulse the outbound heartbeat for a throttle unless the lead loco has been acquired. - Robin Becker  
+ * Adjusted the scaling of loco/consist on Throttle and SelectLoco screens to better utilize the actual textView size. - Robin Becker  
+ * Widened the Throw, Close and Toggle buttons on the Turnouts screen so the label text does not wrap. - Robin Becker  
+ * Adjusted size of the Power icon so it is square. - Robin Becker
 **Version 2.8.2
  * restore functionality for very old JMRI (pre-multi-throttle)
  * fix selection/display of roster entry when same address is used for multiple entries
@@ -255,9 +257,9 @@
  *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
  *   TODO: use PRT titles for Active/inactive
  * turnouts
+ *   TODO: list available "system" based on items in use, maybe with dropdown on Turnout
  *   TODO: pref to sort by system name vs. user name
  *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
- *   TODO: default "system" based on items in use
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
  *   TODO: debug "Success: Restored connection to ..." message seen (sometimes) after exiting from Throttle
@@ -271,6 +273,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: show proper function labels based on lead loco in consist
  *   TODO: fix issues with slider padding (requires restart and does not work sometimes)
  *   TODO: option to show "speed steps" instead of 1-99.
  *   TODO: add JMRI fast-clock to title bar
@@ -293,6 +296,7 @@
  *   TODO: show error if invalid entry
  *
  * These require changes to WiThrottle
+ *   allow setting of undefined turnouts (JMRI Turnout Tool creates them on-the-fly, so we could too)
  *   resend roster, turnout and routes when items are added or removed, by adding listeners to WiT
  *   support resend of function and direction commands, even when WiT knows it has already sent
  *   WiT send MT-xxx when commands are received from a client for a loco that is not active.  (to get ED up to date with server after connection loss)

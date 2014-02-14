@@ -1,4 +1,4 @@
-/*Copyright (C) 2013 M. Steve Todd mstevetodd@enginedriver.rrclubs.org
+/*Copyright (C) 2014 M. Steve Todd mstevetodd@enginedriver.rrclubs.org
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -75,8 +75,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static double SPEED_TO_DISPLAY_T = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL_T);
 	private static double SPEED_TO_DISPLAY_S = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL_S);
 	private static double SPEED_TO_DISPLAY_G = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL_G);
-
-	//	private static final long speedUpdateDelay = 500;	// idle time in milliseconds after speed change before requesting speed update 
 
 	private static boolean navigatingAway = false;			// true if another activity was selected (can't use isFinishing() because Throttle only finishes on exit)
 	private char whichVolume = 'T';
@@ -871,16 +869,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					set_labels();
 					break;
 				}
-				//Commented because this section kept starting select loco activity twice.
-				//				case function_button.SELECT_LOCO : {
-				//					start_select_loco_activity(whichThrottle);  //pass throttle #
-				//					Log.d("debug", "Select Loco");
-				//
-				//					break;
-				//				}
 
 				default : {  //handle the function buttons
-					//Consist con = (whichThrottle == 'T') ? mainapp.consistT : mainapp.consistS;
 					Consist con;
 					if(whichThrottle == 'T') {
 						con = mainapp.consistT;
@@ -1563,10 +1553,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		if (mainapp.consistT.isActive()) {
 			bLabel = mainapp.consistT.toString();
 			throttle_count++;
-		}
-		else {
+		} else {
 			bLabel = "Press to select";
-			whichVolume = 'S';  //set the next throttle to use volume control 
+//			whichVolume = 'S';  //set the next throttle to use volume control 
 		}
 		double textScale = 1.0;	
 		int bWidth = b.getWidth();				// scale text if required to fit the textView
@@ -1592,11 +1581,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		if (mainapp.consistS.isActive()) {
 			bLabel = mainapp.consistS.toString();
 			throttle_count++;
-		}
-		else {
+		} else {
 			bLabel = "Press to select";
-			if(whichVolume == 'S')
-				whichVolume = 'G';  //set the next throttle to use volume control 
+//			if(whichVolume == 'S')
+//				whichVolume = 'G';  //set the next throttle to use volume control 
 		}
 		textScale = 1.0;	
 		bWidth = b.getWidth();				// scale text if required to fit the textView
@@ -1617,11 +1605,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		if (mainapp.consistG.isActive()) {
 			bLabel = mainapp.consistG.toString();
 			throttle_count++;
-		}
-		else {
+		} else {
 			bLabel = "Press to select";
-			if(whichVolume == 'G')
-				whichVolume = 'T';  //set the first throttle to use volume control 
+//			if(whichVolume == 'G')
+//				whichVolume = 'T';  //set the first throttle to use volume control 
 		}
 		textScale = 1.0;	
 		bWidth = b.getWidth();				// scale text if required to fit the textView
@@ -1645,8 +1632,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			//throttle screen hasn't been drawn yet, so use display metrics for now
 			screenHeight = dm.heightPixels - (int)(titleBar * (dm.densityDpi/160.));	//allow for title bar, etc	
 		}
-		if(sW == 0)
-		{
+		if(sW == 0) {
 			sW = dm.widthPixels;
 		}
 
@@ -1670,8 +1656,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 		l.setLayoutParams(llLp);
 
-		if(prefs.getBoolean("display_speed_arrows_buttons", false))
-		{
+		if(prefs.getBoolean("display_speed_arrows_buttons", false))	{
 			int pL = (int) (sW * 0.10);
 			int pS = (int) (sW * 0.80);
 
@@ -1691,9 +1676,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			sbT.setLayoutParams(llLp);
 			sbS.setLayoutParams(llLp);
 			sbG.setLayoutParams(llLp);
-		}
-		else
-		{
+		} else {
 			llLp = new LinearLayout.LayoutParams(
 					0,  0);
 
@@ -1713,8 +1696,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 
 		//TODO: Fix graphic error when updating view, so blue dot and line match the new width when sliding.
-		if(mainapp.firstCreate)
-		{
+		if(mainapp.firstCreate) {
 
 			String leftS = prefs.getString("left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
 			String rightS = prefs.getString("right_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderRightMarginDefaultValue));
@@ -1724,14 +1706,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 			try {
 				left = Integer.parseInt(leftS);
-			} 
-			catch (Exception e) {
+			} catch (Exception e) {
 				left = 8;
 			}
 			try {
 				right = Integer.parseInt(rightS);
-			} 
-			catch (Exception e) {
+			} catch (Exception e) {
 				right = 8;
 			}
 
