@@ -1613,7 +1613,7 @@ public class threaded_application extends Application {
 				function_labels_default.put(0, "Light");
 				function_labels_default.put(1, "Bell");
 				function_labels_default.put(2, "Horn");
-				for(int k = 3; k <= 27; k++) {
+				for(int k = 3; k <= 28; k++) {
 					function_labels_default.put(k, Integer.toString(k));		//String.format("%d",k));
 				}
 			}

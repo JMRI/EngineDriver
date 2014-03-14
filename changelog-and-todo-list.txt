@@ -7,6 +7,7 @@
  * Adjusted the scaling of loco/consist on Throttle and SelectLoco screens to better utilize the actual textView size. - Robin Becker  
  * Widened the Throw, Close and Toggle buttons on the Turnouts screen so the label text does not wrap. - Robin Becker  
  * Adjusted size of the Power icon so it is square. - Robin Becker
+ * corrected number of default function buttons to 28 - mstevetodd
 **Version 2.8.2
  * restore functionality for very old JMRI (pre-multi-throttle)
  * fix selection/display of roster entry when same address is used for multiple entries
@@ -265,6 +266,7 @@
  *   TODO: debug "Success: Restored connection to ..." message seen (sometimes) after exiting from Throttle
  *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
  * threaded_application
+ *   TODO: convert jmri version retrieval from xmlio to json
  *	 TODO: process_comm_error() no longer sending connection lost messages (maybe others)
  *   TODO: remember consist details
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
