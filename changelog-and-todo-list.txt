@@ -255,6 +255,7 @@
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
  * routes
+ *   TODO: restrict "click" region so that scrolling can be done without inadvertently changing state
  *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
  *   TODO: use PRT titles for Active/inactive
  * turnouts
@@ -275,6 +276,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: fix speed issue when rotating while address acquired, next adjustment jumps to zero
  *   TODO: show proper function labels based on lead loco in consist
  *   TODO: fix issues with slider padding (requires restart and does not work sometimes)
  *   TODO: option to show "speed steps" instead of 1-99.
