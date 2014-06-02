@@ -50,6 +50,7 @@ public class web_activity extends Activity {
   private static String currentUrl = null;
   private boolean currentUrlUpdate = false;
   private boolean orientationChange = false;
+  private String currentTime = "";
  
   @SuppressLint("HandlerLeak")
 class web_handler extends Handler {
@@ -67,12 +68,26 @@ class web_handler extends Handler {
 	  	  case message_type.INITIAL_WEBPAGE:
 			  reloadWebpage(); 
 			  break;
+	  	  case message_type.CURRENT_TIME:
+	  		  currentTime = msg.obj.toString();
+	  		  setTitle();
+	  		  break;
 		  case message_type.DISCONNECT:
 		  case message_type.SHUTDOWN:
 			  disconnect();
 			  break;
 		  }
 	  };
+  }
+
+  //	set the title, optionally adding the current time.
+  public void setTitle()
+  {
+	  if (prefs.getBoolean("ClockDisplayPreference", 
+			getResources().getBoolean(R.bool.prefDisplayClockDefaultValue))) {
+		setTitle(getApplicationContext().getResources().getString(R.string.app_name) + "  " + currentTime);
+	  } else
+		setTitle(getApplicationContext().getResources().getString(R.string.app_name_web));
   }
 
   private void reloadWebpage() {
@@ -157,7 +172,8 @@ class web_handler extends Handler {
 		  return;
  	  }
 	  mainapp.cancelRunningNotify();
-
+	  currentTime = "";
+	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CURRENT_TIME);	// request time update
 
 // don't load here - onCreate already handled it.  Load might not be finished yet
 // in which case call load_webview here just creates extra work since url will still be null

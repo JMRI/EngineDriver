@@ -119,6 +119,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static String currentUrl = null;
 	private boolean currentUrlUpdate;
 	private boolean orientationChange = false;
+	private String currentTime = "";
 	private Menu TMenu;
 	int lastSpeed;
 	int lastSpeedT;
@@ -326,11 +327,19 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					set_labels();
 			}
 			break;
+			case message_type.ROSTER_UPDATE:
+				//refresh function labels when any roster response is received
+				set_labels();
+				break;
 			case message_type.WIT_CON_RETRY:
 				removeLoco('T');
 				removeLoco('S');
 				removeLoco('G');
 				reloadWeb();
+				break;
+			case message_type.CURRENT_TIME:
+				currentTime = msg.obj.toString();
+				setTitle();
 				break;
 			case message_type.DISCONNECT:
 			case message_type.SHUTDOWN:
@@ -1011,13 +1020,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 }
 	 */
 
-//	public String setTitleToIncludeThrotName()
-//	{
-//		//sets the tile to include throttle name.
-//		String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-//		//setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle) + "    |    Throttle Name: " + prefs.getString("throttle_name_preference", defaultName));
-//		return  prefs.getString("throttle_name_preference", defaultName);
-//	}
+//	set the title, optionally adding the current time.
+	public void setTitle()
+	{
+		if (prefs.getBoolean("ClockDisplayPreference", 
+				getResources().getBoolean(R.bool.prefDisplayClockDefaultValue))) {
+			setTitle(getApplicationContext().getResources().getString(R.string.app_name) + "  " + currentTime);
+		} else
+			setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
+	}
 
 	public void decrement(char whichThrottle){
 
@@ -1070,8 +1081,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			return;
 		}
 		setContentView(R.layout.throttle);
-
-		//setTitleToIncludeThrotName();
 
 		webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));    
 		//    myGesture = new GestureDetector(this);
@@ -1280,6 +1289,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 		navigatingAway = false;
 		mainapp.cancelRunningNotify();
+		currentTime = "";
+		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CURRENT_TIME);	// request time update
+
 		// set max allowed change for throttles from prefs
 		String s = prefs.getString("maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
 		try {

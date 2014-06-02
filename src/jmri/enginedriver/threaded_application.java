@@ -42,9 +42,16 @@ import android.widget.Toast;
 import javax.jmdns.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import de.tavendo.autobahn.WebSocketConnection;
+import de.tavendo.autobahn.WebSocketHandler;
+import de.tavendo.autobahn.WebSocketOptions;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -147,7 +154,10 @@ public class threaded_application extends Application {
 		withrottle_listener listener;
 		android.net.wifi.WifiManager.MulticastLock multicast_lock;
 		socket_WiT socketWiT;
+        ClockWebSocketHandler clockWebSocket;
 		heartbeat heart = new heartbeat();
+		volatile String currentTime = "";
+		volatile boolean displayClock;
 
 		comm_thread() {
 			super("comm_thread");
@@ -349,7 +359,7 @@ public class threaded_application extends Application {
 						host_ip = null;  //clear vars if failed to connect
 						port = 0;
 					}
-
+					currentTime = "";
 					break;
 
 					//Release one or all locos on the specified throttle.  addr is in msg (""==all), arg1 holds whichThrottle.
@@ -412,6 +422,10 @@ public class threaded_application extends Application {
 					end_jmdns();
 					dlMetadataTask.stop();
 					dlRosterTask.stop();
+                    if (clockWebSocket != null) {
+                   		clockWebSocket.disconnect();
+                        clockWebSocket = null;
+                    }
 					/***future Notification
 					hideNotification();
 					 ***/					
@@ -493,17 +507,28 @@ public class threaded_application extends Application {
 					withrottle_send(String.format("PPA%d", msg.arg1));
 					break;
 
-					// SHUTDOWN - terminate socketWiT and it's done
+				//Current Time update request
+				case message_type.CURRENT_TIME:
+					alert_activities(message_type.CURRENT_TIME, currentTime);
+                    break;
+                    
+				//Current Time clock display preference change
+				case message_type.CLOCK_DISPLAY:
+					clockWebSocket.refresh();
+					alert_activities(message_type.CURRENT_TIME, currentTime);
+                    break;
+                        
+				// SHUTDOWN - terminate socketWiT and it's done
 				case message_type.SHUTDOWN:
 					shutdown();
 					break;
 
-					// update of roster-related data completed in background
+				// update of roster-related data completed in background
 				case message_type.ROSTER_UPDATE:
 					alert_activities(message_type.ROSTER_UPDATE,"");
 					break;
 
-					// WiT socket is down and reconnect attempt in prog 
+				// WiT socket is down and reconnect attempt in prog 
 				case message_type.WIT_CON_RETRY:
 					/***future Notification
   					hideNotification();
@@ -724,9 +749,12 @@ public class threaded_application extends Application {
 						Log.d("Engine_Driver", "process response: invalid web server port string");
 						web_server_port = 0;
 					}
-					dlMetadataTask.get();			// start background metadata update
+                    dlMetadataTask.get();			// start background metadata update
 					dlRosterTask.get();				// start background metadata update
 
+					if (clockWebSocket == null)
+						clockWebSocket = new ClockWebSocketHandler();
+					clockWebSocket.refresh();
 					break;
 				}  //end switch inside P
 				break;
@@ -1429,6 +1457,76 @@ public class threaded_application extends Application {
 				}
 			};
 		}
+		
+		
+		class ClockWebSocketHandler extends WebSocketHandler {
+		    private final String sGetClockMemory = "{\"type\":\"memory\",\"data\":{\"name\":\"IMCURRENTTIME\"}}";
+		    private final String sClockMemoryName = "IMCURRENTTIME";
+		    private WebSocketConnection mConnection = new WebSocketConnection();
+		    
+			@Override
+		    public void onOpen() {
+		        try {
+    	            Log.d("Engine_Driver","ClockWebSocket open");
+		            mConnection.sendTextMessage(sGetClockMemory);
+		        } catch(Exception e) { 
+    	            Log.d("Engine_Driver","ClockWebSocket open error: "+e.toString());
+		        }
+		    }
+		    
+    	    @Override
+    	    public void onTextMessage(String msg) {
+    	        try {
+    	            JSONObject currentTimeMemory = new JSONObject(msg);
+    	            JSONObject data = currentTimeMemory.getJSONObject("data");
+    	            if(sClockMemoryName.equals(data.getString("name"))) {
+    	            	currentTime = data.getString("value");
+    	            	if(currentTime.length() > 0)
+    	            		alert_activities(message_type.CURRENT_TIME, currentTime);	  //send the time update
+    	            }
+    	        } catch (JSONException e) {
+    	        	// wasn't a clock memory message so just ignore it
+    	        }
+    	    }
+		    
+		    @Override
+		    public void onClose(int code, String closeReason) {
+		    	// attempt reconnection unless finishing
+				if(!doFinish && displayClock)
+					this.connect();
+		    }
+				    
+		    public void connect() {
+		        try {
+    	            Log.d("Engine_Driver","ClockWebSocket attempt connect");
+					mConnection.connect(createUri(), this);
+		        } catch (Exception e) {
+    	            Log.d("Engine_Driver","ClockWebSocket connect error: "+e.toString());
+		        }
+		    }
+		    
+		    public void disconnect() {
+	            try {
+	                mConnection.disconnect();
+	            } catch (Exception e) {
+    	            Log.d("Engine_Driver","ClockWebSocket disconnect error: "+e.toString());
+	            }
+	            displayClock = false;
+		    }
+		        
+		    public void refresh() {
+    			currentTime = "";
+		    	displayClock = prefs.getBoolean("ClockDisplayPreference", 
+						getResources().getBoolean(R.bool.prefDisplayClockDefaultValue));
+		    	if(displayClock) {
+		    		if (mConnection.isConnected())
+		    			this.disconnect();
+	    			this.connect();
+		    	} else { 
+		    			this.disconnect();
+		    	}
+			}
+		}
 	}
 
     /**
@@ -1551,6 +1649,7 @@ public class threaded_application extends Application {
 
 		dlMetadataTask = new DownloadMetaTask();
 		dlRosterTask = new DownloadRosterTask();
+
 		//use worker thread to initialize default function labels from file so UI can continue
 		new Thread(new Runnable() {
 			public void run() {
@@ -1994,6 +2093,18 @@ public class threaded_application extends Application {
 				url = "http://" + host_ip + ":" + port + "/" + defaultUrl;
 		}
 		return url;
+	}
+
+	// build a full uri
+	// returns:	full uri    if webServerPort is valid
+	//			null	    otherwise
+	public String createUri() {
+		String uri = null;
+		int port = web_server_port;
+		if (port > 0) {
+            uri = "ws://" + host_ip + ":" + port + "/json/";
+		}
+		return uri;
 	}
 
 	/**

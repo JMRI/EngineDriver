@@ -17,7 +17,23 @@
         android:key="ThrottleOrientation" 
         android:summary="@string/prefThrottleOrientationSummary" 
         android:title="@string/prefThrottleOrientationTitle" />
-    <CheckBoxPreference android:key="show_emergency_stop_button_preference" android:summary="@string/prefEmerStopSummary" android:title="@string/prefEmerStopTitle" android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"/><CheckBoxPreference android:summary="@string/prefPowerButtonBarSummary" android:title="@string/prefPowerButtonBarTitle" android:key="show_layout_power_button_preference" android:defaultValue="@bool/prefLayoutPowerButtonDefaultValue"/><PreferenceCategory android:title="@string/prefThrottleTitle" >
+    <CheckBoxPreference
+        android:key="show_emergency_stop_button_preference" 
+        android:summary="@string/prefEmerStopSummary" 
+        android:title="@string/prefEmerStopTitle" 
+        android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"/>
+    <CheckBoxPreference 
+        android:summary="@string/prefPowerButtonBarSummary" 
+        android:title="@string/prefPowerButtonBarTitle" 
+        android:key="show_layout_power_button_preference" 
+        android:defaultValue="@bool/prefLayoutPowerButtonDefaultValue"/>
+    <CheckBoxPreference 
+        android:title="@string/prefDisplayClockTitle" 
+        android:defaultValue="@bool/prefDisplayClockDefaultValue" 
+        android:summary="@string/prefDisplayClockSummary" 
+        android:key="ClockDisplayPreference"/>
+    <PreferenceCategory 
+        android:title="@string/prefThrottleTitle" >
         <EditTextPreference
             android:defaultValue="@string/prefMaximumThrottleDefaultValue"
             android:dialogTitle="@string/prefMaximumThrottleTitle"
@@ -78,7 +94,7 @@
     	    android:key="InitialThrotWebPage" 
     	    android:summary="@string/prefInitialThrotWebPageSummary" 
     	    android:title="@string/prefInitialThrotWebPageTitle" />
-    	<CheckBoxPreference 
+   		<CheckBoxPreference 
     	    android:title="@string/prefDisplaySpeedArrowsTitle" 
     	    android:defaultValue="@bool/prefDisplaySpeedArrows" 
     	    android:summary="@string/prefDisplaySpeedArrowsSummary" 
@@ -101,7 +117,8 @@
             android:numeric="integer"/>
     		
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
+    <PreferenceCategory 
+        android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference
             android:defaultValue="@bool/prefStopOnReleaseDefaultValue"
             android:key="stop_on_release_preference"
@@ -157,7 +174,8 @@
             android:summary="@string/prefInitialWebPageSummary"
             android:title="@string/prefInitialWebPageTitle" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/prefConnectTitle" >
+    <PreferenceCategory 
+        android:title="@string/prefConnectTitle" >
         <EditTextPreference
             android:defaultValue="@string/prefMaximumRecentConnectionsDefaultValue"
             android:dialogTitle="@string/prefMaximumRecentConnectionsTitle"
@@ -167,9 +185,14 @@
             android:summary="@string/prefMaximumRecentConnectionsSummary"
             android:title="@string/prefMaximumRecentConnectionsTitle" >
         </EditTextPreference>
-        <CheckBoxPreference android:defaultValue="@bool/prefConnectToFirstServer" android:key="connect_to_first_server_preference" android:title="@string/PrefConnectToFirstServerTitle" android:summary="@string/PrefConnectToFirstServerSummary"/>
+        <CheckBoxPreference 
+            android:defaultValue="@bool/prefConnectToFirstServer" 
+            android:key="connect_to_first_server_preference" 
+            android:title="@string/PrefConnectToFirstServerTitle" 
+            android:summary="@string/PrefConnectToFirstServerSummary"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/prefTurnoutsTitle" >
+    <PreferenceCategory 
+        android:title="@string/prefTurnoutsTitle" >
         <ListPreference
             android:defaultValue="@string/prefHardwareSystemDefaultValue"
             android:entries="@array/hardware_system_names"

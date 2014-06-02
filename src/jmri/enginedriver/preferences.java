@@ -36,14 +36,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 	private threaded_application mainapp;  // hold pointer to mainapp
 	private Menu PRMenu;
 
-	public void setTitleToIncludeThrotName()
-	{
-//		SharedPreferences prefs  = getSharedPreferences("jmri.enginedriver_preferences", 0);
-//		String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-//		setTitle(getApplicationContext().getResources().getString(R.string.app_name_preferences) + "    |    Throttle Name: " + 
-//				prefs.getString("throttle_name_preference", defaultName));
-	}
-
 	/** Called when the activity is first created. */
 	@SuppressWarnings("deprecation")
 	@Override
@@ -51,7 +43,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 		super.onCreate(savedInstanceState);
 		mainapp=(threaded_application)getApplication();
 		addPreferencesFromResource(R.xml.preferences);
-		setTitleToIncludeThrotName();
 		if(mainapp.power_state == null)
 		{
 			getPreferenceScreen().findPreference("show_layout_power_button_preference").setSelectable(false);
@@ -67,7 +58,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 		mainapp.cancelRunningNotify();
 		// Set up a listener whenever a key changes            
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-		setTitleToIncludeThrotName();
 		if(PRMenu != null)
 		{
 			mainapp.displayEStop(PRMenu);
@@ -169,7 +159,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 				String uniqueDefaultName = defaultName + " " + deviceId;
 				sharedPreferences.edit().putString(key, uniqueDefaultName).commit();  //save new name to prefs
 			}
-			setTitleToIncludeThrotName();
 		}
 		else if(key.equals("WebViewLocation")) {
 			mainapp.alert_activities(message_type.WEBVIEW_LOC,""); 
@@ -185,7 +174,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 			mainapp.alert_activities(message_type.INITIAL_WEBPAGE,""); 
 		}
 		else if(key.equals("DelimiterPreference")) {
-			mainapp.alert_activities(message_type.LOCATION_DELIMITER,""); 
+			mainapp.alert_activities(message_type.LOCATION_DELIMITER,"");
+		}
+		else if(key.equals("ClockDisplayPreference")) {
+			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY);
 		}
 	}
 	//Handle pressing of the back button to end this activity

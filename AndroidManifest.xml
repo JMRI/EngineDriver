@@ -14,7 +14,7 @@
         android:resizeable="true"
         android:smallScreens="true" />
     <!-- Orig.Min = 7 Orig.Target = 10 -->
-    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="18" tools:ignore="OldTargetApi">
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="19" tools:ignore="OldTargetApi">
     </uses-sdk>
     <uses-permission android:name="android.permission.READ_LOGS"/>
     

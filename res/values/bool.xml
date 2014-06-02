@@ -25,5 +25,6 @@
     <bool name="prefShowEmergencyStopButtonDefaultValue">false</bool>
     <bool name="prefLayoutPowerButtonDefaultValue">false</bool>
     <bool name="prefConnectToFirstServer">false</bool>
+    <bool name="prefDisplayClockDefaultValue">false</bool>
     <bool name="prefDisplaySpeedArrows">false</bool>
 </resources>
