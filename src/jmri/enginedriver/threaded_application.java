@@ -33,6 +33,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+
 import java.net.*;
 import java.io.*;
 import android.util.Log;
@@ -51,12 +52,13 @@ import org.w3c.dom.NodeList;
 
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketHandler;
-import de.tavendo.autobahn.WebSocketOptions;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
 import java.net.InetAddress;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import jmri.enginedriver.message_type;
@@ -112,6 +114,7 @@ public class threaded_application extends Application {
 	public static HashMap<String, String> metadata;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
 	ImageDownloader imageDownloader = new ImageDownloader();
 	String power_state;
+	public boolean displayClock = false;
 
 	static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;	//minimum interval for outbound heartbeat generator
 	static final int HEARTBEAT_RESPONSE_ALLOWANCE = 4;		//worst case time delay for WiT to respond to a heartbeat message
@@ -142,7 +145,7 @@ public class threaded_application extends Application {
 	public boolean EStopActivated = false;  // Used to determine if user pressed the EStop button.
 
 	//Used to tell set_Labels in Throttle not to update padding for throttle sliders after onCreate.
-	public boolean firstCreate = true;  
+	public boolean firstCreate = true;
 
 
 	//TODO: For future use with setContentIntentNotification.
@@ -157,7 +160,6 @@ public class threaded_application extends Application {
         ClockWebSocketHandler clockWebSocket;
 		heartbeat heart = new heartbeat();
 		volatile String currentTime = "";
-		volatile boolean displayClock;
 
 		comm_thread() {
 			super("comm_thread");
@@ -1465,6 +1467,9 @@ public class threaded_application extends Application {
 		    private final String sGetClockMemory = "{\"type\":\"memory\",\"data\":{\"name\":\"IMCURRENTTIME\"}}";
 		    private final String sClockMemoryName = "IMCURRENTTIME";
 		    private WebSocketConnection mConnection = new WebSocketConnection();
+		    private int displayClockHrs = 0;
+		    private final SimpleDateFormat sdf12 = new SimpleDateFormat("h:mm a");
+		    private final SimpleDateFormat sdf24 = new SimpleDateFormat("HH:mm");
 		    
 			@Override
 		    public void onOpen() {
@@ -1483,8 +1488,23 @@ public class threaded_application extends Application {
     	            JSONObject data = currentTimeMemory.getJSONObject("data");
     	            if(sClockMemoryName.equals(data.getString("name"))) {
     	            	currentTime = data.getString("value");
-    	            	if(currentTime.length() > 0)
+    	            	if(currentTime.length() > 0) {
+    	            		String newTime; 
+        	            	try {
+	    	            		if(currentTime.indexOf("M") < 0) {			// no AM or PM - in 24 hr format
+	    	            			if(displayClockHrs == 1) {				// display in 12 hr format
+		    	            			newTime = sdf12.format(sdf24.parse(currentTime));
+		    	            			currentTime = newTime;
+	    	            			}
+	    	            		} else {									// in 12 hr format 
+	    	            			if(displayClockHrs == 2) {				// display in 24 hr format
+	    	            				newTime = sdf24.format(sdf12.parse(currentTime));
+	    	            				currentTime = newTime;
+	    	            			}
+    	            			}
+        	            	} catch (ParseException e) { }
     	            		alert_activities(message_type.CURRENT_TIME, currentTime);	  //send the time update
+    	            	}
     	            }
     	        } catch (JSONException e) {
     	        	// wasn't a clock memory message so just ignore it
@@ -1518,14 +1538,19 @@ public class threaded_application extends Application {
 		        
 		    public void refresh() {
     			currentTime = "";
-		    	displayClock = prefs.getBoolean("ClockDisplayPreference", 
-						getResources().getBoolean(R.bool.prefDisplayClockDefaultValue));
-		    	if(displayClock) {
+    			try {
+    				displayClockHrs = Integer.parseInt(prefs.getString("ClockDisplayTypePreference", "0"));
+    			} catch(NumberFormatException e) {
+    				displayClockHrs = 0;
+    			}
+		    	if(displayClockHrs > 0) {
 		    		if (mConnection.isConnected())
 		    			this.disconnect();
 	    			this.connect();
+	    			displayClock = true;
 		    	} else { 
 		    			this.disconnect();
+		    			displayClock = false;
 		    	}
 			}
 		}

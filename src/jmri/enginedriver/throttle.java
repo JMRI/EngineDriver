@@ -1023,10 +1023,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 //	set the title, optionally adding the current time.
 	public void setTitle()
 	{
-		if (prefs.getBoolean("ClockDisplayPreference", 
-				getResources().getBoolean(R.bool.prefDisplayClockDefaultValue))) {
+		if(mainapp.displayClock)
 			setTitle(getApplicationContext().getResources().getString(R.string.app_name) + "  " + currentTime);
-		} else
+		else
 			setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
 	}
 

@@ -83,11 +83,10 @@ class web_handler extends Handler {
   //	set the title, optionally adding the current time.
   public void setTitle()
   {
-	  if (prefs.getBoolean("ClockDisplayPreference", 
-			getResources().getBoolean(R.bool.prefDisplayClockDefaultValue))) {
-		setTitle(getApplicationContext().getResources().getString(R.string.app_name) + "  " + currentTime);
-	  } else
-		setTitle(getApplicationContext().getResources().getString(R.string.app_name_web));
+	  	if(mainapp.displayClock)
+			setTitle(getApplicationContext().getResources().getString(R.string.app_name) + "  " + currentTime);
+	  	else
+			setTitle(getApplicationContext().getResources().getString(R.string.app_name_web));
   }
 
   private void reloadWebpage() {

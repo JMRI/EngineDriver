@@ -21,17 +21,19 @@
         android:key="show_emergency_stop_button_preference" 
         android:summary="@string/prefEmerStopSummary" 
         android:title="@string/prefEmerStopTitle" 
-        android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"/>
+        android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue" />
     <CheckBoxPreference 
         android:summary="@string/prefPowerButtonBarSummary" 
         android:title="@string/prefPowerButtonBarTitle" 
         android:key="show_layout_power_button_preference" 
-        android:defaultValue="@bool/prefLayoutPowerButtonDefaultValue"/>
-    <CheckBoxPreference 
-        android:title="@string/prefDisplayClockTitle" 
-        android:defaultValue="@bool/prefDisplayClockDefaultValue" 
-        android:summary="@string/prefDisplayClockSummary" 
-        android:key="ClockDisplayPreference"/>
+        android:defaultValue="@bool/prefLayoutPowerButtonDefaultValue" />
+     <ListPreference
+         android:defaultValue="@string/prefDisplayClockDefaultValue"
+         android:entries="@array/DisplayClockOptions"
+         android:entryValues="@array/DisplayClockValues"
+         android:key="ClockDisplayTypePreference"
+         android:summary="@string/prefDisplayClockSummary"
+         android:title="@string/prefDisplayClockTitle" />
     <PreferenceCategory 
         android:title="@string/prefThrottleTitle" >
         <EditTextPreference
@@ -214,5 +216,6 @@
 	        android:summary="@string/prefDelimiterSummary"
 	        android:title="@string/prefDelimiterTitle" >
 	    </EditTextPreference>
-        </PreferenceCategory>
+     </PreferenceCategory>
+    
 </PreferenceScreen>

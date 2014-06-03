@@ -169,8 +169,9 @@
     <string name="prefSliderRightMarginDefaultValue">8</string>
     <string name="PrefConnectToFirstServerTitle">Auto-Connect to First WiThrottle Server</string>
     <string name="PrefConnectToFirstServerSummary">Connect automatically to first JMRI WIThrottle Server identified.</string>
-    <string name="prefDisplayClockTitle">Display Clock</string>
-    <string name="prefDisplayClockSummary">Display JMRI Clock in Throttle and Web screens.</string>
+    <string name="prefDisplayClockTitle">Clock Display</string>
+    <string name="prefDisplayClockSummary">Set Format for JMRI Clock Display in Throttle and Web screens.</string>
+    <string name="prefDisplayClockDefaultValue">0</string>
     <string name="LeftButton">&lt;</string>
     <string name="RightButton">&gt;</string>
     <string name="prefDisplaySpeedArrowsTitle">Display Speed arrow buttons</string>

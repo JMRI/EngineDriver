@@ -16,7 +16,6 @@
 -->
 
 <resources>
-
     <string-array name="address_size">
         <item>Short</item>
         <item>Long</item>
@@ -88,5 +87,15 @@
         <item >One</item>
         <item >Two</item>
         <item >Three</item>
+    </string-array>
+    <string-array name="DisplayClockOptions">
+        <item >None</item>
+        <item >12 Hr format</item>
+        <item >24 hr format</item>
+    </string-array>
+    <string-array name="DisplayClockValues">
+        <item >0</item>
+        <item >1</item>
+        <item >2</item>
     </string-array>
 </resources>
