@@ -514,10 +514,10 @@ public class threaded_application extends Application {
                     
 				//Current Time clock display preference change
 				case message_type.CLOCK_DISPLAY:
-					if (clockWebSocket == null)
-						clockWebSocket = new ClockWebSocketHandler();
-					clockWebSocket.refresh();
-					alert_activities(message_type.CURRENT_TIME, currentTime);
+					if (clockWebSocket != null) {
+						clockWebSocket.refresh();
+						alert_activities(message_type.CURRENT_TIME, currentTime);
+					}
                     break;
                         
 				// SHUTDOWN - terminate socketWiT and it's done
@@ -2086,7 +2086,7 @@ public class threaded_application extends Application {
 	// returns:	full url 	if web_server_port is valid
 	//			null	 otherwise
 	public String createUrl(String defaultUrl) {
-		String url = null;
+		String url = "";
 		int port = web_server_port;
 		if (port > 0) {
 			if (defaultUrl.startsWith("http"))  //if url starts with http, use it as is, else prepend servername and port
@@ -2101,7 +2101,7 @@ public class threaded_application extends Application {
 	// returns:	full uri    if webServerPort is valid
 	//			null	    otherwise
 	public String createUri() {
-		String uri = null;
+		String uri = "";
 		int port = web_server_port;
 		if (port > 0) {
             uri = "ws://" + host_ip + ":" + port + "/json/";
