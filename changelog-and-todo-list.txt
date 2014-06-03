@@ -8,6 +8,8 @@
  * Widened the Throw, Close and Toggle buttons on the Turnouts screen so the label text does not wrap. - Robin Becker  
  * Adjusted size of the Power icon so it is square. - Robin Becker
  * corrected number of default function buttons to 28 - mstevetodd
+ * added option to show JMRI fast-clock in title bar - Robin Becker
+
 **Version 2.8.2
  * restore functionality for very old JMRI (pre-multi-throttle)
  * fix selection/display of roster entry when same address is used for multiple entries
@@ -259,11 +261,13 @@
  *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
  *   TODO: use PRT titles for Active/inactive
  * turnouts
+ *   TODO: restrict "click" region so that scrolling can be done without inadvertently changing state
  *   TODO: list available "system" based on items in use, maybe with dropdown on Turnout
  *   TODO: pref to sort by system name vs. user name
  *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
+ *   TODO: if user enters ":" into address input, jump to port input
  *   TODO: debug "Success: Restored connection to ..." message seen (sometimes) after exiting from Throttle
  *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
  * threaded_application
@@ -280,7 +284,6 @@
  *   TODO: show proper function labels based on lead loco in consist
  *   TODO: fix issues with slider padding (requires restart and does not work sometimes)
  *   TODO: option to show "speed steps" instead of 1-99.
- *   TODO: add JMRI fast-clock to title bar
  *   TODO: retrieve vsDecoder sounds and play when appropriate
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: respect "Max Throttle %" from roster entry

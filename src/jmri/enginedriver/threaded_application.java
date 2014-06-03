@@ -514,6 +514,8 @@ public class threaded_application extends Application {
                     
 				//Current Time clock display preference change
 				case message_type.CLOCK_DISPLAY:
+					if (clockWebSocket == null)
+						clockWebSocket = new ClockWebSocketHandler();
 					clockWebSocket.refresh();
 					alert_activities(message_type.CURRENT_TIME, currentTime);
                     break;
