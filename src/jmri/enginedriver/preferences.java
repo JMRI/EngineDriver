@@ -48,6 +48,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 			getPreferenceScreen().findPreference("show_layout_power_button_preference").setSelectable(false);
 			getPreferenceScreen().findPreference("show_layout_power_button_preference").setEnabled(false);
 		}
+		if(mainapp.androidVersion < mainapp.minWebSocketVersion) {
+			getPreferenceScreen().findPreference("ClockDisplayTypePreference").setSelectable(false);
+			getPreferenceScreen().findPreference("ClockDisplayTypePreference").setEnabled(false);
+		}
 	}
 
 	@SuppressWarnings("deprecation")

@@ -115,6 +115,8 @@ public class threaded_application extends Application {
 	ImageDownloader imageDownloader = new ImageDownloader();
 	String power_state;
 	public boolean displayClock = false;
+	public int androidVersion = 0;
+	public final int minWebSocketVersion = 8;				//minimum Android version for Autobahn websocket library
 
 	static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;	//minimum interval for outbound heartbeat generator
 	static final int HEARTBEAT_RESPONSE_ALLOWANCE = 4;		//worst case time delay for WiT to respond to a heartbeat message
@@ -157,7 +159,7 @@ public class threaded_application extends Application {
 		withrottle_listener listener;
 		android.net.wifi.WifiManager.MulticastLock multicast_lock;
 		socket_WiT socketWiT;
-        ClockWebSocketHandler clockWebSocket;
+        ClockWebSocketHandler clockWebSocket = null;
 		heartbeat heart = new heartbeat();
 		volatile String currentTime = "";
 
@@ -756,9 +758,11 @@ public class threaded_application extends Application {
                     dlMetadataTask.get();			// start background metadata update
 					dlRosterTask.get();				// start background metadata update
 
-					if (clockWebSocket == null)
-						clockWebSocket = new ClockWebSocketHandler();
-					clockWebSocket.refresh();
+					if(androidVersion >= minWebSocketVersion) {
+						if (clockWebSocket == null)
+							clockWebSocket = new ClockWebSocketHandler();
+						clockWebSocket.refresh();
+					}
 					break;
 				}  //end switch inside P
 				break;
@@ -1668,6 +1672,8 @@ public class threaded_application extends Application {
 		startActivity(caIntent);
 		 ***/
 
+		
+		androidVersion = android.os.Build.VERSION.SDK_INT;
 		prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
 		function_states_T = new boolean[32];
