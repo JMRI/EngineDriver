@@ -5,26 +5,22 @@
     android:keepScreenOn="true"
     android:orientation="vertical" >
     <TextView
-        android:id="@+id/routes_label"
+        android:id="@+id/routes_direct_entry_label"
         style="@style/small_heading_style"
-        android:text="@string/routes_label" />
+        android:text="@string/routes_direct_entry_label" />
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="4dp" >
-        <TextView
-            android:id="@+id/route_prefix"
-            style="@style/floating_text_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/routes_default_prefix" />
         <EditText
             android:id="@+id/route_entry"
             android:layout_width="80sp"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
-            android:inputType="text"
+            android:hint="@string/routes_route"
+            android:imeOptions="actionDone"
+            android:maxLength="60"
             android:singleLine="true" />
         <Button
             android:id="@+id/route_toggle"
@@ -45,12 +41,16 @@
         android:padding="4dp" >
 	    <Spinner
 	        android:id="@+id/routes_location"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
 	        android:layout_height="49dp"
             android:layout_weight="1.0"
 	        android:singleLine="true" />
 
     </LinearLayout>
+    <TextView
+        android:id="@+id/routes_list_label"
+        style="@style/small_heading_style"
+        android:text="@string/routes_list_label" />
     <ListView
         android:id="@+id/routes_list"
         android:layout_width="fill_parent"

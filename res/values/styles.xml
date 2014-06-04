@@ -93,27 +93,17 @@
       <item name="android:shadowDy">1</item>
       <item name="android:shadowRadius">0.2</item>
     </style>
-
-<style name="app_title" parent="@android:style/TextAppearance.WindowTitle">
-  <item name="android:shadowColor">#FF000000</item>
-  <item name="android:shadowDx">2</item>
-  <item name="android:shadowDy">2</item>
-  <item name="android:shadowRadius">1</item>
-</style>
-
-    <style name="app_theme" parent="@android:Theme.Holo">
-        <item name="android:windowBackground">@drawable/app_background</item>
-        <item name="android:windowTitleStyle">@style/app_title</item>
-        <item name="android:listViewStyle">@style/EDListView</item>
-        <item name="android:expandableListViewStyle">@style/EDListView</item>
+    <style name="app_title" parent="@android:style/TextAppearance.WindowTitle">
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">1</item>
     </style>
-
- <style name="EDListView" parent="@android:style/Widget.ListView">
-  <item name="android:divider">#8c8a8c</item>
-  <item name="android:dividerHeight">1dp</item>
-  <item name="android:cacheColorHint">@android:color/transparent</item>
- </style>
-
+    <style name="EDListView" parent="@android:style/Widget.ListView">
+        <item name="android:divider">#8c8a8c</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+    </style>
 <style name="small_heading_style" parent="@android:style/Widget.TextView">
   <item name="android:textColor">#FFFFFF</item>
   <item name="android:background">#8c8a8c</item>

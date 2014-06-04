@@ -74,18 +74,6 @@ public class routes extends Activity  implements OnGestureListener {
 	private GestureDetector myGesture ;
 	private Menu RMenu;
 
-	public class route_item implements AdapterView.OnItemClickListener	  {
-
-		//When a route  is clicked, extract systemname and send command to toggle it
-		public void onItemClick(AdapterView<?> parent, View v, int position, long id)	    {
-			ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
-			ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
-			TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
-			String systemname = (String) snv.getText();
-			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, '2'+systemname);	// toggle
-		};
-	}	  
-
 	public void refresh_route_view() {
 
 		boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference", 
@@ -176,7 +164,6 @@ public class routes extends Activity  implements OnGestureListener {
 	private int updateRouteEntry() {
 		Button butSet = (Button) findViewById(R.id.route_toggle);
 		EditText rte = (EditText) findViewById(R.id.route_entry);
-		TextView rtePrefix =(TextView)findViewById(R.id.route_prefix);
 		String route = rte.getText().toString().trim();
 		int txtLen = route.length();
 		if (mainapp.rt_state_names != null) {
@@ -185,22 +172,14 @@ public class routes extends Activity  implements OnGestureListener {
 			// don't allow Set button if nothing entered
 			if(txtLen > 0) {
 				butSet.setEnabled(true);
-				if(Character.isDigit(route.charAt(0))) // show default route prefix if numeric entry
-					rtePrefix.setEnabled(true);
-				else
-					rtePrefix.setEnabled(false);
-			}
-			else {
+			} else {
 				butSet.setEnabled(false);
-				rtePrefix.setEnabled(false);
 			}
-		} 
-		else {
+		} else {
 			rte.setEnabled(false);
 			butSet.setEnabled(false);
 			if(!rte.getText().toString().equals(getString(R.string.disabled)))
 				rte.setText(getString(R.string.disabled));
-			rtePrefix.setEnabled(false);
 		}
 
 		if(RMenu != null)
@@ -258,14 +237,22 @@ public class routes extends Activity  implements OnGestureListener {
 			EditText entryv=(EditText)findViewById(R.id.route_entry);
 			String entrytext = new String(entryv.getText().toString().trim());
 			if (entrytext.length() > 0 ) {
-				//if text starts with a digit then use default prefix
-				//otherwise send the text as is
-				if(Character.isDigit(entrytext.charAt(0)))
-					entrytext = getString(R.string.routes_default_prefix) + entrytext;
 				mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, whichCommand+entrytext);
 			}
 		};
 	}
+	//handle click for each route's state toggle button
+	public class route_state_button_listener implements View.OnClickListener  {
+		
+		public void onClick(View v) {
+			ViewGroup vg = (ViewGroup)v.getParent();  //start with the list item the button belongs to 
+			ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemname and username
+			TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
+			String systemname = (String) snv.getText();
+			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, '2'+systemname);	// 2=toggle
+		};
+	}
+
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event){
@@ -304,10 +291,19 @@ public class routes extends Activity  implements OnGestureListener {
 		routes_list=new ArrayList<HashMap<String, String> >();
 		routes_list_adapter=new SimpleAdapter(this, routes_list, R.layout.routes_item, 
 				new String[] {"rt_user_name", "rt_system_name_hidden", "rt_system_name", "rt_current_state_desc"},
-				new int[] {R.id.rt_user_name, R.id.rt_system_name_hidden, R.id.rt_system_name, R.id.rt_current_state_desc});
+				new int[] {R.id.rt_user_name, R.id.rt_system_name_hidden, R.id.rt_system_name, R.id.rt_current_state_desc}) {
+			//set up listener for each state button
+			@Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View row =  super.getView(position, convertView, parent);
+        		Button b=(Button)row.findViewById(R.id.rt_current_state_desc);
+        		b.setOnClickListener(new route_state_button_listener());
+                return row;
+            }
+			
+		};
 		ListView routes_lv=(ListView)findViewById(R.id.routes_list);
 		routes_lv.setAdapter(routes_list_adapter);
-		routes_lv.setOnItemClickListener(new route_item());
 
 		OnTouchListener gestureListener = new ListView.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
@@ -348,7 +344,7 @@ public class routes extends Activity  implements OnGestureListener {
 		button_listener click_listener=new button_listener('2');
 		b.setOnClickListener(click_listener);
 
-		((EditText) findViewById(R.id.route_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
+		//((EditText) findViewById(R.id.route_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
 
 		locationList = new ArrayList<String>();
 		locationSpinner = (Spinner) findViewById(R.id.routes_location);

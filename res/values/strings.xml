@@ -59,14 +59,16 @@
     <string name="release">Release</string>
     <string name="turnouts">Turnouts</string>
     <string name="turnouts_label">Control Turnouts</string>
-    <string name="turnouts_direct_entry_label">Enter turnout# and Close, Throw or Toggle</string>
-    <string name="turnouts_location_label">Selected Location</string>
+    <string name="turnouts_direct_entry_label">Enter Turnout#</string>
+    <string name="turnouts_location_label">Filter by Location</string>
+    <string name="turnouts_list_label">Turnouts (click state to toggle)</string>
+	<string name="turnouts_turnout">Turnout</string>
     <string name="location_all">ALL LOCATIONS</string>
     <string name="routes">Routes</string>
     <string name="routes_label">Control Routes</string>
-    <string name="routes_direct_entry_label">Enter route# and press Set</string>
-    <string name="routes_location_label">Selected Location</string>
-    <string name="routes_default_prefix">R</string>
+    <string name="routes_direct_entry_label">Enter Route ID</string>
+    <string name="routes_location_label">Filter by Location</string>
+    <string name="routes_list_label">Route (click state to activate)</string>
     <string name="consist_lead_label">Lead Loco</string>
     <string name="consist_list_label">Consist Top</string>
     <string name="throw_button">Throw</string>
@@ -169,8 +171,8 @@
     <string name="prefSliderRightMarginDefaultValue">8</string>
     <string name="PrefConnectToFirstServerTitle">Auto-Connect to First WiThrottle Server</string>
     <string name="PrefConnectToFirstServerSummary">Connect automatically to first JMRI WIThrottle Server identified.</string>
-    <string name="prefDisplayClockTitle">Clock Display</string>
-    <string name="prefDisplayClockSummary">Set Format for JMRI Clock Display in Throttle and Web screens.</string>
+    <string name="prefDisplayClockTitle">JMRI Clock Display</string>
+    <string name="prefDisplayClockSummary">Set Format for JMRI Clock Display in Throttle and Web screens. (requires web server)</string>
     <string name="prefDisplayClockDefaultValue">0</string>
     <string name="LeftButton">&lt;</string>
     <string name="RightButton">&gt;</string>
@@ -182,4 +184,6 @@
     <string name="prefSpeedButtonsSpeedStepTitle">Speed button change amount</string>
     <string name="prefSpeedButtonsSpeedStepSummary">How much Speed arrows jump throttle speed.</string>
 	<string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>
+	<string name="server_address">Server address</string>
+	<string name="routes_route">Route Name</string>
 </resources>

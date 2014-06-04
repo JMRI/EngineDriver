@@ -5,9 +5,9 @@
     android:keepScreenOn="true"
     android:orientation="vertical" >
     <TextView
-        android:id="@+id/turnouts_label"
+        android:id="@+id/turnouts_direct_entry_label"
         style="@style/small_heading_style"
-        android:text="@string/turnouts_label" />
+        android:text="@string/turnouts_direct_entry_label" />
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,10 @@
             android:layout_width="80sp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
+            android:hint="@string/turnouts_turnout"
             android:inputType="text"
+            android:imeOptions="actionDone"
+            android:maxLength="60"
             android:singleLine="true" />
         <Button
             android:id="@+id/turnout_throw"
@@ -56,16 +59,19 @@
         android:padding="4dp" >
 	    <Spinner
 	        android:id="@+id/turnouts_location"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
 	        android:layout_height="49dp"
             android:layout_weight="1.0"
 	        android:singleLine="true" />
 
     </LinearLayout>
+    <TextView
+        android:id="@+id/turnouts_list_label"
+        style="@style/small_heading_style"
+        android:text="@string/turnouts_list_label" />
     <ListView
         android:id="@+id/turnouts_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
     </ListView>
-
 </LinearLayout>

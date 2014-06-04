@@ -29,16 +29,12 @@
             android:layout_height="wrap_content"
             android:text="testing string" />
     </RelativeLayout>
-    <TextView
+
+    <Button
         android:id="@+id/rt_current_state_desc"
-        style="@style/list_item_style"
+        style="@style/large_button_style"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_weight="0.3"
-        android:paddingBottom="4dp"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:paddingTop="15dp"
-        android:text="testing"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="testing" />
 </LinearLayout>

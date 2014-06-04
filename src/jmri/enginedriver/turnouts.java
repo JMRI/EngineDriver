@@ -77,19 +77,6 @@ public class turnouts extends Activity implements OnGestureListener {
 	private GestureDetector myGesture ;
 	private Menu TuMenu;
 
-
-	public class turnout_item implements AdapterView.OnItemClickListener	  {
-
-		//When a turnout  is clicked, extract systemname and send command to toggle it
-		public void onItemClick(AdapterView<?> parent, View v, int position, long id)	    {
-			ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
-			ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
-			TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
-			String systemname = (String) snv.getText();
-			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, '2'+systemname);	// 2=toggle
-		};
-	}	  
-
 	public void refresh_turnout_view() {
 
 		//specify logic for sort comparison (by username)
@@ -284,6 +271,18 @@ public class turnouts extends Activity implements OnGestureListener {
 		};
 	}
 
+	//handle click for each turnout's state toggle button
+	public class turnout_state_button_listener implements View.OnClickListener  {
+		
+		public void onClick(View v) {
+			ViewGroup vg = (ViewGroup)v.getParent();  //start with the list item the button belongs to 
+			ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemname and username
+			TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
+			String systemname = (String) snv.getText();
+			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, '2'+systemname);	// 2=toggle
+		};
+	}
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event){
 		return myGesture.onTouchEvent(event);
@@ -321,10 +320,18 @@ public class turnouts extends Activity implements OnGestureListener {
 		turnouts_list=new ArrayList<HashMap<String, String> >();
 		turnouts_list_adapter=new SimpleAdapter(this, turnouts_list, R.layout.turnouts_item, 
 				new String[] {"to_user_name", "to_system_name", "to_current_state_desc"},
-				new int[] {R.id.to_user_name, R.id.to_system_name, R.id.to_current_state_desc});
+				new int[] {R.id.to_user_name, R.id.to_system_name, R.id.to_current_state_desc}) {
+			//set up listener for each state button
+			@Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View row =  super.getView(position, convertView, parent);
+        		Button b=(Button)row.findViewById(R.id.to_current_state_desc);
+        		b.setOnClickListener(new turnout_state_button_listener());
+                return row;
+            }
+		};
 		ListView turnouts_lv=(ListView)findViewById(R.id.turnouts_list);
 		turnouts_lv.setAdapter(turnouts_list_adapter);
-		turnouts_lv.setOnItemClickListener(new turnout_item());
 
 		OnTouchListener gestureListener = new ListView.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
@@ -383,7 +390,7 @@ public class turnouts extends Activity implements OnGestureListener {
 			b=(Button)findViewById(R.id.turnout_throw);
 			b.setVisibility(GONE);
 		}
-		((EditText) findViewById(R.id.turnout_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
+		//((EditText) findViewById(R.id.turnout_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
 
 		locationList = new ArrayList<String>();
 		locationSpinner = (Spinner) findViewById(R.id.turnouts_location);

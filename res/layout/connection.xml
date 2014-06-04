@@ -17,6 +17,8 @@
             android:layout_width="160sp"
             android:layout_height="wrap_content"
             android:layout_below="@id/ip_label"
+            android:hint="@string/server_address"
+            android:imeOptions="actionNext"
             android:maxLength="60"
             android:singleLine="true" />
         <EditText
@@ -25,8 +27,10 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/host_ip"
             android:layout_toRightOf="@id/host_ip"
+            android:hint="@string/port"
             android:inputType="number"
             android:maxLength="5"
+            android:imeOptions="actionDone"
             android:singleLine="true" />
         <TextView
             style="@style/floating_text_style"
