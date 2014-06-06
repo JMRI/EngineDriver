@@ -295,9 +295,11 @@ public class routes extends Activity  implements OnGestureListener {
 			//set up listener for each state button
 			@Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                View row =  super.getView(position, convertView, parent);
-        		Button b=(Button)row.findViewById(R.id.rt_current_state_desc);
-        		b.setOnClickListener(new route_state_button_listener());
+                View row = super.getView(position, convertView, parent);
+                if (row != null) {
+                	Button b=(Button)row.findViewById(R.id.rt_current_state_desc);
+                	b.setOnClickListener(new route_state_button_listener());
+                }
                 return row;
             }
 			
@@ -307,7 +309,7 @@ public class routes extends Activity  implements OnGestureListener {
 
 		OnTouchListener gestureListener = new ListView.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
-				if (myGesture.onTouchEvent(event)) {
+				if (myGesture != null && myGesture.onTouchEvent(event)) {
 					return true;
 				}
 				return false;

@@ -31,7 +31,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -314,19 +313,22 @@ public class turnouts extends Activity implements OnGestureListener {
 		mainapp.turnouts_msg_handler=new turnouts_handler();
 
 		myGesture = new GestureDetector(this);
-
+		
 		turnoutsFullList=new ArrayList<HashMap<String, String> >();
 		//Set up a list adapter to allow adding the list of recent connections to the UI.
 		turnouts_list=new ArrayList<HashMap<String, String> >();
 		turnouts_list_adapter=new SimpleAdapter(this, turnouts_list, R.layout.turnouts_item, 
 				new String[] {"to_user_name", "to_system_name", "to_current_state_desc"},
 				new int[] {R.id.to_user_name, R.id.to_system_name, R.id.to_current_state_desc}) {
+			
 			//set up listener for each state button
 			@Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                View row =  super.getView(position, convertView, parent);
-        		Button b=(Button)row.findViewById(R.id.to_current_state_desc);
-        		b.setOnClickListener(new turnout_state_button_listener());
+                View row = super.getView(position, convertView, parent);
+                if (row != null) {
+                	Button b=(Button)row.findViewById(R.id.to_current_state_desc);
+                	b.setOnClickListener(new turnout_state_button_listener());
+                }
                 return row;
             }
 		};
@@ -335,7 +337,7 @@ public class turnouts extends Activity implements OnGestureListener {
 
 		OnTouchListener gestureListener = new ListView.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
-				if (myGesture.onTouchEvent(event)) {
+				if (myGesture != null && myGesture.onTouchEvent(event)) {
 					return true;
 				}
 				return false;
