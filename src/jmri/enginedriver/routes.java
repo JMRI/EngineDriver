@@ -433,6 +433,8 @@ public class routes extends Activity  implements OnGestureListener {
 
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        if (e1==null || e2==null)
+            return false;
 		if((Math.abs(e2.getX() - e1.getX()) > threaded_application.min_fling_distance) && 
 				(Math.abs(velocityX) > threaded_application.min_fling_velocity)) {
 			// left to right swipe goes to throttle

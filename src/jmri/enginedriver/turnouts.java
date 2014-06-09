@@ -482,14 +482,16 @@ public class turnouts extends Activity implements OnGestureListener {
 
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        if (e1==null || e2==null)
+            return false;
 		if((Math.abs(e2.getX() - e1.getX()) > threaded_application.min_fling_distance) && 
 				(Math.abs(velocityX) > threaded_application.min_fling_velocity)) {
 			// left to right swipe goes to routes
 			if(e2.getX() > e1.getX()) {
 				Intent in=new Intent().setClass(this, routes.class);
 				startActivity(in);
-				connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);				
 				this.finish();  //don't keep on return stack
+				connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);				
 			}
 			// right to left swipe goes to throttle
 			else {
