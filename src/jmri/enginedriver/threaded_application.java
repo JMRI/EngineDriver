@@ -43,14 +43,15 @@ import android.webkit.CookieSyncManager;
 import android.widget.Toast;
 
 import javax.jmdns.*;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketHandler;
@@ -693,8 +694,7 @@ public class threaded_application extends Application {
 				case 'L': 
 					//					roster_list_string = response_str.substring(2);  //set app variable
 					process_roster_list(response_str);  //process roster list
-					dlMetadataTask.get();		// run background metadata update if web server port is known
-					dlRosterTask.get();			// run background roster update if web server port is known
+//					dlRosterTask.get();			// not sure why we're doing this here
 					break;
 
 				case 'F':   //RF29}|{2591(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
@@ -753,7 +753,7 @@ public class threaded_application extends Application {
 						web_server_port = 0;
 					}
                     dlMetadataTask.get();			// start background metadata update
-					dlRosterTask.get();				// start background metadata update
+					dlRosterTask.get();				// start background roster update
 
 					if(androidVersion >= minWebSocketVersion) {
 						if (clockWebSocket == null)
@@ -1108,7 +1108,11 @@ public class threaded_application extends Application {
 
 			if (validMsg) {
 				//send response to debug log for review
-				Log.d("Engine_Driver", "-->:" + newMsg + "  was(" + msg + ")");
+				String lm =  "-->:" + newMsg;
+				if (newMsg != msg) {
+					lm += "  was(" + msg + ")";
+				}
+				Log.d("Engine_Driver", lm);
 				//perform the send
 				if(socketWiT != null) {
 					socketWiT.Send(newMsg);
@@ -1672,7 +1676,7 @@ public class threaded_application extends Application {
 		void runMethod(Download dl) throws IOException {
 			String rosterUrl = createUrl("prefs/roster.xml");
 			HashMap<String, RosterEntry> rosterTemp = null;
-			if(rosterUrl == null || dl.cancel)
+			if(rosterUrl == null || rosterUrl == "" || dl.cancel)
 				return;
 			Log.d("Engine_Driver","Background loading roster from " + rosterUrl);
 			int rosterSize = 0;
@@ -1696,54 +1700,43 @@ public class threaded_application extends Application {
 		@SuppressWarnings("unchecked")
 		@Override
 		void runMethod(Download dl) throws IOException   {
-			String metaUrl = createUrl("xmlio/");
-			if(metaUrl == null || dl.cancel)
+			String metaUrl = createUrl("json/metadata");
+			if(metaUrl == null || metaUrl == "" || dl.cancel)
 				return;
 			Log.d("Engine_Driver","Background loading metadata from " + metaUrl);
+
+			HttpClient Client = new DefaultHttpClient();
+			HttpGet httpget = new HttpGet(metaUrl);
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			String jsonResponse = "";
+//			try {
+				jsonResponse = Client.execute(httpget, responseHandler);
+//			} catch (IOException e) {
+//				throw new RuntimeException(e);
+//			}
+
+			Log.d("Engine_Driver", "Raw metadata retrieved: " + jsonResponse);
+
+			HashMap<String, String> metadataTemp = new HashMap<String, String>();
 			try {
-				URL url = new URL( metaUrl );
-				URLConnection con = url.openConnection();
-
-				// specify that we will send output and accept input
-				con.setDoInput(true);
-				con.setDoOutput(true);
-				con.setConnectTimeout( 2000 );
-				con.setReadTimeout( 2000 );
-				con.setUseCaches (false);
-				con.setDefaultUseCaches (false);
-
-				// tell the web server to expect xml text
-				con.setRequestProperty ( "Content-Type", "text/xml" );
-
-				OutputStreamWriter writer = new OutputStreamWriter( con.getOutputStream() );
-				writer.write( "<XMLIO><list type='metadata' /></XMLIO>" );  //ask for metadata info
-				writer.flush();
-				writer.close();
-
-				//read response and treat as xml doc
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder builder = factory.newDocumentBuilder();
-				Document dom = builder.parse( con.getInputStream() );
-				Element root = dom.getDocumentElement();
-				HashMap<String, String> metadataTemp = new HashMap<String, String>();
-				//get list of metadata children and loop thru, putting each in global variable metadata
-				NodeList items = root.getElementsByTagName("metadata");
-				for (int i=0; i<items.getLength() & !dl.cancel; i++){
-					String metadataName = items.item(i).getAttributes().getNamedItem("name").getNodeValue(); 
-					String metadataValue = items.item(i).getAttributes().getNamedItem("value").getNodeValue(); 
-					metadataTemp.put(metadataName, metadataValue);
-				}
-				if(!dl.cancel) {
-					if(metadataTemp.size() == 0)		//throw exception if empty
-						throw new IOException();
-					metadata = (HashMap<String, String>) metadataTemp.clone();
-				}
-			}
-			catch(Exception e) {
+				JSONArray ja = new JSONArray(jsonResponse);
+				for (int i = 0; i < ja.length(); i++) {
+					   JSONObject j = ja.optJSONObject(i);
+					   String metadataName = j.getJSONObject("data").getString("name");
+					   String metadataValue = j.getJSONObject("data").getString("value");
+					   metadataTemp.put(metadataName, metadataValue);
+					}				
+			} catch (JSONException e) {
+				Log.d("Engine_Driver","exception trying to retrieve json metadata.");
+			} catch(Exception e) {
 				throw new IOException();
 			}
-			Log.d("Engine_Driver", "Metadata retrieved: " + threaded_application.metadata.toString());
-			Log.d("Engine_Driver","Loaded " + metadata.size() +" metadata entries from xmlio server.");
+			if(metadataTemp.size() == 0) {		
+				Log.d("Engine_Driver","did not retrieve any json metadata entries.");
+			} else {
+				metadata = (HashMap<String, String>) metadataTemp.clone();  // save the metadata in global variable
+				Log.d("Engine_Driver","Loaded " + metadata.size() +" metadata entries from json web server.");
+			}
 		}
 	}
 
