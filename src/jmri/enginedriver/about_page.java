@@ -41,11 +41,6 @@ public class about_page extends Activity {
 		super.onCreate(savedInstanceState);
 		mainapp=(threaded_application)this.getApplication();
 
-//		SharedPreferences prefs  = getSharedPreferences("jmri.enginedriver_preferences", 0);
-//		String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-//		setTitle(getApplicationContext().getResources().getString(R.string.app_name_about) + "    |    Throttle Name: " + 
-//				prefs.getString("throttle_name_preference", defaultName));
-
 		setContentView(R.layout.about_page);
 
 		// format and show version info
@@ -83,7 +78,7 @@ public class about_page extends Activity {
 	public void onResume() {
 		super.onResume();
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-		mainapp.cancelRunningNotify();
+		mainapp.removeNotification();
 
 		if(AMenu != null)
 		{
@@ -98,7 +93,7 @@ public class about_page extends Activity {
 		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
 			return;
 		}
-		mainapp.setContentIntentNotification(this.getIntent());
+		mainapp.addNotification(this.getIntent());
 	}
 
 	@Override

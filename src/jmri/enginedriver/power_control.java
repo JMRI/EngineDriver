@@ -146,7 +146,7 @@ public class power_control extends Activity {
 			return;
 		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-		mainapp.cancelRunningNotify();
+		mainapp.removeNotification();
 		
 		if(PMenu != null)
 		{
@@ -163,7 +163,7 @@ public class power_control extends Activity {
 		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
 			return;
 		}
-		mainapp.setContentIntentNotification(this.getIntent());
+		mainapp.addNotification(this.getIntent());
 	}
 
 		/** Called when the activity is finished. */

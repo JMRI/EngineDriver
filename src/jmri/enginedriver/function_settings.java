@@ -104,7 +104,7 @@ public class function_settings extends Activity{
 	public void onResume() {
 		super.onResume();
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-		mainapp.cancelRunningNotify();
+		mainapp.removeNotification();
 		if(FMenu != null)
 		{
 			mainapp.displayEStop(FMenu);
@@ -124,7 +124,7 @@ public class function_settings extends Activity{
 		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
 			return;
 		}
-		mainapp.setContentIntentNotification(this.getIntent());
+		mainapp.addNotification(this.getIntent());
 	}
 
 	@Override

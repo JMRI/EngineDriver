@@ -756,7 +756,7 @@ public class select_loco extends Activity {
 			return;
 		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-		mainapp.cancelRunningNotify();
+		mainapp.removeNotification();
 
 		// checking address length here covers (future) case where prefs changed while paused
 		default_address_length = prefs.getString("default_address_length", this
@@ -773,7 +773,7 @@ public class select_loco extends Activity {
 		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
 			return;
 		}
-		mainapp.setContentIntentNotification(this.getIntent());
+		mainapp.addNotification(this.getIntent());
 	}
 
 	@Override

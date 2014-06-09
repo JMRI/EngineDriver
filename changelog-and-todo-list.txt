@@ -13,6 +13,7 @@
  * reduced click area of turnout and route lists to prevent inadvertent clicks when scrolling
  * allow alpha input for turnouts and routes
  * add text hints for hostname, port, turnout and route entry
+ * redo notifications to support reopening when clicking notification
 **Version 2.8.2
  * restore functionality for very old JMRI (pre-multi-throttle)
  * fix selection/display of roster entry when same address is used for multiple entries
@@ -250,13 +251,11 @@
  *   added html About page
  */
 /*
- *   TODO: Add ability to let user reopen backgrounded EngineDriver by touching notification.
  *   TODO: change config files to use db instead of .txt files
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: make private stuff private
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
- *   TODO: get power_state from WiThrottle on thread_application start.
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
  * routes

@@ -25,9 +25,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
-import android.app.Notification.Builder;
 import android.app.NotificationManager;
-//import android.app.PendingIntent;
+import android.app.PendingIntent;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
@@ -36,10 +35,13 @@ import android.os.SystemClock;
 
 import java.net.*;
 import java.io.*;
+
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.webkit.CookieSyncManager;
 import android.widget.Toast;
+
 import javax.jmdns.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -56,11 +58,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
+
 import java.net.InetAddress;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+
 import jmri.enginedriver.message_type;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.enginedriver.Consist;
@@ -87,10 +91,6 @@ public class threaded_application extends Application {
 	volatile Consist consistT;
 	volatile Consist consistS;
 	volatile Consist consistG;
-	NotificationManager mNotificationManager; //Displays OnGoing Notification that displays EngineDriver is Running
-	Builder mBuilder; //For setContentIntentNotification Method.
-
-	//	String roster_list_string; //roster list
 	LinkedHashMap<Integer, String> function_labels_T;  //function#s and labels from roster for throttle #1
 	LinkedHashMap<Integer, String> function_labels_S;  //function#s and labels from roster for throttle #2
 	LinkedHashMap<Integer, String> function_labels_G;  //function#s and labels from roster for throttle #3
@@ -139,6 +139,7 @@ public class threaded_application extends Application {
 	public static final int SWIPE_MIN_DISTANCE = 120;
 	public static final int SWIPE_MAX_OFF_PATH = 250;
 	public static final int SWIPE_THRESHOLD_VELOCITY = 200;
+	private static final int ED_NOTIFICATION_ID = 0;
 	public static int min_fling_distance;			// pixel width needed for fling
 	public static int min_fling_velocity;			// velocity needed for fling
 
@@ -148,10 +149,6 @@ public class threaded_application extends Application {
 
 	//Used to tell set_Labels in Throttle not to update padding for throttle sliders after onCreate.
 	public boolean firstCreate = true;
-
-
-	//TODO: For future use with setContentIntentNotification.
-	//	public PendingIntent resultPendingIntent;
 
 	class comm_thread extends Thread  {
 		JmDNS jmdns = null;
@@ -1560,89 +1557,34 @@ public class threaded_application extends Application {
 		}
 	}
 
-    /**
-     * Displays OnGoing Notification that indicates EngineDriver is Running.
-	 * Should only be called when ED is going into the background.
-	 * Currently call this from each activity onPause (via setContentIntentNotification).  
-	 * Is this the correct approach to notification?
-     */
-	@SuppressLint("NewApi")
-	public void showRunningNotify()
-	{
-		try
-		{
-			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-				// only for JellyBean and newer versions
-
-				mBuilder =
-					new Builder(this)
-				.setSmallIcon(R.drawable.icon)
-				.setContentTitle("Engine Driver")
-				.setContentText("Engine Driver is Running!");
-				mBuilder.setOngoing(true);
-//*** ?				mBuilder.setAutoCancel(true);
-
-				//mBuilder.setContentIntent(this);
-
-				mNotificationManager =
-					(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-				mNotificationManager.notify(1, mBuilder.build());
-			}
-		}
-		catch(Exception ex)
-		{
-			Log.d("debug", "Notification creation error: " + ex.getMessage());
-		}
-	}
-
 	/**
-	 * Cancels the notification when the app resumes.
-	 * Currently call this from each activity onResume.  
-	 * Is this the correct approach to notification?
-	 */
-	public void cancelRunningNotify()
-	{
-		try
-		{
-			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-				// only for JellyBean and newer versions
+	 * Display OnGoing Notification that indicates EngineDriver is Running.
+	 * Should only be called when ED is going into the background.
+	 * Currently call this from each activity onPause, passing the current intent 
+	 * to return to when reopening.  */  
+	void addNotification(Intent notificationIntent) {
 
-				mNotificationManager =	(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-				mNotificationManager.cancel(1);
-			}
-		}
-		catch(Exception ex)
-		{
-			Log.d("debug", "Notification removal error: " + ex.getMessage());
-		}
+	    NotificationCompat.Builder builder =
+	    		new NotificationCompat.Builder(this)
+	    .setSmallIcon(R.drawable.icon)
+		.setContentTitle("Engine Driver")
+		.setContentText("Tap to reopen EngineDriver.")
+		.setOngoing(true);
+
+	    PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 
+	                     PendingIntent.FLAG_UPDATE_CURRENT);
+	    builder.setContentIntent(contentIntent);
+
+	    // Add as notification
+	    NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+	    manager.notify(ED_NOTIFICATION_ID, builder.build());
 	}
 
-	//TODO: Add ability to let user resume EngineDriver from routes, Turnouts or Throttles by touching notification.
-	//TODO: If add ability to resume, add a way for Thottle to retain controlled locos speed 
-	//        and get new speed if JMRI server changed speed.
-	//
-	// Currently call this from each activity onPause.  
-	// Is this the correct approach to notification?
-	//
-	public void setContentIntentNotification(Intent resultIntent)
-	{
-		try
-		{
-			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-				//resultPendingIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, resultIntent, 1);
-				//mBuilder.setContentIntent(resultPendingIntent);
-				//	mNotificationManager.notify(1, mBuilder.build());
-			}
-		}
-		catch(Exception ex)
-		{
-			Log.d("debug", "Notification error: " + ex.getMessage());
-		}
-
-		showRunningNotify();			// show the notification icon
+	// Remove notification
+	void removeNotification() {
+	    NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+	    manager.cancel(ED_NOTIFICATION_ID);
 	}
-
 	@Override
 	public void onCreate()  {
 		super.onCreate();
@@ -1657,9 +1599,6 @@ public class threaded_application extends Application {
 		commThread=new comm_thread();
 		commThread.start();
 		alert_activities(message_type.DISCONNECT,"");
-		/***future Notification
-		hideNotification();		// if TA was killed in bkg, icon might still be up
-		 ***/
 
 		/***future Recovery
 	    //Normally CA is run via the manifest when ED is launched.
@@ -1695,34 +1634,6 @@ public class threaded_application extends Application {
 	public boolean isForcingFinish() {
 		return doFinish;
 	}
-
-	/***future Notification
-	// notification bar 
-	void showNotification() {
-		if(!isNotified) {
-			String appName = (String)getText(R.string.app_name);
-			String msg = "Connected to "+host_ip+" port: "+port;
-			Notification noti = new Notification(R.drawable.ic_stat_noti, msg, System.currentTimeMillis());
-			noti.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
-			final Intent notiIntent = new Intent(this, connection_activity.class);
-			notiIntent.setAction(Intent.ACTION_MAIN);
-			notiIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-			notiIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-			PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notiIntent, 0);
-			msg = host_ip + " port " + port;
-			noti.setLatestEventInfo(getApplicationContext(), appName, msg, contentIntent);
-			NotificationManager notifier = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-			notifier.notify(NOTI_ID, noti);
-			isNotified = true;
-		}
-	}
-	void hideNotification() {
-		if(isNotified) {
-			((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE)).cancel(NOTI_ID);
-			isNotified = false;
-		}
-	}
-	 ***/	
 
 
 	//init default function labels from the settings files or set to default

@@ -31,7 +31,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -383,7 +382,8 @@ public class routes extends Activity  implements OnGestureListener {
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			return;
 		}
-		mainapp.cancelRunningNotify();
+//		mainapp.removeNotification();
+		mainapp.removeNotification();
 		
 //		setTitleToIncludeThrotName();
 		if(RMenu != null)
@@ -411,7 +411,9 @@ public class routes extends Activity  implements OnGestureListener {
 		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
 			return;
 		}
-		mainapp.setContentIntentNotification(this.getIntent());
+//		mainapp.addNotification();
+		mainapp.addNotification(this.getIntent());
+		
 //***		this.finish(); //don't keep on return stack
 	}
 

@@ -1287,7 +1287,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			return;
 		}
 		navigatingAway = false;
-		mainapp.cancelRunningNotify();
+		mainapp.removeNotification();
 		currentTime = "";
 		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CURRENT_TIME);	// request time update
 
@@ -1368,7 +1368,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		if(this.isFinishing() || navigatingAway) {		//if finishing or navigating away, don't invoke setContentIntentNotification
 			return;
 		}
-		mainapp.setContentIntentNotification(this.getIntent());
+		mainapp.addNotification(this.getIntent());
 	}
 
 	/** Called when the activity is finished. */

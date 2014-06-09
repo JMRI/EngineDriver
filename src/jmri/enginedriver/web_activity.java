@@ -170,7 +170,7 @@ class web_handler extends Handler {
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  return;
  	  }
-	  mainapp.cancelRunningNotify();
+	  mainapp.removeNotification();
 	  currentTime = "";
 	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CURRENT_TIME);	// request time update
 
@@ -204,7 +204,7 @@ class web_handler extends Handler {
 	  if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
 		  return;
 	  }
-	  mainapp.setContentIntentNotification(this.getIntent());
+	  mainapp.addNotification(this.getIntent());
 }
    
   /** Called when the activity is finished. */

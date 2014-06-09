@@ -348,7 +348,7 @@ public class connection_activity extends Activity {
 		}
 
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-		mainapp.cancelRunningNotify();
+		mainapp.removeNotification();
 		//start up server discovery listener
 		//	    sendMsgErr(0, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
 		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 1);
@@ -374,7 +374,7 @@ public class connection_activity extends Activity {
 		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
 			return;
 		}
-		mainapp.setContentIntentNotification(this.getIntent());
+		mainapp.addNotification(this.getIntent());
 	}
 
 	@Override

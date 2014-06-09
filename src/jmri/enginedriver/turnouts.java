@@ -420,7 +420,8 @@ public class turnouts extends Activity implements OnGestureListener {
 		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
 			return;
 		}
-		mainapp.setContentIntentNotification(this.getIntent());
+//		mainapp.addNotification();
+		mainapp.addNotification(this.getIntent());
 //***		this.finish(); //don't keep on return stack
 	}
 
@@ -439,7 +440,8 @@ public class turnouts extends Activity implements OnGestureListener {
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			return;
 		}
-		mainapp.cancelRunningNotify();
+//		mainapp.removeNotification();
+		mainapp.removeNotification();
 
 //		setTitleToIncludeThrotName();
 
