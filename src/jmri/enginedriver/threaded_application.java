@@ -54,7 +54,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.tavendo.autobahn.WebSocketConnection;
-import de.tavendo.autobahn.WebSocketException;
 import de.tavendo.autobahn.WebSocketHandler;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
