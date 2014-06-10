@@ -81,9 +81,11 @@
             android:text="@string/select_loco" />
         <EditText
             android:id="@+id/loco_address"
-            android:layout_width="80sp"
+            android:layout_width="100sp"
             android:layout_height="wrap_content"
             android:layout_below="@id/select_loco_label"
+            android:hint="@string/select_loco_address"
+            android:imeOptions="actionDone"
             android:inputType="number"
             android:maxLength="4"
             android:shadowColor="#FFFFFFFF"
@@ -91,7 +93,6 @@
             android:shadowDy="1"
             android:shadowRadius="0.2"
             android:singleLine="true" />
-
         <Spinner
             android:id="@+id/address_length"
             android:layout_width="wrap_content"

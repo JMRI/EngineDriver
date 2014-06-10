@@ -31,12 +31,15 @@
     <string name="app_name_preferences">Engine Driver - Preferences</string>
     <string name="app_name_select_loco">Engine Driver - Select Loco</string>
     <string name="app_name_ConsistEdit">Engine Driver - Consist Edit</string>
+    <string name="notification_title">Engine Driver is running</string>
+    <string name="notification_text">Tap to reopen Engine Driver</string>
     <string name="host_ip">Host Name or Address</string>
     <string name="port">Port</string>
     <string name="loco_address">Loco Address</string>
     <string name="connect_button">Connect</string>
     <string name="recent_connections">Recent Connections</string>
     <string name="select_loco">Enter Locomotive Address to Acquire</string>
+    <string name="select_loco_address">Address</string>
     <string name="acquire_button">Acquire</string>
     <string name="roster_list">-OR- Select from Roster/Consist Entries</string>
     <string name="recent_engines">-OR- Select from Recent Locomotives</string>

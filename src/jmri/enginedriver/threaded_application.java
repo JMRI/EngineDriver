@@ -1,4 +1,4 @@
-/*Copyright (C) 2013 M. Steve Todd
+/*Copyright (C) 2014 M. Steve Todd
   mstevetodd@enginedriver.rrclubs.org
 
 This program is free software; you can redistribute it and/or modify
@@ -140,9 +140,10 @@ public class threaded_application extends Application {
 	public static final int SWIPE_MIN_DISTANCE = 120;
 	public static final int SWIPE_MAX_OFF_PATH = 250;
 	public static final int SWIPE_THRESHOLD_VELOCITY = 200;
-	private static final int ED_NOTIFICATION_ID = 0;
 	public static int min_fling_distance;			// pixel width needed for fling
 	public static int min_fling_velocity;			// velocity needed for fling
+
+	private static final int ED_NOTIFICATION_ID = 416;  //no significance to 416, just shouldn't be 0
 
 	private SharedPreferences prefs;
 
@@ -1572,11 +1573,12 @@ public class threaded_application extends Application {
 	    NotificationCompat.Builder builder =
 	    		new NotificationCompat.Builder(this)
 	    .setSmallIcon(R.drawable.icon)
-		.setContentTitle("Engine Driver")
-		.setContentText("Tap to reopen EngineDriver.")
+		.setContentTitle(this.getString(R.string.notification_title))
+		.setContentText(this.getString(R.string.notification_text))
 		.setOngoing(true);
 
-	    PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+	    PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent, 
+	    		PendingIntent.FLAG_UPDATE_CURRENT);
 	    builder.setContentIntent(contentIntent);
 
 	    // Add as notification

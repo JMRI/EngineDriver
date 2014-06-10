@@ -12,7 +12,7 @@
  * fixed theme issue with pre-Holo devices - mstevetodd
  * reduced click area of turnout and route lists to prevent inadvertent clicks when scrolling - mstevetodd
  * reenable alpha input for turnouts and routes - mstevetodd
- * add text hints for hostname, port, turnout and route entry - mstevetodd
+ * add text hints for all entry fields - mstevetodd
  * redo notifications to support reopening when clicking notification - mstevetodd
  * converted jmri metadata retrieval from xmlio to json - mstevetodd
 **Version 2.8.2

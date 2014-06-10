@@ -1372,11 +1372,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onDestroy() {
-//		Log.d("Engine_Driver","throttle.onDestroy()");
-		prefs.edit().putInt("T", 0).commit();
-		prefs.edit().putInt("S", 0).commit();
-		prefs.edit().putInt("G", 0).commit();
-		prefs.edit().putBoolean("r", false).commit();
+		Log.d("Engine_Driver","throttle.onDestroy()");
+//		prefs.edit().putInt("T", 0).commit();
+//		prefs.edit().putInt("S", 0).commit();
+//		prefs.edit().putInt("G", 0).commit();
+//		prefs.edit().putBoolean("r", false).commit();
 		if(webView != null) {
 			scale = webView.getScale();		// save current scale for next onCreate
 			if(!orientationChange) {			// if screen is exiting
