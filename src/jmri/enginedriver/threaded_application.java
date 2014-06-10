@@ -1521,8 +1521,10 @@ public class threaded_application extends Application {
 		    @Override
 		    public void onClose(int code, String closeReason) {
 		    	// attempt reconnection unless finishing
-				if(!doFinish && displayClock)
+				if(!doFinish && displayClock) {
+					displayClock = false;
 					this.connect();
+				}
 		    }
 				    
 		    private void connect() {
@@ -1545,7 +1547,6 @@ public class threaded_application extends Application {
 		        
 		    public void refresh() {
     			currentTime = "";
-    			displayClock = false;
     			try {
     				displayClockHrs = Integer.parseInt(prefs.getString("ClockDisplayTypePreference", "0"));
     			} catch(NumberFormatException e) {
