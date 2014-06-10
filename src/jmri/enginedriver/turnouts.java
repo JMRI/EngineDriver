@@ -460,7 +460,7 @@ public class turnouts extends Activity implements OnGestureListener {
 	/** Called when the activity is finished. */
 	@Override
 	public void onDestroy() {
-		Log.d("Engine_Driver","turnouts.onDestroy()");
+		//Log.d("Engine_Driver","turnouts.onDestroy()");
 		mainapp.turnouts_msg_handler = null;
 		super.onDestroy();
 	}

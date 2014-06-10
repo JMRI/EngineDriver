@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:hint="@string/turnouts_turnout"
-            android:inputType="text"
+            android:inputType="textCapCharacters"
             android:imeOptions="actionDone"
             android:maxLength="60"
             android:singleLine="true" />

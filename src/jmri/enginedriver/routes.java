@@ -270,6 +270,7 @@ public class routes extends Activity  implements OnGestureListener {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState)  {
+		//Log.d("Engine_Driver","routes.onCreate()");
 		super.onCreate(savedInstanceState);
 
 		mainapp=(threaded_application)getApplication();
@@ -368,21 +369,20 @@ public class routes extends Activity  implements OnGestureListener {
 
 	@Override
 	public void onResume() {
+		//Log.d("Engine_Driver","routes.onResume()");
 		super.onResume();
 		if(mainapp.isForcingFinish()) {		//expedite
 			this.finish();
 			return;
 		}
 	
-		if(!mainapp.setActivityOrientation(this))  //set screen orientation based on prefs
-		{
+		if(!mainapp.setActivityOrientation(this)) { //set screen orientation based on prefs
 			Intent in=new Intent().setClass(this, web_activity.class);		// if autoWeb and landscape, switch to Web activity
 			startActivity(in);
 			this.finish();
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			return;
 		}
-//		mainapp.removeNotification();
 		mainapp.removeNotification();
 		
 //		setTitleToIncludeThrotName();
@@ -399,19 +399,18 @@ public class routes extends Activity  implements OnGestureListener {
 	/** Called when the activity is finished. */
 	@Override
 	public void onDestroy() {
-		Log.d("Engine_Driver","routes.onDestroy()");
+		//Log.d("Engine_Driver","routes.onDestroy()");
 		mainapp.routes_msg_handler = null;
 		super.onDestroy();
 	}
 
 	@Override
-	public void onPause()
-	{
+	public void onPause() {
+		//Log.d("Engine_Driver","routes.onPause()");
 		super.onPause();
 		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
 			return;
 		}
-//		mainapp.addNotification();
 		mainapp.addNotification(this.getIntent());
 		
 //***		this.finish(); //don't keep on return stack
@@ -421,6 +420,7 @@ public class routes extends Activity  implements OnGestureListener {
 	@Override
 	public boolean onKeyDown(int key, KeyEvent event) {
 		if(key==KeyEvent.KEYCODE_BACK) {
+			//Log.d("Engine_Driver","routes.onKeyDown() KEYCODE_BACK");
 			this.finish();  //end this activity
 			connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
 			return true;

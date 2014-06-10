@@ -1575,8 +1575,7 @@ public class threaded_application extends Application {
 		.setContentText("Tap to reopen EngineDriver.")
 		.setOngoing(true);
 
-	    PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 
-	                     PendingIntent.FLAG_UPDATE_CURRENT);
+	    PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 	    builder.setContentIntent(contentIntent);
 
 	    // Add as notification

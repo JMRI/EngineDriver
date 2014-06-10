@@ -426,7 +426,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		if (whichThrottle == 'T') {
 			throttle_slider=(SeekBar)findViewById(R.id.speed_T);
 			lastSpeedT = speed;
-			prefs.edit().putInt("T", lastSpeedT).commit();
+//			prefs.edit().putInt("T", lastSpeedT).commit();  //seems like G and S should be included, or none
 		} else if(whichThrottle == 'G') {
 			throttle_slider=(SeekBar)findViewById(R.id.speed_G);
 			lastSpeedG = speed;
@@ -950,9 +950,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 
 		public void onProgressChanged(SeekBar throttle, int speed, boolean fromUser) {
-
-			//Log.d("Engine_Driver", "onProgChanged " + speed + "-" + lastSpeed + "=" + (speed-lastSpeed));
-
 			throttlechangespeed(throttle, speed, fromUser, whichThrottle);
 			return;
 		}
@@ -1375,7 +1372,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onDestroy() {
-		Log.d("Engine_Driver","throttle.onDestroy()");
+//		Log.d("Engine_Driver","throttle.onDestroy()");
 		prefs.edit().putInt("T", 0).commit();
 		prefs.edit().putInt("S", 0).commit();
 		prefs.edit().putInt("G", 0).commit();
@@ -1594,8 +1591,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			throttle_count++;
 		} else {
 			bLabel = "Press to select";
-//			if(whichVolume == 'S')
-//				whichVolume = 'G';  //set the next throttle to use volume control 
 		}
 		textScale = 1.0;	
 		bWidth = b.getWidth();				// scale text if required to fit the textView
@@ -1618,8 +1613,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			throttle_count++;
 		} else {
 			bLabel = "Press to select";
-//			if(whichVolume == 'G')
-//				whichVolume = 'T';  //set the first throttle to use volume control 
 		}
 		textScale = 1.0;	
 		bWidth = b.getWidth();				// scale text if required to fit the textView

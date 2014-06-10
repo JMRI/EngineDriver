@@ -9,11 +9,12 @@
  * Adjusted size of the Power icon so it is square. - Robin Becker
  * corrected number of default function buttons to 28 - mstevetodd
  * added option to show JMRI fast-clock in title bar - Robin Becker
- * fixed theme issue with pre-Holo devices
- * reduced click area of turnout and route lists to prevent inadvertent clicks when scrolling
- * allow alpha input for turnouts and routes
- * add text hints for hostname, port, turnout and route entry
- * redo notifications to support reopening when clicking notification
+ * fixed theme issue with pre-Holo devices - mstevetodd
+ * reduced click area of turnout and route lists to prevent inadvertent clicks when scrolling - mstevetodd
+ * reenable alpha input for turnouts and routes - mstevetodd
+ * add text hints for hostname, port, turnout and route entry - mstevetodd
+ * redo notifications to support reopening when clicking notification - mstevetodd
+ * converted jmri metadata retrieval from xmlio to json - mstevetodd
 **Version 2.8.2
  * restore functionality for very old JMRI (pre-multi-throttle)
  * fix selection/display of roster entry when same address is used for multiple entries
@@ -269,11 +270,11 @@
  *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
+ *   TODO: if in Connect, don't go into background on Pause, just exit.
  *   TODO: if user enters ":" into address input, jump to port input
  *   TODO: debug "Success: Restored connection to ..." message seen (sometimes) after exiting from Throttle
  *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
  * threaded_application
- *   TODO: convert jmri version retrieval from xmlio to json
  *	 TODO: process_comm_error() no longer sending connection lost messages (maybe others)
  *   TODO: remember consist details
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
@@ -299,7 +300,7 @@
  *   TODO: unset all states when loco not selected
  * select_loco:
  *   TODO: add close button and roster image to details dialog
- *   TODO: clean up code for  new MT (Multi-throttle) feature 
+ *   TODO: clean up code for new MT (Multi-throttle) feature 
  *   TODO: simplify select_loco by removing handler
  * preferences:
  *   TODO: show error if invalid entry
