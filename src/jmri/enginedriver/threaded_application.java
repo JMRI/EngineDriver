@@ -54,6 +54,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.tavendo.autobahn.WebSocketConnection;
+import de.tavendo.autobahn.WebSocketException;
 import de.tavendo.autobahn.WebSocketHandler;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -1478,6 +1479,7 @@ public class threaded_application extends Application {
 		    
 			@Override
 		    public void onOpen() {
+				displayClock = true;
 		        try {
     	            Log.d("Engine_Driver","ClockWebSocket open");
 		            mConnection.sendTextMessage(sGetClockMemory);
@@ -1523,7 +1525,7 @@ public class threaded_application extends Application {
 					this.connect();
 		    }
 				    
-		    public void connect() {
+		    private void connect() {
 		        try {
     	            Log.d("Engine_Driver","ClockWebSocket attempt connect");
 					mConnection.connect(createUri(), this);
@@ -1533,16 +1535,17 @@ public class threaded_application extends Application {
 		    }
 		    
 		    public void disconnect() {
+	            displayClock = false;
 	            try {
 	                mConnection.disconnect();
 	            } catch (Exception e) {
     	            Log.d("Engine_Driver","ClockWebSocket disconnect error: "+e.toString());
 	            }
-	            displayClock = false;
 		    }
 		        
 		    public void refresh() {
     			currentTime = "";
+    			displayClock = false;
     			try {
     				displayClockHrs = Integer.parseInt(prefs.getString("ClockDisplayTypePreference", "0"));
     			} catch(NumberFormatException e) {
@@ -1552,10 +1555,8 @@ public class threaded_application extends Application {
 		    		if (mConnection.isConnected())
 		    			this.disconnect();
 	    			this.connect();
-	    			displayClock = true;
 		    	} else { 
-		    			this.disconnect();
-		    			displayClock = false;
+                    this.disconnect();
 		    	}
 			}
 		}
