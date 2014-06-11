@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="jmri.enginedriver"
     android:versionCode="32"
-    android:versionName="2.9" xmlns:tools="http://schemas.android.com/tools">
+    android:versionName="2.9" >
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -14,65 +15,93 @@
         android:resizeable="true"
         android:smallScreens="true" />
     <!-- Orig.Min = 7 Orig.Target = 10 -->
-    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="19" tools:ignore="OldTargetApi">
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="19"
+        tools:ignore="OldTargetApi" >
     </uses-sdk>
-    <uses-permission android:name="android.permission.READ_LOGS"/>
-    
+    <uses-permission android:name="android.permission.READ_LOGS" />
     <application
         android:name="jmri.enginedriver.threaded_application"
+        android:allowBackup="true"
         android:description="@string/app_description"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/app_theme" 
-        android:allowBackup="true">
+        android:theme="@style/app_theme" >
         <activity
             android:name=".connection_activity"
             android:label="@string/app_name" >
-            <intent-filter android:label="@string/app_name" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".select_loco"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask" 
             android:label="@string/app_name_select_loco" >
         </activity>
         <activity
             android:name=".ConsistEdit"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask" 
             android:label="@string/app_name_ConsistEdit" >
         </activity>
         <activity
             android:name=".throttle"
-            android:label="@string/app_name_throttle">
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask" 
+            android:label="@string/app_name_throttle" >
         </activity>
         <activity
             android:name=".function_settings"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask" 
             android:label="@string/app_name_functions" >
         </activity>
         <activity
             android:name=".turnouts"
-            android:label="@string/app_name_turnouts" >
+            android:alwaysRetainTaskState="true"
+            android:label="@string/app_name_turnouts"
+            android:launchMode="singleTask" >
         </activity>
         <activity
             android:name=".routes"
-            android:label="@string/app_name_routes" >
+            android:label="@string/app_name_routes"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask" 
+            >
         </activity>
         <activity
             android:name=".preferences"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask" 
             android:label="@string/app_name_preferences" >
         </activity>
         <activity
             android:name=".about_page"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask" 
             android:label="@string/app_name_about" >
         </activity>
         <activity
             android:name=".web_activity"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask" 
             android:label="@string/app_name_web" >
         </activity>
         <activity
             android:name=".power_control"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask" 
             android:label="@string/app_name_power_control" >
         </activity>
-        <activity android:name=".logviewer.ui.LogViewerActivity" android:label="LogViewerActivity"></activity>
+        <activity
+            android:name=".logviewer.ui.LogViewerActivity"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask" 
+            android:label="LogViewerActivity" >
+        </activity>
     </application>
 </manifest>

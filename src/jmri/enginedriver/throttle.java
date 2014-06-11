@@ -79,7 +79,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static boolean navigatingAway = false;			// true if another activity was selected (can't use isFinishing() because Throttle only finishes on exit)
 	private char whichVolume = 'T';
 
-	private boolean slider_moved_by_server = false;			// true if the slider was moved due to a processed response
+//	private boolean slider_moved_by_server = false;			// true if the slider was moved due to a processed response
 
 	int max_throttle_change = 99;  //maximum allowable change of the sliders, set in preferences
 
@@ -260,9 +260,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 							else if (com3 == 'V') {
 								try {
 									int speed = Integer.parseInt(ls[1].substring(1));
-									slider_moved_by_server = true;
+//									slider_moved_by_server = true;
 									set_speed_slider(whichThrottle, speed);			//update speed slider and indicator
-									slider_moved_by_server = false;
+//									slider_moved_by_server = false;
 								}
 								catch(Exception e) {
 								}
@@ -382,43 +382,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		enable_disable_buttons_for_view(tv, false);
 		set_labels();
 	}
-	void updateMaxSpeed(char whichThrottle, int maxSpeed) {
-
-		if(whichThrottle == 'T') {
-			if(maxSpeed != MAX_SPEED_VAL_T) {
-				double rescale = ((double)maxSpeed) / MAX_SPEED_VAL_T; 
-				SPEED_TO_DISPLAY_T = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL_T);
-				MAX_SPEED_VAL_T = maxSpeed;
-				SeekBar throttleSlider=(SeekBar)findViewById(R.id.speed_T);
-				int newSetting = (int)(throttleSlider.getProgress() * rescale);
-				throttleSlider.setMax(maxSpeed);
-				throttleSlider.setProgress(newSetting);
-				setDisplayedSpeed('T', newSetting);
-			}
-		} else if(whichThrottle == 'G')	{
-			if(maxSpeed != MAX_SPEED_VAL_G) {
-				double rescale = ((double)maxSpeed) / MAX_SPEED_VAL_G; 
-				SPEED_TO_DISPLAY_G = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL_G);
-				MAX_SPEED_VAL_G = maxSpeed;
-				SeekBar throttleSlider=(SeekBar)findViewById(R.id.speed_G);
-				int newSetting = (int)(throttleSlider.getProgress() * rescale);
-				throttleSlider.setMax(maxSpeed);
-				throttleSlider.setProgress(newSetting);
-				setDisplayedSpeed('G', newSetting);
-			}
-		} else {
-			if(maxSpeed != MAX_SPEED_VAL_S) {
-				double rescale = ((double)maxSpeed) / MAX_SPEED_VAL_S; 
-				SPEED_TO_DISPLAY_S = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL_S);
-				MAX_SPEED_VAL_S = maxSpeed;
-				SeekBar throttleSlider=(SeekBar)findViewById(R.id.speed_S);
-				int newSetting = (int)(throttleSlider.getProgress() * rescale);
-				throttleSlider.setMax(maxSpeed);
-				throttleSlider.setProgress(newSetting);
-				setDisplayedSpeed('S', newSetting);
-			}
-		}
-	}
 
 	void set_speed_slider(char whichThrottle, int speed) {
 		SeekBar throttle_slider;
@@ -426,7 +389,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		if (whichThrottle == 'T') {
 			throttle_slider=(SeekBar)findViewById(R.id.speed_T);
 			lastSpeedT = speed;
-//			prefs.edit().putInt("T", lastSpeedT).commit();  //seems like G and S should be included, or none
 		} else if(whichThrottle == 'G') {
 			throttle_slider=(SeekBar)findViewById(R.id.speed_G);
 			lastSpeedG = speed;
@@ -970,9 +932,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		setDisplayedSpeed(whichThrottle, speed);
 
 		//only continue (limit, send to JMRI) if change was initiated by a user touch (prevents "bouncing")
-		if (slider_moved_by_server) {
+//		if (slider_moved_by_server) {
+		if(!fromUser) {
 			lastSpeed = speed;
-			slider_moved_by_server = false;  //reset before return
+//			slider_moved_by_server = false;  //reset before return
 			return;
 		}
 
