@@ -15,6 +15,7 @@
  * add text hints for all entry fields - mstevetodd
  * redo notifications to support reopening when clicking notification - mstevetodd
  * converted jmri metadata retrieval from xmlio to json - mstevetodd
+ * restore last scroll position of turnout and route lists - mstevetodd
 **Version 2.8.2
  * restore functionality for very old JMRI (pre-multi-throttle)
  * fix selection/display of roster entry when same address is used for multiple entries

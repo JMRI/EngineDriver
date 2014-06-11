@@ -122,6 +122,8 @@ public class threaded_application extends Application {
 	static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;	//minimum interval for outbound heartbeat generator
 	static final int HEARTBEAT_RESPONSE_ALLOWANCE = 4;		//worst case time delay for WiT to respond to a heartbeat message
 	public int heartbeatInterval = 0;						//WiT heartbeat interval setting
+	public int turnouts_list_position = 0;					//remember where user was in item lists
+	public int routes_list_position = 0;
 
 	String client_address; //address string of the client address
 	//For communication to the comm_thread.
@@ -363,6 +365,7 @@ public class threaded_application extends Application {
 						port = 0;
 					}
 					currentTime = "";
+					
 					break;
 
 					//Release one or all locos on the specified throttle.  addr is in msg (""==all), arg1 holds whichThrottle.
@@ -1829,6 +1832,8 @@ public class threaded_application extends Application {
 		roster_entries = null;
 		metadata = null;
 		doFinish = false;
+		turnouts_list_position = 0;
+		routes_list_position = 0;
 	}
 
 	//

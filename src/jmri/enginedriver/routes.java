@@ -382,8 +382,13 @@ public class routes extends Activity  implements OnGestureListener {
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			return;
 		}
-		mainapp.removeNotification();
 		
+		mainapp.removeNotification();
+
+		//restore view to last known scroll position
+		ListView lv=(ListView)findViewById(R.id.routes_list);  
+		lv.setSelectionFromTop(mainapp.routes_list_position, 0);
+
 //		setTitleToIncludeThrotName();
 		if(RMenu != null)
 		{
@@ -407,9 +412,14 @@ public class routes extends Activity  implements OnGestureListener {
 	public void onPause() {
 		//Log.d("Engine_Driver","routes.onPause()");
 		super.onPause();
-		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
+		//save scroll position for later restore
+		ListView lv=(ListView)findViewById(R.id.routes_list);
+		mainapp.routes_list_position = lv.getFirstVisiblePosition();
+
+		if(this.isFinishing()) {		//if finishing, expedite it and don't set notification
 			return;
 		}
+
 		mainapp.addNotification(this.getIntent());
 		
 //***		this.finish(); //don't keep on return stack

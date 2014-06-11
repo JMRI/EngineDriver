@@ -413,13 +413,17 @@ public class turnouts extends Activity implements OnGestureListener {
 	}
 
 	@Override
-	public void onPause()
-	{
+	public void onPause() {
 		super.onPause();
+
+		//save scroll position for later restore
+		ListView lv=(ListView)findViewById(R.id.turnouts_list);
+		mainapp.turnouts_list_position = lv.getFirstVisiblePosition();
+
 		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
 			return;
 		}
-//		mainapp.addNotification();
+		
 		mainapp.addNotification(this.getIntent());
 //***		this.finish(); //don't keep on return stack
 	}
@@ -439,8 +443,12 @@ public class turnouts extends Activity implements OnGestureListener {
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			return;
 		}
-//		mainapp.removeNotification();
+
 		mainapp.removeNotification();
+
+		//restore view to last known scroll position
+		ListView lv=(ListView)findViewById(R.id.turnouts_list);
+		lv.setSelectionFromTop(mainapp.turnouts_list_position, 0);
 
 //		setTitleToIncludeThrotName();
 
