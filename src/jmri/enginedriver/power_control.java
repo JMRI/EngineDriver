@@ -214,7 +214,7 @@ public class power_control extends Activity {
 			break;
 		case R.id.preferences_mnu:
 			in=new Intent().setClass(this, preferences.class);
-			startActivityForResult(in, 0);
+			startActivity(in);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
 		case R.id.about_mnu:
@@ -243,6 +243,7 @@ public class power_control extends Activity {
 		{
 			this.finish();  //end this activity
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+			return true;
 		}
 		return(super.onKeyDown(key, event));
 	};

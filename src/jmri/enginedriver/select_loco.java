@@ -172,98 +172,95 @@ public class select_loco extends Activity {
 	// lookup and set values of various text labels
 	private void set_labels() {
 
-		TextView v = (TextView) findViewById(R.id.throttle_name_header);
+		TextView vH = (TextView) findViewById(R.id.throttle_name_header);
 		// show throttle name
 		String s = "Throttle Name: "
 			+ prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
-		v.setText(s);
+		vH.setText(s);
 
 		// format and show currently selected locos, and hide or show Release buttons
 		final int conNomTextSize = 16;
 		final int conSmallTextSize = 10;
 
-		Button b = (Button) findViewById(R.id.sl_release_T);
-		v = (TextView) findViewById(R.id.sl_loco_T);
+		TextView vST = (TextView) findViewById(R.id.sl_loco_T);
+		Button bRT = (Button) findViewById(R.id.sl_release_T);
 		if(mainapp.consistT.isActive()) {
 			String vLabel = mainapp.consistT.toString();
-			int vWidth = v.getWidth();				// scale text if required to fit the textView
-			v.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-			double textWidth = v.getPaint().measureText(vLabel);
+			int vWidth = vST.getWidth();				// scale text if required to fit the textView
+			vST.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+			double textWidth = vST.getPaint().measureText(vLabel);
 			if(vWidth == 0)
 				selectLocoRendered = false;
 			else {
 				selectLocoRendered = true;
 				if(textWidth > vWidth) {
-					v.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
+					vST.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
 				}
 			}
-			v.setText(vLabel);
-			b.setEnabled(true);
+			vST.setText(vLabel);
+			bRT.setEnabled(true);
 		}
 		else {
-			v.setText("");
-			b.setEnabled(false);
+			vST.setText("");
+			bRT.setEnabled(false);
 		}
-
-		b = (Button) findViewById(R.id.sl_release_S);
-		v = (TextView) findViewById(R.id.sl_loco_S);
+		
+		TextView vSS = (TextView) findViewById(R.id.sl_loco_S);
+		Button bRS = (Button) findViewById(R.id.sl_release_S);
 		if(mainapp.consistS.isActive()) {
 			String vLabel = mainapp.consistS.toString();
-			int vWidth = v.getWidth();				// scale text if required to fit the textView
-			v.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-			double textWidth = v.getPaint().measureText(vLabel);
+			int vWidth = vSS.getWidth();				// scale text if required to fit the textView
+			vSS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+			double textWidth = vSS.getPaint().measureText(vLabel);
 			if(vWidth == 0)
 				selectLocoRendered = false;
 			else {
 				selectLocoRendered = true;
 				if(textWidth > vWidth) {
-					v.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
+					vSS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
 				}
 			}
-			v.setText(vLabel);
-			b.setEnabled(true);
+			vSS.setText(vLabel);
+			bRS.setEnabled(true);
 		}
 		else {
-			v.setText("");
-			b.setEnabled(false);
+			vSS.setText("");
+			bRS.setEnabled(false);
 		}
 
-		b = (Button) findViewById(R.id.sl_release_G);
-		v = (TextView) findViewById(R.id.sl_loco_G);
+		TextView vSG = (TextView) findViewById(R.id.sl_loco_G);
+		Button bRG = (Button) findViewById(R.id.sl_release_G);
 		if(mainapp.consistG.isActive()) {
 			String vLabel = mainapp.consistG.toString();
-			int vWidth = v.getWidth();				// scale text if required to fit the textView
-			v.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-			double textWidth = v.getPaint().measureText(vLabel);
+			int vWidth = vSG.getWidth();				// scale text if required to fit the textView
+			vSG.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+			double textWidth = vSG.getPaint().measureText(vLabel);
 			if(vWidth == 0)
 				selectLocoRendered = false;
 			else {
 				selectLocoRendered = true;
 				if(textWidth > vWidth) {
-					v.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
+					vSG.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
 				}
 			}
-			v.setText(vLabel);
-			b.setEnabled(true);
+			vSG.setText(vLabel);
+			bRG.setEnabled(true);
 		}
 		else {
-			v.setText("");
-			b.setEnabled(false);
+			vSG.setText("");
+			bRG.setEnabled(false);
 		}
 
 		// only show loco text and release buttons for allowed # of locos
 		String numThrot = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumOfThrottlesDefault));
-		if(numThrot.matches("One") || numThrot.matches("Two")) {
-			View rlv = (View) findViewById(R.id.sl_loco_G);
-			rlv.setVisibility(GONE);
-			rlv = (View) findViewById(R.id.sl_release_G);
-			rlv.setVisibility(GONE);
-		}
-		if(numThrot.matches("One")) {
-			View rlv = (View) findViewById(R.id.sl_loco_S);
-			rlv.setVisibility(GONE);
-			rlv = (View) findViewById(R.id.sl_release_S);
-			rlv.setVisibility(GONE);
+		if("One".equals(numThrot) || "Two".equals(numThrot)) {
+			vSG.setVisibility(GONE);
+			bRG.setVisibility(GONE);
+			
+			if("One".equals(numThrot)) {
+				vSS.setVisibility(GONE);
+				bRS.setVisibility(GONE);
+			}
 		}
 		
 		// hide the recent locos list if selected in prefs
@@ -391,9 +388,8 @@ public class select_loco extends Activity {
 
 				saveUpdateList = bUpdateList;
 				Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
-				consistEdit.putExtra("address", addr);
 				consistEdit.putExtra("whichThrottle", whichThrottle);
-				startActivityForResult(consistEdit, 0);
+				startActivityForResult(consistEdit, 1);
 				connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			}
 		}
@@ -401,11 +397,11 @@ public class select_loco extends Activity {
 
 	//handle return from ConsistEdit
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(resultCode == RESULT_OK) {						// something in consist was changed
+		if(requestCode == 1) {							// edit consist
 			if(newEngine) {
 				updateRecentEngines(saveUpdateList);
 			}
-			result = RESULT_FIRST_USER;						//tell Throttle to update loco directions
+			result = RESULT_FIRST_USER;					//tell Throttle to update loco directions
 		}
 		end_this_activity();
 	}
@@ -446,37 +442,6 @@ public class select_loco extends Activity {
 					+ except.getMessage());
 		}
 	};
-
-	/***
-	void getConsistLocoDirection() {
-		final AlertDialog.Builder b = new AlertDialog.Builder(this);
-		b.setIcon(android.R.drawable.ic_dialog_alert); 
-		b.setTitle("Direction relative to Lead engine");
-		b.setMessage(R.string.exit_text);
-		forwardDirection = false;
-		b.setCancelable(true);
-		b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-				forwardDirection = true;
-				Intent intent = new Intent();
-				setResult(1,intent);
-			}
-		});
-		b.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-				forwardDirection = true;
-				Intent intent = new Intent();
-				setResult(0,intent);
-			}
-		});
-
-		AlertDialog alert = b.create();
-		alert.show();
-//		b.create().show();
-	}
-/****/
 
 	public class button_listener implements View.OnClickListener {
 		public void onClick(View v) {
@@ -565,6 +530,7 @@ public class select_loco extends Activity {
 	public boolean onKeyDown(int key, KeyEvent event) {
 		if (key == KeyEvent.KEYCODE_BACK) {
 			end_this_activity();
+			return true;
 		}
 		return (super.onKeyDown(key, event));
 	};
@@ -821,7 +787,7 @@ public class select_loco extends Activity {
 		case R.id.preferences_mnu:
 			this.finish();
 			in=new Intent().setClass(this, preferences.class);
-			startActivityForResult(in, 0);
+			startActivity(in);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
 		case R.id.power_control_mnu:
@@ -852,7 +818,7 @@ public class select_loco extends Activity {
 	// end current activity
 	void end_this_activity() {
 		Intent resultIntent = new Intent();
-		resultIntent.putExtra("whichThrottle", sWhichThrottle);  //pass whichThrottle as an extra
+		resultIntent.putExtra("whichThrottle", sWhichThrottle.charAt(0));  //pass whichThrottle as an extra
 		setResult(result, resultIntent);
 		this.finish();
 		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

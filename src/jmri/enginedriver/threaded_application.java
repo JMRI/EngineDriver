@@ -1572,7 +1572,6 @@ public class threaded_application extends Application {
 	 * Currently call this from each activity onPause, passing the current intent 
 	 * to return to when reopening.  */  
 	void addNotification(Intent notificationIntent) {
-
 	    NotificationCompat.Builder builder =
 	    		new NotificationCompat.Builder(this)
 	    .setSmallIcon(R.drawable.icon)
@@ -1591,7 +1590,7 @@ public class threaded_application extends Application {
 
 	// Remove notification
 	void removeNotification() {
-	    NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 	    manager.cancel(ED_NOTIFICATION_ID);
 	}
 	@Override
@@ -1884,7 +1883,7 @@ public class threaded_application extends Application {
 	public void powerStateMenuButton()
 	{
 		int newState = 1;
-		if (power_state.equals("1")) { //toggle to opposite value 0=off, 1=on
+		if ("1".equals(power_state)) { 			//toggle to opposite value 0=off, 1=on
 			newState = 0;
 		}
 		sendMsg(comm_msg_handler, message_type.POWER_CONTROL, "", newState);
@@ -1892,7 +1891,7 @@ public class threaded_application extends Application {
 
 	//TODO: get power_state from JMRI WiThrottle before UI starts up to display Power Layout Icon. 
 	//Then can remove displayPowerStateMenuButton2.
-	// Also change in throttle, routes and turnouts.
+	// Also change in throttle.
 	public void displayPowerStateMenuButton2(Menu menu)
 	{
 		if(prefs.getBoolean("show_layout_power_button_preference", false))

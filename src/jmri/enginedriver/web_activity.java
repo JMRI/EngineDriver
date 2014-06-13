@@ -51,6 +51,7 @@ public class web_activity extends Activity {
   private boolean currentUrlUpdate = false;
   private boolean orientationChange = false;
   private String currentTime = "";
+  private boolean navigatingAway = false;		// flag for onPause: set to true when another activity is selected, false if going into background 
  
   @SuppressLint("HandlerLeak")
 class web_handler extends Handler {
@@ -166,11 +167,13 @@ class web_handler extends Handler {
 	  }
  	  if(!mainapp.setActivityOrientation(this, true))  	//set screen orientation based on prefs
  	  {
+ 		  navigatingAway = true;
 		  this.finish();								// if autoweb and portrait, switch to throttle screen
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  return;
  	  }
 	  mainapp.removeNotification();
+	  navigatingAway = false;
 	  currentTime = "";
 	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CURRENT_TIME);	// request time update
 
@@ -201,10 +204,9 @@ class web_handler extends Handler {
 			  webView.pauseTimers();
 	  }
 	  CookieSyncManager.getInstance().stopSync();
-	  if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
-		  return;
+	  if(!this.isFinishing() && !navigatingAway) {		//only invoke setContentIntentNotification when going into background
+		  mainapp.addNotification(this.getIntent());
 	  }
-	  mainapp.addNotification(this.getIntent());
 }
    
   /** Called when the activity is finished. */
@@ -276,17 +278,20 @@ class web_handler extends Handler {
 	  Intent in;
 	  switch (item.getItemId()) {
 	  case R.id.throttle_mnu:
+		  navigatingAway = true;
 		  this.finish();
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  break;
 	  case R.id.turnouts_mnu:
 		  in = new Intent().setClass(this, turnouts.class);
+		  navigatingAway = true;
 		  startActivity(in);
 		  this.finish();
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  break;
 	  case R.id.routes_mnu:
 		  in=new Intent().setClass(this, routes.class);
+		  navigatingAway = true;
 		  startActivity(in);
 		  this.finish();
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -296,16 +301,19 @@ class web_handler extends Handler {
 		  break;
 	  case R.id.power_control_mnu:
 		  in=new Intent().setClass(this, power_control.class);
+		  navigatingAway = true;
 		  startActivity(in);
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  break;
       case R.id.preferences_mnu:
     	  in=new Intent().setClass(this, preferences.class);
-     	  startActivityForResult(in, 0);
+		  navigatingAway = true;
+     	  startActivity(in);
      	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     	  break;
 	  case R.id.about_mnu:
 		  in=new Intent().setClass(this, about_page.class);
+		  navigatingAway = true;
 		  startActivity(in);
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  break;

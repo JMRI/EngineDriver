@@ -176,7 +176,7 @@ public class function_settings extends Activity{
 		case R.id.preferences_mnu:
 			this.finish();
 			in=new Intent().setClass(this, preferences.class);
-			startActivityForResult(in, 0);
+			startActivity(in);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
 		case R.id.power_control_mnu:
@@ -332,8 +332,8 @@ public class function_settings extends Activity{
 			if(!settingsCurrent)			//if settings array is not current
 				saveSettings();			//save function labels to file
 			this.finish();  //end this activity
-			/*          connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			 */
+			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+			return true;
 		}
 		return(super.onKeyDown(key, event));
 	};

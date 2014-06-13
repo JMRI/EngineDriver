@@ -71,6 +71,7 @@ public class connection_activity extends Activity {
 	private String connected_hostip;
 	private String connected_hostname;
 	private int connected_port;
+	private boolean navigatingAway = false;		// flag for onPause: set to true when another activity is selected, false if going into background 
 
 	private static final String example_host = "jmri.mstevetodd.com";
 	private static final String example_port = "44444";
@@ -115,6 +116,7 @@ public class connection_activity extends Activity {
 	//set flags to ensure there is just one throttle activity
 	throttle.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		 ***/	
+		navigatingAway = true;
 		startActivity(throttle);
 		this.finish();
 		overridePendingTransition(this,R.anim.fade_in, R.anim.fade_out);
@@ -346,7 +348,8 @@ public class connection_activity extends Activity {
 		if(this.isFinishing()) {		//if finishing, expedite it
 			return;
 		}
-
+		
+		navigatingAway = false;
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 		mainapp.removeNotification();
 		//start up server discovery listener
@@ -371,10 +374,9 @@ public class connection_activity extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();
-		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
-			return;
+		if(!this.isFinishing() && !navigatingAway) {		//only invoke setContentIntentNotification when going into background
+			mainapp.addNotification(this.getIntent());
 		}
-		mainapp.addNotification(this.getIntent());
 	}
 
 	@Override
@@ -423,16 +425,16 @@ public class connection_activity extends Activity {
 			break;
 		case R.id.preferences_mnu:
 			in=new Intent().setClass(this, preferences.class);
-			startActivityForResult(in, 0);
+			navigatingAway = true;
+			startActivityForResult(in,0);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
 		case R.id.about_mnu:
 			in=new Intent().setClass(this, about_page.class);
+			navigatingAway = true;
 			startActivity(in);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
-			//Jeffrey M added 7/5/2013
-			//Clears recent connection list.
 		case R.id.ClearconnList:
 			clearConnectionsList();
 			getConnectionsList();
@@ -443,7 +445,7 @@ public class connection_activity extends Activity {
 
 	//handle return from menu items
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		//since we always do the same action no need to distinguish between requests
+		//only one activity with results here
 		set_labels();
 	}
 
@@ -452,6 +454,7 @@ public class connection_activity extends Activity {
 	public boolean onKeyDown(int key, KeyEvent event) {
 		if (key == KeyEvent.KEYCODE_BACK) {
 			mainapp.checkExit(this);
+			return true;
 		}
 		return (super.onKeyDown(key, event));
 	};

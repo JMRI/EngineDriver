@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.lang.reflect.Method;
 
-import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -76,7 +75,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static double SPEED_TO_DISPLAY_S = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL_S);
 	private static double SPEED_TO_DISPLAY_G = ((double)(MAX_SPEED_DISPLAY) / MAX_SPEED_VAL_G);
 
-	private static boolean navigatingAway = false;			// true if another activity was selected (can't use isFinishing() because Throttle only finishes on exit)
+	private boolean navigatingAway = false;			// true if another activity was selected (false in onPause if going into background) 
 	private char whichVolume = 'T';
 
 //	private boolean slider_moved_by_server = false;			// true if the slider was moved due to a processed response
@@ -562,6 +561,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		try {
 			Intent select_loco = new Intent().setClass(this, select_loco.class);
 			select_loco.putExtra("sWhichThrottle", Character.toString(whichThrottle));  //pass whichThrottle as an extra to activity
+			navigatingAway = true;
 			startActivityForResult(select_loco, 1);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		} catch(Exception ex) {
@@ -1240,8 +1240,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 		if(!mainapp.setActivityOrientation(this))  //set screen orientation based on prefs
 		{
-			navigatingAway = true;
 			Intent in=new Intent().setClass(this, web_activity.class);		// if autoWeb and landscape, switch to Web activity
+			navigatingAway = true;
 			startActivity(in);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			return;
@@ -1325,10 +1325,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 		CookieSyncManager.getInstance().stopSync();
 
-		if(this.isFinishing() || navigatingAway) {		//if finishing or navigating away, don't invoke setContentIntentNotification
-			return;
+		if(!this.isFinishing() && !navigatingAway) {		//only invoke setContentIntentNotification when going into background
+			mainapp.addNotification(this.getIntent());
 		}
-		mainapp.addNotification(this.getIntent());
 	}
 
 	/** Called when the activity is finished. */
@@ -1903,48 +1902,56 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle all of the possible menu actions.
 		Intent in;
-		navigatingAway = true;
 		switch (item.getItemId()) {
 		case R.id.turnouts_mnu:
 			in=new Intent().setClass(this, turnouts.class);
+			navigatingAway = true;
 			startActivity(in);
 			connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
 			break;
 		case R.id.routes_mnu:
 			in = new Intent().setClass(this, routes.class);
+			navigatingAway = true;
 			startActivity(in);
 			connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
 			break;
 		case R.id.web_mnu:
 			in=new Intent().setClass(this, web_activity.class);
+			navigatingAway = true;
 			startActivity(in);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
 		case R.id.exit_mnu:
+			navigatingAway = true;
 			mainapp.checkExit(this);
 			break;
 		case R.id.power_control_mnu:
 			in=new Intent().setClass(this, power_control.class);
+			navigatingAway = true;
 			startActivity(in);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
 		case R.id.preferences_mnu:
 			in=new Intent().setClass(this, preferences.class);
-			startActivityForResult(in, 0);
+			navigatingAway = true;
+			startActivity(in);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
 		case R.id.settings_mnu:
 			in=new Intent().setClass(this, function_settings.class);
-			startActivityForResult(in, 0);
+			navigatingAway = true;
+			startActivity(in);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
 		case R.id.about_mnu:
 			in=new Intent().setClass(this, about_page.class);
+			navigatingAway = true;
 			startActivity(in);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
 		case R.id.logviewer_menu:
 			Intent logviewer=new Intent().setClass(this, LogViewerActivity.class);
+			navigatingAway = true;
 			startActivity(logviewer);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
@@ -1968,7 +1975,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				AlertDialog.Builder b = new AlertDialog.Builder(this);
 				b.setIcon(android.R.drawable.ic_dialog_alert);
 				b.setTitle("Will Not Work!"); 
-				b.setMessage("JMRI has the wiThrottle power control setting to off.\n\nWill now remove Power Icon.\n\nWill display agian when JMRI setting is on.");
+				b.setMessage("JMRI has the wiThrottle power control setting to off.\n\nWill now remove Power Icon.\n\nWill display again when JMRI setting is on.");
 				b.setCancelable(true);
 				b.setNegativeButton("OK", null);
 				AlertDialog alert = b.create();
@@ -1982,60 +1989,29 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			break;
 		case R.id.EditConsistT_menu:
 			Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
-
-			String addr = "";
-
-			ArrayList <ConLoco>swe = new ArrayList<ConLoco>();
-
-			swe.addAll(mainapp.consistT.getLocos());
-
-			addr = swe.get(swe.size() - 1).getAddress();
-
-			consistEdit.putExtra("address", addr);
 			consistEdit.putExtra("whichThrottle", 'T');
-			startActivityForResult(consistEdit, 0);
+			navigatingAway = true;
+			startActivityForResult(consistEdit, 1);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
 		case R.id.EditConsistS_menu:
 			Intent consistEdit2 = new Intent().setClass(this, ConsistEdit.class);
-
-			String addr2 = "";
-
-			ArrayList <ConLoco>swe2 = new ArrayList<ConLoco>();
-
-			swe2.addAll(mainapp.consistS.getLocos());
-
-			addr = swe2.get(swe2.size() - 1).getAddress();
-
-			consistEdit2.putExtra("address", addr2);
 			consistEdit2.putExtra("whichThrottle", 'S');
-			startActivityForResult(consistEdit2, 0);
+			navigatingAway = true;
+			startActivityForResult(consistEdit2, 1);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
 		case R.id.EditConsistG_menu:
 			Intent consistEdit3 = new Intent().setClass(this, ConsistEdit.class);
-
-			String addr3 = "";
-
-			ArrayList <ConLoco>swe3 = new ArrayList<ConLoco>();
-
-			swe3.addAll(mainapp.consistG.getLocos());
-
-			addr3 = swe3.get(swe3.size() - 1).getAddress();
-
-			consistEdit3.putExtra("address", addr3);
 			consistEdit3.putExtra("whichThrottle", 'G');
-			startActivityForResult(consistEdit3, 0);
+			navigatingAway = true;
+			startActivityForResult(consistEdit3, 1);
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
-		default:
-			navigatingAway = false;
-			break;
 		}
-			
 		return super.onOptionsItemSelected(item);
 	}
-
+	
 	public void EStop()
 	{
 		sendSpeedMsg('T', 0);
@@ -2046,26 +2022,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 	//handle return from menu items
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode == 1) {					// select loco
-			if(resultCode == RESULT_FIRST_USER) {									//something about consist was changed
+		if(requestCode == 1) {							// edit loco or edit consist
+			if(resultCode == RESULT_FIRST_USER) {		// something about consist was changed
 				Bundle extras = data.getExtras();
 				if (extras != null) {
-					char whichThrottle = extras.getString("whichThrottle").charAt(0);
-					//int dir = (whichThrottle == 'T') ? dirT : dirS;
+					char whichThrottle = extras.getChar("whichThrottle");
 					int dir;
-					if(whichThrottle == 'T')
-					{
+					if(whichThrottle == 'T') {
 						dir = dirT;
 					}
-					else if(whichThrottle == 'S')
-					{
+					else if(whichThrottle == 'S') {
 						dir = dirS;
 					}
-					else
-					{
+					else {
 						dir = dirG;
 					}
-
 					setEngineDirection(whichThrottle, dir, false);				//update direction for each loco in consist
 				}
 				//update loco name

@@ -76,7 +76,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
 		// Unregister the listener            
 		getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-		mainapp.addNotification(this.getIntent());
+		if(!this.isFinishing()) {
+			mainapp.addNotification(this.getIntent());
+		}
 	}
 
 	@Override
@@ -191,6 +193,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 		{
 			this.finish();  //end this activity
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+			return true;
 		}
 		return(super.onKeyDown(key, event));
 	};

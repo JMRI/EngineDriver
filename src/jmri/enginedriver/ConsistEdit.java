@@ -22,6 +22,7 @@ import java.util.HashMap;
 import jmri.enginedriver.Consist.ConLoco;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -52,6 +53,7 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 	private ArrayAdapter<ConLoco> consistObjListAdapter;
 	private Spinner consistSpinner;
 	private Consist consist;
+	private int result; 					// set to RESULT_FIRST_USER when something is edited
 
 	private char whichThrottle;
 
@@ -84,6 +86,7 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 			}
 		}
 		consistListAdapter.notifyDataSetChanged();
+		result = RESULT_FIRST_USER;
 	}
 
 
@@ -219,6 +222,7 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 
 		//update consist list
 		refreshConsistLists();
+		result = RESULT_OK;
 	};
 
 	@Override
@@ -258,9 +262,11 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 	@Override
 	public boolean onKeyDown(int key, KeyEvent event) {
 		if(key==KeyEvent.KEYCODE_BACK) {
-			setResult(RESULT_OK);
+			Intent resultIntent = new Intent();
+			resultIntent.putExtra("whichThrottle", whichThrottle);  //pass whichThrottle as an extra
+			setResult(result, resultIntent);
 			this.finish();  //end this activity
-			connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			return true;
 		}
 		return(super.onKeyDown(key, event));
