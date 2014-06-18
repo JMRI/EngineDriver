@@ -73,6 +73,10 @@
         <item>X</item>
         <item>Z</item>
     </string-array>
+    <string-array name="DisplaySpeedUnits">
+        <item>Percent</item>
+        <item>Speed Steps</item>
+    </string-array>
     <string-array name="WebViewLocation">
         <item>Bottom</item>
         <item>none</item>

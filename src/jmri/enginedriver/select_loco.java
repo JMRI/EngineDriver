@@ -77,7 +77,6 @@ import java.io.PrintWriter;
 
 import jmri.enginedriver.Consist;
 import jmri.enginedriver.Consist.ConLoco;
-import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.jmrit.roster.RosterEntry;
 
 public class select_loco extends Activity {
@@ -103,6 +102,7 @@ public class select_loco extends Activity {
 	private SharedPreferences prefs;
 	private String default_address_length;
 	private Menu SMenu;
+	private boolean navigatingAway = false;		// flag for onPause: set to true when another activity is selected, false if going into background 
 
 	// populate the on-screen roster view from global hashmap
 	public void refresh_roster_list() {
@@ -389,6 +389,7 @@ public class select_loco extends Activity {
 				saveUpdateList = bUpdateList;
 				Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
 				consistEdit.putExtra("whichThrottle", whichThrottle);
+				navigatingAway = true;
 				startActivityForResult(consistEdit, 1);
 				connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			}
@@ -723,6 +724,7 @@ public class select_loco extends Activity {
 		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 		mainapp.removeNotification();
+		navigatingAway = false;
 
 		// checking address length here covers (future) case where prefs changed while paused
 		default_address_length = prefs.getString("default_address_length", this
@@ -736,10 +738,9 @@ public class select_loco extends Activity {
 	public void onPause()
 	{
 		super.onPause();
-		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
-			return;
+		if(!this.isFinishing() && !navigatingAway) {		//only invoke setContentIntentNotification when going into background
+			mainapp.addNotification(this.getIntent());
 		}
-		mainapp.addNotification(this.getIntent());
 	}
 
 	@Override
@@ -761,53 +762,7 @@ public class select_loco extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle all of the possible menu actions.
-		Intent in;
 		switch (item.getItemId()) {
-		case R.id.throttle_mnu:
-			this.finish();
-			connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-			break;
-		case R.id.turnouts_mnu:
-			this.finish();
-			in=new Intent().setClass(this, turnouts.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-			break;
-		case R.id.routes_mnu:
-			in = new Intent().setClass(this, routes.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-			break;
-		case R.id.web_mnu:
-			this.finish();
-			in=new Intent().setClass(this, web_activity.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
-		case R.id.preferences_mnu:
-			this.finish();
-			in=new Intent().setClass(this, preferences.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
-		case R.id.power_control_mnu:
-			this.finish();
-			in=new Intent().setClass(this, power_control.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
-		case R.id.about_mnu:
-			this.finish();
-			in=new Intent().setClass(this, about_page.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
-		case R.id.logviewer_menu:
-			this.finish();
-			Intent logviewer=new Intent().setClass(this, LogViewerActivity.class);
-			startActivity(logviewer);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
 		case R.id.EmerStop:
 			mainapp.sendEStopMsg();
 			break;

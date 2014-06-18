@@ -30,6 +30,9 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -47,6 +50,7 @@ import android.widget.TextView;
 public class ConsistEdit extends Activity  implements OnGestureListener {
 
 	private threaded_application mainapp;  // hold pointer to mainapp
+	private Menu CEMenu;
 	private ArrayList<HashMap<String, String> > consistList;
 	private SimpleAdapter consistListAdapter;
 	private ArrayList<ConLoco> consistObjList;
@@ -228,13 +232,16 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 	@Override
 	public void onResume() {
 		super.onResume();
-
 		if(mainapp.isForcingFinish()) {		//expedite
 			this.finish();
 			return;
 		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 		mainapp.removeNotification();
+		if(CEMenu != null)
+		{
+			mainapp.displayEStop(CEMenu);
+		}
 		// suppress popup keyboard until EditText is touched
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	}
@@ -243,10 +250,9 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 	public void onPause()
 	{
 		super.onPause();
-		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
-			return;
+		if(!this.isFinishing()) {		//only invoke setContentIntentNotification when going into background
+			mainapp.addNotification(this.getIntent());
 		}
-		mainapp.addNotification(this.getIntent());
 	}
 
 	/** Called when the activity is finished. */
@@ -256,6 +262,26 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 
 		mainapp.consist_edit_msg_handler = null;
 		super.onDestroy();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.consist_edit_menu, menu);
+		CEMenu = menu;
+		mainapp.displayEStop(menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle all of the possible menu actions.
+		switch (item.getItemId()) {
+		case R.id.EmerStop:
+			mainapp.sendEStopMsg();
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	//Always go to throttle if back button pressed

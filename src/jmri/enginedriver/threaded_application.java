@@ -1949,7 +1949,7 @@ public class threaded_application extends Application {
 
 	public void displayEStop(Menu menu)
 	{
-		if(prefs.getBoolean("show_emergency_stop_button_preference", false))
+		if(prefs.getBoolean("show_emergency_stop_menu_preference", false))
 		{
 			menu.findItem(R.id.EmerStop).setVisible(true);
 		}

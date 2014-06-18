@@ -111,8 +111,8 @@
     <string name="prefNumOfThrottlesSummary">Choose how many throttles you want to display.</string>
     <string name="prefNumOfThrottlesDefault">Two</string>
     <string name="prefMaximumThrottleTitle">Maximum Throttle Value</string>
-    <string name="prefMaximumThrottleDefaultValue">99</string>
-    <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value</string>
+    <string name="prefMaximumThrottleDefaultValue">100</string>
+    <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value in %</string>
     <string name="prefMaximumThrottleChangeTitle">Maximum Throttle Change</string>
     <string name="prefMaximumThrottleChangeDefaultValue">25</string>
     <string name="prefMaximumThrottleChangeSummary">Maximum Allowed throttle change in %</string>
@@ -138,7 +138,10 @@
     <string name="prefDefaultAddressLengthDefaultValue">Auto</string>
     <string name="prefDefaultAddressLengthSummary">Default Loco Address Length, (Auto will set based on # of digits).</string>
     <string name="prefWebTitle">Web Preferences</string>
-    <string name="prefWebOrientationTitle">Web screen orientation</string>
+    <string name="prefDisplaySpeedUnitsTitle">Speed Units</string>
+    <string name="prefDisplaySpeedUnitsDefaultValue">Percent</string>
+    <string name="prefDisplaySpeedUnitsSummary">Units for speed display</string>
+    <string name="prefWebOrientationTitle">Web Screen Orientation</string>
     <string name="prefWebOrientationDefaultValue">Auto-Rotate</string>
     <string name="prefWebOrientationSummary">Web screen orientation</string>
     <string name="prefInitialWebPageTitle">Initial Web Page</string>

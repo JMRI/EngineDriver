@@ -18,8 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import java.util.Random;
-import jmri.enginedriver.logviewer.ui.LogViewerActivity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -58,6 +56,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if(mainapp.isForcingFinish()) {		//expedite
+			this.finish();
+			return;
+		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 		mainapp.removeNotification();
 		// Set up a listener whenever a key changes            
@@ -99,47 +101,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle all of the possible menu actions.
-		Intent in;
 		switch (item.getItemId()) {
-		case R.id.throttle_mnu:
-			this.finish();
-			connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-			break;
-		case R.id.turnouts_mnu:
-			this.finish();
-			in=new Intent().setClass(this, turnouts.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-			break;
-		case R.id.routes_mnu:
-			in = new Intent().setClass(this, routes.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-			break;
-		case R.id.web_mnu:
-			this.finish();
-			in=new Intent().setClass(this, web_activity.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
-		case R.id.power_control_mnu:
-			this.finish();
-			in=new Intent().setClass(this, power_control.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
-		case R.id.about_mnu:
-			this.finish();
-			in=new Intent().setClass(this, about_page.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
-		case R.id.logviewer_menu:
-			this.finish();
-			Intent logviewer=new Intent().setClass(this, LogViewerActivity.class);
-			startActivity(logviewer);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
 		case R.id.EmerStop:
 			mainapp.sendEStopMsg();
 			break;
@@ -165,6 +127,23 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 				String uniqueDefaultName = defaultName + " " + deviceId;
 				sharedPreferences.edit().putString(key, uniqueDefaultName).commit();  //save new name to prefs
 			}
+		}
+		else if(key.equals("maximum_throttle_preference")) {
+			String defaultVal = getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue);
+			String currentValue = sharedPreferences.getString(key, defaultVal).trim();
+			//limit new value to 100 (%)
+			try {
+				int maxThrot = Integer.parseInt(currentValue);
+				if(maxThrot > 100) {
+					sharedPreferences.edit().putString(key, "100").commit();  //save new name to prefs
+				}
+			} catch (NumberFormatException e) {
+				sharedPreferences.edit().putString(key, defaultVal).commit();  //save new name to prefs
+			}
+			mainapp.alert_activities(message_type.THROTTLE,""); 
+		}
+		else if(key.equals("DisplaySpeedUnits")) {
+			mainapp.alert_activities(message_type.THROTTLE,""); 
 		}
 		else if(key.equals("WebViewLocation")) {
 			mainapp.alert_activities(message_type.WEBVIEW_LOC,""); 

@@ -18,9 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import java.util.HashMap;
-import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -77,6 +75,10 @@ public class about_page extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		if(mainapp.isForcingFinish()) {		//expedite
+			this.finish();
+			return;
+		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 		mainapp.removeNotification();
 
@@ -90,10 +92,9 @@ public class about_page extends Activity {
 	public void onPause()
 	{
 		super.onPause();
-		if(this.isFinishing()) {		//if finishing, expedite it and don't invoke setContentIntentNotification
-			return;
+		if(!this.isFinishing()) {		//only invoke setContentIntentNotification when going into background
+			mainapp.addNotification(this.getIntent());
 		}
-		mainapp.addNotification(this.getIntent());
 	}
 
 	@Override
@@ -108,46 +109,7 @@ public class about_page extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle all of the possible menu actions.
-		Intent in;
 		switch (item.getItemId()) {
-		case R.id.throttle_mnu:
-			this.finish();
-			connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-			break;
-		case R.id.turnouts_mnu:
-			this.finish();
-			in=new Intent().setClass(this, turnouts.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-			break;
-		case R.id.routes_mnu:
-			in = new Intent().setClass(this, routes.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-			break;
-		case R.id.web_mnu:
-			this.finish();
-			in=new Intent().setClass(this, web_activity.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
-		case R.id.preferences_mnu:
-			in=new Intent().setClass(this, preferences.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
-		case R.id.power_control_mnu:
-			this.finish();
-			in=new Intent().setClass(this, power_control.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
-		case R.id.logviewer_menu:
-			this.finish();
-			Intent logviewer=new Intent().setClass(this, LogViewerActivity.class);
-			startActivity(logviewer);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
 		case R.id.EmerStop:
 			mainapp.sendEStopMsg();
 			break;

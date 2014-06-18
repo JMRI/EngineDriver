@@ -7,19 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jmri.enginedriver.R;
-import jmri.enginedriver.about_page;
-import jmri.enginedriver.connection_activity;
-import jmri.enginedriver.power_control;
-import jmri.enginedriver.preferences;
-import jmri.enginedriver.routes;
 import jmri.enginedriver.threaded_application;
-import jmri.enginedriver.turnouts;
-import jmri.enginedriver.web_activity;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -93,46 +85,7 @@ public class LogViewerActivity extends ListActivity{
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle all of the possible menu actions.
-		Intent in;
 		switch (item.getItemId()) {
-		case R.id.throttle_mnu:
-			this.finish();
-			connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-			break;
-		case R.id.turnouts_mnu:
-			this.finish();
-			in=new Intent().setClass(this, turnouts.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-			break;
-		case R.id.routes_mnu:
-			in = new Intent().setClass(this, routes.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-			break;
-		case R.id.web_mnu:
-			this.finish();
-			in=new Intent().setClass(this, web_activity.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
-		case R.id.preferences_mnu:
-			in=new Intent().setClass(this, preferences.class);
-			startActivityForResult(in, 0);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
-		case R.id.power_control_mnu:
-			this.finish();
-			in=new Intent().setClass(this, power_control.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
-		case R.id.about_mnu:
-			this.finish();
-			in=new Intent().setClass(this, about_page.class);
-			startActivity(in);
-			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-			break;
 		case R.id.EmerStop:
 			mainapp.sendEStopMsg();
 			break;

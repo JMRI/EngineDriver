@@ -18,7 +18,7 @@
         android:summary="@string/prefThrottleOrientationSummary" 
         android:title="@string/prefThrottleOrientationTitle" />
     <CheckBoxPreference
-        android:key="show_emergency_stop_button_preference" 
+        android:key="show_emergency_stop_menu_preference" 
         android:summary="@string/prefEmerStopSummary" 
         android:title="@string/prefEmerStopTitle" 
         android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue" />
@@ -40,7 +40,7 @@
             android:defaultValue="@string/prefMaximumThrottleDefaultValue"
             android:dialogTitle="@string/prefMaximumThrottleTitle"
             android:key="maximum_throttle_preference"
-            android:maxLength="2"
+            android:maxLength="3"
             android:numeric="integer"
             android:summary="@string/prefMaximumThrottleSummary"
             android:title="@string/prefMaximumThrottleTitle" >
@@ -96,6 +96,13 @@
     	    android:key="InitialThrotWebPage" 
     	    android:summary="@string/prefInitialThrotWebPageSummary" 
     	    android:title="@string/prefInitialThrotWebPageTitle" />
+        <ListPreference 
+    	    android:defaultValue="@string/prefDisplaySpeedUnitsDefaultValue" 
+    	    android:entries="@array/DisplaySpeedUnits" 
+    	    android:entryValues="@array/DisplaySpeedUnits" 
+    	    android:key="DisplaySpeedUnits" 
+    	    android:summary="@string/prefDisplaySpeedUnitsSummary" 
+    	    android:title="@string/prefDisplaySpeedUnitsTitle" />
    		<CheckBoxPreference 
     	    android:title="@string/prefDisplaySpeedArrowsTitle" 
     	    android:defaultValue="@bool/prefDisplaySpeedArrows" 

@@ -51,6 +51,7 @@ public class web_activity extends Activity {
   private boolean currentUrlUpdate = false;
   private boolean orientationChange = false;
   private String currentTime = "";
+  private Menu WMenu;
   private boolean navigatingAway = false;		// flag for onPause: set to true when another activity is selected, false if going into background 
  
   @SuppressLint("HandlerLeak")
@@ -176,6 +177,10 @@ class web_handler extends Handler {
 	  navigatingAway = false;
 	  currentTime = "";
 	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CURRENT_TIME);	// request time update
+	  if(WMenu != null)
+	  {
+		  mainapp.displayEStop(WMenu);
+	  }
 
 // don't load here - onCreate already handled it.  Load might not be finished yet
 // in which case call load_webview here just creates extra work since url will still be null
@@ -270,6 +275,8 @@ class web_handler extends Handler {
   public boolean onCreateOptionsMenu(Menu menu){
 	  MenuInflater inflater = getMenuInflater();
 	  inflater.inflate(R.menu.web_menu, menu);
+	  WMenu = menu;
+	  mainapp.displayEStop(WMenu);
 	  return true;
   }
   @Override
@@ -310,6 +317,9 @@ class web_handler extends Handler {
 		  navigatingAway = true;
      	  startActivity(in);
      	  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    	  break;
+      case R.id.EmerStop:
+    	  mainapp.sendEStopMsg();
     	  break;
 	  case R.id.about_mnu:
 		  in=new Intent().setClass(this, about_page.class);
