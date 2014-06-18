@@ -140,10 +140,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 			} catch (NumberFormatException e) {
 				sharedPreferences.edit().putString(key, defaultVal).commit();  //save new name to prefs
 			}
-			mainapp.alert_activities(message_type.THROTTLE,""); 
-		}
-		else if(key.equals("DisplaySpeedUnits")) {
-			mainapp.alert_activities(message_type.THROTTLE,""); 
 		}
 		else if(key.equals("WebViewLocation")) {
 			mainapp.alert_activities(message_type.WEBVIEW_LOC,""); 

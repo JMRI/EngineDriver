@@ -51,5 +51,4 @@ interface message_type
   public static final int LOCATION_DELIMITER=27;// pref -> turnouts or routes  location delimiter changed
   public static final int CURRENT_TIME=28;		// ta -> activities  updates current time
   public static final int CLOCK_DISPLAY=29;		// pref -> ta  clock display preference changed
-  public static final int THROTTLE=30;			// pref -> throt  throttle preference changed requiring redraw
 }

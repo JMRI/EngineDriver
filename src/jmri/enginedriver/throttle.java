@@ -76,11 +76,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static int maxSpeedStepT;					// throttle speed steps
 	private static int maxSpeedStepG;
 	private static int maxSpeedStepS;
+	private static int max_throttle_change;			 // maximum allowable change of the sliders
 	private static boolean displaySpeedSteps;
 	private static double displayUnitScaleT;			// display units per slider count
 	private static double displayUnitScaleG;
 	private static double displayUnitScaleS;
-	double max_throttle_change;					 // maximum allowable change of the sliders, set in preferences
 
 	private static SeekBar sbT; // seekbars
 	private static SeekBar sbS;
@@ -362,10 +362,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				if (!selectLocoRendered) // call set_labels if the select loco textViews had not rendered the last time it was called
 					set_labels();
 			}
-				break;
-			case message_type.THROTTLE:
-				set_labels();				// redraw sliders when throttle parameter is changed
-				break;
+			break;
 			case message_type.ROSTER_UPDATE:
 				set_labels();				// refresh function labels when any roster response is received
 				break;
@@ -1005,8 +1002,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			// limit speed change if change was initiated by a user slider touch (prevents "bouncing")
 			if (fromUser) {
 				if (!limitedJump) { 		// touch generates multipleonProgressChanged events, skip processing after first limited jump
-					int maxChange = (int)Math.round(throttle.getMax() * max_throttle_change);
-					if ((speed - lastSpeed) > maxChange) { 		// if jump is too large then limit it
+					if ((speed - lastSpeed) > max_throttle_change) { 	// if jump is too large then limit it
 						// Log.d("Engine_Driver", "onProgressChanged -- throttling change");
 						lastSpeed += 1; 	// advance, but slowly, so user knows something is happening
 						speed = lastSpeed;
@@ -1096,11 +1092,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	}
 
 	public void decrement(char whichThrottle) {
-		speedChangeAndNotify(whichThrottle, -1);
+		speedChangeAndNotify(whichThrottle, -BUTTON_SPEED_STEP);
 	}
 
 	public void increment(char whichThrottle) {
-		speedChangeAndNotify(whichThrottle, 1);
+		speedChangeAndNotify(whichThrottle, BUTTON_SPEED_STEP);
 	}
 
 	@SuppressLint({ "Recycle", "SetJavaScriptEnabled" })
@@ -1252,11 +1248,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		maxSpeedStepT = MAX_SPEED_VAL_WIT;
 		maxSpeedStepG = MAX_SPEED_VAL_WIT;
 		maxSpeedStepS = MAX_SPEED_VAL_WIT;
+		max_throttle_change = 1;
 		displaySpeedSteps = false;
 		displayUnitScaleT = 1.0;	// display units per slider count
 		displayUnitScaleG = 1.0;
 		displayUnitScaleS = 1.0;
-		max_throttle_change = 1.0;
 
 		// throttle layouts
 		vThrotScr = findViewById(R.id.throttle_screen);
@@ -1570,18 +1566,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			vVolG.setVisibility(GONE);
 		}
 
-		// set max allowed change for throttles from prefs
-		String s = prefs.getString("maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
-		int maxThrottle;
-		try {
-			maxThrottle = Integer.parseInt(s);
-		} catch (NumberFormatException e) {
-			maxThrottle = 25;
-		}
-		max_throttle_change = maxThrottle * .01;		// convert from percent to fraction
-
 		// set speed buttons speed step
-		s = prefs.getString("speed_arrows_throttle_speed_step", "4");
+		String s = prefs.getString("speed_arrows_throttle_speed_step", "4");
 		try {
 			BUTTON_SPEED_STEP = Integer.parseInt(s);
 		} catch (NumberFormatException e) {
@@ -1590,6 +1576,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 		// set up max speeds for throttles
 		s = prefs.getString("maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+		int maxThrottle;
 		try {
 			maxThrottle = Integer.parseInt(s);
 			if(maxThrottle > 100) {
@@ -1603,11 +1590,25 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		sbS.setMax(maxThrottle);
 		sbG.setMax(maxThrottle);
 
+		// set max allowed change for throttles from prefs
+		s = prefs.getString("maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
+		int maxChange;
+		try {
+			maxChange = Integer.parseInt(s);		// units are integer percent
+		} catch (NumberFormatException e) {
+			maxChange = 25;
+		}
+		max_throttle_change = (int)Math.round(maxThrottle * (maxChange * .01));
+
 		s = prefs.getString("DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
 		displaySpeedSteps = ("Speed Steps".equals(s));
 		setDisplayUnitScale('T');
 		setDisplayUnitScale('G');
 		setDisplayUnitScale('S');
+		
+		setDisplayedSpeed('T', sbT.getProgress());	// update numeric speeds since units might have changed
+		setDisplayedSpeed('G', sbG.getProgress());
+		setDisplayedSpeed('S', sbS.getProgress());
 			
 		// increase height of throttle slider (if requested in preferences)
 		boolean ish = prefs.getBoolean("increase_slider_height_preference", getResources().getBoolean(R.bool.prefIncreaseSliderHeightDefaultValue));
