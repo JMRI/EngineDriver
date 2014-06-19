@@ -396,9 +396,9 @@ public class threaded_application extends Application {
 					}
 					if (prefs.getBoolean("stop_on_release_preference", 
 							getResources().getBoolean(R.bool.prefStopOnReleaseDefaultValue))) {
-						withrottle_send(whichThrottle+"V0"+"<;>"+addr);  //send stop command before releasing (if set in prefs)
+						withrottle_send(whichThrottle+"V0"+(addr!=""?"<;>"+addr:""));  //send stop command before releasing (if set in prefs)
 					}
-					withrottle_send(whichThrottle+"r<;>"+addr);  //send release command
+					withrottle_send(whichThrottle+"r"+(addr!=""?"<;>"+addr:""));  //send release command
 					break;
 				}
 				//request speed. arg1 holds whichThrottle
@@ -422,7 +422,7 @@ public class threaded_application extends Application {
 					doFinish = true;
 					heart.stopHeartbeat();
 					withrottle_send("Q");
-					if (heart.getInboundInterval() > 0) {
+					if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
 						withrottle_send("*-");     //request to turn off heartbeat (if enabled in server prefs)
 					}
 					end_jmdns();
@@ -467,7 +467,7 @@ public class threaded_application extends Application {
 						withrottle_send("M" + whichThrottle+"A*<;>qR");
 					}
 
-					if (heart.getInboundInterval() > 0) {
+					if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
 						withrottle_send("*+");     //request to turn on heartbeat (if enabled in server prefs)
 					}
 					break;

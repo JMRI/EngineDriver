@@ -361,7 +361,7 @@ public class select_loco extends Activity {
 			consist = mainapp.consistS;
 		}
 
-		if(sWhichThrottle.length() > 1)				// add roster selection info if present
+		if(sWhichThrottle.length() > 1 && mainapp.withrottle_version >= 1.6) // add roster selection info if present and supported
 			addr += "<;>" + sWhichThrottle.substring(1);
 
 
@@ -374,6 +374,9 @@ public class select_loco extends Activity {
 		if(!consist.isActive()) {				// if this is the only loco in consist then just tell WiT and exit
 			consist.add(l);
 			consist.setLeadAddr(l.getAddress());
+			if (mainapp.withrottle_version < 1.6) {  //auto-confirm for older WiT, since no response will come
+				consist.setConfirmed(l.getAddress());
+			}
 			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.LOCO_ADDR, addr, (int) whichThrottle);
 			updateRecentEngines(bUpdateList);
 			result = RESULT_OK;
