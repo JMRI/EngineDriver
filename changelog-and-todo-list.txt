@@ -16,6 +16,7 @@
  * redo notifications to support reopening when clicking notification - mstevetodd
  * converted jmri metadata retrieval from xmlio to json - mstevetodd
  * restore last scroll position of turnout and route lists - mstevetodd
+ * added option to use speedsteps instead of percentage - Robin Becker
 **Version 2.8.2
  * restore functionality for very old JMRI (pre-multi-throttle)
  * fix selection/display of roster entry when same address is used for multiple entries
@@ -284,10 +285,8 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
- *   TODO: fix speed issue when rotating while address acquired, next adjustment jumps to zero
  *   TODO: show proper function labels based on lead loco in consist
  *   TODO: fix issues with slider padding (requires restart and does not work sometimes)
- *   TODO: option to show "speed steps" instead of 1-99.
  *   TODO: retrieve vsDecoder sounds and play when appropriate
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: respect "Max Throttle %" from roster entry
