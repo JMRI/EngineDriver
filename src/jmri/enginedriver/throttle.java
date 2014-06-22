@@ -1024,10 +1024,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		public void onProgressChanged(SeekBar throttle, int speed, boolean fromUser) {
 			// limit speed change if change was initiated by a user slider touch (prevents "bouncing")
 			if (fromUser) {
-				if (!limitedJump) { 		// touch generates multipleonProgressChanged events, skip processing after first limited jump
+				if (!limitedJump) { 		// touch generates multiple onProgressChanged events, skip processing after first limited jump
 					if ((speed - lastSpeed) > max_throttle_change) { 	// if jump is too large then limit it
 						// Log.d("Engine_Driver", "onProgressChanged -- throttling change");
-						lastSpeed += 1; 	// advance, but slowly, so user knows something is happening
+						mAutoIncrement = true;	// advance slowly
+						repeatUpdateHandler.post(new RptUpdater(whichThrottle));
 						speed = lastSpeed;
 						limitedJump = true;
 					}
@@ -1050,6 +1051,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 		@Override
 		public void onStopTrackingTouch(SeekBar sb) {
+			mAutoIncrement = false;
 		}
 	}
 
