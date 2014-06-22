@@ -1642,6 +1642,10 @@ public class threaded_application extends Application {
 	public boolean isForcingFinish() {
 		return doFinish;
 	}
+	
+	public void cancelForcingFinish() {
+		doFinish = false;
+	}
 
 
 	//init default function labels from the settings files or set to default

@@ -192,4 +192,9 @@
 	<string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>
 	<string name="server_address">Server address</string>
 	<string name="routes_route">Route Name</string>
+	<string name="label_percent">%</string>
+    <string name="label_14step">14</string>
+	<string name="label_27step">27</string>
+    <string name="label_28step">28</string>
+	<string name="label_128step">128</string>
 </resources>

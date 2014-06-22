@@ -73,9 +73,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	public static final int SPEED_STEP_CODE_27 = 4;
 	public static final int SPEED_STEP_CODE_28 = 2;
 	public static final int SPEED_STEP_CODE_128 = 1;
-	private static int maxSpeedStepT;					// throttle speed steps
-	private static int maxSpeedStepG;
-	private static int maxSpeedStepS;
+	private static int maxSpeedStepT = 100;					// throttle speed steps
+	private static int maxSpeedStepG = 100;
+	private static int maxSpeedStepS = 100;
 	private static int max_throttle_change;			 // maximum allowable change of the sliders
 	private static boolean displaySpeedSteps;
 	private static double displayUnitScaleT;			// display units per slider count
@@ -407,13 +407,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private void removeLoco(char whichThrottle) {
 		enable_disable_buttons(whichThrottle); 		// direction and slider
 		set_function_labels_and_listeners_for_view(whichThrottle);
-		if (whichThrottle == 'T') {
-			enable_disable_buttons_for_view(fbT, false);
-		} else if (whichThrottle == 'G') {
-			enable_disable_buttons_for_view(fbG, false);
-		} else {
-			enable_disable_buttons_for_view(fbS, false);
-		}
 		set_labels();
 	}
 
@@ -527,9 +520,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		case SPEED_STEP_CODE_14:
 			maxSpeedStep = 14;
 			break;
-//		case SPEED_STEP_CODE_28:
-		default:
+		case SPEED_STEP_CODE_28:
 			maxSpeedStep = 28;
+			break;
+		default:
+			maxSpeedStep = 100;
 			break;
 		}
 		if(whichThrottle == 'T') {
@@ -544,11 +539,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	
 	private void setDisplayUnitScale(char whichThrottle) {
 		if(whichThrottle == 'T') {
-				displayUnitScaleT = calcDisplayUnitScale(maxSpeedStepT);
+			displayUnitScaleT = calcDisplayUnitScale(maxSpeedStepT);
+			tvSpdLabT.setText(calcDisplayUnitLabelId(maxSpeedStepT));
 		} else if(whichThrottle == 'G') {
 			displayUnitScaleG = calcDisplayUnitScale(maxSpeedStepG);
+			tvSpdLabG.setText(calcDisplayUnitLabelId(maxSpeedStepG));
 		} else {
 			displayUnitScaleS = calcDisplayUnitScale(maxSpeedStepS);
+			tvSpdLabS.setText(calcDisplayUnitLabelId(maxSpeedStepS));
 		}
 	}
 	
@@ -559,6 +557,31 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 		return max / (double)MAX_SPEED_VAL_WIT;
 	}
+
+	private int calcDisplayUnitLabelId(int maxSpeedStep) {
+		int labId = R.string.label_percent;
+		if(displaySpeedSteps) {
+			switch(maxSpeedStep) {
+			case 14:
+				labId = R.string.label_14step;
+				break;
+			case 27:
+				labId = R.string.label_27step;
+				break;
+			case 28:
+				labId = R.string.label_28step;
+				break;
+			case 126:
+				labId = R.string.label_128step;
+				break;
+			default:
+				labId = R.string.label_percent;
+				break;
+			}
+		}
+		return labId;
+	}
+	
 	
 	// set the direction for all engines on the throttle
 	// if skipLead is true, the direction is not set for the lead engine
@@ -1245,14 +1268,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		sbG.setOnSeekBarChangeListener(thl);
 		sbG.setOnTouchListener(thl);
 
-		maxSpeedStepT = MAX_SPEED_VAL_WIT;
-		maxSpeedStepG = MAX_SPEED_VAL_WIT;
-		maxSpeedStepS = MAX_SPEED_VAL_WIT;
 		max_throttle_change = 1;
 		displaySpeedSteps = false;
-		displayUnitScaleT = 1.0;	// display units per slider count
-		displayUnitScaleG = 1.0;
-		displayUnitScaleS = 1.0;
 
 		// throttle layouts
 		vThrotScr = findViewById(R.id.throttle_screen);
@@ -1600,6 +1617,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 		max_throttle_change = (int)Math.round(maxThrottle * (maxChange * .01));
 
+		if(mainapp.consistT.isEmpty()) {
+			maxSpeedStepT = 100;
+		} 
+		if(mainapp.consistG.isEmpty()) {
+			maxSpeedStepG = 100;
+		}
+		if(mainapp.consistS.isEmpty()) {
+			maxSpeedStepS = 100;
+		}
 		s = prefs.getString("DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
 		displaySpeedSteps = ("Speed Steps".equals(s));
 		setDisplayUnitScale('T');
@@ -1609,7 +1635,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		setDisplayedSpeed('T', sbT.getProgress());	// update numeric speeds since units might have changed
 		setDisplayedSpeed('G', sbG.getProgress());
 		setDisplayedSpeed('S', sbS.getProgress());
-			
+		
 		// increase height of throttle slider (if requested in preferences)
 		boolean ish = prefs.getBoolean("increase_slider_height_preference", getResources().getBoolean(R.bool.prefIncreaseSliderHeightDefaultValue));
 
@@ -2060,14 +2086,19 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				if (extras != null) {
 					char whichThrottle = extras.getChar("whichThrottle");
 					int dir;
+					int speed;
 					if (whichThrottle == 'T') {
 						dir = dirT;
-					} else if (whichThrottle == 'S') {
-						dir = dirS;
-					} else {
+						speed = sbT.getProgress(); 
+					} else if (whichThrottle == 'G') {
 						dir = dirG;
+						speed = sbG.getProgress(); 
+					} else {
+						dir = dirS;
+						speed = sbS.getProgress(); 
 					}
-					setEngineDirection(whichThrottle, dir, false); // update direction for each loco in consist
+					setEngineDirection(whichThrottle, dir, false); 	// update direction for each loco in consist
+					sendSpeedMsg(whichThrottle, speed);				// ensure all trailing units have the same speed as the lead engine
 				}
 				// update loco name
 			}

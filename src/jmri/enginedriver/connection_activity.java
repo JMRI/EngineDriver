@@ -358,6 +358,7 @@ public class connection_activity extends Activity {
 		//populate the ListView with the recent connections
 		getConnectionsList();
 		set_labels();
+		mainapp.cancelForcingFinish();			// if fresh start are restart after being killed in the bkg, indicate app is running again 
 		//start up server discovery listener again (after a 1 second delay)
 		//TODO: this is a rig, figure out why this is needed for ubuntu servers
 		//	    sendMsgErr(1000, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;

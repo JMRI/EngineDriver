@@ -66,7 +66,8 @@
                             android:enabled="false"
                             android:paddingLeft="2dp"
                             android:paddingTop="2dp"
-                            android:text="@string/speed" />
+                            android:textSize="12sp"
+                            android:text="@string/label_percent" />
                         <TextView
                             android:id="@+id/speed_value_label_T"
                             style="@style/floating_text_style"
@@ -74,8 +75,8 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:enabled="false"
-                            android:text="0"
-                            android:textSize="36dp" />
+                            android:text="126"
+                            android:textSize="36sp" />
                         <TextView
                             android:id="@+id/volume_indicator_T"
                             style="@style/floating_text_style"
@@ -84,6 +85,9 @@
                             android:layout_alignBottom="@id/speed_value_label_T"
                             android:layout_alignParentLeft="true"
                             android:enabled="false"
+                            android:paddingLeft="2dp"
+                            android:paddingBottom="2dp"
+                            android:textSize="12sp"
                             android:text="@string/volume_indicator" />
                     </RelativeLayout>
                 </LinearLayout>
@@ -312,7 +316,8 @@
                             android:enabled="false"
                             android:paddingLeft="2dp"
                             android:paddingTop="2dp"
-                            android:text="@string/speed" />
+                            android:textSize="12sp"
+                            android:text="@string/label_percent" />
                         <TextView
                             android:id="@+id/speed_value_label_S"
                             style="@style/floating_text_style"
@@ -330,6 +335,9 @@
                             android:layout_alignBottom="@id/speed_value_label_S"
                             android:layout_alignParentLeft="true"
                             android:enabled="false"
+                            android:paddingLeft="2dp"
+                            android:paddingTop="2dp"
+                            android:textSize="12sp"
                             android:text="@string/volume_indicator" />
                     </RelativeLayout>
                 </LinearLayout>
@@ -580,7 +588,8 @@
                             android:enabled="false"
                             android:paddingLeft="2dp"
                             android:paddingTop="2dp"
-                            android:text="@string/speed" />
+                            android:textSize="12sp"
+                            android:text="@string/label_percent" />
 
                         <TextView
                             android:id="@+id/speed_value_label_G"
@@ -590,7 +599,7 @@
                             android:layout_alignParentRight="true"
                             android:enabled="false"
                             android:text="0"
-                            android:textSize="36dp" />
+                            android:textSize="36sp" />
 
                         <TextView
                             android:id="@+id/volume_indicator_G"
@@ -600,6 +609,9 @@
                             android:layout_alignBottom="@+id/speed_value_label_G"
                             android:layout_alignParentLeft="true"
                             android:enabled="false"
+                            android:paddingLeft="2dp"
+                            android:paddingTop="2dp"
+                            android:textSize="12sp"
                             android:text="@string/volume_indicator" />
                     </RelativeLayout>
                 </LinearLayout>
