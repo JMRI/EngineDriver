@@ -19,6 +19,8 @@
  * added option to use speedsteps instead of percentage - Robin Becker
  * always show loco for pre-multithrottle, since no response will come - mstevetodd
  * a few fixes to prevent crashes with pre-multithrottle - mstevetodd
+ * rearranged and reworded prefs to flow a bit better - mstevetodd
+ * changed default initial web pages to reflect recent web server changes - mstevetodd
 **Version 2.8.2
  * restore functionality for very old JMRI (pre-multi-throttle)
  * fix selection/display of roster entry when same address is used for multiple entries
@@ -264,11 +266,9 @@
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
  * routes
- *   TODO: remember scroll position in list
  *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
  *   TODO: use PRT titles for Active/inactive
  * turnouts
- *   TODO: remember scroll position in list
  *   TODO: list available "system" based on items in use, maybe with dropdown on Turnout
  *   TODO: pref to sort by system name vs. user name
  *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls

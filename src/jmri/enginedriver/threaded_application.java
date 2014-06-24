@@ -2034,10 +2034,12 @@ public class threaded_application extends Application {
 		String url = "";
 		int port = web_server_port;
 		if (port > 0) {
-			if (defaultUrl.startsWith("http"))  //if url starts with http, use it as is, else prepend servername and port
+			if (defaultUrl.startsWith("http")) { //if url starts with http, use it as is
 				url = defaultUrl;
-			else
-				url = "http://" + host_ip + ":" + port + "/" + defaultUrl;
+			} else { //, else prepend servername and port and slash if needed
+				
+				url = "http://" + host_ip + ":" + port + (defaultUrl.startsWith("/")?"":"/") + defaultUrl;
+			}
 		}
 		return url;
 	}

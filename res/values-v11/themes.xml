@@ -19,6 +19,7 @@
         <item name="android:windowTitleStyle">@style/app_title</item>
         <item name="android:listViewStyle">@style/EDListView</item>
         <item name="android:expandableListViewStyle">@style/EDListView</item>
+        <item name="android:listSeparatorTextViewStyle">@style/small_heading_style</item>
     </style>
 </resources>
     

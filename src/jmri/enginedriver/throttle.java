@@ -464,8 +464,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		if(lastScaleSpeed == scaleSpeed) {
 			speed += Math.signum(change);
 		}
-		if (speed < 0)
+		if (speed < 0)  //insure speed is inside bounds
 			speed = 0;
+		if (speed > MAX_SPEED_VAL_WIT)
+			speed = MAX_SPEED_VAL_WIT;
 		throttle_slider.setProgress(speed);
 		return speed;
 	}
@@ -1788,26 +1790,18 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		if (mainapp.firstCreate) {
 
 			String leftS = prefs.getString("left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
-			String rightS = prefs
-					.getString("right_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderRightMarginDefaultValue));
 
-			int left;
-			int right;
+			int sliderMargin;
 
 			try {
-				left = Integer.parseInt(leftS);
+				sliderMargin = Integer.parseInt(leftS);
 			} catch (Exception e) {
-				left = 8;
-			}
-			try {
-				right = Integer.parseInt(rightS);
-			} catch (Exception e) {
-				right = 8;
+				sliderMargin = 8;
 			}
 
-			sbS.setPadding(left, 0, right, 0);
-			sbG.setPadding(left, 0, right, 0);
-			sbT.setPadding(left, 0, right, 0);
+			sbS.setPadding(sliderMargin, 0, sliderMargin, 0);
+			sbG.setPadding(sliderMargin, 0, sliderMargin, 0);
+			sbT.setPadding(sliderMargin, 0, sliderMargin, 0);
 
 			sbT.setLayoutParams(llLp);
 			sbS.setLayoutParams(llLp);
