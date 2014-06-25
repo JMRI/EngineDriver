@@ -74,10 +74,24 @@
         <item>Z</item>
     </string-array>
     <string-array name="DisplaySpeedUnits">
-        <item>Percent</item>
-        <item>Speed Steps</item>
+        <item>Percentage</item>
+        <item>Auto speed steps</item>
+        <item>8 steps</item>
+        <item>10 steps</item>
+        <item>14 steps</item>
+        <item>28 steps</item>
+        <item>128 steps</item>
     </string-array>
-    <string-array name="WebViewLocation">
+    <string-array name="DisplaySpeedUnitValues">
+        <item>100</item>
+        <item>-1</item>
+        <item>8</item>
+        <item>10</item>
+        <item>14</item>
+        <item>28</item>
+        <item>126</item>
+    </string-array>
+<string-array name="WebViewLocation">
         <item>Bottom</item>
         <item>none</item>
     </string-array>

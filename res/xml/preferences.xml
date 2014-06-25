@@ -45,7 +45,7 @@
         <ListPreference
             android:defaultValue="@string/prefDisplaySpeedUnitsDefaultValue"
             android:entries="@array/DisplaySpeedUnits"
-            android:entryValues="@array/DisplaySpeedUnits"
+            android:entryValues="@array/DisplaySpeedUnitValues"
             android:key="DisplaySpeedUnits"
             android:summary="@string/prefDisplaySpeedUnitsSummary"
             android:title="@string/prefDisplaySpeedUnitsTitle" />

@@ -17,10 +17,12 @@
  * converted jmri metadata retrieval from xmlio to json - mstevetodd
  * restore last scroll position of turnout and route lists - mstevetodd
  * added option to use speedsteps instead of percentage - Robin Becker
+ * show % or speedstep # in speed view - Robin Becker
  * always show loco for pre-multithrottle, since no response will come - mstevetodd
  * a few fixes to prevent crashes with pre-multithrottle - mstevetodd
  * rearranged and reworded prefs to flow a bit better - mstevetodd
  * changed default initial web pages to reflect recent web server changes - mstevetodd
+ * added specific speed step options - mstevetodd
 **Version 2.8.2
  * restore functionality for very old JMRI (pre-multi-throttle)
  * fix selection/display of roster entry when same address is used for multiple entries

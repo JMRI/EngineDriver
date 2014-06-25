@@ -73,11 +73,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	public static final int SPEED_STEP_CODE_27 = 4;
 	public static final int SPEED_STEP_CODE_28 = 2;
 	public static final int SPEED_STEP_CODE_128 = 1;
+	public static final int SPEED_STEP_AUTO_MODE = -1;
 	private static int maxSpeedStepT = 100;					// throttle speed steps
 	private static int maxSpeedStepG = 100;
 	private static int maxSpeedStepS = 100;
 	private static int max_throttle_change;			 // maximum allowable change of the sliders
-	private static boolean displaySpeedSteps;
+	private static int speedStepPref = 100;
 	private static double displayUnitScaleT;			// display units per slider count
 	private static double displayUnitScaleG;
 	private static double displayUnitScaleS;
@@ -308,7 +309,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 							} else if (com3 == 's') {
 								try {
 									int speedStepCode = Integer.valueOf(ls[1].substring(1));
-									setSpeedSteps(whichThrottle, speedStepCode);
+									setSpeedStepsFromWiT(whichThrottle, speedStepCode);
 								} catch (Exception e) {
 								}
 							} else {
@@ -510,78 +511,67 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		speed_label.setText(Integer.toString(scaleSpeed));
 	}
 
-	private void setSpeedSteps(char whichThrottle, int speedStepCode) {
-		int maxSpeedStep;
-		switch(speedStepCode) {
-		case SPEED_STEP_CODE_128:
-			maxSpeedStep = 126;
-			break;
-		case SPEED_STEP_CODE_27:
-			maxSpeedStep = 27;
-			break;
-		case SPEED_STEP_CODE_14:
-			maxSpeedStep = 14;
-			break;
-		case SPEED_STEP_CODE_28:
-			maxSpeedStep = 28;
-			break;
-		default:
-			maxSpeedStep = 100;
-			break;
+	//adjust maxspeedsteps from code passed from JMRI, but only if set to Auto, else do not change
+	private void setSpeedStepsFromWiT(char whichThrottle, int speedStepCode) {
+		if (speedStepPref == SPEED_STEP_AUTO_MODE) {
+			int maxSpeedStep = 100;
+			switch(speedStepCode) {
+			case SPEED_STEP_CODE_128:
+				maxSpeedStep = 126;
+				break;
+			case SPEED_STEP_CODE_27:
+				maxSpeedStep = 27;
+				break;
+			case SPEED_STEP_CODE_14:
+				maxSpeedStep = 14;
+				break;
+			case SPEED_STEP_CODE_28:
+				maxSpeedStep = 28;
+				break;
+			}
+			if(whichThrottle == 'T') {
+				maxSpeedStepT = maxSpeedStep;
+			} else if(whichThrottle == 'G') {
+				maxSpeedStepG = maxSpeedStep;
+			} else {
+				maxSpeedStepS = maxSpeedStep;
+			}
+			setDisplayUnitScale(whichThrottle);
 		}
-		if(whichThrottle == 'T') {
-			maxSpeedStepT = maxSpeedStep;
-		} else if(whichThrottle == 'G') {
-			maxSpeedStepG = maxSpeedStep;
-		} else {
-			maxSpeedStepS = maxSpeedStep;
-		}
-		setDisplayUnitScale(whichThrottle);
 	}
-	
+
+	//adjust all 3 maxspeedsteps from Preferences, unless Pref is for Auto, then do not change here
+	private void setSpeedSteps() {
+		if (speedStepPref != SPEED_STEP_AUTO_MODE) {
+			maxSpeedStepT = speedStepPref;
+			maxSpeedStepG = speedStepPref;
+			maxSpeedStepS = speedStepPref;
+		}
+	}
+
 	private void setDisplayUnitScale(char whichThrottle) {
 		if(whichThrottle == 'T') {
 			displayUnitScaleT = calcDisplayUnitScale(maxSpeedStepT);
-			tvSpdLabT.setText(calcDisplayUnitLabelId(maxSpeedStepT));
+			tvSpdLabT.setText(calcDisplayUnitLabel(maxSpeedStepT));
 		} else if(whichThrottle == 'G') {
 			displayUnitScaleG = calcDisplayUnitScale(maxSpeedStepG);
-			tvSpdLabG.setText(calcDisplayUnitLabelId(maxSpeedStepG));
+			tvSpdLabG.setText(calcDisplayUnitLabel(maxSpeedStepG));
 		} else {
 			displayUnitScaleS = calcDisplayUnitScale(maxSpeedStepS);
-			tvSpdLabS.setText(calcDisplayUnitLabelId(maxSpeedStepS));
+			tvSpdLabS.setText(calcDisplayUnitLabel(maxSpeedStepS));
 		}
 	}
 	
 	private double calcDisplayUnitScale(int maxSpeedStep) {
-		int max = 100;
-		if(displaySpeedSteps) {
-			max = maxSpeedStep;
-		}
-		return max / (double)MAX_SPEED_VAL_WIT;
+		return maxSpeedStep / (double)MAX_SPEED_VAL_WIT;
 	}
 
-	private int calcDisplayUnitLabelId(int maxSpeedStep) {
-		int labId = R.string.label_percent;
-		if(displaySpeedSteps) {
-			switch(maxSpeedStep) {
-			case 14:
-				labId = R.string.label_14step;
-				break;
-			case 27:
-				labId = R.string.label_27step;
-				break;
-			case 28:
-				labId = R.string.label_28step;
-				break;
-			case 126:
-				labId = R.string.label_128step;
-				break;
-			default:
-				labId = R.string.label_percent;
-				break;
-			}
+	private String calcDisplayUnitLabel(int maxSpeedStep) {
+		if (maxSpeedStep == 100) {
+			return getApplicationContext().getResources().getString(R.string.label_percent);
+		} else {
+			return String.valueOf(maxSpeedStep);
 		}
-		return labId;
 	}
 	
 	
@@ -1273,7 +1263,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		sbG.setOnTouchListener(thl);
 
 		max_throttle_change = 1;
-		displaySpeedSteps = false;
+//		displaySpeedSteps = false;
 
 		// throttle layouts
 		vThrotScr = findViewById(R.id.throttle_screen);
@@ -1630,8 +1620,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		if(mainapp.consistS.isEmpty()) {
 			maxSpeedStepS = 100;
 		}
+		//get speed steps from prefs
 		s = prefs.getString("DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
-		displaySpeedSteps = ("Speed Steps".equals(s));
+		try {
+			speedStepPref = Integer.parseInt(s);
+		} catch (Exception e) {
+			speedStepPref = 100;
+		}
+		setSpeedSteps();
+		
 		setDisplayUnitScale('T');
 		setDisplayUnitScale('G');
 		setDisplayUnitScale('S');
