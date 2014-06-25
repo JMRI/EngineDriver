@@ -139,7 +139,7 @@
     <string name="prefDefaultAddressLengthSummary">Default Loco Address Length, (Auto will set based on # of digits).</string>
     <string name="prefWebTitle">Web Preferences</string>
     <string name="prefDisplaySpeedUnitsTitle">Speed Units</string>
-    <string name="prefDisplaySpeedUnitsDefaultValue">Percent</string>
+    <string name="prefDisplaySpeedUnitsDefaultValue">100</string>
     <string name="prefDisplaySpeedUnitsSummary">Display speed as percentage or by speed steps?</string>
     <string name="prefWebOrientationTitle">Web Screen Orientation</string>
     <string name="prefWebOrientationDefaultValue">Auto-Rotate</string>
