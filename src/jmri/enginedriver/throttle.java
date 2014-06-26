@@ -120,6 +120,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static LinearLayout llS;
 	private static LinearLayout llG;
 	private static LinearLayout llTSetSpd;
+	private static LinearLayout llSSetSpd;
+	private static LinearLayout llGSetSpd;
 	private static View vThrotScr;
 	private static View vThrotScrWrap;
 
@@ -1272,6 +1274,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		llG = (LinearLayout) findViewById(R.id.throttle_G);
 		llS = (LinearLayout) findViewById(R.id.throttle_S);
 		llTSetSpd = (LinearLayout) findViewById(R.id.Throttle_T_SetSpeed);
+		llSSetSpd = (LinearLayout) findViewById(R.id.Throttle_S_SetSpeed);
+		llGSetSpd = (LinearLayout) findViewById(R.id.Throttle_G_SetSpeed);
 
 		// volume indicators
 		vVolT = findViewById(R.id.volume_indicator_T);
@@ -1430,10 +1434,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	@Override
 	public void onDestroy() {
 		Log.d("Engine_Driver", "throttle.onDestroy()");
-		// prefs.edit().putInt("T", 0).commit();
-		// prefs.edit().putInt("S", 0).commit();
-		// prefs.edit().putInt("G", 0).commit();
-		// prefs.edit().putBoolean("r", false).commit();
 		if (webView != null) {
 			scale = webView.getScale(); // save current scale for next onCreate
 			if (!orientationChange) { // if screen is exiting
@@ -1743,69 +1743,42 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			screenHeight *= 0.5;
 		}
 
-		LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, newHeight);
-
+		//set height of slider areas
+		LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
 		llTSetSpd.setLayoutParams(llLp);
+		llSSetSpd.setLayoutParams(llLp);
+		llGSetSpd.setLayoutParams(llLp);
 
+		//set margins of slider areas
+		s = prefs.getString("left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
+		int sliderMargin;
+		try {
+			sliderMargin = Integer.parseInt(s);
+		} catch (Exception e) {
+			sliderMargin = 8;
+		}
+
+		//show speed buttons based on pref
 		if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
-			int pL = (int) (sW * 0.10);
-			int pS = (int) (sW * 0.80);
-
-			llLp = new LinearLayout.LayoutParams(pL, newHeight);
-
-			bLSpdT.setLayoutParams(llLp);
-			bRSpdT.setLayoutParams(llLp);
-			bLSpdS.setLayoutParams(llLp);
-			bRSpdS.setLayoutParams(llLp);
-			bLSpdG.setLayoutParams(llLp);
-			bRSpdG.setLayoutParams(llLp);
-
-			llLp = new LinearLayout.LayoutParams(pS, newHeight);
-
-			sbT.setLayoutParams(llLp);
-			sbS.setLayoutParams(llLp);
-			sbG.setLayoutParams(llLp);
-		} else {
-			llLp = new LinearLayout.LayoutParams(0, 0);
-
-			bLSpdT.setLayoutParams(llLp);
-			bRSpdT.setLayoutParams(llLp);
-			bLSpdS.setLayoutParams(llLp);
-			bRSpdS.setLayoutParams(llLp);
-			bLSpdG.setLayoutParams(llLp);
-			bRSpdG.setLayoutParams(llLp);
-
-			llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, newHeight);
-
-			sbT.setLayoutParams(llLp);
-			sbS.setLayoutParams(llLp);
-			sbG.setLayoutParams(llLp);
+			bLSpdT.setVisibility(VISIBLE);
+			bLSpdS.setVisibility(VISIBLE);
+			bLSpdG.setVisibility(VISIBLE);
+			bRSpdT.setVisibility(VISIBLE);
+			bRSpdS.setVisibility(VISIBLE);
+			bRSpdG.setVisibility(VISIBLE);
+		} else {  //hide speed buttons based on pref
+			bLSpdT.setVisibility(GONE);
+			bLSpdS.setVisibility(GONE);
+			bLSpdG.setVisibility(GONE);
+			bRSpdT.setVisibility(GONE);
+			bRSpdS.setVisibility(GONE);
+			bRSpdG.setVisibility(GONE);
+			sliderMargin += 30;  //a little extra margin previously in button
 		}
 
-		// TODO: Fix graphic error when updating view, so blue dot and line
-		// match the new width when sliding.
-		if (mainapp.firstCreate) {
-
-			String leftS = prefs.getString("left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
-
-			int sliderMargin;
-
-			try {
-				sliderMargin = Integer.parseInt(leftS);
-			} catch (Exception e) {
-				sliderMargin = 8;
-			}
-
-			sbS.setPadding(sliderMargin, 0, sliderMargin, 0);
-			sbG.setPadding(sliderMargin, 0, sliderMargin, 0);
-			sbT.setPadding(sliderMargin, 0, sliderMargin, 0);
-
-			sbT.setLayoutParams(llLp);
-			sbS.setLayoutParams(llLp);
-			sbG.setLayoutParams(llLp);
-
-			mainapp.firstCreate = false;
-		}
+		sbS.setPadding(sliderMargin, 0, sliderMargin, 0);
+		sbG.setPadding(sliderMargin, 0, sliderMargin, 0);
+		sbT.setPadding(sliderMargin, 0, sliderMargin, 0);
 
 		if (screenHeight > throttleMargin) { // don't do this if height is invalid
 			// determine how to split the screen (evenly if all three, 45/45/10 for two, 80/10/10 if only one)
@@ -1874,6 +1847,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 			// set height of S area
 			llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, height_S);
+			llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
 			llS.setLayoutParams(llLp);
 
 			// update throttle top/bottom
@@ -1882,11 +1856,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 			// set height of G area
 			llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, height_G);
+			llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
 			llG.setLayoutParams(llLp);
 
 			// update throttle top/bottom
-			G_top = llG.getTop() + sbS.getTop();
-			G_bottom = llG.getTop() + sbS.getBottom() + bSelG.getHeight() + bFwdG.getHeight();
+			G_top = llG.getTop() + sbG.getTop();
+			G_bottom = llG.getTop() + sbG.getBottom() + bSelG.getHeight() + bFwdG.getHeight();
 		}
 
 		// update the direction indicators

@@ -1580,7 +1580,7 @@ public class threaded_application extends Application {
 		.setOngoing(true);
 
 	    PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent, 
-	    		PendingIntent.FLAG_UPDATE_CURRENT);
+	    		PendingIntent.FLAG_CANCEL_CURRENT);
 	    builder.setContentIntent(contentIntent);
 
 	    // Add as notification

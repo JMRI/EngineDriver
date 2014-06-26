@@ -28,7 +28,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="1.0" >
+                    android:weightSum="1.0" 
+                    android:baselineAligned="false">
                     <RelativeLayout
                         android:id="@+id/loco_cell_T"
                         android:layout_width="0dp"
@@ -123,23 +124,25 @@
                     <Button
                         android:id="@+id/Left_speed_button_T"
                         style="@style/normal_button_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+               	 	    android:layout_width="0dip"
+               	 	    android:layout_weight="0.15"
+                        android:layout_height="match_parent"
                         android:text="@string/LeftButton"/>
                	 	<SeekBar
-                    	android:id="@+id/speed_T"
-                   	 	android:layout_width="wrap_content"
-                    	android:layout_height="50dp"
-                    	android:paddingLeft="8dp"
-                    	android:paddingRight="8dp"
-                    	android:maxHeight="50dp"
-                    	android:minHeight="50dp">
+               	 	    android:id="@+id/speed_T"
+               	 	    android:layout_width="0dip"
+               	 	    android:layout_weight="0.7"
+               	 	    android:layout_height="match_parent"
+               	 	    android:maxHeight="80dp"
+               	 	    android:paddingLeft="8dp"
+               	 	    android:paddingRight="8dp" >
                 	</SeekBar>
                		<Button
              			android:id="@+id/Right_speed_button_T"
                     	style="@style/normal_button_style"
-                    	android:layout_width="wrap_content"
-                    	android:layout_height="50dp"
+               	 	    android:layout_width="0dip"
+               	 	    android:layout_weight="0.15"
+                    	android:layout_height="match_parent"
                     	android:text="@string/RightButton"/>
 				</LinearLayout>
 				
@@ -278,7 +281,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="1.0" >
+                    android:weightSum="1.0" 
+                    android:baselineAligned="false">
                     <RelativeLayout
                         android:id="@+id/loco_cell_S"
                         android:layout_width="0dp"
@@ -374,35 +378,28 @@
                     <Button
                         android:id="@+id/Left_speed_button_S"
                         style="@style/normal_button_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+               	 	    android:layout_width="0dip"
+               	 	    android:layout_weight="0.15"
+                        android:layout_height="match_parent"
                         android:text="@string/LeftButton"/>
                	 	<SeekBar
-                    	android:id="@+id/speed_S"
-                   	 	android:layout_width="wrap_content"
-                    	android:layout_height="50dp"
-                    	android:paddingLeft="8dp"
-                    	android:paddingRight="8dp"
-                    	android:maxHeight="50dp"
-                    	android:minHeight="50dp">
+               	 	    android:id="@+id/speed_S"
+               	 	    android:layout_width="0dip"
+               	 	    android:layout_weight="0.7"
+               	 	    android:layout_height="match_parent"
+               	 	    android:maxHeight="80dp"
+               	 	    android:paddingLeft="8dp"
+               	 	    android:paddingRight="8dp" >
                 	</SeekBar>
                		<Button
              			android:id="@+id/Right_speed_button_S"
                     	style="@style/normal_button_style"
-                    	android:layout_width="wrap_content"
-                    	android:layout_height="50dp"
+               	 	    android:layout_width="0dip"
+               	 	    android:layout_weight="0.15"
+                    	android:layout_height="match_parent"
                     	android:text="@string/RightButton"/>
 				</LinearLayout>
                 
-                <!--  <SeekBar
-                    android:id="@+id/speed_S"
-                    android:layout_width="fill_parent"
-                    android:layout_height="50dp"
-                    android:layout_alignLeft="@id/loco_label_S"
-                    android:layout_below="@id/loco_label_S"
-                    android:enabled="false"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp" />-->
                 <ScrollView
                     android:id="@+id/function_buttons_scroller_S"
                     android:layout_width="fill_parent"
@@ -540,13 +537,13 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
-
                 <LinearLayout
                     android:id="@+id/loco_buttons_group_G"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="1.0" >
+                    android:weightSum="1.0" 
+                    android:baselineAligned="false">
 
                     <RelativeLayout
                         android:id="@+id/loco_cell_G"
@@ -648,32 +645,27 @@
                     <Button
                         android:id="@+id/Left_speed_button_G"
                         style="@style/normal_button_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+               	 	    android:layout_width="0dip"
+               	 	    android:layout_weight="0.15"
+                        android:layout_height="match_parent"
                         android:text="@string/LeftButton"/>
                	 	<SeekBar
-                    	android:id="@+id/speed_G"
-                   	 	android:layout_width="wrap_content"
-                    	android:layout_height="50dp"
-                    	android:paddingLeft="8dp"
-                    	android:paddingRight="8dp"
-                    	android:maxHeight="50dp"
-                    	android:minHeight="50dp">
+               	 	    android:id="@+id/speed_G"
+               	 	    android:layout_width="0dip"
+               	 	    android:layout_weight="0.7"
+               	 	    android:layout_height="match_parent"
+               	 	    android:maxHeight="80dp"
+               	 	    android:paddingLeft="8dp"
+               	 	    android:paddingRight="8dp" >
                 	</SeekBar>
                		<Button
              			android:id="@+id/Right_speed_button_G"
                     	style="@style/normal_button_style"
-                    	android:layout_width="wrap_content"
-                    	android:layout_height="50dp"
+               	 	    android:layout_width="0dip"
+               	 	    android:layout_weight="0.15"
+                    	android:layout_height="match_parent"
                     	android:text="@string/RightButton"/>
 				</LinearLayout>
-                <!--<SeekBar
-                    android:id="@+id/speed_G"
-                    android:layout_width="fill_parent"
-                    android:layout_height="50dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp" />-->
-
                 <ScrollView
                     android:id="@+id/function_buttons_scroller_G"
                     android:layout_width="fill_parent"
