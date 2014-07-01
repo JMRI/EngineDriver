@@ -39,13 +39,13 @@
         <activity
             android:name=".select_loco"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask" 
+            android:launchMode="singleTop" 
             android:label="@string/app_name_select_loco" >
         </activity>
         <activity
             android:name=".ConsistEdit"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask" 
+            android:launchMode="singleTop" 
             android:label="@string/app_name_ConsistEdit" >
         </activity>
         <activity
@@ -76,7 +76,7 @@
         <activity
             android:name=".preferences"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask" 
+            android:launchMode="singleTop" 
             android:label="@string/app_name_preferences" >
         </activity>
         <activity
