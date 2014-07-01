@@ -1,0 +1,327 @@
+**Version 2.9
+ * fix issue with volume button changing wrong loco speed when unused throttle has the "v" - mstevetodd
+ * Catch additional exceptions when starting jmDNS listener (NoSuchMethodError reported to Store) - mstevetodd
+ * update system list for turnout prefixes - mstevetodd
+ * Modified handling of consists so that Locos are not visible unless WiT reports that they have been acquired (via the MT+ message). - Robin Becker  
+ * Also TA does not pulse the outbound heartbeat for a throttle unless the lead loco has been acquired. - Robin Becker  
+ * Adjusted the scaling of loco/consist on Throttle and SelectLoco screens to better utilize the actual textView size. - Robin Becker  
+ * Widened the Throw, Close and Toggle buttons on the Turnouts screen so the label text does not wrap. - Robin Becker  
+ * Adjusted size of the Power icon so it is square. - Robin Becker
+ * corrected number of default function buttons to 28 - mstevetodd
+ * added option to show JMRI fast-clock in title bar - Robin Becker
+ * fixed theme issue with pre-Holo devices - mstevetodd
+ * reduced click area of turnout and route lists to prevent inadvertent clicks when scrolling - mstevetodd
+ * reenable alpha input for turnouts and routes - mstevetodd
+ * add text hints for all entry fields - mstevetodd
+ * redo notifications to support reopening when clicking notification - mstevetodd
+ * converted jmri metadata retrieval from xmlio to json - mstevetodd
+ * restore last scroll position of turnout and route lists - mstevetodd
+ * added option to use speedsteps instead of percentage - Robin Becker
+ * show % or speedstep # in speed view - Robin Becker
+ * always show loco for pre-multithrottle, since no response will come - mstevetodd
+ * a few fixes to prevent crashes with pre-multithrottle - mstevetodd
+ * rearranged and reworded prefs to flow a bit better - mstevetodd
+ * changed default initial web pages to reflect recent web server changes - mstevetodd
+ * added specific speed step options - mstevetodd
+ * fixed slider height and thumb alignment issues, and improved button hiding - mstevetodd
+ * fixed issue with notification not working from throttle - mstevetodd
+**Version 2.8.2
+ * restore functionality for very old JMRI (pre-multi-throttle)
+ * fix selection/display of roster entry when same address is used for multiple entries
+ * only show third throttle when supported by JMRI
+ * rearrange the third throttle code to lower chance of NPE reported to Play Store
+ * request heartbeat update on third throttle as well
+ * avoid NPE when heartbeat comes as loco removed (Robin Becker)
+**Version 2.8.1
+ * fix default for "Drop Before Acquire" if never set, should be off
+ * add click sounds to function and direction buttons, to match other buttons 
+**Version 2.8 (mstevetodd)
+ * only show loco and release button for # of throttles allowed
+**Version 2.8 (Robin Becker)
+ * New rotation option to auto-jump to web view in landscape mode.
+ * Quick list filter for turnouts and routes, with new preference for location delimiter.
+ * New consist editing dialog, for choosing lead loco and setting direction of each loco in consist.
+ * only show Ongoing Notification when ED is in background
+ * removed several warnings in JmDNS
+**Version 2.8 (Jeffrey Machacek)
+ * User can display EStop Button in prefs.
+ * Changed display theme to Holo to display action bar.
+ * Estop can be visible in all screens.
+ * Estop stops all locos controlled by EngineDriver.
+ * All screens have action bar and menu.
+ * Lets user see and control Layout power with icon in menu bar in Throttle, Turnouts, and Routes screens.
+ * If Engine Driver is not allowed to control layout power, menu bar layout power icon not visible after first press.
+ * Pref to display layout Power icon or words depending on API version.
+ * Pref to set right and left padding of all throttle's speed slider.
+ * Pref to connect to first discovered JMRI WiThrottle Server.
+ * pref for throttle up/down speed buttons at ends of sliders, with setting for amount of change.
+ * Fixed nullPointException for new ConsistEdit, user can't consist with drop loco before acquire pref On.
+ * Can go to ConsistEdit screen from throttle menu when there is a consist for a throttle slot and can choose which throttle to edit.
+ * Can now clear recent connection and locos list with button.
+ * Added third throttle slot. 
+ * User can select how many throttles to display (1 to 3).
+ * Fixed problem when sending the quit "Q" command to JMRI, now the throttle name is removed from JMRI WiFi Throttle list.
+ * Displays OnGoing Notification to user that Engine Driver is running.
+**Version 2.7 (Robin Becker)
+ * prevent crash when going to About or Prefs prior to any connections
+**Version 2.6 (all by Robin Becker unless noted)
+ * pref to "disable" on-the-fly consisting, and revert to dropping when a new one is added. - mstevetodd
+ * pref to only show one throttle
+ * web page history and zoom levels preserved through rotation, navigation and back button
+ * separate prefs for throttle and web view
+ * made menus consistent across activities
+ * orientation prefs used for all activities
+ * rewrote default function settings for performance
+ * send SHUTDOWN message after DISCONNECT plus a delay.
+ * Connect now uses worker thread (asynctask) to save connection list
+ * Throttle & Web pages: pause webView timers and stop CookieManager() in onPause, start them in onResume
+ * default preference values now use the associated DefaultValue strings
+ * moved calculation of speed slider top/bottom out of gesture Start() and into set_labels() so that the Top/Bottom calcs are only updated when the layout is updated.
+ * swipe now works over disabled sliders
+ * moved roster loading, now updates as roster arrives
+ * multiple changes to improve performance and shutdown properly
+ * multi-system turnout system names can be directly entered
+ * move system info from SelectLoco to About
+ * improvements to all direct text and numeric entry
+ * new webpage is loaded after changes in Prefs
+ * added Debug log viewer - mstevetodd
+ * new launcher icons
+ * new pref to limit number of recent locos
+ * prevent duplicate jmdns listener - mstevetodd
+**Version 2.5
+ * return TargetSDKVersion to 10 to trigger "legacy overflow button" for menu (needed on ICS)
+ * keep screen on in web view (prevent screen blanking)
+**Version 2.4
+ * update JmDNS to 3.4.2+
+ * fixed opaque "footer" in roster listview (seen when few items exist)
+ * catch error when loco address left blank
+ * allow entry of complete http* url for web views
+ * sort routes by user name
+ * sort turnouts by user name
+ * add pref for orientation of web screen
+**Version 2.3
+ * lock orientation to portrait for most screens
+ * add Mfg to roster details (overlooked earlier)
+ * prevent "bounce" when slow server sends old speed.  ED was sending it back as new request.
+ * increase server connection timeout values
+ * track individual addresses/rosterids for acquired locos
+ * process MT-xxx messages to remove loco from a throttle
+ * handle space char in roster id as %20, not +, for new jetty server
+ * increased caching of roster icon images
+ * prevent multiple requests of same image when opening roster (was due to resizing of view)
+ * pref to limit max throttle change, to prevent accidental speedup when trying to press reverse.
+ * ignore swipe on throttle sliders
+ * re-retrieve roster details when roster received
+**Version 2.2
+ * use roster name when selecting loco, to handle multiples with same address
+ * show roster details (including comments) on long-press on roster entry in list
+ * determine full JMRI version using xmlio server (shown on roster page if available)
+ * use new roster icon urls if JMRI version > 2.99.4
+ * catch out of memory error when retrieving large images (seen when resize not available)
+ * ignore failed wifi lock attempt (error reported to Market)
+**Version 2.1
+ * new user pref to select orientation on Throttle (default to portrait)
+ * stop javascript refresh on exit (by loading a "blank" page)
+ * rearranged prefs                                                                          
+**Version 2.0
+ * connect to discovered servers using IP instead of verifying name (avoids timeout on non-DNS network)
+ * change server list items to display system name and ip address
+ * move "web" menu item higher in list so it always shows in Throttle (instead of under More)
+ * only show/use ipv4 address
+ * implement serviceRemoved to remove ended servers from discovered list
+ * web page links now open inside ED instead of external browser 
+ * added prefs for "Initial Web Page" and Web View Location
+ * initial version of web page on throttle page, Bottom only, 50%
+ * prevent ConcurrentModificationException crash (reported to market)
+**Version 1.9
+ * encode icon filenames to handle special characters
+ * catch error when attempting to load very large image files
+ * send resizing parm with image retrieval (also added code to JMRI to take advantage of this)
+ * moved roster.xml loading to an async thread
+ * upgraded imagedownloader
+ * catch NPE in withrottle_send (reported to Market) - (rbecker) 
+ * improved handling of connection loss, including reconnect (rbecker)
+**Version 1.8
+ * Add try/catch for ScrollView.onTouchEvent, reported to dev console (rbecker)
+ * ignore malformed roster list, reported to dev console (mstevetodd)
+ * retrieve and display roster images, if mini web server running (lionel)
+ * show consist details unless name is > 4
+ * Removed unneeded host name lookups to speed connection on some networks, including 2 in jmDNS
+ * Turned off speed step handling (for now)
+ * Fixed crash  (reported to dev console) in routes, turnouts and power when response was < 3 chars  
+ * catch error "Thread already started" message (reported to dev console)
+ * reduce height of roster entries if icon not used
+**Version 1.7
+ * Enabled "fling" between turnouts, throttle, routes (rbecker)
+ * Fixed the shutdown and back behavior (rbecker)
+ * added animations to all page transitions (rbecker)
+ * added menus to routes and turnouts activities (rbecker)
+ * fixed initial height on throttle (rbecker)
+ * show feedback on Stop button (rbecker) 
+ * fixed intermittent failure to get functions from roster (rbecker)
+ * handle strange speeds sent by eStop and show message (rbecker) 
+ * add prompt before disconnecting (rbecker)
+ * moved socket read and heartbeat into classes (rbecker)
+ * now checks for WiT even when no loco selected (rbecker)
+ * now shows correct page when returning from web (mstevetodd)
+ * added menu to web activity (mstevetodd)
+ * don't blank out manual entry after use (mstevetodd)
+ * always include jmri.mstevetodd.com in connections list (mstevetodd)
+ * new pref for max recent connections (mstevetodd)
+ * moved save of recent connections to follow start of throttle activity instead of precede
+**Version 1.6
+ * Began adding Multithrottle support (serious rigged version, 2.0+ only)
+ * Mirror speed and direction from server (on heartbeat, 2.0+ only)
+ * Show warning on client if server goes away while loco selected 
+ * Improved appearance of buttons
+ * Fixed incorrect heartbeat request when not enabled on server side
+ * Shrink the font for loco strings instead of growing the buttons
+ * Added background texture
+ * Added preference to hide recent loco list (more room for roster list)
+ * corrected display of Short addresses in Recent list
+ * prevented crash when MaxThrottle pref is blanked
+ * button "on" images work even when < 2.0 (also fixes the immed-after-press display)
+ * fixed slider height on low-dpi devices
+ * fixed height of selected locos lists on select_loco activity
+ * button text now shows up in eclipse graphical layout tool
+ * receive web server port#
+ * add menu option to browse mini web server home page
+ * started work on "flings" between turnouts, throttle, routes.
+ * added device IP to "cannot connect" message for better debugging
+**Version 1.5
+ * sort roster entries by name
+**Version 1.4
+ *  uses JMRI images for power off/on/unknown instead of text (added by rbecker)
+ *  fixed several potential crashes when reading misformatted settings files (mstevetodd)
+ *  improved default throttle naming to prevent duplicate connections (mstevetodd)
+ *  updated jmDNS again (mstevetodd)
+ *  changed discovery code to take advantage of jmdns changes, works better with ubuntu (mstevetodd)
+ *Version 1.3
+ *  suppressed popup soft keyboard on Turnout and Route panels until EditText view is touched (added by rbecker)
+ *  fixed another NPE reported to market (mstevetodd)
+ *  updated jmDNS again (mstevetodd)
+ *Version 1.2 - changes/additions by mstevetodd
+ *  updated jmDNS again
+ *  fixed a couple of NPEs reported to Market
+ * moved start of jmDNS to OnResume (to reconnect after lock/unlock of device)
+ * switch loco controlled by volume buttons (by tapping the speed label)
+ * added preference to increase height of throttle sliders
+ *Version 1.1 - changes/additions by mstevetodd
+ *  create and delete jmdns as needed (should prevent lockup when wifi is toggled, and will "retry" if wifi state changes.(
+ *Version 1.0 - changes/additions by mstevetodd
+ *  moved directory creation to connect message handler, removed writeable check altogether, and added toast messages on file read/writes
+ *  moved read of connections_list.txt to onStart so it shows immediately
+ *  use volume button for speed of first loco (only if selected)
+ *  add existing consists to select list in select loco, formatting name as addr1+addr2+addr3, etc. 
+ *  improved handling of discovery listener, turn it off and on, and don't add duplicates
+ *  get qualified name of server and use it in discovery list, (verify it resolves first)
+ *  added preference to hide route system names
+ *  update jmDNS to 3.2.2 to improve server discovery
+ *  turn off multicast_lock when not used
+ *Version 0.9 - changes/additions by mstevetodd
+ *  added roster list to select_loco screen (hidden if no entries)
+ *  removed writeable check from read routines of settings and recent file loads (was causing it to randomly skip loading on Incredible)
+ *  show long/short in recent locos list
+ *  show roster names in throttle and selected loco
+ *  always use function labels from roster entry (if set)
+ *Version 0.8 - changes/additions by mstevetodd
+ *  added NCE to hardware system list (oversight)
+ *  added preference to default Long/Short/Auto for loco address length
+ *  leading 0 was treated as octal in select_loco, made it stop doing that 
+ *  show disabled Copy button in function settings
+ *Version 0.7 - changes/additions by mstevetodd
+ *  prevent acquire with blank loco address (was crashing)
+ *  new Turnouts display showing list of defined turnouts, current state, updated on change
+ *  toggle turnout on list click
+ *  direct entry of turnout address with toggle and throw/close buttons, disable controls on not allowed
+ *  new Layout Power control activity
+ *  new Route control activity (clone of Turnouts)
+ *  enhanced titles on all activities
+ *Version 0.6 - changes/additions by mstevetodd
+ *  added preference for Maximum Throttle, to set a maximum speed to be sent
+ *  lowered minSDK from 7 to 4 (to allow use by Android 1.6 devices)  had to copy drawables to drawable folder
+ *Version 0.5 - changes/additions by mstevetodd
+ *  added select loco button to ed screen, call ed direct from connect
+ *  added 29 function buttons for both throttles, using scrollers
+ *  disable buttons and slider and shrink screen usage for unselected loco
+ *  adjust function buttons to indicate current state from WiT server
+ *  added release buttons to sl activity 
+ *Version 0.3 - changes/additions by mstevetodd
+ *   function labels for throttle, hiding unused
+ *   separate rev-stop-fwd buttons
+ *   read responses from withrottle and store in shared app variables
+ *   forward responses to other activities, so they can update as needed
+ *   advance screens only upon successful responses
+ *   release loco when leaving throttle activity, with pref for stopping loco
+ *   screen and messaging additions and edits to provide more feedback to user
+ *   set short timeout on socket open and reads to prevent app from "hanging" on long timeout
+ *   added heartbeat logic (when set on withrottle side)
+ *   copy function labels from roster (note: they do not include sticky bit)
+ *   send hardware address as HU<throttle-name>  (prevents duplicates in WiThrottle server)
+ *   changed process namespace from net.lnxgfx to jmri.enginedriver
+ *   added html About page
+ */
+/*
+ *   TODO: change config files to use db instead of .txt files
+ *   TODO: toast messages on release of loco (even on Exit) and update of preferences
+ *   TODO: make private stuff private
+ *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
+ *   TODO: rewrite procedural process_xxx functions into proper OO classes
+ * web
+ *   TODO: allow user to specify initial zoom-level of each web view
+ * routes
+ *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
+ *   TODO: use PRT titles for Active/inactive
+ * turnouts
+ *   TODO: list available "system" based on items in use, maybe with dropdown on Turnout
+ *   TODO: pref to sort by system name vs. user name
+ *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
+ *   TODO: use PTT titles for Turnouts/Turnout
+ * connection
+ *   TODO: if in Connect, don't go into background on Pause, just exit.
+ *   TODO: if user enters ":" into address input, jump to port input
+ *   TODO: debug "Success: Restored connection to ..." message seen (sometimes) after exiting from Throttle
+ *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
+ * threaded_application
+ *	 TODO: process_comm_error() no longer sending connection lost messages (maybe others)
+ *   TODO: remember consist details
+ *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
+ *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
+ *   TODO: check for error on send and do something with it 
+ *   TODO: move socket timeout values to preference
+ *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
+ * throttle:
+ *   TODO: show proper function labels based on lead loco in consist
+ *   TODO: fix issues with slider progress line when padding changed
+ *   TODO: retrieve vsDecoder sounds and play when appropriate
+ *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
+ *   TODO: respect "Max Throttle %" from roster entry
+ *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released" 
+ *   TODO: make Forward, Stop, Reverse language-sensitive 
+ *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
+ *   TODO: add preference to disable other hardware buttons in throttle screen
+ *   TODO: add graphics (slider, stop, directions, functions?)  add colors
+ *   TODO: in ed exit, don't send release if "Not Set"
+ *   TODO: get 2nd line of label text working again
+ *   TODO: unset all states when loco not selected
+ * select_loco:
+ *   TODO: add close button and roster image to details dialog
+ *   TODO: clean up code for new MT (Multi-throttle) feature 
+ *   TODO: simplify select_loco by removing handler
+ * preferences:
+ *   TODO: show error if invalid entry
+ *
+ * These require changes to WiThrottle
+ *   allow setting of undefined turnouts (JMRI Turnout Tool creates them on-the-fly, so we could too)
+ *   resend roster, turnout and routes when items are added or removed, by adding listeners to WiT
+ *   support resend of function and direction commands, even when WiT knows it has already sent
+ *   WiT send MT-xxx when commands are received from a client for a loco that is not active.  (to get ED up to date with server after connection loss)
+ *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
+ *   disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
+ *   add "E"rror response
+ * 
+ * These changes are likely to wait until ED3
+ *   allow user to configure side-by-side panels for pads, etc.
+ *   allow user to specify multiple web URLs
+ *   change Connect to allow to be called from any Activity when needed
+ * */

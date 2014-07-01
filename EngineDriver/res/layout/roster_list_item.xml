@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+    <ImageView
+        android:id="@+id/roster_icon_image"
+        android:layout_width="200dp"
+        android:layout_height="54dp"
+        android:layout_alignParentRight="true" 
+        android:contentDescription="roster icon">
+    </ImageView>
+    <TextView
+        android:id="@+id/roster_address_label"
+        style="@style/list_id_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TestAddress" >
+    </TextView>
+    <TextView
+        android:id="@+id/roster_name_label"
+        style="@style/list_item_style"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="0dp"
+        android:paddingTop="12dp"
+        android:text="Test Roster Name"
+        android:textAppearance="?android:attr/textAppearanceLarge" >
+    </TextView>
+</RelativeLayout>
