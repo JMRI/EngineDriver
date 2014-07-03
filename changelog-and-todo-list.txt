@@ -305,6 +305,7 @@
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
+ *   TODO: disconnect connections made by roster stuff
  *   TODO: add close button and roster image to details dialog
  *   TODO: clean up code for new MT (Multi-throttle) feature 
  *   TODO: simplify select_loco by removing handler
