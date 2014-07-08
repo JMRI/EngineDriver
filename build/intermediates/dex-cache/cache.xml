@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\pre-dexed\debug\classes-e3a2a64b7eb28669496d93d7476fd7c9aeeb2ded.jar"
+        jar="C:\EclipseWorkspaces\EngineDriver3\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+    <item
+        dex="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\pre-dexed\debug\support-v4-19.1.0-76e8887eb835b15ad08abdc29a01cc47c0bb39d5.jar"
+        jar="C:\Users\stevet\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+
+</pre-dex-items>

@@ -1,0 +1,40 @@
+1) get single activity with multiple, similar "listview" fragments working at OS 3.0, and understand how fragment width works.
+2) add application state variables, starting with fragment list  Note: I plan to only use get/set for access to these, to provide for read-time checks.
+3) add 3rd-party, back-level support for ActionBar.  Not sure I want to go all the way back to 1.6, but I'd at least like to be able to run this on my Nook and my wife's old phone.
+4) add webviewFragment, with hard-coded url, and begin to understand how to handle the loading and running of differing fragments.  also understand webview fling vs. fragment fling
+5) set up webviewFragments for About, Turnout and Routes (using the JMRIMobile pages)  url still hard-coded
+6) set Throttle to use webThrottle
+7) create separate classes for each fragment type, with unique data and methods in each
+) add a nonUITaskFragment to handle all async stuff
+) add Connect fragment, to simply set the server name, to be used by web fragments
+) figure out how to send the new server name to activity, and how to forward on to all "interested" fragments
+) add refresh button to web fragments 
+) add settings icon to each fragment, (dropping hard-coded urls) and deal with persistent storage.  
+) add mechanism to add new fragments and delete unneeded ones.  fragment list+settings should be restored on app start.
+) add initial socket reader/writer.  (re)position to Connect when no connection, Determine if Application object should "own" these async tasks, vs. fragment or activity.  Determine if handler is still the best way to communicate with them.
+) add jmdns listeners, updating discovered list in Connect fragment.  
+) add proper throttle fragment (hard-coded address), get communication working
+) add address/roster selection/entry dialog (determine if activity or fragment or popup dialog, or whatever)
+) add background roster details retrieval (maybe using json server?)
+) determine if various throttle "flavors" should be settings for a single fragment type, or multiple fragment types.
+) add additional throttle flavors
+) replace Turnout and Route webviewFragments with listFragments,
+) enable webfrag's back button, remember url and zoom
+) make webfrag width a pref
+) prompt for app exit on back
+
+things to "improve" from ED 2.x
+more flexible UI to take advantage of screen real estates
+use nonUIFragment to handle activity restarts on rotation
+use tabbed sliders for navigation
+use database instead of text file storage
+use Service for comm stuff (maybe not?)
+use json server in addition to (or instead of) withrottle server
+
+structure:
+application object with getters and setters
+single activity with multiple fragments:
+  always have one of: prefs, connect, about
+  1 to n: throttle
+  0 to n: turnouts, routes, web (trains, panels, frames, etc.)
+nonUIfragment that isn't recreated on rotation
