@@ -1,3 +1,5 @@
+**Version 2.10
+ * Adjusted speed step handling to restore proper AUTO speed behavior - Robin Becker
 **Version 2.9
  * fix issue with volume button changing wrong loco speed when unused throttle has the "v" - mstevetodd
  * Catch additional exceptions when starting jmDNS listener (NoSuchMethodError reported to Store) - mstevetodd

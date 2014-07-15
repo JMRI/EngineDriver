@@ -475,7 +475,7 @@ public class threaded_application extends Application {
 				//          case message_type.ERROR:
 				//            break;
 
-				//Adjust the locomotive's speed. whichThrottle is in arg 1 and arg2 holds the value of the speed to set. //TODO: Allow 14 and 28 speed steps (might need a change on the server side).
+				//Adjust the locomotive's speed. whichThrottle is in arg 1 and arg2 holds the value of the speed to set.
 				case message_type.VELOCITY: {
 					final char whichThrottle = (char) msg.arg1;
 					withrottle_send(String.format(whichThrottle+"V%d", msg.arg2));
@@ -1100,7 +1100,7 @@ public class threaded_application extends Application {
 				catch(Exception e) {
 					validMsg = false;
 					if((socketWiT != null) && newMsg.equals("Q")) {
-						Log.d("Sent Q command", "Sent " + newMsg + " command to jmri WiFi Throttle");
+						Log.d("Engine_Driver", "Sent " + newMsg + " command to jmri WiFi Throttle");
 						socketWiT.Send(newMsg); //Sends quit command to JMRI.
 					}
 					else
