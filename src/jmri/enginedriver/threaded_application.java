@@ -37,6 +37,8 @@ import java.net.*;
 import java.io.*;
 
 import android.support.v4.app.NotificationCompat;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.webkit.CookieSyncManager;
@@ -137,7 +139,7 @@ public class threaded_application extends Application {
 	public volatile Handler routes_msg_handler;
 	public volatile Handler consist_edit_msg_handler;
 	public volatile Handler power_control_msg_handler;
-
+	
 	//these constants are used for onFling
 	public static final int SWIPE_MIN_DISTANCE = 120;
 	public static final int SWIPE_MAX_OFF_PATH = 250;
@@ -160,6 +162,7 @@ public class threaded_application extends Application {
 		withrottle_listener listener;
 		android.net.wifi.WifiManager.MulticastLock multicast_lock;
 		socket_WiT socketWiT;
+		PhoneListener phone;
         ClockWebSocketHandler clockWebSocket = null;
 		heartbeat heart = new heartbeat();
 		volatile String currentTime = "";
@@ -351,6 +354,7 @@ public class threaded_application extends Application {
 					if(socketWiT.connect() == true) {
 						sendThrottleName();
 						sendMsg(connection_msg_handler, message_type.CONNECTED);
+						phone = new PhoneListener();
 						/***future Notification
   				    	showNotification();
 						 ***/
@@ -365,7 +369,6 @@ public class threaded_application extends Application {
 						port = 0;
 					}
 					currentTime = "";
-					
 					break;
 
 					//Release one or all locos on the specified throttle.  addr is in msg (""==all), arg1 holds whichThrottle.
@@ -421,6 +424,7 @@ public class threaded_application extends Application {
 					Log.d("Engine_Driver","TA Disconnect");
 					doFinish = true;
 					heart.stopHeartbeat();
+					phone.disable();
 					withrottle_send("Q");
 					if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
 						withrottle_send("*-");     //request to turn off heartbeat (if enabled in server prefs)
@@ -1300,6 +1304,9 @@ public class threaded_application extends Application {
 					try {
 						outputPW.println(msg);
 						outputPW.flush();
+						//we could restart outbound heartbeat timer here, but wit does not notify us of speed changes
+						//(caused by other throttles for example) so just keep heartbeat going to get regular speed updates
+						//heart.restartOutboundInterval();
 					} 
 					catch (Exception e) {
 						Log.d("Engine_Driver","WiT xmtr error.");
@@ -1360,7 +1367,6 @@ public class threaded_application extends Application {
 			private int heartbeatIntervalSetpoint = 0;		//WiT heartbeat interval in seconds
 			private int heartbeatOutboundInterval = 0;		//sends outbound heartbeat message at this rate
 			private int heartbeatInboundInterval = 0;		//alerts user if there was no inbound traffic for this long
-
 
 			public int getInboundInterval() {
 				return heartbeatInboundInterval;
@@ -1471,6 +1477,40 @@ public class threaded_application extends Application {
 			};
 		}
 		
+		class PhoneListener extends PhoneStateListener {
+			private TelephonyManager telMgr;
+
+			public PhoneListener() {
+				telMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+				this.enable();
+			}
+			
+			public void disable() {
+				telMgr.listen(this, PhoneStateListener.LISTEN_NONE);
+			}
+			
+			public void enable() {
+				telMgr.listen(this, PhoneStateListener.LISTEN_CALL_STATE);
+			}
+			
+			@Override
+			public void onCallStateChanged(int state, String incomingNumber) {
+				if(state == TelephonyManager.CALL_STATE_OFFHOOK) {
+					if (prefs.getBoolean("stop_on_phonecall_preference", 
+							getResources().getBoolean(R.bool.prefStopOnPhonecallDefaultValue))) {
+						if (consistT.isActive()) {
+							withrottle_send("MTA*<;>V0");
+						}
+						if (consistG.isActive()) {
+							withrottle_send("MGA*<;>V0");
+						}
+						if (consistS.isActive()) {
+							withrottle_send("MSA*<;>V0");
+						}
+					}
+				}
+			}
+		}
 		
 		class ClockWebSocketHandler extends WebSocketHandler {
 		    private final String sGetClockMemory = "{\"type\":\"memory\",\"data\":{\"name\":\"IMCURRENTTIME\"}}";
@@ -1593,6 +1633,7 @@ public class threaded_application extends Application {
 		NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 	    manager.cancel(ED_NOTIFICATION_ID);
 	}
+
 	@Override
 	public void onCreate()  {
 		super.onCreate();

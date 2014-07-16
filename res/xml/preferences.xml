@@ -115,7 +115,13 @@
             android:key="InitialThrotWebPage"
             android:summary="@string/prefInitialThrotWebPageSummary"
             android:title="@string/prefInitialThrotWebPageTitle" />
-    </PreferenceCategory>
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefStopOnPhonecallDefaultValue"
+            android:key="stop_on_phonecall_preference"
+            android:summary="@string/prefStopOnPhonecallSummary"
+            android:title="@string/prefStopOnPhonecallTitle" >
+        </CheckBoxPreference>
+        </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference
             android:defaultValue="@bool/prefStopOnReleaseDefaultValue"
