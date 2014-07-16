@@ -18,17 +18,17 @@ public class ED3Fragment extends Fragment {
 	}
 	@Override
 	public void onDetach() {
-		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onDetach() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+//		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onDetach() for " + getName() + " (" + getNum() + ")" + " type " + getType());
 		super.onDetach();
 	}
 	@Override
 	public void onDestroy() {
-		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onDestroy() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+//		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onDestroy() for " + getName() + " (" + getNum() + ")" + " type " + getType());
 		super.onDestroy();
 	}
 	@Override
 	public void onPause() {
-		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onPause() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+//		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onPause() for " + getName() + " (" + getNum() + ")" + " type " + getType());
 		super.onPause();
 	}
 	@Override
@@ -43,7 +43,7 @@ public class ED3Fragment extends Fragment {
 	}
 	@Override
 	public void onStop() {
-		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onStop() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+//		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onStop() for " + getName() + " (" + getNum() + ")" + " type " + getType());
 		super.onStop();
 	}
 	//	public ED3Fragment() {

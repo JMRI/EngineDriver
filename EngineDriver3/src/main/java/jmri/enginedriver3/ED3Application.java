@@ -46,14 +46,14 @@ public class ED3Application extends Application {
 	    int fragKey = 0;
 	    ED3Frags = new HashMap<Integer, FragmentEntry>();
 		ED3Frags.put(fragKey++, new FragmentEntry("Prefs", Consts.PREFS, 2));
-		
+	/*
 	    FragmentEntry tFrag;
 	    tFrag = new FragmentEntry("About", Consts.WEB, 2);
 		tFrag.setData("file:///android_asset/about_page.html");
 	    ED3Frags.put(fragKey++, tFrag);
-	    
+	*/
 		ED3Frags.put(fragKey++, new FragmentEntry("Connect", Consts.CONNECT, 2));
-		
+	/*
 		tFrag = new FragmentEntry("Throttle", Consts.WEB, 2); 
 		tFrag.setData("/web/webThrottle.html");
 	    ED3Frags.put(fragKey++, tFrag);
@@ -69,7 +69,7 @@ public class ED3Application extends Application {
 	    tFrag = new FragmentEntry("Turnouts", Consts.LIST, 1); 
 	    ED3Frags.put(fragKey++, tFrag);
 
-	}
+*/	}
 
 
 }

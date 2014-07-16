@@ -20,6 +20,8 @@ public class ED3Activity extends ActionBarActivity implements ActionBar.TabListe
 
     ViewPager viewPager = null;
 
+    RetainedTaskFragment retainedTaskFrag = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,7 @@ public class ED3Activity extends ActionBarActivity implements ActionBar.TabListe
 
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         addTabs(actionBar);
-        actionBar.getTabAt(2).select();  //always start up with the connection tab  TODO: do this only when disconnected
+//TODO: turn this back on        actionBar.getTabAt(2).select();  //always start up with the connection tab  TODO: do this only when disconnected
 
         viewPager.setAdapter(new ED3PagerAdapter(getSupportFragmentManager()));
 
@@ -58,6 +60,17 @@ public class ED3Activity extends ActionBarActivity implements ActionBar.TabListe
             public void onPageScrollStateChanged(int i) {
             }
         });
+        //create (or find) a nonUI fragment to handle async stuff
+        if (savedInstanceState == null) {
+            retainedTaskFrag = new RetainedTaskFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(retainedTaskFrag, "RetainedTaskFragment").commit();
+            Log.d(Consts.DEBUG_TAG, "Created the RetainedTaskFragment");
+        } else {
+            retainedTaskFrag = (RetainedTaskFragment) getSupportFragmentManager()
+                    .findFragmentByTag("RetainedTaskFragment");
+            Log.d(Consts.DEBUG_TAG, "Reused existing RetainedTaskFragment");
+        }
 
     }
 
@@ -113,6 +126,10 @@ public class ED3Activity extends ActionBarActivity implements ActionBar.TabListe
             } else if (t == Consts.LIST) {
                 ED3ListFragment f = null;
                 f = ED3ListFragment.newInstance(position, t, n);
+                return f;
+            } else if (t == Consts.CONNECT) {
+                ConnectFragment f = null;
+                f = ConnectFragment.newInstance(position, t, n);
                 return f;
             } else {
                 ED3Fragment f = null;

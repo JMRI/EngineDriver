@@ -30,11 +30,21 @@ use tabbed sliders for navigation
 use database instead of text file storage
 use Service for comm stuff (maybe not?)
 use json server in addition to (or instead of) withrottle server
+cleanup/rethink thread structure, use fewer patterns
 
-structure:
+new structure:
 application object with getters and setters
 single activity with multiple fragments:
   always have one of: prefs, connect, about
   1 to n: throttle
   0 to n: turnouts, routes, web (trains, panels, frames, etc.)
 nonUIfragment that isn't recreated on rotation
+
+document old structure:
+ta.onCreate starts comm_thread
+  comm_thread starts socket_WiT thread
+  comm_thread puts out and in timers on queue
+  comm_thread creates and uses ClockWebSocket
+ta.onCreate fires download meta task
+ta.onCreate fires download roster task
+ta.onCreate starts new thread to load default function labels
