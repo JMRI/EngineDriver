@@ -1,8 +1,9 @@
 package jmri.enginedriver3;
 
-
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -13,18 +14,23 @@ import android.support.v7.app.*;
 public class ED3Activity extends ActionBarActivity implements ActionBar.TabListener {
 
     private static ED3Application mainapp; // hold pointer to mainapp
-//    private ED3FragmentPagerAdapter mAdapter;
-//    private ViewPager mPager;
+    private ED3PagerAdapter pagerAdapter;  //set in onCreate()
+
 //    public ActionBar mActionBar;
     private static int fragmentsPerScreen = 1; //will be changed later
 
-    ViewPager viewPager = null;
+    private ViewPager viewPager = null;
 
-    RetainedTaskFragment retainedTaskFrag = null;
+    private RetainedTaskFragment retainedTaskFrag = null;  //created in activity.onCreate()
+    public ED3Activity_Handler ED3ActivityHandler = null;  //set in this.onCreate()
+    private FragmentManager fragmentManager = null;  //set in this.onCreate()
 
+    //this creates the permafrag the first time, then finds it on subsequent creates
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ED3ActivityHandler = new ED3Activity_Handler();  //update ref to thread's handler back in retained frag
+        fragmentManager = getSupportFragmentManager();
         setContentView(R.layout.activity_main);
         viewPager = (ViewPager) findViewById(R.id.pager);
         mainapp = (ED3Application) getApplication();
@@ -42,7 +48,8 @@ public class ED3Activity extends ActionBarActivity implements ActionBar.TabListe
         addTabs(actionBar);
 //TODO: turn this back on        actionBar.getTabAt(2).select();  //always start up with the connection tab  TODO: do this only when disconnected
 
-        viewPager.setAdapter(new ED3PagerAdapter(getSupportFragmentManager()));
+        pagerAdapter = new ED3PagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -60,7 +67,7 @@ public class ED3Activity extends ActionBarActivity implements ActionBar.TabListe
             public void onPageScrollStateChanged(int i) {
             }
         });
-        //create (or find) a nonUI fragment to handle async stuff
+        //create (or find) the nonUI fragment to handle all threads and updates
         if (savedInstanceState == null) {
             retainedTaskFrag = new RetainedTaskFragment();
             getSupportFragmentManager().beginTransaction()
@@ -149,4 +156,26 @@ public class ED3Activity extends ActionBarActivity implements ActionBar.TabListe
             return (float) mainapp.ED3Frags.get(position).getWidth()/fragmentsPerScreen;
         }
     }
+    //fragments send messages to here for processing and forwarding as needed.  The activity knows
+    //  about all the fragments
+    public class ED3Activity_Handler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            Log.d(Consts.DEBUG_TAG, "in ED3Activity_Handler.handleMessage()");
+            switch (msg.what) {
+                case MessageType.SERVER_LIST_CHANGED:  //forward these to the Connect fragment
+//                    Log.d(Consts.DEBUG_TAG, "in ED3Activity_Handler.handleMessage() SERVICE_REMOVED");
+                    ConnectFragment cf = (ConnectFragment) pagerAdapter.getItem(2);  //TODO: don't hard-code the 2
+                    Message msgCopy = cf.fragmentHandler.obtainMessage();
+                    msgCopy.copyFrom(msg);
+                    cf.fragmentHandler.sendMessage(msgCopy);
+                    break;
+                default:
+                    Log.d(Consts.DEBUG_TAG, "in ED3Activity_Handler.handleMessage() Unknown");
+            }  //end of switch msg.what
+            super.handleMessage(msg);
+        }
+    }
+
+
 }

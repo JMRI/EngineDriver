@@ -23,7 +23,7 @@ public class ED3Fragment extends Fragment {
 	}
 	@Override
 	public void onDestroy() {
-//		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onDestroy() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onDestroy() for " + getName() + " (" + getNum() + ")" + " type " + getType());
 		super.onDestroy();
 	}
 	@Override
@@ -80,7 +80,6 @@ public class ED3Fragment extends Fragment {
 	static ED3Fragment newInstance(int fragNum, String fragType, String fragName) {
 		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
 		ED3Fragment f = new ED3Fragment();
-
 		// Store variables for retrieval 
 		Bundle args = new Bundle();
 		args.putInt("fragNum", fragNum);
@@ -103,7 +102,7 @@ public class ED3Fragment extends Fragment {
 		setType((getArguments() != null ? getArguments().getString("fragType") : "error"));
 		setName((getArguments() != null ? getArguments().getString("fragName") : "error"));
 
-//		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onCreate() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onCreate() for " + getName() + " (" + getNum() + ")" + " type " + getType());
 	}
 
 

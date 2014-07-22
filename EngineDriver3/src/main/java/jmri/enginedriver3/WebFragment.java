@@ -30,7 +30,7 @@ public class WebFragment extends ED3Fragment {
 	 * create a new fragment of this type, and populate basic settings in bundle 
 	 * Note: this is a static method, called from the activity's getItem() when new ones are needed */	
 	static WebFragment newInstance(int fragNum, String fragType, String fragName, String fragData) {
-		Log.d(Consts.DEBUG_TAG, "in WebFragment.newInstance()for " + fragName + " (" + fragNum + ")" + " type " + fragType);
+//		Log.d(Consts.DEBUG_TAG, "in WebFragment.newInstance()for " + fragName + " (" + fragNum + ")" + " type " + fragType);
 		WebFragment f = new WebFragment();
 
 		// Store variables for retrieval 

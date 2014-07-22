@@ -14,10 +14,10 @@ public class RetainedTaskFragment extends Fragment {
     int started = 0;
 
     Thread jmdnsRunnableThread = null;
-    Activity activity = null;
+    ED3Activity activity = null;
 
-    Handler retainedTaskFragmentHandler = new Handler();
-    Handler jmdnsRunnableHandler;
+    Handler retainedTaskFragmentHandler = new RetainedTaskFragment_Handler();
+    Handler jmdnsRunnableHandler;  //this is set by the thread after startup
 
     public RetainedTaskFragment() {
 
@@ -25,7 +25,7 @@ public class RetainedTaskFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         Log.d(Consts.DEBUG_TAG, "in RetainedTaskFragment.onAttach()");
-        this.activity = activity;  //save ref to the new activity
+        this.activity = (ED3Activity) activity;  //save ref to the new activity
         super.onAttach(activity);
     }
     @Override
@@ -72,7 +72,7 @@ public class RetainedTaskFragment extends Fragment {
     public void startThreads() {
         if (jmdnsRunnableThread == null) {
             Log.d(Consts.DEBUG_TAG, "starting the jmdnsRunnableThread");
-            jmdnsRunnableThread = new Thread(new JmdnsRunnable(this)); //pass ref to this fragment
+            jmdnsRunnableThread = new Thread(new JmdnsRunnable(this)); //create thread, pass ref back to this fragment
             jmdnsRunnableThread.start();
         }
     }
@@ -81,12 +81,32 @@ public class RetainedTaskFragment extends Fragment {
     public void cancelThreads() {
         if (jmdnsRunnableThread != null) {
             Message m = jmdnsRunnableHandler.obtainMessage();
-            m.what=message_type.SHUTDOWN;
-//            m.obj=new String("this is a test message");
-//        m.arg1 = msgArg1;
-//        m.arg2 = msgArg2;
+            m.what= MessageType.SHUTDOWN;
             jmdnsRunnableHandler.sendMessage(m);
             jmdnsRunnableThread = null;
+        }
+    }
+    private class RetainedTaskFragment_Handler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MessageType.SERVICE_RESOLVED:
+                    //TODO: Add this server to the "global" list of known servers
+                    Message m = activity.ED3ActivityHandler.obtainMessage();
+                    m.what = MessageType.SERVER_LIST_CHANGED;
+                    activity.ED3ActivityHandler.sendMessage(m);
+                    break;
+                case MessageType.SERVICE_REMOVED:
+                    //TODO: Remove this server from the "global" list of known servers
+                    m = activity.ED3ActivityHandler.obtainMessage();
+                    m.what = MessageType.SERVER_LIST_CHANGED;
+                    activity.ED3ActivityHandler.sendMessage(m);
+                    break;
+                default:  //don't forward unknown messages
+                    Log.d(Consts.DEBUG_TAG, "in RetainedTaskFragment_Handler.handleMessage() for unknown");
+                    break;
+            }  //end of switch msg.what
+            super.handleMessage(msg);
         }
     }
 

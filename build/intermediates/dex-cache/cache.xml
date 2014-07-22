@@ -2,18 +2,6 @@
 <pre-dex-items>
 
     <item
-        dex="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\pre-dexed\debug\autobahn-0.5.0-604073174afc5072f7da463c3cd800dfe272e918.jar"
-        jar="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\libs\autobahn-0.5.0.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="5f62bc6117f905fd37955f6e2ebd3aad68701b60"/>
-    <item
-        dex="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\pre-dexed\debug\classes-e3a2a64b7eb28669496d93d7476fd7c9aeeb2ded.jar"
-        jar="C:\EclipseWorkspaces\EngineDriver3\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
-    <item
         dex="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\pre-dexed\debug\jmdns-3.4.1-a33049bda497f8ad80d473bfce300d125594d8cb.jar"
         jar="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\libs\jmdns-3.4.1.jar"
         jumboMode="false"
@@ -26,11 +14,17 @@
         revision="20.0.0"
         sha1="3bc2efad5ceb9e24e44f731d4282b5df3ea6d23f"/>
     <item
-        dex="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\pre-dexed\debug\jackson-core-asl-1.9.7-d778a038355c051ba750bfb93d555a7e735ea5fb.jar"
-        jar="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\libs\jackson-core-asl-1.9.7.jar"
+        dex="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\pre-dexed\debug\autobahn-0.5.0-604073174afc5072f7da463c3cd800dfe272e918.jar"
+        jar="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\libs\autobahn-0.5.0.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="2dd41e7570f5c73e63a6a1311671a60c817e1989"/>
+        sha1="5f62bc6117f905fd37955f6e2ebd3aad68701b60"/>
+    <item
+        dex="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\pre-dexed\debug\classes-195fc19da02ef5434ccd78ded7bde146d6a4b18d.jar"
+        jar="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
     <item
         dex="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\pre-dexed\debug\support-v4-19.1.0-76e8887eb835b15ad08abdc29a01cc47c0bb39d5.jar"
         jar="C:\Users\stevet\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"

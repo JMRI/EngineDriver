@@ -1,6 +1,8 @@
 package jmri.enginedriver3;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +10,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class ConnectFragment extends ED3Fragment {
-    int started = 0;
+    private int started = 0;
+    public Fragment_Handler fragmentHandler = new Fragment_Handler();
 
     /**---------------------------------------------------------------------------------------------**
 	 * create a new fragment of this type, and populate basic settings in bundle 
 	 * Note: this is a static method, called from the activity's getItem() when new ones are needed */	
 	static ConnectFragment newInstance(int fragNum, String fragType, String fragName) {
-		Log.d(Consts.DEBUG_TAG, "in ConnectFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
+//		Log.d(Consts.DEBUG_TAG, "in ConnectFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
 		ConnectFragment f = new ConnectFragment();
 
 		// Store variables for retrieval 
@@ -51,9 +54,28 @@ public class ConnectFragment extends ED3Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onDestroy() {
-        Log.d(Consts.DEBUG_TAG, "in ConnectFragment.onDestroy()");
+//        Log.d(Consts.DEBUG_TAG, "in ConnectFragment.onDestroy()");
         super.onDestroy();
+    }
+    public class Fragment_Handler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            Log.d(Consts.DEBUG_TAG, "in ConnectFragment.handleMessage()");
+            switch (msg.what) {
+                case MessageType.SERVER_LIST_CHANGED:  //TODO: do something
+                    Log.d(Consts.DEBUG_TAG, "in ConnectFragment.handleMessage() SERVER_LIST_CHANGED");
+                    break;
+                default:
+                    Log.d(Consts.DEBUG_TAG, "in ConnectFragment.handleMessage() not handled");
+            }  //end of switch msg.what
+            super.handleMessage(msg);
+        }
     }
 
 }

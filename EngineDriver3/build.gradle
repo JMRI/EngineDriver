@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "jmri.enginedriver3"
-        minSdkVersion 10
+        minSdkVersion 8
         targetSdkVersion 18
         versionCode 1
         versionName "1.0"

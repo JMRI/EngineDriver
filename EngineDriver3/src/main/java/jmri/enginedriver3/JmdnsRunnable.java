@@ -15,10 +15,11 @@ import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
 /**
-* Created by stevet on 7/16/2014.
-*/
+ * Created by stevet on 7/16/2014.
+ */
 class JmdnsRunnable implements Runnable {
 
+    android.net.wifi.WifiManager.MulticastLock multicastLock;
     private RetainedTaskFragment retainedTaskFragment;
     //        private Activity activity = null;  //this is now in the outer class
     //    private String jmdnsType = "_workstation._tcp.local.";
@@ -27,7 +28,6 @@ class JmdnsRunnable implements Runnable {
     private JmDNS jmdns = null;
     private ServiceListener listener = null;
     private ServiceInfo serviceInfo;
-    android.net.wifi.WifiManager.MulticastLock multicastLock;
 //    Handler jmdnsRunnableHandler;
 
     public JmdnsRunnable(RetainedTaskFragment in_retainedTaskFragment) {
@@ -41,25 +41,10 @@ class JmdnsRunnable implements Runnable {
     public void run() {
         Log.d(Consts.DEBUG_TAG, "starting JmdnsRunnable.run()");
         Looper.prepare();
-        retainedTaskFragment.jmdnsRunnableHandler = new Jmdns_Handler();
+        retainedTaskFragment.jmdnsRunnableHandler = new Jmdns_Handler();  //update ref to thread's handler back in retained frag
         startJmdns();
         Looper.loop();
         Log.d(Consts.DEBUG_TAG, "ending JmdnsRunnable.run()");
-    }
-
-    private class Jmdns_Handler extends Handler {
-
-        @Override
-        public void handleMessage(Message msg) {
-            Log.d(Consts.DEBUG_TAG, "in JmdnsRunnable.handleMessage()");
-            switch (msg.what) {
-                case message_type.SHUTDOWN :
-                    stopJmdns();
-                    retainedTaskFragment.jmdnsRunnableHandler.getLooper().quit(); //stop the looper
-                    break;
-            }  //end of switch msg.what
-            super.handleMessage(msg);
-        }
     }
 
     private void startJmdns() {
@@ -69,14 +54,14 @@ class JmdnsRunnable implements Runnable {
         multicastLock.setReferenceCounted(true);
         multicastLock.acquire();
         WifiInfo wifiinfo = wifi.getConnectionInfo();
-        int intAddr= wifiinfo.getIpAddress();
-        byte[] byteAddr = new byte[] { (byte)(intAddr & 0xff), (byte)(intAddr >> 8 & 0xff), (byte)(intAddr >> 16 & 0xff),
-                (byte)(intAddr >> 24 & 0xff) };
+        int intAddr = wifiinfo.getIpAddress();
+        byte[] byteAddr = new byte[]{(byte) (intAddr & 0xff), (byte) (intAddr >> 8 & 0xff), (byte) (intAddr >> 16 & 0xff),
+                (byte) (intAddr >> 24 & 0xff)};
         try {
             Inet4Address deviceAddr = (Inet4Address) Inet4Address.getByAddress(byteAddr);
-            String deviceName = deviceAddr.toString().substring(1);		//strip off leading /
-            Log.d(Consts.DEBUG_TAG,"start_jmdns: local IP addr " + deviceName);
-            jmdns=JmDNS.create(deviceAddr, deviceName);  //pass ip as name to avoid hostname lookup attempt
+            String deviceName = deviceAddr.toString().substring(1);        //strip off leading /
+            Log.d(Consts.DEBUG_TAG, "startJmdns with local IP " + deviceName);
+            jmdns = JmDNS.create(deviceAddr, deviceName);  //pass ip as name to avoid hostname lookup attempt
             jmdns.addServiceListener(jmdnsType, listener = new ServiceListener() {
 
                 @Override
@@ -85,12 +70,20 @@ class JmdnsRunnable implements Runnable {
                     if (ev.getInfo().getInetAddresses() != null && ev.getInfo().getInetAddresses().length > 0) {
                         additions = ev.getInfo().getInetAddresses()[0].getHostAddress();
                     }
-                    Log.d(Consts.DEBUG_TAG, "Service resolved: " + ev.getInfo().getQualifiedName() + " port:" + ev.getInfo().getPort() + additions);
+                    Log.d(Consts.DEBUG_TAG, "Service resolved: " + ev.getInfo().getQualifiedName() + " port:" + ev.getInfo().getPort() + " " + additions);
+                    Message m = retainedTaskFragment.retainedTaskFragmentHandler.obtainMessage();
+                    m.what= MessageType.SERVICE_RESOLVED;
+//            m.obj=new String("this is a test message");m.arg1 = msgArg1;m.arg2 = msgArg2;
+                    retainedTaskFragment.retainedTaskFragmentHandler.sendMessage(m);
                 }
 
                 @Override
                 public void serviceRemoved(ServiceEvent ev) {
                     Log.d(Consts.DEBUG_TAG, "Service removed: " + ev.getName());
+                    Message m = retainedTaskFragment.retainedTaskFragmentHandler.obtainMessage();
+                    m.what= MessageType.SERVICE_REMOVED;
+//            m.obj=new String("this is a test message");m.arg1 = msgArg1;m.arg2 = msgArg2;
+                    retainedTaskFragment.retainedTaskFragmentHandler.sendMessage(m);
                 }
 
                 @Override
@@ -106,24 +99,38 @@ class JmdnsRunnable implements Runnable {
             return;
         }
     }
+
     private void stopJmdns() {
         try {
-            Log.d(Consts.DEBUG_TAG,"removing jmdns listener");
+            Log.d(Consts.DEBUG_TAG, "removing jmdns listener");
             jmdns.removeServiceListener(jmdnsType, listener);
             multicastLock.release();
-        }
-        catch(Exception e) {
-            Log.d(Consts.DEBUG_TAG,"exception in jmdns.removeServiceListener()");
+        } catch (Exception e) {
+            Log.d(Consts.DEBUG_TAG, "exception in jmdns.removeServiceListener()");
         }
         try {
-            Log.d(Consts.DEBUG_TAG,"calling jmdns.close()");
+            Log.d(Consts.DEBUG_TAG, "calling jmdns.close()");
             jmdns.close();
-            Log.d(Consts.DEBUG_TAG,"after jmdns.close()");
-        }
-        catch (Exception e) {
-            Log.d(Consts.DEBUG_TAG,"exception in jmdns.close()");
+            Log.d(Consts.DEBUG_TAG, "after jmdns.close()");
+        } catch (Exception e) {
+            Log.d(Consts.DEBUG_TAG, "exception in jmdns.close()");
         }
         jmdns = null;
+    }
+
+    private class Jmdns_Handler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            Log.d(Consts.DEBUG_TAG, "in JmdnsRunnable.handleMessage()");
+            switch (msg.what) {
+                case MessageType.SHUTDOWN:
+                    stopJmdns();
+                    retainedTaskFragment.jmdnsRunnableHandler.getLooper().quit(); //stop the looper
+                    break;
+            }  //end of switch msg.what
+            super.handleMessage(msg);
+        }
     }
 
 }
