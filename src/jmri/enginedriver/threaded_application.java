@@ -424,7 +424,7 @@ public class threaded_application extends Application {
 					Log.d("Engine_Driver","TA Disconnect");
 					doFinish = true;
 					heart.stopHeartbeat();
-					phone.disable();
+					if (phone!=null) phone.disable();
 					withrottle_send("Q");
 					if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
 						withrottle_send("*-");     //request to turn off heartbeat (if enabled in server prefs)
@@ -436,9 +436,6 @@ public class threaded_application extends Application {
                    		clockWebSocket.disconnect();
                         clockWebSocket = null;
                     }
-					/***future Notification
-					hideNotification();
-					 ***/					
 					alert_activities(message_type.SHUTDOWN,"");	//tell all activities to finish()
 					/***future PowerLock
 					if(wl != null && wl.isHeld())
@@ -1498,6 +1495,7 @@ public class threaded_application extends Application {
 				if(state == TelephonyManager.CALL_STATE_OFFHOOK) {
 					if (prefs.getBoolean("stop_on_phonecall_preference", 
 							getResources().getBoolean(R.bool.prefStopOnPhonecallDefaultValue))) {
+	    	            Log.d("Engine_Driver","Phone is OffHook, Stopping Trains");
 						if (consistT.isActive()) {
 							withrottle_send("MTA*<;>V0");
 						}
