@@ -954,19 +954,18 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f070015;
         public static final int action_menu_presenter=0x7f070016;
         public static final int action_mode_close_button=0x7f070024;
-        public static final int action_settings=0x7f070047;
+        public static final int action_settings=0x7f07004a;
         public static final int activity_chooser_view_content=0x7f070025;
         public static final int always=0x7f07000f;
         public static final int beginning=0x7f07000a;
-        public static final int ca_footer=0x7f070044;
+        public static final int ca_footer=0x7f070043;
         public static final int checkbox=0x7f07002d;
         public static final int collapseActionView=0x7f070011;
-        public static final int connect=0x7f070040;
-        public static final int connections_list=0x7f070043;
+        public static final int connect=0x7f07003f;
         public static final int default_activity_button=0x7f070028;
         public static final int dialog=0x7f070012;
         public static final int disableHome=0x7f070008;
-        public static final int discovery_list=0x7f070041;
+        public static final int discovered_server_list=0x7f070040;
         public static final int dropdown=0x7f070013;
         public static final int edit_query=0x7f070030;
         public static final int end=0x7f07000c;
@@ -974,24 +973,27 @@ containing a value of this type.
         public static final int expanded_menu=0x7f07002c;
         public static final int home=0x7f070017;
         public static final int homeAsUp=0x7f070005;
-        public static final int host_ip=0x7f07003e;
+        public static final int host_ip=0x7f07003d;
+        public static final int host_item_label=0x7f070045;
         public static final int icon=0x7f07002a;
         public static final int ifRoom=0x7f07000e;
         public static final int image=0x7f070027;
-        public static final int ip_label=0x7f07003d;
+        public static final int ip_item_label=0x7f070044;
+        public static final int ip_label=0x7f07003c;
         public static final int listMode=0x7f070001;
         public static final int list_item=0x7f070029;
-        public static final int listview=0x7f070045;
+        public static final int listview=0x7f070047;
+        public static final int mainActivityPager=0x7f070048;
         public static final int middle=0x7f07000b;
         public static final int never=0x7f07000d;
         public static final int none=0x7f070009;
         public static final int normal=0x7f070000;
-        public static final int pager=0x7f07003c;
-        public static final int port=0x7f07003f;
+        public static final int port=0x7f07003e;
+        public static final int port_item_label=0x7f070046;
         public static final int progress_circular=0x7f070018;
         public static final int progress_horizontal=0x7f070019;
         public static final int radio=0x7f07002f;
-        public static final int recent_connections_heading=0x7f070042;
+        public static final int recent_connections_heading=0x7f070041;
         public static final int search_badge=0x7f070032;
         public static final int search_bar=0x7f070031;
         public static final int search_button=0x7f070033;
@@ -1002,6 +1004,7 @@ containing a value of this type.
         public static final int search_plate=0x7f070036;
         public static final int search_src_text=0x7f070037;
         public static final int search_voice_btn=0x7f07003b;
+        public static final int server_list=0x7f070042;
         public static final int shortcut=0x7f07002e;
         public static final int showCustom=0x7f070007;
         public static final int showHome=0x7f070004;
@@ -1013,7 +1016,7 @@ containing a value of this type.
         public static final int top_action_bar=0x7f070020;
         public static final int up=0x7f070021;
         public static final int useLogo=0x7f070003;
-        public static final int webview=0x7f070046;
+        public static final int webview=0x7f070049;
         public static final int withText=0x7f070010;
     }
     public static final class integer {
@@ -1044,11 +1047,12 @@ containing a value of this type.
         public static final int abc_search_dropdown_item_icons_2line=0x7f030015;
         public static final int abc_search_view=0x7f030016;
         public static final int abc_simple_decor=0x7f030017;
-        public static final int activity_main=0x7f030018;
-        public static final int connect_fragment=0x7f030019;
+        public static final int connect_fragment=0x7f030018;
+        public static final int connections_list_item=0x7f030019;
         public static final int list_fragment=0x7f03001a;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001b;
-        public static final int web_fragment=0x7f03001c;
+        public static final int main_activity=0x7f03001b;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001c;
+        public static final int web_fragment=0x7f03001d;
     }
     public static final class menu {
         public static final int my=0x7f0c0000;

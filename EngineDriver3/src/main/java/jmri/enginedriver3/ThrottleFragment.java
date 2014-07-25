@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import jmri.enginedriver3.R;
-
-public class ThrottleFragment extends ED3Fragment {
+public class ThrottleFragment extends DynaFragment {
 	
 	/**---------------------------------------------------------------------------------------------**
 	 * create a new fragment of this type, and populate basic settings in bundle 
@@ -33,14 +31,14 @@ public class ThrottleFragment extends ED3Fragment {
 	 *    runs before activity starts, note does not call super		 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		Log.d(Consts.DEBUG_TAG, "in ThrottleFragment.onCreateView() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+		Log.d(Consts.DEBUG_TAG, "in ThrottleFragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 		//choose the proper layout xml for this fragment's type
 		int rx = R.layout.list_fragment;  //use list for now  TODO: make throttle view layout
 		//inflate the proper layout xml and remember it in fragment
 		view = inflater.inflate(rx, container, false);  
 		View tv = view.findViewById(R.id.title);  //all fragment views currently have title element
 		if (tv != null) {
-			((TextView)tv).setText(getName() + " (" + getNum() + ")");
+			((TextView)tv).setText(getFragName() + " (" + getFragNum() + ")");
 		}
 		return view;
 	}

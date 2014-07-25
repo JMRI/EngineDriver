@@ -12,10 +12,11 @@ permafrag should send "xx_CHANGED" messages to the activity,
   which can forward to any active dynafrags which need to see it
 permafrag is the only one who starts, talks to, or stops the threads
 some threads are continuous, some end when they've finished their update
-some threads allowed to update shared entities directly (maybe?)
+some threads allowed to update shared entities directly (maybe?) clearly document this
 all inter-process comm is via handler messages, to allow for queuing
 application object has getters and setters for shared entities (maybe?)
 each dynafrag should handle its own preferences, and remember them
+persistent storage will be sharedpreferences, storing json strings for objects
 
 steps:
 1) get single activity with multiple, similar "listview" fragments working at OS 3.0, and understand how fragment width works.
@@ -25,14 +26,18 @@ steps:
 5) set up webviewFragments for About, Turnout and Routes (using the JMRIMobile pages)  url still hard-coded
 6) set Throttle to use webThrottle
 7) create separate classes for each fragment type, with unique data and methods in each
-8) add a RetainedTaskFragment to handle all async stuff
+8) remove Sherlock and rewrite for Android Support
+9) add a PermaFragment to handle all async stuff
+10) add LONG_MESSAGE and SHORT_MESSAGE messages, for showing as toast by activity
+11) create and manage jmdns thread for jmdns listeners
 ) add Connect fragment, to simply set the server name, to be used by web fragments
 ) figure out how to send the new server name to activity, and how to forward on to all "interested" fragments
+) add jmdns listeners, updating discovered list in Connect fragment.
+) have web fragments refresh on CONNECTED
 ) add refresh button to web fragments
 ) add settings icon to each fragment, (dropping hard-coded urls) and deal with persistent storage.
 ) add mechanism to add new fragments and delete unneeded ones.  fragment list+settings should be restored on app start.
 ) add initial socket reader/writer.  (re)position to Connect when no connection, Determine if Application object should "own" these async tasks, vs. fragment or activity.  Determine if handler is still the best way to communicate with them.
-) add jmdns listeners, updating discovered list in Connect fragment.
 ) add proper throttle fragment (hard-coded address), get communication working
 ) add address/roster selection/entry dialog (determine if activity or fragment or popup dialog, or whatever)
 ) add background roster details retrieval (maybe using json server?)
@@ -42,6 +47,9 @@ steps:
 ) enable webfrag's back button, remember url and zoom
 ) make webfrag width a pref
 ) prompt for app exit on back
+) add notification icon and action
+) add phone listener
+
 
 things to "improve" from ED 2.x
 more flexible UI to take advantage of screen real estates
@@ -52,6 +60,7 @@ use Service for comm stuff (maybe not?)
 use json server in addition to (or instead of) withrottle server
 cleanup/rethink thread structure, use fewer patterns
 loss of connection should be more obvious
+move code into separate members whenever possible, vs. adding everything to TA and mainapp
 
 document old structure:
 ta.onCreate starts comm_thread
@@ -69,15 +78,23 @@ fragments are transient, (except for Retained), which is why you avoid fragment 
 the activity can "lookup" each fragment by position, this will build it (if needed)
 #13 shows setCommunicator(this)
 not sure how best to handle Throttles in this new transient dynafrag world.
+findFragmentByTag didn't work, as tag was null, and I failed to figure out how to set it
+used instantiateItem instead, not a great solution
 
 Shared objects:
-discovered server list
-recent server list
-current connection and ports (null if not connected)
+discovered server list (maintained by jmdns thread, read only by ConnectFrag)
+current connection and ports (null if not connected) (maintained by new commthread)
 turnout list with states
 route list with states
 roster list with details
-recent locos list
 layout power state
-metadata (jmri version, etc.)
-fast clock time
+metadata (jmri version, etc.) (maintained by short-term thread, started on CONNECTED)
+fast clock time (maintained by new clockthread, read by multiple threads on CLOCK_UPDATE)
+recent locos list (maintained by all ThrottleFrags, stored in sharedprefs)
+
+Not Shared objects:
+recent server list (maintained by ConnectFrag, stored in sharedprefs)
+
+
+
+

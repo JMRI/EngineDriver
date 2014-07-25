@@ -10,10 +10,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.support.v7.app.*;
+import android.widget.Toast;
 
-public class ED3Activity extends ActionBarActivity implements ActionBar.TabListener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
-    private static ED3Application mainapp; // hold pointer to mainapp
+    private static MainApplication mainApp; // hold pointer to mainApp
     private ED3PagerAdapter pagerAdapter;  //set in onCreate()
 
 //    public ActionBar mActionBar;
@@ -21,20 +22,33 @@ public class ED3Activity extends ActionBarActivity implements ActionBar.TabListe
 
     private ViewPager viewPager = null;
 
-    private RetainedTaskFragment retainedTaskFrag = null;  //created in activity.onCreate()
-    public ED3Activity_Handler ED3ActivityHandler = null;  //set in this.onCreate()
+    private PermaFragment permaFrag = null;  //created in activity.onCreate()
+    public MainActivity_Handler mainActivityHandler = null;  //set in this.onCreate()
     private FragmentManager fragmentManager = null;  //set in this.onCreate()
 
     //this creates the permafrag the first time, then finds it on subsequent creates
+    //  also setups the actionbar
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(Consts.DEBUG_TAG,"in MainActivity.onCreate()");
         super.onCreate(savedInstanceState);
-        ED3ActivityHandler = new ED3Activity_Handler();  //update ref to thread's handler back in retained frag
+        mainActivityHandler = new MainActivity_Handler();
         fragmentManager = getSupportFragmentManager();
-        setContentView(R.layout.activity_main);
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        mainapp = (ED3Application) getApplication();
+        setContentView(R.layout.main_activity);
+        viewPager = (ViewPager) findViewById(R.id.mainActivityPager);
+        mainApp = (MainApplication) getApplication();
         final ActionBar actionBar = getSupportActionBar();
+
+        //create (or find) the nonUI fragment to handle all threads and updates
+        if (savedInstanceState == null) {
+            permaFrag = new PermaFragment();
+            fragmentManager.beginTransaction().add(permaFrag, "PermaFragment").commit();
+//            Log.d(Consts.DEBUG_TAG, "Created the PermaFragment");
+        } else {
+            permaFrag = (PermaFragment) fragmentManager.findFragmentByTag("PermaFragment");
+//            Log.d(Consts.DEBUG_TAG, "Reused existing PermaFragment");
+        }
+
         //for testing, hard-code the available screen width based on orientation  TODO: replace this with calculation
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             fragmentsPerScreen = 5;
@@ -46,7 +60,6 @@ public class ED3Activity extends ActionBarActivity implements ActionBar.TabListe
 
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         addTabs(actionBar);
-//TODO: turn this back on        actionBar.getTabAt(2).select();  //always start up with the connection tab  TODO: do this only when disconnected
 
         pagerAdapter = new ED3PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
@@ -67,27 +80,18 @@ public class ED3Activity extends ActionBarActivity implements ActionBar.TabListe
             public void onPageScrollStateChanged(int i) {
             }
         });
-        //create (or find) the nonUI fragment to handle all threads and updates
-        if (savedInstanceState == null) {
-            retainedTaskFrag = new RetainedTaskFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(retainedTaskFrag, "RetainedTaskFragment").commit();
-            Log.d(Consts.DEBUG_TAG, "Created the RetainedTaskFragment");
-        } else {
-            retainedTaskFrag = (RetainedTaskFragment) getSupportFragmentManager()
-                    .findFragmentByTag("RetainedTaskFragment");
-            Log.d(Consts.DEBUG_TAG, "Reused existing RetainedTaskFragment");
-        }
+
+        actionBar.getTabAt(2).select();  //always start up with the connection tab  TODO: do this only when disconnected
 
     }
 
     private void addTabs(ActionBar actionBar) {
 
         //build tabs for each defined fragment
-        for (int i = 0; i < mainapp.ED3Frags.size(); i++) {
+        for (int i = 0; i < mainApp.dynaFrags.size(); i++) {
             ActionBar.Tab tab = actionBar
                     .newTab()
-                    .setText(mainapp.ED3Frags.get(i).getName())
+                    .setText(mainApp.dynaFrags.get(i).getName())
                     .setTabListener(this);
             actionBar.addTab(tab);
         }
@@ -114,13 +118,14 @@ public class ED3Activity extends ActionBarActivity implements ActionBar.TabListe
             super(fm);
         }
 
+        //getItem() should really be called createItem()
         @Override
         public Fragment getItem(int position) {
 
-            String t = mainapp.ED3Frags.get(position).getType();
-            String n = mainapp.ED3Frags.get(position).getName();
-            String d = mainapp.ED3Frags.get(position).getData();
-            Log.d(Consts.DEBUG_TAG, "in EngineDriver3Activity.getItem(" + position + ")" + " type " + t);
+            String t = mainApp.dynaFrags.get(position).getType();
+            String n = mainApp.dynaFrags.get(position).getName();
+            String d = mainApp.dynaFrags.get(position).getData();
+            Log.d(Consts.DEBUG_TAG, "in MainActivity.getItem(" + position + ")" + " type " + t);
 
             if (t == Consts.WEB) {
                 WebFragment f = null;
@@ -131,47 +136,62 @@ public class ED3Activity extends ActionBarActivity implements ActionBar.TabListe
                 f = ThrottleFragment.newInstance(position, t, n);
                 return f;
             } else if (t == Consts.LIST) {
-                ED3ListFragment f = null;
-                f = ED3ListFragment.newInstance(position, t, n);
+                DynaListFragment f = null;
+                f = DynaListFragment.newInstance(position, t, n);
                 return f;
             } else if (t == Consts.CONNECT) {
                 ConnectFragment f = null;
                 f = ConnectFragment.newInstance(position, t, n);
                 return f;
             } else {
-                ED3Fragment f = null;
-                f = ED3Fragment.newInstance(position, t, n);
+                DynaFragment f = null;
+                f = DynaFragment.newInstance(position, t, n);
                 return f;
             }
         }
 
         @Override
         public int getCount() {
-            return mainapp.ED3Frags.size();
+            return mainApp.dynaFrags.size();
         }
 
         @Override
         public float getPageWidth(int position) {
             //return fraction of screen used by this fragment#, based on width
-            return (float) mainapp.ED3Frags.get(position).getWidth()/fragmentsPerScreen;
+            return (float) mainApp.dynaFrags.get(position).getWidth()/fragmentsPerScreen;
         }
     }
     //fragments send messages to here for processing and forwarding as needed.  The activity knows
     //  about all the fragments
-    public class ED3Activity_Handler extends Handler {
+    public class MainActivity_Handler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            Log.d(Consts.DEBUG_TAG, "in ED3Activity_Handler.handleMessage()");
+//            Log.d(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage()");
             switch (msg.what) {
-                case MessageType.SERVER_LIST_CHANGED:  //forward these to the Connect fragment
-//                    Log.d(Consts.DEBUG_TAG, "in ED3Activity_Handler.handleMessage() SERVICE_REMOVED");
-                    ConnectFragment cf = (ConnectFragment) pagerAdapter.getItem(2);  //TODO: don't hard-code the 2
-                    Message msgCopy = cf.fragmentHandler.obtainMessage();
-                    msgCopy.copyFrom(msg);
-                    cf.fragmentHandler.sendMessage(msgCopy);
+                case MessageType.DISCOVERED_SERVER_LIST_CHANGED:  //forward this only to the Connect fragment
+                    int cfPos = 2; //TODO: don't hard-code the 2
+                    if (mainApp.dynaFrags.get(cfPos).getHandler() != null) {  //skip fragment if not active
+                        mainApp.sendMsg(mainApp.dynaFrags.get(cfPos).getHandler(), msg);
+//                            cf = (ConnectFragment) pagerAdapter.instantiateItem(null, 2);
+                    } else {
+                        Log.d(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage() DISCOVERED_SERVER_LIST_CHANGED not forwarded");
+                    }
+                    break;
+                case MessageType.CONNECTED:  //forward these to all server-dependent fragments
+                    for (int i = 0; i < mainApp.dynaFrags.size(); i++) {
+                        if (mainApp.dynaFrags.get(i).getHandler() != null) {  //skip fragment if not active
+                            mainApp.sendMsg(mainApp.dynaFrags.get(i).getHandler(), msg);
+                        }
+                    }
+                    break;
+                case MessageType.LONG_MESSAGE:
+                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_LONG).show();
+                    break;
+                case MessageType.SHORT_MESSAGE:
+                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     break;
                 default:
-                    Log.d(Consts.DEBUG_TAG, "in ED3Activity_Handler.handleMessage() Unknown");
+                    Log.w(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage() not handled");
             }  //end of switch msg.what
             super.handleMessage(msg);
         }

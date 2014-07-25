@@ -29,7 +29,7 @@ interface MessageType
 //  public static final int DIRECTION=5; 			//
 //  public static final int FUNCTION=6; 			//
   public static final int CONNECTED=7; 			//
-  public static final int SERVICE_RESOLVED=8; 	//
+//  public static final int SERVICE_RESOLVED=8; 	//
 //  public static final int RELEASE=9; 			//
 //  public static final int RESPONSE=10;  		//
 //  public static final int END_ACTIVITY=11;  	//
@@ -40,7 +40,7 @@ interface MessageType
 //  public static final int POWER_CONTROL=15;  	//
   public static final int SHUTDOWN=17;  		//
 //  public static final int SET_LISTENER=18;  	//
-  public static final int SERVICE_REMOVED=19; 	//
+//  public static final int SERVICE_REMOVED=19; 	//
 //  public static final int REQ_VELOCITY=20; 		//
 //  public static final int REQ_DIRECTION=21; 	//
 //  public static final int WEBVIEW_LOC=22;		//
@@ -51,5 +51,8 @@ interface MessageType
 //  public static final int LOCATION_DELIMITER=27;//
 //  public static final int CURRENT_TIME=28;		//
 //  public static final int CLOCK_DISPLAY=29;		//
-  public static final int SERVER_LIST_CHANGED=30;		//
+//    public static final int SERVER_LIST_CHANGED=30;		//
+    public static final int SHORT_MESSAGE=31;		//
+    public static final int LONG_MESSAGE=32;		//
+    public static final int DISCOVERED_SERVER_LIST_CHANGED=33;		//
 }

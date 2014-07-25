@@ -8,16 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import jmri.enginedriver3.R;
-
-public class ED3ListFragment extends ED3Fragment {
+public class DynaListFragment extends DynaFragment {
 	/**---------------------------------------------------------------------------------------------**
 	 * create a new fragment of this type, and populate basic settings in bundle 
 	 * Note: this is a static method, called from the activity's getItem() when new ones are needed */	
-	static ED3ListFragment newInstance(int fragNum, String fragType, String fragName) {
+	static DynaListFragment newInstance(int fragNum, String fragType, String fragName) {
 		Log.d(Consts.DEBUG_TAG, "in ListFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
-		ED3ListFragment f = new ED3ListFragment();
+		DynaListFragment f = new DynaListFragment();
 
 		// Store variables for retrieval 
 		Bundle args = new Bundle();
@@ -33,13 +32,13 @@ public class ED3ListFragment extends ED3Fragment {
 	 *    runs before activity starts, note does not call super		 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//		Log.d(Consts.DEBUG_TAG, "in ListFragment.onCreateView() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+//		Log.d(Consts.DEBUG_TAG, "in ListFragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 		//inflate the proper layout xml and remember it in fragment
 		int rx = R.layout.list_fragment;
 		view = inflater.inflate(rx, container, false);  
 		View tv = view.findViewById(R.id.title);  //all fragment views currently have title element
 		if (tv != null) {
-			((TextView)tv).setText(getName() + " (" + getNum() + ")");
+			((TextView)tv).setText(getFragName() + " (" + getFragNum() + ")");
 		}
 		return view;
 	}
@@ -47,7 +46,7 @@ public class ED3ListFragment extends ED3Fragment {
 	 *  Note: calls super.  Only override if additional processing is needed	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-//		Log.d(Consts.DEBUG_TAG, "in ListFragment.onActivityCreated() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+//		Log.d(Consts.DEBUG_TAG, "in ListFragment.onActivityCreated() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 		super.onActivityCreated(savedInstanceState);
 
 		ListView listview = (ListView) view.findViewById(R.id.listview);
@@ -63,8 +62,10 @@ public class ED3ListFragment extends ED3Fragment {
 	public class viewlist_item implements android.widget.AdapterView.OnItemClickListener	  {
 
 		public void onItemClick(android.widget.AdapterView<?> parent, View v, int position, long id)	    {
-			Log.i("FragmentList", "Item clicked: " + id + " on " + getName() + "(" + getNum() + ")");	    
-		};
+            TextView tv = (TextView) v;
+			Log.i(Consts.DEBUG_TAG, "Item clicked: " + tv.getText().toString() + "(" + id + ") on " + getFragName() + "(" + getFragNum() + ")");
+            Toast.makeText(getActivity(), "Item clicked: " + tv.getText().toString() + "(" + id + ") on " + getFragName() + "(" + getFragNum() + ")", Toast.LENGTH_SHORT).show();
+        };
 	}	  
 	
 	public static final String[] sCheeseStrings = {

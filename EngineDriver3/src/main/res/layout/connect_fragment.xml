@@ -53,7 +53,7 @@
         android:background="#00000000"
         android:orientation="vertical" >
         <ListView
-            android:id="@+id/discovery_list"
+            android:id="@+id/discovered_server_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#00000000"
@@ -71,7 +71,7 @@
         android:background="#00000000"
         android:orientation="vertical" >
         <ListView
-            android:id="@+id/connections_list"
+            android:id="@+id/server_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:footerDividersEnabled="true" >

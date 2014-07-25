@@ -2,6 +2,8 @@ package jmri.enginedriver3;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +13,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-import jmri.enginedriver3.R;
-
 @SuppressLint("SetJavaScriptEnabled")
-public class WebFragment extends ED3Fragment {
+public class WebFragment extends DynaFragment {
 	
 	private String _url;
 	
@@ -43,13 +43,28 @@ public class WebFragment extends ED3Fragment {
 
 		return f;
 	}
-	/**---------------------------------------------------------------------------------------------**
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //only set this when fragment is ready to receive messages
+        mainApp.dynaFrags.get(getFragNum()).setHandler(new Fragment_Handler());
+    }
+
+    @Override
+    public void onStop() {
+        //clear this to avoid late messages
+        mainApp.dynaFrags.get(getFragNum()).setHandler(null);
+        super.onStop();
+    }
+
+    /**---------------------------------------------------------------------------------------------**
 	 * Called when new fragment is created, retrieves stuff from bundle and sets instance members	 
 	 * Note: only override if extra values are needed                                               */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		Log.d(Consts.DEBUG_TAG, "in WebFragment.onCreate() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+//		Log.d(Consts.DEBUG_TAG, "in WebFragment.onCreate() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 		
 		//fetch additional stored data from bundle and copy into member variable _url
 		_url =  (getArguments() != null ? getArguments().getString("fragData") : "");
@@ -61,14 +76,14 @@ public class WebFragment extends ED3Fragment {
 	 *    runs before activity starts, note does not call super		 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onCreateView() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+//		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 		//choose the proper layout xml for this fragment's type
 		int rx = R.layout.web_fragment;
 		//inflate the proper layout xml and remember it in fragment
 		view = inflater.inflate(rx, container, false);  
 		View tv = view.findViewById(R.id.title);  //all fragment views currently have title element
 		if (tv != null) {
-			((TextView)tv).setText(getName() + " (" + getNum() + ")");
+			((TextView)tv).setText(getFragName() + " (" + getFragNum() + ")");
 		}
 		return view;
 	}
@@ -77,17 +92,19 @@ public class WebFragment extends ED3Fragment {
 	 * Note: calls super.  Only override if additional processing is needed                           */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-//		Log.d(Consts.DEBUG_TAG, "in WebFragment.onActivityCreated() for " + getName() + " (" + getNum() + ")" + " type " + getType());
+//		Log.d(Consts.DEBUG_TAG, "in WebFragment.onActivityCreated() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 		super.onActivityCreated(savedInstanceState);	
 
 		WebView webview = (WebView)view.findViewById(R.id.webview);
-		if (_url.indexOf("://") < 0) {  //if protocol included, use _url as is, else append protocol and port
-			_url = "http://" + mainapp.getServer() + ":" + mainapp.getWebPort() + _url;
+        if (mainApp.getServer() == null) {
+            _url = "file:///android_asset/not_connected.html";
+        } else if (_url.indexOf("://") < 0) {  //if protocol included, use _url as is, else append protocol and port
+			_url = "http://" + mainApp.getServer() + ":" + mainApp.getWebPort() + _url;
 		}
 //		Log.d(Consts.DEBUG_TAG, "in WebFragment.onActivityCreated() setting url= " + _url);
 		View tv = view.findViewById(R.id.title);  //put the _url as the title TODO: remove this after testing
 		if (tv != null) {
-			((TextView)tv).setText(getName() + " (" + getNum() + ") " + _url);
+			((TextView)tv).setText(getFragName() + " (" + getFragNum() + ") " + _url);
 		}
 		webview.getSettings().setJavaScriptEnabled(true);
 		webview.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
@@ -110,5 +127,20 @@ public class WebFragment extends ED3Fragment {
 		webview.setWebViewClient(EDWebClient);
 		webview.loadUrl(_url);
 	}
+    private class Fragment_Handler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+//            Log.d(Consts.DEBUG_TAG, "in ConnectFragment.handleMessage()");
+            switch (msg.what) {
+                case MessageType.CONNECTED:  //TODO: redraw the screen to reflect connectedness
+                    Log.d(Consts.DEBUG_TAG, "in WebFragment.handleMessage() CONNECTED");
+//                    discoveredServerListAdapter.notifyDataSetChanged();
+                    break;
+                default:
+                    Log.d(Consts.DEBUG_TAG, "in WebFragment.handleMessage() not handled");
+            }  //end of switch msg.what
+            super.handleMessage(msg);
+        }
+    }
 
 }
