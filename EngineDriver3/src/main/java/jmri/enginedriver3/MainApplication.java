@@ -15,7 +15,7 @@ public class MainApplication extends Application {
 
     //store variables for use by the activity and all fragments
 
-    public ArrayList<HashMap<String, String> > discovered_servers_list;
+    public ArrayList<HashMap<String, String> > discoveredServersList;
 
 	//jmri server name (used for both WiThrottle and Web connections)	
 	private String _server = null;
@@ -31,6 +31,19 @@ public class MainApplication extends Application {
 	private int _webPort = -1;
 	public int getWebPort() { return _webPort; }
 	public void setWebPort(int webPort) { _webPort = webPort; }
+
+    public String getJmriTime() {return _jmriTime;}
+    public void setJmriTime(String jmriTime) {this._jmriTime = jmriTime;}
+    private String _jmriTime = null;  //will be set by JmriWebSocket
+
+    public String getPowerState() {return powerState;}
+    public void setPowerState(String powerState) {this.powerState = powerState;}
+    private String powerState = null;  //will be set by JmriWebSocket
+
+    public String getJmriVersion() {return _jmriVersion;}
+    public void setJmriVersion(String jmriVersion) {this._jmriVersion = jmriVersion;}
+    private String _jmriVersion = null;  //will be set by JmriWebSocket
+
 
 //	public EngineDriver3Application() {
 //	}
@@ -69,26 +82,33 @@ public class MainApplication extends Application {
 
 	}
     public boolean sendMsg(Handler h, int msgType) {
-        return sendMsgDelay(h, 0, msgType, "", 0, 0);
+        return sendMsgDelayed(h, 0, msgType, "", 0, 0);
     }
 
     public boolean sendMsg(Handler h, int msgType, String msgBody) {
-        return sendMsgDelay(h, 0, msgType, msgBody, 0, 0);
+        return sendMsgDelayed(h, 0, msgType, msgBody, 0, 0);
     }
 
     public boolean sendMsg(Handler h, int msgType, String msgBody, int msgArg1) {
-        return sendMsgDelay(h, 0, msgType, msgBody, msgArg1, 0);
+        return sendMsgDelayed(h, 0, msgType, msgBody, msgArg1, 0);
     }
 
     public boolean sendMsg(Handler h, int msgType, String msgBody, int msgArg1, int msgArg2) {
-        return sendMsgDelay(h, 0, msgType, msgBody, msgArg1, msgArg2);
+        return sendMsgDelayed(h, 0, msgType, msgBody, msgArg1, msgArg2);
     }
 
-    public boolean sendMsgDelay(Handler h, long delayMs, int msgType) {
-        return sendMsgDelay(h, delayMs, msgType, "", 0, 0);
+    public boolean sendMsgDelayed(Handler h, long delayMs, int msgType) {
+        return sendMsgDelayed(h, delayMs, msgType, "", 0, 0);
     }
-
-    public boolean sendMsgDelay(Handler h, long delayMs, int msgType, String msgBody, int msgArg1, int msgArg2) {
+    //this one forwards a copy of the input message
+    public boolean sendMsg(Handler h, Message msg) {
+        return sendMsgDelayed(h, 0, msg.what, (msg.obj == null) ? null : msg.obj.toString(), msg.arg1, msg.arg2);
+    }
+    //this one forwards a copy of the input message
+    public boolean sendMsgDelayed(Handler h, long delayMs, Message msg) {
+        return sendMsgDelayed(h, delayMs, msg.what, (msg.obj == null) ? null : msg.obj.toString(), msg.arg1, msg.arg2);
+    }
+    public boolean sendMsgDelayed(Handler h, long delayMs, int msgType, String msgBody, int msgArg1, int msgArg2) {
         boolean sent = false;
         if(h != null) {
             Message msg= Message.obtain();
@@ -105,10 +125,6 @@ public class MainApplication extends Application {
                 msg.recycle();
         }
         return sent;
-    }
-    //this one forwards a copy of the input message
-    public boolean sendMsg(Handler h, Message msg) {
-        return sendMsgDelay(h, 0, msg.what, (msg.obj==null) ? null : msg.obj.toString(), msg.arg1, msg.arg2);
     }
 
 

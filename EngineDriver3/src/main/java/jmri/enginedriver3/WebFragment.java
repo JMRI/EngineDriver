@@ -132,8 +132,9 @@ public class WebFragment extends DynaFragment {
         public void handleMessage(Message msg) {
 //            Log.d(Consts.DEBUG_TAG, "in ConnectFragment.handleMessage()");
             switch (msg.what) {
-                case MessageType.CONNECTED:  //TODO: redraw the screen to reflect connectedness
-                    Log.d(Consts.DEBUG_TAG, "in WebFragment.handleMessage() CONNECTED");
+                case MessageType.CONNECTED:  //TODO: redraw the screen to reflect new state
+                case MessageType.DISCONNECTED:
+                    Log.d(Consts.DEBUG_TAG, "in WebFragment.handleMessage() DIS/CONNECTED");
 //                    discoveredServerListAdapter.notifyDataSetChanged();
                     break;
                 default:

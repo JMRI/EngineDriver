@@ -11,41 +11,41 @@ import android.widget.TextView;
 
 public class DynaFragment extends Fragment {
 
-	@Override
-	public void onAttach(Activity activity) {
+//	@Override
+//	public void onAttach(Activity activity) {
 //		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onAttach() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
-		super.onAttach(activity);
-	}
-	@Override
-	public void onDetach() {
+//		super.onAttach(activity);
+//	}
+//	@Override
+//	public void onDetach() {
 //		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onDetach() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
-		super.onDetach();
-	}
-	@Override
-	public void onDestroy() {
-		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onDestroy() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
-		super.onDestroy();
-	}
-	@Override
-	public void onPause() {
+//		super.onDetach();
+//	}
+//	@Override
+//	public void onDestroy() {
+//		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onDestroy() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		super.onDestroy();
+//	}
+//	@Override
+//	public void onPause() {
 //		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onPause() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
-		super.onPause();
-	}
-	@Override
-	public void onResume() {
+//		super.onPause();
+//	}
+//	@Override
+//	public void onResume() {
 //		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onResume() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
-		super.onResume();
-	}
-	@Override
-	public void onStart() {
-		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onStart() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
-		super.onStart();
-	}
-	@Override
-	public void onStop() {
+//		super.onResume();
+//	}
+//	@Override
+//	public void onStart() {
+//		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onStart() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		super.onStart();
+//	}
+//	@Override
+//	public void onStop() {
 //		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onStop() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
-		super.onStop();
-	}
+//		super.onStop();
+//	}
 	//	public ED3Fragment() {
 //		super();
 //	}
@@ -103,7 +103,7 @@ public class DynaFragment extends Fragment {
 		setFragType((getArguments() != null ? getArguments().getString("fragType") : "error"));
 		setFragName((getArguments() != null ? getArguments().getString("fragName") : "error"));
 
-		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onCreate() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onCreate() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 	}
 
 

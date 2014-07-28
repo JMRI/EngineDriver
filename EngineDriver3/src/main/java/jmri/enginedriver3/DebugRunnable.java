@@ -1,19 +1,9 @@
 package jmri.enginedriver3;
 
-import android.net.wifi.WifiInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.SystemClock;
 import android.util.Log;
-
-import java.io.IOException;
-import java.net.Inet4Address;
-import java.util.HashMap;
-
-import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceEvent;
-import javax.jmdns.ServiceListener;
 
 /**
  * Created by stevet on 7/16/2014.
@@ -37,21 +27,29 @@ class DebugRunnable implements Runnable {
         Log.d(Consts.DEBUG_TAG, "starting DebugRunnable.run()");
         Looper.prepare();
         permaFragment.debugRunnableHandler = new Debug_Runnable_Handler();  //update ref to thread's handler back in retained frag
-//        Looper.loop();
-        while (keepRunning) {
-            mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.CONNECTED);
-            SystemClock.sleep(10000);
-        }
+        Looper.loop();  //this runs the message handler, quitting when requested
         Log.d(Consts.DEBUG_TAG, "ending DebugRunnable.run()");
     }
 
     private class Debug_Runnable_Handler extends Handler {
+        //force-start the message loop on this handler
+        private Debug_Runnable_Handler() {
+            mainApp.sendMsgDelayed(this, 5000, MessageType.LOOP);
+        }
+
         @Override
         public void handleMessage(Message msg) {
-            Log.d(Consts.DEBUG_TAG, "in DebugRunnable.handleMessage()");
+//            Log.d(Consts.DEBUG_TAG, "in DebugRunnable.handleMessage()");
             switch (msg.what) {
                 case MessageType.SHUTDOWN:
-                    keepRunning = false;
+                    this.getLooper().quit(); //stop the looper
+                    break;
+                case MessageType.LOOP:  //send heartbeat, then kick off repeat
+                    mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.HEARTBEAT);
+                    mainApp.sendMsgDelayed(this, 10000, MessageType.LOOP);
+                    break;
+                default:
+                    Log.w(Consts.DEBUG_TAG, "in DebugRunnable.handleMessage() received unknown message type " + msg.what);
                     break;
             }  //end of switch msg.what
             super.handleMessage(msg);

@@ -78,7 +78,7 @@
         </ListView>
     </LinearLayout>
     <TextView
-        android:id="@+id/ca_footer"
+        android:id="@+id/cf_footer"
         style="@style/floating_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

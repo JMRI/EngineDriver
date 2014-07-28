@@ -958,7 +958,7 @@ containing a value of this type.
         public static final int activity_chooser_view_content=0x7f070025;
         public static final int always=0x7f07000f;
         public static final int beginning=0x7f07000a;
-        public static final int ca_footer=0x7f070043;
+        public static final int cf_footer=0x7f070043;
         public static final int checkbox=0x7f07002d;
         public static final int collapseActionView=0x7f070011;
         public static final int connect=0x7f07003f;

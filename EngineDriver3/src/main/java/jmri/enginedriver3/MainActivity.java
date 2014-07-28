@@ -172,23 +172,31 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     int cfPos = 2; //TODO: don't hard-code the 2
                     if (mainApp.dynaFrags.get(cfPos).getHandler() != null) {  //skip fragment if not active
                         mainApp.sendMsg(mainApp.dynaFrags.get(cfPos).getHandler(), msg);
-//                            cf = (ConnectFragment) pagerAdapter.instantiateItem(null, 2);
-                    } else {
-                        Log.d(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage() DISCOVERED_SERVER_LIST_CHANGED not forwarded");
+//                    } else {
+//                        Log.d(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage() DISCOVERED_SERVER_LIST_CHANGED not forwarded");
                     }
                     break;
-                case MessageType.CONNECTED:  //forward these to all server-dependent fragments
+                case MessageType.CONNECT_REQUESTED:  //forward this only to PermaFrag to attempt connection
+//            Log.d(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage() CONNECT_REQUESTED");
+                    mainApp.sendMsg(permaFrag.permaFragHandler, msg);
+                    break;
+                case MessageType.CONNECTED:    //forward these to all active fragments
+                case MessageType.DISCONNECTED:
                     for (int i = 0; i < mainApp.dynaFrags.size(); i++) {
                         if (mainApp.dynaFrags.get(i).getHandler() != null) {  //skip fragment if not active
                             mainApp.sendMsg(mainApp.dynaFrags.get(i).getHandler(), msg);
                         }
                     }
                     break;
-                case MessageType.LONG_MESSAGE:
+                case MessageType.MESSAGE_LONG:
                     Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_LONG).show();
                     break;
-                case MessageType.SHORT_MESSAGE:
+                case MessageType.MESSAGE_SHORT:
                     Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                    break;
+                case MessageType.JMRI_TIME_CHANGED:  //TODO: do something with these
+                case MessageType.HEARTBEAT:
+                case MessageType.POWER_STATE_CHANGED:
                     break;
                 default:
                     Log.w(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage() not handled");

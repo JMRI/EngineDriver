@@ -2,6 +2,12 @@
 <pre-dex-items>
 
     <item
+        dex="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\pre-dexed\debug\autobahn-0.5.0-604073174afc5072f7da463c3cd800dfe272e918.jar"
+        jar="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\libs\autobahn-0.5.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="5f62bc6117f905fd37955f6e2ebd3aad68701b60"/>
+    <item
         dex="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\pre-dexed\debug\jmdns-3.4.1-a33049bda497f8ad80d473bfce300d125594d8cb.jar"
         jar="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\libs\jmdns-3.4.1.jar"
         jumboMode="false"

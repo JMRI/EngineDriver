@@ -1,5 +1,6 @@
 package jmri.enginedriver3;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,10 +24,10 @@ import java.util.HashMap;
 
 public class ConnectFragment extends DynaFragment {
     private int started = 0;
-//    public Fragment_Handler fragmentHandler = null;
     private ArrayList<HashMap<String, String> > recentConnectionsList;
     private SimpleAdapter recentConnectionsListAdapter;
     private SimpleAdapter discoveredServerListAdapter;
+    private MainActivity mainActivity = null;
 
     public ConnectFragment() {
     }
@@ -67,13 +70,13 @@ public class ConnectFragment extends DynaFragment {
 
         //Set up a list adapter to present list of discovered WiThrottle servers to the UI.
         //this list is in mainapp, and managed by the jmdns thread
-        discoveredServerListAdapter =new SimpleAdapter(getActivity(), mainApp.discovered_servers_list,
+        discoveredServerListAdapter =new SimpleAdapter(getActivity(), mainApp.discoveredServersList,
                 R.layout.connections_list_item,
                 new String[] {"ip_address", "host_name", "port"},
                 new int[] {R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
         ListView dlv = (ListView) getActivity().findViewById(R.id.discovered_server_list);
         dlv.setAdapter(discoveredServerListAdapter);
-//        dlv.setOnItemClickListener(new connect_item(server_list_type.DISCOVERED_SERVER));
+        dlv.setOnItemClickListener(new connect_item());
 
         //populate the recent list from sharedprefs, defaulting if needed.
         // this list is managed by this fragment, and stored in sharedprefs
@@ -91,10 +94,12 @@ public class ConnectFragment extends DynaFragment {
                 new int[] {R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
         ListView conn_list=(ListView) getActivity().findViewById(R.id.server_list);
         conn_list.setAdapter(recentConnectionsListAdapter);
-//        conn_list.setOnItemClickListener(new connect_item(server_list_type.RECENT_CONNECTION));
+        conn_list.setOnItemClickListener(new connect_item());
 
         // suppress popup keyboard until EditText is touched
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        SetConnectedMessage();
 
         //only set this when fragment is ready to receive messages
         mainApp.dynaFrags.get(getFragNum()).setHandler(new Fragment_Handler());
@@ -123,16 +128,30 @@ public class ConnectFragment extends DynaFragment {
     }
 
     @Override
-    public void onDestroy() {
-//        Log.d(Consts.DEBUG_TAG, "in ConnectFragment.onDestroy()");
-        super.onDestroy();
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+//        Log.d(Consts.DEBUG_TAG, "in ConnectFragment.onAttach()");
+        this.mainActivity = (MainActivity) activity;  //save ref to the new activity
     }
 
     @Override
-    public void onResume() {
-//        Log.d(Consts.DEBUG_TAG, "in ConnectFragment.onResume()");
-        super.onResume();
+    public void onDetach() {
+//        Log.d(Consts.DEBUG_TAG, "in ConnectFragment.onDetach()");
+        this.mainActivity = null; //clear ref
+        super.onDetach();
     }
+
+//    @Override
+//    public void onDestroy() {
+//        Log.d(Consts.DEBUG_TAG, "in ConnectFragment.onDestroy()");
+//        super.onDestroy();
+//    }
+
+//    @Override
+//    public void onResume() {
+//        Log.d(Consts.DEBUG_TAG, "in ConnectFragment.onResume()");
+//        super.onResume();
+//    }
     private class Fragment_Handler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -140,20 +159,15 @@ public class ConnectFragment extends DynaFragment {
             switch (msg.what) {
                 case MessageType.DISCOVERED_SERVER_LIST_CHANGED:
                     Log.d(Consts.DEBUG_TAG, "in ConnectFragment.handleMessage() DISCOVERED_SERVER_LIST_CHANGED");
-                    //ignore changes made while Connect is not running
-//                    if (discoveredServerListAdapter!=null) {
                     discoveredServerListAdapter.notifyDataSetChanged();
-//                    } else {
-//                        Log.d(Consts.DEBUG_TAG, "discoveredServerListAdapter is null");
-//                    }
                     break;
-                case MessageType.CONNECTED:  //TODO: redraw the screen to reflect connectedness
-                    Log.d(Consts.DEBUG_TAG, "in ConnectFragment.handleMessage() CONNECTED");
-//                    if (discoveredServerListAdapter!=null) {
-                    discoveredServerListAdapter.notifyDataSetChanged();
-//                    } else {
-//                        Log.d(Consts.DEBUG_TAG, "discoveredServerListAdapter is null");
-//                    }
+                case MessageType.CONNECTED:
+                case MessageType.DISCONNECTED:
+                    Log.d(Consts.DEBUG_TAG, "in ConnectFragment.handleMessage() DIS/CONNECTED");
+                    SetConnectedMessage();
+                    if (mainApp.getServer() != null) {
+                        UpdateRecentServerList();
+                    }
                     break;
                 default:
                     Log.d(Consts.DEBUG_TAG, "in ConnectFragment.handleMessage() not handled");
@@ -161,5 +175,58 @@ public class ConnectFragment extends DynaFragment {
             super.handleMessage(msg);
         }
     }
+
+    private void SetConnectedMessage() {
+        View tv = view.findViewById(R.id.cf_footer);
+        if (tv != null) {
+            if (mainApp.getServer() == null) {
+                ((TextView)tv).setText("Not Connected");
+            } else {
+                String s = "Connected to " + mainApp.getServer() + ":" + mainApp.getWebPort() +
+                        "\nJMRI " + mainApp.getJmriVersion();
+
+                ((TextView)tv).setText(s);
+            }
+        }
+    }
+
+    private void UpdateRecentServerList() {
+        HashMap<String, String> hm=new HashMap<String, String>();
+        hm.put("ip_address", mainApp.getServer());
+        hm.put("host_name", mainApp.getServer());
+        hm.put("port", Integer.toString(mainApp.getWebPort()));
+        if(!recentConnectionsList.contains(hm)) {	// suppress dups
+            recentConnectionsList.add(hm);
+            recentConnectionsListAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public class connect_item implements AdapterView.OnItemClickListener {
+        //When an item is clicked, send request to connect to the selected IP address and port.
+        public void onItemClick(AdapterView<?> parent, View v, int position, long id)    {
+
+            ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
+            TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
+            String requestedHostIP = (String) hip.getText();
+//                    TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
+//                    connected_hostname = (String) hnv.getText();
+            TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
+            int requestedPort = Integer.valueOf((String) hpv.getText());
+            //don't connect to same server:port again
+            if (mainApp.getServer()!=null && mainApp.getServer().equals(requestedHostIP) && mainApp.getWebPort()== requestedPort) {
+                String s = "Already connected to " + requestedHostIP + ":" + requestedPort;
+                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.MESSAGE_SHORT, s);
+            } else {
+                View tv = view.findViewById(R.id.cf_footer);
+                if (tv != null) {
+                    ((TextView) tv).setText("New Connection requested.......");
+                }
+                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.CONNECT_REQUESTED,
+                        requestedHostIP, requestedPort);
+            }
+
+        };
+    }
+
 
 }

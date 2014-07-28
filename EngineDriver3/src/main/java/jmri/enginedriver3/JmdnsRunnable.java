@@ -59,7 +59,7 @@ class JmdnsRunnable implements Runnable {
         int intAddr = wifiinfo.getIpAddress();
         if (intAddr == 0) {  //must have a local address, else show error and don't start anything TODO: end the thread?
             Log.w(Consts.DEBUG_TAG, "No local IP address found!");
-            mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.LONG_MESSAGE, "ERROR: No local IP address found!");
+            mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.MESSAGE_LONG, "ERROR: No local IP address found!");
         } else {
             byte[] byteAddr = new byte[]{(byte) (intAddr & 0xff), (byte) (intAddr >> 8 & 0xff), (byte) (intAddr >> 16 & 0xff),
                     (byte) (intAddr >> 24 & 0xff)};
@@ -85,8 +85,8 @@ class JmdnsRunnable implements Runnable {
                         boolean entryExists = false;
                         //stop if new address is already in the list
                         HashMap<String, String> tm;
-                        for(int index=0; index < mainApp.discovered_servers_list.size(); index++) {
-                            tm = mainApp.discovered_servers_list.get(index);
+                        for(int index=0; index < mainApp.discoveredServersList.size(); index++) {
+                            tm = mainApp.discoveredServersList.get(index);
                             if (tm.get("ip_address").equals(ip_address)) {  //TODO: switch this back to host_name?  maybe?
                                 entryExists = true;
                                 break;
@@ -97,7 +97,7 @@ class JmdnsRunnable implements Runnable {
                             ds.put("ip_address", ip_address);
                             ds.put("port", ((Integer) port).toString());
                             ds.put("host_name", host_name);
-                            mainApp.discovered_servers_list.add(ds);
+                            mainApp.discoveredServersList.add(ds);
                             mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.DISCOVERED_SERVER_LIST_CHANGED);
                         }
                     }
@@ -108,10 +108,10 @@ class JmdnsRunnable implements Runnable {
                         //remove this name from the list (if found)
                         String host_name = ev.getInfo().getName();
                         HashMap<String, String> tm;
-                        for(int index=0; index < mainApp.discovered_servers_list.size(); index++) {
-                            tm = mainApp.discovered_servers_list.get(index);
+                        for(int index=0; index < mainApp.discoveredServersList.size(); index++) {
+                            tm = mainApp.discoveredServersList.get(index);
                             if (tm.get("host_name").equals(host_name)) {
-                                mainApp.discovered_servers_list.remove(index);
+                                mainApp.discoveredServersList.remove(index);
                                 break;
                             }
                         }
@@ -155,12 +155,16 @@ class JmdnsRunnable implements Runnable {
 
         @Override
         public void handleMessage(Message msg) {
-            Log.d(Consts.DEBUG_TAG, "in JmdnsRunnable.handleMessage()");
+//            Log.d(Consts.DEBUG_TAG, "in JmdnsRunnable.handleMessage()");
             switch (msg.what) {
                 case MessageType.SHUTDOWN:
                     stopJmdns();
-                    permaFragment.jmdnsRunnableHandler.getLooper().quit(); //stop the looper
+                    this.getLooper().quit(); //stop the looper
                     break;
+                default:
+                    Log.w(Consts.DEBUG_TAG, "in JmdnsRunnable.handleMessage() received unknown message type " + msg.what);
+                    break;
+
             }  //end of switch msg.what
             super.handleMessage(msg);
         }
