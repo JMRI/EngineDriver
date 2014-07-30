@@ -8,14 +8,21 @@ import android.os.Message;
 import android.os.Handler;
 import android.util.Log;
 
-
 public class MainApplication extends Application {
 
-	protected HashMap<Integer, DynaFragEntry> dynaFrags;
+	protected HashMap<Integer, DynaFragEntry> dynaFrags;  //this is built in this onCreate()  TODO:convert to get/set
 
     //store variables for use by the activity and all fragments
+    private MainActivity _mainActivity;
+    public MainActivity getMainActivity() {return _mainActivity;}
+    public void setMainActivity(MainActivity in_mainActivity) {this._mainActivity = in_mainActivity;}
 
-    public ArrayList<HashMap<String, String> > discoveredServersList;
+    private ArrayList<HashMap<String, String> > discoveredServersList;
+    public ArrayList<HashMap<String, String>> getDiscoveredServersList() {return discoveredServersList;}
+    public void setDiscoveredServersList(ArrayList<HashMap<String, String>> discoveredServersList) {
+        this.discoveredServersList = discoveredServersList;
+        if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.DISCOVERED_SERVER_LIST_CHANGED); //announce the change
+    }
 
 	//jmri server name (used for both WiThrottle and Web connections)	
 	private String _server = null;
@@ -30,20 +37,26 @@ public class MainApplication extends Application {
 	//JMRI web server port #	
 	private int _webPort = -1;
 	public int getWebPort() { return _webPort; }
-	public void setWebPort(int webPort) { _webPort = webPort; }
+	public void setWebPort(int in_webPort) { _webPort = in_webPort; }
 
-    public String getJmriTime() {return _jmriTime;}
-    public void setJmriTime(String jmriTime) {this._jmriTime = jmriTime;}
     private String _jmriTime = null;  //will be set by JmriWebSocket
+    public String getJmriTime() {return _jmriTime;}
+    public void setJmriTime(String in_jmriTime) {
+        this._jmriTime = in_jmriTime;
+        if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.JMRI_TIME_CHANGED); //send the time update
+    }
 
-    public String getPowerState() {return powerState;}
-    public void setPowerState(String powerState) {this.powerState = powerState;}
-    private String powerState = null;  //will be set by JmriWebSocket
+    private String _powerState = null;  //will be set by JmriWebSocket
+    public String getPowerState() {return _powerState;}
+    public void setPowerState(String in_powerState) {this._powerState = in_powerState;}
 
-    public String getJmriVersion() {return _jmriVersion;}
-    public void setJmriVersion(String jmriVersion) {this._jmriVersion = jmriVersion;}
     private String _jmriVersion = null;  //will be set by JmriWebSocket
+    public String getJmriVersion() {return _jmriVersion;}
+    public void setJmriVersion(String in_jmriVersion) {this._jmriVersion = in_jmriVersion;}
 
+    private int _jmriHeartbeat = Consts.INITIAL_HEARTBEAT;
+    public int getJmriHeartbeat() {return _jmriHeartbeat;}
+    public void setJmriHeartbeat(int in_jmriHeartbeat) {this._jmriHeartbeat = in_jmriHeartbeat;}
 
 //	public EngineDriver3Application() {
 //	}
@@ -120,6 +133,7 @@ public class MainApplication extends Application {
                 sent = h.sendMessageDelayed(msg, delayMs);
             }
             catch(Exception e) {
+                Log.d(Consts.DEBUG_TAG, "failed to send message of type " + msgType + " to " + h.getClass());
             }
             if(!sent)
                 msg.recycle();

@@ -24,8 +24,9 @@ import java.util.HashMap;
 
 public class ConnectFragment extends DynaFragment {
     private int started = 0;
-    private ArrayList<HashMap<String, String> > recentConnectionsList;
+    private ArrayList<HashMap<String, String> > recentConnectionsList;  //maintained locally, stored in prefs
     private SimpleAdapter recentConnectionsListAdapter;
+    private ArrayList<HashMap<String, String> > discoveredServersList;  //local copy of shared var
     private SimpleAdapter discoveredServerListAdapter;
     private MainActivity mainActivity = null;
 
@@ -70,19 +71,21 @@ public class ConnectFragment extends DynaFragment {
 
         //Set up a list adapter to present list of discovered WiThrottle servers to the UI.
         //this list is in mainapp, and managed by the jmdns thread
-        discoveredServerListAdapter =new SimpleAdapter(getActivity(), mainApp.discoveredServersList,
+        discoveredServersList = new ArrayList<HashMap<String, String> >(mainApp.getDiscoveredServersList());  //make a local copy
+        discoveredServerListAdapter =new SimpleAdapter(getActivity(), discoveredServersList,
                 R.layout.connections_list_item,
                 new String[] {"ip_address", "host_name", "port"},
                 new int[] {R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
         ListView dlv = (ListView) getActivity().findViewById(R.id.discovered_server_list);
         dlv.setAdapter(discoveredServerListAdapter);
         dlv.setOnItemClickListener(new connect_item());
+//        discoveredServerListAdapter.notifyDataSetChanged();
 
         //populate the recent list from sharedprefs, defaulting if needed.
         // this list is managed by this fragment, and stored in sharedprefs
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("ConnectFragment", Context.MODE_PRIVATE);
         String recentConnectionsListJson = sharedPreferences.getString("recent_connections_list_json",
-                "[{\"host_name\":\"jmri.mstevetodd.com\",\"port\":\"44444\",\"ip_address\":\"jmri.mstevetodd.com\"}]");
+                "[{\"host_name\":\"jmri.mstevetodd.com\",\"port\":\"1080\",\"ip_address\":\"jmri.mstevetodd.com\"}]");
 //        Log.d(Consts.DEBUG_TAG, recentConnectionsListJson);
         Gson gson = new Gson();
         recentConnectionsList = gson.fromJson(recentConnectionsListJson, new TypeToken<ArrayList<HashMap<String, String>>>() {}.getType());
@@ -159,6 +162,8 @@ public class ConnectFragment extends DynaFragment {
             switch (msg.what) {
                 case MessageType.DISCOVERED_SERVER_LIST_CHANGED:
                     Log.d(Consts.DEBUG_TAG, "in ConnectFragment.handleMessage() DISCOVERED_SERVER_LIST_CHANGED");
+                    discoveredServersList.clear();  //refresh the local copy, keeping same memory location for adapter
+                    discoveredServersList.addAll(mainApp.getDiscoveredServersList());
                     discoveredServerListAdapter.notifyDataSetChanged();
                     break;
                 case MessageType.CONNECTED:
@@ -183,7 +188,7 @@ public class ConnectFragment extends DynaFragment {
                 ((TextView)tv).setText("Not Connected");
             } else {
                 String s = "Connected to " + mainApp.getServer() + ":" + mainApp.getWebPort() +
-                        "\nJMRI " + mainApp.getJmriVersion();
+                        "\nver " + mainApp.getJmriVersion() + ", " + "heartbeat " + mainApp.getJmriHeartbeat() ;
 
                 ((TextView)tv).setText(s);
             }

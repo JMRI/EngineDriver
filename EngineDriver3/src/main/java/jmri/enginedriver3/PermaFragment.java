@@ -23,12 +23,12 @@ public class PermaFragment extends Fragment {
 
     private Thread  jmdnsRunnableThread = null;
     public Handler jmdnsRunnableHandler;  //this is set by the thread after startup
-    private Thread  debugRunnableThread = null;
-    public Handler debugRunnableHandler;  //this is set by the thread after startup
+    private Thread heartbeatRunnableThread = null;
+    public Handler heartbeatRunnableHandler;  //this is set by the thread after startup
     private Thread  webSocketRunnableThread = null;
     public Handler webSocketRunnableHandler;  //this is set by the thread after startup
 
-    protected MainActivity mainActivity = null;
+//    protected MainActivity mainActivity = null;
 
     PermaFragment permaFragment; //set in constructor
     Handler permaFragHandler = new PermaFrag_Handler();
@@ -39,7 +39,8 @@ public class PermaFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         Log.d(Consts.DEBUG_TAG, "in PermaFrag.onAttach()");
-        this.mainActivity = (MainActivity) activity;  //save ref to the new activity
+        mainApp =(MainApplication)getActivity().getApplication();  //set pointer to app
+        mainApp.setMainActivity((MainActivity) activity);  //save ref to the new activity
         super.onAttach(activity);
     }
 
@@ -48,13 +49,20 @@ public class PermaFragment extends Fragment {
         Log.d(Consts.DEBUG_TAG, "in PermaFrag.onCreate()");
         mainApp =(MainApplication)getActivity().getApplication();  //set pointer to app
 
+        //need to clear all shared variables, since app object may be reused
         //TODO: load from storage, once save is implemented
 //	    setServer("10.10.3.131");
 //	    setServer("192.168.1.247");
         mainApp.setServer(null);  //this will be set once connected, by the CommThread
 //        mainApp.setWiThrottlePort(0);
         mainApp.setWebPort(-1);
-        mainApp.discoveredServersList = new ArrayList<HashMap<String, String> >();
+        mainApp.setDiscoveredServersList(new ArrayList<HashMap<String, String> >());
+
+//        mainApp.setMainActivity(null);
+        mainApp.setJmriTime(null);
+        mainApp.setJmriHeartbeat(Consts.INITIAL_HEARTBEAT);
+        mainApp.setPowerState(null);
+        mainApp.setJmriVersion(null);
 
         super.onCreate(savedInstanceState);
     }
@@ -62,7 +70,7 @@ public class PermaFragment extends Fragment {
     @Override
     public void onDetach() {
         Log.d(Consts.DEBUG_TAG, "in PermaFrag.onDetach()");
-        this.mainActivity = null;  //remove ref to the old activity
+        mainApp.setMainActivity(null);  //remove ref to the old activity
         super.onDetach();
     }
     @Override
@@ -106,10 +114,10 @@ public class PermaFragment extends Fragment {
             jmdnsRunnableThread = new Thread(new JmdnsRunnable(this, mainApp)); //create thread, pass ref back to this fragment
             jmdnsRunnableThread.start();
         }
-        if (debugRunnableThread == null) {
-            Log.d(Consts.DEBUG_TAG, "starting the debugRunnableThread");
-            debugRunnableThread = new Thread(new DebugRunnable(this, mainApp)); //create thread, pass ref back to this fragment
-            debugRunnableThread.start();
+        if (heartbeatRunnableThread == null) {
+            Log.d(Consts.DEBUG_TAG, "starting the heartbeatRunnableThread");
+            heartbeatRunnableThread = new Thread(new HeartbeatRunnable(this, mainApp)); //create thread, pass ref back to this fragment
+            heartbeatRunnableThread.start();
         }
     }
 
@@ -120,10 +128,10 @@ public class PermaFragment extends Fragment {
             mainApp.sendMsg(jmdnsRunnableHandler, MessageType.SHUTDOWN);
             jmdnsRunnableThread = null;
         }
-        if (debugRunnableThread != null) {
-            Log.d(Consts.DEBUG_TAG, "ending the debugRunnableThread");
-            mainApp.sendMsg(debugRunnableHandler, MessageType.SHUTDOWN);
-            debugRunnableThread = null;
+        if (heartbeatRunnableThread != null) {
+            Log.d(Consts.DEBUG_TAG, "ending the heartbeatRunnableThread");
+            mainApp.sendMsg(heartbeatRunnableHandler, MessageType.SHUTDOWN);
+            heartbeatRunnableThread = null;
         }
         cancelWebSocketThread();
     }
@@ -146,7 +154,7 @@ public class PermaFragment extends Fragment {
                 case MessageType.CONNECT_REQUESTED:
                     Log.d(Consts.DEBUG_TAG, "in PermaFrag_Handler.handleMessage() CONNECT_REQUESTED");
                     //start websocket thread and let its success send CONNECTED
-                    if (webSocketRunnableThread != null) {  //one is started, shut it down, give it a chance to end, try again
+                    if (webSocketRunnableThread != null && webSocketRunnableThread.isAlive()) {  //one is started, shut it down, give it a chance to end, try again
                         Log.d(Consts.DEBUG_TAG, "webSocketRunnableThread already running, shutting down and retrying start");
                         mainApp.sendMsg(webSocketRunnableHandler, MessageType.SHUTDOWN);  //shut down running thread
                         mainApp.sendMsgDelayed(this, 1000, msg);  //delay to give shutdown time to run, then try again
@@ -172,8 +180,12 @@ public class PermaFragment extends Fragment {
                     mainApp.setWebPort(-1);
                     mainApp.setJmriVersion(null);
                     mainApp.setPowerState(null);
-                    if (mainActivity!=null) {
-                        mainApp.sendMsg(mainActivity.mainActivityHandler, msg);  //forward to activity
+                    mainApp.setJmriTime(null);
+                    mainApp.setJmriHeartbeat(Consts.INITIAL_HEARTBEAT);
+                    if (mainApp.getMainActivity()!=null) {
+                        mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, msg);  //forward to activity
+                        mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.POWER_STATE_CHANGED);
+                        mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.JMRI_TIME_CHANGED);
                     }
                     break;
                 //simply forward these along to activity
@@ -181,11 +193,19 @@ public class PermaFragment extends Fragment {
                 case MessageType.MESSAGE_SHORT:
                 case MessageType.DISCOVERED_SERVER_LIST_CHANGED:
                 case MessageType.CONNECTED:
-                case MessageType.HEARTBEAT:
                 case MessageType.POWER_STATE_CHANGED:
                 case MessageType.JMRI_TIME_CHANGED:
-                    if (mainActivity!=null) {
-                        mainApp.sendMsg(mainActivity.mainActivityHandler, msg);
+                    if (mainApp.getMainActivity()!=null) {
+                        mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, msg);
+                    }
+                    break;
+                //forward heartbeat to websocketthread and to activity
+                case MessageType.HEARTBEAT:
+                    if (mainApp.getMainActivity()!=null) {
+                        mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, msg);
+                    }
+                    if (webSocketRunnableHandler!=null) {
+                        mainApp.sendMsg(webSocketRunnableHandler, msg);
                     }
                     break;
 

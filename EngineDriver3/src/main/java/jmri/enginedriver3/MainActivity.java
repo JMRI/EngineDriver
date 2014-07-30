@@ -25,6 +25,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     private PermaFragment permaFrag = null;  //created in activity.onCreate()
     public MainActivity_Handler mainActivityHandler = null;  //set in this.onCreate()
     private FragmentManager fragmentManager = null;  //set in this.onCreate()
+    public ActionBar actionBar = null;
 
     //this creates the permafrag the first time, then finds it on subsequent creates
     //  also setups the actionbar
@@ -37,7 +38,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         setContentView(R.layout.main_activity);
         viewPager = (ViewPager) findViewById(R.id.mainActivityPager);
         mainApp = (MainApplication) getApplication();
-        final ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
 
         //create (or find) the nonUI fragment to handle all threads and updates
         if (savedInstanceState == null) {
@@ -58,8 +59,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 //            actionBar.setDisplayShowTitleEnabled(true);
         }
 
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         addTabs(actionBar);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         pagerAdapter = new ED3PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
@@ -194,7 +195,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 case MessageType.MESSAGE_SHORT:
                     Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     break;
-                case MessageType.JMRI_TIME_CHANGED:  //TODO: do something with these
+                case MessageType.JMRI_TIME_CHANGED:
+                    actionBar.setSubtitle(mainApp.getJmriTime());
+                    break;
                 case MessageType.HEARTBEAT:
                 case MessageType.POWER_STATE_CHANGED:
                     break;

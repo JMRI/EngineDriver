@@ -12,7 +12,7 @@
         <entry key="$PROJECT_DIR$">
           <value>
             <SvnBranchConfiguration>
-              <option name="trunkUrl" value="" />
+              <option name="trunkUrl" value="https://svn.code.sf.net/p/jmri/code/branches/EngineDriver/EngineDriver3" />
             </SvnBranchConfiguration>
           </value>
         </entry>

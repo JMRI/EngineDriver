@@ -8,6 +8,7 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.jmdns.JmDNS;
@@ -25,8 +26,8 @@ class JmdnsRunnable implements Runnable {
     private MainApplication mainApp;
     //        private Activity activity = null;  //this is now in the outer class
     //    private String jmdnsType = "_workstation._tcp.local.";
-//    private String jmdnsType = "_http._tcp.local.";
-    private String jmdnsType = "_withrottle._tcp.local.";
+    private String jmdnsType = "_http._tcp.local.";
+//    private String jmdnsType = "_withrottle._tcp.local.";
     private JmDNS jmdns = null;
     private ServiceListener listener = null;
     private ServiceInfo serviceInfo;
@@ -44,15 +45,15 @@ class JmdnsRunnable implements Runnable {
         Log.d(Consts.DEBUG_TAG, "starting JmdnsRunnable.run()");
         Looper.prepare();
         permaFragment.jmdnsRunnableHandler = new Jmdns_Handler();  //update ref to thread's handler back in retained frag
-        startJmdns();
+        startJmdnsListeners();
         Looper.loop();
         Log.d(Consts.DEBUG_TAG, "ending JmdnsRunnable.run()");
     }
 
-    private void startJmdns() {
-        Log.d(Consts.DEBUG_TAG, "Starting Jmdns listeners");
-        android.net.wifi.WifiManager wifi = (android.net.wifi.WifiManager) permaFragment.mainActivity.getSystemService(android.content.Context.WIFI_SERVICE);
-        multicastLock = wifi.createMulticastLock("engine_driver");
+    private void startJmdnsListeners() {
+        Log.d(Consts.DEBUG_TAG, "Starting JmdnsListeners");
+        android.net.wifi.WifiManager wifi = (android.net.wifi.WifiManager) mainApp.getMainActivity().getSystemService(android.content.Context.WIFI_SERVICE);
+        multicastLock = wifi.createMulticastLock(Consts.DEBUG_TAG);
         multicastLock.setReferenceCounted(true);
         multicastLock.acquire();
         WifiInfo wifiinfo = wifi.getConnectionInfo();
@@ -66,7 +67,7 @@ class JmdnsRunnable implements Runnable {
             try {
                 Inet4Address deviceAddr = (Inet4Address) Inet4Address.getByAddress(byteAddr);
                 String deviceName = deviceAddr.toString().substring(1);        //strip off leading /
-                Log.d(Consts.DEBUG_TAG, "startJmdns with local IP " + deviceName);
+                Log.d(Consts.DEBUG_TAG, "startJmdnsListeners with local IP " + deviceName);
                 jmdns = JmDNS.create(deviceAddr, deviceName);  //pass ip as name to avoid hostname lookup attempt
                 jmdns.addServiceListener(jmdnsType, listener = new ServiceListener() {
 
@@ -82,23 +83,25 @@ class JmdnsRunnable implements Runnable {
                         Inet4Address[] ip_addresses = ev.getInfo().getInet4Addresses();  //only get ipV4 address
                         String ip_address = ip_addresses[0].toString().substring(1);  //use first one, since WiThrottle is only putting one in (for now), and remove leading slash
 
-                        boolean entryExists = false;
+                        ArrayList<HashMap<String, String> > dsl = mainApp.getDiscoveredServersList();  //make a copy to work on
+
                         //stop if new address is already in the list
+                        boolean entryExists = false;
                         HashMap<String, String> tm;
-                        for(int index=0; index < mainApp.discoveredServersList.size(); index++) {
-                            tm = mainApp.discoveredServersList.get(index);
+                        for(int index=0; index < dsl.size(); index++) {
+                            tm = dsl.get(index);
                             if (tm.get("ip_address").equals(ip_address)) {  //TODO: switch this back to host_name?  maybe?
                                 entryExists = true;
                                 break;
                             }
                         }
-                        if(!entryExists) {                // if new host, add to global list and shout about it
+                        if(!entryExists) {                // if new host, add to global list
                             HashMap<String, String> ds=new HashMap<String, String>();
                             ds.put("ip_address", ip_address);
                             ds.put("port", ((Integer) port).toString());
                             ds.put("host_name", host_name);
-                            mainApp.discoveredServersList.add(ds);
-                            mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.DISCOVERED_SERVER_LIST_CHANGED);
+                            dsl.add(ds);
+                            mainApp.setDiscoveredServersList(dsl);  //replace the shared one and shout about it
                         }
                     }
 
@@ -107,15 +110,16 @@ class JmdnsRunnable implements Runnable {
                         Log.d(Consts.DEBUG_TAG, "Service removed: " + ev.getName());
                         //remove this name from the list (if found)
                         String host_name = ev.getInfo().getName();
+                        ArrayList<HashMap<String, String> > dsl = mainApp.getDiscoveredServersList();  //make a copy to work on
                         HashMap<String, String> tm;
-                        for(int index=0; index < mainApp.discoveredServersList.size(); index++) {
-                            tm = mainApp.discoveredServersList.get(index);
+                        for(int index=0; index < dsl.size(); index++) {
+                            tm = dsl.get(index);
                             if (tm.get("host_name").equals(host_name)) {
-                                mainApp.discoveredServersList.remove(index);
+                                dsl.remove(index);
+                                mainApp.setDiscoveredServersList(dsl);  //share the modified one
                                 break;
                             }
                         }
-                        mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.DISCOVERED_SERVER_LIST_CHANGED);
                     }
 
                     @Override

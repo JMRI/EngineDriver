@@ -8,11 +8,11 @@
         revision="20.0.0"
         sha1="5f62bc6117f905fd37955f6e2ebd3aad68701b60"/>
     <item
-        dex="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\pre-dexed\debug\jmdns-3.4.1-a33049bda497f8ad80d473bfce300d125594d8cb.jar"
-        jar="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\libs\jmdns-3.4.1.jar"
+        dex="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\pre-dexed\debug\jmdns-3.4.2-r353-1-111698397c1a493bad3a6172bb0af7583ee8bca3.jar"
+        jar="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\libs\jmdns-3.4.2-r353-1.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="7ba2dcf7effb5ca9b00736b2a066fff3dd01d432"/>
+        sha1="f537032655fe983faaa05814f482129b06dd4b62"/>
     <item
         dex="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\build\intermediates\pre-dexed\debug\gson-2.2.4-0b5c743282e7e1c9d6b371aa0269c85ffd1ce42e.jar"
         jar="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\libs\gson-2.2.4.jar"

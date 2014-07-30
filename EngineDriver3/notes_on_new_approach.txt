@@ -6,12 +6,12 @@ single activity with multiple dynafrags:
 the activity will be recreated on rotation.  its job is simply to
   set up the tabs, dynafrags and the permafrag
 all inter-process comm is via handler messages, to allow for queuing
-application object has getters and setters for shared entities (maybe?)
+application object has getters and setters for shared entities
+shared variable setters should send "xx_CHANGED" messages to the activity,
+  which can forward to any active dynafrags or the permafrag which need to see it
 each dynafrag should handle its own preferences, and remember them
 persistent storage will be sharedpreferences, storing json strings for objects
 permafrag is not recreated on rotation, only first time activity starts
-permafrag should send "xx_CHANGED" messages to the activity,
-  which can forward to any active dynafrags which need to see it
 permafrag is the only one who starts, talks to, or stops the threads
 some threads are continuous, some end when they've finished their update
 some threads allowed to update shared entities directly, clearly document these
@@ -34,20 +34,20 @@ steps:
 9) add a PermaFragment to handle all async stuff
 10) add LONG_MESSAGE and SHORT_MESSAGE messages, for showing as toast by activity
 11) create and manage jmdns thread for jmdns listeners
-) add Connect fragment, to simply set the server name, to be used by web fragments
-) figure out how to send the new server name to activity, and how to forward on to all "interested" fragments
-) add jmdns listeners, updating discovered list in Connect fragment.
+12) add Connect fragment
+13) figure out how to send the new server name to activity, and how to forward on to all "interested" fragments
+14) add jmdns listeners, updating discovered list in Connect fragment.
+15) add initial websocket reader/writer
 ) have web fragments refresh on CONNECTED
+) replace Turnout and Route webviewFragments with listFragments,
 ) add refresh button to web fragments
 ) add settings icon to each fragment, (dropping hard-coded urls) and deal with persistent storage.
 ) add mechanism to add new fragments and delete unneeded ones.  fragment list+settings should be restored on app start.
-) add initial socket reader/writer.  (re)position to Connect when no connection, Determine if Application object should "own" these async tasks, vs. fragment or activity.  Determine if handler is still the best way to communicate with them.
 ) add proper throttle fragment (hard-coded address), get communication working
 ) add address/roster selection/entry dialog (determine if activity or fragment or popup dialog, or whatever)
 ) add background roster details retrieval (maybe using json server?)
 ) determine if various throttle "flavors" should be settings for a single fragment type, or multiple fragment types.
 ) add additional throttle flavors
-) replace Turnout and Route webviewFragments with listFragments,
 ) enable webfrag's back button, remember url and zoom
 ) make webfrag width a pref
 ) prompt for app exit on back
@@ -59,12 +59,14 @@ things to "improve" from ED 2.x
 more flexible UI to take advantage of screen real estates
 use nonUIFragment to handle activity restarts on rotation
 use tabbed sliders for navigation
-use database instead of text file storage
+use database instead of text file storage (or even better, json sharedprefs)
 use Service for comm stuff (maybe not?)
 use json server in addition to (or instead of) withrottle server
 cleanup/rethink thread structure, use fewer patterns
 loss of connection should be more obvious
 move code into separate members whenever possible, vs. adding everything to TA and mainapp
+improve jmdns discovery, including on quick exit and restart
+
 
 document old structure:
 ta.onCreate starts comm_thread
@@ -86,13 +88,13 @@ minSDK is 8 due to AutoBahn WebSocket library
 
 Shared objects:
 discovered server list (maintained by jmdns thread, read only by ConnectFrag)
-current connection and ports (null if not connected) (maintained by new commthread)
+current connection and ports (null if not connected) (maintained by websocket thread and permafrag)
 turnout list with states
 route list with states
 roster list with details
-layout power state
-metadata (jmri version, etc.) (maintained by short-term thread, started on CONNECTED)
-fast clock time (maintained by new clockthread, read by multiple threads on CLOCK_UPDATE)
+layout power state (maintained by websocket thread, read by activity on POWER_STATE_CHANGED)
+metadata (jmri version, etc.) (already in websocket hello message, just store)
+fast clock time (maintained by websocket thread, read by activity on JMRI_TIME_CHANGED)
 recent locos list (maintained by all ThrottleFrags, stored in sharedprefs)
 
 Not Shared objects:

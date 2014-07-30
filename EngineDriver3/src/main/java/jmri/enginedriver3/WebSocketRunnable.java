@@ -59,21 +59,29 @@ class WebSocketRunnable implements Runnable {
     }
 
     private class WebSocketRunnableHandler extends Handler {
+        final String pingJsonString = "{\"type\":\"ping\",\"data\":{}}";
 
         @Override
         public void handleMessage(Message msg) {
 //            Log.d(Consts.DEBUG_TAG, "in WebSocketRunnable.handleMessage()");
             switch (msg.what) {
                 case MessageType.SHUTDOWN:
+                    Log.d(Consts.DEBUG_TAG, "in WebSocketRunnable.handleMessage() SHUTDOWN");
                     getLooper().quit(); //stop the looper
                     break;
-                //this is received when already connected, and user asks for another server
-                case MessageType.CONNECT_REQUESTED:
-                    Log.d(Consts.DEBUG_TAG, "in WebSocketRunnable.handleMessage() CONNECT_REQUESTED");
-                    requestedServer = msg.obj.toString();  //set requested vars from msg
-                    requestedWebPort = msg.arg1;
-                    jmriWebSocket.connect();
+                case MessageType.HEARTBEAT:
+//                    Log.d(Consts.DEBUG_TAG, "in WebSocketRunnable.handleMessage() HEARTBEAT");
+                    try {
+                        jmriWebSocket.webSocketConnection.sendTextMessage(pingJsonString);
+                    } catch (Exception e) {}  //if anything bad happens here, just ignore it
                     break;
+                //this is received when already connected, and user asks for another server
+//                case MessageType.CONNECT_REQUESTED:
+//                    Log.d(Consts.DEBUG_TAG, "in WebSocketRunnable.handleMessage() CONNECT_REQUESTED");
+//                    requestedServer = msg.obj.toString();  //set requested vars from msg
+//                    requestedWebPort = msg.arg1;
+//                    jmriWebSocket.connect();
+//                    break;
                 default:
                     Log.w(Consts.DEBUG_TAG, "in WebSocketRunnable.handleMessage() received unknown message type " + msg.what);
                     break;
@@ -102,7 +110,7 @@ class WebSocketRunnable implements Runnable {
 
         @Override
         public void onTextMessage(String msgString) {
-            Log.d(Consts.DEBUG_TAG,"JmriWebSocket got a msg " + msgString);
+//            Log.d(Consts.DEBUG_TAG,"JmriWebSocket got a msg " + msgString);
             final String sClockMemoryName = "IMCURRENTTIME";
             int displayClockHrs = 0;
             final SimpleDateFormat sdf12 = new SimpleDateFormat("h:mm a");
@@ -110,44 +118,45 @@ class WebSocketRunnable implements Runnable {
             try {
                 JSONObject msgJsonObject = new JSONObject(msgString);
                 String type = msgJsonObject.getString("type");
-                JSONObject data = msgJsonObject.getJSONObject("data");
                 if (type.equals("hello")) {
                     Log.d(Consts.DEBUG_TAG,"hello message received, data=" + msgJsonObject.getString("data"));
-                    mainApp.setServer(requestedServer);
-//                    mainApp.setWiThrottlePort(msg.arg1);
+                    JSONObject data = msgJsonObject.getJSONObject("data");
+                    mainApp.setServer(requestedServer);  //update shared vars now that we know we're connected
                     mainApp.setWebPort(requestedWebPort);
                     mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.CONNECTED);
-                    //TODO: put these values into shared variables
+                    //put other values into shared variables for later use
                     mainApp.setJmriVersion(data.getString("JMRI"));
+                    mainApp.setJmriHeartbeat(data.getInt("heartbeat"));
                 } else if (type.equals("power")) {
+                    JSONObject data = msgJsonObject.getJSONObject("data");
                     Log.d(Consts.DEBUG_TAG, "power=" + data.getString("state"));
                     if (mainApp.getPowerState()==null
                             || !mainApp.getPowerState().equals(data.getString("state"))) {
                         mainApp.setPowerState(data.getString("state"));
                         mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.POWER_STATE_CHANGED);
                     }
+                } else if (type.equals("pong")) {
+//                    Log.d(Consts.DEBUG_TAG, "pong");
                 } else if (type.equals("memory")) {
+                    JSONObject data = msgJsonObject.getJSONObject("data");
                     Log.d(Consts.DEBUG_TAG,"memory rcvd, name=" + data.getString("name") +
                             ", value=" + data.getString("value"));
                     //is it a clock update?, if so, format, set the shared var, and shout about it
                     if(sClockMemoryName.equals(data.getString("name"))) {
                         String currentTime = data.getString("value");
                         if(currentTime.length() > 0) {
-                            String newTime;
                             try {  //TODO: add pref for format
                                 if(currentTime.indexOf("M") < 0) {			// no AM or PM - in 24 hr format
                                     if(displayClockHrs == 1) {				// display in 12 hr format
-                                        newTime = sdf12.format(sdf24.parse(currentTime));
-                                        mainApp.setJmriTime(newTime);
+                                        currentTime = sdf12.format(sdf24.parse(currentTime));
                                     }
                                 } else {									// in 12 hr format
                                     if(displayClockHrs == 2) {				// display in 24 hr format
-                                        newTime = sdf24.format(sdf12.parse(currentTime));
-                                        mainApp.setJmriTime(newTime);
+                                        currentTime = sdf24.format(sdf12.parse(currentTime));
                                     }
                                 }
                             } catch (ParseException e) { }
-                        mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.JMRI_TIME_CHANGED); //send the time update
+                            mainApp.setJmriTime(currentTime);
                         }
                     }
                 } else {

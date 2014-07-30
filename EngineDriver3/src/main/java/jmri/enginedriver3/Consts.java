@@ -28,7 +28,9 @@ public final class Consts  {
    Useful for {@link String} operations, which return an index of <tt>-1</tt> when 
    an item is not found. 
 	 */
-	public static final int NOT_FOUND = -1;
+    public static final int NOT_FOUND = -1;
+
+    public static final int INITIAL_HEARTBEAT = 5000;
 
 	/** System property - <tt>line.separator</tt>*/
 	public static final String NEW_LINE = System.getProperty("line.separator");
