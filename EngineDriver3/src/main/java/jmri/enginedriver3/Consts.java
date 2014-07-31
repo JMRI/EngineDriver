@@ -8,9 +8,11 @@ package jmri.enginedriver3;
 public final class Consts  {
 
 	public static final String DEBUG_TAG = "EngineDriver3";
+
 	public static final String WEB = "web";
 	public static final String LIST = "list";
-	public static final String THROTTLE = "throttle";
+    public static final String THROTTLE = "throttle";
+    public static final String TURNOUT = "turnout";
 	public static final String CONNECT = "connect";
 	public static final String PREFS = "prefs";
 	

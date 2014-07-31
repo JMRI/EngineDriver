@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <TextView
+        android:id="@+id/turnouts_list_label"
+        style="@style/small_heading_style"
+        android:text="@string/turnouts_list_label" />
+    <ListView
+        android:id="@+id/turnouts_list"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp" >
+    </ListView>
+    <TextView
+        android:id="@+id/to_footer"
+        style="@style/floating_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/none" />
+</LinearLayout>

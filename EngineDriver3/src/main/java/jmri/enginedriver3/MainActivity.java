@@ -1,5 +1,6 @@
 package jmri.enginedriver3;
 
+
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
@@ -140,6 +141,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 DynaListFragment f = null;
                 f = DynaListFragment.newInstance(position, t, n);
                 return f;
+            } else if (t == Consts.TURNOUT) {
+                TurnoutsFragment f = null;
+                f = TurnoutsFragment.newInstance(position, t, n);
+                return f;
             } else if (t == Consts.CONNECT) {
                 ConnectFragment f = null;
                 f = ConnectFragment.newInstance(position, t, n);
@@ -170,22 +175,32 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 //            Log.d(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage()");
             switch (msg.what) {
                 case MessageType.DISCOVERED_SERVER_LIST_CHANGED:  //forward this only to the Connect fragment
-                    int cfPos = 2; //TODO: don't hard-code the 2
-                    if (mainApp.dynaFrags.get(cfPos).getHandler() != null) {  //skip fragment if not active
-                        mainApp.sendMsg(mainApp.dynaFrags.get(cfPos).getHandler(), msg);
-//                    } else {
-//                        Log.d(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage() DISCOVERED_SERVER_LIST_CHANGED not forwarded");
+                    for (int i = 0; i < mainApp.dynaFrags.size(); i++) {
+                        Handler fh = mainApp.dynaFrags.get(i).getHandler();
+                        if (fh != null && mainApp.dynaFrags.get(i).getType().equals(Consts.CONNECT)) {
+                            mainApp.sendMsg(fh, msg);
+                        }
                     }
                     break;
-                case MessageType.CONNECT_REQUESTED:  //forward this only to PermaFrag to attempt connection
+                case MessageType.TURNOUT_CHANGE_REQUESTED:  //forward these only to PermaFrag for processing
+                case MessageType.CONNECT_REQUESTED:
 //            Log.d(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage() CONNECT_REQUESTED");
                     mainApp.sendMsg(permaFrag.permaFragHandler, msg);
                     break;
                 case MessageType.CONNECTED:    //forward these to all active fragments
                 case MessageType.DISCONNECTED:
                     for (int i = 0; i < mainApp.dynaFrags.size(); i++) {
-                        if (mainApp.dynaFrags.get(i).getHandler() != null) {  //skip fragment if not active
-                            mainApp.sendMsg(mainApp.dynaFrags.get(i).getHandler(), msg);
+                        Handler fh = mainApp.dynaFrags.get(i).getHandler();
+                        if (fh != null) {  //skip fragment if not active
+                            mainApp.sendMsg(fh, msg);
+                        }
+                    }
+                    break;
+                case MessageType.TURNOUTS_LIST_CHANGED:
+                    for (int i = 0; i < mainApp.dynaFrags.size(); i++) {
+                        Handler fh = mainApp.dynaFrags.get(i).getHandler();
+                        if (fh != null && mainApp.dynaFrags.get(i).getType().equals(Consts.TURNOUT)) {  //skip fragment if not active
+                            mainApp.sendMsg(fh, msg);
                         }
                     }
                     break;
@@ -196,16 +211,26 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     break;
                 case MessageType.JMRI_TIME_CHANGED:
-                    actionBar.setSubtitle(mainApp.getJmriTime());
+                case MessageType.RAILROAD_CHANGED:
+                    SetSubTitle();
                     break;
                 case MessageType.HEARTBEAT:
                 case MessageType.POWER_STATE_CHANGED:
                     break;
                 default:
-                    Log.w(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage() not handled");
+                    Log.w(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage() not handled: " + msg.what);
             }  //end of switch msg.what
             super.handleMessage(msg);
         }
+    }
+
+    private void SetSubTitle() {
+        String s = null;  //if neither populated, set to null to "erase" the line
+        if (mainApp.getRailroad()!=null || mainApp.getJmriTime()!=null) {
+            s = (mainApp.getRailroad() != null ? mainApp.getRailroad()+" - " : "") +
+                    (mainApp.getJmriTime() != null ? mainApp.getJmriTime() : "");
+        }
+        actionBar.setSubtitle(s);
     }
 
 

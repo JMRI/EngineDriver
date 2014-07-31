@@ -17,14 +17,21 @@ public class MainApplication extends Application {
     public MainActivity getMainActivity() {return _mainActivity;}
     public void setMainActivity(MainActivity in_mainActivity) {this._mainActivity = in_mainActivity;}
 
-    private ArrayList<HashMap<String, String> > discoveredServersList;
-    public ArrayList<HashMap<String, String>> getDiscoveredServersList() {return discoveredServersList;}
-    public void setDiscoveredServersList(ArrayList<HashMap<String, String>> discoveredServersList) {
-        this.discoveredServersList = discoveredServersList;
+    private ArrayList<HashMap<String, String> > _discoveredServersList;
+    public ArrayList<HashMap<String, String>> getDiscoveredServersList() {return _discoveredServersList;}
+    public void setDiscoveredServersList(ArrayList<HashMap<String, String>> in_discoveredServersList) {
+        this._discoveredServersList = in_discoveredServersList;
         if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.DISCOVERED_SERVER_LIST_CHANGED); //announce the change
     }
 
-	//jmri server name (used for both WiThrottle and Web connections)	
+    private ArrayList<HashMap<String, String> > _turnoutsList;
+    public ArrayList<HashMap<String, String>> getTurnoutsList() {return _turnoutsList;}
+    public void setTurnoutsList(ArrayList<HashMap<String, String>> in_turnoutsList) {
+        this._turnoutsList = in_turnoutsList;
+        if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.TURNOUTS_LIST_CHANGED); //announce the change
+    }
+
+    //jmri server name (used for both WiThrottle and Web connections)
 	private String _server = null;
 	public String getServer() { return _server; }
 	public void setServer(String server) { _server = server; }
@@ -43,12 +50,22 @@ public class MainApplication extends Application {
     public String getJmriTime() {return _jmriTime;}
     public void setJmriTime(String in_jmriTime) {
         this._jmriTime = in_jmriTime;
-        if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.JMRI_TIME_CHANGED); //send the time update
+        if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.JMRI_TIME_CHANGED); //announce it
+    }
+
+    private String _railroad = null;  //will be set by JmriWebSocket
+    public String getRailroad() {return _railroad;}
+    public void setRailroad(String in_railroad) {
+        this._railroad = in_railroad;
+        if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.RAILROAD_CHANGED); //announce it
     }
 
     private String _powerState = null;  //will be set by JmriWebSocket
     public String getPowerState() {return _powerState;}
-    public void setPowerState(String in_powerState) {this._powerState = in_powerState;}
+    public void setPowerState(String in_powerState) {
+        this._powerState = in_powerState;
+        if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.POWER_STATE_CHANGED); //announce it
+    }
 
     private String _jmriVersion = null;  //will be set by JmriWebSocket
     public String getJmriVersion() {return _jmriVersion;}
@@ -88,7 +105,7 @@ public class MainApplication extends Application {
         tEntry.setData("/operations/trains");
         dynaFrags.put(fragKey++, tEntry);
 
-        tEntry = new DynaFragEntry("Turnouts", Consts.LIST, 1);
+        tEntry = new DynaFragEntry("Turnouts", Consts.TURNOUT, 2);
         dynaFrags.put(fragKey++, tEntry);
 
         Log.d(Consts.DEBUG_TAG,"end of ED3Application.onCreate()");

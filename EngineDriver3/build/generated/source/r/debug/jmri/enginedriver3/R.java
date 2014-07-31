@@ -954,7 +954,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f070015;
         public static final int action_menu_presenter=0x7f070016;
         public static final int action_mode_close_button=0x7f070024;
-        public static final int action_settings=0x7f07004a;
+        public static final int action_settings=0x7f070050;
         public static final int activity_chooser_view_content=0x7f070025;
         public static final int always=0x7f07000f;
         public static final int beginning=0x7f07000a;
@@ -1013,10 +1013,16 @@ containing a value of this type.
         public static final int submit_area=0x7f070039;
         public static final int tabMode=0x7f070002;
         public static final int title=0x7f07002b;
+        public static final int to_current_state_desc=0x7f07004e;
+        public static final int to_footer=0x7f07004b;
+        public static final int to_system_name=0x7f07004d;
+        public static final int to_user_name=0x7f07004c;
         public static final int top_action_bar=0x7f070020;
+        public static final int turnouts_list=0x7f07004a;
+        public static final int turnouts_list_label=0x7f070049;
         public static final int up=0x7f070021;
         public static final int useLogo=0x7f070003;
-        public static final int webview=0x7f070049;
+        public static final int webview=0x7f07004f;
         public static final int withText=0x7f070010;
     }
     public static final class integer {
@@ -1052,7 +1058,9 @@ containing a value of this type.
         public static final int list_fragment=0x7f03001a;
         public static final int main_activity=0x7f03001b;
         public static final int support_simple_spinner_dropdown_item=0x7f03001c;
-        public static final int web_fragment=0x7f03001d;
+        public static final int turnouts_fragment=0x7f03001d;
+        public static final int turnouts_item=0x7f03001e;
+        public static final int web_fragment=0x7f03001f;
     }
     public static final class menu {
         public static final int my=0x7f0c0000;
@@ -1142,10 +1150,11 @@ containing a value of this type.
         public static final int turnouts=0x7f0a0051;
         public static final int turnouts_direct_entry_label=0x7f0a0052;
         public static final int turnouts_label=0x7f0a0053;
-        public static final int turnouts_location_label=0x7f0a0054;
-        public static final int volume_indicator=0x7f0a0055;
-        public static final int web=0x7f0a0056;
-        public static final int yes=0x7f0a0057;
+        public static final int turnouts_list_label=0x7f0a0054;
+        public static final int turnouts_location_label=0x7f0a0055;
+        public static final int volume_indicator=0x7f0a0056;
+        public static final int web=0x7f0a0057;
+        public static final int yes=0x7f0a0058;
     }
     public static final class style {
         /**  Customize your theme here. 
@@ -1207,11 +1216,11 @@ containing a value of this type.
         public static final int Theme_Base_AppCompat_Dialog_FixedSize=0x7f0b0036;
         public static final int Theme_Base_AppCompat_Dialog_Light_FixedSize=0x7f0b0037;
         public static final int Theme_Base_AppCompat_DialogWhenLarge=0x7f0b0038;
-        public static final int Theme_Base_AppCompat_DialogWhenLarge_Base=0x7f0b0097;
+        public static final int Theme_Base_AppCompat_DialogWhenLarge_Base=0x7f0b0098;
         public static final int Theme_Base_AppCompat_Light=0x7f0b0039;
         public static final int Theme_Base_AppCompat_Light_DarkActionBar=0x7f0b003a;
         public static final int Theme_Base_AppCompat_Light_DialogWhenLarge=0x7f0b003b;
-        public static final int Theme_Base_AppCompat_Light_DialogWhenLarge_Base=0x7f0b0098;
+        public static final int Theme_Base_AppCompat_Light_DialogWhenLarge_Base=0x7f0b0099;
         public static final int Theme_Base_Light=0x7f0b003c;
         public static final int Widget_AppCompat_ActionBar=0x7f0b003d;
         public static final int Widget_AppCompat_ActionBar_Solid=0x7f0b003e;
@@ -1298,11 +1307,12 @@ containing a value of this type.
         public static final int floating_text_style=0x7f0b008f;
         public static final int fn_button_style=0x7f0b0090;
         public static final int large_button_style=0x7f0b0091;
-        public static final int list_id_style=0x7f0b0092;
-        public static final int list_item_style=0x7f0b0093;
-        public static final int normal_button_style=0x7f0b0094;
-        public static final int small_heading_style=0x7f0b0095;
-        public static final int stop_button_style=0x7f0b0096;
+        public static final int list_button_style=0x7f0b0092;
+        public static final int list_id_style=0x7f0b0093;
+        public static final int list_item_style=0x7f0b0094;
+        public static final int normal_button_style=0x7f0b0095;
+        public static final int small_heading_style=0x7f0b0096;
+        public static final int stop_button_style=0x7f0b0097;
     }
     public static final class styleable {
         /** Attributes that can be used with a ActionBar.

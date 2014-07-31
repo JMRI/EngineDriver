@@ -3,13 +3,19 @@ ConnectFragment:
   manual entry of address and port
   include last message in status line
   color-code status line (red for no connection, green for connected, etc.)
+  include the discovered host name in the recent list, instead of just the ip
+  remove leftover formatting from ED, replace with new look
+  if no discovered servers, show "No Items" label
 WebSocketRunnable:
   use heartbeat to kill "hung" connections (such as attempting to connect to the WiThrottle port)
+  don't show error message when connection is intentionally closed
 MainActivity:
   notification icon when backgrounded
   Make the tabs not pile up in landscape mode
 JmDNS listener:
-  use native Android listeners instead of JmDNS where supported
-  filter out/don't show (somehow) broadcasts which are not from a JMRI server
+  use native Android listeners instead of JmDNS on supported devices
+  don't show (somehow) broadcasts which are not from a JMRI server
+TurnoutsFragment:
+  show state descriptions instead of values
 
 

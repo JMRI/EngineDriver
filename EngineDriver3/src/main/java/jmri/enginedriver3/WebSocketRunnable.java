@@ -5,11 +5,18 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
@@ -75,13 +82,12 @@ class WebSocketRunnable implements Runnable {
                         jmriWebSocket.webSocketConnection.sendTextMessage(pingJsonString);
                     } catch (Exception e) {}  //if anything bad happens here, just ignore it
                     break;
-                //this is received when already connected, and user asks for another server
-//                case MessageType.CONNECT_REQUESTED:
-//                    Log.d(Consts.DEBUG_TAG, "in WebSocketRunnable.handleMessage() CONNECT_REQUESTED");
-//                    requestedServer = msg.obj.toString();  //set requested vars from msg
-//                    requestedWebPort = msg.arg1;
-//                    jmriWebSocket.connect();
-//                    break;
+                case MessageType.TURNOUT_CHANGE_REQUESTED:
+                    Log.d(Consts.DEBUG_TAG, "in WebSocketRunnable.handleMessage() TURNOUT_CHANGE_REQUESTED " + msg.obj.toString());
+//                    try {
+//                        jmriWebSocket.webSocketConnection.sendTextMessage(pingJsonString);
+//                    } catch (Exception e) {}  //if anything bad happens here, just ignore it
+                    break;
                 default:
                     Log.w(Consts.DEBUG_TAG, "in WebSocketRunnable.handleMessage() received unknown message type " + msg.what);
                     break;
@@ -97,9 +103,11 @@ class WebSocketRunnable implements Runnable {
         public void onOpen() {
             final String initialWebSocketRequest1 = "{\"type\":\"memory\",\"data\":{\"name\":\"IMCURRENTTIME\"}}";
             final String initialWebSocketRequest2 = "{\"type\":\"power\",\"data\":{}}";
+            final String initialWebSocketRequest3 = "{\"type\":\"list\",\"list\":\"turnouts\"}";
 //            displayClock = true;
             Log.d(Consts.DEBUG_TAG,"JmriWebSocket opened");
             try {
+                this.webSocketConnection.sendTextMessage(initialWebSocketRequest3);
                 this.webSocketConnection.sendTextMessage(initialWebSocketRequest1);  //TODO: improve this
                 this.webSocketConnection.sendTextMessage(initialWebSocketRequest2);
             } catch(Exception e) {
@@ -115,8 +123,44 @@ class WebSocketRunnable implements Runnable {
             int displayClockHrs = 0;
             final SimpleDateFormat sdf12 = new SimpleDateFormat("h:mm a");
             final SimpleDateFormat sdf24 = new SimpleDateFormat("HH:mm");
+            JSONObject msgJsonObject = null;
             try {
-                JSONObject msgJsonObject = new JSONObject(msgString);
+                msgJsonObject = new JSONObject(msgString);
+            } catch (JSONException e) {  //it may be array, try it
+                Log.d(Consts.DEBUG_TAG,"not a json object, is it a json array?");
+                try {
+                    JSONArray msgJsonArray = new JSONArray(msgString);
+                    if (msgJsonArray.length()<1) return;  //bail if nothing in the list
+                    String type = msgJsonArray.getJSONObject(0).getString("type");  //get type from first, all should be identical
+                    if (type.equals("turnout")) {
+                        ArrayList<HashMap<String, String>> tl = new ArrayList<HashMap<String, String>>();  //make a temp list to populate
+                        for (int i = 0; i < msgJsonArray.length(); i++) {
+                            JSONObject data = msgJsonArray.getJSONObject(i).getJSONObject("data");
+                            if (!data.getString("userName").equals("null")) {  //skip any without a username TODO:verify we still want to handle this this way
+                                HashMap<String, String> hm = new HashMap<String, String>();  //make a temp hashmap for a single entry
+                                hm.put("name", data.getString("name"));
+                                hm.put("userName", data.getString("userName"));
+                                hm.put("comment", data.getString("comment"));
+                                hm.put("inverted", data.getString("inverted"));
+                                hm.put("state", ((Integer) data.getInt("state")).toString());
+                                tl.add(hm);  //add this entry to the list
+                            }
+                        }
+                        mainApp.setTurnoutsList(tl);  //replace the shared var with the newly, populated one
+                        Log.d(Consts.DEBUG_TAG,"turnout list received containing " + tl.size() + " entries.");
+                    } else {
+                        Log.w(Consts.DEBUG_TAG,"array of type " + type + " received, but not supported");
+                    }
+                    return;
+                } catch (JSONException e1) {
+                    Log.d(Consts.DEBUG_TAG,"not a json array either.  ignoring");
+                    return;
+                }
+//                ArrayList<HashMap<String, String>> temp = gson.fromJson(msgString, new TypeToken<ArrayList<HashMap<String, String>>>() {}.getType());
+//                ArrayList<HashMap<String, String>> temp = gson.fromJson(msgString, new TypeToken<ArrayList<HashMap<String, String>>>() {}.getType());                return;
+//                return;
+            }
+            try {
                 String type = msgJsonObject.getString("type");
                 if (type.equals("hello")) {
                     Log.d(Consts.DEBUG_TAG,"hello message received, data=" + msgJsonObject.getString("data"));
@@ -126,6 +170,7 @@ class WebSocketRunnable implements Runnable {
                     mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.CONNECTED);
                     //put other values into shared variables for later use
                     mainApp.setJmriVersion(data.getString("JMRI"));
+                    mainApp.setRailroad(data.getString("railroad"));
                     mainApp.setJmriHeartbeat(data.getInt("heartbeat"));
                 } else if (type.equals("power")) {
                     JSONObject data = msgJsonObject.getJSONObject("data");
@@ -133,7 +178,6 @@ class WebSocketRunnable implements Runnable {
                     if (mainApp.getPowerState()==null
                             || !mainApp.getPowerState().equals(data.getString("state"))) {
                         mainApp.setPowerState(data.getString("state"));
-                        mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.POWER_STATE_CHANGED);
                     }
                 } else if (type.equals("pong")) {
 //                    Log.d(Consts.DEBUG_TAG, "pong");
@@ -162,8 +206,12 @@ class WebSocketRunnable implements Runnable {
                 } else {
                     Log.w(Consts.DEBUG_TAG,"JmriWebSocket, unexpected message received " + msgString);
                 }
-            } catch (JSONException e) {
-                Log.w(Consts.DEBUG_TAG,"JmriWebSocket, could not convert " + msgString);
+            } catch (JSONException e) {  //failed to find type, see if its an array instead
+//                try {
+//                    String type = msgJsonObject.getJSONArray("");
+//                } catch (JSONException e1) {
+//                    Log.w(Consts.DEBUG_TAG,"JmriWebSocket, unexpected message received " + msgString);
+//                }
             }
         }
 
@@ -171,7 +219,7 @@ class WebSocketRunnable implements Runnable {
         public void onClose(int code, String closeReason) {
             String s = "JmriWebSocket onClose(), code=" + code + ", reason=" + closeReason;
             Log.d(Consts.DEBUG_TAG,s);
-            mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.MESSAGE_LONG, s); //tell the user
+            mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.MESSAGE_LONG, s); //tell the user TODO:don't tell if intentional
             mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.DISCONNECTED); //tell the app
 //            permaFragment.webSocketRunnableHandler.getLooper().quit(); //stop the looper
         }

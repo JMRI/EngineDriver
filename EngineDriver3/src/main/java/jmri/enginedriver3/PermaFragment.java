@@ -60,9 +60,11 @@ public class PermaFragment extends Fragment {
 
 //        mainApp.setMainActivity(null);
         mainApp.setJmriTime(null);
+        mainApp.setRailroad(null);
         mainApp.setJmriHeartbeat(Consts.INITIAL_HEARTBEAT);
         mainApp.setPowerState(null);
         mainApp.setJmriVersion(null);
+        mainApp.setTurnoutsList(new ArrayList<HashMap<String, String> >());
 
         super.onCreate(savedInstanceState);
     }
@@ -181,6 +183,8 @@ public class PermaFragment extends Fragment {
                     mainApp.setJmriVersion(null);
                     mainApp.setPowerState(null);
                     mainApp.setJmriTime(null);
+                    mainApp.setRailroad(null);
+                    mainApp.setTurnoutsList(new ArrayList<HashMap<String, String> >());  //empty the list
                     mainApp.setJmriHeartbeat(Consts.INITIAL_HEARTBEAT);
                     if (mainApp.getMainActivity()!=null) {
                         mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, msg);  //forward to activity
@@ -197,6 +201,12 @@ public class PermaFragment extends Fragment {
                 case MessageType.JMRI_TIME_CHANGED:
                     if (mainApp.getMainActivity()!=null) {
                         mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, msg);
+                    }
+                    break;
+                //simply forward these along to websocket thread
+                case MessageType.TURNOUT_CHANGE_REQUESTED:
+                    if (webSocketRunnableHandler!=null) {
+                        mainApp.sendMsg(webSocketRunnableHandler, msg);
                     }
                     break;
                 //forward heartbeat to websocketthread and to activity
