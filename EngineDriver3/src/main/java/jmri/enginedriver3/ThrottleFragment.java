@@ -35,12 +35,12 @@ public class ThrottleFragment extends DynaFragment {
 		//choose the proper layout xml for this fragment's type
 		int rx = R.layout.list_fragment;  //use list for now  TODO: make throttle view layout
 		//inflate the proper layout xml and remember it in fragment
-		view = inflater.inflate(rx, container, false);  
-		View tv = view.findViewById(R.id.title);  //all fragment views currently have title element
+		fragmentView = inflater.inflate(rx, container, false);
+		View tv = fragmentView.findViewById(R.id.title);  //all fragment views currently have title element
 		if (tv != null) {
 			((TextView)tv).setText(getFragName() + " (" + getFragNum() + ")");
 		}
-		return view;
+		return fragmentView;
 	}
 
 }

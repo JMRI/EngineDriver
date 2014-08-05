@@ -84,12 +84,12 @@ public class WebFragment extends DynaFragment {
         //choose the proper layout xml for this fragment's type
         int rx = R.layout.web_fragment;
         //inflate the proper layout xml and remember it in fragment
-        view = inflater.inflate(rx, container, false);
-        View tv = view.findViewById(R.id.title);  //all fragment views currently have title element
+        fragmentView = inflater.inflate(rx, container, false);
+        View tv = fragmentView.findViewById(R.id.title);  //all fragment views currently have title element
         if (tv != null) {
             ((TextView) tv).setText(getFragName() + " (" + getFragNum() + ")");
         }
-        return view;
+        return fragmentView;
     }
 
     /**
@@ -107,7 +107,7 @@ public class WebFragment extends DynaFragment {
 
     private void loadWebView() {
         String currentUrl = getInitialUrl(); //initialize to fragment's url  //TODO: remember and restore
-        WebView webView = (WebView) view.findViewById(R.id.webview);
+        WebView webView = (WebView) fragmentView.findViewById(R.id.webview);
         if (!getInitialUrl().contains("://")) {  //if full path is set, show url, no need to wait for connect
             if (mainApp.getServer() == null) {   //no connection, show error page
                 currentUrl = "file:///android_asset/not_connected.html";
@@ -116,7 +116,7 @@ public class WebFragment extends DynaFragment {
             }
         }
 //		Log.d(Consts.DEBUG_TAG, "in WebFragment.onActivityCreated() setting url= " + _url);
-        View tv = view.findViewById(R.id.title);  //put the _url as the title TODO: remove this after testing
+        View tv = fragmentView.findViewById(R.id.title);  //put the _url as the title TODO: remove this after testing
         if (tv != null) {
             ((TextView) tv).setText(getFragName() + " (" + getFragNum() + ") " + currentUrl);
         }

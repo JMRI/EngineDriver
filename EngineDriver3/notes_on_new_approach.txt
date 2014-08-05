@@ -1,6 +1,3 @@
-[{"host_name":"jmri.mstevetodd.com","port":"44444","ip_address":"jmri.mstevetodd.com"},{"port":"1080","host_name":"192.168.1.110","ip_address":"192.168.1.110"},{"port":"1080","host_name":"jmri.mstevetodd.com","ip_address":"jmri.mstevetodd.com"},{"host_name":"192.168.1.194","port":"1080","ip_address":"192.168.1.194"},{"host_name":"192.168.1.110","port":"12080","ip_address":"192.168.1.110"}]
-[{"type":"turnout","data":{"name":"IT1","userName":"T1","comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"IT1_T1","userName":null,"comment":"T1 Lever","inverted":false,"state":2}},{"type":"turnout","data":{"name":"IT69","userName":null,"comment":"West Yard Crossover","inverted":false,"state":2}},{"type":"turnout","data":{"name":"IT70","userName":null,"comment":null,"inverted":false,"state":2}},{"type":"turnout","data":{"name":"IT73","userName":null,"comment":"East Main Crossover","inverted":false,"state":2}},{"type":"turnout","data":{"name":"IT75","userName":null,"comment":"Kaolin Spur","inverted":false,"state":0}},{"type":"turnout","data":{"name":"IT76","userName":null,"comment":"Engine Track 1","inverted":false,"state":0}},{"type":"turnout","data":{"name":"IT77","userName":null,"comment":"Engine Track 2","inverted":false,"state":0}},{"type":"turnout","data":{"name":"IT78","userName":null,"comment":"West Loop Spur","inverted":false,"state":0}},{"type":"turnout","data":{"name":"IT79","userName":null,"comment":"Kaolin Track 2","inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT1","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT2","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT3","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT4","userName":null,"comment":"","inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT5","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT6","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT7","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT8","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT9","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT10","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT11","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT12","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT13","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT14","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT15","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT16","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT17","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT18","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT19","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT20","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT21","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT22","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT23","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT24","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT25","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT26","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT27","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT28","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT29","userName":null,"comment":null,"inverted":false,"state":0}},{"type":"turnout","data":{"name":"LT30","userNam
-
 New approach:
 single activity with multiple dynafrags:
   exactly 1 of: prefs, connect, about
@@ -24,6 +21,7 @@ shared list of dynafrags is used by activity, each dynafrag backrefs its handler
   clears when not, so activity doesn't try to send messages to inactive frags
 dynafrags should do very little "work", mostly ui, nothing needing SHUTDOWN, consider them transient
 dynafrags should _read_ from shared variables, letting the permafrag handle all updates to them
+all comm with jmri is done via the json websocket server, including lists of items.
 
 steps:
 1) get single activity with multiple, similar "listview" fragments working at OS 3.0, and understand how fragment width works.
@@ -42,7 +40,7 @@ steps:
 14) add jmdns listeners, updating discovered list in Connect fragment.
 15) add initial websocket reader/writer
 16) have server-dependent web fragments rebuild on CONNECTED
-) replace Turnout and Route webviewFragments with listFragments,
+17) create Turnout and Route Fragments,
 ) add power button to title bar
 ) add refresh button to web fragments
 ) add settings icon to each fragment, (dropping hard-coded urls) and deal with persistent storage.
@@ -84,22 +82,24 @@ comm_thread.comm_handler starts/stops jmdns listener
 
 Notes:
 onSaveInstanceState can be used for fragments to "remember" what they were doing.
-fragments are transient, (except for Retained), which is why you avoid fragment to fragment comm
+fragments are very transient, (except for PermaFrag), which is why you avoid fragment to fragment comm
 the activity can "lookup" each fragment by position, this will build it (if needed)
-#13 shows setCommunicator(this)
+fragments update their handler ref, which activity uses to determine if fragment is alive or not
 not sure how best to handle Throttles in this new transient dynafrag world.
 minSDK is 8 due to AutoBahn WebSocket library
+listadapters are limited to fairly simple hashmaps, so the shared lists will be more robust, then copied to a
+  local list, sorted, filtered, etc. by the ui fragment.
 
 Shared objects:
 discovered server list (maintained by jmdns thread, read only by ConnectFrag)
 current connection and ports (null if not connected) (maintained by websocket thread and permafrag)
-turnout list with states
-route list with states
+turnout list with states, maintained by websocket thread, read only by TurnoutFragment
+route list with states, maintained by websocket thread, read only by RoutesFragment
 roster list with details
 layout power state (maintained by websocket thread, read by activity on POWER_STATE_CHANGED)
-metadata (jmri version, etc.) (already in websocket hello message, just store)
+metadata (jmri version, etc.) (stored on connection by websocket thread)
 fast clock time (maintained by websocket thread, read by activity on JMRI_TIME_CHANGED)
-recent locos list (maintained by all ThrottleFrags, stored in sharedprefs)
+recent locos list (one instance, maintained by all ThrottleFrags, stored in sharedprefs)
 
 Not Shared objects:
 recent server list (maintained by ConnectFrag, stored in sharedprefs)
@@ -113,6 +113,6 @@ Local: recentServersList
 TurnoutFrag:
 Reads: turnoutsList
 Sends: TURNOUT_CHANGE_REQUESTED
-Recvs: TURNOUT_CHANGED, TURNOUT_LIST_CHANGED, CONNECTED, DISCONNECTED
+Recvs: TURNOUT_LIST_CHANGED, TURNOUT_CHANGED (maybe)
 
 

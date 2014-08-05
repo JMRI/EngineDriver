@@ -59,9 +59,9 @@ public class ConnectFragment extends DynaFragment {
 		//choose the proper layout xml for this fragment's type
 		int rx = R.layout.connect_fragment;
 		//inflate the proper layout xml and remember it in fragment
-		view = inflater.inflate(rx, container, false);
+		fragmentView = inflater.inflate(rx, container, false);
 
-		return view;
+		return fragmentView;
 	}
     @Override
     public void onStart() {
@@ -182,7 +182,7 @@ public class ConnectFragment extends DynaFragment {
     }
 
     private void SetConnectedMessage() {
-        View tv = view.findViewById(R.id.cf_footer);
+        View tv = fragmentView.findViewById(R.id.cf_footer);
         if (tv != null) {
             if (mainApp.getServer() == null) {
                 ((TextView)tv).setText("Not Connected");
@@ -222,7 +222,7 @@ public class ConnectFragment extends DynaFragment {
                 String s = "Already connected to " + requestedHostIP + ":" + requestedPort;
                 mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.MESSAGE_SHORT, s);
             } else {
-                View tv = view.findViewById(R.id.cf_footer);
+                View tv = fragmentView.findViewById(R.id.cf_footer);
                 if (tv != null) {
                     ((TextView) tv).setText("New Connection requested.......");
                 }

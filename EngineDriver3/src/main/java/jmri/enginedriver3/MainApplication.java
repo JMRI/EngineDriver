@@ -1,5 +1,12 @@
 package jmri.enginedriver3;
-
+/*  MainApplication - this overrides Android's Application object, which is created once when an app starts.
+      Note: It may (or may not) be destroyed when all activities have ended.
+      ED3 will use this to store shared data to be accessed by various threads, fragments and the activity.
+      All variables should be private, accessed only by get(), .set() and helper functions.  The .set() functions are
+      also responsible for sending xx_UPDATED messages when variables change, to make sure interested objects are
+      informed of the changes.
+      This object will also house some utility functions, such as message handling.  (May move these to a separate class?)
+* */
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,13 +17,14 @@ import android.util.Log;
 
 public class MainApplication extends Application {
 
-	protected HashMap<Integer, DynaFragEntry> dynaFrags;  //this is built in this onCreate()  TODO:convert to get/set
+	protected HashMap<Integer, DynaFragEntry> dynaFrags;  //this is built in this.onCreate()  TODO:convert to get/set
 
     //store variables for use by the activity and all fragments
     private MainActivity _mainActivity;
     public MainActivity getMainActivity() {return _mainActivity;}
     public void setMainActivity(MainActivity in_mainActivity) {this._mainActivity = in_mainActivity;}
 
+    //list of discovered servers, maintained by jmdns runnable, read by ConnectFragment
     private ArrayList<HashMap<String, String> > _discoveredServersList;
     public ArrayList<HashMap<String, String>> getDiscoveredServersList() {return _discoveredServersList;}
     public void setDiscoveredServersList(ArrayList<HashMap<String, String>> in_discoveredServersList) {
@@ -24,24 +32,67 @@ public class MainApplication extends Application {
         if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.DISCOVERED_SERVER_LIST_CHANGED); //announce the change
     }
 
-    private ArrayList<HashMap<String, String> > _turnoutsList;
-    public ArrayList<HashMap<String, String>> getTurnoutsList() {return _turnoutsList;}
-    public void setTurnoutsList(ArrayList<HashMap<String, String>> in_turnoutsList) {
-        this._turnoutsList = in_turnoutsList;
-        if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.TURNOUTS_LIST_CHANGED); //announce the change
+    //list of roster entries, maintained by websocket thread
+    private HashMap<String, RosterEntry> _rosterEntryList;
+    public HashMap<String, RosterEntry> getRosterEntryList() {return _rosterEntryList;}
+    public void setRosterEntryList(HashMap<String, RosterEntry> in_rosterEntryList) {
+        this._rosterEntryList = in_rosterEntryList;
+        if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.ROSTERENTRY_LIST_CHANGED); //announce the change
     }
+
+    //list of defined turnouts, empty when disconnected
+    //key=system name of turnout, stores Turnout class
+    private HashMap<String, Turnout> _turnoutList;
+    public HashMap<String, Turnout> getTurnoutList() {return _turnoutList;}
+    public void setTurnoutList(HashMap<String, Turnout> in_turnoutList) {
+        this._turnoutList = in_turnoutList;
+        if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.TURNOUT_LIST_CHANGED); //announce the change
+    }
+    public Turnout getTurnout(String in_turnout) {  //helper function
+        return this._turnoutList.get(in_turnout);
+    }
+    public int getTurnoutState(String in_turnout) {  //helper function
+        return this._turnoutList.get(in_turnout).getState();
+    }
+    public void setTurnoutState(String in_turnout, int in_state) {  //helper function, also sends alert message
+        if (getTurnoutState(in_turnout) != in_state) { //don't do anything if already this state
+//            Log.d(Consts.DEBUG_TAG, "setTurnoutState(" + in_turnout + ", " + in_state +")");
+            this._turnoutList.get(in_turnout).setState(in_state);  //update just the state of this entry
+            if (_mainActivity != null)
+                sendMsg(_mainActivity.mainActivityHandler, MessageType.TURNOUT_LIST_CHANGED); //announce the change
+        }
+    }
+
+    //list of defined routes, empty when disconnected
+    //key=system name of turnout, stores Route class
+    private HashMap<String, Route> _routeList;
+    public HashMap<String, Route> getRouteList() {return _routeList;}
+    public void setRouteList(HashMap<String, Route> in_routeList) {
+        this._routeList = in_routeList;
+        if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.ROUTE_LIST_CHANGED); //announce the change
+    }
+    public Route getRoute(String in_route) {  //helper function
+        return this._routeList.get(in_route);
+    }
+    public int getRouteState(String in_route) {  //helper function
+        return this._routeList.get(in_route).getState();
+    }
+    public void setRouteState(String in_route, int in_state) {  //helper function, also sends alert message
+        if (getRouteState(in_route) != in_state) { //don't do anything if already this state
+//            Log.d(Consts.DEBUG_TAG, "setTurnoutState(" + in_turnout + ", " + in_state +")");
+            this._routeList.get(in_route).setState(in_state);  //update just the state of this entry
+            if (_mainActivity != null)
+                sendMsg(_mainActivity.mainActivityHandler, MessageType.ROUTE_LIST_CHANGED); //announce the change
+        }
+    }
+
 
     //jmri server name (used for both WiThrottle and Web connections)
 	private String _server = null;
 	public String getServer() { return _server; }
 	public void setServer(String server) { _server = server; }
 
-	//WiThrottle server port #	
-//	private int _wiThrottlePort = -1;
-//	public int getWiThrottlePort() { return _wiThrottlePort; }
-//	public void setWiThrottlePort(int wiThrottlePort) { _wiThrottlePort = wiThrottlePort; }
-
-	//JMRI web server port #	
+	//JMRI web server port #
 	private int _webPort = -1;
 	public int getWebPort() { return _webPort; }
 	public void setWebPort(int in_webPort) { _webPort = in_webPort; }

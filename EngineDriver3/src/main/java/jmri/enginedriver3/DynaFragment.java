@@ -1,6 +1,5 @@
 package jmri.enginedriver3;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -54,7 +53,7 @@ public class DynaFragment extends Fragment {
 	private String _fragName; //fragment's title
 	private String _fragType; //fragment's type (WEB, LIST,
 
-	protected View		view; //the view object for this fragment
+	protected View fragmentView; //the view object for this fragment
 	
 	public String getFragName() {
 		return _fragName;
@@ -115,12 +114,12 @@ public class DynaFragment extends Fragment {
 		//choose the proper layout xml for this fragment's type
 		int rx = R.layout.list_fragment;  //default to list for now
 		//inflate the proper layout xml and remember it in fragment
-		view = inflater.inflate(rx, container, false);  
-		View tv = view.findViewById(R.id.title);  //all fragment views currently have title element
+		fragmentView = inflater.inflate(rx, container, false);
+		View tv = fragmentView.findViewById(R.id.title);  //all fragment views currently have title element
 		if (tv != null) {
 			((TextView)tv).setText(getFragName() + " (" + getFragNum() + ")");
 		}
-		return view;
+		return fragmentView;
 	}
 	/**---------------------------------------------------------------------------------------------**
 	 * tells the fragment that its activity has completed its own Activity.onCreate().	 

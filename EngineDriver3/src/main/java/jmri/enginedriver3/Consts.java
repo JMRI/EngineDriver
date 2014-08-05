@@ -9,13 +9,22 @@ public final class Consts  {
 
 	public static final String DEBUG_TAG = "EngineDriver3";
 
-	public static final String WEB = "web";
+    public static final String ALL_FRAGMENTS = "all fragments";
+    public static final String WEB = "web";
 	public static final String LIST = "list";
     public static final String THROTTLE = "throttle";
     public static final String TURNOUT = "turnout";
+    public static final String ROUTE = "route";
 	public static final String CONNECT = "connect";
-	public static final String PREFS = "prefs";
-	
+    public static final String PREFS = "prefs";
+
+    public static final int STATE_CLOSED = 2;
+    public static final String STATE_CLOSED_DESC = "Closed";
+    public static final int STATE_THROWN = 4;
+    public static final String STATE_THROWN_DESC = "Thrown";
+    public static final int STATE_UNKNOWN = 0;
+    public static final String STATE_UNKNOWN_DESC = "???";
+
 	/** Opposite of {@link #FAILS}.  */
 	public static final boolean PASSES = true;
 	/** Opposite of {@link #PASSES}.  */
@@ -48,7 +57,18 @@ public final class Consts  {
 	public static final String PERIOD = ".";
 	public static final String DOUBLE_QUOTE = "\"";
 
-	// PRIVATE //
+    public static final String CLOCK_MEMORY_NAME = "IMCURRENTTIME";
+
+    public static final String JSON_REQUEST_TIME = "{\"type\":\"memory\",\"data\":{\"name\":\"IMCURRENTTIME\"}}";
+    public static final String JSON_REQUEST_POWER_STATE  = "{\"type\":\"power\",\"data\":{}}";
+    public static final String JSON_REQUEST_TURNOUT_LIST  = "{\"type\":\"list\",\"list\":\"turnouts\"}";
+    public static final String JSON_REQUEST_ROUTE_LIST  = "{\"type\":\"list\",\"list\":\"routes\"}";
+    public static final String JSON_REQUEST_ROSTER_LIST  = "{\"type\":\"list\",\"list\":\"roster\"}";
+    public static final String JSON_REQUEST_PING = "{\"type\":\"ping\",\"data\":{}}";
+
+
+
+    // PRIVATE //
 
 	/**
    The caller references the constants using <tt>Consts.EMPTY_STRING</tt>, 

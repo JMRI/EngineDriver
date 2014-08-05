@@ -77,13 +77,19 @@ class JmdnsRunnable implements Runnable {
                         if (ev.getInfo().getInetAddresses() != null && ev.getInfo().getInetAddresses().length > 0) {
                             additions = ev.getInfo().getInetAddresses()[0].getHostAddress();
                         }
+                        String jmriProperty= ev.getInfo().getPropertyString("jmri");  //this property is only set by a jmri server
+                        additions += " jmri=" + jmriProperty;
                         Log.d(Consts.DEBUG_TAG, "Service resolved: " + ev.getInfo().getQualifiedName() + " port:" + ev.getInfo().getPort() + " " + additions);
+
+                        //stop if this server isn't jmri
+                        if (jmriProperty==null) return;
+
                         int port=ev.getInfo().getPort();
                         String host_name = ev.getInfo().getName(); //
                         Inet4Address[] ip_addresses = ev.getInfo().getInet4Addresses();  //only get ipV4 address
                         String ip_address = ip_addresses[0].toString().substring(1);  //use first one, since WiThrottle is only putting one in (for now), and remove leading slash
 
-                        ArrayList<HashMap<String, String> > dsl = mainApp.getDiscoveredServersList();  //make a copy to work on
+                        ArrayList<HashMap<String, String>> dsl = new ArrayList<HashMap<String, String>>(mainApp.getDiscoveredServersList());  //make a copy to work on
 
                         //stop if new address is already in the list
                         boolean entryExists = false;
@@ -110,7 +116,7 @@ class JmdnsRunnable implements Runnable {
                         Log.d(Consts.DEBUG_TAG, "Service removed: " + ev.getName());
                         //remove this name from the list (if found)
                         String host_name = ev.getInfo().getName();
-                        ArrayList<HashMap<String, String> > dsl = mainApp.getDiscoveredServersList();  //make a copy to work on
+                        ArrayList<HashMap<String, String>> dsl = new ArrayList<HashMap<String, String>>(mainApp.getDiscoveredServersList());  //make a copy to work on
                         HashMap<String, String> tm;
                         for(int index=0; index < dsl.size(); index++) {
                             tm = dsl.get(index);

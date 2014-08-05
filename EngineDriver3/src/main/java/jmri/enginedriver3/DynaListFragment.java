@@ -35,12 +35,12 @@ public class DynaListFragment extends DynaFragment {
 //		Log.d(Consts.DEBUG_TAG, "in ListFragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 		//inflate the proper layout xml and remember it in fragment
 		int rx = R.layout.list_fragment;
-		view = inflater.inflate(rx, container, false);  
-		View tv = view.findViewById(R.id.title);  //all fragment views currently have title element
+		fragmentView = inflater.inflate(rx, container, false);
+		View tv = fragmentView.findViewById(R.id.title);  //all fragment views currently have title element
 		if (tv != null) {
 			((TextView)tv).setText(getFragName() + " (" + getFragNum() + ")");
 		}
-		return view;
+		return fragmentView;
 	}
 	/** tells the fragment that its activity has completed its own Activity.onCreate().
 	 *  Note: calls super.  Only override if additional processing is needed	 */
@@ -49,12 +49,12 @@ public class DynaListFragment extends DynaFragment {
 //		Log.d(Consts.DEBUG_TAG, "in ListFragment.onActivityCreated() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 		super.onActivityCreated(savedInstanceState);
 
-		ListView listview = (ListView) view.findViewById(R.id.listview);
+		ListView listview = (ListView) fragmentView.findViewById(R.id.listview);
 		int liid = android.R.layout.simple_list_item_1;  //use default layout and populate with some data
 		listview.setAdapter(new ArrayAdapter<String>(getActivity(), liid, sCheeseStrings));
 		listview.setOnItemClickListener(new viewlist_item());
 		//hide the empty message (since we know we put stuff into the good list above)
-		View ev = view.findViewById(android.R.id.empty);
+		View ev = fragmentView.findViewById(android.R.id.empty);
 		ev.setVisibility(View.GONE);
 	}
 

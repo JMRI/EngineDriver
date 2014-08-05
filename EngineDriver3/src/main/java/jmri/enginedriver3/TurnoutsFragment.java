@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -16,12 +15,15 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TurnoutsFragment extends DynaFragment {
     private int started = 0;
-    private ArrayList<HashMap<String, String> > turnoutsList;  //local copy of shared var
-    private SimpleAdapter turnoutsListAdapter;
+    private ArrayList<HashMap<String, String>> turnoutsListLocalCopy = new ArrayList<HashMap<String, String>>();  //local copy of shared var
+    private SimpleAdapter turnoutsListAdapter = null;
     private MainActivity mainActivity = null;
+
+    private int turnoutsListSavedPosition = 0;
 
     public TurnoutsFragment() {
     }
@@ -43,18 +45,22 @@ public class TurnoutsFragment extends DynaFragment {
 		return f;
 	}
 
-	/**---------------------------------------------------------------------------------------------**
+    /**---------------------------------------------------------------------------------------------**
 	 * inflate and populate the proper xml layout for this fragment type
 	 *    runs before activity starts, note does not call super		 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //		Log.d(Consts.DEBUG_TAG, "in TurnoutsFragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+
+        if (savedInstanceState!=null) { //restore saved scroll position, if saved
+            turnoutsListSavedPosition = savedInstanceState.getInt("turnoutsListSavedPosition", 0);
+        }
+
 		//choose the proper layout xml for this fragment's type
 		int rx = R.layout.turnouts_fragment;
 		//inflate the proper layout xml and remember it in fragment
-		view = inflater.inflate(rx, container, false);
-
-		return view;
+		fragmentView = inflater.inflate(rx, container, false);
+		return fragmentView;
 	}
     @Override
     public void onStart() {
@@ -63,9 +69,9 @@ public class TurnoutsFragment extends DynaFragment {
         Log.d(Consts.DEBUG_TAG, "in TurnoutsFragment.onStart() " + started);
 
         //Set up a list adapter to present list of turnouts to the UI.
-        //this list is in mainapp, and managed by the websocket thread
-        turnoutsList = new ArrayList<HashMap<String, String> >(mainApp.getTurnoutsList());  //make a local copy
-        turnoutsListAdapter =new SimpleAdapter(getActivity(), turnoutsList,
+        //uses local copy of the list in mainapp, which is managed by the websocket thread
+        RefreshLocalCopyOfTurnoutList();
+        turnoutsListAdapter =new SimpleAdapter(getActivity(), turnoutsListLocalCopy,
                 R.layout.turnouts_item,
                 new String[] {"userName", "name", "state"},
                 new int[] {R.id.to_user_name, R.id.to_system_name, R.id.to_current_state_desc}) {
@@ -84,12 +90,23 @@ public class TurnoutsFragment extends DynaFragment {
 
         ListView tlv = (ListView) getActivity().findViewById(R.id.turnouts_list);
         tlv.setAdapter(turnoutsListAdapter);
-//        tlv.setOnItemClickListener(new clicked_item());
+        tlv.setSelectionFromTop(turnoutsListSavedPosition, 0);  //position to saved position
 
-        //only set this when fragment is ready to receive messages
+        //set backref to this handler to indicate fragment is ready to receive messages from activity
         mainApp.dynaFrags.get(getFragNum()).setHandler(new Fragment_Handler());
 
         SetFooterMessage();
+    }
+
+    private void RefreshLocalCopyOfTurnoutList() {
+        turnoutsListLocalCopy.clear();  //MUST use same object, since adapter still looks at this one
+        for(Map.Entry<String, Turnout> entry: mainApp.getTurnoutList().entrySet()) {
+            HashMap<String, String> hm = new HashMap<String, String>();  //make a temp hashmap for a single entry
+            hm.put("name", entry.getValue().getSystemName());
+            hm.put("userName", entry.getValue().getUserName());
+            hm.put("state", getStateDesc(entry.getValue().getState()));
+            turnoutsListLocalCopy.add(hm);  //add this new entry to local list for adapter
+        }
     }
 
     @Override
@@ -102,6 +119,10 @@ public class TurnoutsFragment extends DynaFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        //save scroll position for later resume
+        ListView lv=(ListView) fragmentView.findViewById(R.id.turnouts_list);
+        int turnoutsListSavedPosition = lv.getFirstVisiblePosition();
+        outState.putInt("turnoutsListSavedPosition", turnoutsListSavedPosition);
     }
 
     @Override
@@ -121,10 +142,9 @@ public class TurnoutsFragment extends DynaFragment {
         public void handleMessage(Message msg) {
 //            Log.d(Consts.DEBUG_TAG, "in TurnoutsFragment.handleMessage()");
             switch (msg.what) {
-                case MessageType.TURNOUTS_LIST_CHANGED:
+                case MessageType.TURNOUT_LIST_CHANGED:
                     Log.d(Consts.DEBUG_TAG, "in TurnoutsFragment.handleMessage() TURNOUTS_LIST_CHANGED");
-                    turnoutsList.clear();  //refresh the local copy, keeping same memory location for adapter
-                    turnoutsList.addAll(mainApp.getTurnoutsList());
+                    RefreshLocalCopyOfTurnoutList();
                     turnoutsListAdapter.notifyDataSetChanged();
                     SetFooterMessage();
                     break;
@@ -142,32 +162,21 @@ public class TurnoutsFragment extends DynaFragment {
             ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemname and username
             TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
             String systemName = (String) snv.getText();
-            mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.TURNOUT_CHANGE_REQUESTED, systemName, 2);	// 2=toggle
+            int newState = ((mainApp.getTurnoutState(systemName)==4) ? 2 : 4); //get toggled value from current state
+            mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.TURNOUT_CHANGE_REQUESTED, systemName, newState);
         }
     }
 
-//    public class clicked_item implements AdapterView.OnItemClickListener {
-//        //When an item is clicked, send request to connect to the selected IP address and port.
-//        public void onItemClick(AdapterView<?> parent, View v, int position, long id)    {
-//
-//            ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
-//            TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
-//            String requestedHostIP = (String) hip.getText();
-////                    TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
-////                    connected_hostname = (String) hnv.getText();
-//            TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
-//            int requestedPort = Integer.valueOf((String) hpv.getText());
-////                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.CONNECT_REQUESTED,
-////                        requestedHostIP, requestedPort);
-//
-//        };
-//    }
     private void SetFooterMessage() {
-        View tv = view.findViewById(R.id.to_footer);
+        View tv = fragmentView.findViewById(R.id.to_footer);
         if (tv != null) {
-                ((TextView)tv).setText(turnoutsList.size() + " items");
+                ((TextView)tv).setText(turnoutsListLocalCopy.size() + " items");
         }
     }
-
+    private String getStateDesc(int in_state) {
+        if (in_state==Consts.STATE_CLOSED) return Consts.STATE_CLOSED_DESC;
+        if (in_state==Consts.STATE_THROWN) return Consts.STATE_THROWN_DESC;
+        return Consts.STATE_UNKNOWN_DESC;
+    }
 
 }

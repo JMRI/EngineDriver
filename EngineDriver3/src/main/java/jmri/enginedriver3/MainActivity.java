@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
     private static MainApplication mainApp; // hold pointer to mainApp
-    private ED3PagerAdapter pagerAdapter;  //set in onCreate()
+//    private ED3PagerAdapter pagerAdapter;  //set in onCreate()
 
 //    public ActionBar mActionBar;
     private static int fragmentsPerScreen = 1; //will be changed later
@@ -25,7 +25,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     private PermaFragment permaFrag = null;  //created in activity.onCreate()
     public MainActivity_Handler mainActivityHandler = null;  //set in this.onCreate()
-    private FragmentManager fragmentManager = null;  //set in this.onCreate()
+//    private FragmentManager fragmentManager = null;  //set in this.onCreate()
     public ActionBar actionBar = null;
 
     //this creates the permafrag the first time, then finds it on subsequent creates
@@ -35,7 +35,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         Log.d(Consts.DEBUG_TAG,"in MainActivity.onCreate()");
         super.onCreate(savedInstanceState);
         mainActivityHandler = new MainActivity_Handler();
-        fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         setContentView(R.layout.main_activity);
         viewPager = (ViewPager) findViewById(R.id.mainActivityPager);
         mainApp = (MainApplication) getApplication();
@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         addTabs(actionBar);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        pagerAdapter = new ED3PagerAdapter(getSupportFragmentManager());
+        ED3PagerAdapter pagerAdapter = new ED3PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -129,30 +129,18 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             String d = mainApp.dynaFrags.get(position).getData();
             Log.d(Consts.DEBUG_TAG, "in MainActivity.getItem(" + position + ")" + " type " + t);
 
-            if (t == Consts.WEB) {
-                WebFragment f = null;
-                f = WebFragment.newInstance(position, t, n, d);
-                return f;
-            } else if (t == Consts.THROTTLE) {
-                ThrottleFragment f = null;
-                f = ThrottleFragment.newInstance(position, t, n);
-                return f;
-            } else if (t == Consts.LIST) {
-                DynaListFragment f = null;
-                f = DynaListFragment.newInstance(position, t, n);
-                return f;
-            } else if (t == Consts.TURNOUT) {
-                TurnoutsFragment f = null;
-                f = TurnoutsFragment.newInstance(position, t, n);
-                return f;
-            } else if (t == Consts.CONNECT) {
-                ConnectFragment f = null;
-                f = ConnectFragment.newInstance(position, t, n);
-                return f;
+            if (t.equals(Consts.WEB)) {
+                return WebFragment.newInstance(position, t, n, d);
+            } else if (t.equals(Consts.THROTTLE)) {
+                return ThrottleFragment.newInstance(position, t, n);
+            } else if (t.equals(Consts.LIST)) {
+                return DynaListFragment.newInstance(position, t, n);
+            } else if (t.equals(Consts.TURNOUT)) {
+                return TurnoutsFragment.newInstance(position, t, n);
+            } else if (t.equals(Consts.CONNECT)) {
+                return ConnectFragment.newInstance(position, t, n);
             } else {
-                DynaFragment f = null;
-                f = DynaFragment.newInstance(position, t, n);
-                return f;
+                return DynaFragment.newInstance(position, t, n);
             }
         }
 
@@ -175,34 +163,24 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 //            Log.d(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage()");
             switch (msg.what) {
                 case MessageType.DISCOVERED_SERVER_LIST_CHANGED:  //forward this only to the Connect fragment
-                    for (int i = 0; i < mainApp.dynaFrags.size(); i++) {
-                        Handler fh = mainApp.dynaFrags.get(i).getHandler();
-                        if (fh != null && mainApp.dynaFrags.get(i).getType().equals(Consts.CONNECT)) {
-                            mainApp.sendMsg(fh, msg);
-                        }
-                    }
+                    forwardMessageToFragment(msg, Consts.CONNECT);
                     break;
                 case MessageType.TURNOUT_CHANGE_REQUESTED:  //forward these only to PermaFrag for processing
                 case MessageType.CONNECT_REQUESTED:
-//            Log.d(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage() CONNECT_REQUESTED");
                     mainApp.sendMsg(permaFrag.permaFragHandler, msg);
                     break;
-                case MessageType.CONNECTED:    //forward these to all active fragments
+                case MessageType.CONNECTED:    //forward these to ALL active fragments
                 case MessageType.DISCONNECTED:
-                    for (int i = 0; i < mainApp.dynaFrags.size(); i++) {
-                        Handler fh = mainApp.dynaFrags.get(i).getHandler();
-                        if (fh != null) {  //skip fragment if not active
-                            mainApp.sendMsg(fh, msg);
-                        }
-                    }
+                    forwardMessageToFragment(msg, Consts.ALL_FRAGMENTS);
                     break;
-                case MessageType.TURNOUTS_LIST_CHANGED:
-                    for (int i = 0; i < mainApp.dynaFrags.size(); i++) {
-                        Handler fh = mainApp.dynaFrags.get(i).getHandler();
-                        if (fh != null && mainApp.dynaFrags.get(i).getType().equals(Consts.TURNOUT)) {  //skip fragment if not active
-                            mainApp.sendMsg(fh, msg);
-                        }
-                    }
+                case MessageType.TURNOUT_LIST_CHANGED:
+                    forwardMessageToFragment(msg, Consts.TURNOUT);
+                    break;
+                case MessageType.ROUTE_LIST_CHANGED:
+                    forwardMessageToFragment(msg, Consts.ROUTE);
+                    break;
+                case MessageType.ROSTERENTRY_LIST_CHANGED:
+                    forwardMessageToFragment(msg, Consts.THROTTLE);
                     break;
                 case MessageType.MESSAGE_LONG:
                     Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_LONG).show();
@@ -221,6 +199,18 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     Log.w(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage() not handled: " + msg.what);
             }  //end of switch msg.what
             super.handleMessage(msg);
+        }
+
+        //forward message to all active fragments that match type (or ALL_FRAGMENTS)
+        private void forwardMessageToFragment(Message in_msg, String in_fragmentType) {
+            for (int i = 0; i < mainApp.dynaFrags.size(); i++) {
+                Handler fh = mainApp.dynaFrags.get(i).getHandler();
+                if (fh != null &&
+                        (in_fragmentType.equals(Consts.ALL_FRAGMENTS) ||
+                                mainApp.dynaFrags.get(i).getType().equals(in_fragmentType))) {
+                    mainApp.sendMsg(fh, in_msg);
+                }
+            }
         }
     }
 

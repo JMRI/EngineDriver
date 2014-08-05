@@ -64,7 +64,9 @@ public class PermaFragment extends Fragment {
         mainApp.setJmriHeartbeat(Consts.INITIAL_HEARTBEAT);
         mainApp.setPowerState(null);
         mainApp.setJmriVersion(null);
-        mainApp.setTurnoutsList(new ArrayList<HashMap<String, String> >());
+        mainApp.setTurnoutList(new HashMap<String, Turnout>());
+        mainApp.setRouteList(new HashMap<String, Route>());
+        mainApp.setRosterEntryList(new HashMap<String, RosterEntry>());
 
         super.onCreate(savedInstanceState);
     }
@@ -184,12 +186,17 @@ public class PermaFragment extends Fragment {
                     mainApp.setPowerState(null);
                     mainApp.setJmriTime(null);
                     mainApp.setRailroad(null);
-                    mainApp.setTurnoutsList(new ArrayList<HashMap<String, String> >());  //empty the list
+                    mainApp.setTurnoutList(new HashMap<String, Turnout>());  //empty the list
+                    mainApp.setRouteList(new HashMap<String, Route>());  //empty the list
+                    mainApp.setRosterEntryList(new HashMap<String, RosterEntry>());  //empty the list
                     mainApp.setJmriHeartbeat(Consts.INITIAL_HEARTBEAT);
                     if (mainApp.getMainActivity()!=null) {
                         mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, msg);  //forward to activity
                         mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.POWER_STATE_CHANGED);
                         mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.JMRI_TIME_CHANGED);
+                        mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.TURNOUT_LIST_CHANGED);
+                        mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.ROUTE_LIST_CHANGED);
+                        mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.ROSTERENTRY_LIST_CHANGED);
                     }
                     break;
                 //simply forward these along to activity
