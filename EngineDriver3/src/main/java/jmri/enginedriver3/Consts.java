@@ -12,7 +12,7 @@ public final class Consts  {
     public static final String ALL_FRAGMENTS = "all fragments";
     public static final String WEB = "web";
 	public static final String LIST = "list";
-    public static final String THROTTLE = "throttle";
+    public static final String CONSIST = "consist";
     public static final String TURNOUT = "turnout";
     public static final String ROUTE = "route";
 	public static final String CONNECT = "connect";
@@ -65,6 +65,7 @@ public final class Consts  {
     public static final String JSON_REQUEST_ROUTE_LIST  = "{\"type\":\"list\",\"list\":\"routes\"}";
     public static final String JSON_REQUEST_ROSTER_LIST  = "{\"type\":\"list\",\"list\":\"roster\"}";
     public static final String JSON_REQUEST_PING = "{\"type\":\"ping\",\"data\":{}}";
+    public static final String JSON_REQUEST_SYSTEMCONNECTIONS = "{\"type\":\"list\",\"list\":\"systemConnections\"}";
 
 
 

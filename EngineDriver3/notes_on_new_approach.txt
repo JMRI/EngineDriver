@@ -41,34 +41,32 @@ steps:
 15) add initial websocket reader/writer
 16) have server-dependent web fragments rebuild on CONNECTED
 17) create Turnout and Route Fragments,
+18) add background roster details retrieval
+) prompt for app exit on back, only if locos are acquired?, only if connected?
+) add notification icon and action
 ) add power button to title bar
 ) add refresh button to web fragments
 ) add settings icon to each fragment, (dropping hard-coded urls) and deal with persistent storage.
 ) add mechanism to add new fragments and delete unneeded ones.  fragment list+settings should be restored on app start.
-) add proper throttle fragment (hard-coded address), get communication working
+) add proper throttle fragment (hard-coded address)
 ) add address/roster selection/entry dialog (determine if activity or fragment or popup dialog, or whatever)
-) add background roster details retrieval (maybe using json server?)
 ) determine if various throttle "flavors" should be settings for a single fragment type, or multiple fragment types.
 ) add additional throttle flavors
 ) enable webfrag's back button, remember url and zoom
 ) make webfrag width a pref
-) prompt for app exit on back
-) add notification icon and action
 ) add phone listener
-
 
 things to "improve" from ED 2.x
 more flexible UI to take advantage of screen real estates
 use nonUIFragment to handle activity restarts on rotation
 use tabbed sliders for navigation
-use database instead of text file storage (or even better, json sharedprefs)
-use Service for comm stuff (maybe not?)
-use json server in addition to (or instead of) withrottle server
-cleanup/rethink thread structure, use fewer patterns
-loss of connection should be more obvious
+use json sharedprefs instead of text file storage
+use json server instead of withrottle server
+cleanup/rethink thread structure, use fewer patterns, avoid threads starting threads
+loss of connection should be more obvious, clearing screens, etc.
 move code into separate members whenever possible, vs. adding everything to TA and mainapp
+use an object-oriented design where possible
 improve jmdns discovery, including on quick exit and restart
-
 
 document old structure:
 ta.onCreate starts comm_thread
@@ -81,13 +79,13 @@ each activity plus comm_thread has a message_handler, with pointer stored in mai
 comm_thread.comm_handler starts/stops jmdns listener
 
 Notes:
-onSaveInstanceState can be used for fragments to "remember" what they were doing.
+onSaveInstanceState can be used for fragments to "remember" what they were doing thru orientation changes, frag switches, etc.
 fragments are very transient, (except for PermaFrag), which is why you avoid fragment to fragment comm
-the activity can "lookup" each fragment by position, this will build it (if needed)
+the activity can "lookup" each fragment by position, positioning to the frag will create it (if needed)
 fragments update their handler ref, which activity uses to determine if fragment is alive or not
 not sure how best to handle Throttles in this new transient dynafrag world.
 minSDK is 8 due to AutoBahn WebSocket library
-listadapters are limited to fairly simple hashmaps, so the shared lists will be more robust, then copied to a
+listadapters are limited to fairly simple hashmaps, so the shared lists will be robust objects, then copied to a
   local list, sorted, filtered, etc. by the ui fragment.
 
 Shared objects:
@@ -97,22 +95,50 @@ turnout list with states, maintained by websocket thread, read only by TurnoutFr
 route list with states, maintained by websocket thread, read only by RoutesFragment
 roster list with details
 layout power state (maintained by websocket thread, read by activity on POWER_STATE_CHANGED)
-metadata (jmri version, etc.) (stored on connection by websocket thread)
 fast clock time (maintained by websocket thread, read by activity on JMRI_TIME_CHANGED)
 recent locos list (one instance, maintained by all ThrottleFrags, stored in sharedprefs)
+metadata (railroad name, jmri version, etc.) (stored on connection by websocket thread)
+throttleList (list of Throttle objects in use by various throttleFrags)
+DefaultFunctions (text, number and momentary flag) for Fn buttons, to use when no roster entry is available. TODO: where maintained?
+RecentConsistList (list of addresses and consists which have been recently used) maintained by permafrag
 
-Not Shared objects:
-recent server list (maintained by ConnectFrag, stored in sharedprefs)
+Not Shared objects (stored as json in sharedprefs):
+recent server list (maintained by ConnectFrag, stored in sharedprefs as json)
 
 ConnectFrag:
 Reads: discoveredServersList
-Sends: CONNECT_REQUESTED
+Sends: CONNECT_REQUESTED (address, port)
 Recvs: DISCOVERED_SERVER_LIST_CHANGED, CONNECTED, DISCONNECTED
-Local: recentServersList
+Saves: recentServersList
 
 TurnoutFrag:
 Reads: turnoutsList
-Sends: TURNOUT_CHANGE_REQUESTED
-Recvs: TURNOUT_LIST_CHANGED, TURNOUT_CHANGED (maybe)
+Sends: TURNOUT_CHANGE_REQUESTED (name, newstate)
+Recvs: TURNOUT_LIST_CHANGED
 
+NOTE: using name Consist instead of Throttle avoid confusion with single Throttle object in jmri
+ConsistFrag:
+Reads: consistList entry (keyed by a new consistID)
+Sends: ADD_LOCO_REQUESTED (consistID, locoAddress/rosterID, relativeDirection)
+  CONSIST_VELOCITY_CHANGE_REQUESTED (consistID, consistSpeed, consistDirection)
+  CONSIST_FN_CHANGE_REQUESTED (consistID, Fn#, newState)
+  LOCO_FN_CHANGE_REQUESTED (locoAddress/rosterID, Fn#, newState)
+Recvs: CONSIST_STATE_CHANGED (consistID)
+Saves: DefaultFnList, RecentConsistList (since these are shared, maybe let permafrag save them)
+
+Consist object:
+  stores data about a single "consist", assigned to a single slider+buttons UI fragment
+  each Consist has a unique ConsistID, used to map the frag to the object
+  Consist will have 1:n locos, in a specified sequence (defined by UI)
+  first loco treated as "lead", last treated as "trail".  rearrange the sequence to change this
+  the Consist has a speed and direction, and each loco has a relative direction and speed adjustment
+  consist speed and direction are maintained from the server response for the lead loco, not the UI request
+  Consists will be updated even if their corresponding frag is inactive
+  jsonserver has an element called "throttle" which is used as a key to a single jmri Throttle
+   object. websocketthread will generate this key as ConsistID+LocoID.
+  websocketthread splits the UI request for changes and sends for each loco in consist, changing as needed
+  the server response will be by ConsistID+LocoID, so updates could be applied to just the lead loco,
+    every loco, ??
+  F0 will be assumed to be headlight, and requests adjusted to turn off lights on trailing locos, based
+    on consist direction  (make this a pref?)
 

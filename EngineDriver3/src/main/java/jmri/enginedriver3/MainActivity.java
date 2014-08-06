@@ -131,8 +131,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
             if (t.equals(Consts.WEB)) {
                 return WebFragment.newInstance(position, t, n, d);
-            } else if (t.equals(Consts.THROTTLE)) {
-                return ThrottleFragment.newInstance(position, t, n);
+            } else if (t.equals(Consts.CONSIST)) {
+                return ConsistFragment.newInstance(position, t, n);
             } else if (t.equals(Consts.LIST)) {
                 return DynaListFragment.newInstance(position, t, n);
             } else if (t.equals(Consts.TURNOUT)) {
@@ -163,7 +163,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 //            Log.d(Consts.DEBUG_TAG, "in MainActivity_Handler.handleMessage()");
             switch (msg.what) {
                 case MessageType.DISCOVERED_SERVER_LIST_CHANGED:  //forward this only to the Connect fragment
-                    forwardMessageToFragment(msg, Consts.CONNECT);
+                    forwardMessageToFragments(msg, Consts.CONNECT);
                     break;
                 case MessageType.TURNOUT_CHANGE_REQUESTED:  //forward these only to PermaFrag for processing
                 case MessageType.CONNECT_REQUESTED:
@@ -171,16 +171,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     break;
                 case MessageType.CONNECTED:    //forward these to ALL active fragments
                 case MessageType.DISCONNECTED:
-                    forwardMessageToFragment(msg, Consts.ALL_FRAGMENTS);
+                    forwardMessageToFragments(msg, Consts.ALL_FRAGMENTS);
                     break;
                 case MessageType.TURNOUT_LIST_CHANGED:
-                    forwardMessageToFragment(msg, Consts.TURNOUT);
+                    forwardMessageToFragments(msg, Consts.TURNOUT);
                     break;
                 case MessageType.ROUTE_LIST_CHANGED:
-                    forwardMessageToFragment(msg, Consts.ROUTE);
+                    forwardMessageToFragments(msg, Consts.ROUTE);
                     break;
                 case MessageType.ROSTERENTRY_LIST_CHANGED:
-                    forwardMessageToFragment(msg, Consts.THROTTLE);
+                    forwardMessageToFragments(msg, Consts.CONSIST);
                     break;
                 case MessageType.MESSAGE_LONG:
                     Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_LONG).show();
@@ -202,7 +202,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
         //forward message to all active fragments that match type (or ALL_FRAGMENTS)
-        private void forwardMessageToFragment(Message in_msg, String in_fragmentType) {
+        private void forwardMessageToFragments(Message in_msg, String in_fragmentType) {
             for (int i = 0; i < mainApp.dynaFrags.size(); i++) {
                 Handler fh = mainApp.dynaFrags.get(i).getHandler();
                 if (fh != null &&

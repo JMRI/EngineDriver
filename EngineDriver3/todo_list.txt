@@ -7,7 +7,7 @@ ConnectFragment:
   add most recently used at top of list, not bottom
   remove leftover formatting from ED, replace with new look
   if no discovered servers, show "No Items" label
-  new function, long-press to select the auto-connect address?
+  new function, long-press to select the auto-connect address?  or always auto-connect to first?
 WebSocketRunnable:
   use heartbeat to kill "hung" connections (such as attempting to connect to the WiThrottle port)
   don't show error message when connection is intentionally closed
@@ -16,7 +16,6 @@ MainActivity:
   Show the title in landscape mode
 JmDNS listener:
   use native Android listeners instead of JmDNS on supported devices
-  don't show (somehow) broadcasts which are not from a JMRI server
 TurnoutsFragment:
   deal with showing/not showing based on userName
   manual entry of turnout by name and/or number

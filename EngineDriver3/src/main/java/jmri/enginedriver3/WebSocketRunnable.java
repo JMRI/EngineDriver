@@ -21,15 +21,15 @@ import de.tavendo.autobahn.WebSocketHandler;
 /**
  * WebSocketRunnable - executed as a thread by the PermaFrag, ctor expects refs to PermaFrag, mainApp,
  *   and the server and port that are being requested.  If connect attempt fails, the thread ends.
- *   Also will end itself nicely when requested by message from PermaFrag.
+ *   Also will end itself nicely when requested by message from PermaFrag, or when the connection is lost.
  *   While running, accepts various messages which it formats into json requests and sends to server
  *   Then processes the responses from the server, updating shared variables and sending messages.
  */
 class WebSocketRunnable implements Runnable {
-    private PermaFragment permaFragment; //set in constructor
-    private MainApplication mainApp; //set in constructor
-    private String requestedServer; //set in constructor or by CONNECT_REQUESTED message
-    private int requestedWebPort; //set in constructor or by CONNECT_REQUESTED message
+    private PermaFragment permaFragment; //passed in constructor
+    private MainApplication mainApp; //passed in constructor
+    private String requestedServer; //passed in constructor
+    private int requestedWebPort; //passed in constructor
 
     private JmriWebSocketHandler jmriWebSocket = null; //set at beginning of run()
 
@@ -109,6 +109,7 @@ class WebSocketRunnable implements Runnable {
                 this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_ROSTER_LIST);
                 this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_TURNOUT_LIST);
                 this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_ROUTE_LIST);
+                this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_SYSTEMCONNECTIONS);
             } catch(Exception e) {
                 Log.w(Consts.DEBUG_TAG,"JmriWebSocket error in onOpen(): "+e.toString());
                 mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.DISCONNECTED); //tell the app
@@ -142,6 +143,10 @@ class WebSocketRunnable implements Runnable {
                     Log.d(Consts.DEBUG_TAG, "JmriWebSocket, goodbye message received and ignored");
                 } else if (type.equals("memory")) {
                     receivedMemory(data);
+                } else if (type.equals("error")) {  //log and show the error message
+                    String s = data.getString("message");
+                    Log.w(Consts.DEBUG_TAG, "received error from JmriWebSocket: " + s);
+                    mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.MESSAGE_SHORT, s);
                 } else {
                     Log.w(Consts.DEBUG_TAG, "JmriWebSocket, unexpected message received " + msgString);
                 }
@@ -155,10 +160,12 @@ class WebSocketRunnable implements Runnable {
                     } else if (type.equals("route")) {
                         receivedRouteList(msgJsonArray);
                     } else if (type.equals("rosterEntry")) {
-                        Log.d(Consts.DEBUG_TAG,"RosterEntry message = " + msgString);
+                        Log.d(Consts.DEBUG_TAG,"RosterEntry message=" + msgString);
                         receivedRosterEntryList(msgJsonArray);
+                    } else if (type.equals("systemConnection")) {
+                        Log.d(Consts.DEBUG_TAG,"systemConnection message=" + msgString);
                     } else {
-                        Log.w(Consts.DEBUG_TAG, "json array of type " + type + " received, but not supported");
+                        Log.w(Consts.DEBUG_TAG, "unsupported json array received="+msgString);
                     }
                 } catch (JSONException e1) {
                     Log.d(Consts.DEBUG_TAG, "error converting to json object or array.  ignoring " + msgString);
