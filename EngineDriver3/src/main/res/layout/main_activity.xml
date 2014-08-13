@@ -1,7 +1,22 @@
-<android.support.v4.view.ViewPager
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainActivityPager"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mainActivityPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
 
-</android.support.v4.view.ViewPager>
+    <ListView
+        android:id="@+id/drawerList"
+        android:background="@color/black_half_trans"
+        android:entries="@array/main_menu"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left">
+
+    </ListView>
+</android.support.v4.widget.DrawerLayout>

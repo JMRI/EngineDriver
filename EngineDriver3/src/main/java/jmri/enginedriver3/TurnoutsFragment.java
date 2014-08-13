@@ -32,7 +32,7 @@ public class TurnoutsFragment extends DynaFragment {
 	 * create a new fragment of this type, and populate basic settings in bundle 
 	 * Note: this is a static method, called from the activity's getItem() when new ones are needed */	
 	static TurnoutsFragment newInstance(int fragNum, String fragType, String fragName) {
-		Log.d(Consts.DEBUG_TAG, "in TurnoutsFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
+		Log.d(Consts.APP_NAME, "in TurnoutsFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
 		TurnoutsFragment f = new TurnoutsFragment();
 
 		// Store variables for retrieval 
@@ -50,7 +50,7 @@ public class TurnoutsFragment extends DynaFragment {
 	 *    runs before activity starts, note does not call super		 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//		Log.d(Consts.DEBUG_TAG, "in TurnoutsFragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.APP_NAME, "in TurnoutsFragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 
         if (savedInstanceState!=null) { //restore saved scroll position, if saved
             turnoutsListSavedPosition = savedInstanceState.getInt("turnoutsListSavedPosition", 0);
@@ -66,13 +66,13 @@ public class TurnoutsFragment extends DynaFragment {
     public void onStart() {
         super.onStart();
         started++;
-        Log.d(Consts.DEBUG_TAG, "in TurnoutsFragment.onStart() " + started);
+        Log.d(Consts.APP_NAME, "in TurnoutsFragment.onStart() " + started);
 
         //Set up a list adapter to present list of turnouts to the UI.
         //uses local copy of the list in mainapp, which is managed by the websocket thread
         RefreshLocalCopyOfTurnoutList();
         turnoutsListAdapter =new SimpleAdapter(getActivity(), turnoutsListLocalCopy,
-                R.layout.turnouts_item,
+                R.layout.turnouts_list_item,
                 new String[] {"userName", "name", "state"},
                 new int[] {R.id.to_user_name, R.id.to_system_name, R.id.to_current_state_desc}) {
 
@@ -93,7 +93,7 @@ public class TurnoutsFragment extends DynaFragment {
         tlv.setSelectionFromTop(turnoutsListSavedPosition, 0);  //position to saved position
 
         //set backref to this handler to indicate fragment is ready to receive messages from activity
-        mainApp.dynaFrags.get(getFragNum()).setHandler(new Fragment_Handler());
+        mainApp.setDynaFragHandler(getFragNum(), new Fragment_Handler());
 
         SetFooterMessage();
     }
@@ -112,7 +112,7 @@ public class TurnoutsFragment extends DynaFragment {
     @Override
     public void onStop() {
         //clear this to avoid late messages
-        mainApp.dynaFrags.get(getFragNum()).setHandler(null);
+        mainApp.getDynaFrags().get(getFragNum()).setHandler(null);
         super.onStop();
     }
 
@@ -128,28 +128,28 @@ public class TurnoutsFragment extends DynaFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        Log.d(Consts.DEBUG_TAG, "in TurnoutsFragment.onAttach()");
+//        Log.d(Consts.APP_NAME, "in TurnoutsFragment.onAttach()");
         this.mainActivity = (MainActivity) activity;  //save ref to the new activity
     }
     @Override
     public void onDetach() {
-//        Log.d(Consts.DEBUG_TAG, "in TurnoutsFragment.onDetach()");
+//        Log.d(Consts.APP_NAME, "in TurnoutsFragment.onDetach()");
         this.mainActivity = null; //clear ref
         super.onDetach();
     }
     private class Fragment_Handler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-//            Log.d(Consts.DEBUG_TAG, "in TurnoutsFragment.handleMessage()");
+//            Log.d(Consts.APP_NAME, "in TurnoutsFragment.handleMessage()");
             switch (msg.what) {
                 case MessageType.TURNOUT_LIST_CHANGED:
-                    Log.d(Consts.DEBUG_TAG, "in TurnoutsFragment.handleMessage() TURNOUTS_LIST_CHANGED");
+                    Log.d(Consts.APP_NAME, "in TurnoutsFragment.handleMessage() TURNOUTS_LIST_CHANGED");
                     RefreshLocalCopyOfTurnoutList();
                     turnoutsListAdapter.notifyDataSetChanged();
                     SetFooterMessage();
                     break;
                 default:
-                    Log.d(Consts.DEBUG_TAG, "in TurnoutsFragment.handleMessage() not handled: " + msg.what);
+                    Log.d(Consts.APP_NAME, "in TurnoutsFragment.handleMessage() not handled: " + msg.what);
             }  //end of switch msg.what
             super.handleMessage(msg);
         }

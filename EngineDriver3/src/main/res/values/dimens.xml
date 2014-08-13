@@ -2,4 +2,22 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="card_show_stick_height">44dp</dimen>
+    <dimen name="card_show_stick_height_without_shadow">42dp</dimen>
+    <dimen name="loading_spinner_size_small">20dp</dimen>
+    <!-- Dimen for 360dp -->
+    <!-- Web View Action -->
+    <!--<dimen name="web_view_margin_1">35dp</dimen>-->
+    <!--<dimen name="web_view_margin_2">71dp</dimen>-->
+    <!--<dimen name="web_view_margin_3">62dp</dimen>-->
+    <!--<dimen name="web_view_margin_4">65dp</dimen>-->
+    <!--<dimen name="web_view_margin_5">43dp</dimen>-->
+
+    <dimen name="web_view_margin_1">30dp</dimen>
+    <dimen name="web_view_margin_2">61dp</dimen>
+    <dimen name="web_view_margin_3">52dp</dimen>
+    <dimen name="web_view_margin_4">55dp</dimen>
+    <dimen name="web_view_margin_5">38dp</dimen>
+
 </resources>

@@ -12,37 +12,37 @@ public class DynaFragment extends Fragment {
 
 //	@Override
 //	public void onAttach(Activity activity) {
-//		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onAttach() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.APP_NAME, "in DynaFragment.onAttach() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 //		super.onAttach(activity);
 //	}
 //	@Override
 //	public void onDetach() {
-//		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onDetach() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.APP_NAME, "in DynaFragment.onDetach() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 //		super.onDetach();
 //	}
 //	@Override
 //	public void onDestroy() {
-//		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onDestroy() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.APP_NAME, "in DynaFragment.onDestroy() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 //		super.onDestroy();
 //	}
 //	@Override
 //	public void onPause() {
-//		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onPause() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.APP_NAME, "in DynaFragment.onPause() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 //		super.onPause();
 //	}
 //	@Override
 //	public void onResume() {
-//		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onResume() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.APP_NAME, "in DynaFragment.onResume() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 //		super.onResume();
 //	}
 //	@Override
 //	public void onStart() {
-//		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onStart() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.APP_NAME, "in DynaFragment.onStart() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 //		super.onStart();
 //	}
 //	@Override
 //	public void onStop() {
-//		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onStop() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.APP_NAME, "in DynaFragment.onStop() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 //		super.onStop();
 //	}
 	//	public ED3Fragment() {
@@ -78,7 +78,7 @@ public class DynaFragment extends Fragment {
 	 * create a new fragment of this type, and populate basic settings in bundle 
 	 * Note: this is a static method, called from the activity's getItem() when new ones are needed */	
 	static DynaFragment newInstance(int fragNum, String fragType, String fragName) {
-		Log.d(Consts.DEBUG_TAG, "in DynaFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
+		Log.d(Consts.APP_NAME, "in DynaFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
 		DynaFragment f = new DynaFragment();
 		// Store variables for retrieval 
 		Bundle args = new Bundle();
@@ -102,7 +102,7 @@ public class DynaFragment extends Fragment {
 		setFragType((getArguments() != null ? getArguments().getString("fragType") : "error"));
 		setFragName((getArguments() != null ? getArguments().getString("fragName") : "error"));
 
-//		Log.d(Consts.DEBUG_TAG, "in DynaFragment.onCreate() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.APP_NAME, "in DynaFragment.onCreate() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 	}
 
 
@@ -110,7 +110,7 @@ public class DynaFragment extends Fragment {
 	 *    runs before activity starts		 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.APP_NAME, "in ED3Fragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 		//choose the proper layout xml for this fragment's type
 		int rx = R.layout.list_fragment;  //default to list for now
 		//inflate the proper layout xml and remember it in fragment
@@ -126,7 +126,7 @@ public class DynaFragment extends Fragment {
 	 * Note: calls super.  Only override if additional processing is needed                           */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-//		Log.d(Consts.DEBUG_TAG, "in ED3Fragment.onActivityCreated() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.APP_NAME, "in ED3Fragment.onActivityCreated() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 		super.onActivityCreated(savedInstanceState);
 		mainApp =(MainApplication)getActivity().getApplication();  //set pointer to app
 		

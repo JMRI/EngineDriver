@@ -37,7 +37,7 @@ public class ConnectFragment extends DynaFragment {
 	 * create a new fragment of this type, and populate basic settings in bundle 
 	 * Note: this is a static method, called from the activity's getItem() when new ones are needed */	
 	static ConnectFragment newInstance(int fragNum, String fragType, String fragName) {
-		Log.d(Consts.DEBUG_TAG, "in ConnectFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
+		Log.d(Consts.APP_NAME, "in ConnectFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
 		ConnectFragment f = new ConnectFragment();
 
 		// Store variables for retrieval 
@@ -55,7 +55,7 @@ public class ConnectFragment extends DynaFragment {
 	 *    runs before activity starts, note does not call super		 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//		Log.d(Consts.DEBUG_TAG, "in ConnectFragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.APP_NAME, "in ConnectFragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 		//choose the proper layout xml for this fragment's type
 		int rx = R.layout.connect_fragment;
 		//inflate the proper layout xml and remember it in fragment
@@ -67,7 +67,7 @@ public class ConnectFragment extends DynaFragment {
     public void onStart() {
         super.onStart();
         started++;
-        Log.d(Consts.DEBUG_TAG, "in ConnectFragment.onStart() " + started);
+        Log.d(Consts.APP_NAME, "in ConnectFragment.onStart() " + started);
 
         //Set up a list adapter to present list of discovered WiThrottle servers to the UI.
         //this list is in mainapp, and managed by the jmdns thread
@@ -86,7 +86,7 @@ public class ConnectFragment extends DynaFragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("ConnectFragment", Context.MODE_PRIVATE);
         String recentConnectionsListJson = sharedPreferences.getString("recent_connections_list_json",
                 "[{\"host_name\":\"jmri.mstevetodd.com\",\"port\":\"1080\",\"ip_address\":\"jmri.mstevetodd.com\"}]");
-//        Log.d(Consts.DEBUG_TAG, recentConnectionsListJson);
+//        Log.d(Consts.APP_NAME, recentConnectionsListJson);
         Gson gson = new Gson();
         recentConnectionsList = gson.fromJson(recentConnectionsListJson, new TypeToken<ArrayList<HashMap<String, String>>>() {}.getType());
 
@@ -105,20 +105,20 @@ public class ConnectFragment extends DynaFragment {
         SetConnectedMessage();
 
         //only set this when fragment is ready to receive messages
-        mainApp.dynaFrags.get(getFragNum()).setHandler(new Fragment_Handler());
+        mainApp.setDynaFragHandler(getFragNum(), new Fragment_Handler());
 
     }
 
     @Override
     public void onStop() {
         //clear this to avoid late messages
-        mainApp.dynaFrags.get(getFragNum()).setHandler(null);
+        mainApp.getDynaFrags().get(getFragNum()).setHandler(null);
         //save the recent connections list to sharedprefs as json string
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("ConnectFragment", Context.MODE_PRIVATE);
         SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
         Gson gson = new Gson();
         String recentConnectionsListJson = gson.toJson(recentConnectionsList);
-//        Log.d(Consts.DEBUG_TAG, recentConnectionsListJson);
+//        Log.d(Consts.APP_NAME, recentConnectionsListJson);
         sharedPreferencesEditor.putString("recent_connections_list_json", recentConnectionsListJson);
         sharedPreferencesEditor.commit();
 
@@ -133,49 +133,49 @@ public class ConnectFragment extends DynaFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        Log.d(Consts.DEBUG_TAG, "in ConnectFragment.onAttach()");
+//        Log.d(Consts.APP_NAME, "in ConnectFragment.onAttach()");
         this.mainActivity = (MainActivity) activity;  //save ref to the new activity
     }
 
     @Override
     public void onDetach() {
-//        Log.d(Consts.DEBUG_TAG, "in ConnectFragment.onDetach()");
+//        Log.d(Consts.APP_NAME, "in ConnectFragment.onDetach()");
         this.mainActivity = null; //clear ref
         super.onDetach();
     }
 
 //    @Override
 //    public void onDestroy() {
-//        Log.d(Consts.DEBUG_TAG, "in ConnectFragment.onDestroy()");
+//        Log.d(Consts.APP_NAME, "in ConnectFragment.onDestroy()");
 //        super.onDestroy();
 //    }
 
 //    @Override
 //    public void onResume() {
-//        Log.d(Consts.DEBUG_TAG, "in ConnectFragment.onResume()");
+//        Log.d(Consts.APP_NAME, "in ConnectFragment.onResume()");
 //        super.onResume();
 //    }
     private class Fragment_Handler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-//            Log.d(Consts.DEBUG_TAG, "in ConnectFragment.handleMessage()");
+//            Log.d(Consts.APP_NAME, "in ConnectFragment.handleMessage()");
             switch (msg.what) {
                 case MessageType.DISCOVERED_SERVER_LIST_CHANGED:
-                    Log.d(Consts.DEBUG_TAG, "in ConnectFragment.handleMessage() DISCOVERED_SERVER_LIST_CHANGED");
+                    Log.d(Consts.APP_NAME, "in ConnectFragment.handleMessage() DISCOVERED_SERVER_LIST_CHANGED");
                     discoveredServersList.clear();  //refresh the local copy, keeping same memory location for adapter
                     discoveredServersList.addAll(mainApp.getDiscoveredServersList());
                     discoveredServerListAdapter.notifyDataSetChanged();
                     break;
                 case MessageType.CONNECTED:
                 case MessageType.DISCONNECTED:
-                    Log.d(Consts.DEBUG_TAG, "in ConnectFragment.handleMessage() DIS/CONNECTED");
+                    Log.d(Consts.APP_NAME, "in ConnectFragment.handleMessage() DIS/CONNECTED");
                     SetConnectedMessage();
                     if (mainApp.getServer() != null) {
                         UpdateRecentServerList();
                     }
                     break;
                 default:
-                    Log.d(Consts.DEBUG_TAG, "in ConnectFragment.handleMessage() not handled");
+                    Log.d(Consts.APP_NAME, "in ConnectFragment.handleMessage() not handled");
             }  //end of switch msg.what
             super.handleMessage(msg);
         }

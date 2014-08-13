@@ -13,7 +13,7 @@ public class ConsistFragment extends DynaFragment {
 	 * create a new fragment of this type, and populate basic settings in bundle 
 	 * Note: this is a static method, called from the activity's getItem() when new ones are needed */	
 	static ConsistFragment newInstance(int fragNum, String fragType, String fragName) {
-		Log.d(Consts.DEBUG_TAG, "in ConsistFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
+		Log.d(Consts.APP_NAME, "in ConsistFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
 		ConsistFragment f = new ConsistFragment();
 
 		// Store variables for retrieval 
@@ -31,7 +31,7 @@ public class ConsistFragment extends DynaFragment {
 	 *    runs before activity starts, note does not call super		 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		Log.d(Consts.DEBUG_TAG, "in ConsistFragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+		Log.d(Consts.APP_NAME, "in ConsistFragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 		//choose the proper layout xml for this fragment's type
 		int rx = R.layout.list_fragment;  //use list for now  TODO: make throttle view layout
 		//inflate the proper layout xml and remember it in fragment

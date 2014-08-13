@@ -11,6 +11,7 @@ ConnectFragment:
 WebSocketRunnable:
   use heartbeat to kill "hung" connections (such as attempting to connect to the WiThrottle port)
   don't show error message when connection is intentionally closed
+  handle panel list, remember the list can contain differing types
 MainActivity:
   notification icon when backgrounded
   Show the title in landscape mode
@@ -22,5 +23,5 @@ TurnoutsFragment:
   remembered position is not cleared if servers switched while active
 RoutesFragment:
   clone from TurnoutsFragment
-
-
+WebViewFragment:
+  prefs for initial zoom level, width, url

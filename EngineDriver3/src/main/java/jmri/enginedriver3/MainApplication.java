@@ -1,7 +1,7 @@
 package jmri.enginedriver3;
 /*  MainApplication - this overrides Android's Application object, which is created once when an app starts.
-      Note: It may (or may not) be destroyed when all activities have ended.
-      ED3 will use this to store shared data to be accessed by various threads, fragments and the activity.
+      Note: It may (or may NOT) be destroyed when all activities have ended.
+      ED3 will use this for shared data accessed by various threads, fragments and the activity.
       All variables should be private, accessed only by get(), .set() and helper functions.  The .set() functions are
       also responsible for sending xx_UPDATED messages when variables change, to make sure interested objects are
       informed of the changes.
@@ -14,10 +14,19 @@ import android.app.Application;
 import android.os.Message;
 import android.os.Handler;
 import android.util.Log;
+import android.util.SparseArray;
 
 public class MainApplication extends Application {
 
-	protected HashMap<Integer, DynaFragEntry> dynaFrags;  //this is built in this.onCreate()  TODO:convert to get/set
+    private SparseArray<DynaFragEntry> _dynaFrags = new SparseArray<DynaFragEntry>();  //this is built in activity TODO:convert to get/set
+    public SparseArray<DynaFragEntry> getDynaFrags() { return _dynaFrags; }
+    public void setDynaFrags(SparseArray<DynaFragEntry> dynaFrags) { this._dynaFrags = dynaFrags; }
+    //convenience method to set the handler for the specified fragment number, called from each dynafrag to set and to clear
+    public void setDynaFragHandler(Integer in_fragmentNum, Handler in_handler) {
+        this._dynaFrags.get(in_fragmentNum).setHandler(in_handler);
+    }
+//    mainApp.setDynaFragHandler(getFragNum(), new Fragment_Handler());
+
 
     //store variables for use by the activity and all fragments
     private MainActivity _mainActivity;
@@ -56,7 +65,7 @@ public class MainApplication extends Application {
     }
     public void setTurnoutState(String in_turnout, int in_state) {  //helper function, also sends alert message
         if (getTurnoutState(in_turnout) != in_state) { //don't do anything if already this state
-//            Log.d(Consts.DEBUG_TAG, "setTurnoutState(" + in_turnout + ", " + in_state +")");
+//            Log.d(Consts.APP_NAME, "setTurnoutState(" + in_turnout + ", " + in_state +")");
             this._turnoutList.get(in_turnout).setState(in_state);  //update just the state of this entry
             if (_mainActivity != null)
                 sendMsg(_mainActivity.mainActivityHandler, MessageType.TURNOUT_LIST_CHANGED); //announce the change
@@ -79,7 +88,7 @@ public class MainApplication extends Application {
     }
     public void setRouteState(String in_route, int in_state) {  //helper function, also sends alert message
         if (getRouteState(in_route) != in_state) { //don't do anything if already this state
-//            Log.d(Consts.DEBUG_TAG, "setTurnoutState(" + in_turnout + ", " + in_state +")");
+//            Log.d(Consts.APP_NAME, "setTurnoutState(" + in_turnout + ", " + in_state +")");
             this._routeList.get(in_route).setState(in_state);  //update just the state of this entry
             if (_mainActivity != null)
                 sendMsg(_mainActivity.mainActivityHandler, MessageType.ROUTE_LIST_CHANGED); //announce the change
@@ -114,8 +123,11 @@ public class MainApplication extends Application {
     private String _powerState = null;  //will be set by JmriWebSocket
     public String getPowerState() {return _powerState;}
     public void setPowerState(String in_powerState) {
-        this._powerState = in_powerState;
-        if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.POWER_STATE_CHANGED); //announce it
+        if (_powerState == null || !_powerState.equals(in_powerState)) {
+            Log.d(Consts.APP_NAME, "power state changed from " + _powerState + " to " + in_powerState);  //TODO: show descriptions
+            this._powerState = in_powerState;  //if different, update it and announce it
+            if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.POWER_STATE_CHANGED);
+        }
     }
 
     private String _jmriVersion = null;  //will be set by JmriWebSocket
@@ -132,52 +144,50 @@ public class MainApplication extends Application {
 	@Override
 	public void onCreate()  {
 		super.onCreate();
-	    Log.d(Consts.DEBUG_TAG,"in ED3Application.onCreate()");
+	    Log.d(Consts.APP_NAME,"in ED3Application.onCreate()");
 
         //initialize the temporary fragment list, for now, key is 0-n, cannot leave "holes"
-        //TODO: replace this with restore from database or somesuch, maybe in ED3Activity.onCreate()
+        // replace this with restore from database or somesuch, maybe in ED3Activity.onCreate()
+/*
         int fragKey = 0;
-        dynaFrags = new HashMap<Integer, DynaFragEntry>();
-        dynaFrags.put(fragKey++, new DynaFragEntry("Prefs", Consts.PREFS, 2));
+        _dynaFrags = new SparseArray<DynaFragEntry>();  //make sure its ready for use.  Populated by activity
+//        _dynaFrags.put(fragKey++, new DynaFragEntry("Prefs", Consts.PREFS, 2));
         DynaFragEntry tEntry;
         tEntry = new DynaFragEntry("About", Consts.WEB, 2);
         tEntry.setData("file:///android_asset/about_page.html");
-        dynaFrags.put(fragKey++, tEntry);
-        dynaFrags.put(fragKey++, new DynaFragEntry("Connect", Consts.CONNECT, 2));
+        _dynaFrags.put(fragKey++, tEntry);
+        _dynaFrags.put(fragKey++, new DynaFragEntry("Connect", Consts.CONNECT, 2));
         tEntry = new DynaFragEntry("Throttle", Consts.WEB, 2);
         tEntry.setData("/web/webThrottle.html");
-        dynaFrags.put(fragKey++, tEntry);
+        _dynaFrags.put(fragKey++, tEntry);
+
+        tEntry = new DynaFragEntry("Turnouts", Consts.TURNOUT, 2);
+        _dynaFrags.put(fragKey++, tEntry);
 
         tEntry = new DynaFragEntry("Panels", Consts.WEB, 3);
         tEntry.setData("/panel/");
-        dynaFrags.put(fragKey++, tEntry);
+        _dynaFrags.put(fragKey++, tEntry);
 
         tEntry = new DynaFragEntry("Trains", Consts.WEB, 2);
         tEntry.setData("/operations/trains");
-        dynaFrags.put(fragKey++, tEntry);
+        _dynaFrags.put(fragKey++, tEntry);
 
-        tEntry = new DynaFragEntry("Turnouts", Consts.TURNOUT, 2);
-        dynaFrags.put(fragKey++, tEntry);
+        Log.d(Consts.APP_NAME,"end of ED3Application.onCreate()");
 
-        Log.d(Consts.DEBUG_TAG,"end of ED3Application.onCreate()");
-
+*/
 	}
     public boolean sendMsg(Handler h, int msgType) {
         return sendMsgDelayed(h, 0, msgType, "", 0, 0);
     }
-
     public boolean sendMsg(Handler h, int msgType, String msgBody) {
         return sendMsgDelayed(h, 0, msgType, msgBody, 0, 0);
     }
-
     public boolean sendMsg(Handler h, int msgType, String msgBody, int msgArg1) {
         return sendMsgDelayed(h, 0, msgType, msgBody, msgArg1, 0);
     }
-
     public boolean sendMsg(Handler h, int msgType, String msgBody, int msgArg1, int msgArg2) {
         return sendMsgDelayed(h, 0, msgType, msgBody, msgArg1, msgArg2);
     }
-
     public boolean sendMsgDelayed(Handler h, long delayMs, int msgType) {
         return sendMsgDelayed(h, delayMs, msgType, "", 0, 0);
     }
@@ -201,7 +211,7 @@ public class MainApplication extends Application {
                 sent = h.sendMessageDelayed(msg, delayMs);
             }
             catch(Exception e) {
-                Log.d(Consts.DEBUG_TAG, "failed to send message of type " + msgType + " to " + h.getClass());
+                Log.d(Consts.APP_NAME, "failed to send message of type " + msgType + " to " + h.getClass());
             }
             if(!sent)
                 msg.recycle();

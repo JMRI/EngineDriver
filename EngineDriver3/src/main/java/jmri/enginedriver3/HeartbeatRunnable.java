@@ -17,18 +17,18 @@ class HeartbeatRunnable implements Runnable {
 
     //create, expecting refs to permaFrag and mainApp passed in
     public HeartbeatRunnable(PermaFragment in_permaFragment, MainApplication in_mainApp) {
-        Log.d(Consts.DEBUG_TAG, "in HeartbeatRunnable()");
+        Log.d(Consts.APP_NAME, "in HeartbeatRunnable()");
         permaFragment = in_permaFragment;
         mainApp = in_mainApp;
     }
 
     @Override
     public void run() {
-        Log.d(Consts.DEBUG_TAG, "starting HeartbeatRunnable.run()");
+        Log.d(Consts.APP_NAME, "starting HeartbeatRunnable.run()");
         Looper.prepare();
         permaFragment.heartbeatRunnableHandler = new Debug_Runnable_Handler();  //update ref to thread's handler back in retained frag
         Looper.loop();  //this runs the message handler, quitting when requested
-        Log.d(Consts.DEBUG_TAG, "ending HeartbeatRunnable.run()");
+        Log.d(Consts.APP_NAME, "ending HeartbeatRunnable.run()");
     }
 
     private class Debug_Runnable_Handler extends Handler {
@@ -39,7 +39,7 @@ class HeartbeatRunnable implements Runnable {
 
         @Override
         public void handleMessage(Message msg) {
-//            Log.d(Consts.DEBUG_TAG, "in HeartbeatRunnable.handleMessage()");
+//            Log.d(Consts.APP_NAME, "in HeartbeatRunnable.handleMessage()");
             switch (msg.what) {
                 case MessageType.SHUTDOWN:
                     this.getLooper().quit(); //stop the looper
@@ -49,7 +49,7 @@ class HeartbeatRunnable implements Runnable {
                     mainApp.sendMsgDelayed(this, mainApp.getJmriHeartbeat() - 1000, MessageType.LOOP);
                     break;
                 default:
-                    Log.w(Consts.DEBUG_TAG, "in HeartbeatRunnable.handleMessage() received unknown message type " + msg.what);
+                    Log.w(Consts.APP_NAME, "in HeartbeatRunnable.handleMessage() received unknown message type " + msg.what);
                     break;
             }  //end of switch msg.what
             super.handleMessage(msg);

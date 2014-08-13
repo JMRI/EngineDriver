@@ -15,7 +15,7 @@ public class DynaListFragment extends DynaFragment {
 	 * create a new fragment of this type, and populate basic settings in bundle 
 	 * Note: this is a static method, called from the activity's getItem() when new ones are needed */	
 	static DynaListFragment newInstance(int fragNum, String fragType, String fragName) {
-		Log.d(Consts.DEBUG_TAG, "in ListFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
+		Log.d(Consts.APP_NAME, "in ListFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
 		DynaListFragment f = new DynaListFragment();
 
 		// Store variables for retrieval 
@@ -32,7 +32,7 @@ public class DynaListFragment extends DynaFragment {
 	 *    runs before activity starts, note does not call super		 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//		Log.d(Consts.DEBUG_TAG, "in ListFragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.APP_NAME, "in ListFragment.onCreateView() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 		//inflate the proper layout xml and remember it in fragment
 		int rx = R.layout.list_fragment;
 		fragmentView = inflater.inflate(rx, container, false);
@@ -46,7 +46,7 @@ public class DynaListFragment extends DynaFragment {
 	 *  Note: calls super.  Only override if additional processing is needed	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-//		Log.d(Consts.DEBUG_TAG, "in ListFragment.onActivityCreated() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
+//		Log.d(Consts.APP_NAME, "in ListFragment.onActivityCreated() for " + getFragName() + " (" + getFragNum() + ")" + " type " + getFragType());
 		super.onActivityCreated(savedInstanceState);
 
 		ListView listview = (ListView) fragmentView.findViewById(R.id.listview);
@@ -63,7 +63,7 @@ public class DynaListFragment extends DynaFragment {
 
 		public void onItemClick(android.widget.AdapterView<?> parent, View v, int position, long id)	    {
             TextView tv = (TextView) v;
-			Log.i(Consts.DEBUG_TAG, "Item clicked: " + tv.getText().toString() + "(" + id + ") on " + getFragName() + "(" + getFragNum() + ")");
+			Log.i(Consts.APP_NAME, "Item clicked: " + tv.getText().toString() + "(" + id + ") on " + getFragName() + "(" + getFragNum() + ")");
             Toast.makeText(getActivity(), "Item clicked: " + tv.getText().toString() + "(" + id + ") on " + getFragName() + "(" + getFragNum() + ")", Toast.LENGTH_SHORT).show();
         };
 	}	  

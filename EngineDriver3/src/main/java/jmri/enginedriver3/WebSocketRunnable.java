@@ -38,7 +38,7 @@ class WebSocketRunnable implements Runnable {
                              MainApplication in_mainApp,
                              String in_requestedServer,
                              int in_requestedWebPort) {
-//        Log.d(Consts.DEBUG_TAG, "in WebSocketRunnable() " + in_requestedServer + ":" + in_requestedWebPort);
+//        Log.d(Consts.APP_NAME, "in WebSocketRunnable() " + in_requestedServer + ":" + in_requestedWebPort);
         permaFragment = in_permaFragment;
         mainApp = in_mainApp;
         requestedServer = in_requestedServer;
@@ -47,7 +47,7 @@ class WebSocketRunnable implements Runnable {
 
     @Override
     public void run() {
-//        Log.d(Consts.DEBUG_TAG, "starting WebSocketRunnable.run()");
+//        Log.d(Consts.APP_NAME, "starting WebSocketRunnable.run()");
         Looper.prepare();
         permaFragment.webSocketRunnableHandler = new WebSocketRunnableHandler();  //update ref to thread's handler back in retained frag
 
@@ -61,21 +61,24 @@ class WebSocketRunnable implements Runnable {
             jmriWebSocket.disconnect();
             jmriWebSocket = null;
         }
-        Log.d(Consts.DEBUG_TAG, "ending WebSocketRunnable.run()");
+        Log.d(Consts.APP_NAME, "ending WebSocketRunnable.run()");
     }
 
     private class WebSocketRunnableHandler extends Handler {
 
         @Override
         public void handleMessage(Message msg) {
-//            Log.d(Consts.DEBUG_TAG, "in WebSocketRunnable.handleMessage()");
+//            Log.d(Consts.APP_NAME, "in WebSocketRunnable.handleMessage()");
             switch (msg.what) {
                 case MessageType.SHUTDOWN:
-                    Log.d(Consts.DEBUG_TAG, "in WebSocketRunnable.handleMessage() SHUTDOWN");
+                    Log.d(Consts.APP_NAME, "in WebSocketRunnable.handleMessage() SHUTDOWN");
+                    try {  //tell the server goodbye
+                        jmriWebSocket.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_GOODBYE);
+                    } catch (Exception e) {}  //if anything bad happens here, just ignore it
                     getLooper().quit(); //stop the looper
                     break;
                 case MessageType.HEARTBEAT:
-//                    Log.d(Consts.DEBUG_TAG, "in WebSocketRunnable.handleMessage() HEARTBEAT");
+//                    Log.d(Consts.APP_NAME, "in WebSocketRunnable.handleMessage() HEARTBEAT");
                     try {
                         jmriWebSocket.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_PING);
                     } catch (Exception e) {}  //if anything bad happens here, just ignore it
@@ -83,13 +86,13 @@ class WebSocketRunnable implements Runnable {
                 case MessageType.TURNOUT_CHANGE_REQUESTED:
                     Turnout t = mainApp.getTurnout(msg.obj.toString()); //obj is turnout name
                     String jc = t.getChangeStateJson(msg.arg1);  //arg1 is requested state
-//                    Log.d(Consts.DEBUG_TAG, "in WebSocketRunnable.handleMessage() TURNOUT_CHANGE_REQUESTED " + jc);
+//                    Log.d(Consts.APP_NAME, "in WebSocketRunnable.handleMessage() TURNOUT_CHANGE_REQUESTED " + jc);
                     try {
                         jmriWebSocket.webSocketConnection.sendTextMessage(jc);  //send the request to the server
                     } catch (Exception e) {}  //if anything bad happens here, just ignore it
                     break;
                 default:
-                    Log.w(Consts.DEBUG_TAG, "in WebSocketRunnable.handleMessage() received unknown message type " + msg.what);
+                    Log.w(Consts.APP_NAME, "in WebSocketRunnable.handleMessage() received unknown message type " + msg.what);
                     break;
             }  //end of switch msg.what
             super.handleMessage(msg);
@@ -102,23 +105,25 @@ class WebSocketRunnable implements Runnable {
         @Override
         public void onOpen() {
 //            displayClock = true;
-            Log.d(Consts.DEBUG_TAG,"JmriWebSocket opened");
+            Log.d(Consts.APP_NAME,"JmriWebSocket opened");
             try {
                 this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_TIME);
                 this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_POWER_STATE);
                 this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_ROSTER_LIST);
-                this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_TURNOUT_LIST);
-                this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_ROUTE_LIST);
-                this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_SYSTEMCONNECTIONS);
+                this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_TURNOUTS_LIST);
+                this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_ROUTES_LIST);
+                this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_SYSTEMCONNECTIONS_LIST);
+                this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_CONSISTS_LIST);  //jmri-defined consists
+                this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_PANELS_LIST);
             } catch(Exception e) {
-                Log.w(Consts.DEBUG_TAG,"JmriWebSocket error in onOpen(): "+e.toString());
+                Log.w(Consts.APP_NAME,"JmriWebSocket error in onOpen(): "+e.toString());
                 mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.DISCONNECTED); //tell the app
             }
         }
 
         @Override
         public void onTextMessage(String msgString) {
-//            Log.d(Consts.DEBUG_TAG,"JmriWebSocket got a msg " + msgString);
+//            Log.d(Consts.APP_NAME,"JmriWebSocket got a msg " + msgString);
             JSONObject msgJsonObject = null;
             JSONArray msgJsonArray = null;
             String type = null;
@@ -133,42 +138,50 @@ class WebSocketRunnable implements Runnable {
                 if (type.equals("hello")) {  //process according to type of data received
                     receivedHello(data);
                 } else if (type.equals("power")) {
-                    receivedPower(data);
+                    mainApp.setPowerState(data.getString("state"));
+//                    receivedPower(data);
                 } else if (type.equals("turnout")) {
                     mainApp.setTurnoutState(data.getString("name"), data.getInt("state"));
                 } else if (type.equals("route")) {
                     mainApp.setRouteState(data.getString("name"), data.getInt("state"));
                 } else if (type.equals("pong")) {
+//                    Log.d(Consts.APP_NAME, "JmriWebSocket, pong message received and ignored");
                 } else if (type.equals("goodbye")) {
-                    Log.d(Consts.DEBUG_TAG, "JmriWebSocket, goodbye message received and ignored");
+//                    Log.d(Consts.APP_NAME, "JmriWebSocket, goodbye message received and ignored");
                 } else if (type.equals("memory")) {
                     receivedMemory(data);
                 } else if (type.equals("error")) {  //log and show the error message
                     String s = data.getString("message");
-                    Log.w(Consts.DEBUG_TAG, "received error from JmriWebSocket: " + s);
+                    Log.w(Consts.APP_NAME, "received error from JmriWebSocket: " + s);
                     mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.MESSAGE_SHORT, s);
                 } else {
-                    Log.w(Consts.DEBUG_TAG, "JmriWebSocket, unexpected message received " + msgString);
+                    Log.w(Consts.APP_NAME, "JmriWebSocket, unexpected message received " + msgString);
                 }
             } catch (JSONException e) {  //not a json object, treat as a json array
                 try {
                     msgJsonArray = new JSONArray(msgString);
                     if (msgJsonArray.length() < 1) return;  //ignore empty lists
-                    type = msgJsonArray.getJSONObject(0).getString("type");  //get type from first, all should be identical
+                    type = msgJsonArray.getJSONObject(0).getString("type");  //get type from first, assume all identical TODO:not true for panels
                     if (type.equals("turnout")) {  //process according to type of array elements received
                         receivedTurnoutList(msgJsonArray);
                     } else if (type.equals("route")) {
                         receivedRouteList(msgJsonArray);
                     } else if (type.equals("rosterEntry")) {
-                        Log.d(Consts.DEBUG_TAG,"RosterEntry message=" + msgString);
+                        Log.d(Consts.APP_NAME,"RosterEntry array=" + msgString);
                         receivedRosterEntryList(msgJsonArray);
                     } else if (type.equals("systemConnection")) {
-                        Log.d(Consts.DEBUG_TAG,"systemConnection message=" + msgString);
+                        Log.d(Consts.APP_NAME,"systemConnection array=" + msgString);
+                    } else if (type.equals("consist")) {
+                        Log.d(Consts.APP_NAME,"consist array=" + msgString);
+                    } else if (type.equals("Layout")
+                            || type.equals("Control Panel")
+                            || type.equals("Panel")) {
+                        Log.d(Consts.APP_NAME,"panel array=" + msgString);
                     } else {
-                        Log.w(Consts.DEBUG_TAG, "unsupported json array received="+msgString);
+                        Log.w(Consts.APP_NAME, "unsupported json array received="+msgString);
                     }
                 } catch (JSONException e1) {
-                    Log.d(Consts.DEBUG_TAG, "error converting to json object or array.  ignoring " + msgString);
+                    Log.d(Consts.APP_NAME, "error converting to json object or array.  ignoring " + msgString);
 //                    return;
                 }
             }
@@ -189,7 +202,7 @@ class WebSocketRunnable implements Runnable {
                 }
             }
             mainApp.setTurnoutList(tl);  //replace the shared var with the newly populated one
-            Log.d(Consts.DEBUG_TAG, "turnout list received containing " + tl.size() + " entries.");
+            Log.d(Consts.APP_NAME, "turnout list received containing " + tl.size() + " entries.");
         }
 
         private void receivedRouteList(JSONArray msgJsonArray) throws JSONException {
@@ -206,7 +219,7 @@ class WebSocketRunnable implements Runnable {
                 }
             }
             mainApp.setRouteList(rl);  //replace the shared var with the newly populated one
-            Log.d(Consts.DEBUG_TAG, "route list received containing " + rl.size() + " entries.");
+            Log.d(Consts.APP_NAME, "route list received containing " + rl.size() + " entries.");
         }
 
         private void receivedRosterEntryList(JSONArray msgJsonArray) throws JSONException {
@@ -220,12 +233,12 @@ class WebSocketRunnable implements Runnable {
                 rl.put(data.getString("name"), r);  //add this entry to the list, keyed by name
             }
             mainApp.setRosterEntryList(rl);  //replace the shared var with the newly populated one
-            Log.d(Consts.DEBUG_TAG, "roster list received containing " + rl.size() + " entries.");
+            Log.d(Consts.APP_NAME, "roster list received containing " + rl.size() + " entries.");
         }
 
         private void receivedMemory(JSONObject data) throws JSONException {
             int displayClockHrs = 0;
-//                    Log.d(Consts.DEBUG_TAG,"memory rcvd, name=" + data.getString("name") +
+//                    Log.d(Consts.APP_NAME,"memory rcvd, name=" + data.getString("name") +
 //                            ", value=" + data.getString("value"));
             //is it a clock update?, if so, format, set the shared var, and shout about it
             if (Consts.CLOCK_MEMORY_NAME.equals(data.getString("name"))) {
@@ -248,20 +261,12 @@ class WebSocketRunnable implements Runnable {
                     mainApp.setJmriTime(currentTime);
                 }
             } else {
-                Log.d(Consts.DEBUG_TAG, "json memory item received, but not expected " + data.toString());
-            }
-        }
-
-        private void receivedPower(JSONObject data) throws JSONException {
-            Log.d(Consts.DEBUG_TAG, "current power state = " + data.getString("state"));  //TODO: show description
-            if (mainApp.getPowerState() == null
-                    || !mainApp.getPowerState().equals(data.getString("state"))) {
-                mainApp.setPowerState(data.getString("state"));
+                Log.d(Consts.APP_NAME, "json memory item received, but not expected " + data.toString());
             }
         }
 
         private void receivedHello(JSONObject data) throws JSONException {
-            Log.d(Consts.DEBUG_TAG, "hello message received, data=" + data.toString());
+            Log.d(Consts.APP_NAME, "hello message received, data=" + data.toString());
             mainApp.setServer(requestedServer);  //update shared vars now that we know we're connected
             mainApp.setWebPort(requestedWebPort);
             mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.CONNECTED);
@@ -273,18 +278,18 @@ class WebSocketRunnable implements Runnable {
 
         @Override
         public void onClose(int code, String closeReason) {
-            String s = "JmriWebSocket onClose(), code=" + code + ", reason=" + closeReason;
-            Log.d(Consts.DEBUG_TAG,s);
+            String s = closeReason + "\nJmriWebSocket onClose(), code=" + code;
+            Log.d(Consts.APP_NAME,s);
             mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.MESSAGE_LONG, s); //tell the user TODO:don't tell if close was intentional
             mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.DISCONNECTED); //tell the app
         }
 
         private void connect() {
-            Log.d(Consts.DEBUG_TAG,"JmriWebSocket connection attempt to " + requestedServer+":"+requestedWebPort);
+            Log.d(Consts.APP_NAME,"JmriWebSocket connection attempt to " + requestedServer+":"+requestedWebPort);
             try {
                 this.webSocketConnection.connect(createUri(), this);
             } catch (WebSocketException e) {
-                Log.w(Consts.DEBUG_TAG,"JmriWebSocket connect failed: "+e.toString());
+                Log.w(Consts.APP_NAME,"JmriWebSocket connect failed: "+e.toString());
                 mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.DISCONNECTED); //tell the app
             }
         }

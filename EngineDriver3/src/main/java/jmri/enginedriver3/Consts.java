@@ -7,7 +7,7 @@ package jmri.enginedriver3;
  */
 public final class Consts  {
 
-	public static final String DEBUG_TAG = "EngineDriver3";
+	public static final String APP_NAME = "EngineDriver3";
 
     public static final String ALL_FRAGMENTS = "all fragments";
     public static final String WEB = "web";
@@ -16,7 +16,6 @@ public final class Consts  {
     public static final String TURNOUT = "turnout";
     public static final String ROUTE = "route";
 	public static final String CONNECT = "connect";
-    public static final String PREFS = "prefs";
 
     public static final int STATE_CLOSED = 2;
     public static final String STATE_CLOSED_DESC = "Closed";
@@ -61,11 +60,14 @@ public final class Consts  {
 
     public static final String JSON_REQUEST_TIME = "{\"type\":\"memory\",\"data\":{\"name\":\"IMCURRENTTIME\"}}";
     public static final String JSON_REQUEST_POWER_STATE  = "{\"type\":\"power\",\"data\":{}}";
-    public static final String JSON_REQUEST_TURNOUT_LIST  = "{\"type\":\"list\",\"list\":\"turnouts\"}";
-    public static final String JSON_REQUEST_ROUTE_LIST  = "{\"type\":\"list\",\"list\":\"routes\"}";
+    public static final String JSON_REQUEST_TURNOUTS_LIST = "{\"type\":\"list\",\"list\":\"turnouts\"}";
+    public static final String JSON_REQUEST_ROUTES_LIST = "{\"type\":\"list\",\"list\":\"routes\"}";
     public static final String JSON_REQUEST_ROSTER_LIST  = "{\"type\":\"list\",\"list\":\"roster\"}";
-    public static final String JSON_REQUEST_PING = "{\"type\":\"ping\",\"data\":{}}";
-    public static final String JSON_REQUEST_SYSTEMCONNECTIONS = "{\"type\":\"list\",\"list\":\"systemConnections\"}";
+    public static final String JSON_REQUEST_PING = "{\"type\":\"ping\"}";
+    public static final String JSON_REQUEST_GOODBYE = "{\"type\":\"goodbye\"}";
+    public static final String JSON_REQUEST_SYSTEMCONNECTIONS_LIST = "{\"type\":\"list\",\"list\":\"systemConnections\"}";
+    public static final String JSON_REQUEST_CONSISTS_LIST  = "{\"type\":\"list\",\"list\":\"consists\"}";
+    public static final String JSON_REQUEST_PANELS_LIST  = "{\"type\":\"list\",\"list\":\"panels\"}";
 
 
 

@@ -35,39 +35,42 @@ class JmdnsRunnable implements Runnable {
 
     //create, expecting refs to permaFrag and mainApp passed in
     public JmdnsRunnable(PermaFragment in_permaFragment, MainApplication in_mainApp) {
-        Log.d(Consts.DEBUG_TAG, "in JmdnsRunnable()");
+        Log.d(Consts.APP_NAME, "in JmdnsRunnable()");
         permaFragment = in_permaFragment;
         mainApp = in_mainApp;
     }
 
     @Override
     public void run() {
-        Log.d(Consts.DEBUG_TAG, "starting JmdnsRunnable.run()");
+        Log.d(Consts.APP_NAME, "starting JmdnsRunnable.run()");
         Looper.prepare();
         permaFragment.jmdnsRunnableHandler = new Jmdns_Handler();  //update ref to thread's handler back in retained frag
-        startJmdnsListeners();
-        Looper.loop();
-        Log.d(Consts.DEBUG_TAG, "ending JmdnsRunnable.run()");
+        if (startJmdnsListeners()) {
+            Looper.loop();
+        }
+        Log.d(Consts.APP_NAME, "ending JmdnsRunnable.run()");
     }
 
-    private void startJmdnsListeners() {
-        Log.d(Consts.DEBUG_TAG, "Starting JmdnsListeners");
+    //returns true if started successfully, false if not
+    private boolean startJmdnsListeners() {
+        Log.d(Consts.APP_NAME, "Attempting to start JmdnsListeners");
         android.net.wifi.WifiManager wifi = (android.net.wifi.WifiManager) mainApp.getMainActivity().getSystemService(android.content.Context.WIFI_SERVICE);
-        multicastLock = wifi.createMulticastLock(Consts.DEBUG_TAG);
+        multicastLock = wifi.createMulticastLock(Consts.APP_NAME);
         multicastLock.setReferenceCounted(true);
         multicastLock.acquire();
         WifiInfo wifiinfo = wifi.getConnectionInfo();
         int intAddr = wifiinfo.getIpAddress();
         if (intAddr == 0) {  //must have a local address, else show error and don't start anything TODO: end the thread?
-            Log.w(Consts.DEBUG_TAG, "No local IP address found!");
+            Log.w(Consts.APP_NAME, "No local IP address found!");
             mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.MESSAGE_LONG, "ERROR: No local IP address found!");
+            return false;
         } else {
             byte[] byteAddr = new byte[]{(byte) (intAddr & 0xff), (byte) (intAddr >> 8 & 0xff), (byte) (intAddr >> 16 & 0xff),
                     (byte) (intAddr >> 24 & 0xff)};
             try {
                 Inet4Address deviceAddr = (Inet4Address) Inet4Address.getByAddress(byteAddr);
                 String deviceName = deviceAddr.toString().substring(1);        //strip off leading /
-                Log.d(Consts.DEBUG_TAG, "startJmdnsListeners with local IP " + deviceName);
+                Log.d(Consts.APP_NAME, "startJmdnsListeners with local IP " + deviceName);
                 jmdns = JmDNS.create(deviceAddr, deviceName);  //pass ip as name to avoid hostname lookup attempt
                 jmdns.addServiceListener(jmdnsType, listener = new ServiceListener() {
 
@@ -79,7 +82,7 @@ class JmdnsRunnable implements Runnable {
                         }
                         String jmriProperty= ev.getInfo().getPropertyString("jmri");  //this property is only set by a jmri server
                         additions += " jmri=" + jmriProperty;
-                        Log.d(Consts.DEBUG_TAG, "Service resolved: " + ev.getInfo().getQualifiedName() + " port:" + ev.getInfo().getPort() + " " + additions);
+                        Log.d(Consts.APP_NAME, "Service resolved: " + ev.getInfo().getQualifiedName() + " port:" + ev.getInfo().getPort() + " " + additions);
 
                         //stop if this server isn't jmri
                         if (jmriProperty==null) return;
@@ -113,7 +116,7 @@ class JmdnsRunnable implements Runnable {
 
                     @Override
                     public void serviceRemoved(ServiceEvent ev) {
-                        Log.d(Consts.DEBUG_TAG, "Service removed: " + ev.getName());
+                        Log.d(Consts.APP_NAME, "Service removed: " + ev.getName());
                         //remove this name from the list (if found)
                         String host_name = ev.getInfo().getName();
                         ArrayList<HashMap<String, String>> dsl = new ArrayList<HashMap<String, String>>(mainApp.getDiscoveredServersList());  //make a copy to work on
@@ -134,29 +137,29 @@ class JmdnsRunnable implements Runnable {
                         jmdns.requestServiceInfo(event.getType(), event.getName(), 1);
                     }
                 });
-//            serviceInfo = ServiceInfo.create("_test._tcp.local.", "AndroidTest", 0, "plain test service from android");
-//            jmdns.registerService(serviceInfo);
             } catch (IOException e) {
                 e.printStackTrace();
-                return;
+                return false;
             }
         }
+        Log.d(Consts.APP_NAME, "JmdnsListeners started");
+        return true;
     }
 
     private void stopJmdns() {
         try {
-            Log.d(Consts.DEBUG_TAG, "removing jmdns listener");
+            Log.d(Consts.APP_NAME, "removing jmdns listener");
             jmdns.removeServiceListener(jmdnsType, listener);
             multicastLock.release();
         } catch (Exception e) {
-            Log.d(Consts.DEBUG_TAG, "exception in jmdns.removeServiceListener()");
+            Log.d(Consts.APP_NAME, "exception in jmdns.removeServiceListener()");
         }
         try {
-            Log.d(Consts.DEBUG_TAG, "calling jmdns.close()");
+            Log.d(Consts.APP_NAME, "calling jmdns.close()");
             jmdns.close();
-            Log.d(Consts.DEBUG_TAG, "after jmdns.close()");
+            Log.d(Consts.APP_NAME, "after jmdns.close()");
         } catch (Exception e) {
-            Log.d(Consts.DEBUG_TAG, "exception in jmdns.close()");
+            Log.d(Consts.APP_NAME, "exception in jmdns.close()");
         }
         jmdns = null;
     }
@@ -165,14 +168,14 @@ class JmdnsRunnable implements Runnable {
 
         @Override
         public void handleMessage(Message msg) {
-//            Log.d(Consts.DEBUG_TAG, "in JmdnsRunnable.handleMessage()");
+//            Log.d(Consts.APP_NAME, "in JmdnsRunnable.handleMessage()");
             switch (msg.what) {
                 case MessageType.SHUTDOWN:
                     stopJmdns();
                     this.getLooper().quit(); //stop the looper
                     break;
                 default:
-                    Log.w(Consts.DEBUG_TAG, "in JmdnsRunnable.handleMessage() received unknown message type " + msg.what);
+                    Log.w(Consts.APP_NAME, "in JmdnsRunnable.handleMessage() received unknown message type " + msg.what);
                     break;
 
             }  //end of switch msg.what

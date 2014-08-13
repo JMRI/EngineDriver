@@ -3,8 +3,8 @@ single activity with multiple dynafrags:
   exactly 1 of: prefs, connect, about
   1 to n: throttle
   0 to n: turnouts, routes, web (trains, panels, frames, etc.)
-the activity will be recreated on rotation.  its job is simply to
-  set up the tabs, dynafrags and the permafrag
+the activity will be recreated on rotation.  its job is to set up the
+  tabs, drawermenu, dynafrags and the permafrag
 all inter-process comm is via handler messages, to allow for queuing
 application object has getters and setters for all shared entities
 shared variable setters should send "xx_CHANGED" messages to the activity,
@@ -22,6 +22,8 @@ shared list of dynafrags is used by activity, each dynafrag backrefs its handler
 dynafrags should do very little "work", mostly ui, nothing needing SHUTDOWN, consider them transient
 dynafrags should _read_ from shared variables, letting the permafrag handle all updates to them
 all comm with jmri is done via the json websocket server, including lists of items.
+"Add a Tab" menu item should present a smart list of possibilities, some hard-coded, some from panel list, etc.
+"Remove a Tab" should present a smart list of possibilities, e.g. don't show Connect
 
 steps:
 1) get single activity with multiple, similar "listview" fragments working at OS 3.0, and understand how fragment width works.
@@ -42,18 +44,20 @@ steps:
 16) have server-dependent web fragments rebuild on CONNECTED
 17) create Turnout and Route Fragments,
 18) add background roster details retrieval
-) prompt for app exit on back, only if locos are acquired?, only if connected?
+19) prompt for app exit on back only if connected. (only if locos are acquired?)
+20) add refresh button to web fragments
+21) save/restore fragment list+settings on activity create and pause
+) open drawer menu when hardware button pressed
+) add dialogs, called from drawer menu, to add new fragments and delete unneeded ones.
+) allow one fragment to be the default for portrait, and one for landscape,
+    to provide the current "auto-web on rotation" feature.  Only when connected.
 ) add notification icon and action
 ) add power button to title bar
-) add refresh button to web fragments
-) add settings icon to each fragment, (dropping hard-coded urls) and deal with persistent storage.
-) add mechanism to add new fragments and delete unneeded ones.  fragment list+settings should be restored on app start.
+) add settings icon to each fragment, (dropping hard-coded urls) and store as json shared prefs
 ) add proper throttle fragment (hard-coded address)
 ) add address/roster selection/entry dialog (determine if activity or fragment or popup dialog, or whatever)
 ) determine if various throttle "flavors" should be settings for a single fragment type, or multiple fragment types.
 ) add additional throttle flavors
-) enable webfrag's back button, remember url and zoom
-) make webfrag width a pref
 ) add phone listener
 
 things to "improve" from ED 2.x
@@ -65,7 +69,9 @@ use json server instead of withrottle server
 cleanup/rethink thread structure, use fewer patterns, avoid threads starting threads
 loss of connection should be more obvious, clearing screens, etc.
 move code into separate members whenever possible, vs. adding everything to TA and mainapp
+always use set()/get() vs. direct access to shared variables
 use an object-oriented design where possible
+eliminate the "copies" of members and method currently used to support three throttles (xxT, xxS, xxG)
 improve jmdns discovery, including on quick exit and restart
 
 document old structure:
@@ -84,9 +90,12 @@ fragments are very transient, (except for PermaFrag), which is why you avoid fra
 the activity can "lookup" each fragment by position, positioning to the frag will create it (if needed)
 fragments update their handler ref, which activity uses to determine if fragment is alive or not
 not sure how best to handle Throttles in this new transient dynafrag world.
+web pages will also reload on fragment switch, which may need to be addressed
 minSDK is 8 due to AutoBahn WebSocket library
 listadapters are limited to fairly simple hashmaps, so the shared lists will be robust objects, then copied to a
   local list, sorted, filtered, etc. by the ui fragment.
+the gson converter failed with StackOverflowError on some devices when I tried to convert rich objects, so
+  I convert them to simple HashMaps, with any pointers removed, and save/restore those instead
 
 Shared objects:
 discovered server list (maintained by jmdns thread, read only by ConnectFrag)
