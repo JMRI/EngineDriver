@@ -13,6 +13,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -20,7 +21,6 @@ import android.support.v7.app.*;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,7 +32,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -40,15 +39,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     private static MainApplication mainApp; // hold pointer to mainApp
 //    private ED3PagerAdapter pagerAdapter;  //set in onCreate()
 
-//    public ActionBar mActionBar;
+    //    public ActionBar mActionBar;
     private static int fragmentsPerScreen = 1; //will be changed later
 
     private ViewPager viewPager = null;
     private DrawerLayout drawerLayout = null;
     private ListView drawerListView = null;
     private ActionBarDrawerToggle drawerListener = null;
+    private ED3PagerAdapter pagerAdapter = null;
+    private boolean tabsChangeInProgress = false;  //used to force fragment reload after changes
 
-//    private FragmentManager fragmentManager = null;  //set in this.onCreate()
+    //    private FragmentManager fragmentManager = null;  //set in this.onCreate()
     public ActionBar actionBar = null;
     private String[] main_menu;
     private PermaFragment permaFrag = null;  //created in activity.onCreate()
@@ -73,27 +74,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         viewPager = (ViewPager) findViewById(R.id.mainActivityPager);
         actionBar = getSupportActionBar();
 
-        main_menu = getResources().getStringArray(R.array.main_menu);
-
-        drawerListView = (ListView) findViewById(R.id.drawerList);
-        drawerListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, main_menu));
-        drawerListView.setOnItemClickListener(new drawer_item_clicked());
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        drawerListener = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer,
-                R.string.drawer_open, R.string.close_button) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-//                Log.d(Consts.APP_NAME, "drawer opened.");
-            }
-            @Override
-            public void onDrawerClosed(View drawerView) {
-//                Log.d(Consts.APP_NAME, "drawer closed.");
-            }
-        };
-        drawerLayout.setDrawerListener(drawerListener);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        setupDrawerLayout();
 
         //create (or find) the nonUI fragment to handle all threads and updates
         if (savedInstanceState == null) {
@@ -117,7 +98,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         addTabs(actionBar);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        ED3PagerAdapter pagerAdapter = new ED3PagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new ED3PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -142,11 +123,40 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     }
 
+    private void setupDrawerLayout() {
+        main_menu = getResources().getStringArray(R.array.main_menu);  //TODO: improve this
+        drawerListView = (ListView) findViewById(R.id.drawerList);
+        drawerListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, main_menu));
+        drawerListView.setOnItemClickListener(new drawer_item_clicked());
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        drawerListener = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer,
+                R.string.drawer_open, R.string.close_button) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+//                Log.d(Consts.APP_NAME, "drawer opened.");
+            }
+            @Override
+            public void onDrawerClosed(View drawerView) {
+//                Log.d(Consts.APP_NAME, "drawer closed.");
+            }
+        };
+        drawerLayout.setDrawerListener(drawerListener);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
     @Override
     protected void onPause() {
         Log.d(Consts.APP_NAME,"in MainActivity.onPause() dynaFrags=" + mainApp.getDynaFrags().size());
         saveDynaFrags();
         super.onPause();
+    }
+
+    @Override
+    protected void onStart() {
+        SetSubTitle();
+        super.onStart();
     }
 
     //if the hardware menu button is pressed, open/close the drawer.  Not per android specs, but
@@ -216,10 +226,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             drawerLayout.closeDrawer(drawerListView);
             //TODO: handle this in a less-fragile way, removing the string comparisons
             if (main_menu[i].equals("Add a Tab")) {
+                showAddTabDialog();
             } else if (main_menu[i].equals("Remove a Tab")) {
+                showRemoveTabDialog();
             } else if (main_menu[i].equals("Application Preferences")) {
             } else if (main_menu[i].equals("Disconnect")) {  //tell the permafrag to disconnect, if connected
-                if (mainApp.getServer()!=null) {
+                if (mainApp.isConnected()) {
                     mainApp.sendMsg(permaFrag.permaFragHandler, MessageType.DISCONNECT_REQUESTED);
                 }
                 positionToTab("Connect");
@@ -228,9 +240,19 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             } else if (main_menu[i].equals("About")) {
                 positionToTab("About");
             } else if (main_menu[i].equals("Exit")) {
-                VerifyExit();
+                verifyExit();
             }
         }
+    }
+    public void showRemoveTabDialog() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        RemoveTabDialogFragment removeTabDialogFragment = new RemoveTabDialogFragment();
+        removeTabDialogFragment.show(fragmentManager, "Remove a Tab");
+    }
+    public void showAddTabDialog() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        AddTabDialogFragment addTabDialogFragment = new AddTabDialogFragment();
+        addTabDialogFragment.show(fragmentManager, "Add a Tab");
     }
 
     private void addTabs(ActionBar actionBar) {
@@ -248,7 +270,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction) {
         viewPager.setCurrentItem(tab.getPosition());
     }
-    @Override
     public void onTabUnselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction) {
     }
     @Override
@@ -274,11 +295,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void onBackPressed() {
-        VerifyExit();
+        verifyExit();
     }
     //if connected, make sure the user wants to exit
-    private void VerifyExit() {
-        if (mainApp.getServer()==null) {
+    private void verifyExit() {
+        if (!mainApp.isConnected()) {
             MainActivity.this.finish();
         } else {
             new AlertDialog.Builder(this)
@@ -292,6 +313,55 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     .setNegativeButton("No", null)
                     .show();
         }
+    }
+
+    public void removeTab(String in_tabToRemove) {
+        Log.d(Consts.APP_NAME, "in removeTab(" + in_tabToRemove + ")");
+        //make a copy with all entries except the one to be removed
+        SparseArray<DynaFragEntry> tdfsa = new SparseArray<DynaFragEntry>();
+        int j=0;
+        int removedTab = -1;
+        for (int i = 0; i < mainApp.getDynaFrags().size(); i++) {
+            DynaFragEntry tdfe = mainApp.getDynaFrags().get(i);
+            if (!tdfe.getName().equals(in_tabToRemove)) {
+                removedTab = i;
+                tdfsa.put(j, mainApp.getDynaFrags().get(i));
+                j++;
+            }
+        }
+        mainApp.setDynaFrags(tdfsa);  //replace the list with this new, shorter one
+
+        //this is tricky, due to the pager trying to work while the change is in-progress
+        viewPager.setAdapter(null);  //disconnect pager while changing
+        actionBar.removeAllTabs();  //remove all the tabs
+        addTabs(actionBar);         //put back the new list of tabs
+        tabsChangeInProgress = true;
+        pagerAdapter.notifyDataSetChanged();  //tell the adapter you changed something, and force reload
+        tabsChangeInProgress = false;
+        viewPager.setAdapter(pagerAdapter);  //reconnect the pager
+
+    }
+
+    public void addNewTab(String in_jsonTabHashMap) {
+        Log.d(Consts.APP_NAME, "in addNewTab(" + in_jsonTabHashMap + ")");
+
+        //convert the json hashmap into a real one
+        Gson gson = new Gson();
+        HashMap<String, String> hm = gson.fromJson(in_jsonTabHashMap, new TypeToken<HashMap<String, String>>() {}.getType());
+        DynaFragEntry tdfe = new DynaFragEntry(hm.get("ft_name"), //make a new frag entry
+                hm.get("ft_type"), Integer.parseInt(hm.get("ft_width")), hm.get("ft_data"));
+
+        mainApp.getDynaFrags().put(mainApp.getDynaFrags().size(), tdfe); //add this entry at end of list
+
+        //this is tricky, due to the pager trying to work while the change is in-progress
+        viewPager.setAdapter(null);  //disconnect pager while changing
+        actionBar.removeAllTabs();  //remove all the tabs
+        addTabs(actionBar);         //put back the new list of tabs
+        tabsChangeInProgress = true;
+        pagerAdapter.notifyDataSetChanged();  //tell the adapter you changed something, and force reload
+        tabsChangeInProgress = false;
+        viewPager.setAdapter(pagerAdapter);  //reconnect the pager
+
     }
 
     class ED3PagerAdapter extends FragmentStatePagerAdapter {
@@ -327,6 +397,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         @Override
         public int getCount() {
             return mainApp.getDynaFrags().size();
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            //force reload if tab positions are changing
+            if (tabsChangeInProgress) {
+                return PagerAdapter.POSITION_NONE;
+            }
+            return super.getItemPosition(object);
         }
 
         @Override
@@ -372,6 +451,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 case MessageType.RAILROAD_CHANGED:
                     SetSubTitle();
                     break;
+                case MessageType.REMOVE_TAB_REQUESTED:
+                    removeTab(msg.obj.toString()); //this has the tab name
+                    break;
+                case MessageType.ADD_TAB_REQUESTED:
+                    addNewTab(msg.obj.toString());  //this has a json string of a hashmap of fragment settings
+                    break;
                 case MessageType.HEARTBEAT:
                 case MessageType.POWER_STATE_CHANGED:
                     break;
@@ -412,6 +497,5 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
         actionBar.setSubtitle(s);
     }
-
 
 }

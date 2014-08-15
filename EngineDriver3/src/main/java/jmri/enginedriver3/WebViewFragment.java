@@ -165,8 +165,9 @@ public class WebViewFragment extends DynaFragment implements OnClickListener {
     }
     @Override
     public void onStop() {
+        Log.d(Consts.APP_NAME, "in WebViewFragment.onStop()");
         //clear this to avoid late messages
-        mainApp.getDynaFrags().get(getFragNum()).setHandler(null);
+        if (mainApp.getDynaFrags().get(getFragNum())!=null) mainApp.getDynaFrags().get(getFragNum()).setHandler(null);
         super.onStop();
     }
     private class Fragment_Handler extends Handler {
@@ -189,10 +190,10 @@ public class WebViewFragment extends DynaFragment implements OnClickListener {
     private String getUrl() {
         String currentUrl = getInitialUrl();
         if (!getInitialUrl().contains("://")) {  //if full path is set, show url, no need to wait for connect
-            if (mainApp.getServer() == null) {   //no connection, show error page
-                currentUrl = "file:///android_asset/not_connected.html";
-            } else {  //build url from shared vars and use it
+            if (mainApp.isConnected()) {   //no connection, show error page
                 currentUrl = "http://" + mainApp.getServer() + ":" + mainApp.getWebPort() + getInitialUrl();
+            } else {  //build url from shared vars and use it
+                currentUrl = "file:///android_asset/not_connected.html";
             }
         }
         return currentUrl;

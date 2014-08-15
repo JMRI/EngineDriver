@@ -44,7 +44,7 @@ interface MessageType
 //  public static final int REQ_VELOCITY=20; 		//
 //  public static final int REQ_DIRECTION=21; 	//
 //  public static final int WEBVIEW_LOC=22;		//
-  public static final int ROSTERENTRY_LIST_CHANGED=23;		//
+    public static final int ROSTERENTRY_LIST_CHANGED=23;		//
 //  public static final int WIT_CON_RETRY=24;		//
 //  public static final int WIT_CON_RECONNECT=25;	//
 //  public static final int INITIAL_WEBPAGE=26;	//
@@ -56,5 +56,7 @@ interface MessageType
     public static final int MESSAGE_LONG =32;		//
     public static final int RAILROAD_CHANGED=33;		//
     public static final int LOOP=34;		//
-    public static final int TURNOUT_CHANGE_REQUESTED=35;		//
+    public static final int TURNOUT_CHANGE_REQUESTED=35;    //Turnouts->webSocket (systemName, newState)
+    public static final int REMOVE_TAB_REQUESTED=36;		//removeTabDialog->activity (tabName)
+    public static final int ADD_TAB_REQUESTED=37;		    //addTabDialog->activity (hashmap of settings for new tab)
 }

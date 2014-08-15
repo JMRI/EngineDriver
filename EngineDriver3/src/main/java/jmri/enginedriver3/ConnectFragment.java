@@ -111,8 +111,9 @@ public class ConnectFragment extends DynaFragment {
 
     @Override
     public void onStop() {
+        Log.d(Consts.APP_NAME, "in ConnectFragment.onStop()");
         //clear this to avoid late messages
-        mainApp.getDynaFrags().get(getFragNum()).setHandler(null);
+        if (mainApp.getDynaFrags().get(getFragNum())!=null) mainApp.getDynaFrags().get(getFragNum()).setHandler(null);
         //save the recent connections list to sharedprefs as json string
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("ConnectFragment", Context.MODE_PRIVATE);
         SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
@@ -170,7 +171,7 @@ public class ConnectFragment extends DynaFragment {
                 case MessageType.DISCONNECTED:
                     Log.d(Consts.APP_NAME, "in ConnectFragment.handleMessage() DIS/CONNECTED");
                     SetConnectedMessage();
-                    if (mainApp.getServer() != null) {
+                    if (mainApp.isConnected()) {
                         UpdateRecentServerList();
                     }
                     break;
@@ -184,7 +185,7 @@ public class ConnectFragment extends DynaFragment {
     private void SetConnectedMessage() {
         View tv = fragmentView.findViewById(R.id.cf_footer);
         if (tv != null) {
-            if (mainApp.getServer() == null) {
+            if (!mainApp.isConnected()) {
                 ((TextView)tv).setText("Not Connected");
             } else {
                 String s = "Connected to " + mainApp.getServer() + ":" + mainApp.getWebPort() +

@@ -18,12 +18,22 @@ import android.util.SparseArray;
 
 public class MainApplication extends Application {
 
-    private SparseArray<DynaFragEntry> _dynaFrags = new SparseArray<DynaFragEntry>();  //this is built in activity TODO:convert to get/set
+    //definitions of the fragments (tabs) in use.  Note that name is expected to be unique
+    private SparseArray<DynaFragEntry> _dynaFrags = new SparseArray<DynaFragEntry>();  //this is built in activity
     public SparseArray<DynaFragEntry> getDynaFrags() { return _dynaFrags; }
     public void setDynaFrags(SparseArray<DynaFragEntry> dynaFrags) { this._dynaFrags = dynaFrags; }
     //convenience method to set the handler for the specified fragment number, called from each dynafrag to set and to clear
     public void setDynaFragHandler(Integer in_fragmentNum, Handler in_handler) {
         this._dynaFrags.get(in_fragmentNum).setHandler(in_handler);
+    }
+    //convenience method to determine if a tab name is already in use
+    public boolean dynaFragExists(String in_tabName) {
+        for (int i = 0; i < _dynaFrags.size(); i++) {
+            if (_dynaFrags.get(i).getName().equals(in_tabName)) {
+                return true;
+            }
+        }
+        return false;
     }
 //    mainApp.setDynaFragHandler(getFragNum(), new Fragment_Handler());
 
@@ -100,6 +110,10 @@ public class MainApplication extends Application {
 	private String _server = null;
 	public String getServer() { return _server; }
 	public void setServer(String server) { _server = server; }
+
+    public boolean isConnected() {  //convenience method for checking connectivity to jmri server
+        return (_server!=null);
+    }
 
 	//JMRI web server port #
 	private int _webPort = -1;

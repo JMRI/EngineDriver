@@ -66,7 +66,7 @@ public class TurnoutsFragment extends DynaFragment {
     public void onStart() {
         super.onStart();
         started++;
-        Log.d(Consts.APP_NAME, "in TurnoutsFragment.onStart() " + started);
+        Log.d(Consts.APP_NAME, "in TurnoutsFragment.onStart() fragNum=" + getFragNum());
 
         //Set up a list adapter to present list of turnouts to the UI.
         //uses local copy of the list in mainapp, which is managed by the websocket thread
@@ -88,7 +88,7 @@ public class TurnoutsFragment extends DynaFragment {
             }
         };
 
-        ListView tlv = (ListView) getActivity().findViewById(R.id.turnouts_list);
+        ListView tlv = (ListView) fragmentView.findViewById(R.id.turnouts_list);
         tlv.setAdapter(turnoutsListAdapter);
         tlv.setSelectionFromTop(turnoutsListSavedPosition, 0);  //position to saved position
 
@@ -111,8 +111,9 @@ public class TurnoutsFragment extends DynaFragment {
 
     @Override
     public void onStop() {
+        Log.d(Consts.APP_NAME, "in TurnoutsFragment.onStop() fragNum=" + getFragNum());
         //clear this to avoid late messages
-        mainApp.getDynaFrags().get(getFragNum()).setHandler(null);
+        if (mainApp.getDynaFrags().get(getFragNum())!=null) mainApp.getDynaFrags().get(getFragNum()).setHandler(null);
         super.onStop();
     }
 
@@ -143,11 +144,14 @@ public class TurnoutsFragment extends DynaFragment {
 //            Log.d(Consts.APP_NAME, "in TurnoutsFragment.handleMessage()");
             switch (msg.what) {
                 case MessageType.TURNOUT_LIST_CHANGED:
-                    Log.d(Consts.APP_NAME, "in TurnoutsFragment.handleMessage() TURNOUTS_LIST_CHANGED");
+//                    Log.d(Consts.APP_NAME, "in TurnoutsFragment.handleMessage() TURNOUTS_LIST_CHANGED fragNum=" + getFragNum());
                     RefreshLocalCopyOfTurnoutList();
                     turnoutsListAdapter.notifyDataSetChanged();
                     SetFooterMessage();
                     break;
+                case MessageType.CONNECTED:
+                case MessageType.DISCONNECTED:
+                    break;  //do nothing on these
                 default:
                     Log.d(Consts.APP_NAME, "in TurnoutsFragment.handleMessage() not handled: " + msg.what);
             }  //end of switch msg.what

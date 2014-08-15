@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/label_fragment_choices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tab Type:" />
+
+    <Spinner
+        android:id="@+id/spinner_fragment_choices"
+        android:layout_below="@+id/label_fragment_choices"
+        android:layout_width="match_parent"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/label_fragment_width"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set initial width:"
+        android:layout_below="@+id/tab_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:id="@+id/spinner_fragment_width"
+        android:layout_width="fill_parent"
+        android:entries="@array/FragmentWidths"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tab_name"
+        android:layout_toRightOf="@+id/label_fragment_width"
+        android:layout_toEndOf="@+id/label_fragment_width" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tab_name"
+        android:text="Tab Name"
+        android:layout_below="@+id/spinner_fragment_choices"
+        android:layout_toRightOf="@+id/label_fragment_width"
+        android:layout_toEndOf="@+id/label_fragment_width" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tab Name:"
+        android:id="@+id/label_tab_name"
+        android:layout_below="@+id/spinner_fragment_choices"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/ButtonOk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="OK"
+        android:layout_below="@+id/spinner_fragment_width"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/ButtonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Cancel"
+        android:layout_alignTop="@+id/ButtonOk"
+        android:layout_toRightOf="@+id/ButtonOk"
+        android:layout_toEndOf="@+id/ButtonOk" />
+
+</RelativeLayout>

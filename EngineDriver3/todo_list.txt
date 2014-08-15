@@ -1,4 +1,6 @@
 Todo list, to be used for items which I plan to do, but am intentionally skipping for now.
+All:
+  Replace strings with constants
 ConnectFragment:
   manual entry of address and port
   include last message in status line
@@ -25,3 +27,5 @@ RoutesFragment:
   clone from TurnoutsFragment
 WebViewFragment:
   prefs for initial zoom level, width, url
+RemoveTabDialogFragment:
+  add a cancel button

@@ -27,7 +27,7 @@ public class PermaFragment extends Fragment {
     private static MainApplication mainApp; // hold pointer to mainApp
     private int started = 0;
 
-    private Thread  jmdnsRunnableThread = null;
+    private Thread jmdnsRunnableThread = null;
     public Handler jmdnsRunnableHandler;  //this is set by the thread after startup
     private Thread heartbeatRunnableThread = null;
     public Handler heartbeatRunnableHandler;  //this is set by the thread after startup
