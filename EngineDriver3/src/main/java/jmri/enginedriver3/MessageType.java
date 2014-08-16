@@ -39,7 +39,7 @@ interface MessageType
     public static final int ROUTE_LIST_CHANGED =15;		//
     public static final int POWER_STATE_CHANGED=16;  	//
     public static final int SHUTDOWN=17;  		//
-    //  public static final int SET_LISTENER=18;  	//
+    public static final int PANEL_LIST_CHANGED =18;		//
 //  public static final int SERVICE_REMOVED=19; 	//
 //  public static final int REQ_VELOCITY=20; 		//
 //  public static final int REQ_DIRECTION=21; 	//

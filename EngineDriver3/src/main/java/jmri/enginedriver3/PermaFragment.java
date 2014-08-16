@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -73,6 +74,7 @@ public class PermaFragment extends Fragment {
         mainApp.setTurnoutList(new HashMap<String, Turnout>());
         mainApp.setRouteList(new HashMap<String, Route>());
         mainApp.setRosterEntryList(new HashMap<String, RosterEntry>());
+        mainApp.setPanelList(new SparseArray<Panel>());
 
         super.onCreate(savedInstanceState);
     }
@@ -194,6 +196,7 @@ public class PermaFragment extends Fragment {
                     mainApp.setTurnoutList(new HashMap<String, Turnout>());  //empty the list
                     mainApp.setRouteList(new HashMap<String, Route>());  //empty the list
                     mainApp.setRosterEntryList(new HashMap<String, RosterEntry>());  //empty the list
+                    mainApp.setPanelList(new SparseArray<Panel>()); //empty the list
                     mainApp.setJmriHeartbeat(Consts.INITIAL_HEARTBEAT);
                     if (mainApp.getMainActivity()!=null) {
                         mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, msg);  //forward to activity
@@ -202,6 +205,7 @@ public class PermaFragment extends Fragment {
                         mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.TURNOUT_LIST_CHANGED);
                         mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.ROUTE_LIST_CHANGED);
                         mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.ROSTERENTRY_LIST_CHANGED);
+                        mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.PANEL_LIST_CHANGED);
                     }
                     break;
                 //simply forward these along to activity

@@ -152,44 +152,22 @@ public class MainApplication extends Application {
     public int getJmriHeartbeat() {return _jmriHeartbeat;}
     public void setJmriHeartbeat(int in_jmriHeartbeat) {this._jmriHeartbeat = in_jmriHeartbeat;}
 
+    //definitions of the panels, populated in websocketthread
+    private SparseArray<Panel> _panelList = new SparseArray<Panel>();
+    public SparseArray<Panel> getPanelList() { return _panelList; }
+    public void setPanelList(SparseArray<Panel> _panelList) {
+        this._panelList = _panelList;
+        if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.PANEL_LIST_CHANGED); //announce the change
+    }
+
 //	public EngineDriver3Application() {
 //	}
 
-	@Override
-	public void onCreate()  {
-		super.onCreate();
-	    Log.d(Consts.APP_NAME,"in ED3Application.onCreate()");
-
-        //initialize the temporary fragment list, for now, key is 0-n, cannot leave "holes"
-        // replace this with restore from database or somesuch, maybe in ED3Activity.onCreate()
-/*
-        int fragKey = 0;
-        _dynaFrags = new SparseArray<DynaFragEntry>();  //make sure its ready for use.  Populated by activity
-//        _dynaFrags.put(fragKey++, new DynaFragEntry("Prefs", Consts.PREFS, 2));
-        DynaFragEntry tEntry;
-        tEntry = new DynaFragEntry("About", Consts.WEB, 2);
-        tEntry.setData("file:///android_asset/about_page.html");
-        _dynaFrags.put(fragKey++, tEntry);
-        _dynaFrags.put(fragKey++, new DynaFragEntry("Connect", Consts.CONNECT, 2));
-        tEntry = new DynaFragEntry("Throttle", Consts.WEB, 2);
-        tEntry.setData("/web/webThrottle.html");
-        _dynaFrags.put(fragKey++, tEntry);
-
-        tEntry = new DynaFragEntry("Turnouts", Consts.TURNOUT, 2);
-        _dynaFrags.put(fragKey++, tEntry);
-
-        tEntry = new DynaFragEntry("Panels", Consts.WEB, 3);
-        tEntry.setData("/panel/");
-        _dynaFrags.put(fragKey++, tEntry);
-
-        tEntry = new DynaFragEntry("Trains", Consts.WEB, 2);
-        tEntry.setData("/operations/trains");
-        _dynaFrags.put(fragKey++, tEntry);
-
-        Log.d(Consts.APP_NAME,"end of ED3Application.onCreate()");
-
-*/
-	}
+//	@Override
+//	public void onCreate()  {
+//		super.onCreate();
+//	    Log.d(Consts.APP_NAME,"in ED3Application.onCreate()");
+//	}
     public boolean sendMsg(Handler h, int msgType) {
         return sendMsgDelayed(h, 0, msgType, "", 0, 0);
     }
@@ -232,8 +210,4 @@ public class MainApplication extends Application {
         }
         return sent;
     }
-
-
-
-
 }

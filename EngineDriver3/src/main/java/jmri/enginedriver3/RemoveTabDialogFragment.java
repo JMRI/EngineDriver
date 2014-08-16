@@ -19,19 +19,18 @@ import java.util.List;
 public class RemoveTabDialogFragment extends android.support.v4.app.DialogFragment {
     private static MainApplication mainApp; // hold pointer to mainApp
     private View fragmentView; //the view object for this fragment
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.remove_tab_dialog_fragment, null);
         return fragmentView;
     }
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setTitle("Select Tab to REMOVE");
         return dialog;
     }
-
     @Override
     public void onStart() {
         super.onStart();

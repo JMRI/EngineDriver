@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.util.SparseArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -167,7 +168,7 @@ class WebSocketRunnable implements Runnable {
                     } else if (type.equals("route")) {
                         receivedRouteList(msgJsonArray);
                     } else if (type.equals("rosterEntry")) {
-                        Log.d(Consts.APP_NAME,"RosterEntry array=" + msgString);
+//                        Log.d(Consts.APP_NAME,"RosterEntry array=" + msgString);
                         receivedRosterEntryList(msgJsonArray);
                     } else if (type.equals("systemConnection")) {
                         Log.d(Consts.APP_NAME,"systemConnection array=" + msgString);
@@ -176,7 +177,8 @@ class WebSocketRunnable implements Runnable {
                     } else if (type.equals("Layout")
                             || type.equals("Control Panel")
                             || type.equals("Panel")) {
-                        Log.d(Consts.APP_NAME,"panel array=" + msgString);
+//                        Log.d(Consts.APP_NAME,"panel array=" + msgString);
+                        receivedPanelList(msgJsonArray);
                     } else {
                         Log.w(Consts.APP_NAME, "unsupported json array received="+msgString);
                     }
@@ -203,6 +205,20 @@ class WebSocketRunnable implements Runnable {
             }
             mainApp.setTurnoutList(tl);  //replace the shared var with the newly populated one
             Log.d(Consts.APP_NAME, "turnout list received containing " + tl.size() + " entries.");
+        }
+
+        private void receivedPanelList(JSONArray msgJsonArray) throws JSONException {
+            SparseArray<Panel> pl = new SparseArray<Panel>();  //make a temp list to populate
+            for (int i = 0; i < msgJsonArray.length(); i++) {
+                String t = msgJsonArray.getJSONObject(i).getString("type");
+                String n = msgJsonArray.getJSONObject(i).getString("name");
+                String u = msgJsonArray.getJSONObject(i).getString("userName");
+                String url = msgJsonArray.getJSONObject(i).getString("URL");
+                Panel p = new Panel(t, n, u, url);
+                pl.put(i, p);  //add this entry to the list
+            }
+            mainApp.setPanelList(pl);  //replace the shared var with the newly populated one
+            Log.d(Consts.APP_NAME, "panel list received containing " + pl.size() + " entries.");
         }
 
         private void receivedRouteList(JSONArray msgJsonArray) throws JSONException {

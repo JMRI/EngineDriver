@@ -20,6 +20,7 @@
     <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
     </style>
+<!--
     <style name="large_button_style" parent="@android:style/Widget.Button">
       <item name="android:textColor">@color/btn_text_states</item>
       <item name="android:textSize">24sp</item>
@@ -46,6 +47,7 @@
       <item name="android:shadowRadius">1</item>
       <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
+-->
     <style name="normal_button_style" parent="@android:style/Widget.Button">
       <item name="android:textColor">@color/btn_text_states</item>
         <item name="android:textSize">18sp</item>
@@ -60,6 +62,7 @@
         <item name="android:ellipsize">end</item>
       <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
+<!--
     <style name="fn_button_style" parent="@android:style/Widget.Button">
       <item name="android:textColor">@color/btn_text_states</item>
       <item name="android:textSize">18sp</item>
@@ -75,6 +78,8 @@
       <item name="android:shadowDy">1</item>
       <item name="android:shadowRadius">1</item>
     </style>
+-->
+<!--
     <style name="edit_label_style">
       <item name="android:textSize">18sp</item>
       <item name="android:singleLine">true</item>
@@ -97,7 +102,9 @@
       <item name="android:shadowDy">1</item>
       <item name="android:shadowRadius">0.2</item>
     </style>
+-->
 
+<!--
 <style name="app_title" parent="@android:style/TextAppearance.WindowTitle">
   <item name="android:shadowColor">#FF000000</item>
   <item name="android:shadowDx">2</item>
@@ -111,13 +118,14 @@
         <item name="android:listViewStyle">@style/EDListView</item>
         <item name="android:expandableListViewStyle">@style/EDListView</item>
     </style>
+-->
 
- <style name="EDListView" parent="@android:style/Widget.ListView">
+ <!--<style name="EDListView" parent="@android:style/Widget.ListView">
   <item name="android:divider">#8c8a8c</item>
   <item name="android:dividerHeight">1dp</item>
   <item name="android:cacheColorHint">@android:color/transparent</item>
  </style>
-
+-->
 <style name="small_heading_style" parent="@android:style/Widget.TextView">
   <item name="android:textColor">#FFFFFF</item>
   <item name="android:background">#8c8a8c</item>
@@ -164,6 +172,13 @@
         <item name="android:shadowRadius">1</item>
         <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
+<!--
+    <style name="ActionBarTabStyle" parent="@android:style/Widget.Holo.ActionBar.TabView">
+        <item name="android:background">@android:color/transparent</item>
 
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:paddingRight">2dp</item>
+    </style>
+-->
 
 </resources>

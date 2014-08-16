@@ -119,7 +119,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         });
 
         positionToTab("Connect"); //always start up with the connection tab  TODO: do this only when disconnected
-//        actionBar.getTabAt(2).select();
 
     }
 
@@ -348,7 +347,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         //convert the json hashmap into a real one
         Gson gson = new Gson();
         HashMap<String, String> hm = gson.fromJson(in_jsonTabHashMap, new TypeToken<HashMap<String, String>>() {}.getType());
-        DynaFragEntry tdfe = new DynaFragEntry(hm.get("ft_name"), //make a new frag entry
+        String tabName = hm.get("ft_name");
+        DynaFragEntry tdfe = new DynaFragEntry(tabName, //make a new frag entry
                 hm.get("ft_type"), Integer.parseInt(hm.get("ft_width")), hm.get("ft_data"));
 
         mainApp.getDynaFrags().put(mainApp.getDynaFrags().size(), tdfe); //add this entry at end of list
@@ -361,6 +361,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         pagerAdapter.notifyDataSetChanged();  //tell the adapter you changed something, and force reload
         tabsChangeInProgress = false;
         viewPager.setAdapter(pagerAdapter);  //reconnect the pager
+
+        positionToTab(tabName); //position to the new tab
 
     }
 
@@ -459,7 +461,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     break;
                 case MessageType.HEARTBEAT:
                 case MessageType.POWER_STATE_CHANGED:
-                    break;
+                case MessageType.PANEL_LIST_CHANGED:
+                    break;  //do nothing for these
                 default:
                     Log.w(Consts.APP_NAME, "in MainActivity_Handler.handleMessage() not handled: " + msg.what);
             }  //end of switch msg.what

@@ -24,6 +24,8 @@ dynafrags should _read_ from shared variables, letting the permafrag handle all 
 all comm with jmri is done via the json websocket server, including lists of items.
 "Add a Tab" menu item should present a smart list of possibilities, some hard-coded, some from panel list, etc.
 "Remove a Tab" should present a smart list of possibilities, e.g. don't show Connect
+use dialogFragments for tasks which do not need a tab, such as fragment settings
+use nested fragments for stacking multiple throttle fragments inside a single tab
 
 steps:
 1) get single activity with multiple, similar "listview" fragments working at OS 3.0, and understand how fragment width works.
@@ -47,8 +49,8 @@ steps:
 19) prompt for app exit on back only if connected. (only if locos are acquired?)
 20) add refresh button to web fragments
 21) save/restore fragment list+settings on activity create and pause
-) open drawer menu when hardware button pressed
-) add dialogs, called from drawer menu, to add new fragments and delete unneeded ones.
+22) open drawer menu when hardware button pressed
+23) add dialogs, called from drawer menu, to add new fragments and delete unneeded ones.
 ) allow one fragment to be the default for portrait, and one for landscape,
     to provide the current "auto-web on rotation" feature.  Only when connected.
 ) add notification icon and action
@@ -60,8 +62,9 @@ steps:
 ) add additional throttle flavors
 ) add phone listener
 
-things to "improve" from ED 2.x
+things to "improve" from ED 2.x:
 more flexible UI to take advantage of screen real estates
+multiple versions of throttle, including vertical and shunting
 use nonUIFragment to handle activity restarts on rotation
 use tabbed sliders for navigation
 use json sharedprefs instead of text file storage

@@ -3,6 +3,7 @@ package jmri.enginedriver3;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,8 +75,15 @@ public class AddTabDialogFragment extends android.support.v4.app.DialogFragment 
         ftc.add(NewFragmentChoice("Vertical Throttle", "Throttle", Consts.CONSIST, "2", "vertical"));
         ftc.add(NewFragmentChoice("Horizontal Throttle", "Throttle", Consts.CONSIST, "2", "horizontal"));
         ftc.add(NewFragmentChoice("Turnout", "Turnout", Consts.TURNOUT, "2", null));
-        if (!mainApp.dynaFragExists("About")) {
-            ftc.add(NewFragmentChoice("About Page", "About", Consts.WEB, "2", "file:///android_asset/about_page.html"));
+
+        for (int i = 0; i < mainApp.getPanelList().size(); i++) {  //add an item for each open panel
+            Panel p = mainApp.getPanelList().get(i);
+            String tabName = p.getUserName();
+            if (tabName.length()>11) {  //truncate to avoid tab width growth
+                tabName = tabName.substring(0,11);
+            }
+            ftc.add(NewFragmentChoice("Panel: " + p.getUserName(), tabName ,
+                    Consts.WEB, "2", "/panel/" + p.getName()));
         }
         ftc.add(NewFragmentChoice("Home Page", "Web", Consts.WEB, "2", "/"));
         if (!mainApp.dynaFragExists("Panels")) {
@@ -83,6 +91,9 @@ public class AddTabDialogFragment extends android.support.v4.app.DialogFragment 
         }
         if (!mainApp.dynaFragExists("Trains")) {
             ftc.add(NewFragmentChoice("Trains", "Trains", Consts.WEB, "2", "/operations/trains"));
+        }
+        if (!mainApp.dynaFragExists("About")) {
+            ftc.add(NewFragmentChoice("About Page", "About", Consts.WEB, "2", "file:///android_asset/about_page.html"));
         }
         return ftc;
     }
@@ -100,10 +111,10 @@ public class AddTabDialogFragment extends android.support.v4.app.DialogFragment 
     //append a number to the end until it is not used
     private String getUniqueFragmentName(String in_name) {
         String newName = in_name;
-        int suffix = 0;
+        int suffix = 2;  //start at 2
         while (mainApp.dynaFragExists(newName)) {
-            suffix++;
             newName = in_name + suffix;
+            suffix++;
         }
         return newName;
     }

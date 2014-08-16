@@ -17,12 +17,14 @@ WebSocketRunnable:
 MainActivity:
   notification icon when backgrounded
   Show the title in landscape mode
+  reduce padding, etc. to avoid wide tabs
 JmDNS listener:
   use native Android listeners instead of JmDNS on supported devices
 TurnoutsFragment:
   deal with showing/not showing based on userName
   manual entry of turnout by name and/or number
   remembered position is not cleared if servers switched while active
+  don't request turnout list or set up listeners if no turnout frag in use
 RoutesFragment:
   clone from TurnoutsFragment
 WebViewFragment:
