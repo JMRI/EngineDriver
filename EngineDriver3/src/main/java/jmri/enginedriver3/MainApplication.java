@@ -82,6 +82,21 @@ public class MainApplication extends Application {
         }
     }
 
+    //list of known throttles, empty when disconnected
+    //key=throttleKey as used by jmri json server
+    private HashMap<String, Throttle> _throttleList;
+    public HashMap<String, Throttle> getThrottleList() {return _throttleList;}
+    public void setThrottleList(HashMap<String, Throttle> in_throttleList) {
+        this._throttleList = in_throttleList;
+//        if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.THROTTLE_LIST_CHANGED); //announce the change
+    }
+    public Throttle getThrottle(String in_throttle) {  //helper function
+        return this._throttleList.get(in_throttle);
+    }
+    public void storeThrottle(String in_throttleKey, Throttle in_throttle) {
+        this._throttleList.put(in_throttleKey, in_throttle);
+    }
+
     //list of defined routes, empty when disconnected
     //key=system name of turnout, stores Route class
     private HashMap<String, Route> _routeList;

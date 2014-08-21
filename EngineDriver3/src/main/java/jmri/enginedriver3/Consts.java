@@ -9,13 +9,14 @@ public final class Consts  {
 
 	public static final String APP_NAME = "EngineDriver3";
 
-    public static final String ALL_FRAGMENTS = "all fragments";
+    //these are supported fragment types, basically one to one with a fragment object type
     public static final String WEB = "web";
 	public static final String LIST = "list";
-    public static final String CONSIST = "consist";
+    public static final String THROTTLE = "throttle";
     public static final String TURNOUT = "turnout";
     public static final String ROUTE = "route";
 	public static final String CONNECT = "connect";
+    public static final String ALL_FRAGMENTS = "all fragments";
 
     public static final int STATE_CLOSED = 2;
     public static final String STATE_CLOSED_DESC = "Closed";
@@ -23,6 +24,9 @@ public final class Consts  {
     public static final String STATE_THROWN_DESC = "Thrown";
     public static final int STATE_UNKNOWN = 0;
     public static final String STATE_UNKNOWN_DESC = "???";
+
+    public static final int FORWARD = 1;
+    public static final int REVERSE = 0;
 
 	/** Opposite of {@link #FAILS}.  */
 	public static final boolean PASSES = true;
@@ -68,8 +72,6 @@ public final class Consts  {
     public static final String JSON_REQUEST_SYSTEMCONNECTIONS_LIST = "{\"type\":\"list\",\"list\":\"systemConnections\"}";
     public static final String JSON_REQUEST_CONSISTS_LIST  = "{\"type\":\"list\",\"list\":\"consists\"}";
     public static final String JSON_REQUEST_PANELS_LIST  = "{\"type\":\"list\",\"list\":\"panels\"}";
-
-
 
     // PRIVATE //
 

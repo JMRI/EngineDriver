@@ -30,4 +30,8 @@ RoutesFragment:
 WebViewFragment:
   prefs for initial zoom level, width, url
 RemoveTabDialogFragment:
-  add a cancel button
+AddTabDialogFragment:
+  add thumbnail images, especially helpful for throttle layouts
+Throttle:
+  use OnStopTrackingTouch to determine when to allow the system updates to move the slider
+  save and restore attachedThrottles

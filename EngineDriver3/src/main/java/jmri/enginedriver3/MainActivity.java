@@ -200,7 +200,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     private void restoreDynaFrags() {
         SharedPreferences sharedPreferences = this.getSharedPreferences(Consts.APP_NAME, Context.MODE_PRIVATE);
         String dynaFragsJson = sharedPreferences.getString("dynaFragsJson",
-                "{\"0\":{\"data\":\"file:///android_asset/about_page.html\",\"type\":\"web\",\"width\":\"2\",\"name\":\"About\"},\"1\":{\"type\":\"connect\",\"width\":\"2\",\"name\":\"Connect\"},\"2\":{\"data\":\"/web/webThrottle.html\",\"type\":\"web\",\"width\":\"2\",\"name\":\"Throttle\"},\"3\":{\"type\":\"turnout\",\"width\":\"2\",\"name\":\"Turnouts\"},\"4\":{\"data\":\"/panel/\",\"type\":\"web\",\"width\":\"3\",\"name\":\"Panels\"},\"5\":{\"data\":\"/operations/trains\",\"type\":\"web\",\"width\":\"2\",\"name\":\"Trains\"}}");
+                "{\"0\":{\"data\":\"file:///android_asset/about_page.html\",\"type\":\"web\",\"width\":\"2\",\"name\":\"About\"},\"1\":{\"type\":\"connect\",\"width\":\"2\",\"name\":\"Connect\"},\"2\":{\"data\":\"classic\",\"type\":\"throttle\",\"width\":\"2\",\"name\":\"Throttle\"},\"3\":{\"type\":\"turnout\",\"width\":\"2\",\"name\":\"Turnouts\"},\"4\":{\"data\":\"/panel/\",\"type\":\"web\",\"width\":\"3\",\"name\":\"Panels\"},\"5\":{\"data\":\"/operations/trains\",\"type\":\"web\",\"width\":\"2\",\"name\":\"Trains\"}}");
         Log.d(Consts.APP_NAME, "restoring dynaFrags from " + dynaFragsJson);
         Gson gson = new Gson();
         Type t = new TypeToken<HashMap<Integer, HashMap<String, String>>>(){}.getType();
@@ -218,7 +218,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         mainApp.setDynaFrags(tdfsa);  //replace the dynafrag list with this restored one
     }
 
-    public class drawer_item_clicked implements AdapterView.OnItemClickListener {
+    private class drawer_item_clicked implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 //            Toast.makeText(getApplicationContext(), main_menu[i]+" ("+i+") was clicked", Toast.LENGTH_SHORT).show();
@@ -243,12 +243,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             }
         }
     }
-    public void showRemoveTabDialog() {
+    private void showRemoveTabDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         RemoveTabDialogFragment removeTabDialogFragment = new RemoveTabDialogFragment();
         removeTabDialogFragment.show(fragmentManager, "Remove a Tab");
     }
-    public void showAddTabDialog() {
+    private void showAddTabDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         AddTabDialogFragment addTabDialogFragment = new AddTabDialogFragment();
         addTabDialogFragment.show(fragmentManager, "Add a Tab");
@@ -383,8 +383,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
             if (t.equals(Consts.WEB)) {
                 return WebViewFragment.newInstance(position, t, n, d);
-            } else if (t.equals(Consts.CONSIST)) {
-                return ConsistFragment.newInstance(position, t, n);
+            } else if (t.equals(Consts.THROTTLE)) {
+                return ThrottleFragment.newInstance(position, t, n, d);
             } else if (t.equals(Consts.LIST)) {
                 return DynaListFragment.newInstance(position, t, n);
             } else if (t.equals(Consts.TURNOUT)) {
@@ -424,24 +424,31 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 //            Log.d(Consts.APP_NAME, "in MainActivity_Handler.handleMessage()");
             switch (msg.what) {
                 case MessageType.DISCOVERED_SERVER_LIST_CHANGED:  //forward this only to the Connect fragment
-                    forwardMessageToFragments(msg, Consts.CONNECT);
+                    forwardMessageToFragmentType(msg, Consts.CONNECT);
                     break;
-                case MessageType.TURNOUT_CHANGE_REQUESTED:  //forward these only to PermaFrag for processing
+                case MessageType.VELOCITY_CHANGE_REQUESTED: //forward these only to PermaFrag for processing
+                case MessageType.TURNOUT_CHANGE_REQUESTED:
                 case MessageType.CONNECT_REQUESTED:
+                case MessageType.LOCO_REQUESTED:
+                case MessageType.RELEASE_LOCO_REQUESTED:
                     mainApp.sendMsg(permaFrag.permaFragHandler, msg);
                     break;
                 case MessageType.CONNECTED:    //forward these to ALL active fragments
                 case MessageType.DISCONNECTED:
-                    forwardMessageToFragments(msg, Consts.ALL_FRAGMENTS);
+                    forwardMessageToFragmentType(msg, Consts.ALL_FRAGMENTS);
                     break;
                 case MessageType.TURNOUT_LIST_CHANGED:
-                    forwardMessageToFragments(msg, Consts.TURNOUT);
+                    forwardMessageToFragmentType(msg, Consts.TURNOUT);
                     break;
                 case MessageType.ROUTE_LIST_CHANGED:
-                    forwardMessageToFragments(msg, Consts.ROUTE);
+                    forwardMessageToFragmentType(msg, Consts.ROUTE);
                     break;
                 case MessageType.ROSTERENTRY_LIST_CHANGED:
-                    forwardMessageToFragments(msg, Consts.CONSIST);
+                    forwardMessageToFragmentType(msg, Consts.THROTTLE);
+                    break;
+                case MessageType.THROTTLE_CHANGED:
+                    Throttle t = mainApp.getThrottle(msg.obj.toString());  //throttleKey is payload
+                    forwardMessageToFragmentName(msg, t.getFragmentName());  //forward to fragment which owns this throttleKey
                     break;
                 case MessageType.MESSAGE_LONG:
                     Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_LONG).show();
@@ -470,7 +477,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
         //forward message to all active fragments that match type (or ALL_FRAGMENTS)
-        private void forwardMessageToFragments(Message in_msg, String in_fragmentType) {
+        private void forwardMessageToFragmentType(Message in_msg, String in_fragmentType) {
             for (int i = 0; i < mainApp.getDynaFrags().size(); i++) {
                 Handler fh = mainApp.getDynaFrags().get(i).getHandler();
                 if (fh != null &&
@@ -478,6 +485,18 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                                 mainApp.getDynaFrags().get(i).getType().equals(in_fragmentType))) {
                     mainApp.sendMsg(fh, in_msg);
                 }
+            }
+        }
+    }
+
+    //forward message to active fragments that matches name
+    private void forwardMessageToFragmentName(Message in_msg, String in_fragmentName) {
+        for (int i = 0; i < mainApp.getDynaFrags().size(); i++) {
+            Handler fh = mainApp.getDynaFrags().get(i).getHandler();
+            if (fh != null &&
+                    mainApp.getDynaFrags().get(i).getName().equals(in_fragmentName)) {
+                mainApp.sendMsg(fh, in_msg);
+                break;  //there will only be one  TODO: check name first, and break then
             }
         }
     }

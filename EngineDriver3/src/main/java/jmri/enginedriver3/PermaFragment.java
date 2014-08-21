@@ -74,6 +74,7 @@ public class PermaFragment extends Fragment {
         mainApp.setTurnoutList(new HashMap<String, Turnout>());
         mainApp.setRouteList(new HashMap<String, Route>());
         mainApp.setRosterEntryList(new HashMap<String, RosterEntry>());
+        mainApp.setThrottleList(new HashMap<String, Throttle>());  //empty the list
         mainApp.setPanelList(new SparseArray<Panel>());
 
         super.onCreate(savedInstanceState);
@@ -196,6 +197,7 @@ public class PermaFragment extends Fragment {
                     mainApp.setTurnoutList(new HashMap<String, Turnout>());  //empty the list
                     mainApp.setRouteList(new HashMap<String, Route>());  //empty the list
                     mainApp.setRosterEntryList(new HashMap<String, RosterEntry>());  //empty the list
+                    mainApp.setThrottleList(new HashMap<String, Throttle>());  //empty the list
                     mainApp.setPanelList(new SparseArray<Panel>()); //empty the list
                     mainApp.setJmriHeartbeat(Consts.INITIAL_HEARTBEAT);
                     if (mainApp.getMainActivity()!=null) {
@@ -214,13 +216,19 @@ public class PermaFragment extends Fragment {
                 case MessageType.DISCOVERED_SERVER_LIST_CHANGED:
                 case MessageType.CONNECTED:
                 case MessageType.POWER_STATE_CHANGED:
+                case MessageType.THROTTLE_CHANGED:
                 case MessageType.JMRI_TIME_CHANGED:
                     if (mainApp.getMainActivity()!=null) {
                         mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, msg);
+                    } else {
+                        Log.w(Consts.APP_NAME, "activity not active, message lost (" + msg.what + ")");
                     }
                     break;
                 //simply forward these along to websocket thread
+                case MessageType.VELOCITY_CHANGE_REQUESTED:
                 case MessageType.TURNOUT_CHANGE_REQUESTED:
+                case MessageType.LOCO_REQUESTED:
+                case MessageType.RELEASE_LOCO_REQUESTED:
                     if (webSocketRunnableHandler!=null) {
                         mainApp.sendMsg(webSocketRunnableHandler, msg);
                     }

@@ -13,66 +13,71 @@
 
     <Spinner
         android:id="@+id/spinner_fragment_choices"
-        android:layout_below="@+id/label_fragment_choices"
         android:layout_width="match_parent"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/label_fragment_choices"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/label_fragment_width"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set initial width:"
-        android:layout_below="@+id/tab_name"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tab_name"
+        android:text="Set initial width:" />
 
     <Spinner
         android:id="@+id/spinner_fragment_width"
         android:layout_width="fill_parent"
-        android:entries="@array/FragmentWidths"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tab_name"
+        android:layout_toEndOf="@+id/label_fragment_width"
         android:layout_toRightOf="@+id/label_fragment_width"
-        android:layout_toEndOf="@+id/label_fragment_width" />
+        android:entries="@array/FragmentWidths"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
+        android:id="@+id/tab_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tab_name"
-        android:text="Tab Name"
         android:layout_below="@+id/spinner_fragment_choices"
+        android:layout_toEndOf="@+id/label_fragment_width"
         android:layout_toRightOf="@+id/label_fragment_width"
-        android:layout_toEndOf="@+id/label_fragment_width" />
+        android:text="Tab Name" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tab Name:"
         android:id="@+id/label_tab_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/spinner_fragment_choices"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:text="Tab Name:" />
 
-    <Button
-        android:id="@+id/ButtonOk"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="OK"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/spinner_fragment_width"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/ButtonCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Cancel"
-        android:layout_alignTop="@+id/ButtonOk"
-        android:layout_toRightOf="@+id/ButtonOk"
-        android:layout_toEndOf="@+id/ButtonOk" />
+        <Button
+            android:id="@+id/ButtonOk"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="OK"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Button
+            android:id="@+id/ButtonCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Cancel"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
 
 </RelativeLayout>

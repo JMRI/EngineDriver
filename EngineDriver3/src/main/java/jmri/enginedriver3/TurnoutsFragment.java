@@ -32,7 +32,7 @@ public class TurnoutsFragment extends DynaFragment {
 	 * create a new fragment of this type, and populate basic settings in bundle 
 	 * Note: this is a static method, called from the activity's getItem() when new ones are needed */	
 	static TurnoutsFragment newInstance(int fragNum, String fragType, String fragName) {
-		Log.d(Consts.APP_NAME, "in TurnoutsFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
+//		Log.d(Consts.APP_NAME, "in TurnoutsFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
 		TurnoutsFragment f = new TurnoutsFragment();
 
 		// Store variables for retrieval 
@@ -66,7 +66,7 @@ public class TurnoutsFragment extends DynaFragment {
     public void onStart() {
         super.onStart();
         started++;
-        Log.d(Consts.APP_NAME, "in TurnoutsFragment.onStart() fragNum=" + getFragNum());
+//        Log.d(Consts.APP_NAME, "in TurnoutsFragment.onStart() fragNum=" + getFragNum());
 
         //Set up a list adapter to present list of turnouts to the UI.
         //uses local copy of the list in mainapp, which is managed by the websocket thread
@@ -111,7 +111,7 @@ public class TurnoutsFragment extends DynaFragment {
 
     @Override
     public void onStop() {
-        Log.d(Consts.APP_NAME, "in TurnoutsFragment.onStop() fragNum=" + getFragNum());
+//        Log.d(Consts.APP_NAME, "in TurnoutsFragment.onStop() fragNum=" + getFragNum());
         //clear this to avoid late messages
         if (mainApp.getDynaFrags().get(getFragNum())!=null) mainApp.getDynaFrags().get(getFragNum()).setHandler(null);
         super.onStop();

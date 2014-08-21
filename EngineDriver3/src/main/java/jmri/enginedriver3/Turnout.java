@@ -1,7 +1,7 @@
 package jmri.enginedriver3;
 
 /**
- * Created by STEVET on 8/4/2014.
+ * Turnout -- instance of turnout-related values, unique by system name
  */
 public class Turnout {
     private String _systemName;
@@ -65,6 +65,5 @@ public class Turnout {
     public void setSystemName(String systemName) {
         this._systemName = systemName;
     }
-
 
 }

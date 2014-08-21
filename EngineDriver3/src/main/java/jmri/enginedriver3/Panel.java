@@ -20,9 +20,7 @@ public class Panel {
     public String getUserName() {return _userName;}
     public void setUserName(String userName) {this._userName = userName;}
     public String getName() {return _name;}
-    public void setName(String name) {
-        this._name = name;
-    }
+    public void setName(String name) { this._name = name; }
     public String get_type() { return _type; }
     public void set_type(String _type) { this._type = _type; }
 

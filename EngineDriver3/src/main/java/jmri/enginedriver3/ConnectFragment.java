@@ -37,7 +37,7 @@ public class ConnectFragment extends DynaFragment {
 	 * create a new fragment of this type, and populate basic settings in bundle 
 	 * Note: this is a static method, called from the activity's getItem() when new ones are needed */	
 	static ConnectFragment newInstance(int fragNum, String fragType, String fragName) {
-		Log.d(Consts.APP_NAME, "in ConnectFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
+//		Log.d(Consts.APP_NAME, "in ConnectFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
 		ConnectFragment f = new ConnectFragment();
 
 		// Store variables for retrieval 
@@ -67,7 +67,7 @@ public class ConnectFragment extends DynaFragment {
     public void onStart() {
         super.onStart();
         started++;
-        Log.d(Consts.APP_NAME, "in ConnectFragment.onStart() " + started);
+//        Log.d(Consts.APP_NAME, "in ConnectFragment.onStart() " + started);
 
         //Set up a list adapter to present list of discovered WiThrottle servers to the UI.
         //this list is in mainapp, and managed by the jmdns thread
@@ -111,7 +111,7 @@ public class ConnectFragment extends DynaFragment {
 
     @Override
     public void onStop() {
-        Log.d(Consts.APP_NAME, "in ConnectFragment.onStop()");
+//        Log.d(Consts.APP_NAME, "in ConnectFragment.onStop()");
         //clear this to avoid late messages
         if (mainApp.getDynaFrags().get(getFragNum())!=null) mainApp.getDynaFrags().get(getFragNum()).setHandler(null);
         //save the recent connections list to sharedprefs as json string

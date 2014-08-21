@@ -3,7 +3,6 @@ package jmri.enginedriver3;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,11 +71,11 @@ public class AddTabDialogFragment extends android.support.v4.app.DialogFragment 
     private ArrayList<HashMap<String, String>> getFragmentChoices() {
         ArrayList<HashMap<String, String>> ftc = new ArrayList<HashMap<String, String>>();
         ftc.add(NewFragmentChoice("<Select Tab Type to Add>", "", "", "", ""));  //empty entry to force user to make a selection
-        ftc.add(NewFragmentChoice("Vertical Throttle", "Throttle", Consts.CONSIST, "2", "vertical"));
-        ftc.add(NewFragmentChoice("Horizontal Throttle", "Throttle", Consts.CONSIST, "2", "horizontal"));
+        ftc.add(NewFragmentChoice("Throttle - Classic", "Throttle", Consts.THROTTLE, "2", "classic"));
+        ftc.add(NewFragmentChoice("Throttle - Vertical", "Throttle", Consts.THROTTLE, "2", "vertical"));
         ftc.add(NewFragmentChoice("Turnout", "Turnout", Consts.TURNOUT, "2", null));
 
-        for (int i = 0; i < mainApp.getPanelList().size(); i++) {  //add an item for each open panel
+        for (int i = 0; i < mainApp.getPanelList().size(); i++) {  //add an item for each defined panel
             Panel p = mainApp.getPanelList().get(i);
             String tabName = p.getUserName();
             if (tabName.length()>11) {  //truncate to avoid tab width growth
@@ -98,11 +97,12 @@ public class AddTabDialogFragment extends android.support.v4.app.DialogFragment 
         return ftc;
     }
 
-    private HashMap<String, String> NewFragmentChoice(String d, String n, String t, String width, String data) {
+    private HashMap<String, String> NewFragmentChoice(String description, String name,
+                                                      String type, String width, String data) {
         HashMap<String, String> hm = new HashMap<String, String>();
-        hm.put("ft_description", d);
-        hm.put("ft_name",        n);
-        hm.put("ft_type",        t);
+        hm.put("ft_description", description);
+        hm.put("ft_name",        name);
+        hm.put("ft_type",        type);
         hm.put("ft_width",       width);
         hm.put("ft_data",        data);
         return hm;

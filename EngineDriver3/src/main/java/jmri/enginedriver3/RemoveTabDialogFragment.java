@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,13 +18,15 @@ import java.util.List;
  * Present a list of tabs which could be removed.  If the user clicks on one, send a message back
  *   to activity to remove it and refresh the list.
  */
-public class RemoveTabDialogFragment extends android.support.v4.app.DialogFragment {
+public class RemoveTabDialogFragment extends android.support.v4.app.DialogFragment implements View.OnClickListener{
     private static MainApplication mainApp; // hold pointer to mainApp
     private View fragmentView; //the view object for this fragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.remove_tab_dialog_fragment, null);
+        Button buttonCancel = (Button) fragmentView.findViewById(R.id.ButtonCancel);
+        buttonCancel.setOnClickListener(this);
         return fragmentView;
     }
     @Override
@@ -49,6 +53,13 @@ public class RemoveTabDialogFragment extends android.support.v4.app.DialogFragme
         if (tabList.size() > 0) {
             View ev = fragmentView.findViewById(android.R.id.empty);
             ev.setVisibility(View.GONE);
+        }
+    }
+
+    @Override  //process clicks on the OK and Cancel buttons
+    public void onClick(View view) {
+        if (view.getId() == R.id.ButtonCancel) {
+            dismiss();  //just close the dialog
         }
     }
     //available click listeners for a viewlist item

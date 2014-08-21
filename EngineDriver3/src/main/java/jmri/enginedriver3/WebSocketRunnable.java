@@ -6,6 +6,9 @@ import android.os.Message;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,6 +87,24 @@ class WebSocketRunnable implements Runnable {
                         jmriWebSocket.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_PING);
                     } catch (Exception e) {}  //if anything bad happens here, just ignore it
                     break;
+                case MessageType.LOCO_REQUESTED:
+                    //extract the parms from the json'ed hashmap and call method to process
+                    Gson gson = new Gson();
+                    HashMap<String, String> hm = gson.fromJson(msg.obj.toString(), new TypeToken<HashMap<String, String>>() {}.getType());
+                    String fragmentName = hm.get("fragment_name");
+                    String rosterName = hm.get("roster_name");
+                    String rosterAddress = hm.get("roster_address");
+                    int locoDirection = Integer.parseInt(hm.get("loco_direction"));
+                    locoRequested(fragmentName, rosterName, rosterAddress, locoDirection);
+                    break;
+                case MessageType.RELEASE_LOCO_REQUESTED:
+                    //extract the parms from the json'ed hashmap and call method to process
+                    gson = new Gson();
+                    hm = gson.fromJson(msg.obj.toString(), new TypeToken<HashMap<String, String>>() {}.getType());
+                    fragmentName = hm.get("fragment_name");
+                    rosterName = hm.get("roster_name");
+                    releaseLocoRequested(fragmentName, rosterName);
+                    break;
                 case MessageType.TURNOUT_CHANGE_REQUESTED:
                     Turnout t = mainApp.getTurnout(msg.obj.toString()); //obj is turnout name
                     String jc = t.getChangeStateJson(msg.arg1);  //arg1 is requested state
@@ -92,12 +113,46 @@ class WebSocketRunnable implements Runnable {
                         jmriWebSocket.webSocketConnection.sendTextMessage(jc);  //send the request to the server
                     } catch (Exception e) {}  //if anything bad happens here, just ignore it
                     break;
+                case MessageType.VELOCITY_CHANGE_REQUESTED:
+                    Throttle throttle = mainApp.getThrottle(msg.obj.toString()); //obj is throttleKey
+                    float newSpeed = throttle.getSpeedForDisplayedSpeed(msg.arg2);  //arg2 is displayedSpeed
+                    String jv = throttle.getVelocityChangeJson(msg.arg1, newSpeed);  //arg1 is direction, arg2 is speed
+                    Log.d(Consts.APP_NAME, "in WebSocketRunnable.handleMessage() VELOCITY_CHANGE_REQUESTED " + jv);
+                    try {
+                        jmriWebSocket.webSocketConnection.sendTextMessage(jv);  //send the request to the server
+                    } catch (Exception e) {
+                        Log.w(Consts.APP_NAME, "problem sending VELOCITY_CHANGE message " + e);
+                    }
+                    break;
                 default:
                     Log.w(Consts.APP_NAME, "in WebSocketRunnable.handleMessage() received unknown message type " + msg.what);
                     break;
             }  //end of switch msg.what
             super.handleMessage(msg);
         }
+    }
+
+    private void locoRequested(String fragmentName, String rosterName, String rosterAddress, int locoDirection) {
+        String throttleKey = fragmentName + ":" + rosterName;
+        Throttle t = mainApp.getThrottle(throttleKey);
+        if (t==null) {  //create new entry if none exists, to keep track of fragment name
+            Log.d(Consts.APP_NAME, "locoRequested " + throttleKey + " created");
+            t = new Throttle(throttleKey, fragmentName, rosterName);
+            mainApp.storeThrottle(throttleKey, t);
+        }
+        String s = "{\"type\":\"throttle\",\"data\":{\"throttle\":\""
+                + throttleKey + "\",\"address\":" + rosterAddress + "}}";
+        Log.d(Consts.APP_NAME, "sending '" + s + "' to jmri");
+        jmriWebSocket.webSocketConnection.sendTextMessage(s);
+
+    }
+
+    private void releaseLocoRequested(String fragmentName, String rosterName) {
+        String throttleKey = fragmentName + ":" + rosterName;
+        String s = "{\"type\":\"throttle\",\"data\":{\"throttle\":\""
+                + throttleKey + "\",\"release\":null}}";
+        Log.d(Consts.APP_NAME, "sending '"+s+"' to jmri");
+        jmriWebSocket.webSocketConnection.sendTextMessage(s);
     }
 
     private class JmriWebSocketHandler extends WebSocketHandler {
@@ -140,7 +195,8 @@ class WebSocketRunnable implements Runnable {
                     receivedHello(data);
                 } else if (type.equals("power")) {
                     mainApp.setPowerState(data.getString("state"));
-//                    receivedPower(data);
+                } else if (type.equals("throttle")) {
+                    receivedThrottle(data);
                 } else if (type.equals("turnout")) {
                     mainApp.setTurnoutState(data.getString("name"), data.getInt("state"));
                 } else if (type.equals("route")) {
@@ -290,6 +346,28 @@ class WebSocketRunnable implements Runnable {
             mainApp.setJmriVersion(data.getString("JMRI"));
             mainApp.setRailroad(data.getString("railroad"));
             mainApp.setJmriHeartbeat(data.getInt("heartbeat"));
+        }
+
+        private void receivedThrottle(JSONObject data) throws JSONException {
+            Log.d(Consts.APP_NAME, "throttle message received, data=" + data.toString());
+            boolean changed = false;
+            String throttleKey = data.getString("throttle");
+            Throttle t = mainApp.getThrottle(throttleKey);
+            t.setConfirmed(true);  //TODO: unset this somewhere
+            if (data.has("speed")) {
+                float speed = (float) data.getDouble("speed");
+                t.setSpeed(speed);
+                changed = true;
+            }
+            if (data.has("forward")) {
+                boolean forward = data.getBoolean("forward");
+                t.setForward(forward);
+                changed = true;
+            }
+            if (changed) {  //let the interested throttle fragments know something changed
+                mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.THROTTLE_CHANGED, throttleKey);
+            }
+            //put other values into shared variables for later use
         }
 
         @Override

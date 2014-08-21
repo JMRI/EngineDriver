@@ -20,7 +20,6 @@
     <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
     </style>
-<!--
     <style name="large_button_style" parent="@android:style/Widget.Button">
       <item name="android:textColor">@color/btn_text_states</item>
       <item name="android:textSize">24sp</item>
@@ -47,7 +46,6 @@
       <item name="android:shadowRadius">1</item>
       <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
--->
     <style name="normal_button_style" parent="@android:style/Widget.Button">
       <item name="android:textColor">@color/btn_text_states</item>
         <item name="android:textSize">18sp</item>
