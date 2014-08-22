@@ -25,7 +25,7 @@ public class Throttle {
         this._speed = (float) -1.0;
         this._forward = true;
         this._confirmed = false;  //very important, this will be set only after the server responds with this loco
-        this._speedUnits = 100;  //TODO: get this from settings?
+        this._speedUnits = 14;  //TODO: get this from settings?
     }
 
     public Throttle(String _throttleKey, String _fragmentName, String _rosterId, int _dccAddress, float _speed,
@@ -81,9 +81,9 @@ public class Throttle {
     public int getDisplayedSpeed() {
         return (int) ((_speed * _speedUnits) + 0.5);  //convert based on units selected, round up
     }
-    public int getMaxSpeed() {
-        return 100;  //todo: set this in prefs
-    }
+    public int getMaxDisplayedSpeed() { return _speedUnits; }
+    public int getDisplayedSpeedIncrement() { return (int)((_speedUnits/10.0)+0.5); }  //10% for now, todo: set this in prefs
+    public String getSpeedUnitsText() { return ((_speedUnits==100) ? "%" : String.valueOf(_speedUnits)); }
 
     public boolean isForward() {
         return _forward;
@@ -111,8 +111,14 @@ public class Throttle {
 
     public String getVelocityChangeJson(int newDirection, float newSpeed) {
 //        {"type":"throttle","data":{"throttle":"CSX754","speed":0.25}}
-        String s = "{\"type\":\"throttle\",\"data\":{\"throttle\":\"" + _throttleKey +
-                "\",\"speed\":"+ newSpeed + ",\"forward\":"+(newDirection==1?true:false)+"}}";  //format the json change request
+        String s = "{\"type\":\"throttle\",\"data\":{\"throttle\":\"" + _throttleKey + "\"";
+//        if (_forward != (newDirection==1)) {
+            s += ",\"forward\":" + (newDirection==1);  //format the json change request
+//        }
+//        if (_speed != newSpeed) {
+            s += ",\"speed\":" + newSpeed;
+//        }
+        s += "}}";
         return s;
     }
 }

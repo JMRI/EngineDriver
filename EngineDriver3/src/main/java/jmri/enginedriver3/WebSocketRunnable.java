@@ -79,7 +79,7 @@ class WebSocketRunnable implements Runnable {
                     try {  //tell the server goodbye
                         jmriWebSocket.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_GOODBYE);
                     } catch (Exception e) {}  //if anything bad happens here, just ignore it
-                    getLooper().quit(); //stop the looper
+//                    getLooper().quit(); //stop the looper
                     break;
                 case MessageType.HEARTBEAT:
 //                    Log.d(Consts.APP_NAME, "in WebSocketRunnable.handleMessage() HEARTBEAT");

@@ -19,13 +19,14 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class ThrottleFragment extends DynaFragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
 
     private MainActivity mainActivity = null;
 
@@ -78,19 +79,19 @@ public class ThrottleFragment extends DynaFragment implements View.OnClickListen
         super.onStart();
         Log.d(Consts.APP_NAME, "in ThrottleFragment.onStart()");
 
-        //add click listeners for all buttons
+        //add touch listeners for all buttons, to handle up and down as needed
         btnSelectLoco = (Button) fragmentView.findViewById(R.id.btnSelectLoco);
-        if (btnSelectLoco!=null) btnSelectLoco.setOnClickListener(this);  //call onClick()
+        if (btnSelectLoco!=null) btnSelectLoco.setOnTouchListener(this);
         btnStop = (Button) fragmentView.findViewById(R.id.btnStop);
-        if (btnStop!=null) btnStop.setOnClickListener(this);  //call onClick()
+        if (btnStop!=null) btnStop.setOnTouchListener(this);
         btnForward = (Button) fragmentView.findViewById(R.id.btnForward);
-        if (btnForward!=null) btnForward.setOnClickListener(this);  //call onClick()
+        if (btnForward!=null) btnForward.setOnTouchListener(this);
         btnReverse = (Button) fragmentView.findViewById(R.id.btnReverse);
-        if (btnReverse!=null) btnReverse.setOnClickListener(this);  //call onClick()
+        if (btnReverse!=null) btnReverse.setOnTouchListener(this);
         btnSpeedDecrease = (Button) fragmentView.findViewById(R.id.btnSpeedDecrease);
-        if (btnSpeedDecrease!=null) btnSpeedDecrease.setOnClickListener(this);  //call onClick()
+        if (btnSpeedDecrease!=null) btnSpeedDecrease.setOnTouchListener(this);
         btnSpeedIncrease = (Button) fragmentView.findViewById(R.id.btnSpeedIncrease);
-        if (btnSpeedIncrease!=null) btnSpeedIncrease.setOnClickListener(this);  //call onClick()
+        if (btnSpeedIncrease!=null) btnSpeedIncrease.setOnTouchListener(this);
 
         tvSpeedUnits = (TextView) fragmentView.findViewById(R.id.tvSpeedUnits);
         tvSpeedValue = (TextView) fragmentView.findViewById(R.id.tvSpeedValue);
@@ -128,45 +129,14 @@ public class ThrottleFragment extends DynaFragment implements View.OnClickListen
     }
 
     @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.btnSelectLoco) {
-            Log.d(Consts.APP_NAME, "in ThrottleFragment.onClick(btnSelectLoco) ");
-            showSelectLocoDialog();
-        } else if (view.getId() == R.id.btnForward) {
-            Throttle t = getLeadThrottle();
-            mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
-                    throttlesAttached.get(0), Consts.FORWARD, t.getDisplayedSpeed());
-        } else if (view.getId() == R.id.btnReverse) {
-            Throttle t = getLeadThrottle();
-            mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
-                    throttlesAttached.get(0), Consts.REVERSE, t.getDisplayedSpeed());
-        } else if (view.getId() == R.id.btnSpeedIncrease) {
-            Log.d(Consts.APP_NAME, "in ThrottleFragment.onClick(btnSpeedIncrease) ");
-            Throttle t = getLeadThrottle();
-            int newSpeed = t.getDisplayedSpeed() + 10;
-            int dir = (t.isForward() ? 1 : 0);
-            mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
-                    throttlesAttached.get(0), dir, newSpeed);
-        } else if (view.getId() == R.id.btnSpeedDecrease) {
-            Log.d(Consts.APP_NAME, "in ThrottleFragment.onClick(btnSpeedDecrease) ");
-            Throttle t = getLeadThrottle();
-            int newSpeed = t.getDisplayedSpeed() - 10;
-            int dir = (t.isForward() ? 1 : 0);
-            mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
-                    throttlesAttached.get(0), dir, newSpeed);
-        } else {
-            Log.w(Consts.APP_NAME, "unhandled button clicked in ThrottleFragment.onClick() ");
-        }
-    }
-
-    @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        Log.d(Consts.APP_NAME, "in ThrottleFragment.onProgressChanged " + fromUser + " " + progress);
+//        Log.d(Consts.APP_NAME, "in ThrottleFragment.onProgressChanged " + fromUser + " " + progress);
+        //if user caused this change by sliding the slider, send the change request to server
         if (fromUser) {
             Throttle t = getLeadThrottle();
-            int dir = (t.isForward() ? 1 : 0);
+            int dir = (t.isForward() ? Consts.FORWARD : Consts.REVERSE);
             mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
-                    throttlesAttached.get(0), dir, progress);
+                    t.getThrottleKey(), dir, progress);
         }
     }
     @Override
@@ -178,6 +148,63 @@ public class ThrottleFragment extends DynaFragment implements View.OnClickListen
     public void onStopTrackingTouch(SeekBar seekBar) {
 //        Log.d(Consts.APP_NAME, "in ThrottleFragment.onStopTrackingTouch ");
         touchingSlider = false;  //finger is not on slider, update from server and don't send changes
+    }
+
+    @Override  //for forward and back buttons, keep indication as pressed when releasing
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        //handle most actions on the DOWN press
+        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+            if (view.getId() == R.id.btnSelectLoco) {
+//                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnSelectLoco) ");
+                showSelectLocoDialog();
+            } else if (view.getId() == R.id.btnForward) {
+//                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnForward) ");
+                Throttle t = getLeadThrottle();
+                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
+                        t.getThrottleKey(), Consts.FORWARD, t.getDisplayedSpeed());
+            } else if (view.getId() == R.id.btnReverse) {
+//                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnReverse) ");
+                Throttle t = getLeadThrottle();
+                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
+                        t.getThrottleKey(), Consts.REVERSE, t.getDisplayedSpeed());
+            } else if (view.getId() == R.id.btnSpeedIncrease) {
+//                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnSpeedIncrease) ");
+                Throttle t = getLeadThrottle();
+                int newSpeed = t.getDisplayedSpeed() + t.getDisplayedSpeedIncrement();
+                if (newSpeed>t.getMaxDisplayedSpeed()) newSpeed=t.getMaxDisplayedSpeed();
+                int dir = (t.isForward() ? Consts.FORWARD : Consts.REVERSE);
+                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
+                        t.getThrottleKey(), dir, newSpeed);
+            } else if (view.getId() == R.id.btnSpeedDecrease) {
+//                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnSpeedDecrease) ");
+                Throttle t = getLeadThrottle();
+                int newSpeed = t.getDisplayedSpeed() - t.getDisplayedSpeedIncrement();
+                if (newSpeed<0) newSpeed=0;
+                int dir = (t.isForward() ? Consts.FORWARD : Consts.REVERSE);
+                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
+                        t.getThrottleKey(), dir, newSpeed);
+            } else if (view.getId() == R.id.btnStop) {
+//                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnStop) ");
+                Throttle t = getLeadThrottle();
+                int newSpeed = 0;
+                int dir = (t.isForward() ? Consts.FORWARD : Consts.REVERSE);
+                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
+                        t.getThrottleKey(), dir, newSpeed);
+            } else {
+                Log.w(Consts.APP_NAME, "unhandled button clicked in ThrottleFragment.onTouchDOWN");
+            }
+        //deal with a few UP actions
+        } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+
+            //don't allow the dir buttons to become unpressed, since the direction has already updated
+            if ((view.getId()==R.id.btnForward || view.getId()==R.id.btnReverse)) {
+//                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouch ACTION_UP");
+                return true;
+            } else {
+//                Log.d(Consts.APP_NAME, "unhandled button clicked in ThrottleFragment.onTouchUP");
+            }
+        }
+        return false;
     }
 
     private class Fragment_Handler extends Handler {
@@ -196,7 +223,7 @@ public class ThrottleFragment extends DynaFragment implements View.OnClickListen
                 case MessageType.THROTTLE_CHANGED:
                     String throttleKey = msg.obj.toString();  //payload is throttleKey
                     throttlesAttached.put(0, throttleKey);  //attach it to this throttle
-                    Log.d(Consts.APP_NAME, "in ThrottleFragment.handleMessage("+throttleKey+")");
+//                    Log.d(Consts.APP_NAME, "in ThrottleFragment.handleMessage("+throttleKey+")");
                     paintThrottle();
                     break;  //no action for now
                 default:
@@ -207,7 +234,7 @@ public class ThrottleFragment extends DynaFragment implements View.OnClickListen
     }
 
     private void paintThrottle() {
-
+//        Log.d(Consts.APP_NAME, "in paintThrottle()");
         boolean anyAttached = (throttlesAttached.size() > 0);
         if (btnForward!=null)       btnForward.setEnabled(anyAttached);
         if (btnReverse!=null)       btnReverse.setEnabled(anyAttached);
@@ -215,6 +242,8 @@ public class ThrottleFragment extends DynaFragment implements View.OnClickListen
         if (btnSpeedDecrease!=null) btnSpeedDecrease.setEnabled(anyAttached);
         if (btnSpeedIncrease!=null) btnSpeedIncrease.setEnabled(anyAttached);
         if (sbSpeedSlider!=null)    sbSpeedSlider.setEnabled(anyAttached);
+        if (tvSpeedUnits != null)   tvSpeedUnits.setEnabled(anyAttached);
+        if (tvSpeedValue != null)   tvSpeedValue.setEnabled(anyAttached);
 
         btnSelectLoco.setEnabled(mainApp.isConnected());
 
@@ -223,12 +252,14 @@ public class ThrottleFragment extends DynaFragment implements View.OnClickListen
         int speedValue = 0;
         int maxValue = 100;
         boolean fwd = true;
+        String speedUnitsText = "%";
         if (anyAttached) {
             Throttle t = getLeadThrottle();
             locoText = t.getRosterId();
             speedValue = t.getDisplayedSpeed();
             fwd = t.isForward();
-            maxValue = t.getMaxSpeed();
+            maxValue = t.getMaxDisplayedSpeed();
+            speedUnitsText = t.getSpeedUnitsText();
         }
         btnSelectLoco.setText(locoText);
         if (tvSpeedValue != null)  tvSpeedValue.setText("" + speedValue);
@@ -238,6 +269,7 @@ public class ThrottleFragment extends DynaFragment implements View.OnClickListen
             sbSpeedSlider.setMax(maxValue);
             sbSpeedSlider.setProgress(speedValue);
         }
+        if (tvSpeedUnits != null)  tvSpeedUnits.setText(speedUnitsText);
 
     }
 

@@ -13,11 +13,11 @@ ConnectFragment:
 WebSocketRunnable:
   use heartbeat to kill "hung" connections (such as attempting to connect to the WiThrottle port)
   don't show error message when connection is intentionally closed
-  handle panel list, remember the list can contain differing types
 MainActivity:
   notification icon when backgrounded
   Show the title in landscape mode
   reduce padding, etc. to avoid wide tabs
+  check for About tab before showing option in menu (or add it when needed?)
 JmDNS listener:
   use native Android listeners instead of JmDNS on supported devices
 TurnoutsFragment:
@@ -33,5 +33,6 @@ RemoveTabDialogFragment:
 AddTabDialogFragment:
   add thumbnail images, especially helpful for throttle layouts
 Throttle:
-  use OnStopTrackingTouch to determine when to allow the system updates to move the slider
-  save and restore attachedThrottles
+  save and restore attachedThrottles, test by rotating
+  handle multiple attachedThrottles
+  handle repeat on inc/dec speed buttons

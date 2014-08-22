@@ -94,6 +94,7 @@ public class AddTabDialogFragment extends android.support.v4.app.DialogFragment 
         if (!mainApp.dynaFragExists("About")) {
             ftc.add(NewFragmentChoice("About Page", "About", Consts.WEB, "2", "file:///android_asset/about_page.html"));
         }
+        ftc.add(NewFragmentChoice("WebThrottle", "WebThrottle", Consts.WEB, "2", "/web/webThrottle.html"));
         return ftc;
     }
 
