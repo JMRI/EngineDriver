@@ -426,7 +426,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 case MessageType.DISCOVERED_SERVER_LIST_CHANGED:  //forward this only to the Connect fragment
                     forwardMessageToFragmentType(msg, Consts.CONNECT);
                     break;
-                case MessageType.VELOCITY_CHANGE_REQUESTED: //forward these only to PermaFrag for processing
+                case MessageType.SPEED_CHANGE_REQUESTED: //forward these only to PermaFrag for processing
+                case MessageType.DIRECTION_CHANGE_REQUESTED:
                 case MessageType.TURNOUT_CHANGE_REQUESTED:
                 case MessageType.CONNECT_REQUESTED:
                 case MessageType.LOCO_REQUESTED:

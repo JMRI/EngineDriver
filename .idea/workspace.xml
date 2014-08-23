@@ -40,16 +40,17 @@
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="DEBUG" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="ED3" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: jmri.enginedriver3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="45d4d426-4244-447b-8ffd-68bdd610e927" name="Default" comment="EngineDriver3 - throttle fragment partially working">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/AddTabDialogFragment.java" afterPath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/AddTabDialogFragment.java" />
+    <list default="true" readonly="true" id="45d4d426-4244-447b-8ffd-68bdd610e927" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/Consist.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/MainActivity.java" afterPath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/MessageType.java" afterPath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/MessageType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/PermaFragment.java" afterPath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/PermaFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/Throttle.java" afterPath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/Throttle.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/ThrottleFragment.java" afterPath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/ThrottleFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/WebSocketRunnable.java" afterPath="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/WebSocketRunnable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EngineDriver3/src/main/res/layout/select_loco_dialog_fragment.xml" afterPath="$PROJECT_DIR$/EngineDriver3/src/main/res/layout/select_loco_dialog_fragment.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EngineDriver3/todo_list.txt" afterPath="$PROJECT_DIR$/EngineDriver3/todo_list.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="EngineDriver3.iws" />
@@ -78,21 +79,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PermaFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/PermaFragment.java">
+      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2026" max-vertical-offset="4114">
-              <caret line="156" column="43" selection-start-line="156" selection-start-column="43" selection-end-line="156" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="7293" max-vertical-offset="8993">
+              <caret line="429" column="60" selection-start-line="429" selection-start-column="60" selection-end-line="429" selection-end-column="60" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WebSocketRunnable.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/WebSocketRunnable.java">
+      <file leaf-file-name="PermaFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/PermaFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33756346" vertical-offset="785" max-vertical-offset="6562">
-              <caret line="73" column="20" selection-start-line="73" selection-start-column="20" selection-end-line="73" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="3774" max-vertical-offset="4318">
+              <caret line="222" column="60" selection-start-line="222" selection-start-column="60" selection-end-line="222" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -101,12 +102,52 @@
       <file leaf-file-name="ThrottleFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/ThrottleFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1886" max-vertical-offset="4624">
-              <caret line="133" column="93" selection-start-line="133" selection-start-column="93" selection-end-line="133" selection-end-column="93" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2988" max-vertical-offset="4726">
+              <caret line="186" column="14" selection-start-line="186" selection-start-column="14" selection-end-line="186" selection-end-column="14" />
               <folding>
-                <element signature="method#onStartTrackingTouch#0;class#ThrottleFragment#0" expanded="false" />
+                <element signature="imports" expanded="true" />
                 <element signature="method#onStopTrackingTouch#0;class#ThrottleFragment#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DynaFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/DynaFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="2074">
+              <caret line="51" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Consist.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/Consist.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.92727274" vertical-offset="731" max-vertical-offset="1173">
+              <caret line="65" column="31" selection-start-line="65" selection-start-column="31" selection-end-line="65" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MessageType.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/MessageType.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="731" max-vertical-offset="1139">
+              <caret line="43" column="119" selection-start-line="43" selection-start-column="119" selection-end-line="43" selection-end-column="119" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WebSocketRunnable.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/WebSocketRunnable.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2176" max-vertical-offset="7089">
+              <caret line="128" column="53" selection-start-line="128" selection-start-column="53" selection-end-line="128" selection-end-column="53" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -114,8 +155,18 @@
       <file leaf-file-name="Throttle.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/Throttle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1274" max-vertical-offset="1768">
-              <caret line="113" column="88" selection-start-line="113" selection-start-column="88" selection-end-line="113" selection-end-column="88" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1415" max-vertical-offset="1785">
+              <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Turnout.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/Turnout.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="1275">
+              <caret line="19" column="52" selection-start-line="19" selection-start-column="52" selection-end-line="19" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -1273,7 +1324,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/EngineDriver3/src/main/assets/not_connected.html" />
         <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/DebugRunnable.java" />
         <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/WebFragment.java" />
         <option value="$PROJECT_DIR$/EngineDriver3/src/main/res/layout/web_fragment.xml" />
@@ -1314,24 +1364,25 @@
         <option value="$PROJECT_DIR$/EngineDriver3/notes_on_new_approach.txt" />
         <option value="$PROJECT_DIR$/EngineDriver3/src/main/res/layout/throttle_classic.xml" />
         <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/Consts.java" />
+        <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/SelectLocoDialogFragment.java" />
+        <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/AddTabDialogFragment.java" />
+        <option value="$PROJECT_DIR$/EngineDriver3/todo_list.txt" />
+        <option value="$PROJECT_DIR$/EngineDriver3/src/main/res/layout/select_loco_dialog_fragment.xml" />
         <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/MessageType.java" />
         <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/MainActivity.java" />
         <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/PermaFragment.java" />
-        <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/SelectLocoDialogFragment.java" />
-        <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/WebSocketRunnable.java" />
-        <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/AddTabDialogFragment.java" />
-        <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/ThrottleFragment.java" />
         <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/Throttle.java" />
-        <option value="$PROJECT_DIR$/EngineDriver3/todo_list.txt" />
-        <option value="$PROJECT_DIR$/EngineDriver3/src/main/res/layout/select_loco_dialog_fragment.xml" />
+        <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/WebSocketRunnable.java" />
+        <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/ThrottleFragment.java" />
+        <option value="$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/Consist.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1552" />
-    <option name="height" value="842" />
+    <option name="width" value="1296" />
+    <option name="height" value="698" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -1379,27 +1430,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="AndroidView" />
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EngineDriver3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EngineDriver3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EngineDriver3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -1428,6 +1458,111 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="enginedriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EngineDriver3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1445,7 +1580,7 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0A3BA0250D013004" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="591a153f" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="2.3.3" />
     <property name="FullScreen" value="false" />
     <property name="OverrideImplement.combined" value="true" />
@@ -1496,17 +1631,17 @@
     <key name="android.template.packageName">
       <recent name="jmri.enginedriver3" />
     </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="jmri.enginedriver3" />
-      <recent name="jmri" />
-      <recent name="jmri.enginedriver.enginedriver3" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\src\main\res" />
       <recent name="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\src\main\res\drawable-xhdpi" />
       <recent name="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\src\main\java\jmri\enginedriver3" />
       <recent name="C:\EclipseWorkspaces\EngineDriver3\EngineDriver3\libs" />
       <recent name="C:\EclipseWorkspaces\EngineDriver3\app\src\main\res\layout" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="jmri.enginedriver3" />
+      <recent name="jmri" />
+      <recent name="jmri.enginedriver.enginedriver3" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.EngineDriver3">
@@ -1813,7 +1948,11 @@
       <created>1408654420178</created>
       <updated>1408654420178</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="EngineDriver3 - classic throttle works now, no function buttons">
+      <created>1408737117139</created>
+      <updated>1408737117139</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1837,37 +1976,37 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1552" height="842" extended-state="6" />
+    <frame x="-8" y="-8" width="1296" height="698" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3649635" sideWeight="0.31702414" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.071532845" sideWeight="0.31702414" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23324397" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3270073" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4218978" sideWeight="0.85254693" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17375231" sideWeight="0.85254693" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5270073" sideWeight="0.11930295" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3106796" sideWeight="0.5013774" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2642336" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.77956206" sideWeight="0.14142092" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3106796" sideWeight="0.5013774" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12992701" sideWeight="0.6541555" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28759125" sideWeight="0.8806971" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5415897" sideWeight="0.8806971" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3270073" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2969169" sideWeight="0.4986226" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31678832" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2961165" sideWeight="0.4986226" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31608135" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29020333" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297587" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23324397" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31970802" sideWeight="0.60455763" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23475046" sideWeight="0.60455763" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19038817" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -1933,21 +2072,15 @@
     <MESSAGE value="EngineDriver3 - add dialogs for adding and deleting tabs" />
     <MESSAGE value="EngineDriver3 - add panels to new tab choices (if connected)" />
     <MESSAGE value="EngineDriver3 - throttle fragment partially working" />
-    <option name="LAST_COMMIT_MESSAGE" value="EngineDriver3 - throttle fragment partially working" />
+    <MESSAGE value="EngineDriver3 - classic throttle works now, no function buttons" />
+    <option name="LAST_COMMIT_MESSAGE" value="EngineDriver3 - classic throttle works now, no function buttons" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="145" />
+      <option name="time" value="147" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/res/drawable/big_image_loading.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595">
-          <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/res/drawable/stick_btn_back.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
@@ -2138,13 +2271,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/DynaFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="680" max-vertical-offset="2074">
-          <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/DynaListFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="436" max-vertical-offset="3468">
@@ -2214,7 +2340,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1230" max-vertical-offset="3689">
           <caret line="92" column="51" selection-start-line="92" selection-start-column="51" selection-end-line="92" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2222,21 +2347,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.71428573" vertical-offset="3294" max-vertical-offset="3774">
           <caret line="229" column="0" selection-start-line="229" selection-start-column="0" selection-end-line="229" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6548" max-vertical-offset="8313">
-          <caret line="428" column="59" selection-start-line="428" selection-start-column="16" selection-end-line="428" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/Turnout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="157" max-vertical-offset="935">
-          <caret line="24" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -2248,19 +2358,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/MessageType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="368" max-vertical-offset="884">
-          <caret line="43" column="32" selection-start-line="43" selection-start-column="32" selection-end-line="43" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-18/android.jar!/android/view/View.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1418919" vertical-offset="3065" max-vertical-offset="19669">
           <caret line="185" column="16" selection-start-line="185" selection-start-column="16" selection-end-line="185" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2279,7 +2380,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="959" max-vertical-offset="2975">
           <caret line="96" column="107" selection-start-line="96" selection-start-column="107" selection-end-line="96" selection-end-column="107" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2287,7 +2387,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="799" max-vertical-offset="2907">
           <caret line="30" column="99" selection-start-line="30" selection-start-column="99" selection-end-line="30" selection-end-column="99" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2314,41 +2413,80 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1525424" vertical-offset="340" max-vertical-offset="748">
           <caret line="36" column="35" selection-start-line="36" selection-start-column="35" selection-end-line="36" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/Turnout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="157" max-vertical-offset="935">
+          <caret line="19" column="52" selection-start-line="19" selection-start-column="52" selection-end-line="19" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/MessageType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="368" max-vertical-offset="884">
+          <caret line="43" column="119" selection-start-line="43" selection-start-column="119" selection-end-line="43" selection-end-column="119" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6534" max-vertical-offset="8330">
+          <caret line="429" column="60" selection-start-line="429" selection-start-column="60" selection-end-line="429" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/PermaFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2026" max-vertical-offset="4114">
-          <caret line="156" column="43" selection-start-line="156" selection-start-column="43" selection-end-line="156" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/ThrottleFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1886" max-vertical-offset="4624">
-          <caret line="133" column="93" selection-start-line="133" selection-start-column="93" selection-end-line="133" selection-end-column="93" />
-          <folding>
-            <element signature="method#onStartTrackingTouch#0;class#ThrottleFragment#0" expanded="false" />
-            <element signature="method#onStopTrackingTouch#0;class#ThrottleFragment#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/Throttle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1358" max-vertical-offset="1802">
-          <caret line="113" column="88" selection-start-line="113" selection-start-column="88" selection-end-line="113" selection-end-column="88" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3491" max-vertical-offset="4131">
+          <caret line="222" column="60" selection-start-line="222" selection-start-column="60" selection-end-line="222" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/WebSocketRunnable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33756346" vertical-offset="785" max-vertical-offset="6562">
-          <caret line="73" column="20" selection-start-line="73" selection-start-column="20" selection-end-line="73" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1663" max-vertical-offset="6732">
+          <caret line="128" column="53" selection-start-line="128" selection-start-column="53" selection-end-line="128" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/ThrottleFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2988" max-vertical-offset="4726">
+          <caret line="186" column="14" selection-start-line="186" selection-start-column="14" selection-end-line="186" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#onStopTrackingTouch#0;class#ThrottleFragment#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/DynaFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="2074">
+          <caret line="51" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/Throttle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1361" max-vertical-offset="1785">
+          <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EngineDriver3/src/main/java/jmri/enginedriver3/Consist.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.92727274" vertical-offset="731" max-vertical-offset="1173">
+          <caret line="65" column="31" selection-start-line="65" selection-start-column="31" selection-end-line="65" selection-end-column="31" />
           <folding />
         </state>
       </provider>

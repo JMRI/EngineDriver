@@ -1,8 +1,6 @@
 package jmri.enginedriver3;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,10 +8,6 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -225,7 +219,8 @@ public class PermaFragment extends Fragment {
                     }
                     break;
                 //simply forward these along to websocket thread
-                case MessageType.VELOCITY_CHANGE_REQUESTED:
+                case MessageType.SPEED_CHANGE_REQUESTED:
+                case MessageType.DIRECTION_CHANGE_REQUESTED:
                 case MessageType.TURNOUT_CHANGE_REQUESTED:
                 case MessageType.LOCO_REQUESTED:
                 case MessageType.RELEASE_LOCO_REQUESTED:

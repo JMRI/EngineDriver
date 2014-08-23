@@ -40,8 +40,8 @@ interface MessageType
     public static final int SHUTDOWN=17;  		//
     public static final int PANEL_LIST_CHANGED =18;		//
     public static final int THROTTLE_CHANGED=19; //websocket->throttlefrag (throttleKey)
-    public static final int VELOCITY_CHANGE_REQUESTED=20; //throttlefrag -> websocket (throttleKey, direction, displayedspeed)
-//  public static final int REQ_DIRECTION=21; 	//
+    public static final int SPEED_CHANGE_REQUESTED =20; //throttlefrag -> websocket (throttleKey, desired displayedspeed)
+    public static final int DIRECTION_CHANGE_REQUESTED=21; 	//throttlefrag -> websocket (throttleKey, desired direction)
 //  public static final int WEBVIEW_LOC=22;		//
     public static final int ROSTERENTRY_LIST_CHANGED=23;		//
 //  public static final int WIT_CON_RETRY=24;		//

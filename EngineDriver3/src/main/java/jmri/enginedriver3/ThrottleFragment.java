@@ -17,7 +17,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,8 +35,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
     private static SeekBar sbSpeedSlider;
     private static boolean touchingSlider = false;
 
-    //throttleKeys of locos attached to this fragment, 1 is lead.  get Throttle from list
-    private SparseArray<String> throttlesAttached = new SparseArray<String>();
+    private Consist consist = null;
 
     /**---------------------------------------------------------------------------------------------**
 	 * create a new fragment of this type, and populate basic settings in bundle 
@@ -79,6 +77,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
         super.onStart();
         Log.d(Consts.APP_NAME, "in ThrottleFragment.onStart()");
 
+        consist = new Consist(mainApp);
         //add touch listeners for all buttons, to handle up and down as needed
         btnSelectLoco = (Button) fragmentView.findViewById(R.id.btnSelectLoco);
         if (btnSelectLoco!=null) btnSelectLoco.setOnTouchListener(this);
@@ -133,10 +132,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
 //        Log.d(Consts.APP_NAME, "in ThrottleFragment.onProgressChanged " + fromUser + " " + progress);
         //if user caused this change by sliding the slider, send the change request to server
         if (fromUser) {
-            Throttle t = getLeadThrottle();
-            int dir = (t.isForward() ? Consts.FORWARD : Consts.REVERSE);
-            mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
-                    t.getThrottleKey(), dir, progress);
+            consist.sendSpeedChange(progress);
         }
     }
     @Override
@@ -159,37 +155,25 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
                 showSelectLocoDialog();
             } else if (view.getId() == R.id.btnForward) {
 //                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnForward) ");
-                Throttle t = getLeadThrottle();
-                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
-                        t.getThrottleKey(), Consts.FORWARD, t.getDisplayedSpeed());
+                consist.sendDirectionChange(Consts.FORWARD);
             } else if (view.getId() == R.id.btnReverse) {
 //                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnReverse) ");
-                Throttle t = getLeadThrottle();
-                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
-                        t.getThrottleKey(), Consts.REVERSE, t.getDisplayedSpeed());
+                consist.sendDirectionChange(Consts.REVERSE);
             } else if (view.getId() == R.id.btnSpeedIncrease) {
 //                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnSpeedIncrease) ");
-                Throttle t = getLeadThrottle();
+                Throttle t = consist.getLeadThrottle();
                 int newSpeed = t.getDisplayedSpeed() + t.getDisplayedSpeedIncrement();
                 if (newSpeed>t.getMaxDisplayedSpeed()) newSpeed=t.getMaxDisplayedSpeed();
-                int dir = (t.isForward() ? Consts.FORWARD : Consts.REVERSE);
-                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
-                        t.getThrottleKey(), dir, newSpeed);
+                consist.sendSpeedChange(newSpeed);
             } else if (view.getId() == R.id.btnSpeedDecrease) {
 //                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnSpeedDecrease) ");
-                Throttle t = getLeadThrottle();
+                Throttle t = consist.getLeadThrottle();
                 int newSpeed = t.getDisplayedSpeed() - t.getDisplayedSpeedIncrement();
                 if (newSpeed<0) newSpeed=0;
-                int dir = (t.isForward() ? Consts.FORWARD : Consts.REVERSE);
-                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
-                        t.getThrottleKey(), dir, newSpeed);
+                consist.sendSpeedChange(newSpeed);
             } else if (view.getId() == R.id.btnStop) {
 //                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnStop) ");
-                Throttle t = getLeadThrottle();
-                int newSpeed = 0;
-                int dir = (t.isForward() ? Consts.FORWARD : Consts.REVERSE);
-                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.VELOCITY_CHANGE_REQUESTED,
-                        t.getThrottleKey(), dir, newSpeed);
+                consist.sendSpeedChange(0);
             } else {
                 Log.w(Consts.APP_NAME, "unhandled button clicked in ThrottleFragment.onTouchDOWN");
             }
@@ -215,14 +199,16 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
                     paintThrottle();
                     break;
                 case MessageType.DISCONNECTED:
-                    throttlesAttached.clear();
+                    consist.clear();
                     paintThrottle();
                     break;
                 case MessageType.ROSTERENTRY_LIST_CHANGED:
                     break;  //no action for now
                 case MessageType.THROTTLE_CHANGED:
                     String throttleKey = msg.obj.toString();  //payload is throttleKey
-                    throttlesAttached.put(0, throttleKey);  //attach it to this throttle
+                    if (!consist.hasThrottle(throttleKey)) {
+                        consist.addThrottle(throttleKey);  //append throttle to this consist if not already in
+                    }
 //                    Log.d(Consts.APP_NAME, "in ThrottleFragment.handleMessage("+throttleKey+")");
                     paintThrottle();
                     break;  //no action for now
@@ -235,7 +221,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
 
     private void paintThrottle() {
 //        Log.d(Consts.APP_NAME, "in paintThrottle()");
-        boolean anyAttached = (throttlesAttached.size() > 0);
+        boolean anyAttached = !consist.isEmpty();
         if (btnForward!=null)       btnForward.setEnabled(anyAttached);
         if (btnReverse!=null)       btnReverse.setEnabled(anyAttached);
         if (btnStop!=null)          btnStop.setEnabled(anyAttached);
@@ -248,20 +234,18 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
         btnSelectLoco.setEnabled(mainApp.isConnected());
 
         //populate text for buttons and labels
-        String locoText = (mainApp.isConnected() ? "Press to Select" : "Not Connected");
         int speedValue = 0;
         int maxValue = 100;
         boolean fwd = true;
         String speedUnitsText = "%";
         if (anyAttached) {
-            Throttle t = getLeadThrottle();
-            locoText = t.getRosterId();
+            Throttle t = consist.getLeadThrottle();
             speedValue = t.getDisplayedSpeed();
             fwd = t.isForward();
             maxValue = t.getMaxDisplayedSpeed();
             speedUnitsText = t.getSpeedUnitsText();
         }
-        btnSelectLoco.setText(locoText);
+        btnSelectLoco.setText(getLocoText());
         if (tvSpeedValue != null)  tvSpeedValue.setText("" + speedValue);
         if (btnForward != null)    btnForward.setPressed(fwd);  //TODO: should this be 0 instead of null?
         if (btnReverse != null)    btnReverse.setPressed(!fwd);
@@ -273,8 +257,12 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
 
     }
 
-    private Throttle getLeadThrottle() {
-        return mainApp.getThrottle(throttlesAttached.get(0));
+    private String getLocoText() {
+        String locoText = (mainApp.isConnected() ? "Press to Select" : "Not Connected");
+        if (!consist.isEmpty()) {
+            locoText = consist.toString();
+        }
+        return locoText;
     }
 
     public void showSelectLocoDialog() {

@@ -113,15 +113,25 @@ class WebSocketRunnable implements Runnable {
                         jmriWebSocket.webSocketConnection.sendTextMessage(jc);  //send the request to the server
                     } catch (Exception e) {}  //if anything bad happens here, just ignore it
                     break;
-                case MessageType.VELOCITY_CHANGE_REQUESTED:
+                case MessageType.SPEED_CHANGE_REQUESTED:
                     Throttle throttle = mainApp.getThrottle(msg.obj.toString()); //obj is throttleKey
-                    float newSpeed = throttle.getSpeedForDisplayedSpeed(msg.arg2);  //arg2 is displayedSpeed
-                    String jv = throttle.getVelocityChangeJson(msg.arg1, newSpeed);  //arg1 is direction, arg2 is speed
-                    Log.d(Consts.APP_NAME, "in WebSocketRunnable.handleMessage() VELOCITY_CHANGE_REQUESTED " + jv);
+                    float newSpeed = throttle.getSpeedForDisplayedSpeed(msg.arg1);  //arg2 is displayedSpeed
+                    String js = throttle.getSpeedChangeJson(newSpeed);  //arg1 is direction, arg2 is speed
+                    Log.d(Consts.APP_NAME, "in WebSocketRunnable.handleMessage() SPEED_CHANGE_REQUESTED " + js);
                     try {
-                        jmriWebSocket.webSocketConnection.sendTextMessage(jv);  //send the request to the server
+                        jmriWebSocket.webSocketConnection.sendTextMessage(js);  //send the request to the server
                     } catch (Exception e) {
-                        Log.w(Consts.APP_NAME, "problem sending VELOCITY_CHANGE message " + e);
+                        Log.w(Consts.APP_NAME, "problem sending SPEED_CHANGE message " + e);
+                    }
+                    break;
+                case MessageType.DIRECTION_CHANGE_REQUESTED:
+                    throttle = mainApp.getThrottle(msg.obj.toString()); //obj is throttleKey
+                    String jd = throttle.getDirectionChangeJson(msg.arg1);  //arg1 is direction
+                    Log.d(Consts.APP_NAME, "in WebSocketRunnable.handleMessage() DIRECTION_CHANGE_REQUESTED " + jd);
+                    try {
+                        jmriWebSocket.webSocketConnection.sendTextMessage(jd);  //send the request to the server
+                    } catch (Exception e) {
+                        Log.w(Consts.APP_NAME, "problem sending DIRECTION_CHANGE message " + e);
                     }
                     break;
                 default:

@@ -109,15 +109,16 @@ public class Throttle {
         return ((float)displayedSpeed / (float)_speedUnits);
     }
 
-    public String getVelocityChangeJson(int newDirection, float newSpeed) {
+    public String getSpeedChangeJson(float newJmriSpeed) {
 //        {"type":"throttle","data":{"throttle":"CSX754","speed":0.25}}
         String s = "{\"type\":\"throttle\",\"data\":{\"throttle\":\"" + _throttleKey + "\"";
-//        if (_forward != (newDirection==1)) {
-            s += ",\"forward\":" + (newDirection==1);  //format the json change request
-//        }
-//        if (_speed != newSpeed) {
-            s += ",\"speed\":" + newSpeed;
-//        }
+        s += ",\"speed\":" + newJmriSpeed;
+        s += "}}";
+        return s;
+    }
+    public String getDirectionChangeJson(int newDirection) {
+        String s = "{\"type\":\"throttle\",\"data\":{\"throttle\":\"" + _throttleKey + "\"";
+        s += ",\"forward\":" + (newDirection==1);  //format the json change request
         s += "}}";
         return s;
     }
