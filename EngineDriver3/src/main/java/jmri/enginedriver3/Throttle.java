@@ -25,7 +25,7 @@ public class Throttle {
         this._speed = (float) -1.0;
         this._forward = true;
         this._confirmed = false;  //very important, this will be set only after the server responds with this loco
-        this._speedUnits = 14;  //TODO: get this from settings?
+        this._speedUnits = 100;  //TODO: get this from settings or decoder
     }
 
     public Throttle(String _throttleKey, String _fragmentName, String _rosterId, int _dccAddress, float _speed,
