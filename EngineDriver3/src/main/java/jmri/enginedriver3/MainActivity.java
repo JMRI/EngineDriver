@@ -449,6 +449,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     break;
                 case MessageType.THROTTLE_CHANGED:
                     Throttle t = mainApp.getThrottle(msg.obj.toString());  //throttleKey is payload
+//                    Log.d(Consts.APP_NAME, "in MainActivity.ThrottleChanged(" + t.getFragmentName() + ")");
                     forwardMessageToFragmentName(msg, t.getFragmentName());  //forward to fragment which owns this throttleKey
                     break;
                 case MessageType.MESSAGE_LONG:
@@ -484,6 +485,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 if (fh != null &&
                         (in_fragmentType.equals(Consts.ALL_FRAGMENTS) ||
                                 mainApp.getDynaFrags().get(i).getType().equals(in_fragmentType))) {
+                    Log.d(Consts.APP_NAME, "in MainActivity_Handler.handleMessage("
+                            + in_msg.what + ") " + fh.toString());
                     mainApp.sendMsg(fh, in_msg);
                 }
             }
@@ -497,7 +500,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             if (fh != null &&
                     mainApp.getDynaFrags().get(i).getName().equals(in_fragmentName)) {
                 mainApp.sendMsg(fh, in_msg);
-                break;  //there will only be one  TODO: check name first, and break then
             }
         }
     }

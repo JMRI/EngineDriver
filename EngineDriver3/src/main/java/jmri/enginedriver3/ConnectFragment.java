@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ConnectFragment extends DynaFragment {
-    private int started = 0;
     private ArrayList<HashMap<String, String> > recentConnectionsList;  //maintained locally, stored in prefs
     private SimpleAdapter recentConnectionsListAdapter;
     private ArrayList<HashMap<String, String> > discoveredServersList;  //local copy of shared var
@@ -66,7 +65,6 @@ public class ConnectFragment extends DynaFragment {
     @Override
     public void onStart() {
         super.onStart();
-        started++;
 //        Log.d(Consts.APP_NAME, "in ConnectFragment.onStart() " + started);
 
         //Set up a list adapter to present list of discovered WiThrottle servers to the UI.

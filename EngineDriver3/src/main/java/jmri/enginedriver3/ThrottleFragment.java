@@ -29,13 +29,13 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
 
     private MainActivity mainActivity = null;
 
-    private static Button btnSelectLoco, btnStop, btnForward, btnReverse,
+    private Button btnSelectLoco, btnStop, btnForward, btnReverse,
             btnSpeedDecrease, btnSpeedIncrease, btnToggleDirection;
-    private static TextView tvSpeedValue, tvSpeedUnits;
-    private static SeekBar sbSpeedSlider;
-    private static boolean touchingSlider = false;
+    private TextView tvSpeedValue, tvSpeedUnits;
+    private SeekBar sbSpeedSlider;
+    private boolean touchingSlider = false;
 
-    private Consist consist = null;
+    private Consist consist = null;  //singleton to provide multi-throttle functions
 
     /**---------------------------------------------------------------------------------------------**
 	 * create a new fragment of this type, and populate basic settings in bundle 
@@ -78,6 +78,9 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
         Log.d(Consts.APP_NAME, "in ThrottleFragment.onStart()");
 
         consist = new Consist(mainApp);
+        if (mainApp.isConnected()) {  //restore if connected
+            consist.restoreFromPreferences(getFragName());
+        }
         //add touch listeners for all buttons, to handle up and down as needed
         btnSelectLoco = (Button) fragmentView.findViewById(R.id.btnSelectLoco);
         if (btnSelectLoco!=null) btnSelectLoco.setOnTouchListener(this);
@@ -111,7 +114,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
         Log.d(Consts.APP_NAME, "in ThrottleFragment.onStop()");
         //clear this to avoid late messages
         if (mainApp.getDynaFrags().get(getFragNum())!=null) mainApp.getDynaFrags().get(getFragNum()).setHandler(null);
-
+        consist.saveToPreferences(getFragName());
         super.onStop();
     }
     @Override
@@ -196,9 +199,11 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MessageType.CONNECTED:
+//                    Log.d(Consts.APP_NAME, "in ThrottleFragment.handleMessage() CONNECTED frag="+getFragName());
                     paintThrottle();
                     break;
                 case MessageType.DISCONNECTED:
+//                    Log.d(Consts.APP_NAME, "in ThrottleFragment.handleMessage() DISCONNECTED frag="+getFragName());
                     consist.clear();
                     paintThrottle();
                     break;
@@ -209,7 +214,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
                     if (!consist.hasThrottle(throttleKey)) {
                         consist.addThrottle(throttleKey);  //append throttle to this consist if not already in
                     }
-//                    Log.d(Consts.APP_NAME, "in ThrottleFragment.handleMessage("+throttleKey+")");
+//                    Log.d(Consts.APP_NAME, "in ThrottleFragment.ThrottleChanged("+throttleKey+") frag="+getFragName());
                     paintThrottle();
                     break;  //no action for now
                 default:

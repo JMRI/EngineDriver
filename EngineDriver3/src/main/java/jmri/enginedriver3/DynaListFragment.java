@@ -11,7 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class DynaListFragment extends DynaFragment {
-	/**---------------------------------------------------------------------------------------------**
+
+    /**---------------------------------------------------------------------------------------------**
 	 * create a new fragment of this type, and populate basic settings in bundle 
 	 * Note: this is a static method, called from the activity's getItem() when new ones are needed */	
 	static DynaListFragment newInstance(int fragNum, String fragType, String fragName) {
