@@ -72,7 +72,7 @@ public class AddTabDialogFragment extends android.support.v4.app.DialogFragment 
         ArrayList<HashMap<String, String>> ftc = new ArrayList<HashMap<String, String>>();
         ftc.add(NewFragmentChoice("<Select Tab Type to Add>", "", "", "", ""));  //empty entry to force user to make a selection
         ftc.add(NewFragmentChoice("Throttle - Classic", "Throttle", Consts.THROTTLE, "2", "classic"));
-        ftc.add(NewFragmentChoice("Throttle - Vertical", "Throttle", Consts.THROTTLE, "2", "vertical"));
+        ftc.add(NewFragmentChoice("Throttle - Vertical", "Throttle", Consts.THROTTLE, "1", "vertical"));
         ftc.add(NewFragmentChoice("Turnout", "Turnout", Consts.TURNOUT, "2", null));
 
         for (int i = 0; i < mainApp.getPanelList().size(); i++) {  //add an item for each defined panel

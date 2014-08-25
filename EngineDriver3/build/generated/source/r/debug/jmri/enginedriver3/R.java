@@ -974,17 +974,25 @@ containing a value of this type.
         public static final int btn_pressed=0x7f02006d;
         public static final int ed3_launcher_icon=0x7f02006e;
         public static final int ic_drawer=0x7f02006f;
-        public static final int ic_drawer1=0x7f020070;
-        public static final int metal_tread=0x7f020071;
-        public static final int progress_bar_status=0x7f020072;
-        public static final int stick_btn_back=0x7f020073;
-        public static final int stick_btn_forward=0x7f020074;
-        public static final int stick_btn_refresh=0x7f020075;
-        public static final int stick_btn_share=0x7f020076;
-        public static final int sticky_button_states=0x7f020077;
-        public static final int stop_btn_not_pressed=0x7f020078;
-        public static final int stop_btn_pressed=0x7f020079;
-        public static final int stop_button_states=0x7f02007a;
+        public static final int metal_tread=0x7f020070;
+        public static final int progress_bar_status=0x7f020071;
+        public static final int progress_vertical=0x7f020072;
+        public static final int seek_thumb=0x7f020073;
+        public static final int seek_thumb_normal=0x7f020074;
+        public static final int seek_thumb_normal_wide=0x7f020075;
+        public static final int seek_thumb_pressed=0x7f020076;
+        public static final int seek_thumb_pressed_wide=0x7f020077;
+        public static final int seek_thumb_selected=0x7f020078;
+        public static final int seek_thumb_selected_wide=0x7f020079;
+        public static final int seek_thumb_wide=0x7f02007a;
+        public static final int stick_btn_back=0x7f02007b;
+        public static final int stick_btn_forward=0x7f02007c;
+        public static final int stick_btn_refresh=0x7f02007d;
+        public static final int stick_btn_share=0x7f02007e;
+        public static final int sticky_button_states=0x7f02007f;
+        public static final int stop_btn_not_pressed=0x7f020080;
+        public static final int stop_btn_pressed=0x7f020081;
+        public static final int stop_button_states=0x7f020082;
     }
     public static final class id {
         public static final int ButtonCancel=0x7f080043;
@@ -1145,9 +1153,10 @@ containing a value of this type.
         public static final int select_loco_dialog_fragment=0x7f03001f;
         public static final int support_simple_spinner_dropdown_item=0x7f030020;
         public static final int throttle_classic=0x7f030021;
-        public static final int turnouts_fragment=0x7f030022;
-        public static final int turnouts_list_item=0x7f030023;
-        public static final int webview_fragment=0x7f030024;
+        public static final int throttle_vertical=0x7f030022;
+        public static final int turnouts_fragment=0x7f030023;
+        public static final int turnouts_list_item=0x7f030024;
+        public static final int webview_fragment=0x7f030025;
     }
     public static final class string {
         public static final int LeftButton=0x7f0b0000;

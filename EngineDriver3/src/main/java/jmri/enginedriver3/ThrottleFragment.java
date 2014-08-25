@@ -4,7 +4,8 @@ package jmri.enginedriver3;
 *    A UI element which has a speed control and various buttons to allow a user to control a
 *    set of DCC locos treated as a "consist".
 *    Expects a layout name in fragData, and uses it to load an xml file which defines a unique
-*    "flavor" of throttle.  the ids in the xml must be named correctly, but otherwise the format is
+*    "flavor" of throttle.  "throttle_[flavor].xml"
+*    NOTE: the ids of the active elements in the xml must be named correctly, but otherwise the format is
 *    free to provide various ways to control the loco(s).  Note that the code must be able to safely
 *    ignore missing or hidden ids, as some flavors may not need the same buttons, etc.
 *    This fragment uses Android messaging for bidirectional communication with the activity, and thence
@@ -101,6 +102,9 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
         sbSpeedSlider = (SeekBar) fragmentView.findViewById(R.id.sbSpeedSlider);
         if (sbSpeedSlider!=null) sbSpeedSlider.setOnSeekBarChangeListener(this);
 
+//        vsbSpeedSlider = (VerticalSeekBar) fragmentView.findViewById(R.id.vsbSpeedSlider);
+//        if (vsbSpeedSlider!=null) vsbSpeedSlider.setOnSeekBarChangeListener(this);
+
 //        btnToggleDirection = (Button) fragmentView.findViewById(R.id.btnToggleDirection);  //TODO: add after creating new flavor
 //        if (btnToggleDirection!=null) btnToggleDirection.setOnClickListener(this);  //call onClick()
 
@@ -134,18 +138,19 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 //        Log.d(Consts.APP_NAME, "in ThrottleFragment.onProgressChanged " + fromUser + " " + progress);
         //if user caused this change by sliding the slider, send the change request to server
-        if (fromUser) {
+//        if (fromUser) {  //this doesn't work properly on VerticalSeekBar, so use the touching flag instead
+        if (touchingSlider) {
             consist.sendSpeedChange(progress);
         }
     }
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-//        Log.d(Consts.APP_NAME, "in ThrottleFragment.onStartTrackingTouch) ");
+        Log.d(Consts.APP_NAME, "in ThrottleFragment.onStartTrackingTouch) ");
         touchingSlider = true;  //finger is on slider, send changes, but don't update from server
     }
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-//        Log.d(Consts.APP_NAME, "in ThrottleFragment.onStopTrackingTouch ");
+        Log.d(Consts.APP_NAME, "in ThrottleFragment.onStopTrackingTouch ");
         touchingSlider = false;  //finger is not on slider, update from server and don't send changes
     }
 
@@ -252,9 +257,9 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
         }
         btnSelectLoco.setText(getLocoText());
         if (tvSpeedValue != null)  tvSpeedValue.setText("" + speedValue);
-        if (btnForward != null)    btnForward.setPressed(fwd);  //TODO: should this be 0 instead of null?
+        if (btnForward != null)    btnForward.setPressed(fwd);
         if (btnReverse != null)    btnReverse.setPressed(!fwd);
-        if (sbSpeedSlider!=null && !touchingSlider) {  //don't move the slider if a finger is on it
+        if (sbSpeedSlider!=null && !touchingSlider) {  //don't auto-move the slider if a finger is on it
             sbSpeedSlider.setMax(maxValue);
             sbSpeedSlider.setProgress(speedValue);
         }

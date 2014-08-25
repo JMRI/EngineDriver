@@ -3,7 +3,7 @@ All:
   Replace strings with constants
 ConnectFragment:
   manual entry of address and port
-  include last message in status line
+  include last message in status line (or click to show it in a dialog?)
   color-code status line (red for no connection, green for connected, etc.)
   include the discovered host name in the recent list, instead of just the ip
   add most recently used at top of list, not bottom
@@ -33,6 +33,6 @@ RemoveTabDialogFragment:
 AddTabDialogFragment:
   add thumbnail images, especially helpful for throttle layouts
 Throttle:
-  save and restore attachedThrottles, test by rotating
-  handle multiple attachedThrottles
   handle repeat on inc/dec speed buttons
+  add function buttons, arrayed based on available space in the scroll widget
+VerticalThrottle:
