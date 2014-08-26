@@ -1011,6 +1011,7 @@ containing a value of this type.
         public static final int activity_chooser_view_content=0x7f080025;
         public static final int always=0x7f08000f;
         public static final int beginning=0x7f08000a;
+        public static final int btnConnect=0x7f080047;
         public static final int btnForward=0x7f08005f;
         public static final int btnReverse=0x7f080061;
         public static final int btnSelectLoco=0x7f080059;
@@ -1020,7 +1021,6 @@ containing a value of this type.
         public static final int cf_footer=0x7f08004b;
         public static final int checkbox=0x7f08002d;
         public static final int collapseActionView=0x7f080011;
-        public static final int connect=0x7f080047;
         public static final int content=0x7f08006d;
         public static final int default_activity_button=0x7f080028;
         public static final int dialog=0x7f080012;
@@ -1032,12 +1032,13 @@ containing a value of this type.
         public static final int dropdown=0x7f080013;
         public static final int edit_query=0x7f080030;
         public static final int end=0x7f08000c;
+        public static final int etHostIp=0x7f080045;
+        public static final int etPort=0x7f080046;
         public static final int expand_activities_button=0x7f080026;
         public static final int expanded_menu=0x7f08002c;
         public static final int function_buttons_scroller=0x7f080066;
         public static final int home=0x7f080017;
         public static final int homeAsUp=0x7f080005;
-        public static final int host_ip=0x7f080045;
         public static final int host_item_label=0x7f08004d;
         public static final int icon=0x7f08002a;
         public static final int ifRoom=0x7f08000e;
@@ -1059,7 +1060,6 @@ containing a value of this type.
         public static final int never=0x7f08000d;
         public static final int none=0x7f080009;
         public static final int normal=0x7f080000;
-        public static final int port=0x7f080046;
         public static final int port_item_label=0x7f08004e;
         public static final int progress_circular=0x7f080018;
         public static final int progress_horizontal=0x7f080019;

@@ -485,8 +485,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 if (fh != null &&
                         (in_fragmentType.equals(Consts.ALL_FRAGMENTS) ||
                                 mainApp.getDynaFrags().get(i).getType().equals(in_fragmentType))) {
-                    Log.d(Consts.APP_NAME, "in MainActivity_Handler.handleMessage("
-                            + in_msg.what + ") " + fh.toString());
+//                    Log.d(Consts.APP_NAME, "in MainActivity_Handler.handleMessage("
+//                            + in_msg.what + ") " + fh.toString());
                     mainApp.sendMsg(fh, in_msg);
                 }
             }

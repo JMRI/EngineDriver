@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -28,6 +30,8 @@ public class ConnectFragment extends DynaFragment {
     private ArrayList<HashMap<String, String> > discoveredServersList;  //local copy of shared var
     private SimpleAdapter discoveredServerListAdapter;
     private MainActivity mainActivity = null;
+    private Button btnConnect;
+    private EditText etHostIp, etPort;
 
     public ConnectFragment() {
     }
@@ -76,7 +80,7 @@ public class ConnectFragment extends DynaFragment {
                 new int[] {R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
         ListView dlv = (ListView) getActivity().findViewById(R.id.discovered_server_list);
         dlv.setAdapter(discoveredServerListAdapter);
-        dlv.setOnItemClickListener(new connect_item());
+        dlv.setOnItemClickListener(new ConnectionsListItemClickListener());
 //        discoveredServerListAdapter.notifyDataSetChanged();
 
         //populate the recent list from sharedprefs, defaulting if needed.
@@ -95,12 +99,18 @@ public class ConnectFragment extends DynaFragment {
                 new int[] {R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
         ListView conn_list=(ListView) getActivity().findViewById(R.id.server_list);
         conn_list.setAdapter(recentConnectionsListAdapter);
-        conn_list.setOnItemClickListener(new connect_item());
+        conn_list.setOnItemClickListener(new ConnectionsListItemClickListener());
+
+        //setup for manual entry
+        btnConnect = (Button) fragmentView.findViewById(R.id.btnConnect);
+        btnConnect.setOnClickListener(new ConnectButtonClickListener());
+        etHostIp = (EditText) fragmentView.findViewById(R.id.etHostIp);
+        etPort = (EditText) fragmentView.findViewById(R.id.etPort);
 
         // suppress popup keyboard until EditText is touched
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        SetConnectedMessage();
+        setConnectedMessage();
 
         //only set this when fragment is ready to receive messages
         mainApp.setDynaFragHandler(getFragNum(), new Fragment_Handler());
@@ -168,7 +178,7 @@ public class ConnectFragment extends DynaFragment {
                 case MessageType.CONNECTED:
                 case MessageType.DISCONNECTED:
                     Log.d(Consts.APP_NAME, "in ConnectFragment.handleMessage() DIS/CONNECTED");
-                    SetConnectedMessage();
+                    setConnectedMessage();
                     if (mainApp.isConnected()) {
                         UpdateRecentServerList();
                     }
@@ -180,7 +190,7 @@ public class ConnectFragment extends DynaFragment {
         }
     }
 
-    private void SetConnectedMessage() {
+    private void setConnectedMessage() {
         View tv = fragmentView.findViewById(R.id.cf_footer);
         if (tv != null) {
             if (!mainApp.isConnected()) {
@@ -205,7 +215,7 @@ public class ConnectFragment extends DynaFragment {
         }
     }
 
-    public class connect_item implements AdapterView.OnItemClickListener {
+    public class ConnectionsListItemClickListener implements AdapterView.OnItemClickListener {
         //When an item is clicked, send request to connect to the selected IP address and port.
         public void onItemClick(AdapterView<?> parent, View v, int position, long id)    {
 
@@ -231,6 +241,33 @@ public class ConnectFragment extends DynaFragment {
 
         };
     }
+    //handle click on Connect button
+    public class ConnectButtonClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            String requestedHostIP = etHostIp.getText().toString();
+            int requestedPort = 0;
+            try {
+                requestedPort = Integer.valueOf(etPort.getText().toString());
+            } catch(Exception except) {
+                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.MESSAGE_SHORT, "Invalid port#, retry.\n" + except.getMessage());
+                return;
+            }
 
+            //don't connect to same server:port again
+            if (mainApp.getServer()!=null && mainApp.getServer().equals(requestedHostIP) && mainApp.getWebPort()== requestedPort) {
+                String s = "Already connected to " + requestedHostIP + ":" + requestedPort;
+                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.MESSAGE_SHORT, s);
+            } else {
+                View tv = fragmentView.findViewById(R.id.cf_footer);
+                if (tv != null) {
+                    ((TextView) tv).setText("New Connection requested.......");
+                }
+                mainApp.sendMsg(mainActivity.mainActivityHandler, MessageType.CONNECT_REQUESTED,
+                        requestedHostIP, requestedPort);
+            }
+
+        }
+    }
 
 }

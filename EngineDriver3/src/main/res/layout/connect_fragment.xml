@@ -13,18 +13,18 @@
             android:layout_height="wrap_content"
             android:text="@string/host_ip" />
         <EditText
-            android:id="@+id/host_ip"
+            android:id="@+id/etHostIp"
             android:layout_width="160sp"
             android:layout_height="wrap_content"
             android:layout_below="@id/ip_label"
             android:maxLength="60"
             android:singleLine="true" />
         <EditText
-            android:id="@+id/port"
+            android:id="@+id/etPort"
             android:layout_width="80sp"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/host_ip"
-            android:layout_toRightOf="@id/host_ip"
+            android:layout_alignBottom="@id/etHostIp"
+            android:layout_toRightOf="@id/etHostIp"
             android:inputType="number"
             android:maxLength="5"
             android:singleLine="true" />
@@ -32,15 +32,15 @@
             style="@style/floating_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/port"
-            android:layout_alignLeft="@id/port"
+            android:layout_above="@id/etPort"
+            android:layout_alignLeft="@id/etPort"
             android:text="@string/port" />
         <Button
-            android:id="@+id/connect"
+            android:id="@+id/btnConnect"
             style="@style/normal_button_style"
             android:layout_width="fill_parent"
-            android:layout_alignBottom="@id/port"
-            android:layout_toRightOf="@id/port"
+            android:layout_alignBottom="@id/etPort"
+            android:layout_toRightOf="@id/etPort"
             android:text="@string/connect_button" />
     </RelativeLayout>
     <TextView

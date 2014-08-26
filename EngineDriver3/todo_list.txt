@@ -2,7 +2,6 @@ Todo list, to be used for items which I plan to do, but am intentionally skippin
 All:
   Replace strings with constants
 ConnectFragment:
-  manual entry of address and port
   include last message in status line (or click to show it in a dialog?)
   color-code status line (red for no connection, green for connected, etc.)
   include the discovered host name in the recent list, instead of just the ip
@@ -10,11 +9,13 @@ ConnectFragment:
   remove leftover formatting from ED, replace with new look
   if no discovered servers, show "No Items" label
   new function, long-press to select the auto-connect address?  or always auto-connect to first?
+  clear manual entry fields after use?
 WebSocketRunnable:
   use heartbeat to kill "hung" connections (such as attempting to connect to the WiThrottle port)
   don't show error message when connection is intentionally closed
 MainActivity:
   notification icon when backgrounded
+  "stop all" button in header, including landscape, sends stop to all attached locos
   Show the title in landscape mode
   reduce padding, etc. to avoid wide tabs
   check for About tab before showing option in menu (or add it when needed?)

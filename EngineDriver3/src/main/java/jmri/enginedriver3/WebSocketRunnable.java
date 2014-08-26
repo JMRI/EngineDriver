@@ -265,7 +265,7 @@ class WebSocketRunnable implements Runnable {
                             data.getBoolean("inverted"),
                             (data.getString("comment").equals("null") ? null : data.getString("comment")));
                     tl.put(data.getString("name"), t);  //add this entry to the list, keyed by name
-                    String s = t.getChangeStateJson(data.getInt("state"));  //send no-change request to start listener  TODO: should this be 0?
+                    String s = t.getChangeStateJson(Consts.STATE_UNKNOWN);  //send no-change request to start listener
                     this.webSocketConnection.sendTextMessage(s);
                 }
             }

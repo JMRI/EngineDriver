@@ -17,7 +17,8 @@ public class Turnout {
         this._inverted = _inverted;
         this._comment = _comment;
     }
-    //return a properly-formatted json request to change this turnout to new state
+    //return a properly-formatted json request to change this turnout to new state,
+    //   note: if UKNOWN is sent, current value is returned instead
     public String getChangeStateJson(int newState) {
         String s = "{\"type\":\"turnout\",\"data\":{\"name\":\"" + _systemName +
                 "\",\"state\":"+ newState + "}}";  //format the json change request
