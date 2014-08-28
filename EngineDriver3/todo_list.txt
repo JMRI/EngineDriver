@@ -1,4 +1,7 @@
-Todo list, to be used for items which I plan to do, but am intentionally skipping for now.
+Todo list:
+  to be used for items which I plan to do, but am intentionally skipping for now.
+  most of these are items "inside" a fragment, as I'm focusing on the cross-fragment issues first
+
 All:
   Replace strings with constants
 ConnectFragment:
@@ -16,6 +19,7 @@ MainActivity:
   Show the title in landscape mode
   reduce padding, etc. to avoid wide tabs
   check for About tab before showing option in menu (or add it when requested?)
+  determine how to set width for "wide" screens, such as pads
 JmDNS listener:
   use native Android listeners instead of JmDNS on supported devices
 TurnoutsFragment:

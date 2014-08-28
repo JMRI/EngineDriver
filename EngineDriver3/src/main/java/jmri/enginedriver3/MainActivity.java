@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -165,7 +166,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
   protected void onPause() {
     Log.d(Consts.APP_NAME,"in MainActivity.onPause() dynaFrags=" + mainApp.getDynaFrags().size());
     saveDynaFrags();
-    mainApp.addNotification(this.getIntent());
+//    mainApp.addNotification(this.getIntent());
     super.onPause();
   }
 
@@ -173,7 +174,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
   protected void onResume() {
     Log.d(Consts.APP_NAME, "in MainActivity.onResume()");
     super.onResume();
-    mainApp.removeNotification();
+//    mainApp.removeNotification();
   }
 
   @Override
@@ -217,7 +218,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
     //convert the hashmap to json string
     String dynaFragsJson = gson.toJson(tdf, t);
-    Log.d(Consts.APP_NAME, "saving as " + dynaFragsJson);
+    Log.d(Consts.APP_NAME, "saving dynafrags as " + dynaFragsJson);
     //save the json string as a shared pref
     sharedPreferencesEditor.putString("dynaFragsJson", dynaFragsJson);
     sharedPreferencesEditor.commit();
@@ -475,12 +476,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         case MessageType.THROTTLE_CHANGED:
           Throttle t = mainApp.getThrottle(msg.obj.toString());  //throttleKey is payload
 //                    Log.d(Consts.APP_NAME, "in MainActivity.ThrottleChanged(" + t.getFragmentName() + ")");
-          forwardMessageToFragmentName(msg, t.getFragmentName());  //forward to fragment which owns this throttleKey
+          mainActivityHandler.forwardMessageToFragmentName(msg, t.getFragmentName());  //forward to fragment which owns this throttleKey
           break;
-        case MessageType.MESSAGE_LONG:
+        case MessageType.MESSAGE_LONG:  //show message to user as a toast
           Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_LONG).show();
+          // vibrate the device a bit to draw attention to this message
+          Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+          vibrator.vibrate(300);  //TODO: add pref to disable this?
           break;
-        case MessageType.MESSAGE_SHORT:
+        case MessageType.MESSAGE_SHORT:  //show message to user as a toast
           Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
           break;
         case MessageType.JMRI_TIME_CHANGED:
@@ -516,15 +520,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
       }
     }
-  }
 
-  //forward message to active fragments that matches name
-  private void forwardMessageToFragmentName(Message in_msg, String in_fragmentName) {
-    for (int i = 0; i < mainApp.getDynaFrags().size(); i++) {
-      Handler fh = mainApp.getDynaFrags().get(i).getHandler();
-      if (fh != null &&
-          mainApp.getDynaFrags().get(i).getName().equals(in_fragmentName)) {
-        mainApp.sendMsg(fh, in_msg);
+    //forward message to active fragment that matches name
+    private void forwardMessageToFragmentName(Message in_msg, String in_fragmentName) {
+      for (int i = 0; i < mainApp.getDynaFrags().size(); i++) {
+        Handler fh = mainApp.getDynaFrags().get(i).getHandler();
+        if (fh != null &&
+            mainApp.getDynaFrags().get(i).getName().equals(in_fragmentName)) {
+          mainApp.sendMsg(fh, in_msg);
+          return;
+        }
       }
     }
   }

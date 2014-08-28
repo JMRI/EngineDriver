@@ -84,7 +84,7 @@ public class Consist {
         Type t = new TypeToken<SparseArray<String>>(){}.getType();
         //convert the hashmap to json string
         String throttlesAttachedJson = gson.toJson(throttlesAttached, t);
-        Log.d(Consts.APP_NAME, "saving as " + throttlesAttachedJson);
+        Log.d(Consts.APP_NAME, "saving throttles as " + throttlesAttachedJson);
         //save the json string as a shared pref
         sharedPreferencesEditor.putString("dynaFragsJson", throttlesAttachedJson);
         sharedPreferencesEditor.commit();

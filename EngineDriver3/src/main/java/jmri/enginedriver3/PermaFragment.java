@@ -105,11 +105,13 @@ public class PermaFragment extends Fragment {
   public void onStop() {
     Log.d(Consts.APP_NAME, "in PermaFrag.onStop()");
     super.onStop();
+    mainApp.addNotification(getActivity().getIntent());
   }
   @Override
   public void onResume() {
     Log.d(Consts.APP_NAME, "in PermaFrag.onResume()");
     super.onResume();
+    mainApp.removeNotification();
   }
   @Override
   public void onPause() {
