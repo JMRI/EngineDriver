@@ -41,6 +41,7 @@
             android:layout_width="fill_parent"
             android:layout_alignBottom="@id/etPort"
             android:layout_toRightOf="@id/etPort"
+            android:minWidth="7dp"
             android:text="@string/connect_button" />
     </RelativeLayout>
     <TextView

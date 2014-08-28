@@ -11,12 +11,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Application;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Message;
 import android.os.Handler;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.util.SparseArray;
 
 public class MainApplication extends Application {
+
+  private static final int NOTIFICATION_ID = 416;  //no significance to 416, just shouldn't be 0
 
     //definitions of the fragments (tabs) in use.  Note that name is expected to be unique
     private SparseArray<DynaFragEntry> _dynaFrags = new SparseArray<DynaFragEntry>();  //this is built in activity
@@ -225,4 +232,33 @@ public class MainApplication extends Application {
         }
         return sent;
     }
+  /**
+   * Display OnGoing Notification that indicates EngineDriver is Running.
+   * Should only be called when ED is going into the background.
+   * Currently call this from each activity onPause, passing the current intent
+   * to return to when reopening.  */
+  void addNotification(Intent notificationIntent) {
+    NotificationCompat.Builder builder =
+        new NotificationCompat.Builder(getMainActivity())
+            .setSmallIcon(R.drawable.ed3_launcher_icon)
+            .setContentTitle(this.getString(R.string.notificationTitle))
+            .setContentText(this.getString(R.string.notificationText))
+            .setOngoing(true);
+
+    PendingIntent contentIntent = PendingIntent.getActivity(getMainActivity(), NOTIFICATION_ID, notificationIntent,
+        PendingIntent.FLAG_CANCEL_CURRENT);
+    builder.setContentIntent(contentIntent);
+
+    // Add as notification
+    NotificationManager manager = (NotificationManager) getMainActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+    manager.notify(NOTIFICATION_ID, builder.build());
+  }
+
+  // Remove notification
+  void removeNotification() {
+    NotificationManager manager = (NotificationManager) getMainActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+    manager.cancel(NOTIFICATION_ID);
+  }
+
+
 }

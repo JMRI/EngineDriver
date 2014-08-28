@@ -80,5 +80,8 @@
     <string name="drawer_close">Close Navigation Drawer</string>
     <string name="RightButton"><![CDATA[>>]]></string>
     <string name="LeftButton"><![CDATA[<<]]></string>
+    <string name="notificationTitle">Engine Driver 3 is running</string>
+    <string name="notificationText">Tap to reopen Engine Driver 3</string>
+
 
 </resources>

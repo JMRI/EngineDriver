@@ -21,7 +21,6 @@ import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
 import de.tavendo.autobahn.WebSocketHandler;
 
-
 /**
  * WebSocketRunnable - executed as a thread by the PermaFrag, ctor expects refs to PermaFrag, mainApp,
  *   and the server and port that are being requested.  If connect attempt fails, the thread ends.
@@ -58,7 +57,6 @@ class WebSocketRunnable implements Runnable {
     permaFragment.webSocketRunnableHandler = new WebSocketRunnableHandler();  //update ref to thread's handler back in retained frag
 
     jmriWebSocket = new JmriWebSocketHandler();
-//        clockWebSocket.refresh();
     jmriWebSocket.connect();
 
     Looper.loop();
