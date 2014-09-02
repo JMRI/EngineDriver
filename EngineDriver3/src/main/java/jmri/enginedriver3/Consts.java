@@ -25,10 +25,13 @@ public final class Consts  {
     public static final int STATE_UNKNOWN = 0;
     public static final String STATE_UNKNOWN_DESC = "???";
 
-    public static final int FORWARD = 1;
-    public static final int REVERSE = 0;
+  public static final int FORWARD = 1;
+  public static final int REVERSE = 0;
 
-	/** Opposite of {@link #FAILS}.  */
+  public static final int FN_BUTTON_ON = 1;
+  public static final int FN_BUTTON_OFF = 0;
+
+  /** Opposite of {@link #FAILS}.  */
 	public static final boolean PASSES = true;
 	/** Opposite of {@link #PASSES}.  */
 	public static final boolean FAILS = false;

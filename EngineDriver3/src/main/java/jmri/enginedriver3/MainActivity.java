@@ -454,6 +454,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
           break;
         case MessageType.SPEED_CHANGE_REQUESTED: //forward these only to PermaFrag for processing
         case MessageType.DIRECTION_CHANGE_REQUESTED:
+        case MessageType.SEND_JSON_MESSAGE:
         case MessageType.TURNOUT_CHANGE_REQUESTED:
         case MessageType.CONNECT_REQUESTED:
         case MessageType.LOCO_REQUESTED:

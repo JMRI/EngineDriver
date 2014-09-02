@@ -1021,7 +1021,7 @@ containing a value of this type.
         public static final int cf_footer=0x7f08004b;
         public static final int checkbox=0x7f08002d;
         public static final int collapseActionView=0x7f080011;
-        public static final int content=0x7f08006d;
+        public static final int content=0x7f08006e;
         public static final int default_activity_button=0x7f080028;
         public static final int dialog=0x7f080012;
         public static final int dir_buttons_table=0x7f08005e;
@@ -1036,6 +1036,7 @@ containing a value of this type.
         public static final int etPort=0x7f080046;
         public static final int expand_activities_button=0x7f080026;
         public static final int expanded_menu=0x7f08002c;
+        public static final int function_buttons_linear_layout=0x7f080067;
         public static final int function_buttons_scroller=0x7f080066;
         public static final int home=0x7f080017;
         public static final int homeAsUp=0x7f080005;
@@ -1052,7 +1053,7 @@ containing a value of this type.
         public static final int listMode=0x7f080001;
         public static final int list_item=0x7f080029;
         public static final int listview=0x7f08004f;
-        public static final int loading=0x7f080075;
+        public static final int loading=0x7f080076;
         public static final int loco_buttons_group=0x7f080057;
         public static final int loco_cell=0x7f080058;
         public static final int mainActivityPager=0x7f080051;
@@ -1094,25 +1095,25 @@ containing a value of this type.
         public static final int throttle_screen_wrapper=0x7f080056;
         public static final int throttle_setspeed=0x7f080062;
         public static final int title=0x7f08002b;
-        public static final int to_current_state_desc=0x7f08006c;
-        public static final int to_footer=0x7f080069;
-        public static final int to_system_name=0x7f08006b;
-        public static final int to_user_name=0x7f08006a;
+        public static final int to_current_state_desc=0x7f08006d;
+        public static final int to_footer=0x7f08006a;
+        public static final int to_system_name=0x7f08006c;
+        public static final int to_user_name=0x7f08006b;
         public static final int top_action_bar=0x7f080020;
-        public static final int turnouts_list=0x7f080068;
-        public static final int turnouts_list_label=0x7f080067;
+        public static final int turnouts_list=0x7f080069;
+        public static final int turnouts_list_label=0x7f080068;
         public static final int tvSpeedUnits=0x7f08005c;
         public static final int tvSpeedValue=0x7f08005d;
         public static final int up=0x7f080021;
         public static final int useLogo=0x7f080003;
-        public static final int web_view=0x7f08006e;
-        public static final int web_view_btn_back=0x7f080071;
-        public static final int web_view_btn_forward=0x7f080072;
-        public static final int web_view_btn_refresh=0x7f080074;
-        public static final int web_view_btn_share=0x7f080076;
-        public static final int web_view_buttons_divider=0x7f080070;
-        public static final int web_view_lay_refresh=0x7f080073;
-        public static final int web_view_progress=0x7f08006f;
+        public static final int web_view=0x7f08006f;
+        public static final int web_view_btn_back=0x7f080072;
+        public static final int web_view_btn_forward=0x7f080073;
+        public static final int web_view_btn_refresh=0x7f080075;
+        public static final int web_view_btn_share=0x7f080077;
+        public static final int web_view_buttons_divider=0x7f080071;
+        public static final int web_view_lay_refresh=0x7f080074;
+        public static final int web_view_progress=0x7f080070;
         public static final int withText=0x7f080010;
     }
     public static final class integer {

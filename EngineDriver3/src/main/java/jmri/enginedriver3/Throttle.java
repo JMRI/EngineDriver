@@ -116,10 +116,16 @@ public class Throttle {
         s += "}}";
         return s;
     }
-    public String getDirectionChangeJson(int newDirection) {
-        String s = "{\"type\":\"throttle\",\"data\":{\"throttle\":\"" + _throttleKey + "\"";
-        s += ",\"forward\":" + (newDirection==1);  //format the json change request
-        s += "}}";
-        return s;
-    }
+  public String getDirectionChangeJson(int newDirection) {
+    String s = "{\"type\":\"throttle\",\"data\":{\"throttle\":\"" + _throttleKey + "\"";
+    s += ",\"forward\":" + (newDirection==1);  //format the json change request
+    s += "}}";
+    return s;
+  }
+  public String getFunctionChangeJson(String fnName, int newState) {
+    String s = "{\"type\":\"throttle\",\"data\":{\"throttle\":\"" + _throttleKey + "\"";
+    s += ",\""+fnName+"\":" + (newState==1);  //format the json change request
+    s += "}}";
+    return s;
+  }
 }

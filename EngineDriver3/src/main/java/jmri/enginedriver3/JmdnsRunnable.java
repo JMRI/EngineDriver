@@ -133,7 +133,7 @@ class JmdnsRunnable implements Runnable {
 
           @Override
           public void serviceAdded(ServiceEvent ev) {
-            Log.d(Consts.APP_NAME, "Service added, type:" + ev.getType() + " name:" + ev.getName());
+//            Log.d(Consts.APP_NAME, "Service added, type:" + ev.getType() + " name:" + ev.getName());
             // Required to force serviceResolved to be called again (after the first search)
             jmdns.requestServiceInfo(ev.getType(), ev.getName(), 1);
           }

@@ -18,268 +18,341 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
 
-    private MainActivity mainActivity = null;
+  private MainActivity mainActivity = null;
 
-    private Button btnSelectLoco, btnStop, btnForward, btnReverse,
-            btnSpeedDecrease, btnSpeedIncrease, btnToggleDirection;
-    private TextView tvSpeedValue, tvSpeedUnits;
-    private SeekBar sbSpeedSlider;
-    private boolean touchingSlider = false;
+  private Button btnSelectLoco, btnStop, btnForward, btnReverse,
+      btnSpeedDecrease, btnSpeedIncrease, btnToggleDirection;
+  private TextView tvSpeedValue, tvSpeedUnits;
+  private SeekBar sbSpeedSlider;
 
-    private Consist consist = null;  //singleton to provide multi-throttle functions
+  private boolean touchingSlider = false;
 
-    /**---------------------------------------------------------------------------------------------**
-	 * create a new fragment of this type, and populate basic settings in bundle 
-	 * Note: this is a static method, called from the activity's getItem() when new ones are needed */	
-	static ThrottleFragment newInstance(int fragNum, String fragType, String fragName, String fragData) {
-		Log.d(Consts.APP_NAME, "in ThrottleFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
-		ThrottleFragment f = new ThrottleFragment();
+  private Consist consist = null;  //singleton to provide multi-throttle functions
 
-		// Store variables for retrieval 
-		Bundle args = new Bundle();
-		args.putInt("fragNum", fragNum);
-		args.putString("fragType", fragType);
-        args.putString("fragName", fragName);
-        args.putString("fragData", fragData);
-		f.setArguments(args);
+  /**---------------------------------------------------------------------------------------------**
+   * create a new fragment of this type, and populate basic settings in bundle
+   * Note: this is a static method, called from the activity's getItem() when new ones are needed */
+  static ThrottleFragment newInstance(int fragNum, String fragType, String fragName, String fragData) {
+    Log.d(Consts.APP_NAME, "in ThrottleFragment.newInstance() for " + fragName + " (" + fragNum + ")" + " type " + fragType);
+    ThrottleFragment f = new ThrottleFragment();
 
-		return f;
-	}
+    // Store variables for retrieval
+    Bundle args = new Bundle();
+    args.putInt("fragNum", fragNum);
+    args.putString("fragType", fragType);
+    args.putString("fragName", fragName);
+    args.putString("fragData", fragData);
+    f.setArguments(args);
 
-	/**---------------------------------------------------------------------------------------------**
-	 * inflate and populate the proper xml layout for this fragment type, based on data parm
-	 *    runs before activity starts, note does not call super		 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        String fragData = (getArguments() != null ? getArguments().getString("fragData") : "");
-		Log.d(Consts.APP_NAME, "in ThrottleFragment.onCreateView() for " + getFragName() + " ("
-                + getFragNum() + ") type " + getFragType()+ ", data '" + fragData + "'");
-		//choose the proper layout xml for this fragment's type, based on data parm
-        String layoutName = "throttle_" + fragData;
-        int rx = getResources().getIdentifier(layoutName, "layout", getActivity().getPackageName());
-        //TODO: check for rx=0 and show an error of some sort?
-		//inflate the proper layout xml and remember it in fragment
-		fragmentView = inflater.inflate(rx, container, false);
-		return fragmentView;
-	}
+    return f;
+  }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(Consts.APP_NAME, "in ThrottleFragment.onStart()");
+  /**---------------------------------------------------------------------------------------------**
+   * inflate and populate the proper xml layout for this fragment type, based on data parm
+   *    runs before activity starts, note does not call super		 */
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    String fragData = (getArguments() != null ? getArguments().getString("fragData") : "");
+    Log.d(Consts.APP_NAME, "in ThrottleFragment.onCreateView() for " + getFragName() + " ("
+        + getFragNum() + ") type " + getFragType()+ ", data '" + fragData + "'");
+    //choose the proper layout xml for this fragment's type, based on data parm
+    String layoutName = "throttle_" + fragData;
+    int rx = getResources().getIdentifier(layoutName, "layout", getActivity().getPackageName());
+    //TODO: check for rx=0 and show an error of some sort?
+    //inflate the proper layout xml and remember it in fragment
+    fragmentView = inflater.inflate(rx, container, false);
+    return fragmentView;
+  }
 
-        consist = new Consist(mainApp);
-        if (mainApp.isConnected()) {  //restore if connected
-            consist.restoreFromPreferences(getFragName());
-        }
-        //add touch listeners for all buttons, to handle up and down as needed
-        btnSelectLoco = (Button) fragmentView.findViewById(R.id.btnSelectLoco);
-        if (btnSelectLoco!=null) btnSelectLoco.setOnTouchListener(this);
-        btnStop = (Button) fragmentView.findViewById(R.id.btnStop);
-        if (btnStop!=null) btnStop.setOnTouchListener(this);
-        btnForward = (Button) fragmentView.findViewById(R.id.btnForward);
-        if (btnForward!=null) btnForward.setOnTouchListener(this);
-        btnReverse = (Button) fragmentView.findViewById(R.id.btnReverse);
-        if (btnReverse!=null) btnReverse.setOnTouchListener(this);
-        btnSpeedDecrease = (Button) fragmentView.findViewById(R.id.btnSpeedDecrease);
-        if (btnSpeedDecrease!=null) btnSpeedDecrease.setOnTouchListener(this);
-        btnSpeedIncrease = (Button) fragmentView.findViewById(R.id.btnSpeedIncrease);
-        if (btnSpeedIncrease!=null) btnSpeedIncrease.setOnTouchListener(this);
+  @Override
+  public void onStart() {
+    super.onStart();
+    Log.d(Consts.APP_NAME, "in ThrottleFragment.onStart()");
 
-        tvSpeedUnits = (TextView) fragmentView.findViewById(R.id.tvSpeedUnits);
-        tvSpeedValue = (TextView) fragmentView.findViewById(R.id.tvSpeedValue);
+    consist = new Consist(mainApp);
+    if (mainApp.isConnected()) {  //restore if connected
+      consist.restoreFromPreferences(getFragName());
+    }
+    //add touch listeners for all buttons, to handle up and down as needed
+    btnSelectLoco = (Button) fragmentView.findViewById(R.id.btnSelectLoco);
+    if (btnSelectLoco!=null) btnSelectLoco.setOnTouchListener(this);
+    btnStop = (Button) fragmentView.findViewById(R.id.btnStop);
+    if (btnStop!=null) btnStop.setOnTouchListener(this);
+    btnForward = (Button) fragmentView.findViewById(R.id.btnForward);
+    if (btnForward!=null) btnForward.setOnTouchListener(this);
+    btnReverse = (Button) fragmentView.findViewById(R.id.btnReverse);
+    if (btnReverse!=null) btnReverse.setOnTouchListener(this);
+    btnSpeedDecrease = (Button) fragmentView.findViewById(R.id.btnSpeedDecrease);
+    if (btnSpeedDecrease!=null) btnSpeedDecrease.setOnTouchListener(this);
+    btnSpeedIncrease = (Button) fragmentView.findViewById(R.id.btnSpeedIncrease);
+    if (btnSpeedIncrease!=null) btnSpeedIncrease.setOnTouchListener(this);
 
-        sbSpeedSlider = (SeekBar) fragmentView.findViewById(R.id.sbSpeedSlider);
-        if (sbSpeedSlider!=null) sbSpeedSlider.setOnSeekBarChangeListener(this);
+    tvSpeedUnits = (TextView) fragmentView.findViewById(R.id.tvSpeedUnits);
+    tvSpeedValue = (TextView) fragmentView.findViewById(R.id.tvSpeedValue);
 
-//        vsbSpeedSlider = (VerticalSeekBar) fragmentView.findViewById(R.id.vsbSpeedSlider);
-//        if (vsbSpeedSlider!=null) vsbSpeedSlider.setOnSeekBarChangeListener(this);
+    sbSpeedSlider = (SeekBar) fragmentView.findViewById(R.id.sbSpeedSlider);
+    if (sbSpeedSlider!=null) sbSpeedSlider.setOnSeekBarChangeListener(this);
 
 //        btnToggleDirection = (Button) fragmentView.findViewById(R.id.btnToggleDirection);  //TODO: add after creating new flavor
 //        if (btnToggleDirection!=null) btnToggleDirection.setOnClickListener(this);  //call onClick()
+    createFunctionButtons();
+    paintThrottle();
 
-        paintThrottle();
+    //only set this when fragment is ready to receive messages
+    mainApp.setDynaFragHandler(getFragNum(), new Fragment_Handler());
+  }
 
-        //only set this when fragment is ready to receive messages
-        mainApp.setDynaFragHandler(getFragNum(), new Fragment_Handler());
+  private void createFunctionButtons() {
+    Log.d(Consts.APP_NAME, "in ThrottleFragment.createFunctionButtons()");
+    //insert consist's function buttons to fit in the available width, using the parent scroller for the overflow
+    LinearLayout ll_function_buttons = (LinearLayout) fragmentView.findViewById(R.id.function_buttons_linear_layout);
+    if (ll_function_buttons!=null) {  //don't add buttons unless the container is defined in this xml
+
+      ll_function_buttons.removeAllViews();  //get rid of any leftover rows
+      int maxCols = 3;  //how wide is the button area  TODO: calculate this
+
+      int col = 0;  //current column
+      LinearLayout row = null;
+      //loop thru defined functions, creating rows and columns as needed to fit space
+      for (int btnId = 1; btnId <= consist.getFunctionCount(); btnId++) {
+        if (col==0) { //create new row when needed
+          row = new LinearLayout(getActivity());
+          LinearLayout.LayoutParams rlp = new LinearLayout.LayoutParams(
+              LinearLayout.LayoutParams.MATCH_PARENT,    //width
+              LinearLayout.LayoutParams.WRAP_CONTENT);   //height
+          row.setLayoutParams(rlp);
+          ll_function_buttons.addView(row);  //add this row to the parent
+        }
+        Button fnButton = new Button(getActivity());
+        LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams(
+            0,  //button width set to 0 because we're using the weight
+            LinearLayout.LayoutParams.WRAP_CONTENT,  //height of the button
+            (float) 1.0 / maxCols);  //spread the buttons to proportionally use the space available
+        fnButton.setLayoutParams(blp);
+        fnButton.setText(consist.getFunctionLabel(btnId-1));
+        fnButton.setId(btnId + 0);
+        fnButton.setOnTouchListener(this);
+        consist.setFunctionButton(btnId-1, fnButton);  //remember the button ref
+        row.addView(fnButton);  //add this button to the row
+        col++;  //bump the col, reset to zero if exceeds calced width
+        if (col >= maxCols) {
+          col = 0;
+        }
+      }
     }
-    @Override
-    public void onStop() {
-        Log.d(Consts.APP_NAME, "in ThrottleFragment.onStop()");
-        //clear this to avoid late messages
-        if (mainApp.getDynaFrags().get(getFragNum())!=null) mainApp.getDynaFrags().get(getFragNum()).setHandler(null);
-        consist.saveToPreferences(getFragName());
-        super.onStop();
-    }
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+  }
+
+
+  @Override
+  public void onStop() {
+    Log.d(Consts.APP_NAME, "in ThrottleFragment.onStop()");
+    //clear this to avoid late messages
+    if (mainApp.getDynaFrags().get(getFragNum())!=null) mainApp.getDynaFrags().get(getFragNum()).setHandler(null);
+    consist.saveToPreferences(getFragName());
+    super.onStop();
+  }
+  @Override
+  public void onAttach(Activity activity) {
+    super.onAttach(activity);
 //        Log.d(Consts.APP_NAME, "in ThrottleFragment.onAttach()");
-        this.mainActivity = (MainActivity) activity;  //save ref to the new activity
-    }
-    @Override
-    public void onDetach() {
+    this.mainActivity = (MainActivity) activity;  //save ref to the new activity
+  }
+  @Override
+  public void onDetach() {
 //        Log.d(Consts.APP_NAME, "in ThrottleFragment.onDetach()");
-        this.mainActivity = null; //clear ref
-        super.onDetach();
-    }
+    this.mainActivity = null; //clear ref
+    super.onDetach();
+  }
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+  @Override
+  public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 //        Log.d(Consts.APP_NAME, "in ThrottleFragment.onProgressChanged " + fromUser + " " + progress);
-        //if user caused this change by sliding the slider, send the change request to server
+    //if user caused this change by sliding the slider, send the change request to server
 //        if (fromUser) {  //this doesn't work properly on VerticalSeekBar, so use the touching flag instead
-        if (touchingSlider) {
-            consist.sendSpeedChange(progress);
-        }
+    if (touchingSlider) {
+      consist.sendSpeedChange(progress);
     }
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-        Log.d(Consts.APP_NAME, "in ThrottleFragment.onStartTrackingTouch) ");
-        touchingSlider = true;  //finger is on slider, send changes, but don't update from server
-    }
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-        Log.d(Consts.APP_NAME, "in ThrottleFragment.onStopTrackingTouch ");
-        touchingSlider = false;  //finger is not on slider, update from server and don't send changes
-    }
+  }
+  @Override
+  public void onStartTrackingTouch(SeekBar seekBar) {
+    Log.d(Consts.APP_NAME, "in ThrottleFragment.onStartTrackingTouch) ");
+    touchingSlider = true;  //finger is on slider, send changes, but don't update from server
+  }
+  @Override
+  public void onStopTrackingTouch(SeekBar seekBar) {
+    Log.d(Consts.APP_NAME, "in ThrottleFragment.onStopTrackingTouch ");
+    touchingSlider = false;  //finger is not on slider, update from server and don't send changes
+  }
 
-    @Override  //for forward and back buttons, keep indication as pressed when releasing
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        //handle most actions on the DOWN press
-        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-            if (view.getId() == R.id.btnSelectLoco) {
-//                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnSelectLoco) ");
-                showSelectLocoDialog();
-            } else if (view.getId() == R.id.btnForward) {
-//                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnForward) ");
-                consist.sendDirectionChange(Consts.FORWARD);
-            } else if (view.getId() == R.id.btnReverse) {
-//                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnReverse) ");
-                consist.sendDirectionChange(Consts.REVERSE);
-            } else if (view.getId() == R.id.btnSpeedIncrease) {
-//                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnSpeedIncrease) ");
-                Throttle t = consist.getLeadThrottle();
-                int newSpeed = t.getDisplayedSpeed() + t.getDisplayedSpeedIncrement();
-                if (newSpeed>t.getMaxDisplayedSpeed()) newSpeed=t.getMaxDisplayedSpeed();
-                consist.sendSpeedChange(newSpeed);
-            } else if (view.getId() == R.id.btnSpeedDecrease) {
-//                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnSpeedDecrease) ");
-                Throttle t = consist.getLeadThrottle();
-                int newSpeed = t.getDisplayedSpeed() - t.getDisplayedSpeedIncrement();
-                if (newSpeed<0) newSpeed=0;
-                consist.sendSpeedChange(newSpeed);
-            } else if (view.getId() == R.id.btnStop) {
-//                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnStop) ");
-                consist.sendSpeedChange(0);
-            } else {
-                Log.w(Consts.APP_NAME, "unhandled button clicked in ThrottleFragment.onTouchDOWN");
-            }
-        //deal with a few UP actions
-        } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+  @Override  //for forward and back buttons, keep indication as pressed when releasing
+  public boolean onTouch(View view, MotionEvent motionEvent) {
+    //handle most actions on the DOWN press
+    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+      if (view.getId() == R.id.btnSelectLoco) {
+//      Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnSelectLoco) ");
+        showSelectLocoDialog();
 
-            //don't allow the dir buttons to become unpressed, since the direction has already updated
-            if ((view.getId()==R.id.btnForward || view.getId()==R.id.btnReverse)) {
+      } else if (view.getId() == R.id.btnForward) {
+//      Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnForward) ");
+        consist.sendDirectionChange(Consts.FORWARD);
+
+      } else if (view.getId() == R.id.btnReverse) {
+//      Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnReverse) ");
+        consist.sendDirectionChange(Consts.REVERSE);
+
+      } else if (view.getId() == R.id.btnSpeedIncrease) {
+//      Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnSpeedIncrease) ");
+        Throttle t = consist.getLeadThrottle();
+        int newSpeed = t.getDisplayedSpeed() + t.getDisplayedSpeedIncrement();
+        if (newSpeed>t.getMaxDisplayedSpeed()) newSpeed=t.getMaxDisplayedSpeed();
+        consist.sendSpeedChange(newSpeed);
+
+      } else if (view.getId() == R.id.btnSpeedDecrease) {
+//      Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnSpeedDecrease) ");
+        Throttle t = consist.getLeadThrottle();
+        int newSpeed = t.getDisplayedSpeed() - t.getDisplayedSpeedIncrement();
+        if (newSpeed<0) newSpeed=0;
+        consist.sendSpeedChange(newSpeed);
+
+      } else if (view.getId() == R.id.btnStop) {
+//      Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnStop) ");
+        consist.sendSpeedChange(0);
+
+      } else if (consist.getFunctionButton(view.getId()-1) != null) {  //is it in the function button list?
+        String fnName = consist.getFunctionName(view.getId()-1);
+        consist.sendFunctionChange(fnName, Consts.FN_BUTTON_ON);
+
+      } else {
+        Log.w(Consts.APP_NAME, "unhandled button "+view.getId()+" clicked in ThrottleFragment.onTouchDOWN");
+      }
+      //deal with a few UP actions
+    } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+
+      //don't allow the dir buttons to become unpressed, since the direction has already updated
+      if ((view.getId()==R.id.btnForward || view.getId()==R.id.btnReverse)) {
 //                Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouch ACTION_UP");
-                return true;
-            } else {
-//                Log.d(Consts.APP_NAME, "unhandled button clicked in ThrottleFragment.onTouchUP");
-            }
-        }
-        return false;
-    }
+        return true;  //this prevents android from changing appearance
 
-    private class Fragment_Handler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MessageType.CONNECTED:
+      } else if (consist.getFunctionButton(view.getId()-1) != null) {  //is it in the function button list?
+        String fnName = consist.getFunctionName(view.getId()-1);
+        consist.sendFunctionChange(fnName, Consts.FN_BUTTON_OFF);
+
+      } else {
+        Log.d(Consts.APP_NAME, "unhandled button "+view.getId()+" clicked in ThrottleFragment.onTouchUP");
+      }
+    }
+    return false;
+  }
+
+  private class Fragment_Handler extends Handler {
+    @Override
+    public void handleMessage(Message msg) {
+      switch (msg.what) {
+        case MessageType.CONNECTED:
 //                    Log.d(Consts.APP_NAME, "in ThrottleFragment.handleMessage() CONNECTED frag="+getFragName());
-                    paintThrottle();
-                    break;
-                case MessageType.DISCONNECTED:
+          paintThrottle();
+          break;
+        case MessageType.DISCONNECTED:
 //                    Log.d(Consts.APP_NAME, "in ThrottleFragment.handleMessage() DISCONNECTED frag="+getFragName());
-                    consist.clear();
-                    paintThrottle();
-                    break;
-                case MessageType.ROSTERENTRY_LIST_CHANGED:
-                    break;  //no action for now
-                case MessageType.THROTTLE_CHANGED:
-                    String throttleKey = msg.obj.toString();  //payload is throttleKey
-                    if (!consist.hasThrottle(throttleKey)) {
-                        consist.addThrottle(throttleKey);  //append throttle to this consist if not already in
-                    }
-//                    Log.d(Consts.APP_NAME, "in ThrottleFragment.ThrottleChanged("+throttleKey+") frag="+getFragName());
-                    paintThrottle();
-                    break;  //no action for now
-                default:
-                    Log.w(Consts.APP_NAME, "in ThrottleFragment.handleMessage(" + msg.what + ") not handled");
-            }  //end of switch msg.what
-            super.handleMessage(msg);
-        }
+          consist.clear();
+          createFunctionButtons();
+          paintThrottle();
+          break;
+        case MessageType.ROSTERENTRY_LIST_CHANGED:
+          break;  //no action for now
+        case MessageType.THROTTLE_CHANGED:
+          String throttleKey = msg.obj.toString();  //payload is throttleKey
+          if (!consist.hasThrottle(throttleKey)) {
+            consist.addThrottle(throttleKey);  //append throttle to this consist if not already in
+          }
+          Log.d(Consts.APP_NAME, "in ThrottleFragment.ThrottleChanged("+throttleKey+") frag="+getFragName());
+          if (throttleKey.equals(consist.getLeadThrottle().getThrottleKey())) {
+            createFunctionButtons();  //if lead loco changed, populate the buttons based on roster entry
+          }
+          paintThrottle();
+          break;  //no action for now
+        default:
+          Log.w(Consts.APP_NAME, "in ThrottleFragment.handleMessage(" + msg.what + ") not handled");
+      }  //end of switch msg.what
+      super.handleMessage(msg);
     }
+  }
 
-    private void paintThrottle() {
+  //sets values and enables/disables throttle items
+  private void paintThrottle() {
 //        Log.d(Consts.APP_NAME, "in paintThrottle()");
-        boolean anyAttached = !consist.isEmpty();
-        if (btnForward!=null)       btnForward.setEnabled(anyAttached);
-        if (btnReverse!=null)       btnReverse.setEnabled(anyAttached);
-        if (btnStop!=null)          btnStop.setEnabled(anyAttached);
-        if (btnSpeedDecrease!=null) btnSpeedDecrease.setEnabled(anyAttached);
-        if (btnSpeedIncrease!=null) btnSpeedIncrease.setEnabled(anyAttached);
-        if (sbSpeedSlider!=null)    sbSpeedSlider.setEnabled(anyAttached);
-        if (tvSpeedUnits != null)   tvSpeedUnits.setEnabled(anyAttached);
-        if (tvSpeedValue != null)   tvSpeedValue.setEnabled(anyAttached);
+    boolean anyAttached = !consist.isEmpty();
+    if (btnForward!=null)       btnForward.setEnabled(anyAttached);
+    if (btnReverse!=null)       btnReverse.setEnabled(anyAttached);
+    if (btnStop!=null)          btnStop.setEnabled(anyAttached);
+    if (btnSpeedDecrease!=null) btnSpeedDecrease.setEnabled(anyAttached);
+    if (btnSpeedIncrease!=null) btnSpeedIncrease.setEnabled(anyAttached);
+    if (sbSpeedSlider!=null)    sbSpeedSlider.setEnabled(anyAttached);
+    if (tvSpeedUnits != null)   tvSpeedUnits.setEnabled(anyAttached);
+    if (tvSpeedValue != null)   tvSpeedValue.setEnabled(anyAttached);
 
-        btnSelectLoco.setEnabled(mainApp.isConnected());
+    btnSelectLoco.setEnabled(mainApp.isConnected());
 
-        //populate text for buttons and labels
-        int speedValue = 0;
-        int maxValue = 100;
-        boolean fwd = true;
-        String speedUnitsText = "%";
-        if (anyAttached) {
-            Throttle t = consist.getLeadThrottle();
-            speedValue = t.getDisplayedSpeed();
-            fwd = t.isForward();
-            maxValue = t.getMaxDisplayedSpeed();
-            speedUnitsText = t.getSpeedUnitsText();
-        }
-        btnSelectLoco.setText(getLocoText());
-        if (tvSpeedValue != null)  tvSpeedValue.setText("" + speedValue);
-        if (btnForward != null)    btnForward.setPressed(fwd);
-        if (btnReverse != null)    btnReverse.setPressed(!fwd);
-        if (sbSpeedSlider!=null && !touchingSlider) {  //don't auto-move the slider if a finger is on it
-            sbSpeedSlider.setMax(maxValue);
-            sbSpeedSlider.setProgress(speedValue);
-        }
-        if (tvSpeedUnits != null)  tvSpeedUnits.setText(speedUnitsText);
-
+    //populate text for buttons and labels
+    int speedValue = 0;
+    int maxValue = 100;
+    boolean fwd = true;
+    String speedUnitsText = "%";
+    if (anyAttached) {
+      Throttle t = consist.getLeadThrottle();
+      speedValue = t.getDisplayedSpeed();
+      fwd = t.isForward();
+      maxValue = t.getMaxDisplayedSpeed();
+      speedUnitsText = t.getSpeedUnitsText();
+      for (int btnId = 1; btnId <= consist.getFunctionCount(); btnId++) {  //enable all buttons
+        Button b = consist.getFunctionButton(btnId-1);
+        b.setEnabled(true);
+      }
+    } else {  //no throttle selected, disable all buttons
+      for (int btnId = 1; btnId <= consist.getFunctionCount(); btnId++) {
+        Button b = consist.getFunctionButton(btnId-1);
+        b.setEnabled(false);
+      }
     }
-
-    private String getLocoText() {
-        String locoText = (mainApp.isConnected() ? "Press to Select" : "Not Connected");
-        if (!consist.isEmpty()) {
-            locoText = consist.toString();
-        }
-        return locoText;
+    btnSelectLoco.setText(getLocoText());
+    if (tvSpeedValue != null)  tvSpeedValue.setText("" + speedValue);
+    if (btnForward != null)    btnForward.setPressed(fwd);
+    if (btnReverse != null)    btnReverse.setPressed(!fwd);
+    if (sbSpeedSlider!=null && !touchingSlider) {  //don't auto-move the slider if a finger is on it
+      sbSpeedSlider.setMax(maxValue);
+      sbSpeedSlider.setProgress(speedValue);
     }
+    if (tvSpeedUnits != null)  tvSpeedUnits.setText(speedUnitsText);
 
-    public void showSelectLocoDialog() {
-        FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
-        SelectLocoDialogFragment selectLocoDialogFragment = new SelectLocoDialogFragment();
-        selectLocoDialogFragment.setFragmentName(getFragName());  //TODO: more granularity?
-        selectLocoDialogFragment.show(fragmentManager, "Select Loco(s)");
+  }
+
+  private String getLocoText() {
+    String locoText = (mainApp.isConnected() ? "Press to Select" : "Not Connected");
+    if (!consist.isEmpty()) {
+      locoText = consist.toString();
     }
+    return locoText;
+  }
 
+  public void showSelectLocoDialog() {
+    FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
+    SelectLocoDialogFragment selectLocoDialogFragment = new SelectLocoDialogFragment();
+    selectLocoDialogFragment.setFragmentName(getFragName());  //TODO: more granularity?
+    selectLocoDialogFragment.show(fragmentManager, "Select Loco(s)");
+  }
 }

@@ -119,6 +119,14 @@
         android:id="@+id/function_buttons_scroller"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/function_buttons_linear_layout">
+
+        </LinearLayout>
     </ScrollView>
 
 </LinearLayout>

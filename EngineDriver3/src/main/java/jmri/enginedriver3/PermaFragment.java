@@ -224,6 +224,7 @@ public class PermaFragment extends Fragment {
         //simply forward these along to websocket thread
         case MessageType.SPEED_CHANGE_REQUESTED:
         case MessageType.DIRECTION_CHANGE_REQUESTED:
+        case MessageType.SEND_JSON_MESSAGE:
         case MessageType.TURNOUT_CHANGE_REQUESTED:
         case MessageType.LOCO_REQUESTED:
         case MessageType.RELEASE_LOCO_REQUESTED:

@@ -136,6 +136,24 @@ class WebSocketRunnable implements Runnable {
             Log.w(Consts.APP_NAME, "problem sending DIRECTION_CHANGE message " + e);
           }
           break;
+//        case MessageType.FUNCTION_CHANGE_REQUESTED:
+//          throttle = mainApp.getThrottle(msg.obj.toString()); //obj is throttleKey
+//          String jf = throttle.getFunctionChangeJson(msg.arg1, msg.arg2);  //arg1 is fn#, arg2 is state
+//          Log.d(Consts.APP_NAME, "in WebSocketRunnable.handleMessage() FUNCTION_CHANGE_REQUESTED " + jf);
+//          try {
+//            jmriWebSocket.webSocketConnection.sendTextMessage(jf);  //send the request to the server
+//          } catch (Exception e) {
+//            Log.w(Consts.APP_NAME, "problem sending FUNCTION_CHANGE message " + e);
+//          }
+//          break;
+        case MessageType.SEND_JSON_MESSAGE:
+          Log.d(Consts.APP_NAME, "in WebSocketRunnable.handleMessage() SEND_JSON_MESSAGE " + msg.obj.toString());
+          try {
+            jmriWebSocket.webSocketConnection.sendTextMessage(msg.obj.toString());  //simply send the request to the server
+          } catch (Exception e) {
+            Log.w(Consts.APP_NAME, "problem sending SEND_JSON_MESSAGE message " + e);
+          }
+          break;
         default:
           Log.w(Consts.APP_NAME, "in WebSocketRunnable.handleMessage() received unknown message type " + msg.what);
           break;
@@ -237,7 +255,7 @@ class WebSocketRunnable implements Runnable {
           } else if (type.equals("route")) {
             receivedRouteList(msgJsonArray);
           } else if (type.equals("rosterEntry")) {
-//                        Log.d(Consts.APP_NAME,"RosterEntry array=" + msgString);
+            Log.d(Consts.APP_NAME,"RosterEntry array=" + msgString);
             receivedRosterEntryList(msgJsonArray);
           } else if (type.equals("systemConnection")) {
             Log.d(Consts.APP_NAME,"systemConnection array=" + msgString);
@@ -314,8 +332,23 @@ class WebSocketRunnable implements Runnable {
         RosterEntry r = new RosterEntry(data.getString("name"), data.getString("address"),
             data.getBoolean("isLongAddress"),
             (data.getString("comment").equals("null") ? null : data.getString("comment")));
+        JSONArray fnKeysJson = data.getJSONArray("functionKeys");
+        int k = 0;  //index as stored, 0-n, with non-labeled functions skipped
+        for (int j = 0; j < fnKeysJson.length(); j++) {
+          JSONObject fnJson = fnKeysJson.getJSONObject(j);
+          String label = (fnJson.getString("label").equals("null") ? null : fnJson.getString("label"));
+          if (label != null) {  //ignore if label is null
+            String name = fnJson.getString("name");
+            Boolean lockable = fnJson.getBoolean("lockable");
+            r.setFunctionName(k, name);
+            r.setFunctionLabel(k, label);
+            r.setFunctionLockable(k, lockable);
+            Log.d(Consts.APP_NAME, data.getString("name") + ", " +k+", fn " + name + ", " + label + ", " + lockable);
+            k++;
+          }
+        }
         //TODO: add other fields
-        rl.put(data.getString("name"), r);  //add this entry to the list, keyed by name
+        rl.put(data.getString("name"), r);  //add this entry to the list, keyed by roster name
       }
       mainApp.setRosterEntryList(rl);  //replace the shared var with the newly populated one
       Log.d(Consts.APP_NAME, "roster list received containing " + rl.size() + " entries.");
