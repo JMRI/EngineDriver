@@ -153,6 +153,7 @@ public class Consist {
     String functionLabelsJson = gson.toJson(fKeyLabels, t);
     Log.d(Consts.APP_NAME, "saving functionLabels as " + functionLabelsJson);
     sharedPreferencesEditor.putString("functionLabelsJson", functionLabelsJson);
+    t = new TypeToken<ArrayList<Boolean>>(){}.getType();
     String functionLockablesJson = gson.toJson(fKeyLockables, t);
     Log.d(Consts.APP_NAME, "saving functionLockables as " + functionLockablesJson);
     sharedPreferencesEditor.putString("functionLockablesJson", functionLockablesJson);
@@ -202,6 +203,7 @@ public class Consist {
       String functionLockablesJson = sharedPreferences.getString("functionLockablesJson", "");
       if (!functionLockablesJson.equals("")) { //only restore if we found something to restore
         try {
+          t = new TypeToken<ArrayList<Boolean>>() {}.getType();
           fKeyLockables = gson.fromJson(functionLockablesJson, t);  //restore to list
         } catch (Exception e) {  //ignore issues with this restore
         }

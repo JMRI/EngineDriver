@@ -190,7 +190,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
 
   @Override
   public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//        Log.d(Consts.APP_NAME, "in ThrottleFragment.onProgressChanged " + fromUser + " " + progress);
+    Log.d(Consts.APP_NAME, "in ThrottleFragment.onProgressChanged " + fromUser + " " + progress);
     //if user caused this change by sliding the slider, send the change request to server
 //        if (fromUser) {  //this doesn't work properly on VerticalSeekBar, so use the touching flag instead
     if (touchingSlider) {
@@ -199,13 +199,15 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
   }
   @Override
   public void onStartTrackingTouch(SeekBar seekBar) {
-    Log.d(Consts.APP_NAME, "in ThrottleFragment.onStartTrackingTouch) ");
+    Log.d(Consts.APP_NAME, "in ThrottleFragment.onStartTrackingTouch");
     touchingSlider = true;  //finger is on slider, send changes, but don't update from server
+    consist.sendSpeedChange(seekBar.getProgress());  //without this, change waits until up
   }
   @Override
   public void onStopTrackingTouch(SeekBar seekBar) {
-    Log.d(Consts.APP_NAME, "in ThrottleFragment.onStopTrackingTouch ");
+    Log.d(Consts.APP_NAME, "in ThrottleFragment.onStopTrackingTouch");
     touchingSlider = false;  //finger is not on slider, update from server and don't send changes
+//    consist.sendSpeedChange(seekBar.getProgress());
   }
 
   @Override  //for forward and back buttons, keep indication as pressed when releasing

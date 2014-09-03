@@ -106,7 +106,8 @@ class WebSocketRunnable implements Runnable {
           hm = gson.fromJson(msg.obj.toString(), new TypeToken<HashMap<String, String>>() {}.getType());
           fragmentName = hm.get("fragment_name");
           rosterName = hm.get("roster_name");
-          releaseLocoRequested(fragmentName, rosterName);
+          rosterAddress = hm.get("roster_address");
+          releaseLocoRequested(fragmentName, rosterName, rosterAddress);
           break;
         case MessageType.TURNOUT_CHANGE_REQUESTED:
           Turnout t = mainApp.getTurnout(msg.obj.toString()); //obj is turnout name
@@ -163,23 +164,29 @@ class WebSocketRunnable implements Runnable {
     }
   }
 
+  //if new loco requested, ask jmri for it.  if not a new one, just return the existing entry
   private void locoRequested(String fragmentName, String rosterName, String rosterAddress, int locoDirection) {
-    String throttleKey = fragmentName + ":" + rosterName;
+//    String throttleKey = fragmentName + ":" + rosterName;
+    String throttleKey = rosterAddress;
     Throttle t = mainApp.getThrottle(throttleKey);
-    if (t==null) {  //create new entry if none exists, to keep track of fragment name
+    if (t==null || !t.isConfirmed()) {  //create new entry if none exists, to keep track of fragment name
       Log.d(Consts.APP_NAME, "locoRequested " + throttleKey + " created");
       t = new Throttle(throttleKey, fragmentName, rosterName);
       mainApp.storeThrottle(throttleKey, t);
+//    }
+      String s = "{\"type\":\"throttle\",\"data\":{\"throttle\":\""
+          + throttleKey + "\",\"address\":" + rosterAddress + "}}";
+      Log.d(Consts.APP_NAME, "sending '" + s + "' to jmri");
+      jmriWebSocket.webSocketConnection.sendTextMessage(s);
+    } else if (t.isConfirmed()) {  //already exists, let client know (since jmri won't respond twice)
+      t.addFragment(fragmentName);  //include this fragment in the where-used list
+      mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.THROTTLE_CHANGED, throttleKey);
     }
-    String s = "{\"type\":\"throttle\",\"data\":{\"throttle\":\""
-        + throttleKey + "\",\"address\":" + rosterAddress + "}}";
-    Log.d(Consts.APP_NAME, "sending '" + s + "' to jmri");
-    jmriWebSocket.webSocketConnection.sendTextMessage(s);
-
   }
 
-  private void releaseLocoRequested(String fragmentName, String rosterName) {
-    String throttleKey = fragmentName + ":" + rosterName;
+  private void releaseLocoRequested(String fragmentName, String rosterName, String rosterAddress) {
+//    String throttleKey = fragmentName + ":" + rosterName;
+    String throttleKey = rosterAddress;
     String s = "{\"type\":\"throttle\",\"data\":{\"throttle\":\""
         + throttleKey + "\",\"release\":null}}";
     Log.d(Consts.APP_NAME, "sending '"+s+"' to jmri");
@@ -191,7 +198,6 @@ class WebSocketRunnable implements Runnable {
 
     @Override
     public void onOpen() {
-//            displayClock = true;
       Log.d(Consts.APP_NAME,"JmriWebSocket opened");
       try {
         this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_TIME);
@@ -429,7 +435,7 @@ class WebSocketRunnable implements Runnable {
         }
       }
 
-        if (changed) {  //let the interested throttle fragments know something changed
+      if (changed) {  //let the interested throttle fragments know something changed
         mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.THROTTLE_CHANGED, throttleKey);
       }
       //put other values into shared variables for later use

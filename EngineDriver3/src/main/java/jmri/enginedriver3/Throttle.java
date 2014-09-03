@@ -2,6 +2,7 @@ package jmri.enginedriver3;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -14,7 +15,8 @@ import java.util.HashMap;
  */
 public class Throttle {
   private String _throttleKey;  //unique name as known to jmri
-  private String _fragmentName;  //name of the fragment this item belongs to
+//  private String _fragmentName;  //name of the fragment this item belongs to
+  private ArrayList<String> _fragmentNames = new ArrayList<String>();  //list of fragments this throttle is part of
   private String _rosterId;  //if not from a roster, set to dccAddress
   private int _dccAddress;
   private float _speed;  //jmri speed, goes from 0.0 to 1.0
@@ -25,7 +27,7 @@ public class Throttle {
 
   public Throttle(String _throttleKey, String _fragmentName, String _rosterId) {
     this._throttleKey = _throttleKey;
-    this._fragmentName = _fragmentName;
+    this._fragmentNames.add(0, _fragmentName); //add as first fragment
     this._rosterId = _rosterId;
     this._dccAddress = 0;
     this._speed = (float) -1.0;
@@ -37,7 +39,7 @@ public class Throttle {
   public Throttle(String _throttleKey, String _fragmentName, String _rosterId, int _dccAddress, float _speed,
                   boolean _forward, boolean _confirmed, int _speedUnits) {
     this._throttleKey = _throttleKey;
-    this._fragmentName = _fragmentName;
+    this._fragmentNames.add(0, _fragmentName); //add as first fragment
     this._rosterId = _rosterId;
     this._dccAddress = _dccAddress;
     this._speed = _speed;
@@ -54,12 +56,12 @@ public class Throttle {
     this._throttleKey = _throttleKey;
   }
 
-  public String getFragmentName() {
-    return _fragmentName;
+  public ArrayList<String> getFragmentNames() {
+    return _fragmentNames;
   }
 
-  public void setFragmentName(String _fragmentName) {
-    this._fragmentName = _fragmentName;
+  public void setFragmentNames(ArrayList<String> _fragmentNames) {
+    this._fragmentNames = _fragmentNames;
   }
 
   public String getRosterId() {
@@ -143,5 +145,11 @@ public class Throttle {
   public boolean getFKeyState(String fnName) {
 //    Log.d(Consts.APP_NAME,"getFKeyState("+fnName+")");
     return _fKeyState.get(fnName);
+  }
+
+  public void addFragment(String fragmentName) {
+    if (!_fragmentNames.contains(fragmentName)) {
+      _fragmentNames.add(_fragmentNames.size(), fragmentName); 
+    }
   }
 }
