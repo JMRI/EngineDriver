@@ -37,10 +37,11 @@ AddTabDialogFragment:
   add thumbnail images, especially helpful for throttle layouts
 Throttle:
   handle repeat on inc/dec speed buttons
-  add function buttons, arrayed based on available space in the scroll widget
+  fix spacing issue on 2-line-text buttons
 VerticalThrottle:
   use single fwd/rev button?
 SelectLoco:
   manual entry
   recently used
+  sort
   separate dialogs?

@@ -114,14 +114,14 @@ public class RosterEntry {
    * return it, otherwise return null.
    * @param fn function number, starting with 0
    */
-  public String getFunctionLabel(int fn) {
+  public String getFKeyLabel(int fn) {
     if (fn < 0 || fn > functionLabels.size()) {
       return null;
     }
     return functionLabels.get(fn);
   }
 
-  public int getFunctionCount() {
+  public int getFKeyCount() {
     return functionNames.size();
   }
 
@@ -161,13 +161,13 @@ public class RosterEntry {
    * Return the lockable state of a specific function. Defaults to true.
    * @param fn function number, starting with 0
    */
-  public boolean getFunctionLockable(int fn) {
+  public boolean getFKeyLockable(int fn) {
     return functionLockables.get(fn);
   }
 
   /**
    * Return the name of a specific function. e.g. "F4"   */
-  public String getFunctionName(int fn) {
+  public String getFKeyName(int fn) {
     return functionNames.get(fn);
   }
 

@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
@@ -138,7 +139,7 @@ class WebSocketRunnable implements Runnable {
           break;
 //        case MessageType.FUNCTION_CHANGE_REQUESTED:
 //          throttle = mainApp.getThrottle(msg.obj.toString()); //obj is throttleKey
-//          String jf = throttle.getFunctionChangeJson(msg.arg1, msg.arg2);  //arg1 is fn#, arg2 is state
+//          String jf = throttle.getFKeyChangeJson(msg.arg1, msg.arg2);  //arg1 is fn#, arg2 is state
 //          Log.d(Consts.APP_NAME, "in WebSocketRunnable.handleMessage() FUNCTION_CHANGE_REQUESTED " + jf);
 //          try {
 //            jmriWebSocket.webSocketConnection.sendTextMessage(jf);  //send the request to the server
@@ -401,17 +402,34 @@ class WebSocketRunnable implements Runnable {
       String throttleKey = data.getString("throttle");
       Throttle t = mainApp.getThrottle(throttleKey);
       t.setConfirmed(true);  //TODO: unset this somewhere
-      if (data.has("speed")) {
-        float speed = (float) data.getDouble("speed");
-        t.setSpeed(speed);
-        changed = true;
+
+      //loop thru response keys and handle what comes in
+      Iterator<String> keys = data.keys();
+      while(keys.hasNext()) {
+        String key = keys.next();
+        String val = null;
+        try {
+          val = data.getString(key);
+//          Log.d(Consts.APP_NAME, "key=" + key + ", val=" + val);
+        } catch (Exception e) {
+          break;  //if error, stop processing this response
+        }
+        if ("speed".equals(key)) {
+          float speed = Float.parseFloat(val);
+          t.setSpeed(speed);
+          changed = true;
+        } else if ("forward".equals(key)) {
+          boolean forward = Boolean.parseBoolean(val);
+          t.setForward(forward);
+          changed = true;
+        } else if ("F".equals(key.substring(0,1))) {
+          boolean state = Boolean.parseBoolean(val);
+          t.setFKeyState(key, state);
+          changed = true;
+        }
       }
-      if (data.has("forward")) {
-        boolean forward = data.getBoolean("forward");
-        t.setForward(forward);
-        changed = true;
-      }
-      if (changed) {  //let the interested throttle fragments know something changed
+
+        if (changed) {  //let the interested throttle fragments know something changed
         mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.THROTTLE_CHANGED, throttleKey);
       }
       //put other values into shared variables for later use
