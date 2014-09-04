@@ -38,6 +38,7 @@ AddTabDialogFragment:
 Throttle:
   handle repeat on inc/dec speed buttons
   fix spacing issue on 2-line-text buttons
+  fix swipe over buttons
 VerticalThrottle:
   use single fwd/rev button?
 SelectLoco:

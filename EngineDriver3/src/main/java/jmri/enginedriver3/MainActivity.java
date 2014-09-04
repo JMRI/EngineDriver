@@ -28,6 +28,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -89,13 +90,18 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     DisplayMetrics metrics = new DisplayMetrics();
     getWindowManager().getDefaultDisplay().getMetrics(metrics);
-    int x = metrics.widthPixels;
-    int y = metrics.heightPixels;
+    int widthPixels = metrics.widthPixels;
+    int heightPixels = metrics.heightPixels;
     float ratio = 1;
-    if (y > x) {
-      ratio = ((float) y / (float) x);
+    if (heightPixels > widthPixels) {
+      ratio = ((float) heightPixels / (float) widthPixels);
     } else
-      ratio = (float) x / (float) y;
+      ratio = (float) widthPixels / (float) heightPixels;
+
+    //get the width of one "M", and calc screen width in Ems
+    TextView tv = new TextView(this);
+    mainApp.setEmWidth(tv.getPaint().measureText("M"));
+    int widthEms = (int) (widthPixels / mainApp.getEmWidth());
 
     fragmentsPerScreen = 2; //default for portrait screens
     //for testing, hard-code the available screen width based on orientation
@@ -103,7 +109,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
       fragmentsPerScreen = (int) ((fragmentsPerScreen * ratio) + 0.5);
 //            actionBar.setDisplayShowTitleEnabled(false);  //this interferes with the actionbar's fling
     }
-    Log.d(Consts.APP_NAME, "Screen is " + y + "x" + x + "px, ratio is " + ratio
+    Log.i(Consts.APP_NAME, "Screen=" + heightPixels + "x" + widthPixels + "px, width="
+        + widthEms + "ems, emWidth=" + mainApp.getEmWidth() + ", ratio=" + ratio
         + ", fragmentsPerScreen=" + fragmentsPerScreen);
 
     addTabs(actionBar);
@@ -477,8 +484,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         case MessageType.THROTTLE_CHANGED:
           Throttle t = mainApp.getThrottle(msg.obj.toString());  //throttleKey is payload
           for (String f : t.getFragmentNames()) {
-            Log.d(Consts.APP_NAME, "forwarding THROTTLE_CHANGED to " + f);
-            mainActivityHandler.forwardMessageToFragmentName(msg, f);  //forward to each fragment which owns this throttleKey
+//            Log.d(Consts.APP_NAME, "forwarding THROTTLE_CHANGED to " + f);
+            mainActivityHandler.forwardMessageToFragmentName(msg, f);  //forward to each fragment which has this throttleKey
           }
           break;
         case MessageType.MESSAGE_LONG:  //show message to user as a toast

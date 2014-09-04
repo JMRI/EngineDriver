@@ -82,51 +82,71 @@
     </TableLayout>
 
     <LinearLayout
-        android:id="@+id/throttle_setspeed"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/btnSpeedIncrease"
-            style="@style/normal_button_style"
-            android:layout_width="wrap_content"
-            android:layout_weight="0.1"
-            android:layout_height="0dp"
-            android:text="+"/>
-
-        <jmri.enginedriver3.VerticalSeekBar
-            android:id="@+id/sbSpeedSlider"
-            android:layout_width="wrap_content"
-            android:layout_weight="0.7"
-            android:layout_height="0dp"
-            android:layout_marginLeft="12dp">
-        </jmri.enginedriver3.VerticalSeekBar>
-
-        <Button
-            android:id="@+id/btnSpeedDecrease"
-            style="@style/normal_button_style"
-            android:layout_width="wrap_content"
-            android:layout_weight="0.1"
-            android:layout_height="0dp"
-            android:text="-" />
-
-        <Button
-            android:id="@+id/btnStop"
-            style="@style/stop_button_style"
-            android:text="@string/stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginRight="4dp"
-            android:lines="1" />
-    </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/function_buttons_scroller"
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="131dp" >
-    </ScrollView>
+        android:layout_height="fill_parent"
+        >
+
+        <LinearLayout
+            android:id="@+id/throttle_setspeed"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/btnSpeedIncrease"
+                style="@style/normal_button_style"
+                android:layout_width="wrap_content"
+                android:layout_weight="0.1"
+                android:layout_height="0dp"
+                android:text="+"/>
+
+            <jmri.enginedriver3.VerticalSeekBar
+                android:id="@+id/sbSpeedSlider"
+                android:layout_width="wrap_content"
+                android:layout_weight="0.7"
+                android:layout_height="0dp"
+                android:layout_marginLeft="12dp">
+            </jmri.enginedriver3.VerticalSeekBar>
+
+            <Button
+                android:id="@+id/btnSpeedDecrease"
+                style="@style/normal_button_style"
+                android:layout_width="wrap_content"
+                android:layout_weight="0.1"
+                android:layout_height="0dp"
+                android:text="-" />
+
+            <Button
+                android:id="@+id/btnStop"
+                style="@style/stop_button_style"
+                android:text="@string/stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="4dp"
+                android:lines="1" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/function_buttons_scroller"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignEnd="@id/throttle_setspeed">
+            <LinearLayout
+                android:id="@+id/function_buttons_linear_layout"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="right">
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -13,6 +13,7 @@ package jmri.enginedriver3;
 *    should be hidden from this fragment as much as feasible.
 * */
 import android.app.Activity;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -86,7 +87,10 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
     }
     //add touch listeners for all buttons, to handle up and down as needed
     btnSelectLoco = (Button) fragmentView.findViewById(R.id.btnSelectLoco);
-    if (btnSelectLoco!=null) btnSelectLoco.setOnTouchListener(this);
+    btnSelectLoco.setOnTouchListener(this);
+    float w = btnSelectLoco.getPaint().measureText("M");
+
+    //other buttons are optional, so always check for existence
     btnStop = (Button) fragmentView.findViewById(R.id.btnStop);
     if (btnStop!=null) btnStop.setOnTouchListener(this);
     btnForward = (Button) fragmentView.findViewById(R.id.btnForward);
@@ -118,9 +122,11 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
     //insert consist's function buttons to fit in the available width, using the parent scroller for the overflow
     LinearLayout ll_function_buttons = (LinearLayout) fragmentView.findViewById(R.id.function_buttons_linear_layout);
     if (ll_function_buttons!=null) {  //don't add buttons unless the container is defined in this xml
-
       ll_function_buttons.removeAllViews();  //get rid of any leftover rows
-      int maxCols = 3;  //how wide is the button area  TODO: calculate this
+
+      //calculate how many buttons will fit across, round, must be at least one
+      int maxCols = Math.max((int) ((ll_function_buttons.getMeasuredWidth()
+          / (mainApp.getEmWidth() * Consts.BUTTON_WIDTH_EMS)+0.5)), 1);
 
       int col = 0;  //current column
       LinearLayout row = null;
@@ -136,6 +142,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
           ll_function_buttons.addView(row);  //add this row to the parent
         }
         Button fnButton = new Button(getActivity());
+
         fnButton.setId(btnId + 0);  //btnId is 1 through n, since zero isn't an id
         LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams(
             0,  //button width set to 0 because we're using the weight
@@ -190,7 +197,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
 
   @Override
   public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-    Log.d(Consts.APP_NAME, "in ThrottleFragment.onProgressChanged " + fromUser + " " + progress);
+//    Log.d(Consts.APP_NAME, "in ThrottleFragment.onProgressChanged " + fromUser + " " + progress);
     //if user caused this change by sliding the slider, send the change request to server
 //        if (fromUser) {  //this doesn't work properly on VerticalSeekBar, so use the touching flag instead
     if (touchingSlider) {
@@ -199,13 +206,13 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
   }
   @Override
   public void onStartTrackingTouch(SeekBar seekBar) {
-    Log.d(Consts.APP_NAME, "in ThrottleFragment.onStartTrackingTouch");
+//    Log.d(Consts.APP_NAME, "in ThrottleFragment.onStartTrackingTouch");
     touchingSlider = true;  //finger is on slider, send changes, but don't update from server
     consist.sendSpeedChange(seekBar.getProgress());  //without this, change waits until up
   }
   @Override
   public void onStopTrackingTouch(SeekBar seekBar) {
-    Log.d(Consts.APP_NAME, "in ThrottleFragment.onStopTrackingTouch");
+//    Log.d(Consts.APP_NAME, "in ThrottleFragment.onStopTrackingTouch");
     touchingSlider = false;  //finger is not on slider, update from server and don't send changes
 //    consist.sendSpeedChange(seekBar.getProgress());
   }
@@ -254,7 +261,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
           boolean state = t.getFKeyState(fnName);
           consist.sendFKeyChange(fnName, (state ? Consts.FN_BUTTON_OFF : Consts.FN_BUTTON_ON));
         }
-        return true;  //let the response control the
+        return true;  //let the server response control the button appearance
 
       } else {
         Log.w(Consts.APP_NAME, "unhandled button "+view.getId()+" clicked in ThrottleFragment.onTouchDOWN");
@@ -292,7 +299,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
           paintThrottle();
           break;
         case MessageType.DISCONNECTED:
-//                    Log.d(Consts.APP_NAME, "in ThrottleFragment.handleMessage() DISCONNECTED frag="+getFragName());
+          Log.d(Consts.APP_NAME, "in ThrottleFragment.handleMessage() DISCONNECTED frag="+getFragName());
           consist.clear();
           createFunctionButtons();
           paintThrottle();

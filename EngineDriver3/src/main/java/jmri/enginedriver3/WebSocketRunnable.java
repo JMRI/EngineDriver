@@ -350,7 +350,7 @@ class WebSocketRunnable implements Runnable {
             r.setFunctionName(k, name);
             r.setFunctionLabel(k, label);
             r.setFunctionLockable(k, lockable);
-            Log.d(Consts.APP_NAME, data.getString("name") + ", " +k+", fn " + name + ", " + label + ", " + lockable);
+//            Log.d(Consts.APP_NAME, data.getString("name") + ", " +k+", fn " + name + ", " + label + ", " + lockable);
             k++;
           }
         }

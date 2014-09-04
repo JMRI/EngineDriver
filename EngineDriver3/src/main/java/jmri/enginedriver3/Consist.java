@@ -74,9 +74,17 @@ public class Consist {
   }
   public void clear() {
     throttlesAttached.clear();
+    fKeyButtons.clear();
+    fKeyLabels.clear();
+    fKeyNames.clear();
+    fKeyLockables.clear();
   }
   public Throttle getLeadThrottle() {
-    return mainApp.getThrottle(throttlesAttached.get(0));
+    if (throttlesAttached.size() > 0) {
+      return mainApp.getThrottle(throttlesAttached.get(0));
+    } else {
+      return null;
+    }
   }
   public String getFKeyName(int fnId) {
     return fKeyNames.get(fnId);
