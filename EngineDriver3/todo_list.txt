@@ -19,7 +19,9 @@ MainActivity:
   Show the title in landscape mode
   reduce padding, etc. to avoid wide tabs
   check for About tab before showing option in menu (or add it when requested?)
-  determine how to set width for "wide" screens, such as pads
+  determine how to calculate width for "wide" screens, such as pads
+  set a default tab for portrait and landscape
+  jump to default tab on connect, rotate, and back button (if already there, exit as now)
 JmDNS listener:
   use native Android listeners instead of JmDNS on supported devices
 TurnoutsFragment:

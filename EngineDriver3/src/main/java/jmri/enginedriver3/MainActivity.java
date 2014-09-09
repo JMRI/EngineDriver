@@ -136,7 +136,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
       }
     });
 
-    positionToTab("Connect"); //always start up with the connection tab  TODO: do this only when disconnected
+    positionToTab("Connect"); //start with the connection tab, note that resuming will step on this
 
   }
 
@@ -173,22 +173,35 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
   protected void onPause() {
     Log.d(Consts.APP_NAME,"in MainActivity.onPause() dynaFrags=" + mainApp.getDynaFrags().size());
     saveDynaFrags();
-//    mainApp.addNotification(this.getIntent());
     super.onPause();
-  }
-
-  @Override
-  protected void onResume() {
-    Log.d(Consts.APP_NAME, "in MainActivity.onResume()");
-    super.onResume();
-//    mainApp.removeNotification();
   }
 
   @Override
   protected void onStart() {
     Log.d(Consts.APP_NAME, "in MainActivity.onStart()");
-    SetSubTitle();
     super.onStart();
+    SetSubTitle();
+  }
+  @Override
+  protected void onResume() {
+    Log.d(Consts.APP_NAME, "in MainActivity.onResume()");
+    super.onResume();
+    positionToDefaultTab();
+  }
+
+  //jump to the proper tab based on connection and orientation, returns true if changed, false if not
+  private boolean positionToDefaultTab() {
+    boolean changed = false;
+    if (mainApp.isConnected()) {
+      if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+        changed = positionToTab("Throttle");  //TODO: set this in prefs
+      } else {
+        changed = positionToTab("Panels");  //TODO: set this in prefs
+      }
+    } else {
+      changed = positionToTab("Connect");
+    }
+    return changed;
   }
 
   //if the hardware menu button is pressed, open/close the drawer.  Not per android specs, but
@@ -266,7 +279,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (mainApp.isConnected()) {
           mainApp.sendMsg(permaFrag.permaFragHandler, MessageType.DISCONNECT_REQUESTED);
         }
-        positionToTab("Connect");
+//        positionToTab("Connect");
       } else if (main_menu[i].equals("Help")) {
         positionToTab("About");
       } else if (main_menu[i].equals("About")) {
@@ -316,6 +329,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
   }
   @Override
   public void onConfigurationChanged(Configuration newConfig) {
+    Log.d(Consts.APP_NAME, "in onConfigurationChanged()");
     super.onConfigurationChanged(newConfig);
     drawerListener.onConfigurationChanged(newConfig);
   }
@@ -327,7 +341,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
   @Override
   public void onBackPressed() {
-    verifyExit();
+    boolean changed = positionToDefaultTab();  //first time, jump to the default tab
+    if (!changed){  //if not changed, then exit, or prompt for exit
+      verifyExit();
+    }
   }
   //if connected, make sure the user wants to exit
   private void verifyExit() {
@@ -468,9 +485,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         case MessageType.RELEASE_LOCO_REQUESTED:
           mainApp.sendMsg(permaFrag.permaFragHandler, msg);
           break;
-        case MessageType.CONNECTED:    //forward these to ALL active fragments
+        case MessageType.CONNECTED:
         case MessageType.DISCONNECTED:
-          forwardMessageToFragmentType(msg, Consts.ALL_FRAGMENTS);
+          forwardMessageToFragmentType(msg, Consts.ALL_FRAGMENTS);    //forward these to ALL active fragments
+          positionToDefaultTab();  //jump to proper tab
           break;
         case MessageType.TURNOUT_LIST_CHANGED:
           forwardMessageToFragmentType(msg, Consts.TURNOUT);
@@ -544,14 +562,22 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
   }
 
-  //find and open the tab with the requested name
-  private void positionToTab(String in_tabName) {
+  //find and open the tab with the requested name, return true if done, false if not found
+  private boolean positionToTab(String in_tabName) {
+    String currentTabName = (String) actionBar.getSelectedTab().getText();
+    if (in_tabName.equals(currentTabName)) {
+      Log.d(Consts.APP_NAME,"already positioned to " + in_tabName);
+      return false;  //already there, no need to move
+    }
     for (int i = 0; i < mainApp.getDynaFrags().size(); i++) {
       if (mainApp.getDynaFrags().get(i).getName().equals(in_tabName)) {
         actionBar.getTabAt(i).select();
-        return;
+        Log.d(Consts.APP_NAME,"positioned to " + in_tabName);
+        return true;  //positioning performed
       }
     }
+    Log.d(Consts.APP_NAME,"did not position to " + in_tabName);
+    return false;  //not found, no position changed
   }
 
   private void SetSubTitle() {

@@ -21,6 +21,7 @@ import java.util.Iterator;
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
 import de.tavendo.autobahn.WebSocketHandler;
+import de.tavendo.autobahn.WebSocketOptions;
 
 /**
  * WebSocketRunnable - executed as a thread by the PermaFrag, ctor expects refs to PermaFrag, mainApp,
@@ -202,12 +203,12 @@ class WebSocketRunnable implements Runnable {
       try {
         this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_TIME);
         this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_POWER_STATE);
-        this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_ROSTER_LIST);
         this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_TURNOUTS_LIST);
         this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_ROUTES_LIST);
         this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_SYSTEMCONNECTIONS_LIST);
         this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_CONSISTS_LIST);  //jmri-defined consists
         this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_PANELS_LIST);
+        this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_ROSTER_LIST);
       } catch(Exception e) {
         Log.w(Consts.APP_NAME,"JmriWebSocket error in onOpen(): "+e.toString());
         mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.DISCONNECTED); //tell the app
@@ -453,8 +454,10 @@ class WebSocketRunnable implements Runnable {
 
     private void connect() {
       Log.d(Consts.APP_NAME,"JmriWebSocket connection attempt to " + requestedServer+":"+requestedWebPort);
+      WebSocketOptions webSocketOptions = new WebSocketOptions();
+      webSocketOptions.setMaxMessagePayloadSize(4000 * 1024);  //increase max to 4MB
       try {
-        this.webSocketConnection.connect(createUri(), this);
+        webSocketConnection.connect(createUri(), this, webSocketOptions);
       } catch (WebSocketException e) {
         Log.w(Consts.APP_NAME,"JmriWebSocket connect failed: "+e.toString());
         mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.DISCONNECTED); //tell the app

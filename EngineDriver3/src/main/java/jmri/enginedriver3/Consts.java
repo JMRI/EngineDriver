@@ -67,11 +67,11 @@ public final class Consts  {
 
   public static final String CLOCK_MEMORY_NAME = "IMCURRENTTIME";
 
+  public static final String JSON_REQUEST_ROSTER_LIST  = "{\"type\":\"list\",\"list\":\"roster\"}";
   public static final String JSON_REQUEST_TIME = "{\"type\":\"memory\",\"data\":{\"name\":\"IMCURRENTTIME\"}}";
   public static final String JSON_REQUEST_POWER_STATE  = "{\"type\":\"power\",\"data\":{}}";
   public static final String JSON_REQUEST_TURNOUTS_LIST = "{\"type\":\"list\",\"list\":\"turnouts\"}";
   public static final String JSON_REQUEST_ROUTES_LIST = "{\"type\":\"list\",\"list\":\"routes\"}";
-  public static final String JSON_REQUEST_ROSTER_LIST  = "{\"type\":\"list\",\"list\":\"roster\"}";
   public static final String JSON_REQUEST_PING = "{\"type\":\"ping\"}";
   public static final String JSON_REQUEST_GOODBYE = "{\"type\":\"goodbye\"}";
   public static final String JSON_REQUEST_SYSTEMCONNECTIONS_LIST = "{\"type\":\"list\",\"list\":\"systemConnections\"}";
