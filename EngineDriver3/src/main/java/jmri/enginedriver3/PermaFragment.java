@@ -215,6 +215,7 @@ public class PermaFragment extends Fragment {
         case MessageType.POWER_STATE_CHANGED:
         case MessageType.THROTTLE_CHANGED:
         case MessageType.JMRI_TIME_CHANGED:
+        case MessageType.LOCO_RELEASED:
           if (mainApp.getMainActivity()!=null) {
             mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, msg);
           } else {

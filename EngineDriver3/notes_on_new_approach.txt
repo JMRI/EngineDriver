@@ -59,9 +59,9 @@ steps:
 25) determine if various throttle "flavors" should be settings for a single fragment type, or multiple fragment types.
 26) add address/roster selection/entry dialog
 27) determine messaging flow between selectloco, websockets, throttle fragments
-) allow one fragment to be the default for portrait, and one for landscape,
-    to provide the current "auto-web on rotation" feature.  Only when connected.
-) add notification icon and action
+28) allow one fragment to be the default for portrait, and one for landscape,
+    to provide the current "auto-web on rotation" feature.  Connect is default when not connected.
+29) add notification icon and action
 ) add power button to title bar
 ) add settings icon to each fragment, (dropping hard-coded urls) and store as json shared prefs
 ) add phone listener, option to pause locos
@@ -121,6 +121,7 @@ RecentThrottleList (list of addresses and consists which have been recently used
 
 Not Shared objects (stored as json in sharedprefs):
 recent server list (maintained by ConnectFrag, stored in sharedprefs as json)
+Consist (singleton local to each throttlefrag, which keeps track of 0-n Throttle objects attached to frag)
 
 ConnectFrag:
 Reads: discoveredServersList
@@ -133,33 +134,41 @@ Reads: turnoutsList
 Sends: TURNOUT_CHANGE_REQUESTED (name, newstate)
 Recvs: TURNOUT_LIST_CHANGED
 
-NOTE: using name Consist instead of Throttle avoid confusion with single Throttle object in jmri
-ConsistFrag:
-Reads: throttleList entry (keyed by a new consistID)
-Sends: ADD_LOCO_REQUESTED (throttleID, locoAddress/rosterID, relativeDirection)
-  THROTTLE_VELOCITY_CHANGE_REQUESTED (throttleID, throttleSpeed, throttleDirection)
-  THROTTLE_FN_CHANGE_REQUESTED (throttleID, Fn#, newState)
-  LOCO_FN_CHANGE_REQUESTED (locoAddress/rosterID, Fn#, newState)
-Recvs: THROTTLE_STATE_CHANGED (throttleID)
+ThrottleFrag:
+Reads: throttleList entry (keyed by a new throttleKey)
+Sends: LOCO_REQUESTED (throttleKey, locoAddress, rosterID, relativeDirection, fragName)
+  THROTTLE_VELOCITY_CHANGE_REQUESTED (throttleKey, throttleSpeed, throttleDirection)
+  THROTTLE_FN_CHANGE_REQUESTED (throttleKey, Fn#, newState)
+  LOCO_FN_CHANGE_REQUESTED (locoAddress/throttleKey, Fn#, newState)
+  RELEASE_LOCO_REQUESTED (fragName, throttleKey)
+Recvs: THROTTLE_STATE_CHANGED (throttleKey)
+  LOCO_RELEASED (fragName)
 Saves: DefaultFnList, RecentThrottleList (since these are shared, maybe let permafrag save them)
 
-Throttles and Throttle object:
-  stores data about a single "consist", assigned to a single slider+buttons UI fragment
-  each Throttle has a unique ThrottleID, used to map the frag to the object
-  Throttle will have 1:n locos, in a specified sequence (defined by UI)
-  first loco treated as "lead", last treated as "trail".  rearrange the sequence to change this
-  the Throttle has a speed and direction, and each loco has a relative direction and speed adjustment
+global throttleList of Throttle objects:
+  keyed by throttleKey, which is dcc address as a string
+  stores data about a single jmri "throttle" object, keyed by throttleKey, which is dcc address as a string
+  keeps a list of fragments which use this throttle
   Throttle speed and direction are maintained from the server response for the lead loco, not the UI request
   Throttles will be updated even if their corresponding frag is inactive
   jsonserver has an element called "throttle" which is used as a key to a single jmri Throttle
-   object. websocketthread will generate this key as ThrottleID+LocoID.
-  websocketthread splits the UI request for changes and sends for each loco in consist, changing as needed
-  the server response will be by ThrottleID+LocoID, so updates could be applied to just the lead loco,
+   object.
+  the server response will be by ThrottleKey, so updates could be applied to just the lead loco,
     every loco, ??
   F0 will be assumed to be headlight, and requests adjusted to turn off lights on trailing locos, based
     on leadloco direction  (make this a pref?)
   All ThrottleFragments will use the same object, but differing layout files.  The layout name to use will be
     passed/stored in the data parm of each fragment. file name is "throttle_xxxx.xml" where xxxx is the selected layout.
   The id names of the various parts of each throttle layout will be the same.  Code should accept missing ids.
-  The "functions" buttons will be added to the layout dynamically, to best handle screen size changes.
+  The "functions" buttons are added to the layout dynamically, to best handle screen size changes.
+  FnKeys are based on lead loco for Consist.  if not defined, a default list is shown.
 
+Consist object, local to each throttleFrag
+  has a list of throttles, 0-n
+  first loco treated as "lead", last treated as "trail".  rearrange the sequence to change this
+  the Consist has a speed and direction, and each loco can have a relative direction and speed adjustment
+  Consist speed and direction are updated from server response for the lead loco.
+  throttles are added to Consist when acquired from server, or by a direct message from websocketthread
+    if already allocated for another throttlefrag
+  throttles are removed from Consist when released from server, or by a direct message if used by >1 frag
+  Throttles are removed from global list first, so Consists are asked to "verify" themselves to remove missing throttles

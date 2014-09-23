@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * consist -- used as a singleton by each throttle fragment, this keeps track of the throttles
@@ -28,18 +29,20 @@ public class Consist {
 
   private MainApplication mainApp; // hold pointer to mainApp, passed in constructor
 
-  public Consist(MainApplication in_mainApp) {
+  private String _fragName; //fragment name which "owns" this consist, internal only
+  private String getFragName() { return _fragName;}
+  private void setFragName(String _fragName) {this._fragName = _fragName;}
+
+  public Consist(MainApplication in_mainApp, String in_fragName) {
     mainApp = in_mainApp;
+    setFragName(in_fragName);
   }
 
   public void addThrottle(String throttleKey) {
     if (!hasThrottle(throttleKey)) {  //don't add if already attached
       throttlesAttached.add(throttleKey);
-      if (throttlesAttached.size() == 1) {  //if just added lead, copy functions to consist
-        fKeyNames.clear();
-        fKeyLabels.clear();
-        fKeyLockables.clear();
-        fKeyButtons.clear();
+      if (getThrottleCount() == 1) {  //if just added lead, copy functions to consist
+        clearFKeys();
         Throttle throttle = getLeadThrottle();
         RosterEntry re = mainApp.getRosterEntry(throttle.getRosterId());
         if (re != null && re.getFKeyCount()>0) {  //show defined function keys
@@ -62,12 +65,31 @@ public class Consist {
       }
     }
   }
+
+  private void clearFKeys() {
+    fKeyNames.clear();
+    fKeyLabels.clear();
+    fKeyLockables.clear();
+    fKeyButtons.clear();
+  }
+
+  public void removeThrottle(String throttleKey) {
+    if (hasThrottle(throttleKey)) {  //don't remove if not found
+      throttlesAttached.remove(throttleKey);
+      Log.d(Consts.APP_NAME, "removed " + throttleKey + " from consist, new size=" + getThrottleCount());
+    }
+    if (getThrottleCount() == 0) {  //if no loco, clear the keys
+      clearFKeys();
+    }
+  }
   @Override
   public String toString() {
     String locoText = "";
     String sep = "";
-    for (int i = 0; i < throttlesAttached.size(); i++) {
-      locoText += sep + mainApp.getThrottle(throttlesAttached.get(i)).getRosterId();
+    for (int i = 0; i < getThrottleCount(); i++) {
+      if (throttlesAttached.get(i)!=null && mainApp.getThrottle(throttlesAttached.get(i))!=null) {
+        locoText += sep + mainApp.getThrottle(throttlesAttached.get(i)).getRosterId();
+      }
       sep = "+";
     }
     return locoText;
@@ -80,7 +102,7 @@ public class Consist {
     fKeyLockables.clear();
   }
   public Throttle getLeadThrottle() {
-    if (throttlesAttached.size() > 0) {
+    if (getThrottleCount() > 0) {
       return mainApp.getThrottle(throttlesAttached.get(0));
     } else {
       return null;
@@ -115,7 +137,7 @@ public class Consist {
     return throttlesAttached.size();
   }
   public boolean hasThrottle(String in_throttleKey) {
-    for (int i = 0; i < throttlesAttached.size(); i++) {
+    for (int i = 0; i < getThrottleCount(); i++) {
       if (throttlesAttached.get(i).equals(in_throttleKey)) {
         return true;
       }
@@ -124,7 +146,7 @@ public class Consist {
   }
   //send the needed requests for each loco in the consist  TODO: adjust based on factor
   public void sendSpeedChange(int in_displayedSpeed) {
-    for (int i = 0; i < throttlesAttached.size(); i++) {
+    for (int i = 0; i < getThrottleCount(); i++) {
       Throttle t = mainApp.getThrottle(throttlesAttached.get(i));
       mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.SPEED_CHANGE_REQUESTED,
           t.getThrottleKey(), in_displayedSpeed);
@@ -132,21 +154,45 @@ public class Consist {
   }
   //send the needed requests for each loco in the consist  TODO: adjust based on direction in consist
   public void sendDirectionChange(int in_direction) {
-    for (int i = 0; i < throttlesAttached.size(); i++) {
+    for (int i = 0; i < getThrottleCount(); i++) {
       Throttle t = mainApp.getThrottle(throttlesAttached.get(i));
       mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.DIRECTION_CHANGE_REQUESTED,
           t.getThrottleKey(), in_direction);
     }
   }
-  //send the needed requests for each loco in the consist  TODO: decide which locos to send it to
+  //send the needed requests for each loco in the consist  TODO: decide which locos in consist to send it to
   public void sendFKeyChange(String fnName, int newState) {
-    for (int i = 0; i < throttlesAttached.size(); i++) {
+    for (int i = 0; i < getThrottleCount(); i++) {
       Throttle t = mainApp.getThrottle(throttlesAttached.get(i));
       String js = t.getFKeyChangeJson(fnName, newState);
       mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.SEND_JSON_MESSAGE, js);
     }
   }
-  public void saveToPreferences(String prefName) {
+  //send the needed requests for each loco in the consist, in reverse order
+  public void releaseAllLocos() {
+//    for (int i = 0; i < getThrottleCount(); i++) {
+    for (int i = getThrottleCount()-1; i >= 0; i--) {
+      Throttle t = mainApp.getThrottle(throttlesAttached.get(i));
+      HashMap<String, String> hm = new HashMap<String, String>();  //make a temp hashmap for a single entry
+      hm.put("fragment_name", getFragName());
+      hm.put("throttle_key", t.getThrottleKey());
+      Gson gson = new Gson();      //convert to json for message transport
+      String hmJson = gson.toJson(hm, new TypeToken<HashMap<String, String>>() {}.getType());
+      mainApp.sendMsg(mainApp.getMainActivity().mainActivityHandler, MessageType.RELEASE_LOCO_REQUESTED, hmJson);
+    }
+  }
+  //remove any throttles which no longer exist in the global throttle list OR
+  //   OR no longer have this fragment listed
+  public void verifyThrottles() {
+    for (int i = 0; i < getThrottleCount(); i++) {
+      Throttle t = mainApp.getThrottle(throttlesAttached.get(i));
+      if ((t==null) || (!t.getFragmentNames().contains(getFragName()))) {
+        removeThrottle(throttlesAttached.get(i));
+      }
+    }
+  }
+  public void saveToPreferences() {
+    String prefName = getFragName();  //use the fragment name as the preferences file name
     SharedPreferences sharedPreferences = mainApp.getMainActivity().getSharedPreferences(prefName,
         Context.MODE_PRIVATE);
     SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
@@ -167,13 +213,10 @@ public class Consist {
     sharedPreferencesEditor.putString("functionLockablesJson", functionLockablesJson);
     sharedPreferencesEditor.commit();
   }
-  public void restoreFromPreferences(String prefName) {
-    fKeyButtons.clear();  //just clear, object references should not be restored
-
+  public void restoreFromPreferences() {
+    String prefName = getFragName();  //use the fragment name as the preferences file name
+    clearFKeys();  //just clear, object references should not be restored
     throttlesAttached.clear();  //clear these in case issues below
-    fKeyNames.clear();
-    fKeyLabels.clear();
-    fKeyLockables.clear();
     SharedPreferences sharedPreferences = mainApp.getMainActivity().getSharedPreferences(prefName,
         Context.MODE_PRIVATE);
     String throttlesAttachedJson = sharedPreferences.getString("throttlesAttachedJson", "");
@@ -187,7 +230,7 @@ public class Consist {
         return;  //any issue don't restore
       }
       //verify all throttles are still tracked by app, if not, clear the list
-      for (int i = 0; i < throttlesAttached.size(); i++) {
+      for (int i = 0; i < getThrottleCount(); i++) {
         Throttle throttle = mainApp.getThrottle(throttlesAttached.get(i));
         if (throttle==null) {
           throttlesAttached.clear();

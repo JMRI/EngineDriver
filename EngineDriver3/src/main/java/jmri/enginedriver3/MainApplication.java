@@ -136,6 +136,9 @@ public class MainApplication extends Application {
   public void storeThrottle(String in_throttleKey, Throttle in_throttle) {
     this._throttleList.put(in_throttleKey, in_throttle);
   }
+  public void removeThrottle(String in_throttleKey) {
+    this._throttleList.remove(in_throttleKey);
+  }
 
   public HashMap<String, Route> getRouteList() {return _routeList;}
 

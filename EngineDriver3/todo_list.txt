@@ -20,8 +20,7 @@ MainActivity:
   reduce padding, etc. to avoid wide tabs
   check for About tab before showing option in menu (or add it when requested?)
   determine how to calculate width for "wide" screens, such as pads
-  set a default tab for portrait and landscape
-  jump to default tab on connect, rotate, and back button (if already there, exit as now)
+  use prefs for default tab for portrait and landscape
 JmDNS listener:
   use native Android listeners instead of JmDNS on supported devices
 TurnoutsFragment:
@@ -35,12 +34,14 @@ RoutesFragment:
 WebViewFragment:
   prefs for initial zoom level, width, url
 RemoveTabDialogFragment:
+  for throttlefrags, release and remove any attached throttles
 AddTabDialogFragment:
   add thumbnail images, especially helpful for throttle layouts
 Throttle:
   handle repeat on inc/dec speed buttons
   fix spacing issue on 2-line-text buttons
   fix swipe over buttons
+  fix spacing after rotation (going to single column now)
 VerticalThrottle:
   use single fwd/rev button?
 SelectLoco:

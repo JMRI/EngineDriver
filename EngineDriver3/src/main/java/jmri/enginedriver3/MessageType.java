@@ -27,7 +27,8 @@ interface MessageType {
 //  public static final int FUNCTION_CHANGE_REQUESTED=6; 			//throttlefrag -> websocket (throttleKey, fn#, fnState)
   public static final int CONNECTED =7; 			//websocket -> all tabs ()
   public static final int DISCONNECTED =8; 			//websocket -> all tabs ()
-  public static final int RELEASE_LOCO_REQUESTED=9; //from selectlocodialog->websocketthread (rostername, address, direction, fragmentname
+  public static final int RELEASE_LOCO_REQUESTED=9; //from throttlefrag(via consist)->websocketthread (fragName, throttleKey)
+  public static final int LOCO_RELEASED=10; //from websocket->throttlefrag (fragmentName)
   public static final int HEARTBEAT=12;  		//
   public static final int LOCO_REQUESTED=13; //from selectlocodialog->websocketthread (rostername, address, direction, fragmentname)
   public static final int TURNOUT_LIST_CHANGED =14;		//

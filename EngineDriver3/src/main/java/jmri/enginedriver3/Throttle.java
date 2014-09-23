@@ -1,7 +1,5 @@
 package jmri.enginedriver3;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -149,7 +147,12 @@ public class Throttle {
 
   public void addFragment(String fragmentName) {
     if (!_fragmentNames.contains(fragmentName)) {
-      _fragmentNames.add(_fragmentNames.size(), fragmentName); 
+      _fragmentNames.add(_fragmentNames.size(), fragmentName);
+    }
+  }
+  public void removeFragment(String fragmentName) {
+    if (_fragmentNames.contains(fragmentName)) {
+      _fragmentNames.remove(fragmentName);
     }
   }
 }

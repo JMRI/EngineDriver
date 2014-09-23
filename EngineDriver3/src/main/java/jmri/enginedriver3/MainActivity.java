@@ -503,8 +503,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
           Throttle t = mainApp.getThrottle(msg.obj.toString());  //throttleKey is payload
           for (String f : t.getFragmentNames()) {
 //            Log.d(Consts.APP_NAME, "forwarding THROTTLE_CHANGED to " + f);
-            mainActivityHandler.forwardMessageToFragmentName(msg, f);  //forward to each fragment which has this throttleKey
+            forwardMessageToFragmentName(msg, f);  //forward to each fragment which has this throttleKey
           }
+          break;
+        case MessageType.LOCO_RELEASED:  //fragmentname is payload
+          forwardMessageToFragmentName(msg, msg.obj.toString());  //forward message to specified fragment
           break;
         case MessageType.MESSAGE_LONG:  //show message to user as a toast
           Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_LONG).show();

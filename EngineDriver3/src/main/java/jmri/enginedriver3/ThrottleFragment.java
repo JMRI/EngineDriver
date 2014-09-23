@@ -13,7 +13,8 @@ package jmri.enginedriver3;
 *    should be hidden from this fragment as much as feasible.
 * */
 import android.app.Activity;
-import android.graphics.Paint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -81,9 +82,9 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
     super.onStart();
     Log.d(Consts.APP_NAME, "in ThrottleFragment.onStart()");
 
-    consist = new Consist(mainApp);
+    consist = new Consist(mainApp, getFragName());
     if (mainApp.isConnected()) {  //restore if connected
-      consist.restoreFromPreferences(getFragName());
+      consist.restoreFromPreferences();
     }
     //add touch listeners for all buttons, to handle up and down as needed
     btnSelectLoco = (Button) fragmentView.findViewById(R.id.btnSelectLoco);
@@ -118,7 +119,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
   }
 
   private void createFunctionButtons() {
-    Log.d(Consts.APP_NAME, "in ThrottleFragment.createFunctionButtons()");
+//    Log.d(Consts.APP_NAME, "in ThrottleFragment.createFunctionButtons()");
     //insert consist's function buttons to fit in the available width, using the parent scroller for the overflow
     LinearLayout ll_function_buttons = (LinearLayout) fragmentView.findViewById(R.id.function_buttons_linear_layout);
     if (ll_function_buttons!=null) {  //don't add buttons unless the container is defined in this xml
@@ -179,7 +180,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
     Log.d(Consts.APP_NAME, "in ThrottleFragment.onStop()");
     //clear this to avoid late messages
     if (mainApp.getDynaFrags().get(getFragNum())!=null) mainApp.getDynaFrags().get(getFragNum()).setHandler(null);
-    consist.saveToPreferences(getFragName());
+    consist.saveToPreferences();
     super.onStop();
   }
   @Override
@@ -223,7 +224,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
       if (view.getId() == R.id.btnSelectLoco) {
 //      Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnSelectLoco) ");
-        showSelectLocoDialog();
+        showReleaseOrAddLocoDialog();
 
       } else if (view.getId() == R.id.btnForward) {
 //      Log.d(Consts.APP_NAME, "in ThrottleFragment.onTouchDOWN(btnForward) ");
@@ -316,7 +317,19 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
             }
           }
           paintThrottle();
-          break;  //no action for now
+          break;
+        case MessageType.LOCO_RELEASED:
+          //payload is fragment, so we have to determine which throttle is now gone
+          Log.d(Consts.APP_NAME, "in ThrottleFragment.LocoReleased("+getFragName()+")");
+          String oldLeadThrottleKey = ((consist.getLeadThrottle()==null) ? null : consist.getLeadThrottle().getThrottleKey());  //save to check for change
+          consist.verifyThrottles();  //consist will remove any throttles which are no longer defined
+          if ((oldLeadThrottleKey==null)
+              || (consist.getLeadThrottle()==null)
+              || (oldLeadThrottleKey.equals(consist.getLeadThrottle().getThrottleKey()))) {
+            createFunctionButtons();  //repopulate the buttons based on lead throttle's roster entry
+          }
+          paintThrottle();
+          break;
         default:
           Log.w(Consts.APP_NAME, "in ThrottleFragment.handleMessage(" + msg.what + ") not handled");
       }  //end of switch msg.what
@@ -344,7 +357,7 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
     int maxValue = 100;
     boolean fwd = true;
     String speedUnitsText = "%";
-    if (anyAttached) {
+    if (anyAttached && consist.getLeadThrottle()!=null)  {
       Throttle t = consist.getLeadThrottle();
       speedValue = t.getDisplayedSpeed();
       fwd = t.isForward();
@@ -377,6 +390,27 @@ public class ThrottleFragment extends DynaFragment implements SeekBar.OnSeekBarC
       locoText = consist.toString();
     }
     return locoText;
+  }
+
+  public void showReleaseOrAddLocoDialog() {
+    if (consist.isEmpty()) {  //nothing connected, don't ask about releasing
+      showSelectLocoDialog();
+    } else {
+      new AlertDialog.Builder(mainActivity)
+          .setMessage("Release or Add Loco?")
+          .setCancelable(false)
+          .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+              showSelectLocoDialog();
+            }
+          })
+          .setNegativeButton("Release", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+              consist.releaseAllLocos();  //send releases for all locos in the consist
+            }
+          })
+          .show();
+    }
   }
 
   public void showSelectLocoDialog() {
