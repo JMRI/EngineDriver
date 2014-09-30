@@ -27,4 +27,5 @@
     <bool name="prefLayoutPowerButtonDefaultValue">false</bool>
     <bool name="prefConnectToFirstServer">false</bool>
     <bool name="prefDisplaySpeedArrows">false</bool>
+    <bool name="prefHideSliderDefaultValue">false</bool>
 </resources>

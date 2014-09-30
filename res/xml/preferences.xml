@@ -102,6 +102,12 @@
             android:numeric="integer"
             android:summary="@string/prefSliderLeftMarginSummary"
             android:title="@string/prefSliderLeftMarginTitle" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefHideSliderDefaultValue"
+            android:key="hide_slider_preference"
+            android:summary="@string/prefHideSliderSummary"
+            android:title="@string/prefHideSliderTitle" >
+        </CheckBoxPreference>
         <ListPreference
             android:defaultValue="@string/prefWebViewLocationDefaultValue"
             android:entries="@array/WebViewLocation"

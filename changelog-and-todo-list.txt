@@ -1,5 +1,7 @@
 **Version 2.10
  * Adjusted speed step handling to restore proper AUTO speed behavior - Robin Becker
+ * new pref to stop locos when phone goes off hook - Robin Becker
+ * new pref to hide speed slider, making a button-only throttle - mstevetodd
 **Version 2.9
  * fix issue with volume button changing wrong loco speed when unused throttle has the "v" - mstevetodd
  * Catch additional exceptions when starting jmDNS listener (NoSuchMethodError reported to Store) - mstevetodd
@@ -293,6 +295,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: fix issue with rotation, Reverse indication is lost
  *   TODO: show proper function labels based on lead loco in consist
  *   TODO: fix issues with slider progress line when padding changed
  *   TODO: retrieve vsDecoder sounds and play when appropriate

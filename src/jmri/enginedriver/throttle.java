@@ -1766,6 +1766,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			bRSpdT.setVisibility(VISIBLE);
 			bRSpdS.setVisibility(VISIBLE);
 			bRSpdG.setVisibility(VISIBLE);
+			//if buttons enabled, hide the slider if requested
+			if (prefs.getBoolean("hide_slider_preference", false)) {
+				sbS.setVisibility(GONE);
+				sbG.setVisibility(GONE);
+				sbT.setVisibility(GONE);
+			}
 		} else {  //hide speed buttons based on pref
 			bLSpdT.setVisibility(GONE);
 			bLSpdS.setVisibility(GONE);
@@ -1774,6 +1780,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			bRSpdS.setVisibility(GONE);
 			bRSpdG.setVisibility(GONE);
 			sliderMargin += 30;  //a little extra margin previously in button
+			sbS.setVisibility(VISIBLE);  //always show slider if buttons not shown
+			sbG.setVisibility(VISIBLE);
+			sbT.setVisibility(VISIBLE);
 		}
 
 		sbS.setPadding(sliderMargin, 0, sliderMargin, 0);
