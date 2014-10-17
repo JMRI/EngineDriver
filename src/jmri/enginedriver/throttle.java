@@ -2009,9 +2009,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
 		case R.id.EmerStop:
-			speedUpdateAndNotify('T', 0);
-			speedUpdateAndNotify('S', 0);
-			speedUpdateAndNotify('G', 0);
+			mainapp.sendEStopMsg();
+			speedUpdate('T', 0);
+			speedUpdate('S', 0);
+			speedUpdate('G', 0);
 			break;
 		case R.id.power_layout_button:
 			if (mainapp.power_state == null) {

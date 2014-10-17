@@ -419,6 +419,13 @@ public class threaded_application extends Application {
 					break;
 				}
 
+				//estop requested.   arg1 holds whichThrottle
+				case message_type.ESTOP: {
+					final char whichThrottle = (char) msg.arg1;
+					withrottle_send(whichThrottle+"X");  //send eStop request
+					break;
+				}
+
 				//Disconnect from the WiThrottle server.
 				case message_type.DISCONNECT: {
 					Log.d("Engine_Driver","TA Disconnect");
@@ -872,6 +879,7 @@ public class threaded_application extends Application {
 		//  PTA<NewState><SystemName>
 		//  PTA2LT12
 		private void process_turnout_change(String response_str) {
+			if (to_system_names == null) return;  //ignore if turnouts not defined
 			String newState = response_str.substring(3,4);
 			String systemName = response_str.substring(4);
 			int pos = -1;
@@ -2003,11 +2011,10 @@ public class threaded_application extends Application {
 
 	}
 
-	public void sendEStopMsg()
-	{
-		sendMsgDelay(comm_msg_handler,0, message_type.VELOCITY, "",(int) 'T', 0);
-		sendMsgDelay(comm_msg_handler,0, message_type.VELOCITY, "",(int) 'S', 0);
-		sendMsgDelay(comm_msg_handler,0, message_type.VELOCITY, "",(int) 'G', 0);
+	public void sendEStopMsg()	{
+		sendMsg(comm_msg_handler, message_type.ESTOP, "", (int) 'T');
+		sendMsg(comm_msg_handler, message_type.ESTOP, "", (int) 'S');
+		sendMsg(comm_msg_handler, message_type.ESTOP, "", (int) 'G');
 		EStopActivated = true;
 	}
 
