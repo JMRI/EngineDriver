@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI: Engine Driver Throttle for Android</title>
+</head>
+<h1>JMRI: Engine Driver Throttle for Android</h1>
+<img src="file:///android_asset/engine_driver_icon.png" height="144" width="166" style="float:left;padding:0 8px 8px 0"/>
+<p>Engine Driver version 2.10 includes:<br />
+Adjusted speed step handling to restore proper AUTO speed behavior - Robin Becker.<br />
+New pref to stop locos when phone goes off hook - Robin Becker.<br />
+New pref to hide speed slider, making a button-only throttle - mstevetodd<br />
+Send estop instead of stop when estop button pressed - mstevetodd 
+
+<br /><em><a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/EngineDriver/changelog-and-todo-list.txt" target="_blank" title="View complete EngineDriver changelog">[view complete changelog]</a></em></p>
+<p>This free application can connect to a <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml" target="_blank">JMRI WiThrottle</a> server running on a computer, 
+and in turn control your DCC locomotives and other devices. 
+Speed, direction, and up to 29 DCC functions are supported for one to three locos or consists.  
+You can create and edit consists (software-defined).  
+You can also control layout power, turnouts and routes, and display panels and other JMRI windows using the web views.</p>
+<p>For more details, visit <a href="http://enginedriver.rrclubs.org" target="_blank">[EngineDriver&nbsp;site]</a>. For screenshots, click <a href="http://enginedriver.rrclubs.org/content/screenshots" target="_blank">[here]</a>.</p>
+<h3>Prerequisites:</h3>
+<p>Verify your Android device can connect to your PC network via WiFi and obtain an IP address.<br />Make sure you are running one of the latest versions of <a href="http://jmri.sourceforge.net/" target="_blank">JMRI</a> (2.8 works, 3.0+ works much better) on your PC, connected to your layout.&nbsp; Start up JMRI and verify you can use the included "Throttle" app to control a loco on your layout.</p>
+<p>Start the <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml" target="_blank">WiThrottle</a> function of JMRI, located in DecoderPro under Tools, Throttles.&nbsp; It is also hghly recommended that you start the <a href="http://jmri.sourceforge.net/help/en/html/web/index.shtml" target="_blank" title="Learn more about JMRI Web Server">JMRI Web Server</a>
+function (Tools, Start JMRI Web Server).&nbsp; 
+Both of these should be added to Preferences, Start Up as well.</p>
+<h3>Operation:</h3>
+<p>On your phone, start the Engine Driver app and wait for your PC's address to show up in "Discovered Services".&nbsp;</p>
+<p>Click on the discovered address, or you can enter the address and port of your WiThrottle server directly.&nbsp; 
+(Using the values shown on the WiThrottle window.)<br /> 
+There is also a "demo" server at jmri.mstevetodd.com, port 44444 that you can connect to for testing.</p>
+<p>On the throttle screen, click on the "Press to Select" loco button for each loco.<br />On the next screen, click on a loco from the roster list, 
+or enter the loco address (verify short or long), and press "Acquire".&nbsp; You will be returned to the Throttle screen.<br />
+Repeat using 2nd and 3rd "Press to Select" button to acquire a 2nd loco or 3rd loco.<br />
+Note: press and hold a roster item to see additional details from the roster.</p>
+<p>Operate your loco using the slider (or volume control) (or arrow buttons) for speed, and the reverse, stop and forward buttons to control direction. <br />
+To release all locos, just press the Back button and exit the app. This will also stop your locos (can be overridden in preferences). 
+You can reassign the volume control by clicking on the speed indicator (the small "v" shows which has control).</p>
+<p>To create a consist "on-the-fly", simply select additional locos for the same throttle. 
+Direction and speed will be sent for all. 
+Release will release all for that throttle.</p>
+<p>Press your phone's Menu button to access screens for Turnout, Route and Power control, as well as adjust settings and set numerous preferences.</p>
+<p>You can also "fling" left or right to jump quickly back and forth between the Throttle, Routes and Turnouts pages.</p>
+<h3>Configuration:</h3>
+<p>Under Preferences, there is an extensive list of options where you can customize the screens 
+and actions of EngineDriver to work best with your device, your layout and your personal style.
+These include fast clock display, speed step options, web views, button size, additional buttons, 
+slider size and behavior, number of throttles to display, 
+stop on release, allow/disallow on-the-fly consisting, autoconnect, and many more.  
+</p>
+<p>If you have entered function labels for a roster entry in JMRI, these labels will be used.  
+If not, you can use the Function Defaults menu option to set default labels and function numbers to display.&nbsp; Remove buttons by blanking out the labels.&nbsp; </p>
+<p>On the JMRI computer side, check your WiThrottle preferences to insure you allow or disallow the control features desired.&nbsp; 
+If you've defined your turnouts and routes in a panel, make sure to specify "user names" for those you'd like to see listed on your throttle.&nbsp; 
+You can also "filter" the turnouts shown using the WiThrottle-&gt;Filter Controls option in the WiThrottle window.&nbsp; 
+Turning on "Use eStop" and "Use fixed port#" are also recommended.</p>
+<p>Entering roster entries, and defining routes and turnouts in JMRI will all make your Engine Driver throttle more powerful and easier to use (though not required).&nbsp; 
+EngineDriver will show additional info if the JMRI Web Server is started (such as roster details and icon images).</p>
+<p>You can browse the current development source code (with tags for earlier releases) 
+<a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/EngineDriver/" target="_blank">[HERE].</a></p>
+<p><a href="http://enginedriver.rrclubs.org" target="_blank">[Homepage for EngineDriver]</a></p>
+</body>
+</html>
