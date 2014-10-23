@@ -2,8 +2,8 @@
  * Adjusted speed step handling to restore proper AUTO speed behavior - Robin Becker
  * new pref to stop locos when phone goes off hook - Robin Becker
  * new pref to hide speed slider, making a button-only throttle - mstevetodd
- * prevent npe reported to Market - mstevetodd
  * send estop instead of stop when estop button pressed - mstevetodd
+ * prevent several npes reported to Market - mstevetodd
 **Version 2.9
  * fix issue with volume button changing wrong loco speed when unused throttle has the "v" - mstevetodd
  * Catch additional exceptions when starting jmDNS listener (NoSuchMethodError reported to Store) - mstevetodd

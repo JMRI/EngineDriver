@@ -417,7 +417,7 @@ public class routes extends Activity  implements OnGestureListener {
 		super.onPause();
 		//save scroll position for later restore
 		ListView lv=(ListView)findViewById(R.id.routes_list);
-		mainapp.routes_list_position = lv.getFirstVisiblePosition();
+		mainapp.routes_list_position = (lv==null ? 0 : lv.getFirstVisiblePosition());
 
 		if(!this.isFinishing() && !navigatingAway) {		//only invoke setContentIntentNotification when going into background
 			mainapp.addNotification(this.getIntent());

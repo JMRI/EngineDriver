@@ -2067,13 +2067,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					int speed;
 					if (whichThrottle == 'T') {
 						dir = dirT;
-						speed = sbT.getProgress(); 
+						speed = (sbT==null ? 0 : sbT.getProgress()); 
 					} else if (whichThrottle == 'G') {
 						dir = dirG;
-						speed = sbG.getProgress(); 
+						speed = (sbG==null ? 0 : sbG.getProgress()); 
 					} else {
 						dir = dirS;
-						speed = sbS.getProgress(); 
+						speed = (sbS==null ? 0 : sbS.getProgress()); 
 					}
 					setEngineDirection(whichThrottle, dir, false); 	// update direction for each loco in consist
 					sendSpeedMsg(whichThrottle, speed);				// ensure all trailing units have the same speed as the lead engine
