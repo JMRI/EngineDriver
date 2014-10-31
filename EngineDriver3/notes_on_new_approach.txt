@@ -172,3 +172,11 @@ Consist object, local to each throttleFrag
     if already allocated for another throttlefrag
   throttles are removed from Consist when released from server, or by a direct message if used by >1 frag
   Throttles are removed from global list first, so Consists are asked to "verify" themselves to remove missing throttles
+
+Redesign of Select Loco dialog
+  numeric input at top, with Acquire button
+  buttons for sort and toggle between roster and recents
+  maybe allow sort of roster by recent use
+  numeric input also works as dynamic filter for lists
+
+

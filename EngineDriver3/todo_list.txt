@@ -42,6 +42,8 @@ Throttle:
   fix spacing issue on 2-line-text buttons
   fix swipe over buttons
   fix spacing after rotation (going to single column now)
+  option (or flavor) to provide a "pause" button instead of stop.  It will leave slider in place
+    for "unpause".  Useful for following trains at shows, etc.
 VerticalThrottle:
   use single fwd/rev button?
 SelectLoco:

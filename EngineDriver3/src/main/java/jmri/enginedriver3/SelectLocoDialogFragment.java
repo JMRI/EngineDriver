@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,6 +76,14 @@ public class SelectLocoDialogFragment extends android.support.v4.app.DialogFragm
             hm.put("roster_address", entry.getValue().getDccAddress());
             rosterEntryListLocalCopy.add(hm);  //add this new entry to local list for adapter
         }
+      //sort the list
+      Comparator<HashMap<String, String>> comparator = new Comparator<HashMap<String, String>>() {
+        @Override
+        public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
+          return arg0.get("roster_name").compareToIgnoreCase(arg1.get("roster_name"));
+        }
+      };
+      Collections.sort(rosterEntryListLocalCopy, comparator);
     }
 
     @Override  //process clicks on the OK and Cancel buttons
