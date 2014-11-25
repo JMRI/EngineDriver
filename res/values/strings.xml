@@ -183,8 +183,10 @@
     <string name="prefDisplayClockDefaultValue">0</string>
     <string name="LeftButton">&lt;&lt;</string>
     <string name="RightButton">&gt;&gt;</string>
-    <string name="prefDisplaySpeedArrowsTitle">Display Speed arrow buttons?</string>
-    <string name="prefDisplaySpeedArrowsSummary">Display arrow buttons next to speed sliders to change loco speed?</string>
+    <string name="DownButton">--</string>
+    <string name="UpButton">++</string>
+    <string name="prefDisplaySpeedArrowsTitle">Display Speed buttons?</string>
+    <string name="prefDisplaySpeedArrowsSummary">Display buttons next to speed sliders to change loco speed?</string>
     <string name="prefSpeedButtonsRepeatTitle">Speed button repeat delay</string>
     <string name="prefSpeedButtonsRepeatSummary">How long between repeats on speed buttons.  Smaller is faster.</string>
 	<string name="prefSpeedButtonsRepeatDefaultValue">100</string>

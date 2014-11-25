@@ -5,12 +5,9 @@
 </head>
 <h1>JMRI: Engine Driver Throttle for Android</h1>
 <img src="file:///android_asset/engine_driver_icon.png" height="144" width="166" style="float:left;padding:0 8px 8px 0"/>
-<p>Engine Driver version 2.10 includes:<br />
-Adjusted speed step handling to restore proper AUTO speed behavior - Robin Becker.<br />
-New pref to stop locos when phone goes off hook - Robin Becker.<br />
-New pref to hide speed slider, making a button-only throttle - mstevetodd<br />
-Send estop instead of stop when estop button pressed - mstevetodd 
-
+<p>Engine Driver version 2.11 includes:<br />
+show -- ++ instead of &lt;&lt; &gt;&gt; when slider is hidden,<br />
+avoid crash reported to Play Store<br />
 <br /><em><a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/EngineDriver/changelog-and-todo-list.txt" target="_blank" title="View complete EngineDriver changelog">[view complete changelog]</a></em></p>
 <p>This free application can connect to a <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml" target="_blank">JMRI WiThrottle</a> server running on a computer, 
 and in turn control your DCC locomotives and other devices. 
@@ -29,13 +26,13 @@ Both of these should be added to Preferences, Start Up as well.</p>
 (Using the values shown on the WiThrottle window.)<br /> 
 There is also a "demo" server at jmri.mstevetodd.com, port 44444 that you can connect to for testing.</p>
 <p>On the throttle screen, click on the "Press to Select" loco button for each loco.<br />On the next screen, click on a loco from the roster list, 
-or enter the loco address (verify short or long), and press "Acquire".&nbsp; You will be returned to the Throttle screen.<br />
-Repeat using 2nd and 3rd "Press to Select" button to acquire a 2nd loco or 3rd loco.<br />
+or enter the loco address (verify short or long), and press "Acquire". You will be returned to the Throttle screen.<br />
+Repeat using 2nd and 3rd "Press to Select" buttons to acquire a 2nd or 3rd train.<br />
 Note: press and hold a roster item to see additional details from the roster.</p>
 <p>Operate your loco using the slider (or volume control) (or arrow buttons) for speed, and the reverse, stop and forward buttons to control direction. <br />
 To release all locos, just press the Back button and exit the app. This will also stop your locos (can be overridden in preferences). 
 You can reassign the volume control by clicking on the speed indicator (the small "v" shows which has control).</p>
-<p>To create a consist "on-the-fly", simply select additional locos for the same throttle. 
+<p>To create a consist "on-the-fly", simply select additional locos for the same throttle.  You will be prompted for the direction of each new loco relative to the existing consist. 
 Direction and speed will be sent for all. 
 Release will release all for that throttle.</p>
 <p>Press your phone's Menu button to access screens for Turnout, Route and Power control, as well as adjust settings and set numerous preferences.</p>

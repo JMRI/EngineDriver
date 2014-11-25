@@ -169,6 +169,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	static int REP_DELAY = 25;
 	static int BUTTON_SPEED_STEP = 4;
 
+	private String speedButtonLeftText;
+	private String speedButtonRightText;
+	private String speedButtonUpText;
+	private String speedButtonDownText;
+	
 	private Handler repeatUpdateHandler = new Handler();
 	private boolean mAutoIncrement = false;
 	private boolean mAutoDecrement = false;
@@ -215,7 +220,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			switch (msg.what) {
 			case message_type.RESPONSE: { // handle messages from WiThrottle server
 				String response_str = msg.obj.toString();
-				char com1 = response_str.charAt(0);
+				if (response_str.length() < 2) return;  //bail if too short, to avoid crash				
+				char com1 = response_str.charAt(0);				
 				char whichThrottle = response_str.charAt(1);
 
 				switch (com1) {
@@ -1132,6 +1138,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			return;
 		}
 		setContentView(R.layout.throttle);
+		
+		speedButtonLeftText = getApplicationContext().getResources().getString(R.string.LeftButton); 
+		speedButtonRightText = getApplicationContext().getResources().getString(R.string.RightButton); 
+		speedButtonUpText = getApplicationContext().getResources().getString(R.string.UpButton); 
+		speedButtonDownText = getApplicationContext().getResources().getString(R.string.DownButton); 
 
 		webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
 		// myGesture = new GestureDetector(this);
@@ -1759,6 +1770,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 
 		//show speed buttons based on pref
+		sbS.setVisibility(VISIBLE);  //always show slider if buttons not shown
+		sbG.setVisibility(VISIBLE);
+		sbT.setVisibility(VISIBLE);
 		if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
 			bLSpdT.setVisibility(VISIBLE);
 			bLSpdS.setVisibility(VISIBLE);
@@ -1766,11 +1780,23 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			bRSpdT.setVisibility(VISIBLE);
 			bRSpdS.setVisibility(VISIBLE);
 			bRSpdG.setVisibility(VISIBLE);
+			bLSpdT.setText(speedButtonLeftText);
+			bLSpdG.setText(speedButtonLeftText);
+			bLSpdS.setText(speedButtonLeftText);
+			bRSpdT.setText(speedButtonRightText);
+			bRSpdG.setText(speedButtonRightText);
+			bRSpdS.setText(speedButtonRightText);
 			//if buttons enabled, hide the slider if requested
 			if (prefs.getBoolean("hide_slider_preference", false)) {
 				sbS.setVisibility(GONE);
 				sbG.setVisibility(GONE);
 				sbT.setVisibility(GONE);
+				bLSpdT.setText(speedButtonDownText);
+				bLSpdG.setText(speedButtonDownText);
+				bLSpdS.setText(speedButtonDownText);
+				bRSpdT.setText(speedButtonUpText);
+				bRSpdG.setText(speedButtonUpText);
+				bRSpdS.setText(speedButtonUpText);
 			}
 		} else {  //hide speed buttons based on pref
 			bLSpdT.setVisibility(GONE);
@@ -1780,9 +1806,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			bRSpdS.setVisibility(GONE);
 			bRSpdG.setVisibility(GONE);
 			sliderMargin += 30;  //a little extra margin previously in button
-			sbS.setVisibility(VISIBLE);  //always show slider if buttons not shown
-			sbG.setVisibility(VISIBLE);
-			sbT.setVisibility(VISIBLE);
 		}
 
 		sbS.setPadding(sliderMargin, 0, sliderMargin, 0);
