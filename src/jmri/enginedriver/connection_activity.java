@@ -136,11 +136,11 @@ public class connection_activity extends Activity {
 			case RECENT_CONNECTION:
 				ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
 				TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
-				connected_hostip = (String) hip.getText();
+				connected_hostip = hip.getText().toString();
 				TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
-				connected_hostname = (String) hnv.getText();
+				connected_hostname = hnv.getText().toString();
 				TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
-				connected_port = Integer.valueOf((String) hpv.getText());
+				connected_port = Integer.valueOf(hpv.getText().toString());
 				break;
 			}
 			connect();
@@ -150,10 +150,10 @@ public class connection_activity extends Activity {
 	public class button_listener implements View.OnClickListener
 	{
 		public void onClick(View v) {
-			EditText entry=(EditText)findViewById(R.id.host_ip);
-			connected_hostip=new String(entry.getText().toString());
+			EditText entry = (EditText)findViewById(R.id.host_ip);
+			connected_hostip = entry.getText().toString();
 			if (connected_hostip.trim().length() > 0 ) {
-				entry =(EditText)findViewById(R.id.port);
+				entry = (EditText)findViewById(R.id.port);
 				try {
 					connected_port = Integer.valueOf(entry.getText().toString());
 				} catch(Exception except) { 

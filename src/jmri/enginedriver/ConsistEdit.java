@@ -168,7 +168,7 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 				ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
 				ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
 				TextView addrv = (TextView) rl.getChildAt(1); // get address text from 2nd box
-				String address = (String)addrv.getText();
+				String address = addrv.getText().toString();
 
 				try {
 					consist.setBackward(address, !consist.isBackward(address));
@@ -186,7 +186,7 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 				ViewGroup vg = (ViewGroup) v;
 				ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
 				TextView addrv = (TextView) rl.getChildAt(1); // get address text from 2nd box
-				String addr = (String)addrv.getText();
+				String addr = addrv.getText().toString();
 
 				if(!consist.getLeadAddr().equals(addr)) {
 					consist.remove(addr);

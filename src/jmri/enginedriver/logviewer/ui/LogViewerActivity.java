@@ -106,7 +106,7 @@ public class LogViewerActivity extends ListActivity{
 		super.onListItemClick(l, v, position, id);
 
 		final AlertDialog.Builder builder = new AlertDialog.Builder(LogViewerActivity.this);
-		String text = ((String) ((TextView)v).getText());
+		String text = ((TextView)v).getText().toString();
 
 		builder.setMessage(text);
 

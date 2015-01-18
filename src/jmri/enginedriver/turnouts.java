@@ -248,7 +248,7 @@ public class turnouts extends Activity implements OnGestureListener {
 
 		public void onClick(View v) {
 			EditText entryv=(EditText)findViewById(R.id.turnout_entry);
-			String entrytext = new String(entryv.getText().toString().trim());
+			String entrytext = entryv.getText().toString().trim();
 			if (entrytext.length() > 0 ) {
 				//if text starts with a digit, check number and prefix with hardware_system and "T"
 				//otherwise send the text as is
@@ -277,7 +277,7 @@ public class turnouts extends Activity implements OnGestureListener {
 			ViewGroup vg = (ViewGroup)v.getParent();  //start with the list item the button belongs to 
 			ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemname and username
 			TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
-			String systemname = (String) snv.getText();
+			String systemname = snv.getText().toString();
 			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, '2'+systemname);	// 2=toggle
 		};
 	}
