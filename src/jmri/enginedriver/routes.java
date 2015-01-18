@@ -356,7 +356,7 @@ public class routes extends Activity  implements OnGestureListener {
 
 		locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				location = (String)parent.getSelectedItem();
+				location = parent.getSelectedItem().toString();
 				filterRouteView();
 			}
 			public void onNothingSelected(AdapterView<?> parent) {

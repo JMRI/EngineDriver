@@ -244,7 +244,7 @@ public class connection_activity extends Activity {
 
 			case message_type.SERVICE_REMOVED:        
 				//look for name in list
-				String removed_host_name = (String) msg.obj;
+				String removed_host_name = msg.obj.toString();
 				tm=new HashMap<String, String>();
 				for(int index=0; index < discovery_list.size(); index++) {
 					tm = discovery_list.get(index);
@@ -498,9 +498,9 @@ public class connection_activity extends Activity {
 				int clEntries =Math.min(connections_list.size(), mrc);  //don't keep more entries than specified in preference
 				for(int i = 0; i < clEntries; i++)  {  //loop thru entries from connections list, up to max in prefs 
 					HashMap <String, String> t = connections_list.get(i);
-					String li = (String) t.get("ip_address");
-					String lh = (String) t.get("host_name");
-					Integer lp = Integer.valueOf((String) t.get("port"));
+					String li = t.get("ip_address").toString();
+					String lh = t.get("host_name").toString();
+					Integer lp = Integer.valueOf(t.get("port").toString());
 					//***        			if(connected_hostip != null && connected_port != 0)
 					if(!connected_hostip.equals(li) || connected_port!=lp) {  //write it out if not same as selected 
 						list_output.format("%s:%s:%d\n", lh, li, lp);

@@ -345,7 +345,7 @@ public class threaded_application extends Application {
 					initShared();
 
 					//The IP address is stored in the obj as a String, the port is stored in arg1.
-					host_ip = new String((String)msg.obj);
+					host_ip = msg.obj.toString();
 					host_ip = host_ip.trim();
 					port = msg.arg1;
 
