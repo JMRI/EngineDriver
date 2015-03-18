@@ -1149,6 +1149,9 @@ public class threaded_application extends Application {
 			protected PrintWriter outputPW = null;
 			private volatile boolean endRead = false;			//signals rcvr to terminate
 			private volatile boolean socketGood = false;		//indicates socket condition
+			private volatile boolean socketCheckState = false;	//indicates the state of the last socket 
+			private static final int MAX_BAD_SOCKET_CHECKS = 4;	//number of seconds to recheck the socket before deciding it really failed
+			private int badSocketChecks = 0;					//number of consecutive seconds of failed socket checks  
 
 			socket_WiT() {
 				super("socket_WiT");
@@ -1220,7 +1223,8 @@ public class threaded_application extends Application {
 						socketOk = false;
 					}
 				}
-				socketGood = socketOk;
+				this.socketGood = socketOk;
+				this.socketCheckState = socketOk;
 				return socketOk;
 			}
 
@@ -1237,7 +1241,8 @@ public class threaded_application extends Application {
 					}
 				}
 
-				socketGood = false;
+				this.socketGood = false;
+				this.socketCheckState = false;
 
 				//close socket
 				if (clientSocket != null) {
@@ -1262,8 +1267,10 @@ public class threaded_application extends Application {
 			public void run() {
 				String str = null;
 				//continue reading until signalled to exit by endRead
-				while(!endRead) {
-					if(socketGood) {		//skip read when the socket is down
+				while(!this.endRead) {
+					if(this.socketCheckState) 		//only try to read when the socket is good
+					{
+						this.badSocketChecks = 0;
 						try {
 							if((str = inputBR.readLine()) != null) {
 								if (str.length()>0) {
@@ -1272,18 +1279,35 @@ public class threaded_application extends Application {
 								}
 							}
 						} 
-						catch (SocketTimeoutException e )   {
-							socketGood = this.SocketCheck();
+						catch (SocketTimeoutException e )   
+						{
+							this.socketCheckState = this.SocketCheck();	// found nothing to read, so check to be sure the socket is ok
 						} 
-						catch (IOException e) {
-							if(socketGood) {
+						catch (IOException e) 
+						{
+							if(this.socketCheckState) 
+							{
 								Log.d("Engine_Driver","WiT rcvr error.");
-								socketGood = false;		//input buffer error so force reconnection on next send
+								this.socketCheckState = false;		//input buffer error so indicate socket has a problem 
 							}
 						}
 					}
-					if(!socketGood) {
-						SystemClock.sleep(1000L);	//don't become compute bound here when the socket is down
+					
+					if(!this.socketCheckState) 
+					{
+						if(this.badSocketChecks < MAX_BAD_SOCKET_CHECKS)
+						{
+							this.badSocketChecks++;
+							if(this.badSocketChecks == MAX_BAD_SOCKET_CHECKS)
+							{
+								this.socketGood = false;
+							}
+						}
+						SystemClock.sleep(1000L);	//don't become compute bound here when the socket is not ok
+						if(this.socketGood)
+						{
+							this.socketCheckState = this.SocketCheck();
+						}
 					}
 				}
 				heart.stopHeartbeat();
@@ -1291,10 +1315,10 @@ public class threaded_application extends Application {
 
 			public void Send(String msg) {
 				//reconnect socket if needed
-				if(!socketGood || !this.SocketCheck()) {
+				if(!this.socketGood) {
 					this.disconnect(false);		//clean up socket but do not shut down the receiver
 					this.connect();				//attempt to reestablish connection
-					if(socketGood) {
+					if(this.socketGood) {
 						process_comm_error("Success: Restored connection to WiThrottle server " + host_ip + ".\n");
 						sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT);
 					}
@@ -1304,8 +1328,9 @@ public class threaded_application extends Application {
 					}
 				}
 
-				//send the message
-				if(socketGood) {
+				//try to send the message if the socket is ok
+				if(this.socketGood)
+				{
 					try {
 						outputPW.println(msg);
 						outputPW.flush();
@@ -1315,7 +1340,7 @@ public class threaded_application extends Application {
 					} 
 					catch (Exception e) {
 						Log.d("Engine_Driver","WiT xmtr error.");
-						socketGood = false;		//output buffer error so force reconnection on next send
+						this.socketCheckState = false;		//output buffer error so indicate socket has a problem
 					}
 				}
 			}
