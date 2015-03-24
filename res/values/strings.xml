@@ -23,6 +23,7 @@
     <string name="app_name_connect">Engine Driver - Connect to JMRI WiThrottle</string>
     <string name="app_name_throttle">Engine Driver - Throttle</string>
     <string name="app_name_power_control">Engine Driver - Power Control</string>
+    <string name="app_name_reconnect_status">Engine Driver - Reconnect Status</string>
     <string name="app_name_routes">Engine Driver - Routes</string>
     <string name="app_name_turnouts">Engine Driver - Turnouts</string>
     <string name="app_name_about">Engine Driver - About</string>
@@ -81,7 +82,9 @@
     <string name="power_control_button">unknown</string>
     <string name="press_to_toggle">Press button to toggle layout power state.</string>
     <string name="power_control_not_allowed">Power Control not allowed.  Change in WiThrottle Preferences in JMRI.</string>
-	<string name="fs_edit_notice">WARNING: changes to Default Functions Setttings will be lost on exit - No SD Card found.</string>
+    <string name="reconnect_label">Reconnect Attempt Status</string>
+    <string name="reconnect_help">Attempting to Reconnect automatically.  Wait for Reconnection or press BackArrow to Exit.</string>
+   	<string name="fs_edit_notice">WARNING: changes to Default Functions Setttings will be lost on exit - No SD Card found.</string>
 	<string name="ca_recent_conn_notice">Recent Connections unavailable - No SD Card found.</string>
 	<string name="sl_recent_engine_notice">Recent Locos unavailable - No SD Card found.</string>
 	<string name="power">Power</string>

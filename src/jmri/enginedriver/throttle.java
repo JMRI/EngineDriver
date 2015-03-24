@@ -34,6 +34,7 @@ import android.view.SoundEffectConstants;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
+import android.graphics.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -161,6 +162,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private String webViewLocation;
 	private static float scale = initialScale; // used to restore throttle web zoom level (after rotation)
 	private static boolean clearHistory = false; // flags webViewClient to clear history when page load finishes
+	private static String firstUrl = null;		// first url loaded that isn't noUrl
 	private static String currentUrl = null;
 	private boolean currentUrlUpdate;
 	private boolean orientationChange = false;
@@ -376,10 +378,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				set_labels();				// refresh function labels when any roster response is received
 				break;
 			case message_type.WIT_CON_RETRY:
-				removeLoco('T');
-				removeLoco('S');
-				removeLoco('G');
-				reloadWeb();
+				witRetry();
+				break;
+			case message_type.WIT_CON_RECONNECT:
 				break;
 			case message_type.CURRENT_TIME:
 				currentTime = msg.obj.toString();
@@ -396,25 +397,38 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				// set new location
 				webViewLocation = prefs
 						.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
-				load_webview();
+				reloadWeb();
 				break;
 			case message_type.INITIAL_WEBPAGE:
-				reloadWeb();
+				initWeb();
 				break;
 			}
 		};
 	}
 
 	private void reloadWeb() {
-		// try web-dependent items again
 		webView.stopLoading();
-		clearHistory = true;
+		load_webview(); // reload
+	}
+
+	private void initWeb() {
+		// reload from the initial webpage
+		webView.stopLoading();
 		currentUrl = null;
 		load_webview(); // reload
 	}
 
+	private void witRetry() {
+		webView.stopLoading();
+		webView.loadUrl(noUrl);		// stop Javascript if running
+		Intent in = new Intent().setClass(this, reconnect_status.class);
+		navigatingAway = true;
+		startActivity(in);
+		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	}
+	
 	private void removeLoco(char whichThrottle) {
-		enable_disable_buttons(whichThrottle); 		// direction and slider
+		disable_buttons(whichThrottle); 		// direction and slider
 		set_function_labels_and_listeners_for_view(whichThrottle);
 		set_labels();
 	}
@@ -713,10 +727,20 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 	};
 
+	void disable_buttons(char whichThrottle) {
+		enable_disable_buttons(whichThrottle, true);
+	}
+	
 	void enable_disable_buttons(char whichThrottle) {
-		boolean newEnabledState;
+		enable_disable_buttons(whichThrottle, false);
+	}
+	
+	void enable_disable_buttons(char whichThrottle, boolean forceDisable) {
+		boolean newEnabledState = false;
 		if (whichThrottle == 'T') {
-			newEnabledState = mainapp.consistT.isActive(); 		// set false if lead loco is not assigned
+			if(!forceDisable) {
+				newEnabledState = mainapp.consistT.isActive(); 		// set false if lead loco is not assigned
+			}
 			bFwdT.setEnabled(newEnabledState);
 			bStopT.setEnabled(newEnabledState);
 			bRevT.setEnabled(newEnabledState);
@@ -730,7 +754,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			}
 			sbT.setEnabled(newEnabledState);
 		} else if (whichThrottle == 'G') {
-			newEnabledState = (mainapp.consistG.isActive()); 	// set false if lead loco is not assigned
+			if(!forceDisable) {
+				newEnabledState = (mainapp.consistG.isActive()); 	// set false if lead loco is not assigned
+			}
 			bFwdG.setEnabled(newEnabledState);
 			bStopG.setEnabled(newEnabledState);
 			bRevG.setEnabled(newEnabledState);
@@ -744,7 +770,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			}
 			sbG.setEnabled(newEnabledState);
 		} else {
-			newEnabledState = (mainapp.consistS.isActive()); 	// set false if lead loco is not assigned
+			if(!forceDisable) {
+				newEnabledState = (mainapp.consistS.isActive()); 	// set false if lead loco is not assigned
+			}
 			bFwdS.setEnabled(newEnabledState);
 			bStopS.setEnabled(newEnabledState);
 			bRevS.setEnabled(newEnabledState);
@@ -1339,23 +1367,35 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 			@Override
 			public void onPageFinished(WebView view, String url) {
+				super.onPageFinished(view, url);
+				//Android 4.4 bug results in multiple calls to onPageFinished and
+				// the first call(s) occur before the page has loaded so clearHistory
+				// doesn't do what is expected.  firstUrl works around that bug.
 				if (!noUrl.equals(url)) {
+					if (firstUrl != null) {
+						firstUrl = url;
+					}
 					if (clearHistory) {
-						view.clearHistory();
-						clearHistory = false;
+						if (url.equals(firstUrl) && view.canGoBack()) {
+							view.clearHistory();
+						}
+						else {
+							clearHistory = false;
+						}
 					}
 					if (currentUrlUpdate)
 						currentUrl = url;
-				} else
+				} else {
 					clearHistory = true;
+					firstUrl = null;
+				}
 			}
 		};
 
 		webView.setWebViewClient(EDWebClient);
 		currentUrlUpdate = true; // ok to update currentUrl
 		if (currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null) {
-			load_webview(); // reload if no saved state or no page had loaded
-							// when state was saved
+			load_webview(); // reload if no saved state or no page had loaded when state was saved
 		}
 		// put pointer to this activity's handler in main app's shared variable
 		mainapp.throttle_msg_handler = new throttle_handler();
@@ -1484,17 +1524,18 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private void load_webview() {
 		String url = currentUrl;
 		if (url == null)
+		{
 			url = mainapp.createUrl(prefs.getString("InitialThrotWebPage",
 					getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue)));
+		}
 
-		if (url == null || webViewLocation.equals("none")) // if port is invalid
-															// or not displaying
-															// webview
+		// if port is invalid or not displaying webview
+		if (url == null || webViewLocation.equals("none")) {
 			url = noUrl;
-		// webView.clearCache(true);
+		}
 		webView.loadUrl(url);
 	}
-
+	
 	// helper function to set up function buttons for each throttle
 	void set_function_labels_and_listeners_for_view(char whichThrottle) {
 		// Log.d("Engine_Driver","starting set_function_labels_and_listeners_for_view");
@@ -1917,7 +1958,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onKeyDown(int key, KeyEvent event) {
-		// Handle pressing of the back button to release the selected loco and end this activity
+		// Handle pressing of the back button
 		if (key == KeyEvent.KEYCODE_BACK) {
 			if (webView.canGoBack() && !clearHistory) {
 				scale = webView.getScale(); // save scale
@@ -2276,5 +2317,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		scale = initialScale;
 		clearHistory = false;
 		currentUrl = null;
+		firstUrl = null;
 	}
 }

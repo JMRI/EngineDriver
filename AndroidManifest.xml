@@ -99,6 +99,12 @@
             android:label="@string/app_name_power_control" >
         </activity>
         <activity
+            android:name=".reconnect_status"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask" 
+            android:label="@string/app_name_reconnect_status" >
+        </activity>
+        <activity
             android:name=".logviewer.ui.LogViewerActivity"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask" 

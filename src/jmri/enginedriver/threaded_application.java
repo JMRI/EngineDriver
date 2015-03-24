@@ -69,6 +69,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import jmri.enginedriver.message_type;
+import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.enginedriver.Consist;
 import jmri.jmrit.roster.RosterEntry;
@@ -122,6 +123,7 @@ public class threaded_application extends Application {
 	public final int minWebSocketVersion = 8;				//minimum Android version for Autobahn websocket library
 
 	static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;	//minimum interval for outbound heartbeat generator
+	static final int DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL = 6;	//interval for outbound heartbeat generator when WiT heartbeat is disabled
 	static final int HEARTBEAT_RESPONSE_ALLOWANCE = 4;		//worst case time delay for WiT to respond to a heartbeat message
 	public int heartbeatInterval = 0;						//WiT heartbeat interval setting
 	public int turnouts_list_position = 0;					//remember where user was in item lists
@@ -139,6 +141,7 @@ public class threaded_application extends Application {
 	public volatile Handler routes_msg_handler;
 	public volatile Handler consist_edit_msg_handler;
 	public volatile Handler power_control_msg_handler;
+	public volatile Handler reconnect_status_msg_handler;
 	
 	//these constants are used for onFling
 	public static final int SWIPE_MIN_DISTANCE = 120;
@@ -336,7 +339,7 @@ public class threaded_application extends Application {
 				case message_type.CONNECT:
 
 					//avoid duplicate connects, seen when user clicks address multiple times quickly
-					if (socketWiT != null && socketWiT.socketGood) {
+					if (socketWiT != null && socketWiT.SocketGood()) {
 						Log.d("Engine_Driver","Duplicate CONNECT message received.");
 						return;
 					}
@@ -401,7 +404,8 @@ public class threaded_application extends Application {
 							getResources().getBoolean(R.bool.prefStopOnReleaseDefaultValue))) {
 						withrottle_send(whichThrottle+"V0"+(addr!=""?"<;>"+addr:""));  //send stop command before releasing (if set in prefs)
 					}
-					withrottle_send(whichThrottle+"r"+(addr!=""?"<;>"+addr:""));  //send release command
+					
+					releaseLoco(addr, whichThrottle);
 					break;
 				}
 				//request speed. arg1 holds whichThrottle
@@ -443,13 +447,15 @@ public class threaded_application extends Application {
                    		clockWebSocket.disconnect();
                         clockWebSocket = null;
                     }
+					Log.d("Engine_Driver","TA Alert Activites Shutdown");
 					alert_activities(message_type.SHUTDOWN,"");	//tell all activities to finish()
+					
 					/***future PowerLock
 					if(wl != null && wl.isHeld())
 						wl.release();
 					 ***/						
 					//give msgs a chance to xmit before closing socket
-					if(!sendMsgDelay(comm_msg_handler, 1000, message_type.SHUTDOWN)) {
+					if(!sendMsgDelay(comm_msg_handler, 4000L, message_type.SHUTDOWN)) {
 						shutdown();
 					}
 					break;
@@ -467,17 +473,8 @@ public class threaded_application extends Application {
 
 						}
 					}
-					withrottle_send(whichThrottle + addr);
-
-					if (withrottle_version >= 2.0) {
-						//request current direction and speed (WiT 2.0+)
-						withrottle_send("M" + whichThrottle+"A*<;>qV");
-						withrottle_send("M" + whichThrottle+"A*<;>qR");
-					}
-
-					if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
-						withrottle_send("*+");     //request to turn on heartbeat (if enabled in server prefs)
-					}
+					
+					acquireLoco(addr, whichThrottle);
 					break;
 				}
 				//          case message_type.ERROR:
@@ -549,7 +546,9 @@ public class threaded_application extends Application {
 					/***future Notification
   					hideNotification();
 					 ***/
-					alert_activities(message_type.WIT_CON_RETRY,"");
+					String status = "Can't connect to host "+host_ip+" and port "+port+
+									" from " + client_address;
+					alert_activities(message_type.WIT_CON_RETRY,status);
 					break;
 
 					// WiT socket is back up
@@ -557,6 +556,8 @@ public class threaded_application extends Application {
 					/***future Notification
 					showNotification();
 					 ***/
+					sendThrottleName();
+					reacquireAllConsists();
 					alert_activities(message_type.WIT_CON_RECONNECT,"");
 					break;
 				}
@@ -584,6 +585,44 @@ public class threaded_application extends Application {
 			withrottle_send("N" + s);  //send throttle name
 			if(sendHWID == true)
 				withrottle_send("HU" + s);  //also send throttle name as the UDID
+		}
+		
+		private void acquireLoco(String addr, char whichThrottle) {
+			withrottle_send(whichThrottle + addr);
+
+			if (withrottle_version >= 2.0) {
+				//request current direction and speed (WiT 2.0+)
+				withrottle_send("M" + whichThrottle+"A*<;>qV");
+				withrottle_send("M" + whichThrottle+"A*<;>qR");
+			}
+
+			if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
+				withrottle_send("*+");     //request to turn on heartbeat (if enabled in server prefs)
+			}
+		}
+		
+		private void releaseLoco(String addr, char whichThrottle) {
+			withrottle_send(whichThrottle+"r"+(addr!=""?"<;>"+addr:""));  //send release command
+		}
+
+		private void reacquireAllConsists()
+		{
+			reacquireConsist(consistT, 'T');
+			reacquireConsist(consistS, 'S');
+			reacquireConsist(consistG, 'G');
+		}
+		
+		private void reacquireConsist(Consist c, char whichThrottle)
+		{
+//			releaseLoco("", whichThrottle);					// release throttle in case WiT didn't detect disconnect
+			for(ConLoco l : c.getLocos())					// reacquire each loco in the consist 
+			{
+				String addr = l.getAddress();
+				String desc = l.getDesc();
+				if(desc.length() > 0 && withrottle_version >= 1.6) 	// add roster selection info if present and supported
+					addr += "<;>" + l.getDesc();
+				acquireLoco(addr, whichThrottle);
+			}
 		}
 
 		//display error msg using Toast()
@@ -1149,9 +1188,7 @@ public class threaded_application extends Application {
 			protected PrintWriter outputPW = null;
 			private volatile boolean endRead = false;			//signals rcvr to terminate
 			private volatile boolean socketGood = false;		//indicates socket condition
-			private volatile boolean socketCheckState = false;	//indicates the state of the last socket 
-			private static final int MAX_BAD_SOCKET_CHECKS = 4;	//number of seconds to recheck the socket before deciding it really failed
-			private int badSocketChecks = 0;					//number of consecutive seconds of failed socket checks  
+			private boolean firstConnect = false;				//indicates initial socket connection
 
 			socket_WiT() {
 				super("socket_WiT");
@@ -1182,9 +1219,12 @@ public class threaded_application extends Application {
 						clientSocket.setSoTimeout(500);
 					}
 					catch(Exception except)  {
-						process_comm_error("Can't connect to host "+host_ip+" and port "+port+
+						if (!firstConnect)
+						{
+							process_comm_error("Can't connect to host "+host_ip+" and port "+port+
 								" from " + client_address +
 								" - "+except.getMessage()+"\nCheck WiThrottle and network settings.");
+						}
 						socketOk = false;
 					}
 				}
@@ -1223,8 +1263,9 @@ public class threaded_application extends Application {
 						socketOk = false;
 					}
 				}
-				this.socketGood = socketOk;
-				this.socketCheckState = socketOk;
+				socketGood = socketOk;
+				if (socketOk)
+					firstConnect = true;
 				return socketOk;
 			}
 
@@ -1241,8 +1282,7 @@ public class threaded_application extends Application {
 					}
 				}
 
-				this.socketGood = false;
-				this.socketCheckState = false;
+				socketGood = false;
 
 				//close socket
 				if (clientSocket != null) {
@@ -1256,9 +1296,6 @@ public class threaded_application extends Application {
 
 				if (!shutdown)	// going to retry the connection
 				{
-					// reinit shared variables then signal activities to refresh their views
-					// so that (potentially) invalid information is not displayed
-					initShared();
 					sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY);
 				}
 			}
@@ -1267,10 +1304,8 @@ public class threaded_application extends Application {
 			public void run() {
 				String str = null;
 				//continue reading until signalled to exit by endRead
-				while(!this.endRead) {
-					if(this.socketCheckState) 		//only try to read when the socket is good
-					{
-						this.badSocketChecks = 0;
+				while(!endRead) {
+					if(socketGood) {		//skip read when the socket is down
 						try {
 							if((str = inputBR.readLine()) != null) {
 								if (str.length()>0) {
@@ -1279,35 +1314,18 @@ public class threaded_application extends Application {
 								}
 							}
 						} 
-						catch (SocketTimeoutException e )   
-						{
-							this.socketCheckState = this.SocketCheck();	// found nothing to read, so check to be sure the socket is ok
+						catch (SocketTimeoutException e )   {
+							socketGood = this.SocketCheck();
 						} 
-						catch (IOException e) 
-						{
-							if(this.socketCheckState) 
-							{
+						catch (IOException e) {
+							if(socketGood) {
 								Log.d("Engine_Driver","WiT rcvr error.");
-								this.socketCheckState = false;		//input buffer error so indicate socket has a problem 
+								socketGood = false;		//input buffer error so force reconnection on next send
 							}
 						}
 					}
-					
-					if(!this.socketCheckState) 
-					{
-						if(this.badSocketChecks < MAX_BAD_SOCKET_CHECKS)
-						{
-							this.badSocketChecks++;
-							if(this.badSocketChecks == MAX_BAD_SOCKET_CHECKS)
-							{
-								this.socketGood = false;
-							}
-						}
-						SystemClock.sleep(1000L);	//don't become compute bound here when the socket is not ok
-						if(this.socketGood)
-						{
-							this.socketCheckState = this.SocketCheck();
-						}
+					if(!socketGood) {
+						SystemClock.sleep(1000L);	//don't become compute bound here when the socket is down
 					}
 				}
 				heart.stopHeartbeat();
@@ -1315,22 +1333,21 @@ public class threaded_application extends Application {
 
 			public void Send(String msg) {
 				//reconnect socket if needed
-				if(!this.socketGood) {
+				if(!socketGood || !this.SocketCheck()) {
 					this.disconnect(false);		//clean up socket but do not shut down the receiver
 					this.connect();				//attempt to reestablish connection
-					if(this.socketGood) {
-						process_comm_error("Success: Restored connection to WiThrottle server " + host_ip + ".\n");
+					if(socketGood) {
+//						process_comm_error("Success: Restored connection to WiThrottle server " + host_ip + ".\n");
 						sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT);
 					}
 					else {
-						process_comm_error("Warning: Lost connection to WiThrottle server " + host_ip + ".\nAttempting to reconnect.");
-						comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 6000L);	//try connection again in 6 seconds
+//						process_comm_error("Warning: Lost connection to WiThrottle server " + host_ip + ".\nAttempting to reconnect.");
+						comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 1000L);	//try connection again in 1 second
 					}
 				}
 
-				//try to send the message if the socket is ok
-				if(this.socketGood)
-				{
+				//send the message
+				if(socketGood) {
 					try {
 						outputPW.println(msg);
 						outputPW.flush();
@@ -1340,12 +1357,15 @@ public class threaded_application extends Application {
 					} 
 					catch (Exception e) {
 						Log.d("Engine_Driver","WiT xmtr error.");
-						this.socketCheckState = false;		//output buffer error so indicate socket has a problem
+						socketGood = false;		//output buffer error so force reconnection on next send
 					}
 				}
 			}
 
-			// attempt to determine if the socket connection is still good
+			// Attempt to determine if the socket connection is still good.
+			// unfortunatley isConnected returns true if the Socket was disconnected other than by calling close() 
+			// so on signal loss it still returns true.  
+			// Eventually we just try to send and handle the IOException if the socket was disconnected.
 			public boolean SocketCheck() {
 				boolean status = clientSocket.isConnected() && !clientSocket.isInputShutdown() && !clientSocket.isOutputShutdown();
 				if (status)
@@ -1377,6 +1397,10 @@ public class threaded_application extends Application {
 				}
 				return haveConnectedWifi || haveConnectedMobile;
 			}
+			
+			public boolean SocketGood() {
+				return this.socketGood;
+			}
 		}
 
 		class heartbeat {
@@ -1384,15 +1408,14 @@ public class threaded_application extends Application {
 			//
 			//	inboundHeartbeat - WiT doesn't send a heartbeat to ED, so send a periodic message to WiT that requires a response.
 			//
-			//	If the WiT heartbeat interval = 0 then heartbeat checking is disabled.
+			//	If the WiT heartbeat interval = 0 then use DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL.
 			//
-			//	Else 
-			//		If the WiT heartbeat is >= (MIN_OUTBOUND_HEARTBEAT_INTERVAL + HEARTBEAT_RESPONSE_ALLOWANCE) 
-			//		then the outbound heartbeat rate to (WiT heartbeat - HEARTBEAT_RESPONSE_ALLOWANCE)
+			//	If the WiT heartbeat is >= (MIN_OUTBOUND_HEARTBEAT_INTERVAL + HEARTBEAT_RESPONSE_ALLOWANCE) 
+			//	then the outbound heartbeat rate to (WiT heartbeat - HEARTBEAT_RESPONSE_ALLOWANCE)
 			//
-			//		Else the outbound heartbeat rate to	MIN_OUTBOUND_HEARTBEAT_INTERVAL.
+			//	Else the outbound heartbeat rate to	MIN_OUTBOUND_HEARTBEAT_INTERVAL.
 			//
-			//		The inbound heartbeat rate is set to (outbound heartbeat rate + HEARTBEAT_RESPONSE_ALLOWANCE)
+			//	The inbound heartbeat rate is set to (outbound heartbeat rate + HEARTBEAT_RESPONSE_ALLOWANCE)
 
 			private int heartbeatIntervalSetpoint = 0;		//WiT heartbeat interval in seconds
 			private int heartbeatOutboundInterval = 0;		//sends outbound heartbeat message at this rate
@@ -1412,20 +1435,20 @@ public class threaded_application extends Application {
 				if(timeoutInterval != heartbeatIntervalSetpoint)
 				{
 					heartbeatIntervalSetpoint = timeoutInterval;
-					if(heartbeatIntervalSetpoint == 0) {	//heartbeat is disabled
-						heartbeatOutboundInterval = 0;
-						heartbeatInboundInterval = 0;
+					if (heartbeatIntervalSetpoint == 0) {	//wit heartbeat is disabled so use default
+						heartbeatOutboundInterval = DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL;
 					}
 					else {
 						heartbeatOutboundInterval = heartbeatIntervalSetpoint - HEARTBEAT_RESPONSE_ALLOWANCE;
-						if(heartbeatOutboundInterval < MIN_OUTBOUND_HEARTBEAT_INTERVAL)
-							heartbeatOutboundInterval = MIN_OUTBOUND_HEARTBEAT_INTERVAL;
-
-						heartbeatInboundInterval = heartbeatOutboundInterval + HEARTBEAT_RESPONSE_ALLOWANCE;
-
-						heartbeatOutboundInterval *= 1000;		//convert to milliseconds
-						heartbeatInboundInterval *= 1000;		//convert to milliseconds
 					}
+					if (heartbeatOutboundInterval < MIN_OUTBOUND_HEARTBEAT_INTERVAL)
+						heartbeatOutboundInterval = MIN_OUTBOUND_HEARTBEAT_INTERVAL;
+
+					heartbeatInboundInterval = heartbeatOutboundInterval + HEARTBEAT_RESPONSE_ALLOWANCE;
+
+					heartbeatOutboundInterval *= 1000;		//convert to milliseconds
+					heartbeatInboundInterval *= 1000;		//convert to milliseconds
+					
 					restartOutboundInterval();
 					restartInboundInterval();
 				}
@@ -1499,7 +1522,7 @@ public class threaded_application extends Application {
 				public void run() {
 					comm_msg_handler.removeCallbacks(this);	//remove pending requests
 					if(heartbeatInboundInterval != 0) {
-						if (socketWiT != null && socketWiT.socketGood)
+						if (socketWiT != null && socketWiT.SocketGood())
 							process_comm_error("WARNING: No response from WiThrottle server for " + (heartbeatInboundInterval/1000)  + " seconds.  Verify connection.");
 						comm_msg_handler.postDelayed(this,heartbeatInboundInterval);	//set next inbound timeout
 					}
@@ -2052,6 +2075,7 @@ public class threaded_application extends Application {
 		sendMsg(throttle_msg_handler, msgType, msgBody);
 		sendMsg(web_msg_handler, msgType, msgBody);
 		sendMsg(power_control_msg_handler, msgType, msgBody);
+		sendMsg(reconnect_status_msg_handler, msgType, msgBody);
 		sendMsg(select_loco_msg_handler, msgType, msgBody);
 	}
 

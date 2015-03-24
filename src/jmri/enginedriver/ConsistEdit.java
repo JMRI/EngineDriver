@@ -110,6 +110,9 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 				}
 				break;
 			case message_type.WIT_CON_RETRY:
+				witRetry();
+				break;
+			case message_type.WIT_CON_RECONNECT:
 				refreshConsistLists(); 
 				break;
 			case message_type.DISCONNECT:
@@ -119,6 +122,13 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 			};
 		}
 	}
+
+	private void witRetry() {
+		Intent in = new Intent().setClass(this, reconnect_status.class);
+		startActivity(in);
+		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	}
+	
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event){

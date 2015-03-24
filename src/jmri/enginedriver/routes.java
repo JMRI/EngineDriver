@@ -215,6 +215,9 @@ public class routes extends Activity  implements OnGestureListener {
 				refresh_route_view();
 				break;
 			case message_type.WIT_CON_RETRY:
+				witRetry();
+				break;
+			case message_type.WIT_CON_RECONNECT:
 				refresh_route_view(); 
 				break;
 			case message_type.DISCONNECT:
@@ -225,6 +228,13 @@ public class routes extends Activity  implements OnGestureListener {
 		}
 	}
 
+	private void witRetry() {
+		Intent in = new Intent().setClass(this, reconnect_status.class);
+		navigatingAway = true;
+		startActivity(in);
+		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	}
+	
 	public class button_listener implements View.OnClickListener  {
 		char whichCommand; //command to send for button instance 'C'lose, 'T'hrow or '2' for toggle
 

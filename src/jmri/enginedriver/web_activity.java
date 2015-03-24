@@ -47,6 +47,7 @@ public class web_activity extends Activity {
   private static final float initialScale = 1.5f;
   private static float scale = initialScale;		// used to restore web zoom level
   private static boolean clearHistory = false;		// flags webViewClient to clear history when page load finishes
+  private static String firstUrl = null;			// first url loaded that isn't noUrl
   private static String currentUrl = null;
   private boolean currentUrlUpdate = false;
   private boolean orientationChange = false;
@@ -63,12 +64,17 @@ class web_handler extends Handler {
 			  String s = msg.obj.toString();
 			  String response_str = s.substring(0, Math.min(s.length(), 2));
 			  if("PW".equals(response_str))		// PW - web server port info
-				  reloadWebpage();
+				  reloadWeb();
 			  break;
 		  }
 		  case message_type.WIT_CON_RETRY:
+			  witRetry();
+			  break;
+		  case message_type.WIT_CON_RECONNECT:
+			  reloadWeb();
+			  break;
 	  	  case message_type.INITIAL_WEBPAGE:
-			  reloadWebpage(); 
+			  initWeb(); 
 			  break;
 	  	  case message_type.CURRENT_TIME:
 	  		  currentTime = msg.obj.toString();
@@ -91,7 +97,21 @@ class web_handler extends Handler {
 			setTitle(getApplicationContext().getResources().getString(R.string.app_name_web));
   }
 
-  private void reloadWebpage() {
+	private void witRetry() {
+		webView.stopLoading();
+		webView.loadUrl(noUrl);		// stop Javascript if running
+		Intent in = new Intent().setClass(this, reconnect_status.class);
+		navigatingAway = true;
+		startActivity(in);
+		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	}
+	
+  private void reloadWeb() {
+	  webView.stopLoading();
+	  load_webview();		// reload the page
+  }
+  
+  private void initWeb() {
 	  webView.stopLoading();
 	  clearHistory = true;
 	  currentUrl = null;
@@ -131,19 +151,31 @@ class web_handler extends Handler {
 		@Override
 		public void onPageFinished(WebView view, String url)
 		{
-			if(!noUrl.equals(url)) {
-				if(clearHistory)
-				{
-					view.clearHistory();
-					clearHistory = false;
+			super.onPageFinished(view, url);
+			//Android 4.4 bug results in multiple calls to onPageFinished and
+			// the first call(s) occur before the page has loaded so clearHistory
+			// doesn't do what is expected.  firstUrl works around that bug.
+			if (!noUrl.equals(url)) {
+				if (firstUrl != null) {
+					firstUrl = url;
 				}
-				if(currentUrlUpdate)
+				if (clearHistory) {
+					if (url.equals(firstUrl) && view.canGoBack()) {
+						view.clearHistory();
+					}
+					else {
+						clearHistory = false;
+					}
+				}
+				if (currentUrlUpdate)
 					currentUrl = url;
-			}
-			else
+			} else {
 				clearHistory = true;
+				firstUrl = null;
+			}
 		}
 	};
+	
 	webView.setWebViewClient(EDWebClient);
 	currentUrlUpdate = true;		// ok to update currentUrl
 	if(currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null)

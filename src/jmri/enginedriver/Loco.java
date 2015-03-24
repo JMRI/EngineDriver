@@ -73,6 +73,10 @@ public class Loco {
 		desc = rosterName;
 	}
 	
+	public String getDesc() {
+		return desc;
+	}
+	
 	//provide roster name if present, otherwise provide formatted address
 	@Override
 	public String toString() {

@@ -19,6 +19,7 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -53,6 +54,9 @@ public class power_control extends Activity {
 				}
 				break;
 			case message_type.WIT_CON_RETRY:
+				witRetry();
+				break;
+			case message_type.WIT_CON_RECONNECT:
 				refresh_power_control_view(); 
 				break;
 			case message_type.DISCONNECT:
@@ -63,6 +67,12 @@ public class power_control extends Activity {
 		}
 	}
 
+	private void witRetry() {
+		Intent in = new Intent().setClass(this, reconnect_status.class);
+		startActivity(in);
+		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	}
+	
 	public class button_listener implements View.OnClickListener	  {
 
 		public void onClick(View v) {
@@ -150,7 +160,7 @@ public class power_control extends Activity {
 		{
 			mainapp.displayEStop(PMenu);
 		}
-		//update route list
+		//update power state
 		refresh_power_control_view();
 	}
 

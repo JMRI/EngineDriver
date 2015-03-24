@@ -315,6 +315,9 @@ public class select_loco extends Activity {
 					set_labels();
 				break;
 			case message_type.WIT_CON_RETRY:
+				witRetry();
+				break;
+			case message_type.WIT_CON_RECONNECT:
 				roster_list_adapter.notifyDataSetChanged();
 				set_labels();
 				break;
@@ -325,6 +328,13 @@ public class select_loco extends Activity {
 		}
 	}
 
+	private void witRetry() {
+		Intent in = new Intent().setClass(this, reconnect_status.class);
+		navigatingAway = true;
+		startActivity(in);
+		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+	}
+	
 	// request release of specified throttle
 	void release_loco(char whichThrottle) {
 		if(whichThrottle == 'T') {
