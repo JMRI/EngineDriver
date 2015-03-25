@@ -305,6 +305,7 @@ public class threaded_application extends Application {
 			/***future PowerLock
   			private PowerManager.WakeLock wl = null;
 			 */
+			String status;
 			public void handleMessage(Message msg)      {
 				switch(msg.what)        {
 				//Start or Stop the WiThrottle listener and required jmdns stuff
@@ -447,17 +448,20 @@ public class threaded_application extends Application {
                    		clockWebSocket.disconnect();
                         clockWebSocket = null;
                     }
+					
 					Log.d("Engine_Driver","TA Alert Activites Shutdown");
-					alert_activities(message_type.SHUTDOWN,"");	//tell all activities to finish()
+					alert_activities(message_type.SHUTDOWN,"");		//tell all activities to finish()
 					
 					/***future PowerLock
 					if(wl != null && wl.isHeld())
 						wl.release();
-					 ***/						
+					 ***/
+					
 					//give msgs a chance to xmit before closing socket
 					if(!sendMsgDelay(comm_msg_handler, 4000L, message_type.SHUTDOWN)) {
 						shutdown();
 					}
+					
 					break;
 				}
 
@@ -520,12 +524,14 @@ public class threaded_application extends Application {
 
 				//Current Time update request
 				case message_type.CURRENT_TIME:
-					alert_activities(message_type.CURRENT_TIME, currentTime);
+					if (!doFinish) {
+						alert_activities(message_type.CURRENT_TIME, currentTime);
+					}
                     break;
                     
 				//Current Time clock display preference change
 				case message_type.CLOCK_DISPLAY:
-					if (clockWebSocket != null) {
+					if (!doFinish && clockWebSocket != null) {
 						clockWebSocket.refresh();
 						alert_activities(message_type.CURRENT_TIME, currentTime);
 					}
@@ -538,7 +544,9 @@ public class threaded_application extends Application {
 
 				// update of roster-related data completed in background
 				case message_type.ROSTER_UPDATE:
-					alert_activities(message_type.ROSTER_UPDATE,"");
+					if (!doFinish) {
+						alert_activities(message_type.ROSTER_UPDATE,"");
+					}
 					break;
 
 				// WiT socket is down and reconnect attempt in prog 
@@ -546,9 +554,10 @@ public class threaded_application extends Application {
 					/***future Notification
   					hideNotification();
 					 ***/
-					String status = "Can't connect to host "+host_ip+" and port "+port+
-									" from " + client_address;
-					alert_activities(message_type.WIT_CON_RETRY,status);
+					if (!doFinish) {
+						status = "Failed to connect to host "+host_ip+":"+port+" from "+client_address+".  Retrying";
+						alert_activities(message_type.WIT_CON_RETRY,status);
+					}
 					break;
 
 					// WiT socket is back up
@@ -556,9 +565,12 @@ public class threaded_application extends Application {
 					/***future Notification
 					showNotification();
 					 ***/
-					sendThrottleName();
-					reacquireAllConsists();
-					alert_activities(message_type.WIT_CON_RECONNECT,"");
+					if (!doFinish) {
+						sendThrottleName();
+						reacquireAllConsists();
+						status = "Connected to host "+host_ip+":"+port;
+						alert_activities(message_type.WIT_CON_RECONNECT,status);
+					}
 					break;
 				}
 			};
@@ -614,7 +626,6 @@ public class threaded_application extends Application {
 		
 		private void reacquireConsist(Consist c, char whichThrottle)
 		{
-//			releaseLoco("", whichThrottle);					// release throttle in case WiT didn't detect disconnect
 			for(ConLoco l : c.getLocos())					// reacquire each loco in the consist 
 			{
 				String addr = l.getAddress();
@@ -656,6 +667,7 @@ public class threaded_application extends Application {
 			//send response to debug log for review
 			Log.d("Engine_Driver", "<--:" + response_str);
 
+			boolean skipAlert = false;			//set to true if the Activities do not need to be Alerted
 			switch (response_str.charAt(0)) {
 
 			//handle responses from MultiThrottle function
@@ -791,32 +803,43 @@ public class threaded_application extends Application {
 
 				case 'P':  //power 
 					if (response_str.charAt(2) == 'A') {  //change power state
+						String oldState = power_state;
 						power_state = response_str.substring(3);
+						if (power_state.equals(oldState)) {
+							skipAlert = true;
+						}
 					}
 					break;
 
 				case 'W':  //Web Server port 
+					int oldPort = web_server_port;
 					try {
 						web_server_port = Integer.parseInt(response_str.substring(2));  //set app variable
 					} 
 					catch (Exception e) {
 						Log.d("Engine_Driver", "process response: invalid web server port string");
-						web_server_port = 0;
 					}
-                    dlMetadataTask.get();			// start background metadata update
-					dlRosterTask.get();				// start background roster update
-
-					if(androidVersion >= minWebSocketVersion) {
-						if (clockWebSocket == null)
-							clockWebSocket = new ClockWebSocketHandler();
-						clockWebSocket.refresh();
+					if (oldPort == web_server_port) {
+						skipAlert = true;
+					}
+					else {
+	                    dlMetadataTask.get();			// start background metadata update
+						dlRosterTask.get();				// start background roster update
+	
+						if(androidVersion >= minWebSocketVersion) {
+							if (clockWebSocket == null)
+								clockWebSocket = new ClockWebSocketHandler();
+							clockWebSocket.refresh();
+						}
 					}
 					break;
 				}  //end switch inside P
 				break;
 			}  //end switch
 
-			alert_activities(message_type.RESPONSE, response_str);	//send response to running activities
+			if (!skipAlert) {
+				alert_activities(message_type.RESPONSE, response_str);	//send response to running activities
+			}
 		}  //end of process_response
 
 		//parse roster functions list into appropriate app variable array
@@ -1215,7 +1238,7 @@ public class threaded_application extends Application {
 					try {
 						clientSocket=new Socket();               //look for someone to answer on specified socket, and set timeout
 						InetSocketAddress sa = new InetSocketAddress(host_ip, port);
-						clientSocket.connect(sa, 3000);  //TODO: adjust these timeouts, or set in prefs
+						clientSocket.connect(sa, 1000);  //TODO: adjust these timeouts, or set in prefs
 						clientSocket.setSoTimeout(500);
 					}
 					catch(Exception except)  {
@@ -1274,7 +1297,7 @@ public class threaded_application extends Application {
 					endRead = true;
 					for(int i = 0; i < 5 && this.isAlive(); i++) {
 						try { 
-							Thread.sleep(300);    			//  give run() a chance to see endRead and exit
+							Thread.sleep(500);    			//  give run() a chance to see endRead and exit
 						}
 						catch (InterruptedException e) { 
 							process_comm_error("Error sleeping the thread, InterruptedException: "+e.getMessage());
@@ -1325,7 +1348,8 @@ public class threaded_application extends Application {
 						}
 					}
 					if(!socketGood) {
-						SystemClock.sleep(1000L);	//don't become compute bound here when the socket is down
+						heart.restartInboundInterval();	//no need for inbound timeouts while the socket is down
+						SystemClock.sleep(500L);		//don't become compute bound here when the socket is down
 					}
 				}
 				heart.stopHeartbeat();
@@ -1336,13 +1360,13 @@ public class threaded_application extends Application {
 				if(!socketGood || !this.SocketCheck()) {
 					this.disconnect(false);		//clean up socket but do not shut down the receiver
 					this.connect();				//attempt to reestablish connection
-					if(socketGood) {
-//						process_comm_error("Success: Restored connection to WiThrottle server " + host_ip + ".\n");
+					if (socketGood) {
+						heart.restartInboundInterval();		//socket is good so restart heartbeats
+						heart.restartOutboundInterval();
 						sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT);
 					}
 					else {
-//						process_comm_error("Warning: Lost connection to WiThrottle server " + host_ip + ".\nAttempting to reconnect.");
-						comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 1000L);	//try connection again in 1 second
+						comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 500L);	//try connection again in 0.5 second
 					}
 				}
 
@@ -1411,7 +1435,7 @@ public class threaded_application extends Application {
 			//	If the WiT heartbeat interval = 0 then use DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL.
 			//
 			//	If the WiT heartbeat is >= (MIN_OUTBOUND_HEARTBEAT_INTERVAL + HEARTBEAT_RESPONSE_ALLOWANCE) 
-			//	then the outbound heartbeat rate to (WiT heartbeat - HEARTBEAT_RESPONSE_ALLOWANCE)
+			//	then set the outbound heartbeat rate to (WiT heartbeat - HEARTBEAT_RESPONSE_ALLOWANCE)
 			//
 			//	Else the outbound heartbeat rate to	MIN_OUTBOUND_HEARTBEAT_INTERVAL.
 			//
@@ -1488,7 +1512,7 @@ public class threaded_application extends Application {
 				@Override
 				public void run() {
 					comm_msg_handler.removeCallbacks(this);				//remove pending requests
-					if(heartbeatOutboundInterval != 0) {
+					if(heartbeatIntervalSetpoint != 0) {
 						boolean anySent = false;
 						if (withrottle_version >= 2.0) {
 							if (consistT.isActive()) {  
@@ -1521,7 +1545,7 @@ public class threaded_application extends Application {
 				@Override
 				public void run() {
 					comm_msg_handler.removeCallbacks(this);	//remove pending requests
-					if(heartbeatInboundInterval != 0) {
+					if(heartbeatIntervalSetpoint != 0) {
 						if (socketWiT != null && socketWiT.SocketGood())
 							process_comm_error("WARNING: No response from WiThrottle server for " + (heartbeatInboundInterval/1000)  + " seconds.  Verify connection.");
 						comm_msg_handler.postDelayed(this,heartbeatInboundInterval);	//set next inbound timeout
@@ -2068,15 +2092,33 @@ public class threaded_application extends Application {
 
 	// forward a message to all running activities 
 	void alert_activities(int msgType, String msgBody) {
-		sendMsg(connection_msg_handler, msgType, msgBody);
-		sendMsg(turnouts_msg_handler, msgType, msgBody);
-		sendMsg(routes_msg_handler, msgType, msgBody);
-		sendMsg(consist_edit_msg_handler, msgType, msgBody);
-		sendMsg(throttle_msg_handler, msgType, msgBody);
-		sendMsg(web_msg_handler, msgType, msgBody);
-		sendMsg(power_control_msg_handler, msgType, msgBody);
-		sendMsg(reconnect_status_msg_handler, msgType, msgBody);
-		sendMsg(select_loco_msg_handler, msgType, msgBody);
+		try {
+			sendMsg(connection_msg_handler, msgType, msgBody);
+		} catch(Exception e) {}
+		try {
+			sendMsg(turnouts_msg_handler, msgType, msgBody);
+		} catch(Exception e) {}
+		try {
+			sendMsg(routes_msg_handler, msgType, msgBody);
+		} catch(Exception e) {}
+		try {
+			sendMsg(consist_edit_msg_handler, msgType, msgBody);
+		} catch(Exception e) {}
+		try {
+			sendMsg(throttle_msg_handler, msgType, msgBody);
+		} catch(Exception e) {}
+		try {
+			sendMsg(web_msg_handler, msgType, msgBody);
+		} catch(Exception e) {}
+		try {
+			sendMsg(power_control_msg_handler, msgType, msgBody);
+		} catch(Exception e) {}
+		try {
+			sendMsg(reconnect_status_msg_handler, msgType, msgBody);
+		} catch(Exception e) {}
+		try {
+			sendMsg(select_loco_msg_handler, msgType, msgBody);
+		} catch(Exception e) {}
 	}
 
 	public boolean sendMsg(Handler h, int msgType) {

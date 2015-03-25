@@ -56,12 +56,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 	@Override
 	protected void onResume() {
 		super.onResume();
+		mainapp.removeNotification();
 		if(mainapp.isForcingFinish()) {		//expedite
 			this.finish();
 			return;
 		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-		mainapp.removeNotification();
 		// Set up a listener whenever a key changes            
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 		if(PRMenu != null)

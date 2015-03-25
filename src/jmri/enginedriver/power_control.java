@@ -54,7 +54,7 @@ public class power_control extends Activity {
 				}
 				break;
 			case message_type.WIT_CON_RETRY:
-				witRetry();
+				witRetry(msg.obj.toString());
 				break;
 			case message_type.WIT_CON_RECONNECT:
 				refresh_power_control_view(); 
@@ -67,8 +67,9 @@ public class power_control extends Activity {
 		}
 	}
 
-	private void witRetry() {
+	private void witRetry(String s) {
 		Intent in = new Intent().setClass(this, reconnect_status.class);
+		in.putExtra("status", s);
 		startActivity(in);
 		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	}
@@ -149,12 +150,12 @@ public class power_control extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		mainapp.removeNotification();
 		if(mainapp.isForcingFinish()) {	//expedite
 			this.finish();
 			return;
 		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-		mainapp.removeNotification();
 		
 		if(PMenu != null)
 		{

@@ -160,11 +160,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static final float initialScale = 1.5f;
 	private WebView webView = null;
 	private String webViewLocation;
-	private static float scale = initialScale; // used to restore throttle web zoom level (after rotation)
-	private static boolean clearHistory = false; // flags webViewClient to clear history when page load finishes
-	private static String firstUrl = null;		// first url loaded that isn't noUrl
+	private static float scale = initialScale; 		// used to restore throttle web zoom level (after rotation)
+	private static boolean clearHistory = false; 	// flags webViewClient to clear history when page load finishes
+	private static String firstUrl = null;			// desired first url when clearing history
 	private static String currentUrl = null;
-	private boolean currentUrlUpdate;
 	private boolean orientationChange = false;
 	private String currentTime = "";
 	private Menu TMenu;
@@ -364,7 +363,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					break;
 				case 'P': // panel info
 					if (whichThrottle == 'W') // PW - web server port info
-						reloadWeb();
+						initWeb();
 					if (whichThrottle == 'P') // PP - power state change
 						mainapp.setPowerStateButton(TMenu); // update the power state button
 					break;
@@ -378,7 +377,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				set_labels();				// refresh function labels when any roster response is received
 				break;
 			case message_type.WIT_CON_RETRY:
-				witRetry();
+				witRetry(msg.obj.toString());
 				break;
 			case message_type.WIT_CON_RECONNECT:
 				break;
@@ -391,9 +390,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				disconnect();
 				break;
 			case message_type.WEBVIEW_LOC: 		// webview location changed
-				if ("none".equals(webViewLocation)) { 	// if not currently displayed
-					currentUrl = null; 					// reload init url
-				}
 				// set new location
 				webViewLocation = prefs
 						.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
@@ -413,15 +409,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 	private void initWeb() {
 		// reload from the initial webpage
-		webView.stopLoading();
 		currentUrl = null;
-		load_webview(); // reload
+		reloadWeb();
 	}
 
-	private void witRetry() {
+	private void witRetry(String s) {
 		webView.stopLoading();
-		webView.loadUrl(noUrl);		// stop Javascript if running
 		Intent in = new Intent().setClass(this, reconnect_status.class);
+		in.putExtra("status", s);
 		navigatingAway = true;
 		startActivity(in);
 		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -1368,32 +1363,25 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				super.onPageFinished(view, url);
-				//Android 4.4 bug results in multiple calls to onPageFinished and
-				// the first call(s) occur before the page has loaded so clearHistory
-				// doesn't do what is expected.  firstUrl works around that bug.
-				if (!noUrl.equals(url)) {
-					if (firstUrl != null) {
+				if (!noUrl.equals(url)) {				// if url is legit
+					currentUrl = url;
+					if (firstUrl == null) {				// if this is the first legit url 
 						firstUrl = url;
+						clearHistory = true;
 					}
-					if (clearHistory) {
-						if (url.equals(firstUrl) && view.canGoBack()) {
-							view.clearHistory();
+					if (clearHistory) {					// keep clearing history until off this page
+						if(url.equals(firstUrl)) {		// (works around Android bug)
+							webView.clearHistory();
 						}
 						else {
 							clearHistory = false;
 						}
 					}
-					if (currentUrlUpdate)
-						currentUrl = url;
-				} else {
-					clearHistory = true;
-					firstUrl = null;
 				}
 			}
 		};
 
 		webView.setWebViewClient(EDWebClient);
-		currentUrlUpdate = true; // ok to update currentUrl
 		if (currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null) {
 			load_webview(); // reload if no saved state or no page had loaded when state was saved
 		}
@@ -1410,6 +1398,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	@Override
 	public void onResume() {
 		super.onResume();
+		mainapp.removeNotification();
 		if (mainapp.isForcingFinish()) { // expedite
 			this.finish();
 			return;
@@ -1423,7 +1412,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			return;
 		}
 		navigatingAway = false;
-		mainapp.removeNotification();
 		currentTime = "";
 		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CURRENT_TIME); // request time update
 
@@ -1437,8 +1425,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		set_labels(); // handle labels and update view
 
 		if (webView != null) {
-			if (!callHiddenWebViewOnResume())
+			if (!callHiddenWebViewOnResume()) {
 				webView.resumeTimers();
+			}
+			if (noUrl.equals(webView.getUrl()) && webView.canGoBack()) {	//unload static url loaded by onPause
+				webView.goBack();
+			}
 		}
 
 		if (mainapp.EStopActivated) {
@@ -1469,15 +1461,18 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	public void onPause() {
 		super.onPause();
 		if (webView != null) {
-			if (!callHiddenWebViewOnPause())
+			if (!callHiddenWebViewOnPause()) {
 				webView.pauseTimers();
+			}
+			
+			String url = webView.getUrl();
+			if (url != null && !noUrl.equals(url)) {	// if any url has been loaded 
+				webView.loadUrl(noUrl); 				// load a static url to stop any javascript
+			}
 		}
 		CookieSyncManager.getInstance().stopSync();
 
-		if (!this.isFinishing() && !navigatingAway) { // only invoke
-														// setContentIntentNotification
-														// when going into
-														// background
+		if (!this.isFinishing() && !navigatingAway) { // only invoke setContentIntentNotification when going into background
 			mainapp.addNotification(this.getIntent());
 		}
 	}
@@ -1489,10 +1484,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		Log.d("Engine_Driver", "throttle.onDestroy()");
 		if (webView != null) {
 			scale = webView.getScale(); // save current scale for next onCreate
-			if (!orientationChange) { // if screen is exiting
-				webView.loadUrl(noUrl); // load a static url else any javascript
-										// on current page would keep running
-			}
 		}
 		repeatUpdateHandler = null;
 		mainapp.throttle_msg_handler = null;
@@ -1523,15 +1514,24 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	// load the url
 	private void load_webview() {
 		String url = currentUrl;
-		if (url == null)
+		if (webViewLocation.equals("none")) {		// if not displaying webview
+			url = noUrl;							// load static url to stop javascript
+			currentUrl = null;
+			firstUrl = null;
+		} 
+		else if (url == null)						// else if initializing
 		{
 			url = mainapp.createUrl(prefs.getString("InitialThrotWebPage",
 					getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue)));
-		}
-
-		// if port is invalid or not displaying webview
-		if (url == null || webViewLocation.equals("none")) {
-			url = noUrl;
+			if (url == null) {		//if port is invalid
+				url = noUrl;
+			}
+			
+			if (firstUrl == null) {
+				scale = initialScale;
+				webView.setInitialScale((int) (100 * scale));
+			}
+			firstUrl = null;
 		}
 		webView.loadUrl(url);
 	}

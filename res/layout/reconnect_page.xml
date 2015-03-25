@@ -14,27 +14,22 @@
         android:padding="4dp" >
 
         <TextView
-            android:id="@+id/TextView01"
-            style="@style/floating_text_style"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp" />
-
-        <TextView
             android:id="@+id/reconnect_status"
             style="@style/floating_text_style"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
+            android:padding="20dp"
             android:text="" />
-            
+
         <TextView
             android:id="@+id/reconnect_help"
             style="@style/floating_text_style"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
+            android:layout_gravity="center_vertical"
+            android:padding="20dp"
             android:text="@string/reconnect_help" />
 
     </LinearLayout>
+
 </LinearLayout>

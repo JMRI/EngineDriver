@@ -228,7 +228,7 @@ public class turnouts extends Activity implements OnGestureListener {
 				refresh_turnout_view();
 				break;
 			case message_type.WIT_CON_RETRY:
-				witRetry();
+				witRetry(msg.obj.toString());
 				break;
 			case message_type.WIT_CON_RECONNECT:
 				refresh_turnout_view(); 
@@ -241,8 +241,9 @@ public class turnouts extends Activity implements OnGestureListener {
 		}
 	}
 
-	private void witRetry() {
+	private void witRetry(String s) {
 		Intent in = new Intent().setClass(this, reconnect_status.class);
+		in.putExtra("status", s);
 		navigatingAway = true;
 		startActivity(in);
 		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -438,6 +439,7 @@ public class turnouts extends Activity implements OnGestureListener {
 	@Override
 	public void onResume() {
 		super.onResume();
+		mainapp.removeNotification();
 		if(mainapp.isForcingFinish()) {		//expedite
 			this.finish();
 			return;
@@ -452,7 +454,6 @@ public class turnouts extends Activity implements OnGestureListener {
 			return;
 		}
 
-		mainapp.removeNotification();
 		navigatingAway = false;
 
 		//restore view to last known scroll position

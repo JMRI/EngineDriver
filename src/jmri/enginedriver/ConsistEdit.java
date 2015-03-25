@@ -110,7 +110,7 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 				}
 				break;
 			case message_type.WIT_CON_RETRY:
-				witRetry();
+				witRetry(msg.obj.toString());
 				break;
 			case message_type.WIT_CON_RECONNECT:
 				refreshConsistLists(); 
@@ -123,8 +123,9 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 		}
 	}
 
-	private void witRetry() {
+	private void witRetry(String s) {
 		Intent in = new Intent().setClass(this, reconnect_status.class);
+		in.putExtra("status", s);
 		startActivity(in);
 		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	}
@@ -242,12 +243,12 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 	@Override
 	public void onResume() {
 		super.onResume();
+		mainapp.removeNotification();
 		if(mainapp.isForcingFinish()) {		//expedite
 			this.finish();
 			return;
 		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-		mainapp.removeNotification();
 		if(CEMenu != null)
 		{
 			mainapp.displayEStop(CEMenu);

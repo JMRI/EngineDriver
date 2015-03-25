@@ -262,6 +262,7 @@ public class connection_activity extends Activity {
 				start_throttle_activity();
 				break;
 
+			case message_type.DISCONNECT:
 			case message_type.SHUTDOWN:
 				shutdown();
 				break;
@@ -345,13 +346,13 @@ public class connection_activity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		mainapp.removeNotification();
 		if(this.isFinishing()) {		//if finishing, expedite it
 			return;
 		}
 		
 		navigatingAway = false;
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-		mainapp.removeNotification();
 		//start up server discovery listener
 		//	    sendMsgErr(0, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
 		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 1);

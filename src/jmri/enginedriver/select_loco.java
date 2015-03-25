@@ -315,7 +315,7 @@ public class select_loco extends Activity {
 					set_labels();
 				break;
 			case message_type.WIT_CON_RETRY:
-				witRetry();
+				witRetry(msg.obj.toString());
 				break;
 			case message_type.WIT_CON_RECONNECT:
 				roster_list_adapter.notifyDataSetChanged();
@@ -328,8 +328,9 @@ public class select_loco extends Activity {
 		}
 	}
 
-	private void witRetry() {
+	private void witRetry(String s) {
 		Intent in = new Intent().setClass(this, reconnect_status.class);
+		in.putExtra("status", s);
 		navigatingAway = true;
 		startActivity(in);
 		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -731,12 +732,12 @@ public class select_loco extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		mainapp.removeNotification();
 		if(mainapp.isForcingFinish()) {		//expedite
 			this.finish();
 			return;
 		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-		mainapp.removeNotification();
 		navigatingAway = false;
 
 		// checking address length here covers (future) case where prefs changed while paused

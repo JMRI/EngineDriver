@@ -75,12 +75,12 @@ public class about_page extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		mainapp.removeNotification();
 		if(mainapp.isForcingFinish()) {		//expedite
 			this.finish();
 			return;
 		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-		mainapp.removeNotification();
 
 		if(AMenu != null)
 		{

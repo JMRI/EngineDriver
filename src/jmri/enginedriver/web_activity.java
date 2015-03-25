@@ -49,7 +49,6 @@ public class web_activity extends Activity {
   private static boolean clearHistory = false;		// flags webViewClient to clear history when page load finishes
   private static String firstUrl = null;			// first url loaded that isn't noUrl
   private static String currentUrl = null;
-  private boolean currentUrlUpdate = false;
   private boolean orientationChange = false;
   private String currentTime = "";
   private Menu WMenu;
@@ -64,14 +63,13 @@ class web_handler extends Handler {
 			  String s = msg.obj.toString();
 			  String response_str = s.substring(0, Math.min(s.length(), 2));
 			  if("PW".equals(response_str))		// PW - web server port info
-				  reloadWeb();
+				  initWeb();
 			  break;
 		  }
 		  case message_type.WIT_CON_RETRY:
-			  witRetry();
+			  witRetry(msg.obj.toString());
 			  break;
 		  case message_type.WIT_CON_RECONNECT:
-			  reloadWeb();
 			  break;
 	  	  case message_type.INITIAL_WEBPAGE:
 			  initWeb(); 
@@ -97,26 +95,25 @@ class web_handler extends Handler {
 			setTitle(getApplicationContext().getResources().getString(R.string.app_name_web));
   }
 
-	private void witRetry() {
+	private void reloadWeb() {
 		webView.stopLoading();
-		webView.loadUrl(noUrl);		// stop Javascript if running
+		load_webview(); // reload
+	}
+
+	private void initWeb() {
+		// reload from the initial webpage
+		currentUrl = null;
+		reloadWeb();
+	}
+
+	private void witRetry(String s) {
+		webView.stopLoading();
 		Intent in = new Intent().setClass(this, reconnect_status.class);
+		in.putExtra("status", s);
 		navigatingAway = true;
 		startActivity(in);
 		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	}
-	
-  private void reloadWeb() {
-	  webView.stopLoading();
-	  load_webview();		// reload the page
-  }
-  
-  private void initWeb() {
-	  webView.stopLoading();
-	  clearHistory = true;
-	  currentUrl = null;
-	  load_webview();		// reload the page
-  }
   
   /** Called when the activity is first created. */
   @SuppressLint("SetJavaScriptEnabled") @Override
@@ -149,35 +146,27 @@ class web_handler extends Handler {
 		}
 		
 		@Override
-		public void onPageFinished(WebView view, String url)
-		{
+		public void onPageFinished(WebView view, String url) {
 			super.onPageFinished(view, url);
-			//Android 4.4 bug results in multiple calls to onPageFinished and
-			// the first call(s) occur before the page has loaded so clearHistory
-			// doesn't do what is expected.  firstUrl works around that bug.
-			if (!noUrl.equals(url)) {
-				if (firstUrl != null) {
+			if (!noUrl.equals(url)) {				// if url is legit
+				currentUrl = url;
+				if (firstUrl == null) {				// if this is the first legit url 
 					firstUrl = url;
+					clearHistory = true;
 				}
-				if (clearHistory) {
-					if (url.equals(firstUrl) && view.canGoBack()) {
-						view.clearHistory();
+				if (clearHistory) {					// keep clearing history until off this page
+					if(url.equals(firstUrl)) {		// (works around Android bug)
+						webView.clearHistory();
 					}
 					else {
 						clearHistory = false;
 					}
 				}
-				if (currentUrlUpdate)
-					currentUrl = url;
-			} else {
-				clearHistory = true;
-				firstUrl = null;
 			}
 		}
 	};
 	
 	webView.setWebViewClient(EDWebClient);
-	currentUrlUpdate = true;		// ok to update currentUrl
 	if(currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null)
 		load_webview();			// reload if no saved state or no page had loaded when state was saved
 	
@@ -194,6 +183,7 @@ class web_handler extends Handler {
   public void onResume() {
 	  Log.d("Engine_Driver","web_activity.onResume() called");
  	  super.onResume();
+	  mainapp.removeNotification();
 	  if(mainapp.isForcingFinish()) {	//expedite
 		  this.finish();
 		  return;
@@ -205,7 +195,6 @@ class web_handler extends Handler {
 		  connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		  return;
  	  }
-	  mainapp.removeNotification();
 	  navigatingAway = false;
 	  currentTime = "";
 	  mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CURRENT_TIME);	// request time update
@@ -218,9 +207,14 @@ class web_handler extends Handler {
 // in which case call load_webview here just creates extra work since url will still be null
 // causing load_webview to load the page again 
 //	  load_webview();
- 	  
-	  if(!callHiddenWebViewOnResume())
-		  webView.resumeTimers();
+	  
+	  if (webView != null) {
+		  if(!callHiddenWebViewOnResume())
+			  webView.resumeTimers();
+		  if (noUrl.equals(webView.getUrl()) && webView.canGoBack()) {	//unload static url loaded by onPause
+			  webView.goBack();
+		  }
+	  }
 	  CookieSyncManager.getInstance().startSync();
  };
 
@@ -239,8 +233,13 @@ class web_handler extends Handler {
 	  if(webView != null) {
 		  if(!callHiddenWebViewOnPause())
 			  webView.pauseTimers();
+		  String url = webView.getUrl();
+		  if (url != null && !noUrl.equals(url)) {	// if any url has been loaded 
+			  webView.loadUrl(noUrl); 				// load a static url to stop any javascript
+		  }
 	  }
 	  CookieSyncManager.getInstance().stopSync();
+	  
 	  if(!this.isFinishing() && !navigatingAway) {		//only invoke setContentIntentNotification when going into background
 		  mainapp.addNotification(this.getIntent());
 	  }
@@ -254,9 +253,6 @@ class web_handler extends Handler {
 
 	  if(webView != null) {
 		  scale = webView.getScale();	// save scale for next onCreate
-		  if(!orientationChange) {		// screen is exiting
-			  webView.loadUrl(noUrl);	//load a static url else any javascript on current page would keep running
-		  }
 	  }
 	  mainapp.web_msg_handler = null;
 	  super.onDestroy();
@@ -365,13 +361,19 @@ class web_handler extends Handler {
   
   // load the url
   private void load_webview() {
-//	  webView.loadUrl(mainapp.getWebUrl());
 	  String url = currentUrl;
-	  if(url == null)
+	  if(url == null) {
 		  url = mainapp.createUrl(prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue)));
-
-	  if (url == null)					// if port is invalid 
-		  url = noUrl;
+		  if (url == null) {		//if port is invalid
+			  url = noUrl;
+		  }
+		
+		  if (firstUrl == null) {
+			  scale = initialScale;
+			  webView.setInitialScale((int) (100 * scale));
+		  }
+		  firstUrl = null;
+	  }
 	  webView.loadUrl(url);
   }
   
@@ -386,6 +388,7 @@ class web_handler extends Handler {
 	  scale = initialScale;
 	  clearHistory = false;
 	  currentUrl = null;
+	  firstUrl = null;
  }
 
 }
