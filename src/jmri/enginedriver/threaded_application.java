@@ -122,8 +122,8 @@ public class threaded_application extends Application {
 	public int androidVersion = 0;
 	public final int minWebSocketVersion = 8;				//minimum Android version for Autobahn websocket library
 
+	static final int DEFAULT_HEARTBEAT_INTERVAL = 10;		//interval for heartbeat when WiT heartbeat is disabled
 	static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;	//minimum interval for outbound heartbeat generator
-	static final int DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL = 6;	//interval for outbound heartbeat generator when WiT heartbeat is disabled
 	static final int HEARTBEAT_RESPONSE_ALLOWANCE = 4;		//worst case time delay for WiT to respond to a heartbeat message
 	public int heartbeatInterval = 0;						//WiT heartbeat interval setting
 	public int turnouts_list_position = 0;					//remember where user was in item lists
@@ -226,26 +226,42 @@ public class threaded_application extends Application {
 			};
 		}
 
-		void start_jmdns() {
-
+		Inet4Address getClientAddr() {
 			int intaddr = 0;
-
+			Inet4Address addr = null;
 			//Set up to find a WiThrottle service via ZeroConf
 			try   {
 				WifiManager wifi = (WifiManager)threaded_application.this.getSystemService(Context.WIFI_SERVICE);
 				WifiInfo wifiinfo = wifi.getConnectionInfo();
 				intaddr = wifiinfo.getIpAddress();
 				if (intaddr != 0) {
+					byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
+							(byte)(intaddr >> 24 & 0xff) };
+					addr = (Inet4Address) Inet4Address.getByAddress(byteaddr);
+					client_address = addr.toString().substring(1);		//strip off leading /
+				}
+				else {
+					client_address = null;
+				}
+			}  catch(Exception except) { 
+				Log.e("Engine_Driver", "getClientAddr - error gettting IP addr: "+except.getMessage());
+				client_address = null;
+			}
+			return addr;
+		}
+		
+		void start_jmdns() {
+			//Set up to find a WiThrottle service via ZeroConf
+			try   {
+				Inet4Address addr = getClientAddr();
+				if (addr != null && client_address != null) {
+					WifiManager wifi = (WifiManager)threaded_application.this.getSystemService(Context.WIFI_SERVICE);
 
 					if (multicast_lock == null) {  //do this only as needed
 						multicast_lock=wifi.createMulticastLock("engine_driver");
 						multicast_lock.setReferenceCounted(true);
 					}
 
-					byte[] byteaddr = new byte[] { (byte)(intaddr & 0xff), (byte)(intaddr >> 8 & 0xff), (byte)(intaddr >> 16 & 0xff),
-							(byte)(intaddr >> 24 & 0xff) };
-					Inet4Address addr = (Inet4Address) Inet4Address.getByAddress(byteaddr);
-					client_address = addr.toString().substring(1);		//strip off leading /
 					Log.d("Engine_Driver","start_jmdns: local IP addr " + client_address);
 
 					jmdns=JmDNS.create(addr, client_address);  //pass ip as name to avoid hostname lookup attempt
@@ -255,7 +271,7 @@ public class threaded_application extends Application {
 
 				} else {
 					process_comm_error("No local IP Address found.\nCheck your WiFi connection.");
-				}  //end of if intaddr!=0
+				} 
 			}  catch(Exception except) { 
 				Log.e("Engine_Driver", "start_jmdns - Error creating withrottle listener: "+except.getMessage()); 
 				process_comm_error("Error creating withrottle zeroconf listener: IOException: \n"+except.getMessage()); 
@@ -305,7 +321,6 @@ public class threaded_application extends Application {
 			/***future PowerLock
   			private PowerManager.WakeLock wl = null;
 			 */
-			String status;
 			public void handleMessage(Message msg)      {
 				switch(msg.what)        {
 				//Start or Stop the WiThrottle listener and required jmdns stuff
@@ -555,8 +570,7 @@ public class threaded_application extends Application {
   					hideNotification();
 					 ***/
 					if (!doFinish) {
-						status = "Failed to connect to host "+host_ip+":"+port+" from "+client_address+".  Retrying";
-						alert_activities(message_type.WIT_CON_RETRY,status);
+						alert_activities(message_type.WIT_CON_RETRY,msg.obj.toString());
 					}
 					break;
 
@@ -568,8 +582,7 @@ public class threaded_application extends Application {
 					if (!doFinish) {
 						sendThrottleName();
 						reacquireAllConsists();
-						status = "Connected to host "+host_ip+":"+port;
-						alert_activities(message_type.WIT_CON_RECONNECT,status);
+						alert_activities(message_type.WIT_CON_RECONNECT,msg.obj.toString());
 					}
 					break;
 				}
@@ -1211,7 +1224,8 @@ public class threaded_application extends Application {
 			protected PrintWriter outputPW = null;
 			private volatile boolean endRead = false;			//signals rcvr to terminate
 			private volatile boolean socketGood = false;		//indicates socket condition
-			private boolean firstConnect = false;				//indicates initial socket connection
+			private volatile boolean inboundTimeout = false;	//indicates inbound messages are not arriving from WiT
+			private boolean firstConnect = false;				//indicates initial socket connection was achieved
 
 			socket_WiT() {
 				super("socket_WiT");
@@ -1236,7 +1250,8 @@ public class threaded_application extends Application {
 				//socket
 				if (socketOk) {
 					try {
-						clientSocket=new Socket();               //look for someone to answer on specified socket, and set timeout
+						//look for someone to answer on specified socket, and set timeout
+						clientSocket=new Socket();
 						InetSocketAddress sa = new InetSocketAddress(host_ip, port);
 						clientSocket.connect(sa, 1000);  //TODO: adjust these timeouts, or set in prefs
 						clientSocket.setSoTimeout(500);
@@ -1279,7 +1294,10 @@ public class threaded_application extends Application {
 				//xmtr
 				if (socketOk) {
 					try { 
-						outputPW = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true); 
+						outputPW = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+						if (outputPW.checkError()) {
+							socketOk = false;
+						}
 					}
 					catch(IOException e) {
 						process_comm_error("Error creating output stream, IOException: "+e.getMessage());
@@ -1309,24 +1327,19 @@ public class threaded_application extends Application {
 
 				//close socket
 				if (clientSocket != null) {
-					try { 
+					try {
 						clientSocket.close();
 					}
 					catch(Exception e) { 
 						Log.d("Engine_Driver","Error closing the Socket: "+e.getMessage()); 
 					}
 				}
-
-				if (!shutdown)	// going to retry the connection
-				{
-					sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY);
-				}
 			}
 
 			//read the input buffer
 			public void run() {
 				String str = null;
-				//continue reading until signalled to exit by endRead
+				//continue reading until signaled to exit by endRead
 				while(!endRead) {
 					if(socketGood) {		//skip read when the socket is down
 						try {
@@ -1356,21 +1369,33 @@ public class threaded_application extends Application {
 			}
 
 			public void Send(String msg) {
+				boolean reconInProg = false;
 				//reconnect socket if needed
-				if(!socketGood || !this.SocketCheck()) {
-					this.disconnect(false);		//clean up socket but do not shut down the receiver
-					this.connect();				//attempt to reestablish connection
-					if (socketGood) {
-						heart.restartInboundInterval();		//socket is good so restart heartbeats
-						heart.restartOutboundInterval();
-						sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT);
-					}
+//				if(!socketGood || !this.SocketCheck()) {
+				if(!socketGood) {
+					String status;
+					if (inboundTimeout) {
+						status = "No response from JMRI "+host_ip+":"+port+" for "+heart.sGetInboundInterval()+" seconds.  "+
+								"Check the JMRI WiThrottle address / port and check that the JMRI Withrottle server is running.\n\nRetrying";
+						Log.d("Engine_Driver","WiT receive reconnection attempt.");
+					} 
 					else {
-						comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 500L);	//try connection again in 0.5 second
+						getClientAddr();					//update address in case network connection was lost
+						if (client_address != null) {
+							status = "Failed to connect to JMRI at "+host_ip+":"+port+" from "+client_address+".\n\nRetrying";
+						}
+						else {
+							status = "Not connected to a network.  Check WiFi settings.\n\nRetrying";
+						}
+						Log.d("Engine_Driver","WiT send reconnection attempt.");
 					}
+					sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY, status);
+					this.disconnect(false);				//clean up socket but do not shut down the receiver
+					this.connect();						//attempt to reestablish connection
+					reconInProg = true;
 				}
-
-				//send the message
+				
+				//try to send the message
 				if(socketGood) {
 					try {
 						outputPW.println(msg);
@@ -1378,11 +1403,25 @@ public class threaded_application extends Application {
 						//we could restart outbound heartbeat timer here, but wit does not notify us of speed changes
 						//(caused by other throttles for example) so just keep heartbeat going to get regular speed updates
 						//heart.restartOutboundInterval();
+						
+						// if we get here without an exception then the socket is ok
+						if (reconInProg) {
+							getClientAddr();			//update address in case network connection has changed
+							String status = "Connected to JMRI WiThrottle Server at "+host_ip+":"+port;
+							sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT, status);
+							Log.d("Engine_Driver","WiT reconnection successful.");
+							inboundTimeout = false;
+							heart.restartInboundInterval();		//socket is good so restart inbound heartbeat timer
+						}
 					} 
 					catch (Exception e) {
 						Log.d("Engine_Driver","WiT xmtr error.");
-						socketGood = false;		//output buffer error so force reconnection on next send
+						socketGood = false;				//output buffer error so force reconnection on next send
 					}
+				}
+				
+				if(!socketGood) {
+					comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 500L);	//try connection again in 0.5 second
 				}
 			}
 
@@ -1425,6 +1464,13 @@ public class threaded_application extends Application {
 			public boolean SocketGood() {
 				return this.socketGood;
 			}
+			
+			public void InboundTimeout() {
+				if (socketGood) {
+					inboundTimeout = true;
+					socketGood = false;
+				}
+			}
 		}
 
 		class heartbeat {
@@ -1442,8 +1488,9 @@ public class threaded_application extends Application {
 			//	The inbound heartbeat rate is set to (outbound heartbeat rate + HEARTBEAT_RESPONSE_ALLOWANCE)
 
 			private int heartbeatIntervalSetpoint = 0;		//WiT heartbeat interval in seconds
-			private int heartbeatOutboundInterval = 0;		//sends outbound heartbeat message at this rate
-			private int heartbeatInboundInterval = 0;		//alerts user if there was no inbound traffic for this long
+			private int heartbeatOutboundInterval = 0;		//sends outbound heartbeat message at this rate (msec)
+			private int heartbeatInboundInterval = 0;		//alerts user if there was no inbound traffic for this long (msec)
+			private String sInboundInterval = "";			//inbound heartbeat interval in seconds
 
 			public int getInboundInterval() {
 				return heartbeatInboundInterval;
@@ -1451,6 +1498,10 @@ public class threaded_application extends Application {
 			public int getOutboundInterval() {
 				return heartbeatOutboundInterval;
 			}
+			public String sGetInboundInterval() {
+				return sInboundInterval;
+			}
+			
 
 			//startHeartbeat(timeoutInterval in seconds)
 			//calcs the inbound and outbound intervals and starts the beating
@@ -1459,19 +1510,21 @@ public class threaded_application extends Application {
 				if(timeoutInterval != heartbeatIntervalSetpoint)
 				{
 					heartbeatIntervalSetpoint = timeoutInterval;
+					int outInterval;
 					if (heartbeatIntervalSetpoint == 0) {	//wit heartbeat is disabled so use default
-						heartbeatOutboundInterval = DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL;
+						
+						outInterval = DEFAULT_HEARTBEAT_INTERVAL;
 					}
 					else {
-						heartbeatOutboundInterval = heartbeatIntervalSetpoint - HEARTBEAT_RESPONSE_ALLOWANCE;
+						outInterval = heartbeatIntervalSetpoint - HEARTBEAT_RESPONSE_ALLOWANCE;
 					}
-					if (heartbeatOutboundInterval < MIN_OUTBOUND_HEARTBEAT_INTERVAL)
-						heartbeatOutboundInterval = MIN_OUTBOUND_HEARTBEAT_INTERVAL;
+					if (outInterval < MIN_OUTBOUND_HEARTBEAT_INTERVAL)
+						outInterval = MIN_OUTBOUND_HEARTBEAT_INTERVAL;
 
-					heartbeatInboundInterval = heartbeatOutboundInterval + HEARTBEAT_RESPONSE_ALLOWANCE;
 
-					heartbeatOutboundInterval *= 1000;		//convert to milliseconds
-					heartbeatInboundInterval *= 1000;		//convert to milliseconds
+					heartbeatOutboundInterval = outInterval * 1000;						//convert to milliseconds
+					heartbeatInboundInterval = (outInterval + HEARTBEAT_RESPONSE_ALLOWANCE) * 1000;		//convert to milliseconds
+					sInboundInterval = Integer.toString(outInterval + HEARTBEAT_RESPONSE_ALLOWANCE);
 					
 					restartOutboundInterval();
 					restartInboundInterval();
@@ -1546,8 +1599,10 @@ public class threaded_application extends Application {
 				public void run() {
 					comm_msg_handler.removeCallbacks(this);	//remove pending requests
 					if(heartbeatIntervalSetpoint != 0) {
-						if (socketWiT != null && socketWiT.SocketGood())
-							process_comm_error("WARNING: No response from WiThrottle server for " + (heartbeatInboundInterval/1000)  + " seconds.  Verify connection.");
+						if (socketWiT != null && socketWiT.SocketGood()) {
+							socketWiT.InboundTimeout();
+//							process_comm_error("WARNING: No response from WiThrottle server for " + (heartbeatInboundInterval/1000)  + " seconds.  Verify connection.");
+						}
 						comm_msg_handler.postDelayed(this,heartbeatInboundInterval);	//set next inbound timeout
 					}
 				}

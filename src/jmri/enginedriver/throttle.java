@@ -414,12 +414,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	}
 
 	private void witRetry(String s) {
-		webView.stopLoading();
-		Intent in = new Intent().setClass(this, reconnect_status.class);
-		in.putExtra("status", s);
-		navigatingAway = true;
-		startActivity(in);
-		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+		if(this.hasWindowFocus()) {
+			webView.stopLoading();
+			Intent in = new Intent().setClass(this, reconnect_status.class);
+			in.putExtra("status", s);
+			navigatingAway = true;
+			startActivity(in);
+			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+		}
 	}
 	
 	private void removeLoco(char whichThrottle) {

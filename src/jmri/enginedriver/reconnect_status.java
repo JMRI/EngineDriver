@@ -39,6 +39,8 @@ public class reconnect_status extends Activity {
 	private threaded_application mainapp;  // hold pointer to mainapp
 	private String prog = "";
 	private boolean backOk = true;
+	private boolean navigatingAway = false; // true if another activity was selected (false in onPause if going into background)
+	private boolean retryFirst = false;
 
 	//Handle messages from the communication thread back to this thread (responses from withrottle)
 	@SuppressLint("HandlerLeak")
@@ -46,8 +48,14 @@ public class reconnect_status extends Activity {
 
 		public void handleMessage(Message msg) {
 			switch(msg.what) {
+			case message_type.RESPONSE:
+				if (!retryFirst) {  			// Got a message from WiThrottle server so the socket must already be ok.  This means the
+					reconnected();				// RETRY/RECONNECT sequence was over before this Screen came up, so just resume normal ops. 
+				}
+				break;
 			case message_type.WIT_CON_RETRY:
-				refresh_reconnect_status(msg.obj.toString()); 
+				retryFirst = true;
+				refresh_reconnect_status(msg.obj.toString());
 				break;
 			case message_type.WIT_CON_RECONNECT:
 				refresh_reconnect_status(msg.obj.toString()); 
@@ -74,10 +82,18 @@ public class reconnect_status extends Activity {
 	}
 	
 	public void reconnected() {
-		this.backOk = false;
-		TextView tv=(TextView)findViewById(R.id.reconnect_help);
-		tv.setText(getString(R.string.reconnect_success));
-	    mainapp.reconnect_status_msg_handler.postDelayed(delayCloseScreen,500L);
+		if(backOk) {						// ensure we only run this once 
+			backOk = false;
+			TextView tv=(TextView)findViewById(R.id.reconnect_help);
+			tv.setText(getString(R.string.reconnect_success));
+			if(mainapp.reconnect_status_msg_handler != null) {
+				mainapp.reconnect_status_msg_handler.postDelayed(delayCloseScreen,500L);
+			}
+			else {
+				Log.d("Engine_Driver","Reconnect: handler already null");
+				closeScreen();
+			}
+		}
 	}
 	
 	@SuppressLint("Recycle")
@@ -89,6 +105,7 @@ public class reconnect_status extends Activity {
 	};
 	
 	private void closeScreen() {
+		navigatingAway = true;
  		this.finish();  				//end this activity
  		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	}
@@ -113,6 +130,7 @@ public class reconnect_status extends Activity {
 				refresh_reconnect_status(msg);
 			}
 		}
+		retryFirst = false;
 	};
 
 	@Override
@@ -124,6 +142,7 @@ public class reconnect_status extends Activity {
 			return;
 		}
 		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+		navigatingAway = false;
 
 		this.backOk = true;
 	}
@@ -132,7 +151,7 @@ public class reconnect_status extends Activity {
 	public void onPause()
 	{
 		super.onPause();
-		if(!this.isFinishing() ) {		//only invoke setContentIntentNotification when going into background
+		if(!this.isFinishing() && !navigatingAway) {		//only invoke setContentIntentNotification when going into background
 			mainapp.addNotification(this.getIntent());
 		}
 	}

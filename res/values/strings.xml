@@ -83,7 +83,7 @@
     <string name="press_to_toggle">Press button to toggle layout power state.</string>
     <string name="power_control_not_allowed">Power Control not allowed.  Change in WiThrottle Preferences in JMRI.</string>
     <string name="reconnect_label">Reconnect Attempt Status</string>
-    <string name="reconnect_help">Network disconnected.  Attempting to Reconnect automatically.  Wait for Reconnection or press BackArrow to Exit.</string>
+    <string name="reconnect_help">Attempting to Reconnect automatically.  Wait for Reconnection or press BackArrow to Exit.</string>
     <string name="reconnect_success">RECONNECTED.  Resuming normal operation.</string>
     	<string name="fs_edit_notice">WARNING: changes to Default Functions Setttings will be lost on exit - No SD Card found.</string>
 	<string name="ca_recent_conn_notice">Recent Connections unavailable - No SD Card found.</string>
