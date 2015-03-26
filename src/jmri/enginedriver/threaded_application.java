@@ -1361,7 +1361,6 @@ public class threaded_application extends Application {
 						}
 					}
 					if(!socketGood) {
-						heart.restartInboundInterval();	//no need for inbound timeouts while the socket is down
 						SystemClock.sleep(500L);		//don't become compute bound here when the socket is down
 					}
 				}
@@ -1372,24 +1371,27 @@ public class threaded_application extends Application {
 				boolean reconInProg = false;
 				//reconnect socket if needed
 //				if(!socketGood || !this.SocketCheck()) {
-				if(!socketGood) {
+				if(!socketGood || inboundTimeout) {
 					String status;
-					if (inboundTimeout) {
+					getClientAddr();					//update address in case network connection was lost
+					if (client_address == null) {
+						status = "Not connected to a network.  Check WiFi settings.\n\nRetrying";
+						Log.d("Engine_Driver","WiT send reconnection attempt.");
+					}
+					else if (inboundTimeout) {
 						status = "No response from JMRI "+host_ip+":"+port+" for "+heart.sGetInboundInterval()+" seconds.  "+
-								"Check the JMRI WiThrottle address / port and check that the JMRI Withrottle server is running.\n\nRetrying";
+								"Check that the JMRI Withrottle server is running.\n\nRetrying";
 						Log.d("Engine_Driver","WiT receive reconnection attempt.");
+						
+						socketGood = false;
 					} 
 					else {
-						getClientAddr();					//update address in case network connection was lost
-						if (client_address != null) {
-							status = "Failed to connect to JMRI at "+host_ip+":"+port+" from "+client_address+".\n\nRetrying";
-						}
-						else {
-							status = "Not connected to a network.  Check WiFi settings.\n\nRetrying";
-						}
+						status = "Unable to connect to JMRI at "+host_ip+":"+port+" from "+client_address+".\n\nRetrying";
 						Log.d("Engine_Driver","WiT send reconnection attempt.");
 					}
 					sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY, status);
+					
+					//perform the reconnection sequence
 					this.disconnect(false);				//clean up socket but do not shut down the receiver
 					this.connect();						//attempt to reestablish connection
 					reconInProg = true;
@@ -1466,10 +1468,8 @@ public class threaded_application extends Application {
 			}
 			
 			public void InboundTimeout() {
-				if (socketGood) {
-					inboundTimeout = true;
-					socketGood = false;
-				}
+				inboundTimeout = true;
+				comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer,200L);	//force a send so the reconnection process start immediately
 			}
 		}
 
@@ -1601,7 +1601,6 @@ public class threaded_application extends Application {
 					if(heartbeatIntervalSetpoint != 0) {
 						if (socketWiT != null && socketWiT.SocketGood()) {
 							socketWiT.InboundTimeout();
-//							process_comm_error("WARNING: No response from WiThrottle server for " + (heartbeatInboundInterval/1000)  + " seconds.  Verify connection.");
 						}
 						comm_msg_handler.postDelayed(this,heartbeatInboundInterval);	//set next inbound timeout
 					}
