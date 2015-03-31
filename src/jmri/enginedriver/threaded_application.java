@@ -1382,13 +1382,12 @@ public class threaded_application extends Application {
 						status = "No response from JMRI "+host_ip+":"+port+" for "+heart.sGetInboundInterval()+" seconds.  "+
 								"Check that the JMRI Withrottle server is running.\n\nRetrying";
 						Log.d("Engine_Driver","WiT receive reconnection attempt.");
-						
-						socketGood = false;
 					} 
 					else {
 						status = "Unable to connect to JMRI at "+host_ip+":"+port+" from "+client_address+".\n\nRetrying";
 						Log.d("Engine_Driver","WiT send reconnection attempt.");
 					}
+					socketGood = false;
 					sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY, status);
 					
 					//perform the reconnection sequence
