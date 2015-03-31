@@ -607,9 +607,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		else
 			con = mainapp.consistS;
 		String leadAddr = con.getLeadAddr();
-		for (String addr : con.getList()) { // loop through each engine in
-											// consist
-			if (!skipLead || !addr.equals(leadAddr)) {
+		for (String addr : con.getList()) { // loop through each engine in consist
+			if (!skipLead || (addr != null && !addr.equals(leadAddr))) {
 				int locoDir = direction;
 				try {
 					if (con.isReverseOfLead(addr)) // if engine faces opposite of lead loco
