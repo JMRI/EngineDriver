@@ -94,7 +94,7 @@ public class routes extends Activity  implements OnGestureListener {
 				int pos = 0;
 				String del = prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
 				for (String username : mainapp.rt_user_names) {
-					if (!username.equals(""))  {  //skip routes without usernames
+					if (username != null && !username.equals(""))  {  //skip routes without usernames
 						//get values from global array
 						String systemname = mainapp.rt_system_names[pos];
 						String currentstate = mainapp.rt_states[pos];

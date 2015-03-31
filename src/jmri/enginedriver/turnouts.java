@@ -94,7 +94,7 @@ public class turnouts extends Activity implements OnGestureListener {
 				int pos = 0;
 				String del = prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
 				for (String username : mainapp.to_user_names) {
-					if (!username.equals(""))  {  //skip turnouts without usernames
+					if (username != null && !username.equals(""))  {  //skip turnouts without usernames
 						//get values from global array
 						String systemname = mainapp.to_system_names[pos];
 						String currentstate = mainapp.to_states[pos];
