@@ -220,14 +220,14 @@ class WebSocketRunnable implements Runnable {
     public void onOpen() {
       Log.d(Consts.APP_NAME,"JmriWebSocket opened");
       try {
-        this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_TIME);
         this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_POWER_STATE);
+        this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_ROSTER_LIST);
         this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_TURNOUTS_LIST);
         this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_ROUTES_LIST);
         this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_SYSTEMCONNECTIONS_LIST);
         this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_CONSISTS_LIST);  //jmri-defined consists
         this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_PANELS_LIST);
-        this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_ROSTER_LIST);
+        this.webSocketConnection.sendTextMessage(Consts.JSON_REQUEST_TIME);
       } catch(Exception e) {
         Log.w(Consts.APP_NAME,"JmriWebSocket error in onOpen(): "+e.toString());
         mainApp.sendMsg(permaFragment.permaFragHandler, MessageType.DISCONNECTED); //tell the app
@@ -236,7 +236,7 @@ class WebSocketRunnable implements Runnable {
 
     @Override
     public void onTextMessage(String msgString) {
-//            Log.d(Consts.APP_NAME,"JmriWebSocket got a msg " + msgString);
+      Log.d(Consts.APP_NAME,"JmriWebSocket got a msg " + msgString);
       JSONObject msgJsonObject = null;
       JSONArray msgJsonArray = null;
       String type = null;
@@ -272,7 +272,7 @@ class WebSocketRunnable implements Runnable {
         } else {
           Log.w(Consts.APP_NAME, "JmriWebSocket, unexpected message received " + msgString);
         }
-      } catch (JSONException e) {  //not a json object, treat as a json array
+      } catch (JSONException e) {  //not a json object, try as a json array
         try {
           msgJsonArray = new JSONArray(msgString);
           if (msgJsonArray.length() < 1) return;  //ignore empty lists
@@ -288,11 +288,14 @@ class WebSocketRunnable implements Runnable {
             Log.d(Consts.APP_NAME,"systemConnection array=" + msgString);
           } else if (type.equals("consist")) {
             Log.d(Consts.APP_NAME,"consist array=" + msgString);
+          } else if (type.equals("panel")) {
+            Log.d(Consts.APP_NAME,"panel array=" + msgString);
+            receivedPanelList(msgJsonArray);
           } else if (type.equals("Layout")
               || type.equals("Control Panel")
               || type.equals("Panel")) {
-//                        Log.d(Consts.APP_NAME,"panel array=" + msgString);
-            receivedPanelList(msgJsonArray);
+            Log.d(Consts.APP_NAME,"pre v3 panel array=" + msgString);
+            receivedPanelListPreV3(msgJsonArray);
           } else {
             Log.w(Consts.APP_NAME, "unsupported json array received="+msgString);
           }
@@ -322,6 +325,22 @@ class WebSocketRunnable implements Runnable {
     }
 
     private void receivedPanelList(JSONArray msgJsonArray) throws JSONException {
+      //NOTE: this only works with jmri json >= 3.0, due to format change
+      SparseArray<Panel> pl = new SparseArray<Panel>();  //make a temp list to populate
+      for (int i = 0; i < msgJsonArray.length(); i++) {
+        JSONObject data = msgJsonArray.getJSONObject(i).getJSONObject("data");
+        String t = data.getString("type");
+        String n = data.getString("name");
+        String u = data.getString("userName");
+        String url = data.getString("URL");
+        Panel p = new Panel(t, n, u, url);
+        pl.put(i, p);  //add this entry to the list
+      }
+      mainApp.setPanelList(pl);  //replace the shared var with the newly populated one
+      Log.d(Consts.APP_NAME, "panel list received containing " + pl.size() + " entries.");
+    }
+    private void receivedPanelListPreV3(JSONArray msgJsonArray) throws JSONException {
+      //NOTE: this only works with jmri json < 3.0, due to format change
       SparseArray<Panel> pl = new SparseArray<Panel>();  //make a temp list to populate
       for (int i = 0; i < msgJsonArray.length(); i++) {
         String t = msgJsonArray.getJSONObject(i).getString("type");
@@ -420,6 +439,7 @@ class WebSocketRunnable implements Runnable {
       mainApp.setJmriVersion(data.getString("JMRI"));
       mainApp.setRailroad(data.getString("railroad"));
       mainApp.setJmriHeartbeat(data.getInt("heartbeat"));
+      mainApp.setActiveProfile(data.getString("activeProfile"));
     }
 
     private void receivedThrottle(JSONObject data) throws JSONException {
@@ -497,7 +517,8 @@ class WebSocketRunnable implements Runnable {
     private void connect() {
       Log.d(Consts.APP_NAME,"JmriWebSocket connection attempt to " + requestedServer+":"+requestedWebPort);
       WebSocketOptions webSocketOptions = new WebSocketOptions();
-      webSocketOptions.setMaxMessagePayloadSize(4000 * 1024);  //increase max to 4MB
+      webSocketOptions.setMaxFramePayloadSize(512 * 1024);          //increase max frame size to 512Kb
+      webSocketOptions.setMaxMessagePayloadSize(10 * 1024 * 1024);  //increase max message size to 10Mb
       try {
         webSocketConnection.connect(createUri(), this, webSocketOptions);
       } catch (WebSocketException e) {

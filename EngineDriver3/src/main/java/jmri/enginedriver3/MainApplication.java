@@ -49,6 +49,7 @@ public class MainApplication extends Application {
   private int _webPort = -1;
   private String _jmriTime = null;  //will be set by JmriWebSocket
   private String _railroad = null;  //will be set by JmriWebSocket
+  private String _activeProfile = null;  //will be set by JmriWebSocket
   private String _powerState = null;  //will be set by JmriWebSocket
   private String _jmriVersion = null;  //will be set by JmriWebSocket
   private int _jmriHeartbeat = Consts.INITIAL_HEARTBEAT;
@@ -189,6 +190,10 @@ public class MainApplication extends Application {
     this._railroad = in_railroad;
     if (_mainActivity!=null) sendMsg(_mainActivity.mainActivityHandler, MessageType.RAILROAD_CHANGED); //announce it
   }
+
+  public String getActiveProfile() {return _activeProfile;}
+
+  public void setActiveProfile(String in_activeProfile) { this._activeProfile = in_activeProfile; }
 
   public String getPowerState() {return _powerState;}
 

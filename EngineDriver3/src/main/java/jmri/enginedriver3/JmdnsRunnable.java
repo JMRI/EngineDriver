@@ -17,7 +17,10 @@ import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
 /**
- * Created by stevet on 7/16/2014.
+ *  Manages zeroconf listeners using JmDNS library
+ *   Modifies: Shared Discovered Servers list (by calling MainApp.setDiscoveredServersList())
+ *   Receives: SHUTDOWN
+ *   Created by stevet on 7/16/2014.
  */
 class JmdnsRunnable implements Runnable {
 
@@ -45,6 +48,7 @@ class JmdnsRunnable implements Runnable {
     Log.d(Consts.APP_NAME, "starting JmdnsRunnable.run()");
     Looper.prepare();
     permaFragment.jmdnsRunnableHandler = new Jmdns_Handler();  //update ref to thread's handler back in retained frag
+
     if (startJmdnsListeners()) {
       Looper.loop();
     }
@@ -82,7 +86,7 @@ class JmdnsRunnable implements Runnable {
             }
             String jmriProperty= ev.getInfo().getPropertyString("jmri");  //this property is only set by a jmri server
             additions += " jmri=" + jmriProperty;
-            Log.d(Consts.APP_NAME, "Service resolved: " + ev.getInfo().getQualifiedName() + " port:" + ev.getInfo().getPort() + " " + additions);
+            Log.d(Consts.APP_NAME, "jmdns Service resolved: " + ev.getInfo().getQualifiedName() + " port:" + ev.getInfo().getPort() + " " + additions);
 
             //stop if this server isn't jmri
             if (jmriProperty==null) return;
@@ -116,7 +120,7 @@ class JmdnsRunnable implements Runnable {
 
           @Override
           public void serviceRemoved(ServiceEvent ev) {
-            Log.d(Consts.APP_NAME, "Service removed: " + ev.getName());
+            Log.d(Consts.APP_NAME, "jmdns Service removed: " + ev.getName());
             //remove this name from the list (if found)
             String host_name = ev.getInfo().getName();
             ArrayList<HashMap<String, String>> dsl = new ArrayList<HashMap<String, String>>(mainApp.getDiscoveredServersList());  //make a copy to work on
@@ -133,7 +137,7 @@ class JmdnsRunnable implements Runnable {
 
           @Override
           public void serviceAdded(ServiceEvent ev) {
-//            Log.d(Consts.APP_NAME, "Service added, type:" + ev.getType() + " name:" + ev.getName());
+            Log.d(Consts.APP_NAME, "jmdns Service added, type:" + ev.getType() + " name:" + ev.getName());
             // Required to force serviceResolved to be called again (after the first search)
             jmdns.requestServiceInfo(ev.getType(), ev.getName(), 1);
           }

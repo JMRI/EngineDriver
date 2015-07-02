@@ -24,6 +24,8 @@ public class PermaFragment extends Fragment {
 
   private Thread jmdnsRunnableThread = null;
   public Handler jmdnsRunnableHandler;  //this is set by the thread after startup
+//  private Thread nsdRunnableThread = null;
+//  public Handler nsdRunnableHandler;  //this is set by the thread after startup
   private Thread heartbeatRunnableThread = null;
   public Handler heartbeatRunnableHandler;  //this is set by the thread after startup
   private Thread  webSocketRunnableThread = null;
@@ -65,6 +67,7 @@ public class PermaFragment extends Fragment {
     mainApp.setJmriHeartbeat(Consts.INITIAL_HEARTBEAT);
     mainApp.setPowerState(null);
     mainApp.setJmriVersion(null);
+    mainApp.setActiveProfile(null);
     mainApp.setTurnoutList(new HashMap<String, Turnout>());
     mainApp.setRouteList(new HashMap<String, Route>());
     mainApp.setRosterEntryList(new HashMap<String, RosterEntry>());
@@ -125,6 +128,11 @@ public class PermaFragment extends Fragment {
       jmdnsRunnableThread = new Thread(new JmdnsRunnable(this, mainApp)); //create thread, pass ref back to this fragment
       jmdnsRunnableThread.start();
     }
+//    if (nsdRunnableThread == null) {
+//      Log.d(Consts.APP_NAME, "starting the nsdRunnableThread");
+//      nsdRunnableThread = new Thread(new NsdRunnable(this, mainApp)); //create thread, pass ref back to this fragment
+//      nsdRunnableThread.start();
+//    }
     if (heartbeatRunnableThread == null) {
       Log.d(Consts.APP_NAME, "starting the heartbeatRunnableThread");
       heartbeatRunnableThread = new Thread(new HeartbeatRunnable(this, mainApp)); //create thread, pass ref back to this fragment
@@ -139,6 +147,11 @@ public class PermaFragment extends Fragment {
       mainApp.sendMsg(jmdnsRunnableHandler, MessageType.SHUTDOWN);
       jmdnsRunnableThread = null;
     }
+//    if (nsdRunnableThread != null && nsdRunnableThread.isAlive()) {
+//      Log.d(Consts.APP_NAME, "ending the nsdRunnableThread");
+//      mainApp.sendMsg(nsdRunnableHandler, MessageType.SHUTDOWN);
+//      nsdRunnableThread = null;
+//    }
     if (heartbeatRunnableThread != null && heartbeatRunnableThread.isAlive()) {
       Log.d(Consts.APP_NAME, "ending the heartbeatRunnableThread");
       mainApp.sendMsg(heartbeatRunnableHandler, MessageType.SHUTDOWN);
@@ -191,6 +204,7 @@ public class PermaFragment extends Fragment {
           mainApp.setPowerState(null);
           mainApp.setJmriTime(null);
           mainApp.setRailroad(null);
+          mainApp.setActiveProfile(null);
           mainApp.setTurnoutList(new HashMap<String, Turnout>());  //empty the list
           mainApp.setRouteList(new HashMap<String, Route>());  //empty the list
           mainApp.setRosterEntryList(new HashMap<String, RosterEntry>());  //empty the list

@@ -23,6 +23,7 @@ MainActivity:
   use prefs for default tab for portrait and landscape
 JmDNS listener:
   use native Android listeners instead of JmDNS on supported devices
+  unfortunately, native nsd is not well supported except on newest devices.  Tried it anyway, failed.
 TurnoutsFragment:
   deal with showing/not showing based on userName
   manual entry of turnout by name and/or number

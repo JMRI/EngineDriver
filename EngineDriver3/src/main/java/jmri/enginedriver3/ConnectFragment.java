@@ -196,10 +196,12 @@ public class ConnectFragment extends DynaFragment {
             if (!mainApp.isConnected()) {
                 ((TextView)tv).setText("Not Connected");
             } else {
-                String s = "Connected to " + mainApp.getServer() + ":" + mainApp.getWebPort() +
-                        "\nver " + mainApp.getJmriVersion() + ", " + "heartbeat " + mainApp.getJmriHeartbeat() ;
-
-                ((TextView)tv).setText(s);
+              String s = "Connected to " + mainApp.getServer() + ":" + mainApp.getWebPort() +
+                  "\nver " + mainApp.getJmriVersion() + ", " + "heartbeat " + mainApp.getJmriHeartbeat() ;
+              if (mainApp.getActiveProfile() != null) {
+                s += "\nprofile " + mainApp.getActiveProfile();
+              }
+              ((TextView)tv).setText(s);
             }
         }
     }
