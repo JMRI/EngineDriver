@@ -3,6 +3,8 @@
  * when slider hidden, use -- and ++ instead of << and >>
  * avoid ClassCastException on string conversion - Robin Becker
  * new Reconnect logic and display - Robin Becker
+ * handle move of JMRI roster folder
+ * prevent npe in turnouts.java reported to Play Store
 **Version 2.10
  * Adjusted speed step handling to restore proper AUTO speed behavior - Robin Becker
  * new pref to stop locos when phone goes off hook - Robin Becker

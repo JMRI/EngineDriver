@@ -429,7 +429,7 @@ public class turnouts extends Activity implements OnGestureListener {
 
 		//save scroll position for later restore
 		ListView lv=(ListView)findViewById(R.id.turnouts_list);
-		mainapp.turnouts_list_position = lv.getFirstVisiblePosition();
+		mainapp.turnouts_list_position = (lv==null ? 0 : lv.getFirstVisiblePosition());
 
 		if(!this.isFinishing() && !navigatingAway) {		//only invoke setContentIntentNotification when going into background
 			mainapp.addNotification(this.getIntent());
