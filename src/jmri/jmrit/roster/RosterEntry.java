@@ -1,5 +1,6 @@
 package jmri.jmrit.roster;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
@@ -62,25 +63,29 @@ public class RosterEntry {
 	public String getDecoderModel() { return _decoderModel; }
 	public String getDecoderFamily() { return _decoderFamily; }
 	public String getDecoderComment() { return _decoderComment; }
-	@SuppressWarnings("deprecation")
 	public String getImagePath() {
 		if ((_imageFilePath != null) && (_imageFilePath.length()>0))
-			return resourcesURL+URLEncoder.encode(_imageFilePath);
+			try {
+				return resourcesURL+URLEncoder.encode(_imageFilePath, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+			}
 		return null;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public String getIconPath() { 
 		if ((_iconFilePath != null) && (_iconFilePath.length()>0) && (!_iconFilePath.equals("__noIcon.jpg"))) {			
-			//decide which icon path to use, path was changed with jetty upgrade, 2.99.5
-		    HashMap<String, String> metadata = threaded_application.metadata;  //reference global metadata 
-			if (metadata != null && metadata.size() > 0 && metadata.get("JMRIVERCANON") != null && metadata.get("JMRIVERCANON").compareTo("2.99.4") > 0 ) {
-				return rosterURL + URLEncoder.encode(_id).replace("+", "%20") + "/icon";  //roster servlet doesn't like the + replacements
-			} 
-			return resourcesURL + URLEncoder.encode(_iconFilePath);
+			try {
+				//decide which icon path to use, path was changed with jetty upgrade, 2.99.5
+				HashMap<String, String> metadata = threaded_application.metadata;  //reference global metadata 
+				if (metadata != null && metadata.size() > 0 && metadata.get("JMRIVERCANON") != null && metadata.get("JMRIVERCANON").compareTo("2.99.4") > 0 ) {
+					return rosterURL + URLEncoder.encode(_id, "UTF-8").replace("+", "%20") + "/icon";  //roster servlet doesn't like the + replacements
+				} 
+				return resourcesURL + URLEncoder.encode(_iconFilePath, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+			}
 		}
 		return null;
-		
+
 	}
 	public String getURL() { return _URL; }
 	public String getDateUpdated() { return _dateUpdated; }
@@ -94,7 +99,7 @@ public class RosterEntry {
 		NamedNodeMap nm = n.getAttributes();
 		for (int k=0; k<nm.getLength() ;k++) {
 			if ("id".compareTo(nm.item(k).getNodeName())==0) {    			
-				_id  = nm.item(k).getNodeValue();
+				_id  = nm.item(k).getNodeValue();			
 				Log.d("Engine_Driver","RosterEntry - adding id "+_id);
 				continue;
 			}

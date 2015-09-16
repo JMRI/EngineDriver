@@ -122,8 +122,18 @@ public class select_loco extends Activity {
 					hm.put("roster_address", mainapp.roster_entries.get(rostername));
 					hm.put("roster_entry_type", "loco");
 					//add icon if url set
-					if ((mainapp.roster != null) && (mainapp.roster.get(rostername)!=null) && (mainapp.roster.get(rostername).getIconPath()!=null)) {
-						hm.put("roster_icon", mainapp.roster.get(rostername).getIconPath() + "?maxHeight=52");  //include sizing instructions	
+					if (mainapp.roster != null) {
+						if (mainapp.roster.get(rostername)!=null) {
+							if ((mainapp.roster != null) && (mainapp.roster.get(rostername)!=null) && (mainapp.roster.get(rostername).getIconPath()!=null)) {
+								hm.put("roster_icon", mainapp.roster.get(rostername).getIconPath() + "?maxHeight=52");  //include sizing instructions
+							} else {
+								Log.d("Engine_Driver","xml roster entry " + rostername + " found, but no icon specified.");															
+							}
+						} else {
+							Log.w("Engine_Driver","WiThrottle roster entry " + rostername + " not found in xml roster.");							
+						}
+					} else {
+						Log.w("Engine_Driver","xml roster not available");
 					}
 					// add temp hashmap to list which view is hooked to
 					roster_list.add(hm);

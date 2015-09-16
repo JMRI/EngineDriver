@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import android.util.Log;
 
 public class RosterLoader {
 	final URL rosterUrl;
@@ -28,6 +29,7 @@ public class RosterLoader {
 		try {
 			return rosterUrl.openConnection().getInputStream();
 		} catch (IOException e) {
+			Log.e("Engine_Driver", "Error retrieving roster xml: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}

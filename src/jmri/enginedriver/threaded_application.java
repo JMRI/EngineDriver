@@ -1253,7 +1253,7 @@ public class threaded_application extends Application {
 						//look for someone to answer on specified socket, and set timeout
 						clientSocket=new Socket();
 						InetSocketAddress sa = new InetSocketAddress(host_ip, port);
-						clientSocket.connect(sa, 1000);  //TODO: adjust these timeouts, or set in prefs
+						clientSocket.connect(sa, 3000);  //TODO: adjust these timeouts, or set in prefs
 						clientSocket.setSoTimeout(500);
 					}
 					catch(Exception except)  {
@@ -1854,7 +1854,7 @@ public class threaded_application extends Application {
 		@SuppressWarnings("unchecked")
 		@Override
 		void runMethod(Download dl) throws IOException {
-			String rosterUrl = createUrl("prefs/roster.xml");
+			String rosterUrl = createUrl("roster/?format=xml");
 			HashMap<String, RosterEntry> rosterTemp = null;
 			if(rosterUrl == null || rosterUrl == "" || dl.cancel)
 				return;
@@ -1889,12 +1889,7 @@ public class threaded_application extends Application {
 			HttpGet httpget = new HttpGet(metaUrl);
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String jsonResponse = "";
-//			try {
-				jsonResponse = Client.execute(httpget, responseHandler);
-//			} catch (IOException e) {
-//				throw new RuntimeException(e);
-//			}
-
+			jsonResponse = Client.execute(httpget, responseHandler);
 			Log.d("Engine_Driver", "Raw metadata retrieved: " + jsonResponse);
 
 			HashMap<String, String> metadataTemp = new HashMap<String, String>();
