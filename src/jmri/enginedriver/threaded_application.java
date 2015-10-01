@@ -280,7 +280,7 @@ public class threaded_application extends Application {
 
 		//end_jmdns() takes a long time, so put it in its own thread
 		void end_jmdns() {
-			Thread jmdnsThread = new Thread() {
+			Thread jmdnsThread = new Thread("EndJmdns") {
 				@Override
 				public void run() {
 					try {
@@ -1807,7 +1807,7 @@ public class threaded_application extends Application {
 			public void run() {
 				set_default_function_labels();
 			}
-		}).start();	
+		}, "DefaultFunctionLabels").start();	
 		CookieSyncManager.createInstance(this);		//create this here so onPause/onResume for webViews can control it
 	}
 
@@ -1938,6 +1938,9 @@ public class threaded_application extends Application {
 					if(cancel)
 						Log.d("Engine_Driver", "Data fetch cancelled");
 				}
+			}
+			Download() {
+				super("DownloadData");
 			}
 		}
 
