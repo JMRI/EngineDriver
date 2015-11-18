@@ -41,9 +41,9 @@ public class RosterEntry {
 	private String rosterURL	= "";
 	public int getMAXFNNUM() { return MAXFNNUM; }
 	protected String[] functionLabels;
-	protected String[] functionSelectedImages;
-	protected String[] functionImages;
-	boolean[] functionLockables;
+	protected String[] functionSelectedImages; //not currently used
+	protected String[] functionImages; //not currently used
+	boolean[] functionLockables;  //not currently used
 
 	java.util.TreeMap<String,String> attributePairs;
 
