@@ -1,4 +1,5 @@
 **Version 2.12
+ * only send estop for active throttles
 **Version 2.11
  * Avoid StringIndexOutOfBoundsException reported to Play Store
  * when slider hidden, use -- and ++ instead of << and >>

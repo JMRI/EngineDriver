@@ -2135,9 +2135,18 @@ public class threaded_application extends Application {
 	}
 
 	public void sendEStopMsg()	{
-		sendMsg(comm_msg_handler, message_type.ESTOP, "", (int) 'T');
-		sendMsg(comm_msg_handler, message_type.ESTOP, "", (int) 'S');
-		sendMsg(comm_msg_handler, message_type.ESTOP, "", (int) 'G');
+		if (withrottle_version >= 2.0) {
+			if (consistT.isActive()) {  
+				sendMsg(comm_msg_handler, message_type.ESTOP, "", (int) 'T');
+			}
+			if (consistS.isActive()) {  
+				sendMsg(comm_msg_handler, message_type.ESTOP, "", (int) 'S');
+			}
+			if (consistG.isActive()) {  
+				sendMsg(comm_msg_handler, message_type.ESTOP, "", (int) 'G');
+			}
+		}
+		
 		EStopActivated = true;
 	}
 

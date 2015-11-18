@@ -34,8 +34,6 @@ import android.view.SoundEffectConstants;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
-import android.graphics.*;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.lang.reflect.Method;
