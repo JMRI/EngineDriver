@@ -506,10 +506,14 @@ public class turnouts extends Activity implements OnGestureListener {
 		if((Math.abs(e2.getX() - e1.getX()) > threaded_application.min_fling_distance) && 
 				(Math.abs(velocityX) > threaded_application.min_fling_velocity)) {
 			navigatingAway = true;
-			// left to right swipe goes to routes
+			// left to right swipe goes to routes if enabled in prefs
 			if(e2.getX() > e1.getX()) {
-				Intent in=new Intent().setClass(this, routes.class);
-				startActivity(in);
+				boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference", 
+						getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
+				if(swipeRoutes == true) {
+					Intent in=new Intent().setClass(this, routes.class);
+					startActivity(in);
+				}
 				this.finish();  //don't keep on return stack
 				connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);				
 			}
