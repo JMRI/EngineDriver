@@ -133,6 +133,10 @@
     <string name="prefStopOnPhonecallSummary">Stop loco(s) when a phone call is answered or placed</string>
     <string name="prefStopOnReleaseTitle">Stop On Release?</string>
     <string name="prefStopOnReleaseSummary">Stop loco(s) when releasing from throttle</string>
+    <string name="prefSwipeThroughRoutesTitle">Swipe Through Routes?</string>
+    <string name="prefSwipeThroughRoutesSummary">Include Routes screen when swiping between screens.</string>
+    <string name="prefSwipeThroughTurnoutsTitle">Swipe Through Turnouts?</string>
+    <string name="prefSwipeThroughTurnoutsSummary">Include Turnouts screen when swiping between screens.</string>
     <string name="prefDropOnAcquireTitle">Drop Loco Before Acquire?</string>
     <string name="prefDropOnAcquireSummary">Drop current loco before acquiring new loco.</string>
     <string name="prefHideRecentLocosTitle">Hide Recent Locos panel?</string>

@@ -2248,18 +2248,43 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			if (Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) {
 				// valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
 				event.setAction(MotionEvent.ACTION_CANCEL);
-				navigatingAway = true;
-				// left to right swipe goes to turnouts
-				if (event.getRawX() > gestureStartX) {
-					Intent in = new Intent().setClass(this, turnouts.class);
-					startActivity(in);
-					connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-				}
-				// right to left swipe goes to routes
-				else {
-					Intent in = new Intent().setClass(this, routes.class);
-					startActivity(in);
-					connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+				boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference", 
+						getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
+				boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference", 
+						getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
+				// if swiping (to Turnouts or Routes screen) is enabled, process the swipe
+				if (swipeTurnouts == true || swipeRoutes == true) {
+					navigatingAway = true;
+					// left to right swipe goes to turnouts if enabled in prefs
+					if (event.getRawX() > gestureStartX) 
+					{
+						Intent in;
+						if(swipeTurnouts == true) 
+						{
+							in=new Intent().setClass(this, turnouts.class);
+						} 
+						else 
+						{
+							in = new Intent().setClass(this, routes.class);
+						}
+						startActivity(in);
+						connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+					}
+					// right to left swipe goes to routes if enabled in prefs
+					else 
+					{
+						Intent in;
+						if(swipeRoutes == true) 
+						{
+							in = new Intent().setClass(this, routes.class);
+						} 
+						else 
+						{
+							in=new Intent().setClass(this, turnouts.class);
+						}
+						startActivity(in);
+						connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+					}
 				}
 			} else {
 				// gesture was not long enough

@@ -28,4 +28,6 @@
     <bool name="prefConnectToFirstServer">false</bool>
     <bool name="prefDisplaySpeedArrows">false</bool>
     <bool name="prefHideSliderDefaultValue">false</bool>
+    <bool name="prefSwipeThroughTurnoutsDefaultValue">true</bool>
+    <bool name="prefSwipeThroughRoutesDefaultValue">true</bool>
 </resources>

@@ -464,10 +464,14 @@ public class routes extends Activity  implements OnGestureListener {
 				this.finish();
 				connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
 			}
-			// right to left swipe goes to turnouts
+			// right to left swipe goes to turnouts if enabled in prefs
 			else {
-				Intent in=new Intent().setClass(this, turnouts.class);
-				startActivity(in);
+				boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference", 
+						getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
+				if(swipeTurnouts == true) {
+					Intent in=new Intent().setClass(this, turnouts.class);
+					startActivity(in);
+				}
 				this.finish();
 				connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
 			}

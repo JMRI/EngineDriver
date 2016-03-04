@@ -223,5 +223,17 @@
             android:summary="@string/prefDelimiterSummary"
             android:title="@string/prefDelimiterTitle" >
         </EditTextPreference>
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefSwipeThroughTurnoutsDefaultValue"
+            android:key="swipe_through_turnouts_preference"
+            android:summary="@string/prefSwipeThroughTurnoutsSummary"
+            android:title="@string/prefSwipeThroughTurnoutsTitle" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefSwipeThroughRoutesDefaultValue"
+            android:key="swipe_through_routes_preference"
+            android:summary="@string/prefSwipeThroughRoutesSummary"
+            android:title="@string/prefSwipeThroughRoutesTitle" >
+        </CheckBoxPreference>
     </PreferenceCategory>
 </PreferenceScreen>
