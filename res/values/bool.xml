@@ -23,6 +23,7 @@
     <bool name="prefHideRecentLocosDefaultValue">false</bool>
     <bool name="prefRosterRecentLocosDefaultValue">false</bool>
     <bool name="prefHideSystemRouteNamesDefaultValue">false</bool>
+    <bool name="prefHideIfNoUserNameDefaultValue">true</bool>
     <bool name="prefShowEmergencyStopButtonDefaultValue">false</bool>
     <bool name="prefLayoutPowerButtonDefaultValue">false</bool>
     <bool name="prefConnectToFirstServer">false</bool>

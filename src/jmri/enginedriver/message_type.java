@@ -52,5 +52,6 @@ interface message_type
   public static final int CURRENT_TIME=28;		// ta -> activities  updates current time
   public static final int CLOCK_DISPLAY=29;		// pref -> ta  clock display preference changed
   public static final int ESTOP=30;				// ta(sendeStopMsg) -> ta  estop requested
+  public static final int HIDE_IF_NO_USER_NAME=31;// pref -> turnouts or routes  hide if no user name preference changed
   
 }

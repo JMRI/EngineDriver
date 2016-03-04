@@ -139,6 +139,8 @@
     <string name="prefSwipeThroughTurnoutsSummary">Include Turnouts screen when swiping between screens.</string>
     <string name="prefDropOnAcquireTitle">Drop Loco Before Acquire?</string>
     <string name="prefDropOnAcquireSummary">Drop current loco before acquiring new loco.</string>
+    <string name="prefHideIfNoUserNameTitle">Hide If No User Name?</string>
+    <string name="prefHideIfNoUserNameSummary">Omit Turnout/Route from list if the user name is empty.</string>
     <string name="prefHideRecentLocosTitle">Hide Recent Locos panel?</string>
     <string name="prefHideRecentLocosSummary">Leave more room for roster locos.</string>
     <string name="prefRosterRecentLocosTitle">Roster in Recent Locos?</string>

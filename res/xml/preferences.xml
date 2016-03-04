@@ -224,6 +224,12 @@
             android:title="@string/prefDelimiterTitle" >
         </EditTextPreference>
         <CheckBoxPreference
+            android:defaultValue="@bool/prefHideIfNoUserNameDefaultValue"
+            android:key="HideIfNoUserNamePreference"
+            android:summary="@string/prefHideIfNoUserNameSummary"
+            android:title="@string/prefHideIfNoUserNameTitle" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
             android:defaultValue="@bool/prefSwipeThroughTurnoutsDefaultValue"
             android:key="swipe_through_turnouts_preference"
             android:summary="@string/prefSwipeThroughTurnoutsSummary"
