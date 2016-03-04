@@ -93,8 +93,10 @@ public class routes extends Activity  implements OnGestureListener {
 			if (mainapp.rt_user_names != null) { //none defined
 				int pos = 0;
 				String del = prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
+				boolean hideIfNoUserName = prefs.getBoolean("HideIfNoUserNamePreference", getResources().getBoolean(R.bool.prefHideIfNoUserNameDefaultValue));
 				for (String username : mainapp.rt_user_names) {
-					if (username != null && !username.equals(""))  {  //skip routes without usernames
+					boolean hasUserName = (username != null && !username.equals(""));
+					if (hasUserName || !hideIfNoUserName)  {  //skip routes without usernames if pref is set
 						//get values from global array
 						String systemname = mainapp.rt_system_names[pos];
 						String currentstate = mainapp.rt_states[pos];
@@ -105,7 +107,10 @@ public class routes extends Activity  implements OnGestureListener {
 
 						//put values into temp hashmap
 						HashMap<String, String> hm=new HashMap<String, String>();
-						hm.put("rt_user_name", username);
+						if (hasUserName)
+							hm.put("rt_user_name", username);
+						else
+							hm.put("rt_user_name", systemname);
 						hm.put("rt_system_name_hidden", systemname);
 						if (!hidesystemroutes) {  //check prefs for show or not show this
 							hm.put("rt_system_name", systemname);
@@ -114,7 +119,7 @@ public class routes extends Activity  implements OnGestureListener {
 						routesFullList.add(hm);
 
 						//if location is new, add to list
-						if(del.length() > 0) {
+						if(del.length() > 0 && hasUserName) {
 							int delim = username.indexOf(del);
 							if(delim >= 0) {
 								String loc = username.substring(0, delim);
@@ -212,6 +217,7 @@ public class routes extends Activity  implements OnGestureListener {
 			}
 			break;
 			case message_type.LOCATION_DELIMITER:
+			case message_type.HIDE_IF_NO_USER_NAME:
 				refresh_route_view();
 				break;
 			case message_type.WIT_CON_RETRY:
@@ -466,8 +472,7 @@ public class routes extends Activity  implements OnGestureListener {
 			}
 			// right to left swipe goes to turnouts if enabled in prefs
 			else {
-				boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference", 
-						getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
+				boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference", getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
 				if(swipeTurnouts == true) {
 					Intent in=new Intent().setClass(this, turnouts.class);
 					startActivity(in);
