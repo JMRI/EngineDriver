@@ -1,6 +1,7 @@
 **Version 2.12
  * only send estop for active throttles
- * new prefs to include Routes and Turnouts in swipe list
+ * new prefs to include Routes and Turnouts in swipe list - Robin Becker
+ * new pref to hide turnouts/routes if no user name - Robin Becker
 **Version 2.11
  * Avoid StringIndexOutOfBoundsException reported to Play Store
  * when slider hidden, use -- and ++ instead of << and >>
@@ -286,12 +287,10 @@
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
  * routes
- *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
  *   TODO: use PRT titles for Active/inactive
  * turnouts
  *   TODO: list available "system" based on items in use, maybe with dropdown on Turnout
  *   TODO: pref to sort by system name vs. user name
- *   TODO: remove the username not blank "filter" and rely on WiT's Filter Controls
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
  *   TODO: if in Connect, don't go into background on Pause, just exit.
