@@ -1166,18 +1166,10 @@ public class threaded_application extends Application {
 							else
 								newMsg = prefix + "-*<;>r";  						//release all locos from this throttle
 						} 
-						else if('V' == com) {							//if set speed
-							if(addr.length() == 0)
-								addr = "*";
-							newMsg = prefix + "A" + addr + "<;>" + cmd;  
-						}
-						else if('R' == com) {							//if set direction
+						else {												//if anything else
 							if(addr.length() == 0)
 								addr = "*";
 							newMsg = prefix + "A" + addr + "<;>" + cmd;
-						}
-						else {												//if anything else
-							newMsg = prefix + "A*<;>" + cmd;  				//pass all action commands along
 						}
 					}
 				}

@@ -2,6 +2,7 @@
  * only send estop for active throttles
  * new prefs to include Routes and Turnouts in swipe list - Robin Becker
  * new pref to hide turnouts/routes if no user name - Robin Becker
+ * test of sending functions only to lead address
 **Version 2.11
  * Avoid StringIndexOutOfBoundsException reported to Play Store
  * when slider hidden, use -- and ++ instead of << and >>
