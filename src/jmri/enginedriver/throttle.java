@@ -216,9 +216,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 		@Override
 		public void handleMessage(Message msg) {
+			String response_str = msg.obj.toString();
 			switch (msg.what) {
 			case message_type.RESPONSE: { // handle messages from WiThrottle server
-				String response_str = msg.obj.toString();
 				if (response_str.length() < 2) return;  //bail if too short, to avoid crash				
 				char com1 = response_str.charAt(0);				
 				char whichThrottle = response_str.charAt(1);
@@ -375,12 +375,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				set_labels();				// refresh function labels when any roster response is received
 				break;
 			case message_type.WIT_CON_RETRY:
-				witRetry(msg.obj.toString());
+				witRetry(response_str);
 				break;
 			case message_type.WIT_CON_RECONNECT:
 				break;
 			case message_type.CURRENT_TIME:
-				currentTime = msg.obj.toString();
+				currentTime = response_str;
 				setTitle();
 				break;
 			case message_type.DISCONNECT:
@@ -943,7 +943,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				leadOnly =  (lab.contains("WHISTLE")
 							|| lab.contains("HORN")
 							|| lab.contains("BELL")
-							|| lab.contains("HEAD"));
+							|| lab.contains("HEAD")
+							|| (lab.contains("LIGHT") && !lab.contains("REAR")));
 				trailOnly = lab.contains("REAR");
 			}
 		}

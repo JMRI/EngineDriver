@@ -226,8 +226,11 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 		consistSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				ConLoco l = (ConLoco)parent.getSelectedItem();
-				consist.setLeadAddr(l.getAddress());
-				refreshConsistLists();
+				String lAddr = l.getAddress();
+				if (!(consist.getLeadAddr().equals(lAddr))) {
+					consist.setLeadAddr(lAddr);
+					refreshConsistLists();
+				}
 			}
 			public void onNothingSelected(AdapterView<?> parent) {
 			}
