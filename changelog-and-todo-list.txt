@@ -3,6 +3,7 @@
  * new prefs to include Routes and Turnouts in swipe list - Robin Becker
  * new pref to hide turnouts/routes if no user name - Robin Becker
  * test of sending functions only to lead address
+ * fixed issue with Consist Edit list view on new OS
 **Version 2.11
  * Avoid StringIndexOutOfBoundsException reported to Play Store
  * when slider hidden, use -- and ++ instead of << and >>
@@ -294,7 +295,6 @@
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
- *   TODO: if in Connect, don't go into background on Pause, just exit.
  *   TODO: if user enters ":" into address input, jump to port input
  *   TODO: debug "Success: Restored connection to ..." message seen (sometimes) after exiting from Throttle
  *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
@@ -307,6 +307,9 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: make Stop "sticky" and ignore slider unless direction is selected
+ *   TODO: send "appropriate" functions to consist lead instead of all consist
+ *   TODO: support webview on Top
  *   TODO: fix issue with rotation, Reverse indication is lost
  *   TODO: show proper function labels based on lead loco in consist
  *   TODO: fix issues with slider progress line when padding changed
@@ -318,9 +321,9 @@
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
  *   TODO: add preference to disable other hardware buttons in throttle screen
  *   TODO: add graphics (slider, stop, directions, functions?)  add colors
- *   TODO: in ed exit, don't send release if "Not Set"
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
+ *   TODO: 
  * select_loco:
  *   TODO: disconnect connections made by roster stuff
  *   TODO: add close button and roster image to details dialog
@@ -331,7 +334,7 @@
  *
  * These require changes to WiThrottle
  *   allow setting of undefined turnouts (JMRI Turnout Tool creates them on-the-fly, so we could too)
- *   resend roster, turnout and routes when items are added or removed, by adding listeners to WiT
+ *   resend turnout and routes when items are added or removed, by adding listeners to WiT
  *   support resend of function and direction commands, even when WiT knows it has already sent
  *   WiT send MT-xxx when commands are received from a client for a loco that is not active.  (to get ED up to date with server after connection loss)
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
