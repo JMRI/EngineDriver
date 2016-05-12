@@ -3,6 +3,7 @@
  * new prefs to include Routes and Turnouts in swipe list - Robin Becker
  * new pref to hide turnouts/routes if no user name - Robin Becker
  * test of sending functions only to lead address
+ * fixed issue with Consist Edit list view on new OS
 **Version 2.11
  * Avoid StringIndexOutOfBoundsException reported to Play Store
  * when slider hidden, use -- and ++ instead of << and >>

@@ -177,8 +177,7 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id)	    {
 				ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
-				ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
-				TextView addrv = (TextView) rl.getChildAt(1); // get address text from 2nd box
+				TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
 				String address = addrv.getText().toString();
 
 				try {
@@ -195,8 +194,7 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id) {
 				ViewGroup vg = (ViewGroup) v;
-				ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout
-				TextView addrv = (TextView) rl.getChildAt(1); // get address text from 2nd box
+				TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
 				String addr = addrv.getText().toString();
 
 				if(!consist.getLeadAddr().equals(addr)) {
