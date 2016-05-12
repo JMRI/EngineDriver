@@ -2,8 +2,8 @@
  * only send estop for active throttles
  * new prefs to include Routes and Turnouts in swipe list - Robin Becker
  * new pref to hide turnouts/routes if no user name - Robin Becker
- * test of sending functions only to lead address
  * fixed issue with Consist Edit list view on new OS
+ * only send Horn, Bell and Headlight functions to lead loco in Engine Driver consist - Robin Becker
 **Version 2.11
  * Avoid StringIndexOutOfBoundsException reported to Play Store
  * when slider hidden, use -- and ++ instead of << and >>
@@ -308,7 +308,7 @@
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected
- *   TODO: send "appropriate" functions to consist lead instead of all consist
+ *   TODO: send "appropriate" functions to just consist trail instead of all consist
  *   TODO: support webview on Top
  *   TODO: fix issue with rotation, Reverse indication is lost
  *   TODO: show proper function labels based on lead loco in consist

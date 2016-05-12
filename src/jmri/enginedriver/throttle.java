@@ -925,13 +925,29 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	public class function_button_touch_listener implements View.OnTouchListener {
 		int function;
 		char whichThrottle;		// T for first throttle, S for second, G for third
+		boolean leadOnly;		// function only applies to the lead loco
+		boolean trailOnly;		// function only applies to the trail loco (future)
 
-		// public function_button_touch_listener(int new_function, boolean
-		// new_toggle_type, String new_whichThrottle)
 		public function_button_touch_listener(int new_function, char new_whichThrottle) {
+			this(new_function, new_whichThrottle, "");
+		}
+
+		public function_button_touch_listener(int new_function, char new_whichThrottle, String funcLabel) {
 			function = new_function; 	// store these values for this button
 			whichThrottle = new_whichThrottle;
+			String lab = funcLabel.toUpperCase().trim();
+			leadOnly = false;
+			trailOnly = false;
+			if (lab != null && lab != "")
+			{
+				leadOnly =  (lab.contains("WHISTLE")
+							|| lab.contains("HORN")
+							|| lab.contains("BELL")
+							|| lab.contains("HEAD"));
+				trailOnly = lab.contains("REAR");
+			}
 		}
+		
 
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
@@ -961,67 +977,71 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			String throt = Character.toString(whichThrottle);
 
 			switch (action) {
-			case MotionEvent.ACTION_DOWN: {
-				switch (this.function) {
-				case function_button.FORWARD:
-				case function_button.REVERSE: {
-					int dir = (function == function_button.FORWARD ? 1 : 0);
-					showDirectionRequest(whichThrottle, dir);		 // update requested direction indication
-					setEngineDirection(whichThrottle, dir, false);	 // update direction for each engine on this throttle
+				case MotionEvent.ACTION_DOWN: {
+					switch (this.function) {
+						case function_button.FORWARD:
+						case function_button.REVERSE: {
+							int dir = (function == function_button.FORWARD ? 1 : 0);
+							showDirectionRequest(whichThrottle, dir);		 // update requested direction indication
+							setEngineDirection(whichThrottle, dir, false);	 // update direction for each engine on this throttle
+							break;
+						}
+						case function_button.STOP: 
+							set_stop_button(whichThrottle, true);
+							speedUpdateAndNotify(whichThrottle, 0);
+							break;
+						case function_button.SPEED_LABEL:  // specify which throttle the volume button controls
+							whichVolume = whichThrottle; 	// use whichever was clicked
+							set_labels();
+							break;
+		
+						default: { // handle the function buttons
+							Consist con;
+							if (whichThrottle == 'T') {
+								con = mainapp.consistT;
+							} else if (whichThrottle == 'G') {
+								con = mainapp.consistG;
+							} else {
+								con = mainapp.consistS;
+							}
+		
+							String addr = "";
+							if (leadOnly)
+								addr = con.getLeadAddr();
+// ***future				else if (trailOnly)
+//								addr = con.getTrailAddr();
+							mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + addr, this.function, 1);
+							// set_function_request(whichThrottle, function, 1);
+							break;
+						}
+					}
 					break;
 				}
-				case function_button.STOP: {
-					set_stop_button(whichThrottle, true);
-					speedUpdateAndNotify(whichThrottle, 0);
-				}
-				case function_button.SPEED_LABEL: { // specify which throttle the volume button controls
-					whichVolume = whichThrottle; 	// use whichever was clicked
-					set_labels();
+				
+				// handle stopping of function on key-up
+				case MotionEvent.ACTION_UP:
+				case MotionEvent.ACTION_CANCEL:
+	
+					if (function == function_button.STOP) {
+						set_stop_button(whichThrottle, false);
+					}
+					// only process UP for function buttons
+					else if (function < function_button.FORWARD) {
+						// Consist con = (whichThrottle == 'T') ? mainapp.consistT :
+						// mainapp.consistS;
+						Consist con;
+						if (whichThrottle == 'T') {
+							con = mainapp.consistT;
+						} else if (whichThrottle == 'G') {
+							con = mainapp.consistG;
+						} else {
+							con = mainapp.consistS;
+						}
+						String addr = con.getLeadAddr();
+						mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, throt + addr, function, 0);
+						// set_function_request(whichThrottle, function, 0);
+					}
 					break;
-				}
-
-				default: { // handle the function buttons
-					Consist con;
-					if (whichThrottle == 'T') {
-						con = mainapp.consistT;
-					} else if (whichThrottle == 'G') {
-						con = mainapp.consistG;
-					} else {
-						con = mainapp.consistS;
-					}
-
-					String addr = con.getLeadAddr();
-					mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + addr, this.function, 1);
-					// set_function_request(whichThrottle, function, 1);
-				}
-				}
-
-			}
-				break;
-			// handle stopping of function on key-up
-			case MotionEvent.ACTION_UP:
-			case MotionEvent.ACTION_CANCEL:
-
-				if (function == function_button.STOP) {
-					set_stop_button(whichThrottle, false);
-				}
-				// only process UP for function buttons
-				else if (function < function_button.FORWARD) {
-					// Consist con = (whichThrottle == 'T') ? mainapp.consistT :
-					// mainapp.consistS;
-					Consist con;
-					if (whichThrottle == 'T') {
-						con = mainapp.consistT;
-					} else if (whichThrottle == 'G') {
-						con = mainapp.consistG;
-					} else {
-						con = mainapp.consistS;
-					}
-					String addr = con.getLeadAddr();
-					mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, throt + addr, function, 0);
-					// set_function_request(whichThrottle, function, 0);
-				}
-				break;
 			}
 		}
 	}
@@ -1582,9 +1602,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 					Integer func = aList.get(k);
 					functionButtonMap.put(func, b); // save function to button
 													// mapping
-					fbtl = new function_button_touch_listener(func, whichThrottle);
+					String bt = function_labels_temp.get(func);
+					fbtl = new function_button_touch_listener(func, whichThrottle, bt);
 					b.setOnTouchListener(fbtl);
-					String bt = function_labels_temp.get(func) + "        "; 	// pad with spaces, and limit to 7 characters
+					bt = bt  + "        "; 	// pad with spaces, and limit to 7 characters
 					b.setText(bt.substring(0, 7));
 					b.setVisibility(VISIBLE);
 					b.setEnabled(false); // start out with everything disabled
