@@ -4,6 +4,7 @@
  * new pref to hide turnouts/routes if no user name - Robin Becker
  * fixed issue with Consist Edit list view on new OS
  * only send Horn, Bell and Headlight functions to lead loco in Engine Driver consist - Robin Becker
+ * Stop button no longer moves the "v" - Robin Becker
 **Version 2.11
  * Avoid StringIndexOutOfBoundsException reported to Play Store
  * when slider hidden, use -- and ++ instead of << and >>
