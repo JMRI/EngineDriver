@@ -1,3 +1,5 @@
+**Version 2.13
+ * allow app to be moved to SD card
 **Version 2.12
  * only send estop for active throttles
  * new prefs to include Routes and Turnouts in swipe list - Robin Becker
