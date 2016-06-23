@@ -154,12 +154,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 		else if(key.equals("InitialThrotWebPage")) {
 			mainapp.alert_activities(message_type.INITIAL_WEBPAGE,""); 
 		}
-		else if(key.equals("DelimiterPreference")) {
-			mainapp.alert_activities(message_type.LOCATION_DELIMITER,"");
-		}
-		else if(key.equals("HideIfNoUserNamePreference")) {
-			mainapp.alert_activities(message_type.HIDE_IF_NO_USER_NAME,"");
-		}
 		else if(key.equals("ClockDisplayTypePreference")) {
 			mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY);
 		}

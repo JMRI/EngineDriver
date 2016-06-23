@@ -229,10 +229,6 @@ public class turnouts extends Activity implements OnGestureListener {
 					}
 				}
 				break;
-			case message_type.LOCATION_DELIMITER:
-			case message_type.HIDE_IF_NO_USER_NAME:
-				refresh_turnout_view();
-				break;
 			case message_type.WIT_CON_RETRY:
 				witRetry(msg.obj.toString());
 				break;
@@ -595,7 +591,7 @@ public class turnouts extends Activity implements OnGestureListener {
 		case R.id.preferences_mnu:
 			in=new Intent().setClass(this, preferences.class);
 			navigatingAway = true;
-			startActivity(in);
+			startActivityForResult(in,0);	// refresh view on return
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
 		case R.id.about_mnu:
@@ -612,6 +608,12 @@ public class turnouts extends Activity implements OnGestureListener {
 			break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	//handle return from menu items
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		//since we always do the same action no need to distinguish between requests
+		refresh_turnout_view();
 	}
 
 	private void disconnect() {
