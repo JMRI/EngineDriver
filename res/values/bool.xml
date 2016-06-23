@@ -17,6 +17,7 @@
     <bool name="prefIncreaseSliderHeightDefaultValue">false</bool>
     <bool name="prefUseOneThrottleDefaultValue">false</bool>
     <bool name="prefUseTwoThrottleDefaultValue">false</bool>
+    <bool name="prefSelectiveLeadSoundDefaultValue">true</bool>
     <bool name="prefStopOnPhonecallDefaultValue">true</bool>
     <bool name="prefStopOnReleaseDefaultValue">true</bool>
     <bool name="prefDropOnAcquireDefaultValue">false</bool>

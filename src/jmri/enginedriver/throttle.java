@@ -940,9 +940,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			trailOnly = false;
 			if (lab != null && lab != "")
 			{
-				leadOnly =  (lab.contains("WHISTLE")
-							|| lab.contains("HORN")
-							|| lab.contains("BELL")
+				boolean selectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
+				leadOnly =  (selectiveLeadSound && 
+								(lab.contains("WHISTLE") || lab.contains("HORN") || lab.contains("BELL"))
 							|| lab.contains("HEAD")
 							|| (lab.contains("LIGHT") && !lab.contains("REAR")));
 				trailOnly = lab.contains("REAR");
@@ -1349,11 +1349,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		fbT = (ViewGroup) findViewById(R.id.function_buttons_table_T);
 		fbS = (ViewGroup) findViewById(R.id.function_buttons_table_S);
 		fbG = (ViewGroup) findViewById(R.id.function_buttons_table_G);
-		// loop through all function buttons and
 		// set label and dcc functions (based on settings) or hide if no label
-		set_function_labels_and_listeners_for_view('T');
-		set_function_labels_and_listeners_for_view('S');
-		set_function_labels_and_listeners_for_view('G');
+		setAllFunctionLabelsAndListeners();
 
 		if (mVelocityTracker == null) {
 			mVelocityTracker = VelocityTracker.obtain();
@@ -1555,8 +1552,17 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 		webView.loadUrl(url);
 	}
+
+	void setAllFunctionLabelsAndListeners()
+	{
+		set_function_labels_and_listeners_for_view('T');
+		set_function_labels_and_listeners_for_view('S');
+		set_function_labels_and_listeners_for_view('G');
+	}
 	
 	// helper function to set up function buttons for each throttle
+	// loop through all function buttons and
+	// set label and dcc functions (based on settings) or hide if no label
 	void set_function_labels_and_listeners_for_view(char whichThrottle) {
 		// Log.d("Engine_Driver","starting set_function_labels_and_listeners_for_view");
 
@@ -2072,7 +2078,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		case R.id.preferences_mnu:
 			in = new Intent().setClass(this, preferences.class);
 			navigatingAway = true;
-			startActivity(in);
+			startActivityForResult(in,0);	// reinitialize function buttons and labels on return
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 			break;
 		case R.id.settings_mnu:
@@ -2168,9 +2174,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 		// loop through all function buttons and
 		// set label and dcc functions (based on settings) or hide if no label
-		set_function_labels_and_listeners_for_view('T');
-		set_function_labels_and_listeners_for_view('S');
-		set_function_labels_and_listeners_for_view('G');
+		setAllFunctionLabelsAndListeners();
 		set_labels();
 	}
 
