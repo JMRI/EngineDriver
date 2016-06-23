@@ -127,6 +127,12 @@
             android:summary="@string/prefStopOnPhonecallSummary"
             android:title="@string/prefStopOnPhonecallTitle" >
         </CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefSelectiveLeadSoundDefaultValue"
+            android:key="SelectiveLeadSound"
+            android:summary="@string/prefSelectiveLeadSoundSummary"
+            android:title="@string/prefSelectiveLeadSoundTitle" >
+        </CheckBoxPreference>
         </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference
