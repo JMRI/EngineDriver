@@ -311,6 +311,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: add preferences for maximum speed to enable direction buttons, to limit inadvertent changes
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected
  *   TODO: send "appropriate" functions to just consist trail instead of all consist
  *   TODO: support webview on Top
