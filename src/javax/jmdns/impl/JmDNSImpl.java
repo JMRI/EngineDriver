@@ -5,6 +5,7 @@
 package javax.jmdns.impl;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.DatagramPacket;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
@@ -439,6 +440,15 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
         }
     }
 
+	private void joinGroup(MulticastSocket socket, InetAddress addr) {
+		try {
+			Method method = MulticastSocket.class.getMethod("joinGroup", InetAddress.class);
+			method.invoke(socket, addr);
+		} catch (Exception e) {
+            logger.log(Level.INFO, "JmDNS MulticastSocket.joinGroup not supported by Android version.  Discovery is not available.");
+		}
+	}
+
     private void openMulticastSocket(HostInfo hostInfo) throws IOException {
         if (_group == null) {
             if (hostInfo.getInetAddress() instanceof Inet6Address) {
@@ -470,7 +480,8 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
             }
         }
         _socket.setTimeToLive(255);
-        _socket.joinGroup(_group);
+//        _socket.joinGroup(_group);
+        joinGroup(_socket, _group);
     }
 
     private void closeMulticastSocket() {
