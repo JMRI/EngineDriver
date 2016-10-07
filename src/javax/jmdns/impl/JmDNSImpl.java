@@ -442,10 +442,10 @@ public class JmDNSImpl extends JmDNS implements DNSStatefulObject, DNSTaskStarte
 
 	private void joinGroup(MulticastSocket socket, InetAddress addr) {
 		try {
-			Method method = socket.getClass().getMethod("joinGroup",addr.getClass());
-			method.invoke(socket,addr);
+			Method method = MulticastSocket.class.getMethod("joinGroup", InetAddress.class);
+			method.invoke(socket, addr);
 		} catch (Exception e) {
-            logger.log(Level.INFO, "JmDNS MulticastSocket.joinGroup not supported");
+            logger.log(Level.INFO, "JmDNS MulticastSocket.joinGroup not supported by Android version.  Discovery is not available.");
 		}
 	}
 
