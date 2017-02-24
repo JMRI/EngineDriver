@@ -751,6 +751,9 @@ public class threaded_application extends Application {
 					server_type = response_str.substring(2); //store the type 
 					if (server_type.equals("MRC")) {
 						web_server_port = 80; //hardcode web port for MRC
+						to_state_names = new HashMap<String, String>();
+				     	to_state_names.put("2", "Closed"); //hardcode for MRC, this will enable the manual input only
+				     	to_state_names.put("4", "Thrown");
 					}
 					Log.d("Engine_Driver", "process response: set server_type to " + server_type + " web port to " + web_server_port);					
 				}
