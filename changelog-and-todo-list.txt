@@ -1,7 +1,8 @@
 **Version 2.13
- * allow app to be moved to SD card
+ * allow app to be moved to SD card - mstevetodd
  * Added selective sound routing preference for consists - Robin Becker
  * eliminate crash when multicast not supported - Robin Becker
+ * support for MRC wifi hardware (1530) - mstevetodd
 **Version 2.12
  * only send estop for active throttles
  * new prefs to include Routes and Turnouts in swipe list - Robin Becker

@@ -49,10 +49,10 @@ public class web_activity extends Activity {
   private static boolean clearHistory = false;		// flags webViewClient to clear history when page load finishes
   private static String firstUrl = null;			// first url loaded that isn't noUrl
   private static String currentUrl = null;
-  private boolean orientationChange = false;
   private String currentTime = "";
   private Menu WMenu;
-  private boolean navigatingAway = false;		// flag for onPause: set to true when another activity is selected, false if going into background 
+  private boolean navigatingAway = false;		// flag for onPause: set to true when another activity is selected, false if going into background
+  private boolean webInited = false;
  
   @SuppressLint("HandlerLeak")
 class web_handler extends Handler {
@@ -63,7 +63,15 @@ class web_handler extends Handler {
 			  String s = msg.obj.toString();
 			  String response_str = s.substring(0, Math.min(s.length(), 2));
 			  if("PW".equals(response_str))		// PW - web server port info
-				  initWeb();
+				  if (!webInited) {
+					  initWeb();
+					  webInited = true;
+				  }
+			  if("HTMRC".equals(s))		// If connected to the MRC Wifi adapter, treat as PW, which isn't coming
+				  if (!webInited) {
+					  initWeb();
+					  webInited = true;
+				  }
 			  break;
 		  }
 		  case message_type.WIT_CON_RETRY:
@@ -122,7 +130,6 @@ class web_handler extends Handler {
 
     mainapp=(threaded_application)this.getApplication();
     prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-    orientationChange = false;
     if(mainapp.isForcingFinish()) {		// expedite
     	return;
     }
@@ -136,7 +143,6 @@ class web_handler extends Handler {
 	webView.getSettings().setUseWideViewPort(true);		// Enable greater zoom-out
 	webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
 	webView.setInitialScale((int)(100 * scale));
-//	webView.getSettings().setLoadWithOverviewMode(true);	// size image to fill width
 
 	// open all links inside the current view (don't start external web browser)
 	WebViewClient EDWebClient = new WebViewClient()	{
@@ -223,7 +229,6 @@ class web_handler extends Handler {
 	  super.onSaveInstanceState(outState);
 	  if(webView != null)
 		  webView.saveState(outState);		// save history
-	  orientationChange = true;
 	  
   }
   
@@ -364,6 +369,7 @@ class web_handler extends Handler {
 	  String url = currentUrl;
 	  if(url == null) {
 		  url = mainapp.createUrl(prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue)));
+		  Log.d("Engine_Driver","initial web url set to '" + url + "'");
 		  if (url == null) {		//if port is invalid
 			  url = noUrl;
 		  }

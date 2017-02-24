@@ -90,6 +90,7 @@ public class threaded_application extends Application {
 	volatile int port = 0; //The TCP port that the WiThrottle server is running on
 	Double withrottle_version = 0.0; //version of withrottle server
 	private int web_server_port = 0; //default port for jmri web server
+	private String server_type = "JMRI"; //currently, only JMRI or MRC
 	private volatile boolean doFinish = false;	// when true, tells any Activities that are being created/resumed to finish()
 	//shared variables returned from the withrottle server, stored here for easy access by other activities
 	volatile Consist consistT;
@@ -742,6 +743,16 @@ public class threaded_application extends Application {
 				catch (Exception e) {
 					Log.d("Engine_Driver", "process response: invalid WiT version string");
 					withrottle_version = 0.0;
+				}
+				break;
+
+			case 'H': 
+				if (response_str.charAt(1) == 'T') { //handle HTMRC for example
+					server_type = response_str.substring(2); //store the type 
+					if (server_type.equals("MRC")) {
+						web_server_port = 80; //hardcode web port for MRC
+					}
+					Log.d("Engine_Driver", "process response: set server_type to " + server_type + " web port to " + web_server_port);					
 				}
 				break;
 
@@ -1974,6 +1985,7 @@ public class threaded_application extends Application {
 	private void initShared() {
 		withrottle_version = 0.0; 
 		web_server_port = 0;
+		server_type = "JMRI";
 		power_state = null;
 		to_states = null;
 		to_system_names = null;
@@ -2218,15 +2230,18 @@ public class threaded_application extends Application {
 
 	// build a full url
 	// returns:	full url 	if web_server_port is valid
-	//			null	 otherwise
+	//			empty string   otherwise
 	public String createUrl(String defaultUrl) {
 		String url = "";
 		int port = web_server_port;
+		if (server_type.equals("MRC")) {  //special case ignore any url passed-in if connected to MRC, as it does not forward
+			defaultUrl = "";
+			Log.d("Engine_Driver","ignoring web url for MRC");
+		}
 		if (port > 0) {
 			if (defaultUrl.startsWith("http")) { //if url starts with http, use it as is
 				url = defaultUrl;
-			} else { //, else prepend servername and port and slash if needed
-				
+			} else { //, else prepend servername and port and slash if needed			
 				url = "http://" + host_ip + ":" + port + (defaultUrl.startsWith("/")?"":"/") + defaultUrl;
 			}
 		}
