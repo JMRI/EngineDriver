@@ -1,4 +1,4 @@
-/* Copyright (C) 2014 M. Steve Todd mstevetodd@enginedriver.rrclubs.org
+/* Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -170,7 +170,7 @@ public class connection_activity extends Activity {
 		};
 	}
 
-	//Method to connect to first discovered JMRI WiThrottle server.
+	//Method to connect to first discovered WiThrottle server.
 	public void connectA()
 	{
 		try
@@ -193,7 +193,7 @@ public class connection_activity extends Activity {
 					}
 					connected_hostname = tm.get("host_name"); //copy ip to name
 					connect();
-					Toast.makeText(getApplicationContext(), "Connected to JMRI Server: " + connected_hostname  + "  Port : " + connected_port, Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "Connected to Server: " + connected_hostname  + "  Port : " + connected_port, Toast.LENGTH_LONG).show();
 				} 
 				else {
 					Toast.makeText(getApplicationContext(), "Enter or select an address and port", Toast.LENGTH_SHORT).show();

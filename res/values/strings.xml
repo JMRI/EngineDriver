@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-      Copyright (C) 2014 M. Steve Todd mstevetodd@enginedriver.rrclubs.org
+      Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
       This program is free software; you can redistribute it and/or modify it 
       under the terms of the GNU General Public License as published by the 
       Free Software Foundation;
@@ -19,8 +19,8 @@
     <string name="fb_label">Function Label</string>
     <string name="function_buttons">function_buttons</string>
     <string name="app_name">Engine Driver</string>
-    <string name="app_description">Engine Driver - JMRI Throttle for your Android phone.  This application can connect to a JMRI WiThrottle server running on a PC, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one or two locomotives. </string>
-    <string name="app_name_connect">Engine Driver - Connect to JMRI WiThrottle</string>
+    <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI (or MRC) WiThrottle server, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one or two locomotives. </string>
+    <string name="app_name_connect">Engine Driver - Connect to Server</string>
     <string name="app_name_throttle">Engine Driver - Throttle</string>
     <string name="app_name_power_control">Engine Driver - Power Control</string>
     <string name="app_name_reconnect_status">Engine Driver - Reconnect Status</string>
@@ -81,7 +81,7 @@
     <string name="power_control_label">Control Layout Power Setting</string>
     <string name="power_control_button">unknown</string>
     <string name="press_to_toggle">Press button to toggle layout power state.</string>
-    <string name="power_control_not_allowed">Power Control not allowed.  Change in WiThrottle Preferences in JMRI.</string>
+    <string name="power_control_not_allowed">Power Control not allowed.  Change in Preferences/Settings on server.</string>
     <string name="reconnect_label">Reconnect Attempt Status</string>
     <string name="reconnect_help">Attempting to Reconnect automatically.  Wait for Reconnection or press BackArrow to Exit.</string>
     <string name="reconnect_success">RECONNECTED.  Resuming normal operation.</string>
@@ -189,9 +189,9 @@
     <string name="prefSliderLeftMarginSummary">Number of pixels to offset margins of throttle speed sliders.</string>
     <string name="prefSliderLeftMarginDefaultValue">8</string>
     <string name="PrefConnectToFirstServerTitle">Auto-Connect to First WiThrottle Server?</string>
-    <string name="PrefConnectToFirstServerSummary">Connect automatically to first JMRI WIThrottle Server discovered?</string>
-    <string name="prefDisplayClockTitle">JMRI Clock Display</string>
-    <string name="prefDisplayClockSummary">Set Format for JMRI Clock Display in Throttle and Web screens. (requires web server)</string>
+    <string name="PrefConnectToFirstServerSummary">Connect automatically to first WiThrottle Server discovered?</string>
+    <string name="prefDisplayClockTitle">Fast Clock Display</string>
+    <string name="prefDisplayClockSummary">Set Format for Fast Clock Display in Throttle and Web screens.</string>
     <string name="prefDisplayClockDefaultValue">0</string>
     <string name="LeftButton">&lt;&lt;</string>
     <string name="RightButton">&gt;&gt;</string>
