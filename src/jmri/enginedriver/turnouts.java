@@ -1,4 +1,4 @@
-/*Copyright (C) 2014 M. Steve Todd mstevetodd@enginedriver.rrclubs.org
+/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -264,8 +264,7 @@ public class turnouts extends Activity implements OnGestureListener {
 			if (entrytext.length() > 0 ) {
 				//if text starts with a digit, check number and prefix with hardware_system and "T"
 				//otherwise send the text as is
-				if(Character.isDigit(entrytext.charAt(0)))
-				{
+				if(Character.isDigit(entrytext.charAt(0))) {
 					try {
 						Integer.valueOf(entrytext);  //edit check address by attempting conversion to int
 					} 
@@ -273,9 +272,11 @@ public class turnouts extends Activity implements OnGestureListener {
 						Toast.makeText(getApplicationContext(), "Invalid turnout number.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
 						return;
 					}
-					//use preference for system name in command string
-					String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
-					entrytext = hs + "T" + entrytext;
+					//use preference for system name in command string unless system is MRC
+					if (!mainapp.getServerType().equals("MRC")) {
+						String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
+						entrytext = hs + "T" + entrytext;
+					}
 				}
 				mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, whichCommand + entrytext);
 			} 
@@ -464,11 +465,13 @@ public class turnouts extends Activity implements OnGestureListener {
 
 //		setTitleToIncludeThrotName();
 
-		//update hardware system prefix
-		String cmdPrefix= prefs.getString("hardware_system", getApplicationContext().getResources()
-				.getString(R.string.prefHardwareSystemDefaultValue));
-		TextView trnPrefix =(TextView)findViewById(R.id.turnout_prefix);
-		trnPrefix.setText(cmdPrefix + "T");
+		//update hardware system prefix unless MRC
+		if (!mainapp.getServerType().equals("MRC")) {
+			String cmdPrefix= prefs.getString("hardware_system", getApplicationContext().getResources()
+					.getString(R.string.prefHardwareSystemDefaultValue));
+			TextView trnPrefix =(TextView)findViewById(R.id.turnout_prefix);
+			trnPrefix.setText(cmdPrefix + "T"); 
+		}
 
 		// enable/disable buttons
 		updateTurnoutEntry();

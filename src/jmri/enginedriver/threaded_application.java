@@ -1,4 +1,4 @@
-/*Copyright (C) 2014 M. Steve Todd
+/*Copyright (C) 2017 M. Steve Todd
   mstevetodd@enginedriver.rrclubs.org
 
 This program is free software; you can redistribute it and/or modify
@@ -90,7 +90,7 @@ public class threaded_application extends Application {
 	volatile int port = 0; //The TCP port that the WiThrottle server is running on
 	Double withrottle_version = 0.0; //version of withrottle server
 	private int web_server_port = 0; //default port for jmri web server
-	private String server_type = "JMRI"; //currently, only JMRI or MRC
+	private String serverType = "JMRI"; //currently, only JMRI or MRC
 	private volatile boolean doFinish = false;	// when true, tells any Activities that are being created/resumed to finish()
 	//shared variables returned from the withrottle server, stored here for easy access by other activities
 	volatile Consist consistT;
@@ -748,14 +748,14 @@ public class threaded_application extends Application {
 
 			case 'H': 
 				if (response_str.charAt(1) == 'T') { //handle HTMRC for example
-					server_type = response_str.substring(2); //store the type 
-					if (server_type.equals("MRC")) {
+					serverType = response_str.substring(2); //store the type 
+					if (serverType.equals("MRC")) {
 						web_server_port = 80; //hardcode web port for MRC
 						to_state_names = new HashMap<String, String>();
 				     	to_state_names.put("2", "Closed"); //hardcode for MRC, this will enable the manual input only
 				     	to_state_names.put("4", "Thrown");
 					}
-					Log.d("Engine_Driver", "process response: set server_type to " + server_type + " web port to " + web_server_port);					
+					Log.d("Engine_Driver", "process response: set server_type to " + serverType + " web port to " + web_server_port);					
 				}
 				break;
 
@@ -978,7 +978,7 @@ public class threaded_application extends Application {
 					break;
 				}
 			}
-			if (pos <= to_system_names.length) {  //if found, update to new value
+			if (pos >= 0 && pos <= to_system_names.length) {  //if found, update to new value
 				to_states[pos] = newState;
 			}
 		}  //end of process_turnout_change
@@ -1190,8 +1190,8 @@ public class threaded_application extends Application {
 				catch(Exception e) {
 					validMsg = false;
 					if((socketWiT != null) && newMsg.equals("Q")) {
-						Log.d("Engine_Driver", "Sent " + newMsg + " command to jmri WiFi Throttle");
-						socketWiT.Send(newMsg); //Sends quit command to JMRI.
+						Log.d("Engine_Driver", "Sent " + newMsg + " command to WiThrottle server");
+						socketWiT.Send(newMsg); //Sends quit command
 					}
 					else
 					{
@@ -1385,12 +1385,12 @@ public class threaded_application extends Application {
 						Log.d("Engine_Driver","WiT send reconnection attempt.");
 					}
 					else if (inboundTimeout) {
-						status = "No response from JMRI "+host_ip+":"+port+" for "+heart.sGetInboundInterval()+" seconds.  "+
-								"Check that the JMRI Withrottle server is running.\n\nRetrying";
+						status = "No response from server "+host_ip+":"+port+" for "+heart.sGetInboundInterval()+" seconds.  "+
+								"Check that the WiThrottle server is running.\n\nRetrying";
 						Log.d("Engine_Driver","WiT receive reconnection attempt.");
 					} 
 					else {
-						status = "Unable to connect to JMRI at "+host_ip+":"+port+" from "+client_address+".\n\nRetrying";
+						status = "Unable to connect to server at "+host_ip+":"+port+" from "+client_address+".\n\nRetrying";
 						Log.d("Engine_Driver","WiT send reconnection attempt.");
 					}
 					socketGood = false;
@@ -1414,7 +1414,7 @@ public class threaded_application extends Application {
 						// if we get here without an exception then the socket is ok
 						if (reconInProg) {
 							getClientAddr();			//update address in case network connection has changed
-							String status = "Connected to JMRI WiThrottle Server at "+host_ip+":"+port;
+							String status = "Connected to WiThrottle Server at "+host_ip+":"+port;
 							sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT, status);
 							Log.d("Engine_Driver","WiT reconnection successful.");
 							inboundTimeout = false;
@@ -1984,11 +1984,19 @@ public class threaded_application extends Application {
 		return response_str; //return input if not found
 	}
 
+	public String getServerType() {
+		return serverType;
+	}
+
+	public void setServerType(String serverType) {
+		this.serverType = serverType;
+	}
+
 	//initialize shared variables
 	private void initShared() {
 		withrottle_version = 0.0; 
 		web_server_port = 0;
-		server_type = "JMRI";
+		serverType = "JMRI";
 		power_state = null;
 		to_states = null;
 		to_system_names = null;
@@ -2070,7 +2078,7 @@ public class threaded_application extends Application {
 		sendMsg(comm_msg_handler, message_type.POWER_CONTROL, "", newState);
 	}
 
-	//TODO: get power_state from JMRI WiThrottle before UI starts up to display Power Layout Icon. 
+	//TODO: get power_state from WiThrottle before UI starts up to display Power Layout Icon. 
 	//Then can remove displayPowerStateMenuButton2.
 	// Also change in throttle.
 	public void displayPowerStateMenuButton2(Menu menu)
@@ -2237,7 +2245,7 @@ public class threaded_application extends Application {
 	public String createUrl(String defaultUrl) {
 		String url = "";
 		int port = web_server_port;
-		if (server_type.equals("MRC")) {  //special case ignore any url passed-in if connected to MRC, as it does not forward
+		if (serverType.equals("MRC")) {  //special case ignore any url passed-in if connected to MRC, as it does not forward
 			defaultUrl = "";
 			Log.d("Engine_Driver","ignoring web url for MRC");
 		}
