@@ -287,6 +287,7 @@
  *   added html About page
  */
 /*
+ *   TODO: handle MRC's fastclock message
  *   TODO: change config files to use db instead of .txt files
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: make private stuff private
@@ -342,7 +343,7 @@
  * These require changes to WiThrottle
  *   allow setting of undefined turnouts (JMRI Turnout Tool creates them on-the-fly, so we could too)
  *   resend turnout and routes when items are added or removed, by adding listeners to WiT
- *   support resend of function and direction commands, even when WiT knows it has already sent
+ *   support resend of function and direction commands, even when WiT knows it has already sent (may be there now)
  *   WiT send MT-xxx when commands are received from a client for a loco that is not active.  (to get ED up to date with server after connection loss)
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
  *   disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
@@ -352,4 +353,5 @@
  *   allow user to configure side-by-side panels for pads, etc.
  *   allow user to specify multiple web URLs
  *   change Connect to allow to be called from any Activity when needed
+ *   kid throttle type with very large buttons for functions
  * */

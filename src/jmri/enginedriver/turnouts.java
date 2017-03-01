@@ -279,6 +279,10 @@ public class turnouts extends Activity implements OnGestureListener {
 					}
 				}
 				mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, whichCommand + entrytext);
+				Toast.makeText(getApplicationContext(), "Command sent to " + 
+						(whichCommand=='C' ? "Close" : whichCommand=='T' ? "Throw" : "Toggle") +
+						" turnout " + entrytext, 
+						Toast.LENGTH_SHORT).show();
 			} 
 		};
 	}

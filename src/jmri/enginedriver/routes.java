@@ -53,6 +53,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
 public class routes extends Activity  implements OnGestureListener {
@@ -239,7 +240,7 @@ public class routes extends Activity  implements OnGestureListener {
 	}
 	
 	public class button_listener implements View.OnClickListener  {
-		char whichCommand; //command to send for button instance 'C'lose, 'T'hrow or '2' for toggle
+		char whichCommand; //always '2' 
 
 		public button_listener(char new_command) {
 			whichCommand = new_command;
@@ -250,6 +251,9 @@ public class routes extends Activity  implements OnGestureListener {
 			String entrytext = entryv.getText().toString().trim();
 			if (entrytext.length() > 0 ) {
 				mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, whichCommand+entrytext);
+				Toast.makeText(getApplicationContext(), "Command sent to Set route " + entrytext, 
+						Toast.LENGTH_SHORT).show();
+
 			}
 		};
 	}
