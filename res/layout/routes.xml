@@ -13,19 +13,21 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="4dp" >
+
         <EditText
             android:id="@+id/route_entry"
-            android:layout_width="80sp"
+            android:layout_width="120sp"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
             android:hint="@string/routes_route"
-            android:inputType="textCapCharacters"
             android:imeOptions="actionDone"
-            android:maxLength="60"
+            android:inputType="textCapCharacters"
+            android:maxLength="80"
             android:singleLine="true" />
+
         <Button
             android:id="@+id/route_toggle"
-            android:layout_width="80sp"
+            android:layout_width="60sp"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
             android:text="@string/set"

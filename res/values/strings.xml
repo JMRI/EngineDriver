@@ -70,7 +70,7 @@
     <string name="location_all">ALL LOCATIONS</string>
     <string name="routes">Routes</string>
     <string name="routes_label">Control Routes</string>
-    <string name="routes_direct_entry_label">Enter Route ID</string>
+    <string name="routes_direct_entry_label">Enter Route System Name</string>
     <string name="routes_location_label">Filter by Location</string>
     <string name="routes_list_label">Route (click state to activate)</string>
     <string name="consist_lead_label">Lead Loco</string>
@@ -206,7 +206,7 @@
     <string name="prefSpeedButtonsSpeedStepSummary">How much Speed arrows jump throttle speed.</string>
 	<string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>
 	<string name="server_address">Server address</string>
-	<string name="routes_route">Route Name</string>
+	<string name="routes_route">Route System Name</string>
 	<string name="label_percent">%</string>
     <string name="label_14step">14</string>
 	<string name="label_27step">27</string>
