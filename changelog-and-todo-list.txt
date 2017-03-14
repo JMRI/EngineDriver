@@ -1,3 +1,5 @@
+**Version 2.14
+ * request and show function labels for JMRI consists - mstevetodd
 **Version 2.13
  * allow app to be moved to SD card - mstevetodd
  * Added selective sound routing preference for consists - Robin Becker
@@ -294,6 +296,7 @@
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  * web
+ *   TODO: if type='MRC", change "Web" menu item to "MRC Settings" and (maybe) logo
  *   TODO: allow user to specify initial zoom-level of each web view
  * routes
  *   TODO: use PRT titles for Active/inactive
@@ -314,7 +317,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
- *   TODO: add preferences for maximum speed to enable direction buttons, to limit inadvertent changes
+ *   TODO: add preference to disable "Select Loco" and Direction buttons if speed > 0
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected
  *   TODO: send "appropriate" functions to just consist trail instead of all consist
  *   TODO: support webview on Top

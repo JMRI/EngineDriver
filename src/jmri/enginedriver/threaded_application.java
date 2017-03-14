@@ -704,6 +704,14 @@ public class threaded_application extends Application {
 						con.setConfirmed(addr);
 					else
 						Log.d("Engine_Driver", "loco " + addr + " not selected but assigned by WiT to " + whichThrottle);
+
+					String consistname = getConsistNameFromAddress(addr); //check for a JMRI consist for this address, 
+					if (consistname != null) { //if found, request function keys for lead, format MTAS13<;>CL1234 
+						String[] cna = splitByString(consistname,"+");
+						String cmd = "M" + whichThrottle + "A" + addr + "<;>C" + cvtToLAddr(cna[0]); 
+						withrottle_send(cmd);
+					};
+					
 				} 
 				else if(com2 == '-') { //"MS-L6318<;>"  loco removed from throttle
 					if(whichThrottle == 'T') {
@@ -946,7 +954,6 @@ public class threaded_application extends Application {
 					consist_name = tv[2];
 				}  else {  //list of locos in consist
 					String[] tv = splitByString(ts,"}|{");  //split these into loco address and direction
-					tv = splitByString(tv[0],"(");  //split again to strip off address size (L)
 					consist_desc +=  plus + tv[0];
 					plus = "+";
 				}  //end if i==0
@@ -1966,22 +1973,44 @@ public class threaded_application extends Application {
 	}
 
 	// get the roster name from address string 123(L).  Return input if not found in roster or in consist
-	public String getRosterNameFromAddress(String response_str) {
+	public String getRosterNameFromAddress(String addr_str) {
 
 		if ((roster_entries != null) && (roster_entries.size() > 0))  { 
 			for (String rostername : roster_entries.keySet()) {  // loop thru roster entries, 
-				if (roster_entries.get(rostername).equals(response_str)) { //looking for value = input parm
+				if (roster_entries.get(rostername).equals(addr_str)) { //looking for value = input parm
 					return rostername;  //if found, return the roster name (key)
 				}
 			}
 		}
-		if ((consist_entries != null) && (consist_entries.size() > 0)) {
-			String consistname = consist_entries.get(response_str);  //consists are keyed by address "123(L)"
-			if (consistname != null)  { //looking for value = input parm
-				return consistname;  //if found, return the consist name (value)
-			}
+		if (getConsistNameFromAddress(addr_str) != null) { //check for a JMRI consist for this address
+			return getConsistNameFromAddress(addr_str);
+		};
+		
+		return addr_str; //return input if not found
+	}
+
+	public String getConsistNameFromAddress(String addr_str) {
+		if (addr_str.charAt(0) == 'S' || addr_str.charAt(0) == 'L') { //convert from S123 to 123(S) formatting if needed
+			addr_str = cvtToAddrP(addr_str);
 		}
-		return response_str; //return input if not found
+		if ((consist_entries != null) && (consist_entries.size() > 0)) {
+			return consist_entries.get(addr_str);  //consists are keyed by address "123(L)"
+		}
+		return null;
+	}
+
+	//convert a string of form L123 to 123(L)
+	private String cvtToAddrP(String addr_str) {
+		return addr_str.substring(1) + "(" + addr_str.substring(0,1) + ")";
+	}
+	//convert a string of form 123(L) to L123
+	private String cvtToLAddr(String addr_str) {
+		String[] sa = splitByString(addr_str,"(");  //split on the "("
+		if (sa.length==2) {
+			return sa[1].substring(0,1) + sa[0]; //move length to front and return format L123
+		} else {
+			return addr_str; //just return input if format not as expected
+		}
 	}
 
 	public String getServerType() {

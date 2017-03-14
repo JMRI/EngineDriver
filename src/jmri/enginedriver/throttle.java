@@ -736,9 +736,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 				newEnabledState = mainapp.consistT.isActive(); 		// set false if lead loco is not assigned
 			}
 			bFwdT.setEnabled(newEnabledState);
-			bStopT.setEnabled(newEnabledState);
 			bRevT.setEnabled(newEnabledState);
-			tvSpdLabT.setEnabled(newEnabledState);
+			bStopT.setEnabled(newEnabledState);
 			tvSpdValT.setEnabled(newEnabledState);
 			bLSpdT.setEnabled(newEnabledState);
 			bRSpdT.setEnabled(newEnabledState);
