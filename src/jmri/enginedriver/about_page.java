@@ -55,8 +55,12 @@ public class about_page extends Activity {
 		if(mainapp.host_ip != null) {
 			// JMRI version info
 			HashMap<String, String> metadata = threaded_application.metadata;
-			if (metadata != null && metadata.size() > 0)
-				s += "\nJMRI v: " + metadata.get("JMRIVERCANON") + "    build: " + metadata.get("JMRIVERSION");
+			if (metadata != null && metadata.size() > 0) {
+				s += "\nJMRI v" + metadata.get("JMRIVERCANON") + "    build: " + metadata.get("JMRIVERSION");
+				if (metadata.get("activeProfile")!=null) {
+					s += "\nActive Profile: " + metadata.get("activeProfile");
+				}
+			}
 			// WiT info
 			if(mainapp.withrottle_version != 0.0) {
 				s += "\nWiThrottle: v" + mainapp.withrottle_version;
