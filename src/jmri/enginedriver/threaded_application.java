@@ -763,7 +763,7 @@ public class threaded_application extends Application {
 				     	to_state_names.put("2", "Closed"); //hardcode for MRC, this will enable the manual input only
 				     	to_state_names.put("4", "Thrown");
 					}
-					Log.d("Engine_Driver", "process response: set server_type to " + serverType + " web port to " + web_server_port);					
+//					Log.d("Engine_Driver", "process response: set server_type to " + serverType + " web port to " + web_server_port);					
 				}
 				break;
 
@@ -954,6 +954,7 @@ public class threaded_application extends Application {
 					consist_name = tv[2];
 				}  else {  //list of locos in consist
 					String[] tv = splitByString(ts,"}|{");  //split these into loco address and direction
+//					tv = splitByString(tv[0],"(");  //split again to strip off address size (L)
 					consist_desc +=  plus + tv[0];
 					plus = "+";
 				}  //end if i==0
@@ -2000,11 +2001,11 @@ public class threaded_application extends Application {
 	}
 
 	//convert a string of form L123 to 123(L)
-	private String cvtToAddrP(String addr_str) {
+	public String cvtToAddrP(String addr_str) {
 		return addr_str.substring(1) + "(" + addr_str.substring(0,1) + ")";
 	}
 	//convert a string of form 123(L) to L123
-	private String cvtToLAddr(String addr_str) {
+	public String cvtToLAddr(String addr_str) {
 		String[] sa = splitByString(addr_str,"(");  //split on the "("
 		if (sa.length==2) {
 			return sa[1].substring(0,1) + sa[0]; //move length to front and return format L123
