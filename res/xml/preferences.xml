@@ -133,6 +133,13 @@
             android:summary="@string/prefSelectiveLeadSoundSummary"
             android:title="@string/prefSelectiveLeadSoundTitle" >
         </CheckBoxPreference>
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefDirChangeWhileMovingDefaultValue"
+            android:key="DirChangeWhileMovingPreference"
+            android:summary="@string/prefDirChangeWhileMovingSummary"
+            android:title="@string/prefDirChangeWhileMovingTitle"></CheckBoxPreference>
         </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference
