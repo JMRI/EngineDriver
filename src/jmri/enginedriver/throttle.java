@@ -461,6 +461,20 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 	}
 
+	// get the current speed of the throttle
+	int getSpeed(char whichThrottle) {
+		SeekBar throttle_slider;
+		if (whichThrottle == 'T') {
+			throttle_slider = sbT;
+		} else if (whichThrottle == 'G') {
+			throttle_slider = sbG;
+		} else {
+			throttle_slider = sbS;
+		}
+		int lastSpeed = throttle_slider.getProgress();
+		return lastSpeed;
+	}
+	
 	// change speed slider by scaled display unit value
 	int speedChange(char whichThrottle, int change) {
 		SeekBar throttle_slider;
@@ -975,6 +989,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 		private void handleAction(int action) {
 			String throt = Character.toString(whichThrottle);
+			boolean dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
 
 			switch (action) {
 				case MotionEvent.ACTION_DOWN: {
@@ -982,8 +997,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 						case function_button.FORWARD:
 						case function_button.REVERSE: {
 							int dir = (function == function_button.FORWARD ? 1 : 0);
-							showDirectionRequest(whichThrottle, dir);		 // update requested direction indication
-							setEngineDirection(whichThrottle, dir, false);	 // update direction for each engine on this throttle
+
+							// don't allow direction change while moving if the preference is set
+							if ((dirChangeWhileMoving) || (getSpeed(whichThrottle)==0)) {
+								showDirectionRequest(whichThrottle, dir);		 // update requested direction indication
+								setEngineDirection(whichThrottle, dir, false);	 // update direction for each engine on this throttle
+							}
 							break;
 						}
 						case function_button.STOP: 

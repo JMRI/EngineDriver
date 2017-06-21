@@ -113,6 +113,8 @@
     <string name="prefIncreaseSliderHeightSummary">Use a taller slider for throttles.</string>
     <string name="prefHideSliderTitle">Hide Speed Slider?</string>
     <string name="prefHideSliderSummary">Do not show speed slider, use speed buttons instead.</string>
+    <string name="prefDirChangeWhileMovingTitle">Direction change?</string>
+    <string name="prefDirChangeWhileMovingSummary">Allow direction change while Moving.</string>    
     <string name="prefNumOfThrottles">Number of throttles</string>
     <string name="prefNumOfThrottlesSummary">Choose how many throttles you want to display.</string>
     <string name="prefNumOfThrottlesDefault">Two</string>
