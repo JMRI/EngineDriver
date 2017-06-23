@@ -74,6 +74,13 @@
             android:title="@string/prefIncreaseSliderHeightTitle" >
         </CheckBoxPreference>
         <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefDecreaseLocoNumberHeightDefaultValue"
+            android:key="prefDecreaseLocoNumberHeight"
+            android:summary="@string/prefDecreaseLocoNumberHeightSummary"
+            android:title="@string/prefDecreaseLocoNumberHeightTitle"></CheckBoxPreference>
+        <CheckBoxPreference
             android:defaultValue="@bool/prefDisplaySpeedArrows"
             android:key="display_speed_arrows_buttons"
             android:summary="@string/prefDisplaySpeedArrowsSummary"
@@ -141,7 +148,35 @@
             android:summary="@string/prefDirChangeWhileMovingSummary"
             android:title="@string/prefDirChangeWhileMovingTitle"></CheckBoxPreference>
         </PreferenceCategory>
-    <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefStopOnDirectionChangeDefaultValue"
+            android:key="prefStopOnDirectionChange"
+            android:summary="@string/prefStopOnDirectionChangeSummary"
+            android:title="@string/prefStopOnDirectionChangeTitle"></CheckBoxPreference>
+       <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefShowAddressInsteadOfNameDefaultValue"
+            android:key="prefShowAddressInsteadOfName"
+            android:summary="@string/prefShowAddressInsteadOfNameSummary"
+            android:title="@string/prefShowAddressInsteadOfNameTitle"></CheckBoxPreference>
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefThrottleViewImmersiveModeDefaultValue"
+            android:key="prefThrottleViewImmersiveMode"
+            android:summary="@string/prefThrottleViewImmersiveModeSummary"
+            android:title="@string/prefThrottleViewImmersiveModeTitle"></CheckBoxPreference>
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefAlwaysUseDefaultFunctionLabelsDefaultValue"
+            android:key="prefAlwaysUseDefaultFunctionLabels"
+            android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary"
+            android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle"></CheckBoxPreference>
+     <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference
             android:defaultValue="@bool/prefStopOnReleaseDefaultValue"
             android:key="stop_on_release_preference"
