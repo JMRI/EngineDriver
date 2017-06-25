@@ -365,7 +365,11 @@ public class connection_activity extends Activity {
 		//	    sendMsgErr(1000, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
 		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 1);
 		
-		if(prefs.getBoolean("connect_to_first_server_preference", false))
+		// check if the preference is set to use immersive mode on the Throttle View
+		boolean tvim = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
+		// if it is set, never automatically connect
+
+		if( (prefs.getBoolean("connect_to_first_server_preference", false)) && (!tvim) )
 		{
 			connectA();
 		}
