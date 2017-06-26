@@ -1375,6 +1375,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		llTSetSpd = (LinearLayout) findViewById(R.id.Throttle_T_SetSpeed);
 		llSSetSpd = (LinearLayout) findViewById(R.id.Throttle_S_SetSpeed);
 		llGSetSpd = (LinearLayout) findViewById(R.id.Throttle_G_SetSpeed);
+		// SPDHT
+		llTLocoId = (LinearLayout) findViewById(R.id.loco_buttons_group_T);
+		llSLocoId = (LinearLayout) findViewById(R.id.loco_buttons_group_S);
+		llGLocoId = (LinearLayout) findViewById(R.id.loco_buttons_group_G);
+		//
+		llTLocoDir = (LinearLayout) findViewById(R.id.dir_buttons_table_T);
+		llSLocoDir = (LinearLayout) findViewById(R.id.dir_buttons_table_S);
+		llGLocoDir = (LinearLayout) findViewById(R.id.dir_buttons_table_G);
+		// SPDHT
 
 		// volume indicators
 		vVolT = findViewById(R.id.volume_indicator_T);
