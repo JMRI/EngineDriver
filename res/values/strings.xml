@@ -125,6 +125,8 @@
     <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  WARNING: Auto Connect preference will be ignored, as Preferences will not be available from the Throttle Page.</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Always use the default labels?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default function labels regardless of the labels the loco has in the Roster.</string>
+    <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. Height?</string>
+    <string name="prefDecreaseLocoNumberHeightSummary">Use smaller buttons for the loco Number, speed and direction buttons.</string>
     <string name="prefNumOfThrottles">Number of throttles</string>
     <string name="prefNumOfThrottlesSummary">Choose how many throttles you want to display.</string>
     <string name="prefNumOfThrottlesDefault">Two</string>
