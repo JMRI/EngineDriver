@@ -121,6 +121,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 	private static LinearLayout llTSetSpd;
 	private static LinearLayout llSSetSpd;
 	private static LinearLayout llGSetSpd;
+	// SPDHT for Speed Id and Direction Button Heights
+	private static LinearLayout llTLocoId;
+	private static LinearLayout llSLocoId;
+	private static LinearLayout llGLocoId;
+	private static LinearLayout llTLocoDir;
+	private static LinearLayout llSLocoDir;
+	private static LinearLayout llGLocoDir;
+	// SPDHT
 	private static View vThrotScr;
 	private static View vThrotScrWrap;
 
@@ -633,6 +641,17 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 	}
 
+	// get the indicated direction from the button pressed state
+	private int getDirection(char whichThrottle) {
+		if (whichThrottle == 'T') {
+			return dirT;
+		} else if (whichThrottle == 'G') {
+			return dirG;
+		} else {
+			return dirS;
+		}
+	}
+
 	// indicate direction using the button pressed state
 	void showDirectionIndication(char whichThrottle, int direction) {
 		Button bFwd;
@@ -990,6 +1009,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		private void handleAction(int action) {
 			String throt = Character.toString(whichThrottle);
 			boolean dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
+			boolean stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
 
 			switch (action) {
 				case MotionEvent.ACTION_DOWN: {
@@ -997,6 +1017,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 						case function_button.FORWARD:
 						case function_button.REVERSE: {
 							int dir = (function == function_button.FORWARD ? 1 : 0);
+							
+							// set speed to zero on direction change while moving if the preference is set
+							if ((stopOnDirectionChange) && (getSpeed(whichThrottle)!=0) && (dir != getDirection(whichThrottle)) && (stopOnDirectionChange)) {
+								speedUpdateAndNotify(whichThrottle, 0);
+							}
 
 							// don't allow direction change while moving if the preference is set
 							if ((dirChangeWhileMoving) || (getSpeed(whichThrottle)==0)) {
@@ -1350,6 +1375,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		llTSetSpd = (LinearLayout) findViewById(R.id.Throttle_T_SetSpeed);
 		llSSetSpd = (LinearLayout) findViewById(R.id.Throttle_S_SetSpeed);
 		llGSetSpd = (LinearLayout) findViewById(R.id.Throttle_G_SetSpeed);
+		// SPDHT
+		llTLocoId = (LinearLayout) findViewById(R.id.loco_buttons_group_T);
+		llSLocoId = (LinearLayout) findViewById(R.id.loco_buttons_group_S);
+		llGLocoId = (LinearLayout) findViewById(R.id.loco_buttons_group_G);
+		//
+		llTLocoDir = (LinearLayout) findViewById(R.id.dir_buttons_table_T);
+		llSLocoDir = (LinearLayout) findViewById(R.id.dir_buttons_table_S);
+		llGLocoDir = (LinearLayout) findViewById(R.id.dir_buttons_table_G);
+		// SPDHT
 
 		// volume indicators
 		vVolT = findViewById(R.id.volume_indicator_T);
@@ -1512,6 +1546,25 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		}
 	}
 
+	@Override
+ 	public void onWindowFocusChanged(boolean hasFocus) {
+ 		super.onWindowFocusChanged(hasFocus);
+ 		// check if the preference is set to use immersimve mode on the Throttle View
+ 		boolean tvim = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
+ 
+ 		if (hasFocus) {
+ 			if (tvim) {   // if the preference is set use Immersive mode
+ 				webView.setSystemUiVisibility(
+ 					View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+ 							| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+ 							| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+ 							| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+ 							| View.SYSTEM_UI_FLAG_FULLSCREEN
+ 							| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+ 			}
+ 		}
+ 	}
+ 
 	/** Called when the activity is finished. */
 	@SuppressWarnings("deprecation")
 	@Override
@@ -1600,17 +1653,24 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			tv = fbS;
 		}
 
+		// Ignore the labels for the loco in the Roster and use the defaults... if requested in preferences
+		boolean audfl = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
+
 		// note: we make a copy of function_labels_x because TA might change it
 		// while we are using it (causing issues during button update below)
-		if (whichThrottle == 'T' && mainapp.function_labels_T != null && mainapp.function_labels_T.size() > 0) {
-			function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_T);
-		} else if (whichThrottle == 'G' && mainapp.function_labels_G != null && mainapp.function_labels_G.size() > 0) {
-			function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_G);
-		} else if (whichThrottle == 'S' && mainapp.function_labels_S != null && mainapp.function_labels_S.size() > 0) {
-			function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_S);
-		} else {
-			function_labels_temp = mainapp.function_labels_default;
-		}
+		if (!audfl) {
+			if (whichThrottle == 'T' && mainapp.function_labels_T != null && mainapp.function_labels_T.size() > 0) {
+				function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_T);
+			} else if (whichThrottle == 'G' && mainapp.function_labels_G != null && mainapp.function_labels_G.size() > 0) {
+				function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_G);
+			} else if (whichThrottle == 'S' && mainapp.function_labels_S != null && mainapp.function_labels_S.size() > 0) {
+				function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_S);
+			} else {
+				function_labels_temp = mainapp.function_labels_default;
+			}
+		} else { // Force using the Default Function Labels
+  			function_labels_temp = mainapp.function_labels_default;
+  		}
 
 		// put values in array for indexing in next step TODO: find direct way
 		// to do this
@@ -1734,13 +1794,27 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		setDisplayedSpeed('G', sbG.getProgress());
 		setDisplayedSpeed('S', sbS.getProgress());
 		
+		final DisplayMetrics dm = getResources().getDisplayMetrics();
+		// Get the screen's density scale
+		final float denScale = dm.density;
+
+		// SPDHT decrease height of Loco Id (if requested in preferences)
+		boolean dlih = prefs.getBoolean("prefDecreaseLocoNumberHeight", getResources().getBoolean(R.bool.prefDecreaseLocoNumberHeightDefaultValue));
+		// Convert the dps to pixels, based on density scale
+		int newDlihHeight;
+		int newDlihFontSize;
+		if (dlih) {
+			newDlihHeight = (int) (40 * denScale + 0.5f); // decreased height
+			newDlihFontSize = 32; // decreased height
+		} else {
+			newDlihHeight = (int) (50 * denScale + 0.5f); // normal height
+			newDlihFontSize = 36; // normal height
+		}
+		// SPDHT
+
 		// increase height of throttle slider (if requested in preferences)
 		boolean ish = prefs.getBoolean("increase_slider_height_preference", getResources().getBoolean(R.bool.prefIncreaseSliderHeightDefaultValue));
 
-		final DisplayMetrics dm = getResources().getDisplayMetrics();
-		// Get the screen's density scale
-
-		final float denScale = dm.density;
 		// Convert the dps to pixels, based on density scale
 		int newHeight;
 		if (ish) {
@@ -1749,12 +1823,20 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			newHeight = (int) (50 * denScale + 0.5f); // normal height
 		}
 
+		//
+		boolean sadion = prefs.getBoolean("prefShowAddressInsteadOfName", getResources().getBoolean(R.bool.prefShowAddressInsteadOfNameDefaultValue));
+		//
+
 		final int conNomTextSize = 24;
 		final double minTextScale = 0.5;
 		String bLabel;
 		Button b = bSelT;
 		if (mainapp.consistT.isActive()) {
-			bLabel = mainapp.consistT.toString();
+			if (!sadion) {
+				bLabel = mainapp.consistT.toString();
+			} else {
+ 				bLabel = mainapp.consistT.formatConsistAddr();
+ 			}			
 			throttle_count++;
 		} else {
 			bLabel = "Press to select";
@@ -1782,7 +1864,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 		b = bSelS;
 		if (mainapp.consistS.isActive()) {
-			bLabel = mainapp.consistS.toString();
+			if (!sadion) {
+				bLabel = mainapp.consistS.toString();
+			} else {
+ 				bLabel = mainapp.consistS.formatConsistAddr();
+ 			}			
 			throttle_count++;
 		} else {
 			bLabel = "Press to select";
@@ -1804,7 +1890,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 		b = bSelG;
 		if (mainapp.consistG.isActive()) {
-			bLabel = mainapp.consistG.toString();
+			if (!sadion) {
+				bLabel = mainapp.consistG.toString();
+			} else {
+ 				bLabel = mainapp.consistG.formatConsistAddr();
+ 			}			
 			throttle_count++;
 		} else {
 			bLabel = "Press to select";
@@ -1835,10 +1925,39 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			sW = dm.widthPixels;
 		}
 
-		// save 1/2 the screen for webview
+		//
+		boolean iwvs = prefs.getBoolean("prefIncreaseWebViewSize", getResources().getBoolean(R.bool.prefIncreaseWebViewSizeDefaultValue));
+		//
+
+		// save part the screen for webview
 		if (webViewLocation.equals("Top") || webViewLocation.equals("Bottom")) {
-			screenHeight *= 0.5;
+			if (!iwvs) {
+				// save half the screen
+				screenHeight *= 0.5;
+			} else {
+				// save 66% of the screen
+				if (webViewLocation.equals("Bottom")) {
+					screenHeight *= 0.40;
+				} else {
+					screenHeight *= 0.60;
+				}
+			}
 		}
+
+		// SPDHT set height of Loco Id and Direction Button areas
+		LinearLayout.LayoutParams llLidp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newDlihHeight);
+		llTLocoId.setLayoutParams(llLidp);
+		llSLocoId.setLayoutParams(llLidp);
+		llGLocoId.setLayoutParams(llLidp);
+		llTLocoDir.setLayoutParams(llLidp);
+		llSLocoDir.setLayoutParams(llLidp);
+		llGLocoDir.setLayoutParams(llLidp);
+		//
+		tvSpdValT.setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
+		tvSpdValS.setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
+		tvSpdValG.setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
+		// SPDHT
+
 
 		//set height of slider areas
 		LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);

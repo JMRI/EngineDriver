@@ -33,4 +33,10 @@
     <bool name="prefSwipeThroughTurnoutsDefaultValue">true</bool>
     <bool name="prefSwipeThroughRoutesDefaultValue">true</bool>
     <bool name="prefDirChangeWhileMovingDefaultValue">true</bool>
+    <bool name="prefStopOnDirectionChangeDefaultValue">false</bool>
+    <bool name="prefDecreaseLocoNumberHeightDefaultValue">false</bool>
+    <bool name="prefShowAddressInsteadOfNameDefaultValue">false</bool>
+    <bool name="prefIncreaseWebViewSizeDefaultValue">false</bool>
+    <bool name="prefThrottleViewImmersiveModeDefaultValue">false</bool>
+    <bool name="prefAlwaysUseDefaultFunctionLabelsDefaultValue">false</bool>
 </resources>

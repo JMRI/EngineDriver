@@ -235,4 +235,23 @@ public final class Consist {
 		}
 		return formatCon;
 	}
+	
+	public String formatConsistAddr() {
+		String formatCon;
+		if(con.size() > 0) {
+			formatCon = "";
+			String sep = "";
+			for(Map.Entry<String, ConLoco> l : con.entrySet()) {		// loop through locos in consist
+				if(l.getValue().isConfirmed()) {
+					formatCon += sep + l.getValue().getAddress().substring(1,l.getValue().getAddress().length());
+					sep = ",";
+				}
+			}
+		}
+		else {
+			formatCon = "Not Set";
+		}
+		return formatCon;
+	}
+
 }
