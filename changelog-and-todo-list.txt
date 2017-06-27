@@ -1,7 +1,13 @@
 **Version 2.14
- * request and show function labels for JMRI consists - mstevetodd
+ * request and show function labels for JMRI consists - mstevetodd  
  * show activeProfile on About page - mstevetodd
- * new preference to prevent direction change while moving - flash62au
+ * Several new Preferences added by Peter Akers:
+ *  Prevent direction change while moving,
+ *  Decrease Loco No. button Height,
+ *  Show loco address instead of names,
+ *  Immersive mode,
+ *  Stop on direction change while moving,
+ *  Always use default labels.
 **Version 2.13
  * allow app to be moved to SD card - mstevetodd
  * Added selective sound routing preference for consists - Robin Becker
@@ -321,14 +327,14 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: grey-out direction buttons if not allowed while moving
  *   TODO: add preference to disable "Select Loco" if speed > 0
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected
  *   TODO: new preference to reverse order of Forward and Reverse buttons
  *   TODO: send "appropriate" functions to just consist trail instead of all consist
  *   TODO: support webview on Top
  *   TODO: fix issue with rotation, Reverse indication is lost
- *   TODO: show proper function labels based on lead loco in consist
- *   TODO: fix issues with slider progress line when padding changed
+ *   TODO: show proper function labels based on lead loco in ED consist
  *   TODO: retrieve vsDecoder sounds and play when appropriate
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: respect "Max Throttle %" from roster entry

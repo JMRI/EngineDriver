@@ -66,6 +66,7 @@ public class about_page extends Activity {
 				s += "\nWiThrottle: v" + mainapp.withrottle_version;
 				s += String.format("    Heartbeat: %d secs\n", mainapp.heartbeatInterval);
 			}
+			s += String.format("SSID: %s\n", mainapp.client_ssid);
 		}
 		// show info
 		v.setText(s);

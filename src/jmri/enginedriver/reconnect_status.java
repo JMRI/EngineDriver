@@ -28,146 +28,146 @@ import android.widget.TextView;
 
 public class reconnect_status extends Activity {
 
-	private threaded_application mainapp;  // hold pointer to mainapp
-	private String prog = "";
-	private boolean backOk = true;
-	private boolean navigatingAway = false; // true if another activity was selected (false in onPause if going into background)
-	private boolean retryFirst = false;
+    private threaded_application mainapp;  // hold pointer to mainapp
+    private String prog = "";
+    private boolean backOk = true;
+    private boolean navigatingAway = false; // true if another activity was selected (false in onPause if going into background)
+    private boolean retryFirst = false;
 
-	//Handle messages from the communication thread back to this thread (responses from withrottle)
-	@SuppressLint("HandlerLeak")
-	class reconnect_status_handler extends Handler {
+    //Handle messages from the communication thread back to this thread (responses from withrottle)
+    @SuppressLint("HandlerLeak")
+    class reconnect_status_handler extends Handler {
 
-		public void handleMessage(Message msg) {
-			switch(msg.what) {
-			case message_type.RESPONSE:
-				if (!retryFirst) {  			// Got a message from WiThrottle server so the socket must already be ok.  This means the
-					reconnected();				// RETRY/RECONNECT sequence was over before this Screen came up, so just resume normal ops. 
-				}
-				break;
-			case message_type.WIT_CON_RETRY:
-				retryFirst = true;
-				refresh_reconnect_status(msg.obj.toString());
-				break;
-			case message_type.WIT_CON_RECONNECT:
-				refresh_reconnect_status(msg.obj.toString()); 
-				reconnected(); 
-				break;
-			case message_type.DISCONNECT:
-			case message_type.SHUTDOWN:
-				disconnect();
-				break;
-			};
-		}
-	}
+        public void handleMessage(Message msg) {
+            switch(msg.what) {
+            case message_type.RESPONSE:
+                if (!retryFirst) {              // Got a message from WiThrottle server so the socket must already be ok.  This means the
+                    reconnected();              // RETRY/RECONNECT sequence was over before this Screen came up, so just resume normal ops. 
+                }
+                break;
+            case message_type.WIT_CON_RETRY:
+                retryFirst = true;
+                refresh_reconnect_status(msg.obj.toString());
+                break;
+            case message_type.WIT_CON_RECONNECT:
+                refresh_reconnect_status(msg.obj.toString()); 
+                reconnected(); 
+                break;
+            case message_type.DISCONNECT:
+            case message_type.SHUTDOWN:
+                disconnect();
+                break;
+            };
+        }
+    }
 
-	@SuppressWarnings("deprecation")
-	public void refresh_reconnect_status(String status) {
-		TextView tv=(TextView)findViewById(R.id.reconnect_status);
-		if (status != null)
-		{
-			prog = prog + ".";
-			if (prog.length() > 5)
-				prog = ".";
-			tv.setText(status+prog);
-		}
-	}
-	
-	public void reconnected() {
-		if(backOk) {						// ensure we only run this once 
-			backOk = false;
-			TextView tv=(TextView)findViewById(R.id.reconnect_help);
-			tv.setText(getString(R.string.reconnect_success));
-			if(mainapp.reconnect_status_msg_handler != null) {
-				mainapp.reconnect_status_msg_handler.postDelayed(delayCloseScreen,500L);
-			}
-			else {
-				Log.d("Engine_Driver","Reconnect: handler already null");
-				closeScreen();
-			}
-		}
-	}
-	
-	@SuppressLint("Recycle")
-	private Runnable delayCloseScreen = new Runnable() {
-		@Override
-		public void run() {
-			closeScreen();
-		}
-	};
-	
-	private void closeScreen() {
-		navigatingAway = true;
- 		this.finish();  				//end this activity
- 		connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-	}
+    @SuppressWarnings("deprecation")
+    public void refresh_reconnect_status(String status) {
+        TextView tv=(TextView)findViewById(R.id.reconnect_status);
+        if (status != null)
+        {
+            prog = prog + ".";
+            if (prog.length() > 5)
+                prog = ".";
+            tv.setText(status+prog);
+        }
+    }
+    
+    public void reconnected() {
+        if(backOk) {                        // ensure we only run this once 
+            backOk = false;
+            TextView tv=(TextView)findViewById(R.id.reconnect_help);
+            tv.setText(getString(R.string.reconnect_success));
+            if(mainapp.reconnect_status_msg_handler != null) {
+                mainapp.reconnect_status_msg_handler.postDelayed(delayCloseScreen,500L);
+            }
+            else {
+                Log.d("Engine_Driver","Reconnect: handler already null");
+                closeScreen();
+            }
+        }
+    }
+    
+    @SuppressLint("Recycle")
+    private Runnable delayCloseScreen = new Runnable() {
+        @Override
+        public void run() {
+            closeScreen();
+        }
+    };
+    
+    private void closeScreen() {
+        navigatingAway = true;
+        this.finish();                  //end this activity
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    }
 
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState)  {
-		super.onCreate(savedInstanceState);
-		mainapp=(threaded_application)getApplication();
-		if(mainapp.isForcingFinish()) {		// expedite
-			return;
-		}
-		setContentView(R.layout.reconnect_page);
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState)  {
+        super.onCreate(savedInstanceState);
+        mainapp=(threaded_application)getApplication();
+        if(mainapp.isForcingFinish()) {     // expedite
+            return;
+        }
+        setContentView(R.layout.reconnect_page);
 
-		//put pointer to this activity's handler in main app's shared variable (If needed)
-		mainapp.reconnect_status_msg_handler=new reconnect_status_handler();
+        //put pointer to this activity's handler in main app's shared variable (If needed)
+        mainapp.reconnect_status_msg_handler=new reconnect_status_handler();
 
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			String msg = extras.getString("status");
-			if (msg != null) {
-				refresh_reconnect_status(msg);
-			}
-		}
-		retryFirst = false;
-	};
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String msg = extras.getString("status");
+            if (msg != null) {
+                refresh_reconnect_status(msg);
+            }
+        }
+        retryFirst = false;
+    };
 
-	@Override
-	public void onResume() {
-		super.onResume();
-		mainapp.removeNotification();
-		if(mainapp.isForcingFinish()) {	//expedite
-			this.finish();
-			return;
-		}
-		mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-		navigatingAway = false;
+    @Override
+    public void onResume() {
+        super.onResume();
+        mainapp.removeNotification();
+        if(mainapp.isForcingFinish()) { //expedite
+            this.finish();
+            return;
+        }
+        mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+        navigatingAway = false;
 
-		this.backOk = true;
-	}
+        this.backOk = true;
+    }
 
-	@Override
-	public void onPause()
-	{
-		super.onPause();
-		if(!this.isFinishing() && !navigatingAway) {		//only invoke setContentIntentNotification when going into background
-			mainapp.addNotification(this.getIntent());
-		}
-	}
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        if(!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
+            mainapp.addNotification(this.getIntent());
+        }
+    }
 
-		/** Called when the activity is finished. */
-	@Override
-	public void onDestroy() {
-		mainapp.reconnect_status_msg_handler = null;
-		super.onDestroy();
-	}
+        /** Called when the activity is finished. */
+    @Override
+    public void onDestroy() {
+        mainapp.reconnect_status_msg_handler = null;
+        super.onDestroy();
+    }
 
-	//Handle pressing of the back button to end this activity
-	@Override
-	public boolean onKeyDown(int key, KeyEvent event) {
-		if(key==KeyEvent.KEYCODE_BACK && this.backOk)
-		{
-			mainapp.checkExit(this);
-			return true;
-		}
-		return(super.onKeyDown(key, event));
-	};
+    //Handle pressing of the back button to end this activity
+    @Override
+    public boolean onKeyDown(int key, KeyEvent event) {
+        if(key==KeyEvent.KEYCODE_BACK && this.backOk)
+        {
+            mainapp.checkExit(this);
+            return true;
+        }
+        return(super.onKeyDown(key, event));
+    };
 
-	private void disconnect() {
-		this.finish();
-	}
+    private void disconnect() {
+        this.finish();
+    }
 
 }

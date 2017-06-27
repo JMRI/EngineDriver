@@ -13,13 +13,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="4dp" >
-	    <Spinner
-	        android:id="@+id/consist_lead"
+        <Spinner
+            android:id="@+id/consist_lead"
             android:layout_width="0dip"
-	        android:layout_height="49dp"
+            android:layout_height="49dp"
             android:layout_weight="1.0"
-	        android:singleLine="true" />
-
+            android:singleLine="true" />
     </LinearLayout>
     <TextView
         android:id="@+id/consist_list_label"
@@ -30,18 +29,18 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
     </ListView>
-	<LinearLayout 
-	    android:layout_width="wrap_content"
-	    android:layout_height="fill_parent"
-	    android:orientation="horizontal" 
-	    android:gravity="bottom"
-	    android:layout_marginTop="20dp" >
-	    <TextView
-	        android:id="@+id/consist_help"
-	        style="@style/floating_text_style"
-	        android:textSize="15sp"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:text="@string/consist_help" />
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal" 
+        android:gravity="bottom"
+        android:layout_marginTop="20dp" >
+        <TextView
+            android:id="@+id/consist_help"
+            style="@style/floating_text_style"
+            android:textSize="15sp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/consist_help" />
     </LinearLayout>
 </LinearLayout>
