@@ -1653,17 +1653,24 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 			tv = fbS;
 		}
 
+		// Ignore the labels for the loco in the Roster and use the defaults... if requested in preferences
+		boolean audfl = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
+
 		// note: we make a copy of function_labels_x because TA might change it
 		// while we are using it (causing issues during button update below)
-		if (whichThrottle == 'T' && mainapp.function_labels_T != null && mainapp.function_labels_T.size() > 0) {
-			function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_T);
-		} else if (whichThrottle == 'G' && mainapp.function_labels_G != null && mainapp.function_labels_G.size() > 0) {
-			function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_G);
-		} else if (whichThrottle == 'S' && mainapp.function_labels_S != null && mainapp.function_labels_S.size() > 0) {
-			function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_S);
-		} else {
-			function_labels_temp = mainapp.function_labels_default;
-		}
+		if (!audfl) {
+			if (whichThrottle == 'T' && mainapp.function_labels_T != null && mainapp.function_labels_T.size() > 0) {
+				function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_T);
+			} else if (whichThrottle == 'G' && mainapp.function_labels_G != null && mainapp.function_labels_G.size() > 0) {
+				function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_G);
+			} else if (whichThrottle == 'S' && mainapp.function_labels_S != null && mainapp.function_labels_S.size() > 0) {
+				function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_S);
+			} else {
+				function_labels_temp = mainapp.function_labels_default;
+			}
+		} else { // Force using the Default Function Labels
+  			function_labels_temp = mainapp.function_labels_default;
+  		}
 
 		// put values in array for indexing in next step TODO: find direct way
 		// to do this
