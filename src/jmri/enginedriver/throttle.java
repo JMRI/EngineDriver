@@ -1806,7 +1806,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 		String bLabel;
 		Button b = bSelT;
 		if (mainapp.consistT.isActive()) {
-			bLabel = mainapp.consistT.toString();
+			if (!sadion) {
+				bLabel = mainapp.consistT.toString();
+			} else {
+ 				bLabel = mainapp.consistT.formatConsistAddr();
+ 			}			
 			throttle_count++;
 		} else {
 			bLabel = "Press to select";
@@ -1834,7 +1838,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 		b = bSelS;
 		if (mainapp.consistS.isActive()) {
-			bLabel = mainapp.consistS.toString();
+			if (!sadion) {
+				bLabel = mainapp.consistS.toString();
+			} else {
+ 				bLabel = mainapp.consistS.formatConsistAddr();
+ 			}			
 			throttle_count++;
 		} else {
 			bLabel = "Press to select";
@@ -1856,7 +1864,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 		b = bSelG;
 		if (mainapp.consistG.isActive()) {
-			bLabel = mainapp.consistG.toString();
+			if (!sadion) {
+				bLabel = mainapp.consistG.toString();
+			} else {
+ 				bLabel = mainapp.consistG.formatConsistAddr();
+ 			}			
 			throttle_count++;
 		} else {
 			bLabel = "Press to select";
