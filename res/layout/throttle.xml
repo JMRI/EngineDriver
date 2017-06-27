@@ -100,20 +100,23 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:stretchColumns="0,1,2" >
-                    <TableRow>
+                    <TableRow android:layout_height="wrap_content">
                         <Button
                             android:id="@+id/button_fwd_T"
                             style="@style/large_button_style"
+                            android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/forward" />
                         <Button
                             android:id="@+id/button_stop_T"
                             style="@style/stop_button_style"
+                            android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/stop" />
                         <Button
                             android:id="@+id/button_rev_T"
                             style="@style/large_button_style"
+                            android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/reverse" />
                     </TableRow>
@@ -361,20 +364,23 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:stretchColumns="0,1,2" >
-                    <TableRow>
+                    <TableRow android:layout_height="wrap_content">
                         <Button
                             android:id="@+id/button_fwd_S"
                             style="@style/large_button_style"
+                            android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/forward" />
                         <Button
                             android:id="@+id/button_stop_S"
                             style="@style/stop_button_style"
+                            android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/stop" />
                         <Button
                             android:id="@+id/button_rev_S"
                             style="@style/large_button_style"
+                            android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/reverse" />
                     </TableRow>
@@ -633,21 +639,24 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:stretchColumns="0,1,2" >
-                    <TableRow>
+                    <TableRow android:layout_height="wrap_content">
                         <Button
                             android:id="@+id/button_fwd_G"
                             style="@style/large_button_style"
+                            android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/forward" />
                         <Button
                             android:id="@+id/button_stop_G"
                             style="@style/stop_button_style"
+                            android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/stop" />
 
                         <Button
                             android:id="@+id/button_rev_G"
                             style="@style/large_button_style"
+                            android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/reverse" />
                     </TableRow>
