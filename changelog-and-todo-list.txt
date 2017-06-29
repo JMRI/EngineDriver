@@ -306,7 +306,6 @@
  * MRC
  *   TODO: hide or add option for MRC to turnout system list
  * web
- *   TODO: if type='MRC", change "Web" menu item to "MRC Settings" and (maybe) logo
  *   TODO: allow user to specify initial zoom-level of each web view
  * routes
  *   TODO: use PRT titles for Active/inactive
@@ -331,7 +330,6 @@
  *   TODO: add preference to disable "Select Loco" if speed > 0
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected
  *   TODO: new preference to reverse order of Forward and Reverse buttons
- *   TODO: send "appropriate" functions to just consist trail instead of all consist
  *   TODO: support webview on Top
  *   TODO: fix issue with rotation, Reverse indication is lost
  *   TODO: show proper function labels based on lead loco in ED consist

@@ -58,6 +58,7 @@
 	<string name="consist_help">Click an engine to change its direction with respect to the top of the consist.  Long press an engine to remove it from the consist.  Press Back Arrow when done.</string>
 	<string name="about">About</string>
     <string name="web">Web</string>
+    <string name="mrc_settings">MRC Settings</string>
     <string name="loco">Loco:</string>
     <string name="current_locos">Currently Selected Locos</string>
     <string name="release">Release</string>
