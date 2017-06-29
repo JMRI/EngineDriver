@@ -79,7 +79,8 @@
             android:defaultValue="@bool/prefDecreaseLocoNumberHeightDefaultValue"
             android:key="prefDecreaseLocoNumberHeight"
             android:summary="@string/prefDecreaseLocoNumberHeightSummary"
-            android:title="@string/prefDecreaseLocoNumberHeightTitle"></CheckBoxPreference>
+            android:title="@string/prefDecreaseLocoNumberHeightTitle">
+        </CheckBoxPreference>
         <CheckBoxPreference
             android:defaultValue="@bool/prefDisplaySpeedArrows"
             android:key="display_speed_arrows_buttons"
@@ -122,6 +123,14 @@
             android:key="WebViewLocation"
             android:summary="@string/prefWebViewLocationSummary"
             android:title="@string/prefWebViewLocationTitle" />
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefIncreaseWebViewSizeDefaultValue"
+            android:key="prefIncreaseWebViewSize"
+            android:summary="@string/prefIncreaseWebViewSizeSummary"
+            android:title="@string/prefIncreaseWebViewSizeTitle">
+        </CheckBoxPreference>
         <EditTextPreference
             android:defaultValue="@string/prefInitialThrotWebPageDefaultValue"
             android:dialogTitle="@string/prefInitialThrotWebPageSummary"
@@ -146,7 +155,8 @@
             android:defaultValue="@bool/prefDirChangeWhileMovingDefaultValue"
             android:key="DirChangeWhileMovingPreference"
             android:summary="@string/prefDirChangeWhileMovingSummary"
-            android:title="@string/prefDirChangeWhileMovingTitle"></CheckBoxPreference>
+            android:title="@string/prefDirChangeWhileMovingTitle">
+        </CheckBoxPreference>
         </PreferenceCategory>
         <CheckBoxPreference
             android:layout_width="wrap_content"
@@ -154,28 +164,32 @@
             android:defaultValue="@bool/prefStopOnDirectionChangeDefaultValue"
             android:key="prefStopOnDirectionChange"
             android:summary="@string/prefStopOnDirectionChangeSummary"
-            android:title="@string/prefStopOnDirectionChangeTitle"></CheckBoxPreference>
+            android:title="@string/prefStopOnDirectionChangeTitle">
+        </CheckBoxPreference>
        <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefShowAddressInsteadOfNameDefaultValue"
             android:key="prefShowAddressInsteadOfName"
             android:summary="@string/prefShowAddressInsteadOfNameSummary"
-            android:title="@string/prefShowAddressInsteadOfNameTitle"></CheckBoxPreference>
+            android:title="@string/prefShowAddressInsteadOfNameTitle">
+       </CheckBoxPreference>
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefThrottleViewImmersiveModeDefaultValue"
             android:key="prefThrottleViewImmersiveMode"
             android:summary="@string/prefThrottleViewImmersiveModeSummary"
-            android:title="@string/prefThrottleViewImmersiveModeTitle"></CheckBoxPreference>
+            android:title="@string/prefThrottleViewImmersiveModeTitle">
+        </CheckBoxPreference>
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefAlwaysUseDefaultFunctionLabelsDefaultValue"
             android:key="prefAlwaysUseDefaultFunctionLabels"
             android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary"
-            android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle"></CheckBoxPreference>
+            android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle">
+        </CheckBoxPreference>
      <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference
             android:defaultValue="@bool/prefStopOnReleaseDefaultValue"
