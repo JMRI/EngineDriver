@@ -114,7 +114,7 @@
     <string name="prefHideSliderTitle">Hide Speed Slider?</string>
     <string name="prefHideSliderSummary">Do not show speed slider, use speed buttons instead.</string>
     <string name="prefDirChangeWhileMovingTitle">Direction change?</string>
-    <string name="prefDirChangeWhileMovingSummary">Allow direction change while Moving.</string>    
+    <string name="prefDirChangeWhileMovingSummary">Allow direction change while Moving. Unchecking also disables Loco selection while moving.</string>
     <string name="prefStopOnDirectionChangeTitle">Stop on direction change?</string>
     <string name="prefStopOnDirectionChangeSummary">Stop train if you change direction while moving.  Overrides ‘Allow direction change while moving’ preference.</string>
     <string name="prefShowAddressInsteadOfNameTitle">Show Loco Address instead of Name?</string>
