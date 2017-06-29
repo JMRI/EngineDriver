@@ -899,14 +899,19 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     public class select_function_button_touch_listener implements View.OnClickListener {
         char whichThrottle;     // T for first throttle, S for second, G for third
-
         public select_function_button_touch_listener(char new_whichThrottle) {
             whichThrottle = new_whichThrottle;
         }
 
         @Override
         public void onClick(View v) {
-            start_select_loco_activity(whichThrottle); // pass throttle #
+            boolean dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
+            // don't loco change while moving if the preference is set
+            if ((dirChangeWhileMoving) || (getSpeed(whichThrottle)==0)) {
+                start_select_loco_activity(whichThrottle); // pass throttle #
+            } else {
+                Toast.makeText(getApplicationContext(), "Loco change not allowed: 'Direction change?' while moving is disabled in the preferences", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -1027,7 +1032,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                             if ((dirChangeWhileMoving) || (getSpeed(whichThrottle)==0)) {
                                 showDirectionRequest(whichThrottle, dir);        // update requested direction indication
                                 setEngineDirection(whichThrottle, dir, false);   // update direction for each engine on this throttle
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Direction change not allowed: 'Direction change?' while moving is disabled in the preferences", Toast.LENGTH_LONG).show();
                             }
+
                             break;
                         }
                         case function_button.STOP: 
