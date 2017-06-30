@@ -1,13 +1,14 @@
 **Version 2.14
  * request and show function labels for JMRI consists - mstevetodd  
  * show activeProfile on About page - mstevetodd
- * Several new Preferences added by Peter Akers:
- *  Prevent direction change while moving,
- *  Decrease Loco No. button Height,
- *  Show loco address instead of names,
- *  Immersive mode,
- *  Stop on direction change while moving,
- *  Always use default labels.
+ * Prevent direction change while moving - Peter Akers,
+ * Decrease Loco No. button Height - Peter Akers,
+ * Show loco address instead of names - Peter Akers,
+ * Increase web view size - Peter Akers,
+ * Immersive mode - Peter Akers,
+ * Stop on direction change while moving - Peter Akers,
+ * Always use default labels - Peter Akers.
+ * hide menu options and activities when not allowed or supported - mstevetodd
 **Version 2.13
  * allow app to be moved to SD card - mstevetodd
  * Added selective sound routing preference for consists - Robin Becker
@@ -327,7 +328,6 @@
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
  *   TODO: grey-out direction buttons if not allowed while moving
- *   TODO: add preference to disable "Select Loco" if speed > 0
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected
  *   TODO: new preference to reverse order of Forward and Reverse buttons
  *   TODO: support webview on Top

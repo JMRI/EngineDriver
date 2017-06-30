@@ -90,7 +90,7 @@ public class power_control extends Activity {
     public void refresh_power_control_view() {
         Button b=(Button)findViewById(R.id.power_control_button);
         Drawable currentImage = power_unknown_drawable;
-        if (mainapp.power_state == null) {
+        if (!mainapp.isPowerControlAllowed()) {
             b.setEnabled(false);
             TextView tv=(TextView)findViewById(R.id.power_control_text);
             tv.setText(getString(R.string.power_control_not_allowed)); 

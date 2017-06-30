@@ -473,6 +473,7 @@ public class routes extends Activity  implements OnGestureListener {
             // right to left swipe goes to turnouts if enabled in prefs
             else {
                 boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference", getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
+                swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
                 if(swipeTurnouts == true) {
                     Intent in=new Intent().setClass(this, turnouts.class);
                     startActivity(in);
@@ -505,9 +506,12 @@ public class routes extends Activity  implements OnGestureListener {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.routes_menu, menu);
         RMenu = menu;
-        mainapp.displayEStop(RMenu);
+        mainapp.displayEStop(menu);
         mainapp.displayPowerStateMenuButton(menu);
+        mainapp.setPowerMenuOption(menu);
         mainapp.setPowerStateButton(menu);
+        mainapp.setWebMenuOption(menu);
+        mainapp.setTurnoutsMenuOption(menu);
         return true;
     }
     @Override

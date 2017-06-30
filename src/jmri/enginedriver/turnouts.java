@@ -89,7 +89,7 @@ public class turnouts extends Activity implements OnGestureListener {
         //clear and rebuild, or disable if not allowed
         turnoutsFullList.clear();
         locationList.clear();
-        if (mainapp.to_state_names != null) {  //not allowed
+        if (mainapp.isTurnoutControlAllowed()) {
             if (mainapp.to_user_names != null) { //none defined
                 int pos = 0;
                 String del = prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
@@ -169,7 +169,7 @@ public class turnouts extends Activity implements OnGestureListener {
         TextView trnPrefix =(TextView)findViewById(R.id.turnout_prefix);
         String turnout = trn.getText().toString().trim();
         int txtLen = turnout.length();
-        if (mainapp.to_state_names != null) {
+        if (mainapp.isTurnoutControlAllowed()) {
             trn.setEnabled(true);
             // don't allow buttons if nothing entered
             if(txtLen > 0) {
@@ -404,10 +404,10 @@ public class turnouts extends Activity implements OnGestureListener {
         } else {
             //hide the buttons
             b=(Button)findViewById(R.id.turnout_close);
-            b.setVisibility(GONE);
+            b.setVisibility(View.GONE);
 
             b=(Button)findViewById(R.id.turnout_throw);
-            b.setVisibility(GONE);
+            b.setVisibility(View.GONE);
         }
         //((EditText) findViewById(R.id.turnout_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
 
@@ -519,6 +519,7 @@ public class turnouts extends Activity implements OnGestureListener {
             if(e2.getX() > e1.getX()) {
                 boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference", 
                         getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
+                swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
                 if(swipeRoutes == true) {
                     Intent in=new Intent().setClass(this, routes.class);
                     startActivity(in);
@@ -557,9 +558,12 @@ public class turnouts extends Activity implements OnGestureListener {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.turnouts_menu, menu);
         TuMenu = menu;
-        mainapp.displayEStop(TuMenu);
+        mainapp.displayEStop(menu);
         mainapp.displayPowerStateMenuButton(menu);
+        mainapp.setPowerMenuOption(menu);
         mainapp.setPowerStateButton(menu);
+        mainapp.setWebMenuOption(menu);
+        mainapp.setRoutesMenuOption(menu);
         return true;
     }
     @Override

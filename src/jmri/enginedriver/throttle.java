@@ -378,10 +378,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     break;
                 case 'P': // panel info
-                    if (whichThrottle == 'W') // PW - web server port info
+                    if (whichThrottle == 'W') { // PW - web server port info
                         initWeb();
-                    if (whichThrottle == 'P') // PP - power state change
-                        mainapp.setPowerStateButton(TMenu); // update the power state button
+                        set_labels();
+                    }
+                    if (whichThrottle == 'P') { // PP - power state change
+                        set_labels();
+                    }
                     break;
                 } // end of switch
                 
@@ -760,7 +763,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             startActivityForResult(select_loco, 1);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
-            Log.d("debug", ex.getMessage());
+            Log.d("Engine_Driver", ex.getMessage());
         }
     };
 
@@ -2183,9 +2186,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         set_all_function_states('S');
         set_all_function_states('G');
 
+        //adjust several items in the menu
         if (TMenu != null) {
             mainapp.displayEStop(TMenu);
+            mainapp.setPowerStateButton(TMenu);
             mainapp.displayPowerStateMenuButton(TMenu);
+            mainapp.setPowerMenuOption(TMenu);
+            mainapp.setWebMenuOption(TMenu);
+            mainapp.setRoutesMenuOption(TMenu);
+            mainapp.setTurnoutsMenuOption(TMenu);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");
@@ -2245,13 +2254,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.throttle_menu, menu);
         TMenu = menu;
-        mainapp.displayEStop(menu);
-        mainapp.displayPowerStateMenuButton2(menu);
-        mainapp.setPowerStateButton(menu);
-        //for MRC, the web view is only for settings, so change the text
-        if (mainapp.getServerType().equals("MRC")) {
-            TMenu.findItem(R.id.web_mnu).setTitle(R.string.mrc_settings);
-        }
+        set_labels();
         return true;
     }
 
@@ -2319,7 +2322,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             speedUpdate('G', 0);
             break;
         case R.id.power_layout_button:
-            if (mainapp.power_state == null) {
+            if (!mainapp.isPowerControlAllowed()) {
                 AlertDialog.Builder b = new AlertDialog.Builder(this);
                 b.setIcon(android.R.drawable.ic_dialog_alert);
                 b.setTitle("Will Not Work!");
@@ -2489,8 +2492,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 event.setAction(MotionEvent.ACTION_CANCEL);
                 boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference", 
                         getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
+                swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
                 boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference", 
                         getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
+                swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
                 // if swiping (to Turnouts or Routes screen) is enabled, process the swipe
                 if (swipeTurnouts == true || swipeRoutes == true) {
                     navigatingAway = true;
