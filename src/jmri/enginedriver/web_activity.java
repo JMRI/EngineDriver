@@ -309,7 +309,10 @@ class web_handler extends Handler {
 	  MenuInflater inflater = getMenuInflater();
 	  inflater.inflate(R.menu.web_menu, menu);
 	  WMenu = menu;
-	  mainapp.displayEStop(WMenu);
+	  mainapp.displayEStop(menu);
+      mainapp.setRoutesMenuOption(menu);
+      mainapp.setTurnoutsMenuOption(menu);
+	  mainapp.setPowerMenuOption(menu);
 	  return true;
   }
   @Override

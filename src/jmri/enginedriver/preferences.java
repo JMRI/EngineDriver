@@ -41,8 +41,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         super.onCreate(savedInstanceState);
         mainapp=(threaded_application)getApplication();
         addPreferencesFromResource(R.xml.preferences);
-        if(mainapp.power_state == null)
-        {
+        if(mainapp.isPowerControlAllowed()) {
             getPreferenceScreen().findPreference("show_layout_power_button_preference").setSelectable(false);
             getPreferenceScreen().findPreference("show_layout_power_button_preference").setEnabled(false);
         }

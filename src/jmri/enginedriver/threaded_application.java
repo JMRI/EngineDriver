@@ -41,6 +41,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.webkit.CookieSyncManager;
 import android.widget.Toast;
 
@@ -112,7 +113,7 @@ public class threaded_application extends Application {
     String[] rt_system_names;
     String[] rt_user_names;
     String[] rt_states;
-    HashMap<String, String> rt_state_names;
+    HashMap<String, String> rt_state_names; //if not set, routes are not allowed
     HashMap<String, String> roster_entries;  //roster sent by WiThrottle
     LinkedHashMap<String, String> consist_entries;
     private static DownloadRosterTask dlRosterTask = null;
@@ -361,7 +362,6 @@ public class threaded_application extends Application {
             Log.d("Engine_Driver", String.format("added Dtx at %s to Discovered List", server_addr));
 
         }
-
 
         @SuppressLint("HandlerLeak")
         class comm_handler extends Handler    {
@@ -809,9 +809,9 @@ public class threaded_application extends Application {
                     serverType = response_str.substring(2); //store the type 
                     if (serverType.equals("MRC")) {
                         web_server_port = 80; //hardcode web port for MRC
-                        to_state_names = new HashMap<String, String>();
-                        to_state_names.put("2", "Closed"); //hardcode for MRC, this will enable the manual input only
-                        to_state_names.put("4", "Thrown");
+//                        to_state_names = new HashMap<String, String>();
+//                        to_state_names.put("2", "Closed"); //hardcode for MRC, this will enable the manual input only
+//                        to_state_names.put("4", "Thrown");
                     }
 //                  Log.d("Engine_Driver", "process response: set server_type to " + serverType + " web port to " + web_server_port);                   
                 } else if (response_str.charAt(1) == 'M') { //message sent from server to throttle, send to UI as toast message 
@@ -2160,21 +2160,6 @@ public class threaded_application extends Application {
         sendMsg(comm_msg_handler, message_type.POWER_CONTROL, "", newState);
     }
 
-    //TODO: get power_state from WiThrottle before UI starts up to display Power Layout Icon. 
-    //Then can remove displayPowerStateMenuButton2.
-    // Also change in throttle.
-    public void displayPowerStateMenuButton2(Menu menu)
-    {
-        if(prefs.getBoolean("show_layout_power_button_preference", false))
-        {
-            menu.findItem(R.id.power_layout_button).setVisible(true);
-        }
-        else
-        {
-            menu.findItem(R.id.power_layout_button).setVisible(false);
-        }
-    }
-
     public void displayPowerStateMenuButton(Menu menu)
     {
         if(prefs.getBoolean("show_layout_power_button_preference", false) && (power_state != null))
@@ -2185,6 +2170,116 @@ public class threaded_application extends Application {
         {
             menu.findItem(R.id.power_layout_button).setVisible(false);
         }
+    }
+
+    /**
+     * for menu passed in, set the text or hide the menu option based on connected system
+     * @param menu - menu object that will be adjusted
+     */
+    public void setWebMenuOption(Menu menu) {
+        if (menu != null) {
+            MenuItem item = menu.findItem(R.id.web_mnu);
+            if (item != null) {
+                if (isWebAllowed()) {
+                    item.setVisible(true);
+                    if ("MRC".equals(getServerType())) {
+                        //for MRC, the web view is only for settings, so also change the text
+                        item.setTitle(R.string.mrc_settings);
+                    }
+                } else {
+                    item.setVisible(false);
+                }
+            }
+        }
+    }
+
+    /**
+     * for menu passed in, hide or show the routes menu
+     * @param menu - menu object that will be adjusted
+     */
+    public void setRoutesMenuOption(Menu menu) {
+        if (menu != null) {
+            MenuItem item = menu.findItem(R.id.routes_mnu);
+            if (item != null) {
+                if (isRouteControlAllowed()) {
+                    item.setVisible(true);
+                } else {
+                    item.setVisible(false);
+                }
+            }
+        }
+    }
+
+    /**
+     * for menu passed in, hide or show the power menu option
+     * @param menu - menu object that will be adjusted
+     */
+    public void setPowerMenuOption(Menu menu) {
+        if (menu != null) {
+            MenuItem item = menu.findItem(R.id.power_control_mnu);
+            if (item != null) {
+                if (isPowerControlAllowed()) {
+                    item.setVisible(true);
+                } else {
+                    item.setVisible(false);
+                }
+            }
+        }
+    }
+
+    /**
+     * for menu passed in, hide or show the routes menu
+     * @param menu - menu object that will be adjusted
+     */
+    public void setTurnoutsMenuOption(Menu menu) {
+        if (menu != null) {
+            MenuItem item = menu.findItem(R.id.turnouts_mnu);
+            if (item != null) {
+                if (isTurnoutControlAllowed()) {
+                    item.setVisible(true);
+                } else {
+                    item.setVisible(false);
+                }
+            }
+        }
+    }
+
+    /**
+     * Is Web View allowed for this connection?
+     *   this hides/shows menu options and activities
+     * @return true or false
+     */
+    public boolean isWebAllowed() {
+        return (web_server_port > 0);
+    }
+
+    /**
+     * Is Power Control allowed for this connection?
+     *   this hides/shows menu options and activities
+     * @return true or false
+     */
+    public boolean isPowerControlAllowed() {
+        return (power_state != null);
+    }
+
+    /**
+     * Is Route Control allowed for this connection?
+     *   based on setting of rt_state_names for now
+     *   this hides/shows menu options and activities
+     * @return true or false
+     */
+    public boolean isRouteControlAllowed() {
+        return (rt_state_names != null);
+    }
+
+    /**
+     * Are routes allowed for this connection?
+     *   based on setting of to_state_names for now
+     *   this hides/shows menu options and activities
+     * @return true or false
+     */
+    public boolean isTurnoutControlAllowed() {
+        return (to_state_names != null);
     }
 
     public void setPowerStateButton(Menu menu)
@@ -2353,6 +2448,9 @@ public class threaded_application extends Application {
         return uri;
     }
 
+    public boolean setActivityOrientation(Activity activity) {
+        return setActivityOrientation(activity,false);
+    }
     /**
      * Set activity screen orientation based on prefs, check to avoid sending change when already there.
      * checks "auto Web on landscape" preference and returns false if orientation requires activity switch
@@ -2364,9 +2462,6 @@ public class threaded_application extends Application {
      * @return  true if the new orientation is ok for this activity.
      *          false if "Auto Web on Landscape" is enabled and new orientation requires activity switch
      * */
-    public boolean setActivityOrientation(Activity activity) {
-        return setActivityOrientation(activity,false);
-    }
     public boolean setActivityOrientation(Activity activity, Boolean webPref) {
         String to;
         to = prefs.getString("ThrottleOrientation", 
