@@ -193,6 +193,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     private boolean selectLocoRendered = false; // this will be true once set_labels() runs following rendering of the loco select textViews
 
+    // for calculating how far the touch has moved
+    // use in the touch action for enteing and exiting immersive mode
+    private float  lastX;
+    private float  lastY;
+    private float  currentX;
+    private float  currentY;
+    private boolean immersiveModeIsOn;
+    private boolean immersiveModeCheck;
+
     // For speed slider speed buttons.
     class RptUpdater implements Runnable {
         char whichThrottle;
@@ -898,6 +907,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
+    // Listeners for the Select Loco buttons
     public class select_function_button_touch_listener implements View.OnClickListener {
         char whichThrottle;     // T for first throttle, S for second, G for third
         public select_function_button_touch_listener(char new_whichThrottle) {
@@ -996,9 +1006,17 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             // make the click sound once
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 v.playSoundEffect(SoundEffectConstants.CLICK);
+
+                lastX = event.getX();
+                lastY = event.getY();
             }
 
-            // if gesture in progress, skip button processing
+            if (event.getAction() == MotionEvent.ACTION_MOVE){
+                currentX = event.getX();
+                currentY = event.getY();
+            }
+
+                // if gesture in progress, skip button processing
             if (gestureInProgress == true) {
                 return (true);
             }
@@ -1018,6 +1036,44 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             boolean stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
 
             switch (action) {
+                case MotionEvent.ACTION_MOVE: {
+                    switch (this.function) {
+                        case function_button.SPEED_LABEL:
+                            final int deltaX = (int) (currentX - lastX);
+                            final int deltaY = (int) (currentY - lastY);
+                            int distance = (deltaX * deltaX) + (deltaY * deltaY);
+                            if (distance > 100000) {
+                                if (!immersiveModeCheck) {
+                                    immersiveModeCheck = true;
+                                    // check if the preference is set to use immersimve mode on the Throttle View
+                                    boolean tvim = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
+
+                                    if (tvim) {   // if the preference is set use Immersive mode
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+
+                                            if (immersiveModeIsOn) {
+                                                webView.setSystemUiVisibility(
+                                                        View.SYSTEM_UI_FLAG_VISIBLE);
+                                                webView.invalidate();
+                                                immersiveModeIsOn = false;
+                                            } else {
+                                                webView.setSystemUiVisibility(
+                                                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                                                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                                                                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                                                immersiveModeIsOn = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                immersiveModeCheck = false;
+                            }
+                    }
+                }
                 case MotionEvent.ACTION_DOWN: {
                     switch (this.function) {
                         case function_button.FORWARD:
@@ -1564,6 +1620,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         if (hasFocus) {
             if (tvim) {   // if the preference is set use Immersive mode
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    immersiveModeIsOn = true;
                     webView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -1571,7 +1628,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                } else {
+                    immersiveModeIsOn = false;
                 }
+            } else {
+                immersiveModeIsOn = false;
             }
         }
     }
