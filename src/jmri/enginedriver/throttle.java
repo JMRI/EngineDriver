@@ -193,12 +193,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     private boolean selectLocoRendered = false; // this will be true once set_labels() runs following rendering of the loco select textViews
 
-    // for calculating how far the touch has moved
-    // use in the touch action for enteing and exiting immersive mode
-    private float  lastX;
-    private float  lastY;
-    private float  currentX;
-    private float  currentY;
+    // used in the gesture for entering and exiting immersive mode
     private boolean immersiveModeIsOn;
     private boolean immersiveModeCheck;
 
@@ -419,6 +414,36 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 break;
             }
         };
+    }
+
+
+    private void setImmersiveModeOn (View webView ) {
+        boolean tvim = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
+        immersiveModeIsOn = false;
+
+        if (tvim) {   // if the preference is set use Immersive mode
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                immersiveModeIsOn = true;
+                webView.setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                );
+            }
+        }
+    }
+    private void setImmersiveModeOff (View webView) {
+        boolean tvim = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
+        immersiveModeIsOn = false;
+
+        if (tvim) {   // if the preference is set use Immersive mode
+            webView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_VISIBLE);
+            webView.invalidate();
+        }
     }
 
     private void reloadWeb() {
@@ -1009,17 +1034,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             // make the click sound once
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 v.playSoundEffect(SoundEffectConstants.CLICK);
-
-                lastX = event.getX();
-                lastY = event.getY();
             }
 
-            if (event.getAction() == MotionEvent.ACTION_MOVE){
-                currentX = event.getX();
-                currentY = event.getY();
-            }
-
-                // if gesture in progress, skip button processing
+            // if gesture in progress, skip button processing
             if (gestureInProgress == true) {
                 return (true);
             }
@@ -1039,44 +1056,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             boolean stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
 
             switch (action) {
-                case MotionEvent.ACTION_MOVE: {
-                    switch (this.function) {
-                        case function_button.SPEED_LABEL:
-                            final int deltaX = (int) (currentX - lastX);
-                            final int deltaY = (int) (currentY - lastY);
-                            int distance = (deltaX * deltaX) + (deltaY * deltaY);
-                            if (distance > 100000) {
-                                if (!immersiveModeCheck) {
-                                    immersiveModeCheck = true;
-                                    // check if the preference is set to use immersimve mode on the Throttle View
-                                    boolean tvim = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
-
-                                    if (tvim) {   // if the preference is set use Immersive mode
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-
-                                            if (immersiveModeIsOn) {
-                                                webView.setSystemUiVisibility(
-                                                        View.SYSTEM_UI_FLAG_VISIBLE);
-                                                webView.invalidate();
-                                                immersiveModeIsOn = false;
-                                            } else {
-                                                webView.setSystemUiVisibility(
-                                                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                                                                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                                                                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-                                                immersiveModeIsOn = true;
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-                                immersiveModeCheck = false;
-                            }
-                    }
-                }
                 case MotionEvent.ACTION_DOWN: {
                     switch (this.function) {
                         case function_button.FORWARD:
@@ -1617,26 +1596,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        // check if the preference is set to use immersimve mode on the Throttle View
-        boolean tvim = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
- 
+
         if (hasFocus) {
-            if (tvim) {   // if the preference is set use Immersive mode
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    immersiveModeIsOn = true;
-                    webView.setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-                } else {
-                    immersiveModeIsOn = false;
-                }
-            } else {
-                immersiveModeIsOn = false;
-            }
+            setImmersiveModeOn(webView);
         }
     }
  
@@ -2471,8 +2433,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 final VelocityTracker velocityTracker = mVelocityTracker;
                 velocityTracker.computeCurrentVelocity(1000);
                 int velocityX = (int) velocityTracker.getXVelocity();
+                int velocityY = (int) velocityTracker.getYVelocity();
                 // Log.d("Engine_Driver", "gestureVelocity vel " + velocityX);
-                if (Math.abs(velocityX) < threaded_application.min_fling_velocity) {
+                if ((Math.abs(velocityX) < threaded_application.min_fling_velocity) && (Math.abs(velocityY) < threaded_application.min_fling_velocity)) {
                     gestureFailed(event);
                 }
             }
@@ -2487,50 +2450,54 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         // Log.d("Engine_Driver", "gestureEnd action " + event.getAction());
         mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
         if (gestureInProgress == true) {
-            if (Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) {
-                // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
-                event.setAction(MotionEvent.ACTION_CANCEL);
-                boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference", 
-                        getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
-                swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
-                boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference", 
-                        getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
-                swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
-                // if swiping (to Turnouts or Routes screen) is enabled, process the swipe
-                if (swipeTurnouts == true || swipeRoutes == true) {
-                    navigatingAway = true;
-                    // left to right swipe goes to turnouts if enabled in prefs
-                    if (event.getRawX() > gestureStartX) 
-                    {
-                        Intent in;
-                        if(swipeTurnouts == true) 
-                        {
-                            in=new Intent().setClass(this, turnouts.class);
-                        } 
-                        else 
-                        {
-                            in = new Intent().setClass(this, routes.class);
+            if ((Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) || (Math.abs(event.getY() - gestureStartY) > threaded_application.min_fling_distance)) {
+                if (Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) {
+                    // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
+                    event.setAction(MotionEvent.ACTION_CANCEL);
+                    boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
+                            getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
+                    swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
+                    boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
+                            getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
+                    swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
+                    // if swiping (to Turnouts or Routes screen) is enabled, process the swipe
+                    if (swipeTurnouts == true || swipeRoutes == true) {
+                        navigatingAway = true;
+                        // left to right swipe goes to turnouts if enabled in prefs
+                        if (event.getRawX() > gestureStartX) {
+                            Intent in;
+                            if (swipeTurnouts == true) {
+                                in = new Intent().setClass(this, turnouts.class);
+                            } else {
+                                in = new Intent().setClass(this, routes.class);
+                            }
+                            startActivity(in);
+                            connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
                         }
-                        startActivity(in);
-                        connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-                    }
-                    // right to left swipe goes to routes if enabled in prefs
-                    else 
-                    {
-                        Intent in;
-                        if(swipeRoutes == true) 
-                        {
-                            in = new Intent().setClass(this, routes.class);
-                        } 
-                        else 
-                        {
-                            in=new Intent().setClass(this, turnouts.class);
+                        // right to left swipe goes to routes if enabled in prefs
+                        else {
+                            Intent in;
+                            if (swipeRoutes == true) {
+                                in = new Intent().setClass(this, routes.class);
+                            } else {
+                                in = new Intent().setClass(this, turnouts.class);
+                            }
+                            startActivity(in);
+                            connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
                         }
-                        startActivity(in);
-                        connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
                     }
                 }
-            } else {
+                // enter or exit immersive mode on pull down (only) if the preference is set
+                if ((event.getY() - gestureStartY) > threaded_application.min_fling_distance) {
+                    if (immersiveModeIsOn) {
+                        setImmersiveModeOff(webView);
+                        Toast.makeText(getApplicationContext(), "Immersive mode temporarily disabled. To disable permanently change in preferences", Toast.LENGTH_LONG).show();
+                    } else {
+                        setImmersiveModeOn(webView);
+                    }
+                }
+            }
+            else {
                 // gesture was not long enough
                 gestureFailed(event);
             }
