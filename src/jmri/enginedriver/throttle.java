@@ -197,6 +197,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private boolean immersiveModeIsOn;
     private boolean immersiveModeCheck;
 
+    //used in the gesture for temporarily showing the Web View
+    private boolean webViewIsOn;
+
     // For speed slider speed buttons.
     class RptUpdater implements Runnable {
         char whichThrottle;
@@ -949,7 +952,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             if ((dirChangeWhileMoving) || (getSpeed(whichThrottle)==0)) {
                 start_select_loco_activity(whichThrottle); // pass throttle #
             } else {
-                Toast.makeText(getApplicationContext(), "Loco change not allowed: 'Direction change?' while moving is disabled in the preferences", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Loco change not allowed: 'Direction change?' while moving is disabled in the preferences", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -1072,7 +1075,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                 showDirectionRequest(whichThrottle, dir);        // update requested direction indication
                                 setEngineDirection(whichThrottle, dir, false);   // update direction for each engine on this throttle
                             } else {
-                                Toast.makeText(getApplicationContext(), "Direction change not allowed: 'Direction change?' while moving is disabled in the preferences", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Direction change not allowed: 'Direction change?' (while moving) is disabled in the preferences", Toast.LENGTH_SHORT).show();
                             }
 
                             break;
@@ -1278,6 +1281,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         speedButtonDownText = getApplicationContext().getResources().getString(R.string.DownButton); 
 
         webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+
         // myGesture = new GestureDetector(this);
         GestureOverlayView ov = (GestureOverlayView) findViewById(R.id.throttle_overlay);
         ov.addOnGestureListener(this);
@@ -1640,12 +1644,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private void load_webview() {
         String url = currentUrl;
         if (webViewLocation.equals("none")) {       // if not displaying webview
+            webViewIsOn = false;
             url = noUrl;                            // load static url to stop javascript
             currentUrl = null;
             firstUrl = null;
         } 
         else if (url == null)                       // else if initializing
         {
+            webViewIsOn = true;
             url = mainapp.createUrl(prefs.getString("InitialThrotWebPage",
                     getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue)));
             if (url == null) {      //if port is invalid
@@ -1962,17 +1968,17 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             sW = dm.widthPixels;
         }
 
-        //
+        // increase the web view height if the preference is set
         boolean iwvs = prefs.getBoolean("prefIncreaseWebViewSize", getResources().getBoolean(R.bool.prefIncreaseWebViewSizeDefaultValue));
-        //
 
         // save part the screen for webview
         if (webViewLocation.equals("Top") || webViewLocation.equals("Bottom")) {
+            webViewIsOn = true;
             if (!iwvs) {
                 // save half the screen
                 screenHeight *= 0.5;
             } else {
-                // save 66% of the screen
+                // save 60% of the screen
                 if (webViewLocation.equals("Bottom")) {
                     screenHeight *= 0.40;
                 } else {
@@ -2491,10 +2497,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 if ((event.getY() - gestureStartY) > threaded_application.min_fling_distance) {
                     if (immersiveModeIsOn) {
                         setImmersiveModeOff(webView);
-                        Toast.makeText(getApplicationContext(), "Immersive mode temporarily disabled. To disable permanently change in preferences", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Immersive mode temporarily disabled. To disable permanently change in preferences", Toast.LENGTH_SHORT).show();
                     } else {
                         setImmersiveModeOn(webView);
                     }
+                }
+                // TODO: do something on swipe up (only)
+                if ((gestureStartY - event.getY()) > threaded_application.min_fling_distance) {
+//                    Toast.makeText(getApplicationContext(), "Swipe Up", Toast.LENGTH_SHORT).show();
                 }
             }
             else {
