@@ -123,7 +123,7 @@
     <string name="prefIncreaseWebViewSizeTitle">Increase Web View Size?</string>
     <string name="prefIncreaseWebViewSizeSummary">Increase web view size to 60% for small screens.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Use Immersive Mode for Throttle view?</string>
-    <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  WARNING: Requires Android Jelly Bean (4.1.x) or later. WARNING: Auto Connect preference will be ignored, as Preferences will not be available from the Throttle Page.</string>
+    <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  Swipe down on the page to temporarily disable (to see the menu and eStop) WARNING: Requires Android Jelly Bean (4.1.x) or later.</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Always use the default labels?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default function labels regardless of the labels the loco has in the Roster. Note: Requires a restart of EngineDriver.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. Height?</string>
