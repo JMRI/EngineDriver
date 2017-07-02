@@ -808,8 +808,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     }
 
     void enable_disable_direction_and_loco_buttons(char whichThrottle){
-        // check the option to see if the the Direction and Loco buttons need to be disabled
-//        boolean dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
 
         // TODO: Fix this so that it also works if the sliders are showing
         if (prefs.getBoolean("hide_slider_preference", true)) {
@@ -1006,7 +1004,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public void onClick(View v) {
-//            boolean dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
             // don't loco change while moving if the preference is set
             if ((dirChangeWhileMoving) || (getSpeed(whichThrottle)==0)) {
                 start_select_loco_activity(whichThrottle); // pass throttle #
@@ -1136,7 +1133,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         private void handleAction(int action) {
             String throt = Character.toString(whichThrottle);
-//            boolean dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
             boolean stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
 
             switch (action) {
