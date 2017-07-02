@@ -200,6 +200,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     //used in the gesture for temporarily showing the Web View
     private boolean webViewIsOn;
 
+    // used to hold the direction change preferences
+    boolean dirChangeWhileMoving;
+
+
     // For speed slider speed buttons.
     class RptUpdater implements Runnable {
         char whichThrottle;
@@ -802,6 +806,59 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     void enable_disable_buttons(char whichThrottle) {
         enable_disable_buttons(whichThrottle, false);
     }
+
+    void enable_disable_direction_and_loco_buttons(char whichThrottle){
+
+        // TODO: Fix this so that it also works if the sliders are showing
+        if (prefs.getBoolean("hide_slider_preference", true)) {
+
+            if (!dirChangeWhileMoving) {
+
+                // default to throttle 'T'
+                Button bFwd = bFwdT;
+                Button bRev = bRevT;
+                Button bSel = bSelT;
+                boolean tIsEnabled = llT.isEnabled();
+                Consist con = mainapp.consistT;
+                String conAddr = mainapp.consistT.formatConsistAddr();
+
+                switch (whichThrottle) {
+                    case 'T':
+                        break;
+                    case 'S':
+                        bFwd = bFwdS;
+                        bRev = bRevS;
+                        bSel = bSelS;
+                        tIsEnabled = llS.isEnabled();
+                        con = mainapp.consistS;
+                        conAddr = mainapp.consistS.formatConsistAddr();
+                        break;
+                    case 'G':
+                        bFwd = bFwdG;
+                        bRev = bRevG;
+                        bSel = bSelG;
+                        tIsEnabled = llG.isEnabled();
+                        con = mainapp.consistG;
+                        conAddr = mainapp.consistG.formatConsistAddr();
+                }
+
+                if ((getSpeed(whichThrottle) == 0) && tIsEnabled) {
+                    bSel.setEnabled(true);
+                    if (conAddr != "Not Set") {
+                        bFwd.setEnabled(true);
+                        bRev.setEnabled(true);
+                    } else {
+                        bFwd.setEnabled(false);
+                        bRev.setEnabled(false);
+                    }
+                } else {
+                    bFwd.setEnabled(false);
+                    bRev.setEnabled(false);
+                    bSel.setEnabled(false);
+                }
+            }
+        }
+    }
     
     void enable_disable_buttons(char whichThrottle, boolean forceDisable) {
         boolean newEnabledState = false;
@@ -947,7 +1004,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public void onClick(View v) {
-            boolean dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
             // don't loco change while moving if the preference is set
             if ((dirChangeWhileMoving) || (getSpeed(whichThrottle)==0)) {
                 start_select_loco_activity(whichThrottle); // pass throttle #
@@ -1007,6 +1063,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 mAutoDecrement = false;
                 decrement(whichThrottle);
             }
+            enable_disable_direction_and_loco_buttons(whichThrottle);
         }
 
         @Override
@@ -1076,7 +1133,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         private void handleAction(int action) {
             String throt = Character.toString(whichThrottle);
-            boolean dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
             boolean stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
 
             switch (action) {
@@ -1104,6 +1160,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         case function_button.STOP: 
                             set_stop_button(whichThrottle, true);
                             speedUpdateAndNotify(whichThrottle, 0);
+                            enable_disable_direction_and_loco_buttons(whichThrottle);
                             break;
                         case function_button.SPEED_LABEL:  // specify which throttle the volume button controls
                             whichVolume = whichThrottle;    // use whichever was clicked
@@ -1484,6 +1541,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             mVelocityTracker = VelocityTracker.obtain();
         }
 
+        // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
+        boolean dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
+        enable_disable_direction_and_loco_buttons('T');
+        enable_disable_direction_and_loco_buttons('S');
+        enable_disable_direction_and_loco_buttons('G');
+
         webView = (WebView) findViewById(R.id.throttle_webview);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
         webView.getSettings().setDatabasePath(databasePath);
@@ -1566,6 +1629,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         enable_disable_buttons('G');
         gestureFailed = false;
         gestureInProgress = false;
+        // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
+        boolean dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
+        enable_disable_direction_and_loco_buttons('T');
+        enable_disable_direction_and_loco_buttons('S');
+        enable_disable_direction_and_loco_buttons('G');
 
         set_labels(); // handle labels and update view
 
