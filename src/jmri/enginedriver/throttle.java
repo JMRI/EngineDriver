@@ -939,7 +939,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     }
 
     // Listeners for the Select Loco buttons
-    public class select_function_button_touch_listener implements View.OnClickListener {
+    public class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener  {
         char whichThrottle;     // T for first throttle, S for second, G for third
         public select_function_button_touch_listener(char new_whichThrottle) {
             whichThrottle = new_whichThrottle;
@@ -955,8 +955,29 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 Toast.makeText(getApplicationContext(), "Loco change not allowed: 'Direction change?' while moving is disabled in the preferences", Toast.LENGTH_SHORT).show();
             }
         }
+
+
+        //TODO: This onTouch may be redundant now that the gesture overlay is working better
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            int pos[] = new int[2];
+            v.getLocationOnScreen(pos);
+
+            // if gesture in progress, we may need to skip button processing
+            if (gestureInProgress == true) {
+                // Log.d("Engine_Driver", "onTouch " + "Gesture- currentY: " + (pos[1]+event.getY()) + " startY: " + gestureStartY);
+                //check to see if we have a substantial vertical movement
+                if (Math.abs(pos[1] + event.getY() - gestureStartY) > (threaded_application.min_fling_distance)) {
+                    // Log.d("Engine_Driver", "onTouch " + "Gesture - long - cY: " + (pos[1]+event.getY()) + " sY: " + gestureStartY);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
+    //listeners for the increase/decrease speed buttons (not the slider)
     public class arrow_speed_button_touch_listener implements View.OnClickListener, View.OnLongClickListener, View.OnTouchListener {
         char whichThrottle;     // T for first throttle, S for second, G for third
         String arrowDirection;
@@ -1140,6 +1161,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
+    //Listeners for the throttle slider
     public class throttle_listener implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
         char whichThrottle;
         int lastSpeed;
@@ -1286,7 +1308,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         GestureOverlayView ov = (GestureOverlayView) findViewById(R.id.throttle_overlay);
         ov.addOnGestureListener(this);
         ov.setGestureVisible(false);
-        
+
         function_button_touch_listener fbtl;
         select_function_button_touch_listener sfbt;
         arrow_speed_button_touch_listener asbl;
@@ -1296,16 +1318,19 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         bSelT.setClickable(true);
         sfbt = new select_function_button_touch_listener('T');
         bSelT.setOnClickListener(sfbt);
+        bSelT.setOnTouchListener(sfbt);
 
         bSelS = (Button) findViewById(R.id.button_select_loco_S);
         bSelS.setClickable(true);
         sfbt = new select_function_button_touch_listener('S');
         bSelS.setOnClickListener(sfbt);
+        bSelS.setOnTouchListener(sfbt);
 
         bSelG = (Button) findViewById(R.id.button_select_loco_G);
         bSelG.setClickable(true);
         sfbt = new select_function_button_touch_listener('G');
         bSelG.setOnClickListener(sfbt);
+        bSelG.setOnTouchListener(sfbt);
 
         // Arrow Keys
         try {
@@ -2121,8 +2146,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
             llT.setLayoutParams(llLp);
 
-            // update throttle top/bottom
-            T_top = llT.getTop() + sbT.getTop();
+            // update throttle slider top/bottom
+            T_top = llT.getTop() + sbT.getTop() + bSelT.getHeight() + bFwdT.getHeight();
             T_bottom = llT.getTop() + sbT.getBottom() + bSelT.getHeight() + bFwdT.getHeight();
 
             // set height of S area
@@ -2130,8 +2155,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
             llS.setLayoutParams(llLp);
 
-            // update throttle top/bottom
-            S_top = llS.getTop() + sbS.getTop();
+            // update throttle slider top/bottom
+            S_top = llS.getTop() + sbS.getTop() + bSelS.getHeight() + bFwdS.getHeight();
             S_bottom = llS.getTop() + sbS.getBottom() + bSelS.getHeight() + bFwdS.getHeight();
 
             // set height of G area
@@ -2139,8 +2164,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
             llG.setLayoutParams(llLp);
 
-            // update throttle top/bottom
-            G_top = llG.getTop() + sbG.getTop();
+            // update throttle slider top/bottom
+            G_top = llG.getTop() + sbG.getTop() + bSelG.getHeight() + bFwdG.getHeight();
             G_bottom = llG.getTop() + sbG.getBottom() + bSelG.getHeight() + bFwdG.getHeight();
         }
 
@@ -2408,14 +2433,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         gestureStartY = event.getY();
         // Log.d("Engine_Driver", "gestureStart y=" + gestureStartY);
 
-        // if gesture is attempting to start over an enabled slider, ignore it and return immediately.
-        if ((((View)sbT).isEnabled() && gestureStartY >= T_top && gestureStartY <= T_bottom)
-                || (((View)sbS).isEnabled() && gestureStartY >= S_top && gestureStartY <= S_bottom)
-                || (((View)sbG).isEnabled() && gestureStartY >= G_top && gestureStartY <= G_bottom)) {
-            // Log.d("Engine_Driver","exiting gestureStart");
-            return;
-        }
+        // check if the sliders are already hidden by preference
+        if (!prefs.getBoolean("hide_slider_preference", false)) {
+//            Log.d("Engine_Driver", "gestureStart sX= " + gestureStartX + " sY= " + gestureStartY);
+//            Log.d("Engine_Driver", "gestureStart tTop= " + T_top + " tBottom= " + T_bottom);
+//            Log.d("Engine_Driver", "gestureStart sTop= " + S_top + " sBottom= " + S_bottom);
+//            Log.d("Engine_Driver", "gestureStart gTop= " + G_top + " gBottom= " + G_bottom);
 
+            // if gesture is attempting to start over an enabled slider, ignore it and return immediately.
+            if ((((View) sbT).isEnabled() && gestureStartY >= T_top && gestureStartY <= T_bottom)
+                    || (((View) sbS).isEnabled() && gestureStartY >= S_top && gestureStartY <= S_bottom)
+                    || (((View) sbG).isEnabled() && gestureStartY >= G_top && gestureStartY <= G_bottom)) {
+                // Log.d("Engine_Driver","exiting gestureStart");
+                return;
+            }
+        }
         gestureInProgress = true;
         gestureFailed = false;
         gestureLastCheckTime = event.getEventTime();
@@ -2453,7 +2485,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     }
 
     private void gestureEnd(MotionEvent event) {
-        // Log.d("Engine_Driver", "gestureEnd action " + event.getAction());
+        // Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
         mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
         if (gestureInProgress == true) {
             if ((Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) || (Math.abs(event.getY() - gestureStartY) > threaded_application.min_fling_distance)) {
