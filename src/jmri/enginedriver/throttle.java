@@ -809,9 +809,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     void enable_disable_direction_and_loco_buttons(char whichThrottle){
 
-        // TODO: Fix this so that it also works if the sliders are showing
-        if (prefs.getBoolean("hide_slider_preference", true)) {
-
             if (!dirChangeWhileMoving) {
 
                 // default to throttle 'T'
@@ -857,7 +854,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     bSel.setEnabled(false);
                 }
             }
-        }
     }
     
     void enable_disable_buttons(char whichThrottle, boolean forceDisable) {
@@ -1254,9 +1250,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     lastSpeed = speed;
                 }
                 throttle.setProgress(lastSpeed);
+                enable_disable_direction_and_loco_buttons(whichThrottle);
             } else {
                 setDisplayedSpeed(whichThrottle, speed);
                 lastSpeed = speed;
+                enable_disable_direction_and_loco_buttons(whichThrottle);
             }
         }
 
