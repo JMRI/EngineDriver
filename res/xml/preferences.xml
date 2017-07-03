@@ -17,24 +17,26 @@
         android:key="ThrottleOrientation"
         android:summary="@string/prefThrottleOrientationSummary"
         android:title="@string/prefThrottleOrientationTitle" />
-    <CheckBoxPreference
-        android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"
-        android:key="show_emergency_stop_menu_preference"
-        android:summary="@string/prefEmerStopSummary"
-        android:title="@string/prefEmerStopTitle" />
-    <CheckBoxPreference
-        android:defaultValue="@bool/prefLayoutPowerButtonDefaultValue"
-        android:key="show_layout_power_button_preference"
-        android:summary="@string/prefPowerButtonBarSummary"
-        android:title="@string/prefPowerButtonBarTitle" />
-    <ListPreference
-        android:defaultValue="@string/prefDisplayClockDefaultValue"
-        android:entries="@array/DisplayClockOptions"
-        android:entryValues="@array/DisplayClockValues"
-        android:key="ClockDisplayTypePreference"
-        android:summary="@string/prefDisplayClockSummary"
-        android:title="@string/prefDisplayClockTitle" />
-    <PreferenceCategory android:title="@string/prefThrottleTitle" >
+    <PreferenceCategory android:title="@string/prefThrottleStatusTitle" >
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"
+            android:key="show_emergency_stop_menu_preference"
+            android:summary="@string/prefEmerStopSummary"
+            android:title="@string/prefEmerStopTitle" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefLayoutPowerButtonDefaultValue"
+            android:key="show_layout_power_button_preference"
+            android:summary="@string/prefPowerButtonBarSummary"
+            android:title="@string/prefPowerButtonBarTitle" />
+        <ListPreference
+            android:defaultValue="@string/prefDisplayClockDefaultValue"
+            android:entries="@array/DisplayClockOptions"
+            android:entryValues="@array/DisplayClockValues"
+            android:key="ClockDisplayTypePreference"
+            android:summary="@string/prefDisplayClockSummary"
+            android:title="@string/prefDisplayClockTitle" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefThrottlePageTitle" >
         <ListPreference
             android:defaultValue="Two"
             android:entries="@array/NumOfThrottlesOptions"
@@ -42,6 +44,86 @@
             android:key="NumThrottle"
             android:summary="@string/prefNumOfThrottlesSummary"
             android:title="@string/prefNumOfThrottles" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefIncreaseSliderHeightDefaultValue"
+            android:key="increase_slider_height_preference"
+            android:summary="@string/prefIncreaseSliderHeightSummary"
+            android:title="@string/prefIncreaseSliderHeightTitle" >
+        </CheckBoxPreference>
+        <EditTextPreference
+            android:defaultValue="@string/prefSliderLeftMarginDefaultValue"
+            android:dialogTitle="@string/prefSliderLeftMarginTitle"
+            android:key="left_slider_margin"
+            android:maxLength="2"
+            android:numeric="integer"
+            android:summary="@string/prefSliderLeftMarginSummary"
+            android:title="@string/prefSliderLeftMarginTitle" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefDisplaySpeedArrows"
+            android:key="display_speed_arrows_buttons"
+            android:summary="@string/prefDisplaySpeedArrowsSummary"
+            android:title="@string/prefDisplaySpeedArrowsTitle" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefHideSliderDefaultValue"
+            android:key="hide_slider_preference"
+            android:summary="@string/prefHideSliderSummary"
+            android:title="@string/prefHideSliderTitle" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefDecreaseLocoNumberHeightDefaultValue"
+            android:key="prefDecreaseLocoNumberHeight"
+            android:summary="@string/prefDecreaseLocoNumberHeightSummary"
+            android:title="@string/prefDecreaseLocoNumberHeightTitle">
+        </CheckBoxPreference>
+        <ListPreference
+            android:defaultValue="@string/prefWebViewLocationDefaultValue"
+            android:entries="@array/WebViewLocation"
+            android:entryValues="@array/WebViewLocation"
+            android:key="WebViewLocation"
+            android:summary="@string/prefWebViewLocationSummary"
+            android:title="@string/prefWebViewLocationTitle" />
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefIncreaseWebViewSizeDefaultValue"
+            android:key="prefIncreaseWebViewSize"
+            android:summary="@string/prefIncreaseWebViewSizeSummary"
+            android:title="@string/prefIncreaseWebViewSizeTitle">
+        </CheckBoxPreference>
+        <EditTextPreference
+            android:defaultValue="@string/prefInitialThrotWebPageDefaultValue"
+            android:dialogTitle="@string/prefInitialThrotWebPageSummary"
+            android:key="InitialThrotWebPage"
+            android:summary="@string/prefInitialThrotWebPageSummary"
+            android:title="@string/prefInitialThrotWebPageTitle" />
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefShowAddressInsteadOfNameDefaultValue"
+            android:key="prefShowAddressInsteadOfName"
+            android:summary="@string/prefShowAddressInsteadOfNameSummary"
+            android:title="@string/prefShowAddressInsteadOfNameTitle">
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefAlwaysUseDefaultFunctionLabelsDefaultValue"
+            android:key="prefAlwaysUseDefaultFunctionLabels"
+            android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary"
+            android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle">
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefThrottleViewImmersiveModeDefaultValue"
+            android:key="prefThrottleViewImmersiveMode"
+            android:summary="@string/prefThrottleViewImmersiveModeSummary"
+            android:title="@string/prefThrottleViewImmersiveModeTitle">
+        </CheckBoxPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefThrottleTitle" >
         <ListPreference
             android:defaultValue="@string/prefDisplaySpeedUnitsDefaultValue"
             android:entries="@array/DisplaySpeedUnits"
@@ -67,25 +149,6 @@
             android:summary="@string/prefMaximumThrottleChangeSummary"
             android:title="@string/prefMaximumThrottleChangeTitle" >
         </EditTextPreference>
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefIncreaseSliderHeightDefaultValue"
-            android:key="increase_slider_height_preference"
-            android:summary="@string/prefIncreaseSliderHeightSummary"
-            android:title="@string/prefIncreaseSliderHeightTitle" >
-        </CheckBoxPreference>
-        <CheckBoxPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:defaultValue="@bool/prefDecreaseLocoNumberHeightDefaultValue"
-            android:key="prefDecreaseLocoNumberHeight"
-            android:summary="@string/prefDecreaseLocoNumberHeightSummary"
-            android:title="@string/prefDecreaseLocoNumberHeightTitle">
-        </CheckBoxPreference>
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefDisplaySpeedArrows"
-            android:key="display_speed_arrows_buttons"
-            android:summary="@string/prefDisplaySpeedArrowsSummary"
-            android:title="@string/prefDisplaySpeedArrowsTitle" />
         <EditTextPreference
             android:defaultValue="@string/prefSpeedButtonsSpeedStepDefaultValue"
             android:dialogTitle="@string/prefSpeedButtonsSpeedStepTitle"
@@ -102,52 +165,11 @@
             android:numeric="integer"
             android:summary="@string/prefSpeedButtonsRepeatSummary"
             android:title="@string/prefSpeedButtonsRepeatTitle" />
-        <EditTextPreference
-            android:defaultValue="@string/prefSliderLeftMarginDefaultValue"
-            android:dialogTitle="@string/prefSliderLeftMarginTitle"
-            android:key="left_slider_margin"
-            android:maxLength="2"
-            android:numeric="integer"
-            android:summary="@string/prefSliderLeftMarginSummary"
-            android:title="@string/prefSliderLeftMarginTitle" />
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefHideSliderDefaultValue"
-            android:key="hide_slider_preference"
-            android:summary="@string/prefHideSliderSummary"
-            android:title="@string/prefHideSliderTitle" >
-        </CheckBoxPreference>
-        <ListPreference
-            android:defaultValue="@string/prefWebViewLocationDefaultValue"
-            android:entries="@array/WebViewLocation"
-            android:entryValues="@array/WebViewLocation"
-            android:key="WebViewLocation"
-            android:summary="@string/prefWebViewLocationSummary"
-            android:title="@string/prefWebViewLocationTitle" />
-        <CheckBoxPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:defaultValue="@bool/prefIncreaseWebViewSizeDefaultValue"
-            android:key="prefIncreaseWebViewSize"
-            android:summary="@string/prefIncreaseWebViewSizeSummary"
-            android:title="@string/prefIncreaseWebViewSizeTitle">
-        </CheckBoxPreference>
-        <EditTextPreference
-            android:defaultValue="@string/prefInitialThrotWebPageDefaultValue"
-            android:dialogTitle="@string/prefInitialThrotWebPageSummary"
-            android:key="InitialThrotWebPage"
-            android:summary="@string/prefInitialThrotWebPageSummary"
-            android:title="@string/prefInitialThrotWebPageTitle" />
         <CheckBoxPreference
             android:defaultValue="@bool/prefStopOnPhonecallDefaultValue"
             android:key="stop_on_phonecall_preference"
             android:summary="@string/prefStopOnPhonecallSummary"
             android:title="@string/prefStopOnPhonecallTitle" >
-        </CheckBoxPreference>
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefSelectiveLeadSoundDefaultValue"
-            android:key="SelectiveLeadSound"
-            android:summary="@string/prefSelectiveLeadSoundSummary"
-            android:title="@string/prefSelectiveLeadSoundTitle" >
         </CheckBoxPreference>
         <CheckBoxPreference
             android:layout_width="wrap_content"
@@ -166,29 +188,11 @@
             android:summary="@string/prefStopOnDirectionChangeSummary"
             android:title="@string/prefStopOnDirectionChangeTitle">
         </CheckBoxPreference>
-       <CheckBoxPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:defaultValue="@bool/prefShowAddressInsteadOfNameDefaultValue"
-            android:key="prefShowAddressInsteadOfName"
-            android:summary="@string/prefShowAddressInsteadOfNameSummary"
-            android:title="@string/prefShowAddressInsteadOfNameTitle">
-       </CheckBoxPreference>
         <CheckBoxPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:defaultValue="@bool/prefThrottleViewImmersiveModeDefaultValue"
-            android:key="prefThrottleViewImmersiveMode"
-            android:summary="@string/prefThrottleViewImmersiveModeSummary"
-            android:title="@string/prefThrottleViewImmersiveModeTitle">
-        </CheckBoxPreference>
-        <CheckBoxPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:defaultValue="@bool/prefAlwaysUseDefaultFunctionLabelsDefaultValue"
-            android:key="prefAlwaysUseDefaultFunctionLabels"
-            android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary"
-            android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle">
+            android:defaultValue="@bool/prefSelectiveLeadSoundDefaultValue"
+            android:key="SelectiveLeadSound"
+            android:summary="@string/prefSelectiveLeadSoundSummary"
+            android:title="@string/prefSelectiveLeadSoundTitle" >
         </CheckBoxPreference>
      <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference

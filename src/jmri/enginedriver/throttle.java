@@ -1152,7 +1152,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                 showDirectionRequest(whichThrottle, dir);        // update requested direction indication
                                 setEngineDirection(whichThrottle, dir, false);   // update direction for each engine on this throttle
                             } else {
-                                Toast.makeText(getApplicationContext(), "Direction change not allowed: 'Direction change?' (while moving) is disabled in the preferences", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Direction change not allowed: 'Direction change while moving' is disabled in the preferences", Toast.LENGTH_SHORT).show();
                             }
 
                             break;
