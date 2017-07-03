@@ -1152,7 +1152,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                 showDirectionRequest(whichThrottle, dir);        // update requested direction indication
                                 setEngineDirection(whichThrottle, dir, false);   // update direction for each engine on this throttle
                             } else {
-                                Toast.makeText(getApplicationContext(), "Direction change not allowed: 'Direction change?' (while moving) is disabled in the preferences", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Direction change not allowed: 'Direction change while moving' is disabled in the preferences", Toast.LENGTH_SHORT).show();
                             }
 
                             break;
@@ -1650,6 +1650,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             speedUpdateAndNotify('T', 0);
             speedUpdateAndNotify('S', 0);
             speedUpdateAndNotify('G', 0);
+
+            // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
+            enable_disable_direction_and_loco_buttons('T');
+            enable_disable_direction_and_loco_buttons('S');
+            enable_disable_direction_and_loco_buttons('G');
+
             mainapp.EStopActivated = false;
         }
 
@@ -2381,6 +2387,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             speedUpdate('T', 0);
             speedUpdate('S', 0);
             speedUpdate('G', 0);
+
+            // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
+            enable_disable_direction_and_loco_buttons('T');
+            enable_disable_direction_and_loco_buttons('S');
+            enable_disable_direction_and_loco_buttons('G');
+
             break;
         case R.id.power_layout_button:
             if (!mainapp.isPowerControlAllowed()) {
