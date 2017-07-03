@@ -202,6 +202,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     // used to hold the direction change preferences
     boolean dirChangeWhileMoving;
+    boolean stopOnDirectionChange;
 
 
     // For speed slider speed buttons.
@@ -809,7 +810,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     void enable_disable_direction_and_loco_buttons(char whichThrottle){
 
-            if (!dirChangeWhileMoving) {
+            if ((!dirChangeWhileMoving) && (!stopOnDirectionChange)) {
 
                 // default to throttle 'T'
                 Button bFwd = bFwdT;
@@ -1011,10 +1012,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             // don't loco change while moving if the preference is set
             if ((dirChangeWhileMoving) || (getSpeed(whichThrottle)==0)) {
                 start_select_loco_activity(whichThrottle); // pass throttle #
+            } else {
+                Toast.makeText(getApplicationContext(), "Loco change not allowed: 'Direction change?' while moving is disabled in the preferences", Toast.LENGTH_SHORT).show();
             }
-            //else {
-            //    Toast.makeText(getApplicationContext(), "Loco change not allowed: 'Direction change?' while moving is disabled in the preferences", Toast.LENGTH_SHORT).show();
-            //}
         }
 
 
@@ -1138,7 +1138,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         private void handleAction(int action) {
             String throt = Character.toString(whichThrottle);
-            boolean stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
+            //boolean stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
 
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
@@ -1550,6 +1550,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
         dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
+        stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
         enable_disable_direction_and_loco_buttons('T');
         enable_disable_direction_and_loco_buttons('S');
         enable_disable_direction_and_loco_buttons('G');
@@ -1638,6 +1639,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         gestureInProgress = false;
         // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
         dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
+        stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
         enable_disable_direction_and_loco_buttons('T');
         enable_disable_direction_and_loco_buttons('S');
         enable_disable_direction_and_loco_buttons('G');
