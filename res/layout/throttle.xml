@@ -398,8 +398,10 @@
                	 	    android:layout_width="0dip"
                	 	    android:layout_weight="0.15"
                         android:layout_height="match_parent"
-                        android:text="@string/LeftButton"/>
-               	 	<SeekBar
+                        android:text="@string/LeftButton"
+                        android:padding="0dp"
+                        android:textSize="30sp" />
+                    <SeekBar
                	 	    android:id="@+id/speed_S"
                	 	    android:layout_width="0dip"
                	 	    android:layout_weight="0.7"
@@ -414,7 +416,9 @@
                	 	    android:layout_width="0dip"
                	 	    android:layout_weight="0.15"
                     	android:layout_height="match_parent"
-                    	android:text="@string/RightButton"/>
+                    	android:text="@string/RightButton"
+                        android:padding="0dp"
+                        android:textSize="30sp" />
 				</LinearLayout>
                 
                 <ScrollView
@@ -672,7 +676,9 @@
                	 	    android:layout_width="0dip"
                	 	    android:layout_weight="0.15"
                         android:layout_height="match_parent"
-                        android:text="@string/LeftButton"/>
+                        android:text="@string/LeftButton"
+                        android:padding="0dp"
+                        android:textSize="30sp" />
                	 	<SeekBar
                	 	    android:id="@+id/speed_G"
                	 	    android:layout_width="0dip"
@@ -688,7 +694,9 @@
                	 	    android:layout_width="0dip"
                	 	    android:layout_weight="0.15"
                     	android:layout_height="match_parent"
-                    	android:text="@string/RightButton"/>
+                    	android:text="@string/RightButton"
+                        android:padding="0dp"
+                        android:textSize="30sp" />
 				</LinearLayout>
                 <ScrollView
                     android:id="@+id/function_buttons_scroller_G"
