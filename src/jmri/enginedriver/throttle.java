@@ -816,8 +816,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 Button bRev = bRevT;
                 Button bSel = bSelT;
                 boolean tIsEnabled = llT.isEnabled();
-                Consist con = mainapp.consistT;
+                //Consist con = mainapp.consistT;
                 String conAddr = mainapp.consistT.formatConsistAddr();
+                int dir = dirT;
 
                 switch (whichThrottle) {
                     case 'T':
@@ -827,15 +828,16 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         bRev = bRevS;
                         bSel = bSelS;
                         tIsEnabled = llS.isEnabled();
-                        con = mainapp.consistS;
+                        //con = mainapp.consistS;
                         conAddr = mainapp.consistS.formatConsistAddr();
+                        dir = dirS;
                         break;
                     case 'G':
                         bFwd = bFwdG;
                         bRev = bRevG;
                         bSel = bSelG;
                         tIsEnabled = llG.isEnabled();
-                        con = mainapp.consistG;
+                        //con = mainapp.consistG;
                         conAddr = mainapp.consistG.formatConsistAddr();
                 }
 
@@ -849,8 +851,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         bRev.setEnabled(false);
                     }
                 } else {
-                    bFwd.setEnabled(false);
-                    bRev.setEnabled(false);
+                    if (dir == 1) {
+                        bFwd.setEnabled(true);
+                        bRev.setEnabled(false);
+                    } else {
+                        bFwd.setEnabled(false);
+                        bRev.setEnabled(true);
+                    }
                     bSel.setEnabled(false);
                 }
             }
@@ -1003,9 +1010,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             // don't loco change while moving if the preference is set
             if ((dirChangeWhileMoving) || (getSpeed(whichThrottle)==0)) {
                 start_select_loco_activity(whichThrottle); // pass throttle #
-            } else {
-                Toast.makeText(getApplicationContext(), "Loco change not allowed: 'Direction change?' while moving is disabled in the preferences", Toast.LENGTH_SHORT).show();
             }
+            //else {
+            //    Toast.makeText(getApplicationContext(), "Loco change not allowed: 'Direction change?' while moving is disabled in the preferences", Toast.LENGTH_SHORT).show();
+            //}
         }
 
 
@@ -1147,9 +1155,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                             if ((dirChangeWhileMoving) || (getSpeed(whichThrottle)==0)) {
                                 showDirectionRequest(whichThrottle, dir);        // update requested direction indication
                                 setEngineDirection(whichThrottle, dir, false);   // update direction for each engine on this throttle
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Direction change not allowed: 'Direction change while moving' is disabled in the preferences", Toast.LENGTH_SHORT).show();
-                            }
+                            } //else {
+                                //Toast.makeText(getApplicationContext(), "Direction change not allowed: 'Direction change while moving' is disabled in the preferences", Toast.LENGTH_SHORT).show();
+                            //}
 
                             break;
                         }
