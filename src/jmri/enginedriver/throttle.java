@@ -1540,7 +1540,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
 
         // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
-        boolean dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
+        dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
         enable_disable_direction_and_loco_buttons('T');
         enable_disable_direction_and_loco_buttons('S');
         enable_disable_direction_and_loco_buttons('G');
@@ -1628,7 +1628,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         gestureFailed = false;
         gestureInProgress = false;
         // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
-        boolean dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
+        dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
         enable_disable_direction_and_loco_buttons('T');
         enable_disable_direction_and_loco_buttons('S');
         enable_disable_direction_and_loco_buttons('G');
