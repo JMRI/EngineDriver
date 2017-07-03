@@ -839,6 +839,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         tIsEnabled = llG.isEnabled();
                         //con = mainapp.consistG;
                         conAddr = mainapp.consistG.formatConsistAddr();
+                        dir = dirG;
                 }
 
                 if ((getSpeed(whichThrottle) == 0) && tIsEnabled) {
