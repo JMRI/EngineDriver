@@ -127,7 +127,8 @@ public class threaded_application extends Application {
     public final int minWebSocketVersion = 8;               //minimum Android version for Autobahn websocket library
 
     static final int DEFAULT_HEARTBEAT_INTERVAL = 10;       //interval for heartbeat when WiT heartbeat is disabled
-    static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;   //minimum interval for outbound heartbeat generator
+    static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;   //minimum allowed interval for outbound heartbeat generator
+    static final int MAX_OUTBOUND_HEARTBEAT_INTERVAL = 30;  //maximum allowed interval for outbound heartbeat generator
     static final int HEARTBEAT_RESPONSE_ALLOWANCE = 4;      //worst case time delay for WiT to respond to a heartbeat message
     public int heartbeatInterval = 0;                       //WiT heartbeat interval setting
     public int turnouts_list_position = 0;                  //remember where user was in item lists
@@ -1583,9 +1584,11 @@ public class threaded_application extends Application {
                     else {
                         outInterval = heartbeatIntervalSetpoint - HEARTBEAT_RESPONSE_ALLOWANCE;
                     }
+                    //keep values in a reasonable range
                     if (outInterval < MIN_OUTBOUND_HEARTBEAT_INTERVAL)
                         outInterval = MIN_OUTBOUND_HEARTBEAT_INTERVAL;
-
+                    if (outInterval > MAX_OUTBOUND_HEARTBEAT_INTERVAL)
+                        outInterval = MAX_OUTBOUND_HEARTBEAT_INTERVAL;
 
                     heartbeatOutboundInterval = outInterval * 1000;                     //convert to milliseconds
                     heartbeatInboundInterval = (outInterval + HEARTBEAT_RESPONSE_ALLOWANCE) * 1000;     //convert to milliseconds
