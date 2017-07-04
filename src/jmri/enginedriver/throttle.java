@@ -430,7 +430,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         immersiveModeIsOn = false;
 
         if (tvim) {   // if the preference is set use Immersive mode
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 immersiveModeIsOn = true;
                 webView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -448,7 +448,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         immersiveModeIsOn = false;
 
         if (tvim) {   // if the preference is set use Immersive mode
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 webView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_VISIBLE);
             }
@@ -2627,7 +2627,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 }
                 // TODO: do something on swipe up (only)
                 if ((gestureStartY - event.getY()) > threaded_application.min_fling_distance) {
-//                    Toast.makeText(getApplicationContext(), "Swipe Up", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getApplicationContext(), "Swipe Up", Toast.LENGTH_SHORT).show();
                 }
             }
             else {
