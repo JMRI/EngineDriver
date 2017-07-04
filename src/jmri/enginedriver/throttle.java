@@ -448,8 +448,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         immersiveModeIsOn = false;
 
         if (tvim) {   // if the preference is set use Immersive mode
-            webView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_VISIBLE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                webView.setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_VISIBLE);
+            }
             webView.invalidate();
         }
     }
