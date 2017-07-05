@@ -18,6 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 interface address_type {
-  int SHORT = 0;
-  int LONG = 1;
+    int SHORT = 0;
+    int LONG = 1;
 }
