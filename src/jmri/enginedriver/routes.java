@@ -227,7 +227,7 @@ public class routes extends Activity  implements OnGestureListener {
             case message_type.SHUTDOWN:
                 disconnect();
                 break;
-            };
+            }
         }
     }
 
@@ -255,7 +255,7 @@ public class routes extends Activity  implements OnGestureListener {
                         Toast.LENGTH_SHORT).show();
 
             }
-        };
+        }
     }
     //handle click for each route's state toggle button
     public class route_state_button_listener implements View.OnClickListener  {
@@ -266,7 +266,7 @@ public class routes extends Activity  implements OnGestureListener {
             TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
             String systemname = snv.getText().toString();
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, '2'+systemname);  // 2=toggle
-        };
+        }
     }
 
 
@@ -326,10 +326,7 @@ public class routes extends Activity  implements OnGestureListener {
 
         OnTouchListener gestureListener = new ListView.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                if (myGesture != null && myGesture.onTouchEvent(event)) {
-                    return true;
-                }
-                return false;
+                return myGesture != null && myGesture.onTouchEvent(event);
             }
         };
         routes_lv.setOnTouchListener(gestureListener);
@@ -382,7 +379,7 @@ public class routes extends Activity  implements OnGestureListener {
 
         //update route list
         refresh_route_view();
-    };
+    }
 
     @Override
     public void onResume() {
@@ -474,7 +471,7 @@ public class routes extends Activity  implements OnGestureListener {
             else {
                 boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference", getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
                 swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
-                if(swipeTurnouts == true) {
+                if(swipeTurnouts) {
                     Intent in=new Intent().setClass(this, turnouts.class);
                     startActivity(in);
                 }
@@ -579,4 +576,4 @@ public class routes extends Activity  implements OnGestureListener {
         this.finish();
     }
 
-};
+}

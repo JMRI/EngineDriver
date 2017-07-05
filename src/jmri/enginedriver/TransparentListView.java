@@ -22,9 +22,9 @@ public class TransparentListView extends ListView {
             try {
 
                 Method overscrollFooterMethod = 
-                    TransparentListView.class.getMethod("setOverscrollFooter", new Class[] {Drawable.class});
+                    TransparentListView.class.getMethod("setOverscrollFooter", Drawable.class);
                 Method overscrollHeaderMethod = 
-                    TransparentListView.class.getMethod("setOverscrollHeader", new Class[] {Drawable.class});
+                    TransparentListView.class.getMethod("setOverscrollHeader", Drawable.class);
 
 
                 try {

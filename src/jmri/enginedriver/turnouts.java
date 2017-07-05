@@ -239,7 +239,7 @@ public class turnouts extends Activity implements OnGestureListener {
             case message_type.SHUTDOWN:
                 disconnect();
                 break;
-            };
+            }
         }
     }
 
@@ -266,6 +266,7 @@ public class turnouts extends Activity implements OnGestureListener {
                 //otherwise send the text as is
                 if(Character.isDigit(entrytext.charAt(0))) {
                     try {
+                        //noinspection ResultOfMethodCallIgnored
                         Integer.valueOf(entrytext);  //edit check address by attempting conversion to int
                     } 
                     catch(Exception except) { 
@@ -284,7 +285,7 @@ public class turnouts extends Activity implements OnGestureListener {
                         " turnout " + entrytext, 
                         Toast.LENGTH_SHORT).show();
             } 
-        };
+        }
     }
 
     //handle click for each turnout's state toggle button
@@ -296,7 +297,7 @@ public class turnouts extends Activity implements OnGestureListener {
             TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
             String systemname = snv.getText().toString();
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, '2'+systemname);    // 2=toggle
-        };
+        }
     }
 
     @Override
@@ -354,10 +355,7 @@ public class turnouts extends Activity implements OnGestureListener {
 
         OnTouchListener gestureListener = new ListView.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                if (myGesture != null && myGesture.onTouchEvent(event)) {
-                    return true;
-                }
-                return false;
+                return myGesture != null && myGesture.onTouchEvent(event);
             }
         };
         turnouts_lv.setOnTouchListener(gestureListener);
@@ -520,7 +518,7 @@ public class turnouts extends Activity implements OnGestureListener {
                 boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference", 
                         getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
                 swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
-                if(swipeRoutes == true) {
+                if(swipeRoutes) {
                     Intent in=new Intent().setClass(this, routes.class);
                     startActivity(in);
                 }
@@ -551,7 +549,7 @@ public class turnouts extends Activity implements OnGestureListener {
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
         return false;
-    };
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

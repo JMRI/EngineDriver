@@ -309,39 +309,35 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                     }
                                 } else {
                                     int locoDir = curDir;               // calc correct direction for this (non-lead) loco
-                                    if (con != null) {
-                                        try {
-                                            if (con.isReverseOfLead(addr))
-                                                locoDir ^= 1;
-                                            if (locoDir != dir) {// if loco has wrong direction then correct it
-                                                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, whichThrottle, locoDir);
-                                            }
-                                        } catch (Exception e) {     // isReverseOfLead returns null if addr is not in con
-                                                                    // - should not happen unless WiT is reporting on engine user just dropped from ED consist?
-                                            Log.d("Engine_Driver", "throttle " + whichThrottle + " loco " + addr + " direction reported by WiT but engine is not assigned");
+                                    try {
+                                        if (con.isReverseOfLead(addr))
+                                            locoDir ^= 1;
+                                        if (locoDir != dir) {// if loco has wrong direction then correct it
+                                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, whichThrottle, locoDir);
                                         }
+                                    } catch (Exception e) {     // isReverseOfLead returns null if addr is not in con
+                                                                // - should not happen unless WiT is reporting on engine user just dropped from ED consist?
+                                        Log.d("Engine_Driver", "throttle " + whichThrottle + " loco " + addr + " direction reported by WiT but engine is not assigned");
                                     }
                                 }
                             } else if (com3 == 'V') {
                                 try {
                                     int speed = Integer.parseInt(ls[1].substring(1));
                                     speedUpdateWiT(whichThrottle, speed); // update speed slider and indicator
-                                } catch (Exception e) {
+                                } catch (Exception ignored) {
                                 }
                             } else if (com3 == 'F') {
                                 try {
                                     int function = Integer.valueOf(ls[1].substring(2));
                                     set_function_state(whichThrottle, function);
-                                } catch (Exception e) {
+                                } catch (Exception ignored) {
                                 }
                             } else if (com3 == 's') {
                                 try {
                                     int speedStepCode = Integer.valueOf(ls[1].substring(1));
                                     setSpeedStepsFromWiT(whichThrottle, speedStepCode);
-                                } catch (Exception e) {
+                                } catch (Exception ignored) {
                                 }
-                            } else {
-                                // set_labels();
                             }
                         }
                     }
@@ -376,7 +372,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                 whichThrottle = response_str.charAt(6);
                                 set_all_function_states(whichThrottle);
                             }
-                        } catch (IndexOutOfBoundsException e) {
+                        } catch (IndexOutOfBoundsException ignored) {
                         }
                     }
                     break;
@@ -421,7 +417,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 initWeb();
                 break;
             }
-        };
+        }
     }
 
 
@@ -527,8 +523,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         } else {
             throttle_slider = sbS;
         }
-        int lastSpeed = throttle_slider.getProgress();
-        return lastSpeed;
+        return throttle_slider.getProgress();
     }
     
     // change speed slider by scaled display unit value
@@ -773,7 +768,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         } else {
             bStop = bStopS;
         }
-        if (pressed == true) {
+        if (pressed) {
             bStop.setPressed(true);
             bStop.setTypeface(null, Typeface.ITALIC);
         } else {
@@ -800,7 +795,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         } catch (Exception ex) {
             Log.d("Engine_Driver", ex.getMessage());
         }
-    };
+    }
 
     void disable_buttons(char whichThrottle) {
         enable_disable_buttons(whichThrottle, true);
@@ -847,7 +842,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
                 if ((getSpeed(whichThrottle) == 0) && tIsEnabled) {
                     bSel.setEnabled(true);
-                    if (conAddr != "Not Set") {
+                    if (!conAddr.equals("Not Set")) {
                         bFwd.setEnabled(true);
                         bRev.setEnabled(true);
                     } else {
@@ -917,7 +912,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             }
             sbS.setEnabled(newEnabledState);
         }
-    }; // end of enable_disable_buttons
+    } // end of enable_disable_buttons
 
     // helper function to enable/disable all children for a group
     void enable_disable_buttons_for_view(ViewGroup vg, boolean newEnabledState) {
@@ -969,7 +964,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             fs = mainapp.function_states_S;
         }
         if (b != null && fs != null) {
-            if (fs[function] == true) {
+            if (fs[function]) {
                 b.setTypeface(null, Typeface.ITALIC);
                 b.setPressed(true);
             } else {
@@ -1028,7 +1023,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             v.getLocationOnScreen(pos);
 
             // if gesture in progress, we may need to skip button processing
-            if (gestureInProgress == true) {
+            if (gestureInProgress) {
                 // Log.d("Engine_Driver", "onTouch " + "Gesture- currentY: " + (pos[1]+event.getY()) + " startY: " + gestureStartY);
                 //check to see if we have a substantial vertical movement
                 if (Math.abs(pos[1] + event.getY() - gestureStartY) > (threaded_application.min_fling_distance)) {
@@ -1102,7 +1097,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             String lab = funcLabel.toUpperCase().trim();
             leadOnly = false;
             trailOnly = false;
-            if (lab != null && lab != "")
+            if (!lab.equals(""))
             {
                 boolean selectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
                 leadOnly =  (selectiveLeadSound && 
@@ -1125,12 +1120,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             }
 
             // if gesture in progress, skip button processing
-            if (gestureInProgress == true) {
+            if (gestureInProgress) {
                 return (true);
             }
 
             // if gesture just failed, insert one DOWN event on this control
-            if (gestureFailed == true) {
+            if (gestureFailed) {
                 handleAction(MotionEvent.ACTION_DOWN);
                 gestureFailed = false;  // just do this once
             }
@@ -1325,7 +1320,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 delayInProg = false;
             }
         }
-    };
+    }
     
 
     /*
@@ -1795,7 +1790,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         function_button_touch_listener fbtl;
         Button b; // button
         int k = 0; // button count
-        LinkedHashMap<Integer, String> function_labels_temp = new LinkedHashMap<Integer, String>();
+        LinkedHashMap<Integer, String> function_labels_temp;
         LinkedHashMap<Integer, Button> functionButtonMap = new LinkedHashMap<Integer, Button>();
 
         if (whichThrottle == 'T') {
@@ -1870,9 +1865,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         // Log.d("Engine_Driver","starting set_labels");
 
         int throttle_count = 0;
-        int height_T = 0; // height of first throttle area
-        int height_S = 0; // height of second throttle area
-        int height_G = 0;// height of third throttle area
+        int height_T; // height of first throttle area
+        int height_S; // height of second throttle area
+        int height_G;// height of third throttle area
 
         // hide or display volume control indicator based on variable
         if (whichVolume == 'T') {
@@ -2068,14 +2063,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         b.setPressed(false);
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
-        int sW = vThrotScrWrap.getWidth();
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for
             // now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
-        }
-        if (sW == 0) {
-            sW = dm.widthPixels;
         }
 
         // increase the web view height if the preference is set
@@ -2532,9 +2523,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 //            Log.d("Engine_Driver", "gestureStart gTop= " + G_top + " gBottom= " + G_bottom);
 
             // if gesture is attempting to start over an enabled slider, ignore it and return immediately.
-            if ((((View) sbT).isEnabled() && gestureStartY >= T_top && gestureStartY <= T_bottom)
-                    || (((View) sbS).isEnabled() && gestureStartY >= S_top && gestureStartY <= S_bottom)
-                    || (((View) sbG).isEnabled() && gestureStartY >= G_top && gestureStartY <= G_bottom)) {
+            if ((sbT.isEnabled() && gestureStartY >= T_top && gestureStartY <= T_bottom)
+                    || (sbS.isEnabled() && gestureStartY >= S_top && gestureStartY <= S_bottom)
+                    || (sbG.isEnabled() && gestureStartY >= G_top && gestureStartY <= G_bottom)) {
                 // Log.d("Engine_Driver","exiting gestureStart");
                 return;
             }
@@ -2551,7 +2542,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     public void gestureMove(MotionEvent event) {
         // Log.d("Engine_Driver", "gestureMove action " + event.getAction());
-        if (gestureInProgress == true) {
+        if (gestureInProgress) {
             // stop the gesture timeout timer
             mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
 
@@ -2568,7 +2559,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     gestureFailed(event);
                 }
             }
-            if (gestureInProgress == true) {
+            if (gestureInProgress) {
                 // restart the gesture timeout timer
                 mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
             }
@@ -2578,7 +2569,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private void gestureEnd(MotionEvent event) {
         // Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
         mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
-        if (gestureInProgress == true) {
+        if (gestureInProgress) {
             if ((Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) || (Math.abs(event.getY() - gestureStartY) > threaded_application.min_fling_distance)) {
                 if (Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) {
                     // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
@@ -2590,12 +2581,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                             getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
                     swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
                     // if swiping (to Turnouts or Routes screen) is enabled, process the swipe
-                    if (swipeTurnouts == true || swipeRoutes == true) {
+                    if (swipeTurnouts || swipeRoutes) {
                         navigatingAway = true;
                         // left to right swipe goes to turnouts if enabled in prefs
                         if (event.getRawX() > gestureStartX) {
                             Intent in;
-                            if (swipeTurnouts == true) {
+                            if (swipeTurnouts) {
                                 in = new Intent().setClass(this, turnouts.class);
                             } else {
                                 in = new Intent().setClass(this, routes.class);
@@ -2606,7 +2597,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         // right to left swipe goes to routes if enabled in prefs
                         else {
                             Intent in;
-                            if (swipeRoutes == true) {
+                            if (swipeRoutes) {
                                 in = new Intent().setClass(this, routes.class);
                             } else {
                                 in = new Intent().setClass(this, turnouts.class);
@@ -2626,6 +2617,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                 }
                 // TODO: do something on swipe up (only)
+                //noinspection StatementWithEmptyBody
                 if ((gestureStartY - event.getY()) > threaded_application.min_fling_distance) {
                     // Toast.makeText(getApplicationContext(), "Swipe Up", Toast.LENGTH_SHORT).show();
                 }
@@ -2658,7 +2650,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private Runnable gestureStopped = new Runnable() {
         @Override
         public void run() {
-            if (gestureInProgress == true) {
+            if (gestureInProgress) {
                 // end the gesture
                 gestureInProgress = false;
                 gestureFailed = true;

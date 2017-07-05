@@ -30,10 +30,8 @@ import android.widget.TextView;
 
 public class LogViewerActivity extends ListActivity{
 	private LogStringAdaptor adaptor = null;
-	private ArrayList<String> logarray = null;
 	private LogReaderTask logReaderTask = null;
 	private threaded_application mainapp;  // hold pointer to mainapp
-	private Menu LMenu;
 
 
 	public void setTitleToIncludeThrotName()
@@ -54,7 +52,7 @@ public class LogViewerActivity extends ListActivity{
 
 		setTitleToIncludeThrotName();
 
-		logarray = new ArrayList<String>();
+		ArrayList<String> logarray = new ArrayList<String>();
 		adaptor = new LogStringAdaptor(this, R.id.txtLogString, logarray);
 
 		setListAdapter(adaptor);
@@ -69,7 +67,6 @@ public class LogViewerActivity extends ListActivity{
 		super.onResume();
 		if(mainapp.isForcingFinish()) {		//expedite
 			this.finish();
-			return;
 		}
 	}
 
@@ -77,8 +74,7 @@ public class LogViewerActivity extends ListActivity{
 	public boolean onCreateOptionsMenu(Menu menu){
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.logviewer_menu, menu);
-		LMenu = menu;
-		mainapp.displayEStop(LMenu);
+		mainapp.displayEStop(menu);
 		return true;
 	}
 
@@ -114,7 +110,6 @@ public class LogViewerActivity extends ListActivity{
 	}
 
 	private int getLogColor(String type) {
-		int color = Color.WHITE;
 
 		/*  some of these colors do not show up well
   		if(type.equals("D"))
@@ -135,7 +130,7 @@ public class LogViewerActivity extends ListActivity{
 		}
 		 */		
 
-		return color;
+		return Color.WHITE;
 	}
 
 	private class LogStringAdaptor extends ArrayAdapter<String>{

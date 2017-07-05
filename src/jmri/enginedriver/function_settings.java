@@ -229,7 +229,7 @@ public class function_settings extends Activity{
                         ndx++;
                     }
                 } 
-                catch (Exception e) {
+                catch (Exception ignored) {
                 }
             }
         }
@@ -252,7 +252,7 @@ public class function_settings extends Activity{
                     aFnc.add(func);
                     settingsCurrent = false;
                 }
-                else if(!label.equals(aLbl.get(ndx)) || func != aFnc.get(ndx)) {
+                else if(!label.equals(aLbl.get(ndx)) || !func.equals(aFnc.get(ndx))) {
                     aLbl.set(ndx, label);
                     aFnc.set(ndx, func);
                     settingsCurrent = false;
@@ -274,7 +274,7 @@ public class function_settings extends Activity{
         {
             move_roster_to_settings();
             move_settings_to_view();
-        };
+        }
     }
 
     //Handle pressing of the back button to save settings
@@ -290,7 +290,7 @@ public class function_settings extends Activity{
             return true;
         }
         return(super.onKeyDown(key, event));
-    };
+    }
 
     //save function and labels to file
     void saveSettings() {

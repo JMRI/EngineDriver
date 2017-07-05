@@ -63,7 +63,7 @@ public class power_control extends Activity {
             case message_type.SHUTDOWN:
                 disconnect();
                 break;
-            };
+            }
         }
     }
 
@@ -82,7 +82,7 @@ public class power_control extends Activity {
                 newState = 0;
             }
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.POWER_CONTROL, "", newState);
-        };
+        }
     }
 
     //Set the button text based on current power state  TODO: improve code 
@@ -97,15 +97,16 @@ public class power_control extends Activity {
         } 
         else { 
             b.setEnabled(true);
-            if (mainapp.power_state.equals("1")) {
-                currentImage = power_on_drawable;
-            } 
-            else if(mainapp.power_state.equals("2"))
-            {
-                currentImage = power_unknown_drawable;
-            }
-            else {
-                currentImage = power_off_drawable;
+            switch (mainapp.power_state) {
+                case "1":
+                    currentImage = power_on_drawable;
+                    break;
+                case "2":
+                    currentImage = power_unknown_drawable;
+                    break;
+                default:
+                    currentImage = power_off_drawable;
+                    break;
             }
         }        
 
@@ -145,7 +146,7 @@ public class power_control extends Activity {
         button_listener click_listener=new button_listener();
         b.setOnClickListener(click_listener);
 
-    };
+    }
 
     @Override
     public void onResume() {
@@ -211,7 +212,7 @@ public class power_control extends Activity {
             return true;
         }
         return(super.onKeyDown(key, event));
-    };
+    }
 
     private void disconnect() {
         this.finish();

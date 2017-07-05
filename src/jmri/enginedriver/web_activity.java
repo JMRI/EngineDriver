@@ -91,7 +91,7 @@ class web_handler extends Handler {
 			  disconnect();
 			  break;
 		  }
-	  };
+	  }
   }
 
   //	set the title, optionally adding the current time.
@@ -178,9 +178,9 @@ class web_handler extends Handler {
 	
     //put pointer to this activity's handler in main app's shared variable
 	mainapp.web_msg_handler=new web_handler();
-};
+}
 
-  @Override
+    @Override
   public void onStart() {
     super.onStart();
   }
@@ -222,9 +222,9 @@ class web_handler extends Handler {
 		  }
 	  }
 	  CookieSyncManager.getInstance().startSync();
- };
+ }
 
- @Override
+    @Override
   public void onSaveInstanceState(Bundle outState) {
 	  super.onSaveInstanceState(outState);
 	  if(webView != null)
@@ -302,9 +302,9 @@ class web_handler extends Handler {
 	      connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 	  }
 	  return(super.onKeyDown(key, event));
-  };
+  }
 
-  @Override
+    @Override
   public boolean onCreateOptionsMenu(Menu menu){
 	  MenuInflater inflater = getMenuInflater();
 	  inflater.inflate(R.menu.web_menu, menu);

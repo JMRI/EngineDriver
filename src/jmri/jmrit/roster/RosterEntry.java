@@ -67,7 +67,7 @@ public class RosterEntry {
 		if ((_imageFilePath != null) && (_imageFilePath.length()>0))
 			try {
 				return resourcesURL+URLEncoder.encode(_imageFilePath, "UTF-8");
-			} catch (UnsupportedEncodingException e) {
+			} catch (UnsupportedEncodingException ignored) {
 			}
 		return null;
 	}
@@ -81,7 +81,7 @@ public class RosterEntry {
 					return rosterURL + URLEncoder.encode(_id, "UTF-8").replace("+", "%20") + "/icon";  //roster servlet doesn't like the + replacements
 				} 
 				return resourcesURL + URLEncoder.encode(_iconFilePath, "UTF-8");
-			} catch (UnsupportedEncodingException e) {
+			} catch (UnsupportedEncodingException ignored) {
 			}
 		}
 		return null;
