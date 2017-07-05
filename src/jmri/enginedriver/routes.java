@@ -56,27 +56,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
-public class routes extends Activity  implements OnGestureListener {
+public class routes extends Activity implements OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp
 
     private SharedPreferences prefs;
 
     private ArrayList<HashMap<String, String>> routesFullList;
-    private ArrayList<HashMap<String, String> > routes_list;
+    private ArrayList<HashMap<String, String>> routes_list;
     private SimpleAdapter routes_list_adapter;
     private ArrayList<String> locationList;
     private ArrayAdapter<String> locationListAdapter;
     private static String location = null;
     private Spinner locationSpinner;
 
-    private GestureDetector myGesture ;
+    private GestureDetector myGesture;
     private Menu RMenu;
     private boolean navigatingAway = false;     // flag for onPause: set to true when another activity is selected, false if going into background 
 
     public void refresh_route_view() {
 
-        boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference", 
+        boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference",
                 getResources().getBoolean(R.bool.prefHideSystemRouteNamesDefaultValue));
 
         //specify logic for sort comparison (by username)
@@ -97,7 +97,7 @@ public class routes extends Activity  implements OnGestureListener {
                 boolean hideIfNoUserName = prefs.getBoolean("HideIfNoUserNamePreference", getResources().getBoolean(R.bool.prefHideIfNoUserNameDefaultValue));
                 for (String username : mainapp.rt_user_names) {
                     boolean hasUserName = (username != null && !username.equals(""));
-                    if (hasUserName || !hideIfNoUserName)  {  //skip routes without usernames if pref is set
+                    if (hasUserName || !hideIfNoUserName) {  //skip routes without usernames if pref is set
                         //get values from global array
                         String systemname = mainapp.rt_system_names[pos];
                         String currentstate = mainapp.rt_states[pos];
@@ -107,7 +107,7 @@ public class routes extends Activity  implements OnGestureListener {
                         }
 
                         //put values into temp hashmap
-                        HashMap<String, String> hm= new HashMap<>();
+                        HashMap<String, String> hm = new HashMap<>();
                         if (hasUserName)
                             hm.put("rt_user_name", username);
                         else
@@ -120,11 +120,11 @@ public class routes extends Activity  implements OnGestureListener {
                         routesFullList.add(hm);
 
                         //if location is new, add to list
-                        if(del.length() > 0 && hasUserName) {
+                        if (del.length() > 0 && hasUserName) {
                             int delim = username.indexOf(del);
-                            if(delim >= 0) {
+                            if (delim >= 0) {
                                 String loc = username.substring(0, delim);
-                                if(!locationList.contains(loc))
+                                if (!locationList.contains(loc))
                                     locationList.add(loc);
                             }
                         }
@@ -140,9 +140,9 @@ public class routes extends Activity  implements OnGestureListener {
         //sort lists by username
         Collections.sort(routesFullList, route_comparator);
         Collections.sort(locationList);
-        locationList.add(0,getString(R.string.location_all));   // this entry goes at the top of the list
+        locationList.add(0, getString(R.string.location_all));   // this entry goes at the top of the list
         locationListAdapter.notifyDataSetChanged();
-        if(!locationList.contains(location))
+        if (!locationList.contains(location))
             location = getString(R.string.location_all);
         locationSpinner.setSelection(locationListAdapter.getPosition(location));
 
@@ -153,12 +153,12 @@ public class routes extends Activity  implements OnGestureListener {
         final String loc = location + prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
         final boolean useAllLocations = getString(R.string.location_all).equals(location);
         routes_list.clear();
-        for(HashMap<String, String> hm : routesFullList) {
+        for (HashMap<String, String> hm : routesFullList) {
             String userName = hm.get("rt_user_name");
-            if(useAllLocations || userName.startsWith(loc)) {
+            if (useAllLocations || userName.startsWith(loc)) {
                 @SuppressWarnings("unchecked")
-                HashMap<String, String> hmFilt = (HashMap<String, String>) hm.clone(); 
-                if(!useAllLocations)
+                HashMap<String, String> hmFilt = (HashMap<String, String>) hm.clone();
+                if (!useAllLocations)
                     hmFilt.put("rt_user_name", userName.substring(loc.length()));
                 routes_list.add(hmFilt);
             }
@@ -175,7 +175,7 @@ public class routes extends Activity  implements OnGestureListener {
             rte.setEnabled(true);
             butSet.setText(getString(R.string.set));
             // don't allow Set button if nothing entered
-            if(txtLen > 0) {
+            if (txtLen > 0) {
                 butSet.setEnabled(true);
             } else {
                 butSet.setEnabled(false);
@@ -183,12 +183,11 @@ public class routes extends Activity  implements OnGestureListener {
         } else {
             rte.setEnabled(false);
             butSet.setEnabled(false);
-            if(!rte.getText().toString().equals(getString(R.string.disabled)))
+            if (!rte.getText().toString().equals(getString(R.string.disabled)))
                 rte.setText(getString(R.string.disabled));
         }
 
-        if(RMenu != null)
-        {
+        if (RMenu != null) {
             mainapp.displayEStop(RMenu);
         }
 
@@ -200,33 +199,33 @@ public class routes extends Activity  implements OnGestureListener {
     class routes_handler extends Handler {
 
         public void handleMessage(Message msg) {
-            switch(msg.what) {
-            case message_type.RESPONSE: {
-                String response_str = msg.obj.toString();
+            switch (msg.what) {
+                case message_type.RESPONSE: {
+                    String response_str = msg.obj.toString();
 
-                if (response_str.length() >= 3) {
-                    String com1 = response_str.substring(0,3);
-                    //refresh routes if any have changed state or if route list changed
-                    if ("PRA".equals(com1) || "PRL".equals(com1)) {
-                        refresh_route_view();
-                    }
-                    //update power icon
-                    if ("PPA".equals(com1)) {
-                        mainapp.setPowerStateButton(RMenu);
+                    if (response_str.length() >= 3) {
+                        String com1 = response_str.substring(0, 3);
+                        //refresh routes if any have changed state or if route list changed
+                        if ("PRA".equals(com1) || "PRL".equals(com1)) {
+                            refresh_route_view();
+                        }
+                        //update power icon
+                        if ("PPA".equals(com1)) {
+                            mainapp.setPowerStateButton(RMenu);
+                        }
                     }
                 }
-            }
-            break;
-            case message_type.WIT_CON_RETRY:
-                witRetry(msg.obj.toString());
                 break;
-            case message_type.WIT_CON_RECONNECT:
-                refresh_route_view(); 
-                break;
-            case message_type.DISCONNECT:
-            case message_type.SHUTDOWN:
-                disconnect();
-                break;
+                case message_type.WIT_CON_RETRY:
+                    witRetry(msg.obj.toString());
+                    break;
+                case message_type.WIT_CON_RECONNECT:
+                    refresh_route_view();
+                    break;
+                case message_type.DISCONNECT:
+                case message_type.SHUTDOWN:
+                    disconnect();
+                    break;
             }
         }
     }
@@ -238,8 +237,8 @@ public class routes extends Activity  implements OnGestureListener {
         startActivity(in);
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
-    
-    public class button_listener implements View.OnClickListener  {
+
+    public class button_listener implements View.OnClickListener {
         char whichCommand; //always '2' 
 
         public button_listener(char new_command) {
@@ -247,52 +246,54 @@ public class routes extends Activity  implements OnGestureListener {
         }
 
         public void onClick(View v) {
-            EditText entryv=(EditText)findViewById(R.id.route_entry);
+            EditText entryv = (EditText) findViewById(R.id.route_entry);
             String entrytext = entryv.getText().toString().trim();
-            if (entrytext.length() > 0 ) {
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, whichCommand+entrytext);
-                Toast.makeText(getApplicationContext(), "Command sent to Set route " + entrytext, 
+            if (entrytext.length() > 0) {
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, whichCommand + entrytext);
+                Toast.makeText(getApplicationContext(), "Command sent to Set route " + entrytext,
                         Toast.LENGTH_SHORT).show();
 
             }
         }
     }
+
     //handle click for each route's state toggle button
-    public class route_state_button_listener implements View.OnClickListener  {
-        
+    public class route_state_button_listener implements View.OnClickListener {
+
         public void onClick(View v) {
-            ViewGroup vg = (ViewGroup)v.getParent();  //start with the list item the button belongs to 
+            ViewGroup vg = (ViewGroup) v.getParent();  //start with the list item the button belongs to
             ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemname and username
             TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
             String systemname = snv.getText().toString();
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, '2'+systemname);  // 2=toggle
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, '2' + systemname);  // 2=toggle
         }
     }
 
 
     @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
         return myGesture.onTouchEvent(event);
     }
 
 
-    public void setTitleToIncludeThrotName()
-    {
+    public void setTitleToIncludeThrotName() {
         String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_routes) + "    |    Throttle Name: " + 
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_routes) + "    |    Throttle Name: " +
                 prefs.getString("throttle_name_preference", defaultName));
     }
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @SuppressWarnings("deprecation")
     @Override
-    public void onCreate(Bundle savedInstanceState)  {
+    public void onCreate(Bundle savedInstanceState) {
         //Log.d("Engine_Driver","routes.onCreate()");
         super.onCreate(savedInstanceState);
 
-        mainapp=(threaded_application)getApplication();
+        mainapp = (threaded_application) getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        if(mainapp.isForcingFinish()) {     // expedite
+        if (mainapp.isForcingFinish()) {     // expedite
             return;
         }
 
@@ -300,28 +301,28 @@ public class routes extends Activity  implements OnGestureListener {
 
         setContentView(R.layout.routes);
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.routes_msg_handler=new routes_handler();
+        mainapp.routes_msg_handler = new routes_handler();
         myGesture = new GestureDetector(this);
 
-        routesFullList= new ArrayList<>();
+        routesFullList = new ArrayList<>();
         //Set up a list adapter to allow adding the list of recent connections to the UI.
-        routes_list= new ArrayList<>();
-        routes_list_adapter=new SimpleAdapter(this, routes_list, R.layout.routes_item, 
-                new String[] {"rt_user_name", "rt_system_name_hidden", "rt_system_name", "rt_current_state_desc"},
-                new int[] {R.id.rt_user_name, R.id.rt_system_name_hidden, R.id.rt_system_name, R.id.rt_current_state_desc}) {
+        routes_list = new ArrayList<>();
+        routes_list_adapter = new SimpleAdapter(this, routes_list, R.layout.routes_item,
+                new String[]{"rt_user_name", "rt_system_name_hidden", "rt_system_name", "rt_current_state_desc"},
+                new int[]{R.id.rt_user_name, R.id.rt_system_name_hidden, R.id.rt_system_name, R.id.rt_current_state_desc}) {
             //set up listener for each state button
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View row = super.getView(position, convertView, parent);
                 if (row != null) {
-                    Button b=(Button)row.findViewById(R.id.rt_current_state_desc);
+                    Button b = (Button) row.findViewById(R.id.rt_current_state_desc);
                     b.setOnClickListener(new route_state_button_listener());
                 }
                 return row;
             }
-            
+
         };
-        ListView routes_lv=(ListView)findViewById(R.id.routes_list);
+        ListView routes_lv = (ListView) findViewById(R.id.routes_list);
         routes_lv.setAdapter(routes_list_adapter);
 
         OnTouchListener gestureListener = new ListView.OnTouchListener() {
@@ -331,33 +332,34 @@ public class routes extends Activity  implements OnGestureListener {
         };
         routes_lv.setOnTouchListener(gestureListener);
 
-        EditText rte = (EditText)findViewById(R.id.route_entry);
+        EditText rte = (EditText) findViewById(R.id.route_entry);
         rte.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 updateRouteEntry();
             }
+
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
         rte.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
-                    InputMethodManager imm = 
-                        (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
+                    InputMethodManager imm =
+                            (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     return true;
-                }
-                else
+                } else
                     return false;
             }
         });
 
         //Set the button callbacks, storing the command to pass for each
-        Button b=(Button)findViewById(R.id.route_toggle);
-        button_listener click_listener=new button_listener('2');
+        Button b = (Button) findViewById(R.id.route_toggle);
+        button_listener click_listener = new button_listener('2');
         b.setOnClickListener(click_listener);
 
         //((EditText) findViewById(R.id.route_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
@@ -373,6 +375,7 @@ public class routes extends Activity  implements OnGestureListener {
                 location = parent.getSelectedItem().toString();
                 filterRouteView();
             }
+
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
@@ -386,29 +389,28 @@ public class routes extends Activity  implements OnGestureListener {
         //Log.d("Engine_Driver","routes.onResume()");
         super.onResume();
         mainapp.removeNotification();
-        if(mainapp.isForcingFinish()) {     //expedite
+        if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;
         }
-    
-        if(!mainapp.setActivityOrientation(this)) { //set screen orientation based on prefs
-            Intent in=new Intent().setClass(this, web_activity.class);      // if autoWeb and landscape, switch to Web activity
+
+        if (!mainapp.setActivityOrientation(this)) { //set screen orientation based on prefs
+            Intent in = new Intent().setClass(this, web_activity.class);      // if autoWeb and landscape, switch to Web activity
             navigatingAway = true;
             startActivity(in);
             this.finish();
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return;
         }
-        
+
         navigatingAway = false;
 
         //restore view to last known scroll position
-        ListView lv=(ListView)findViewById(R.id.routes_list);  
+        ListView lv = (ListView) findViewById(R.id.routes_list);
         lv.setSelectionFromTop(mainapp.routes_list_position, 0);
 
 //      setTitleToIncludeThrotName();
-        if(RMenu != null)
-        {
+        if (RMenu != null) {
             mainapp.displayEStop(RMenu);
             mainapp.displayPowerStateMenuButton(RMenu);
         }
@@ -417,7 +419,9 @@ public class routes extends Activity  implements OnGestureListener {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-    /** Called when the activity is finished. */
+    /**
+     * Called when the activity is finished.
+     */
     @Override
     public void onDestroy() {
         //Log.d("Engine_Driver","routes.onDestroy()");
@@ -430,10 +434,10 @@ public class routes extends Activity  implements OnGestureListener {
         //Log.d("Engine_Driver","routes.onPause()");
         super.onPause();
         //save scroll position for later restore
-        ListView lv=(ListView)findViewById(R.id.routes_list);
-        mainapp.routes_list_position = (lv==null ? 0 : lv.getFirstVisiblePosition());
+        ListView lv = (ListView) findViewById(R.id.routes_list);
+        mainapp.routes_list_position = (lv == null ? 0 : lv.getFirstVisiblePosition());
 
-        if(!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
+        if (!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
             mainapp.addNotification(this.getIntent());
         }
     }
@@ -441,13 +445,13 @@ public class routes extends Activity  implements OnGestureListener {
     //Always go to throttle activity if back button pressed
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
-        if(key==KeyEvent.KEYCODE_BACK) {
+        if (key == KeyEvent.KEYCODE_BACK) {
             //Log.d("Engine_Driver","routes.onKeyDown() KEYCODE_BACK");
             this.finish();  //end this activity
             connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
             return true;
         }
-        return(super.onKeyDown(key, event));
+        return (super.onKeyDown(key, event));
     }
 
     @Override
@@ -457,13 +461,13 @@ public class routes extends Activity  implements OnGestureListener {
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if (e1==null || e2==null)
+        if (e1 == null || e2 == null)
             return false;
-        if((Math.abs(e2.getX() - e1.getX()) > threaded_application.min_fling_distance) && 
+        if ((Math.abs(e2.getX() - e1.getX()) > threaded_application.min_fling_distance) &&
                 (Math.abs(velocityX) > threaded_application.min_fling_velocity)) {
             navigatingAway = true;
             // left to right swipe goes to throttle
-            if(e2.getX() > e1.getX()) {
+            if (e2.getX() > e1.getX()) {
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
             }
@@ -471,8 +475,8 @@ public class routes extends Activity  implements OnGestureListener {
             else {
                 boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference", getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
                 swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
-                if(swipeTurnouts) {
-                    Intent in=new Intent().setClass(this, turnouts.class);
+                if (swipeTurnouts) {
+                    Intent in = new Intent().setClass(this, turnouts.class);
                     startActivity(in);
                 }
                 this.finish();
@@ -486,20 +490,23 @@ public class routes extends Activity  implements OnGestureListener {
     @Override
     public void onLongPress(MotionEvent e) {
     }
+
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         return false;
     }
+
     @Override
     public void onShowPress(MotionEvent e) {
     }
+
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
         return false;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.routes_menu, menu);
         RMenu = menu;
@@ -511,61 +518,62 @@ public class routes extends Activity  implements OnGestureListener {
         mainapp.setTurnoutsMenuOption(menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
         Intent in;
         switch (item.getItemId()) {
-        case R.id.throttle_mnu:
-            navigatingAway = true;
-            this.finish();
-            connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-            break;
-        case R.id.turnouts_mnu:
-            in = new Intent().setClass(this, turnouts.class);
-            navigatingAway = true;
-            startActivity(in);
-            this.finish();
-            connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-            break;
-        case R.id.web_mnu:
-            in=new Intent().setClass(this, web_activity.class);
-            navigatingAway = true;
-            startActivity(in);
-            this.finish();
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.exit_mnu:
-            mainapp.checkExit(this);
-            break;
-        case R.id.power_control_mnu:
-            in=new Intent().setClass(this, power_control.class);
-            navigatingAway = true;
-            startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.preferences_mnu:
-            in=new Intent().setClass(this, preferences.class);
-            navigatingAway = true;
-            startActivityForResult(in,0);   // refresh view on return
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.about_mnu:
-            in=new Intent().setClass(this, about_page.class);
-            navigatingAway = true;
-            startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.EmerStop:
-            mainapp.sendEStopMsg();
-            break;
-        case R.id.power_layout_button:
-            mainapp.powerStateMenuButton();
-            break;
+            case R.id.throttle_mnu:
+                navigatingAway = true;
+                this.finish();
+                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+                break;
+            case R.id.turnouts_mnu:
+                in = new Intent().setClass(this, turnouts.class);
+                navigatingAway = true;
+                startActivity(in);
+                this.finish();
+                connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+                break;
+            case R.id.web_mnu:
+                in = new Intent().setClass(this, web_activity.class);
+                navigatingAway = true;
+                startActivity(in);
+                this.finish();
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.exit_mnu:
+                mainapp.checkExit(this);
+                break;
+            case R.id.power_control_mnu:
+                in = new Intent().setClass(this, power_control.class);
+                navigatingAway = true;
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.preferences_mnu:
+                in = new Intent().setClass(this, preferences.class);
+                navigatingAway = true;
+                startActivityForResult(in, 0);   // refresh view on return
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.about_mnu:
+                in = new Intent().setClass(this, about_page.class);
+                navigatingAway = true;
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.EmerStop:
+                mainapp.sendEStopMsg();
+                break;
+            case R.id.power_layout_button:
+                mainapp.powerStateMenuButton();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
-    
+
     //handle return from menu items
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //since we always do the same action no need to distinguish between requests

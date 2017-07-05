@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import java.util.Random;
+
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -34,7 +35,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu PRMenu;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,15 +63,14 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     protected void onResume() {
         super.onResume();
         mainapp.removeNotification();
-        if(mainapp.isForcingFinish()) {     //expedite
+        if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         // Set up a listener whenever a key changes            
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-        if(PRMenu != null)
-        {
+        if (PRMenu != null) {
             mainapp.displayEStop(PRMenu);
         }
     }
@@ -76,24 +78,24 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     @SuppressWarnings("deprecation")
     @Override
     protected void onPause() {
-        Log.d("Engine_Driver","preferences.onPause() called");
+        Log.d("Engine_Driver", "preferences.onPause() called");
         super.onPause();
 
         // Unregister the listener            
         getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-        if(!this.isFinishing()) {
+        if (!this.isFinishing()) {
             mainapp.addNotification(this.getIntent());
         }
     }
 
     @Override
     protected void onDestroy() {
-        Log.d("Engine_Driver","preferences.onDestroy() called");
+        Log.d("Engine_Driver", "preferences.onDestroy() called");
         super.onDestroy();
     }
-    
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.preferences_menu, menu);
         PRMenu = menu;
@@ -105,16 +107,16 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
         switch (item.getItemId()) {
-        case R.id.EmerStop:
-            mainapp.sendEStopMsg();
-            break;
+            case R.id.EmerStop:
+                mainapp.sendEStopMsg();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("deprecation")
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        threaded_application mainapp=(threaded_application)this.getApplication();
+        threaded_application mainapp = (threaded_application) this.getApplication();
         switch (key) {
             case "throttle_name_preference": {
                 String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
@@ -165,15 +167,15 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 break;
         }
     }
+
     //Handle pressing of the back button to end this activity
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
-        if(key==KeyEvent.KEYCODE_BACK)
-        {
+        if (key == KeyEvent.KEYCODE_BACK) {
             this.finish();  //end this activity
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
-        return(super.onKeyDown(key, event));
+        return (super.onKeyDown(key, event));
     }
 }

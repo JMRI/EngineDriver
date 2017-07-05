@@ -17,15 +17,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-interface function_button
-{
-  //Constant values for the function buttons (including direction):
-//  public static final int LIGHT=0;
-  int FORWARD=990;
-  int STOP=991;
-  int REVERSE=992;
-  int SELECT_LOCO=993;
-  int SPEED_LABEL=994;
-  int SPEED_INC=995;
-  int SPEED_DEC=996;
+interface function_button {
+    //Constant values for the function buttons (including direction):
+    int FORWARD = 990;
+    int STOP = 991;
+    int REVERSE = 992;
+    int SELECT_LOCO = 993;
+    int SPEED_LABEL = 994;
+    int SPEED_INC = 995;
+    int SPEED_DEC = 996;
 }

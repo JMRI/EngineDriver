@@ -35,11 +35,13 @@ import android.view.SoundEffectConstants;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.lang.reflect.Method;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -181,11 +183,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private String speedButtonRightText;
     private String speedButtonUpText;
     private String speedButtonDownText;
-    
+
     private Handler repeatUpdateHandler = new Handler();
     private boolean mAutoIncrement = false;
     private boolean mAutoDecrement = false;
-    
+
     private static final int changeDelay = 1000;
     private ChangeDelay changeTimerT;
     private ChangeDelay changeTimerG;
@@ -239,189 +241,190 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         public void handleMessage(Message msg) {
             String response_str = msg.obj.toString();
             switch (msg.what) {
-            case message_type.RESPONSE: { // handle messages from WiThrottle server
-                if (response_str.length() < 2) return;  //bail if too short, to avoid crash             
-                char com1 = response_str.charAt(0);             
-                char whichThrottle = response_str.charAt(1);
+                case message_type.RESPONSE: { // handle messages from WiThrottle server
+                    if (response_str.length() < 2)
+                        return;  //bail if too short, to avoid crash
+                    char com1 = response_str.charAt(0);
+                    char whichThrottle = response_str.charAt(1);
 
-                switch (com1) {
-                // various MultiThrottle messages
-                case 'M':
-                    char com2 = response_str.charAt(2);
-                    String[] ls = threaded_application.splitByString(response_str, "<;>");
-                    String addr;
-                    try {
-                        addr = ls[0].substring(3);
-                    } catch (Exception e) {
-                        addr = "";
-                    }
-                    if (whichThrottle == 'T' || whichThrottle == 'S' || whichThrottle == 'G') {
-                        if (com2 == '+' || com2 == 'L') { // if loco added or function labels updated
-                            if (com2 == ('+')) {
-                                // set_default_function_labels();
-                                enable_disable_buttons(whichThrottle); // direction and slider: pass whichthrottle
+                    switch (com1) {
+                        // various MultiThrottle messages
+                        case 'M':
+                            char com2 = response_str.charAt(2);
+                            String[] ls = threaded_application.splitByString(response_str, "<;>");
+                            String addr;
+                            try {
+                                addr = ls[0].substring(3);
+                            } catch (Exception e) {
+                                addr = "";
                             }
-                            // loop through all function buttons and set label and dcc functions (based on settings) or hide if no label
-                            set_function_labels_and_listeners_for_view(whichThrottle);
-                            if (whichThrottle == 'T') {
-                                enable_disable_buttons_for_view(fbT, true);
-                            } else if (whichThrottle == 'G') {
-                                enable_disable_buttons_for_view(fbG, true);
-                            } else {
-                                enable_disable_buttons_for_view(fbS, true);
-                            }
-                            set_labels();
-                        } else if (com2 == '-') { // if loco removed
-                            if (whichThrottle == 'T') {
-                                removeLoco('T');
-                            } else if (whichThrottle == 'G') {
-                                removeLoco('G');
-                            } else {
-                                removeLoco('S');
-                            }
-                        } else if (com2 == 'A') { // e.g. MTAL2608<;>R1
-                            char com3 = ls[1].charAt(0);
-                            if (com3 == 'R') {
-                                int dir;
-                                try {
-                                    dir = Integer.valueOf(ls[1].substring(1, 2));
-                                } catch (Exception e) {
-                                    dir = 1;
-                                }
-
-                                Consist con;
-                                int curDir;
-                                if (whichThrottle == 'T') {
-                                    con = mainapp.consistT;
-                                    curDir = dirT;
-                                } else if (whichThrottle == 'G') {
-                                    con = mainapp.consistG;
-                                    curDir = dirG;
-                                } else {
-                                    con = mainapp.consistS;
-                                    curDir = dirS;
-                                }
-
-                                if (addr.equals(con.getLeadAddr())) {
-                                    if (dir != curDir) { // lead/consist direction changed from outside of ED
-                                        showDirectionRequest(whichThrottle, dir);       // update requested direction indication
-                                        setEngineDirection(whichThrottle, dir, true);   // update rest of consist to match new direction
+                            if (whichThrottle == 'T' || whichThrottle == 'S' || whichThrottle == 'G') {
+                                if (com2 == '+' || com2 == 'L') { // if loco added or function labels updated
+                                    if (com2 == ('+')) {
+                                        // set_default_function_labels();
+                                        enable_disable_buttons(whichThrottle); // direction and slider: pass whichthrottle
                                     }
-                                } else {
-                                    int locoDir = curDir;               // calc correct direction for this (non-lead) loco
-                                    try {
-                                        if (con.isReverseOfLead(addr))
-                                            locoDir ^= 1;
-                                        if (locoDir != dir) {// if loco has wrong direction then correct it
-                                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, whichThrottle, locoDir);
+                                    // loop through all function buttons and set label and dcc functions (based on settings) or hide if no label
+                                    set_function_labels_and_listeners_for_view(whichThrottle);
+                                    if (whichThrottle == 'T') {
+                                        enable_disable_buttons_for_view(fbT, true);
+                                    } else if (whichThrottle == 'G') {
+                                        enable_disable_buttons_for_view(fbG, true);
+                                    } else {
+                                        enable_disable_buttons_for_view(fbS, true);
+                                    }
+                                    set_labels();
+                                } else if (com2 == '-') { // if loco removed
+                                    if (whichThrottle == 'T') {
+                                        removeLoco('T');
+                                    } else if (whichThrottle == 'G') {
+                                        removeLoco('G');
+                                    } else {
+                                        removeLoco('S');
+                                    }
+                                } else if (com2 == 'A') { // e.g. MTAL2608<;>R1
+                                    char com3 = ls[1].charAt(0);
+                                    if (com3 == 'R') {
+                                        int dir;
+                                        try {
+                                            dir = Integer.valueOf(ls[1].substring(1, 2));
+                                        } catch (Exception e) {
+                                            dir = 1;
                                         }
-                                    } catch (Exception e) {     // isReverseOfLead returns null if addr is not in con
-                                                                // - should not happen unless WiT is reporting on engine user just dropped from ED consist?
-                                        Log.d("Engine_Driver", "throttle " + whichThrottle + " loco " + addr + " direction reported by WiT but engine is not assigned");
+
+                                        Consist con;
+                                        int curDir;
+                                        if (whichThrottle == 'T') {
+                                            con = mainapp.consistT;
+                                            curDir = dirT;
+                                        } else if (whichThrottle == 'G') {
+                                            con = mainapp.consistG;
+                                            curDir = dirG;
+                                        } else {
+                                            con = mainapp.consistS;
+                                            curDir = dirS;
+                                        }
+
+                                        if (addr.equals(con.getLeadAddr())) {
+                                            if (dir != curDir) { // lead/consist direction changed from outside of ED
+                                                showDirectionRequest(whichThrottle, dir);       // update requested direction indication
+                                                setEngineDirection(whichThrottle, dir, true);   // update rest of consist to match new direction
+                                            }
+                                        } else {
+                                            int locoDir = curDir;               // calc correct direction for this (non-lead) loco
+                                            try {
+                                                if (con.isReverseOfLead(addr))
+                                                    locoDir ^= 1;
+                                                if (locoDir != dir) {// if loco has wrong direction then correct it
+                                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, whichThrottle, locoDir);
+                                                }
+                                            } catch (Exception e) {     // isReverseOfLead returns null if addr is not in con
+                                                // - should not happen unless WiT is reporting on engine user just dropped from ED consist?
+                                                Log.d("Engine_Driver", "throttle " + whichThrottle + " loco " + addr + " direction reported by WiT but engine is not assigned");
+                                            }
+                                        }
+                                    } else if (com3 == 'V') {
+                                        try {
+                                            int speed = Integer.parseInt(ls[1].substring(1));
+                                            speedUpdateWiT(whichThrottle, speed); // update speed slider and indicator
+                                        } catch (Exception ignored) {
+                                        }
+                                    } else if (com3 == 'F') {
+                                        try {
+                                            int function = Integer.valueOf(ls[1].substring(2));
+                                            set_function_state(whichThrottle, function);
+                                        } catch (Exception ignored) {
+                                        }
+                                    } else if (com3 == 's') {
+                                        try {
+                                            int speedStepCode = Integer.valueOf(ls[1].substring(1));
+                                            setSpeedStepsFromWiT(whichThrottle, speedStepCode);
+                                        } catch (Exception ignored) {
+                                        }
                                     }
                                 }
-                            } else if (com3 == 'V') {
-                                try {
-                                    int speed = Integer.parseInt(ls[1].substring(1));
-                                    speedUpdateWiT(whichThrottle, speed); // update speed slider and indicator
-                                } catch (Exception ignored) {
+                            }
+                            break;
+
+                        case 'T':
+                        case 'S':
+                        case 'G':
+                            enable_disable_buttons(com1); // pass whichthrottle
+                            set_labels();
+                            break;
+
+                        case 'R':
+                            if (whichThrottle == 'F' || whichThrottle == 'S' || whichThrottle == 'G') { // roster function labels - legacy
+                                if (whichThrottle == 'F') { // used to use 'F' instead of 'T'
+                                    whichThrottle = 'T';
                                 }
-                            } else if (com3 == 'F') {
-                                try {
-                                    int function = Integer.valueOf(ls[1].substring(2));
-                                    set_function_state(whichThrottle, function);
-                                } catch (Exception ignored) {
+                                set_function_labels_and_listeners_for_view(whichThrottle);
+                                if (whichThrottle == 'T') {
+                                    enable_disable_buttons_for_view(fbT, true);
+                                } else if (whichThrottle == 'G') {
+                                    enable_disable_buttons_for_view(fbG, true);
+                                } else {
+                                    enable_disable_buttons_for_view(fbS, true);
                                 }
-                            } else if (com3 == 's') {
+                                set_labels();
+
+                            } else {
                                 try {
-                                    int speedStepCode = Integer.valueOf(ls[1].substring(1));
-                                    setSpeedStepsFromWiT(whichThrottle, speedStepCode);
-                                } catch (Exception ignored) {
+                                    String scom2 = response_str.substring(1, 6);
+                                    if (scom2.equals("PF}|{")) {
+                                        whichThrottle = response_str.charAt(6);
+                                        set_all_function_states(whichThrottle);
+                                    }
+                                } catch (IndexOutOfBoundsException ignored) {
                                 }
                             }
-                        }
-                    }
-                    break;
-
-                case 'T':
-                case 'S':
-                case 'G':
-                    enable_disable_buttons(com1); // pass whichthrottle
-                    set_labels();
-                    break;
-
-                case 'R':
-                    if (whichThrottle == 'F' || whichThrottle == 'S' || whichThrottle == 'G') { // roster function labels - legacy
-                        if (whichThrottle == 'F') { // used to use 'F' instead of 'T'
-                            whichThrottle = 'T';
-                        }
-                        set_function_labels_and_listeners_for_view(whichThrottle);
-                        if (whichThrottle == 'T') {
-                            enable_disable_buttons_for_view(fbT, true);
-                        } else if (whichThrottle == 'G') {
-                            enable_disable_buttons_for_view(fbG, true);
-                        } else {
-                            enable_disable_buttons_for_view(fbS, true);
-                        }
-                        set_labels();
-
-                    } else {
-                        try {
-                            String scom2 = response_str.substring(1, 6);
-                            if (scom2.equals("PF}|{")) {
-                                whichThrottle = response_str.charAt(6);
-                                set_all_function_states(whichThrottle);
+                            break;
+                        case 'P': // panel info
+                            if (whichThrottle == 'W') { // PW - web server port info
+                                initWeb();
+                                set_labels();
                             }
-                        } catch (IndexOutOfBoundsException ignored) {
-                        }
-                    }
-                    break;
-                case 'P': // panel info
-                    if (whichThrottle == 'W') { // PW - web server port info
-                        initWeb();
+                            if (whichThrottle == 'P') { // PP - power state change
+                                set_labels();
+                            }
+                            break;
+                    } // end of switch
+
+                    if (!selectLocoRendered) // call set_labels if the select loco textViews had not rendered the last time it was called
                         set_labels();
-                    }
-                    if (whichThrottle == 'P') { // PP - power state change
-                        set_labels();
-                    }
+                }
+                break;
+                case message_type.ROSTER_UPDATE:
+                    set_labels();               // refresh function labels when any roster response is received
                     break;
-                } // end of switch
-                
-                if (!selectLocoRendered) // call set_labels if the select loco textViews had not rendered the last time it was called
-                    set_labels();
-            }
-            break;
-            case message_type.ROSTER_UPDATE:
-                set_labels();               // refresh function labels when any roster response is received
-                break;
-            case message_type.WIT_CON_RETRY:
-                witRetry(response_str);
-                break;
-            case message_type.WIT_CON_RECONNECT:
-                break;
-            case message_type.CURRENT_TIME:
-                currentTime = response_str;
-                setTitle();
-                break;
-            case message_type.DISCONNECT:
-            case message_type.SHUTDOWN:
-                disconnect();
-                break;
-            case message_type.WEBVIEW_LOC:      // webview location changed
-                // set new location
-                webViewLocation = prefs
-                        .getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
-                reloadWeb();
-                break;
-            case message_type.INITIAL_WEBPAGE:
-                initWeb();
-                break;
+                case message_type.WIT_CON_RETRY:
+                    witRetry(response_str);
+                    break;
+                case message_type.WIT_CON_RECONNECT:
+                    break;
+                case message_type.CURRENT_TIME:
+                    currentTime = response_str;
+                    setTitle();
+                    break;
+                case message_type.DISCONNECT:
+                case message_type.SHUTDOWN:
+                    disconnect();
+                    break;
+                case message_type.WEBVIEW_LOC:      // webview location changed
+                    // set new location
+                    webViewLocation = prefs
+                            .getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+                    reloadWeb();
+                    break;
+                case message_type.INITIAL_WEBPAGE:
+                    initWeb();
+                    break;
             }
         }
     }
 
 
-    private void setImmersiveModeOn (View webView ) {
+    private void setImmersiveModeOn(View webView) {
         boolean tvim = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
         immersiveModeIsOn = false;
 
@@ -439,7 +442,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             }
         }
     }
-    private void setImmersiveModeOff (View webView) {
+
+    private void setImmersiveModeOff(View webView) {
         boolean tvim = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
         immersiveModeIsOn = false;
 
@@ -464,7 +468,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     }
 
     private void witRetry(String s) {
-        if(this.hasWindowFocus()) {
+        if (this.hasWindowFocus()) {
             webView.stopLoading();
             Intent in = new Intent().setClass(this, reconnect_status.class);
             in.putExtra("status", s);
@@ -473,7 +477,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
     }
-    
+
     private void removeLoco(char whichThrottle) {
         disable_buttons(whichThrottle);         // direction and slider
         set_function_labels_and_listeners_for_view(whichThrottle);
@@ -486,15 +490,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         if (speed < 0)
             speed = 0;
         if (whichThrottle == 'T') {
-            if(!changeTimerT.delayInProg) {
+            if (!changeTimerT.delayInProg) {
                 sbT.setProgress(speed);
             }
         } else if (whichThrottle == 'G') {
-            if(!changeTimerG.delayInProg) {
+            if (!changeTimerG.delayInProg) {
                 sbG.setProgress(speed);
             }
         } else {
-            if(!changeTimerS.delayInProg) {
+            if (!changeTimerS.delayInProg) {
                 sbS.setProgress(speed);
             }
         }
@@ -525,7 +529,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
         return throttle_slider.getProgress();
     }
-    
+
     // change speed slider by scaled display unit value
     int speedChange(char whichThrottle, int change) {
         SeekBar throttle_slider;
@@ -541,10 +545,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             displayUnitScale = displayUnitScaleS;
         }
         int lastSpeed = throttle_slider.getProgress();
-        int lastScaleSpeed = (int)Math.round(lastSpeed * displayUnitScale);
-        int speed = (int)Math.round(lastSpeed + (change / displayUnitScale));
-        int scaleSpeed = (int)Math.round(speed * displayUnitScale);
-        if(lastScaleSpeed == scaleSpeed) {
+        int lastScaleSpeed = (int) Math.round(lastSpeed * displayUnitScale);
+        int speed = (int) Math.round(lastSpeed + (change / displayUnitScale));
+        int scaleSpeed = (int) Math.round(speed * displayUnitScale);
+        if (lastScaleSpeed == scaleSpeed) {
             speed += Math.signum(change);
         }
         if (speed < 0)  //insure speed is inside bounds
@@ -596,23 +600,23 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     //adjust maxspeedsteps from code passed from JMRI, but only if set to Auto, else do not change
     private void setSpeedStepsFromWiT(char whichThrottle, int speedStepCode) {
         int maxSpeedStep = 100;
-        switch(speedStepCode) {
-        case SPEED_STEP_CODE_128:
-            maxSpeedStep = 126;
-            break;
-        case SPEED_STEP_CODE_27:
-            maxSpeedStep = 27;
-            break;
-        case SPEED_STEP_CODE_14:
-            maxSpeedStep = 14;
-            break;
-        case SPEED_STEP_CODE_28:
-            maxSpeedStep = 28;
-            break;
+        switch (speedStepCode) {
+            case SPEED_STEP_CODE_128:
+                maxSpeedStep = 126;
+                break;
+            case SPEED_STEP_CODE_27:
+                maxSpeedStep = 27;
+                break;
+            case SPEED_STEP_CODE_14:
+                maxSpeedStep = 14;
+                break;
+            case SPEED_STEP_CODE_28:
+                maxSpeedStep = 28;
+                break;
         }
-        if(whichThrottle == 'T') {
+        if (whichThrottle == 'T') {
             maxSpeedStepT = maxSpeedStep;
-        } else if(whichThrottle == 'G') {
+        } else if (whichThrottle == 'G') {
             maxSpeedStepG = maxSpeedStep;
         } else {
             maxSpeedStepS = maxSpeedStep;
@@ -623,19 +627,19 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     //get max speedstep based on Preferences 
     //unless pref is set to AUTO in which case just return the input value
     private int getSpeedSteps(int maxStep) {
-        if(speedStepPref != SPEED_STEP_AUTO_MODE) {
+        if (speedStepPref != SPEED_STEP_AUTO_MODE) {
             maxStep = speedStepPref;
-        } 
+        }
         return maxStep;
     }
 
     private void setDisplayUnitScale(char whichThrottle) {
         int maxStep;
-        if(whichThrottle == 'T') {
+        if (whichThrottle == 'T') {
             maxStep = getSpeedSteps(maxSpeedStepT);
             displayUnitScaleT = calcDisplayUnitScale(maxStep);
             tvSpdLabT.setText(calcDisplayUnitLabel(maxStep));
-        } else if(whichThrottle == 'G') {
+        } else if (whichThrottle == 'G') {
             maxStep = getSpeedSteps(maxSpeedStepG);
             displayUnitScaleG = calcDisplayUnitScale(maxStep);
             tvSpdLabG.setText(calcDisplayUnitLabel(maxStep));
@@ -645,9 +649,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             tvSpdLabS.setText(calcDisplayUnitLabel(maxStep));
         }
     }
-    
+
     private double calcDisplayUnitScale(int maxSpeedStep) {
-        return maxSpeedStep / (double)MAX_SPEED_VAL_WIT;
+        return maxSpeedStep / (double) MAX_SPEED_VAL_WIT;
     }
 
     private String calcDisplayUnitLabel(int maxSpeedStep) {
@@ -657,8 +661,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             return String.valueOf(maxSpeedStep);
         }
     }
-    
-    
+
+
     // set the direction for all engines on the throttle
     // if skipLead is true, the direction is not set for the lead engine
     void setEngineDirection(char whichThrottle, int direction, boolean skipLead) {
@@ -800,72 +804,72 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     void disable_buttons(char whichThrottle) {
         enable_disable_buttons(whichThrottle, true);
     }
-    
+
     void enable_disable_buttons(char whichThrottle) {
         enable_disable_buttons(whichThrottle, false);
     }
 
-    void enable_disable_direction_and_loco_buttons(char whichThrottle){
+    void enable_disable_direction_and_loco_buttons(char whichThrottle) {
 
-            if ((!dirChangeWhileMoving) && (!stopOnDirectionChange)) {
+        if ((!dirChangeWhileMoving) && (!stopOnDirectionChange)) {
 
-                // default to throttle 'T'
-                Button bFwd = bFwdT;
-                Button bRev = bRevT;
-                Button bSel = bSelT;
-                boolean tIsEnabled = llT.isEnabled();
-                //Consist con = mainapp.consistT;
-                String conAddr = mainapp.consistT.formatConsistAddr();
-                int dir = dirT;
+            // default to throttle 'T'
+            Button bFwd = bFwdT;
+            Button bRev = bRevT;
+            Button bSel = bSelT;
+            boolean tIsEnabled = llT.isEnabled();
+            //Consist con = mainapp.consistT;
+            String conAddr = mainapp.consistT.formatConsistAddr();
+            int dir = dirT;
 
-                switch (whichThrottle) {
-                    case 'T':
-                        break;
-                    case 'S':
-                        bFwd = bFwdS;
-                        bRev = bRevS;
-                        bSel = bSelS;
-                        tIsEnabled = llS.isEnabled();
-                        //con = mainapp.consistS;
-                        conAddr = mainapp.consistS.formatConsistAddr();
-                        dir = dirS;
-                        break;
-                    case 'G':
-                        bFwd = bFwdG;
-                        bRev = bRevG;
-                        bSel = bSelG;
-                        tIsEnabled = llG.isEnabled();
-                        //con = mainapp.consistG;
-                        conAddr = mainapp.consistG.formatConsistAddr();
-                        dir = dirG;
-                }
-
-                if ((getSpeed(whichThrottle) == 0) && tIsEnabled) {
-                    bSel.setEnabled(true);
-                    if (!conAddr.equals("Not Set")) {
-                        bFwd.setEnabled(true);
-                        bRev.setEnabled(true);
-                    } else {
-                        bFwd.setEnabled(false);
-                        bRev.setEnabled(false);
-                    }
-                } else {
-                    if (dir == 1) {
-                        bFwd.setEnabled(true);
-                        bRev.setEnabled(false);
-                    } else {
-                        bFwd.setEnabled(false);
-                        bRev.setEnabled(true);
-                    }
-                    bSel.setEnabled(false);
-                }
+            switch (whichThrottle) {
+                case 'T':
+                    break;
+                case 'S':
+                    bFwd = bFwdS;
+                    bRev = bRevS;
+                    bSel = bSelS;
+                    tIsEnabled = llS.isEnabled();
+                    //con = mainapp.consistS;
+                    conAddr = mainapp.consistS.formatConsistAddr();
+                    dir = dirS;
+                    break;
+                case 'G':
+                    bFwd = bFwdG;
+                    bRev = bRevG;
+                    bSel = bSelG;
+                    tIsEnabled = llG.isEnabled();
+                    //con = mainapp.consistG;
+                    conAddr = mainapp.consistG.formatConsistAddr();
+                    dir = dirG;
             }
+
+            if ((getSpeed(whichThrottle) == 0) && tIsEnabled) {
+                bSel.setEnabled(true);
+                if (!conAddr.equals("Not Set")) {
+                    bFwd.setEnabled(true);
+                    bRev.setEnabled(true);
+                } else {
+                    bFwd.setEnabled(false);
+                    bRev.setEnabled(false);
+                }
+            } else {
+                if (dir == 1) {
+                    bFwd.setEnabled(true);
+                    bRev.setEnabled(false);
+                } else {
+                    bFwd.setEnabled(false);
+                    bRev.setEnabled(true);
+                }
+                bSel.setEnabled(false);
+            }
+        }
     }
-    
+
     void enable_disable_buttons(char whichThrottle, boolean forceDisable) {
         boolean newEnabledState = false;
         if (whichThrottle == 'T') {
-            if(!forceDisable) {
+            if (!forceDisable) {
                 newEnabledState = mainapp.consistT.isActive();      // set false if lead loco is not assigned
             }
             bFwdT.setEnabled(newEnabledState);
@@ -880,7 +884,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             }
             sbT.setEnabled(newEnabledState);
         } else if (whichThrottle == 'G') {
-            if(!forceDisable) {
+            if (!forceDisable) {
                 newEnabledState = (mainapp.consistG.isActive());    // set false if lead loco is not assigned
             }
             bFwdG.setEnabled(newEnabledState);
@@ -896,7 +900,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             }
             sbG.setEnabled(newEnabledState);
         } else {
-            if(!forceDisable) {
+            if (!forceDisable) {
                 newEnabledState = (mainapp.consistS.isActive());    // set false if lead loco is not assigned
             }
             bFwdS.setEnabled(newEnabledState);
@@ -998,8 +1002,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     }
 
     // Listeners for the Select Loco buttons
-    public class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener  {
+    public class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener {
         char whichThrottle;     // T for first throttle, S for second, G for third
+
         public select_function_button_touch_listener(char new_whichThrottle) {
             whichThrottle = new_whichThrottle;
         }
@@ -1007,7 +1012,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         @Override
         public void onClick(View v) {
             // don't loco change while moving if the preference is set
-            if ((dirChangeWhileMoving) || (getSpeed(whichThrottle)==0)) {
+            if ((dirChangeWhileMoving) || (getSpeed(whichThrottle) == 0)) {
                 start_select_loco_activity(whichThrottle); // pass throttle #
             } else {
                 Toast.makeText(getApplicationContext(), "Loco change not allowed: 'Direction change?' while moving is disabled in the preferences", Toast.LENGTH_SHORT).show();
@@ -1097,17 +1102,16 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             String lab = funcLabel.toUpperCase().trim();
             leadOnly = false;
             trailOnly = false;
-            if (!lab.equals(""))
-            {
+            if (!lab.equals("")) {
                 boolean selectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
-                leadOnly =  (selectiveLeadSound && 
-                                (lab.contains("WHISTLE") || lab.contains("HORN") || lab.contains("BELL"))
-                            || lab.contains("HEAD")
-                            || (lab.contains("LIGHT") && !lab.contains("REAR")));
+                leadOnly = (selectiveLeadSound &&
+                        (lab.contains("WHISTLE") || lab.contains("HORN") || lab.contains("BELL"))
+                        || lab.contains("HEAD")
+                        || (lab.contains("LIGHT") && !lab.contains("REAR")));
                 trailOnly = lab.contains("REAR");
             }
         }
-        
+
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -1143,23 +1147,23 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         case function_button.FORWARD:
                         case function_button.REVERSE: {
                             int dir = (function == function_button.FORWARD ? 1 : 0);
-                            
+
                             // set speed to zero on direction change while moving if the preference is set
-                            if ((stopOnDirectionChange) && (getSpeed(whichThrottle)!=0) && (dir != getDirection(whichThrottle)) && (stopOnDirectionChange)) {
+                            if ((stopOnDirectionChange) && (getSpeed(whichThrottle) != 0) && (dir != getDirection(whichThrottle)) && (stopOnDirectionChange)) {
                                 speedUpdateAndNotify(whichThrottle, 0);
                             }
 
                             // don't allow direction change while moving if the preference is set
-                            if ((dirChangeWhileMoving) || (getSpeed(whichThrottle)==0)) {
+                            if ((dirChangeWhileMoving) || (getSpeed(whichThrottle) == 0)) {
                                 showDirectionRequest(whichThrottle, dir);        // update requested direction indication
                                 setEngineDirection(whichThrottle, dir, false);   // update direction for each engine on this throttle
                             } //else {
-                                //Toast.makeText(getApplicationContext(), "Direction change not allowed: 'Direction change while moving' is disabled in the preferences", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "Direction change not allowed: 'Direction change while moving' is disabled in the preferences", Toast.LENGTH_SHORT).show();
                             //}
 
                             break;
                         }
-                        case function_button.STOP: 
+                        case function_button.STOP:
                             set_stop_button(whichThrottle, true);
                             speedUpdateAndNotify(whichThrottle, 0);
                             enable_disable_direction_and_loco_buttons(whichThrottle);
@@ -1168,7 +1172,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                             whichVolume = whichThrottle;    // use whichever was clicked
                             set_labels();
                             break;
-        
+
                         default: { // handle the function buttons
                             Consist con;
                             if (whichThrottle == 'T') {
@@ -1178,7 +1182,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                             } else {
                                 con = mainapp.consistS;
                             }
-        
+
                             String addr = "";
                             if (leadOnly)
                                 addr = con.getLeadAddr();
@@ -1191,11 +1195,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     break;
                 }
-                
+
                 // handle stopping of function on key-up
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
-    
+
                     if (function == function_button.STOP) {
                         set_stop_button(whichThrottle, false);
                     }
@@ -1279,9 +1283,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     // send a throttle speed message to WiT
     public void sendSpeedMsg(char whichThrottle, int speed) {
         // start timer to briefly ignore WiT speed messages - avoids speed "jumping"
-        if(whichThrottle == 'T') {
+        if (whichThrottle == 'T') {
             changeTimerT.changeDelay();
-        } else if(whichThrottle == 'G') {
+        } else if (whichThrottle == 'G') {
             changeTimerG.changeDelay();
         } else {
             changeTimerS.changeDelay();
@@ -1308,13 +1312,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             delayInProg = true;
             mainapp.throttle_msg_handler.postDelayed(changeTimer, changeDelay);
         }
-        
+
         class ChangeTimer implements Runnable {
-    
+
             public ChangeTimer() {
                 delayInProg = false;
             }
-            
+
             @Override
             public void run() {         // change delay is over - clear the delay flag
                 delayInProg = false;
@@ -1345,7 +1349,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         speedChangeAndNotify(whichThrottle, BUTTON_SPEED_STEP);
     }
 
-    @SuppressLint({ "Recycle", "SetJavaScriptEnabled" })
+    @SuppressLint({"Recycle", "SetJavaScriptEnabled"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -1357,11 +1361,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             return;
         }
         setContentView(R.layout.throttle);
-        
-        speedButtonLeftText = getApplicationContext().getResources().getString(R.string.LeftButton); 
-        speedButtonRightText = getApplicationContext().getResources().getString(R.string.RightButton); 
-        speedButtonUpText = getApplicationContext().getResources().getString(R.string.UpButton); 
-        speedButtonDownText = getApplicationContext().getResources().getString(R.string.DownButton); 
+
+        speedButtonLeftText = getApplicationContext().getResources().getString(R.string.LeftButton);
+        speedButtonRightText = getApplicationContext().getResources().getString(R.string.RightButton);
+        speedButtonUpText = getApplicationContext().getResources().getString(R.string.UpButton);
+        speedButtonDownText = getApplicationContext().getResources().getString(R.string.DownButton);
 
         webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
 
@@ -1557,9 +1561,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         webView.getSettings().setDatabasePath(databasePath);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true); // Enable Multitouch
-                                                            // if supported
+        // if supported
         webView.getSettings().setUseWideViewPort(true); // Enable greater
-                                                        // zoom-out
+        // zoom-out
         webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
         webView.setInitialScale((int) (100 * scale));
         // webView.getSettings().setLoadWithOverviewMode(true); // size image to
@@ -1583,10 +1587,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         clearHistory = true;
                     }
                     if (clearHistory) {                 // keep clearing history until off this page
-                        if(url.equals(firstUrl)) {      // (works around Android bug)
+                        if (url.equals(firstUrl)) {      // (works around Android bug)
                             webView.clearHistory();
-                        }
-                        else {
+                        } else {
                             clearHistory = false;
                         }
                     }
@@ -1605,7 +1608,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         changeTimerT = new ChangeDelay('T');
         changeTimerG = new ChangeDelay('G');
         changeTimerS = new ChangeDelay('S');
-        
+
     } // end of onCreate()
 
     @Override
@@ -1678,7 +1681,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         webView.saveState(outState); // save history (on rotation) if at least
-                                        // one page has loaded
+        // one page has loaded
         orientationChange = true;
     }
 
@@ -1689,7 +1692,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             if (!callHiddenWebViewOnPause()) {
                 webView.pauseTimers();
             }
-            
+
             String url = webView.getUrl();
             if (url != null && !noUrl.equals(url)) {    // if any url has been loaded 
                 webView.loadUrl(noUrl);                 // load a static url to stop any javascript
@@ -1710,8 +1713,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             setImmersiveModeOn(webView);
         }
     }
- 
-    /** Called when the activity is finished. */
+
+    /**
+     * Called when the activity is finished.
+     */
     @SuppressWarnings("deprecation")
     @Override
     public void onDestroy() {
@@ -1753,8 +1758,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             url = noUrl;                            // load static url to stop javascript
             currentUrl = null;
             firstUrl = null;
-        } 
-        else if (url == null)                       // else if initializing
+        } else if (url == null)                       // else if initializing
         {
             webViewIsOn = true;
             url = mainapp.createUrl(prefs.getString("InitialThrotWebPage",
@@ -1762,7 +1766,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             if (url == null) {      //if port is invalid
                 url = noUrl;
             }
-            
+
             if (firstUrl == null) {
                 scale = initialScale;
                 webView.setInitialScale((int) (100 * scale));
@@ -1772,13 +1776,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         webView.loadUrl(url);
     }
 
-    void setAllFunctionLabelsAndListeners()
-    {
+    void setAllFunctionLabelsAndListeners() {
         set_function_labels_and_listeners_for_view('T');
         set_function_labels_and_listeners_for_view('S');
         set_function_labels_and_listeners_for_view('G');
     }
-    
+
     // helper function to set up function buttons for each throttle
     // loop through all function buttons and
     // set label and dcc functions (based on settings) or hide if no label
@@ -1832,11 +1835,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 if (k < function_labels_temp.size()) {
                     Integer func = aList.get(k);
                     functionButtonMap.put(func, b); // save function to button
-                                                    // mapping
+                    // mapping
                     String bt = function_labels_temp.get(func);
                     fbtl = new function_button_touch_listener(func, whichThrottle, bt);
                     b.setOnTouchListener(fbtl);
-                    bt = bt  + "        ";  // pad with spaces, and limit to 7 characters
+                    bt = bt + "        ";  // pad with spaces, and limit to 7 characters
                     b.setText(bt.substring(0, 7));
                     b.setVisibility(View.VISIBLE);
                     b.setEnabled(false); // start out with everything disabled
@@ -1895,13 +1898,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         int maxThrottle;
         try {
             maxThrottle = Integer.parseInt(s);
-            if(maxThrottle > 100) {
+            if (maxThrottle > 100) {
                 maxThrottle = 100;
             }
         } catch (NumberFormatException e) {
             maxThrottle = 100;
         }
-        maxThrottle = (int)Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
+        maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
         sbT.setMax(maxThrottle);
         sbS.setMax(maxThrottle);
         sbG.setMax(maxThrottle);
@@ -1914,15 +1917,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         } catch (NumberFormatException e) {
             maxChange = 25;
         }
-        max_throttle_change = (int)Math.round(maxThrottle * (maxChange * .01));
+        max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
 
-        if(mainapp.consistT.isEmpty()) {
+        if (mainapp.consistT.isEmpty()) {
             maxSpeedStepT = 100;
-        } 
-        if(mainapp.consistG.isEmpty()) {
+        }
+        if (mainapp.consistG.isEmpty()) {
             maxSpeedStepG = 100;
         }
-        if(mainapp.consistS.isEmpty()) {
+        if (mainapp.consistS.isEmpty()) {
             maxSpeedStepS = 100;
         }
         //get speed steps from prefs
@@ -1935,11 +1938,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         setDisplayUnitScale('T');
         setDisplayUnitScale('G');
         setDisplayUnitScale('S');
-        
+
         setDisplayedSpeed('T', sbT.getProgress());  // update numeric speeds since units might have changed
         setDisplayedSpeed('G', sbG.getProgress());
         setDisplayedSpeed('S', sbS.getProgress());
-        
+
         final DisplayMetrics dm = getResources().getDisplayMetrics();
         // Get the screen's density scale
         final float denScale = dm.density;
@@ -1982,7 +1985,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 bLabel = mainapp.consistT.toString();
             } else {
                 bLabel = mainapp.consistT.formatConsistAddr();
-            }           
+            }
             throttle_count++;
         } else {
             bLabel = "Press to select";
@@ -2014,7 +2017,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 bLabel = mainapp.consistS.toString();
             } else {
                 bLabel = mainapp.consistS.formatConsistAddr();
-            }           
+            }
             throttle_count++;
         } else {
             bLabel = "Press to select";
@@ -2040,7 +2043,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 bLabel = mainapp.consistG.toString();
             } else {
                 bLabel = mainapp.consistG.formatConsistAddr();
-            }           
+            }
             throttle_count++;
         } else {
             bLabel = "Press to select";
@@ -2300,7 +2303,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             return (true); // stop processing this key
         }
         return (super.onKeyDown(key, event)); // continue with normal key
-                                                // processing
+        // processing
     }
 
     private void disconnect() {
@@ -2330,106 +2333,106 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         // Handle all of the possible menu actions.
         Intent in;
         switch (item.getItemId()) {
-        case R.id.turnouts_mnu:
-            in = new Intent().setClass(this, turnouts.class);
-            navigatingAway = true;
-            startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-            break;
-        case R.id.routes_mnu:
-            in = new Intent().setClass(this, routes.class);
-            navigatingAway = true;
-            startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-            break;
-        case R.id.web_mnu:
-            in = new Intent().setClass(this, web_activity.class);
-            navigatingAway = true;
-            startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.exit_mnu:
-            navigatingAway = true;
-            mainapp.checkExit(this);
-            break;
-        case R.id.power_control_mnu:
-            in = new Intent().setClass(this, power_control.class);
-            navigatingAway = true;
-            startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.preferences_mnu:
-            in = new Intent().setClass(this, preferences.class);
-            navigatingAway = true;
-            startActivityForResult(in,0);   // reinitialize function buttons and labels on return
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.settings_mnu:
-            in = new Intent().setClass(this, function_settings.class);
-            navigatingAway = true;
-            startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.about_mnu:
-            in = new Intent().setClass(this, about_page.class);
-            navigatingAway = true;
-            startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.logviewer_menu:
-            Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
-            navigatingAway = true;
-            startActivity(logviewer);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.EmerStop:
-            mainapp.sendEStopMsg();
-            speedUpdate('T', 0);
-            speedUpdate('S', 0);
-            speedUpdate('G', 0);
+            case R.id.turnouts_mnu:
+                in = new Intent().setClass(this, turnouts.class);
+                navigatingAway = true;
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+                break;
+            case R.id.routes_mnu:
+                in = new Intent().setClass(this, routes.class);
+                navigatingAway = true;
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+                break;
+            case R.id.web_mnu:
+                in = new Intent().setClass(this, web_activity.class);
+                navigatingAway = true;
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.exit_mnu:
+                navigatingAway = true;
+                mainapp.checkExit(this);
+                break;
+            case R.id.power_control_mnu:
+                in = new Intent().setClass(this, power_control.class);
+                navigatingAway = true;
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.preferences_mnu:
+                in = new Intent().setClass(this, preferences.class);
+                navigatingAway = true;
+                startActivityForResult(in, 0);   // reinitialize function buttons and labels on return
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.settings_mnu:
+                in = new Intent().setClass(this, function_settings.class);
+                navigatingAway = true;
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.about_mnu:
+                in = new Intent().setClass(this, about_page.class);
+                navigatingAway = true;
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.logviewer_menu:
+                Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
+                navigatingAway = true;
+                startActivity(logviewer);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.EmerStop:
+                mainapp.sendEStopMsg();
+                speedUpdate('T', 0);
+                speedUpdate('S', 0);
+                speedUpdate('G', 0);
 
-            // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
-            enable_disable_direction_and_loco_buttons('T');
-            enable_disable_direction_and_loco_buttons('S');
-            enable_disable_direction_and_loco_buttons('G');
+                // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
+                enable_disable_direction_and_loco_buttons('T');
+                enable_disable_direction_and_loco_buttons('S');
+                enable_disable_direction_and_loco_buttons('G');
 
-            break;
-        case R.id.power_layout_button:
-            if (!mainapp.isPowerControlAllowed()) {
-                AlertDialog.Builder b = new AlertDialog.Builder(this);
-                b.setIcon(android.R.drawable.ic_dialog_alert);
-                b.setTitle("Will Not Work!");
-                b.setMessage("JMRI has the wiThrottle power control setting to off.\n\nWill now remove Power Icon.\n\nWill display again when JMRI setting is on.");
-                b.setCancelable(true);
-                b.setNegativeButton("OK", null);
-                AlertDialog alert = b.create();
-                alert.show();
-                mainapp.displayPowerStateMenuButton(TMenu);
-            } else {
-                mainapp.powerStateMenuButton();
-            }
-            break;
-        case R.id.EditConsistT_menu:
-            Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
-            consistEdit.putExtra("whichThrottle", 'T');
-            navigatingAway = true;
-            startActivityForResult(consistEdit, 1);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.EditConsistS_menu:
-            Intent consistEdit2 = new Intent().setClass(this, ConsistEdit.class);
-            consistEdit2.putExtra("whichThrottle", 'S');
-            navigatingAway = true;
-            startActivityForResult(consistEdit2, 1);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.EditConsistG_menu:
-            Intent consistEdit3 = new Intent().setClass(this, ConsistEdit.class);
-            consistEdit3.putExtra("whichThrottle", 'G');
-            navigatingAway = true;
-            startActivityForResult(consistEdit3, 1);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
+                break;
+            case R.id.power_layout_button:
+                if (!mainapp.isPowerControlAllowed()) {
+                    AlertDialog.Builder b = new AlertDialog.Builder(this);
+                    b.setIcon(android.R.drawable.ic_dialog_alert);
+                    b.setTitle("Will Not Work!");
+                    b.setMessage("JMRI has the wiThrottle power control setting to off.\n\nWill now remove Power Icon.\n\nWill display again when JMRI setting is on.");
+                    b.setCancelable(true);
+                    b.setNegativeButton("OK", null);
+                    AlertDialog alert = b.create();
+                    alert.show();
+                    mainapp.displayPowerStateMenuButton(TMenu);
+                } else {
+                    mainapp.powerStateMenuButton();
+                }
+                break;
+            case R.id.EditConsistT_menu:
+                Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
+                consistEdit.putExtra("whichThrottle", 'T');
+                navigatingAway = true;
+                startActivityForResult(consistEdit, 1);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.EditConsistS_menu:
+                Intent consistEdit2 = new Intent().setClass(this, ConsistEdit.class);
+                consistEdit2.putExtra("whichThrottle", 'S');
+                navigatingAway = true;
+                startActivityForResult(consistEdit2, 1);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.EditConsistG_menu:
+                Intent consistEdit3 = new Intent().setClass(this, ConsistEdit.class);
+                consistEdit3.putExtra("whichThrottle", 'G');
+                navigatingAway = true;
+                startActivityForResult(consistEdit3, 1);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -2439,7 +2442,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) { // edit loco or edit consist
             if (resultCode == RESULT_FIRST_USER) { // something about consist
-                                                    // was changed
+                // was changed
                 Bundle extras = data.getExtras();
                 if (extras != null) {
                     char whichThrottle = extras.getChar("whichThrottle");
@@ -2447,13 +2450,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     int speed;
                     if (whichThrottle == 'T') {
                         dir = dirT;
-                        speed = (sbT==null ? 0 : sbT.getProgress()); 
+                        speed = (sbT == null ? 0 : sbT.getProgress());
                     } else if (whichThrottle == 'G') {
                         dir = dirG;
-                        speed = (sbG==null ? 0 : sbG.getProgress()); 
+                        speed = (sbG == null ? 0 : sbG.getProgress());
                     } else {
                         dir = dirS;
-                        speed = (sbS==null ? 0 : sbS.getProgress()); 
+                        speed = (sbS == null ? 0 : sbS.getProgress());
                     }
                     setEngineDirection(whichThrottle, dir, false);  // update direction for each loco in consist
                     sendSpeedMsg(whichThrottle, speed);             // ensure all trailing units have the same speed as the lead engine
@@ -2472,17 +2475,17 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     public boolean onTouchEvent(MotionEvent event) {
         // Log.d("Engine_Driver", "onTouch Title action " + event.getAction());
         switch (event.getAction()) {
-        case MotionEvent.ACTION_DOWN:
-            gestureStart(event);
-            break;
-        case MotionEvent.ACTION_UP:
-            gestureEnd(event);
-            break;
-        case MotionEvent.ACTION_MOVE:
-            gestureMove(event);
-            break;
-        case MotionEvent.ACTION_CANCEL:
-            gestureCancel(event);
+            case MotionEvent.ACTION_DOWN:
+                gestureStart(event);
+                break;
+            case MotionEvent.ACTION_UP:
+                gestureEnd(event);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                gestureMove(event);
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                gestureCancel(event);
         }
         return true;
     }
@@ -2619,8 +2622,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 if ((gestureStartY - event.getY()) > threaded_application.min_fling_distance) {
                     // Toast.makeText(getApplicationContext(), "Swipe Up", Toast.LENGTH_SHORT).show();
                 }
-            }
-            else {
+            } else {
                 // gesture was not long enough
                 gestureFailed(event);
             }

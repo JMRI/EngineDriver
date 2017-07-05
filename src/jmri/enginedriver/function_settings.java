@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+
 import java.util.ArrayList;
 import java.io.*;
 
@@ -38,7 +39,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class function_settings extends Activity{
+public class function_settings extends Activity {
 
     private threaded_application mainapp;
     private boolean orientationChange = false;
@@ -50,26 +51,27 @@ public class function_settings extends Activity{
     private Menu FMenu;
 
 
-    public void setTitleToIncludeThrotName()
-    {
-        SharedPreferences prefs  = getSharedPreferences("jmri.enginedriver_preferences", 0);
+    public void setTitleToIncludeThrotName() {
+        SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_functions) + "    |    Throttle Name: " + 
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_functions) + "    |    Throttle Name: " +
                 prefs.getString("throttle_name_preference", defaultName));
     }
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mainapp=(threaded_application)getApplication();  //save pointer to main app
+        mainapp = (threaded_application) getApplication();  //save pointer to main app
 
         //setTitleToIncludeThrotName();
 
         setContentView(R.layout.function_settings);
         orientationChange = false;
 
-        if(savedInstanceState == null) {    //if not an orientation change then init settings array
+        if (savedInstanceState == null) {    //if not an orientation change then init settings array
             initSettings();
             settingsCurrent = true;
         }
@@ -78,20 +80,19 @@ public class function_settings extends Activity{
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        Button b=(Button)findViewById(R.id.fb_copy_labels_from_roster);
-        if (mainapp.function_labels_T == null || mainapp.function_labels_T.size()==0) {
+        Button b = (Button) findViewById(R.id.fb_copy_labels_from_roster);
+        if (mainapp.function_labels_T == null || mainapp.function_labels_T.size() == 0) {
             b.setEnabled(false);  //disable button if no roster
-        } 
-        else { 
+        } else {
             //Set the button callback.
-            button_listener click_listener=new button_listener();
+            button_listener click_listener = new button_listener();
             b.setOnClickListener(click_listener);
             b.setEnabled(true);
         }
 
-        if(!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+        if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             //warn user that saving Default Function Settings requires SD Card
-            TextView v=(TextView)findViewById(R.id.fs_heading);
+            TextView v = (TextView) findViewById(R.id.fs_heading);
             v.setText(getString(R.string.fs_edit_notice));
         }
 
@@ -101,13 +102,12 @@ public class function_settings extends Activity{
     public void onResume() {
         super.onResume();
         mainapp.removeNotification();
-        if(mainapp.isForcingFinish()) {     //expedite
+        if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-        if(FMenu != null)
-        {
+        if (FMenu != null) {
             mainapp.displayEStop(FMenu);
         }
     }
@@ -119,19 +119,17 @@ public class function_settings extends Activity{
     }
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
-        if(!this.isFinishing()) {       //only invoke setContentIntentNotification when going into background
+        if (!this.isFinishing()) {       //only invoke setContentIntentNotification when going into background
             mainapp.addNotification(this.getIntent());
         }
     }
 
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver","function_settings.onDestroy() called");
-        if(!orientationChange)
-        {
+        Log.d("Engine_Driver", "function_settings.onDestroy() called");
+        if (!orientationChange) {
             aLbl.clear();
             aFnc.clear();
         }
@@ -139,7 +137,7 @@ public class function_settings extends Activity{
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.function_settings_menu, menu);
         FMenu = menu;
@@ -151,9 +149,9 @@ public class function_settings extends Activity{
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
         switch (item.getItemId()) {
-        case R.id.EmerStop:
-            mainapp.sendEStopMsg();
-            break;
+            case R.id.EmerStop:
+                mainapp.sendEStopMsg();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -176,23 +174,22 @@ public class function_settings extends Activity{
         ViewGroup t = (ViewGroup) findViewById(R.id.label_func_table); //table
         //loop thru input rows, skipping first (headings)
         int ndx = 0;
-        for(int i = 1; i < t.getChildCount(); i++) {
-            ViewGroup r = (ViewGroup)t.getChildAt(i);
+        for (int i = 1; i < t.getChildCount(); i++) {
+            ViewGroup r = (ViewGroup) t.getChildAt(i);
             //move to next non-blank array entry if it exists
-            while(ndx < aFnc.size() && aLbl.get(ndx).length() == 0)
+            while (ndx < aFnc.size() && aLbl.get(ndx).length() == 0)
                 ndx++;
-            if(ndx < aFnc.size()) {
-                ((EditText)r.getChildAt(0)).setText(aLbl.get(ndx));
-                ((EditText)r.getChildAt(1)).setText(aFnc.get(ndx).toString());
+            if (ndx < aFnc.size()) {
+                ((EditText) r.getChildAt(0)).setText(aLbl.get(ndx));
+                ((EditText) r.getChildAt(1)).setText(aFnc.get(ndx).toString());
                 ndx++;
-            }
-            else {
+            } else {
                 //          
                 // work around for known EditText bug - see http://code.google.com/p/android/issues/detail?id=17508
                 //          ((EditText)r.getChildAt(0)).setText("");
                 //          ((EditText)r.getChildAt(1)).setText("");
-                TextKeyListener.clear(((EditText)r.getChildAt(0)).getText());
-                TextKeyListener.clear(((EditText)r.getChildAt(1)).getText());
+                TextKeyListener.clear(((EditText) r.getChildAt(0)).getText());
+                TextKeyListener.clear(((EditText) r.getChildAt(1)).getText());
             }
         }
     }
@@ -203,38 +200,36 @@ public class function_settings extends Activity{
         ViewGroup r;  //row
         //loop thru each row, Skipping the first one (the headings)  format is "label:function#"
         int ndx = 0;
-        for(int i = 1; i < t.getChildCount(); i++) {
-            r = (ViewGroup)t.getChildAt(i);
+        for (int i = 1; i < t.getChildCount(); i++) {
+            r = (ViewGroup) t.getChildAt(i);
             //get the 2 inputs from each row
-            String label = ((EditText)r.getChildAt(0)).getText().toString();
+            String label = ((EditText) r.getChildAt(0)).getText().toString();
             label = label.replace("\n", " ");  //remove newlines
             label = label.replace(":", " ");   //   and colons, as they confuse the save format
-            String sfunc = ((EditText)r.getChildAt(1)).getText().toString();
-            if(label.length() > 0 && sfunc.length() > 0) {
+            String sfunc = ((EditText) r.getChildAt(1)).getText().toString();
+            if (label.length() > 0 && sfunc.length() > 0) {
                 //verify function is valid number between 0 and 28
                 int func;
                 try {
                     func = Integer.parseInt(sfunc);
-                    if(func >= 0 && func <= 28) {
-                        if(aFnc.size() <= ndx) {
+                    if (func >= 0 && func <= 28) {
+                        if (aFnc.size() <= ndx) {
                             aLbl.add(label);
                             aFnc.add(func);
                             settingsCurrent = false;
-                        }
-                        else if(!label.equals(aLbl.get(ndx)) || func != aFnc.get(ndx)) {
+                        } else if (!label.equals(aLbl.get(ndx)) || func != aFnc.get(ndx)) {
                             aLbl.set(ndx, label);
                             aFnc.set(ndx, func);
                             settingsCurrent = false;
                         }
                         ndx++;
                     }
-                } 
-                catch (Exception ignored) {
+                } catch (Exception ignored) {
                 }
             }
         }
 
-        while(aFnc.size() > ndx) {          //if array remains then trim it
+        while (aFnc.size() > ndx) {          //if array remains then trim it
             aFnc.remove(ndx);
             aLbl.remove(ndx);
             settingsCurrent = false;
@@ -246,13 +241,12 @@ public class function_settings extends Activity{
         int ndx = 0;
         for (Integer func : mainapp.function_labels_T.keySet()) {
             String label = mainapp.function_labels_T.get(func);
-            if(label.length() > 0 && func >= 0 && func <= 28) {
-                if(aFnc.size() <= ndx) {
+            if (label.length() > 0 && func >= 0 && func <= 28) {
+                if (aFnc.size() <= ndx) {
                     aLbl.add(label);
                     aFnc.add(func);
                     settingsCurrent = false;
-                }
-                else if(!label.equals(aLbl.get(ndx)) || !func.equals(aFnc.get(ndx))) {
+                } else if (!label.equals(aLbl.get(ndx)) || !func.equals(aFnc.get(ndx))) {
                     aLbl.set(ndx, label);
                     aFnc.set(ndx, func);
                     settingsCurrent = false;
@@ -261,17 +255,15 @@ public class function_settings extends Activity{
             }
         }
 
-        while(aFnc.size() > ndx) {          //if array remains then trim it
+        while (aFnc.size() > ndx) {          //if array remains then trim it
             aFnc.remove(ndx);
             aLbl.remove(ndx);
             settingsCurrent = false;
         }
     }
 
-    public class button_listener implements View.OnClickListener
-    {
-        public void onClick(View v)
-        {
+    public class button_listener implements View.OnClickListener {
+        public void onClick(View v) {
             move_roster_to_settings();
             move_settings_to_view();
         }
@@ -279,35 +271,34 @@ public class function_settings extends Activity{
 
     //Handle pressing of the back button to save settings
     @Override
-    public boolean onKeyDown(int key, KeyEvent event)
-    {
-        if(key==KeyEvent.KEYCODE_BACK) {
+    public boolean onKeyDown(int key, KeyEvent event) {
+        if (key == KeyEvent.KEYCODE_BACK) {
             move_view_to_settings();        //sync settings array to view
-            if(!settingsCurrent)            //if settings array is not current
+            if (!settingsCurrent)            //if settings array is not current
                 saveSettings();         //save function labels to file
             this.finish();  //end this activity
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
-        return(super.onKeyDown(key, event));
+        return (super.onKeyDown(key, event));
     }
 
     //save function and labels to file
     void saveSettings() {
         //SD Card required to save settings
-        if(!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
+        if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
             return;
         //Save the valid function labels to the settings.txt file.
-        File sdcard_path=Environment.getExternalStorageDirectory();
-        File settings_file=new File(sdcard_path, "engine_driver/function_settings.txt");
+        File sdcard_path = Environment.getExternalStorageDirectory();
+        File settings_file = new File(sdcard_path, "engine_driver/function_settings.txt");
         PrintWriter settings_output;
         String errMsg = "";
         try {
-            settings_output=new PrintWriter(settings_file);
+            settings_output = new PrintWriter(settings_file);
             mainapp.function_labels_default.clear();
-            for(int i = 0; i < aFnc.size(); i++) {
+            for (int i = 0; i < aFnc.size(); i++) {
                 String label = aLbl.get(i);
-                if(label.length() > 0) {
+                if (label.length() > 0) {
                     Integer fnc = aFnc.get(i);
                     settings_output.format("%s:%s\n", label, fnc);
                     mainapp.function_labels_default.put(fnc, label);
@@ -315,13 +306,12 @@ public class function_settings extends Activity{
             }
             settings_output.flush();
             settings_output.close();
-        }
-        catch(IOException except) {
+        } catch (IOException except) {
             errMsg = except.getMessage();
-            Log.e("settings_activity", "Error creating a PrintWriter, IOException: "+errMsg);
+            Log.e("settings_activity", "Error creating a PrintWriter, IOException: " + errMsg);
         }
-        if(errMsg.length() != 0)
-            Toast.makeText(getApplicationContext(), "Save Settings Failed." +errMsg, Toast.LENGTH_LONG).show();
+        if (errMsg.length() != 0)
+            Toast.makeText(getApplicationContext(), "Save Settings Failed." + errMsg, Toast.LENGTH_LONG).show();
         else
             Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();
     }

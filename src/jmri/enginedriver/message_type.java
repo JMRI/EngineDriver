@@ -17,39 +17,38 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-interface message_type
-{
-  //Constant values for Message types:  from->to parms (action)
-  int NONE=-1;
-  int ERROR=0;
-  int CONNECT=1;            // ca(select)->ta ipaddr, port (sends CONNECTED if no error)
-  int DISCONNECT=2;         // sl(exit)->ta  -- (send Q, turns off heartbeat, ends read timer)
-  int LOCO_ADDR=3;          // sl(acquire) -> ta engineaddr, size (sends Tengineaddr to WiT)
-  int VELOCITY=4;           // ed(sliderchg) -> ta speed (sends TVspeed to WiT)
-  int DIRECTION=5;          // ed(fwd/rev) -> ta direction (sends TRx to WiT)
-  int FUNCTION=6;           // ed(buttons) -> ta function, on then off (sends TFxy to WiT)
-  int CONNECTED=7;          // ta(connect success) -> ca -- (starts sl)
-  int SERVICE_RESOLVED=8;   // ta(service resolved) -> ca ipaddr, ,port  (adds to list)
-  int RELEASE=9;            // ed(exit) -> ta -- (sends TV0 and Tr to WiT)
-  int RESPONSE=10;          // ta(msg from WiT) -> sl + ed msg (read changed variables)
-  int END_ACTIVITY=11;      // not used
-  int HEARTBEAT=12;         // ed(timer) -> ta  AND ta(receipt of heartbeat from ed) -> ed   strange, huh?
-  int LOCO_SELECTED=13;     // ta(read msg) -> sl -- (start ed)
-  int TURNOUT=14;           // tu -> ta
-  int ROUTE=16;             // r -> ta
-  int POWER_CONTROL=15;     // pc -> ta
-  int SHUTDOWN=17;          // ca -> ta
-  int SET_LISTENER=18;      // ca -> ta, pass 1 to turn on, 0 to turn off
-  int SERVICE_REMOVED=19;   // ta(service removed) -> ca ipaddr, ,port  (removes from list)
-  int REQ_VELOCITY=20;      // ed(delay after sliderchg) -> ta (requests velocity from WiT)
-  int REQ_DIRECTION=21;     // ed -> ta (requests direction from WiT)
-  int WEBVIEW_LOC=22;       // pref -> throt  user changed webview location pref
-  int ROSTER_UPDATE=23;     // ta -> ed  roster-related data updated in background
-  int WIT_CON_RETRY=24;     // ta -> ed  WiT connection lost and trying to reconnect
-  int WIT_CON_RECONNECT=25; // ta -> ed  WiT connection reestablished
-  int INITIAL_WEBPAGE=26;   // pref -> throt or web  user changed initial webpage
-  int CURRENT_TIME=28;      // ta -> activities  updates current time
-  int CLOCK_DISPLAY=29;     // pref -> ta  clock display preference changed
-  int ESTOP=30;             // ta(sendeStopMsg) -> ta  estop requested
-  
+interface message_type {
+    //Constant values for Message types:  from->to parms (action)
+    int NONE = -1;
+    int ERROR = 0;
+    int CONNECT = 1;            // ca(select)->ta ipaddr, port (sends CONNECTED if no error)
+    int DISCONNECT = 2;         // sl(exit)->ta  -- (send Q, turns off heartbeat, ends read timer)
+    int LOCO_ADDR = 3;          // sl(acquire) -> ta engineaddr, size (sends Tengineaddr to WiT)
+    int VELOCITY = 4;           // ed(sliderchg) -> ta speed (sends TVspeed to WiT)
+    int DIRECTION = 5;          // ed(fwd/rev) -> ta direction (sends TRx to WiT)
+    int FUNCTION = 6;           // ed(buttons) -> ta function, on then off (sends TFxy to WiT)
+    int CONNECTED = 7;          // ta(connect success) -> ca -- (starts sl)
+    int SERVICE_RESOLVED = 8;   // ta(service resolved) -> ca ipaddr, ,port  (adds to list)
+    int RELEASE = 9;            // ed(exit) -> ta -- (sends TV0 and Tr to WiT)
+    int RESPONSE = 10;          // ta(msg from WiT) -> sl + ed msg (read changed variables)
+    int END_ACTIVITY = 11;      // not used
+    int HEARTBEAT = 12;         // ed(timer) -> ta  AND ta(receipt of heartbeat from ed) -> ed   strange, huh?
+    int LOCO_SELECTED = 13;     // ta(read msg) -> sl -- (start ed)
+    int TURNOUT = 14;           // tu -> ta
+    int ROUTE = 16;             // r -> ta
+    int POWER_CONTROL = 15;     // pc -> ta
+    int SHUTDOWN = 17;          // ca -> ta
+    int SET_LISTENER = 18;      // ca -> ta, pass 1 to turn on, 0 to turn off
+    int SERVICE_REMOVED = 19;   // ta(service removed) -> ca ipaddr, ,port  (removes from list)
+    int REQ_VELOCITY = 20;      // ed(delay after sliderchg) -> ta (requests velocity from WiT)
+    int REQ_DIRECTION = 21;     // ed -> ta (requests direction from WiT)
+    int WEBVIEW_LOC = 22;       // pref -> throt  user changed webview location pref
+    int ROSTER_UPDATE = 23;     // ta -> ed  roster-related data updated in background
+    int WIT_CON_RETRY = 24;     // ta -> ed  WiT connection lost and trying to reconnect
+    int WIT_CON_RECONNECT = 25; // ta -> ed  WiT connection reestablished
+    int INITIAL_WEBPAGE = 26;   // pref -> throt or web  user changed initial webpage
+    int CURRENT_TIME = 28;      // ta -> activities  updates current time
+    int CLOCK_DISPLAY = 29;     // pref -> ta  clock display preference changed
+    int ESTOP = 30;             // ta(sendeStopMsg) -> ta  estop requested
+
 }
