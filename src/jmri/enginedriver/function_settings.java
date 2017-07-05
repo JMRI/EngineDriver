@@ -45,8 +45,8 @@ public class function_settings extends Activity{
 
     //set up label, dcc function, toggle setting for each button
     private static boolean settingsCurrent = false;
-    private static ArrayList<String> aLbl = new ArrayList<String>();
-    private static ArrayList<Integer> aFnc = new ArrayList<Integer>();
+    private static ArrayList<String> aLbl = new ArrayList<>();
+    private static ArrayList<Integer> aFnc = new ArrayList<>();
     private Menu FMenu;
 
 

@@ -106,7 +106,7 @@ public class turnouts extends Activity implements OnGestureListener {
                         }
 
                         //put values into temp hashmap
-                        HashMap<String, String> hm = new HashMap<String, String>();
+                        HashMap<String, String> hm = new HashMap<>();
                         if (hasUserName)
                             hm.put("to_user_name", username);
                         else
@@ -332,9 +332,9 @@ public class turnouts extends Activity implements OnGestureListener {
 
         myGesture = new GestureDetector(this);
         
-        turnoutsFullList=new ArrayList<HashMap<String, String> >();
+        turnoutsFullList= new ArrayList<>();
         //Set up a list adapter to allow adding the list of recent connections to the UI.
-        turnouts_list=new ArrayList<HashMap<String, String> >();
+        turnouts_list= new ArrayList<>();
         turnouts_list_adapter=new SimpleAdapter(this, turnouts_list, R.layout.turnouts_item, 
                 new String[] {"to_user_name", "to_system_name", "to_current_state_desc"},
                 new int[] {R.id.to_user_name, R.id.to_system_name, R.id.to_current_state_desc}) {
@@ -409,9 +409,9 @@ public class turnouts extends Activity implements OnGestureListener {
         }
         //((EditText) findViewById(R.id.turnout_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
 
-        locationList = new ArrayList<String>();
+        locationList = new ArrayList<>();
         locationSpinner = (Spinner) findViewById(R.id.turnouts_location);
-        locationListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, locationList);
+        locationListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, locationList);
         locationListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationSpinner.setAdapter(locationListAdapter);
 

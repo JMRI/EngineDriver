@@ -30,16 +30,10 @@ public class TransparentListView extends ListView {
                 try {
                     overscrollFooterMethod.invoke(this, new Object[] {null});
                     overscrollHeaderMethod.invoke(this, new Object[] {null});
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
+                } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
                 }
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
+            } catch (SecurityException | NoSuchMethodException e) {
                 e.printStackTrace();
             }
         }

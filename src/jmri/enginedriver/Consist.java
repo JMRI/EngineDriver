@@ -56,7 +56,7 @@ public final class Consist {
 
 
 	public Consist() {
-		con = new LinkedHashMap<String, ConLoco>();
+		con = new LinkedHashMap<>();
 		leadAddr = "";
 	}
 

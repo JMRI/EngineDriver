@@ -81,7 +81,7 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
         for (ConLoco l : consist.getLocos()) {
             if(l.isConfirmed()) {
                 //put values into temp hashmap
-                HashMap<String, String> hm=new HashMap<String, String>();
+                HashMap<String, String> hm= new HashMap<>();
                 hm.put("lead_label", consist.getLeadAddr().equals(l.getAddress()) ? "LEAD" : "");
                 hm.put("loco_addr", l.getAddress());
                 hm.put("loco_name", l.toString());
@@ -166,7 +166,7 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
         }
 
         //Set up a list adapter to allow adding the list of recent connections to the UI.
-        consistList=new ArrayList<HashMap<String, String> >();
+        consistList= new ArrayList<>();
         consistListAdapter=new SimpleAdapter(this, consistList, R.layout.consist_item, 
                 new String[] {"loco_name", "loco_addr", "lead_label", "loco_facing"},
                 new int[] {R.id.con_loco_name, R.id.con_loco_addr_hidden, R.id.con_lead_label, R.id.con_loco_facing});
@@ -214,9 +214,9 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 
         consistLV.setOnTouchListener(gestureListener);
 
-        consistObjList = new ArrayList<ConLoco>();
+        consistObjList = new ArrayList<>();
         consistSpinner = (Spinner) findViewById(R.id.consist_lead);
-        consistObjListAdapter = new ArrayAdapter<ConLoco>(this, android.R.layout.simple_spinner_item, consistObjList);
+        consistObjListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, consistObjList);
         consistObjListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         consistSpinner.setAdapter(consistObjListAdapter);
 

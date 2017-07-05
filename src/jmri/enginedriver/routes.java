@@ -107,7 +107,7 @@ public class routes extends Activity  implements OnGestureListener {
                         }
 
                         //put values into temp hashmap
-                        HashMap<String, String> hm=new HashMap<String, String>();
+                        HashMap<String, String> hm= new HashMap<>();
                         if (hasUserName)
                             hm.put("rt_user_name", username);
                         else
@@ -303,9 +303,9 @@ public class routes extends Activity  implements OnGestureListener {
         mainapp.routes_msg_handler=new routes_handler();
         myGesture = new GestureDetector(this);
 
-        routesFullList=new ArrayList<HashMap<String, String> >();
+        routesFullList= new ArrayList<>();
         //Set up a list adapter to allow adding the list of recent connections to the UI.
-        routes_list=new ArrayList<HashMap<String, String> >();
+        routes_list= new ArrayList<>();
         routes_list_adapter=new SimpleAdapter(this, routes_list, R.layout.routes_item, 
                 new String[] {"rt_user_name", "rt_system_name_hidden", "rt_system_name", "rt_current_state_desc"},
                 new int[] {R.id.rt_user_name, R.id.rt_system_name_hidden, R.id.rt_system_name, R.id.rt_current_state_desc}) {
@@ -362,9 +362,9 @@ public class routes extends Activity  implements OnGestureListener {
 
         //((EditText) findViewById(R.id.route_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
 
-        locationList = new ArrayList<String>();
+        locationList = new ArrayList<>();
         locationSpinner = (Spinner) findViewById(R.id.routes_location);
-        locationListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, locationList);
+        locationListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, locationList);
         locationListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationSpinner.setAdapter(locationListAdapter);
 
