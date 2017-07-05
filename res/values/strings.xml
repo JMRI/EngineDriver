@@ -229,4 +229,5 @@
 	<string name="label_27step">27</string>
     <string name="label_28step">28</string>
 	<string name="label_128step">128</string>
+    <string name="throttle_name">Throttle Name: %1$s</string>
 </resources>
