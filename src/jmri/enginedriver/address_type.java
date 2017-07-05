@@ -17,8 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-interface address_type
-{
-  public static final int SHORT=0;
-  public static final int LONG=1;
+interface address_type {
+  int SHORT = 0;
+  int LONG = 1;
 }

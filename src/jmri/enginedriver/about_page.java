@@ -75,7 +75,7 @@ public class about_page extends Activity {
 		WebView webview = (WebView) findViewById(R.id.about_webview);
 		webview.loadUrl("file:///android_asset/about_page.html");
 
-	};
+	}
 
 	@Override
 	public void onResume() {
@@ -91,7 +91,7 @@ public class about_page extends Activity {
 		{
 			mainapp.displayEStop(AMenu);
 		}
-	};
+	}
 
 	@Override
 	public void onPause()
@@ -131,7 +131,7 @@ public class about_page extends Activity {
 			connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 		}
 		return(super.onKeyDown(key, event));
-	};
+	}
 
 
 }

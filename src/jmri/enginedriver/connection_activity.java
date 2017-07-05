@@ -59,8 +59,8 @@ import android.content.SharedPreferences;
 import android.widget.AdapterView;
 
 public class connection_activity extends Activity {
-	ArrayList<HashMap<String, String> > connections_list;
-	ArrayList<HashMap<String, String> > discovery_list;
+	private ArrayList<HashMap<String, String> > connections_list;
+	private ArrayList<HashMap<String, String> > discovery_list;
 	private SimpleAdapter connection_list_adapter;
 	private SimpleAdapter discovery_list_adapter;
 	private SharedPreferences prefs;
@@ -79,7 +79,7 @@ public class connection_activity extends Activity {
 	private static Method overridePendingTransition;
 	static {
 		try {
-			overridePendingTransition = Activity.class.getMethod("overridePendingTransition", new Class[] {Integer.TYPE, Integer.TYPE}); //$NON-NLS-1$
+			overridePendingTransition = Activity.class.getMethod("overridePendingTransition", Integer.TYPE, Integer.TYPE); //$NON-NLS-1$
 		}
 		catch (NoSuchMethodException e) {
 			overridePendingTransition = null;
@@ -103,51 +103,49 @@ public class connection_activity extends Activity {
 	}
 
 	//Request connection to the WiThrottle server.
-	void connect()  {
+	private void connect()  {
 		//	  sendMsgErr(0, message_type.CONNECT, connected_hostip, connected_port, "ERROR in ca.connect: comm thread not started.");
 		mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CONNECT, connected_hostip, connected_port);
-	};
+	}
 
 
-	void start_throttle_activity()
+	private void start_throttle_activity()
 	{
 		Intent throttle=new Intent().setClass(this, throttle.class);
-		/***future Notification
-	//set flags to ensure there is just one throttle activity
-	throttle.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		 ***/	
 		navigatingAway = true;
 		startActivity(throttle);
 		this.finish();
 		overridePendingTransition(this,R.anim.fade_in, R.anim.fade_out);
-	};
-
-	public enum server_list_type { DISCOVERED_SERVER, RECENT_CONNECTION }
-	public class connect_item implements AdapterView.OnItemClickListener
-	{
-		server_list_type server_type;
-
-		connect_item(server_list_type new_type) { server_type=new_type; }
-
-		//When an item is clicked, connect to the given IP address and port.
-		public void onItemClick(AdapterView<?> parent, View v, int position, long id)    {
-			switch(server_type)      {
-			case DISCOVERED_SERVER:
-			case RECENT_CONNECTION:
-				ViewGroup vg = (ViewGroup)v; //convert to viewgroup for clicked row
-				TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
-				connected_hostip = hip.getText().toString();
-				TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
-				connected_hostname = hnv.getText().toString();
-				TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
-				connected_port = Integer.valueOf(hpv.getText().toString());
-				break;
-			}
-			connect();
-		};
 	}
 
-	public class button_listener implements View.OnClickListener
+	private enum server_list_type {DISCOVERED_SERVER, RECENT_CONNECTION}
+
+	private class connect_item implements AdapterView.OnItemClickListener {
+		final server_list_type server_type;
+
+		connect_item(server_list_type new_type) {
+			server_type = new_type;
+		}
+
+		//When an item is clicked, connect to the given IP address and port.
+		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+			switch (server_type) {
+				case DISCOVERED_SERVER:
+				case RECENT_CONNECTION:
+					ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
+					TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
+					connected_hostip = hip.getText().toString();
+					TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
+					connected_hostname = hnv.getText().toString();
+					TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
+					connected_port = Integer.valueOf(hpv.getText().toString());
+					break;
+			}
+			connect();
+		}
+	}
+
+	private class button_listener implements View.OnClickListener
 	{
 		public void onClick(View v) {
 			EditText entry = (EditText)findViewById(R.id.host_ip);
@@ -167,21 +165,19 @@ public class connection_activity extends Activity {
 			else {
 				Toast.makeText(getApplicationContext(), "Enter or select an address and port", Toast.LENGTH_SHORT).show();
 			}
-		};
+		}
 	}
 
 	//Method to connect to first discovered WiThrottle server.
-	public void connectA()
+	private void connectA()
 	{
 		try
 		{
 			if(discovery_list.get(0) != null)
 			{
-				HashMap<String, String> tm = new HashMap<String, String>();
+				HashMap<String, String> tm = discovery_list.get(0);
 
-				tm = discovery_list.get(0);
-
-				connected_hostip = new String(tm.get("ip_address"));
+				connected_hostip = tm.get("ip_address");
 
 				if (connected_hostip.trim().length() > 0 ) {
 					try {
@@ -209,7 +205,7 @@ public class connection_activity extends Activity {
 
 	//Handle messages from the communication thread back to the UI thread.
 	@SuppressLint("HandlerLeak")
-	class ui_handler extends Handler
+	private class ui_handler extends Handler
 	{
 		@SuppressWarnings("unchecked")
 		public void handleMessage(Message msg)
@@ -217,13 +213,12 @@ public class connection_activity extends Activity {
 			switch(msg.what)
 			{
 			case message_type.SERVICE_RESOLVED:
-				HashMap<String, String> hm=new HashMap<String, String>();
-				hm = (HashMap<String, String>) msg.obj;  //payload is already a hashmap
+				HashMap<String, String> hm = (HashMap<String, String>) msg.obj;  //payload is already a hashmap
 				String found_host_name = hm.get("host_name");
 				boolean entryExists = false;
 
 				//stop if new address is already in the list
-				HashMap<String, String> tm=new HashMap<String, String>();
+				HashMap<String, String> tm;
 				for(int index=0; index < discovery_list.size(); index++) {
 					tm = discovery_list.get(index);
 					if (tm.get("host_name").equals(found_host_name)) { 
@@ -245,7 +240,6 @@ public class connection_activity extends Activity {
 			case message_type.SERVICE_REMOVED:        
 				//look for name in list
 				String removed_host_name = msg.obj.toString();
-				tm=new HashMap<String, String>();
 				for(int index=0; index < discovery_list.size(); index++) {
 					tm = discovery_list.get(index);
 					if (tm.get("host_name").equals(removed_host_name)) {
@@ -267,7 +261,7 @@ public class connection_activity extends Activity {
 				shutdown();
 				break;
 			}
-		};
+		}
 	}
 
 	/** Called when the activity is first created. */
@@ -302,8 +296,7 @@ public class connection_activity extends Activity {
 				Random rand = new Random();
 				deviceId = String.valueOf(rand.nextInt(9999));  //use random string
 			}
-			String uniqueDefaultName = defaultName + " " + deviceId;
-			s = uniqueDefaultName;
+			s = defaultName + " " + deviceId;
 			prefs.edit().putString("throttle_name_preference", s).commit();  //save new name to prefs
 
 		}
@@ -311,7 +304,7 @@ public class connection_activity extends Activity {
 		setContentView(R.layout.connection);
 
 		//Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
-		discovery_list=new ArrayList<HashMap<String, String> >();
+		discovery_list= new ArrayList<>();
 		discovery_list_adapter=new SimpleAdapter(this, discovery_list, R.layout.connections_list_item,
 				new String[] {"ip_address", "host_name", "port"},
 				new int[] {R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
@@ -320,7 +313,7 @@ public class connection_activity extends Activity {
 		discover_list.setOnItemClickListener(new connect_item(server_list_type.DISCOVERED_SERVER));
 
 		//Set up a list adapter to allow adding the list of recent connections to the UI.
-		connections_list=new ArrayList<HashMap<String, String> >();
+		connections_list= new ArrayList<>();
 		connection_list_adapter=new SimpleAdapter(this, connections_list, R.layout.connections_list_item, 
 				new String[] {"ip_address", "host_name", "port"},
 				new int[] {R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
@@ -401,7 +394,7 @@ public class connection_activity extends Activity {
 		SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 		TextView v=(TextView)findViewById(R.id.ca_footer);
 		String s = prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
-		v.setText("Throttle Name: " + s);
+		v.setText(getString(R.string.throttle_name, s));
 
 		//sets the tile to include throttle name.
 		//String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
@@ -456,7 +449,7 @@ public class connection_activity extends Activity {
 			return true;
 		}
 		return (super.onKeyDown(key, event));
-	};
+	}
 
 	/***	
 	private void sendMsgErr(long delayMs, int msgType, String msgBody, int msgArg1, String errMsg) {
@@ -479,7 +472,8 @@ public class connection_activity extends Activity {
 			try  {
 				File path=Environment.getExternalStorageDirectory();
 				File engine_driver_dir=new File(path, "engine_driver");
-				engine_driver_dir.mkdir();			// create directory if it doesn't exist 
+				//noinspection ResultOfMethodCallIgnored
+				engine_driver_dir.mkdir();			// create directory if it doesn't exist
 
 				File connections_list_file=new File(path, "engine_driver/connections_list.txt");
 				PrintWriter list_output=new PrintWriter(connections_list_file);
@@ -496,9 +490,9 @@ public class connection_activity extends Activity {
 				int clEntries =Math.min(connections_list.size(), mrc);  //don't keep more entries than specified in preference
 				for(int i = 0; i < clEntries; i++)  {  //loop thru entries from connections list, up to max in prefs 
 					HashMap <String, String> t = connections_list.get(i);
-					String li = t.get("ip_address").toString();
-					String lh = t.get("host_name").toString();
-					Integer lp = Integer.valueOf(t.get("port").toString());
+					String li = t.get("ip_address");
+					String lh = t.get("host_name");
+					Integer lp = Integer.valueOf(t.get("port"));
 					//***        			if(connected_hostip != null && connected_port != 0)
 					if(!connected_hostip.equals(li) || connected_port!=lp) {  //write it out if not same as selected 
 						list_output.format("%s:%s:%d\n", lh, li, lp);
@@ -521,7 +515,7 @@ public class connection_activity extends Activity {
 
 	//Jeffrey M added 7/3/2013
 	//Clears recent connection list.
-	public void clearConnectionsList()
+	private void clearConnectionsList()
 	{
 		//if no SD Card present then nothing to do
 		if(!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
@@ -534,6 +528,7 @@ public class connection_activity extends Activity {
 			File connections_list_file=new File(sdcard_path, "engine_driver/connections_list.txt");
 
 			if(connections_list_file.exists())    {
+				//noinspection ResultOfMethodCallIgnored
 				connections_list_file.delete();
 				connections_list.clear();
 			}
@@ -543,7 +538,7 @@ public class connection_activity extends Activity {
 	private void getConnectionsList() {
 		boolean foundExampleHost = false;
 		connections_list.clear();
-		String errMsg = "";
+		String errMsg;
 		if(!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
 			//alert user that recent connections list requires SD Card
 			TextView v=(TextView)findViewById(R.id.recent_connections_heading);
@@ -560,27 +555,26 @@ public class connection_activity extends Activity {
 						String line=list_reader.readLine();
 						String ip_address;
 						String host_name;
-						String port_str = "";
+						String port_str;
 						Integer port = 0;
-						List<String> parts = new ArrayList<String>();
-						parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
+						List<String> parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
 						if (parts.size() > 1) {  //skip if not split
 							if (parts.size() == 2) {  //old style, use part 1 for ip and host
 								host_name = parts.get(0);
 								ip_address = parts.get(0);
-								port_str = parts.get(1).toString();
+								port_str = parts.get(1);
 							} else { 						  //new style, get all 3 parts
 								host_name = parts.get(0);
 								ip_address = parts.get(1);
-								port_str = parts.get(2).toString();
+								port_str = parts.get(2);
 							}
 							try {  //attempt to convert port to integer
 								port = Integer.decode(port_str);
 							} 
-							catch (Exception e) {
+							catch (Exception ignored) {
 							}
 							if (port > 0) {  //skip if port not converted to integer
-								HashMap<String, String> hm=new HashMap<String, String>();
+								HashMap<String, String> hm= new HashMap<>();
 								hm.put("ip_address", ip_address);
 								hm.put("host_name", host_name);
 								hm.put("port", port.toString());
@@ -605,7 +599,7 @@ public class connection_activity extends Activity {
 
 		//if example host not already in list, add it at end
 		if (!foundExampleHost) {
-			HashMap<String, String> hm=new HashMap<String, String>();
+			HashMap<String, String> hm= new HashMap<>();
 			hm.put("ip_address", example_host);
 			hm.put("host_name", example_host);
 			hm.put("port", example_port);
