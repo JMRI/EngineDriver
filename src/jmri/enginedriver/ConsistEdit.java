@@ -119,7 +119,7 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
             case message_type.SHUTDOWN:
                 disconnect();
                 break;
-            };
+            }
         }
     }
 
@@ -208,10 +208,7 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
 
         OnTouchListener gestureListener = new ListView.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                if (myGesture.onTouchEvent(event)) {
-                    return true;
-                }
-                return false;
+                return myGesture.onTouchEvent(event);
             }
         };
 
@@ -239,7 +236,7 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
         //update consist list
         refreshConsistLists();
         result = RESULT_OK;
-    };
+    }
 
     @Override
     public void onResume() {
@@ -338,4 +335,4 @@ public class ConsistEdit extends Activity  implements OnGestureListener {
     private void disconnect() {
         this.finish();
     }
-};
+}

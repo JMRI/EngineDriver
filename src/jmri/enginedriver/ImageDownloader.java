@@ -258,19 +258,17 @@ public class ImageDownloader {
 
             addBitmapToCache(url, bitmap);
 
-            if (imageViewReference != null) {
-                ImageView imageView = imageViewReference.get();
-                BitmapDownloaderTask bitmapDownloaderTask = getBitmapDownloaderTask(imageView);
-                // Change bitmap only if this process is still associated with it
-                // Or if we don't use any bitmap to task association (NO_DOWNLOADED_DRAWABLE mode)
-                if ((this == bitmapDownloaderTask) || (mode != Mode.CORRECT)) {
-                	if(bitmap != null) {
-                		imageView.setImageBitmap(bitmap);
-                		Log.d("Engine_Driver","ImageDownloader: Download complete: " + url);
-                	}
-                	else
-                		Log.d("Engine_Driver","ImageDownloader: No image downloaded: " + url);
+            ImageView imageView = imageViewReference.get();
+            BitmapDownloaderTask bitmapDownloaderTask = getBitmapDownloaderTask(imageView);
+            // Change bitmap only if this process is still associated with it
+            // Or if we don't use any bitmap to task association (NO_DOWNLOADED_DRAWABLE mode)
+            if ((this == bitmapDownloaderTask) || (mode != Mode.CORRECT)) {
+                if(bitmap != null) {
+                    imageView.setImageBitmap(bitmap);
+                    Log.d("Engine_Driver","ImageDownloader: Download complete: " + url);
                 }
+                else
+                    Log.d("Engine_Driver","ImageDownloader: No image downloaded: " + url);
             }
         }
     }

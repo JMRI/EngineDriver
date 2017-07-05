@@ -21,11 +21,11 @@ interface function_button
 {
   //Constant values for the function buttons (including direction):
 //  public static final int LIGHT=0;
-  public static final int FORWARD=990;
-  public static final int STOP=991;
-  public static final int REVERSE=992;
-  public static final int SELECT_LOCO=993;
-  public static final int SPEED_LABEL=994;
-  public static final int SPEED_INC=995;
-  public static final int SPEED_DEC=996;
+  int FORWARD=990;
+  int STOP=991;
+  int REVERSE=992;
+  int SELECT_LOCO=993;
+  int SPEED_LABEL=994;
+  int SPEED_INC=995;
+  int SPEED_DEC=996;
 }

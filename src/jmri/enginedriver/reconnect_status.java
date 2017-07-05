@@ -57,7 +57,7 @@ public class reconnect_status extends Activity {
             case message_type.SHUTDOWN:
                 disconnect();
                 break;
-            };
+            }
         }
     }
 
@@ -123,7 +123,7 @@ public class reconnect_status extends Activity {
             }
         }
         retryFirst = false;
-    };
+    }
 
     @Override
     public void onResume() {
@@ -164,7 +164,7 @@ public class reconnect_status extends Activity {
             return true;
         }
         return(super.onKeyDown(key, event));
-    };
+    }
 
     private void disconnect() {
         this.finish();

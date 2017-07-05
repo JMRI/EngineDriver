@@ -115,50 +115,54 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     @SuppressWarnings("deprecation")
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         threaded_application mainapp=(threaded_application)this.getApplication();
-        if (key.equals("throttle_name_preference"))  {
-            String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-            String currentValue = sharedPreferences.getString(key, defaultName).trim();
-            //if new name is blank or the default name, make it unique
-            if (currentValue.equals("") || currentValue.equals(defaultName)) {
-                String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-                if (deviceId != null && deviceId.length() >=4) {
-                    deviceId = deviceId.substring(deviceId.length() - 4);
-                } else {
-                    Random rand = new Random();
-                    deviceId = String.valueOf(rand.nextInt(9999));  //use random string
+        switch (key) {
+            case "throttle_name_preference": {
+                String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
+                String currentValue = sharedPreferences.getString(key, defaultName).trim();
+                //if new name is blank or the default name, make it unique
+                if (currentValue.equals("") || currentValue.equals(defaultName)) {
+                    String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+                    if (deviceId != null && deviceId.length() >= 4) {
+                        deviceId = deviceId.substring(deviceId.length() - 4);
+                    } else {
+                        Random rand = new Random();
+                        deviceId = String.valueOf(rand.nextInt(9999));  //use random string
+                    }
+                    String uniqueDefaultName = defaultName + " " + deviceId;
+                    sharedPreferences.edit().putString(key, uniqueDefaultName).commit();  //save new name to prefs
                 }
-                String uniqueDefaultName = defaultName + " " + deviceId;
-                sharedPreferences.edit().putString(key, uniqueDefaultName).commit();  //save new name to prefs
+                break;
             }
-        }
-        else if(key.equals("maximum_throttle_preference")) {
-            String defaultVal = getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue);
-            String currentValue = sharedPreferences.getString(key, defaultVal).trim();
-            //limit new value to 100 (%)
-            try {
-                int maxThrot = Integer.parseInt(currentValue);
-                if(maxThrot > 100) {
-                    sharedPreferences.edit().putString(key, "100").commit();  //save new name to prefs
+            case "maximum_throttle_preference": {
+                String defaultVal = getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue);
+                String currentValue = sharedPreferences.getString(key, defaultVal).trim();
+                //limit new value to 100 (%)
+                try {
+                    int maxThrot = Integer.parseInt(currentValue);
+                    if (maxThrot > 100) {
+                        sharedPreferences.edit().putString(key, "100").commit();  //save new name to prefs
+                    }
+                } catch (NumberFormatException e) {
+                    sharedPreferences.edit().putString(key, defaultVal).commit();  //save new name to prefs
                 }
-            } catch (NumberFormatException e) {
-                sharedPreferences.edit().putString(key, defaultVal).commit();  //save new name to prefs
+                break;
             }
-        }
-        else if(key.equals("WebViewLocation")) {
-            mainapp.alert_activities(message_type.WEBVIEW_LOC,""); 
-        }
-        else if(key.equals("ThrottleOrientation")) {
-            //if mode was fixed (Port or Land) won't get callback so need explicit call here 
-            mainapp.setActivityOrientation(this);
-        }
-        else if(key.equals("InitialWebPage")) {
-            mainapp.alert_activities(message_type.INITIAL_WEBPAGE,""); 
-        }
-        else if(key.equals("InitialThrotWebPage")) {
-            mainapp.alert_activities(message_type.INITIAL_WEBPAGE,""); 
-        }
-        else if(key.equals("ClockDisplayTypePreference")) {
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY);
+            case "WebViewLocation":
+                mainapp.alert_activities(message_type.WEBVIEW_LOC, "");
+                break;
+            case "ThrottleOrientation":
+                //if mode was fixed (Port or Land) won't get callback so need explicit call here
+                mainapp.setActivityOrientation(this);
+                break;
+            case "InitialWebPage":
+                mainapp.alert_activities(message_type.INITIAL_WEBPAGE, "");
+                break;
+            case "InitialThrotWebPage":
+                mainapp.alert_activities(message_type.INITIAL_WEBPAGE, "");
+                break;
+            case "ClockDisplayTypePreference":
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY);
+                break;
         }
     }
     //Handle pressing of the back button to end this activity
@@ -171,5 +175,5 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             return true;
         }
         return(super.onKeyDown(key, event));
-    };
+    }
 }

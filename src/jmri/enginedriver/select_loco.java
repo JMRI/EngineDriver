@@ -84,7 +84,6 @@ public class select_loco extends Activity {
     private static final int VISIBLE = 0;
 
     ArrayList<HashMap<String, String>> recent_engine_list;
-    private SimpleAdapter recent_list_adapter;
     ArrayList<HashMap<String, String>> roster_list;
     private RosterSimpleAdapter roster_list_adapter;
 
@@ -166,16 +165,16 @@ public class select_loco extends Activity {
 
             roster_list_adapter.notifyDataSetChanged();
             View v = findViewById(R.id.roster_list_heading);
-            v.setVisibility(VISIBLE);
+            v.setVisibility(View.VISIBLE);
             v = findViewById(R.id.roster_list);
-            v.setVisibility(VISIBLE);
+            v.setVisibility(View.VISIBLE);
 
         } 
         else { // hide roster section if nothing to show
             View v = findViewById(R.id.roster_list_heading);
-            v.setVisibility(GONE);
+            v.setVisibility(View.GONE);
             v = findViewById(R.id.roster_list);
-            v.setVisibility(GONE);
+            v.setVisibility(View.GONE);
         } // if roster_entries not null
     }
 
@@ -264,12 +263,12 @@ public class select_loco extends Activity {
         // only show loco text and release buttons for allowed # of locos
         String numThrot = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumOfThrottlesDefault));
         if("One".equals(numThrot) || "Two".equals(numThrot)) {
-            vSG.setVisibility(GONE);
-            bRG.setVisibility(GONE);
+            vSG.setVisibility(View.GONE);
+            bRG.setVisibility(View.GONE);
             
             if("One".equals(numThrot)) {
-                vSS.setVisibility(GONE);
-                bRS.setVisibility(GONE);
+                vSS.setVisibility(View.GONE);
+                bRS.setVisibility(View.GONE);
             }
         }
         
@@ -277,12 +276,12 @@ public class select_loco extends Activity {
         boolean hrl = prefs.getBoolean("hide_recent_locos_preference", 
                 getResources().getBoolean(R.bool.prefHideRecentLocosDefaultValue)); 
         if (hrl) {
-            View rlv = (View) findViewById(R.id.recent_engines_heading);
-            rlv.setVisibility(GONE);
-            rlv = (View) findViewById(R.id.engine_list_wrapper);
-            rlv.setVisibility(GONE);
-            rlv = (View) findViewById(R.id.clear_Loco_List_button);
-            rlv.setVisibility(GONE);
+            View rlv = findViewById(R.id.recent_engines_heading);
+            rlv.setVisibility(View.GONE);
+            rlv = findViewById(R.id.engine_list_wrapper);
+            rlv.setVisibility(View.GONE);
+            rlv = findViewById(R.id.clear_Loco_List_button);
+            rlv.setVisibility(View.GONE);
         }
         if(SMenu != null) {
             mainapp.displayEStop(SMenu);
@@ -334,7 +333,7 @@ public class select_loco extends Activity {
             case message_type.DISCONNECT:
                 end_this_activity();
                 break;
-            };
+            }
         }
     }
 
@@ -387,7 +386,7 @@ public class select_loco extends Activity {
 
 
         //user preference set to not consist, or consisting not supported in this JMRI, so drop before adding
-        if((prefs.getBoolean("drop_on_acquire_preference", false) == true) 
+        if((prefs.getBoolean("drop_on_acquire_preference", false))
                 || (mainapp.withrottle_version < 2.0)) {
             release_loco(whichThrottle);
         }
@@ -466,7 +465,7 @@ public class select_loco extends Activity {
                     "select_loco - Error creating a PrintWriter, IOException: "
                     + except.getMessage());
         }
-    };
+    }
 
     public class button_listener implements View.OnClickListener {
         public void onClick(View v) {
@@ -480,28 +479,28 @@ public class select_loco extends Activity {
             Spinner spinner = (Spinner) findViewById(R.id.address_length);
             address_size = spinner.getSelectedItemPosition();
             acquire_engine(true);
-        };
+        }
     }
 
     public class release_button_listener_T implements View.OnClickListener {
         public void onClick(View v) {
             release_loco('T');
             end_this_activity();
-        };
+        }
     }
 
     public class release_button_listener_S implements View.OnClickListener {
         public void onClick(View v) {
             release_loco('S');
             end_this_activity();
-        };
+        }
     }
 
     public class release_button_listener_G implements View.OnClickListener {
         public void onClick(View v) {
             release_loco('G');
             end_this_activity();
-        };
+        }
     }
 
     public class engine_item implements AdapterView.OnItemClickListener {
@@ -511,7 +510,7 @@ public class select_loco extends Activity {
             engine_address = engine_address_list.get(position);
             address_size = address_size_list.get(position);
             acquire_engine(true);
-        };
+        }
     }
 
     //Jeffrey M added 7/3/2013
@@ -520,7 +519,7 @@ public class select_loco extends Activity {
         public void onClick(View v) {
             clearList();
             onCreate(null);
-        };
+        }
     }
 
     public class roster_item_ClickListener implements
@@ -547,7 +546,7 @@ public class select_loco extends Activity {
                         getResources().getBoolean(R.bool.prefRosterRecentLocosDefaultValue)); 
                 acquire_engine(bRosterRecent);
             }
-        };
+        }
     }
 
     // Handle pressing of the back button to simply return to caller
@@ -558,7 +557,7 @@ public class select_loco extends Activity {
             return true;
         }
         return (super.onKeyDown(key, event));
-    };
+    }
 
     /** Called when the activity is first created. */
     @Override
@@ -606,9 +605,9 @@ public class select_loco extends Activity {
         // Set up a list adapter to allow adding the list of recent engines to
         // the UI.
         recent_engine_list = new ArrayList<HashMap<String, String>>();
-        recent_list_adapter = new SimpleAdapter(this, recent_engine_list,
-                R.layout.engine_list_item, new String[] { "engine" },
-                new int[] { R.id.engine_item_label });
+        SimpleAdapter recent_list_adapter = new SimpleAdapter(this, recent_engine_list,
+                R.layout.engine_list_item, new String[]{"engine"},
+                new int[]{R.id.engine_item_label});
         ListView engine_list_view = (ListView) findViewById(R.id.engine_list);
         engine_list_view.setAdapter(recent_list_adapter);
         engine_list_view.setOnItemClickListener(new engine_item());
@@ -718,7 +717,7 @@ public class select_loco extends Activity {
             }
         });
         set_labels();
-    };
+    }
 
     //Jeffrey added 7/3/2013
     //Clears recent connection list of locos
@@ -729,14 +728,10 @@ public class select_loco extends Activity {
 
         if (engine_list_file.exists())
         {
+            //noinspection ResultOfMethodCallIgnored
             engine_list_file.delete();
             recent_engine_list.clear();
         }
-        else
-        {
-            engine_list_file = new File(sdcard_path + "/engine_driver/recent_engine_list.txt");
-        }
-
     } 
 
     @Override
@@ -892,7 +887,7 @@ public class select_loco extends Activity {
                 mainapp.imageDownloader.download(iconURL, imageView);
             } else {
                 View v = view.findViewById(R.id.roster_icon_image);
-                v.setVisibility(GONE);
+                v.setVisibility(View.GONE);
             }
 
             return view;
