@@ -72,7 +72,7 @@ public class turnouts extends Activity implements OnGestureListener {
     private static String location = null;
     private Spinner locationSpinner;
 
-    private GestureDetector myGesture ;
+    private GestureDetector myGesture;
     private Menu TuMenu;
     private boolean navigatingAway = false;     // flag for onPause: set to true when another activity is selected, false if going into background 
 
@@ -96,7 +96,7 @@ public class turnouts extends Activity implements OnGestureListener {
                 boolean hideIfNoUserName = prefs.getBoolean("HideIfNoUserNamePreference", getResources().getBoolean(R.bool.prefHideIfNoUserNameDefaultValue));
                 for (String username : mainapp.to_user_names) {
                     boolean hasUserName = (username != null && !username.equals(""));
-                    if (hasUserName || !hideIfNoUserName)  {  //skip turnouts without usernames if pref is set
+                    if (hasUserName || !hideIfNoUserName) {  //skip turnouts without usernames if pref is set
                         //get values from global array
                         String systemname = mainapp.to_system_names[pos];
                         String currentstate = mainapp.to_states[pos];
@@ -116,11 +116,11 @@ public class turnouts extends Activity implements OnGestureListener {
                         turnoutsFullList.add(hm);
 
                         //if location is new, add to list
-                        if(del.length() > 0 && hasUserName) {
+                        if (del.length() > 0 && hasUserName) {
                             int delim = username.indexOf(del);
-                            if(delim >= 0) {
+                            if (delim >= 0) {
                                 String loc = username.substring(0, delim);
-                                if(!locationList.contains(loc))
+                                if (!locationList.contains(loc))
                                     locationList.add(loc);
                             }
                         }
@@ -135,9 +135,9 @@ public class turnouts extends Activity implements OnGestureListener {
         //sort by username
         Collections.sort(turnoutsFullList, turnout_comparator);
         Collections.sort(locationList);
-        locationList.add(0,getString(R.string.location_all));   // this entry goes at the top of the list
+        locationList.add(0, getString(R.string.location_all));   // this entry goes at the top of the list
         locationListAdapter.notifyDataSetChanged();
-        if(!locationList.contains(location))
+        if (!locationList.contains(location))
             location = getString(R.string.location_all);
         locationSpinner.setSelection(locationListAdapter.getPosition(location));
 
@@ -149,11 +149,11 @@ public class turnouts extends Activity implements OnGestureListener {
         final String loc = location + prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
         final boolean useAllLocations = getString(R.string.location_all).equals(location);
         turnouts_list.clear();
-        for(HashMap<String, String> hm : turnoutsFullList) {
+        for (HashMap<String, String> hm : turnoutsFullList) {
             String userName = hm.get("to_user_name");
-            if(useAllLocations || userName.startsWith(loc)) {
-                HashMap<String, String> hmFilt = (HashMap<String, String>) hm.clone(); 
-                if(!useAllLocations)
+            if (useAllLocations || userName.startsWith(loc)) {
+                HashMap<String, String> hmFilt = (HashMap<String, String>) hm.clone();
+                if (!useAllLocations)
                     hmFilt.put("to_user_name", userName.substring(loc.length()));
                 turnouts_list.add(hmFilt);
             }
@@ -163,44 +163,41 @@ public class turnouts extends Activity implements OnGestureListener {
 
     private int updateTurnoutEntry() {
         Button butTog = (Button) findViewById(R.id.turnout_toggle);
-        Button butClose = (Button)findViewById(R.id.turnout_close);
-        Button butThrow = (Button)findViewById(R.id.turnout_throw);
+        Button butClose = (Button) findViewById(R.id.turnout_close);
+        Button butThrow = (Button) findViewById(R.id.turnout_throw);
         EditText trn = (EditText) findViewById(R.id.turnout_entry);
-        TextView trnPrefix =(TextView)findViewById(R.id.turnout_prefix);
+        TextView trnPrefix = (TextView) findViewById(R.id.turnout_prefix);
         String turnout = trn.getText().toString().trim();
         int txtLen = turnout.length();
         if (mainapp.isTurnoutControlAllowed()) {
             trn.setEnabled(true);
             // don't allow buttons if nothing entered
-            if(txtLen > 0) {
+            if (txtLen > 0) {
                 butThrow.setEnabled(true);
                 butClose.setEnabled(true);
                 butTog.setEnabled(true);
-                if(Character.isDigit(turnout.charAt(0))) //show hardware system prefix if numeric entry
+                if (Character.isDigit(turnout.charAt(0))) //show hardware system prefix if numeric entry
                     trnPrefix.setEnabled(true);
                 else
                     trnPrefix.setEnabled(false);
-            }
-            else {
+            } else {
                 butThrow.setEnabled(false);
                 butClose.setEnabled(false);
                 butTog.setEnabled(false);
                 trnPrefix.setEnabled(false);
             }
-        } 
-        else {
+        } else {
             trn.setEnabled(false);
             butThrow.setEnabled(false);
             butClose.setEnabled(false);
             butTog.setEnabled(false);
             //set text to "Disabled", but only do this once to avoid getting stuck in this callback
-            if(!trn.getText().toString().equals(getString(R.string.disabled)))
+            if (!trn.getText().toString().equals(getString(R.string.disabled)))
                 trn.setText(getString(R.string.disabled));
             trnPrefix.setEnabled(false);
         }
 
-        if(TuMenu != null)
-        {
+        if (TuMenu != null) {
             mainapp.displayEStop(TuMenu);
             mainapp.displayPowerStateMenuButton(TuMenu);
         }
@@ -213,32 +210,32 @@ public class turnouts extends Activity implements OnGestureListener {
     class turnouts_handler extends Handler {
 
         public void handleMessage(Message msg) {
-            switch(msg.what) {
-            case message_type.RESPONSE:
-                String response_str = msg.obj.toString();
-                
-                if (response_str.length() >= 3) {
-                    String com1 = response_str.substring(0,3);
-                    //refresh turnouts if any have changed or if turnout list has changed
-                    if ("PTA".equals(com1) || "PTL".equals(com1)) {
-                        refresh_turnout_view(); 
+            switch (msg.what) {
+                case message_type.RESPONSE:
+                    String response_str = msg.obj.toString();
+
+                    if (response_str.length() >= 3) {
+                        String com1 = response_str.substring(0, 3);
+                        //refresh turnouts if any have changed or if turnout list has changed
+                        if ("PTA".equals(com1) || "PTL".equals(com1)) {
+                            refresh_turnout_view();
+                        }
+                        //update power icon
+                        if ("PPA".equals(com1)) {
+                            mainapp.setPowerStateButton(TuMenu);
+                        }
                     }
-                    //update power icon
-                    if ("PPA".equals(com1)) {
-                        mainapp.setPowerStateButton(TuMenu);
-                    }
-                }
-                break;
-            case message_type.WIT_CON_RETRY:
-                witRetry(msg.obj.toString());
-                break;
-            case message_type.WIT_CON_RECONNECT:
-                refresh_turnout_view(); 
-                break;
-            case message_type.DISCONNECT:
-            case message_type.SHUTDOWN:
-                disconnect();
-                break;
+                    break;
+                case message_type.WIT_CON_RETRY:
+                    witRetry(msg.obj.toString());
+                    break;
+                case message_type.WIT_CON_RECONNECT:
+                    refresh_turnout_view();
+                    break;
+                case message_type.DISCONNECT:
+                case message_type.SHUTDOWN:
+                    disconnect();
+                    break;
             }
         }
     }
@@ -250,8 +247,8 @@ public class turnouts extends Activity implements OnGestureListener {
         startActivity(in);
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
-    
-    public class button_listener implements View.OnClickListener  {
+
+    public class button_listener implements View.OnClickListener {
         char whichCommand; //command to send for button instance 'C'lose, 'T'hrow or '2' for toggle
 
         public button_listener(char new_command) {
@@ -259,18 +256,17 @@ public class turnouts extends Activity implements OnGestureListener {
         }
 
         public void onClick(View v) {
-            EditText entryv=(EditText)findViewById(R.id.turnout_entry);
+            EditText entryv = (EditText) findViewById(R.id.turnout_entry);
             String entrytext = entryv.getText().toString().trim();
-            if (entrytext.length() > 0 ) {
+            if (entrytext.length() > 0) {
                 //if text starts with a digit, check number and prefix with hardware_system and "T"
                 //otherwise send the text as is
-                if(Character.isDigit(entrytext.charAt(0))) {
+                if (Character.isDigit(entrytext.charAt(0))) {
                     try {
                         //noinspection ResultOfMethodCallIgnored
                         Integer.valueOf(entrytext);  //edit check address by attempting conversion to int
-                    } 
-                    catch(Exception except) { 
-                        Toast.makeText(getApplicationContext(), "Invalid turnout number.\n"+except.getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (Exception except) {
+                        Toast.makeText(getApplicationContext(), "Invalid turnout number.\n" + except.getMessage(), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     //use preference for system name in command string unless system is MRC
@@ -280,46 +276,47 @@ public class turnouts extends Activity implements OnGestureListener {
                     }
                 }
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, whichCommand + entrytext);
-                Toast.makeText(getApplicationContext(), "Command sent to " + 
-                        (whichCommand=='C' ? "Close" : whichCommand=='T' ? "Throw" : "Toggle") +
-                        " turnout " + entrytext, 
+                Toast.makeText(getApplicationContext(), "Command sent to " +
+                                (whichCommand == 'C' ? "Close" : whichCommand == 'T' ? "Throw" : "Toggle") +
+                                " turnout " + entrytext,
                         Toast.LENGTH_SHORT).show();
-            } 
+            }
         }
     }
 
     //handle click for each turnout's state toggle button
-    public class turnout_state_button_listener implements View.OnClickListener  {
-        
+    public class turnout_state_button_listener implements View.OnClickListener {
+
         public void onClick(View v) {
-            ViewGroup vg = (ViewGroup)v.getParent();  //start with the list item the button belongs to 
+            ViewGroup vg = (ViewGroup) v.getParent();  //start with the list item the button belongs to
             ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemname and username
             TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
             String systemname = snv.getText().toString();
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, '2'+systemname);    // 2=toggle
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, '2' + systemname);    // 2=toggle
         }
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
         return myGesture.onTouchEvent(event);
     }
 
-    public void setTitleToIncludeThrotName()
-    {
+    public void setTitleToIncludeThrotName() {
         String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts) + "    |    Throttle Name: " + 
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts) + "    |    Throttle Name: " +
                 prefs.getString("throttle_name_preference", defaultName));
     }
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @SuppressWarnings("deprecation")
     @Override
-    public void onCreate(Bundle savedInstanceState)  {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mainapp=(threaded_application)getApplication();
+        mainapp = (threaded_application) getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        if(mainapp.isForcingFinish()) {     // expedite
+        if (mainapp.isForcingFinish()) {     // expedite
             return;
         }
         setContentView(R.layout.turnouts);
@@ -328,29 +325,29 @@ public class turnouts extends Activity implements OnGestureListener {
 //      setTitleToIncludeThrotName();
 
         //put pointer to this activity's handler in main app's shared variable (If needed)
-        mainapp.turnouts_msg_handler=new turnouts_handler();
+        mainapp.turnouts_msg_handler = new turnouts_handler();
 
         myGesture = new GestureDetector(this);
-        
-        turnoutsFullList= new ArrayList<>();
+
+        turnoutsFullList = new ArrayList<>();
         //Set up a list adapter to allow adding the list of recent connections to the UI.
-        turnouts_list= new ArrayList<>();
-        turnouts_list_adapter=new SimpleAdapter(this, turnouts_list, R.layout.turnouts_item, 
-                new String[] {"to_user_name", "to_system_name", "to_current_state_desc"},
-                new int[] {R.id.to_user_name, R.id.to_system_name, R.id.to_current_state_desc}) {
-            
+        turnouts_list = new ArrayList<>();
+        turnouts_list_adapter = new SimpleAdapter(this, turnouts_list, R.layout.turnouts_item,
+                new String[]{"to_user_name", "to_system_name", "to_current_state_desc"},
+                new int[]{R.id.to_user_name, R.id.to_system_name, R.id.to_current_state_desc}) {
+
             //set up listener for each state button
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View row = super.getView(position, convertView, parent);
                 if (row != null) {
-                    Button b=(Button)row.findViewById(R.id.to_current_state_desc);
+                    Button b = (Button) row.findViewById(R.id.to_current_state_desc);
                     b.setOnClickListener(new turnout_state_button_listener());
                 }
                 return row;
             }
         };
-        ListView turnouts_lv=(ListView)findViewById(R.id.turnouts_list);
+        ListView turnouts_lv = (ListView) findViewById(R.id.turnouts_list);
         turnouts_lv.setAdapter(turnouts_list_adapter);
 
         OnTouchListener gestureListener = new ListView.OnTouchListener() {
@@ -360,51 +357,52 @@ public class turnouts extends Activity implements OnGestureListener {
         };
         turnouts_lv.setOnTouchListener(gestureListener);
 
-        EditText trn =(EditText)findViewById(R.id.turnout_entry);
+        EditText trn = (EditText) findViewById(R.id.turnout_entry);
         trn.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 updateTurnoutEntry();
             }
+
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
         trn.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
-                    InputMethodManager imm = 
-                        (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
+                    InputMethodManager imm =
+                            (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     return true;
-                }
-                else
+                } else
                     return false;
             }
         });
 
         //Set the button callbacks, storing the command to pass for each
-        Button b=(Button)findViewById(R.id.turnout_toggle);
-        button_listener click_listener=new button_listener('2');
+        Button b = (Button) findViewById(R.id.turnout_toggle);
+        button_listener click_listener = new button_listener('2');
         b.setOnClickListener(click_listener);
 
         //don't show throw and close buttons if withrottle version < 1.6
         if (mainapp.withrottle_version >= 1.6) {
-            b=(Button)findViewById(R.id.turnout_close);
-            click_listener=new button_listener('C');
+            b = (Button) findViewById(R.id.turnout_close);
+            click_listener = new button_listener('C');
             b.setOnClickListener(click_listener);
 
-            b=(Button)findViewById(R.id.turnout_throw);
-            click_listener=new button_listener('T');
+            b = (Button) findViewById(R.id.turnout_throw);
+            click_listener = new button_listener('T');
             b.setOnClickListener(click_listener);
 
         } else {
             //hide the buttons
-            b=(Button)findViewById(R.id.turnout_close);
+            b = (Button) findViewById(R.id.turnout_close);
             b.setVisibility(View.GONE);
 
-            b=(Button)findViewById(R.id.turnout_throw);
+            b = (Button) findViewById(R.id.turnout_throw);
             b.setVisibility(View.GONE);
         }
         //((EditText) findViewById(R.id.turnout_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
@@ -420,6 +418,7 @@ public class turnouts extends Activity implements OnGestureListener {
                 location = parent.getSelectedItem().toString();
                 filterTurnoutView();
             }
+
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
@@ -433,10 +432,10 @@ public class turnouts extends Activity implements OnGestureListener {
         super.onPause();
 
         //save scroll position for later restore
-        ListView lv=(ListView)findViewById(R.id.turnouts_list);
-        mainapp.turnouts_list_position = (lv==null ? 0 : lv.getFirstVisiblePosition());
+        ListView lv = (ListView) findViewById(R.id.turnouts_list);
+        mainapp.turnouts_list_position = (lv == null ? 0 : lv.getFirstVisiblePosition());
 
-        if(!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
+        if (!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
             mainapp.addNotification(this.getIntent());
         }
     }
@@ -445,13 +444,13 @@ public class turnouts extends Activity implements OnGestureListener {
     public void onResume() {
         super.onResume();
         mainapp.removeNotification();
-        if(mainapp.isForcingFinish()) {     //expedite
+        if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;
         }
-        if(!mainapp.setActivityOrientation(this))  //set screen orientation based on prefs
+        if (!mainapp.setActivityOrientation(this))  //set screen orientation based on prefs
         {
-            Intent in=new Intent().setClass(this, web_activity.class);      // if autoWeb and landscape, switch to Web activity
+            Intent in = new Intent().setClass(this, web_activity.class);      // if autoWeb and landscape, switch to Web activity
             navigatingAway = true;
             startActivity(in);
             this.finish();
@@ -462,17 +461,17 @@ public class turnouts extends Activity implements OnGestureListener {
         navigatingAway = false;
 
         //restore view to last known scroll position
-        ListView lv=(ListView)findViewById(R.id.turnouts_list);
+        ListView lv = (ListView) findViewById(R.id.turnouts_list);
         lv.setSelectionFromTop(mainapp.turnouts_list_position, 0);
 
 //      setTitleToIncludeThrotName();
 
         //update hardware system prefix unless MRC
         if (!mainapp.getServerType().equals("MRC")) {
-            String cmdPrefix= prefs.getString("hardware_system", getApplicationContext().getResources()
+            String cmdPrefix = prefs.getString("hardware_system", getApplicationContext().getResources()
                     .getString(R.string.prefHardwareSystemDefaultValue));
-            TextView trnPrefix =(TextView)findViewById(R.id.turnout_prefix);
-            trnPrefix.setText(cmdPrefix + "T"); 
+            TextView trnPrefix = (TextView) findViewById(R.id.turnout_prefix);
+            trnPrefix.setText(cmdPrefix + "T");
         }
 
         // enable/disable buttons
@@ -481,7 +480,9 @@ public class turnouts extends Activity implements OnGestureListener {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-    /** Called when the activity is finished. */
+    /**
+     * Called when the activity is finished.
+     */
     @Override
     public void onDestroy() {
         //Log.d("Engine_Driver","turnouts.onDestroy()");
@@ -493,12 +494,12 @@ public class turnouts extends Activity implements OnGestureListener {
     //Always go to throttle activity if back button pressed
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
-        if(key==KeyEvent.KEYCODE_BACK)  {
+        if (key == KeyEvent.KEYCODE_BACK) {
             this.finish();
             connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
             return true;
         }
-        return(super.onKeyDown(key, event));
+        return (super.onKeyDown(key, event));
     }
 
     @Override
@@ -508,22 +509,22 @@ public class turnouts extends Activity implements OnGestureListener {
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if (e1==null || e2==null)
+        if (e1 == null || e2 == null)
             return false;
-        if((Math.abs(e2.getX() - e1.getX()) > threaded_application.min_fling_distance) && 
+        if ((Math.abs(e2.getX() - e1.getX()) > threaded_application.min_fling_distance) &&
                 (Math.abs(velocityX) > threaded_application.min_fling_velocity)) {
             navigatingAway = true;
             // left to right swipe goes to routes if enabled in prefs
-            if(e2.getX() > e1.getX()) {
-                boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference", 
+            if (e2.getX() > e1.getX()) {
+                boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
                         getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
                 swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
-                if(swipeRoutes) {
-                    Intent in=new Intent().setClass(this, routes.class);
+                if (swipeRoutes) {
+                    Intent in = new Intent().setClass(this, routes.class);
                     startActivity(in);
                 }
                 this.finish();  //don't keep on return stack
-                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);               
+                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
             }
             // right to left swipe goes to throttle
             else {
@@ -538,21 +539,24 @@ public class turnouts extends Activity implements OnGestureListener {
     @Override
     public void onLongPress(MotionEvent e) {
     }
+
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-            float distanceY) {
+                            float distanceY) {
         return false;
     }
+
     @Override
     public void onShowPress(MotionEvent e) {
     }
+
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
         return false;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.turnouts_menu, menu);
         TuMenu = menu;
@@ -564,57 +568,58 @@ public class turnouts extends Activity implements OnGestureListener {
         mainapp.setRoutesMenuOption(menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
         Intent in;
         switch (item.getItemId()) {
-        case R.id.throttle_mnu:
-            navigatingAway = true;
-            this.finish();
-            connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-            break;
-        case R.id.routes_mnu:
-            in = new Intent().setClass(this, routes.class);
-            navigatingAway = true;
-            startActivity(in);
-            this.finish();
-            connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-            break;
-        case R.id.web_mnu:
-            in=new Intent().setClass(this, web_activity.class);
-            navigatingAway = true;
-            startActivity(in);
-            this.finish();
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.exit_mnu:
-            mainapp.checkExit(this);
-            break;
-        case R.id.power_control_mnu:
-            in=new Intent().setClass(this, power_control.class);
-            navigatingAway = true;
-            startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.preferences_mnu:
-            in=new Intent().setClass(this, preferences.class);
-            navigatingAway = true;
-            startActivityForResult(in,0);   // refresh view on return
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.about_mnu:
-            in=new Intent().setClass(this, about_page.class);
-            navigatingAway = true;
-            startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            break;
-        case R.id.EmerStop:
-            mainapp.sendEStopMsg();
-            break;
-        case R.id.power_layout_button:
-            mainapp.powerStateMenuButton();
-            break;
+            case R.id.throttle_mnu:
+                navigatingAway = true;
+                this.finish();
+                connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+                break;
+            case R.id.routes_mnu:
+                in = new Intent().setClass(this, routes.class);
+                navigatingAway = true;
+                startActivity(in);
+                this.finish();
+                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+                break;
+            case R.id.web_mnu:
+                in = new Intent().setClass(this, web_activity.class);
+                navigatingAway = true;
+                startActivity(in);
+                this.finish();
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.exit_mnu:
+                mainapp.checkExit(this);
+                break;
+            case R.id.power_control_mnu:
+                in = new Intent().setClass(this, power_control.class);
+                navigatingAway = true;
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.preferences_mnu:
+                in = new Intent().setClass(this, preferences.class);
+                navigatingAway = true;
+                startActivityForResult(in, 0);   // refresh view on return
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.about_mnu:
+                in = new Intent().setClass(this, about_page.class);
+                navigatingAway = true;
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.EmerStop:
+                mainapp.sendEStopMsg();
+                break;
+            case R.id.power_layout_button:
+                mainapp.powerStateMenuButton();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

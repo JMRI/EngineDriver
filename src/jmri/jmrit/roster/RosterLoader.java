@@ -12,44 +12,45 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
 import android.util.Log;
 
 public class RosterLoader {
-	final URL rosterUrl;
+    final URL rosterUrl;
 
-	public RosterLoader(String Url){
-		try {
-			this.rosterUrl = new URL(Url);
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public RosterLoader(String Url) {
+        try {
+            this.rosterUrl = new URL(Url);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	protected InputStream getInputStream() {
-		try {
-			return rosterUrl.openConnection().getInputStream();
-		} catch (IOException e) {
-			Log.e("Engine_Driver", "Error retrieving roster xml: " + e.getMessage());
-			throw new RuntimeException(e);
-		}
-	}
+    protected InputStream getInputStream() {
+        try {
+            return rosterUrl.openConnection().getInputStream();
+        } catch (IOException e) {
+            Log.e("Engine_Driver", "Error retrieving roster xml: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
 
-	public HashMap<String, RosterEntry> parse() {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		HashMap<String, RosterEntry> roster = new HashMap<String, RosterEntry>();
-		try {
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document dom = builder.parse(this.getInputStream());
-			Element root = dom.getDocumentElement(); 
-			NodeList items = root.getElementsByTagName("locomotive");
-			for (int i=0;i<items.getLength();i++){	       	
-				RosterEntry entry = new RosterEntry( items.item(i));
-				entry.setHostURLs(rosterUrl.getHost()+":"+rosterUrl.getPort());
-				roster.put(entry.getId(),entry);
-			}
-		} catch (Exception e) {
-			return null;
-		} 
-		return roster;
-	}
+    public HashMap<String, RosterEntry> parse() {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        HashMap<String, RosterEntry> roster = new HashMap<String, RosterEntry>();
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document dom = builder.parse(this.getInputStream());
+            Element root = dom.getDocumentElement();
+            NodeList items = root.getElementsByTagName("locomotive");
+            for (int i = 0; i < items.getLength(); i++) {
+                RosterEntry entry = new RosterEntry(items.item(i));
+                entry.setHostURLs(rosterUrl.getHost() + ":" + rosterUrl.getPort());
+                roster.put(entry.getId(), entry);
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        return roster;
+    }
 }

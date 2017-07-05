@@ -16,6 +16,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 package jmri.enginedriver;
+
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,227 +32,224 @@ import java.util.Set;
 //
 //
 public final class Consist {
-	public class ConLoco extends Loco {
-		private boolean backward;						//end of loco that faces the top of the consist
-		
-		private ConLoco(String address) {
-			super(address);
-			backward = false;
-		}
+    public class ConLoco extends Loco {
+        private boolean backward;                        //end of loco that faces the top of the consist
 
-		private ConLoco(Loco l) {
-			super(l);
-			backward = false;
-		}
+        private ConLoco(String address) {
+            super(address);
+            backward = false;
+        }
 
-		public boolean isBackward() {
-			return backward;
-		}
+        private ConLoco(Loco l) {
+            super(l);
+            backward = false;
+        }
 
-	}
+        public boolean isBackward() {
+            return backward;
+        }
 
-	private LinkedHashMap<String, ConLoco> con;			//locos assigned to this consist (i.e. this throttle)
-	private String leadAddr;							//address of lead loco 
-	//TODO: eliminate stored leadAddr and create on the fly?
+    }
+
+    private LinkedHashMap<String, ConLoco> con;            //locos assigned to this consist (i.e. this throttle)
+    private String leadAddr;                            //address of lead loco
+    //TODO: eliminate stored leadAddr and create on the fly?
 
 
-	public Consist() {
-		con = new LinkedHashMap<>();
-		leadAddr = "";
-	}
+    public Consist() {
+        con = new LinkedHashMap<>();
+        leadAddr = "";
+    }
 
-	public Consist(Loco l) {
-		this();
+    public Consist(Loco l) {
+        this();
 
-		this.add(l);
-		leadAddr = l.getAddress();
-	}
+        this.add(l);
+        leadAddr = l.getAddress();
+    }
 
-	public Consist(Consist c) {
-		this();
-		for(ConLoco l : c.con.values()) {
+    public Consist(Consist c) {
+        this();
+        for (ConLoco l : c.con.values()) {
 
-			this.add(l);
-		}
-		leadAddr = c.leadAddr;
-	}
+            this.add(l);
+        }
+        leadAddr = c.leadAddr;
+    }
 
-	//
-	public void release() {
+    //
+    public void release() {
 
-		con.clear();
-		leadAddr = "";
-	}
+        con.clear();
+        leadAddr = "";
+    }
 
-	public void add(String addr) {
-		this.add(new ConLoco(addr));
-	}
+    public void add(String addr) {
+        this.add(new ConLoco(addr));
+    }
 
-	public void add(Loco l) {
-		Loco nl = new Loco(l);
-		this.add(new ConLoco(nl));
-	}
+    public void add(Loco l) {
+        Loco nl = new Loco(l);
+        this.add(new ConLoco(nl));
+    }
 
-	public void add(ConLoco l) {
-		String addr = l.getAddress();
-		if(!con.containsKey(addr)) {
-			if(isEmpty())
-				leadAddr = addr;
-			con.put(addr, new ConLoco(l));						//this ctor makes copy as objects are immutable
-			
-		}
-	}
-	
-	public void remove(String address) {
-		con.remove(address);
-	}
+    public void add(ConLoco l) {
+        String addr = l.getAddress();
+        if (!con.containsKey(addr)) {
+            if (isEmpty())
+                leadAddr = addr;
+            con.put(addr, new ConLoco(l));                        //this ctor makes copy as objects are immutable
 
-	public ConLoco getLoco(String address) {
-		return con.get(address);
-	}
+        }
+    }
 
-	//
-	// report direction of this engine relative to the _current_ lead engine
-	//
-	// caller should catch null returned value indicating address is not in the consist
-	//
-	public Boolean isReverseOfLead(String address) {
-		ConLoco l = con.get(address);
-		if(l == null)
-			return null;
-		boolean dir = l.backward;							//orientation of this loco
-		boolean leadDir = con.get(leadAddr).backward;		//orientation of current lead loco
-		return dir != leadDir;								//return true if orientation of this loco is different from the lead
-	}
+    public void remove(String address) {
+        con.remove(address);
+    }
 
-	//
-	// report direction of this engine relative to the top of the consist
-	//
-	// caller should catch null returned value indicating address is not in the consist
-	//
-	public Boolean isBackward(String address) {
-		ConLoco l = con.get(address);
-		if(l == null)
-			return null;
-		return l.backward;
-	}
+    public ConLoco getLoco(String address) {
+        return con.get(address);
+    }
 
-	public void setBackward(String address) {
+    //
+    // report direction of this engine relative to the _current_ lead engine
+    //
+    // caller should catch null returned value indicating address is not in the consist
+    //
+    public Boolean isReverseOfLead(String address) {
+        ConLoco l = con.get(address);
+        if (l == null)
+            return null;
+        boolean dir = l.backward;                            //orientation of this loco
+        boolean leadDir = con.get(leadAddr).backward;        //orientation of current lead loco
+        return dir != leadDir;                                //return true if orientation of this loco is different from the lead
+    }
 
-		setBackward(address, true);
-	}
+    //
+    // report direction of this engine relative to the top of the consist
+    //
+    // caller should catch null returned value indicating address is not in the consist
+    //
+    public Boolean isBackward(String address) {
+        ConLoco l = con.get(address);
+        if (l == null)
+            return null;
+        return l.backward;
+    }
 
-	public void setBackward(String address, boolean state) {
+    public void setBackward(String address) {
 
-		ConLoco l = con.get(address);
-		if(l != null)
-			l.backward = state;
-	}
+        setBackward(address, true);
+    }
 
-	//
-	// returns true if consist is not empty and the lead loco has been confirmed
-	public Boolean isActive()
-	{
-		boolean conGood = false;
-		if(!isEmpty() && leadAddr != null) {
-			ConLoco l = con.get(leadAddr);
-			if(l != null && l.isConfirmed())
-				conGood = true;
-		}
-		return conGood;
-	}
-	
-	//
-	// caller should catch null returned value indicating address is not in the consist
-	//
-	public Boolean isConfirmed(String address) {
-		ConLoco l = con.get(address);
-		return (l != null) ? l.isConfirmed() : null;
-	}
+    public void setBackward(String address, boolean state) {
 
-	public void setConfirmed(String address) {
-		setConfirmed(address, true);
-	}
+        ConLoco l = con.get(address);
+        if (l != null)
+            l.backward = state;
+    }
 
-	public void setConfirmed(String address, boolean state) {
-		ConLoco l = con.get(address);
-		if(l != null)
-			l.setConfirmed(state);
-	}
+    //
+    // returns true if consist is not empty and the lead loco has been confirmed
+    public Boolean isActive() {
+        boolean conGood = false;
+        if (!isEmpty() && leadAddr != null) {
+            ConLoco l = con.get(leadAddr);
+            if (l != null && l.isConfirmed())
+                conGood = true;
+        }
+        return conGood;
+    }
 
-	//get Set containing addresses of all locos in consist
-	public Set<String> getList() {
-		return con.keySet();
-	}
+    //
+    // caller should catch null returned value indicating address is not in the consist
+    //
+    public Boolean isConfirmed(String address) {
+        ConLoco l = con.get(address);
+        return (l != null) ? l.isConfirmed() : null;
+    }
 
-	//get Set containing all locos in consist
-	public Collection<ConLoco> getLocos() {
-		return con.values();
-	}
+    public void setConfirmed(String address) {
+        setConfirmed(address, true);
+    }
 
-	public boolean isEmpty() {
-		return con.size() == 0;
-	}
-	
-	public boolean isMulti() {
-		return (con.size() > 1 && isActive());
-	}
+    public void setConfirmed(String address, boolean state) {
+        ConLoco l = con.get(address);
+        if (l != null)
+            l.setConfirmed(state);
+    }
 
-	public int size() {
-		return con.size();
-	}
+    //get Set containing addresses of all locos in consist
+    public Set<String> getList() {
+        return con.keySet();
+    }
 
-	public String getLeadAddr() {
-		return leadAddr;
-	}
+    //get Set containing all locos in consist
+    public Collection<ConLoco> getLocos() {
+        return con.values();
+    }
 
-	public String setLeadAddr(String addr) {
-		if(con.containsKey(addr) && !leadAddr.equals(addr)) {
-			leadAddr = addr;
-		}
-		return leadAddr;
-	}
+    public boolean isEmpty() {
+        return con.size() == 0;
+    }
 
-	//create string description of the consist
-	@Override
-	public String toString() {
-		return formatConsist();
-	}
+    public boolean isMulti() {
+        return (con.size() > 1 && isActive());
+    }
 
-	private String formatConsist() {
-		String formatCon;
-		if(con.size() > 0) {
-			formatCon = "";
-			String sep = "";
-			for(Map.Entry<String, ConLoco> l : con.entrySet()) {		// loop through locos in consist
-				if(l.getValue().isConfirmed()) { 
-					formatCon += sep + l.getValue().toString();
-					sep = " +";
-				}
-			}
-		}
-		else {
-			formatCon = "Not Set";
-		}
-		return formatCon;
-	}
-	
-	public String formatConsistAddr() {
-		String formatCon;
-		if(con.size() > 0) {
-			formatCon = "";
-			String sep = "";
-			for(Map.Entry<String, ConLoco> l : con.entrySet()) {		// loop through locos in consist
-				if(l.getValue().isConfirmed()) {
-					formatCon += sep + l.getValue().getAddress().substring(1,l.getValue().getAddress().length());
-					sep = ",";
-				}
-			}
-		}
-		else {
-			formatCon = "Not Set";
-		}
-		return formatCon;
-	}
+    public int size() {
+        return con.size();
+    }
+
+    public String getLeadAddr() {
+        return leadAddr;
+    }
+
+    public String setLeadAddr(String addr) {
+        if (con.containsKey(addr) && !leadAddr.equals(addr)) {
+            leadAddr = addr;
+        }
+        return leadAddr;
+    }
+
+    //create string description of the consist
+    @Override
+    public String toString() {
+        return formatConsist();
+    }
+
+    private String formatConsist() {
+        String formatCon;
+        if (con.size() > 0) {
+            formatCon = "";
+            String sep = "";
+            for (Map.Entry<String, ConLoco> l : con.entrySet()) {        // loop through locos in consist
+                if (l.getValue().isConfirmed()) {
+                    formatCon += sep + l.getValue().toString();
+                    sep = " +";
+                }
+            }
+        } else {
+            formatCon = "Not Set";
+        }
+        return formatCon;
+    }
+
+    public String formatConsistAddr() {
+        String formatCon;
+        if (con.size() > 0) {
+            formatCon = "";
+            String sep = "";
+            for (Map.Entry<String, ConLoco> l : con.entrySet()) {        // loop through locos in consist
+                if (l.getValue().isConfirmed()) {
+                    formatCon += sep + l.getValue().getAddress().substring(1, l.getValue().getAddress().length());
+                    sep = ",";
+                }
+            }
+        } else {
+            formatCon = "Not Set";
+        }
+        return formatCon;
+    }
 
 }

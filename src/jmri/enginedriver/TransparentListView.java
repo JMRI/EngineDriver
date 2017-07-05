@@ -21,15 +21,15 @@ public class TransparentListView extends ListView {
         if (Build.VERSION.SDK_INT >= 9) {
             try {
 
-                Method overscrollFooterMethod = 
-                    TransparentListView.class.getMethod("setOverscrollFooter", Drawable.class);
-                Method overscrollHeaderMethod = 
-                    TransparentListView.class.getMethod("setOverscrollHeader", Drawable.class);
+                Method overscrollFooterMethod =
+                        TransparentListView.class.getMethod("setOverscrollFooter", Drawable.class);
+                Method overscrollHeaderMethod =
+                        TransparentListView.class.getMethod("setOverscrollHeader", Drawable.class);
 
 
                 try {
-                    overscrollFooterMethod.invoke(this, new Object[] {null});
-                    overscrollHeaderMethod.invoke(this, new Object[] {null});
+                    overscrollFooterMethod.invoke(this, new Object[]{null});
+                    overscrollHeaderMethod.invoke(this, new Object[]{null});
                 } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
                 }
