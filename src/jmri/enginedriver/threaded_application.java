@@ -124,7 +124,10 @@ public class threaded_application extends Application {
     String power_state;
     public boolean displayClock = false;
     public int androidVersion = 0;
-    public final int minWebSocketVersion = 8;               //minimum Android version for Autobahn websocket library
+    //minimum Android version for some features
+    public final int minWebSocketVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
+    public final int minImmersiveModeVersion = android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
+    public final int minToolbarButtonVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
 
     static final int DEFAULT_HEARTBEAT_INTERVAL = 10;       //interval for heartbeat when WiT heartbeat is disabled
     static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;   //minimum allowed interval for outbound heartbeat generator
