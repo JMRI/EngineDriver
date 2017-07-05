@@ -52,7 +52,7 @@ public class LogViewerActivity extends ListActivity{
 
 		setTitleToIncludeThrotName();
 
-		ArrayList<String> logarray = new ArrayList<String>();
+		ArrayList<String> logarray = new ArrayList<>();
 		adaptor = new LogStringAdaptor(this, R.id.txtLogString, logarray);
 
 		setListAdapter(adaptor);

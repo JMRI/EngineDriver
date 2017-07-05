@@ -235,7 +235,7 @@ public class ImageDownloader {
         private final WeakReference<ImageView> imageViewReference;
 
         public BitmapDownloaderTask(ImageView imageView) {
-            imageViewReference = new WeakReference<ImageView>(imageView);
+            imageViewReference = new WeakReference<>(imageView);
         }
 
         /**
@@ -287,7 +287,7 @@ public class ImageDownloader {
         public DownloadedDrawable(BitmapDownloaderTask bitmapDownloaderTask) {
 //            super(Color.BLACK);
             bitmapDownloaderTaskReference =
-                new WeakReference<BitmapDownloaderTask>(bitmapDownloaderTask);
+                    new WeakReference<>(bitmapDownloaderTask);
         }
 
         public BitmapDownloaderTask getBitmapDownloaderTask() {
@@ -319,7 +319,7 @@ public class ImageDownloader {
         protected boolean removeEldestEntry(LinkedHashMap.Entry<String, Bitmap> eldest) {
             if (size() > HARD_CACHE_CAPACITY) {
                 // Entries push-out of hard reference cache are transferred to soft reference cache
-                sSoftBitmapCache.put(eldest.getKey(), new SoftReference<Bitmap>(eldest.getValue()));
+                sSoftBitmapCache.put(eldest.getKey(), new SoftReference<>(eldest.getValue()));
                 return true;
             } else
                 return false;
@@ -328,7 +328,7 @@ public class ImageDownloader {
 
     // Soft cache for bitmaps kicked out of hard cache
     private final static ConcurrentHashMap<String, SoftReference<Bitmap>> sSoftBitmapCache =
-        new ConcurrentHashMap<String, SoftReference<Bitmap>>(HARD_CACHE_CAPACITY / 2);
+            new ConcurrentHashMap<>(HARD_CACHE_CAPACITY / 2);
 
     private final Handler purgeHandler = new Handler();
 

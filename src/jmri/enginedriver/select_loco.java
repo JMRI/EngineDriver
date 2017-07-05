@@ -116,7 +116,7 @@ public class select_loco extends Activity {
             if (mainapp.roster_entries != null) {
                 for (String rostername : mainapp.roster_entries.keySet()) {
                     // put key and values into temp hashmap
-                    HashMap<String, String> hm = new HashMap<String, String>();
+                    HashMap<String, String> hm = new HashMap<>();
                     hm.put("roster_name", rostername);
                     hm.put("roster_address", mainapp.roster_entries.get(rostername));
                     hm.put("roster_entry_type", "loco");
@@ -144,7 +144,7 @@ public class select_loco extends Activity {
                 Set<String> ces = mainapp.consist_entries.keySet();
                 for (String consistname : ces) {
                     // put key and values into temp hashmap
-                    HashMap<String, String> hm = new HashMap<String, String>();
+                    HashMap<String, String> hm = new HashMap<>();
                     hm.put("roster_name", mainapp.consist_entries.get(consistname));
                     hm.put("roster_address", consistname);
                     hm.put("roster_entry_type", "consist");
@@ -583,7 +583,7 @@ public class select_loco extends Activity {
         address_spinner.setAdapter(spinner_adapter);
 
         // Set up a list adapter to contain the current roster list.
-        roster_list = new ArrayList<HashMap<String, String>>();
+        roster_list = new ArrayList<>();
         roster_list_adapter = new RosterSimpleAdapter(this, roster_list,
                 R.layout.roster_list_item, new String[] { "roster_name",
                 "roster_address", "roster_icon" }, new int[] { R.id.roster_name_label,
@@ -604,7 +604,7 @@ public class select_loco extends Activity {
 
         // Set up a list adapter to allow adding the list of recent engines to
         // the UI.
-        recent_engine_list = new ArrayList<HashMap<String, String>>();
+        recent_engine_list = new ArrayList<>();
         SimpleAdapter recent_list_adapter = new SimpleAdapter(this, recent_engine_list,
                 R.layout.engine_list_item, new String[]{"engine"},
                 new int[]{R.id.engine_item_label});
@@ -612,8 +612,8 @@ public class select_loco extends Activity {
         engine_list_view.setAdapter(recent_list_adapter);
         engine_list_view.setOnItemClickListener(new engine_item());
 
-        engine_address_list = new ArrayList<Integer>();
-        address_size_list = new ArrayList<Integer>();
+        engine_address_list = new ArrayList<>();
+        address_size_list = new ArrayList<>();
         //if no SD Card present then there is no recent locos list
         if(!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             //alert user that recent locos list requires SD Card
@@ -647,7 +647,7 @@ public class select_loco extends Activity {
                             if ((ea >= 0) && (as >= 0)) {
                                 engine_address_list.add(ea);
                                 address_size_list.add(as);
-                                HashMap<String, String> hm = new HashMap<String, String>();
+                                HashMap<String, String> hm = new HashMap<>();
                                 String addressLengthString = ((as == 0) ? "S" : "L");  //show L or S based on length from file
                                 String engineAddressString = String.format("%s(%s)",engine_address_list.get(
                                         engine_address_list.size() - 1).toString(), addressLengthString);

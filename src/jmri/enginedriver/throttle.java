@@ -83,55 +83,55 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private static double displayUnitScaleG;
     private static double displayUnitScaleS;
 
-    private static SeekBar sbT; // seekbars
-    private static SeekBar sbS;
-    private static SeekBar sbG;
-    private static ViewGroup fbT; // function button tables
-    private static ViewGroup fbS;
-    private static ViewGroup fbG;
-    private static Button bFwdT; // buttons
-    private static Button bStopT;
-    private static Button bRevT;
-    private static Button bSelT;
-    private static Button bRSpdT;
-    private static Button bLSpdT;
-    private static Button bFwdG;
-    private static Button bStopG;
-    private static Button bRevG;
-    private static Button bSelG;
-    private static Button bRSpdG;
-    private static Button bLSpdG;
-    private static Button bFwdS;
-    private static Button bStopS;
-    private static Button bRevS;
-    private static Button bSelS;
-    private static Button bRSpdS;
-    private static Button bLSpdS;
-    private static TextView tvSpdLabT; // labels
-    private static TextView tvSpdValT;
-    private static TextView tvSpdLabG;
-    private static TextView tvSpdValG;
-    private static TextView tvSpdLabS;
-    private static TextView tvSpdValS;
-    private static View vVolT; // volume indicators
-    private static View vVolS;
-    private static View vVolG;
-    private static LinearLayout llT; // throttles
-    private static LinearLayout llS;
-    private static LinearLayout llG;
-    private static LinearLayout llTSetSpd;
-    private static LinearLayout llSSetSpd;
-    private static LinearLayout llGSetSpd;
+    private SeekBar sbT; // seekbars
+    private SeekBar sbS;
+    private SeekBar sbG;
+    private ViewGroup fbT; // function button tables
+    private ViewGroup fbS;
+    private ViewGroup fbG;
+    private Button bFwdT; // buttons
+    private Button bStopT;
+    private Button bRevT;
+    private Button bSelT;
+    private Button bRSpdT;
+    private Button bLSpdT;
+    private Button bFwdG;
+    private Button bStopG;
+    private Button bRevG;
+    private Button bSelG;
+    private Button bRSpdG;
+    private Button bLSpdG;
+    private Button bFwdS;
+    private Button bStopS;
+    private Button bRevS;
+    private Button bSelS;
+    private Button bRSpdS;
+    private Button bLSpdS;
+    private TextView tvSpdLabT; // labels
+    private TextView tvSpdValT;
+    private TextView tvSpdLabG;
+    private TextView tvSpdValG;
+    private TextView tvSpdLabS;
+    private TextView tvSpdValS;
+    private View vVolT; // volume indicators
+    private View vVolS;
+    private View vVolG;
+    private LinearLayout llT; // throttles
+    private LinearLayout llS;
+    private LinearLayout llG;
+    private LinearLayout llTSetSpd;
+    private LinearLayout llSSetSpd;
+    private LinearLayout llGSetSpd;
     // SPDHT for Speed Id and Direction Button Heights
-    private static LinearLayout llTLocoId;
-    private static LinearLayout llSLocoId;
-    private static LinearLayout llGLocoId;
-    private static LinearLayout llTLocoDir;
-    private static LinearLayout llSLocoDir;
-    private static LinearLayout llGLocoDir;
+    private LinearLayout llTLocoId;
+    private LinearLayout llSLocoId;
+    private LinearLayout llGLocoId;
+    private LinearLayout llTLocoDir;
+    private LinearLayout llSLocoDir;
+    private LinearLayout llGLocoDir;
     // SPDHT
-    private static View vThrotScr;
-    private static View vThrotScrWrap;
+    private View vThrotScr;
+    private View vThrotScrWrap;
 
     private boolean navigatingAway = false; // true if another activity was selected (false in onPause if going into background)
     private char whichVolume = 'T';
@@ -1791,7 +1791,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         Button b; // button
         int k = 0; // button count
         LinkedHashMap<Integer, String> function_labels_temp;
-        LinkedHashMap<Integer, Button> functionButtonMap = new LinkedHashMap<Integer, Button>();
+        LinkedHashMap<Integer, Button> functionButtonMap = new LinkedHashMap<>();
 
         if (whichThrottle == 'T') {
             tv = fbT;
@@ -1808,11 +1808,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         // while we are using it (causing issues during button update below)
         if (!audfl) {
             if (whichThrottle == 'T' && mainapp.function_labels_T != null && mainapp.function_labels_T.size() > 0) {
-                function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_T);
+                function_labels_temp = new LinkedHashMap<>(mainapp.function_labels_T);
             } else if (whichThrottle == 'G' && mainapp.function_labels_G != null && mainapp.function_labels_G.size() > 0) {
-                function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_G);
+                function_labels_temp = new LinkedHashMap<>(mainapp.function_labels_G);
             } else if (whichThrottle == 'S' && mainapp.function_labels_S != null && mainapp.function_labels_S.size() > 0) {
-                function_labels_temp = new LinkedHashMap<Integer, String>(mainapp.function_labels_S);
+                function_labels_temp = new LinkedHashMap<>(mainapp.function_labels_S);
             } else {
                 function_labels_temp = mainapp.function_labels_default;
             }
@@ -1822,10 +1822,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         // put values in array for indexing in next step TODO: find direct way
         // to do this
-        ArrayList<Integer> aList = new ArrayList<Integer>();
-        for (Integer f : function_labels_temp.keySet()) {
-            aList.add(f);
-        }
+        ArrayList<Integer> aList = new ArrayList<>();
+        aList.addAll(function_labels_temp.keySet());
 
         for (int i = 0; i < tv.getChildCount(); i++) {
             r = (ViewGroup) tv.getChildAt(i);

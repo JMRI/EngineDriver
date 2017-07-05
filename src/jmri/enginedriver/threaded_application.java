@@ -212,7 +212,7 @@ public class threaded_application extends Application {
                 String ip_address = ip_addresses[0].toString().substring(1);  //use first one, since WiThrottle is only putting one in (for now), and remove leading slash
 
                 //Tell the UI thread to update the list of services available.
-                HashMap<String, String> hm=new HashMap<String, String>();
+                HashMap<String, String> hm= new HashMap<>();
                 hm.put("ip_address", ip_address);
                 hm.put("port", ((Integer)port).toString());
                 hm.put("host_name",host_name);
@@ -341,7 +341,7 @@ public class threaded_application extends Application {
         void addDtxToDiscoveredList() {
             String server_addr = client_address.substring(0, client_address.lastIndexOf("."));
             server_addr += ".1";
-            HashMap<String, String> hm=new HashMap<String, String>();
+            HashMap<String, String> hm= new HashMap<>();
             hm.put("ip_address", server_addr);
             hm.put("port", "12090");
             hm.put("host_name", "Dtx server");
@@ -449,21 +449,21 @@ public class threaded_application extends Application {
                     if (whichThrottle == 'T') {
                         if(releaseAll || consistT.isEmpty()) {
                             addr = "";
-                            function_labels_T = new LinkedHashMap<Integer, String>();
+                            function_labels_T = new LinkedHashMap<>();
                             function_states_T = new boolean[32];
                         }
                     } 
                     else if(whichThrottle == 'G') {
                         if (releaseAll || consistG.isEmpty()) {
                             addr = "";
-                            function_labels_G = new LinkedHashMap<Integer, String>();
+                            function_labels_G = new LinkedHashMap<>();
                             function_states_G = new boolean[32];
                         }
                     }
                     else {
                         if (releaseAll || consistS.isEmpty()) {
                             addr = "";
-                            function_labels_S = new LinkedHashMap<Integer, String>();
+                            function_labels_S = new LinkedHashMap<>();
                             function_states_S = new boolean[32];
                         }
                     }
@@ -788,7 +788,7 @@ public class threaded_application extends Application {
 
                 else if(com2 == 'A') { //process change in function value  MTAL4805<;>F028
                     if ("F".equals(ls[1].substring(0,1))) {
-                        process_function_state_20(sWhichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1,2)) ? true : false);
+                        process_function_state_20(sWhichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1, 2)));
                     }                       
                 }
 
@@ -937,14 +937,14 @@ public class threaded_application extends Application {
             String[] ta = splitByString(response_str,"]\\[");  //split into list of labels
             //clear the appropriate global variable
             if ("T".equals(whichThrottle)) {
-                function_labels_T = new LinkedHashMap<Integer, String>();
+                function_labels_T = new LinkedHashMap<>();
             } 
             else if("S".equals(whichThrottle))
             {
-                function_labels_S = new LinkedHashMap<Integer, String>();
+                function_labels_S = new LinkedHashMap<>();
             }
             else {
-                function_labels_G = new LinkedHashMap<Integer, String>();
+                function_labels_G = new LinkedHashMap<>();
             }
 
             //initialize app arrays (skipping first)
@@ -970,7 +970,7 @@ public class threaded_application extends Application {
         //  RL2]\[NS2591}|{2591}|{L]\[NS4805}|{4805}|{L
         private void process_roster_list(String response_str) {
             //clear the global variable
-            roster_entries = new HashMap<String, String>();
+            roster_entries = new HashMap<>();
 
             String[] ta = splitByString(response_str,"]\\[");  //initial separation 
             //initialize app arrays (skipping first)
@@ -1070,7 +1070,7 @@ public class threaded_application extends Application {
             //PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
 
             //clear the global variable
-            to_state_names = new HashMap<String, String>();
+            to_state_names = new HashMap<>();
 
             String[] ta = splitByString(response_str,"]\\[");  //initial separation 
             //initialize app arrays (skipping first)
@@ -1130,7 +1130,7 @@ public class threaded_application extends Application {
             //PRT
 
             //clear the global variable
-            rt_state_names = new HashMap<String, String>();
+            rt_state_names = new HashMap<>();
 
             String[] ta = splitByString(response_str,"]\\[");  //initial separation 
             //initialize app arrays (skipping first)
@@ -1875,7 +1875,7 @@ public class threaded_application extends Application {
             public void run() {
                 set_default_function_labels();
             }
-        }, "DefaultFunctionLabels").start();    
+        }, "DefaultFunctionLabels").start();
         CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
     }
 
@@ -1890,7 +1890,7 @@ public class threaded_application extends Application {
 
     //init default function labels from the settings files or set to default
     private void set_default_function_labels() {
-        function_labels_default = new LinkedHashMap<Integer, String>();
+        function_labels_default = new LinkedHashMap<>();
         try {
             File sdcard_path=Environment.getExternalStorageDirectory();
             File settings_file=new File(sdcard_path + "/engine_driver/function_settings.txt");
@@ -1960,7 +1960,7 @@ public class threaded_application extends Application {
             jsonResponse = Client.execute(httpget, responseHandler);
             Log.d("Engine_Driver", "Raw metadata retrieved: " + jsonResponse);
 
-            HashMap<String, String> metadataTemp = new HashMap<String, String>();
+            HashMap<String, String> metadataTemp = new HashMap<>();
             try {
                 JSONArray ja = new JSONArray(jsonResponse);
                 for (int i = 0; i < ja.length(); i++) {
@@ -2093,13 +2093,13 @@ public class threaded_application extends Application {
         consistT = new Consist();
         consistS = new Consist();
         consistG = new Consist();
-        function_labels_S = new LinkedHashMap<Integer, String>();
-        function_labels_T = new LinkedHashMap<Integer, String>();
-        function_labels_G = new LinkedHashMap<Integer, String>();
+        function_labels_S = new LinkedHashMap<>();
+        function_labels_T = new LinkedHashMap<>();
+        function_labels_G = new LinkedHashMap<>();
         function_states_T = new boolean[32];        // also allocated in onCreate() ???
         function_states_S = new boolean[32];
         function_states_G = new boolean[32];
-        consist_entries = new LinkedHashMap<String, String>();
+        consist_entries = new LinkedHashMap<>();
         roster = null;
         roster_entries = null;
         metadata = null;
