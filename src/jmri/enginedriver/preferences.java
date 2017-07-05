@@ -39,15 +39,19 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mainapp=(threaded_application)getApplication();
+        mainapp = (threaded_application) getApplication();
         addPreferencesFromResource(R.xml.preferences);
-        if(!mainapp.isPowerControlAllowed()) {
+        if (!mainapp.isPowerControlAllowed()) {
             getPreferenceScreen().findPreference("show_layout_power_button_preference").setSelectable(false);
             getPreferenceScreen().findPreference("show_layout_power_button_preference").setEnabled(false);
         }
-        if(mainapp.androidVersion < mainapp.minWebSocketVersion) {
+        if (mainapp.androidVersion < mainapp.minWebSocketVersion) {
             getPreferenceScreen().findPreference("ClockDisplayTypePreference").setSelectable(false);
             getPreferenceScreen().findPreference("ClockDisplayTypePreference").setEnabled(false);
+        }
+        if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
+            getPreferenceScreen().findPreference("prefThrottleViewImmersiveMode").setSelectable(false);
+            getPreferenceScreen().findPreference("prefThrottleViewImmersiveMode").setEnabled(false);
         }
     }
 
