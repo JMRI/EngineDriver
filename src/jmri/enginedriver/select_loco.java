@@ -435,11 +435,12 @@ public class select_loco extends Activity {
                 "engine_driver/recent_engine_list.txt");
         PrintWriter list_output;
         String smrl = prefs.getString("maximum_recent_locos_preference", ""); //retrieve pref for max recent locos to show  
-        if (smrl.equals("")) { //if no value or entry removed, set to default
-            smrl = getApplicationContext().getResources().getString(R.string.prefMaximumRecentLocosDefaultValue);
-        }
         try {
-            int mrl = Integer.parseInt(smrl);
+            int mrl = 10; //default to 10 if pref is blank or invalid
+            try {
+                mrl = Integer.parseInt(smrl);
+            } catch (NumberFormatException ignored) {
+            }
             list_output = new PrintWriter(connections_list_file);
             if (mrl > 0) {
                 // Add this engine to the head of recent engines list.
