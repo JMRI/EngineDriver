@@ -777,7 +777,7 @@ public class threaded_application extends Application {
                         if (lead.equals(addr))                       //*** temp - only process if for lead engine in consist
                             process_roster_function_string("RF29}|{1234(L)" + ls[1], sWhichThrottle);  //prepend some stuff to match old-style
                     } else if (com2 == 'A') { //process change in function value  MTAL4805<;>F028
-                        if ("F".equals(ls[1].substring(0, 1))) {
+                        if (ls.length == 2 && "F".equals(ls[1].substring(0, 1))) {
                             process_function_state_20(sWhichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1, 2)));
                         }
                     }

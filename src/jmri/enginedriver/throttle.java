@@ -1870,6 +1870,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         int height_S; // height of second throttle area
         int height_G;// height of third throttle area
 
+        // avoid NPE by not letting this run too early (reported to Play Store)
+        if (vVolT == null) return;
+
         // hide or display volume control indicator based on variable
         if (whichVolume == 'T') {
             vVolT.setVisibility(VISIBLE);

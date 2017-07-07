@@ -481,7 +481,11 @@ public class connection_activity extends Activity {
                 if (smrc.equals("")) { //if no value or entry removed, set to default
                     smrc = getApplicationContext().getResources().getString(R.string.prefMaximumRecentConnectionsDefaultValue);
                 }
-                int mrc = Integer.parseInt(smrc);
+                int mrc = 10;
+                try {
+                    mrc = Integer.parseInt(smrc);
+                } catch (NumberFormatException ignored) {
+                }
                 int clEntries = Math.min(connections_list.size(), mrc);  //don't keep more entries than specified in preference
                 for (int i = 0; i < clEntries; i++) {  //loop thru entries from connections list, up to max in prefs
                     HashMap<String, String> t = connections_list.get(i);
