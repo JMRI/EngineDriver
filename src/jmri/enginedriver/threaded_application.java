@@ -343,7 +343,7 @@ public class threaded_application extends Application {
             HashMap<String, String> hm = new HashMap<>();
             hm.put("ip_address", server_addr);
             hm.put("port", "12090");
-            hm.put("host_name", "Dtx server");
+            hm.put("host_name", client_ssid);
 
             Message service_message = Message.obtain();
             service_message.what = message_type.SERVICE_RESOLVED;
