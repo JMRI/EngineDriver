@@ -126,6 +126,8 @@
     <string name="prefIncreaseWebViewSizeSummary">Increase web view size to 60% for small screens.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Use Immersive Mode for Throttle view?</string>
     <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  Swipe down to temporarily disable and reach the menu.</string>
+    <string name="prefThrottleGamePadTitle">Enable gamepad and Keyboard support?</string>
+    <string name="prefThrottleGamePadSummary">NOTE: Currently only supports basic DPAD actions and/or the following keys:- Direction:AF Speed:WX Stop:Y F0: .</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default function labels instead of labels from roster entries.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. Height?</string>
