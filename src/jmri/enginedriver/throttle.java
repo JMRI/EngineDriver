@@ -65,6 +65,7 @@ import android.graphics.Typeface;
 //import android.view.inputmethod.InputMethodManager;
 import android.view.WindowManager;
 
+import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
 /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ */
 
@@ -1024,30 +1025,36 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         int action = event.getAction();
 
         if (prefThrottleGamePad) { // respond to the gamepad and keyboard inputs if the preference is set
-            char whichThrottle = 'T';
+            //char whichThrottle = 'T';
+            char whichThrottle = whichVolume;
             int keyCode = event.getKeyCode();
+
             if (keyCode != 0) {
                 Log.d("Engine_Driver", "keycode " + keyCode);
             }
             switch (keyCode) {
-                case KeyEvent.KEYCODE_W:
-                case KeyEvent.KEYCODE_E:
+                //case KeyEvent.KEYCODE_W:
+                //case KeyEvent.KEYCODE_E:
                 case KeyEvent.KEYCODE_DPAD_UP:
                     // Increase Speed
-                    speedChangeAndNotify(whichThrottle, 1);
-                    enable_disable_direction_and_loco_buttons('T');
+                    if (action == ACTION_DOWN) {
+                        speedChangeAndNotify(whichThrottle, 1);
+                        enable_disable_direction_and_loco_buttons('T');
+                    }
                     return (true); // stop processing this key
 
-                case KeyEvent.KEYCODE_X:
-                case KeyEvent.KEYCODE_Z:
+                //case KeyEvent.KEYCODE_X:
+                //case KeyEvent.KEYCODE_Z:
                 case KeyEvent.KEYCODE_DPAD_DOWN:
                     // Decrease Speed
-                    speedChangeAndNotify(whichThrottle, -1);
-                    enable_disable_direction_and_loco_buttons('T');
+                    if (action == ACTION_DOWN) {
+                        speedChangeAndNotify(whichThrottle, -1);
+                        enable_disable_direction_and_loco_buttons('T');
+                    }
                     return (true); // stop processing this key
 
-                case KeyEvent.KEYCODE_A:
-                case KeyEvent.KEYCODE_Q:
+                //case KeyEvent.KEYCODE_A:
+                //case KeyEvent.KEYCODE_Q:
                 case KeyEvent.KEYCODE_DPAD_LEFT:
                     // Forward
                     // set speed to zero on direction change while moving if the preference is set
@@ -1066,8 +1073,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     return (true); // stop processing this key
 
-                case KeyEvent.KEYCODE_D:
-                case KeyEvent.KEYCODE_C:
+                //case KeyEvent.KEYCODE_D:
+                //case KeyEvent.KEYCODE_C:
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
                     // Reverse
                     // set speed to zero on direction change while moving if the preference is set
@@ -1097,40 +1104,45 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     return (true); // stop processing this key
 
                 case KeyEvent.KEYCODE_U:
+                    // F1 - Bell
                     if (action == ACTION_UP) {
 //                        Log.d("Engine_Driver", "keycode " + keyCode);
                         switch (whichThrottle) {
-                            case 'T': mainapp.function_states_T[1] = ((mainapp.function_states_T[1]) ? false : true);
-                            case 'G': mainapp.function_states_G[1] = ((mainapp.function_states_G[1]) ? false : true);
-                            default: mainapp.function_states_S[1]  = ((mainapp.function_states_S[1]) ? false : true);
+                            case 'T': { mainapp.function_states_T[1] = ((mainapp.function_states_T[1]) ? false : true); break;}
+                            case 'G': { mainapp.function_states_G[1] = ((mainapp.function_states_G[1]) ? false : true); break;}
+                            default: { mainapp.function_states_S[1]  = ((mainapp.function_states_S[1]) ? false : true); break;}
                         }
-                        set_function_state(whichThrottle, 0);
+                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+"", 1, 1);
+                        set_function_state(whichThrottle, 1);
 
                     }
                         return (true); // stop processing this key
 
                 case KeyEvent.KEYCODE_J:
+                    // F2 - Horn
                     if (action == ACTION_UP) {
                         Log.d("Engine_Driver", "keycode " + keyCode);
                         switch (whichThrottle) {
-                            case 'T': mainapp.function_states_T[2] = ((mainapp.function_states_T[2]) ? false : true);
-                            case 'G': mainapp.function_states_G[2] = ((mainapp.function_states_G[2]) ? false : true);
-                            default: mainapp.function_states_S[2]  = ((mainapp.function_states_S[2]) ? false : true);
+                            case 'T': { mainapp.function_states_T[2] = ((mainapp.function_states_T[2]) ? false : true); break;}
+                            case 'G': { mainapp.function_states_G[2] = ((mainapp.function_states_G[2]) ? false : true); break;}
+                            default: { mainapp.function_states_S[2]  = ((mainapp.function_states_S[2]) ? false : true); break;}
                         }
-                        set_function_state(whichThrottle, 0);
+                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+"", 2, 1);
+                        set_function_state(whichThrottle, 2);
 
                     }
                     return (true); // stop processing this key
 
                 case KeyEvent.KEYCODE_H:
-                    // F0
+                    // F0 - Light
                     if (action == ACTION_UP) {
                         Log.d("Engine_Driver", "keycode " + keyCode);
                         switch (whichThrottle) {
-                            case 'T': mainapp.function_states_T[0] = ((mainapp.function_states_T[0]) ? false : true);
-                            case 'G': mainapp.function_states_G[0] = ((mainapp.function_states_G[0]) ? false : true);
-                            default: mainapp.function_states_S[0]  = ((mainapp.function_states_S[0]) ? false : true);
+                            case 'T': { mainapp.function_states_T[0] = ((mainapp.function_states_T[0]) ? false : true); break;}
+                            case 'G': { mainapp.function_states_G[0] = ((mainapp.function_states_G[0]) ? false : true); break;}
+                            default: { mainapp.function_states_S[0]  = ((mainapp.function_states_S[0]) ? false : true); break;}
                         }
+                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+"", 0, 1);
                         set_function_state(whichThrottle, 0);
 
                     }
