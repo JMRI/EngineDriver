@@ -1017,6 +1017,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
+    @Override
+    public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
+        Log.d("Engine_Driver", "keycode " + event.getAction());
+        return super.dispatchGenericMotionEvent(event);
+    }
 
     // listener for physical keyboard events
     // used to support the gamepad in 'NewGame' mode only   DPAD and key events
@@ -1029,10 +1034,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             char whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol and use that one
 
             int keyCode = event.getKeyCode();
-
+/*
             if (keyCode != 0) {
                 Log.d("Engine_Driver", "keycode " + keyCode);
             }
+*/
             switch (keyCode) {
                 // DPAD actually produces all three of the following events.  just use one
                 //case KeyEvent.KEYCODE_W:
@@ -1099,7 +1105,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     return (true); // stop processing this key
 
 //                case KeyEvent.KEYCODE_Q:
-                case KeyEvent.KEYCODE_Y:
+                case KeyEvent.KEYCODE_Y: // 'NewGame' mode
+                case KeyEvent.KEYCODE_3: // international standard gamepad
                     // stop
                     if (action == ACTION_UP) {
                         set_stop_button(whichThrottle, true);
@@ -1110,6 +1117,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     return (true); // stop processing this key
 
                 case KeyEvent.KEYCODE_U:
+                case KeyEvent.KEYCODE_2: // international standard gamepad
                     // F1 - Bell
                     if (action == ACTION_UP) {
 //                        Log.d("Engine_Driver", "keycode " + keyCode);
@@ -1125,6 +1133,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         return (true); // stop processing this key
 
                 case KeyEvent.KEYCODE_J:
+                case KeyEvent.KEYCODE_4: // international standard gamepad
                     // F2 - Horn
                     if (action == ACTION_UP) {
                         Log.d("Engine_Driver", "keycode " + keyCode);
@@ -1140,6 +1149,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     return (true); // stop processing this key
 
                 case KeyEvent.KEYCODE_H:
+                case KeyEvent.KEYCODE_1: // international standard gamepad
                     // F0 - Light
                     if (action == ACTION_UP) {
                         //Log.d("Engine_Driver", "keycode " + keyCode);
