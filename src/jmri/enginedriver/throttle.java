@@ -1017,22 +1017,24 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
-    /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ */
-    /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ */
 
+    // listener for physical keyboard events
+    // used to support the gamepad in 'NewGame' mode only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         int action = event.getAction();
 
         if (prefThrottleGamePad) { // respond to the gamepad and keyboard inputs if the preference is set
-            //char whichThrottle = 'T';
-            char whichThrottle = whichVolume;
+
+            char whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol and use that one
+
             int keyCode = event.getKeyCode();
 
             if (keyCode != 0) {
                 Log.d("Engine_Driver", "keycode " + keyCode);
             }
             switch (keyCode) {
+                // DPAD actually produces all three of the following events.  just use one
                 //case KeyEvent.KEYCODE_W:
                 //case KeyEvent.KEYCODE_E:
                 case KeyEvent.KEYCODE_DPAD_UP:
@@ -1043,6 +1045,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     return (true); // stop processing this key
 
+                // DPAD actually produces all three of the following events.  just use one
                 //case KeyEvent.KEYCODE_X:
                 //case KeyEvent.KEYCODE_Z:
                 case KeyEvent.KEYCODE_DPAD_DOWN:
@@ -1053,6 +1056,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     return (true); // stop processing this key
 
+                // DPAD actually produces all three of the following events.  just use one
                 //case KeyEvent.KEYCODE_A:
                 //case KeyEvent.KEYCODE_Q:
                 case KeyEvent.KEYCODE_DPAD_LEFT:
@@ -1073,6 +1077,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     return (true); // stop processing this key
 
+                // DPAD actually produces all three of the following events.  just use one
                 //case KeyEvent.KEYCODE_D:
                 //case KeyEvent.KEYCODE_C:
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
@@ -1155,10 +1160,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             return super.dispatchKeyEvent(event);
         }
     }
-
-   /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ */
-   /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ */
-
 
     // Listeners for the Select Loco buttons
     public class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener {
