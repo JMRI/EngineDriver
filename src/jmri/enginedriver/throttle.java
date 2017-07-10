@@ -1040,8 +1040,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 case KeyEvent.KEYCODE_DPAD_UP:
                     // Increase Speed
                     if (action == ACTION_DOWN) {
-                        speedChangeAndNotify(whichThrottle, 1);
-                        enable_disable_direction_and_loco_buttons('T');
+                        increment(whichThrottle);
+                        enable_disable_direction_and_loco_buttons(whichThrottle);
                     }
                     return (true); // stop processing this key
 
@@ -1051,8 +1051,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 case KeyEvent.KEYCODE_DPAD_DOWN:
                     // Decrease Speed
                     if (action == ACTION_DOWN) {
-                        speedChangeAndNotify(whichThrottle, -1);
-                        enable_disable_direction_and_loco_buttons('T');
+                        decrement(whichThrottle);
+                        enable_disable_direction_and_loco_buttons(whichThrottle);
                     }
                     return (true); // stop processing this key
 
@@ -1105,6 +1105,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         set_stop_button(whichThrottle, true);
                         speedUpdateAndNotify(whichThrottle, 0);
                         enable_disable_direction_and_loco_buttons(whichThrottle);
+                        set_stop_button(whichThrottle, false);
                     }
                     return (true); // stop processing this key
 
@@ -1141,7 +1142,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 case KeyEvent.KEYCODE_H:
                     // F0 - Light
                     if (action == ACTION_UP) {
-                        Log.d("Engine_Driver", "keycode " + keyCode);
+                        //Log.d("Engine_Driver", "keycode " + keyCode);
                         switch (whichThrottle) {
                             case 'T': { mainapp.function_states_T[0] = ((mainapp.function_states_T[0]) ? false : true); break;}
                             case 'G': { mainapp.function_states_G[0] = ((mainapp.function_states_G[0]) ? false : true); break;}
