@@ -38,5 +38,6 @@
     <bool name="prefShowAddressInsteadOfNameDefaultValue">false</bool>
     <bool name="prefIncreaseWebViewSizeDefaultValue">false</bool>
     <bool name="prefThrottleViewImmersiveModeDefaultValue">false</bool>
+    <bool name="prefThrottleGamePadDefaultValue">false</bool>
     <bool name="prefAlwaysUseDefaultFunctionLabelsDefaultValue">false</bool>
 </resources>
