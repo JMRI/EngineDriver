@@ -1033,6 +1033,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
             char whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol and use that one
 
+            String conAddr = mainapp.consistT.formatConsistAddr();
+            switch (whichThrottle) {
+                case 'S': { conAddr = mainapp.consistS.formatConsistAddr(); break;}
+                case 'G': { conAddr = mainapp.consistG.formatConsistAddr(); break;}
+            }
+
             int keyCode = event.getKeyCode();
 /*
             if (keyCode != 0) {
@@ -1045,7 +1051,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 //case KeyEvent.KEYCODE_E:
                 case KeyEvent.KEYCODE_DPAD_UP:
                     // Increase Speed
-                    if (action == ACTION_DOWN) {
+                    if ((!conAddr.equals("Not Set")) && (action == ACTION_DOWN)) {
                         increment(whichThrottle);
                         enable_disable_direction_and_loco_buttons(whichThrottle);
                     }
@@ -1056,7 +1062,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 //case KeyEvent.KEYCODE_Z:
                 case KeyEvent.KEYCODE_DPAD_DOWN:
                     // Decrease Speed
-                    if (action == ACTION_DOWN) {
+                    if ((!conAddr.equals("Not Set")) && (action == ACTION_DOWN)) {
                         decrement(whichThrottle);
                         enable_disable_direction_and_loco_buttons(whichThrottle);
                     }
@@ -1068,7 +1074,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 case KeyEvent.KEYCODE_DPAD_LEFT:
                     // Forward
                     // set speed to zero on direction change while moving if the preference is set
-                    if (action == ACTION_UP) {
+                    if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
                         if (stopOnDirectionChange) {
                             if ((getSpeed(whichThrottle) != 0) && (getDirection(whichThrottle) != DIRECTION_FORWARD)) {
                                 speedUpdateAndNotify(whichThrottle, 0);
@@ -1089,7 +1095,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
                     // Reverse
                     // set speed to zero on direction change while moving if the preference is set
-                    if (action == ACTION_UP) {
+                    if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
                         if (stopOnDirectionChange) {
                             if ((getSpeed(whichThrottle) != 0) && (getDirection(whichThrottle) != DIRECTION_REVERSE)) {
                                 speedUpdateAndNotify(whichThrottle, 0);
@@ -1108,7 +1114,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 case KeyEvent.KEYCODE_Y: // 'NewGame' mode
                 case KeyEvent.KEYCODE_3: // international standard gamepad
                     // stop
-                    if (action == ACTION_UP) {
+                    if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
                         set_stop_button(whichThrottle, true);
                         speedUpdateAndNotify(whichThrottle, 0);
                         enable_disable_direction_and_loco_buttons(whichThrottle);
@@ -1119,12 +1125,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 case KeyEvent.KEYCODE_U:
                 case KeyEvent.KEYCODE_2: // international standard gamepad
                     // F1 - Bell
-                    if (action == ACTION_UP) {
+                    if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
 //                        Log.d("Engine_Driver", "keycode " + keyCode);
                         switch (whichThrottle) {
-                            case 'T': { mainapp.function_states_T[1] = ((mainapp.function_states_T[1]) ? false : true); break;}
-                            case 'G': { mainapp.function_states_G[1] = ((mainapp.function_states_G[1]) ? false : true); break;}
-                            default: { mainapp.function_states_S[1]  = ((mainapp.function_states_S[1]) ? false : true); break;}
+                            case 'T': { mainapp.function_states_T[1] = !mainapp.function_states_T[1]; break;}
+                            case 'G': { mainapp.function_states_G[1] = !mainapp.function_states_G[1]; break;}
+                            default: { mainapp.function_states_S[1]  = !mainapp.function_states_S[1]; break;}
                         }
                         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+"", 1, 1);
                         set_function_state(whichThrottle, 1);
@@ -1135,12 +1141,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 case KeyEvent.KEYCODE_J:
                 case KeyEvent.KEYCODE_4: // international standard gamepad
                     // F2 - Horn
-                    if (action == ACTION_UP) {
+                    if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
                         Log.d("Engine_Driver", "keycode " + keyCode);
                         switch (whichThrottle) {
-                            case 'T': { mainapp.function_states_T[2] = ((mainapp.function_states_T[2]) ? false : true); break;}
-                            case 'G': { mainapp.function_states_G[2] = ((mainapp.function_states_G[2]) ? false : true); break;}
-                            default: { mainapp.function_states_S[2]  = ((mainapp.function_states_S[2]) ? false : true); break;}
+                            case 'T': { mainapp.function_states_T[2] = !mainapp.function_states_T[2]; break;}
+                            case 'G': { mainapp.function_states_G[2] = !mainapp.function_states_G[2]; break;}
+                            default: { mainapp.function_states_S[2]  = !mainapp.function_states_S[2]; break;}
                         }
                         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+"", 2, 1);
                         set_function_state(whichThrottle, 2);
@@ -1151,16 +1157,28 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 case KeyEvent.KEYCODE_H:
                 case KeyEvent.KEYCODE_1: // international standard gamepad
                     // F0 - Light
-                    if (action == ACTION_UP) {
+                    if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
                         //Log.d("Engine_Driver", "keycode " + keyCode);
                         switch (whichThrottle) {
-                            case 'T': { mainapp.function_states_T[0] = ((mainapp.function_states_T[0]) ? false : true); break;}
-                            case 'G': { mainapp.function_states_G[0] = ((mainapp.function_states_G[0]) ? false : true); break;}
-                            default: { mainapp.function_states_S[0]  = ((mainapp.function_states_S[0]) ? false : true); break;}
+                            case 'T': { mainapp.function_states_T[0] = !mainapp.function_states_T[0]; break;}
+                            case 'G': { mainapp.function_states_G[0] = !mainapp.function_states_G[0]; break;}
+                            default: { mainapp.function_states_S[0]  = !mainapp.function_states_S[0]; break;}
                         }
                         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+"", 0, 1);
                         set_function_state(whichThrottle, 0);
+                    }
+                    return (true); // stop processing this key
 
+                case KeyEvent.KEYCODE_V:
+                case KeyEvent.KEYCODE_0: // international standard gamepad
+                    // F0 - EStop
+                    if (action == ACTION_UP) {
+                        speedUpdateAndNotify('T', 0);        // update requested direction indication
+                        speedUpdateAndNotify('S', 0);        // update requested direction indication
+                        speedUpdateAndNotify('G', 0);        // update requested direction indication
+                        enable_disable_direction_and_loco_buttons('T');
+                        enable_disable_direction_and_loco_buttons('S');
+                        enable_disable_direction_and_loco_buttons('G');
                     }
                     return (true); // stop processing this key
 
