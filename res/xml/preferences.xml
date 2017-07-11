@@ -126,6 +126,14 @@
             android:summary="@string/prefThrottleViewImmersiveModeSummary"
             android:title="@string/prefThrottleViewImmersiveModeTitle">
         </CheckBoxPreference>
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefThrottleGamePadDefaultValue"
+            android:key="prefThrottleGamePad"
+            android:summary="@string/prefThrottleGamePadSummary"
+            android:title="@string/prefThrottleGamePadTitle">
+        </CheckBoxPreference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefThrottleTitle" >
         <ListPreference
