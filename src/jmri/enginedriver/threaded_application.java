@@ -134,7 +134,7 @@ public class threaded_application extends Application {
     static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;   //minimum allowed interval for outbound heartbeat generator
     static final int MAX_OUTBOUND_HEARTBEAT_INTERVAL = 30;  //maximum allowed interval for outbound heartbeat generator
     static final int HEARTBEAT_RESPONSE_ALLOWANCE = 4;      //worst case time delay for WiT to respond to a heartbeat message
-    public int heartbeatInterval = 0;                       //WiT heartbeat interval setting
+    public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (seconds)
     public int turnouts_list_position = 0;                  //remember where user was in item lists
     public int routes_list_position = 0;
 
@@ -497,12 +497,10 @@ public class threaded_application extends Application {
                     case message_type.DISCONNECT: {
                         Log.d("Engine_Driver", "TA Disconnect");
                         doFinish = true;
+                        Log.d("Engine_Driver", "TA alert all activites to shutdown");
+                        alert_activities(message_type.SHUTDOWN, "");     //tell all activities to finish()
                         heart.stopHeartbeat();
                         if (phone != null) phone.disable();
-                        withrottle_send("Q");
-                        if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
-                            withrottle_send("*-");     //request to turn off heartbeat (if enabled in server prefs)
-                        }
                         end_jmdns();
                         dlMetadataTask.stop();
                         dlRosterTask.stop();
@@ -511,16 +509,11 @@ public class threaded_application extends Application {
                             clockWebSocket = null;
                         }
 
-                        Log.d("Engine_Driver", "TA Alert Activites Shutdown");
-                        alert_activities(message_type.SHUTDOWN, "");     //tell all activities to finish()
-
-                    /*future PowerLock
-                     if(wl != null && wl.isHeld())
-                     wl.release();
-                     */
+                        //send quit message to withrottle after a short delay for other activities to communicate
+                        sendMsgDelay(comm_msg_handler, 1000L, message_type.WITHROTTLE_QUIT);
 
                         //give msgs a chance to xmit before closing socket
-                        if (!sendMsgDelay(comm_msg_handler, 4000L, message_type.SHUTDOWN)) {
+                        if (!sendMsgDelay(comm_msg_handler, 3000L, message_type.SHUTDOWN)) {
                             shutdown();
                         }
 
@@ -582,6 +575,11 @@ public class threaded_application extends Application {
                     //send command to change power setting, new state is passed in arg1
                     case message_type.POWER_CONTROL:
                         withrottle_send(String.format("PPA%d", msg.arg1));
+                        break;
+
+                    //send Q to withrottle server
+                    case message_type.WITHROTTLE_QUIT:
+                        withrottle_send("Q");
                         break;
 
                     //Current Time update request
@@ -1175,16 +1173,18 @@ public class threaded_application extends Application {
         //where <;>rosterName is optional
         //
         private void withrottle_send(String msg) {
-            //      Log.d("Engine_Driver", "WiT send " + msg);      
+//            Log.d("Engine_Driver", "WiT send '" + msg + "'");
+
             String newMsg = msg;
-            boolean validMsg = (newMsg != null);
-            if (!validMsg) {
+
+            if (newMsg == null) {
                 Log.d("Engine_Driver", "--> null msg");
+                return;
             }
-            //convert msg to new MultiThrottle format if version >= 2.0
-            else if (withrottle_version >= 2.0) {
-                try {
-                    char whichThrottle = msg.charAt(0);
+            // if version >= 2.0, convert certain messages to MultiThrottle format
+            if (withrottle_version >= 2.0) {
+                char whichThrottle = msg.charAt(0);
+                if ('T' == whichThrottle || 'S' == whichThrottle || 'G' == whichThrottle) {     //acquire loco
                     String cmd = msg.substring(1);
                     char com = cmd.charAt(0);
                     String addr = "";
@@ -1196,52 +1196,40 @@ public class threaded_application extends Application {
                         }
                     }
                     String prefix = "M" + whichThrottle;                    // use a multithrottle command
-                    if ('T' == whichThrottle || 'S' == whichThrottle || 'G' == whichThrottle) {     //acquire loco
-                        if ('L' == com || 'S' == com) {                     //if address length
-                            String rosterName = addr;
-                            addr = cmd;
-                            if (rosterName.length() > 0) {
-                                rosterName = "E" + rosterName;  //use E to indicate rostername
-                            } else {
-                                rosterName = addr;
-                            }
-                            newMsg = prefix + "+" + addr + "<;>" + rosterName;  //add requested loco to this throttle
-                        } else if ('r' == com) {                          //if release loco(s)
-                            if (addr.length() > 0)
-                                newMsg = prefix + "-" + addr + "<;> + addr";        //release one loco
-                            else
-                                newMsg = prefix + "-*<;>r";                         //release all locos from this throttle
-                        } else {                                              //if anything else
-                            if (addr.length() == 0)
-                                addr = "*";
-                            newMsg = prefix + "A" + addr + "<;>" + cmd;
+                    if ('L' == com || 'S' == com) {                     //if address length
+                        String rosterName = addr;
+                        addr = cmd;
+                        if (rosterName.length() > 0) {
+                            rosterName = "E" + rosterName;  //use E to indicate rostername
+                        } else {
+                            rosterName = addr;
                         }
-                    }
-                } catch (Exception e) {
-                    validMsg = false;
-                    if ((socketWiT != null) && newMsg.equals("Q")) {
-                        Log.d("Engine_Driver", "Sent " + newMsg + " command to WiThrottle server");
-                        socketWiT.Send(newMsg); //Sends quit command
-                    } else {
-                        Log.d("Engine_Driver", "--> invalid msg: " + newMsg);
+                        newMsg = prefix + "+" + addr + "<;>" + rosterName;  //add requested loco to this throttle
+                    } else if ('r' == com) {                          //if release loco(s)
+                        if (addr.length() > 0)
+                            newMsg = prefix + "-" + addr + "<;> + addr";        //release one loco
+                        else
+                            newMsg = prefix + "-*<;>r";                         //release all locos from this throttle
+                    } else {                                              //if anything else
+                        if (addr.length() == 0)
+                            addr = "*";
+                        newMsg = prefix + "A" + addr + "<;>" + cmd;
                     }
                 }
             }
 
-            if (validMsg) {
-                //send response to debug log for review
-                String lm = "-->:" + newMsg;
-                if (!newMsg.equals(msg)) {
-                    lm += "  was(" + msg + ")";
-                }
-                Log.d("Engine_Driver", lm);
-                //perform the send
-                if (socketWiT != null) {
-                    socketWiT.Send(newMsg);
-                }
+            //send response to debug log for review
+            String lm = "-->:" + newMsg;
+            if (!newMsg.equals(msg)) {
+                lm += "  was(" + msg + ")";
+            }
+            Log.d("Engine_Driver", lm);
+
+            //perform the send
+            if (socketWiT != null) {
+                socketWiT.Send(newMsg);
             }
 
-            //        start_read_timer(busyReadDelay);
         }  //end withrottle_send()
 
         public void run() {

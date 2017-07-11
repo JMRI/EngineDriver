@@ -50,5 +50,6 @@ interface message_type {
     int CURRENT_TIME = 28;      // ta -> activities  updates current time
     int CLOCK_DISPLAY = 29;     // pref -> ta  clock display preference changed
     int ESTOP = 30;             // ta(sendeStopMsg) -> ta  estop requested
+    int WITHROTTLE_QUIT = 31;   // ta(disconnect) -> ta send quit command to server
 
 }

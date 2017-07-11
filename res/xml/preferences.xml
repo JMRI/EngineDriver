@@ -8,7 +8,9 @@
         android:dialogTitle="@string/prefThrottleNameTitle"
         android:key="throttle_name_preference"
         android:summary="@string/prefThrottleNameSummary"
-        android:title="@string/prefThrottleNameTitle" >
+        android:title="@string/prefThrottleNameTitle"
+        android:inputType="text"
+        android:maxLines="1">
     </EditTextPreference>
     <ListPreference
         android:defaultValue="@string/prefThrottleOrientationDefaultValue"
@@ -97,7 +99,9 @@
             android:dialogTitle="@string/prefInitialThrotWebPageSummary"
             android:key="InitialThrotWebPage"
             android:summary="@string/prefInitialThrotWebPageSummary"
-            android:title="@string/prefInitialThrotWebPageTitle" />
+            android:title="@string/prefInitialThrotWebPageTitle"
+            android:inputType="text"
+            android:maxLines="1"/>
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -265,7 +269,9 @@
             android:dialogTitle="@string/prefInitialWebPageSummary"
             android:key="InitialWebPage"
             android:summary="@string/prefInitialWebPageSummary"
-            android:title="@string/prefInitialWebPageTitle" />
+            android:title="@string/prefInitialWebPageTitle"
+            android:inputType="text"
+            android:maxLines="1"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefTurnoutsTitle" >
         <ListPreference
@@ -287,7 +293,9 @@
             android:key="DelimiterPreference"
             android:maxLength="1"
             android:summary="@string/prefDelimiterSummary"
-            android:title="@string/prefDelimiterTitle" >
+            android:title="@string/prefDelimiterTitle"
+            android:inputType="text"
+            android:maxLines="1">
         </EditTextPreference>
         <CheckBoxPreference
             android:defaultValue="@bool/prefHideIfNoUserNameDefaultValue"

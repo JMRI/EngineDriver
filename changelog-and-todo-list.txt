@@ -1,5 +1,7 @@
-**Version 2.15
+**Version 2.14.1
  * avoid some crashes reported to Play Store
+ * postpone sending of "Q"uit message until Throttle has a chance to send stops
+ * prevent entry of new lines in text fields (Throttle Name, initial web, etc.)
 **Version 2.14
  * request and show function labels for JMRI consists - mstevetodd  
  * show activeProfile on About page - mstevetodd
@@ -313,6 +315,7 @@
  * routes
  *   TODO: use PRT titles for Active/inactive
  * turnouts
+ *   TODO: combine loco control and turnout control in one page
  *   TODO: list available "system" based on items in use, maybe with dropdown on Turnout
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout
@@ -362,6 +365,7 @@
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
  *   disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
  *   add "E"rror response
+ *   add throttle messages
  * 
  * These changes are likely to wait until ED3
  *   allow user to configure side-by-side panels for pads, etc.
