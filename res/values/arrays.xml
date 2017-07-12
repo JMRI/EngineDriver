@@ -116,4 +116,11 @@
         <item >1</item>
         <item >2</item>
     </string-array>
+    <string-array name="prefGamePadTypeOptions">
+        <item >None</item>
+        <item >iCade</item>
+        <item >iCade+DPAD</item>
+        <item >MKT</item>
+        <item >Keyboard</item>
+    </string-array>
 </resources>

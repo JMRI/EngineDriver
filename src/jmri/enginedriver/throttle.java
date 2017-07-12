@@ -59,16 +59,33 @@ import android.widget.TextView;
 import android.gesture.GestureOverlayView;
 import android.graphics.Typeface;
 
-/* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ */
-//import android.hardware.input.InputManager;
-//import android.view.InputDevice;
-//import android.view.inputmethod.InputMethodManager;
+// used for supporting Keyboard and Gamepad input;
 import android.view.WindowManager;
-
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
-/* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ */
-
+import static android.view.KeyEvent.KEYCODE_0;
+import static android.view.KeyEvent.KEYCODE_1;
+import static android.view.KeyEvent.KEYCODE_2;
+import static android.view.KeyEvent.KEYCODE_3;
+import static android.view.KeyEvent.KEYCODE_4;
+import static android.view.KeyEvent.KEYCODE_9;
+import static android.view.KeyEvent.KEYCODE_A;
+import static android.view.KeyEvent.KEYCODE_BACK;
+import static android.view.KeyEvent.KEYCODE_D;
+import static android.view.KeyEvent.KEYCODE_DPAD_DOWN;
+import static android.view.KeyEvent.KEYCODE_DPAD_LEFT;
+import static android.view.KeyEvent.KEYCODE_DPAD_RIGHT;
+import static android.view.KeyEvent.KEYCODE_DPAD_UP;
+import static android.view.KeyEvent.KEYCODE_F;
+import static android.view.KeyEvent.KEYCODE_L;
+import static android.view.KeyEvent.KEYCODE_N;
+import static android.view.KeyEvent.KEYCODE_R;
+import static android.view.KeyEvent.KEYCODE_S;
+import static android.view.KeyEvent.KEYCODE_T;
+import static android.view.KeyEvent.KEYCODE_V;
+import static android.view.KeyEvent.KEYCODE_W;
+import static android.view.KeyEvent.KEYCODE_X;
+import static android.view.KeyEvent.KEYCODE_Z;
 
 public class throttle extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
 
@@ -218,9 +235,20 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     boolean stopOnDirectionChange;
 
     // used for the GamePad Support
-    boolean prefThrottleGamePad = false;
+    private boolean prefThrottleGamePad = false;
     private static final int DIRECTION_FORWARD = 1;
     private static final int DIRECTION_REVERSE = 0;
+    // default to the iOS iCade mappings
+    private String whichGamePadMode = "None";
+    private int gamepadDpadUp = KEYCODE_W;   //key down   'E' up
+    private int gamepadDpadDown = KEYCODE_X;   //key down   'Z' up
+    private int gamepadDpadLeft = KEYCODE_A;   //key down   'Q' up
+    private int gamepadDpadRight = KEYCODE_D;   //key down   'C' up
+    private int gamepadStart = KEYCODE_V;   //key up   'L' down
+    private int gamepadX = KEYCODE_T;   //key up   'Y' down
+    private int gamepadY = KEYCODE_N;   //key up   'J' down
+    private int gamepadA = KEYCODE_R;   //key up   'H' down
+    private int gamepadB = KEYCODE_F;   //key up   'Y' down
 
 
     // For speed slider speed buttons.
@@ -1023,13 +1051,80 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         return super.dispatchGenericMotionEvent(event);
     }
 
+    private void setGamepadKeys() {
+        whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
+
+        if (!whichGamePadMode.equals("None")) { // make sure the Softkeyboard is hidden
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
+                    WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }
+
+        switch (whichGamePadMode) {
+            case "iCade":
+                Toast.makeText(getApplicationContext(), "Gamepad - iCade Mode", Toast.LENGTH_LONG).show();
+
+                gamepadDpadUp = KEYCODE_W;   //key down   'E' up
+                gamepadDpadDown = KEYCODE_X;   //key down   'Z' up
+                gamepadDpadLeft = KEYCODE_A;   //key down   'Q' up
+                gamepadDpadRight = KEYCODE_D;   //key down   'C' up
+                gamepadStart = KEYCODE_V;   //key up   'L' down
+                gamepadX = KEYCODE_T;   //key up   'Y' down
+                gamepadY = KEYCODE_N;   //key up   'J' down
+                gamepadA = KEYCODE_R;   //key up   'H' down
+                gamepadB = KEYCODE_F;   //key up   'Y' down
+                break;
+            case "iCade+DPAD":
+                Toast.makeText(getApplicationContext(), "Gamepad - iCade+DPAD Mode", Toast.LENGTH_LONG).show();
+
+                // iOS iCade but use the DPAD keys rather than the standard iCade ones
+                gamepadDpadUp = KEYCODE_DPAD_UP;
+                gamepadDpadDown = KEYCODE_DPAD_DOWN;
+                gamepadDpadLeft = KEYCODE_DPAD_LEFT;
+                gamepadDpadRight = KEYCODE_DPAD_RIGHT;
+                gamepadStart = KEYCODE_V;   //key up   'L' down
+                gamepadX = KEYCODE_T;   //key up   'Y' down
+                gamepadY = KEYCODE_N;   //key up   'J' down
+                gamepadA = KEYCODE_R;   //key up   'H' down
+                gamepadB = KEYCODE_F;   //key up   'Y' down
+                break;
+            case "MKT":
+                Toast.makeText(getApplicationContext(), "Gamepad - MKT Mode", Toast.LENGTH_LONG).show();
+
+                gamepadDpadUp = KEYCODE_DPAD_UP;
+                gamepadDpadDown = KEYCODE_DPAD_DOWN;
+                gamepadDpadLeft = KEYCODE_DPAD_LEFT;
+                gamepadDpadRight = KEYCODE_DPAD_RIGHT;
+                gamepadStart = KEYCODE_0;
+                gamepadX = KEYCODE_3;
+                gamepadY = KEYCODE_4;
+                gamepadA = KEYCODE_1;
+                gamepadB = KEYCODE_2;
+                break;
+            case "Keyboard":
+                Toast.makeText(getApplicationContext(), "Gamepad - Keyboard Mode", Toast.LENGTH_LONG).show();
+
+                gamepadDpadUp = KEYCODE_W;
+                gamepadDpadDown = KEYCODE_Z;
+                gamepadDpadLeft = KEYCODE_A;
+                gamepadDpadRight = KEYCODE_S;
+                gamepadStart = KEYCODE_9;
+                gamepadX = KEYCODE_0;
+                gamepadY = KEYCODE_2;
+                gamepadA = KEYCODE_1;
+                gamepadB = KEYCODE_3;
+                break;
+        }
+
+    }
+
     // listener for physical keyboard events
     // used to support the gamepad in 'NewGame' mode only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         int action = event.getAction();
+        int keyCode = event.getKeyCode();
 
-        if (prefThrottleGamePad) { // respond to the gamepad and keyboard inputs if the preference is set
+        if (!whichGamePadMode.equals("None")) { // respond to the gamepad and keyboard inputs if the preference is set
 
             char whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol and use that one
 
@@ -1039,28 +1134,20 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 case 'G': { conAddr = mainapp.consistG.formatConsistAddr(); break;}
             }
 
-            int keyCode = event.getKeyCode();
 /*
             if (keyCode != 0) {
                 Log.d("Engine_Driver", "keycode " + keyCode);
             }
 */
-            switch (keyCode) {
-                // DPAD actually produces all three of the following events.  just use one
-                //case KeyEvent.KEYCODE_W:
-                //case KeyEvent.KEYCODE_E:
-                case KeyEvent.KEYCODE_DPAD_UP:
-                    // Increase Speed
-                    if ((!conAddr.equals("Not Set")) && (action == ACTION_DOWN)) {
-                        increment(whichThrottle);
-                        enable_disable_direction_and_loco_buttons(whichThrottle);
-                    }
-                    return (true); // stop processing this key
+            if (keyCode == gamepadDpadUp) {
+                // Increase Speed
+                if ((!conAddr.equals("Not Set")) && (action == ACTION_DOWN)) {
+                    increment(whichThrottle);
+                    enable_disable_direction_and_loco_buttons(whichThrottle);
+                }
+                return (true); // stop processing this key
 
-                // DPAD actually produces all three of the following events.  just use one
-                //case KeyEvent.KEYCODE_X:
-                //case KeyEvent.KEYCODE_Z:
-                case KeyEvent.KEYCODE_DPAD_DOWN:
+            } else if (keyCode == gamepadDpadDown) {
                     // Decrease Speed
                     if ((!conAddr.equals("Not Set")) && (action == ACTION_DOWN)) {
                         decrement(whichThrottle);
@@ -1068,10 +1155,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     return (true); // stop processing this key
 
-                // DPAD actually produces all three of the following events.  just use one
-                //case KeyEvent.KEYCODE_A:
-                //case KeyEvent.KEYCODE_Q:
-                case KeyEvent.KEYCODE_DPAD_LEFT:
+            } else if (keyCode == gamepadDpadLeft) {
                     // Forward
                     // set speed to zero on direction change while moving if the preference is set
                     if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
@@ -1089,10 +1173,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     return (true); // stop processing this key
 
-                // DPAD actually produces all three of the following events.  just use one
-                //case KeyEvent.KEYCODE_D:
-                //case KeyEvent.KEYCODE_C:
-                case KeyEvent.KEYCODE_DPAD_RIGHT:
+            } else if (keyCode == gamepadDpadRight) {
                     // Reverse
                     // set speed to zero on direction change while moving if the preference is set
                     if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
@@ -1110,9 +1191,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     return (true); // stop processing this key
 
-//                case KeyEvent.KEYCODE_Q:
-                case KeyEvent.KEYCODE_Y: // 'NewGame' mode
-                case KeyEvent.KEYCODE_3: // international standard gamepad
+            } else if (keyCode == gamepadX) {
                     // stop
                     if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
                         set_stop_button(whichThrottle, true);
@@ -1122,8 +1201,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     return (true); // stop processing this key
 
-                case KeyEvent.KEYCODE_U:
-                case KeyEvent.KEYCODE_2: // international standard gamepad
+            } else if (keyCode == gamepadY) {
                     // F1 - Bell
                     if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
 //                        Log.d("Engine_Driver", "keycode " + keyCode);
@@ -1138,8 +1216,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                         return (true); // stop processing this key
 
-                case KeyEvent.KEYCODE_J:
-                case KeyEvent.KEYCODE_4: // international standard gamepad
+            } else if (keyCode == gamepadA) {
+                    // F0 - Light
+                    if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
+                        //Log.d("Engine_Driver", "keycode " + keyCode);
+                        switch (whichThrottle) {
+                            case 'T': { mainapp.function_states_T[0] = !mainapp.function_states_T[0]; break;}
+                            case 'G': { mainapp.function_states_G[0] = !mainapp.function_states_G[0]; break;}
+                            default: { mainapp.function_states_S[0]  = !mainapp.function_states_S[0]; break;}
+                        }
+                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+"", 0, 1);
+                        set_function_state(whichThrottle, 0);
+                    }
+                    return (true); // stop processing this key
+
+            } else if (keyCode == gamepadB) {
                     // F2 - Horn
                     if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
                         Log.d("Engine_Driver", "keycode " + keyCode);
@@ -1154,40 +1245,27 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     return (true); // stop processing this key
 
-                case KeyEvent.KEYCODE_H:
-                case KeyEvent.KEYCODE_1: // international standard gamepad
-                    // F0 - Light
-                    if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
-                        //Log.d("Engine_Driver", "keycode " + keyCode);
-                        switch (whichThrottle) {
-                            case 'T': { mainapp.function_states_T[0] = !mainapp.function_states_T[0]; break;}
-                            case 'G': { mainapp.function_states_G[0] = !mainapp.function_states_G[0]; break;}
-                            default: { mainapp.function_states_S[0]  = !mainapp.function_states_S[0]; break;}
-                        }
-                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+"", 0, 1);
-                        set_function_state(whichThrottle, 0);
-                    }
-                    return (true); // stop processing this key
-
-                case KeyEvent.KEYCODE_V:
-                case KeyEvent.KEYCODE_0: // international standard gamepad
-                    // F0 - EStop
-                    if (action == ACTION_UP) {
-                        speedUpdateAndNotify('T', 0);        // update requested direction indication
-                        speedUpdateAndNotify('S', 0);        // update requested direction indication
-                        speedUpdateAndNotify('G', 0);        // update requested direction indication
-                        enable_disable_direction_and_loco_buttons('T');
-                        enable_disable_direction_and_loco_buttons('S');
-                        enable_disable_direction_and_loco_buttons('G');
-                    }
-                    return (true); // stop processing this key
-
-                default:
-                    return super.dispatchKeyEvent(event);
+            } else if (keyCode == gamepadStart) {
+                // F0 - EStop
+                if (action == ACTION_UP) {
+                    speedUpdateAndNotify('T', 0);        // update requested direction indication
+                    speedUpdateAndNotify('S', 0);        // update requested direction indication
+                    speedUpdateAndNotify('G', 0);        // update requested direction indication
+                    enable_disable_direction_and_loco_buttons('T');
+                    enable_disable_direction_and_loco_buttons('S');
+                    enable_disable_direction_and_loco_buttons('G');
+                }
+                return (true); // stop processing this key
             }
-        } else {
-            return super.dispatchKeyEvent(event);
+
+            if (keyCode == KEYCODE_BACK) {
+                return super.dispatchKeyEvent(event);
+            }else {
+                return (true); // swallow all other keystrokes except back
+            }
         }
+
+        return super.dispatchKeyEvent(event);
     }
 
     // Listeners for the Select Loco buttons
@@ -1747,11 +1825,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         enable_disable_direction_and_loco_buttons('G');
 
         // check the preference setting for GamePad Support
-        prefThrottleGamePad = prefs.getBoolean("prefThrottleGamePad", getResources().getBoolean(R.bool.prefThrottleGamePadDefaultValue));
-        if (prefThrottleGamePad) { // make sure the Softkeyboad is hidden
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
-                    WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        }
+        setGamepadKeys();
 
         webView = (WebView) findViewById(R.id.throttle_webview);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
@@ -1840,6 +1914,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         enable_disable_direction_and_loco_buttons('T');
         enable_disable_direction_and_loco_buttons('S');
         enable_disable_direction_and_loco_buttons('G');
+
+        // check the preference setting for GamePad Support
+        setGamepadKeys();
 
         set_labels(); // handle labels and update view
 
@@ -2474,7 +2551,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
         // Handle pressing of the back button
-        if (key == KeyEvent.KEYCODE_BACK) {
+        if (key == KEYCODE_BACK) {
             if (webView.canGoBack() && !clearHistory) {
                 scale = webView.getScale(); // save scale
                 webView.goBack();
@@ -2718,11 +2795,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         // check if the sliders are already hidden by preference
         if (!prefs.getBoolean("hide_slider_preference", false)) {
-//            Log.d("Engine_Driver", "gestureStart sX= " + gestureStartX + " sY= " + gestureStartY);
-//            Log.d("Engine_Driver", "gestureStart tTop= " + T_top + " tBottom= " + T_bottom);
-//            Log.d("Engine_Driver", "gestureStart sTop= " + S_top + " sBottom= " + S_bottom);
-//            Log.d("Engine_Driver", "gestureStart gTop= " + G_top + " gBottom= " + G_bottom);
-
             // if gesture is attempting to start over an enabled slider, ignore it and return immediately.
             if ((sbT.isEnabled() && gestureStartY >= T_top && gestureStartY <= T_bottom)
                     || (sbS.isEnabled() && gestureStartY >= S_top && gestureStartY <= S_bottom)
