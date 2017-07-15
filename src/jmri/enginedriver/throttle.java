@@ -228,7 +228,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private boolean immersiveModeCheck;
 
     //used in the gesture for temporarily showing the Web View
-    private boolean webViewIsOn;
+    private boolean webViewIsOn = false;
+    private String prefSwipeUpOption;
+    private String keepWebViewLocation = "none";
 
     // used to hold the direction change preferences
     boolean dirChangeWhileMoving;
@@ -458,6 +460,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     // set new location
                     webViewLocation = prefs
                             .getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+                    keepWebViewLocation = webViewLocation;
+                    webViewIsOn = false;
                     reloadWeb();
                     break;
                 case message_type.INITIAL_WEBPAGE:
@@ -1061,7 +1065,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         switch (whichGamePadMode) {
             case "iCade":
-                Toast.makeText(getApplicationContext(), "Gamepad - iCade Mode", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Gamepad - iCade Mode", Toast.LENGTH_SHORT).show();
 
                 gamepadDpadUp = KEYCODE_W;   //key down   'E' up
                 gamepadDpadDown = KEYCODE_X;   //key down   'Z' up
@@ -1074,7 +1078,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 gamepadB = KEYCODE_F;   //key up   'Y' down
                 break;
             case "iCade+DPAD":
-                Toast.makeText(getApplicationContext(), "Gamepad - iCade+DPAD Mode", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Gamepad - iCade+DPAD Mode", Toast.LENGTH_SHORT).show();
 
                 // iOS iCade but use the DPAD keys rather than the standard iCade ones
                 gamepadDpadUp = KEYCODE_DPAD_UP;
@@ -1088,7 +1092,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 gamepadB = KEYCODE_F;   //key up   'Y' down
                 break;
             case "MKT":
-                Toast.makeText(getApplicationContext(), "Gamepad - MKT Mode", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Gamepad - MKT Mode", Toast.LENGTH_SHORT).show();
 
                 gamepadDpadUp = KEYCODE_DPAD_UP;
                 gamepadDpadDown = KEYCODE_DPAD_DOWN;
@@ -1101,7 +1105,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 gamepadB = KEYCODE_2;
                 break;
             case "Keyboard":
-                Toast.makeText(getApplicationContext(), "Gamepad - Keyboard Mode", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Gamepad - Keyboard Mode", Toast.LENGTH_SHORT).show();
 
                 gamepadDpadUp = KEYCODE_W;
                 gamepadDpadDown = KEYCODE_Z;
@@ -1636,6 +1640,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         speedButtonDownText = getApplicationContext().getResources().getString(R.string.DownButton);
 
         webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+        if (webViewLocation.equals("none")) webViewIsOn = false; else webViewIsOn = true;
+        keepWebViewLocation = webViewLocation;
+
+        prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
 
         // myGesture = new GestureDetector(this);
         GestureOverlayView ov = (GestureOverlayView) findViewById(R.id.throttle_overlay);
@@ -1908,6 +1916,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         enable_disable_buttons('G');
         gestureFailed = false;
         gestureInProgress = false;
+
+        prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
+
         // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
         dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
         stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
@@ -2889,10 +2900,16 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         setImmersiveModeOn(webView);
                     }
                 }
-                // TODO: do something on swipe up (only)
-                //noinspection StatementWithEmptyBody
+
+                //on swipe up
                 if ((gestureStartY - event.getY()) > threaded_application.min_fling_distance) {
-                    // Toast.makeText(getApplicationContext(), "Swipe Up", Toast.LENGTH_SHORT).show();
+                    if (prefSwipeUpOption.equals("Show-Hide Web View")) { // show the web view if the preference is set
+                        if (!webViewIsOn) webViewLocation = keepWebViewLocation; else webViewLocation = "none";
+                        webViewIsOn = !webViewIsOn;
+                        //Toast.makeText(getApplicationContext(), "Swipe Up - " + webViewLocation, Toast.LENGTH_SHORT).show();
+
+                        this.onResume();
+                    }
                 }
             } else {
                 // gesture was not long enough

@@ -126,6 +126,8 @@
     <string name="prefIncreaseWebViewSizeSummary">Increase web view size to 60% for small screens.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Use Immersive Mode for Throttle view?</string>
     <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  Swipe down to temporarily disable and reach the menu.</string>
+    <string name="prefSwipeUpOptionTitle">Swipe up action in the Throttle view?</string>
+    <string name="prefSwipeUpOptionSummary">What should happen when you swipe up on the Throttle view. NOTE: Requires \'Throttle Web View?\' to be set.</string>
     <string name="prefGamePadTypeTitle">Gamepad Type?</string>
     <string name="prefGamePadTypeSummary">Choose the option that best supports you gamepad. NOTE: Currently only supports simple gamepads \nor Keyboard:-Dir: WZAS F:123 Stop:0 EStop:9</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>
@@ -225,7 +227,9 @@
     <string name="prefSpeedButtonsSpeedStepSummary">How much Speed arrows jump throttle speed.</string>
 	<string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>
     <string name="prefGamePadTypeDefaultValue">None</string>
-	<string name="server_address">Server address</string>
+	<string name="prefSwipeUpOptionDefaultValue">None</string>
+    <string name="NumThrottleDefaulValue">Two</string>
+    <string name="server_address">Server address</string>
 	<string name="routes_route">Route System Name</string>
 	<string name="label_percent">%</string>
     <string name="label_14step">14</string>
