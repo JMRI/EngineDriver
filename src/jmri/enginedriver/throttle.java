@@ -252,6 +252,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private int gamepadA = KEYCODE_R;   //key up   'H' down
     private int gamepadB = KEYCODE_F;   //key up   'Y' down
 
+    //Throttle Array
+    private char[] allThrottleLetters = {'T', 'S', 'G'};
 
     // For speed slider speed buttons.
     class RptUpdater implements Runnable {
@@ -1255,9 +1257,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     speedUpdateAndNotify('T', 0);        // update requested direction indication
                     speedUpdateAndNotify('S', 0);        // update requested direction indication
                     speedUpdateAndNotify('G', 0);        // update requested direction indication
-                    enable_disable_direction_and_loco_buttons('T');
-                    enable_disable_direction_and_loco_buttons('S');
-                    enable_disable_direction_and_loco_buttons('G');
+                    for (char throttleLetter : allThrottleLetters) {enable_disable_direction_and_loco_buttons(throttleLetter);}  // repeat for all three throttles
                 }
                 return (true); // stop processing this key
             }
@@ -1824,9 +1824,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
         dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
         stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
-        enable_disable_direction_and_loco_buttons('T');
-        enable_disable_direction_and_loco_buttons('S');
-        enable_disable_direction_and_loco_buttons('G');
+        for (char throttleLetter : allThrottleLetters) {enable_disable_direction_and_loco_buttons(throttleLetter);}  // repeat for all three throttles
 
         // check the preference setting for GamePad Support
         setGamepadKeys();
@@ -1918,9 +1916,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
         dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
         stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
-        enable_disable_direction_and_loco_buttons('T');
-        enable_disable_direction_and_loco_buttons('S');
-        enable_disable_direction_and_loco_buttons('G');
+
+        for (char throttleLetter : allThrottleLetters) {enable_disable_direction_and_loco_buttons(throttleLetter);}  // repeat for all three throttles
+
 
         // check the preference setting for GamePad Support
         setGamepadKeys();
@@ -1942,9 +1940,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             speedUpdateAndNotify('G', 0);
 
             // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
-            enable_disable_direction_and_loco_buttons('T');
-            enable_disable_direction_and_loco_buttons('S');
-            enable_disable_direction_and_loco_buttons('G');
+            for (char throttleLetter : allThrottleLetters) {enable_disable_direction_and_loco_buttons(throttleLetter);}  // repeat for all three throttles
 
             mainapp.EStopActivated = false;
         }
@@ -2671,14 +2667,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 break;
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
-                speedUpdate('T', 0);
-                speedUpdate('S', 0);
-                speedUpdate('G', 0);
+                for (char throttleLetter : allThrottleLetters) {speedUpdate(throttleLetter,0);}  // repeat for all three throttles
 
                 // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
-                enable_disable_direction_and_loco_buttons('T');
-                enable_disable_direction_and_loco_buttons('S');
-                enable_disable_direction_and_loco_buttons('G');
+                for (char throttleLetter : allThrottleLetters) {enable_disable_direction_and_loco_buttons(throttleLetter);}  // repeat for all three throttles
 
                 break;
             case R.id.power_layout_button:
