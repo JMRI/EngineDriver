@@ -130,6 +130,8 @@
     <string name="prefSwipeUpOptionSummary">What should happen when you swipe up on the Throttle view. NOTE: Requires \'Throttle Web View?\' to be set.</string>
     <string name="prefGamePadTypeTitle">Gamepad Type?</string>
     <string name="prefGamePadTypeSummary">Choose the option that best supports you gamepad. NOTE: Currently only supports simple gamepads \nor Keyboard:-Dir: WZAS F:123 Stop:0 EStop:9</string>
+    <string name="prefGamePadStartButtonTitle">Gamepad Start Button?</string>
+    <string name="prefGamePadStartButtonSummary">Choose the action when you press the Start button.</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default function labels instead of labels from roster entries.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. Height?</string>
@@ -228,6 +230,7 @@
 	<string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>
     <string name="prefGamePadTypeDefaultValue">None</string>
 	<string name="prefSwipeUpOptionDefaultValue">None</string>
+    <string name="prefGamePadStartButtonDefaultValue">Next Throttle</string>
     <string name="NumThrottleDefaulValue">Two</string>
     <string name="server_address">Server address</string>
 	<string name="routes_route">Route System Name</string>

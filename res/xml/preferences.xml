@@ -140,6 +140,13 @@
             android:key="prefGamePadType"
             android:summary="@string/prefGamePadTypeSummary"
             android:title="@string/prefGamePadTypeTitle" />
+        <ListPreference
+            android:defaultValue="@string/prefGamePadStartButtonDefaultValue"
+            android:entries="@array/prefGamePadStartButtonOptions"
+            android:entryValues="@array/prefGamePadStartButtonOptions"
+            android:key="prefGamePadStartButton"
+            android:summary="@string/prefGamePadStartButtonSummary"
+            android:title="@string/prefGamePadStartButtonTitle" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefThrottleTitle" >
         <ListPreference

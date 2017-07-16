@@ -127,4 +127,8 @@
         <item >None</item>
         <item >Show-Hide Web View</item>
     </string-array>
+    <string-array name="prefGamePadStartButtonOptions">
+        <item >EStop</item>
+        <item >Next Throttle</item>
+    </string-array>
 </resources>

@@ -83,6 +83,8 @@ import static android.view.KeyEvent.KEYCODE_R;
 import static android.view.KeyEvent.KEYCODE_S;
 import static android.view.KeyEvent.KEYCODE_T;
 import static android.view.KeyEvent.KEYCODE_V;
+import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
+import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
 import static android.view.KeyEvent.KEYCODE_Z;
@@ -242,6 +244,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private static final int DIRECTION_REVERSE = 0;
     // default to the iOS iCade mappings
     private String whichGamePadMode = "None";
+    private String prefThrottleGameStartButton;
     private int gamepadDpadUp = KEYCODE_W;   //key down   'E' up
     private int gamepadDpadDown = KEYCODE_X;   //key down   'Z' up
     private int gamepadDpadLeft = KEYCODE_A;   //key down   'Q' up
@@ -1051,6 +1054,65 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
+    private void setVolumeIndicator() {
+        // hide or display volume control indicator based on variable
+        if (whichVolume == 'T') {
+            vVolT.setVisibility(View.VISIBLE);
+            vVolS.setVisibility(View.GONE);
+            vVolG.setVisibility(View.GONE);
+        } else if (whichVolume == 'G') {
+            vVolT.setVisibility(View.GONE);
+            vVolS.setVisibility(View.GONE);
+            vVolG.setVisibility(View.VISIBLE);
+        } else {
+            vVolT.setVisibility(View.GONE);
+            vVolS.setVisibility(View.VISIBLE);
+            vVolG.setVisibility(View.GONE);
+        }
+    }
+
+    private void setNextActiveThrottle() {
+        int i;
+        int index = -1;
+        int nextIndex = 0;
+
+        String[] conAddrs = new String[3];
+        conAddrs[0] = mainapp.consistT.formatConsistAddr();
+        conAddrs[1] = mainapp.consistS.formatConsistAddr();
+        conAddrs[2] = mainapp.consistG.formatConsistAddr();
+
+        for (i = 0; (i < allThrottleLetters.length) && (index == -1); i++) {
+            if (allThrottleLetters[i] == whichVolume) {
+                index = i;
+            }
+        }
+
+        i= index+1;
+
+        while (i != index) {
+            if (i > 2) {
+                i = 0;
+            } else {
+                if (!conAddrs[i].equals("Not Set")) { // see if the next throttle is set.
+                    whichVolume = allThrottleLetters[i]; // set the volume throttle
+                    setVolumeIndicator();
+                    index = i; // force it so that the next time through the loop it wil match, and drop out
+                } else {
+                    i++;
+                }
+            }
+        }
+        for (i=0; i<=index;i++) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+        }
+    }
+
+
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
         Log.d("Engine_Driver", "keycode " + event.getAction());
@@ -1059,6 +1121,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     private void setGamepadKeys() {
         whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
+        prefThrottleGameStartButton = prefs.getString("prefGamePadStartButton", getApplicationContext().getResources().getString(R.string.prefGamePadStartButtonDefaultValue));
 
         if (!whichGamePadMode.equals("None")) { // make sure the Softkeyboard is hidden
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
@@ -1151,6 +1214,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     increment(whichThrottle);
                     enable_disable_direction_and_loco_buttons(whichThrottle);
                 }
+                Log.d("Engine_Driver", "Speed " + getSpeed(whichThrottle));
+                if (getSpeed(whichThrottle) > (MAX_SPEED_VAL_WIT-1)) vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                 return (true); // stop processing this key
 
             } else if (keyCode == gamepadDpadDown) {
@@ -1159,6 +1224,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         decrement(whichThrottle);
                         enable_disable_direction_and_loco_buttons(whichThrottle);
                     }
+                    if (getSpeed(whichThrottle) < 1) vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                     return (true); // stop processing this key
 
             } else if (keyCode == gamepadDpadLeft) {
@@ -1175,6 +1241,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         if ((dirChangeWhileMoving) || (getSpeed(whichThrottle) == 0)) {
                             showDirectionRequest(whichThrottle, DIRECTION_FORWARD);        // update requested direction indication
                             setEngineDirection(whichThrottle, DIRECTION_FORWARD, false);   // update direction for each engine on this throttle
+                            vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                         }
                     }
                     return (true); // stop processing this key
@@ -1193,6 +1260,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         if ((dirChangeWhileMoving) || (getSpeed(whichThrottle) == 0)) {
                             showDirectionRequest(whichThrottle, DIRECTION_REVERSE);        // update requested direction indication
                             setEngineDirection(whichThrottle, DIRECTION_REVERSE, false);   // update direction for each engine on this throttle
+                            vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                         }
                     }
                     return (true); // stop processing this key
@@ -1218,7 +1286,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         }
                         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+"", 1, 1);
                         set_function_state(whichThrottle, 1);
-
+                        vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                     }
                         return (true); // stop processing this key
 
@@ -1233,6 +1301,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         }
                         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+"", 0, 1);
                         set_function_state(whichThrottle, 0);
+                        vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                     }
                     return (true); // stop processing this key
 
@@ -1247,22 +1316,27 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         }
                         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+"", 2, 1);
                         set_function_state(whichThrottle, 2);
-
+                        vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                     }
                     return (true); // stop processing this key
 
             } else if (keyCode == gamepadStart) {
                 // F0 - EStop
                 if (action == ACTION_UP) {
-                    speedUpdateAndNotify('T', 0);        // update requested direction indication
-                    speedUpdateAndNotify('S', 0);        // update requested direction indication
-                    speedUpdateAndNotify('G', 0);        // update requested direction indication
-                    for (char throttleLetter : allThrottleLetters) {enable_disable_direction_and_loco_buttons(throttleLetter);}  // repeat for all three throttles
+                    if (prefThrottleGameStartButton.equals("EStop")) {
+                        for (char throttleLetter : allThrottleLetters) {  // repeat for all three throttles
+                            enable_disable_direction_and_loco_buttons(throttleLetter);
+                            speedUpdateAndNotify(throttleLetter, 0);  // update requested direction indication
+                            vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                        }  //
+                    } else { // "Next Throttle"
+                        setNextActiveThrottle();
+                    }
                 }
                 return (true); // stop processing this key
             }
 
-            if (!(keyCode == KEYCODE_BACK)) return (true); // swallow all other keystrokes except back
+            if (!((keyCode == KEYCODE_BACK) || (keyCode == KEYCODE_VOLUME_DOWN) || (keyCode == KEYCODE_VOLUME_UP))) return (true); // swallow all other keystrokes except back and the volume keys
         }
 
         return super.dispatchKeyEvent(event);
@@ -2151,19 +2225,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         if (vVolT == null) return;
 
         // hide or display volume control indicator based on variable
-        if (whichVolume == 'T') {
-            vVolT.setVisibility(VISIBLE);
-            vVolS.setVisibility(GONE);
-            vVolG.setVisibility(GONE);
-        } else if (whichVolume == 'G') {
-            vVolT.setVisibility(GONE);
-            vVolS.setVisibility(GONE);
-            vVolG.setVisibility(VISIBLE);
-        } else {
-            vVolT.setVisibility(GONE);
-            vVolS.setVisibility(VISIBLE);
-            vVolG.setVisibility(GONE);
-        }
+        setVolumeIndicator();
 
         // set speed buttons speed step
         String s = prefs.getString("speed_arrows_throttle_speed_step", "4");
@@ -2562,7 +2624,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             } else
                 mainapp.checkExit(this);
             return (true); // stop processing this key
-        } else if ((key == KeyEvent.KEYCODE_VOLUME_UP) || (key == KeyEvent.KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
+        } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
             char wVol = 0;
             if (whichVolume == 'T' && mainapp.consistT.isActive()) {
                 wVol = 'T';
@@ -2574,7 +2636,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 wVol = 'G';
             }
             if (wVol != 0) {
-                if (key == KeyEvent.KEYCODE_VOLUME_UP) {
+                if (key == KEYCODE_VOLUME_UP) {
                     speedChangeAndNotify(wVol, 1);
                 } else {
                     speedChangeAndNotify(wVol, -1);
