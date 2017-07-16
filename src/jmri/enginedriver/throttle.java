@@ -1262,11 +1262,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 return (true); // stop processing this key
             }
 
-            if (keyCode == KEYCODE_BACK) {
-                return super.dispatchKeyEvent(event);
-            }else {
-                return (true); // swallow all other keystrokes except back
-            }
+            if (!(keyCode == KEYCODE_BACK)) return (true); // swallow all other keystrokes except back
         }
 
         return super.dispatchKeyEvent(event);
@@ -1640,7 +1636,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         speedButtonDownText = getApplicationContext().getResources().getString(R.string.DownButton);
 
         webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
-        if (webViewLocation.equals("none")) webViewIsOn = false; else webViewIsOn = true;
+        webViewIsOn = !webViewLocation.equals("none");
         keepWebViewLocation = webViewLocation;
 
         prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
@@ -2904,7 +2900,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 //on swipe up
                 if ((gestureStartY - event.getY()) > threaded_application.min_fling_distance) {
                     if (prefSwipeUpOption.equals("Show-Hide Web View")) { // show the web view if the preference is set
-                        if (!webViewIsOn) webViewLocation = keepWebViewLocation; else webViewLocation = "none";
+                        if (!webViewIsOn) {
+                            webViewLocation = keepWebViewLocation;
+                        } else {
+                            webViewLocation = "none";
+                            Toast.makeText(getApplicationContext(), "Web View temporarily hidden. To hide permanently change in preferences" + webViewLocation, Toast.LENGTH_SHORT).show();
+                        }
                         webViewIsOn = !webViewIsOn;
                         //Toast.makeText(getApplicationContext(), "Swipe Up - " + webViewLocation, Toast.LENGTH_SHORT).show();
 
