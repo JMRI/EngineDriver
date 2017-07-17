@@ -121,6 +121,7 @@
         <item >iCade</item>
         <item >iCade+DPAD</item>
         <item >MKT</item>
+        <item >MKT - Rotate DPad Left</item>
         <item >Keyboard</item>
     </string-array>
     <string-array name="prefSwipeUpOptions">

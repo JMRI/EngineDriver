@@ -1156,6 +1156,19 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 gamepadA = KEYCODE_R;   //key up   'H' down
                 gamepadB = KEYCODE_F;   //key up   'Y' down
                 break;
+            case "MKT - Rotate DPad Left":
+                //Toast.makeText(getApplicationContext(), "Gamepad - MKT Mode", Toast.LENGTH_SHORT).show();
+
+                gamepadDpadUp = KEYCODE_DPAD_LEFT;
+                gamepadDpadDown = KEYCODE_DPAD_RIGHT;
+                gamepadDpadLeft = KEYCODE_DPAD_DOWN;
+                gamepadDpadRight = KEYCODE_DPAD_UP;
+                gamepadStart = KEYCODE_0;
+                gamepadX = KEYCODE_3;
+                gamepadY = KEYCODE_4;
+                gamepadA = KEYCODE_1;
+                gamepadB = KEYCODE_2;
+                break;
             case "MKT":
                 //Toast.makeText(getApplicationContext(), "Gamepad - MKT Mode", Toast.LENGTH_SHORT).show();
 
@@ -1183,7 +1196,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 gamepadB = KEYCODE_3;
                 break;
         }
-
     }
 
     // listener for physical keyboard events
@@ -2953,7 +2965,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
                 //on swipe up
                 if ((gestureStartY - event.getY()) > threaded_application.min_fling_distance) {
-                    if (prefSwipeUpOption.equals("Show-Hide Web View")) { // show the web view if the preference is set
+                    if ((prefSwipeUpOption.equals("Show-Hide Web View")) && !(keepWebViewLocation.equals("none"))) { // show the web view if the preference is set
                         if (!webViewIsOn) {
                             webViewLocation = keepWebViewLocation;
                         } else {
