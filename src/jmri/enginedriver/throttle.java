@@ -83,6 +83,8 @@ import static android.view.KeyEvent.KEYCODE_R;
 import static android.view.KeyEvent.KEYCODE_S;
 import static android.view.KeyEvent.KEYCODE_T;
 import static android.view.KeyEvent.KEYCODE_V;
+import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
+import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
 import static android.view.KeyEvent.KEYCODE_Z;
@@ -228,7 +230,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private boolean immersiveModeCheck;
 
     //used in the gesture for temporarily showing the Web View
-    private boolean webViewIsOn;
+    private boolean webViewIsOn = false;
+    private String prefSwipeUpOption;
+    private String keepWebViewLocation = "none";
 
     // used to hold the direction change preferences
     boolean dirChangeWhileMoving;
@@ -240,6 +244,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private static final int DIRECTION_REVERSE = 0;
     // default to the iOS iCade mappings
     private String whichGamePadMode = "None";
+    private String prefThrottleGameStartButton;
     private int gamepadDpadUp = KEYCODE_W;   //key down   'E' up
     private int gamepadDpadDown = KEYCODE_X;   //key down   'Z' up
     private int gamepadDpadLeft = KEYCODE_A;   //key down   'Q' up
@@ -250,6 +255,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private int gamepadA = KEYCODE_R;   //key up   'H' down
     private int gamepadB = KEYCODE_F;   //key up   'Y' down
 
+    //Throttle Array
+    private char[] allThrottleLetters = {'T', 'S', 'G'};
 
     // For speed slider speed buttons.
     class RptUpdater implements Runnable {
@@ -458,6 +465,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     // set new location
                     webViewLocation = prefs
                             .getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+                    keepWebViewLocation = webViewLocation;
+                    webViewIsOn = false;
                     reloadWeb();
                     break;
                 case message_type.INITIAL_WEBPAGE:
@@ -1045,6 +1054,65 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
+    private void setVolumeIndicator() {
+        // hide or display volume control indicator based on variable
+        if (whichVolume == 'T') {
+            vVolT.setVisibility(View.VISIBLE);
+            vVolS.setVisibility(View.GONE);
+            vVolG.setVisibility(View.GONE);
+        } else if (whichVolume == 'G') {
+            vVolT.setVisibility(View.GONE);
+            vVolS.setVisibility(View.GONE);
+            vVolG.setVisibility(View.VISIBLE);
+        } else {
+            vVolT.setVisibility(View.GONE);
+            vVolS.setVisibility(View.VISIBLE);
+            vVolG.setVisibility(View.GONE);
+        }
+    }
+
+    private void setNextActiveThrottle() {
+        int i;
+        int index = -1;
+        int nextIndex = 0;
+
+        String[] conAddrs = new String[3];
+        conAddrs[0] = mainapp.consistT.formatConsistAddr();
+        conAddrs[1] = mainapp.consistS.formatConsistAddr();
+        conAddrs[2] = mainapp.consistG.formatConsistAddr();
+
+        for (i = 0; (i < allThrottleLetters.length) && (index == -1); i++) {
+            if (allThrottleLetters[i] == whichVolume) {
+                index = i;
+            }
+        }
+
+        i= index+1;
+
+        while (i != index) {
+            if (i > 2) {
+                i = 0;
+            } else {
+                if (!conAddrs[i].equals("Not Set")) { // see if the next throttle is set.
+                    whichVolume = allThrottleLetters[i]; // set the volume throttle
+                    setVolumeIndicator();
+                    index = i; // force it so that the next time through the loop it wil match, and drop out
+                } else {
+                    i++;
+                }
+            }
+        }
+        for (i=0; i<=index;i++) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+        }
+    }
+
+
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
         Log.d("Engine_Driver", "keycode " + event.getAction());
@@ -1053,6 +1121,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     private void setGamepadKeys() {
         whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
+        prefThrottleGameStartButton = prefs.getString("prefGamePadStartButton", getApplicationContext().getResources().getString(R.string.prefGamePadStartButtonDefaultValue));
 
         if (!whichGamePadMode.equals("None")) { // make sure the Softkeyboard is hidden
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
@@ -1061,7 +1130,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         switch (whichGamePadMode) {
             case "iCade":
-                Toast.makeText(getApplicationContext(), "Gamepad - iCade Mode", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Gamepad - iCade Mode", Toast.LENGTH_SHORT).show();
 
                 gamepadDpadUp = KEYCODE_W;   //key down   'E' up
                 gamepadDpadDown = KEYCODE_X;   //key down   'Z' up
@@ -1074,7 +1143,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 gamepadB = KEYCODE_F;   //key up   'Y' down
                 break;
             case "iCade+DPAD":
-                Toast.makeText(getApplicationContext(), "Gamepad - iCade+DPAD Mode", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Gamepad - iCade+DPAD Mode", Toast.LENGTH_SHORT).show();
 
                 // iOS iCade but use the DPAD keys rather than the standard iCade ones
                 gamepadDpadUp = KEYCODE_DPAD_UP;
@@ -1087,8 +1156,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 gamepadA = KEYCODE_R;   //key up   'H' down
                 gamepadB = KEYCODE_F;   //key up   'Y' down
                 break;
+            case "MKT - Rotate DPad Left":
+                //Toast.makeText(getApplicationContext(), "Gamepad - MKT Mode", Toast.LENGTH_SHORT).show();
+
+                gamepadDpadUp = KEYCODE_DPAD_LEFT;
+                gamepadDpadDown = KEYCODE_DPAD_RIGHT;
+                gamepadDpadLeft = KEYCODE_DPAD_DOWN;
+                gamepadDpadRight = KEYCODE_DPAD_UP;
+                gamepadStart = KEYCODE_0;
+                gamepadX = KEYCODE_3;
+                gamepadY = KEYCODE_4;
+                gamepadA = KEYCODE_1;
+                gamepadB = KEYCODE_2;
+                break;
             case "MKT":
-                Toast.makeText(getApplicationContext(), "Gamepad - MKT Mode", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Gamepad - MKT Mode", Toast.LENGTH_SHORT).show();
 
                 gamepadDpadUp = KEYCODE_DPAD_UP;
                 gamepadDpadDown = KEYCODE_DPAD_DOWN;
@@ -1101,7 +1183,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 gamepadB = KEYCODE_2;
                 break;
             case "Keyboard":
-                Toast.makeText(getApplicationContext(), "Gamepad - Keyboard Mode", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Gamepad - Keyboard Mode", Toast.LENGTH_SHORT).show();
 
                 gamepadDpadUp = KEYCODE_W;
                 gamepadDpadDown = KEYCODE_Z;
@@ -1114,7 +1196,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 gamepadB = KEYCODE_3;
                 break;
         }
-
     }
 
     // listener for physical keyboard events
@@ -1145,6 +1226,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     increment(whichThrottle);
                     enable_disable_direction_and_loco_buttons(whichThrottle);
                 }
+                Log.d("Engine_Driver", "Speed " + getSpeed(whichThrottle));
+                if (getSpeed(whichThrottle) > (MAX_SPEED_VAL_WIT-1)) vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                 return (true); // stop processing this key
 
             } else if (keyCode == gamepadDpadDown) {
@@ -1153,6 +1236,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         decrement(whichThrottle);
                         enable_disable_direction_and_loco_buttons(whichThrottle);
                     }
+                    if (getSpeed(whichThrottle) < 1) vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                     return (true); // stop processing this key
 
             } else if (keyCode == gamepadDpadLeft) {
@@ -1169,6 +1253,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         if ((dirChangeWhileMoving) || (getSpeed(whichThrottle) == 0)) {
                             showDirectionRequest(whichThrottle, DIRECTION_FORWARD);        // update requested direction indication
                             setEngineDirection(whichThrottle, DIRECTION_FORWARD, false);   // update direction for each engine on this throttle
+                            vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                         }
                     }
                     return (true); // stop processing this key
@@ -1187,6 +1272,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         if ((dirChangeWhileMoving) || (getSpeed(whichThrottle) == 0)) {
                             showDirectionRequest(whichThrottle, DIRECTION_REVERSE);        // update requested direction indication
                             setEngineDirection(whichThrottle, DIRECTION_REVERSE, false);   // update direction for each engine on this throttle
+                            vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                         }
                     }
                     return (true); // stop processing this key
@@ -1212,7 +1298,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         }
                         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+"", 1, 1);
                         set_function_state(whichThrottle, 1);
-
+                        vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                     }
                         return (true); // stop processing this key
 
@@ -1227,6 +1313,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         }
                         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+"", 0, 1);
                         set_function_state(whichThrottle, 0);
+                        vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                     }
                     return (true); // stop processing this key
 
@@ -1241,28 +1328,27 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         }
                         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle+"", 2, 1);
                         set_function_state(whichThrottle, 2);
-
+                        vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                     }
                     return (true); // stop processing this key
 
             } else if (keyCode == gamepadStart) {
                 // F0 - EStop
                 if (action == ACTION_UP) {
-                    speedUpdateAndNotify('T', 0);        // update requested direction indication
-                    speedUpdateAndNotify('S', 0);        // update requested direction indication
-                    speedUpdateAndNotify('G', 0);        // update requested direction indication
-                    enable_disable_direction_and_loco_buttons('T');
-                    enable_disable_direction_and_loco_buttons('S');
-                    enable_disable_direction_and_loco_buttons('G');
+                    if (prefThrottleGameStartButton.equals("EStop")) {
+                        for (char throttleLetter : allThrottleLetters) {  // repeat for all three throttles
+                            enable_disable_direction_and_loco_buttons(throttleLetter);
+                            speedUpdateAndNotify(throttleLetter, 0);  // update requested direction indication
+                            vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                        }  //
+                    } else { // "Next Throttle"
+                        setNextActiveThrottle();
+                    }
                 }
                 return (true); // stop processing this key
             }
 
-            if (keyCode == KEYCODE_BACK) {
-                return super.dispatchKeyEvent(event);
-            }else {
-                return (true); // swallow all other keystrokes except back
-            }
+            if (!((keyCode == KEYCODE_BACK) || (keyCode == KEYCODE_VOLUME_DOWN) || (keyCode == KEYCODE_VOLUME_UP))) return (true); // swallow all other keystrokes except back and the volume keys
         }
 
         return super.dispatchKeyEvent(event);
@@ -1636,6 +1722,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         speedButtonDownText = getApplicationContext().getResources().getString(R.string.DownButton);
 
         webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+        webViewIsOn = !webViewLocation.equals("none");
+        keepWebViewLocation = webViewLocation;
+
+        prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
 
         // myGesture = new GestureDetector(this);
         GestureOverlayView ov = (GestureOverlayView) findViewById(R.id.throttle_overlay);
@@ -1820,9 +1910,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
         dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
         stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
-        enable_disable_direction_and_loco_buttons('T');
-        enable_disable_direction_and_loco_buttons('S');
-        enable_disable_direction_and_loco_buttons('G');
+        for (char throttleLetter : allThrottleLetters) {enable_disable_direction_and_loco_buttons(throttleLetter);}  // repeat for all three throttles
 
         // check the preference setting for GamePad Support
         setGamepadKeys();
@@ -1908,12 +1996,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         enable_disable_buttons('G');
         gestureFailed = false;
         gestureInProgress = false;
+
+        prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
+
         // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
         dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
         stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
-        enable_disable_direction_and_loco_buttons('T');
-        enable_disable_direction_and_loco_buttons('S');
-        enable_disable_direction_and_loco_buttons('G');
+
+        for (char throttleLetter : allThrottleLetters) {enable_disable_direction_and_loco_buttons(throttleLetter);}  // repeat for all three throttles
+
 
         // check the preference setting for GamePad Support
         setGamepadKeys();
@@ -1935,9 +2026,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             speedUpdateAndNotify('G', 0);
 
             // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
-            enable_disable_direction_and_loco_buttons('T');
-            enable_disable_direction_and_loco_buttons('S');
-            enable_disable_direction_and_loco_buttons('G');
+            for (char throttleLetter : allThrottleLetters) {enable_disable_direction_and_loco_buttons(throttleLetter);}  // repeat for all three throttles
 
             mainapp.EStopActivated = false;
         }
@@ -2148,19 +2237,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         if (vVolT == null) return;
 
         // hide or display volume control indicator based on variable
-        if (whichVolume == 'T') {
-            vVolT.setVisibility(VISIBLE);
-            vVolS.setVisibility(GONE);
-            vVolG.setVisibility(GONE);
-        } else if (whichVolume == 'G') {
-            vVolT.setVisibility(GONE);
-            vVolS.setVisibility(GONE);
-            vVolG.setVisibility(VISIBLE);
-        } else {
-            vVolT.setVisibility(GONE);
-            vVolS.setVisibility(VISIBLE);
-            vVolG.setVisibility(GONE);
-        }
+        setVolumeIndicator();
 
         // set speed buttons speed step
         String s = prefs.getString("speed_arrows_throttle_speed_step", "4");
@@ -2559,7 +2636,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             } else
                 mainapp.checkExit(this);
             return (true); // stop processing this key
-        } else if ((key == KeyEvent.KEYCODE_VOLUME_UP) || (key == KeyEvent.KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
+        } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
             char wVol = 0;
             if (whichVolume == 'T' && mainapp.consistT.isActive()) {
                 wVol = 'T';
@@ -2571,7 +2648,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 wVol = 'G';
             }
             if (wVol != 0) {
-                if (key == KeyEvent.KEYCODE_VOLUME_UP) {
+                if (key == KEYCODE_VOLUME_UP) {
                     speedChangeAndNotify(wVol, 1);
                 } else {
                     speedChangeAndNotify(wVol, -1);
@@ -2664,14 +2741,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 break;
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
-                speedUpdate('T', 0);
-                speedUpdate('S', 0);
-                speedUpdate('G', 0);
+                for (char throttleLetter : allThrottleLetters) {speedUpdate(throttleLetter,0);}  // repeat for all three throttles
 
                 // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
-                enable_disable_direction_and_loco_buttons('T');
-                enable_disable_direction_and_loco_buttons('S');
-                enable_disable_direction_and_loco_buttons('G');
+                for (char throttleLetter : allThrottleLetters) {enable_disable_direction_and_loco_buttons(throttleLetter);}  // repeat for all three throttles
 
                 break;
             case R.id.power_layout_button:
@@ -2889,10 +2962,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         setImmersiveModeOn(webView);
                     }
                 }
-                // TODO: do something on swipe up (only)
-                //noinspection StatementWithEmptyBody
+
+                //on swipe up
                 if ((gestureStartY - event.getY()) > threaded_application.min_fling_distance) {
-                    // Toast.makeText(getApplicationContext(), "Swipe Up", Toast.LENGTH_SHORT).show();
+                    if ((prefSwipeUpOption.equals("Show-Hide Web View")) && !(keepWebViewLocation.equals("none"))) { // show the web view if the preference is set
+                        if (!webViewIsOn) {
+                            webViewLocation = keepWebViewLocation;
+                        } else {
+                            webViewLocation = "none";
+                            Toast.makeText(getApplicationContext(), "Web View temporarily hidden. To hide permanently change in preferences" + webViewLocation, Toast.LENGTH_SHORT).show();
+                        }
+                        webViewIsOn = !webViewIsOn;
+                        //Toast.makeText(getApplicationContext(), "Swipe Up - " + webViewLocation, Toast.LENGTH_SHORT).show();
+
+                        this.onResume();
+                    }
                 }
             } else {
                 // gesture was not long enough
