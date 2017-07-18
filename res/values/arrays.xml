@@ -120,6 +120,7 @@
         <item >None</item>
         <item >iCade</item>
         <item >iCade+DPAD</item>
+        <item >iCade+DPAD - Rotate DPad Left</item>
         <item >MKT</item>
         <item >MKT - Rotate DPad Left</item>
         <item >Keyboard</item>
@@ -132,4 +133,70 @@
         <item >EStop</item>
         <item >Next Throttle</item>
     </string-array>
+    <integer-array name="prefGamePadiCade">
+        <item>@integer/KeyCode_W</item> //key down   'E' up
+        <item>@integer/KeyCode_X</item> //key down   'Z' up
+        <item>@integer/KeyCode_A</item>  //key down   'Q' up
+        <item>@integer/KeyCode_D</item> //key down   'C' up
+        <item>@integer/KeyCode_V</item> //key up   'L' down
+        <item>@integer/KeyCode_T</item> //key up   'Y' down
+        <item>@integer/KeyCode_N</item> //key up   'J' down
+        <item>@integer/KeyCode_R</item> //key up   'H' down
+        <item>@integer/KeyCode_F</item> ///key up   'Y' down
+    </integer-array>
+    <integer-array name="prefGamePadiCadePlusDpad">
+        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
+        <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown = KEYCODE_DPAD_DOWN;
+        <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft = KEYCODE_DPAD_LEFT;
+        <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadRight = KEYCODE_DPAD_RIGHT;
+        <item>@integer/KeyCode_V</item> ///key up   'L' down
+        <item>@integer/KeyCode_T</item> //key up   'Y' down
+        <item>@integer/KeyCode_N</item> //key up   'J' down
+        <item>@integer/KeyCode_R</item> //key up   'H' down
+        <item>@integer/KeyCode_F</item> //key up   'Y' down
+    </integer-array>
+    <integer-array name="prefGamePadiCadePlusDpadRotateDpadLeft">
+        <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadUp = KEYCODE_DPAD_LEFT;
+        <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadDown = KEYCODE_DPAD_RIGHT;
+        <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadLeft = KEYCODE_DPAD_DOWN;
+        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadRight = KEYCODE_DPAD_UP;
+        <item>@integer/KeyCode_V</item> //key up   'L' down
+        <item>@integer/KeyCode_T</item> //key up   'Y' down
+        <item>@integer/KeyCode_N</item> //key up   'J' down
+        <item>@integer/KeyCode_R</item> //key up   'H' down
+        <item>@integer/KeyCode_F</item> //key up   'Y' down
+    </integer-array>
+    <integer-array name="prefGamePadMKTRotateDpadLeft">
+        <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadUp = KEYCODE_DPAD_LEFT;
+        <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadDown = KEYCODE_DPAD_RIGHT;
+        <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadLeft = KEYCODE_DPAD_DOWN;
+        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadRight = KEYCODE_DPAD_UP;
+        <item>@integer/KeyCode_0</item> //gamepadStart = KEYCODE_V;
+        <item>@integer/KeyCode_3</item> //gamepadX = KEYCODE_T;
+        <item>@integer/KeyCode_4</item> //gamepadY = KEYCODE_N;
+        <item>@integer/KeyCode_1</item> //gamepadA = KEYCODE_R;
+        <item>@integer/KeyCode_2</item> //gamepadB = KEYCODE_F;
+    </integer-array>
+    <integer-array name="prefGamePadMKT">
+        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
+        <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown = KEYCODE_DPAD_DOWN;
+        <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft = KEYCODE_DPAD_LEFT;
+        <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadRight = KEYCODE_DPAD_RIGHT;
+        <item>@integer/KeyCode_0</item> //gamepadStart = KEYCODE_V;
+        <item>@integer/KeyCode_3</item> //gamepadX = KEYCODE_T;
+        <item>@integer/KeyCode_4</item> //gamepadY = KEYCODE_N;
+        <item>@integer/KeyCode_1</item> //gamepadA = KEYCODE_R;
+        <item>@integer/KeyCode_2</item> //gamepadB = KEYCODE_F;
+    </integer-array>
+    <integer-array name="prefGamePadKeyboard">
+        <item>@integer/KeyCode_W</item>
+        <item>@integer/KeyCode_Z</item>
+        <item>@integer/KeyCode_A</item>
+        <item>@integer/KeyCode_S</item>
+        <item>@integer/KeyCode_9</item>
+        <item>@integer/KeyCode_0</item>
+        <item>@integer/KeyCode_2</item>
+        <item>@integer/KeyCode_1</item>
+        <item>@integer/KeyCode_3</item>
+    </integer-array>
 </resources>
