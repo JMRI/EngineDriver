@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -328,7 +329,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                         removeLoco('S');
                                     }
                                 } else if (com2 == 'A') { // e.g. MTAL2608<;>R1
-                                    char com3 = ls[1].charAt(0);
+                                    char com3 = ' ';
+                                    if (ls.length == 1) { //make sure there's a value to parse
+                                        com3 = ls[1].charAt(0);
+                                    }
                                     if (com3 == 'R') {
                                         int dir;
                                         try {
@@ -465,6 +469,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     break;
                 case message_type.INITIAL_WEBPAGE:
                     initWeb();
+                    break;
+                case message_type.REQ_STEAL:
+                    String addr = msg.obj.toString();
+                    char whichThrottle = (char) msg.arg1;
+                    promptForSteal(addr, whichThrottle);
                     break;
             }
         }
@@ -1109,7 +1118,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
-        Log.d("Engine_Driver", "keycode " + event.getAction());
+        Log.d("Engine_Driver", "dgme keycode " + event.getAction());
         return super.dispatchGenericMotionEvent(event);
     }
 
@@ -2985,4 +2994,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         currentUrl = null;
         firstUrl = null;
     }
+    // prompt for Steal? Address, if yes, send message to execute the steal
+    public void promptForSteal(String addr, char whichThrottle) {
+        final AlertDialog.Builder b = new AlertDialog.Builder(this);
+        b.setIcon(android.R.drawable.ic_dialog_alert);
+        b.setTitle(R.string.steal_title);
+        b.setMessage(getString(R.string.steal_text, addr));
+        b.setCancelable(true);
+        b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.STEAL, addr, whichThrottle);
+            }
+        });
+        b.setNegativeButton(R.string.no, null);
+        AlertDialog alert = b.create();
+        alert.show();
+    }
+
 }

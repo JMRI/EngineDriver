@@ -1,4 +1,7 @@
 **Version 2.15
+ * swipe up on Throttle screen to hide Throttle Web view - Peter Akers
+ * add client support for Steal
+ * avoid several crashes reported to Play Store
 **Version 2.14.1
  * avoid some crashes reported to Play Store
  * postpone sending of "Q"uit message until Throttle has a chance to send stops
@@ -306,7 +309,6 @@
  *   TODO: handle MRC's fastclock message
  *   TODO: change config files to use db instead of .txt files
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
- *   TODO: make private stuff private
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  * MRC
@@ -322,10 +324,9 @@
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
  *   TODO: if user enters ":" into address input, jump to port input
- *   TODO: debug "Success: Restored connection to ..." message seen (sometimes) after exiting from Throttle
  *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
  * threaded_application
- *	 TODO: process_comm_error() no longer sending connection lost messages (maybe others)
+ *   TODO: limit/throttle message traffic via queue to avoid overloading hardware
  *   TODO: remember consist details
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one

@@ -100,6 +100,8 @@
     <string name="no">No</string>
     <string name="exit_text">Exit Engine Driver?</string>
     <string name="exit_title">Exit</string>
+    <string name="steal_text">Steal address %1$s?</string>
+    <string name="steal_title">Steal</string>
     <string name="prefTitle">Preferences</string>
     <string name="prefSummary">Preferences for Engine Driver</string>
     <string name="preferences">Preferences</string>
