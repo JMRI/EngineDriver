@@ -51,5 +51,6 @@ interface message_type {
     int CLOCK_DISPLAY = 29;     // pref -> ta  clock display preference changed
     int ESTOP = 30;             // ta(sendeStopMsg) -> ta  estop requested
     int WITHROTTLE_QUIT = 31;   // ta(disconnect) -> ta send quit command to server
-
+    int REQ_STEAL = 32;         // ta(message_action) pass addr, throttle -> throttle
+    int STEAL = 33;             // ta(checkSteal) pass addr, throttle -> ta send commands to steal
 }

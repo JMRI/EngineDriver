@@ -71,10 +71,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import jmri.enginedriver.message_type;
 import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
-import jmri.enginedriver.Consist;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 
@@ -137,6 +135,9 @@ public class threaded_application extends Application {
     public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (seconds)
     public int turnouts_list_position = 0;                  //remember where user was in item lists
     public int routes_list_position = 0;
+
+    String last_addr_requested = null;  //used to drop and retry
+    char last_whichThrottle;            //used to drop and retry
 
     String client_address; //address string of the client address
     Inet4Address client_address_inet4; //inet4 value of the client address
@@ -256,7 +257,7 @@ public class threaded_application extends Application {
                 }
                 //store the wifi ssid for later, removing any enclosing quotes
                 client_ssid = wifiinfo.getSSID();
-                if (client_ssid.startsWith("\"") && client_ssid.endsWith("\"")) {
+                if (client_ssid != null && client_ssid.startsWith("\"") && client_ssid.endsWith("\"")) {
                     client_ssid = client_ssid.substring(1, client_ssid.length() - 1);
                 }
             } catch (Exception except) {
@@ -284,11 +285,11 @@ public class threaded_application extends Application {
                     Log.d("Engine_Driver", "start_jmdns: listener created");
 
                 } else {
-                    process_comm_error("No local IP Address found.\nCheck your WiFi connection.");
+                    show_toast_message("No local IP Address found.\nCheck your WiFi connection.", Toast.LENGTH_SHORT);
                 }
             } catch (Exception except) {
                 Log.e("Engine_Driver", "start_jmdns - Error creating withrottle listener: " + except.getMessage());
-                process_comm_error("Error creating withrottle zeroconf listener: IOException: \n" + except.getMessage());
+                show_toast_message("Error creating withrottle zeroconf listener: IOException: \n" + except.getMessage(), Toast.LENGTH_SHORT);
             }
         }
 
@@ -327,7 +328,7 @@ public class threaded_application extends Application {
 
         boolean isDtx() {  //TODO: replace with regex
             boolean ret = false;
-            if (client_ssid.startsWith("Dtx")) {
+            if (client_ssid != null && client_ssid.startsWith("Dtx")) {
                 List<String> parts;
                 parts = Arrays.asList(client_ssid.split("-"));
                 if (parts.size() == 3) {
@@ -536,6 +537,13 @@ public class threaded_application extends Application {
                         acquireLoco(addr, whichThrottle);
                         break;
                     }
+                    //send commands to steal the last requested address
+                    case message_type.STEAL: {
+                        String addr = msg.obj.toString();
+                        char whichThrottle = (char) msg.arg1;
+                        stealLoco(addr, whichThrottle);
+                        break;
+                    }
                     //          case message_type.ERROR:
                     //            break;
 
@@ -657,8 +665,11 @@ public class threaded_application extends Application {
                 withrottle_send("HU" + s);  //also send throttle name as the UDID
         }
 
+        /* ask for specific loco to be added to a throttle */
         private void acquireLoco(String addr, char whichThrottle) {
             withrottle_send(whichThrottle + addr);
+            last_addr_requested = addr; //remember this for use with steal
+            last_whichThrottle = whichThrottle;
 
             if (withrottle_version >= 2.0) {
                 //request current direction and speed (WiT 2.0+)
@@ -668,6 +679,21 @@ public class threaded_application extends Application {
 
             if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
                 withrottle_send("*+");     //request to turn on heartbeat (if enabled in server prefs)
+            }
+        }
+
+        /* "steal" will send the release command followed by the acquire command */
+        private void stealLoco(String addr, char whichThrottle) {
+            if (addr != null) {
+//                releaseLoco(addr, whichThrottle);
+//                acquireLoco(addr, whichThrottle);
+                withrottle_send(whichThrottle + "r<;>" + addr);
+                try {
+                    Thread.sleep(100);              //
+                } catch (InterruptedException ignore) {
+                }
+                withrottle_send(whichThrottle + addr);
+
             }
         }
 
@@ -692,9 +718,21 @@ public class threaded_application extends Application {
             }
         }
 
+        /* some messages from server need to be handled specially, return true if handled here */
+        private boolean message_action(final String msg_txt) {
+            boolean handled = false;
+            if (msg_txt.startsWith("!err-local use") || msg_txt.startsWith("!Loco In Use")) {
+                show_toast_message("Requested Address "+last_addr_requested+" already in use.",  Toast.LENGTH_SHORT);
+                sendMsg(throttle_msg_handler, message_type.REQ_STEAL, last_addr_requested, last_whichThrottle);
+                Log.d("Engine_Driver", "Loco in use msg " + last_addr_requested + " for " + last_whichThrottle + ", requesting steal");
+                handled = true;
+            }
+            return handled;
+        }
+
         //display error msg using Toast()
-        private void process_comm_error(final String msg_txt) {
-            Log.d("Engine_Driver", "TA comm error: " + msg_txt);
+        private void show_toast_message(final String msg_txt, int length) {
+            Log.d("Engine_Driver", "TA toast message: " + msg_txt);
             //need to do Toast() on the main thread so create a handler
             Handler h = new Handler(Looper.getMainLooper());
             h.post(new Runnable() {
@@ -796,13 +834,11 @@ public class threaded_application extends Application {
                         serverType = response_str.substring(2); //store the type
                         if (serverType.equals("MRC")) {
                             web_server_port = 80; //hardcode web port for MRC
-//                        to_state_names = new HashMap<String, String>();
-//                        to_state_names.put("2", "Closed"); //hardcode for MRC, this will enable the manual input only
-//                        to_state_names.put("4", "Thrown");
                         }
-//                  Log.d("Engine_Driver", "process response: set server_type to " + serverType + " web port to " + web_server_port);                   
-                    } else if (response_str.charAt(1) == 'M') { //message sent from server to throttle, send to UI as toast message
-                        process_comm_error(response_str.substring(2));
+                    } else if (response_str.charAt(1) == 'M') { //message sent from server to throttle
+                        if (!message_action(response_str.substring(2))) {                      //some need special handling
+                            show_toast_message(response_str.substring(2), Toast.LENGTH_SHORT); // otherwise, just copy to UI as toast message
+                        };
                     }
                     break;
 
@@ -1207,9 +1243,9 @@ public class threaded_application extends Application {
                         newMsg = prefix + "+" + addr + "<;>" + rosterName;  //add requested loco to this throttle
                     } else if ('r' == com) {                          //if release loco(s)
                         if (addr.length() > 0)
-                            newMsg = prefix + "-" + addr + "<;> + addr";        //release one loco
+                            newMsg = prefix + "-" + addr + "<;>r"; //release one loco
                         else
-                            newMsg = prefix + "-*<;>r";                         //release all locos from this throttle
+                            newMsg = prefix + "-*<;>r";            //release all locos from this throttle
                     } else {                                              //if anything else
                         if (addr.length() == 0)
                             addr = "*";
@@ -1263,7 +1299,7 @@ public class threaded_application extends Application {
                     try {
                         host_address = InetAddress.getByName(host_ip);
                     } catch (UnknownHostException except) {
-                        process_comm_error("Can't determine IP address of " + host_ip);
+                        show_toast_message("Can't determine IP address of " + host_ip, Toast.LENGTH_LONG);
                         socketOk = false;
                     }
                 }
@@ -1278,9 +1314,9 @@ public class threaded_application extends Application {
                         clientSocket.setSoTimeout(500);
                     } catch (Exception except) {
                         if (!firstConnect) {
-                            process_comm_error("Can't connect to host " + host_ip + " and port " + port +
+                            show_toast_message("Can't connect to host " + host_ip + " and port " + port +
                                     " from " + client_address +
-                                    " - " + except.getMessage() + "\nCheck WiThrottle and network settings.");
+                                    " - " + except.getMessage() + "\nCheck WiThrottle and network settings.", Toast.LENGTH_LONG);
                         }
                         socketOk = false;
                     }
@@ -1291,7 +1327,7 @@ public class threaded_application extends Application {
                     try {
                         inputBR = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                     } catch (IOException except) {
-                        process_comm_error("Error creating input stream, IOException: " + except.getMessage());
+                        show_toast_message("Error creating input stream, IOException: " + except.getMessage(), Toast.LENGTH_LONG);
                         socketOk = false;
                     }
                 }
@@ -1304,7 +1340,7 @@ public class threaded_application extends Application {
                             this.start();
                         } catch (IllegalThreadStateException except) {
                             //ignore "already started" errors
-                            process_comm_error("Error starting socket_WiT thread:  " + except.getMessage());
+                            show_toast_message("Error starting socket_WiT thread:  " + except.getMessage(), Toast.LENGTH_LONG);
                         }
                     }
                 }
@@ -1317,7 +1353,7 @@ public class threaded_application extends Application {
                             socketOk = false;
                         }
                     } catch (IOException e) {
-                        process_comm_error("Error creating output stream, IOException: " + e.getMessage());
+                        show_toast_message("Error creating output stream, IOException: " + e.getMessage(), Toast.LENGTH_LONG);
                         socketOk = false;
                     }
                 }
@@ -1334,7 +1370,7 @@ public class threaded_application extends Application {
                         try {
                             Thread.sleep(500);              //  give run() a chance to see endRead and exit
                         } catch (InterruptedException e) {
-                            process_comm_error("Error sleeping the thread, InterruptedException: " + e.getMessage());
+                            show_toast_message("Error sleeping the thread, InterruptedException: " + e.getMessage(), Toast.LENGTH_LONG);
                         }
                     }
                 }
