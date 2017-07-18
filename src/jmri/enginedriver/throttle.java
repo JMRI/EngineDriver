@@ -245,15 +245,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     // default to the iOS iCade mappings
     private String whichGamePadMode = "None";
     private String prefThrottleGameStartButton;
-    private int gamepadDpadUp = KEYCODE_W;   //key down   'E' up
-    private int gamepadDpadDown = KEYCODE_X;   //key down   'Z' up
-    private int gamepadDpadLeft = KEYCODE_A;   //key down   'Q' up
-    private int gamepadDpadRight = KEYCODE_D;   //key down   'C' up
-    private int gamepadStart = KEYCODE_V;   //key up   'L' down
-    private int gamepadX = KEYCODE_T;   //key up   'Y' down
-    private int gamepadY = KEYCODE_N;   //key up   'J' down
-    private int gamepadA = KEYCODE_R;   //key up   'H' down
-    private int gamepadB = KEYCODE_F;   //key up   'Y' down
+
+    //                           Dpad_Up    Dpad_Down  Dpad_Left  Dpad_Right Start      Button_X   Button_Y   Button_A   Button_B
+    private int[] gamePadKeys = {KEYCODE_W, KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
 
     //Throttle Array
     private char[] allThrottleLetters = {'T', 'S', 'G'};
@@ -1128,73 +1122,29 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         }
 
-        switch (whichGamePadMode) {
-            case "iCade":
-                //Toast.makeText(getApplicationContext(), "Gamepad - iCade Mode", Toast.LENGTH_SHORT).show();
+        int[] bGamePadKeys;
 
-                gamepadDpadUp = KEYCODE_W;   //key down   'E' up
-                gamepadDpadDown = KEYCODE_X;   //key down   'Z' up
-                gamepadDpadLeft = KEYCODE_A;   //key down   'Q' up
-                gamepadDpadRight = KEYCODE_D;   //key down   'C' up
-                gamepadStart = KEYCODE_V;   //key up   'L' down
-                gamepadX = KEYCODE_T;   //key up   'Y' down
-                gamepadY = KEYCODE_N;   //key up   'J' down
-                gamepadA = KEYCODE_R;   //key up   'H' down
-                gamepadB = KEYCODE_F;   //key up   'Y' down
+        switch (whichGamePadMode) {
+            case "iCade+DPAD - Rotate DPad Left":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCadePlusDpadRotateDpadLeft);
                 break;
             case "iCade+DPAD":
-                //Toast.makeText(getApplicationContext(), "Gamepad - iCade+DPAD Mode", Toast.LENGTH_SHORT).show();
-
-                // iOS iCade but use the DPAD keys rather than the standard iCade ones
-                gamepadDpadUp = KEYCODE_DPAD_UP;
-                gamepadDpadDown = KEYCODE_DPAD_DOWN;
-                gamepadDpadLeft = KEYCODE_DPAD_LEFT;
-                gamepadDpadRight = KEYCODE_DPAD_RIGHT;
-                gamepadStart = KEYCODE_V;   //key up   'L' down
-                gamepadX = KEYCODE_T;   //key up   'Y' down
-                gamepadY = KEYCODE_N;   //key up   'J' down
-                gamepadA = KEYCODE_R;   //key up   'H' down
-                gamepadB = KEYCODE_F;   //key up   'Y' down
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCadePlusDpad);
                 break;
             case "MKT - Rotate DPad Left":
-                //Toast.makeText(getApplicationContext(), "Gamepad - MKT Mode", Toast.LENGTH_SHORT).show();
-
-                gamepadDpadUp = KEYCODE_DPAD_LEFT;
-                gamepadDpadDown = KEYCODE_DPAD_RIGHT;
-                gamepadDpadLeft = KEYCODE_DPAD_DOWN;
-                gamepadDpadRight = KEYCODE_DPAD_UP;
-                gamepadStart = KEYCODE_0;
-                gamepadX = KEYCODE_3;
-                gamepadY = KEYCODE_4;
-                gamepadA = KEYCODE_1;
-                gamepadB = KEYCODE_2;
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMKTRotateDpadLeft);
                 break;
             case "MKT":
-                //Toast.makeText(getApplicationContext(), "Gamepad - MKT Mode", Toast.LENGTH_SHORT).show();
-
-                gamepadDpadUp = KEYCODE_DPAD_UP;
-                gamepadDpadDown = KEYCODE_DPAD_DOWN;
-                gamepadDpadLeft = KEYCODE_DPAD_LEFT;
-                gamepadDpadRight = KEYCODE_DPAD_RIGHT;
-                gamepadStart = KEYCODE_0;
-                gamepadX = KEYCODE_3;
-                gamepadY = KEYCODE_4;
-                gamepadA = KEYCODE_1;
-                gamepadB = KEYCODE_2;
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMKT);
                 break;
             case "Keyboard":
-                //Toast.makeText(getApplicationContext(), "Gamepad - Keyboard Mode", Toast.LENGTH_SHORT).show();
-
-                gamepadDpadUp = KEYCODE_W;
-                gamepadDpadDown = KEYCODE_Z;
-                gamepadDpadLeft = KEYCODE_A;
-                gamepadDpadRight = KEYCODE_S;
-                gamepadStart = KEYCODE_9;
-                gamepadX = KEYCODE_0;
-                gamepadY = KEYCODE_2;
-                gamepadA = KEYCODE_1;
-                gamepadB = KEYCODE_3;
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadKeyboard);
                 break;
+            default: // "iCade"
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCade);
+        }
+        for (int i = 0; i<=8; i++ ) {
+            gamePadKeys = bGamePadKeys;
         }
     }
 
@@ -1220,7 +1170,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 Log.d("Engine_Driver", "keycode " + keyCode);
             }
 */
-            if (keyCode == gamepadDpadUp) {
+            if (keyCode == gamePadKeys[0]) {
                 // Increase Speed
                 if ((!conAddr.equals("Not Set")) && (action == ACTION_DOWN)) {
                     increment(whichThrottle);
@@ -1230,7 +1180,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 if (getSpeed(whichThrottle) > (MAX_SPEED_VAL_WIT-1)) vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                 return (true); // stop processing this key
 
-            } else if (keyCode == gamepadDpadDown) {
+            } else if (keyCode == gamePadKeys[1]) {
                     // Decrease Speed
                     if ((!conAddr.equals("Not Set")) && (action == ACTION_DOWN)) {
                         decrement(whichThrottle);
@@ -1239,7 +1189,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     if (getSpeed(whichThrottle) < 1) vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                     return (true); // stop processing this key
 
-            } else if (keyCode == gamepadDpadLeft) {
+            } else if (keyCode == gamePadKeys[2]) {
                     // Forward
                     // set speed to zero on direction change while moving if the preference is set
                     if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
@@ -1258,7 +1208,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     return (true); // stop processing this key
 
-            } else if (keyCode == gamepadDpadRight) {
+            } else if (keyCode == gamePadKeys[3]) {
                     // Reverse
                     // set speed to zero on direction change while moving if the preference is set
                     if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
@@ -1277,7 +1227,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     return (true); // stop processing this key
 
-            } else if (keyCode == gamepadX) {
+            } else if (keyCode == gamePadKeys[5]) {
                     // stop
                     if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
                         set_stop_button(whichThrottle, true);
@@ -1287,7 +1237,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     return (true); // stop processing this key
 
-            } else if (keyCode == gamepadY) {
+            } else if (keyCode == gamePadKeys[6]) {
                     // F1 - Bell
                     if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
 //                        Log.d("Engine_Driver", "keycode " + keyCode);
@@ -1302,7 +1252,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                         return (true); // stop processing this key
 
-            } else if (keyCode == gamepadA) {
+            } else if (keyCode == gamePadKeys[7]) {
                     // F0 - Light
                     if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
                         //Log.d("Engine_Driver", "keycode " + keyCode);
@@ -1317,7 +1267,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     return (true); // stop processing this key
 
-            } else if (keyCode == gamepadB) {
+            } else if (keyCode == gamePadKeys[8]) {
                     // F2 - Horn
                     if ((!conAddr.equals("Not Set")) && (action == ACTION_UP)) {
                         Log.d("Engine_Driver", "keycode " + keyCode);
@@ -1332,7 +1282,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                     return (true); // stop processing this key
 
-            } else if (keyCode == gamepadStart) {
+            } else if (keyCode == gamePadKeys[4]) {
                 // F0 - EStop
                 if (action == ACTION_UP) {
                     if (prefThrottleGameStartButton.equals("EStop")) {
