@@ -330,7 +330,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                     }
                                 } else if (com2 == 'A') { // e.g. MTAL2608<;>R1
                                     char com3 = ' ';
-                                    if (ls.length >= 1) { //make sure there's a value to parse
+                                    if (ls.length >= 2) { //make sure there's a value to parse
                                         com3 = ls[1].charAt(0);
                                     }
                                     if (com3 == 'R') {

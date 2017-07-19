@@ -721,10 +721,10 @@ public class threaded_application extends Application {
         /* some messages from server need to be handled specially, return true if handled here */
         private boolean message_action(final String msg_txt) {
             boolean handled = false;
-            if (msg_txt.startsWith("!err-local use") || msg_txt.startsWith("!Loco In Use")) {
-                show_toast_message("Requested Address "+last_addr_requested+" already in use.",  Toast.LENGTH_SHORT);
+            if (msg_txt.startsWith(" error - loco on another APP throttle ") || msg_txt.startsWith(" Loco is InUse already ")) {
+                show_toast_message("Requested Address " + last_addr_requested + " already in use.", Toast.LENGTH_SHORT);
                 sendMsg(throttle_msg_handler, message_type.REQ_STEAL, last_addr_requested, last_whichThrottle);
-                Log.d("Engine_Driver", "Loco in use msg " + last_addr_requested + " for " + last_whichThrottle + ", requesting steal");
+                Log.d("Engine_Driver", "address in use msg " + last_addr_requested + " for " + last_whichThrottle + ", requesting steal");
                 handled = true;
             }
             return handled;
@@ -814,7 +814,11 @@ public class threaded_application extends Application {
                             process_roster_function_string("RF29}|{1234(L)" + ls[1], sWhichThrottle);  //prepend some stuff to match old-style
                     } else if (com2 == 'A') { //process change in function value  MTAL4805<;>F028
                         if (ls.length == 2 && "F".equals(ls[1].substring(0, 1))) {
-                            process_function_state_20(sWhichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1, 2)));
+                            try {
+                                process_function_state_20(sWhichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1, 2)));
+                            } catch (NumberFormatException | StringIndexOutOfBoundsException ignore) {
+                                Log.d("Engine_Driver", "bad incoming message data, unable to parse '" + response_str + "'");
+                            }
                         }
                     }
 
@@ -838,7 +842,8 @@ public class threaded_application extends Application {
                     } else if (response_str.charAt(1) == 'M') { //message sent from server to throttle
                         if (!message_action(response_str.substring(2))) {                      //some need special handling
                             show_toast_message(response_str.substring(2), Toast.LENGTH_SHORT); // otherwise, just copy to UI as toast message
-                        };
+                        }
+                        ;
                     }
                     break;
 
@@ -955,29 +960,26 @@ public class threaded_application extends Application {
 
             Log.d("Engine_Driver", "processing function labels for " + whichThrottle);
             String[] ta = splitByString(response_str, "]\\[");  //split into list of labels
-            //clear the appropriate global variable
-            if ("T".equals(whichThrottle)) {
-                function_labels_T = new LinkedHashMap<>();
-            } else if ("S".equals(whichThrottle)) {
-                function_labels_S = new LinkedHashMap<>();
-            } else {
-                function_labels_G = new LinkedHashMap<>();
-            }
 
-            //initialize app arrays (skipping first)
+            //populate a temp label array from RF command string
+            LinkedHashMap<Integer, String> function_labels_temp = new LinkedHashMap<>();
             int i = 0;
             for (String ts : ta) {
                 if (i > 0 && !"".equals(ts)) { //skip first chunk, which is length, and skip any blank entries
-                    if ("T".equals(whichThrottle)) {  //populate the appropriate hashmap
-                        function_labels_T.put(i - 1, ts); //index is hashmap key, value is label string
-                    } else if ("S".equals(whichThrottle)) {
-                        function_labels_S.put(i - 1, ts); //index is hashmap key, value is label string
-                    } else {
-                        function_labels_G.put(i - 1, ts); //index is hashmap key, value is label string
-                    }
+                    function_labels_temp.put(i - 1, ts); //index is hashmap key, value is label string
                 }  //end if i>0
                 i++;
             }  //end for
+
+            //set the appropriate global variable from the temp
+            if ("T".equals(whichThrottle)) {
+                function_labels_T = function_labels_temp;
+            } else if ("S".equals(whichThrottle)) {
+                function_labels_S = function_labels_temp;
+            } else {
+                function_labels_G = function_labels_temp;
+            }
+
         }
 
         //parse roster list into appropriate app variable array
