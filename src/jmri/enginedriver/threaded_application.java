@@ -135,6 +135,7 @@ public class threaded_application extends Application {
     public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (seconds)
     public int turnouts_list_position = 0;                  //remember where user was in item lists
     public int routes_list_position = 0;
+    static final long WITHROTTLE_SPACING_INTERVAL = 100;   //minimum desired interval between messages sent to WiThrottle server, in milliseconds
 
     String last_addr_requested = null;  //used to drop and retry
     char last_whichThrottle;            //used to drop and retry
@@ -442,6 +443,7 @@ public class threaded_application extends Application {
 
                     //Release one or all locos on the specified throttle.  addr is in msg (""==all), arg1 holds whichThrottle.
                     case message_type.RELEASE: {
+                        int delays = 0;
                         String addr = msg.obj.toString();
                         final char whichThrottle = (char) msg.arg1;
                         final boolean releaseAll = (addr.length() == 0);
@@ -467,22 +469,16 @@ public class threaded_application extends Application {
                         if (prefs.getBoolean("stop_on_release_preference",
                                 getResources().getBoolean(R.bool.prefStopOnReleaseDefaultValue))) {
                             withrottle_send(whichThrottle + "V0" + (!addr.equals("") ? "<;>" + addr : ""));  //send stop command before releasing (if set in prefs)
+                            delays++;
                         }
 
-                        releaseLoco(addr, whichThrottle);
+                        releaseLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL);
                         break;
                     }
                     //request speed. arg1 holds whichThrottle
-                    case message_type.REQ_VELOCITY: {
+                    case message_type.REQ_VEL_AND_DIR: {
                         final char whichThrottle = (char) msg.arg1;
                         withrottle_send(whichThrottle + "qV");
-                        break;
-                    }
-
-                    //request direction.  arg1 hold whichThrottle
-                    case message_type.REQ_DIRECTION: {
-                        final char whichThrottle = (char) msg.arg1;
-                        //              withrottle_send(whichThrottle+"qR");  //request updated direction
                         withrottle_send(whichThrottle + "qR");  //request updated direction
                         break;
                     }
@@ -523,20 +519,19 @@ public class threaded_application extends Application {
 
                     //Set up an engine to control. The address of the engine is given in msg.obj and whichThrottle is in arg1
                     //Optional rostername if present is separated from the address by the proper delimiter
-                    case message_type.LOCO_ADDR: {
+                    case message_type.REQ_LOCO_ADDR: {
+                        long delays = 0;
                         final String addr = msg.obj.toString();
                         final char whichThrottle = (char) msg.arg1;
-                        if (withrottle_version >= 2.0) {  //don't pass rostername to older WiT
-                            if (prefs.getBoolean("drop_on_acquire_preference",
-                                    getResources().getBoolean(R.bool.prefDropOnAcquireDefaultValue))) {
-                                withrottle_send(whichThrottle + "r");  //send release command for any already acquired locos (if set in prefs)
-
-                            }
+                        if (prefs.getBoolean("drop_on_acquire_preference",
+                                getResources().getBoolean(R.bool.prefDropOnAcquireDefaultValue))) {
+                            withrottle_send(whichThrottle + "r");  //send release command for any already acquired locos (if set in prefs)
+                            delays++;
                         }
-
-                        acquireLoco(addr, whichThrottle);
+                        acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL);
                         break;
                     }
+
                     //send commands to steal the last requested address
                     case message_type.STEAL: {
                         String addr = msg.obj.toString();
@@ -585,9 +580,19 @@ public class threaded_application extends Application {
                         withrottle_send(String.format("PPA%d", msg.arg1));
                         break;
 
+                    //send whatever command string comes in obj to Withrottle Server
+                    case message_type.WITHROTTLE_SEND:
+                        withrottle_send(String.format(msg.obj.toString()));
+                        break;
+
                     //send Q to withrottle server
                     case message_type.WITHROTTLE_QUIT:
                         withrottle_send("Q");
+                        break;
+
+                    //send heartbeat start command to withrottle server
+                    case message_type.SEND_HEARTBEAT_START:
+                        withrottle_send("*+");
                         break;
 
                     //Current Time update request
@@ -666,39 +671,28 @@ public class threaded_application extends Application {
         }
 
         /* ask for specific loco to be added to a throttle */
-        private void acquireLoco(String addr, char whichThrottle) {
-            withrottle_send(whichThrottle + addr);
-            last_addr_requested = addr; //remember this for use with steal
-            last_whichThrottle = whichThrottle;
+        private void acquireLoco(String addr, char whichThrottle, long interval) {
 
-            if (withrottle_version >= 2.0) {
-                //request current direction and speed (WiT 2.0+)
-                withrottle_send("M" + whichThrottle + "A*<;>qV");
-                withrottle_send("M" + whichThrottle + "A*<;>qR");
-            }
+            sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, whichThrottle + addr);
 
             if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
-                withrottle_send("*+");     //request to turn on heartbeat (if enabled in server prefs)
+                sendMsgDelay(comm_msg_handler, interval + WITHROTTLE_SPACING_INTERVAL, message_type.SEND_HEARTBEAT_START);
             }
+            last_addr_requested = addr; //remember this for use with steal TODO: replace with value from message
+            last_whichThrottle = whichThrottle;
         }
 
         /* "steal" will send the release command followed by the acquire command */
         private void stealLoco(String addr, char whichThrottle) {
             if (addr != null) {
-//                releaseLoco(addr, whichThrottle);
-//                acquireLoco(addr, whichThrottle);
-                withrottle_send(whichThrottle + "r<;>" + addr);
-                try {
-                    Thread.sleep(100);              //
-                } catch (InterruptedException ignore) {
-                }
-                withrottle_send(whichThrottle + addr);
-
+                releaseLoco(addr, whichThrottle, 0); //request release with no delay
+                acquireLoco(addr, whichThrottle, WITHROTTLE_SPACING_INTERVAL);
             }
         }
 
-        private void releaseLoco(String addr, char whichThrottle) {
-            withrottle_send(whichThrottle + "r" + (!addr.equals("") ? "<;>" + addr : ""));  //send release command
+        private void releaseLoco(String addr, char whichThrottle, long interval) {
+            String msgtxt = whichThrottle + "r" + (!addr.equals("") ? "<;>" + addr : "");
+            sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, msgtxt);
         }
 
         private void reacquireAllConsists() {
@@ -708,20 +702,23 @@ public class threaded_application extends Application {
         }
 
         private void reacquireConsist(Consist c, char whichThrottle) {
-            for (ConLoco l : c.getLocos())                   // reacquire each loco in the consist
-            {
+            int delays = 0;
+            for (ConLoco l : c.getLocos()) {                  // reacquire each loco in the consist
                 String addr = l.getAddress();
                 String desc = l.getDesc();
                 if (desc.length() > 0 && withrottle_version >= 1.6)  // add roster selection info if present and supported
                     addr += "<;>" + l.getDesc();
-                acquireLoco(addr, whichThrottle);
+                acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL); //ask for next loco, with 0 or more delays
+                delays++;
             }
         }
 
         /* some messages from server need to be handled specially, return true if handled here */
         private boolean message_action(final String msg_txt) {
             boolean handled = false;
-            if (msg_txt.startsWith(" error - loco on another APP throttle ") || msg_txt.startsWith(" Loco is InUse already ")) {
+            if (msg_txt.startsWith(" error - loco on another APP throttle ")
+                    || msg_txt.startsWith(" Loco is InUse already ")
+                    || msg_txt.startsWith("!err-local use")) {
                 show_toast_message("Requested Address " + last_addr_requested + " already in use.", Toast.LENGTH_SHORT);
                 sendMsg(throttle_msg_handler, message_type.REQ_STEAL, last_addr_requested, last_whichThrottle);
                 Log.d("Engine_Driver", "address in use msg " + last_addr_requested + " for " + last_whichThrottle + ", requesting steal");
@@ -2370,8 +2367,16 @@ public class threaded_application extends Application {
         return sendMsgDelay(h, 0, msgType, msgBody, msgArg1, msgArg2);
     }
 
+    public boolean sendMsgDelay(Handler h, long delayMs, int msgType, int msgArg1) {
+        return sendMsgDelay(h, delayMs, msgType, "", msgArg1, 0);
+    }
+
     public boolean sendMsgDelay(Handler h, long delayMs, int msgType) {
         return sendMsgDelay(h, delayMs, msgType, "", 0, 0);
+    }
+
+    public boolean sendMsgDelay(Handler h, long delayMs, int msgType, String msgBody) {
+        return sendMsgDelay(h, delayMs, msgType, msgBody, 0, 0);
     }
 
     public boolean sendMsgDelay(Handler h, long delayMs, int msgType, String msgBody, int msgArg1, int msgArg2) {
