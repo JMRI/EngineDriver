@@ -137,9 +137,6 @@ public class threaded_application extends Application {
     public int routes_list_position = 0;
     static final long WITHROTTLE_SPACING_INTERVAL = 100;   //minimum desired interval between messages sent to WiThrottle server, in milliseconds
 
-    String last_addr_requested = null;  //used to drop and retry
-    char last_whichThrottle;            //used to drop and retry
-
     String client_address; //address string of the client address
     Inet4Address client_address_inet4; //inet4 value of the client address
     String client_ssid;    //string of the connected SSID
@@ -678,15 +675,13 @@ public class threaded_application extends Application {
             if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
                 sendMsgDelay(comm_msg_handler, interval + WITHROTTLE_SPACING_INTERVAL, message_type.SEND_HEARTBEAT_START);
             }
-            last_addr_requested = addr; //remember this for use with steal TODO: replace with value from message
-            last_whichThrottle = whichThrottle;
         }
 
-        /* "steal" will send the release command followed by the acquire command */
+        /* "steal" will send the MTS command */
         private void stealLoco(String addr, char whichThrottle) {
             if (addr != null) {
-                releaseLoco(addr, whichThrottle, 0); //request release with no delay
-                acquireLoco(addr, whichThrottle, WITHROTTLE_SPACING_INTERVAL);
+                String msgtxt = "M" + whichThrottle + "S" + addr + "<;>" + addr;
+                sendMsg(comm_msg_handler, message_type.WITHROTTLE_SEND, msgtxt);
             }
         }
 
@@ -711,20 +706,6 @@ public class threaded_application extends Application {
                 acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL); //ask for next loco, with 0 or more delays
                 delays++;
             }
-        }
-
-        /* some messages from server need to be handled specially, return true if handled here */
-        private boolean message_action(final String msg_txt) {
-            boolean handled = false;
-            if (msg_txt.startsWith(" error - loco on another APP throttle ")
-                    || msg_txt.startsWith(" Loco is InUse already ")
-                    || msg_txt.startsWith("!err-local use")) {
-                show_toast_message("Requested Address " + last_addr_requested + " already in use.", Toast.LENGTH_SHORT);
-                sendMsg(throttle_msg_handler, message_type.REQ_STEAL, last_addr_requested, last_whichThrottle);
-                Log.d("Engine_Driver", "address in use msg " + last_addr_requested + " for " + last_whichThrottle + ", requesting steal");
-                handled = true;
-            }
-            return handled;
         }
 
         //display error msg using Toast()
@@ -817,6 +798,10 @@ public class threaded_application extends Application {
                                 Log.d("Engine_Driver", "bad incoming message data, unable to parse '" + response_str + "'");
                             }
                         }
+
+                    } else if (com2 == 'S') { //"MTSL4425<;>L4425" loco is in use, prompt for Steal
+                        Log.d("Engine_Driver", "rcvd MTS, request prompt for " + addr + " on " + whichThrottle);
+                        sendMsg(throttle_msg_handler, message_type.REQ_STEAL, addr, whichThrottle);
                     }
 
                     break;
@@ -837,10 +822,7 @@ public class threaded_application extends Application {
                             web_server_port = 80; //hardcode web port for MRC
                         }
                     } else if (response_str.charAt(1) == 'M') { //message sent from server to throttle
-                        if (!message_action(response_str.substring(2))) {                      //some need special handling
                             show_toast_message(response_str.substring(2), Toast.LENGTH_SHORT); // otherwise, just copy to UI as toast message
-                        }
-                        ;
                     }
                     break;
 

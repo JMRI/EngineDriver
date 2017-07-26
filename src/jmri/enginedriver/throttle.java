@@ -204,7 +204,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private static boolean clearHistory = false;    // flags webViewClient to clear history when page load finishes
     private static String firstUrl = null;          // desired first url when clearing history
     private static String currentUrl = null;
-    private boolean orientationChange = false;
     private String currentTime = "";
     private Menu TMenu;
     static int REP_DELAY = 25;
@@ -333,7 +332,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                     if (ls.length >= 2) { //make sure there's a value to parse
                                         com3 = ls[1].charAt(0);
                                     }
-                                    if (com3 == 'R') {
+                                    if (com3 == 'R') { //MTAL5511<;>R0
                                         int dir;
                                         try {
                                             dir = Integer.valueOf(ls[1].substring(1, 2));
@@ -777,6 +776,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             bFwd.setPressed(true);
             bRev.setPressed(false);
         }
+//        bFwd.invalidate(); //button wasn't changing at times
+//        bRev.invalidate();
     }
 
     // indicate requested direction using the button typeface
@@ -1668,7 +1669,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        orientationChange = false;
 
         if (mainapp.isForcingFinish()) { // expedite
             return;
@@ -2004,7 +2004,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         super.onSaveInstanceState(outState);
         webView.saveState(outState); // save history (on rotation) if at least
         // one page has loaded
-        orientationChange = true;
     }
 
     @Override
