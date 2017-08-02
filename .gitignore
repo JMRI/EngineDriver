@@ -32,4 +32,7 @@ local.properties
 *.DS_Store
 /bin/
 /gen/
+
+# Android Studio stuff
 /out/
+*.apk
