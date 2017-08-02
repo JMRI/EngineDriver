@@ -32,3 +32,4 @@ local.properties
 *.DS_Store
 /bin/
 /gen/
+/out/
