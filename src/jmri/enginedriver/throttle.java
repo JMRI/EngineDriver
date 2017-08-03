@@ -24,76 +24,60 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.gesture.GestureOverlayView;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.lang.reflect.Method;
-
-import jmri.enginedriver.logviewer.ui.LogViewerActivity;
-
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
+import android.view.WindowManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import android.widget.Button;
-import android.widget.Toast;
-import android.view.MotionEvent;
-import android.os.Message;
 import android.widget.TextView;
-import android.gesture.GestureOverlayView;
-import android.graphics.Typeface;
+import android.widget.Toast;
 
-// used for supporting Keyboard and Gamepad input;
-import android.view.WindowManager;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
+import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
 import static android.view.KeyEvent.KEYCODE_0;
-import static android.view.KeyEvent.KEYCODE_1;
-import static android.view.KeyEvent.KEYCODE_2;
-import static android.view.KeyEvent.KEYCODE_3;
-import static android.view.KeyEvent.KEYCODE_4;
 import static android.view.KeyEvent.KEYCODE_9;
 import static android.view.KeyEvent.KEYCODE_A;
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static android.view.KeyEvent.KEYCODE_D;
-import static android.view.KeyEvent.KEYCODE_DPAD_DOWN;
-import static android.view.KeyEvent.KEYCODE_DPAD_LEFT;
-import static android.view.KeyEvent.KEYCODE_DPAD_RIGHT;
-import static android.view.KeyEvent.KEYCODE_DPAD_UP;
-import static android.view.KeyEvent.KEYCODE_EQUALS;
 import static android.view.KeyEvent.KEYCODE_F;
-import static android.view.KeyEvent.KEYCODE_L;
-import static android.view.KeyEvent.KEYCODE_MINUS;
 import static android.view.KeyEvent.KEYCODE_N;
 import static android.view.KeyEvent.KEYCODE_R;
-import static android.view.KeyEvent.KEYCODE_S;
-import static android.view.KeyEvent.KEYCODE_SPACE;
-import static android.view.KeyEvent.KEYCODE_STAR;
 import static android.view.KeyEvent.KEYCODE_T;
 import static android.view.KeyEvent.KEYCODE_V;
 import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
 import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
-import static android.view.KeyEvent.KEYCODE_Y;
-import static android.view.KeyEvent.KEYCODE_Z;
+
+// used for supporting Keyboard and Gamepad input;
 
 public class throttle extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
 
@@ -1503,9 +1487,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
 
         private void handleAction(int action) {
-            String throt = Character.toString(whichThrottle);
-            //boolean stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
-
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
                     switch (this.function) {
@@ -1514,7 +1495,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                             int dir = (function == function_button.FORWARD ? 1 : 0);
 
                             // set speed to zero on direction change while moving if the preference is set
-                            if ((stopOnDirectionChange) && (getSpeed(whichThrottle) != 0) && (dir != getDirection(whichThrottle)) && (stopOnDirectionChange)) {
+                            if ((stopOnDirectionChange) && (getSpeed(whichThrottle) != 0) && (dir != getDirection(whichThrottle))) {
                                 speedUpdateAndNotify(whichThrottle, 0);
                             }
 
@@ -1580,8 +1561,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         } else {
                             con = mainapp.consistS;
                         }
-                        String addr = con.getLeadAddr();
-                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, throt + addr, function, 0);
+                        String addr = "";
+                        if (leadOnly)
+                            addr = con.getLeadAddr();
+// ***future                else if (trailOnly)
+//                              addr = con.getTrailAddr();
+                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + addr, function, 0);
                         // set_function_request(whichThrottle, function, 0);
                     }
                     break;
