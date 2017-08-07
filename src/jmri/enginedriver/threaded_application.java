@@ -1017,7 +1017,10 @@ public class threaded_application extends Application {
             if (!consist_name.equals(consist_addr) && (consist_name.length() > 4)) {
                 consist_desc = consist_name; // use entered name if significant
             }
-            consist_entries.put(consist_addr, consist_desc);
+            //don't add empty consists to list
+            if (consist_desc != null && consist_desc.length() > 0) {
+                consist_entries.put(consist_addr, consist_desc);
+            }
         }
 
         //clear out any stored consists

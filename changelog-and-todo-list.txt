@@ -1,6 +1,7 @@
 **Version 2.15
  * fix incorrect loco request on reconnect when loco is not in roster (found by Bob Grandle)
- * prevent crash attempting to split empty string
+ * prevent crash caused by empty JMRI consists
+ * prevent concurrentmodificationexception reported to Play Store
 **Version 2.14.2
  * swipe up on Throttle screen to hide Throttle Web view - Peter Akers
  * add client support for Steal
@@ -311,8 +312,8 @@
  *   added html About page
  */
 /*
- *   TODO: convert all WiThrottle commands to 2.0+ protocol
- *   TODO: handle MRC's fastclock message
+ *   TODO: convert all WiThrottle commands to 2.0+ protocol, drop older protocol
+ *   TODO: handle MRC and Digitrax fastclock messages
  *   TODO: change config files to use db instead of .txt files, turn off sd card permission
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
@@ -329,7 +330,7 @@
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
- *   TODO: stay on Connect screen until we recieve an actual response from server
+ *   TODO: stay on Connect screen until we receive an actual response from server
  *   TODO: if user enters ":" into address input, jump to port input
  *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
  * threaded_application
@@ -341,6 +342,8 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: fix broken state indicators (lost on menu, rotate, etc.)
+ *   TODO: clear loco buttons on reconnect attempt until actual MT+ received
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected
  *   TODO: new preference to reverse order of Forward and Reverse buttons
  *   TODO: support webview on Top

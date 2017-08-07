@@ -113,7 +113,8 @@ public class select_loco extends Activity {
 
             //put roster entries into screen list
             if (mainapp.roster_entries != null) {
-                for (String rostername : mainapp.roster_entries.keySet()) {
+                Set<String> rns = mainapp.roster_entries.keySet(); //copy to prevent concurrentmodification
+                for (String rostername : rns) {
                     // put key and values into temp hashmap
                     HashMap<String, String> hm = new HashMap<>();
                     hm.put("roster_name", rostername);
