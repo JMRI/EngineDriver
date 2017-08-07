@@ -30,24 +30,24 @@ public class Loco {
 
     public Loco(String address) {
         if (address != null)
-            addr = address;
+            this.addr = address;
         else
-            addr = "";
-        formatAddr = formatAddress();
-        desc = "";
-        confirmed = false;
-        rosterName = null;
+            this.addr = "";
+        this.formatAddr = formatAddress();
+        this.desc = "";
+        this.confirmed = false;
+        this.rosterName = null;
     }
 
     public Loco(Loco l) {
         this(l.addr);
-        desc = l.desc;
-        rosterName = l.rosterName;
-        confirmed = l.confirmed;
+        this.desc = l.desc;
+        this.rosterName = l.rosterName;
+        this.confirmed = l.confirmed;
     }
 
     public boolean isConfirmed() {
-        return confirmed;
+        return this.confirmed;
     }
 
     public void setConfirmed() {
@@ -55,26 +55,26 @@ public class Loco {
     }
 
     public void setConfirmed(boolean state) {
-        confirmed = state;
+        this.confirmed = state;
     }
 
     public String getAddress() {
-        return addr;
+        return this.addr;
     }
 
     public String getFormatAddress() {
-        return formatAddr;
+        return this.formatAddr;
     }
 
     public void setDesc(String rosterName) {
-        desc = rosterName;
+        this.desc = rosterName;
     }
 
     public String getDesc() {
-        return desc;
+        return this.desc;
     }
     public String getRosterName() {
-        return rosterName;
+        return this.rosterName;
     }
     public void setRosterName(String rosterName) {
         this.rosterName = rosterName;
@@ -83,11 +83,11 @@ public class Loco {
     //provide description if present, otherwise provide formatted address
     @Override
     public String toString() {
-        return (desc.length() > 0 ? desc : formatAddr);
+        return (this.desc.length() > 0 ? this.desc : this.formatAddr);
     }
 
     private String formatAddress() {
-        return addr.substring(1) + "(" + addr.substring(0, 1) + ")";  //reformat from L2591 to 2591(L)
+        return this.addr.substring(1) + "(" + this.addr.substring(0, 1) + ")";  //reformat from L2591 to 2591(L)
     }
 }
     
