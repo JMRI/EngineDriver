@@ -25,6 +25,7 @@ public class Loco {
     private final String formatAddr;            //2531(L) form
     //TODO: eliminate stored formatted address and create on the fly?
     private String desc;                        //typically the roster name
+    private String rosterName;                  //null if loco has no roster entry
     private boolean confirmed;                  //set after WiT responds that engine is assigned to throttle
 
     public Loco(String address) {
@@ -35,17 +36,21 @@ public class Loco {
         formatAddr = formatAddress();
         desc = "";
         confirmed = false;
+        rosterName = null;
     }
 
-    public Loco(String address, String rosterName) {
+    public Loco(String address, String _rosterName) {
         this(address);
-        if (rosterName != null)
-            desc = rosterName;
+        if (rosterName != null) {
+            desc = _rosterName;
+            rosterName = _rosterName;
+        }
     }
 
     public Loco(Loco l) {
         this(l.addr);
         desc = l.desc;
+        rosterName = l.rosterName;
         confirmed = l.confirmed;
     }
 
@@ -75,6 +80,12 @@ public class Loco {
 
     public String getDesc() {
         return desc;
+    }
+    public String getRosterName() {
+        return rosterName;
+    }
+    public void setRosterName(String rosterName) {
+        this.rosterName = rosterName;
     }
 
     //provide roster name if present, otherwise provide formatted address
