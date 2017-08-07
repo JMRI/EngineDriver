@@ -361,9 +361,11 @@ public class select_loco extends Activity {
         String addr = (address_size == address_type.LONG ? "L" : "S") + engine_address;
         Loco l = new Loco(addr);
         if (!roster_name.equals("")) {
-            l.setDesc(roster_name); //use rosterName if present
+            l.setDesc(roster_name);       //use rosterName if present
+            l.setRosterName(roster_name); //use rosterName if present
         } else {
             l.setDesc(mainapp.getRosterNameFromAddress(l.toString()));  //lookup rostername from address if not set
+            l.setRosterName(null); //make sure rosterName is null
         }
         Consist consist;
 

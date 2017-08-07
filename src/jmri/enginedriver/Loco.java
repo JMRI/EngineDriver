@@ -25,32 +25,29 @@ public class Loco {
     private final String formatAddr;            //2531(L) form
     //TODO: eliminate stored formatted address and create on the fly?
     private String desc;                        //typically the roster name
+    private String rosterName;                  //null if loco has no roster entry
     private boolean confirmed;                  //set after WiT responds that engine is assigned to throttle
 
     public Loco(String address) {
         if (address != null)
-            addr = address;
+            this.addr = address;
         else
-            addr = "";
-        formatAddr = formatAddress();
-        desc = "";
-        confirmed = false;
-    }
-
-    public Loco(String address, String rosterName) {
-        this(address);
-        if (rosterName != null)
-            desc = rosterName;
+            this.addr = "";
+        this.formatAddr = formatAddress();
+        this.desc = "";
+        this.confirmed = false;
+        this.rosterName = null;
     }
 
     public Loco(Loco l) {
         this(l.addr);
-        desc = l.desc;
-        confirmed = l.confirmed;
+        this.desc = l.desc;
+        this.rosterName = l.rosterName;
+        this.confirmed = l.confirmed;
     }
 
     public boolean isConfirmed() {
-        return confirmed;
+        return this.confirmed;
     }
 
     public void setConfirmed() {
@@ -58,33 +55,39 @@ public class Loco {
     }
 
     public void setConfirmed(boolean state) {
-        confirmed = state;
+        this.confirmed = state;
     }
 
     public String getAddress() {
-        return addr;
+        return this.addr;
     }
 
     public String getFormatAddress() {
-        return formatAddr;
+        return this.formatAddr;
     }
 
     public void setDesc(String rosterName) {
-        desc = rosterName;
+        this.desc = rosterName;
     }
 
     public String getDesc() {
-        return desc;
+        return this.desc;
+    }
+    public String getRosterName() {
+        return this.rosterName;
+    }
+    public void setRosterName(String rosterName) {
+        this.rosterName = rosterName;
     }
 
-    //provide roster name if present, otherwise provide formatted address
+    //provide description if present, otherwise provide formatted address
     @Override
     public String toString() {
-        return (desc.length() > 0 ? desc : formatAddr);
+        return (this.desc.length() > 0 ? this.desc : this.formatAddr);
     }
 
     private String formatAddress() {
-        return addr.substring(1) + "(" + addr.substring(0, 1) + ")";  //reformat from L2591 to 2591(L)
+        return this.addr.substring(1) + "(" + this.addr.substring(0, 1) + ")";  //reformat from L2591 to 2591(L)
     }
 }
     

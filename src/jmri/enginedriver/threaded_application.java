@@ -324,6 +324,9 @@ public class threaded_application extends Application {
             return jmdns != null && !endingJmdns;
         }
 
+        /*
+          is this a Digitrax LnWi? (based on naming convention in device
+         */
         boolean isDtx() {  //TODO: replace with regex
             boolean ret = false;
             if (client_ssid != null && client_ssid.startsWith("Dtx")) {
@@ -336,6 +339,9 @@ public class threaded_application extends Application {
             return ret;
         }
 
+        /*
+          add known configuration of digitrax LnWi to discovered list, since they do not provide jmDNS
+         */
         void addDtxToDiscoveredList() {
             String server_addr = client_address.substring(0, client_address.lastIndexOf("."));
             server_addr += ".1";
@@ -356,7 +362,7 @@ public class threaded_application extends Application {
             if (!sent)
                 service_message.recycle();
 
-            Log.d("Engine_Driver", String.format("added Dtx at %s to Discovered List", server_addr));
+            Log.d("Engine_Driver", String.format("added DigiTrax LnWi at %s to Discovered List", server_addr));
 
         }
 
@@ -701,8 +707,9 @@ public class threaded_application extends Application {
             for (ConLoco l : c.getLocos()) {                  // reacquire each loco in the consist
                 String addr = l.getAddress();
                 String desc = l.getDesc();
-                if (desc.length() > 0 && withrottle_version >= 1.6)  // add roster selection info if present and supported
-                    addr += "<;>" + l.getDesc();
+                String roster_name = l.getRosterName();
+                if (roster_name != null && withrottle_version >= 1.6)  // add roster selection info if present and supported
+                    addr += "<;>" + roster_name;
                 acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL); //ask for next loco, with 0 or more delays
                 delays++;
             }
