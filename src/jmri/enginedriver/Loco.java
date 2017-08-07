@@ -39,14 +39,6 @@ public class Loco {
         rosterName = null;
     }
 
-    public Loco(String address, String _rosterName) {
-        this(address);
-        if (rosterName != null) {
-            desc = _rosterName;
-            rosterName = _rosterName;
-        }
-    }
-
     public Loco(Loco l) {
         this(l.addr);
         desc = l.desc;
@@ -88,7 +80,7 @@ public class Loco {
         this.rosterName = rosterName;
     }
 
-    //provide roster name if present, otherwise provide formatted address
+    //provide description if present, otherwise provide formatted address
     @Override
     public String toString() {
         return (desc.length() > 0 ? desc : formatAddr);
