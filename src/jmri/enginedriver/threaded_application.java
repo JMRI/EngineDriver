@@ -2088,6 +2088,10 @@ public class threaded_application extends Application {
      * @param divider Where to divide the input; this does not appear in output
      */
     static public String[] splitByString(String input, String divider) {
+
+        //bail on empty input string, return input as single element
+        if (input == null || input.length() == 0) return new String[] { input };
+
         int size = 0;
         String temp = input;
 
