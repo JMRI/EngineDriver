@@ -126,7 +126,12 @@
         <item >MKT-rotate</item>
         <item >Game</item>
         <item >Game-rotate</item>
-        <item >Keyboard</item>
+        <item >VRBoxA</item>
+        <item >VRBoxA-rotate</item>
+        <item >VRBoxC</item>
+        <item >VRBoxC-rotate</item>
+        <item >VRBoxiC</item>
+        <item >VRBoxiC-rotate</item>
     </string-array>
     <string-array name="prefSwipeUpOptions">
         <item >None</item>
@@ -144,31 +149,57 @@
         <item>0</item> //not used
         <item>@integer/KeyCode_W</item> //key down   'E' up  <!-- DPAD butons [0-3] use the down codes.  the other buttons us the up codes -->
         <item>@integer/KeyCode_X</item> //key down   'Z' up
-        <item>@integer/KeyCode_A</item>  //key down   'Q' up
+        <item>@integer/KeyCode_A</item> //key down   'Q' up
         <item>@integer/KeyCode_D</item> //key down   'C' up
-        <item>@integer/KeyCode_V</item> //key up   'L' down
-        <item>@integer/KeyCode_T</item> //key up   'Y' down
-        <item>@integer/KeyCode_N</item> //key up   'J' down
-        <item>@integer/KeyCode_R</item> //key up   'H' down
-        <item>@integer/KeyCode_F</item> ///key up   'Y' down
+        <item>@integer/KeyCode_L</item> //key down   'V' down
+        <item>@integer/KeyCode_Y</item> //key down   'T' down
+        <item>@integer/KeyCode_J</item> //key down   'N' down
+        <item>@integer/KeyCode_H</item> //key down   'R' down
+        <item>@integer/KeyCode_U</item> //key down   'T' down
+    </integer-array>
+    <integer-array name="prefGamePadiCade_UpCodes">
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>@integer/KeyCode_E</item>
+        <item>@integer/KeyCode_Z</item>
+        <item>@integer/KeyCode_Q</item>
+        <item>@integer/KeyCode_C</item>
+        <item>@integer/KeyCode_V</item>
+        <item>@integer/KeyCode_T</item>
+        <item>@integer/KeyCode_N</item>
+        <item>@integer/KeyCode_R</item>
+        <item>@integer/KeyCode_F</item>
     </integer-array>
     <integer-array name="prefGamePadiCadePlusDpad">
         <item>0</item> //not used
         <item>0</item> //not used
-        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP; <!-- DPAD butons [0-3] use the down codes.  the other buttons us the up codes -->
+        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
         <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown = KEYCODE_DPAD_DOWN;
         <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft = KEYCODE_DPAD_LEFT;
         <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadRight = KEYCODE_DPAD_RIGHT;
-        <item>@integer/KeyCode_V</item> ///key up   'L' down
-        <item>@integer/KeyCode_T</item> //key up   'Y' down
-        <item>@integer/KeyCode_N</item> //key up   'J' down
-        <item>@integer/KeyCode_R</item> //key up   'H' down
-        <item>@integer/KeyCode_F</item> //key up   'Y' down
+        <item>@integer/KeyCode_L</item>
+        <item>@integer/KeyCode_Y</item>
+        <item>@integer/KeyCode_J</item>
+        <item>@integer/KeyCode_H</item>
+        <item>@integer/KeyCode_Y</item>
+    </integer-array>
+    <integer-array name="prefGamePadiCadePlusDpad_UpCodes">
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>@integer/KeyCode_E</item>
+        <item>@integer/KeyCode_Z</item>
+        <item>@integer/KeyCode_Q</item>
+        <item>@integer/KeyCode_C</item>
+        <item>@integer/KeyCode_V</item>
+        <item>@integer/KeyCode_T</item>
+        <item>@integer/KeyCode_N</item>
+        <item>@integer/KeyCode_R</item>
+        <item>@integer/KeyCode_F</item>
     </integer-array>
     <integer-array name="prefGamePadMKT">
         <item>0</item> //not used
         <item>0</item> //not used
-        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP; <!-- DPAD butons [0-3] use the down codes.  the other buttons us the up codes -->
+        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
         <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown = KEYCODE_DPAD_DOWN;
         <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft = KEYCODE_DPAD_LEFT;
         <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadRight = KEYCODE_DPAD_RIGHT;
@@ -181,7 +212,7 @@
     <integer-array name="prefGamePadGame">
         <item>0</item> //not used
         <item>0</item> //not used
-        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP; <!-- DPAD butons [0-3] use the down codes.  the other buttons us the up codes -->
+        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
         <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown = KEYCODE_DPAD_DOWN;
         <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft = KEYCODE_DPAD_LEFT;
         <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadRight = KEYCODE_DPAD_RIGHT;
@@ -191,17 +222,56 @@
         <item>@integer/KeyCode_Volume_Up</item> //gamepadA
         <item>@integer/KeyCode_Enter</item> //gamepadB
     </integer-array>
-    <integer-array name="prefGamePadKeyboard">
-        <item>@integer/KeyCode_Equals</item>
-        <item>@integer/KeyCode_Minus</item>
-        <item>@integer/KeyCode_W</item> <!-- DPAD equivalant butons [0-3] use the down codes.  the other buttons us the up codes -->
+    <integer-array name="prefGamePadVRBoxA">
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Fast_Forward</item> //gamepadDpadUp
+        <item>@integer/KeyCode_Rewind</item> //gamepadDpadDown
+        <item>@integer/KeyCode_Previous</item> //gamepadDpadLeft
+        <item>@integer/KeyCode_Next</item> //gamepadDpadRight
+        <item>@integer/KeyCode_Button_X</item> //none
+        <item>@integer/KeyCode_Mute</item> //gamepadEscape
+        <item>@integer/KeyCode_Play_Pause</item> //gamepadA, gamepadEnter
+        <item>@integer/KeyCode_Volume_Down</item> //gamepadD
+        <item>@integer/KeyCode_Volume_Up</item> //gamepadC
+    </integer-array>
+    <integer-array name="prefGamePadVRBoxC">
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp
+        <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown
+        <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft
+        <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadRight
+        <item>@integer/KeyCode_Button_X</item> //none
+        <item>@integer/KeyCode_Button_Y</item> //gamepadA, gamepadEnter
+        <item>@integer/KeyCode_Button_B</item> //gamepadB, gamepadEscape
+        <item>@integer/KeyCode_Volume_Down</item> //gamepadD
+        <item>@integer/KeyCode_Enter</item> //gamepadC
+    </integer-array>
+    <integer-array name="prefGamePadVRBoxiC">
+        <item>0</item> //not used
+        <item>@integer/KeyCode_O</item> //gamepadEscape
+        <item>@integer/KeyCode_A</item> //gamepadDpadUp
+        <item>@integer/KeyCode_D</item> //gamepadDpadDown
+        <item>@integer/KeyCode_X</item> //gamepadDpadLeft
+        <item>@integer/KeyCode_W</item> //gamepadDpadRight
+        <item>@integer/KeyCode_L</item> //gamepadEnter
+        <item>@integer/KeyCode_U</item> //gamepadA
+        <item>@integer/KeyCode_H</item> //gamepadB
+        <item>@integer/KeyCode_J</item> //gamepadD
+        <item>@integer/KeyCode_Y</item> //gamepadC
+    </integer-array>
+    <integer-array name="prefGamePadVRBoxiC_UpCodes">
+        <item>0</item> //not used
+        <item>@integer/KeyCode_G</item>
+        <item>@integer/KeyCode_Q</item>
+        <item>@integer/KeyCode_C</item>
         <item>@integer/KeyCode_Z</item>
-        <item>@integer/KeyCode_A</item>
-        <item>@integer/KeyCode_S</item>
-        <item>@integer/KeyCode_9</item>
-        <item>@integer/KeyCode_0</item>
-        <item>@integer/KeyCode_2</item>
-        <item>@integer/KeyCode_1</item>
-        <item>@integer/KeyCode_3</item>
+        <item>@integer/KeyCode_E</item>
+        <item>@integer/KeyCode_V</item>
+        <item>@integer/KeyCode_F</item>
+        <item>@integer/KeyCode_R</item>
+        <item>@integer/KeyCode_N</item>
+        <item>@integer/KeyCode_T</item>
     </integer-array>
 </resources>

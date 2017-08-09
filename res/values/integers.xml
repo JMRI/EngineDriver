@@ -58,13 +58,20 @@
     <integer name="KeyCode_Dpad_Down"> 20</integer>
     <integer name="KeyCode_Dpad_Left"> 21</integer>
     <integer name="KeyCode_Dpad_Right"> 22</integer>
-    <integer name="KeyCode_Button_X"> 99</integer>
-    <integer name="KeyCode_Button_Y"> 100</integer>
+    <integer name="KeyCode_Volume_Up"> 24</integer>
+    <integer name="KeyCode_Volume_Down"> 25</integer>
+    <integer name="KeyCode_Enter"> 66</integer>
+    <integer name="KeyCode_Minus"> 69</integer>
+    <integer name="KeyCode_Equals"> 70</integer>
+    <integer name="KeyCode_Play_Pause"> 85</integer>
+    <integer name="KeyCode_Next"> 87</integer>
+    <integer name="KeyCode_Previous"> 88</integer>
+    <integer name="KeyCode_Rewind"> 89</integer>
+    <integer name="KeyCode_Fast_Forward"> 90</integer>
     <integer name="KeyCode_Button_A"> 96</integer>
     <integer name="KeyCode_Button_B"> 97</integer>
+    <integer name="KeyCode_Button_X"> 99</integer>
+    <integer name="KeyCode_Button_Y"> 100</integer>
     <integer name="KeyCode_Button_Start"> 108</integer>
-    <integer name="KeyCode_Enter"> 66</integer>
-    <integer name="KeyCode_Volume_Up"> 24</integer>
-    <integer name="KeyCode_Equals"> 70</integer>
-    <integer name="KeyCode_Minus"> 69</integer>
+    <integer name="KeyCode_Mute"> 164</integer>
 </resources>
