@@ -1703,6 +1703,16 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            // restore the requested throttle direction so we can update the
+            // direction indication while we wait for an update from WiT
+            if (savedInstanceState.getSerializable("dirT") != null)
+                dirT = (int) savedInstanceState.getSerializable("dirT");
+            if (savedInstanceState.getSerializable("dirS") != null)
+                dirS = (int) savedInstanceState.getSerializable("dirS");
+            if (savedInstanceState.getSerializable("dirT") != null)
+                dirG = (int) savedInstanceState.getSerializable("dirG");
+        }
 
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -2039,8 +2049,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        webView.saveState(outState); // save history (on rotation) if at least
-        // one page has loaded
+        webView.saveState(outState); // save history (on rotation) if at least one page has loaded
+
+        // save the requested throttle direction so we can update the
+        // direction indication immediately in OnCreate following a rotate
+        outState.putSerializable("dirT", dirT);
+        outState.putSerializable("dirS", dirS);
+        outState.putSerializable("dirG", dirG);
     }
 
     @Override
@@ -2069,6 +2084,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         if (hasFocus) {
             setImmersiveModeOn(webView);
+            set_labels();       // need to redraw button Press states since ActionBar and Notification access clears them
         }
     }
 
