@@ -204,7 +204,6 @@
             android:summary="@string/prefDirChangeWhileMovingSummary"
             android:title="@string/prefDirChangeWhileMovingTitle">
         </CheckBoxPreference>
-        </PreferenceCategory>
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -219,7 +218,8 @@
             android:summary="@string/prefSelectiveLeadSoundSummary"
             android:title="@string/prefSelectiveLeadSoundTitle" >
         </CheckBoxPreference>
-     <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference
             android:defaultValue="@bool/prefStopOnReleaseDefaultValue"
             android:key="stop_on_release_preference"
@@ -231,6 +231,14 @@
             android:key="drop_on_acquire_preference"
             android:summary="@string/prefDropOnAcquireSummary"
             android:title="@string/prefDropOnAcquireTitle" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefSelLocoWhileMovingDefaultValue"
+            android:key="SelLocoWhileMovingPreference"
+            android:summary="@string/prefSelLocoWhileMovingSummary"
+            android:title="@string/prefSelLocoWhileMovingTitle">
         </CheckBoxPreference>
         <ListPreference
             android:defaultValue="@string/prefDefaultAddressLengthDefaultValue"

@@ -34,6 +34,7 @@
     <bool name="prefSwipeThroughRoutesDefaultValue">true</bool>
     <bool name="prefDirChangeWhileMovingDefaultValue">true</bool>
     <bool name="prefStopOnDirectionChangeDefaultValue">false</bool>
+    <bool name="prefSelLocoWhileMovingDefaultValue">true</bool>
     <bool name="prefDecreaseLocoNumberHeightDefaultValue">false</bool>
     <bool name="prefShowAddressInsteadOfNameDefaultValue">false</bool>
     <bool name="prefIncreaseWebViewSizeDefaultValue">false</bool>

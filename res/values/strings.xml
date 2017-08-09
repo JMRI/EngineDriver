@@ -118,10 +118,12 @@
     <string name="prefIncreaseSliderHeightSummary">Use a taller slider, or speed buttons, for throttles.</string>
     <string name="prefHideSliderTitle">Hide Speed Slider?</string>
     <string name="prefHideSliderSummary">Do not show speed slider, use speed buttons instead.</string>
-    <string name="prefDirChangeWhileMovingTitle">Allow direction change while moving?</string>
-    <string name="prefDirChangeWhileMovingSummary">Only allow direction change if the speed is zero.</string>
+    <string name="prefDirChangeWhileMovingTitle">Direction change while moving?</string>
+    <string name="prefDirChangeWhileMovingSummary">Allow direction change when moving.</string>
     <string name="prefStopOnDirectionChangeTitle">Stop on direction change?</string>
     <string name="prefStopOnDirectionChangeSummary">Stop train if you change direction while moving.</string>
+    <string name="prefSelLocoWhileMovingTitle">Allow loco select while moving?</string>
+    <string name="prefSelLocoWhileMovingSummary">Enables Loco button when moving.</string>
     <string name="prefShowAddressInsteadOfNameTitle">Show Loco Address instead of Name?</string>
     <string name="prefShowAddressInsteadOfNameSummary">Show the loco DCC Address instead of the Loco Name on the Throttle page.</string>
     <string name="prefIncreaseWebViewSizeTitle">Increase Web View Size?</string>
