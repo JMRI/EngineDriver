@@ -179,7 +179,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private LinkedHashMap<Integer, Button> functionMapG;
 
     // current direction
-    private int dirT = 1; // request direction for each throttle (single or multiple engines)
+    private int dirT = 1;   // requested direction for each throttle (single or multiple engines)
     private int dirS = 1;
     private int dirG = 1;
 
@@ -224,6 +224,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     // used to hold the direction change preferences
     boolean dirChangeWhileMoving;
     boolean stopOnDirectionChange;
+    boolean locoSelectWhileMoving;
 
     // used for the GamePad Support
     private boolean prefThrottleGamePad = false;
@@ -235,7 +236,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private char[] lastKeyChars = {' ', ' ', ' ', ' '};
     private int lastKeyCount = 0;
     private int lastKeyCountNeedExtraKeys = 0;
-    //                           Throttle  F    Dpad_Up    Dpad_Down  Dpad_Left  Dpad_Right Start      Button_X   Button_Y   Button_A   Button_B
+    //                              none     NextThr  Speed+    Speed-      Fwd         Rev         EStop       F2      F1          F0          Stop
     private int[] gamePadKeys =     {0,        0,   KEYCODE_W, KEYCODE_X,   KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
     private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
 
@@ -259,10 +260,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         @Override
         public void run() {
             if (mAutoIncrement) {
-                increment(whichThrottle);
+                incrementSpeed(whichThrottle);
                 repeatUpdateHandler.postDelayed(new RptUpdater(whichThrottle), REP_DELAY);
             } else if (mAutoDecrement) {
-                decrement(whichThrottle);
+                decrementSpeed(whichThrottle);
                 repeatUpdateHandler.postDelayed(new RptUpdater(whichThrottle), REP_DELAY);
             }
         }
@@ -549,7 +550,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
-    // set speed slider to absolute value
+    // set speed slider to absolute value on all throttles
+    void speedUpdate(int speed) {
+        for (char throttleLetter : allThrottleLetters) {
+            speedUpdate(throttleLetter, speed);
+        }
+    }
+
+    // set speed slider to absolute value on one throttle
     void speedUpdate(char whichThrottle, int speed) {
         if (speed < 0)
             speed = 0;
@@ -575,7 +583,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         return throttle_slider.getProgress();
     }
 
-    // check if at the maximum speed of the throttle
+    // get the maximum speed of the throttle
     boolean atMaxSpeed(char whichThrottle) {
         SeekBar throttle_slider;
         if (whichThrottle == 'T') {
@@ -617,7 +625,22 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         return speed;
     }
 
-    // set speed slider and notify server
+    public void decrementSpeed(char whichThrottle) {
+        speedChangeAndNotify(whichThrottle, -BUTTON_SPEED_STEP);
+    }
+
+    public void incrementSpeed(char whichThrottle) {
+        speedChangeAndNotify(whichThrottle, BUTTON_SPEED_STEP);
+    }
+
+    // set speed slider and notify server for all throttles
+    void speedUpdateAndNotify(int speed) {
+        for (char throttleLetter : allThrottleLetters) {
+            speedUpdateAndNotify(throttleLetter, speed);
+        }
+    }
+
+    // set speed slider and notify server for one throttle
     void speedUpdateAndNotify(char whichThrottle, int speed) {
         speedUpdate(whichThrottle, speed);
         sendSpeedMsg(whichThrottle, speed);
@@ -725,12 +748,18 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     // if skipLead is true, the direction is not set for the lead engine
     void setEngineDirection(char whichThrottle, int direction, boolean skipLead) {
         Consist con;
-        if (whichThrottle == 'T')
+        if (whichThrottle == 'T') {
             con = mainapp.consistT;
-        else if (whichThrottle == 'G')
+            dirT = direction;
+        }
+        else if (whichThrottle == 'G') {
             con = mainapp.consistG;
-        else
+            dirG = direction;
+        }
+        else {
             con = mainapp.consistS;
+            dirS = direction;
+        }
         String leadAddr = con.getLeadAddr();
         for (String addr : con.getList()) { // loop through each engine in consist
             if (!skipLead || (addr != null && !addr.equals(leadAddr))) {
@@ -746,6 +775,18 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
+    // get the consist for the specified throttle
+    private Consist getConsist(char whichThrottle) {
+        Consist con;
+        if (whichThrottle == 'T')
+            con = mainapp.consistT;
+        else if (whichThrottle == 'G')
+            con = mainapp.consistG;
+        else
+            con = mainapp.consistS;
+        return con;
+    }
+
     // get the indicated direction from the button pressed state
     private int getDirection(char whichThrottle) {
         if (whichThrottle == 'T') {
@@ -755,6 +796,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         } else {
             return dirS;
         }
+    }
+
+    // update the direction indicators
+    void showDirectionIndications() {
+        showDirectionIndication('T', dirT);
+        showDirectionIndication('S', dirS);
+        showDirectionIndication('G', dirG);
     }
 
     // indicate direction using the button pressed state
@@ -823,22 +871,26 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         showDirectionIndication(whichThrottle, direction);
     }
 
-    private void changeDirectionIfAllowed(char whichThrottle, String conAddr, int direction) {
-        // set speed to zero on direction change while moving if the preference is set
-        if (!conAddr.equals("Not Set")) {
-            if (stopOnDirectionChange) {
-                if ((getSpeed(whichThrottle) != 0) && (getDirection(whichThrottle) != direction)) {
-                    speedUpdateAndNotify(whichThrottle, 0);
-                }
+    private void changeDirectionIfAllowed(char whichThrottle, int direction) {
+        if ((getDirection(whichThrottle) != direction) && isChangeDirectionAllowed(whichThrottle)) {
+            // set speed to zero on direction change while moving if the preference is set
+            if (stopOnDirectionChange && (getSpeed(whichThrottle) != 0)) {
+                speedUpdateAndNotify(whichThrottle, 0);
             }
 
-            // don't allow direction change while moving if the preference is set
-            if ((dirChangeWhileMoving) || (getSpeed(whichThrottle) == 0)) {
-                showDirectionRequest(whichThrottle, direction);        // update requested direction indication
-                setEngineDirection(whichThrottle, direction, false);   // update direction for each engine on this throttle
-                vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
-            }
+            showDirectionRequest(whichThrottle, direction);        // update requested direction indication
+            setEngineDirection(whichThrottle, direction, false);   // update direction for each engine on this throttle
         }
+    }
+
+    private boolean isChangeDirectionAllowed(char whichThrottle) {
+        // check whether direction change is permitted
+        boolean isAllowed = false;
+        if (getConsist(whichThrottle).isActive()) {
+            if(stopOnDirectionChange || dirChangeWhileMoving || (getSpeed(whichThrottle) == 0))
+                isAllowed = true;
+        }
+        return isAllowed;
     }
 
     void set_stop_button(char whichThrottle, boolean pressed) {
@@ -857,6 +909,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             bStop.setPressed(false);
             bStop.setTypeface(null, Typeface.NORMAL);
         }
+    }
+
+    private boolean isSelectLocoAllowed(char whichThrottle) {
+        // check whether loco change is permitted
+        boolean isAllowed = false;
+        if (!getConsist(whichThrottle).isActive() || locoSelectWhileMoving || (getSpeed(whichThrottle) == 0)) {
+            isAllowed = true;
+        }
+        return isAllowed;
     }
 
     void start_select_loco_activity(char whichThrottle) {
@@ -887,50 +948,40 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         enable_disable_buttons(whichThrottle, false);
     }
 
-    void applyDirectionChangeOptions(char whichThrottle) {
+    void applySpeedRelatedOptions() {
+        for (char throttleLetter : allThrottleLetters) {
+            applySpeedRelatedOptions(throttleLetter);}  // repeat for all three throttles
+    }
 
-        if ((!dirChangeWhileMoving) && (!stopOnDirectionChange)) {
+    void applySpeedRelatedOptions(char whichThrottle) {
+        // default to throttle 'T'
+        Button bFwd = bFwdT;
+        Button bRev = bRevT;
+        Button bSel = bSelT;
+        boolean tIsEnabled = llT.isEnabled();
+        int dir = dirT;
+        switch (whichThrottle) {
+            case 'S':
+                bFwd = bFwdS;
+                bRev = bRevS;
+                bSel = bSelS;
+                tIsEnabled = llS.isEnabled();
+                dir = dirS;
+                break;
+            case 'G':
+                bFwd = bFwdG;
+                bRev = bRevG;
+                bSel = bSelG;
+                tIsEnabled = llG.isEnabled();
+                dir = dirG;
+        }
 
-            // default to throttle 'T'
-            Button bFwd = bFwdT;
-            Button bRev = bRevT;
-            Button bSel = bSelT;
-            boolean tIsEnabled = llT.isEnabled();
-            //Consist con = mainapp.consistT;
-            String conAddr = mainapp.consistT.formatConsistAddr();
-            int dir = dirT;
-
-            switch (whichThrottle) {
-                case 'T':
-                    break;
-                case 'S':
-                    bFwd = bFwdS;
-                    bRev = bRevS;
-                    bSel = bSelS;
-                    tIsEnabled = llS.isEnabled();
-                    //con = mainapp.consistS;
-                    conAddr = mainapp.consistS.formatConsistAddr();
-                    dir = dirS;
-                    break;
-                case 'G':
-                    bFwd = bFwdG;
-                    bRev = bRevG;
-                    bSel = bSelG;
-                    tIsEnabled = llG.isEnabled();
-                    //con = mainapp.consistG;
-                    conAddr = mainapp.consistG.formatConsistAddr();
-                    dir = dirG;
-            }
-
-            if ((getSpeed(whichThrottle) == 0) && tIsEnabled) {
-                bSel.setEnabled(true);
-                if (!conAddr.equals("Not Set")) {
+        if (getConsist(whichThrottle).isActive()) {
+            boolean dirChangeAllowed = tIsEnabled && isChangeDirectionAllowed(whichThrottle);
+            boolean locoChangeAllowed = tIsEnabled && isSelectLocoAllowed(whichThrottle);
+            if (dirChangeAllowed) {
                     bFwd.setEnabled(true);
                     bRev.setEnabled(true);
-                } else {
-                    bFwd.setEnabled(false);
-                    bRev.setEnabled(false);
-                }
             } else {
                 if (dir == 1) {
                     bFwd.setEnabled(true);
@@ -939,8 +990,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     bFwd.setEnabled(false);
                     bRev.setEnabled(true);
                 }
-                bSel.setEnabled(false);
             }
+            bSel.setEnabled(locoChangeAllowed);
+        }
+        else {
+            bFwd.setEnabled(false);
+            bRev.setEnabled(false);
+            bSel.setEnabled(true);
         }
     }
 
@@ -1220,33 +1276,28 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     public boolean dispatchKeyEvent(KeyEvent event) {
         int action = event.getAction();
         int keyCode = event.getKeyCode();
+        int repeatCnt = event.getRepeatCount();
         int kbInt = 0;
         int i;
 
         if (!whichGamePadMode.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
 
             char whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
-
-            String conAddr = mainapp.consistT.formatConsistAddr();
-            switch (whichThrottle) {
-                case 'S': { conAddr = mainapp.consistS.formatConsistAddr(); break;}
-                case 'G': { conAddr = mainapp.consistG.formatConsistAddr(); break;}
-            }
+            boolean isActive = getConsist(whichThrottle).isActive();
 
             if (keyCode != 0) {
                 Log.d("Engine_Driver", "keycode " + keyCode + " action " + action);
             }
 
             // only allow repeat keys for Increase and Decrease Speed
-            if (event.getRepeatCount() > 0 && (keyCode != gamePadKeys[2] && keyCode != gamePadKeys[3] )) {
+            if (repeatCnt > 0 && (keyCode != gamePadKeys[2] && keyCode != gamePadKeys[3] )) {
                 return (true);
             }
 
             if (keyCode == gamePadKeys[2]) {
                 // Increase Speed
-                if ((!conAddr.equals("Not Set")) && (action == ACTION_DOWN)) {
-                    increment(whichThrottle);
-                    applyDirectionChangeOptions(whichThrottle);
+                if (isActive && (action == ACTION_DOWN)) {
+                    incrementSpeed(whichThrottle);
                     Log.d("Engine_Driver", "Speed " + getSpeed(whichThrottle));
                     if (atMaxSpeed(whichThrottle))
                         vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
@@ -1255,9 +1306,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
             } else if (keyCode == gamePadKeys[3]) {
                 // Decrease Speed
-                if ((!conAddr.equals("Not Set")) && (action == ACTION_DOWN)) {
-                    decrement(whichThrottle);
-                    applyDirectionChangeOptions(whichThrottle);
+                if (isActive && (action == ACTION_DOWN)) {
+                    decrementSpeed(whichThrottle);
                     if (getSpeed(whichThrottle) < 1)
                         vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                 }
@@ -1265,20 +1315,25 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
             } else if (keyCode == gamePadKeys[4]) {
                 // Forward
-                if (action == ACTION_DOWN) changeDirectionIfAllowed(whichThrottle,conAddr,DIRECTION_FORWARD);
+                if (isActive && (action == ACTION_DOWN)) {
+                    vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                    changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
+                }
                 return (true); // stop processing this key
 
             } else if (keyCode == gamePadKeys[5]) {
                 // Reverse
-                if (action == ACTION_DOWN) changeDirectionIfAllowed(whichThrottle,conAddr,DIRECTION_REVERSE);
+                if (isActive && action == ACTION_DOWN) {
+                    vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                    changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
+                }
                 return (true); // stop processing this key
 
             } else if (keyCode == gamePadKeys[7]) {
                 // stop
-                if ((!conAddr.equals("Not Set")) && (action == ACTION_DOWN)) {
+                if (isActive && (action == ACTION_DOWN)) {
                     set_stop_button(whichThrottle, true);
                     speedUpdateAndNotify(whichThrottle, 0);
-                    applyDirectionChangeOptions(whichThrottle);
                     set_stop_button(whichThrottle, false);
                 }
                 return (true); // stop processing this key
@@ -1286,35 +1341,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             } else if ((action == ACTION_DOWN) && ((keyCode == gamePadKeys[8]) || (keyCode == gamePadKeys[9]) || (keyCode == gamePadKeys[10]))) {
                 // handle function button Down action
                 // 8 = F1 - Bell    9 = F0 - Light    10 = F2 - Horn
-                if ((!conAddr.equals("Not Set"))) {
+                if (isActive) {
                     int fKey = 0; // default to 9 = F0
                     if (keyCode == gamePadKeys[8])
                         fKey = 1;
                     else if (keyCode == gamePadKeys[10])
                         fKey = 2;
 
-//                    switch (whichThrottle) {
-//                        case 'T': {
-//                            mainapp.function_states_T[fKey] = !mainapp.function_states_T[fKey];
-//                            break;}
-//                        case 'G': {
-//                            mainapp.function_states_G[fKey] = !mainapp.function_states_G[fKey];
-//                            break;}
-//                        default: {
-//                            mainapp.function_states_S[fKey] = !mainapp.function_states_S[fKey];
-//                            break;}
-//                    }
-
-//                    Button b = getFunctionButton(whichThrottle, fKey);
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + "", fKey, 1);
-//                      set_function_state(whichThrottle, fKey);
                     vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                 }
                 return (true); // stop processing this key
             } else if ((action == ACTION_UP) && ((keyCode == gamePadKeys_Up[8]) || (keyCode == gamePadKeys_Up[9]) || (keyCode == gamePadKeys_Up[10]))) {
                 // handle function button Down action
                 // 8 = F1 - Bell    9 = F0 - Light    10 = F2 - Horn
-                if ((!conAddr.equals("Not Set"))) {
+                if (isActive) {
                     int fKey = 0; // default to 9 = F0
                     if (keyCode == gamePadKeys_Up[8])
                         fKey = 1;
@@ -1330,11 +1371,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 // EStop or optionally NextThrottle
                 if (action == ACTION_DOWN) {
                     if (prefThrottleGameStartButton.equals("EStop")) {
-                        for (char throttleLetter : allThrottleLetters) {  // repeat for all three throttles
-                            applyDirectionChangeOptions(throttleLetter);
-                            speedUpdateAndNotify(throttleLetter, 0);  // update requested direction indication
-                            vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
-                        }  //
+                        speedUpdate(0);         // update all three throttles
+                        vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                     } else { // "Next Throttle"
                         setNextActiveThrottle();
                     }
@@ -1368,10 +1406,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         @Override
         public void onClick(View v) {
             // don't loco change while moving if the preference is set
-            if ((dirChangeWhileMoving) || (getSpeed(whichThrottle) == 0)) {
+            if (isSelectLocoAllowed(whichThrottle)) {
                 start_select_loco_activity(whichThrottle); // pass throttle #
             } else {
-                Toast.makeText(getApplicationContext(), "Loco change not allowed: 'Direction change?' while moving is disabled in the preferences", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Loco change not allowed: 'Direction change while moving' is disabled in the preferences", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -1421,12 +1459,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         public void onClick(View v) {
             if (arrowDirection.equals("right")) {
                 mAutoIncrement = false;
-                increment(whichThrottle);
+                incrementSpeed(whichThrottle);
             } else {
                 mAutoDecrement = false;
-                decrement(whichThrottle);
+                decrementSpeed(whichThrottle);
             }
-            applyDirectionChangeOptions(whichThrottle);
         }
 
         @Override
@@ -1494,32 +1531,20 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
 
         private void handleAction(int action) {
+
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
                     switch (this.function) {
                         case function_button.FORWARD:
+                            changeDirectionIfAllowed(whichThrottle,1);
+                            break;
                         case function_button.REVERSE: {
-                            int dir = (function == function_button.FORWARD ? 1 : 0);
-
-                            // set speed to zero on direction change while moving if the preference is set
-                            if ((stopOnDirectionChange) && (getSpeed(whichThrottle) != 0) && (dir != getDirection(whichThrottle))) {
-                                speedUpdateAndNotify(whichThrottle, 0);
-                            }
-
-                            // don't allow direction change while moving if the preference is set
-                            if ((dirChangeWhileMoving) || (getSpeed(whichThrottle) == 0)) {
-                                showDirectionRequest(whichThrottle, dir);        // update requested direction indication
-                                setEngineDirection(whichThrottle, dir, false);   // update direction for each engine on this throttle
-                            } //else {
-                            //Toast.makeText(getApplicationContext(), "Direction change not allowed: 'Direction change while moving' is disabled in the preferences", Toast.LENGTH_SHORT).show();
-                            //}
-
+                            changeDirectionIfAllowed(whichThrottle,0);
                             break;
                         }
                         case function_button.STOP:
                             set_stop_button(whichThrottle, true);
                             speedUpdateAndNotify(whichThrottle, 0);
-                            applyDirectionChangeOptions(whichThrottle);
                             break;
                         case function_button.SPEED_LABEL:  // specify which throttle the volume button controls
                             whichVolume = whichThrottle;    // use whichever was clicked
@@ -1556,10 +1581,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     if (function == function_button.STOP) {
                         set_stop_button(whichThrottle, false);
                     }
-                    // only process UP for function buttons
+                    // only process UP event if this is a "function" button
                     else if (function < function_button.FORWARD) {
-                        // Consist con = (whichThrottle == 'T') ? mainapp.consistT :
-                        // mainapp.consistS;
                         Consist con;
                         if (whichThrottle == 'T') {
                             con = mainapp.consistT;
@@ -1571,9 +1594,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         String addr = "";
                         if (leadOnly)
                             addr = con.getLeadAddr();
-// ***future                else if (trailOnly)
-//                              addr = con.getTrailAddr();
-                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + addr, function, 0);
+// ***future            else if (trailOnly)
+//                          addr = con.getTrailAddr();
+                       mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + addr, function, 0);
                         // set_function_request(whichThrottle, function, 0);
                     }
                     break;
@@ -1586,6 +1609,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         char whichThrottle;
         int lastSpeed;
         boolean limitedJump;
+        int jumpSpeed;
 
         public throttle_listener(char new_whichThrottle) {
             whichThrottle = new_whichThrottle; // store values for this listener
@@ -1608,21 +1632,33 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     if ((speed - lastSpeed) > max_throttle_change) {    // if jump is too large then limit it
                         // Log.d("Engine_Driver", "onProgressChanged -- throttling change");
                         mAutoIncrement = true;  // advance slowly
-                        repeatUpdateHandler.post(new RptUpdater(whichThrottle));
-                        speed = lastSpeed;
+                        jumpSpeed = speed;      // save ultimate target value
                         limitedJump = true;
+                        throttle.setProgress(lastSpeed);
+                        repeatUpdateHandler.post(new RptUpdater(whichThrottle));
+                        return;
                     }
                     sendSpeedMsg(whichThrottle, speed);
                     setDisplayedSpeed(whichThrottle, speed);
-                    lastSpeed = speed;
                 }
-                throttle.setProgress(lastSpeed);
-                applyDirectionChangeOptions(whichThrottle);
+                else {                      // got a touch while processing limitJump
+                    speed = lastSpeed;    //   so suppress multiple touches
+                    throttle.setProgress(lastSpeed);
+                }
             } else {
+                if (limitedJump) {
+                    if (speed >= jumpSpeed) {   // stop when we reach the target
+                        mAutoIncrement = false;
+                        limitedJump = false;
+                        throttle.setProgress(jumpSpeed);
+                    }
+                }
                 setDisplayedSpeed(whichThrottle, speed);
-                lastSpeed = speed;
-                applyDirectionChangeOptions(whichThrottle);
             }
+            if (speed == 0 || lastSpeed == 0) {     // check rules when going to/from 0 speed
+                applySpeedRelatedOptions(whichThrottle);
+            }
+            lastSpeed = speed;
         }
 
         @Override
@@ -1698,14 +1734,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
     }
 
-    public void decrement(char whichThrottle) {
-        speedChangeAndNotify(whichThrottle, -BUTTON_SPEED_STEP);
-    }
-
-    public void increment(char whichThrottle) {
-        speedChangeAndNotify(whichThrottle, BUTTON_SPEED_STEP);
-    }
-
     @SuppressLint({"Recycle", "SetJavaScriptEnabled"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -1727,6 +1755,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         if (mainapp.isForcingFinish()) { // expedite
             return;
         }
+
         setContentView(R.layout.throttle);
 
         speedButtonLeftText = getApplicationContext().getResources().getString(R.string.LeftButton);
@@ -1920,16 +1949,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             mVelocityTracker = VelocityTracker.obtain();
         }
 
-        // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
-        dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
-        stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
-        for (char throttleLetter : allThrottleLetters) {
-            applyDirectionChangeOptions(throttleLetter);}  // repeat for all three throttles
-
-        // check the preference setting for GamePad Support
-        setGamepadKeys();
-
-        webView = (WebView) findViewById(R.id.throttle_webview);
+       webView = (WebView) findViewById(R.id.throttle_webview);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
         webView.getSettings().setDatabasePath(databasePath);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -2013,13 +2033,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
 
-        // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
         dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
         stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
+        locoSelectWhileMoving = prefs.getBoolean("SelLocoWhileMovingPreference", getResources().getBoolean(R.bool.prefSelLocoWhileMovingDefaultValue));
 
-        for (char throttleLetter : allThrottleLetters) {
-            applyDirectionChangeOptions(throttleLetter);}  // repeat for all three throttles
-
+        applySpeedRelatedOptions();  // update all throttles
 
         // check the preference setting for GamePad Support
         setGamepadKeys();
@@ -2036,16 +2054,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
 
         if (mainapp.EStopActivated) {
-            speedUpdateAndNotify('T', 0);
-            speedUpdateAndNotify('S', 0);
-            speedUpdateAndNotify('G', 0);
-
-            // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
-            for (char throttleLetter : allThrottleLetters) {
-                applyDirectionChangeOptions(throttleLetter);}  // repeat for all three throttles
+            speedUpdateAndNotify(0);  // update all three throttles
+            applySpeedRelatedOptions();  // update all three throttles
 
             mainapp.EStopActivated = false;
         }
+
+        // update the direction indicators
+        showDirectionIndications();
 
         if (TMenu != null) {
             TMenu.findItem(R.id.EditConsistT_menu).setVisible(mainapp.consistT.isMulti());
@@ -2242,6 +2258,22 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         } else
             functionMapS = functionButtonMap;
     }
+
+    // helper function to get a numbered function button from its throttle and function number
+    Button getFunctionButton(char whichThrottle, int func) {
+        Button b; // button
+        LinkedHashMap<Integer, Button> functionButtonMap;
+
+        if (whichThrottle == 'T')
+            functionButtonMap = functionMapT;
+        else if (whichThrottle == 'G') {
+            functionButtonMap = functionMapG;
+        } else {
+            functionButtonMap = functionMapS;
+        }
+        b = functionButtonMap.get(func);
+        return b;
+   }
 
     // lookup and set values of various informational text labels and size the
     // screen elements
@@ -2622,9 +2654,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
 
         // update the direction indicators
-        showDirectionIndication('T', dirT);
-        showDirectionIndication('S', dirS);
-        showDirectionIndication('G', dirG);
+        showDirectionIndications();
 
         // update the state of each function button based on shared variable
         set_all_function_states('T');
@@ -2699,7 +2729,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.throttle_menu, menu);
         TMenu = menu;
-        set_labels();
         return true;
     }
 
@@ -2762,11 +2791,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 break;
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
-                for (char throttleLetter : allThrottleLetters) {speedUpdate(throttleLetter,0);}  // repeat for all three throttles
-
-                // enable or disble the direction buttons if the preference is set at the current speed is greater than zero
-                for (char throttleLetter : allThrottleLetters) {
-                    applyDirectionChangeOptions(throttleLetter);}  // repeat for all three throttles
+                speedUpdate(0);  // update all three throttles
+                applySpeedRelatedOptions();  // update all three throttles
 
                 break;
             case R.id.power_layout_button:
