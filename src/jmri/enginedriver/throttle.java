@@ -1332,9 +1332,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             } else if (keyCode == gamePadKeys[7]) {
                 // stop
                 if (isActive && (action == ACTION_DOWN)) {
-                    set_stop_button(whichThrottle, true);
                     speedUpdateAndNotify(whichThrottle, 0);
-                    set_stop_button(whichThrottle, false);
                 }
                 return (true); // stop processing this key
 
@@ -1371,7 +1369,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 // EStop or optionally NextThrottle
                 if (action == ACTION_DOWN) {
                     if (prefThrottleGameStartButton.equals("EStop")) {
-                        speedUpdate(0);         // update all three throttles
+                        speedUpdateAndNotify(0);         // update all three throttles
                         vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                     } else { // "Next Throttle"
                         setNextActiveThrottle();

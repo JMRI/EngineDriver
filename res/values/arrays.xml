@@ -181,7 +181,7 @@
         <item>@integer/KeyCode_Y</item>
         <item>@integer/KeyCode_J</item>
         <item>@integer/KeyCode_H</item>
-        <item>@integer/KeyCode_Y</item>
+        <item>@integer/KeyCode_U</item>
     </integer-array>
     <integer-array name="prefGamePadiCadePlusDpad_UpCodes">
         <item>0</item> //not used
@@ -251,10 +251,10 @@
     <integer-array name="prefGamePadVRBoxiC">
         <item>0</item> //not used
         <item>@integer/KeyCode_O</item> //gamepadEscape
-        <item>@integer/KeyCode_A</item> //gamepadDpadUp
-        <item>@integer/KeyCode_D</item> //gamepadDpadDown
-        <item>@integer/KeyCode_X</item> //gamepadDpadLeft
-        <item>@integer/KeyCode_W</item> //gamepadDpadRight
+        <item>@integer/KeyCode_W</item> //gamepadDpadUp
+        <item>@integer/KeyCode_X</item> //gamepadDpadDown
+        <item>@integer/KeyCode_A</item> //gamepadDpadLeft
+        <item>@integer/KeyCode_D</item> //gamepadDpadRight
         <item>@integer/KeyCode_L</item> //gamepadEnter
         <item>@integer/KeyCode_U</item> //gamepadA
         <item>@integer/KeyCode_H</item> //gamepadB
@@ -264,10 +264,10 @@
     <integer-array name="prefGamePadVRBoxiC_UpCodes">
         <item>0</item> //not used
         <item>@integer/KeyCode_G</item>
+        <item>@integer/KeyCode_E</item>
+        <item>@integer/KeyCode_Z</item>
         <item>@integer/KeyCode_Q</item>
         <item>@integer/KeyCode_C</item>
-        <item>@integer/KeyCode_Z</item>
-        <item>@integer/KeyCode_E</item>
         <item>@integer/KeyCode_V</item>
         <item>@integer/KeyCode_F</item>
         <item>@integer/KeyCode_R</item>
