@@ -109,6 +109,22 @@
             android:key="SwipeUpOption"
             android:summary="@string/prefSwipeUpOptionSummary"
             android:title="@string/prefSwipeUpOptionTitle" />
+        <EditTextPreference
+            android:defaultValue="@string/prefScreenBrightnessDimDefaultValue"
+            android:dialogTitle="@string/prefScreenBrightnessDimTitle"
+            android:key="prefScreenBrightnessDim"
+            android:maxLength="3"
+            android:numeric="integer"
+            android:summary="@string/prefScreenBrightnessDimSummary"
+            android:title="@string/prefScreenBrightnessDimTitle" />
+        <EditTextPreference
+            android:defaultValue="@string/prefScreenBrightnessBrightDefaultValue"
+            android:dialogTitle="@string/prefScreenBrightnessBrightTitle"
+            android:key="prefScreenBrightnessBright"
+            android:maxLength="3"
+            android:numeric="integer"
+            android:summary="@string/prefScreenBrightnessBrightSummary"
+            android:title="@string/prefScreenBrightnessBrightTitle" />
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -53,6 +53,9 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+// for changing the screen brightness
+import android.provider.Settings;
+
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -220,6 +223,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private boolean webViewIsOn = false;
     private String prefSwipeUpOption;
     private String keepWebViewLocation = "none";
+    // use for locking the screen on swipe up
+    private boolean screenLocked = false;
+    private boolean screenDimmed = false;
+    private int screenBrightnessDim;
+    //private int screenBrightnessBright;
+    private int screenBrightnessOriginal;
 
     // used to hold the direction change preferences
     boolean dirChangeWhileMoving;
@@ -467,6 +476,78 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     break;
             }
         }
+    }
+
+    // Change the screen brightness
+    public void setScreenBrightness(int brightnessValue){
+        Context mContext;
+        mContext = getApplicationContext();
+
+        /*
+            public abstract ContentResolver getContentResolver ()
+                Return a ContentResolver instance for your application's package.
+        */
+        /*
+            Settings
+                The Settings provider contains global system-level device preferences.
+
+            Settings.System
+                System settings, containing miscellaneous system preferences. This table holds
+                simple name/value pairs. There are convenience functions for accessing
+                individual settings entries.
+        */
+        /*
+            public static final String SCREEN_BRIGHTNESS
+                The screen backlight brightness between 0 and 255.
+                Constant Value: "screen_brightness"
+        */
+        /*
+            public static boolean putInt (ContentResolver cr, String name, int value)
+                Convenience function for updating a single settings value as an integer. This will
+                either create a new entry in the table if the given name does not exist, or modify
+                the value of the existing row with that name. Note that internally setting values
+                are always stored as strings, so this function converts the given value to a
+                string before storing it.
+
+            Parameters
+                cr : The ContentResolver to access.
+                name : The name of the setting to modify.
+                value : The new value for the setting.
+            Returns
+                true : if the value was set, false on database errors
+        */
+
+        // Make sure brightness value between 0 to 255
+        if(brightnessValue >= 0 && brightnessValue <= 255){
+            Settings.System.putInt( mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessValue );
+        }
+    }
+
+    // Get the screen current brightness
+    protected int getScreenBrightness(){
+        Context mContext;
+        mContext = getApplicationContext();
+
+        /*
+            public static int getInt (ContentResolver cr, String name, int def)
+                Convenience function for retrieving a single system settings value as an integer.
+                Note that internally setting values are always stored as strings; this function
+                converts the string to an integer for you. The default value will be returned
+                if the setting is not defined or not an integer.
+
+            Parameters
+                cr : The ContentResolver to access.
+                name : The name of the setting to retrieve.
+                def : Value to return if the setting is not defined.
+            Returns
+                The setting's current value, or 'def' if it is not defined or not a valid integer.
+        */
+        int brightnessValue = Settings.System.getInt(
+                mContext.getContentResolver(),
+                Settings.System.SCREEN_BRIGHTNESS,
+                0
+        );
+        return brightnessValue;
     }
 
 
@@ -1403,6 +1484,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public void onClick(View v) {
+            if (screenLocked) return; // ignore everything if the screen is locked
+
             // don't loco change while moving if the preference is set
             if (isSelectLocoAllowed(whichThrottle)) {
                 start_select_loco_activity(whichThrottle); // pass throttle #
@@ -1444,6 +1527,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public boolean onLongClick(View v) {
+
+            if (screenLocked) return false; // ignore everything if the screen is locked
+
             if (arrowDirection.equals("right")) {
                 mAutoIncrement = true;
             } else {
@@ -1455,6 +1541,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public void onClick(View v) {
+
+            if (screenLocked) return; // ignore everything if the screen is locked
+
             if (arrowDirection.equals("right")) {
                 mAutoIncrement = false;
                 incrementSpeed(whichThrottle);
@@ -1466,6 +1555,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+
+            if (screenLocked) return false; // ignore everything if the screen is locked
+
             if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) && mAutoIncrement) {
                 mAutoIncrement = false;
             }
@@ -1488,6 +1580,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
 
         public function_button_touch_listener(int new_function, char new_whichThrottle, String funcLabel) {
+
+            if (screenLocked) return; // ignore everything if the screen is locked
+
             function = new_function;    // store these values for this button
             whichThrottle = new_whichThrottle;
             String lab = funcLabel.toUpperCase().trim();
@@ -1506,6 +1601,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+
+            if (screenLocked) return (true); // ignore everything if the screen is locked
+
             // Log.d("Engine_Driver", "onTouch func " + function + " action " +
             // event.getAction());
 
@@ -1529,6 +1627,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
 
         private void handleAction(int action) {
+
+            if (screenLocked) return; // ignore everything if the screen is locked
 
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
@@ -1661,6 +1761,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public void onStartTrackingTouch(SeekBar sb) {
+            if (screenLocked) return; // ignore everything if the screen is locked
+
             gestureInProgress = false;
             limitedJump = false;
         }
@@ -1766,6 +1868,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         keepWebViewLocation = webViewLocation;
 
         prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
+        screenLocked = false;
+
+        // get the screen brightness on create
+        screenBrightnessOriginal = getScreenBrightness();
 
         // myGesture = new GestureDetector(this);
         GestureOverlayView ov = (GestureOverlayView) findViewById(R.id.throttle_overlay);
@@ -2030,10 +2136,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         gestureInProgress = false;
 
         prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
+        screenLocked = false;
 
         dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
         stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
         locoSelectWhileMoving = prefs.getBoolean("SelLocoWhileMovingPreference", getResources().getBoolean(R.bool.prefSelLocoWhileMovingDefaultValue));
+
+        screenBrightnessDim = Integer.parseInt(prefs.getString("prefScreenBrightnessDim", getResources().getString(R.string.prefScreenBrightnessDimDefaultValue))) * 255 /100;
+        //screenBrightnessBright = Integer.parseInt(prefs.getString("prefScreenBrightnessBright", getResources().getString(R.string.prefScreenBrightnessBrightDefaultValue))) * 255 /100;
 
         applySpeedRelatedOptions();  // update all throttles
 
@@ -2676,6 +2786,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     @SuppressWarnings("deprecation")
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
+        if (screenLocked) return(false); // ignore everything if the screen is locked
+
         // Handle pressing of the back button
         if (key == KEYCODE_BACK) {
             if (webView.canGoBack() && !clearHistory) {
@@ -2964,6 +3076,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         if (gestureInProgress) {
             if ((Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) || (Math.abs(event.getY() - gestureStartY) > threaded_application.min_fling_distance)) {
                 if (Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) {
+
+                    if (screenLocked) return; // ignore everything if the screen is locked
+
                     // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
                     event.setAction(MotionEvent.ACTION_CANCEL);
                     boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
@@ -3001,6 +3116,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 }
                 // enter or exit immersive mode on pull down (only) if the preference is set
                 if ((event.getY() - gestureStartY) > threaded_application.min_fling_distance) {
+
+                    if (screenLocked) return; // ignore everything if the screen is locked
+
                     if (immersiveModeIsOn) {
                         setImmersiveModeOff(webView);
                         Toast.makeText(getApplicationContext(), "Immersive mode temporarily disabled. To disable permanently change in preferences", Toast.LENGTH_SHORT).show();
@@ -3022,6 +3140,27 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         //Toast.makeText(getApplicationContext(), "Swipe Up - " + webViewLocation, Toast.LENGTH_SHORT).show();
 
                         this.onResume();
+                    } else if (prefSwipeUpOption.equals("Enable-Disable all buttons")) {
+                        if (screenLocked) {
+                            screenLocked = false;
+                            Toast.makeText(getApplicationContext(), "Throttle Screen Unlocked", Toast.LENGTH_SHORT).show();
+                            //setScreenBrightness(screenBrightnessBright);
+                            setScreenBrightness(screenBrightnessOriginal);
+                        } else {
+                            screenLocked = true;
+                            Toast.makeText(getApplicationContext(), "Throttle Screen Locked - Swipe up to unlock", Toast.LENGTH_LONG).show();
+                            setScreenBrightness(screenBrightnessDim);
+                        }
+                    } else if (prefSwipeUpOption.equals("Dim - Brighten Screen")) {
+                        if (screenDimmed) {
+                            screenDimmed = false;
+                            //setScreenBrightness(screenBrightnessBright);
+                            setScreenBrightness(screenBrightnessOriginal);
+                        } else {
+                            screenDimmed = true;
+                            Toast.makeText(getApplicationContext(), "Throttle Screen Dimmed - Swipe up to brighten", Toast.LENGTH_LONG).show();
+                            setScreenBrightness(screenBrightnessDim);
+                        }
                     }
                 }
             } else {
