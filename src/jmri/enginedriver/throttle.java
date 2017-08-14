@@ -153,6 +153,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private View vThrotScr;
     private View vThrotScrWrap;
 
+    private boolean stealPromptActive = false; //true while steal dialog is open
     private boolean navigatingAway = false; // true if another activity was selected (false in onPause if going into background)
     private char whichVolume = 'T';
 
@@ -3083,17 +3084,24 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     }
     // prompt for Steal? Address, if yes, send message to execute the steal
     public void promptForSteal(String addr, char whichThrottle) {
+        if (stealPromptActive) return;
+        stealPromptActive = true;
         final AlertDialog.Builder b = new AlertDialog.Builder(this);
         b.setIcon(android.R.drawable.ic_dialog_alert);
         b.setTitle(R.string.steal_title);
         b.setMessage(getString(R.string.steal_text, addr));
         b.setCancelable(true);
-        b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+        b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() { //if yes pressed, tell ta to proceed with steal
             public void onClick(DialogInterface dialog, int id) {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.STEAL, addr, whichThrottle);
+                stealPromptActive = false;
             }
         });
-        b.setNegativeButton(R.string.no, null);
+        b.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() { //if no pressed do nothing
+            public void onClick(DialogInterface dialog, int id) {
+                stealPromptActive = false;
+            }
+        });
         AlertDialog alert = b.create();
         alert.show();
     }
