@@ -18,7 +18,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 
 import jmri.enginedriver.Consist.ConLoco;
 
@@ -69,7 +71,8 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         //clear and rebuild
         consistObjList.clear();
         int pos = 0;
-        for (ConLoco l : consist.getLocos()) {
+        Collection<ConLoco> cgl = consist.getLocos(); //copy to prevent concurrentmodification
+        for (ConLoco l : cgl) {
             if (l.isConfirmed()) {
                 consistObjList.add(l);
                 if (l.getAddress().equals(consist.getLeadAddr()))
@@ -80,7 +83,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         consistObjListAdapter.notifyDataSetChanged();
 
         consistList.clear();
-        for (ConLoco l : consist.getLocos()) {
+        for (ConLoco l : cgl) {
             if (l.isConfirmed()) {
                 //put values into temp hashmap
                 HashMap<String, String> hm = new HashMap<>();
