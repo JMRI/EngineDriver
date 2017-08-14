@@ -2210,6 +2210,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         if (!this.isFinishing() && !navigatingAway) { // only invoke setContentIntentNotification when going into background
             mainapp.addNotification(this.getIntent());
         }
+
+        if ((screenLocked) || (screenDimmed)) {
+            screenLocked = false;
+            screenDimmed = false;
+            setScreenBrightness(screenBrightnessOriginal);
+        }
     }
 
     @Override
@@ -3149,16 +3155,17 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         } else {
                             screenLocked = true;
                             Toast.makeText(getApplicationContext(), "Throttle Screen Locked - Swipe up to unlock", Toast.LENGTH_LONG).show();
+                            screenBrightnessOriginal = getScreenBrightness();
                             setScreenBrightness(screenBrightnessDim);
                         }
-                    } else if (prefSwipeUpOption.equals("Dim - Brighten Screen")) {
+                    } else if (prefSwipeUpOption.equals("Dim-Brighten Screen")) {
                         if (screenDimmed) {
                             screenDimmed = false;
-                            //setScreenBrightness(screenBrightnessBright);
                             setScreenBrightness(screenBrightnessOriginal);
                         } else {
                             screenDimmed = true;
                             Toast.makeText(getApplicationContext(), "Throttle Screen Dimmed - Swipe up to brighten", Toast.LENGTH_LONG).show();
+                            screenBrightnessOriginal = getScreenBrightness();
                             setScreenBrightness(screenBrightnessDim);
                         }
                     }

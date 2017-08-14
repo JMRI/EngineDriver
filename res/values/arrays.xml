@@ -137,7 +137,7 @@
         <item >None</item>
         <item >Show-Hide Web View</item>
         <item >Enable-Disable all buttons</item>
-        <item >Dim - Brighten Screen</item>
+        <item >Dim-Brighten Screen</item>
     </string-array>
     <string-array name="prefGamePadStartButtonOptions">
         <item >EStop</item>
