@@ -46,31 +46,37 @@
             android:key="NumThrottle"
             android:summary="@string/prefNumOfThrottlesSummary"
             android:title="@string/prefNumOfThrottles" />
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefIncreaseSliderHeightDefaultValue"
-            android:key="increase_slider_height_preference"
-            android:summary="@string/prefIncreaseSliderHeightSummary"
-            android:title="@string/prefIncreaseSliderHeightTitle" >
-        </CheckBoxPreference>
-        <EditTextPreference
-            android:defaultValue="@string/prefSliderLeftMarginDefaultValue"
-            android:dialogTitle="@string/prefSliderLeftMarginTitle"
-            android:key="left_slider_margin"
-            android:maxLength="2"
-            android:numeric="integer"
-            android:summary="@string/prefSliderLeftMarginSummary"
-            android:title="@string/prefSliderLeftMarginTitle" />
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefDisplaySpeedArrows"
-            android:key="display_speed_arrows_buttons"
-            android:summary="@string/prefDisplaySpeedArrowsSummary"
-            android:title="@string/prefDisplaySpeedArrowsTitle" />
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefHideSliderDefaultValue"
-            android:key="hide_slider_preference"
-            android:summary="@string/prefHideSliderSummary"
-            android:title="@string/prefHideSliderTitle" >
-        </CheckBoxPreference>
+        <PreferenceScreen
+            android:key="throttle_slider_preference"
+            android:title="@string/prefSliderTitle"
+            android:summary="@string/prefSliderSummary"
+            android:persistent="false">
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefIncreaseSliderHeightDefaultValue"
+                android:key="increase_slider_height_preference"
+                android:summary="@string/prefIncreaseSliderHeightSummary"
+                android:title="@string/prefIncreaseSliderHeightTitle" >
+            </CheckBoxPreference>
+            <EditTextPreference
+                android:defaultValue="@string/prefSliderLeftMarginDefaultValue"
+                android:dialogTitle="@string/prefSliderLeftMarginTitle"
+                android:key="left_slider_margin"
+                android:maxLength="2"
+                android:numeric="integer"
+                android:summary="@string/prefSliderLeftMarginSummary"
+                android:title="@string/prefSliderLeftMarginTitle" />
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefDisplaySpeedArrows"
+                android:key="display_speed_arrows_buttons"
+                android:summary="@string/prefDisplaySpeedArrowsSummary"
+                android:title="@string/prefDisplaySpeedArrowsTitle" />
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefHideSliderDefaultValue"
+                android:key="hide_slider_preference"
+                android:summary="@string/prefHideSliderSummary"
+                android:title="@string/prefHideSliderTitle" >
+            </CheckBoxPreference>
+        </PreferenceScreen>
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -79,30 +85,35 @@
             android:summary="@string/prefDecreaseLocoNumberHeightSummary"
             android:title="@string/prefDecreaseLocoNumberHeightTitle">
         </CheckBoxPreference>
-        <ListPreference
-            android:defaultValue="@string/prefWebViewLocationDefaultValue"
-            android:entries="@array/WebViewLocation"
-            android:entryValues="@array/WebViewLocation"
-            android:key="WebViewLocation"
-            android:summary="@string/prefWebViewLocationSummary"
-            android:title="@string/prefWebViewLocationTitle" />
-        <CheckBoxPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:defaultValue="@bool/prefIncreaseWebViewSizeDefaultValue"
-            android:key="prefIncreaseWebViewSize"
-            android:summary="@string/prefIncreaseWebViewSizeSummary"
-            android:title="@string/prefIncreaseWebViewSizeTitle">
-        </CheckBoxPreference>
-        <EditTextPreference
-            android:defaultValue="@string/prefInitialThrotWebPageDefaultValue"
-            android:dialogTitle="@string/prefInitialThrotWebPageSummary"
-            android:key="InitialThrotWebPage"
-            android:summary="@string/prefInitialThrotWebPageSummary"
-            android:title="@string/prefInitialThrotWebPageTitle"
-            android:inputType="text"
-            android:maxLines="1"/>
-
+        <PreferenceScreen
+            android:key="throttle_webview_preference"
+            android:title="@string/prefWebViewTitle"
+            android:summary="@string/prefWebViewSummary"
+            android:persistent="false">
+            <ListPreference
+                android:defaultValue="@string/prefWebViewLocationDefaultValue"
+                android:entries="@array/WebViewLocation"
+                android:entryValues="@array/WebViewLocation"
+                android:key="WebViewLocation"
+                android:summary="@string/prefWebViewLocationSummary"
+                android:title="@string/prefWebViewLocationTitle" />
+            <CheckBoxPreference
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:defaultValue="@bool/prefIncreaseWebViewSizeDefaultValue"
+                android:key="prefIncreaseWebViewSize"
+                android:summary="@string/prefIncreaseWebViewSizeSummary"
+                android:title="@string/prefIncreaseWebViewSizeTitle">
+            </CheckBoxPreference>
+            <EditTextPreference
+                android:defaultValue="@string/prefInitialThrotWebPageDefaultValue"
+                android:dialogTitle="@string/prefInitialThrotWebPageSummary"
+                android:key="InitialThrotWebPage"
+                android:summary="@string/prefInitialThrotWebPageSummary"
+                android:title="@string/prefInitialThrotWebPageTitle"
+                android:inputType="text"
+                android:maxLines="1"/>
+        </PreferenceScreen>
         <PreferenceScreen
             android:key="swipe_up_down_preferences"
             android:title="@string/prefSwipeUpDownTitle"
@@ -132,7 +143,6 @@
                 android:summary="@string/prefScreenBrightnessDimSummary"
                 android:title="@string/prefScreenBrightnessDimTitle" />
         </PreferenceScreen>
-
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -149,20 +159,26 @@
             android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary"
             android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle">
         </CheckBoxPreference>
-        <ListPreference
-            android:defaultValue="@string/prefGamePadTypeDefaultValue"
-            android:entries="@array/prefGamePadTypeOptions"
-            android:entryValues="@array/prefGamePadTypeOptions"
-            android:key="prefGamePadType"
-            android:summary="@string/prefGamePadTypeSummary"
-            android:title="@string/prefGamePadTypeTitle" />
-        <ListPreference
-            android:defaultValue="@string/prefGamePadStartButtonDefaultValue"
-            android:entries="@array/prefGamePadStartButtonOptions"
-            android:entryValues="@array/prefGamePadStartButtonOptions"
-            android:key="prefGamePadStartButton"
-            android:summary="@string/prefGamePadStartButtonSummary"
-            android:title="@string/prefGamePadStartButtonTitle" />
+        <PreferenceScreen
+            android:key="gamepad_preferences"
+            android:title="@string/prefGamePadTitle"
+            android:summary="@string/prefGamePadSummary"
+            android:persistent="false">
+            <ListPreference
+                android:defaultValue="@string/prefGamePadTypeDefaultValue"
+                android:entries="@array/prefGamePadTypeOptions"
+                android:entryValues="@array/prefGamePadTypeOptions"
+                android:key="prefGamePadType"
+                android:summary="@string/prefGamePadTypeSummary"
+                android:title="@string/prefGamePadTypeTitle" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadStartButtonDefaultValue"
+                android:entries="@array/prefGamePadStartButtonOptions"
+                android:entryValues="@array/prefGamePadStartButtonOptions"
+                android:key="prefGamePadStartButton"
+                android:summary="@string/prefGamePadStartButtonSummary"
+                android:title="@string/prefGamePadStartButtonTitle" />
+        </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefThrottleTitle" >
         <ListPreference
