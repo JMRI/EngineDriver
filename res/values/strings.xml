@@ -116,6 +116,8 @@
     <string name="prefThrottlePageTitle">Throttle Page Appearance Preferences</string>
     <string name="prefThrottleTitle">Throttle Control Preferences</string>
     <string name="prefThrottleStatusTitle">Throttle Page Status Row Preferences</string>
+    <string name="prefSliderTitle">Slider Preferences</string>
+    <string name="prefSliderSummary">Options for Speed Slider and Speed Buttons</string>
     <string name="prefIncreaseSliderHeightTitle">Increase Slider Height?</string>
     <string name="prefIncreaseSliderHeightSummary">Use a taller slider, or speed buttons, for throttles.</string>
     <string name="prefHideSliderTitle">Hide Speed Slider?</string>
@@ -133,7 +135,9 @@
     <string name="prefThrottleViewImmersiveModeTitle">Use Immersive Mode for Throttle view?</string>
     <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  Swipe down to temporarily disable and reach the menu.</string>
     <string name="prefSwipeUpOptionTitle">Swipe up action in the Throttle view?</string>
-    <string name="prefSwipeUpOptionSummary">What should happen when you swipe up on the Throttle view. NOTE: Requires \'Throttle Web View?\' to be set.</string>
+    <string name="prefSwipeUpOptionSummary">What should happen when you swipe up on the Throttle view. NOTE: "Webview" option requires \'Throttle Web View?\' to be set.</string>
+    <string name="prefGamePadTitle">Gamepad Preferences</string>
+    <string name="prefGamePadSummary">Choose the Gamepad type and other options</string>
     <string name="prefGamePadTypeTitle">Gamepad Type?</string>
     <string name="prefGamePadTypeSummary">Choose the option that best supports you gamepad. NOTE: Currently only supports simple gamepads \nor Keyboard:-Dir: WZAS F:123 Stop:0 EStop:9</string>
     <string name="prefGamePadStartButtonTitle">Gamepad Start Button?</string>
@@ -151,6 +155,8 @@
     <string name="prefMaximumThrottleChangeTitle">Maximum Throttle Change</string>
     <string name="prefMaximumThrottleChangeDefaultValue">25</string>
     <string name="prefMaximumThrottleChangeSummary">Maximum Allowed throttle change in %</string>
+    <string name="prefWebViewTitle">Web View Preferences</string>
+    <string name="prefWebViewSummary">Options for Web View appearance</string>
     <string name="prefInitialThrotWebPageTitle">Initial Throttle Web Page</string>
     <string name="prefInitialThrotWebPageDefaultValue">/</string>
     <string name="prefInitialThrotWebPageSummary">Initial Throttle Web Page (such as \'/panel/\')</string>
@@ -205,8 +211,8 @@
     <string name="prefDelimiterTitle">Location Delimiter</string>
     <string name="prefDelimiterDefaultValue">:</string>
     <string name="prefDelimiterSummary">Set the character that marks the end of the Location portion of Turnout and Route names</string>
-    <string name="prefScreenBrightnessDimTitle">Screen Brightness Dim %?</string>
-    <string name="prefScreenBrightnessDimSummary">Dim screen brightness setting if the Swipe down Up is selected.</string>
+    <string name="prefScreenBrightnessDimTitle">Screen Dimming Value</string>
+    <string name="prefScreenBrightnessDimSummary">Brightness setting to use when dimming the screen.</string>
     <string name="logViewer">View Log</string>
     <string name="clearLocoList">Clear List</string>
     <string name="ClearConnList">Clear Recent List</string>
