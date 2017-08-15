@@ -200,7 +200,7 @@
     </integer-array>
     <integer-array name="prefGamePadMKT">
         <item>0</item> //not used
-        <item>0</item> //not used
+        <item>@integer/KeyCode_5</item> //gamepadSelect
         <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
         <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown = KEYCODE_DPAD_DOWN;
         <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft = KEYCODE_DPAD_LEFT;

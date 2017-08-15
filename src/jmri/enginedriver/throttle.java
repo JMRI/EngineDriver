@@ -156,6 +156,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private View vThrotScr;
     private View vThrotScrWrap;
 
+    private boolean stealPromptActive = false; //true while steal dialog is open
     private boolean navigatingAway = false; // true if another activity was selected (false in onPause if going into background)
     private char whichVolume = 'T';
 
@@ -1237,13 +1238,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         int i;
         int index = -1;
         int nextIndex = 0;
+        int numThrottles = allThrottleLetters.length;
 
-        String[] conAddrs = new String[3];
-        conAddrs[0] = mainapp.consistT.formatConsistAddr();
-        conAddrs[1] = mainapp.consistS.formatConsistAddr();
-        conAddrs[2] = mainapp.consistG.formatConsistAddr();
-
-        for (i = 0; (i < allThrottleLetters.length) && (index == -1); i++) {
+        // find current Volume throttle
+        for (i = 0; (i < numThrottles) && (index == -1); i++) {
             if (allThrottleLetters[i] == whichVolume) {
                 index = i;
             }
@@ -1251,26 +1249,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         i= index+1;
 
-        while (i != index) {
-            if (i > 2) {
+        // find next active throttle
+        while (i != index) {                        // check until we get back to current Volume throttle
+            if (i >= numThrottles) {                // wrap
                 i = 0;
             } else {
-                if (!conAddrs[i].equals("Not Set")) { // see if the next throttle is set.
-                    whichVolume = allThrottleLetters[i]; // set the volume throttle
+                char whichT = allThrottleLetters[i];
+                if (getConsist(whichT).isActive()) { // if throttle is active, assign it to Volume
+                    whichVolume = whichT;
                     setVolumeIndicator();
-                    index = i; // force it so that the next time through the loop it wil match, and drop out
-                } else {
+                    vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                    break;  // done
+                } else {                            // move to next throttle
                     i++;
                 }
             }
-        }
-        for (i=0; i<=index;i++) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
         }
     }
 
@@ -1645,8 +1638,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                             speedUpdateAndNotify(whichThrottle, 0);
                             break;
                         case function_button.SPEED_LABEL:  // specify which throttle the volume button controls
-                            whichVolume = whichThrottle;    // use whichever was clicked
-                            set_labels();
+                            if (getConsist(whichThrottle).isActive()) { // only assign if Active
+                                whichVolume = whichThrottle;
+                                set_labels();
+                            }
                             break;
 
                         default: { // handle the function buttons
@@ -2977,6 +2972,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 }
                 // update loco name
             }
+            if (!getConsist(whichVolume).isActive()) {          // if consist on Volume throttle was released
+                setNextActiveThrottle();                        // move to next throttle
+            }
         }
         // loop through all function buttons and
         // set label and dcc functions (based on settings) or hide if no label
@@ -3229,17 +3227,24 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     }
     // prompt for Steal? Address, if yes, send message to execute the steal
     public void promptForSteal(String addr, char whichThrottle) {
+        if (stealPromptActive) return;
+        stealPromptActive = true;
         final AlertDialog.Builder b = new AlertDialog.Builder(this);
         b.setIcon(android.R.drawable.ic_dialog_alert);
         b.setTitle(R.string.steal_title);
         b.setMessage(getString(R.string.steal_text, addr));
         b.setCancelable(true);
-        b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+        b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() { //if yes pressed, tell ta to proceed with steal
             public void onClick(DialogInterface dialog, int id) {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.STEAL, addr, whichThrottle);
+                stealPromptActive = false;
             }
         });
-        b.setNegativeButton(R.string.no, null);
+        b.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() { //if no pressed do nothing
+            public void onClick(DialogInterface dialog, int id) {
+                stealPromptActive = false;
+            }
+        });
         AlertDialog alert = b.create();
         alert.show();
     }
