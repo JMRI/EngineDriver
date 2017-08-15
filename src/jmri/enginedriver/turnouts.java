@@ -196,6 +196,9 @@ public class turnouts extends Activity implements OnGestureListener {
                 trn.setText(getString(R.string.disabled));
             trnPrefix.setEnabled(false);
         }
+        if (mainapp.getServerType().equals("Digitrax")) {  //Digitrax LnWi does not support toggle
+            butTog.setEnabled(false);
+        }
 
         if (TuMenu != null) {
             mainapp.displayEStop(TuMenu);

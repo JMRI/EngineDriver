@@ -3,6 +3,7 @@
  * prevent crash caused by empty JMRI consists
  * prevent concurrentmodificationexceptions reported to Play Store
  * prevent loop of Steal dialog
+ * hide turnout toggle button if system is LnWi
  * Preserve throttle button states - Robin Becker
  * Correct function button release handling for consists - Robin Becker
 **Version 2.14.2
@@ -328,13 +329,14 @@
  * routes
  *   TODO: use PRT titles for Active/inactive
  * turnouts
+ *   TODO: add turnouts to list as used, when no list available
  *   TODO: combine loco control and turnout control in one page
  *   TODO: list available "system" based on items in use, maybe with dropdown on Turnout
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
  *   TODO: set limit on reconnect attempts?
- *   TODO: while reconnecting, make Exit EngineDriver? immediate, not wait for next timeout
+ *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: stay on Connect screen until we receive an actual response from server
  *   TODO: if user enters ":" into address input, jump to port input
  *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
@@ -348,7 +350,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
- *   TODO: fix broken state indicators (lost on menu, rotate, etc.)
+ *   TODO: on Steal, not getting function state above F8
  *   TODO: clear loco buttons on reconnect attempt until actual MT+ received
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected
  *   TODO: new preference to reverse order of Forward and Reverse buttons

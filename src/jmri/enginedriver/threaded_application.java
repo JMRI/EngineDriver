@@ -824,12 +824,12 @@ public class threaded_application extends Application {
 
                 case 'H':
                     if (response_str.charAt(1) == 'T') { //set hardware type, HTMRC for example
-                        serverType = response_str.substring(2); //store the type
-                        if (serverType.equals("MRC")) {
+                        setServerType(response_str.substring(2)); //store the type
+                        if (getServerType().equals("MRC")) {
                             web_server_port = 80; //hardcode web port for MRC
                         }
                     } else if (response_str.charAt(1) == 'M') { //message sent from server to throttle
-                            show_toast_message(response_str.substring(2), Toast.LENGTH_SHORT); // otherwise, just copy to UI as toast message
+                            show_toast_message(response_str.substring(2), Toast.LENGTH_SHORT); // copy to UI as toast message
                     }
                     break;
 
@@ -2048,7 +2048,7 @@ public class threaded_application extends Application {
     private void initShared() {
         withrottle_version = 0.0;
         web_server_port = 0;
-        serverType = "JMRI";
+        setServerType("JMRI");
         power_state = null;
         to_states = null;
         to_system_names = null;
@@ -2403,7 +2403,7 @@ public class threaded_application extends Application {
     public String createUrl(String defaultUrl) {
         String url = "";
         int port = web_server_port;
-        if (serverType.equals("MRC")) {  //special case ignore any url passed-in if connected to MRC, as it does not forward
+        if (getServerType().equals("MRC")) {  //special case ignore any url passed-in if connected to MRC, as it does not forward
             defaultUrl = "";
             Log.d("Engine_Driver", "ignoring web url for MRC");
         }
