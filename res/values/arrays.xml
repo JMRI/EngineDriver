@@ -122,8 +122,8 @@
         <item >iCade-rotate</item>
         <item >iCade+DPAD</item>
         <item >iCade+DPAD-rotate</item>
-        <item >MKT</item>
-        <item >MKT-rotate</item>
+        <item >MTK</item>
+        <item >MTK-rotate</item>
         <item >Game</item>
         <item >Game-rotate</item>
         <item >VRBoxA</item>
@@ -198,7 +198,7 @@
         <item>@integer/KeyCode_R</item>
         <item>@integer/KeyCode_F</item>
     </integer-array>
-    <integer-array name="prefGamePadMKT">
+    <integer-array name="prefGamePadMTK">
         <item>0</item> //not used
         <item>@integer/KeyCode_5</item> //gamepadSelect
         <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
