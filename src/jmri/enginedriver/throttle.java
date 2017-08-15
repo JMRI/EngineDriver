@@ -1296,9 +1296,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCadePlusDpad);
                 bGamePadKeysUp = this.getResources().getIntArray(R.array.prefGamePadiCadePlusDpad_UpCodes);
                 break;
-            case "MKT":
-            case "MKT-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMKT);
+            case "MTK":
+            case "MTK-rotate":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMTK);
                 bGamePadKeysUp = bGamePadKeys;
                 break;
             case "Game":
