@@ -102,13 +102,37 @@
             android:title="@string/prefInitialThrotWebPageTitle"
             android:inputType="text"
             android:maxLines="1"/>
-        <ListPreference
-            android:defaultValue="@string/prefSwipeUpOptionDefaultValue"
-            android:entries="@array/prefSwipeUpOptions"
-            android:entryValues="@array/prefSwipeUpOptions"
-            android:key="SwipeUpOption"
-            android:summary="@string/prefSwipeUpOptionSummary"
-            android:title="@string/prefSwipeUpOptionTitle" />
+
+        <PreferenceScreen
+            android:key="swipe_up_down_preferences"
+            android:title="@string/prefSwipeUpDownTitle"
+            android:summary="@string/prefSwipeUpDownSummary"
+            android:persistent="false">
+            <CheckBoxPreference
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:defaultValue="@bool/prefThrottleViewImmersiveModeDefaultValue"
+                android:key="prefThrottleViewImmersiveMode"
+                android:summary="@string/prefThrottleViewImmersiveModeSummary"
+                android:title="@string/prefThrottleViewImmersiveModeTitle">
+            </CheckBoxPreference>
+            <ListPreference
+                android:defaultValue="@string/prefSwipeUpOptionDefaultValue"
+                android:entries="@array/prefSwipeUpOptions"
+                android:entryValues="@array/prefSwipeUpOptions"
+                android:key="SwipeUpOption"
+                android:summary="@string/prefSwipeUpOptionSummary"
+                android:title="@string/prefSwipeUpOptionTitle" />
+            <EditTextPreference
+                android:defaultValue="@string/prefScreenBrightnessDimDefaultValue"
+                android:dialogTitle="@string/prefScreenBrightnessDimTitle"
+                android:key="prefScreenBrightnessDim"
+                android:maxLength="3"
+                android:numeric="integer"
+                android:summary="@string/prefScreenBrightnessDimSummary"
+                android:title="@string/prefScreenBrightnessDimTitle" />
+        </PreferenceScreen>
+
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -124,14 +148,6 @@
             android:key="prefAlwaysUseDefaultFunctionLabels"
             android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary"
             android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle">
-        </CheckBoxPreference>
-        <CheckBoxPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:defaultValue="@bool/prefThrottleViewImmersiveModeDefaultValue"
-            android:key="prefThrottleViewImmersiveMode"
-            android:summary="@string/prefThrottleViewImmersiveModeSummary"
-            android:title="@string/prefThrottleViewImmersiveModeTitle">
         </CheckBoxPreference>
         <ListPreference
             android:defaultValue="@string/prefGamePadTypeDefaultValue"

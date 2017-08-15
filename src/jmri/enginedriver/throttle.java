@@ -53,6 +53,9 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+// for changing the screen brightness
+import android.provider.Settings;
+
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -221,6 +224,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private boolean webViewIsOn = false;
     private String prefSwipeUpOption;
     private String keepWebViewLocation = "none";
+    // use for locking the screen on swipe up
+    private boolean isScreenLocked = false;
+    private boolean screenDimmed = false;
+    private int screenBrightnessDim;
+    private float swipeUpGestureY = 0;
+
+    //private int screenBrightnessBright;
+    private int screenBrightnessOriginal;
 
     // used to hold the direction change preferences
     boolean dirChangeWhileMoving;
@@ -468,6 +479,78 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     break;
             }
         }
+    }
+
+    // Change the screen brightness
+    public void setScreenBrightness(int brightnessValue){
+        Context mContext;
+        mContext = getApplicationContext();
+
+        /*
+            public abstract ContentResolver getContentResolver ()
+                Return a ContentResolver instance for your application's package.
+        */
+        /*
+            Settings
+                The Settings provider contains global system-level device preferences.
+
+            Settings.System
+                System settings, containing miscellaneous system preferences. This table holds
+                simple name/value pairs. There are convenience functions for accessing
+                individual settings entries.
+        */
+        /*
+            public static final String SCREEN_BRIGHTNESS
+                The screen backlight brightness between 0 and 255.
+                Constant Value: "screen_brightness"
+        */
+        /*
+            public static boolean putInt (ContentResolver cr, String name, int value)
+                Convenience function for updating a single settings value as an integer. This will
+                either create a new entry in the table if the given name does not exist, or modify
+                the value of the existing row with that name. Note that internally setting values
+                are always stored as strings, so this function converts the given value to a
+                string before storing it.
+
+            Parameters
+                cr : The ContentResolver to access.
+                name : The name of the setting to modify.
+                value : The new value for the setting.
+            Returns
+                true : if the value was set, false on database errors
+        */
+
+        // Make sure brightness value between 0 to 255
+        if(brightnessValue >= 0 && brightnessValue <= 255){
+            Settings.System.putInt( mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessValue );
+        }
+    }
+
+    // Get the screen current brightness
+    protected int getScreenBrightness(){
+        Context mContext;
+        mContext = getApplicationContext();
+
+        /*
+            public static int getInt (ContentResolver cr, String name, int def)
+                Convenience function for retrieving a single system settings value as an integer.
+                Note that internally setting values are always stored as strings; this function
+                converts the string to an integer for you. The default value will be returned
+                if the setting is not defined or not an integer.
+
+            Parameters
+                cr : The ContentResolver to access.
+                name : The name of the setting to retrieve.
+                def : Value to return if the setting is not defined.
+            Returns
+                The setting's current value, or 'def' if it is not defined or not a valid integer.
+        */
+        int brightnessValue = Settings.System.getInt(
+                mContext.getContentResolver(),
+                Settings.System.SCREEN_BRIGHTNESS,
+                0
+        );
+        return brightnessValue;
     }
 
 
@@ -1522,7 +1605,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
 
         private void handleAction(int action) {
-
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
                     switch (this.function) {
@@ -1761,6 +1843,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         keepWebViewLocation = webViewLocation;
 
         prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
+        isScreenLocked = false;
+
+        // get the screen brightness on create
+        screenBrightnessOriginal = getScreenBrightness();
 
         // myGesture = new GestureDetector(this);
         GestureOverlayView ov = (GestureOverlayView) findViewById(R.id.throttle_overlay);
@@ -2025,10 +2111,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         gestureInProgress = false;
 
         prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
+        isScreenLocked = false;
 
         dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
         stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
         locoSelectWhileMoving = prefs.getBoolean("SelLocoWhileMovingPreference", getResources().getBoolean(R.bool.prefSelLocoWhileMovingDefaultValue));
+
+        screenBrightnessDim = Integer.parseInt(prefs.getString("prefScreenBrightnessDim", getResources().getString(R.string.prefScreenBrightnessDimDefaultValue))) * 255 /100;
+        //screenBrightnessBright = Integer.parseInt(prefs.getString("prefScreenBrightnessBright", getResources().getString(R.string.prefScreenBrightnessBrightDefaultValue))) * 255 /100;
 
         applySpeedRelatedOptions();  // update all throttles
 
@@ -2094,6 +2184,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         if (!this.isFinishing() && !navigatingAway) { // only invoke setContentIntentNotification when going into background
             mainapp.addNotification(this.getIntent());
+        }
+
+        if ((isScreenLocked) || (screenDimmed)) {
+            isScreenLocked = false;
+            screenDimmed = false;
+            setScreenBrightness(screenBrightnessOriginal);
         }
     }
 
@@ -2885,6 +2981,26 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        // if screen is locked
+        if (isScreenLocked) {
+            // check if we have a swipe up
+            if (ev.getAction() == ACTION_DOWN) {
+                swipeUpGestureY = ev.getY();
+            }
+            if (ev.getAction() == ACTION_UP) {
+                if (swipeUpGestureY - Math.abs(ev.getY()) > threaded_application.min_fling_distance) {
+                    return super.dispatchTouchEvent(ev);
+                }
+            }
+            // otherwise ignore the event
+            return true;
+        }
+        // not locked ... proceed with normal processing
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
     public void onGesture(GestureOverlayView arg0, MotionEvent event) {
         gestureMove(event);
     }
@@ -3020,6 +3136,28 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         //Toast.makeText(getApplicationContext(), "Swipe Up - " + webViewLocation, Toast.LENGTH_SHORT).show();
 
                         this.onResume();
+                    } else if (prefSwipeUpOption.equals("Enable-Disable all buttons")) {
+                        if (isScreenLocked) {
+                            isScreenLocked = false;
+                            Toast.makeText(getApplicationContext(), "Throttle Screen Unlocked", Toast.LENGTH_SHORT).show();
+                            //setScreenBrightness(screenBrightnessBright);
+                            setScreenBrightness(screenBrightnessOriginal);
+                        } else {
+                            isScreenLocked = true;
+                            Toast.makeText(getApplicationContext(), "Throttle Screen Locked - Swipe up to unlock", Toast.LENGTH_LONG).show();
+                            screenBrightnessOriginal = getScreenBrightness();
+                            setScreenBrightness(screenBrightnessDim);
+                        }
+                    } else if (prefSwipeUpOption.equals("Dim-Brighten Screen")) {
+                        if (screenDimmed) {
+                            screenDimmed = false;
+                            setScreenBrightness(screenBrightnessOriginal);
+                        } else {
+                            screenDimmed = true;
+                            Toast.makeText(getApplicationContext(), "Throttle Screen Dimmed - Swipe up to brighten", Toast.LENGTH_LONG).show();
+                            screenBrightnessOriginal = getScreenBrightness();
+                            setScreenBrightness(screenBrightnessDim);
+                        }
                     }
                 }
             } else {
