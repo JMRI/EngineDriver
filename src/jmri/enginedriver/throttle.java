@@ -225,9 +225,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private String prefSwipeUpOption;
     private String keepWebViewLocation = "none";
     // use for locking the screen on swipe up
-    private boolean screenLocked = false;
+    private boolean isScreenLocked = false;
     private boolean screenDimmed = false;
     private int screenBrightnessDim;
+    private float swipeUpGestureY = 0;
+
     //private int screenBrightnessBright;
     private int screenBrightnessOriginal;
 
@@ -1477,8 +1479,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public void onClick(View v) {
-            if (screenLocked) return; // ignore everything if the screen is locked
-
             // don't loco change while moving if the preference is set
             if (isSelectLocoAllowed(whichThrottle)) {
                 start_select_loco_activity(whichThrottle); // pass throttle #
@@ -1520,9 +1520,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public boolean onLongClick(View v) {
-
-            if (screenLocked) return false; // ignore everything if the screen is locked
-
             if (arrowDirection.equals("right")) {
                 mAutoIncrement = true;
             } else {
@@ -1534,9 +1531,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public void onClick(View v) {
-
-            if (screenLocked) return; // ignore everything if the screen is locked
-
             if (arrowDirection.equals("right")) {
                 mAutoIncrement = false;
                 incrementSpeed(whichThrottle);
@@ -1548,9 +1542,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-
-            if (screenLocked) return false; // ignore everything if the screen is locked
-
             if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) && mAutoIncrement) {
                 mAutoIncrement = false;
             }
@@ -1573,9 +1564,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
 
         public function_button_touch_listener(int new_function, char new_whichThrottle, String funcLabel) {
-
-            if (screenLocked) return; // ignore everything if the screen is locked
-
             function = new_function;    // store these values for this button
             whichThrottle = new_whichThrottle;
             String lab = funcLabel.toUpperCase().trim();
@@ -1594,9 +1582,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-
-            if (screenLocked) return (true); // ignore everything if the screen is locked
-
             // Log.d("Engine_Driver", "onTouch func " + function + " action " +
             // event.getAction());
 
@@ -1620,9 +1605,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
 
         private void handleAction(int action) {
-
-            if (screenLocked) return; // ignore everything if the screen is locked
-
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
                     switch (this.function) {
@@ -1756,8 +1738,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public void onStartTrackingTouch(SeekBar sb) {
-            if (screenLocked) return; // ignore everything if the screen is locked
-
             gestureInProgress = false;
             limitedJump = false;
         }
@@ -1863,7 +1843,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         keepWebViewLocation = webViewLocation;
 
         prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
-        screenLocked = false;
+        isScreenLocked = false;
 
         // get the screen brightness on create
         screenBrightnessOriginal = getScreenBrightness();
@@ -2131,7 +2111,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         gestureInProgress = false;
 
         prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
-        screenLocked = false;
+        isScreenLocked = false;
 
         dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
         stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
@@ -2206,8 +2186,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             mainapp.addNotification(this.getIntent());
         }
 
-        if ((screenLocked) || (screenDimmed)) {
-            screenLocked = false;
+        if ((isScreenLocked) || (screenDimmed)) {
+            isScreenLocked = false;
             screenDimmed = false;
             setScreenBrightness(screenBrightnessOriginal);
         }
@@ -2787,8 +2767,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     @SuppressWarnings("deprecation")
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
-        if (screenLocked) return(false); // ignore everything if the screen is locked
-
         // Handle pressing of the back button
         if (key == KEYCODE_BACK) {
             if (webView.canGoBack() && !clearHistory) {
@@ -3003,6 +2981,26 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        // if screen is locked
+        if (isScreenLocked) {
+            // check if we have a swipe up
+            if (ev.getAction() == ACTION_DOWN) {
+                swipeUpGestureY = ev.getY();
+            }
+            if (ev.getAction() == ACTION_UP) {
+                if (swipeUpGestureY - Math.abs(ev.getY()) > threaded_application.min_fling_distance) {
+                    return super.dispatchTouchEvent(ev);
+                }
+            }
+            // otherwise ignore the event
+            return true;
+        }
+        // not locked ... proceed with normal processing
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
     public void onGesture(GestureOverlayView arg0, MotionEvent event) {
         gestureMove(event);
     }
@@ -3080,9 +3078,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         if (gestureInProgress) {
             if ((Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) || (Math.abs(event.getY() - gestureStartY) > threaded_application.min_fling_distance)) {
                 if (Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) {
-
-                    if (screenLocked) return; // ignore everything if the screen is locked
-
                     // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
                     event.setAction(MotionEvent.ACTION_CANCEL);
                     boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
@@ -3120,9 +3115,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 }
                 // enter or exit immersive mode on pull down (only) if the preference is set
                 if ((event.getY() - gestureStartY) > threaded_application.min_fling_distance) {
-
-                    if (screenLocked) return; // ignore everything if the screen is locked
-
                     if (immersiveModeIsOn) {
                         setImmersiveModeOff(webView);
                         Toast.makeText(getApplicationContext(), "Immersive mode temporarily disabled. To disable permanently change in preferences", Toast.LENGTH_SHORT).show();
@@ -3145,13 +3137,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
                         this.onResume();
                     } else if (prefSwipeUpOption.equals("Enable-Disable all buttons")) {
-                        if (screenLocked) {
-                            screenLocked = false;
+                        if (isScreenLocked) {
+                            isScreenLocked = false;
                             Toast.makeText(getApplicationContext(), "Throttle Screen Unlocked", Toast.LENGTH_SHORT).show();
                             //setScreenBrightness(screenBrightnessBright);
                             setScreenBrightness(screenBrightnessOriginal);
                         } else {
-                            screenLocked = true;
+                            isScreenLocked = true;
                             Toast.makeText(getApplicationContext(), "Throttle Screen Locked - Swipe up to unlock", Toast.LENGTH_LONG).show();
                             screenBrightnessOriginal = getScreenBrightness();
                             setScreenBrightness(screenBrightnessDim);
