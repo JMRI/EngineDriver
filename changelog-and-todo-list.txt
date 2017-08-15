@@ -341,7 +341,6 @@
  *   TODO: if user enters ":" into address input, jump to port input
  *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
  * threaded_application
- *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
  *   TODO: limit/throttle message traffic via queue to avoid overloading hardware, esp. after acquire/release
  *   TODO: remember consist details
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
@@ -350,13 +349,12 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
- *   TODO: on Steal, not getting function state above F8
+ *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
  *   TODO: clear loco buttons on reconnect attempt until actual MT+ received
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected
  *   TODO: new preference to reverse order of Forward and Reverse buttons
  *   TODO: support webview on Top
- *   TODO: fix issue with direction indication lost, on rotation, or 2nd acquisition of same address
- *   TODO: show proper function labels based on lead loco in ED consist
+ *   TODO: fix issue with direction indication lost on 2nd acquisition of same address
  *   TODO: retrieve vsDecoder sounds and play when appropriate
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: respect "Max Throttle %" from roster entry
