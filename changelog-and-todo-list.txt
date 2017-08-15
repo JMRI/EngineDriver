@@ -3,6 +3,8 @@
  * prevent crash caused by empty JMRI consists
  * prevent concurrentmodificationexceptions reported to Play Store
  * prevent loop of Steal dialog
+ * Preserve throttle button states - Robin Becker
+ * Correct function button release handling for consists - Robin Becker
 **Version 2.14.2
  * swipe up on Throttle screen to hide Throttle Web view - Peter Akers
  * add client support for Steal
