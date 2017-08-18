@@ -3136,7 +3136,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         //Toast.makeText(getApplicationContext(), "Swipe Up - " + webViewLocation, Toast.LENGTH_SHORT).show();
 
                         this.onResume();
-                    } else if (prefSwipeUpOption.equals("Disable/Enable Buttons plus Dim/Brighten Screen")) {
+                    } else if (prefSwipeUpOption.equals("Lock and Dim Screen")) {
                         if (isScreenLocked) {
                             isScreenLocked = false;
                             Toast.makeText(getApplicationContext(), "Throttle Screen Unlocked", Toast.LENGTH_SHORT).show();
@@ -3148,7 +3148,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                             screenBrightnessOriginal = getScreenBrightness();
                             setScreenBrightness(screenBrightnessDim);
                         }
-                    } else if (prefSwipeUpOption.equals("Dim/Brighten Screen")) {
+                    } else if (prefSwipeUpOption.equals("Dim Screen")) {
                         if (screenDimmed) {
                             screenDimmed = false;
                             setScreenBrightness(screenBrightnessOriginal);
