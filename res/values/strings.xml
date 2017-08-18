@@ -138,9 +138,9 @@
     <string name="prefSwipeUpOptionSummary">What should happen when you swipe up on the Throttle view. NOTE: "Webview" option requires \'Throttle Web View?\' to be set.</string>
     <string name="prefGamePadTitle">Gamepad Preferences</string>
     <string name="prefGamePadSummary">Choose the Gamepad type and other options</string>
-    <string name="prefGamePadTypeTitle">Gamepad Type?</string>
-    <string name="prefGamePadTypeSummary">Choose the option that best supports you gamepad. NOTE: Currently only supports simple gamepads \nor Keyboard:-Dir: WZAS F:123 Stop:0 EStop:9</string>
-    <string name="prefGamePadStartButtonTitle">Gamepad Start Button?</string>
+    <string name="prefGamePadTypeTitle">Gamepad type</string>
+    <string name="prefGamePadTypeSummary">Choose the option that best supports your gamepad.</string>
+    <string name="prefGamePadStartButtonTitle">Gamepad Start Button action</string>
     <string name="prefGamePadStartButtonSummary">Choose the action when you press the Start button.</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default function labels instead of labels from roster entries.</string>
