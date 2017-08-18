@@ -17,11 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -53,8 +48,13 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 
 public class routes extends Activity implements OnGestureListener {
 
@@ -463,11 +463,14 @@ public class routes extends Activity implements OnGestureListener {
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         if (e1 == null || e2 == null)
             return false;
-        if ((Math.abs(e2.getX() - e1.getX()) > threaded_application.min_fling_distance) &&
-                (Math.abs(velocityX) > threaded_application.min_fling_velocity)) {
+        float deltaX = e2.getX() - e1.getX();
+        float absDeltaX = Math.abs(deltaX);
+        if ((absDeltaX > threaded_application.min_fling_distance) &&
+                (Math.abs(velocityX) > threaded_application.min_fling_velocity) &&
+                (absDeltaX > Math.abs(e2.getY() - e1.getY()))) {
             navigatingAway = true;
             // left to right swipe goes to throttle
-            if (e2.getX() > e1.getX()) {
+            if (deltaX > 0.0) {
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
             }

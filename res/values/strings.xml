@@ -135,7 +135,7 @@
     <string name="prefThrottleViewImmersiveModeTitle">Use Immersive Mode for Throttle view?</string>
     <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  Swipe down to temporarily disable and reach the menu.</string>
     <string name="prefSwipeUpOptionTitle">Swipe up action in the Throttle view?</string>
-    <string name="prefSwipeUpOptionSummary">What should happen when you swipe up on the Throttle view. NOTE: "Webview" option requires \'Throttle Web View?\' to be set.</string>
+    <string name="prefSwipeUpOptionSummary">What should happen when you swipe up on the Throttle view.</string>
     <string name="prefGamePadTitle">Gamepad Preferences</string>
     <string name="prefGamePadSummary">Choose the Gamepad type and other options</string>
     <string name="prefGamePadTypeTitle">Gamepad type</string>

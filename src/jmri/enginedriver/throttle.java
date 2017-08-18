@@ -2986,12 +2986,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         if (isScreenLocked) {
             // check if we have a swipe up
             if (ev.getAction() == ACTION_DOWN) {
-                swipeUpGestureY = ev.getY();
+                gestureStart(ev);
             }
             if (ev.getAction() == ACTION_UP) {
-                if (swipeUpGestureY - Math.abs(ev.getY()) > threaded_application.min_fling_distance) {
-                    return super.dispatchTouchEvent(ev);
-                }
+                gestureEnd(ev);
             }
             // otherwise ignore the event
             return true;
@@ -3076,87 +3074,102 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         // Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
         mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
         if (gestureInProgress) {
-            if ((Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) || (Math.abs(event.getY() - gestureStartY) > threaded_application.min_fling_distance)) {
-                if (Math.abs(event.getX() - gestureStartX) > threaded_application.min_fling_distance) {
-                    // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
-                    event.setAction(MotionEvent.ACTION_CANCEL);
-                    boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
-                            getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
-                    swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
-                    boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
-                            getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
-                    swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
-                    // if swiping (to Turnouts or Routes screen) is enabled, process the swipe
-                    if (swipeTurnouts || swipeRoutes) {
-                        navigatingAway = true;
-                        // left to right swipe goes to turnouts if enabled in prefs
-                        if (event.getRawX() > gestureStartX) {
-                            Intent in;
-                            if (swipeTurnouts) {
-                                in = new Intent().setClass(this, turnouts.class);
-                            } else {
-                                in = new Intent().setClass(this, routes.class);
+            float deltaX = (event.getX() - gestureStartX);
+            float deltaY = (event.getY() - gestureStartY);
+            float absDeltaX =  Math.abs(deltaX);
+            float absDeltaY = Math.abs(deltaY);
+            if ((absDeltaX > threaded_application.min_fling_distance) || (absDeltaY > threaded_application.min_fling_distance)) {
+                // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
+                event.setAction(MotionEvent.ACTION_CANCEL);
+                // process swipe in the direction with the largest change
+                if (absDeltaX >= absDeltaY) {
+                    // swipe left/right
+                    if (!isScreenLocked) {
+                        boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
+                                getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
+                        swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
+                        boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
+                                getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
+                        swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
+                        // if swiping (to Turnouts or Routes screen) is enabled, process the swipe
+                        if (swipeTurnouts || swipeRoutes) {
+                            navigatingAway = true;
+                            // left to right swipe goes to turnouts if enabled in prefs
+                            if (deltaX > 0.0) {
+                                // swipe left
+                                Intent in;
+                                if (swipeTurnouts) {
+                                    in = new Intent().setClass(this, turnouts.class);
+                                } else {
+                                    in = new Intent().setClass(this, routes.class);
+                                }
+                                startActivity(in);
+                                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
                             }
-                            startActivity(in);
-                            connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-                        }
-                        // right to left swipe goes to routes if enabled in prefs
-                        else {
-                            Intent in;
-                            if (swipeRoutes) {
-                                in = new Intent().setClass(this, routes.class);
-                            } else {
-                                in = new Intent().setClass(this, turnouts.class);
+                            // right to left swipe goes to routes if enabled in prefs
+                            else {
+                                // swipe right
+                                Intent in;
+                                if (swipeRoutes) {
+                                    in = new Intent().setClass(this, routes.class);
+                                } else {
+                                    in = new Intent().setClass(this, turnouts.class);
+                                }
+                                startActivity(in);
+                                connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
                             }
-                            startActivity(in);
-                            connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
                         }
                     }
                 }
-                // enter or exit immersive mode on pull down (only) if the preference is set
-                if ((event.getY() - gestureStartY) > threaded_application.min_fling_distance) {
-                    if (immersiveModeIsOn) {
-                        setImmersiveModeOff(webView);
-                        Toast.makeText(getApplicationContext(), "Immersive mode temporarily disabled. To disable permanently change in preferences", Toast.LENGTH_SHORT).show();
+                else {
+                    // swipe up/down
+                    if (deltaY > 0.0) {
+                        // swipe down
+                        if (!isScreenLocked) {
+                            // enter or exit immersive mode only if the preference is set
+                            if (immersiveModeIsOn) {
+                                setImmersiveModeOff(webView);
+                                Toast.makeText(getApplicationContext(), "Immersive mode temporarily disabled. To disable permanently change in preferences", Toast.LENGTH_SHORT).show();
+                            } else {
+                                setImmersiveModeOn(webView);
+                            }
+                        }
                     } else {
-                        setImmersiveModeOn(webView);
-                    }
-                }
+                        // swipe up
+                        if ((prefSwipeUpOption.equals("Hide Web View\n(requires 'Throttle Web View' preference)"))) {
+                            if (!(keepWebViewLocation.equals("none"))) { // show/hide the web view if the preference is set
+                                if (!webViewIsOn) {
+                                    webViewLocation = keepWebViewLocation;
+                                } else {
+                                    webViewLocation = "none";
+                                    Toast.makeText(getApplicationContext(), "Web View temporarily hidden. To hide permanently change in preferences" + webViewLocation, Toast.LENGTH_SHORT).show();
+                                }
+                                webViewIsOn = !webViewIsOn;
+                                //Toast.makeText(getApplicationContext(), "Swipe Up - " + webViewLocation, Toast.LENGTH_SHORT).show();
 
-                //on swipe up
-                if ((gestureStartY - event.getY()) > threaded_application.min_fling_distance) {
-                    if ((prefSwipeUpOption.equals("Show/Hide Web View (requires Throttle Web View option)")) && !(keepWebViewLocation.equals("none"))) { // show the web view if the preference is set
-                        if (!webViewIsOn) {
-                            webViewLocation = keepWebViewLocation;
-                        } else {
-                            webViewLocation = "none";
-                            Toast.makeText(getApplicationContext(), "Web View temporarily hidden. To hide permanently change in preferences" + webViewLocation, Toast.LENGTH_SHORT).show();
-                        }
-                        webViewIsOn = !webViewIsOn;
-                        //Toast.makeText(getApplicationContext(), "Swipe Up - " + webViewLocation, Toast.LENGTH_SHORT).show();
-
-                        this.onResume();
-                    } else if (prefSwipeUpOption.equals("Lock and Dim Screen")) {
-                        if (isScreenLocked) {
-                            isScreenLocked = false;
-                            Toast.makeText(getApplicationContext(), "Throttle Screen Unlocked", Toast.LENGTH_SHORT).show();
-                            //setScreenBrightness(screenBrightnessBright);
-                            setScreenBrightness(screenBrightnessOriginal);
-                        } else {
-                            isScreenLocked = true;
-                            Toast.makeText(getApplicationContext(), "Throttle Screen Locked - Swipe up to unlock", Toast.LENGTH_LONG).show();
-                            screenBrightnessOriginal = getScreenBrightness();
-                            setScreenBrightness(screenBrightnessDim);
-                        }
-                    } else if (prefSwipeUpOption.equals("Dim Screen")) {
-                        if (screenDimmed) {
-                            screenDimmed = false;
-                            setScreenBrightness(screenBrightnessOriginal);
-                        } else {
-                            screenDimmed = true;
-                            Toast.makeText(getApplicationContext(), "Throttle Screen Dimmed - Swipe up to brighten", Toast.LENGTH_LONG).show();
-                            screenBrightnessOriginal = getScreenBrightness();
-                            setScreenBrightness(screenBrightnessDim);
+                                this.onResume();
+                            }
+                        } else if (prefSwipeUpOption.equals("Lock and Dim Screen")) {
+                            if (isScreenLocked) {
+                                isScreenLocked = false;
+                                Toast.makeText(getApplicationContext(), "Throttle Screen Unlocked", Toast.LENGTH_SHORT).show();
+                                setScreenBrightness(screenBrightnessOriginal);
+                            } else {
+                                isScreenLocked = true;
+                                Toast.makeText(getApplicationContext(), "Throttle Screen Locked - Swipe up again to unlock", Toast.LENGTH_SHORT).show();
+                                screenBrightnessOriginal = getScreenBrightness();
+                                setScreenBrightness(screenBrightnessDim);
+                            }
+                        } else if (prefSwipeUpOption.equals("Dim Screen")) {
+                            if (screenDimmed) {
+                                screenDimmed = false;
+                                setScreenBrightness(screenBrightnessOriginal);
+                            } else {
+                                screenDimmed = true;
+                                Toast.makeText(getApplicationContext(), "Throttle Screen Dimmed - Swipe up to restore", Toast.LENGTH_SHORT).show();
+                                screenBrightnessOriginal = getScreenBrightness();
+                                setScreenBrightness(screenBrightnessDim);
+                            }
                         }
                     }
                 }

@@ -135,8 +135,8 @@
     </string-array>
     <string-array name="prefSwipeUpOptions">
         <item >None</item>
-        <item >Show/Hide Web View (requires Throttle Web View option)</item>
-        <item >Lock and Dim screen</item>
+        <item >Hide Web View\n(requires \'Throttle Web View\' preference)</item>
+        <item >Lock and Dim Screen</item>
         <item >Dim Screen</item>
     </string-array>
     <string-array name="prefGamePadStartButtonOptions">
