@@ -3125,7 +3125,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
                 //on swipe up
                 if ((gestureStartY - event.getY()) > threaded_application.min_fling_distance) {
-                    if ((prefSwipeUpOption.equals("Show-Hide Web View")) && !(keepWebViewLocation.equals("none"))) { // show the web view if the preference is set
+                    if ((prefSwipeUpOption.equals("Show/Hide Web View (requires Throttle Web View option)")) && !(keepWebViewLocation.equals("none"))) { // show the web view if the preference is set
                         if (!webViewIsOn) {
                             webViewLocation = keepWebViewLocation;
                         } else {
@@ -3136,7 +3136,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         //Toast.makeText(getApplicationContext(), "Swipe Up - " + webViewLocation, Toast.LENGTH_SHORT).show();
 
                         this.onResume();
-                    } else if (prefSwipeUpOption.equals("Enable-Disable all buttons")) {
+                    } else if (prefSwipeUpOption.equals("Disable/Enable Buttons plus Dim/Brighten Screen")) {
                         if (isScreenLocked) {
                             isScreenLocked = false;
                             Toast.makeText(getApplicationContext(), "Throttle Screen Unlocked", Toast.LENGTH_SHORT).show();
@@ -3148,7 +3148,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                             screenBrightnessOriginal = getScreenBrightness();
                             setScreenBrightness(screenBrightnessDim);
                         }
-                    } else if (prefSwipeUpOption.equals("Dim-Brighten Screen")) {
+                    } else if (prefSwipeUpOption.equals("Dim/Brighten Screen")) {
                         if (screenDimmed) {
                             screenDimmed = false;
                             setScreenBrightness(screenBrightnessOriginal);
