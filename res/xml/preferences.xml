@@ -178,6 +178,14 @@
                 android:key="prefGamePadStartButton"
                 android:summary="@string/prefGamePadStartButtonSummary"
                 android:title="@string/prefGamePadStartButtonTitle" />
+            <CheckBoxPreference
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:defaultValue="@bool/prefTtsDefaultValue"
+                android:key="prefTts"
+                android:summary="@string/prefTtsSummary"
+                android:title="@string/prefTtsTitle">
+            </CheckBoxPreference>
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefThrottleTitle" >

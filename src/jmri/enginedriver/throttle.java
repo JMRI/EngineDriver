@@ -55,7 +55,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 // for changing the screen brightness
 import android.provider.Settings;
-
+// For TTS
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
+import java.util.Locale;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -80,7 +83,7 @@ import static android.view.KeyEvent.KEYCODE_X;
 
 // used for supporting Keyboard and Gamepad input;
 
-public class throttle extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
+public class throttle extends Activity implements GestureOverlayView.OnGestureListener, OnInitListener {
 
     private threaded_application mainapp; // hold pointer to mainapp
     private SharedPreferences prefs;
@@ -251,6 +254,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     //                              none     NextThr  Speed+    Speed-      Fwd         Rev         EStop       F2      F1          F0          Stop
     private int[] gamePadKeys =     {0,        0,   KEYCODE_W, KEYCODE_X,   KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
     private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
+
+    // For TTS
+    private int MY_DATA_CHECK_CODE = 0;
+    private TextToSpeech myTTS;
 
     //Throttle Array
     private char[] allThrottleLetters = {'T', 'S', 'G'};
@@ -553,6 +560,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         return brightnessValue;
     }
 
+    // For TTS
+    private void speakWords(String speech) {
+        if (prefs.getBoolean("prefTts", getResources().getBoolean(R.bool.prefTtsDefaultValue))) {
+            myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+        }
+    }
+
+    //For TTS
+    public void onInit(int initStatus) {
+        if (initStatus == TextToSpeech.SUCCESS) {
+            myTTS.setLanguage(Locale.US);
+        } else if (initStatus == TextToSpeech.ERROR) {
+            Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
+        }
+    }
 
     private void setImmersiveModeOn(View webView) {
         boolean tvim = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
@@ -1261,6 +1283,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     whichVolume = whichT;
                     setVolumeIndicator();
                     vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                    switch (whichT) {
+                        case 'T': { speakWords(getApplicationContext().getResources().getString(R.string.TTS_Throttle_1)); break;}
+                        case 'S': { speakWords(getApplicationContext().getResources().getString(R.string.TTS_Throttle_2)); break;}
+                        case 'G': { speakWords(getApplicationContext().getResources().getString(R.string.TTS_Throttle_3)); break;}
+                    }
                     break;  // done
                 } else {                            // move to next throttle
                     i++;
@@ -1847,6 +1874,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         // get the screen brightness on create
         screenBrightnessOriginal = getScreenBrightness();
+
+        // For TTS
+        Intent checkTTSIntent = new Intent();
+        checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+        startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
 
         // myGesture = new GestureDetector(this);
         GestureOverlayView ov = (GestureOverlayView) findViewById(R.id.throttle_overlay);
@@ -2958,6 +2990,19 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
         set_labels();
+
+        // For TTS
+        if (requestCode == MY_DATA_CHECK_CODE) {
+            if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
+                myTTS = new TextToSpeech(this, this);
+            }
+            else {
+                Intent installTTSIntent = new Intent();
+                installTTSIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+                startActivity(installTTSIntent);
+            }
+        }
+
     }
 
     // touch events outside the GestureOverlayView get caught here
@@ -3118,6 +3163,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     if (immersiveModeIsOn) {
                         setImmersiveModeOff(webView);
                         Toast.makeText(getApplicationContext(), "Immersive mode temporarily disabled. To disable permanently change in preferences", Toast.LENGTH_SHORT).show();
+                        speakWords(getApplicationContext().getResources().getString(R.string.TTS_Immersive_Mode_Disabled));
                     } else {
                         setImmersiveModeOn(webView);
                     }
@@ -3140,11 +3186,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         if (isScreenLocked) {
                             isScreenLocked = false;
                             Toast.makeText(getApplicationContext(), "Throttle Screen Unlocked", Toast.LENGTH_SHORT).show();
+                            speakWords(getApplicationContext().getResources().getString(R.string.TTS_Screen_Unlocked));
                             //setScreenBrightness(screenBrightnessBright);
                             setScreenBrightness(screenBrightnessOriginal);
                         } else {
                             isScreenLocked = true;
                             Toast.makeText(getApplicationContext(), "Throttle Screen Locked - Swipe up to unlock", Toast.LENGTH_LONG).show();
+                            speakWords(getApplicationContext().getResources().getString(R.string.TTS_Screen_Locked));
                             screenBrightnessOriginal = getScreenBrightness();
                             setScreenBrightness(screenBrightnessDim);
                         }
@@ -3155,6 +3203,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         } else {
                             screenDimmed = true;
                             Toast.makeText(getApplicationContext(), "Throttle Screen Dimmed - Swipe up to brighten", Toast.LENGTH_LONG).show();
+                            speakWords(getApplicationContext().getResources().getString(R.string.TTS_Immersive_Mode_Disabled));
                             screenBrightnessOriginal = getScreenBrightness();
                             setScreenBrightness(screenBrightnessDim);
                         }
