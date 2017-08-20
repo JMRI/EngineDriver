@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.text.format.Time;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -256,8 +257,11 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
     private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
 
     // For TTS
-    private int MY_DATA_CHECK_CODE = 0;
+    private int MY_TTS_DATA_CHECK_CODE = 1234;
     private TextToSpeech myTTS;
+    private String lastTts = "none";
+    private boolean prefTts = false;
+    private Time lastTtsTime;
 
     //Throttle Array
     private char[] allThrottleLetters = {'T', 'S', 'G'};
@@ -562,16 +566,24 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
 
     // For TTS
     private void speakWords(String speech) {
-        if (prefs.getBoolean("prefTts", getResources().getBoolean(R.bool.prefTtsDefaultValue))) {
-            myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+        Time currentTime = new Time();
+        currentTime.setToNow();
+
+        if (prefTts) {
+            // //don't repeat what was last spoken withing 3 seconds
+            if (((currentTime.toMillis(true) >= (lastTtsTime.toMillis(true)+3000)) || (!speech.equals(lastTts)))) {
+                myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+                lastTtsTime = currentTime;
+            }
         }
+        lastTts = speech;
     }
 
     //For TTS
     public void onInit(int initStatus) {
-        // if (initStatus == TextToSpeech.SUCCESS) {
-        //    myTTS.setLanguage(Locale.US);
-        // } else
+        if (initStatus == TextToSpeech.SUCCESS) {
+            myTTS.setLanguage(Locale.getDefault());
+        } else
         if (initStatus == TextToSpeech.ERROR) {
             Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
         }
@@ -1000,6 +1012,14 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
         return isAllowed;
     }
 
+    private boolean isNewDirectionAllowed(char whichThrottle, int direction) {
+        // check whether direction change is permitted
+        boolean isAllowed = false;
+        if ((getDirection(whichThrottle) != direction) && isChangeDirectionAllowed(whichThrottle))
+            isAllowed = true;
+        return isAllowed;
+    }
+
     void set_stop_button(char whichThrottle, boolean pressed) {
         Button bStop;
         if (whichThrottle == 'T') {
@@ -1284,10 +1304,11 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
                     whichVolume = whichT;
                     setVolumeIndicator();
                     vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                    // For TTS
                     switch (whichT) {
-                        case 'T': { speakWords(getApplicationContext().getResources().getString(R.string.TTS_Throttle_1)); break;}
-                        case 'S': { speakWords(getApplicationContext().getResources().getString(R.string.TTS_Throttle_2)); break;}
-                        case 'G': { speakWords(getApplicationContext().getResources().getString(R.string.TTS_Throttle_3)); break;}
+                        case 'T': { speakWords(getApplicationContext().getResources().getString(R.string.TTS_Throttle)+"1"); break;}
+                        case 'S': { speakWords(getApplicationContext().getResources().getString(R.string.TTS_Throttle)+"2"); break;}
+                        case 'G': { speakWords(getApplicationContext().getResources().getString(R.string.TTS_Throttle)+"3"); break;}
                     }
                     break;  // done
                 } else {                            // move to next throttle
@@ -1403,8 +1424,10 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
                 if (isActive && (action == ACTION_DOWN)) {
                     incrementSpeed(whichThrottle);
                     Log.d("Engine_Driver", "Speed " + getSpeed(whichThrottle));
-                    if (atMaxSpeed(whichThrottle))
+                    if (atMaxSpeed(whichThrottle)) {
                         vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                        speakWords(getApplicationContext().getResources().getString(R.string.TTS_Speed_Max)); // For TTS
+                    }
                 }
                 return (true); // stop processing this key
 
@@ -1412,8 +1435,10 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
                 // Decrease Speed
                 if (isActive && (action == ACTION_DOWN)) {
                     decrementSpeed(whichThrottle);
-                    if (getSpeed(whichThrottle) < 1)
+                    if (getSpeed(whichThrottle) < 1) {
                         vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                        speakWords(getApplicationContext().getResources().getString(R.string.TTS_Speed_Zero)); // For TTS
+                    }
                 }
                 return (true); // stop processing this key
 
@@ -1421,6 +1446,10 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
                 // Forward
                 if (isActive && (action == ACTION_DOWN)) {
                     vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                    if (isNewDirectionAllowed(whichThrottle,DIRECTION_FORWARD)) // For TTS
+                        speakWords(getApplicationContext().getResources().getString(R.string.TTS_Forward));
+                    else
+                        speakWords(getApplicationContext().getResources().getString(R.string.TTS_Dir_Change_While_Moving_Disabled));
                     changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
                 }
                 return (true); // stop processing this key
@@ -1429,6 +1458,10 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
                 // Reverse
                 if (isActive && action == ACTION_DOWN) {
                     vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                    if (isNewDirectionAllowed(whichThrottle,DIRECTION_REVERSE)) // For TTS
+                        speakWords(getApplicationContext().getResources().getString(R.string.TTS_Reverse));
+                    else
+                        speakWords(getApplicationContext().getResources().getString(R.string.TTS_Dir_Change_While_Moving_Disabled));
                     changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
                 }
                 return (true); // stop processing this key
@@ -1437,6 +1470,8 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
                 // stop
                 if (isActive && (action == ACTION_DOWN)) {
                     speedUpdateAndNotify(whichThrottle, 0);
+                    speakWords(getApplicationContext().getResources().getString(R.string.TTS_Speed_Stop)); // For TTS
+
                 }
                 return (true); // stop processing this key
 
@@ -1452,6 +1487,7 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
 
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + "", fKey, 1);
                     vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                    speakWords(getApplicationContext().getResources().getString(R.string.TTS_Function)+fKey); // For TTS
                 }
                 return (true); // stop processing this key
             } else if ((action == ACTION_UP) && ((keyCode == gamePadKeys_Up[8]) || (keyCode == gamePadKeys_Up[9]) || (keyCode == gamePadKeys_Up[10]))) {
@@ -1475,6 +1511,7 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
                     if (prefThrottleGameStartButton.equals("EStop")) {
                         speedUpdateAndNotify(0);         // update all three throttles
                         vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                        speakWords(getApplicationContext().getResources().getString(R.string.TTS_EStop)); // For TTS
                     } else { // "Next Throttle"
                         setNextActiveThrottle();
                     }
@@ -1877,9 +1914,12 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
         screenBrightnessOriginal = getScreenBrightness();
 
         // For TTS
+        prefTts = (prefs.getBoolean("prefTts", getResources().getBoolean(R.bool.prefTtsDefaultValue)));
         Intent checkTTSIntent = new Intent();
         checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
-        startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
+        startActivityForResult(checkTTSIntent, MY_TTS_DATA_CHECK_CODE);
+        lastTtsTime = new Time();
+        lastTtsTime.setToNow();
 
         // myGesture = new GestureDetector(this);
         GestureOverlayView ov = (GestureOverlayView) findViewById(R.id.throttle_overlay);
@@ -2152,6 +2192,8 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
 
         screenBrightnessDim = Integer.parseInt(prefs.getString("prefScreenBrightnessDim", getResources().getString(R.string.prefScreenBrightnessDimDefaultValue))) * 255 /100;
         //screenBrightnessBright = Integer.parseInt(prefs.getString("prefScreenBrightnessBright", getResources().getString(R.string.prefScreenBrightnessBrightDefaultValue))) * 255 /100;
+
+        prefTts = (prefs.getBoolean("prefTts", getResources().getBoolean(R.bool.prefTtsDefaultValue))); // For TTS
 
         applySpeedRelatedOptions();  // update all throttles
 
@@ -2993,17 +3035,18 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
         set_labels();
 
         // For TTS
-        if (requestCode == MY_DATA_CHECK_CODE) {
-            if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
-                myTTS = new TextToSpeech(this, this);
-            }
-            else {
-                Intent installTTSIntent = new Intent();
-                installTTSIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
-                startActivity(installTTSIntent);
+        prefTts = (prefs.getBoolean("prefTts", getResources().getBoolean(R.bool.prefTtsDefaultValue)));
+        if (prefTts) {
+            if (requestCode == MY_TTS_DATA_CHECK_CODE) {
+                if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
+                    myTTS = new TextToSpeech(this, this);
+                } else {
+                    Intent installTTSIntent = new Intent();
+                    installTTSIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+                    startActivity(installTTSIntent);
+                }
             }
         }
-
     }
 
     // touch events outside the GestureOverlayView get caught here
