@@ -569,9 +569,10 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
 
     //For TTS
     public void onInit(int initStatus) {
-        if (initStatus == TextToSpeech.SUCCESS) {
-            myTTS.setLanguage(Locale.US);
-        } else if (initStatus == TextToSpeech.ERROR) {
+        // if (initStatus == TextToSpeech.SUCCESS) {
+        //    myTTS.setLanguage(Locale.US);
+        // } else
+        if (initStatus == TextToSpeech.ERROR) {
             Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
         }
     }
@@ -3203,7 +3204,7 @@ public class throttle extends Activity implements GestureOverlayView.OnGestureLi
                         } else {
                             screenDimmed = true;
                             Toast.makeText(getApplicationContext(), "Throttle Screen Dimmed - Swipe up to brighten", Toast.LENGTH_LONG).show();
-                            speakWords(getApplicationContext().getResources().getString(R.string.TTS_Immersive_Mode_Disabled));
+                            speakWords(getApplicationContext().getResources().getString(R.string.TTS_Screen_Dimmed));
                             screenBrightnessOriginal = getScreenBrightness();
                             setScreenBrightness(screenBrightnessDim);
                         }
