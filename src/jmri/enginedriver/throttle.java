@@ -26,11 +26,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.gesture.GestureOverlayView;
 import android.graphics.Typeface;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -53,9 +56,6 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-// for changing the screen brightness
-import android.provider.Settings;
-
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -78,12 +78,19 @@ import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
 
+// for changing the screen brightness
+
 // used for supporting Keyboard and Gamepad input;
 
 public class throttle extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
 
     private threaded_application mainapp; // hold pointer to mainapp
     private SharedPreferences prefs;
+
+    // activity codes
+    public static final int ACTIVITY_PREFS = 0;
+    public static final int ACTIVITY_SELECT_LOCO = 1;
+    public static final int ACTIVITY_CONSIST = 2;
 
     private static final int GONE = 8;
     private static final int VISIBLE = 0;
@@ -218,7 +225,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     // used in the gesture for entering and exiting immersive mode
     private boolean immersiveModeIsOn;
-    private boolean immersiveModeCheck;
 
     //used in the gesture for temporarily showing the Web View
     private boolean webViewIsOn = false;
@@ -228,7 +234,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private boolean isScreenLocked = false;
     private boolean screenDimmed = false;
     private int screenBrightnessDim;
-    private float swipeUpGestureY = 0;
 
     //private int screenBrightnessBright;
     private int screenBrightnessOriginal;
@@ -239,32 +244,34 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     boolean locoSelectWhileMoving;
 
     // used for the GamePad Support
-    private boolean prefThrottleGamePad = false;
     private static final int DIRECTION_FORWARD = 1;
     private static final int DIRECTION_REVERSE = 0;
     // default to the iOS iCade mappings
     private String whichGamePadMode = "None";
     private String prefThrottleGameStartButton;
-    private char[] lastKeyChars = {' ', ' ', ' ', ' '};
-    private int lastKeyCount = 0;
-    private int lastKeyCountNeedExtraKeys = 0;
     //                              none     NextThr  Speed+    Speed-      Fwd         Rev         EStop       F2      F1          F0          Stop
     private int[] gamePadKeys =     {0,        0,   KEYCODE_W, KEYCODE_X,   KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
     private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
 
+    private ToneGenerator tg;
+    private Handler gamepadRepeatUpdateHandler = new Handler();
+    private boolean mGamepadAutoIncrement = false;
+    private boolean mGamepadAutoDecrement = false;
+
+
     //Throttle Array
-    private char[] allThrottleLetters = {'T', 'S', 'G'};
+    private final char[] allThrottleLetters = {'T', 'S', 'G'};
 
     // For speed slider speed buttons.
-    class RptUpdater implements Runnable {
+    private class RptUpdater implements Runnable {
         char whichThrottle;
 
-        public RptUpdater(char WhichThrottle) {
+        private RptUpdater(char WhichThrottle) {
             whichThrottle = WhichThrottle;
 
             try {
                 REP_DELAY = Integer.parseInt(prefs.getString("speed_arrows_throttle_repeat_delay", "100"));
-            } catch (Exception ex) {
+            } catch (NumberFormatException ex) {
                 REP_DELAY = 100;
             }
         }
@@ -274,7 +281,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             if (mAutoIncrement) {
                 incrementSpeed(whichThrottle);
                 repeatUpdateHandler.postDelayed(new RptUpdater(whichThrottle), REP_DELAY);
-            } else if (mAutoDecrement) {
+            } else if (mGamepadAutoDecrement) {
                 decrementSpeed(whichThrottle);
                 repeatUpdateHandler.postDelayed(new RptUpdater(whichThrottle), REP_DELAY);
             }
@@ -283,7 +290,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     // Handle messages from the communication thread TO this thread (responses from withrottle)
     @SuppressLint("HandlerLeak")
-    class throttle_handler extends Handler {
+    private class throttle_handler extends Handler {
 
         @Override
         public void handleMessage(Message msg) {
@@ -634,6 +641,30 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
+    SeekBar getThrottleSlider(char whichThrottle) {
+        SeekBar throttle_slider;
+        if (whichThrottle == 'T') {
+            throttle_slider = sbT;
+        } else if (whichThrottle == 'G') {
+            throttle_slider = sbG;
+        } else {
+            throttle_slider = sbS;
+        }
+        return throttle_slider;
+    }
+
+    double getDisplayUnitScale(char whichThrottle) {
+        double displayUnitScale;
+        if (whichThrottle == 'T') {
+            displayUnitScale = displayUnitScaleT;
+        } else if (whichThrottle == 'G') {
+            displayUnitScale = displayUnitScaleG;
+        } else {
+            displayUnitScale = displayUnitScaleS;
+        }
+        return displayUnitScale;
+    }
+
     // set speed slider to absolute value on all throttles
     void speedUpdate(int speed) {
         for (char throttleLetter : allThrottleLetters) {
@@ -645,55 +676,36 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     void speedUpdate(char whichThrottle, int speed) {
         if (speed < 0)
             speed = 0;
-        if (whichThrottle == 'T') {
-            sbT.setProgress(speed);
-        } else if (whichThrottle == 'G') {
-            sbG.setProgress(speed);
-        } else {
-            sbS.setProgress(speed);
-        }
+        getThrottleSlider(whichThrottle).setProgress(speed);
     }
 
     // get the current speed of the throttle
     int getSpeed(char whichThrottle) {
-        SeekBar throttle_slider;
-        if (whichThrottle == 'T') {
-            throttle_slider = sbT;
-        } else if (whichThrottle == 'G') {
-            throttle_slider = sbG;
-        } else {
-            throttle_slider = sbS;
-        }
-        return throttle_slider.getProgress();
+        return getThrottleSlider(whichThrottle).getProgress();
     }
 
-    // get the maximum speed of the throttle
+    int getMaxSpeed(char whichThrottle) {
+        return getThrottleSlider(whichThrottle).getMax();
+    }
+
+    int getMinSpeed(char whichThrottle) {
+        return 0;
+    }
+
+    // returns true if throttle is set for the maximum speed
     boolean atMaxSpeed(char whichThrottle) {
-        SeekBar throttle_slider;
-        if (whichThrottle == 'T') {
-            throttle_slider = sbT;
-        } else if (whichThrottle == 'G') {
-            throttle_slider = sbG;
-        } else {
-            throttle_slider = sbS;
-        }
-        return (throttle_slider.getProgress() >= throttle_slider.getMax());
+        return (getSpeed(whichThrottle) >= getMaxSpeed(whichThrottle));
+    }
+
+    // returns true if throttle is set for the minimum speed
+    boolean atMinSpeed(char whichThrottle) {
+        return (getSpeed(whichThrottle) <= getMinSpeed(whichThrottle));
     }
 
     // change speed slider by scaled display unit value
     int speedChange(char whichThrottle, int change) {
-        SeekBar throttle_slider;
-        double displayUnitScale;
-        if (whichThrottle == 'T') {
-            throttle_slider = sbT;
-            displayUnitScale = displayUnitScaleT;
-        } else if (whichThrottle == 'G') {
-            throttle_slider = sbG;
-            displayUnitScale = displayUnitScaleG;
-        } else {
-            throttle_slider = sbS;
-            displayUnitScale = displayUnitScaleS;
-        }
+        SeekBar throttle_slider = getThrottleSlider(whichThrottle);
+        double displayUnitScale = getDisplayUnitScale(whichThrottle);
         int lastSpeed = throttle_slider.getProgress();
         int lastScaleSpeed = (int) Math.round(lastSpeed * displayUnitScale);
         int speed = (int) Math.round(lastSpeed + (change / displayUnitScale));
@@ -740,17 +752,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private void setDisplayedSpeed(char whichThrottle, int speed) {
         TextView speed_label;
         Consist con;
-        double speedScale;
+        double speedScale = getDisplayUnitScale(whichThrottle);
         if (whichThrottle == 'T') {
-            speedScale = displayUnitScaleT;
             speed_label = tvSpdValT;
             con = mainapp.consistT;
         } else if (whichThrottle == 'G') {
-            speedScale = displayUnitScaleG;
             speed_label = tvSpdValG;
             con = mainapp.consistG;
         } else {
-            speedScale = displayUnitScaleS;
             speed_label = tvSpdValS;
             con = mainapp.consistS;
         }
@@ -1017,7 +1026,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             Intent select_loco = new Intent().setClass(this, select_loco.class);
             select_loco.putExtra("sWhichThrottle", Character.toString(whichThrottle));  // pass whichThrottle as an extra to activity
             navigatingAway = true;
-            startActivityForResult(select_loco, 1);
+            startActivityForResult(select_loco, ACTIVITY_SELECT_LOCO);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
             Log.d("Engine_Driver", ex.getMessage());
@@ -1237,35 +1246,40 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     }
 
     private void setNextActiveThrottle() {
+        setNextActiveThrottle(false);
+    }
+
+    private void setNextActiveThrottle(boolean feedbackSound) {
         int i;
         int index = -1;
-        int nextIndex = 0;
         int numThrottles = allThrottleLetters.length;
 
         // find current Volume throttle
-        for (i = 0; (i < numThrottles) && (index == -1); i++) {
+        for (i = 0; i < numThrottles ; i++) {
             if (allThrottleLetters[i] == whichVolume) {
                 index = i;
+                break;
             }
         }
-
-        i= index+1;
-
         // find next active throttle
+        i = index+1;
         while (i != index) {                        // check until we get back to current Volume throttle
             if (i >= numThrottles) {                // wrap
                 i = 0;
             } else {
                 char whichT = allThrottleLetters[i];
-                if (getConsist(whichT).isActive()) { // if throttle is active, assign it to Volume
+                if (getConsist(whichT).isActive()) { // found next active throttle
                     whichVolume = whichT;
                     setVolumeIndicator();
-                    vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                     break;  // done
                 } else {                            // move to next throttle
                     i++;
                 }
             }
+        }
+        // play appropriate feedbackSound
+        if (feedbackSound) {
+            GamepadFeedbackSound(i == index);
         }
     }
 
@@ -1282,9 +1296,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
         prefThrottleGameStartButton = prefs.getString("prefGamePadStartButton", getApplicationContext().getResources().getString(R.string.prefGamePadStartButtonDefaultValue));
 
-        if (!whichGamePadMode.equals("None")) { // make sure the Softkeyboard is hidden
+        if (!whichGamePadMode.equals("None")) {
+            // make sure the Softkeyboard is hidden
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                     WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+
         }
 
         int[] bGamePadKeys;
@@ -1350,49 +1366,61 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     // used to support the gamepad in 'NewGame' mode only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        int action = event.getAction();
-        int keyCode = event.getKeyCode();
-        int repeatCnt = event.getRepeatCount();
-        int kbInt = 0;
-        int i;
 
         if (!whichGamePadMode.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
+            int action = event.getAction();
+            int keyCode = event.getKeyCode();
+            int repeatCnt = event.getRepeatCount();
 
             char whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
             boolean isActive = getConsist(whichThrottle).isActive();
 
             if (keyCode != 0) {
-                Log.d("Engine_Driver", "keycode " + keyCode + " action " + action);
+                Log.d("Engine_Driver", "keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
             }
 
             // only allow repeat keys for Increase and Decrease Speed
-            if (repeatCnt > 0 && (keyCode != gamePadKeys[2] && keyCode != gamePadKeys[3] )) {
+            if (repeatCnt > 0 && (keyCode != gamePadKeys[2] && keyCode != gamePadKeys[3]))
                 return (true);
+
+            if (action == ACTION_UP) {
+                mGamepadAutoIncrement = false;
+                mGamepadAutoDecrement = false;
+                GamepadFeedbackSoundStop();
             }
 
             if (keyCode == gamePadKeys[2]) {
                 // Increase Speed
                 if (isActive && (action == ACTION_DOWN)) {
-                    incrementSpeed(whichThrottle);
-                    Log.d("Engine_Driver", "Speed " + getSpeed(whichThrottle));
-                    if (atMaxSpeed(whichThrottle))
-                        vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                    if (repeatCnt == 0) {
+                        GamepadIncrementSpeed(whichThrottle);
+                    }
+                    // if longpress, start repeater
+                    else if (repeatCnt == 1) {
+                        mGamepadAutoIncrement = true;
+                        gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle));
+                    }
                 }
                 return (true); // stop processing this key
 
             } else if (keyCode == gamePadKeys[3]) {
                 // Decrease Speed
                 if (isActive && (action == ACTION_DOWN)) {
-                    decrementSpeed(whichThrottle);
-                    if (getSpeed(whichThrottle) < 1)
-                        vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                    if (repeatCnt == 0) {
+                        GamepadDecrementSpeed(whichThrottle);
+                    }
+                    // if longpress, start repeater
+                    else if (repeatCnt == 1) {
+                        mGamepadAutoDecrement = true;
+                        gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle));
+                    }
                 }
                 return (true); // stop processing this key
 
             } else if (keyCode == gamePadKeys[4]) {
                 // Forward
                 if (isActive && (action == ACTION_DOWN)) {
-                    vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                    GamepadFeedbackSound(false);
                     changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
                 }
                 return (true); // stop processing this key
@@ -1400,7 +1428,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             } else if (keyCode == gamePadKeys[5]) {
                 // Reverse
                 if (isActive && action == ACTION_DOWN) {
-                    vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                    GamepadFeedbackSound(false);
                     changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
                 }
                 return (true); // stop processing this key
@@ -1408,6 +1436,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             } else if (keyCode == gamePadKeys[7]) {
                 // stop
                 if (isActive && (action == ACTION_DOWN)) {
+                    GamepadFeedbackSound(false);
                     speedUpdateAndNotify(whichThrottle, 0);
                 }
                 return (true); // stop processing this key
@@ -1422,8 +1451,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     else if (keyCode == gamePadKeys[10])
                         fKey = 2;
 
+                    GamepadFeedbackSound(false);
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + "", fKey, 1);
-                    vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
                 }
                 return (true); // stop processing this key
             } else if ((action == ACTION_UP) && ((keyCode == gamePadKeys_Up[8]) || (keyCode == gamePadKeys_Up[9]) || (keyCode == gamePadKeys_Up[10]))) {
@@ -1437,7 +1466,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         fKey = 2;
 
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + "", fKey, 0);
-//                    set_function_state(whichThrottle, fKey);
                 }
                 return (true); // stop processing this key
 
@@ -1446,9 +1474,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 if (action == ACTION_DOWN) {
                     if (prefThrottleGameStartButton.equals("EStop")) {
                         speedUpdateAndNotify(0);         // update all three throttles
-                        vThrotScrWrap.playSoundEffect(SoundEffectConstants.CLICK);
+                        GamepadFeedbackSound(false);
                     } else { // "Next Throttle"
-                        setNextActiveThrottle();
+                        setNextActiveThrottle(true);
                     }
                 }
                 return (true); // stop processing this key
@@ -1457,7 +1485,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             else if (keyCode == gamePadKeys[1]) {
                 // NextThrottle
                 if (action == ACTION_DOWN) {
-                    setNextActiveThrottle();
+                    setNextActiveThrottle(true);
                 }
                 return (true); // stop processing this key
             }
@@ -1469,11 +1497,60 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         return super.dispatchKeyEvent(event);
     }
 
-    // Listeners for the Select Loco buttons
-    public class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener {
+    void GamepadIncrementSpeed(char whichThrottle) {
+        incrementSpeed(whichThrottle);
+        GamepadFeedbackSound(atMaxSpeed(whichThrottle));
+    }
+
+    void GamepadDecrementSpeed(char whichThrottle) {
+        decrementSpeed(whichThrottle);
+        GamepadFeedbackSound(atMinSpeed(whichThrottle));
+    }
+
+    void GamepadFeedbackSound(boolean invalidAction) {
+        if (invalidAction)
+            tg.startTone(ToneGenerator.TONE_PROP_NACK);
+        else
+            tg.startTone(ToneGenerator.TONE_PROP_BEEP);
+    }
+
+    void GamepadFeedbackSoundStop() {
+        tg.stopTone();
+    }
+
+    // For gamepad speed buttons.
+    private class GamepadRptUpdater implements Runnable {
+        char whichThrottle;
+
+        private GamepadRptUpdater(char WhichThrottle) {
+            whichThrottle = WhichThrottle;
+
+            try {
+                REP_DELAY = Integer.parseInt(prefs.getString("speed_arrows_throttle_repeat_delay", "100"));
+            } catch (NumberFormatException ex) {
+                REP_DELAY = 100;
+            }
+        }
+
+        @Override
+        public void run() {
+            if (mGamepadAutoIncrement) {
+                GamepadIncrementSpeed(whichThrottle);
+                gamepadRepeatUpdateHandler.postDelayed(new GamepadRptUpdater(whichThrottle), REP_DELAY);
+            } else if (mGamepadAutoDecrement) {
+                GamepadDecrementSpeed(whichThrottle);
+                gamepadRepeatUpdateHandler.postDelayed(new GamepadRptUpdater(whichThrottle), REP_DELAY);
+            }
+        }
+    }
+
+
+
+// Listeners for the Select Loco buttons
+    private class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener {
         char whichThrottle;     // T for first throttle, S for second, G for third
 
-        public select_function_button_touch_listener(char new_whichThrottle) {
+        private select_function_button_touch_listener(char new_whichThrottle) {
             whichThrottle = new_whichThrottle;
         }
 
@@ -1509,11 +1586,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     }
 
     //listeners for the increase/decrease speed buttons (not the slider)
-    public class arrow_speed_button_touch_listener implements View.OnClickListener, View.OnLongClickListener, View.OnTouchListener {
+    private class arrow_speed_button_touch_listener implements View.OnClickListener, View.OnLongClickListener, View.OnTouchListener {
         char whichThrottle;     // T for first throttle, S for second, G for third
         String arrowDirection;
 
-        public arrow_speed_button_touch_listener(char new_whichThrottle, String new_arrowDirection) {
+        private arrow_speed_button_touch_listener(char new_whichThrottle, String new_arrowDirection) {
             whichThrottle = new_whichThrottle;
             arrowDirection = new_arrowDirection;
         }
@@ -1553,17 +1630,17 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
-    public class function_button_touch_listener implements View.OnTouchListener {
+    private class function_button_touch_listener implements View.OnTouchListener {
         int function;
         char whichThrottle;     // T for first throttle, S for second, G for third
         boolean leadOnly;       // function only applies to the lead loco
         boolean trailOnly;      // function only applies to the trail loco (future)
 
-        public function_button_touch_listener(int new_function, char new_whichThrottle) {
+        private function_button_touch_listener(int new_function, char new_whichThrottle) {
             this(new_function, new_whichThrottle, "");
         }
 
-        public function_button_touch_listener(int new_function, char new_whichThrottle, String funcLabel) {
+        private function_button_touch_listener(int new_function, char new_whichThrottle, String funcLabel) {
             function = new_function;    // store these values for this button
             whichThrottle = new_whichThrottle;
             String lab = funcLabel.toUpperCase().trim();
@@ -1680,13 +1757,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     }
 
     //Listeners for the throttle slider
-    public class throttle_listener implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
+    private class throttle_listener implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
         char whichThrottle;
         int lastSpeed;
         boolean limitedJump;
         int jumpSpeed;
 
-        public throttle_listener(char new_whichThrottle) {
+        private throttle_listener(char new_whichThrottle) {
             whichThrottle = new_whichThrottle; // store values for this listener
             lastSpeed = 0;
             limitedJump = false;
@@ -1764,18 +1841,18 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     // implement delay for briefly ignoring WiT speed reports after sending a throttle speed update
     // this prevents use of speed reports sent by WiT just prior to WiT processing the speed update 
-    class ChangeDelay {
+    private class ChangeDelay {
         boolean delayInProg;
         Runnable changeTimer;
         char whichThrottle;
 
-        public ChangeDelay(char wThrot) {
+        private ChangeDelay(char wThrot) {
             delayInProg = false;
             changeTimer = new ChangeTimer();
             whichThrottle = wThrot;
         }
 
-        public void changeDelay() {
+        private void changeDelay() {
             mainapp.throttle_msg_handler.removeCallbacks(changeTimer);          //remove any pending requests
             delayInProg = true;
             mainapp.throttle_msg_handler.postDelayed(changeTimer, changeDelay);
@@ -1783,7 +1860,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         class ChangeTimer implements Runnable {
 
-            public ChangeTimer() {
+            private ChangeTimer() {
                 delayInProg = false;
             }
 
@@ -2081,6 +2158,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         changeTimerG = new ChangeDelay('G');
         changeTimerS = new ChangeDelay('S');
 
+        // tone generator for feedback sounds
+        tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
+                preferences.getIntPrefValue(prefs,"prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
+
+        // set GamePad Support
+        setGamepadKeys();
+
     } // end of onCreate()
 
     @Override
@@ -2121,9 +2205,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         //screenBrightnessBright = Integer.parseInt(prefs.getString("prefScreenBrightnessBright", getResources().getString(R.string.prefScreenBrightnessBrightDefaultValue))) * 255 /100;
 
         applySpeedRelatedOptions();  // update all throttles
-
-        // check the preference setting for GamePad Support
-        setGamepadKeys();
 
         set_labels(); // handle labels and update view
 
@@ -2214,6 +2295,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             scale = webView.getScale(); // save current scale for next onCreate
         }
         repeatUpdateHandler = null;
+        tg.release();
         mainapp.throttle_msg_handler = null;
 
         super.onDestroy();
@@ -2382,37 +2464,17 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         setVolumeIndicator();
 
         // set speed buttons speed step
-        String s = prefs.getString("speed_arrows_throttle_speed_step", "4");
-        try {
-            BUTTON_SPEED_STEP = Integer.parseInt(s);
-        } catch (NumberFormatException e) {
-            BUTTON_SPEED_STEP = 4;
-        }
+        BUTTON_SPEED_STEP = preferences.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
 
         // set up max speeds for throttles
-        s = prefs.getString("maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
-        int maxThrottle;
-        try {
-            maxThrottle = Integer.parseInt(s);
-            if (maxThrottle > 100) {
-                maxThrottle = 100;
-            }
-        } catch (NumberFormatException e) {
-            maxThrottle = 100;
-        }
+        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
         sbT.setMax(maxThrottle);
         sbS.setMax(maxThrottle);
         sbG.setMax(maxThrottle);
 
         // set max allowed change for throttles from prefs
-        s = prefs.getString("maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
-        int maxChange;
-        try {
-            maxChange = Integer.parseInt(s);        // units are integer percent
-        } catch (NumberFormatException e) {
-            maxChange = 25;
-        }
+        int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
         max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
 
         if (mainapp.consistT.isEmpty()) {
@@ -2425,12 +2487,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             maxSpeedStepS = 100;
         }
         //get speed steps from prefs
-        s = prefs.getString("DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
-        try {
-            speedStepPref = Integer.parseInt(s);
-        } catch (Exception e) {
-            speedStepPref = 100;
-        }
+        speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
         setDisplayUnitScale('T');
         setDisplayUnitScale('G');
         setDisplayUnitScale('S');
@@ -2607,13 +2664,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         llGSetSpd.setLayoutParams(llLp);
 
         //set margins of slider areas
-        s = prefs.getString("left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
-        int sliderMargin;
-        try {
-            sliderMargin = Integer.parseInt(s);
-        } catch (Exception e) {
-            sliderMargin = 8;
-        }
+        int sliderMargin = preferences.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
 
         //show speed buttons based on pref
         sbS.setVisibility(VISIBLE);  //always show slider if buttons not shown
@@ -2857,7 +2908,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             case R.id.preferences_mnu:
                 in = new Intent().setClass(this, preferences.class);
                 navigatingAway = true;
-                startActivityForResult(in, 0);   // reinitialize function buttons and labels on return
+                startActivityForResult(in, ACTIVITY_PREFS);   // reinitialize function buttons and labels on return
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.settings_mnu:
@@ -2903,21 +2954,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
                 consistEdit.putExtra("whichThrottle", 'T');
                 navigatingAway = true;
-                startActivityForResult(consistEdit, 1);
+                startActivityForResult(consistEdit, ACTIVITY_CONSIST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.EditConsistS_menu:
                 Intent consistEdit2 = new Intent().setClass(this, ConsistEdit.class);
                 consistEdit2.putExtra("whichThrottle", 'S');
                 navigatingAway = true;
-                startActivityForResult(consistEdit2, 1);
+                startActivityForResult(consistEdit2, ACTIVITY_CONSIST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.EditConsistG_menu:
                 Intent consistEdit3 = new Intent().setClass(this, ConsistEdit.class);
                 consistEdit3.putExtra("whichThrottle", 'G');
                 navigatingAway = true;
-                startActivityForResult(consistEdit3, 1);
+                startActivityForResult(consistEdit3, ACTIVITY_CONSIST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
         }
@@ -2927,37 +2978,56 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     // handle return from menu items
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) { // edit loco or edit consist
-            if (resultCode == RESULT_FIRST_USER) { // something about consist
-                // was changed
-                Bundle extras = data.getExtras();
-                if (extras != null) {
-                    char whichThrottle = extras.getChar("whichThrottle");
-                    int dir;
-                    int speed;
-                    if (whichThrottle == 'T') {
-                        dir = dirT;
-                        speed = (sbT == null ? 0 : sbT.getProgress());
-                    } else if (whichThrottle == 'G') {
-                        dir = dirG;
-                        speed = (sbG == null ? 0 : sbG.getProgress());
-                    } else {
-                        dir = dirS;
-                        speed = (sbS == null ? 0 : sbS.getProgress());
-                    }
-                    setEngineDirection(whichThrottle, dir, false);  // update direction for each loco in consist
-                    sendSpeedMsg(whichThrottle, speed);             // ensure all trailing units have the same speed as the lead engine
+        switch (requestCode) {
+            case ACTIVITY_SELECT_LOCO:
+                if (resultCode == select_loco.RESULT_LOCO_EDIT)
+                    ActivityConsistUpdate(resultCode, data.getExtras());
+                if (!getConsist(whichVolume).isActive()) {          // if consist on Volume throttle was released
+                    setNextActiveThrottle();                        // move to next throttle
                 }
-                // update loco name
-            }
-            if (!getConsist(whichVolume).isActive()) {          // if consist on Volume throttle was released
-                setNextActiveThrottle();                        // move to next throttle
+                break;
+            case ACTIVITY_CONSIST:         // edit loco or edit consist
+                if (resultCode == ConsistEdit.RESULT_CON_EDIT)
+                    ActivityConsistUpdate(resultCode, data.getExtras());
+                break;
+            case ACTIVITY_PREFS: {    // edit prefs
+                if (resultCode == preferences.RESULT_GAMEPAD) { // gamepad pref changed
+                    // update tone generator volume
+                    tg.release();
+                    tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
+                            preferences.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
+                    // update GamePad Support
+                    setGamepadKeys();
+                }
+                break;
             }
         }
+
         // loop through all function buttons and
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
         set_labels();
+
+    }
+
+    private void ActivityConsistUpdate(int resultCode, Bundle extras) {
+        if (extras != null) {
+            char whichThrottle = extras.getChar("whichThrottle");
+            int dir;
+            int speed;
+            if (whichThrottle == 'T') {
+                dir = dirT;
+                speed = (sbT == null ? 0 : sbT.getProgress());
+            } else if (whichThrottle == 'G') {
+                dir = dirG;
+                speed = (sbG == null ? 0 : sbG.getProgress());
+            } else {
+                dir = dirS;
+                speed = (sbS == null ? 0 : sbS.getProgress());
+            }
+            setEngineDirection(whichThrottle, dir, false);  // update direction for each loco in consist
+            sendSpeedMsg(whichThrottle, speed);             // ensure all trailing units have the same speed as the lead engine
+        }
     }
 
     // touch events outside the GestureOverlayView get caught here
@@ -3136,40 +3206,44 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         }
                     } else {
                         // swipe up
-                        if ((prefSwipeUpOption.equals("Hide Web View\n(requires 'Throttle Web View' preference)"))) {
-                            if (!(keepWebViewLocation.equals("none"))) { // show/hide the web view if the preference is set
-                                if (!webViewIsOn) {
-                                    webViewLocation = keepWebViewLocation;
-                                } else {
-                                    webViewLocation = "none";
-                                    Toast.makeText(getApplicationContext(), "Web View temporarily hidden. To hide permanently change in preferences" + webViewLocation, Toast.LENGTH_SHORT).show();
-                                }
-                                webViewIsOn = !webViewIsOn;
-                                //Toast.makeText(getApplicationContext(), "Swipe Up - " + webViewLocation, Toast.LENGTH_SHORT).show();
+                        switch(prefSwipeUpOption) {
+                            case "Hide Web View\n(requires 'Throttle Web View' preference)":
+                                if (!(keepWebViewLocation.equals("none"))) { // show/hide the web view if the preference is set
+                                    if (!webViewIsOn) {
+                                        webViewLocation = keepWebViewLocation;
+                                    } else {
+                                        webViewLocation = "none";
+                                        Toast.makeText(getApplicationContext(), "Web View temporarily hidden. To hide permanently change in preferences" + webViewLocation, Toast.LENGTH_SHORT).show();
+                                    }
+                                    webViewIsOn = !webViewIsOn;
+                                    //Toast.makeText(getApplicationContext(), "Swipe Up - " + webViewLocation, Toast.LENGTH_SHORT).show();
 
-                                this.onResume();
-                            }
-                        } else if (prefSwipeUpOption.equals("Lock and Dim Screen")) {
-                            if (isScreenLocked) {
-                                isScreenLocked = false;
-                                Toast.makeText(getApplicationContext(), "Throttle Screen Unlocked", Toast.LENGTH_SHORT).show();
-                                setScreenBrightness(screenBrightnessOriginal);
-                            } else {
-                                isScreenLocked = true;
-                                Toast.makeText(getApplicationContext(), "Throttle Screen Locked - Swipe up again to unlock", Toast.LENGTH_SHORT).show();
-                                screenBrightnessOriginal = getScreenBrightness();
-                                setScreenBrightness(screenBrightnessDim);
-                            }
-                        } else if (prefSwipeUpOption.equals("Dim Screen")) {
-                            if (screenDimmed) {
-                                screenDimmed = false;
-                                setScreenBrightness(screenBrightnessOriginal);
-                            } else {
-                                screenDimmed = true;
-                                Toast.makeText(getApplicationContext(), "Throttle Screen Dimmed - Swipe up to restore", Toast.LENGTH_SHORT).show();
-                                screenBrightnessOriginal = getScreenBrightness();
-                                setScreenBrightness(screenBrightnessDim);
-                            }
+                                    this.onResume();
+                                }
+                                break;
+                            case "Lock and Dim Screen":
+                                if (isScreenLocked) {
+                                    isScreenLocked = false;
+                                    Toast.makeText(getApplicationContext(), "Throttle Screen Unlocked", Toast.LENGTH_SHORT).show();
+                                    setScreenBrightness(screenBrightnessOriginal);
+                                } else {
+                                    isScreenLocked = true;
+                                    Toast.makeText(getApplicationContext(), "Throttle Screen Locked - Swipe up again to unlock", Toast.LENGTH_SHORT).show();
+                                    screenBrightnessOriginal = getScreenBrightness();
+                                    setScreenBrightness(screenBrightnessDim);
+                                }
+                                break;
+                            case "Dim Screen":
+                                if (screenDimmed) {
+                                    screenDimmed = false;
+                                    setScreenBrightness(screenBrightnessOriginal);
+                                } else {
+                                    screenDimmed = true;
+                                    Toast.makeText(getApplicationContext(), "Throttle Screen Dimmed - Swipe up to restore", Toast.LENGTH_SHORT).show();
+                                    screenBrightnessOriginal = getScreenBrightness();
+                                    setScreenBrightness(screenBrightnessDim);
+                                }
+                                break;
                         }
                     }
                 }
