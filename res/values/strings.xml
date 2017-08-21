@@ -213,8 +213,6 @@
     <string name="prefDelimiterSummary">Set the character that marks the end of the Location portion of Turnout and Route names</string>
     <string name="prefScreenBrightnessDimTitle">Screen Dimming Value</string>
     <string name="prefScreenBrightnessDimSummary">Brightness setting to use when dimming the screen.</string>
-    <string name="prefTtsTitle">Voice Response</string>
-    <string name="prefTtsSummary">Speak keey events and actions using Text to Speech (TTS).</string>
     <string name="logViewer">View Log</string>
     <string name="clearLocoList">Clear List</string>
     <string name="ClearConnList">Clear Recent List</string>
