@@ -255,13 +255,4 @@
     <string name="label_28step">28</string>
 	<string name="label_128step">128</string>
     <string name="throttle_name">Throttle Name: %1$s</string>
-
-    <string name="TTS_Screen_Dimmed">Screen dimmed, swipe up to restore</string>
-    <string name="TTS_Screen_Locked">Screen Locked, swipe up to restore</string>
-    <string name="TTS_Screen_Unlocked">Screen Un-locked</string>
-    <string name="TTS_Immersive_Mode_Disabled">Immersive mode temporarily disabled</string>
-    <string name="TTS_Throttle_1">Throttle one</string>
-    <string name="TTS_Throttle_2">Throttle two</string>
-    <string name="TTS_Throttle_3">Throttle three</string>
-
 </resources>
