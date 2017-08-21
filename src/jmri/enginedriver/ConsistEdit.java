@@ -17,13 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Set;
-
-import jmri.enginedriver.Consist.ConLoco;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -51,7 +44,14 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+
+import jmri.enginedriver.Consist.ConLoco;
+
 public class ConsistEdit extends Activity implements OnGestureListener {
+    static public final int RESULT_CON_EDIT = RESULT_FIRST_USER;
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu CEMenu;
@@ -95,7 +95,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
             }
         }
         consistListAdapter.notifyDataSetChanged();
-        result = RESULT_FIRST_USER;
+        result = RESULT_CON_EDIT;
     }
 
 
