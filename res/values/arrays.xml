@@ -276,5 +276,4 @@
         <item>@integer/KeyCode_N</item>
         <item>@integer/KeyCode_T</item>
     </integer-array>
-
 </resources>
