@@ -20,23 +20,45 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,40 +67,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import android.widget.SimpleAdapter;
-import android.widget.ListView;
-
-import java.io.File;
-
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.os.Environment;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.util.TypedValue;
-
-import java.io.FileReader;
-
-import android.widget.EditText;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.widget.Button;
-import android.widget.AdapterView;
-import android.widget.TextView.OnEditorActionListener;
-
-import java.io.PrintWriter;
-
 import jmri.enginedriver.Consist.ConLoco;
 import jmri.jmrit.roster.RosterEntry;
 
 public class select_loco extends Activity {
+    static public final int RESULT_LOCO_EDIT = RESULT_FIRST_USER;
+
     private static final int GONE = 8;
     private static final int VISIBLE = 0;
 
@@ -410,7 +404,7 @@ public class select_loco extends Activity {
                 Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
                 consistEdit.putExtra("whichThrottle", whichThrottle);
                 navigatingAway = true;
-                startActivityForResult(consistEdit, 1);
+                startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
         }
@@ -418,11 +412,11 @@ public class select_loco extends Activity {
 
     //handle return from ConsistEdit
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {                          // edit consist
+        if (requestCode == throttle.ACTIVITY_CONSIST) {                          // edit consist
             if (newEngine) {
                 updateRecentEngines(saveUpdateList);
             }
-            result = RESULT_FIRST_USER;                 //tell Throttle to update loco directions
+            result = RESULT_LOCO_EDIT;                 //tell Throttle to update loco directions
         }
         end_this_activity();
     }

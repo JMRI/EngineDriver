@@ -178,6 +178,14 @@
                 android:key="prefGamePadStartButton"
                 android:summary="@string/prefGamePadStartButtonSummary"
                 android:title="@string/prefGamePadStartButtonTitle" />
+            <EditTextPreference
+                android:defaultValue="@string/prefGamePadFeedbackVolumeDefaultValue"
+                android:dialogTitle="@string/prefGamePadFeedbackVolumeTitle"
+                android:key="prefGamePadFeedbackVolume"
+                android:maxLength="3"
+                android:numeric="integer"
+                android:summary="@string/prefGamePadFeedbackVolumeSummary"
+                android:title="@string/prefGamePadFeedbackVolumeTitle" />
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefThrottleTitle" >

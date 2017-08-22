@@ -17,10 +17,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import java.util.Random;
-
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.provider.Settings;
@@ -30,10 +29,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.Random;
+
 public class preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+    static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu PRMenu;
+    private int result;                     // set to RESULT_FIRST_USER when something is edited
 
     /**
      * Called when the activity is first created.
@@ -56,6 +59,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             getPreferenceScreen().findPreference("prefThrottleViewImmersiveMode").setSelectable(false);
             getPreferenceScreen().findPreference("prefThrottleViewImmersiveMode").setEnabled(false);
         }
+        result = RESULT_OK;
     }
 
     @SuppressWarnings("deprecation")
@@ -135,20 +139,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 }
                 break;
             }
-            case "maximum_throttle_preference": {
-                String defaultVal = getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue);
-                String currentValue = sharedPreferences.getString(key, defaultVal).trim();
-                //limit new value to 100 (%)
-                try {
-                    int maxThrot = Integer.parseInt(currentValue);
-                    if (maxThrot > 100) {
-                        sharedPreferences.edit().putString(key, "100").commit();  //save new name to prefs
-                    }
-                } catch (NumberFormatException e) {
-                    sharedPreferences.edit().putString(key, defaultVal).commit();  //save new name to prefs
-                }
+            case "maximum_throttle_preference":
+                //limit new value to 0-100 (%)
+                limitIntPrefValue(sharedPreferences, key, 0, 100, "100");
                 break;
-            }
             case "WebViewLocation":
                 mainapp.alert_activities(message_type.WEBVIEW_LOC, "");
                 break;
@@ -165,17 +159,62 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             case "ClockDisplayTypePreference":
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY);
                 break;
+            case "prefGamePadFeedbackVolume":
+                //limit check new value
+                limitIntPrefValue(sharedPreferences, key, ToneGenerator.MIN_VOLUME, ToneGenerator.MAX_VOLUME,
+                       getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue));
+                result = RESULT_GAMEPAD;
+                break;
+            case "prefGamePadType":
+            case "prefGamePadStartButton":
+                result = RESULT_GAMEPAD;
+                break;
         }
+    }
+
+    private boolean limitIntPrefValue(SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
+        boolean isValid = true;
+        try {
+            int newVal = Integer.parseInt(sharedPreferences.getString(key, defaultVal).trim());
+            if (newVal > maxVal) {
+                sharedPreferences.edit().putString(key, Integer.toString(maxVal)).commit();
+                isValid = false;
+            } else if (newVal < minVal) {
+                sharedPreferences.edit().putString(key, Integer.toString(minVal)).commit();
+                isValid = false;
+            }
+        } catch (NumberFormatException e) {
+            sharedPreferences.edit().putString(key, defaultVal).commit();
+            isValid = false;
+        }
+        return isValid;
     }
 
     //Handle pressing of the back button to end this activity
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
         if (key == KeyEvent.KEYCODE_BACK) {
+            setResult(result);
             this.finish();  //end this activity
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
         return (super.onKeyDown(key, event));
     }
+
+    static public int getIntPrefValue(SharedPreferences sharedPreferences, String key, String defaultVal) {
+        int newVal;
+        try {
+            newVal = Integer.parseInt(sharedPreferences.getString(key, defaultVal).trim());
+        } catch (NumberFormatException e) {
+            try {
+                newVal = Integer.parseInt(defaultVal);
+            } catch (NumberFormatException ex) {
+                newVal = 0;
+            }
+        }
+        return newVal;
+    }
+
+
 }
