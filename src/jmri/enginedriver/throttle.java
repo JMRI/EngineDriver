@@ -964,7 +964,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         showDirectionIndication(whichThrottle, direction);
     }
 
-    private void changeDirectionIfAllowed(char whichThrottle, int direction) {
+    //
+    // processes a direction change if allowed by related preferences and current speed
+    // returns true if throttle direction matches the requested direction
+    private boolean changeDirectionIfAllowed(char whichThrottle, int direction) {
         if ((getDirection(whichThrottle) != direction) && isChangeDirectionAllowed(whichThrottle)) {
             // set speed to zero on direction change while moving if the preference is set
             if (stopOnDirectionChange && (getSpeed(whichThrottle) != 0)) {
@@ -974,6 +977,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             showDirectionRequest(whichThrottle, direction);        // update requested direction indication
             setEngineDirection(whichThrottle, direction, false);   // update direction for each engine on this throttle
         }
+        return (getDirection(whichThrottle) == direction);
     }
 
     private boolean isChangeDirectionAllowed(char whichThrottle) {
@@ -1366,7 +1370,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     // used to support the gamepad in 'NewGame' mode only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-
         if (!whichGamePadMode.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
             int action = event.getAction();
             int keyCode = event.getKeyCode();
@@ -1378,10 +1381,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             if (keyCode != 0) {
                 Log.d("Engine_Driver", "keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
             }
-
-            // only allow repeat keys for Increase and Decrease Speed
-            if (repeatCnt > 0 && (keyCode != gamePadKeys[2] && keyCode != gamePadKeys[3]))
-                return (true);
 
             if (action == ACTION_UP) {
                 mGamepadAutoIncrement = false;
@@ -1419,22 +1418,28 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
             } else if (keyCode == gamePadKeys[4]) {
                 // Forward
+                if (repeatCnt > 0)      // repeat not allowed
+                    return true;
                 if (isActive && (action == ACTION_DOWN)) {
-                    GamepadFeedbackSound(false);
-                    changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
+                    boolean dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
+                    GamepadFeedbackSound(dirChangeFailed);
                 }
                 return (true); // stop processing this key
 
             } else if (keyCode == gamePadKeys[5]) {
                 // Reverse
+                if (repeatCnt > 0)      // repeat not allowed
+                    return true;
                 if (isActive && action == ACTION_DOWN) {
-                    GamepadFeedbackSound(false);
-                    changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
+                    boolean dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
+                    GamepadFeedbackSound(dirChangeFailed);
                 }
                 return (true); // stop processing this key
 
             } else if (keyCode == gamePadKeys[7]) {
                 // stop
+                if (repeatCnt > 0)      // repeat not allowed
+                    return true;
                 if (isActive && (action == ACTION_DOWN)) {
                     GamepadFeedbackSound(false);
                     speedUpdateAndNotify(whichThrottle, 0);
@@ -1444,6 +1449,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             } else if ((action == ACTION_DOWN) && ((keyCode == gamePadKeys[8]) || (keyCode == gamePadKeys[9]) || (keyCode == gamePadKeys[10]))) {
                 // handle function button Down action
                 // 8 = F1 - Bell    9 = F0 - Light    10 = F2 - Horn
+                if (repeatCnt > 0)      // repeat not allowed
+                    return true;
                 if (isActive) {
                     int fKey = 0; // default to 9 = F0
                     if (keyCode == gamePadKeys[8])
@@ -1471,6 +1478,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
             } else if (keyCode == gamePadKeys[6]) {
                 // EStop or optionally NextThrottle
+                if (repeatCnt > 0)      // repeat not allowed
+                    return true;
                 if (action == ACTION_DOWN) {
                     if (prefThrottleGameStartButton.equals("EStop")) {
                         speedUpdateAndNotify(0);         // update all three throttles
@@ -1484,14 +1493,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
             else if (keyCode == gamePadKeys[1]) {
                 // NextThrottle
+                if (repeatCnt > 0)      // repeat not allowed
+                    return true;
                 if (action == ACTION_DOWN) {
                     setNextActiveThrottle(true);
                 }
                 return (true); // stop processing this key
             }
-
-            if (!((keyCode == KEYCODE_BACK) || (keyCode == KEYCODE_VOLUME_DOWN) || (keyCode == KEYCODE_VOLUME_UP)))
-                return (true); // swallow all other keystrokes except back and the volume keys
         }
 
         return super.dispatchKeyEvent(event);
