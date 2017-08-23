@@ -1,5 +1,6 @@
 **Version 2.16
- * new preference grouping
+ * Preference grouping
+ * new gamepad repeat handling and sound feedback
 **Version 2.15
  * fix incorrect loco request on reconnect when loco is not in roster (found by Bob Grandle)
  * prevent crash caused by empty JMRI consists
