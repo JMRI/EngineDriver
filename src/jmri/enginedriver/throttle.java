@@ -1418,9 +1418,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
             } else if (keyCode == gamePadKeys[4]) {
                 // Forward
-                if (repeatCnt > 0)      // repeat not allowed
-                    return true;
-                if (isActive && (action == ACTION_DOWN)) {
+                if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                     boolean dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
                     GamepadFeedbackSound(dirChangeFailed);
                 }
@@ -1428,9 +1426,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
             } else if (keyCode == gamePadKeys[5]) {
                 // Reverse
-                if (repeatCnt > 0)      // repeat not allowed
-                    return true;
-                if (isActive && action == ACTION_DOWN) {
+                if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                     boolean dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
                     GamepadFeedbackSound(dirChangeFailed);
                 }
@@ -1438,9 +1434,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
             } else if (keyCode == gamePadKeys[7]) {
                 // stop
-                if (repeatCnt > 0)      // repeat not allowed
-                    return true;
-                if (isActive && (action == ACTION_DOWN)) {
+                if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                     GamepadFeedbackSound(false);
                     speedUpdateAndNotify(whichThrottle, 0);
                 }
@@ -1449,9 +1443,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             } else if ((action == ACTION_DOWN) && ((keyCode == gamePadKeys[8]) || (keyCode == gamePadKeys[9]) || (keyCode == gamePadKeys[10]))) {
                 // handle function button Down action
                 // 8 = F1 - Bell    9 = F0 - Light    10 = F2 - Horn
-                if (repeatCnt > 0)      // repeat not allowed
-                    return true;
-                if (isActive) {
+                if (isActive && (repeatCnt == 0)) {
                     int fKey = 0; // default to 9 = F0
                     if (keyCode == gamePadKeys[8])
                         fKey = 1;
@@ -1465,7 +1457,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             } else if ((action == ACTION_UP) && ((keyCode == gamePadKeys_Up[8]) || (keyCode == gamePadKeys_Up[9]) || (keyCode == gamePadKeys_Up[10]))) {
                 // handle function button Down action
                 // 8 = F1 - Bell    9 = F0 - Light    10 = F2 - Horn
-                if (isActive) {
+                if (isActive && (repeatCnt == 0)) {
                     int fKey = 0; // default to 9 = F0
                     if (keyCode == gamePadKeys_Up[8])
                         fKey = 1;
@@ -1478,9 +1470,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
             } else if (keyCode == gamePadKeys[6]) {
                 // EStop or optionally NextThrottle
-                if (repeatCnt > 0)      // repeat not allowed
-                    return true;
-                if (action == ACTION_DOWN) {
+                if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
                     if (prefThrottleGameStartButton.equals("EStop")) {
                         speedUpdateAndNotify(0);         // update all three throttles
                         GamepadFeedbackSound(false);
@@ -1489,19 +1479,18 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     }
                 }
                 return (true); // stop processing this key
-            }
-
-            else if (keyCode == gamePadKeys[1]) {
+            } else if (keyCode == gamePadKeys[1]) {
                 // NextThrottle
-                if (repeatCnt > 0)      // repeat not allowed
-                    return true;
-                if (action == ACTION_DOWN) {
+                if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
                     setNextActiveThrottle(true);
                 }
                 return (true); // stop processing this key
             }
+//  for now pass all keystrokes not in gamePadKeys[] to super
+//  if problems occur, we can uncomment the next 2 lines
+//            else if (!((keyCode == KEYCODE_BACK) || (keyCode == KEYCODE_VOLUME_DOWN) || (keyCode == KEYCODE_VOLUME_UP) || (keyCode == KEYCODE_MENU)))
+//            return (true); // swallow all other keystrokes except back, menu and the volume keys
         }
-
         return super.dispatchKeyEvent(event);
     }
 
