@@ -1581,7 +1581,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         @Override
         public boolean onLongClick(View v) {
-            Toast.makeText(getApplicationContext(), "Control Lights of the individual Locos in the Consist", Toast.LENGTH_SHORT).show();
             start_consist_lights_edit(whichThrottle);
 
             return true;

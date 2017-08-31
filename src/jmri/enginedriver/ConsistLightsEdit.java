@@ -37,7 +37,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -60,7 +59,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     static public final int RESULT_CON_LIGHTS_EDIT = RESULT_FIRST_USER;
 
     private threaded_application mainapp;  // hold pointer to mainapp
-    private Menu CEMenu;
+    private Menu CLEMenu;
     private ArrayList<HashMap<String, String>> consistList;
     private SimpleAdapter consistListAdapter;
     private ArrayList<ConLoco> consistObjList;
@@ -183,7 +182,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         ListView consistLV = (ListView) findViewById(R.id.consist_lights_list);
         consistLV.setAdapter(consistListAdapter);
         consistLV.setOnItemClickListener(new OnItemClickListener() {
-            //When an entry is clicked, toggle the facing state
+            //When an entry is clicked, toggle the lights state for that loco
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
@@ -195,24 +194,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                 refreshConsistLists();
             }
         });
-/*
-        consistLV.setOnItemLongClickListener(new OnItemLongClickListener() {
-            //When an entry is long-clicked, remove it from the consist
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id) {
-                ViewGroup vg = (ViewGroup) v;
-                TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
-                String addr = addrv.getText().toString();
 
-                if (!consist.getLeadAddr().equals(addr)) {
-                    consist.remove(addr);
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, addr, (int) whichThrottle);   //release the loco
-                    refreshConsistLists();
-                }
-                return true;
-            }
-        });
-*/
         OnTouchListener gestureListener = new OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 return myGesture.onTouchEvent(event);
@@ -238,8 +220,8 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
             return;
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-        if (CEMenu != null) {
-            mainapp.displayEStop(CEMenu);
+        if (CLEMenu != null) {
+            mainapp.displayEStop(CLEMenu);
         }
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -258,7 +240,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
      */
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "ConsistedEdit.onDestroy()");
+        Log.d("Engine_Driver", "ConsistLightsEdit.onDestroy()");
 
         mainapp.consist_lights_edit_msg_handler = null;
         super.onDestroy();
@@ -267,8 +249,8 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.consist_edit_menu, menu);
-        CEMenu = menu;
+        inflater.inflate(R.menu.consist_lights_edit_menu, menu);
+        CLEMenu = menu;
         mainapp.displayEStop(menu);
         return true;
     }
