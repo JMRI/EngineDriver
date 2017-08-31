@@ -32,6 +32,7 @@
     <string name="app_name_preferences">Engine Driver - Preferences</string>
     <string name="app_name_select_loco">Engine Driver - Select Loco</string>
     <string name="app_name_ConsistEdit">Engine Driver - Consist Edit</string>
+    <string name="app_name_ConsistLightsEdit">Engine Driver - Consist Lights</string>
     <string name="notification_title">Engine Driver is running</string>
     <string name="notification_text">Tap to reopen Engine Driver</string>
     <string name="host_ip">Host Name or Address</string>
@@ -258,4 +259,8 @@
     <string name="label_28step">28</string>
 	<string name="label_128step">128</string>
     <string name="throttle_name">Throttle Name: %1$s</string>
+
+    <string name="prefConsistLightsLongClickTitle">Control Consist lights on long click</string>
+    <string name="prefConsistLightsLongClickSummary">Change the Lights of the individual locos in a Consist with a long click on the Loco Select button.</string>
+    <string name="consistLights_help">Click on a Loco to toggle the lights for that Loco On or Off.  Press Back Arrow when done.</string>
 </resources>

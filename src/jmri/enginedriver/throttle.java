@@ -91,6 +91,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     public static final int ACTIVITY_PREFS = 0;
     public static final int ACTIVITY_SELECT_LOCO = 1;
     public static final int ACTIVITY_CONSIST = 2;
+    public static final int ACTIVITY_CONSIST_LIGHTS = 3;
 
     private static final int GONE = 8;
     private static final int VISIBLE = 0;
@@ -258,6 +259,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private boolean mGamepadAutoIncrement = false;
     private boolean mGamepadAutoDecrement = false;
 
+    // preference to chnage the consist's on long clicks
+    boolean prefConsistLightsLongClick;
 
     //Throttle Array
     private final char[] allThrottleLetters = {'T', 'S', 'G'};
@@ -1037,6 +1040,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
+    // Edit the Consist Lights
+    void start_consist_lights_edit(char whichThrottle) {
+        if (prefConsistLightsLongClick) {  // only allow the editing in the consist lights if the preference is set
+            try {
+                Intent consistLightsEdit = new Intent().setClass(this, ConsistLightsEdit.class);
+                consistLightsEdit.putExtra("whichThrottle", whichThrottle);
+                navigatingAway = true;
+                startActivityForResult(consistLightsEdit, throttle.ACTIVITY_CONSIST_LIGHTS);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            } catch (Exception ex) {
+                Log.d("Engine_Driver", ex.getMessage());
+            }
+        }
+    }
+
     void disable_buttons(char whichThrottle) {
         enable_disable_buttons(whichThrottle, true);
     }
@@ -1544,7 +1562,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
 
 // Listeners for the Select Loco buttons
-    private class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener {
+    private class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
         char whichThrottle;     // T for first throttle, S for second, G for third
 
         private select_function_button_touch_listener(char new_whichThrottle) {
@@ -1561,8 +1579,16 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             }
         }
 
+        @Override
+        public boolean onLongClick(View v) {
+            Toast.makeText(getApplicationContext(), "Control Lights of the individual Locos in the Consist", Toast.LENGTH_SHORT).show();
+            start_consist_lights_edit(whichThrottle);
 
-        //TODO: This onTouch may be redundant now that the gesture overlay is working better
+            return true;
+        }
+
+
+    //TODO: This onTouch may be redundant now that the gesture overlay is working better
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -1580,6 +1606,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             }
             return false;
         }
+
     }
 
     //listeners for the increase/decrease speed buttons (not the slider)
@@ -1937,18 +1964,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         sfbt = new select_function_button_touch_listener('T');
         bSelT.setOnClickListener(sfbt);
         bSelT.setOnTouchListener(sfbt);
+        bSelT.setOnLongClickListener(sfbt);  // Consist Light Edit
 
         bSelS = (Button) findViewById(R.id.button_select_loco_S);
         bSelS.setClickable(true);
         sfbt = new select_function_button_touch_listener('S');
         bSelS.setOnClickListener(sfbt);
         bSelS.setOnTouchListener(sfbt);
+        bSelS.setOnLongClickListener(sfbt);  // Consist Light Edit
 
         bSelG = (Button) findViewById(R.id.button_select_loco_G);
         bSelG.setClickable(true);
         sfbt = new select_function_button_touch_listener('G');
         bSelG.setOnClickListener(sfbt);
         bSelG.setOnTouchListener(sfbt);
+        bSelG.setOnLongClickListener(sfbt);  // Consist Light Edit
 
         // Arrow Keys
         try {
@@ -2201,6 +2231,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         screenBrightnessDim = Integer.parseInt(prefs.getString("prefScreenBrightnessDim", getResources().getString(R.string.prefScreenBrightnessDimDefaultValue))) * 255 /100;
         //screenBrightnessBright = Integer.parseInt(prefs.getString("prefScreenBrightnessBright", getResources().getString(R.string.prefScreenBrightnessBrightDefaultValue))) * 255 /100;
 
+        prefConsistLightsLongClick = prefs.getBoolean("ConsistLightsLongClickPreference", getResources().getBoolean(R.bool.prefConsistLightsLongClickDefaultValue));
+
         applySpeedRelatedOptions();  // update all throttles
 
         set_labels(); // handle labels and update view
@@ -2228,6 +2260,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             TMenu.findItem(R.id.EditConsistT_menu).setVisible(mainapp.consistT.isMulti());
             TMenu.findItem(R.id.EditConsistS_menu).setVisible(mainapp.consistS.isMulti());
             TMenu.findItem(R.id.EditConsistG_menu).setVisible(mainapp.consistG.isMulti());
+
+            TMenu.findItem(R.id.EditLightsConsistT_menu).setVisible(mainapp.consistT.isMulti());
+            TMenu.findItem(R.id.EditLightsConsistS_menu).setVisible(mainapp.consistS.isMulti());
+            TMenu.findItem(R.id.EditLightsConsistG_menu).setVisible(mainapp.consistG.isMulti());
         }
 
         CookieSyncManager.getInstance().startSync();
@@ -2968,6 +3004,27 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 startActivityForResult(consistEdit3, ACTIVITY_CONSIST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
+            case R.id.EditLightsConsistT_menu:
+                Intent consistLightsEdit = new Intent().setClass(this, ConsistLightsEdit.class);
+                consistLightsEdit.putExtra("whichThrottle", 'T');
+                navigatingAway = true;
+                startActivityForResult(consistLightsEdit, ACTIVITY_CONSIST_LIGHTS);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.EditLightsConsistS_menu:
+                Intent consistLightsEdit2 = new Intent().setClass(this, ConsistLightsEdit.class);
+                consistLightsEdit2.putExtra("whichThrottle", 'S');
+                navigatingAway = true;
+                startActivityForResult(consistLightsEdit2, ACTIVITY_CONSIST_LIGHTS);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.EditLightsConsistG_menu:
+                Intent consistLightsEdit3 = new Intent().setClass(this, ConsistLightsEdit.class);
+                consistLightsEdit3.putExtra("whichThrottle", 'G');
+                navigatingAway = true;
+                startActivityForResult(consistLightsEdit3, ACTIVITY_CONSIST_LIGHTS);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -2987,6 +3044,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 if (resultCode == ConsistEdit.RESULT_CON_EDIT)
                     ActivityConsistUpdate(resultCode, data.getExtras());
                 break;
+            case ACTIVITY_CONSIST_LIGHTS:         // edit consist lights
+                break;   // nothing to do
             case ACTIVITY_PREFS: {    // edit prefs
                 if (resultCode == preferences.RESULT_GAMEPAD) { // gamepad pref changed
                     // update tone generator volume

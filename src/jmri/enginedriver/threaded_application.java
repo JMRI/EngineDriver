@@ -150,6 +150,7 @@ public class threaded_application extends Application {
     public volatile Handler turnouts_msg_handler;
     public volatile Handler routes_msg_handler;
     public volatile Handler consist_edit_msg_handler;
+    public volatile Handler consist_lights_edit_msg_handler;
     public volatile Handler power_control_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
 
@@ -2323,6 +2324,10 @@ public class threaded_application extends Application {
         }
         try {
             sendMsg(consist_edit_msg_handler, msgType, msgBody);
+        } catch (Exception ignored) {
+        }
+        try {
+            sendMsg(consist_lights_edit_msg_handler, msgType, msgBody);
         } catch (Exception ignored) {
         }
         try {

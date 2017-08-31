@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:keepScreenOn="true"
+    android:orientation="vertical" >
+    <ListView
+        android:id="@+id/consist_lights_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal" 
+        android:gravity="bottom"
+        android:layout_marginTop="20dp" >
+        <TextView
+            android:id="@+id/consistLights_help"
+            style="@style/floating_text_style"
+            android:textSize="15sp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/consistLights_help" />
+    </LinearLayout>
+</LinearLayout>

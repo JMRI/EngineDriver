@@ -50,6 +50,12 @@
             android:label="@string/app_name_ConsistEdit" >
         </activity>
         <activity
+            android:name=".ConsistLightsEdit"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTop"
+            android:label="@string/app_name_ConsistLightsEdit" >
+        </activity>
+        <activity
             android:name=".throttle"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask" 

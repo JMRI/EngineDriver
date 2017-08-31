@@ -308,6 +308,12 @@
             android:summary="@string/prefMaximumRecentLocosSummary"
             android:title="@string/prefMaximumRecentLocosTitle" >
         </EditTextPreference>
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefConsistLightsLongClickDefaultValue"
+            android:key="ConsistLightsLongClickPreference"
+            android:summary="@string/prefConsistLightsLongClickSummary"
+            android:title="@string/prefConsistLightsLongClickTitle" >
+        </CheckBoxPreference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefConnectTitle" >
         <EditTextPreference
