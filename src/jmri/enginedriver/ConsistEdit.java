@@ -51,6 +51,10 @@ import java.util.HashMap;
 import jmri.enginedriver.Consist.ConLoco;
 
 public class ConsistEdit extends Activity implements OnGestureListener {
+    public static final int LIGHT_OFF = 0;
+    public static final int LIGHT_ON = 1;
+    public static final int LIGHT_UNKNOWN = 2;
+
     static public final int RESULT_CON_EDIT = RESULT_FIRST_USER;
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -91,6 +95,15 @@ public class ConsistEdit extends Activity implements OnGestureListener {
                 hm.put("loco_addr", l.getAddress());
                 hm.put("loco_name", l.toString());
                 hm.put("loco_facing", l.isBackward() ? "Rear" : "Front");
+
+                // TODO: need to get the current state of the lead loco from the function buttion 0 state
+                if (l.isLightOn()==LIGHT_OFF) {
+                    hm.put("loco_light", "Off");
+                } else if (l.isLightOn()==LIGHT_ON) {
+                    hm.put("loco_light", "On");
+                } else {
+                    hm.put("loco_light", "Unknown");
+                }
                 consistList.add(hm);
             }
         }

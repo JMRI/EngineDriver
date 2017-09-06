@@ -262,5 +262,5 @@
 
     <string name="prefConsistLightsLongClickTitle">Control Consist lights on long click</string>
     <string name="prefConsistLightsLongClickSummary">Change the Lights of the individual locos in a Consist with a long click on the Loco Select button.</string>
-    <string name="consistLights_help">Click on a Loco to toggle the lights for that Loco On or Off.  Press Back Arrow when done.</string>
+    <string name="consistLights_help">Click on a Loco to toggle the lights for that Loco On or Off. \n\nLong Click on a Loco to change the light status, without sending the command to the Loco .(i.e. if ED is confused). \n\nPress Back Arrow when done.</string>
 </resources>

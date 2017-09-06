@@ -56,6 +56,10 @@ import jmri.enginedriver.reconnect_status;
 import jmri.enginedriver.threaded_application;
 
 public class ConsistLightsEdit extends Activity implements OnGestureListener {
+    public static final int LIGHT_OFF = 0;
+    public static final int LIGHT_ON = 1;
+    public static final int LIGHT_UNKNOWN = 2;
+
     static public final int RESULT_CON_LIGHTS_EDIT = RESULT_FIRST_USER;
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -92,11 +96,21 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                 hm.put("lead_label", consist.getLeadAddr().equals(l.getAddress()) ? "LEAD" : "");
                 hm.put("loco_addr", l.getAddress());
                 hm.put("loco_name", l.toString());
-                hm.put("loco_facing", l.isBackward() ? "Rear" : "Front");
+//                if (consist.getLeadAddr().equals(l.getAddress())) {  // if it is the Lead address find out what hte function is currrently set to
+//                } else {   // otherwise look at what was previously recorded
+                    if (l.isLightOn() == LIGHT_OFF) {
+                        hm.put("loco_light", "Off");
+                    } else if (l.isLightOn() == LIGHT_ON) {
+                        hm.put("loco_light", "On");
+                    } else {
+                        hm.put("loco_light", "Unknown");
+                    }
+//                }
                 consistList.add(hm);
             }
         }
 
+        consistListAdapter.notifyDataSetChanged();
         result = RESULT_CON_LIGHTS_EDIT;
     }
 
@@ -177,8 +191,8 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         //Set up a list adapter to allow adding the list of recent connections to the UI.
         consistList = new ArrayList<>();
         consistListAdapter = new SimpleAdapter(this, consistList, R.layout.consist_lights_item,
-                new String[]{"loco_name", "loco_addr", "lead_label", "loco_facing"},
-                new int[]{R.id.con_loco_name, R.id.con_loco_addr_hidden, R.id.con_lead_label, R.id.con_loco_facing});
+                new String[]{"loco_name", "loco_addr", "loco_light"},
+                new int[]{R.id.con_loco_name, R.id.con_loco_addr_hidden, R.id.con_loco_light});
         ListView consistLV = (ListView) findViewById(R.id.consist_lights_list);
         consistLV.setAdapter(consistListAdapter);
         consistLV.setOnItemClickListener(new OnItemClickListener() {
@@ -189,9 +203,46 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                 TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
                 String address = addrv.getText().toString();
 
+                int light;
+                if ((consist.isLight(address)==LIGHT_UNKNOWN)|(consist.isLight(address)==LIGHT_OFF)) {
+                    light = LIGHT_ON;
+                } else {
+                    light = LIGHT_OFF;
+                }
+
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + address, 0, 1);
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + address, 0, 0);
+                try {
+                    consist.setLight(address, light);
+                } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
+                    Log.d("Engine_Driver", "ConsistLightsEdit selected engine " + address + " that is not in consist");
+                }
 
                 refreshConsistLists();
+            }
+        });
+
+        consistLV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            //When an entry is long-clicked, toggle the lights state for that loco but don't send the command to the loco
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id) {
+                ViewGroup vg = (ViewGroup) v;
+                TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
+                String address = addrv.getText().toString();
+
+                int light;
+                if ((consist.isLight(address)==LIGHT_UNKNOWN)|(consist.isLight(address)==LIGHT_OFF)) {
+                    light = LIGHT_ON;
+                } else {
+                    light = LIGHT_OFF;
+                }
+               try {
+                    consist.setLight(address, light);
+                } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
+                    Log.d("Engine_Driver", "ConsistLightsEdit selected engine " + address + " that is not in consist");
+                }
+                refreshConsistLists();
+                return true;
             }
         });
 

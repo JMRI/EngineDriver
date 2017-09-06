@@ -31,22 +31,32 @@ import java.util.Set;
 // reverse is always false for the lead loco
 //
 //
-public final class Consist {
+    public final class Consist {
+    public static final int LIGHT_OFF = 0;
+    public static final int LIGHT_ON = 1;
+    public static final int LIGHT_UNKNOWN = 2;
+
     public class ConLoco extends Loco {
         private boolean backward;                        //end of loco that faces the top of the consist
+        private int lightOn;                        //end of loco that faces the top of the consist
 
         private ConLoco(String address) {
             super(address);
             backward = false;
+            lightOn = LIGHT_UNKNOWN;
         }
 
         private ConLoco(Loco l) {
             super(l);
             backward = false;
+            lightOn = LIGHT_UNKNOWN;
         }
 
         public boolean isBackward() {
             return backward;
+        }
+        public int isLightOn() {
+            return lightOn;
         }
 
     }
@@ -147,6 +157,20 @@ public final class Consist {
         ConLoco l = con.get(address);
         if (l != null)
             l.backward = state;
+    }
+
+    public int isLight(String address) {
+        ConLoco l = con.get(address);
+        if (l == null)
+            return LIGHT_UNKNOWN;
+        return l.lightOn;
+    }
+
+    public void setLight(String address, int state) {
+
+        ConLoco l = con.get(address);
+        if (l != null)
+            l.lightOn = state;
     }
 
     //
