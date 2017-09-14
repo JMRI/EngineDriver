@@ -96,16 +96,17 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                 hm.put("lead_label", consist.getLeadAddr().equals(l.getAddress()) ? "LEAD" : "");
                 hm.put("loco_addr", l.getAddress());
                 hm.put("loco_name", l.toString());
-//                if (consist.getLeadAddr().equals(l.getAddress())) {  // if it is the Lead address find out what hte function is currrently set to
-//                } else {   // otherwise look at what was previously recorded
-                    if (l.isLightOn() == LIGHT_OFF) {
-                        hm.put("loco_light", "Off");
-                    } else if (l.isLightOn() == LIGHT_ON) {
-                        hm.put("loco_light", "On");
-                    } else {
-                        hm.put("loco_light", "Unknown");
-                    }
-//                }
+                if (l.isLightOn() == LIGHT_OFF) {
+                    hm.put("loco_light", "Off");
+                    // because we can't be sure if the function has been set elsewhere, force it to what we think it should be
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, whichThrottle + l.getAddress(), 0, 0);
+                } else if (l.isLightOn() == LIGHT_ON) {
+                    hm.put("loco_light", "On");
+                    // because we can't be sure if the function has been set elsewhere, force it to what we think it should be
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, whichThrottle + l.getAddress(), 0, 1);
+                } else {
+                    hm.put("loco_light", "Unknown");
+                }
                 consistList.add(hm);
             }
         }
@@ -210,8 +211,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                     light = LIGHT_OFF;
                 }
 
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + address, 0, 1);
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + address, 0, 0);
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, whichThrottle + address, 0, light);
                 try {
                     consist.setLight(address, light);
                 } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list

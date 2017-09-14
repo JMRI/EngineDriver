@@ -567,6 +567,14 @@ public class threaded_application extends Application {
                         withrottle_send(String.format(whichThrottle + "F%d%d<;>" + addr, msg.arg2, msg.arg1));
                         break;
                     }
+                    //Set or unset a function. whichThrottle+addr is in the msg, arg1 is the function number, arg2 is set or unset.
+                    case message_type.FORCE_FUNCTION: {
+                        String addr = msg.obj.toString();
+                        final char whichThrottle = addr.charAt(0);
+                        addr = addr.substring(1);
+                        withrottle_send(String.format(whichThrottle + "f%d%d<;>" + addr, msg.arg2, msg.arg1));
+                        break;
+                    }
                     //send command to change turnout.  msg = (T)hrow, (C)lose or (2)(toggle) + systemName
                     case message_type.TURNOUT: {
                         final String cmd = msg.obj.toString();
