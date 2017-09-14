@@ -146,6 +146,8 @@
     <string name="prefGamePadFeedbackVolumeTitle">Gamepad Button Click Volume %</string>
     <string name="prefGamePadFeedbackVolumeSummary">Set the volume percent for gamepad button clicks.</string>
     <string name="prefGamePadFeedbackVolumeDefaultValue">100</string>
+    <string name="prefGamePadMultipleDevicesTitle">Support Multiple Devices</string>
+    <string name="prefGamePadMultipleDevicesSummary">Control seperate throttles with each device. Requires Android Jelly Bean or later.</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default function labels instead of labels from roster entries.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. Height?</string>

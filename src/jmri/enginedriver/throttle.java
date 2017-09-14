@@ -259,6 +259,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private boolean mGamepadAutoIncrement = false;
     private boolean mGamepadAutoDecrement = false;
 
+    private int[] gamePadIds = {0,0,0};
+    private boolean prefGamePadMultipleDevices = false;
+
     // preference to chnage the consist's on long clicks
     boolean prefConsistLightsLongClick;
 
@@ -1317,6 +1320,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private void setGamepadKeys() {
         whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
         prefThrottleGameStartButton = prefs.getString("prefGamePadStartButton", getApplicationContext().getResources().getString(R.string.prefGamePadStartButtonDefaultValue));
+        prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
 
         if (!whichGamePadMode.equals("None")) {
             // make sure the Softkeyboard is hidden
@@ -1392,8 +1396,34 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             int action = event.getAction();
             int keyCode = event.getKeyCode();
             int repeatCnt = event.getRepeatCount();
+            int keySource = 0;
+            int whichGamePad = 999;
+            if (prefGamePadMultipleDevices) {  // deal with multiple devices if the preference is set
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                    keySource = event.getSource();
+                    if ((gamePadIds[0] == 0) || (gamePadIds[0] == keySource)) {
+                        gamePadIds[0] = keySource;
+                        whichGamePad = 0;
+                    } else {
+                        if ((gamePadIds[1] == 0) || (gamePadIds[1] == keySource)) {
+                            gamePadIds[1] = keySource;
+                            whichGamePad = 1;
+                        } else {
+                            if ((gamePadIds[2] == 0) || (gamePadIds[2] == keySource)) {
+                                gamePadIds[2] = keySource;
+                                whichGamePad = 2;
+                            }
+                        }
+                    }
+                }
+            }
 
             char whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
+
+            if (whichGamePad != 999) {
+                whichThrottle = allThrottleLetters[whichGamePad];
+            }
+
             boolean isActive = getConsist(whichThrottle).isActive();
 
             if (keyCode != 0) {
