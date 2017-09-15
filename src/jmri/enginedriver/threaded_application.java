@@ -572,7 +572,8 @@ public class threaded_application extends Application {
                         String addr = msg.obj.toString();
                         final char whichThrottle = addr.charAt(0);
                         addr = addr.substring(1);
-                        withrottle_send(String.format(whichThrottle + "f%d%d<;>" + addr, msg.arg2, msg.arg1));
+                        //withrottle_send(String.format(whichThrottle + "f%d%d<;>" + addr, msg.arg2, msg.arg1));
+                        forceFunction(addr,whichThrottle,msg.arg2, msg.arg1);
                         break;
                     }
                     //send command to change turnout.  msg = (T)hrow, (C)lose or (2)(toggle) + systemName
@@ -722,6 +723,12 @@ public class threaded_application extends Application {
                 acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL); //ask for next loco, with 0 or more delays
                 delays++;
             }
+        }
+
+        private void forceFunction(String addr, char whichThrottle, int fN, int OnOff) {
+            if ( (addr != null) && (OnOff>=0) && (OnOff<=1) && (fN>=0) && (fN<=28) ) {
+                withrottle_send(String.format(whichThrottle + "f%d%d<;>" + addr, fN, OnOff));
+            } // otherwise just ignore it
         }
 
         //display error msg using Toast()
