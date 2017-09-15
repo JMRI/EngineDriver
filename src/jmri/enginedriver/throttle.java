@@ -60,8 +60,13 @@ import android.widget.Toast;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
+import android.bluetooth.BluetoothDevice;
 
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
@@ -261,6 +266,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     private int[] gamePadIds = {0,0,0};
     private boolean prefGamePadMultipleDevices = false;
+    private int BTdeviceCount =0;
 
     // preference to chnage the consist's on long clicks
     boolean prefConsistLightsLongClick;
@@ -1320,7 +1326,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private void setGamepadKeys() {
         whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
         prefThrottleGameStartButton = prefs.getString("prefGamePadStartButton", getApplicationContext().getResources().getString(R.string.prefGamePadStartButtonDefaultValue));
+
         prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
+        BTdeviceCount = BTcountDevices(); // Count the number of Bluetooth Devices
 
         if (!whichGamePadMode.equals("None")) {
             // make sure the Softkeyboard is hidden
@@ -1388,6 +1396,27 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
+    // see if we have any Bluetooth Devices
+    public int BTcountDevices() {
+        int found=0;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+            BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
+
+            if (bluetoothAdapter != null) {// Device doesn't Support Bluetooth
+                if (bluetoothAdapter.isEnabled()) {
+                    Set<BluetoothDevice> bondedDevices = bluetoothAdapter.getBondedDevices();
+                    if (!bondedDevices.isEmpty()) {
+                        for (BluetoothDevice iterator : bondedDevices) {
+                            found++;
+                        }
+                    }
+                }
+            }
+        }
+        return found;
+    }
+
     // listener for physical keyboard events
     // used to support the gamepad in 'NewGame' mode only   DPAD and key events
     @Override
@@ -1398,20 +1427,23 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             int repeatCnt = event.getRepeatCount();
             int keySource = 0;
             int whichGamePad = 999;
-            if (prefGamePadMultipleDevices) {  // deal with multiple devices if the preference is set
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                    keySource = event.getSource();
-                    if ((gamePadIds[0] == 0) || (gamePadIds[0] == keySource)) {
-                        gamePadIds[0] = keySource;
-                        whichGamePad = 0;
-                    } else {
-                        if ((gamePadIds[1] == 0) || (gamePadIds[1] == keySource)) {
-                            gamePadIds[1] = keySource;
-                            whichGamePad = 1;
+
+            if (BTdeviceCount>1) {
+                if (prefGamePadMultipleDevices) {  // deal with multiple devices if the preference is set
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                        keySource = event.getSource();
+                        if ((gamePadIds[0] == 0) || (gamePadIds[0] == keySource)) {
+                            gamePadIds[0] = keySource;
+                            whichGamePad = 0;
                         } else {
-                            if ((gamePadIds[2] == 0) || (gamePadIds[2] == keySource)) {
-                                gamePadIds[2] = keySource;
-                                whichGamePad = 2;
+                            if ((gamePadIds[1] == 0) || (gamePadIds[1] == keySource)) {
+                                gamePadIds[1] = keySource;
+                                whichGamePad = 1;
+                            } else {
+                                if ((gamePadIds[2] == 0) || (gamePadIds[2] == keySource)) {
+                                    gamePadIds[2] = keySource;
+                                    whichGamePad = 2;
+                                }
                             }
                         }
                     }
@@ -2261,6 +2293,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         //screenBrightnessBright = Integer.parseInt(prefs.getString("prefScreenBrightnessBright", getResources().getString(R.string.prefScreenBrightnessBrightDefaultValue))) * 255 /100;
 
         prefConsistLightsLongClick = prefs.getBoolean("ConsistLightsLongClickPreference", getResources().getBoolean(R.bool.prefConsistLightsLongClickDefaultValue));
+
+        prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
+        BTdeviceCount = BTcountDevices(); // Count the number of Bluetooth Devices
 
         applySpeedRelatedOptions();  // update all throttles
 
