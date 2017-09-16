@@ -99,11 +99,13 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                 if (l.isLightOn() == LIGHT_OFF) {
                     hm.put("loco_light", "Off");
                     // because we can't be sure if the function has been set elsewhere, force it to what we think it should be
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, whichThrottle + l.getAddress(), 0, 0);
+                    //mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, whichThrottle + l.getAddress(), 0, 0);
+                    mainapp.forceFunction(whichThrottle+l.getAddress(), 0, false);
                 } else if (l.isLightOn() == LIGHT_ON) {
                     hm.put("loco_light", "On");
                     // because we can't be sure if the function has been set elsewhere, force it to what we think it should be
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, whichThrottle + l.getAddress(), 0, 1);
+                    //mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, whichThrottle + l.getAddress(), 0, 1);
+                    mainapp.forceFunction(whichThrottle+l.getAddress(), 0, true);
                 } else {
                     hm.put("loco_light", "Unknown");
                 }
@@ -207,11 +209,12 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                 int light;
                 if ((consist.isLight(address)==LIGHT_UNKNOWN)|(consist.isLight(address)==LIGHT_OFF)) {
                     light = LIGHT_ON;
+                    mainapp.forceFunction(whichThrottle+address, 0, true);
                 } else {
                     light = LIGHT_OFF;
+                    mainapp.forceFunction(whichThrottle+address, 0, false);
                 }
 
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, whichThrottle + address, 0, light);
                 try {
                     consist.setLight(address, light);
                 } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list

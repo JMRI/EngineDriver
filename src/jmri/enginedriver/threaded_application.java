@@ -137,6 +137,8 @@ public class threaded_application extends Application {
     public int routes_list_position = 0;
     static final long WITHROTTLE_SPACING_INTERVAL = 100;   //minimum desired interval between messages sent to WiThrottle server, in milliseconds
 
+    public static final int MAX_FUNCTION_NUMBER = 28;        // maximum number of the function buttons supported.
+
     String client_address; //address string of the client address
     Inet4Address client_address_inet4; //inet4 value of the client address
     String client_ssid;    //string of the connected SSID
@@ -572,8 +574,7 @@ public class threaded_application extends Application {
                         String addr = msg.obj.toString();
                         final char whichThrottle = addr.charAt(0);
                         addr = addr.substring(1);
-                        //withrottle_send(String.format(whichThrottle + "f%d%d<;>" + addr, msg.arg2, msg.arg1));
-                        forceFunction(addr,whichThrottle,msg.arg2, msg.arg1);
+                        withrottle_send(String.format(whichThrottle + "f%d%d<;>" + addr, msg.arg2, msg.arg1));
                         break;
                     }
                     //send command to change turnout.  msg = (T)hrow, (C)lose or (2)(toggle) + systemName
@@ -725,13 +726,7 @@ public class threaded_application extends Application {
             }
         }
 
-        private void forceFunction(String addr, char whichThrottle, int fN, int OnOff) {
-            if ( (addr != null) && (OnOff>=0) && (OnOff<=1) && (fN>=0) && (fN<=28) ) {
-                withrottle_send(String.format(whichThrottle + "f%d%d<;>" + addr, fN, OnOff));
-            } // otherwise just ignore it
-        }
-
-        //display error msg using Toast()
+         //display error msg using Toast()
         private void show_toast_message(final String msg_txt, int length) {
             Log.d("Engine_Driver", "TA toast message: " + msg_txt);
             //need to do Toast() on the main thread so create a handler
@@ -2233,6 +2228,14 @@ public class threaded_application extends Application {
                 }
             }
         }
+    }
+
+    public void forceFunction(String throttleAndAddr, int functionNumber, boolean state) {
+        int onOff = 0;
+        if (state) onOff = 1;
+        if ( (functionNumber>=0) && (functionNumber<=MAX_FUNCTION_NUMBER) ) {
+            sendMsg(comm_msg_handler, message_type.FORCE_FUNCTION, throttleAndAddr, functionNumber, onOff);
+        } // otherwise just ignore the request
     }
 
     /**
