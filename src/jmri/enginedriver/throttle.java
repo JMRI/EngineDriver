@@ -267,6 +267,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private int[] gamePadIds = {0,0,0};
     private boolean prefGamePadMultipleDevices = false;
     private int BTdeviceCount =0;
+    private boolean usingMultiplePads = false;
 
     // preference to chnage the consist's on long clicks
     boolean prefConsistLightsLongClick;
@@ -1398,6 +1399,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     // see if we have any Bluetooth Devices
     public int BTcountDevices() {
+        usingMultiplePads = false; // assume that we have none connected regardless of the count of paried devices
         int found=0;
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
             BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
@@ -1417,6 +1419,41 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         return found;
     }
 
+    // work out a) if we need to look for multiple gamepads b) workout which gamepad we received the key event from
+    private int whichGamePad(KeyEvent event) {
+        int whichGamePad = -1;
+        if (prefGamePadMultipleDevices) {  // deal with multiple devices if the preference is set
+            if (BTdeviceCount>1) {
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+
+                    int gamePadSourceId = event.getSource();
+
+                    if ((gamePadIds[0] == 0) || (gamePadIds[0] == gamePadSourceId)) {
+                        // key event from the first gamepad.  May not know at this point IF there are more gamepads
+                        gamePadIds[0] = gamePadSourceId;
+                        whichGamePad = 0;
+                    } else {
+                        if ((gamePadIds[1] == 0) || (gamePadIds[1] == gamePadSourceId)) {
+                            // just got a key event from a second gamepad.  We now know there at multiple gamepads
+                            gamePadIds[1] = gamePadSourceId;
+                            whichGamePad = 1;
+                            usingMultiplePads = true;
+                        } else {
+                            if ((gamePadIds[2] == 0) || (gamePadIds[2] == gamePadSourceId)) {
+                                // just got a key event from a third gamepad.
+                                gamePadIds[2] = gamePadSourceId;
+                                whichGamePad = 2;
+                                usingMultiplePads = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return whichGamePad;
+    }
+
     // listener for physical keyboard events
     // used to support the gamepad in 'NewGame' mode only   DPAD and key events
     @Override
@@ -1425,35 +1462,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             int action = event.getAction();
             int keyCode = event.getKeyCode();
             int repeatCnt = event.getRepeatCount();
-            int keySource = 0;
-            int whichGamePad = 999;
+            char whichThrottle = ' ';
+            int whichGamePad = whichGamePad(event);
 
-            if (BTdeviceCount>1) {
-                if (prefGamePadMultipleDevices) {  // deal with multiple devices if the preference is set
-                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                        keySource = event.getSource();
-                        if ((gamePadIds[0] == 0) || (gamePadIds[0] == keySource)) {
-                            gamePadIds[0] = keySource;
-                            whichGamePad = 0;
-                        } else {
-                            if ((gamePadIds[1] == 0) || (gamePadIds[1] == keySource)) {
-                                gamePadIds[1] = keySource;
-                                whichGamePad = 1;
-                            } else {
-                                if ((gamePadIds[2] == 0) || (gamePadIds[2] == keySource)) {
-                                    gamePadIds[2] = keySource;
-                                    whichGamePad = 2;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            char whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
-
-            if (whichGamePad != 999) {
+            if ( usingMultiplePads) { // we have multiple gamepads AND the preference is set to make use of them
                 whichThrottle = allThrottleLetters[whichGamePad];
+            } else {
+                whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
             }
 
             boolean isActive = getConsist(whichThrottle).isActive();
