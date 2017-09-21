@@ -1398,22 +1398,22 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
 
-                int gamePadSourceId = event.getSource();
+                int gamePadDeviceId = event.getDeviceId();
 
-                if ((gamePadIds[0] == 0) || (gamePadIds[0] == gamePadSourceId)) {
+                if ((gamePadIds[0] == 0) || (gamePadIds[0] == gamePadDeviceId)) {
                     // key event from the first gamepad.  May not know at this point IF there are more gamepads
-                    gamePadIds[0] = gamePadSourceId;
+                    gamePadIds[0] = gamePadDeviceId;
                     whichGamePad = 0;
                 } else {
-                    if ((gamePadIds[1] == 0) || (gamePadIds[1] == gamePadSourceId)) {
+                    if ((gamePadIds[1] == 0) || (gamePadIds[1] == gamePadDeviceId)) {
                         // just got a key event from a second gamepad.  We now know there at multiple gamepads
-                        gamePadIds[1] = gamePadSourceId;
+                        gamePadIds[1] = gamePadDeviceId;
                         whichGamePad = 1;
                         usingMultiplePads = true;
                     } else {
-                        if ((gamePadIds[2] == 0) || (gamePadIds[2] == gamePadSourceId)) {
+                        if ((gamePadIds[2] == 0) || (gamePadIds[2] == gamePadDeviceId)) {
                             // just got a key event from a third gamepad.
-                            gamePadIds[2] = gamePadSourceId;
+                            gamePadIds[2] = gamePadDeviceId;
                             whichGamePad = 2;
                             usingMultiplePads = true;
                         }
