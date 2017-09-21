@@ -137,6 +137,8 @@ public class threaded_application extends Application {
     public int routes_list_position = 0;
     static final long WITHROTTLE_SPACING_INTERVAL = 100;   //minimum desired interval between messages sent to WiThrottle server, in milliseconds
 
+    public static final int MAX_FUNCTION_NUMBER = 28;        // maximum number of the function buttons supported.
+
     String client_address; //address string of the client address
     Inet4Address client_address_inet4; //inet4 value of the client address
     String client_ssid;    //string of the connected SSID
@@ -150,6 +152,7 @@ public class threaded_application extends Application {
     public volatile Handler turnouts_msg_handler;
     public volatile Handler routes_msg_handler;
     public volatile Handler consist_edit_msg_handler;
+    public volatile Handler consist_lights_edit_msg_handler;
     public volatile Handler power_control_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
 
@@ -566,6 +569,14 @@ public class threaded_application extends Application {
                         withrottle_send(String.format(whichThrottle + "F%d%d<;>" + addr, msg.arg2, msg.arg1));
                         break;
                     }
+                    //Set or unset a function. whichThrottle+addr is in the msg, arg1 is the function number, arg2 is set or unset.
+                    case message_type.FORCE_FUNCTION: {
+                        String addr = msg.obj.toString();
+                        final char whichThrottle = addr.charAt(0);
+                        addr = addr.substring(1);
+                        withrottle_send(String.format(whichThrottle + "f%d%d<;>" + addr, msg.arg2, msg.arg1));
+                        break;
+                    }
                     //send command to change turnout.  msg = (T)hrow, (C)lose or (2)(toggle) + systemName
                     case message_type.TURNOUT: {
                         final String cmd = msg.obj.toString();
@@ -715,7 +726,7 @@ public class threaded_application extends Application {
             }
         }
 
-        //display error msg using Toast()
+         //display error msg using Toast()
         private void show_toast_message(final String msg_txt, int length) {
             Log.d("Engine_Driver", "TA toast message: " + msg_txt);
             //need to do Toast() on the main thread so create a handler
@@ -2219,6 +2230,14 @@ public class threaded_application extends Application {
         }
     }
 
+    public void forceFunction(String throttleAndAddr, int functionNumber, boolean state) {
+        int onOff = 0;
+        if (state) onOff = 1;
+        if ( (functionNumber>=0) && (functionNumber<=MAX_FUNCTION_NUMBER) ) {
+            sendMsg(comm_msg_handler, message_type.FORCE_FUNCTION, throttleAndAddr, functionNumber, onOff);
+        } // otherwise just ignore the request
+    }
+
     /**
      * Is Web View allowed for this connection?
      * this hides/shows menu options and activities
@@ -2323,6 +2342,10 @@ public class threaded_application extends Application {
         }
         try {
             sendMsg(consist_edit_msg_handler, msgType, msgBody);
+        } catch (Exception ignored) {
+        }
+        try {
+            sendMsg(consist_lights_edit_msg_handler, msgType, msgBody);
         } catch (Exception ignored) {
         }
         try {

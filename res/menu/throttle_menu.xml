@@ -29,4 +29,7 @@
 	<item android:id="@+id/EditConsistT_menu" android:title="Edit Consist Throttle 1" android:visible="false"></item>
  	<item android:id="@+id/EditConsistS_menu" android:title="Edit Consist Throttle 2" android:visible="false"></item>
 	<item android:id="@+id/EditConsistG_menu" android:title="Edit Consist Throttle 3" android:visible="false"></item>
-</menu> 
+    <item android:id="@+id/EditLightsConsistT_menu" android:title="Edit Consist Lights Throttle 1" android:visible="false"></item>
+    <item android:id="@+id/EditLightsConsistS_menu" android:title="Edit Consist Lights Throttle 2" android:visible="false"></item>
+    <item android:id="@+id/EditLightsConsistG_menu" android:title="Edit Consist Lights Throttle 3" android:visible="false"></item>
+</menu>

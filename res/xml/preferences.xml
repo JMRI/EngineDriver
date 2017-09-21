@@ -186,6 +186,14 @@
                 android:numeric="integer"
                 android:summary="@string/prefGamePadFeedbackVolumeSummary"
                 android:title="@string/prefGamePadFeedbackVolumeTitle" />
+            <CheckBoxPreference
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:defaultValue="@bool/prefGamePadMultipleDevicesDefaultValue"
+                android:key="prefGamePadMultipleDevices"
+                android:summary="@string/prefGamePadMultipleDevicesSummary"
+                android:title="@string/prefGamePadMultipleDevicesTitle">
+            </CheckBoxPreference>
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefThrottleTitle" >
@@ -308,6 +316,12 @@
             android:summary="@string/prefMaximumRecentLocosSummary"
             android:title="@string/prefMaximumRecentLocosTitle" >
         </EditTextPreference>
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefConsistLightsLongClickDefaultValue"
+            android:key="ConsistLightsLongClickPreference"
+            android:summary="@string/prefConsistLightsLongClickSummary"
+            android:title="@string/prefConsistLightsLongClickTitle" >
+        </CheckBoxPreference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefConnectTitle" >
         <EditTextPreference

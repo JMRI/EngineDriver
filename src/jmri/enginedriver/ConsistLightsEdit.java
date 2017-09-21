@@ -37,7 +37,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -48,17 +47,23 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import jmri.enginedriver.Consist;
 import jmri.enginedriver.Consist.ConLoco;
+import jmri.enginedriver.R;
+import jmri.enginedriver.connection_activity;
+import jmri.enginedriver.message_type;
+import jmri.enginedriver.reconnect_status;
+import jmri.enginedriver.threaded_application;
 
-public class ConsistEdit extends Activity implements OnGestureListener {
+public class ConsistLightsEdit extends Activity implements OnGestureListener {
     public static final int LIGHT_OFF = 0;
     public static final int LIGHT_ON = 1;
     public static final int LIGHT_UNKNOWN = 2;
 
-    static public final int RESULT_CON_EDIT = RESULT_FIRST_USER;
+    static public final int RESULT_CON_LIGHTS_EDIT = RESULT_FIRST_USER;
 
     private threaded_application mainapp;  // hold pointer to mainapp
-    private Menu CEMenu;
+    private Menu CLEMenu;
     private ArrayList<HashMap<String, String>> consistList;
     private SimpleAdapter consistListAdapter;
     private ArrayList<ConLoco> consistObjList;
@@ -79,12 +84,9 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         for (ConLoco l : cgl) {
             if (l.isConfirmed()) {
                 consistObjList.add(l);
-                if (l.getAddress().equals(consist.getLeadAddr()))
-                    consistSpinner.setSelection(pos);
                 pos++;
             }
         }
-        consistObjListAdapter.notifyDataSetChanged();
 
         consistList.clear();
         for (ConLoco l : cgl) {
@@ -94,27 +96,31 @@ public class ConsistEdit extends Activity implements OnGestureListener {
                 hm.put("lead_label", consist.getLeadAddr().equals(l.getAddress()) ? "LEAD" : "");
                 hm.put("loco_addr", l.getAddress());
                 hm.put("loco_name", l.toString());
-                hm.put("loco_facing", l.isBackward() ? "Rear" : "Front");
-
-                // TODO: need to get the current state of the lead loco from the function buttion 0 state
-                if (l.isLightOn()==LIGHT_OFF) {
+                if (l.isLightOn() == LIGHT_OFF) {
                     hm.put("loco_light", "Off");
-                } else if (l.isLightOn()==LIGHT_ON) {
+                    // because we can't be sure if the function has been set elsewhere, force it to what we think it should be
+                    //mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, whichThrottle + l.getAddress(), 0, 0);
+                    mainapp.forceFunction(whichThrottle+l.getAddress(), 0, false);
+                } else if (l.isLightOn() == LIGHT_ON) {
                     hm.put("loco_light", "On");
+                    // because we can't be sure if the function has been set elsewhere, force it to what we think it should be
+                    //mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, whichThrottle + l.getAddress(), 0, 1);
+                    mainapp.forceFunction(whichThrottle+l.getAddress(), 0, true);
                 } else {
                     hm.put("loco_light", "Unknown");
                 }
                 consistList.add(hm);
             }
         }
+
         consistListAdapter.notifyDataSetChanged();
-        result = RESULT_CON_EDIT;
+        result = RESULT_CON_LIGHTS_EDIT;
     }
 
 
     //Handle messages from the communication thread back to this thread (responses from withrottle)
     @SuppressLint("HandlerLeak")
-    class ConsistEditHandler extends Handler {
+    class ConsistLightsEditHandler extends Handler {
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -166,9 +172,9 @@ public class ConsistEdit extends Activity implements OnGestureListener {
             return;
         }
 
-        setContentView(R.layout.consist);
+        setContentView(R.layout.consist_lights);
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.consist_edit_msg_handler = new ConsistEditHandler();
+        mainapp.consist_lights_edit_msg_handler = new ConsistLightsEditHandler();
         myGesture = new GestureDetector(this);
 
         Bundle extras = getIntent().getExtras();
@@ -187,45 +193,63 @@ public class ConsistEdit extends Activity implements OnGestureListener {
 
         //Set up a list adapter to allow adding the list of recent connections to the UI.
         consistList = new ArrayList<>();
-        consistListAdapter = new SimpleAdapter(this, consistList, R.layout.consist_item,
-                new String[]{"loco_name", "loco_addr", "lead_label", "loco_facing"},
-                new int[]{R.id.con_loco_name, R.id.con_loco_addr_hidden, R.id.con_lead_label, R.id.con_loco_facing});
-        ListView consistLV = (ListView) findViewById(R.id.consist_list);
+        consistListAdapter = new SimpleAdapter(this, consistList, R.layout.consist_lights_item,
+                new String[]{"loco_name", "loco_addr", "loco_light"},
+                new int[]{R.id.con_loco_name, R.id.con_loco_addr_hidden, R.id.con_loco_light});
+        ListView consistLV = (ListView) findViewById(R.id.consist_lights_list);
         consistLV.setAdapter(consistListAdapter);
         consistLV.setOnItemClickListener(new OnItemClickListener() {
-            //When an entry is clicked, toggle the facing state
+            //When an entry is clicked, toggle the lights state for that loco
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
                 TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
                 String address = addrv.getText().toString();
 
-                try {
-                    consist.setBackward(address, !consist.isBackward(address));
-                } catch (Exception e) {    // isBackward returns null if address is not in consist - should not happen since address was selected from consist list
-                    Log.d("Engine_Driver", "ConsistEdit selected engine " + address + " that is not in consist");
+                int light;
+                if ((consist.isLight(address)==LIGHT_UNKNOWN)|(consist.isLight(address)==LIGHT_OFF)) {
+                    light = LIGHT_ON;
+                    mainapp.forceFunction(whichThrottle+address, 0, true);
+                } else {
+                    light = LIGHT_OFF;
+                    mainapp.forceFunction(whichThrottle+address, 0, false);
                 }
+
+                try {
+                    consist.setLight(address, light);
+                } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
+                    Log.d("Engine_Driver", "ConsistLightsEdit selected engine " + address + " that is not in consist");
+                }
+
                 refreshConsistLists();
             }
         });
-        consistLV.setOnItemLongClickListener(new OnItemLongClickListener() {
-            //When an entry is long-clicked, remove it from the consist
+
+        consistLV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            //When an entry is long-clicked, toggle the lights state for that loco but don't send the command to the loco
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id) {
                 ViewGroup vg = (ViewGroup) v;
                 TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
-                String addr = addrv.getText().toString();
+                String address = addrv.getText().toString();
 
-                if (!consist.getLeadAddr().equals(addr)) {
-                    consist.remove(addr);
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, addr, (int) whichThrottle);   //release the loco
-                    refreshConsistLists();
+                int light;
+                if ((consist.isLight(address)==LIGHT_UNKNOWN)|(consist.isLight(address)==LIGHT_OFF)) {
+                    light = LIGHT_ON;
+                } else {
+                    light = LIGHT_OFF;
                 }
+               try {
+                    consist.setLight(address, light);
+                } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
+                    Log.d("Engine_Driver", "ConsistLightsEdit selected engine " + address + " that is not in consist");
+                }
+                refreshConsistLists();
                 return true;
             }
         });
 
-        OnTouchListener gestureListener = new ListView.OnTouchListener() {
+        OnTouchListener gestureListener = new OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 return myGesture.onTouchEvent(event);
             }
@@ -234,24 +258,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         consistLV.setOnTouchListener(gestureListener);
 
         consistObjList = new ArrayList<>();
-        consistSpinner = (Spinner) findViewById(R.id.consist_lead);
-        consistObjListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, consistObjList);
-        consistObjListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        consistSpinner.setAdapter(consistObjListAdapter);
 
-        consistSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ConLoco l = (ConLoco) parent.getSelectedItem();
-                String lAddr = l.getAddress();
-                if (!(consist.getLeadAddr().equals(lAddr))) {
-                    consist.setLeadAddr(lAddr);
-                    refreshConsistLists();
-                }
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
 
         //update consist list
         refreshConsistLists();
@@ -267,8 +274,8 @@ public class ConsistEdit extends Activity implements OnGestureListener {
             return;
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-        if (CEMenu != null) {
-            mainapp.displayEStop(CEMenu);
+        if (CLEMenu != null) {
+            mainapp.displayEStop(CLEMenu);
         }
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -287,17 +294,17 @@ public class ConsistEdit extends Activity implements OnGestureListener {
      */
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "ConsistedEdit.onDestroy()");
+        Log.d("Engine_Driver", "ConsistLightsEdit.onDestroy()");
 
-        mainapp.consist_edit_msg_handler = null;
+        mainapp.consist_lights_edit_msg_handler = null;
         super.onDestroy();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.consist_edit_menu, menu);
-        CEMenu = menu;
+        inflater.inflate(R.menu.consist_lights_edit_menu, menu);
+        CLEMenu = menu;
         mainapp.displayEStop(menu);
         return true;
     }
