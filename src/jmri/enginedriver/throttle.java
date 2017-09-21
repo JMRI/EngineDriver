@@ -64,10 +64,6 @@ import java.util.Set;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothManager;
-import android.bluetooth.BluetoothDevice;
-
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
 import static android.view.KeyEvent.KEYCODE_A;
