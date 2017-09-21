@@ -1436,7 +1436,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             char whichThrottle = ' ';
             int whichGamePad = whichGamePad(event);
 
-            if ( usingMultiplePads) { // we have multiple gamepads AND the preference is set to make use of them
+            if ( usingMultiplePads && whichGamePad >= 0) { // we have multiple gamepads AND the preference is set to make use of them
                 whichThrottle = allThrottleLetters[whichGamePad];
             } else {
                 whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
