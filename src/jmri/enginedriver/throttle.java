@@ -116,7 +116,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     private static String VOLUME_INDICATOR = "v";
     private static String[] GAMEPAD_INDICATOR = {"1", "2", "3"};
--
+
     private SeekBar sbT; // seekbars
     private SeekBar sbS;
     private SeekBar sbG;
@@ -150,9 +150,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private TextView tvVolT; // volume indicators
     private TextView tvVolS;
     private TextView tvVolG;
-    private View vVolT; // volume indicators
-    private View vVolS;
-    private View vVolG;
     private LinearLayout llT; // throttles
     private LinearLayout llS;
     private LinearLayout llG;
@@ -270,7 +267,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private boolean prefGamePadMultipleDevices = false;
     private boolean usingMultiplePads = false;
     private int gamepadCount = 0;
-
     // preference to chnage the consist's on long clicks
     boolean prefConsistLightsLongClick;
 
@@ -1326,14 +1322,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private void setGamepadKeys() {
         whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
         prefThrottleGameStartButton = prefs.getString("prefGamePadStartButton", getApplicationContext().getResources().getString(R.string.prefGamePadStartButtonDefaultValue));
-
         prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
 
         if (!whichGamePadMode.equals("None")) {
             // make sure the Softkeyboard is hidden
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                     WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-
         }
 
         int[] bGamePadKeys;
