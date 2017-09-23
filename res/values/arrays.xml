@@ -140,7 +140,7 @@
         <item >Dim Screen</item>
     </string-array>
     <string-array name="prefGamePadStartButtonOptions">
-        <item >EStop</item>
+        <item >Stop All Throttles</item>
         <item >Next Throttle</item>
     </string-array>
 

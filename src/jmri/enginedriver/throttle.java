@@ -150,6 +150,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private TextView tvVolT; // volume indicators
     private TextView tvVolS;
     private TextView tvVolG;
+
+    private TextView tvGamePadT; // volume indicators
+    private TextView tvGamePadS;
+    private TextView tvGamePadG;
+
     private LinearLayout llT; // throttles
     private LinearLayout llS;
     private LinearLayout llG;
@@ -253,6 +258,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     // default to the iOS iCade mappings
     private String whichGamePadMode = "None";
     private String prefThrottleGameStartButton;
+    private static String PREF_THROTTLE_GAMEPAD_START_BUTTON_ALL_STOP = "Stop All Throttles";
     //                              none     NextThr  Speed+    Speed-      Fwd         Rev         EStop       F2      F1          F0          Stop
     private int[] gamePadKeys =     {0,        0,   KEYCODE_W, KEYCODE_X,   KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
     private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
@@ -1260,16 +1266,23 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     private void setVolumeIndicator() {
         // hide or display volume control indicator based on variable
-        tvVolT.setText(gamePadThrottleAssignment[0]);
-        tvVolS.setText(gamePadThrottleAssignment[1]);
-        tvVolG.setText(gamePadThrottleAssignment[2]);
+        tvVolT.setText("");
+        tvVolS.setText("");
+        tvVolG.setText("");
         if (whichVolume == 'T') {
-            tvVolT.setText(VOLUME_INDICATOR+gamePadThrottleAssignment[0]);
+            tvVolT.setText(VOLUME_INDICATOR);
         } else if (whichVolume == 'S') {
-            tvVolS.setText(VOLUME_INDICATOR+gamePadThrottleAssignment[1]);
+            tvVolS.setText(VOLUME_INDICATOR);
         } else {
-            tvVolG.setText(VOLUME_INDICATOR+gamePadThrottleAssignment[2]);
+            tvVolG.setText(VOLUME_INDICATOR);
         }
+    }
+
+    private void setGamepadIndicator() {
+        // hide or display gamepad number indicator based on variable
+        tvGamePadT.setText(gamePadThrottleAssignment[0]);
+        tvGamePadS.setText(gamePadThrottleAssignment[1]);
+        tvGamePadG.setText(gamePadThrottleAssignment[2]);
     }
 
     private void setNextActiveThrottle() {
@@ -1407,7 +1420,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 gamePadThrottleAssignment[whichThrottle] = gamePadThrottleAssignment[fromThrottle];
                 gamePadIds[fromThrottle] = 0;
                 gamePadThrottleAssignment[fromThrottle] = "";
-                setVolumeIndicator();
+                setGamepadIndicator();
             }
         }
         if (whichThrottle==-1) {
@@ -1436,7 +1449,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         reassigningGamepad = gamePadThrottleAssignment[i];
                         gamePadThrottleAssignment[i] = "";
                         gamepadCount--;
-                        setVolumeIndicator(); // need to clear the indicator
+                        setGamepadIndicator(); // need to clear the indicator
                     }
                     break;
                 }
@@ -1455,7 +1468,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                 }
                                 whichGamePad = i;
                                 gamepadCount++;
-                                setVolumeIndicator();
+                                setGamepadIndicator();
                                 break;  // done
                             }
                         }
@@ -1581,7 +1594,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             } else if (keyCode == gamePadKeys[6]) {
                 // EStop or optionally NextThrottle
                 if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
-                    if (prefThrottleGameStartButton.equals("EStop")) {
+                    if (prefThrottleGameStartButton.equals(PREF_THROTTLE_GAMEPAD_START_BUTTON_ALL_STOP)) {
                         speedUpdateAndNotify(0);         // update all three throttles
                         GamepadFeedbackSound(false);
                     } else { // "Next Throttle"
@@ -2213,6 +2226,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         tvVolS =(TextView) findViewById(R.id.volume_indicator_S);
         tvVolG =(TextView) findViewById(R.id.volume_indicator_G);
 
+        // gamepad indicators
+        tvGamePadT =(TextView) findViewById(R.id.gamepad_indicator_T);
+        tvGamePadS =(TextView) findViewById(R.id.gamepad_indicator_S);
+        tvGamePadG =(TextView) findViewById(R.id.gamepad_indicator_G);
+
         // set_default_function_labels();
         tvSpdLabT = (TextView) findViewById(R.id.speed_label_T);
         tvSpdValT = (TextView) findViewById(R.id.speed_value_label_T);
@@ -2596,6 +2614,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         // hide or display volume control indicator based on variable
         setVolumeIndicator();
+        setGamepadIndicator();
 
         // set speed buttons speed step
         BUTTON_SPEED_STEP = preferences.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
