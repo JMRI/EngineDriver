@@ -114,6 +114,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private static double displayUnitScaleG;
     private static double displayUnitScaleS;
 
+    private static String VOLUME_INDICATOR = "v";
+    private static String[] GAMEPAD_INDICATOR = {"1", "2", "3"};
+-
     private SeekBar sbT; // seekbars
     private SeekBar sbS;
     private SeekBar sbG;
@@ -144,6 +147,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private TextView tvSpdValG;
     private TextView tvSpdLabS;
     private TextView tvSpdValS;
+    private TextView tvVolT; // volume indicators
+    private TextView tvVolS;
+    private TextView tvVolG;
     private View vVolT; // volume indicators
     private View vVolS;
     private View vVolG;
@@ -260,8 +266,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private boolean mGamepadAutoDecrement = false;
 
     private int[] gamePadIds = {0,0,0};
+    private String[] gamePadThrottleAssignment = {"","",""};
     private boolean prefGamePadMultipleDevices = false;
     private boolean usingMultiplePads = false;
+    private int gamepadCount = 0;
 
     // preference to chnage the consist's on long clicks
     boolean prefConsistLightsLongClick;
@@ -1256,18 +1264,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     private void setVolumeIndicator() {
         // hide or display volume control indicator based on variable
+        tvVolT.setText(gamePadThrottleAssignment[0]);
+        tvVolS.setText(gamePadThrottleAssignment[1]);
+        tvVolG.setText(gamePadThrottleAssignment[2]);
         if (whichVolume == 'T') {
-            vVolT.setVisibility(View.VISIBLE);
-            vVolS.setVisibility(View.GONE);
-            vVolG.setVisibility(View.GONE);
-        } else if (whichVolume == 'G') {
-            vVolT.setVisibility(View.GONE);
-            vVolS.setVisibility(View.GONE);
-            vVolG.setVisibility(View.VISIBLE);
+            tvVolT.setText(VOLUME_INDICATOR+gamePadThrottleAssignment[0]);
+        } else if (whichVolume == 'S') {
+            tvVolS.setText(VOLUME_INDICATOR+gamePadThrottleAssignment[1]);
         } else {
-            vVolT.setVisibility(View.GONE);
-            vVolS.setVisibility(View.VISIBLE);
-            vVolG.setVisibility(View.GONE);
+            tvVolG.setText(VOLUME_INDICATOR+gamePadThrottleAssignment[2]);
         }
     }
 
@@ -1393,24 +1398,22 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private int swapToNextAvilableThrottleForGamePad(int fromThrottle) {
         int whichThrottle = -1;
         if (prefGamePadMultipleDevices) {  // deal with multiple devices if the preference is set
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                for (int i = 0; i < allThrottleLetters.length; i++) {
-                    if (gamePadIds[i] == 0) {  // unassigned
-                        if (getConsist(allThrottleLetters[i]).isActive()) { // found next active throttle
-                            if (gamePadIds[i] <= 0) { //not currently assigned
-                                whichThrottle = i;
-                                break;  // done
-                            }
+            for (int i = 0; i < allThrottleLetters.length; i++) {
+                if (gamePadIds[i] == 0) {  // unassigned
+                    if (getConsist(allThrottleLetters[i]).isActive()) { // found next active throttle
+                        if (gamePadIds[i] <= 0) { //not currently assigned
+                            whichThrottle = i;
+                            break;  // done
                         }
                     }
                 }
-                if (whichThrottle>=0) {
-                    gamePadIds[whichThrottle] = gamePadIds[fromThrottle];
-                    gamePadThrottleAssignment[whichThrottle] = gamePadThrottleAssignment[fromThrottle];
-                    gamePadIds[fromThrottle] = 0;
-                    gamePadThrottleAssignment[fromThrottle] = "";
-                    setVolumeIndicator();
-                }
+            }
+            if (whichThrottle>=0) {
+                gamePadIds[whichThrottle] = gamePadIds[fromThrottle];
+                gamePadThrottleAssignment[whichThrottle] = gamePadThrottleAssignment[fromThrottle];
+                gamePadIds[fromThrottle] = 0;
+                gamePadThrottleAssignment[fromThrottle] = "";
+                setVolumeIndicator();
             }
         }
         if (whichThrottle==-1) {
@@ -1441,7 +1444,6 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         gamepadCount--;
                         setVolumeIndicator(); // need to clear the indicator
                     }
-
                     break;
                 }
             }
@@ -1481,7 +1483,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             int action = event.getAction();
             int keyCode = event.getKeyCode();
             int repeatCnt = event.getRepeatCount();
-            char whichThrottle = ' ';
+            char whichThrottle;
             int whichGamePad = whichGamePad(event);
 
             if (usingMultiplePads && whichGamePad >= 0) { // we have multiple gamepads AND the preference is set to make use of them
@@ -2213,9 +2215,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         // SPDHT
 
         // volume indicators
-        vVolT = findViewById(R.id.volume_indicator_T);
-        vVolS = findViewById(R.id.volume_indicator_S);
-        vVolG = findViewById(R.id.volume_indicator_G);
+        tvVolT =(TextView) findViewById(R.id.volume_indicator_T);
+        tvVolS =(TextView) findViewById(R.id.volume_indicator_S);
+        tvVolG =(TextView) findViewById(R.id.volume_indicator_G);
 
         // set_default_function_labels();
         tvSpdLabT = (TextView) findViewById(R.id.speed_label_T);
@@ -2596,7 +2598,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         int height_G;// height of third throttle area
 
         // avoid NPE by not letting this run too early (reported to Play Store)
-        if (vVolT == null) return;
+        if (tvVolT == null) return;
 
         // hide or display volume control indicator based on variable
         setVolumeIndicator();
