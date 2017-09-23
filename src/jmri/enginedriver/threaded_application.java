@@ -27,15 +27,22 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
-
-import java.net.*;
-import java.io.*;
-
 import android.support.v4.app.NotificationCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -44,8 +51,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.CookieSyncManager;
 import android.widget.Toast;
-
-import javax.jmdns.*;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -56,14 +61,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.tavendo.autobahn.WebSocketConnection;
-import de.tavendo.autobahn.WebSocketHandler;
-
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
-import android.net.wifi.WifiInfo;
-
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -71,17 +81,17 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceEvent;
+import javax.jmdns.ServiceInfo;
+import javax.jmdns.ServiceListener;
+
+import de.tavendo.autobahn.WebSocketConnection;
+import de.tavendo.autobahn.WebSocketHandler;
 import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
-
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
@@ -127,6 +137,7 @@ public class threaded_application extends Application {
     public final int minWebSocketVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
     public final int minImmersiveModeVersion = android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
     public final int minToolbarButtonVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
+    public final int minGamepadVersion = Build.VERSION_CODES.KITKAT;
 
     static final int DEFAULT_HEARTBEAT_INTERVAL = 10;       //interval for heartbeat when WiT heartbeat is disabled
     static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;   //minimum allowed interval for outbound heartbeat generator

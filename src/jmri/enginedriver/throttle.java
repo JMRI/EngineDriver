@@ -60,7 +60,6 @@ import android.widget.Toast;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Set;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
@@ -148,11 +147,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private TextView tvSpdValG;
     private TextView tvSpdLabS;
     private TextView tvSpdValS;
-
     private TextView tvVolT; // volume indicators
     private TextView tvVolS;
     private TextView tvVolG;
-
     private LinearLayout llT; // throttles
     private LinearLayout llS;
     private LinearLayout llG;
@@ -1325,14 +1322,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private void setGamepadKeys() {
         whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
         prefThrottleGameStartButton = prefs.getString("prefGamePadStartButton", getApplicationContext().getResources().getString(R.string.prefGamePadStartButtonDefaultValue));
-
         prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
 
         if (!whichGamePadMode.equals("None")) {
             // make sure the Softkeyboard is hidden
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                     WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-
         }
 
         int[] bGamePadKeys;
@@ -1397,24 +1392,22 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private int swapToNextAvilableThrottleForGamePad(int fromThrottle) {
         int whichThrottle = -1;
         if (prefGamePadMultipleDevices) {  // deal with multiple devices if the preference is set
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                for (int i = 0; i < allThrottleLetters.length; i++) {
-                    if (gamePadIds[i] == 0) {  // unassigned
-                        if (getConsist(allThrottleLetters[i]).isActive()) { // found next active throttle
-                            if (gamePadIds[i] <= 0) { //not currently assigned
-                                whichThrottle = i;
-                                break;  // done
-                            }
+            for (int i = 0; i < allThrottleLetters.length; i++) {
+                if (gamePadIds[i] == 0) {  // unassigned
+                    if (getConsist(allThrottleLetters[i]).isActive()) { // found next active throttle
+                        if (gamePadIds[i] <= 0) { //not currently assigned
+                            whichThrottle = i;
+                            break;  // done
                         }
                     }
                 }
-                if (whichThrottle>=0) {
-                    gamePadIds[whichThrottle] = gamePadIds[fromThrottle];
-                    gamePadThrottleAssignment[whichThrottle] = gamePadThrottleAssignment[fromThrottle];
-                    gamePadIds[fromThrottle] = 0;
-                    gamePadThrottleAssignment[fromThrottle] = "";
-                    setVolumeIndicator();
-                }
+            }
+            if (whichThrottle>=0) {
+                gamePadIds[whichThrottle] = gamePadIds[fromThrottle];
+                gamePadThrottleAssignment[whichThrottle] = gamePadThrottleAssignment[fromThrottle];
+                gamePadIds[fromThrottle] = 0;
+                gamePadThrottleAssignment[fromThrottle] = "";
+                setVolumeIndicator();
             }
         }
         if (whichThrottle==-1) {
@@ -1428,60 +1421,53 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private int whichGamePad(KeyEvent event) {
         int whichGamePad = -1;
         if (prefGamePadMultipleDevices) {  // deal with multiple devices if the preference is set
+            int gamePadDeviceId = event.getDeviceId();
 
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-
-                int gamePadDeviceId = event.getDeviceId();
-
-                String reassigningGamepad = "X";
-                int i;
-                int numThrottles = allThrottleLetters.length;
-                // find out if this gamepad is alread assigned
-                for (i = 0; i < numThrottles; i++) {
-                    if (gamePadIds[i] == gamePadDeviceId) {
-                        if (getConsist(allThrottleLetters[i]).isActive()) { //found the throttle and it is active
-                            whichGamePad = i;
-                        } else { // currently assigned to this throttle, but the throttle is not active
-                            gamePadIds[i] = 0;
-                            reassigningGamepad = gamePadThrottleAssignment[i];
-                            gamePadThrottleAssignment[i] = "";
-                            gamepadCount--;
-                            setVolumeIndicator(); // need to clear the indicator
-                        }
-
-                        break;
+            String reassigningGamepad = "X";
+            int i;
+            int numThrottles = allThrottleLetters.length;
+            // find out if this gamepad is alread assigned
+            for (i = 0; i < numThrottles; i++) {
+                if (gamePadIds[i] == gamePadDeviceId) {
+                    if (getConsist(allThrottleLetters[i]).isActive()) { //found the throttle and it is active
+                        whichGamePad = i;
+                    } else { // currently assigned to this throttle, but the throttle is not active
+                        gamePadIds[i] = 0;
+                        reassigningGamepad = gamePadThrottleAssignment[i];
+                        gamePadThrottleAssignment[i] = "";
+                        gamepadCount--;
+                        setVolumeIndicator(); // need to clear the indicator
                     }
+                    break;
                 }
+            }
 
-                if (whichGamePad == -1) { //didn't find it
-                    for (i = 0; i < numThrottles; i++) {
-                        if (gamePadIds[i] == 0) {  // unassigned
-                            if (getConsist(allThrottleLetters[i]).isActive()) { // found next active throttle
-                                if (gamePadIds[i]<=0) { //not currently assigned
-                                    gamePadIds[i] = gamePadDeviceId;
-                                    if (reassigningGamepad.equals("X")) { // not a reassignemnt
-                                        gamePadThrottleAssignment[i] = GAMEPAD_INDICATOR[gamepadCount];
-                                    } else { // reasigning
-                                        gamePadThrottleAssignment[i] = reassigningGamepad;
-                                    }
-                                    whichGamePad = i;
-                                    gamepadCount++;
-                                    setVolumeIndicator();
-                                    break;  // done
+            if (whichGamePad == -1) { //didn't find it
+                for (i = 0; i < numThrottles; i++) {
+                    if (gamePadIds[i] == 0) {  // unassigned
+                        if (getConsist(allThrottleLetters[i]).isActive()) { // found next active throttle
+                            if (gamePadIds[i]<=0) { //not currently assigned
+                                gamePadIds[i] = gamePadDeviceId;
+                                if (reassigningGamepad.equals("X")) { // not a reassignemnt
+                                    gamePadThrottleAssignment[i] = GAMEPAD_INDICATOR[gamepadCount];
+                                } else { // reasigning
+                                    gamePadThrottleAssignment[i] = reassigningGamepad;
                                 }
+                                whichGamePad = i;
+                                gamepadCount++;
+                                setVolumeIndicator();
+                                break;  // done
                             }
                         }
                     }
                 }
-                if (gamepadCount > 0) {
-                    usingMultiplePads = true;
-                }
+            }
+            if (gamepadCount > 0) {
+                usingMultiplePads = true;
             }
         }
-
         return whichGamePad;
     }
-
 
     // listener for physical keyboard events
     // used to support the gamepad in 'NewGame' mode only   DPAD and key events
@@ -1494,7 +1480,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             char whichThrottle;
             int whichGamePad = whichGamePad(event);
 
-            if ( usingMultiplePads && whichGamePad >= 0) { // we have multiple gamepads AND the preference is set to make use of them
+            if (usingMultiplePads && whichGamePad >= 0) { // we have multiple gamepads AND the preference is set to make use of them
                 whichThrottle = allThrottleLetters[whichGamePad];
             } else {
                 whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
@@ -1610,7 +1596,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             } else if (keyCode == gamePadKeys[1]) {
                 // NextThrottle
                 if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
-                    setNextActiveThrottle(true);
+                    if ( usingMultiplePads && whichGamePad >= 0) {
+                        whichGamePad = swapToNextAvilableThrottleForGamePad(whichGamePad);
+                    } else {
+                        setNextActiveThrottle(true);
+                    }
                 }
                 return (true); // stop processing this key
             }
