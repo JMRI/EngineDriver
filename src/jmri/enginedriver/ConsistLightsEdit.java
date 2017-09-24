@@ -57,8 +57,11 @@ import jmri.enginedriver.threaded_application;
 
 public class ConsistLightsEdit extends Activity implements OnGestureListener {
     public static final int LIGHT_OFF = 0;
-    public static final int LIGHT_ON = 1;
+    public static final int LIGHT_FOLLOW = 1;
     public static final int LIGHT_UNKNOWN = 2;
+    public static final String LIGHT_TEXT_OFF = "Off";
+    public static final String LIGHT_TEXT_FOLLOW = "Follow Fn Btn";
+    public static final String LIGHT_TEXT_UNKNOWN = "Unknown";
 
     static public final int RESULT_CON_LIGHTS_EDIT = RESULT_FIRST_USER;
 
@@ -96,18 +99,19 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                 hm.put("lead_label", consist.getLeadAddr().equals(l.getAddress()) ? "LEAD" : "");
                 hm.put("loco_addr", l.getAddress());
                 hm.put("loco_name", l.toString());
-                if (l.isLightOn() == LIGHT_OFF) {
-                    hm.put("loco_light", "Off");
-                    // because we can't be sure if the function has been set elsewhere, force it to what we think it should be
-                    //mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, whichThrottle + l.getAddress(), 0, 0);
-                    mainapp.forceFunction(whichThrottle+l.getAddress(), 0, false);
-                } else if (l.isLightOn() == LIGHT_ON) {
-                    hm.put("loco_light", "On");
-                    // because we can't be sure if the function has been set elsewhere, force it to what we think it should be
-                    //mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, whichThrottle + l.getAddress(), 0, 1);
-                    mainapp.forceFunction(whichThrottle+l.getAddress(), 0, true);
+                if (consist.getLeadAddr().equals(l.getAddress())) { // lead loco is always 'follow'
+                    hm.put("loco_light", LIGHT_TEXT_FOLLOW);
                 } else {
-                    hm.put("loco_light", "Unknown");
+                    if (l.isLightOn() == LIGHT_OFF) {
+                        hm.put("loco_light", LIGHT_TEXT_OFF);
+                        mainapp.forceFunction(whichThrottle + l.getAddress(), 0, false);
+                    } else if (l.isLightOn() == LIGHT_FOLLOW) {
+                        hm.put("loco_light", LIGHT_TEXT_FOLLOW);
+                        // because we can't be sure if the function has been set elsewhere, force it to what we think it should be
+                        //mainapp.forceFunction(whichThrottle+l.getAddress(), 0, true);
+                    } else {
+                        hm.put("loco_light", LIGHT_TEXT_UNKNOWN);
+                    }
                 }
                 consistList.add(hm);
             }
@@ -207,19 +211,20 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                 String address = addrv.getText().toString();
 
                 int light;
-                if ((consist.isLight(address)==LIGHT_UNKNOWN)|(consist.isLight(address)==LIGHT_OFF)) {
-                    light = LIGHT_ON;
-                    mainapp.forceFunction(whichThrottle+address, 0, true);
+                if (consist.getLeadAddr().equals(address)) { // lead loco is always 'follow'
+                    light = LIGHT_FOLLOW;
                 } else {
-                    light = LIGHT_OFF;
-                    mainapp.forceFunction(whichThrottle+address, 0, false);
+                    if ((consist.isLight(address) == LIGHT_UNKNOWN) || (consist.isLight(address) == LIGHT_FOLLOW)) {
+                        light = LIGHT_OFF;
+                    } else {
+                        light = LIGHT_FOLLOW;
+                    }
                 }
-
-                try {
-                    consist.setLight(address, light);
-                } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
-                    Log.d("Engine_Driver", "ConsistLightsEdit selected engine " + address + " that is not in consist");
-                }
+                    try {
+                        consist.setLight(address, light);
+                    } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
+                        Log.d("Engine_Driver", "ConsistLightsEdit selected engine " + address + " that is not in consist");
+                    }
 
                 refreshConsistLists();
             }
@@ -234,10 +239,10 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                 String address = addrv.getText().toString();
 
                 int light;
-                if ((consist.isLight(address)==LIGHT_UNKNOWN)|(consist.isLight(address)==LIGHT_OFF)) {
-                    light = LIGHT_ON;
-                } else {
+                if ((consist.isLight(address) == LIGHT_UNKNOWN) | (consist.isLight(address) == LIGHT_FOLLOW)) {
                     light = LIGHT_OFF;
+                } else {
+                    light = LIGHT_FOLLOW;
                 }
                try {
                     consist.setLight(address, light);

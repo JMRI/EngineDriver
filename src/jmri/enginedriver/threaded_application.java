@@ -2249,6 +2249,12 @@ public class threaded_application extends Application {
         } // otherwise just ignore the request
     }
 
+    public void toggleFunction(String throttleAndAddr, int functionNumber) {
+        if ( (functionNumber>=0) && (functionNumber<=MAX_FUNCTION_NUMBER) ) {
+            sendMsg(comm_msg_handler, message_type.FUNCTION, throttleAndAddr, functionNumber, 1);
+        } // otherwise just ignore the request
+    }
+
     /**
      * Is Web View allowed for this connection?
      * this hides/shows menu options and activities

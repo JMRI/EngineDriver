@@ -275,6 +275,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private int gamepadCount = 0;
     // preference to chnage the consist's on long clicks
     boolean prefConsistLightsLongClick;
+    public static final int LIGHT_FOLLOW = 1;
 
     //Throttle Array
     private final char[] allThrottleLetters = {'T', 'S', 'G'};
@@ -1782,6 +1783,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         char whichThrottle;     // T for first throttle, S for second, G for third
         boolean leadOnly;       // function only applies to the lead loco
         boolean trailOnly;      // function only applies to the trail loco (future)
+        boolean followLeadFunction;       // function only applies to the locos that have been set to follow the function
 
         private function_button_touch_listener(int new_function, char new_whichThrottle) {
             this(new_function, new_whichThrottle, "");
@@ -1793,12 +1795,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             String lab = funcLabel.toUpperCase().trim();
             leadOnly = false;
             trailOnly = false;
+            followLeadFunction = false;
+
             if (!lab.equals("")) {
                 boolean selectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
                 leadOnly = (selectiveLeadSound &&
                         (lab.contains("WHISTLE") || lab.contains("HORN") || lab.contains("BELL"))
                         || lab.contains("HEAD")
                         || (lab.contains("LIGHT") && !lab.contains("REAR")));
+                followLeadFunction = (lab.contains("LIGHT"));
                 trailOnly = lab.contains("REAR");
             }
         }
@@ -1865,8 +1870,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                 addr = con.getLeadAddr();
 // ***future                else if (trailOnly)
 //                              addr = con.getTrailAddr();
-                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + addr, this.function, 1);
+
+                            //mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + addr, this.function, 1);
+                            mainapp.toggleFunction(whichThrottle + addr, this.function);
                             // set_function_request(whichThrottle, function, 1);
+
+                            if(followLeadFunction) {
+                                for (Consist.ConLoco l : con.getLocos()) {
+                                    if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
+                                        if (l.isLightOn() == LIGHT_FOLLOW) {
+                                            mainapp.toggleFunction(whichThrottle + l.getAddress(), this.function);
+                                        }
+                                    }
+                                }
+                            }
+
                             break;
                         }
                     }
