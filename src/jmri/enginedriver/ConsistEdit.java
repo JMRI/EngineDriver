@@ -52,8 +52,11 @@ import jmri.enginedriver.Consist.ConLoco;
 
 public class ConsistEdit extends Activity implements OnGestureListener {
     public static final int LIGHT_OFF = 0;
-    public static final int LIGHT_ON = 1;
+    public static final int LIGHT_FOLLOW = 1;
     public static final int LIGHT_UNKNOWN = 2;
+    public static final String LIGHT_TEXT_OFF = "Off";
+    public static final String LIGHT_TEXT_FOLLOW = "Follow Fn Btn";
+    public static final String LIGHT_TEXT_UNKNOWN = "Unknown";
 
     static public final int RESULT_CON_EDIT = RESULT_FIRST_USER;
 
@@ -96,13 +99,16 @@ public class ConsistEdit extends Activity implements OnGestureListener {
                 hm.put("loco_name", l.toString());
                 hm.put("loco_facing", l.isBackward() ? "Rear" : "Front");
 
-                // TODO: need to get the current state of the lead loco from the function buttion 0 state
-                if (l.isLightOn()==LIGHT_OFF) {
-                    hm.put("loco_light", "Off");
-                } else if (l.isLightOn()==LIGHT_ON) {
-                    hm.put("loco_light", "On");
+                if (consist.getLeadAddr().equals(l.getAddress())) { // first one is always 'follow'
+                    hm.put("loco_light", LIGHT_TEXT_FOLLOW);
                 } else {
-                    hm.put("loco_light", "Unknown");
+                    if (l.isLightOn() == LIGHT_OFF) {
+                        hm.put("loco_light", LIGHT_TEXT_OFF);
+                    } else if (l.isLightOn() == LIGHT_FOLLOW) {
+                        hm.put("loco_light", LIGHT_TEXT_FOLLOW);
+                    } else {
+                        hm.put("loco_light", LIGHT_TEXT_UNKNOWN);
+                    }
                 }
                 consistList.add(hm);
             }

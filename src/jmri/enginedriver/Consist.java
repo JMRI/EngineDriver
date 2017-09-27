@@ -33,7 +33,7 @@ import java.util.Set;
 //
     public final class Consist {
     public static final int LIGHT_OFF = 0;
-    public static final int LIGHT_ON = 1;
+    public static final int LIGHT_FOLLOW = 1;
     public static final int LIGHT_UNKNOWN = 2;
 
     public class ConLoco extends Loco {

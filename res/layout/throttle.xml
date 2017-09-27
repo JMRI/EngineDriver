@@ -93,6 +93,19 @@
                             android:paddingBottom="2dp"
                             android:textSize="12sp"
                             android:text="@string/volume_indicator" />
+                        <TextView
+                            android:id="@+id/gamepad_indicator_T"
+                            style="@style/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/volume_indicator_T"
+                            android:layout_alignParentLeft="true"
+                            android:enabled="false"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="0dp"
+                            android:paddingBottom="2dp"
+                            android:textSize="12sp"
+                            android:text="" />
                     </RelativeLayout>
                 </LinearLayout>
                 <TableLayout
@@ -356,7 +369,20 @@
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
                             android:textSize="12sp"
-                            android:text="@string/volume_indicator" />
+                            android:text="" />
+                        <TextView
+                            android:id="@+id/gamepad_indicator_S"
+                            style="@style/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/volume_indicator_S"
+                            android:layout_alignParentLeft="true"
+                            android:enabled="false"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="0dp"
+                            android:paddingBottom="2dp"
+                            android:textSize="12sp"
+                            android:text="" />
                     </RelativeLayout>
                 </LinearLayout>
                 <TableLayout
@@ -634,7 +660,20 @@
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
                             android:textSize="12sp"
-                            android:text="@string/volume_indicator" />
+                            android:text="" />
+                        <TextView
+                            android:id="@+id/gamepad_indicator_G"
+                            style="@style/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/volume_indicator_G"
+                            android:layout_alignParentLeft="true"
+                            android:enabled="false"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="0dp"
+                            android:paddingBottom="2dp"
+                            android:textSize="12sp"
+                            android:text="" />
                     </RelativeLayout>
                 </LinearLayout>
 
