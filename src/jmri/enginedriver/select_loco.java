@@ -96,6 +96,9 @@ public class select_loco extends Activity {
     private Menu SMenu;
     private boolean navigatingAway = false;     // flag for onPause: set to true when another activity is selected, false if going into background 
 
+    private static final String CLEAR_LIST_LONG_PRESS_INSTRUCTION = "Confirm that you want remove all the Recent Locomotives by pressing the 'Clear List' button AGAIN.";
+    private int clearListCount = 0;
+
     // populate the on-screen roster view from global hashmap
     public void refresh_roster_list() {
         // clear and rebuild
@@ -174,6 +177,8 @@ public class select_loco extends Activity {
     // lookup and set values of various text labels
     private void set_labels() {
 
+        boolean prefShowAddressInsteadOfName = prefs.getBoolean("prefShowAddressInsteadOfName", getResources().getBoolean(R.bool.prefShowAddressInsteadOfNameDefaultValue));
+
         TextView vH = (TextView) findViewById(R.id.throttle_name_header);
         // show throttle name
         String s = "Throttle Name: "
@@ -188,6 +193,10 @@ public class select_loco extends Activity {
         Button bRT = (Button) findViewById(R.id.sl_release_T);
         if (mainapp.consistT.isActive()) {
             String vLabel = mainapp.consistT.toString();
+            if (prefShowAddressInsteadOfName) { // show the DCC Address instead of the loco name if the preference is set
+                vLabel = mainapp.consistT.formatConsistAddr();
+            }
+
             int vWidth = vST.getWidth();                // scale text if required to fit the textView
             vST.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
             double textWidth = vST.getPaint().measureText(vLabel);
@@ -508,7 +517,13 @@ public class select_loco extends Activity {
     //Clears recent connection list of locos when button is touched or clicked
     public class clear_Loco_List_button implements AdapterView.OnClickListener {
         public void onClick(View v) {
-            clearList();
+            clearListCount++;
+            if (clearListCount <= 1) {
+                Toast.makeText(getApplicationContext(), CLEAR_LIST_LONG_PRESS_INSTRUCTION, Toast.LENGTH_SHORT).show();
+            } else { // only clear the list if the button is clicked a second time
+                clearList();
+                clearListCount=0;
+            }
             onCreate(null);
         }
     }

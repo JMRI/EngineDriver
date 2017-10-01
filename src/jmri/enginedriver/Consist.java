@@ -267,7 +267,7 @@ import java.util.Set;
             for (Map.Entry<String, ConLoco> l : con.entrySet()) {        // loop through locos in consist
                 if (l.getValue().isConfirmed()) {
                     formatCon += sep + l.getValue().getAddress().substring(1, l.getValue().getAddress().length());
-                    sep = ",";
+                    sep = ", ";
                 }
             }
         } else {
