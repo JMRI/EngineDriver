@@ -519,7 +519,7 @@ public class select_loco extends Activity {
         public void onClick(View v) {
             clearListCount++;
             if (clearListCount <= 1) {
-                Toast.makeText(getApplicationContext(), CLEAR_LIST_LONG_PRESS_INSTRUCTION, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), CLEAR_LIST_LONG_PRESS_INSTRUCTION, Toast.LENGTH_LONG).show();
             } else { // only clear the list if the button is clicked a second time
                 clearList();
                 clearListCount=0;
