@@ -479,6 +479,10 @@ public class select_loco extends Activity {
             Spinner spinner = (Spinner) findViewById(R.id.address_length);
             address_size = spinner.getSelectedItemPosition();
             acquire_engine(true);
+            InputMethodManager imm =
+            (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+
         }
     }
 
