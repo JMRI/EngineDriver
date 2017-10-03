@@ -3,6 +3,7 @@
  * new gamepad repeat handling and sound feedback
  * Individually control lights in consist
  * Handle multiple gamepads
+ * warning before clearing Recent Loco list
 **Version 2.15
  * fix incorrect loco request on reconnect when loco is not in roster (found by Bob Grandle)
  * prevent crash caused by empty JMRI consists
