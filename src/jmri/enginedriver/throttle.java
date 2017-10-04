@@ -351,17 +351,17 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                 } else if (com2 == '-') { // if loco removed
                                     if (whichThrottle == 'T') {
                                         removeLoco('T');
-                                        swapToNextAvilableThrottleForGamePad(0); // see if we can/need to move the gamepad to another throttle
+                                        swapToNextAvilableThrottleForGamePad(0, true); // see if we can/need to move the gamepad to another throttle
                                         gamePadIds[0] = 0;
                                         gamePadThrottleAssignment[0] = " ";
                                     } else if (whichThrottle == 'G') {
                                         removeLoco('G');
-                                        swapToNextAvilableThrottleForGamePad(2); // see if we can/need to move the gamepad to another throttle
+                                        swapToNextAvilableThrottleForGamePad(2, true); // see if we can/need to move the gamepad to another throttle
                                         gamePadIds[2] = 0;
                                         gamePadThrottleAssignment[2] = " ";
                                     } else {
                                         removeLoco('S');
-                                        swapToNextAvilableThrottleForGamePad(1); // see if we can/need to move the gamepad to another throttle
+                                        swapToNextAvilableThrottleForGamePad(1, true); // see if we can/need to move the gamepad to another throttle
                                         gamePadIds[1] = 0;
                                         gamePadThrottleAssignment[1] = " ";
                                     }
@@ -1415,7 +1415,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     }
 
     //
-    private int swapToNextAvilableThrottleForGamePad(int fromThrottle) {
+    private int swapToNextAvilableThrottleForGamePad(int fromThrottle, boolean quiet) {
         int whichThrottle = -1;
         int index;
         index = fromThrottle -1;
@@ -1445,10 +1445,14 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             }
         }
         if (whichThrottle==-1) {
-            GamepadFeedbackSound(true);
+            if (!quiet) {
+                GamepadFeedbackSound(true);
+            }
             return fromThrottle;  // didn't work. leave it alone
         } else {
-            GamepadFeedbackSound(false);
+            if (!quiet) {
+                GamepadFeedbackSound(false);
+            }
             return whichThrottle;
         }
     }
@@ -1644,7 +1648,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                         GamepadFeedbackSound(false);
                     } else { // "Next Throttle"
                         if ( usingMultiplePads && whichGamePadIsEventFrom >= 0) {
-                            whichGamePadIsEventFrom = swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom);
+                            whichGamePadIsEventFrom = swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
                         } else {
                             setNextActiveThrottle(true);
                         }
@@ -1655,7 +1659,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 // NextThrottle
                 if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
                     if ( usingMultiplePads && whichGamePadIsEventFrom >= 0) {
-                        whichGamePadIsEventFrom = swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom);
+                        whichGamePadIsEventFrom = swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
                     } else {
                         setNextActiveThrottle(true);
                     }
