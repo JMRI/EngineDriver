@@ -171,6 +171,7 @@
                 android:key="prefGamePadType"
                 android:summary="@string/prefGamePadTypeSummary"
                 android:title="@string/prefGamePadTypeTitle" />
+<!--
             <ListPreference
                 android:defaultValue="@string/prefGamePadStartButtonDefaultValue"
                 android:entries="@array/prefGamePadStartButtonOptions"
@@ -178,6 +179,7 @@
                 android:key="prefGamePadStartButton"
                 android:summary="@string/prefGamePadStartButtonSummary"
                 android:title="@string/prefGamePadStartButtonTitle" />
+-->
             <EditTextPreference
                 android:defaultValue="@string/prefGamePadFeedbackVolumeDefaultValue"
                 android:dialogTitle="@string/prefGamePadFeedbackVolumeTitle"
@@ -194,6 +196,43 @@
                 android:summary="@string/prefGamePadMultipleDevicesSummary"
                 android:title="@string/prefGamePadMultipleDevicesTitle">
             </CheckBoxPreference>
+            <!--    Gamepad button preferences   -->
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButton1DefaultValue"
+                android:entries="@array/prefGamePadKeyOptions"
+                android:entryValues="@array/prefGamePadKeyOptions"
+                android:key="prefGamePadButton1"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButton1Title" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButton2DefaultValue"
+                android:entries="@array/prefGamePadKeyOptions"
+                android:entryValues="@array/prefGamePadKeyOptions"
+                android:key="prefGamePadButton2"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButton2Title" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButton3DefaultValue"
+                android:entries="@array/prefGamePadKeyOptions"
+                android:entryValues="@array/prefGamePadKeyOptions"
+                android:key="prefGamePadButton3"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButton3Title" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButton4DefaultValue"
+                android:entries="@array/prefGamePadKeyOptions"
+                android:entryValues="@array/prefGamePadKeyOptions"
+                android:key="prefGamePadButton4"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButton4Title" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonStartDefaultValue"
+                android:entries="@array/prefGamePadKeyOptions"
+                android:entryValues="@array/prefGamePadKeyOptions"
+                android:key="prefGamePadButtonStart"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonStartTitle" />
+            <!--    Gamepad button preferences   -->
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefThrottleTitle" >
