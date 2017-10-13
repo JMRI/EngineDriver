@@ -171,15 +171,6 @@
                 android:key="prefGamePadType"
                 android:summary="@string/prefGamePadTypeSummary"
                 android:title="@string/prefGamePadTypeTitle" />
-<!--
-            <ListPreference
-                android:defaultValue="@string/prefGamePadStartButtonDefaultValue"
-                android:entries="@array/prefGamePadStartButtonOptions"
-                android:entryValues="@array/prefGamePadStartButtonOptions"
-                android:key="prefGamePadStartButton"
-                android:summary="@string/prefGamePadStartButtonSummary"
-                android:title="@string/prefGamePadStartButtonTitle" />
--->
             <EditTextPreference
                 android:defaultValue="@string/prefGamePadFeedbackVolumeDefaultValue"
                 android:dialogTitle="@string/prefGamePadFeedbackVolumeTitle"
@@ -232,6 +223,34 @@
                 android:key="prefGamePadButtonStart"
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButtonStartTitle" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonUpDefaultValue"
+                android:entries="@array/prefGamePadKeyOptions"
+                android:entryValues="@array/prefGamePadKeyOptions"
+                android:key="prefGamePadButtonUp"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonUpTitle" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonRightDefaultValue"
+                android:entries="@array/prefGamePadKeyOptions"
+                android:entryValues="@array/prefGamePadKeyOptions"
+                android:key="prefGamePadButtonRight"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonRightTitle" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonDownDefaultValue"
+                android:entries="@array/prefGamePadKeyOptions"
+                android:entryValues="@array/prefGamePadKeyOptions"
+                android:key="prefGamePadButtonDown"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonDownTitle" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonLeftDefaultValue"
+                android:entries="@array/prefGamePadKeyOptions"
+                android:entryValues="@array/prefGamePadKeyOptions"
+                android:key="prefGamePadButtonLeft"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonLeftTitle" />
             <!--    Gamepad button preferences   -->
         </PreferenceScreen>
     </PreferenceCategory>

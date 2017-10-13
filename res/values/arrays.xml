@@ -139,21 +139,14 @@
         <item >Lock and Dim Screen</item>
         <item >Dim Screen</item>
     </string-array>
-    <string-array name="prefGamePadStartButtonOptions">
-        <item >Stop All Throttles</item>
-        <item >Next Throttle</item>
-    </string-array>
-
     <string-array name="prefGamePadKeyOptions">
         <item >All Stop</item>
         <item >Stop</item>
-<!--
         <item >Forward</item>
         <item >Reverse</item>
         <item >Forward/Reverse Toggle</item>
         <item >Increase Speed</item>
         <item >Decrease Speed</item>
--->
         <item >Next Throttle</item>
         <item >Function 00/Light</item>
         <item >Function 01/Bell</item>

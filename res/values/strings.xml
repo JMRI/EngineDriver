@@ -154,12 +154,20 @@
     <string name="prefGamePadButton3Title">Gamepad Button C action</string>
     <string name="prefGamePadButton4Title">Gamepad Button D action</string>
     <string name="prefGamePadButtonStartTitle">Gamepad Start Button action</string>
+    <string name="prefGamePadButtonUpTitle">Gamepad Button DPAD Up action</string>
+    <string name="prefGamePadButtonRightTitle">Gamepad Button DPAD Right action</string>
+    <string name="prefGamePadButtonDownTitle">Gamepad Button DPAD Down action</string>
+    <string name="prefGamePadButtonLeftTitle">Gamepad Button DPAD Left action</string>
     <string name="prefGamePadButtonSummary">Choose the action when you press the button.</string>
     <string name="prefGamePadButton1DefaultValue">Stop</string>
     <string name="prefGamePadButton2DefaultValue">Function 00/Light</string>
     <string name="prefGamePadButton3DefaultValue">Function 01/Bell</string>
     <string name="prefGamePadButton4DefaultValue">Function 02/Horn</string>
     <string name="prefGamePadButtonStartDefaultValue">Next Throttle</string>
+    <string name="prefGamePadButtonUpDefaultValue">Increase Speed</string>
+    <string name="prefGamePadButtonRightDefaultValue">Reverse</string>
+    <string name="prefGamePadButtonDownDefaultValue">Decrease Speed</string>
+    <string name="prefGamePadButtonLeftDefaultValue">Forward</string>
     <!--    Gamepad button preferences   -->
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default function labels instead of labels from roster entries.</string>
