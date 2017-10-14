@@ -149,10 +149,10 @@
     <string name="prefGamePadMultipleDevicesTitle">Support Multiple Gamepads</string>
     <string name="prefGamePadMultipleDevicesSummary">Control seperate throttles with each gamepad. \nRequires Android Jelly Bean or later.</string>
     <!--    Gamepad button preferences   -->
-    <string name="prefGamePadButton1Title">Gamepad Button A action</string>
-    <string name="prefGamePadButton2Title">Gamepad Button B action</string>
-    <string name="prefGamePadButton3Title">Gamepad Button C action</string>
-    <string name="prefGamePadButton4Title">Gamepad Button D action</string>
+    <string name="prefGamePadButton1Title">Gamepad Button X action</string>
+    <string name="prefGamePadButton2Title">Gamepad Button Y action</string>
+    <string name="prefGamePadButton3Title">Gamepad Button B action</string>
+    <string name="prefGamePadButton4Title">Gamepad Button A action</string>
     <string name="prefGamePadButtonStartTitle">Gamepad Start Button action</string>
     <string name="prefGamePadButtonUpTitle">Gamepad Button DPAD Up action</string>
     <string name="prefGamePadButtonRightTitle">Gamepad Button DPAD Right action</string>
