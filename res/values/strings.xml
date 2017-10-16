@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
       Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
       This program is free software; you can redistribute it and/or modify it 
       under the terms of the GNU General Public License as published by the 
@@ -51,12 +50,14 @@
     <string name="stop">Stop</string>
     <string name="forward">Forward</string>
     <string name="reverse">Reverse</string>
+    <string name="fwd">Fwd</string>
+    <string name="rev">Rev</string>
     <string name="none">None</string>
     <string name="fb_helptext">Enter labels and function#s in list at right.  Leave label blank to hide button.  These are used when roster functions are not available.</string>
     <string name="copy_function_labels">Copy Labels from Roster</string>
     <string name="fb_header">Edit Functions</string>
-	<string name="consist_help">Click an engine to change its direction with respect to the top of the consist.  Long press an engine to remove it from the consist.  Press Back Arrow when done.</string>
-	<string name="about">About</string>
+    <string name="consist_help">Click an engine to change its direction with respect to the top of the consist.  Long press an engine to remove it from the consist.  Press Back Arrow when done.</string>
+    <string name="about">About</string>
     <string name="web">Web</string>
     <string name="mrc_settings">MRC Settings</string>
     <string name="loco">Loco:</string>
@@ -67,7 +68,7 @@
     <string name="turnouts_direct_entry_label">Enter Turnout#</string>
     <string name="turnouts_location_label">Filter by Location</string>
     <string name="turnouts_list_label">Turnouts (click state to toggle)</string>
-	<string name="turnouts_turnout">Turnout</string>
+    <string name="turnouts_turnout">Turnout</string>
     <string name="location_all">ALL LOCATIONS</string>
     <string name="routes">Routes</string>
     <string name="routes_label">Control Routes</string>
@@ -86,10 +87,10 @@
     <string name="reconnect_label">Reconnect Attempt Status</string>
     <string name="reconnect_help">Attempting to Reconnect automatically.  Wait for Reconnection or press BackArrow to Exit.</string>
     <string name="reconnect_success">RECONNECTED.  Resuming normal operation.</string>
-    	<string name="fs_edit_notice">WARNING: changes to Default Functions Setttings will be lost on exit - No SD Card found.</string>
-	<string name="ca_recent_conn_notice">Recent Connections unavailable - No SD Card found.</string>
-	<string name="sl_recent_engine_notice">Recent Locos unavailable - No SD Card found.</string>
-	<string name="power">Power</string>
+    <string name="fs_edit_notice">WARNING: changes to Default Functions Setttings will be lost on exit - No SD Card found.</string>
+    <string name="ca_recent_conn_notice">Recent Connections unavailable - No SD Card found.</string>
+    <string name="sl_recent_engine_notice">Recent Locos unavailable - No SD Card found.</string>
+    <string name="power">Power</string>
     <string name="throttle">Throttle</string>
     <string name="on">On</string>
     <string name="off">Off</string>
@@ -111,7 +112,7 @@
     <string name="prefThrottleNameDefaultValue">Engine Driver</string>
     <string name="prefThrottleNameSummary">Set a name for this device (shown on WiThrottle screen)</string>
     <string name="prefThrottleOrientationTitle">Screen orientation</string>
-    <string name="prefThrottleOrientationDefaultValue">Portrait</string>
+    <string name="prefThrottleOrientationDefaultValue">Landscape</string>
     <string name="prefThrottleOrientationSummary">Screen orientation (except Web)</string>
     <string name="prefThrottlePageTitle">Throttle Page Appearance Preferences</string>
     <string name="prefThrottleTitle">Throttle Control Preferences</string>
@@ -149,9 +150,11 @@
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default function labels instead of labels from roster entries.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. Height?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Use smaller buttons for the loco Number, speed and direction buttons.</string>
+    <string name="prefTypeOfThrottles">Simple throttles</string>
+    <string name="prefTypeOfThrottlesSummary">Display throttles without Function buttons.</string>
     <string name="prefNumOfThrottles">Number of throttles</string>
     <string name="prefNumOfThrottlesSummary">Choose how many throttles you want to display.</string>
-    <string name="prefNumOfThrottlesDefault">Two</string>
+    <string name="prefNumOfThrottlesDefaultValue">Six</string>
     <string name="prefMaximumThrottleTitle">Maximum Throttle Percentage</string>
     <string name="prefMaximumThrottleDefaultValue">100</string>
     <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value in %</string>
@@ -235,27 +238,29 @@
     <string name="prefDisplayClockDefaultValue">0</string>
     <string name="LeftButton">&lt;&lt;</string>
     <string name="RightButton">&gt;&gt;</string>
-    <string name="DownButton">--</string>
-    <string name="UpButton">++</string>
+    <string name="DownButton">–</string>
+    <string name="UpButton">+</string>
     <string name="prefDisplaySpeedArrowsTitle">Display Speed buttons?</string>
     <string name="prefDisplaySpeedArrowsSummary">Display buttons next to speed sliders to change loco speed?</string>
     <string name="prefSpeedButtonsRepeatTitle">Speed button repeat delay</string>
     <string name="prefSpeedButtonsRepeatSummary">How long between repeats on speed buttons.  Smaller is faster.</string>
-	<string name="prefSpeedButtonsRepeatDefaultValue">100</string>
+    <string name="prefSpeedButtonsRepeatDefaultValue">100</string>
     <string name="prefSpeedButtonsSpeedStepTitle">Speed button change amount</string>
     <string name="prefSpeedButtonsSpeedStepSummary">How much Speed arrows jump throttle speed.</string>
-	<string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>
+    <string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>
     <string name="prefGamePadTypeDefaultValue">None</string>
-	<string name="prefSwipeUpOptionDefaultValue">None</string>
+    <string name="prefSwipeUpOptionDefaultValue">None</string>
     <string name="prefGamePadStartButtonDefaultValue">Next Throttle</string>
     <string name="prefScreenBrightnessDimDefaultValue">"5"</string>
-    <string name="NumThrottleDefaulValue">Two</string>
     <string name="server_address">Server address</string>
-	<string name="routes_route">Route System Name</string>
-	<string name="label_percent">%</string>
+    <string name="routes_route">Route System Name</string>
+    <string name="label_percent">%</string>
     <string name="label_14step">14</string>
-	<string name="label_27step">27</string>
+    <string name="label_27step">27</string>
     <string name="label_28step">28</string>
-	<string name="label_128step">128</string>
+    <string name="label_128step">128</string>
     <string name="throttle_name">Throttle Name: %1$s</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -101,10 +101,17 @@
         <item>Auto-Rotate</item>
         <item>Auto-Web</item>
     </string-array>
+    <string-array name="TypeOfThrottlesOptions">
+        <item >Full</item>
+        <item >Simple</item>
+    </string-array>
     <string-array name="NumOfThrottlesOptions">
         <item >One</item>
         <item >Two</item>
         <item >Three</item>
+        <item >Four</item>
+        <item >Five</item>
+        <item >Six</item>
     </string-array>
     <string-array name="DisplayClockOptions">
         <item >None</item>
