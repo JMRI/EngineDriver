@@ -1228,7 +1228,7 @@ public class threaded_application extends Application {
             // if version >= 2.0, convert certain messages to MultiThrottle format
             if (withrottle_version >= 2.0) {
                 char whichThrottle = msg.charAt(0);
-//                if ('T' == whichThrottle || 'S' == whichThrottle || 'G' == whichThrottle) {     //acquire loco
+                if (whichThrottle >= '0' && whichThrottle <= '5' ) { //acquire loco
                     String cmd = msg.substring(1);
                     char com = cmd.charAt(0);
                     String addr = "";
@@ -1259,7 +1259,7 @@ public class threaded_application extends Application {
                             addr = "*";
                         newMsg = prefix + "A" + addr + "<;>" + cmd;
                     }
-//                }
+                }
             }
 
             //send response to debug log for review
