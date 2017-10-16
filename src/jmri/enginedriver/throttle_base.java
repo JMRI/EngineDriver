@@ -1867,7 +1867,7 @@ public class throttle_base extends Activity implements android.gesture.GestureOv
         changeTimers[whichThrottle].changeDelay();
 
         // send speed update to WiT
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "", whichThrottle, speed);
+        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "", whichThrottle + '0', speed);
     }
 
     // implement delay for briefly ignoring WiT speed reports after sending a throttle speed update

@@ -7,7 +7,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Implementation of an easy vertical SeekBar, based on the normal SeekBar.
@@ -99,16 +103,19 @@ public class VerticalSeekBar extends SeekBar {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
+                //setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
+                setSeekBarProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
                 mOnSeekBarChangeListener.onStartTrackingTouch(this);
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
+                //setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
+                setSeekBarProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
                 break;
 
             case MotionEvent.ACTION_UP:
-                setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
+                //setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
+                setSeekBarProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
                 mOnSeekBarChangeListener.onStopTrackingTouch(this);
                 break;
 
@@ -128,6 +135,21 @@ public class VerticalSeekBar extends SeekBar {
      */
     @Override
     public final void setProgress(final int progress) {
+        super.setProgress(progress);
+        onSizeChanged(getWidth(), getHeight(), 0, 0);
+    }
+
+    private void setSeekBarProgress(int progress) {
+
+        Method privateSetProgressMethod = null;
+
+        try {
+            privateSetProgressMethod = ProgressBar.class.getDeclaredMethod("setProgress", Integer.TYPE, Boolean.TYPE);
+            privateSetProgressMethod.setAccessible(true);
+            privateSetProgressMethod.invoke(this, progress, true);
+        }
+        catch (Exception ex) {
+        }
         super.setProgress(progress);
         onSizeChanged(getWidth(), getHeight(), 0, 0);
     }
