@@ -17,10 +17,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.provider.Settings;
 import android.util.Log;
@@ -28,6 +31,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.CheckedTextView;
+import android.widget.ListView;
 
 import java.util.Random;
 
@@ -60,6 +68,40 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             getPreferenceScreen().findPreference("prefThrottleViewImmersiveMode").setEnabled(false);
         }
         result = RESULT_OK;
+
+
+
+
+
+        ListPreference devicePreference = (ListPreference) getPreferenceScreen().findPreference("NumThrottle");
+
+        devicePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+            public boolean onPreferenceClick(Preference preference) {
+                final ListPreference listPref = (ListPreference) preference;
+                ListView listView = ((AlertDialog)listPref.getDialog()).getListView();
+                listView.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
+
+                    public void onChildViewRemoved(View parent, View child) { }
+
+                    public void onChildViewAdded(View parent, View child) {
+
+                        if (!mainapp.prefs.getBoolean("TypeThrottle", getResources().getBoolean(R.bool.prefTypeOfThrottleDefaultValue))) {
+                            String key = ((CheckedTextView)child).getText().toString();
+                            if (key.equals("Four")
+                                ||
+                                key.equals("Five")
+                                ||
+                                key.equals("Six")
+                                )
+                                child.setEnabled(false);
+                        }
+                    }
+                });
+                return false;
+            }
+        });
+
     }
 
     @SuppressWarnings("deprecation")

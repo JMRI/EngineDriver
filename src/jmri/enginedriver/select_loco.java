@@ -85,16 +85,18 @@ public class select_loco extends Activity {
 
     private int engine_address;
     private int address_size;
-    private String sWhichThrottle = "T"; // "T" or "S" or "G" + roster name
+    private String sWhichThrottle =  "0"; //"T"; // "T" or "S" or "G" + roster name
     private int result;
-    private boolean selectLocoRendered = false;         // this will be true once set_labels() runs following rendering of the loco select textViews
+    protected boolean selectLocoRendered = false;         // this will be true once set_labels() runs following rendering of the loco select textViews
 
-    private threaded_application mainapp; // hold pointer to mainapp
+    protected threaded_application mainapp; // hold pointer to mainapp
 
-    private SharedPreferences prefs;
+    protected SharedPreferences prefs;
     private String default_address_length;
     private Menu SMenu;
     private boolean navigatingAway = false;     // flag for onPause: set to true when another activity is selected, false if going into background 
+
+    protected int layoutViewId = R.layout.select_loco;
 
     // populate the on-screen roster view from global hashmap
     public void refresh_roster_list() {
@@ -172,98 +174,158 @@ public class select_loco extends Activity {
     }
 
     // lookup and set values of various text labels
-    private void set_labels() {
+    protected void set_labels() {
 
         TextView vH = (TextView) findViewById(R.id.throttle_name_header);
         // show throttle name
         String s = "Throttle Name: "
-                + prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
+                + mainapp.prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
         vH.setText(s);
 
         // format and show currently selected locos, and hide or show Release buttons
         final int conNomTextSize = 16;
         final int conSmallTextSize = 10;
 
-        TextView vST = (TextView) findViewById(R.id.sl_loco_T);
-        Button bRT = (Button) findViewById(R.id.sl_release_T);
-        if (mainapp.consistT.isActive()) {
-            String vLabel = mainapp.consistT.toString();
-            int vWidth = vST.getWidth();                // scale text if required to fit the textView
-            vST.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-            double textWidth = vST.getPaint().measureText(vLabel);
-            if (vWidth == 0)
-                selectLocoRendered = false;
-            else {
-                selectLocoRendered = true;
-                if (textWidth > vWidth) {
-                    vST.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
-                }
+        TextView vS = (TextView) findViewById(R.id.Sl_loco_0);
+        Button bR = (Button) findViewById(R.id.Sl_release_0);
+
+        for (int i = 0; i < 3; i++) {
+            switch (i)
+            {
+                case 1:
+                    vS = (TextView) findViewById(R.id.Sl_loco_1);
+                    bR = (Button) findViewById(R.id.Sl_release_1);
+                    break;
+                case 2:
+                    vS = (TextView) findViewById(R.id.Sl_loco_2);
+                    bR = (Button) findViewById(R.id.Sl_release_2);
+                    break;
             }
-            vST.setText(vLabel);
-            bRT.setEnabled(true);
-        } else {
-            vST.setText("");
-            bRT.setEnabled(false);
+
+            vS.setVisibility(View.GONE);
+            bR.setVisibility(View.GONE);
         }
 
-        TextView vSS = (TextView) findViewById(R.id.sl_loco_S);
-        Button bRS = (Button) findViewById(R.id.sl_release_S);
-        if (mainapp.consistS.isActive()) {
-            String vLabel = mainapp.consistS.toString();
-            int vWidth = vSS.getWidth();                // scale text if required to fit the textView
-            vSS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-            double textWidth = vSS.getPaint().measureText(vLabel);
-            if (vWidth == 0)
-                selectLocoRendered = false;
-            else {
-                selectLocoRendered = true;
-                if (textWidth > vWidth) {
-                    vSS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
-                }
+        vS = (TextView) findViewById(R.id.Sl_loco_0);
+        bR = (Button) findViewById(R.id.Sl_release_0);
+
+        for (int i = 0; i < Math.min(mainapp.numThrottles,3); i++) {
+            switch (i)
+            {
+                case 1:
+                    vS = (TextView) findViewById(R.id.Sl_loco_1);
+                    bR = (Button) findViewById(R.id.Sl_release_1);
+                    break;
+                case 2:
+                    vS = (TextView) findViewById(R.id.Sl_loco_2);
+                    bR = (Button) findViewById(R.id.Sl_release_2);
+                    break;
             }
-            vSS.setText(vLabel);
-            bRS.setEnabled(true);
-        } else {
-            vSS.setText("");
-            bRS.setEnabled(false);
+
+            vS.setVisibility(View.VISIBLE);
+            bR.setVisibility(View.VISIBLE);
+
+            if (mainapp.consists[i].isActive()) {
+                String vLabel = mainapp.consists[i].toString();
+                int vWidth = vS.getWidth();                // scale text if required to fit the textView
+                vS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+                double textWidth = vS.getPaint().measureText(vLabel);
+                if (vWidth == 0)
+                    selectLocoRendered = false;
+                else {
+                    selectLocoRendered = true;
+                    if (textWidth > vWidth) {
+                        vS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
+                    }
+                }
+                vS.setText(vLabel);
+                bR.setEnabled(true);
+            } else {
+                vS.setText("");
+                bR.setEnabled(false);
+            }
         }
 
-        TextView vSG = (TextView) findViewById(R.id.sl_loco_G);
-        Button bRG = (Button) findViewById(R.id.sl_release_G);
-        if (mainapp.consistG.isActive()) {
-            String vLabel = mainapp.consistG.toString();
-            int vWidth = vSG.getWidth();                // scale text if required to fit the textView
-            vSG.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-            double textWidth = vSG.getPaint().measureText(vLabel);
-            if (vWidth == 0)
-                selectLocoRendered = false;
-            else {
-                selectLocoRendered = true;
-                if (textWidth > vWidth) {
-                    vSG.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
-                }
-            }
-            vSG.setText(vLabel);
-            bRG.setEnabled(true);
-        } else {
-            vSG.setText("");
-            bRG.setEnabled(false);
-        }
+//        TextView vST = (TextView) findViewById(R.id.sl_loco_T);
+//        Button bRT = (Button) findViewById(R.id.sl_release_T);
+//        if (mainapp.consistT.isActive()) {
+//            String vLabel = mainapp.consistT.toString();
+//            int vWidth = vST.getWidth();                // scale text if required to fit the textView
+//            vST.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+//            double textWidth = vST.getPaint().measureText(vLabel);
+//            if (vWidth == 0)
+//                selectLocoRendered = false;
+//            else {
+//                selectLocoRendered = true;
+//                if (textWidth > vWidth) {
+//                    vST.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
+//                }
+//            }
+//            vST.setText(vLabel);
+//            bRT.setEnabled(true);
+//        } else {
+//            vST.setText("");
+//            bRT.setEnabled(false);
+//        }
+//
+//        TextView vSS = (TextView) findViewById(R.id.sl_loco_S);
+//        Button bRS = (Button) findViewById(R.id.sl_release_S);
+//        if (mainapp.consistS.isActive()) {
+//            String vLabel = mainapp.consistS.toString();
+//            int vWidth = vSS.getWidth();                // scale text if required to fit the textView
+//            vSS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+//            double textWidth = vSS.getPaint().measureText(vLabel);
+//            if (vWidth == 0)
+//                selectLocoRendered = false;
+//            else {
+//                selectLocoRendered = true;
+//                if (textWidth > vWidth) {
+//                    vSS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
+//                }
+//            }
+//            vSS.setText(vLabel);
+//            bRS.setEnabled(true);
+//        } else {
+//            vSS.setText("");
+//            bRS.setEnabled(false);
+//        }
+//
+//        TextView vSG = (TextView) findViewById(R.id.sl_loco_G);
+//        Button bRG = (Button) findViewById(R.id.sl_release_G);
+//        if (mainapp.consistG.isActive()) {
+//            String vLabel = mainapp.consistG.toString();
+//            int vWidth = vSG.getWidth();                // scale text if required to fit the textView
+//            vSG.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+//            double textWidth = vSG.getPaint().measureText(vLabel);
+//            if (vWidth == 0)
+//                selectLocoRendered = false;
+//            else {
+//                selectLocoRendered = true;
+//                if (textWidth > vWidth) {
+//                    vSG.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
+//                }
+//            }
+//            vSG.setText(vLabel);
+//            bRG.setEnabled(true);
+//        } else {
+//            vSG.setText("");
+//            bRG.setEnabled(false);
+//        }
 
         // only show loco text and release buttons for allowed # of locos
-        String numThrot = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumOfThrottlesDefault));
-        if ("One".equals(numThrot) || "Two".equals(numThrot)) {
-            vSG.setVisibility(View.GONE);
-            bRG.setVisibility(View.GONE);
-
-            if ("One".equals(numThrot)) {
-                vSS.setVisibility(View.GONE);
-                bRS.setVisibility(View.GONE);
-            }
-        }
+//        String numThrot = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumOfThrottlesDefault));
+//        if ("One".equals(numThrot) || "Two".equals(numThrot)) {
+//            vSG.setVisibility(View.GONE);
+//            bRG.setVisibility(View.GONE);
+//
+//            if ("One".equals(numThrot)) {
+//                vSS.setVisibility(View.GONE);
+//                bRS.setVisibility(View.GONE);
+//            }
+//        }
 
         // hide the recent locos list if selected in prefs
-        boolean hrl = prefs.getBoolean("hide_recent_locos_preference",
+        boolean hrl = mainapp.prefs.getBoolean("hide_recent_locos_preference",
                 getResources().getBoolean(R.bool.prefHideRecentLocosDefaultValue));
         if (hrl) {
             View rlv = findViewById(R.id.recent_engines_heading);
@@ -279,7 +341,7 @@ public class select_loco extends Activity {
 
         //      String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
         //      setTitle(getApplicationContext().getResources().getString(R.string.app_name_select_loco) + "    |    Throttle Name: " + 
-        //              prefs.getString("throttle_name_preference", defaultName));
+        //              mainapp.prefs.getString("throttle_name_preference", defaultName));
 
         refresh_roster_list();
     }
@@ -335,23 +397,24 @@ public class select_loco extends Activity {
     }
 
     // request release of specified throttle
-    void release_loco(char whichThrottle) {
-        if (whichThrottle == 'T') {
-            mainapp.consistT.release();
-        } else if (whichThrottle == 'G') {
-            mainapp.consistG.release();
-        } else {
-            mainapp.consistS.release();
-        }
+    void release_loco(int whichThrottle) {
+        mainapp.consists[whichThrottle].release();
+//        if (whichThrottle == 'T') {
+//            mainapp.consistT.release();
+//        } else if (whichThrottle == 'G') {
+//            mainapp.consistG.release();
+//        } else {
+//            mainapp.consistS.release();
+//        }
 
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", (int) whichThrottle); // pass T, S or G in message
+        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", whichThrottle); // pass 0, 1 or 2 in message
     }
 
     boolean saveUpdateList;         // save value across ConsistEdit activity 
     boolean newEngine;              // save value across ConsistEdit activity
 
     void acquire_engine(boolean bUpdateList) {
-        char whichThrottle = sWhichThrottle.charAt(0);
+        int whichThrottle = sWhichThrottle.charAt(0)-48;
         String roster_name = sWhichThrottle.substring(1);
         String addr = (address_size == address_type.LONG ? "L" : "S") + engine_address;
         Loco l = new Loco(addr);
@@ -362,22 +425,21 @@ public class select_loco extends Activity {
             l.setDesc(mainapp.getRosterNameFromAddress(l.toString()));  //lookup rostername from address if not set
             l.setRosterName(null); //make sure rosterName is null
         }
-        Consist consist;
-
-        if (whichThrottle == 'T') {
-            consist = mainapp.consistT;
-        } else if (whichThrottle == 'G') {
-            consist = mainapp.consistG;
-        } else {
-            consist = mainapp.consistS;
-        }
+        Consist consist = mainapp.consists[whichThrottle];
+//        if (whichThrottle == 'T') {
+//            consist = mainapp.consistT;
+//        } else if (whichThrottle == 'G') {
+//            consist = mainapp.consistG;
+//        } else {
+//            consist = mainapp.consistS;
+//        }
 
         if (sWhichThrottle.length() > 1 && mainapp.withrottle_version >= 1.6) // add roster selection info if present and supported
             addr += "<;>" + sWhichThrottle.substring(1);
 
 
         //user preference set to not consist, or consisting not supported in this JMRI, so drop before adding
-        if ((prefs.getBoolean("drop_on_acquire_preference", false))
+        if ((mainapp.prefs.getBoolean("drop_on_acquire_preference", false))
                 || (mainapp.withrottle_version < 2.0)) {
             release_loco(whichThrottle);
         }
@@ -388,7 +450,7 @@ public class select_loco extends Activity {
             if (mainapp.withrottle_version < 1.6) {  //auto-confirm for older WiT, since no response will come
                 consist.setConfirmed(l.getAddress());
             }
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, addr, (int) whichThrottle);
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, addr, whichThrottle);
             updateRecentEngines(bUpdateList);
             result = RESULT_OK;
             end_this_activity();
@@ -398,13 +460,13 @@ public class select_loco extends Activity {
             newEngine = (cl == null);
             if (newEngine || !cl.isConfirmed()) {        // if engine is not already in the consist, or if it is but never got acquired
                 consist.add(l);
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, addr, (int) whichThrottle);
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, addr, whichThrottle);
 
                 saveUpdateList = bUpdateList;
                 Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
                 consistEdit.putExtra("whichThrottle", whichThrottle);
                 navigatingAway = true;
-                startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
+                startActivityForResult(consistEdit, throttle_full.ACTIVITY_CONSIST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
         }
@@ -412,7 +474,7 @@ public class select_loco extends Activity {
 
     //handle return from ConsistEdit
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == throttle.ACTIVITY_CONSIST) {                          // edit consist
+        if (requestCode == throttle_full.ACTIVITY_CONSIST) {                          // edit consist
             if (newEngine) {
                 updateRecentEngines(saveUpdateList);
             }
@@ -430,7 +492,7 @@ public class select_loco extends Activity {
         File connections_list_file = new File(sdcard_path,
                 "engine_driver/recent_engine_list.txt");
         PrintWriter list_output;
-        String smrl = prefs.getString("maximum_recent_locos_preference", ""); //retrieve pref for max recent locos to show  
+        String smrl = mainapp.prefs.getString("maximum_recent_locos_preference", ""); //retrieve pref for max recent locos to show
         try {
             int mrl = 10; //default to 10 if pref is blank or invalid
             try {
@@ -473,7 +535,20 @@ public class select_loco extends Activity {
         }
     }
 
-    public class release_button_listener_T implements View.OnClickListener {
+    public class release_button_listener implements View.OnClickListener {
+        int _throttle;
+        public release_button_listener(int throttle)
+        {
+            _throttle = throttle;
+        }
+
+        public void onClick(View v) {
+            release_loco(_throttle);
+            end_this_activity();
+        }
+    }
+
+/*    public class release_button_listener_T implements View.OnClickListener {
         public void onClick(View v) {
             release_loco('T');
             end_this_activity();
@@ -492,7 +567,7 @@ public class select_loco extends Activity {
             release_loco('G');
             end_this_activity();
         }
-    }
+    }*/
 
     public class engine_item implements AdapterView.OnItemClickListener {
         // When an item is clicked, acquire that engine.
@@ -533,7 +608,7 @@ public class select_loco extends Activity {
                 if ("loco".equals(rosterEntryType)) {
                     sWhichThrottle += rosterNameString;     //append rostername if type is loco (not consist) 
                 }
-                boolean bRosterRecent = prefs.getBoolean("roster_recent_locos_preference",
+                boolean bRosterRecent = mainapp.prefs.getBoolean("roster_recent_locos_preference",
                         getResources().getBoolean(R.bool.prefRosterRecentLocosDefaultValue));
                 acquire_engine(bRosterRecent);
             }
@@ -557,12 +632,11 @@ public class select_loco extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) getApplication();
-        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         result = RESULT_CANCELED;
         if (mainapp.isForcingFinish()) {     // expedite
             return;
         }
-        setContentView(R.layout.select_loco);
+        setContentView(layoutViewId);
 
         // put pointer to this activity's handler in main app's shared variable
         mainapp.select_loco_msg_handler = new select_loco_handler();
@@ -662,20 +736,20 @@ public class select_loco extends Activity {
         button_listener click_listener = new button_listener();
         button.setOnClickListener(click_listener);
 
-        button = (Button) findViewById(R.id.sl_release_T);
-        button.setOnClickListener(new release_button_listener_T());
+        button = (Button) findViewById(R.id.Sl_release_0);
+        button.setOnClickListener(new release_button_listener(0));
+
+        button = (Button) findViewById(R.id.Sl_release_1);
+        button.setOnClickListener(new release_button_listener(1));
+
+        button = (Button) findViewById(R.id.Sl_release_2);
+        button.setOnClickListener(new release_button_listener(2));
 
         //Jeffrey added 7/3/2013
         button = (Button) findViewById(R.id.clear_Loco_List_button);
         button.setOnClickListener(new clear_Loco_List_button());
 
-        button = (Button) findViewById(R.id.sl_release_S);
-        button.setOnClickListener(new release_button_listener_S());
-
-        button = (Button) findViewById(R.id.sl_release_G);
-        button.setOnClickListener(new release_button_listener_G());
-
-        default_address_length = prefs.getString("default_address_length", this
+        default_address_length = mainapp.prefs.getString("default_address_length", this
                 .getResources().getString(
                         R.string.prefDefaultAddressLengthDefaultValue));
         Bundle extras = getIntent().getExtras();
@@ -735,7 +809,7 @@ public class select_loco extends Activity {
         navigatingAway = false;
 
         // checking address length here covers (future) case where prefs changed while paused
-        default_address_length = prefs.getString("default_address_length", this
+        default_address_length = mainapp.prefs.getString("default_address_length", this
                 .getResources().getString(R.string.prefDefaultAddressLengthDefaultValue));
         updateAddressEntry();   // enable/disable buttons
         // suppress popup keyboard until EditText is touched
