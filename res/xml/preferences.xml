@@ -39,8 +39,14 @@
             android:title="@string/prefDisplayClockTitle" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefThrottlePageTitle" >
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefTypeOfThrottleDefaultValue"
+            android:key="TypeThrottle"
+            android:summary="@string/prefTypeOfThrottlesSummary"
+            android:title="@string/prefTypeOfThrottles" >
+        </CheckBoxPreference>
         <ListPreference
-            android:defaultValue="@string/NumThrottleDefaulValue"
+            android:defaultValue="@string/prefNumOfThrottlesDefaultValue"
             android:entries="@array/NumOfThrottlesOptions"
             android:entryValues="@array/NumOfThrottlesOptions"
             android:key="NumThrottle"
