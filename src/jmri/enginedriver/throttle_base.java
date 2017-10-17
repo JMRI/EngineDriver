@@ -2001,10 +2001,7 @@ public class throttle_base extends Activity implements android.gesture.GestureOv
 
         changeTimers = new ChangeDelay[mainapp.numThrottles];
 
-        int numT = mainapp.numThrottles;
-
-        if (numT > 3)
-            numT = 3; // prevent this from stomping over throttles 3-5
+        int numT = Math.max(mainapp.numThrottles, 3); // prevent this from stomping over throttles 3-5
 
         for (int i=0; i < numT; i++) {
             // set listener for select loco buttons
@@ -2413,7 +2410,7 @@ public class throttle_base extends Activity implements android.gesture.GestureOv
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CURRENT_TIME); // request time update
 
         // format the screen area
-        for (int i=0; i < Math.min(mainapp.numThrottles,3); i++) {
+        for (int i=0; i < mainapp.numThrottles; i++) {
             enable_disable_buttons(i);
 
             if (TMenu != null) {
