@@ -196,19 +196,19 @@
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButton1Title" />
             <ListPreference
-                android:defaultValue="@string/prefGamePadButton2DefaultValue"
-                android:entries="@array/prefGamePadKeyOptions"
-                android:entryValues="@array/prefGamePadKeyOptions"
-                android:key="prefGamePadButton2"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButton2Title" />
-            <ListPreference
                 android:defaultValue="@string/prefGamePadButton3DefaultValue"
                 android:entries="@array/prefGamePadKeyOptions"
                 android:entryValues="@array/prefGamePadKeyOptions"
                 android:key="prefGamePadButton3"
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButton3Title" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButton2DefaultValue"
+                android:entries="@array/prefGamePadKeyOptions"
+                android:entryValues="@array/prefGamePadKeyOptions"
+                android:key="prefGamePadButton2"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButton2Title" />
             <ListPreference
                 android:defaultValue="@string/prefGamePadButton4DefaultValue"
                 android:entries="@array/prefGamePadKeyOptions"
