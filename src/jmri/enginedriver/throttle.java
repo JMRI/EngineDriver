@@ -1764,7 +1764,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
-    // For gamepad speed buttons.
+    // For volume speed buttons.
     private class volumeKeysRptUpdater implements Runnable {
         char whichThrottle;
 
