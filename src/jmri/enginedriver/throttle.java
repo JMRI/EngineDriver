@@ -278,6 +278,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private Handler gamepadRepeatUpdateHandler = new Handler();
     private boolean mGamepadAutoIncrement = false;
     private boolean mGamepadAutoDecrement = false;
+    private Handler volumeKeysRepeatUpdateHandler = new Handler();
+    private boolean mVolumeKeysAutoIncrement = false;
+    private boolean mVolumeKeysAutoDecrement = false;
 
     private int[] gamePadIds = {0,0,0}; // which device id if assigned to each of the three throttles
     private String[] gamePadThrottleAssignment = {"","",""};
@@ -311,7 +314,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             if (mAutoIncrement) {
                 incrementSpeed(whichThrottle);
                 repeatUpdateHandler.postDelayed(new RptUpdater(whichThrottle), REP_DELAY);
-            } else if (mGamepadAutoDecrement) {
+            } else if (mAutoDecrement) {
                 decrementSpeed(whichThrottle);
                 repeatUpdateHandler.postDelayed(new RptUpdater(whichThrottle), REP_DELAY);
             }
@@ -1761,6 +1764,31 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
+    // For volume speed buttons.
+    private class volumeKeysRptUpdater implements Runnable {
+        char whichThrottle;
+
+        private volumeKeysRptUpdater(char WhichThrottle) {
+            whichThrottle = WhichThrottle;
+
+            try {
+                REP_DELAY = Integer.parseInt(prefs.getString("speed_arrows_throttle_repeat_delay", "100"));
+            } catch (NumberFormatException ex) {
+                REP_DELAY = 100;
+            }
+        }
+
+        @Override
+        public void run() {
+            if (mVolumeKeysAutoIncrement) {
+                incrementSpeed(whichThrottle);
+                volumeKeysRepeatUpdateHandler.postDelayed(new volumeKeysRptUpdater(whichThrottle), REP_DELAY);
+            } else if (mVolumeKeysAutoDecrement) {
+                decrementSpeed(whichThrottle);
+                volumeKeysRepeatUpdateHandler.postDelayed(new volumeKeysRptUpdater(whichThrottle), REP_DELAY);
+            }
+        }
+    }
 
 
 // Listeners for the Select Loco buttons
@@ -2555,6 +2583,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             scale = webView.getScale(); // save current scale for next onCreate
         }
         repeatUpdateHandler = null;
+        volumeKeysRepeatUpdateHandler = null;
+        gamepadRepeatUpdateHandler = null;
+
         tg.release();
         mainapp.throttle_msg_handler = null;
 
@@ -2928,16 +2959,16 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         int sliderMargin = preferences.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
 
         //show speed buttons based on pref
-        sbS.setVisibility(VISIBLE);  //always show slider if buttons not shown
-        sbG.setVisibility(VISIBLE);
-        sbT.setVisibility(VISIBLE);
+        sbS.setVisibility(View.VISIBLE);  //always show slider if buttons not shown
+        sbG.setVisibility(View.VISIBLE);
+        sbT.setVisibility(View.VISIBLE);
         if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
-            bLSpdT.setVisibility(VISIBLE);
-            bLSpdS.setVisibility(VISIBLE);
-            bLSpdG.setVisibility(VISIBLE);
-            bRSpdT.setVisibility(VISIBLE);
-            bRSpdS.setVisibility(VISIBLE);
-            bRSpdG.setVisibility(VISIBLE);
+            bLSpdT.setVisibility(View.VISIBLE);
+            bLSpdS.setVisibility(View.VISIBLE);
+            bLSpdG.setVisibility(View.VISIBLE);
+            bRSpdT.setVisibility(View.VISIBLE);
+            bRSpdS.setVisibility(View.VISIBLE);
+            bRSpdG.setVisibility(View.VISIBLE);
             bLSpdT.setText(speedButtonLeftText);
             bLSpdG.setText(speedButtonLeftText);
             bLSpdS.setText(speedButtonLeftText);
@@ -2946,9 +2977,9 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             bRSpdS.setText(speedButtonRightText);
             //if buttons enabled, hide the slider if requested
             if (prefs.getBoolean("hide_slider_preference", false)) {
-                sbS.setVisibility(GONE);
-                sbG.setVisibility(GONE);
-                sbT.setVisibility(GONE);
+                sbS.setVisibility(View.GONE);
+                sbG.setVisibility(View.GONE);
+                sbT.setVisibility(View.GONE);
                 bLSpdT.setText(speedButtonDownText);
                 bLSpdG.setText(speedButtonDownText);
                 bLSpdS.setText(speedButtonDownText);
@@ -2957,12 +2988,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 bRSpdS.setText(speedButtonUpText);
             }
         } else {  //hide speed buttons based on pref
-            bLSpdT.setVisibility(GONE);
-            bLSpdS.setVisibility(GONE);
-            bLSpdG.setVisibility(GONE);
-            bRSpdT.setVisibility(GONE);
-            bRSpdS.setVisibility(GONE);
-            bRSpdG.setVisibility(GONE);
+            bLSpdT.setVisibility(View.GONE);
+            bLSpdS.setVisibility(View.GONE);
+            bLSpdG.setVisibility(View.GONE);
+            bRSpdT.setVisibility(View.GONE);
+            bRSpdS.setVisibility(View.GONE);
+            bRSpdG.setVisibility(View.GONE);
             sliderMargin += 30;  //a little extra margin previously in button
         }
 
@@ -3078,7 +3109,27 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     @SuppressWarnings("deprecation")
     @Override
+    public boolean onKeyUp(int key, KeyEvent event) {
+        int repeatCnt = event.getRepeatCount();
+        int action = event.getAction();
+
+        // Handle pressing of the back button
+        if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {
+            mVolumeKeysAutoIncrement = false;
+            mVolumeKeysAutoDecrement = false;
+
+            return (true); // stop processing this key
+        }
+        return (super.onKeyUp(key, event)); // continue with normal key
+        // processing
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
     public boolean onKeyDown(int key, KeyEvent event) {
+        int repeatCnt = event.getRepeatCount();
+        int action = event.getAction();
+
         // Handle pressing of the back button
         if (key == KEYCODE_BACK) {
             if (webView.canGoBack() && !clearHistory) {
@@ -3100,10 +3151,31 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 wVol = 'G';
             }
             if (wVol != 0) {
+                /*
                 if (key == KEYCODE_VOLUME_UP) {
                     speedChangeAndNotify(wVol, 1);
                 } else {
                     speedChangeAndNotify(wVol, -1);
+                }
+                */
+                if (key == KEYCODE_VOLUME_UP) {
+                    if (repeatCnt == 0) {
+                        incrementSpeed(wVol);
+                    }
+                    // if longpress, start repeater
+                    else if (repeatCnt == 1) {
+                        mVolumeKeysAutoIncrement = true;
+                        volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(wVol));
+                    }
+                } else {
+                    if (repeatCnt == 0) {
+                        incrementSpeed(wVol);
+                    }
+                    // if longpress, start repeater
+                    else if (repeatCnt == 1) {
+                        mVolumeKeysAutoDecrement = true;
+                        volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(wVol));
+                    }
                 }
             }
             return (true); // stop processing this key
