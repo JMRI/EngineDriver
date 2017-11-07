@@ -1488,64 +1488,66 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         int whichGamePadDeviceId = -1;
         int j;
 
-        if (prefGamePadMultipleDevices) {  // deal with multiple devices if the preference is set
-            int gamePadDeviceId = event.getDeviceId();
+        if ((event.getKeyCode()!=KEYCODE_VOLUME_UP)&&(event.getKeyCode()!=KEYCODE_VOLUME_DOWN)&&(event.getKeyCode()!=KEYCODE_BACK)) { // if it is a volume key or the back assume it did not come form a gamepad
+            if (prefGamePadMultipleDevices) {  // deal with multiple devices if the preference is set
+                int gamePadDeviceId = event.getDeviceId();
 
-            if (gamePadDeviceId>=0) { // event is from a gamepad (or at least not from a screen touch)
-                whichGamePad = -1;  // gamepad
+                if (gamePadDeviceId >= 0) { // event is from a gamepad (or at least not from a screen touch)
+                    whichGamePad = -1;  // gamepad
 
-                String reassigningGamepad = "X";
-                int i;
-                int numThrottles = allThrottleLetters.length;
-                // find out if this gamepad is alread assigned
-                for (i = 0; i < numThrottles; i++) {
-                    if (gamePadIds[i] == gamePadDeviceId) {
-                        if (getConsist(allThrottleLetters[i]).isActive()) { //found the throttle and it is active
-                            whichGamePad = i;
-                        } else { // currently assigned to this throttle, but the throttle is not active
-                            whichGamePad = i;
-                            gamePadIds[i] = 0;
-                            reassigningGamepad = gamePadThrottleAssignment[i];
-                            gamePadThrottleAssignment[i] = " ";
-                            setGamepadIndicator(); // need to clear the indicator
-                        }
-                        break;
-                    }
-                }
-
-                if (whichGamePad == -1) { //didn't find it OR is known, but unassigned
-
-                    for (j = 0; j < gamepadCount; j++) {
-                        if (gamePadDeviceIds[j] == gamePadDeviceId) { // known, but unassigned
-                            whichGamePadDeviceId = j;
+                    String reassigningGamepad = "X";
+                    int i;
+                    int numThrottles = allThrottleLetters.length;
+                    // find out if this gamepad is alread assigned
+                    for (i = 0; i < numThrottles; i++) {
+                        if (gamePadIds[i] == gamePadDeviceId) {
+                            if (getConsist(allThrottleLetters[i]).isActive()) { //found the throttle and it is active
+                                whichGamePad = i;
+                            } else { // currently assigned to this throttle, but the throttle is not active
+                                whichGamePad = i;
+                                gamePadIds[i] = 0;
+                                reassigningGamepad = gamePadThrottleAssignment[i];
+                                gamePadThrottleAssignment[i] = " ";
+                                setGamepadIndicator(); // need to clear the indicator
+                            }
                             break;
                         }
                     }
-                    if (whichGamePadDeviceId == -1) { // previously unseen gamepad
-                        gamepadCount++;
-                        gamePadDeviceIds[gamepadCount - 1] = gamePadDeviceId;
-                        whichGamePadDeviceId = gamepadCount - 1;
-                    }
 
-                    for (i = 0; i < numThrottles; i++) {
-                        if (gamePadIds[i] == 0) {  // throttle is not assigned a gamepad
-                            if (getConsist(allThrottleLetters[i]).isActive()) { // found next active throttle
-                                gamePadIds[i] = gamePadDeviceId;
-                                if (reassigningGamepad.equals("X")) { // not a reassignment
-                                    gamePadThrottleAssignment[i] = GAMEPAD_INDICATOR[whichGamePadDeviceId];
-                                } else { // reasigning
-                                    gamePadThrottleAssignment[i] = reassigningGamepad;
+                    if (whichGamePad == -1) { //didn't find it OR is known, but unassigned
+
+                        for (j = 0; j < gamepadCount; j++) {
+                            if (gamePadDeviceIds[j] == gamePadDeviceId) { // known, but unassigned
+                                whichGamePadDeviceId = j;
+                                break;
+                            }
+                        }
+                        if (whichGamePadDeviceId == -1) { // previously unseen gamepad
+                            gamepadCount++;
+                            gamePadDeviceIds[gamepadCount - 1] = gamePadDeviceId;
+                            whichGamePadDeviceId = gamepadCount - 1;
+                        }
+
+                        for (i = 0; i < numThrottles; i++) {
+                            if (gamePadIds[i] == 0) {  // throttle is not assigned a gamepad
+                                if (getConsist(allThrottleLetters[i]).isActive()) { // found next active throttle
+                                    gamePadIds[i] = gamePadDeviceId;
+                                    if (reassigningGamepad.equals("X")) { // not a reassignment
+                                        gamePadThrottleAssignment[i] = GAMEPAD_INDICATOR[whichGamePadDeviceId];
+                                    } else { // reasigning
+                                        gamePadThrottleAssignment[i] = reassigningGamepad;
+                                    }
+                                    whichGamePad = i;
+                                    setGamepadIndicator();
+                                    break;  // done
                                 }
-                                whichGamePad = i;
-                                setGamepadIndicator();
-                                break;  // done
                             }
                         }
                     }
                 }
-            }
-            if (gamepadCount > 0) {
-                usingMultiplePads = true;
+                if (gamepadCount > 0) {
+                    usingMultiplePads = true;
+                }
             }
         }
         return whichGamePad;
@@ -1595,10 +1597,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_INCREASE_SPEED)) {  // Increase Speed
             if (isActive && (action == ACTION_DOWN)) {
                 if (repeatCnt == 0) {
-                    GamepadIncrementSpeed(whichThrottle);
+/*                    GamepadIncrementSpeed(whichThrottle);
                 }
                 // if longpress, start repeater
                 else if (repeatCnt == 1) {
+*/
                     mGamepadAutoIncrement = true;
                     gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle));
                 }
@@ -1606,10 +1609,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_DECREASE_SPEED)) {  // Decrease Speed
             if (isActive && (action == ACTION_DOWN)) {
                 if (repeatCnt == 0) {
-                    GamepadDecrementSpeed(whichThrottle);
+/*                    GamepadDecrementSpeed(whichThrottle);
                 }
                 // if longpress, start repeater
                 else if (repeatCnt == 1) {
+*/
                     mGamepadAutoDecrement = true;
                     gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle));
                 }
@@ -3151,28 +3155,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 wVol = 'G';
             }
             if (wVol != 0) {
-                /*
-                if (key == KEYCODE_VOLUME_UP) {
-                    speedChangeAndNotify(wVol, 1);
-                } else {
-                    speedChangeAndNotify(wVol, -1);
-                }
-                */
                 if (key == KEYCODE_VOLUME_UP) {
                     if (repeatCnt == 0) {
-                        incrementSpeed(wVol);
-                    }
-                    // if longpress, start repeater
-                    else if (repeatCnt == 1) {
                         mVolumeKeysAutoIncrement = true;
                         volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(wVol));
                     }
                 } else {
                     if (repeatCnt == 0) {
-                        incrementSpeed(wVol);
-                    }
-                    // if longpress, start repeater
-                    else if (repeatCnt == 1) {
                         mVolumeKeysAutoDecrement = true;
                         volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(wVol));
                     }
