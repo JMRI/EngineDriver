@@ -4,7 +4,8 @@
  * Individually control lights in consist
  * Handle multiple gamepads
  * warning before clearing Recent Loco list
- * User-selectable gamepad buttons
+ * user-selectable gamepad buttons
+ * use repeat Preference for volume as well
 **Version 2.15
  * fix incorrect loco request on reconnect when loco is not in roster (found by Bob Grandle)
  * prevent crash caused by empty JMRI consists
