@@ -311,4 +311,11 @@
         <item>@integer/KeyCode_N</item>
         <item>@integer/KeyCode_T</item>
     </integer-array>
+
+    <string-array name="prefImportExportOptions">
+        <item >None</item>
+        <item >Export</item>
+        <item >Import</item>
+        <item >Reset</item>
+    </string-array>
 </resources>

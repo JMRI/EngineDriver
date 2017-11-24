@@ -286,4 +286,10 @@
     <string name="prefConsistLightsLongClickTitle">Control Consist lights on long click</string>
     <string name="prefConsistLightsLongClickSummary">Change the Lights of the individual locos in a Consist with a long click on the Loco Select button.</string>
     <string name="consistLights_help">Click on a Loco to toggle the lights for that Loco \'Off\' or \'Follow Function Button\'. \n\nLong Click on a Loco to force the light status \'Off\', without sending the command to the Loco .(i.e. if ED is confused). \n\nPress Back Arrow when done.</string>
+
+    <string name="prefThrottleImportExportTitle">Import/Export/Reset Preferences</string>
+    <string name="prefImportExportTitle">Import or Export the Preferences</string>
+    <string name="prefImportExportSummary">Select \'Import\', \'Export\' or \'Reset\' your preferences to the \'engine_driver/\' folder on you SD card. Action will occur IMMEDIATELY on selecting the option.</string>
+    <string name="prefImportExportDefaultValue">None</string>
+
 </resources>
