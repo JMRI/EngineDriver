@@ -203,8 +203,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         resetPreferences(sharedPreferences);
                     }
                     sharedPreferences.edit().putString(key, "None").commit();  //reset the preference
-
-                    reload();
                 }
 
                 break;
@@ -230,6 +228,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         SharedPreferences.Editor prefEdit = sharedPreferences.edit();
         prefEdit.clear();
         prefEdit.commit();
+        reload();
     }
 
     private boolean writeExportFile(SharedPreferences sharedPreferences, File dst){
@@ -258,6 +257,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         if (!res) {
             Toast.makeText(getApplicationContext(), "Export failed!", Toast.LENGTH_LONG).show();
         }
+        sharedPreferences.edit().putString("prefImportExport", "None").commit();  //reset the preference
+        reload();
         return res;
     }
 
@@ -362,6 +363,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         if (!res) {
             Toast.makeText(getApplicationContext(), "Import from 'engine_driver/"+exportedPreferencesFileName+"' failed!", Toast.LENGTH_LONG).show();
+        } else {
+            reload();
         }
         return res;
     }
