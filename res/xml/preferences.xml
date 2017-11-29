@@ -457,4 +457,15 @@
             android:title="@string/prefSwipeThroughRoutesTitle" >
         </CheckBoxPreference>
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/prefThrottleImportExportTitle" >
+        <ListPreference
+            android:defaultValue="@string/prefImportExportDefaultValue"
+            android:entries="@array/prefImportExportOptions"
+            android:entryValues="@array/prefImportExportOptions"
+            android:key="prefImportExport"
+            android:summary="@string/prefImportExportSummary"
+            android:title="@string/prefImportExportTitle" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
