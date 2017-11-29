@@ -17,6 +17,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -52,6 +55,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private boolean currentlyImporting = false;
     private static String exportedPreferencesFileName =  "exported_preferences.ed";
+    private boolean overwiteFile = false;
 
     /**
      * Called when the activity is first created.
@@ -228,27 +232,20 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         prefEdit.commit();
     }
 
-    private boolean saveSharedPreferencesToFile(SharedPreferences sharedPreferences) {
+    private boolean writeExportFile(SharedPreferences sharedPreferences, File dst){
         boolean res = false;
-
-        File path = Environment.getExternalStorageDirectory();
-        File engine_driver_dir = new File(path, "engine_driver");
-        engine_driver_dir.mkdir();            // create directory if it doesn't exist
-
-        File dst = new File(path, "engine_driver/"+exportedPreferencesFileName);
-
         ObjectOutputStream output = null;
         try {
             output = new ObjectOutputStream(new FileOutputStream(dst));
             output.writeObject(sharedPreferences.getAll());
 
-            Toast.makeText(getApplicationContext(), "Export to 'engine_driver/" + exportedPreferencesFileName +"' succeseded.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Export to 'engine_driver/" + exportedPreferencesFileName + "' succeseded.", Toast.LENGTH_SHORT).show();
             res = true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 if (output != null) {
                     output.flush();
@@ -258,9 +255,51 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 ex.printStackTrace();
             }
         }
-
         if (!res) {
             Toast.makeText(getApplicationContext(), "Export failed!", Toast.LENGTH_LONG).show();
+        }
+        return res;
+    }
+
+    public boolean overwiteFileDialog(SharedPreferences sharedPreferences, File dst) {
+        boolean res = false;
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            //@Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        writeExportFile(sharedPreferences, dst);
+                        overwiteFile = true;
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        overwiteFile = false;
+                        break;
+                }
+            }
+        };
+        AlertDialog.Builder ab = new AlertDialog.Builder(preferences.this);
+        ab.setMessage("File already exists. Overwite?")
+                .setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("Cancel", dialogClickListener);
+        ab.show();
+        return overwiteFile;
+    }
+
+    private boolean saveSharedPreferencesToFile(SharedPreferences sharedPreferences) {
+        boolean res = false;
+
+        File path = Environment.getExternalStorageDirectory();
+        File engine_driver_dir = new File(path, "engine_driver");
+        engine_driver_dir.mkdir();            // create directory if it doesn't exist
+
+        File dst = new File(path, "engine_driver/"+exportedPreferencesFileName);
+
+        if(dst.exists()) {
+            overwiteFileDialog(sharedPreferences, dst);
+        } else {
+            res = writeExportFile(sharedPreferences, dst);
         }
         return res;
     }
@@ -270,6 +309,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         currentlyImporting = true;
         boolean res = false;
 
+        // save the current throttle name so that we can set it back after the restore is done
         String currentThrottleNameValue = sharedPreferences.getString("throttle_name_preference", getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)).trim();
 
         File path = Environment.getExternalStorageDirectory();
@@ -289,21 +329,16 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     Object v = entry.getValue();
                     String key = entry.getKey();
 
-                    if (v instanceof Boolean)
-                        prefEdit.putBoolean(key, ((Boolean) v).booleanValue());
-                    else if (v instanceof Float)
-                        prefEdit.putFloat(key, ((Float) v).floatValue());
-                    else if (v instanceof Integer)
-                        prefEdit.putInt(key, ((Integer) v).intValue());
-                    else if (v instanceof Long)
-                        prefEdit.putLong(key, ((Long) v).longValue());
-                    else if (v instanceof String)
-                        prefEdit.putString(key, ((String) v));
+                    if (v instanceof Boolean) prefEdit.putBoolean(key, ((Boolean) v).booleanValue());
+                    else if (v instanceof Float) prefEdit.putFloat(key, ((Float) v).floatValue());
+                    else if (v instanceof Integer) prefEdit.putInt(key, ((Integer) v).intValue());
+                    else if (v instanceof Long) prefEdit.putLong(key, ((Long) v).longValue());
+                    else if (v instanceof String) prefEdit.putString(key, ((String) v));
                 }
                 prefEdit.commit();
                 res = true;
 
-                // restore the original throttle name to avoid a dupliacte name
+                // restore the remembered throttle name to avoid a duplicate throttle name
                 sharedPreferences.edit().putString("throttle_name_preference", currentThrottleNameValue).commit();
 
                 Toast.makeText(getApplicationContext(), "Import from 'engine_driver/"+exportedPreferencesFileName+"' succeseded.", Toast.LENGTH_SHORT).show();
