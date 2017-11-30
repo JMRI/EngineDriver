@@ -202,9 +202,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     } else if (currentValue.equals("Reset")) {
                         resetPreferences(sharedPreferences);
                     }
-                    sharedPreferences.edit().putString(key, "None").commit();  //reset the preference
                 }
-
                 break;
         }
     }
@@ -228,6 +226,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         SharedPreferences.Editor prefEdit = sharedPreferences.edit();
         prefEdit.clear();
         prefEdit.commit();
+        reload();
+    }
+
+    private void resetAndReloadImportExportPreference(SharedPreferences sharedPreferences){
+        sharedPreferences.edit().putString("prefImportExport", "None").commit();  //reset the preference
         reload();
     }
 
@@ -257,8 +260,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         if (!res) {
             Toast.makeText(getApplicationContext(), "Export failed!", Toast.LENGTH_LONG).show();
         }
-        sharedPreferences.edit().putString("prefImportExport", "None").commit();  //reset the preference
-        reload();
+
+        resetAndReloadImportExportPreference(sharedPreferences);
         return res;
     }
 
@@ -275,6 +278,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
+                        resetAndReloadImportExportPreference(sharedPreferences);
                         overwiteFile = false;
                         break;
                 }
@@ -302,6 +306,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         } else {
             res = writeExportFile(sharedPreferences, dst);
         }
+
         return res;
     }
 
@@ -366,6 +371,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         } else {
             reload();
         }
+
+        resetAndReloadImportExportPreference(sharedPreferences);
         return res;
     }
 
