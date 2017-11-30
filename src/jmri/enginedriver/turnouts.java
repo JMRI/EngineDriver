@@ -378,8 +378,7 @@ public class turnouts extends Activity implements OnGestureListener {
                 if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
                     InputMethodManager imm =
                             (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    EditText trn = (EditText) findViewById(R.id.turnout_entry);
-                    imm.hideSoftInputFromWindow(trn.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     return true;
                 } else
                     return false;
