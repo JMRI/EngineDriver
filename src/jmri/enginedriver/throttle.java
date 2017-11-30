@@ -2913,10 +2913,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         b.setPressed(false);
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
+        //Log.d("Engine_Driver","vThrotScrWrap.getHeight(), screenHeight=" + screenHeight);
         if (screenHeight == 0) {
-            // throttle screen hasn't been drawn yet, so use display metrics for
-            // now
+            // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
+            //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
         // increase the web view height if the preference is set
@@ -3006,6 +3007,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         sbT.setPadding(sliderMargin, 0, sliderMargin, 0);
 
         if (screenHeight > throttleMargin) { // don't do this if height is invalid
+            //Log.d("Engine_Driver","starting screen height adjustments, screenHeight=" + screenHeight);
             // determine how to split the screen (evenly if all three, 45/45/10 for two, 80/10/10 if only one)
             screenHeight -= throttleMargin;
             String numThrot = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumOfThrottlesDefault));
@@ -3087,6 +3089,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             // update throttle slider top/bottom
             G_top = llG.getTop() + sbG.getTop() + bSelG.getHeight() + bFwdG.getHeight();
             G_bottom = llG.getTop() + sbG.getBottom() + bSelG.getHeight() + bFwdG.getHeight();
+        } else {
+            Log.d("Engine_Driver","screen height adjustments skipped, screenHeight=" + screenHeight);
         }
 
         // update the direction indicators

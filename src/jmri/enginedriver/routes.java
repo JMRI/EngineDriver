@@ -437,6 +437,11 @@ public class routes extends Activity implements OnGestureListener {
         ListView lv = (ListView) findViewById(R.id.routes_list);
         mainapp.routes_list_position = (lv == null ? 0 : lv.getFirstVisiblePosition());
 
+        //make sure the soft keyboard is closed
+        EditText rte = (EditText) findViewById(R.id.route_entry);
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(rte.getWindowToken(), 0);
+
         if (!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
             mainapp.addNotification(this.getIntent());
         }
