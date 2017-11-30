@@ -378,7 +378,8 @@ public class turnouts extends Activity implements OnGestureListener {
                 if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
                     InputMethodManager imm =
                             (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    EditText trn = (EditText) findViewById(R.id.turnout_entry);
+                    imm.hideSoftInputFromWindow(trn.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     return true;
                 } else
                     return false;
@@ -437,6 +438,11 @@ public class turnouts extends Activity implements OnGestureListener {
         //save scroll position for later restore
         ListView lv = (ListView) findViewById(R.id.turnouts_list);
         mainapp.turnouts_list_position = (lv == null ? 0 : lv.getFirstVisiblePosition());
+
+        //make sure the soft keyboard is closed
+        EditText trn = (EditText) findViewById(R.id.turnout_entry);
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(trn.getWindowToken(), 0);
 
         if (!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
             mainapp.addNotification(this.getIntent());

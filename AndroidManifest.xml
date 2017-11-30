@@ -59,7 +59,8 @@
         <activity
             android:name=".throttle"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask" 
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle" >
         </activity>
         <activity

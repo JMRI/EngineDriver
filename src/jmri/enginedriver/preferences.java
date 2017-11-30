@@ -227,6 +227,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         prefEdit.clear();
         prefEdit.commit();
         reload();
+        Toast.makeText(getApplicationContext(), "Preferences Reset to defaults!", Toast.LENGTH_LONG).show();
     }
 
     private void resetAndReloadImportExportPreference(SharedPreferences sharedPreferences){
@@ -241,7 +242,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             output = new ObjectOutputStream(new FileOutputStream(dst));
             output.writeObject(sharedPreferences.getAll());
 
-            Toast.makeText(getApplicationContext(), "Export to 'engine_driver/" + exportedPreferencesFileName + "' succeseded.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Export to 'engine_driver/" + exportedPreferencesFileName + "' succeeded.", Toast.LENGTH_SHORT).show();
             res = true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -347,7 +348,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 // restore the remembered throttle name to avoid a duplicate throttle name
                 sharedPreferences.edit().putString("throttle_name_preference", currentThrottleNameValue).commit();
 
-                Toast.makeText(getApplicationContext(), "Import from 'engine_driver/"+exportedPreferencesFileName+"' succeseded.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Import from 'engine_driver/"+exportedPreferencesFileName+"' succeeded.", Toast.LENGTH_SHORT).show();
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
