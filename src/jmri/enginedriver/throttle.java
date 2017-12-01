@@ -572,7 +572,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         // Make sure brightness value between 0 to 255
         if(brightnessValue >= 0 && brightnessValue <= 255){
-            Settings.System.putInt( mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessValue );
+
+            if (Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessValue)) {
+                Log.d("Engine_Driver", "screen brightness successfully changed to " + brightnessValue);
+            } else {
+                Log.e("Engine_Driver", "screen brightness was NOT changed to " + brightnessValue);
+            }
         }
     }
 
