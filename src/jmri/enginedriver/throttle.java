@@ -626,12 +626,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     protected int getScreenBrightnessMode(){
         Context mContext;
         mContext = getApplicationContext();
+        int BrightnessModeValue = 0;
 
-        int BrightnessModeValue = Settings.System.getInt(
-                mContext.getContentResolver(),
-                Settings.System.SCREEN_BRIGHTNESS_MODE,
-                0
-        );
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            BrightnessModeValue = Settings.System.getInt(
+                    mContext.getContentResolver(),
+                    Settings.System.SCREEN_BRIGHTNESS_MODE,
+                    0
+            );
+        }
         return BrightnessModeValue;
     }
 
