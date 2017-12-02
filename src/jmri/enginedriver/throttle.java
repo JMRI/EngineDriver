@@ -2598,6 +2598,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             isScreenLocked = false;
             screenDimmed = false;
             setScreenBrightness(screenBrightnessOriginal);
+            setScreenBrightnessMode(screenBrightnessModeOriginal);
         }
     }
 
@@ -3622,12 +3623,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                 if (screenDimmed) {
                                     screenDimmed = false;
                                     setScreenBrightness(screenBrightnessOriginal);
+                                    setScreenBrightnessMode(screenBrightnessModeOriginal);
                                 } else {
                                     screenDimmed = true;
                                     Toast.makeText(getApplicationContext(), "Throttle Screen Dimmed - Swipe up to restore", Toast.LENGTH_SHORT).show();
                                     screenBrightnessOriginal = getScreenBrightness();
                                     setScreenBrightness(screenBrightnessDim);
-                                    setScreenBrightnessMode(screenBrightnessModeOriginal);
                                 }
                                 break;
                         }
