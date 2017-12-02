@@ -248,6 +248,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     //private int screenBrightnessBright;
     private int screenBrightnessOriginal;
+    private int screenBrightnessModeOriginal;
 
     // used to hold the direction change preferences
     boolean dirChangeWhileMoving;
@@ -574,9 +575,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         // Make sure brightness value between 0 to 255
         if(brightnessValue >= 0 && brightnessValue <= 255){
-            if (!Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, SCREEN_BRIGHTNESS_MODE_MANUAL)) {
-                Toast.makeText(getApplicationContext(), "Unable to disable Auto Brightness/ Adaptive Brightness. Cannot dim screen.", Toast.LENGTH_SHORT).show();
-            }
+            setScreenBrightnessMode(SCREEN_BRIGHTNESS_MODE_MANUAL);
+
             if (Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessValue)) {
                 Log.d("Engine_Driver", "screen brightness successfully changed to " + brightnessValue);
             } else {
@@ -612,6 +612,28 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         return brightnessValue;
     }
 
+    public void setScreenBrightnessMode(int brightnessModeValue){
+        Context mContext;
+        mContext = getApplicationContext();
+
+        if(brightnessModeValue >= 0 && brightnessModeValue <= 1){
+            if (!Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, brightnessModeValue)) {
+                Toast.makeText(getApplicationContext(), "Unable to set the Auto Brightness/ Adaptive Brightness.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    protected int getScreenBrightnessMode(){
+        Context mContext;
+        mContext = getApplicationContext();
+
+        int BrightnessModeValue = Settings.System.getInt(
+                mContext.getContentResolver(),
+                Settings.System.SCREEN_BRIGHTNESS_MODE,
+                0
+        );
+        return BrightnessModeValue;
+    }
 
     private void setImmersiveModeOn(View webView) {
         boolean tvim = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
@@ -2207,6 +2229,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         // get the screen brightness on create
         screenBrightnessOriginal = getScreenBrightness();
+        screenBrightnessModeOriginal = getScreenBrightnessMode();
 
         // myGesture = new GestureDetector(this);
         GestureOverlayView ov = (GestureOverlayView) findViewById(R.id.throttle_overlay);
@@ -3584,6 +3607,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                     isScreenLocked = false;
                                     Toast.makeText(getApplicationContext(), "Throttle Screen Unlocked", Toast.LENGTH_SHORT).show();
                                     setScreenBrightness(screenBrightnessOriginal);
+                                    setScreenBrightnessMode(screenBrightnessModeOriginal);
                                 } else {
                                     isScreenLocked = true;
                                     Toast.makeText(getApplicationContext(), "Throttle Screen Locked - Swipe up again to unlock", Toast.LENGTH_SHORT).show();
@@ -3600,6 +3624,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                     Toast.makeText(getApplicationContext(), "Throttle Screen Dimmed - Swipe up to restore", Toast.LENGTH_SHORT).show();
                                     screenBrightnessOriginal = getScreenBrightness();
                                     setScreenBrightness(screenBrightnessDim);
+                                    setScreenBrightnessMode(screenBrightnessModeOriginal);
                                 }
                                 break;
                         }
