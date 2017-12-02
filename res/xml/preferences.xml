@@ -266,7 +266,7 @@
             android:defaultValue="@string/prefMaximumThrottleDefaultValue"
             android:dialogTitle="@string/prefMaximumThrottleTitle"
             android:key="maximum_throttle_preference"
-            android:maxLength="3"
+            android:maxLength="2"
             android:numeric="integer"
             android:summary="@string/prefMaximumThrottleSummary"
             android:title="@string/prefMaximumThrottleTitle" >
