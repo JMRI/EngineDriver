@@ -572,8 +572,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 true : if the value was set, false on database errors
         */
 
-        // Make sure brightness value between 0 to 100
-        if(brightnessValue >= 0 && brightnessValue <= 99){
+        // Make sure brightness value between 0 to 255
+        if(brightnessValue >= 0 && brightnessValue <= 255){
             if (!Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, SCREEN_BRIGHTNESS_MODE_MANUAL)) {
                 Toast.makeText(getApplicationContext(), "Unable to disable Auto Brightness/ Adaptive Brightness. Cannot dim screen.", Toast.LENGTH_SHORT).show();
             }
