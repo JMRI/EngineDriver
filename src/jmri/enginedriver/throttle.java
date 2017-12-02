@@ -626,12 +626,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     protected int getScreenBrightnessMode(){
         Context mContext;
         mContext = getApplicationContext();
+        int BrightnessModeValue = 0;
 
-        int BrightnessModeValue = Settings.System.getInt(
-                mContext.getContentResolver(),
-                Settings.System.SCREEN_BRIGHTNESS_MODE,
-                0
-        );
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            BrightnessModeValue = Settings.System.getInt(
+                    mContext.getContentResolver(),
+                    Settings.System.SCREEN_BRIGHTNESS_MODE,
+                    0
+            );
+        }
         return BrightnessModeValue;
     }
 
@@ -2595,6 +2598,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             isScreenLocked = false;
             screenDimmed = false;
             setScreenBrightness(screenBrightnessOriginal);
+            setScreenBrightnessMode(screenBrightnessModeOriginal);
         }
     }
 
@@ -3619,12 +3623,12 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                 if (screenDimmed) {
                                     screenDimmed = false;
                                     setScreenBrightness(screenBrightnessOriginal);
+                                    setScreenBrightnessMode(screenBrightnessModeOriginal);
                                 } else {
                                     screenDimmed = true;
                                     Toast.makeText(getApplicationContext(), "Throttle Screen Dimmed - Swipe up to restore", Toast.LENGTH_SHORT).show();
                                     screenBrightnessOriginal = getScreenBrightness();
                                     setScreenBrightness(screenBrightnessDim);
-                                    setScreenBrightnessMode(screenBrightnessModeOriginal);
                                 }
                                 break;
                         }
