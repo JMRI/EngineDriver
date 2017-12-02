@@ -243,6 +243,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     private boolean isScreenLocked = false;
     private boolean screenDimmed = false;
     private int screenBrightnessDim;
+    private static final int SCREEN_BRIGHTNESS_MODE_MANUAL = 0;
+    private static final int SCREEN_BRIGHTNESS_MODE_AUTOMATIC = 1;
 
     //private int screenBrightnessBright;
     private int screenBrightnessOriginal;
@@ -570,9 +572,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 true : if the value was set, false on database errors
         */
 
-        // Make sure brightness value between 0 to 255
-        if(brightnessValue >= 0 && brightnessValue <= 255){
-
+        // Make sure brightness value between 0 to 100
+        if(brightnessValue >= 0 && brightnessValue <= 99){
+            if (!Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, SCREEN_BRIGHTNESS_MODE_MANUAL)) {
+                Toast.makeText(getApplicationContext(), "Unable to disable Auto Brightness/ Adaptive Brightness. Cannot dim screen.", Toast.LENGTH_SHORT).show();
+            }
             if (Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessValue)) {
                 Log.d("Engine_Driver", "screen brightness successfully changed to " + brightnessValue);
             } else {

@@ -238,8 +238,11 @@
     <string name="prefDelimiterTitle">Location Delimiter</string>
     <string name="prefDelimiterDefaultValue">:</string>
     <string name="prefDelimiterSummary">Set the character that marks the end of the Location portion of Turnout and Route names</string>
-    <string name="prefScreenBrightnessDimTitle">Screen Dimming Value</string>
-    <string name="prefScreenBrightnessDimSummary">Brightness setting to use when dimming the screen.</string>
+
+    <string name="prefScreenBrightnessDimTitle">Screen Dimming % Value</string>
+    <string name="prefScreenBrightnessDimSummary">Brightness setting to use when dimming the screen (0%-99%. Automatically disables Auto-brightness / Adaptive Brightness if set.</string>
+    <string name="prefScreenBrightnessDimDefaultValue">"5"</string>
+
     <string name="logViewer">View Log</string>
     <string name="clearLocoList">Clear List</string>
     <string name="ClearConnList">Clear Recent List</string>
@@ -272,7 +275,6 @@
     <string name="prefGamePadTypeDefaultValue">None</string>
 	<string name="prefSwipeUpOptionDefaultValue">None</string>
     <string name="prefGamePadStartButtonDefaultValue">Next Throttle</string>
-    <string name="prefScreenBrightnessDimDefaultValue">"5"</string>
     <string name="NumThrottleDefaulValue">Two</string>
     <string name="server_address">Server address</string>
 	<string name="routes_route">Route System Name</string>
