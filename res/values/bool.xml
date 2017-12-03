@@ -42,4 +42,6 @@
     <bool name="prefAlwaysUseDefaultFunctionLabelsDefaultValue">false</bool>
     <bool name="prefConsistLightsLongClickDefaultValue">false</bool>
     <bool name="prefGamePadMultipleDevicesDefaultValue">true</bool>
+
+    <bool name="prefSwapForwardReverseButtonsDefaultValue">false</bool>
 </resources>
