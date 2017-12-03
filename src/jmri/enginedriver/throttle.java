@@ -3631,6 +3631,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                     setScreenBrightness(screenBrightnessDim);
                                 }
                                 break;
+                            case "Immersive Mode temporarily enable-disable":
+                                if (immersiveModeIsOn) {
+                                    setImmersiveModeOff(webView);
+                                    Toast.makeText(getApplicationContext(), "Immersive mode temporarily disabled. To disable permanently change in preferences", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    setImmersiveModeOn(webView);
+                                }
+                                break;
+
                         }
                     }
                 }

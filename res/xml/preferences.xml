@@ -114,6 +114,7 @@
                 android:inputType="text"
                 android:maxLines="1"/>
         </PreferenceScreen>
+
         <PreferenceScreen
             android:key="swipe_up_down_preferences"
             android:title="@string/prefSwipeUpDownTitle"
@@ -143,6 +144,7 @@
                 android:summary="@string/prefScreenBrightnessDimSummary"
                 android:title="@string/prefScreenBrightnessDimTitle" />
         </PreferenceScreen>
+
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
