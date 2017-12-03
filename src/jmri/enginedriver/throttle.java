@@ -295,6 +295,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     boolean prefConsistLightsLongClick;
     public static final int LIGHT_FOLLOW = 1;
 
+    private boolean prefSwapForwardReverseButtons = false;
+    private String DirectionButtonLeftText = "Forward";
+    private String DirectionButtonRightText = "Reverse";
+
     //Throttle Array
     private final char[] allThrottleLetters = {'T', 'S', 'G'};
 
@@ -979,17 +983,29 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     void showDirectionIndication(char whichThrottle, int direction) {
         Button bFwd;
         Button bRev;
-        if (whichThrottle == 'T') {
-            bFwd = bFwdT;
-            bRev = bRevT;
-        } else if (whichThrottle == 'G') {
-            bFwd = bFwdG;
-            bRev = bRevG;
+        if (!prefSwapForwardReverseButtons) {
+            if (whichThrottle == 'T') {
+                bFwd = bFwdT;
+                bRev = bRevT;
+            } else if (whichThrottle == 'G') {
+                bFwd = bFwdG;
+                bRev = bRevG;
+            } else {
+                bFwd = bFwdS;
+                bRev = bRevS;
+            }
         } else {
-            bFwd = bFwdS;
-            bRev = bRevS;
+            if (whichThrottle == 'T') {
+                bRev = bFwdT;
+                bFwd = bRevT;
+            } else if (whichThrottle == 'G') {
+                bRev = bFwdG;
+                bFwd = bRevG;
+            } else {
+                bRev = bFwdS;
+                bFwd = bRevS;
+            }
         }
-
         if (direction == 0) {
             bFwd.setPressed(false);
             bRev.setPressed(true);
@@ -1005,20 +1021,36 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     void showDirectionRequest(char whichThrottle, int direction) {
         Button bFwd;
         Button bRev;
-        if (whichThrottle == 'T') {
-            bFwd = bFwdT;
-            bRev = bRevT;
-            dirT = direction;
-        } else if (whichThrottle == 'G') {
-            bFwd = bFwdG;
-            bRev = bRevG;
-            dirG = direction;
+        if (!prefSwapForwardReverseButtons) {
+            if (whichThrottle == 'T') {
+                bFwd = bFwdT;
+                bRev = bRevT;
+                dirT = direction;
+            } else if (whichThrottle == 'G') {
+                bFwd = bFwdG;
+                bRev = bRevG;
+                dirG = direction;
+            } else {
+                bFwd = bFwdS;
+                bRev = bRevS;
+                dirS = direction;
+            }
         } else {
-            bFwd = bFwdS;
-            bRev = bRevS;
-            dirS = direction;
-        }
+            if (whichThrottle == 'T') {
+                bRev = bFwdT;
+                bFwd = bRevT;
+                dirT = direction;
+            } else if (whichThrottle == 'G') {
+                bRev = bFwdG;
+                bFwd = bRevG;
+                dirG = direction;
+            } else {
+                bRev = bFwdS;
+                bFwd = bRevS;
+                dirS = direction;
+            }
 
+        }
         if (direction == 0) {
             bFwd.setTypeface(null, Typeface.NORMAL);
             bRev.setTypeface(null, Typeface.ITALIC);
@@ -1173,11 +1205,21 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     bRev.setEnabled(true);
             } else {
                 if (dir == 1) {
-                    bFwd.setEnabled(true);
-                    bRev.setEnabled(false);
+                    if (!prefSwapForwardReverseButtons) {
+                        bFwd.setEnabled(true);
+                        bRev.setEnabled(false);
+                    } else {
+                        bFwd.setEnabled(false);
+                        bRev.setEnabled(true);
+                    }
                 } else {
-                    bFwd.setEnabled(false);
-                    bRev.setEnabled(true);
+                    if (!prefSwapForwardReverseButtons) {
+                        bFwd.setEnabled(false);
+                        bRev.setEnabled(true);
+                    } else {
+                        bFwd.setEnabled(true);
+                        bRev.setEnabled(false);
+                    }
                 }
             }
             bSel.setEnabled(locoChangeAllowed);
@@ -1984,7 +2026,7 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                             changeDirectionIfAllowed(whichThrottle,1);
                             break;
                         case function_button.REVERSE: {
-                            changeDirectionIfAllowed(whichThrottle,0);
+                             changeDirectionIfAllowed(whichThrottle,0);
                             break;
                         }
                         case function_button.STOP:
@@ -2223,6 +2265,16 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         speedButtonUpText = getApplicationContext().getResources().getString(R.string.UpButton);
         speedButtonDownText = getApplicationContext().getResources().getString(R.string.DownButton);
 
+        prefSwapForwardReverseButtons = prefs.getBoolean("prefSwapForwardReverseButtons", getResources().getBoolean(R.bool.prefSwapForwardReverseButtonsDefaultValue));
+
+        if (prefSwapForwardReverseButtons) {
+            DirectionButtonLeftText = getApplicationContext().getResources().getString(R.string.reverse);
+            DirectionButtonRightText = getApplicationContext().getResources().getString(R.string.forward);
+        } else {
+            DirectionButtonLeftText = getApplicationContext().getResources().getString(R.string.forward);
+            DirectionButtonRightText = getApplicationContext().getResources().getString(R.string.reverse);
+        }
+
         webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
         webViewIsOn = !webViewLocation.equals("none");
         keepWebViewLocation = webViewLocation;
@@ -2317,40 +2369,70 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         // set listeners for 3 direction buttons for each throttle
         bFwdT = (Button) findViewById(R.id.button_fwd_T);
-        fbtl = new function_button_touch_listener(function_button.FORWARD, 'T');
+        if (prefSwapForwardReverseButtons) {
+            fbtl = new function_button_touch_listener(function_button.REVERSE, 'T');
+        } else {
+            fbtl = new function_button_touch_listener(function_button.FORWARD, 'T');
+        }
         bFwdT.setOnTouchListener(fbtl);
+        bFwdT.setText(DirectionButtonLeftText);
         bStopT = (Button) findViewById(R.id.button_stop_T);
         fbtl = new function_button_touch_listener(function_button.STOP, 'T');
         bStopT.setOnTouchListener(fbtl);
         bRevT = (Button) findViewById(R.id.button_rev_T);
-        fbtl = new function_button_touch_listener(function_button.REVERSE, 'T');
+        if (prefSwapForwardReverseButtons) {
+            fbtl = new function_button_touch_listener(function_button.FORWARD, 'T');
+        } else {
+            fbtl = new function_button_touch_listener(function_button.REVERSE, 'T');
+        }
         bRevT.setOnTouchListener(fbtl);
+        bRevT.setText(DirectionButtonRightText);
         View v = findViewById(R.id.speed_cell_T);
         fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'T');
         v.setOnTouchListener(fbtl);
 
         bFwdS = (Button) findViewById(R.id.button_fwd_S);
-        fbtl = new function_button_touch_listener(function_button.FORWARD, 'S');
+        if (prefSwapForwardReverseButtons) {
+            fbtl = new function_button_touch_listener(function_button.REVERSE, 'S');
+        } else {
+            fbtl = new function_button_touch_listener(function_button.FORWARD, 'S');
+        }
         bFwdS.setOnTouchListener(fbtl);
+        bFwdS.setText(DirectionButtonLeftText);
         bStopS = (Button) findViewById(R.id.button_stop_S);
         fbtl = new function_button_touch_listener(function_button.STOP, 'S');
         bStopS.setOnTouchListener(fbtl);
         bRevS = (Button) findViewById(R.id.button_rev_S);
-        fbtl = new function_button_touch_listener(function_button.REVERSE, 'S');
+        if (prefSwapForwardReverseButtons) {
+            fbtl = new function_button_touch_listener(function_button.FORWARD, 'S');
+        } else {
+            fbtl = new function_button_touch_listener(function_button.REVERSE, 'S');
+        }
         bRevS.setOnTouchListener(fbtl);
+        bRevS.setText(DirectionButtonRightText);
         v = findViewById(R.id.speed_cell_S);
         fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'S');
         v.setOnTouchListener(fbtl);
 
         bFwdG = (Button) findViewById(R.id.button_fwd_G);
-        fbtl = new function_button_touch_listener(function_button.FORWARD, 'G');
+        if (prefSwapForwardReverseButtons) {
+            fbtl = new function_button_touch_listener(function_button.REVERSE, 'G');
+        } else {
+            fbtl = new function_button_touch_listener(function_button.FORWARD, 'G');
+        }
         bFwdG.setOnTouchListener(fbtl);
+        bFwdG.setText(DirectionButtonLeftText);
         bStopG = (Button) findViewById(R.id.button_stop_G);
         fbtl = new function_button_touch_listener(function_button.STOP, 'G');
         bStopG.setOnTouchListener(fbtl);
         bRevG = (Button) findViewById(R.id.button_rev_G);
-        fbtl = new function_button_touch_listener(function_button.REVERSE, 'G');
+        if (prefSwapForwardReverseButtons) {
+            fbtl = new function_button_touch_listener(function_button.FORWARD, 'G');
+        } else {
+            fbtl = new function_button_touch_listener(function_button.REVERSE, 'G');
+        }
         bRevG.setOnTouchListener(fbtl);
+        bRevG.setText(DirectionButtonRightText);
         v = findViewById(R.id.speed_cell_G);
         fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'G');
         v.setOnTouchListener(fbtl);
@@ -3631,6 +3713,15 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                                     setScreenBrightness(screenBrightnessDim);
                                 }
                                 break;
+                            case "Immersive Mode temporarily enable-disable":
+                                if (immersiveModeIsOn) {
+                                    setImmersiveModeOff(webView);
+                                    Toast.makeText(getApplicationContext(), "Immersive mode temporarily disabled. To disable permanently change in preferences", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    setImmersiveModeOn(webView);
+                                }
+                                break;
+
                         }
                     }
                 }

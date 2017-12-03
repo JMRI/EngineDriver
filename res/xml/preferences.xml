@@ -38,6 +38,7 @@
             android:summary="@string/prefDisplayClockSummary"
             android:title="@string/prefDisplayClockTitle" />
     </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/prefThrottlePageTitle" >
         <ListPreference
             android:defaultValue="@string/NumThrottleDefaulValue"
@@ -76,6 +77,12 @@
                 android:summary="@string/prefHideSliderSummary"
                 android:title="@string/prefHideSliderTitle" >
             </CheckBoxPreference>
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefSwapForwardReverseButtonsDefaultValue"
+                android:key="prefSwapForwardReverseButtons"
+                android:summary="@string/prefSwapForwardReverseButtonsSummary"
+                android:title="@string/prefSwapForwardReverseButtonsTitle" >
+            </CheckBoxPreference>
         </PreferenceScreen>
         <CheckBoxPreference
             android:layout_width="wrap_content"
@@ -85,6 +92,7 @@
             android:summary="@string/prefDecreaseLocoNumberHeightSummary"
             android:title="@string/prefDecreaseLocoNumberHeightTitle">
         </CheckBoxPreference>
+
         <PreferenceScreen
             android:key="throttle_webview_preference"
             android:title="@string/prefWebViewTitle"
@@ -114,6 +122,7 @@
                 android:inputType="text"
                 android:maxLines="1"/>
         </PreferenceScreen>
+
         <PreferenceScreen
             android:key="swipe_up_down_preferences"
             android:title="@string/prefSwipeUpDownTitle"
@@ -143,6 +152,7 @@
                 android:summary="@string/prefScreenBrightnessDimSummary"
                 android:title="@string/prefScreenBrightnessDimTitle" />
         </PreferenceScreen>
+
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
