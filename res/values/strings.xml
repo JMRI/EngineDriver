@@ -297,4 +297,40 @@
     <string name="prefSwapForwardReverseButtonsTitle">Swap  Forward and Reverse</string>
     <string name="prefSwapForwardReverseButtonsSummary">Swap the Forward and Reverse Buttons. REQUIRES a restart of Engine Driver, or it will behave unpredictably.</string>
 
+    <string name="functionButton00DefultValue">Light</string>
+    <string name="functionButton01DefultValue">Bell</string>
+    <string name="functionButton02DefultValue">Horn</string>
+    <string name="functionButton03DefultValue">3</string>
+    <string name="functionButton04DefultValue">4</string>
+    <string name="functionButton05DefultValue">5</string>
+    <string name="functionButton06DefultValue">6</string>
+    <string name="functionButton07DefultValue">7</string>
+    <string name="functionButton08DefultValue">8</string>
+    <string name="functionButton09DefultValue">9</string>
+
+    <string name="functionButton10DefultValue">10</string>
+    <string name="functionButton11DefultValue">11</string>
+    <string name="functionButton12DefultValue">12</string>
+    <string name="functionButton13DefultValue">13</string>
+    <string name="functionButton14DefultValue">14</string>
+    <string name="functionButton15DefultValue">15</string>
+    <string name="functionButton16DefultValue">16</string>
+    <string name="functionButton17DefultValue">17</string>
+    <string name="functionButton18DefultValue">18</string>
+    <string name="functionButton19DefultValue">19</string>
+
+    <string name="functionButton20DefultValue">20</string>
+    <string name="functionButton21DefultValue">21</string>
+    <string name="functionButton22DefultValue">22</string>
+    <string name="functionButton23DefultValue">23</string>
+    <string name="functionButton24DefultValue">24</string>
+    <string name="functionButton25DefultValue">25</string>
+    <string name="functionButton26DefultValue">26</string>
+    <string name="functionButton27DefultValue">27</string>
+    <string name="functionButton28DefultValue">28</string>
+    <string name="functionButton29DefultValue">29</string>
+
+    <string name="functionButton30DefultValue">30</string>
+    <string name="functionButton31DefultValue">31</string>
+
 </resources>

@@ -183,105 +183,105 @@
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="Light" />
+                                android:text="@string/functionButton00DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="Bell" />
+                                android:text="@string/functionButton01DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="Horn" />
+                                android:text="@string/functionButton02DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="3" />
+                                android:text="@string/functionButton03DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="4" />
+                                android:text="@string/functionButton04DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="5" />
+                                android:text="@string/functionButton05DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="6" />
+                                android:text="@string/functionButton06DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="7" />
+                                android:text="@string/functionButton07DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="8" />
+                                android:text="@string/functionButton08DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="9" />
+                                android:text="@string/functionButton09DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="10" />
+                                android:text="@string/functionButton10DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="11" />
+                                android:text="@string/functionButton11DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="12" />
+                                android:text="@string/functionButton12DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="13" />
+                                android:text="@string/functionButton13DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="14" />
+                                android:text="@string/functionButton14DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="15" />
+                                android:text="@string/functionButton15DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="16" />
+                                android:text="@string/functionButton16DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="17" />
+                                android:text="@string/functionButton17DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="18" />
+                                android:text="@string/functionButton18DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="19" />
+                                android:text="@string/functionButton19DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="20" />
+                                android:text="@string/functionButton20DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="21" />
+                                android:text="@string/functionButton21DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="22" />
+                                android:text="@string/functionButton22DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="23" />
+                                android:text="@string/functionButton23DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="24" />
+                                android:text="@string/functionButton24DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="25" />
+                                android:text="@string/functionButton25DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="26" />
+                                android:text="@string/functionButton26DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="27" />
+                                android:text="@string/functionButton27DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="28" />
+                                android:text="@string/functionButton28DefultValue" />
                         </TableRow>
                     </TableLayout>
                 </ScrollView>
@@ -461,114 +461,114 @@
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="Light" />
+                                android:text="@string/functionButton00DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="Bell" />
+                                android:text="@string/functionButton01DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="Horn" />
+                                android:text="@string/functionButton02DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="3" />
+                                android:text="@string/functionButton03DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="4" />
+                                android:text="@string/functionButton04DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="5" />
+                                android:text="@string/functionButton05DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="6" />
+                                android:text="@string/functionButton06DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="7" />
+                                android:text="@string/functionButton07DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="8" />
+                                android:text="@string/functionButton08DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="9" />
+                                android:text="@string/functionButton09DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="10" />
+                                android:text="@string/functionButton10DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="11" />
+                                android:text="@string/functionButton11DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="12" />
+                                android:text="@string/functionButton12DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="13" />
+                                android:text="@string/functionButton13DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="14" />
+                                android:text="@string/functionButton14DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="15" />
+                                android:text="@string/functionButton15DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="16" />
+                                android:text="@string/functionButton16DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="17" />
+                                android:text="@string/functionButton17DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="18" />
+                                android:text="@string/functionButton18DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="19" />
+                                android:text="@string/functionButton19DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="20" />
+                                android:text="@string/functionButton20DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="21" />
+                                android:text="@string/functionButton21DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="22" />
+                                android:text="@string/functionButton22DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="23" />
+                                android:text="@string/functionButton23DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="24" />
+                                android:text="@string/functionButton24DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="25" />
+                                android:text="@string/functionButton25DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="26" />
+                                android:text="@string/functionButton26DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="27" />
+                                android:text="@string/functionButton27DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="28" />
+                                android:text="@string/functionButton28DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="29" />
+                                android:text="@string/functionButton29DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="30" />
+                                android:text="@string/functionButton30DefultValue" />
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="31" />
+                                android:text="@string/functionButton31DefultValue" />
                         </TableRow>
                     </TableLayout>
                 </ScrollView>
@@ -752,138 +752,138 @@
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="Light" />
+                                android:text="@string/functionButton00DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="Bell" />
+                                android:text="@string/functionButton01DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="Horn" />
+                                android:text="@string/functionButton02DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="3" />
+                                android:text="@string/functionButton03DefultValue" />
                         </TableRow>
 
                         <TableRow>
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="4" />
+                                android:text="@string/functionButton04DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="5" />
+                                android:text="@string/functionButton05DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="6" />
+                                android:text="@string/functionButton06DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="7" />
+                                android:text="@string/functionButton07DefultValue" />
                         </TableRow>
 
                         <TableRow>
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="8" />
+                                android:text="@string/functionButton08DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="9" />
+                                android:text="@string/functionButton09DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="10" />
+                                android:text="@string/functionButton10DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="11" />
+                                android:text="@string/functionButton11DefultValue" />
                         </TableRow>
 
                         <TableRow>
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="12" />
+                                android:text="@string/functionButton12DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="13" />
+                                android:text="@string/functionButton13DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="14" />
+                                android:text="@string/functionButton14DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="15" />
+                                android:text="@string/functionButton15DefultValue" />
                         </TableRow>
 
                         <TableRow>
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="16" />
+                                android:text="@string/functionButton16DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="17" />
+                                android:text="@string/functionButton17DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="18" />
+                                android:text="@string/functionButton18DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="19" />
+                                android:text="@string/functionButton19DefultValue" />
                         </TableRow>
 
                         <TableRow>
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="20" />
+                                android:text="@string/functionButton20DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="21" />
+                                android:text="@string/functionButton21DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="22" />
+                                android:text="@string/functionButton22DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="23" />
+                                android:text="@string/functionButton23DefultValue" />
                         </TableRow>
 
                         <TableRow>
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="24" />
+                                android:text="@string/functionButton24DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="25" />
+                                android:text="@string/functionButton25DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="26" />
+                                android:text="@string/functionButton26DefultValue" />
 
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="27" />
+                                android:text="@string/functionButton27DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
                                 style="@style/fn_button_style"
-                                android:text="28" />
+                                android:text="@string/functionButton28DefultValue" />
                         </TableRow>
                     </TableLayout>
                 </ScrollView>
