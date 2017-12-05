@@ -19,6 +19,7 @@
         android:key="ThrottleOrientation"
         android:summary="@string/prefThrottleOrientationSummary"
         android:title="@string/prefThrottleOrientationTitle" />
+
     <PreferenceCategory android:title="@string/prefThrottleStatusTitle" >
         <CheckBoxPreference
             android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"
@@ -84,6 +85,7 @@
                 android:title="@string/prefSwapForwardReverseButtonsTitle" >
             </CheckBoxPreference>
         </PreferenceScreen>
+
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -264,6 +266,7 @@
             <!--    Gamepad button preferences   -->
         </PreferenceScreen>
     </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/prefThrottleTitle" >
         <ListPreference
             android:defaultValue="@string/prefDisplaySpeedUnitsDefaultValue"
@@ -276,7 +279,7 @@
             android:defaultValue="@string/prefMaximumThrottleDefaultValue"
             android:dialogTitle="@string/prefMaximumThrottleTitle"
             android:key="maximum_throttle_preference"
-            android:maxLength="2"
+            android:maxLength="3"
             android:numeric="integer"
             android:summary="@string/prefMaximumThrottleSummary"
             android:title="@string/prefMaximumThrottleTitle" >
