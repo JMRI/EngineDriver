@@ -27,6 +27,7 @@ import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.EditTextPreference;
 import android.preference.PreferenceActivity;
 import android.provider.Settings;
 import android.util.Log;
@@ -163,8 +164,17 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 break;
             }
             case "maximum_throttle_preference":
-                //limit new value to 0-100 (%)
-                limitIntPrefValue(sharedPreferences, key, 0, 100, "100");
+                //limit new value to 1-100 (%)
+                limitIntPrefValue(sharedPreferences, key, 1, 100, "100");
+                break;
+            case "maximum_throttle_change_preference":
+                limitIntPrefValue(sharedPreferences, key, 1, 100, "25");
+                break;
+            case "speed_arrows_throttle_speed_step":
+                limitIntPrefValue(sharedPreferences, key, 1, 99, "4");
+                break;
+            case "prefScreenBrightnessDim":
+                limitIntPrefValue(sharedPreferences, key, 0, 100, "5");
                 break;
             case "WebViewLocation":
                 mainapp.alert_activities(message_type.WEBVIEW_LOC, "");
@@ -391,20 +401,28 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     }
 
+    @SuppressWarnings("deprecation")
     private boolean limitIntPrefValue(SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
         boolean isValid = true;
+        EditTextPreference prefText = (EditTextPreference) getPreferenceScreen().findPreference(key);
         try {
             int newVal = Integer.parseInt(sharedPreferences.getString(key, defaultVal).trim());
             if (newVal > maxVal) {
                 sharedPreferences.edit().putString(key, Integer.toString(maxVal)).commit();
+                prefText.setText(Integer.toString(maxVal));
                 isValid = false;
+                Toast.makeText(getApplicationContext(), "Value entered is outside the limits ("+Integer.toString(minVal)+"-"+Integer.toString(maxVal)+"). Reset to "+Integer.toString(maxVal)+".", Toast.LENGTH_LONG).show();
             } else if (newVal < minVal) {
                 sharedPreferences.edit().putString(key, Integer.toString(minVal)).commit();
+                prefText.setText(Integer.toString(minVal));
                 isValid = false;
+                Toast.makeText(getApplicationContext(), "Value entered is outside the limits ("+Integer.toString(minVal)+"-"+Integer.toString(maxVal)+"). Reset to "+Integer.toString(minVal)+".", Toast.LENGTH_LONG).show();
             }
         } catch (NumberFormatException e) {
             sharedPreferences.edit().putString(key, defaultVal).commit();
+            prefText.setText(defaultVal);
             isValid = false;
+            Toast.makeText(getApplicationContext(), "Value entered not numeric ("+Integer.toString(minVal)+"-"+Integer.toString(maxVal)+")! Reset to default.", Toast.LENGTH_LONG).show();
         }
         return isValid;
     }
