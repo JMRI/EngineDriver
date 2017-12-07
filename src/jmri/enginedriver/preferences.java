@@ -79,10 +79,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             getPreferenceScreen().findPreference("prefThrottleViewImmersiveMode").setSelectable(false);
             getPreferenceScreen().findPreference("prefThrottleViewImmersiveMode").setEnabled(false);
         }
-        if (mainapp.androidVersion < mainapp.minGamepadVersion) {
-            getPreferenceScreen().findPreference("gamepad_preferences").setSelectable(false);
-            getPreferenceScreen().findPreference("gamepad_preferences").setEnabled(false);
-        }
         result = RESULT_OK;
     }
 
