@@ -199,6 +199,14 @@
                 android:summary="@string/prefGamePadMultipleDevicesSummary"
                 android:title="@string/prefGamePadMultipleDevicesTitle">
             </CheckBoxPreference>
+            <EditTextPreference
+                android:defaultValue="@string/prefGamePadSpeedButtonsRepeatDefaultValue"
+                android:dialogTitle="@string/prefGamePadSpeedButtonsRepeatTitle"
+                android:key="prefGamePadSpeedArrowsThrottleRepeatDelay"
+                android:maxLength="4"
+                android:numeric="integer"
+                android:summary="@string/prefGamePadSpeedButtonsRepeatSummary"
+                android:title="@string/prefGamePadSpeedButtonsRepeatTitle" />
             <!--    Gamepad button preferences   -->
             <ListPreference
                 android:defaultValue="@string/prefGamePadButton1DefaultValue"
