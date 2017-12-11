@@ -147,7 +147,12 @@
     <string name="prefGamePadFeedbackVolumeSummary">Set the volume percent for gamepad button clicks.</string>
     <string name="prefGamePadFeedbackVolumeDefaultValue">100</string>
     <string name="prefGamePadMultipleDevicesTitle">Support Multiple Gamepads</string>
-    <string name="prefGamePadMultipleDevicesSummary">Control seperate throttles with each gamepad. \nRequires Android Jelly Bean or later.</string>
+    <string name="prefGamePadMultipleDevicesSummary">Control separate throttles with each gamepad. \nRequires Android Jelly Bean or later.</string>
+
+    <string name="prefGamePadSpeedButtonsRepeatTitle">Speed button repeat delay</string>
+    <string name="prefGamePadSpeedButtonsRepeatSummary">How long between repeats on Gamepad speed buttons.  Smaller is faster.</string>
+    <string name="prefGamePadSpeedButtonsRepeatDefaultValue">300</string>
+
     <!--    Gamepad button preferences   -->
     <string name="prefGamePadButton1Title">Gamepad Button X action</string>
     <string name="prefGamePadButton2Title">Gamepad Button A action</string>
@@ -266,12 +271,15 @@
     <string name="UpButton">++</string>
     <string name="prefDisplaySpeedArrowsTitle">Display Speed buttons?</string>
     <string name="prefDisplaySpeedArrowsSummary">Display buttons next to speed sliders to change loco speed?</string>
+
     <string name="prefSpeedButtonsRepeatTitle">Speed button repeat delay</string>
-    <string name="prefSpeedButtonsRepeatSummary">How long between repeats on speed buttons.  Smaller is faster.</string>
+    <string name="prefSpeedButtonsRepeatSummary">How long between repeats on speed buttons.  Smaller is faster. Excludes gamepad buttons. (See separate gamepad setting.)</string>
 	<string name="prefSpeedButtonsRepeatDefaultValue">100</string>
+
     <string name="prefSpeedButtonsSpeedStepTitle">Speed button change amount</string>
     <string name="prefSpeedButtonsSpeedStepSummary">How much Speed arrows jump throttle speed.</string>
 	<string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>
+
     <string name="prefGamePadTypeDefaultValue">None</string>
 	<string name="prefSwipeUpOptionDefaultValue">None</string>
     <string name="prefGamePadStartButtonDefaultValue">Next Throttle</string>

@@ -1827,9 +1827,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             whichThrottle = WhichThrottle;
 
             try {
-                REP_DELAY = Integer.parseInt(prefs.getString("speed_arrows_throttle_repeat_delay", "100"));
+                //REP_DELAY = Integer.parseInt(prefs.getString("speed_arrows_throttle_repeat_delay", "100"));
+                REP_DELAY = Integer.parseInt(prefs.getString("prefGamePadSpeedArrowsThrottleRepeatDelay",  getApplicationContext().getResources().getString(R.string.prefGamePadSpeedButtonsRepeatDefaultValue)));
             } catch (NumberFormatException ex) {
-                REP_DELAY = 100;
+                REP_DELAY = 300;
             }
         }
 
