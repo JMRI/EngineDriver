@@ -246,10 +246,12 @@ public class connection_activity extends Activity {
                 case message_type.CONNECTED:
                     //use asynctask to save the updated connections list to the connections_list.txt file
                     new saveConnectionsList().execute();
+                    mainapp.connectedHostName = connected_hostname;
                     start_throttle_activity();
                     break;
 
                 case message_type.DISCONNECT:
+                    mainapp.connectedHostName = "";
                 case message_type.SHUTDOWN:
                     shutdown();
                     break;

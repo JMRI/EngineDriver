@@ -317,8 +317,10 @@
 
     <string-array name="prefImportExportOptions">
         <item >None</item>
-        <item >Export</item>
-        <item >Import</item>
+        <item >Export - any host</item>
+        <item >Import - any host</item>
         <item >Reset</item>
+        <item >Export - specific to this host</item>
+        <item >Import - specific to this host</item>
     </string-array>
 </resources>
