@@ -299,7 +299,7 @@
 
     <string name="prefThrottleImportExportTitle">Import/Export/Reset Preferences</string>
     <string name="prefImportExportTitle">Import or Export the Preferences</string>
-    <string name="prefImportExportSummary">Select \'Import\', \'Export\' or \'Reset\' your preferences to the \'engine_driver/\' folder on your SD card. Action will occur IMMEDIATELY on selecting the option.</string>
+    <string name="prefImportExportSummary">\'Import\', \'Export\' or \'Reset\' your preferences to the \'engine_driver/\' folder on your SD card. Action will occur IMMEDIATELY on selecting the option.</string>
     <string name="prefImportExportDefaultValue">None</string>
 
     <string name="prefSwapForwardReverseButtonsTitle">Swap  Forward and Reverse</string>
