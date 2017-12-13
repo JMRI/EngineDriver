@@ -487,6 +487,13 @@
             android:key="prefImportExport"
             android:summary="@string/prefImportExportSummary"
             android:title="@string/prefImportExportTitle" />
+        <ListPreference
+            android:defaultValue="@string/prefAutoImportExportDefaultValue"
+            android:entries="@array/prefAutoImportExportOptions"
+            android:entryValues="@array/prefAutoImportExportOptions"
+            android:key="prefAutoImportExport"
+            android:summary="@string/prefAutoImportExportSummary"
+            android:title="@string/prefAutoImportExportTitle" />
     </PreferenceCategory>
 
 </PreferenceScreen>

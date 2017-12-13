@@ -302,7 +302,11 @@
     <string name="prefImportExportSummary">\'Import\', \'Export\' or \'Reset\' your preferences to the \'engine_driver/\' folder on your SD card. Action will occur IMMEDIATELY on selecting the option.</string>
     <string name="prefImportExportDefaultValue">None</string>
 
-    <string name="prefSwapForwardReverseButtonsTitle">Swap  Forward and Reverse</string>
+    <string name="prefAutoImportExportTitle">Auto import host specifc Preferences</string>
+    <string name="prefAutoImportExportSummary">Automatically import any preferences for the current host on connection. Requires that you have already used the \'export\' function above.</string>
+    <string name="prefAutoImportExportDefaultValue">None</string>
+
+    <string name="prefSwapForwardReverseButtonsTitle">Swap Forward and Reverse</string>
     <string name="prefSwapForwardReverseButtonsSummary">Swap the Forward and Reverse Buttons. REQUIRES a restart of Engine Driver, or it will behave unpredictably.</string>
 
     <string name="functionButton00DefultValue">Light</string>
