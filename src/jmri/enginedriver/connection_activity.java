@@ -22,10 +22,14 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import android.widget.SimpleAdapter;
@@ -246,12 +250,11 @@ public class connection_activity extends Activity {
                 case message_type.CONNECTED:
                     //use asynctask to save the updated connections list to the connections_list.txt file
                     new saveConnectionsList().execute();
-                    mainapp.connectedHostName = connected_hostname;
+
                     start_throttle_activity();
                     break;
 
                 case message_type.DISCONNECT:
-                    mainapp.connectedHostName = "";
                 case message_type.SHUTDOWN:
                     shutdown();
                     break;

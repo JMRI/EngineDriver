@@ -201,20 +201,14 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             case "prefImportExport":
                 if (!currentlyImporting) {
                     String currentValue = sharedPreferences.getString(key, "");
-                    if (currentValue.equals("Export - any host")) {
+                    if (currentValue.equals("Export")) {
                         exportedPreferencesFileName =  "exported_preferences.ed";
                         saveSharedPreferencesToFile(sharedPreferences);
-                    } else if (currentValue.equals("Import - any host")) {
+                    } else if (currentValue.equals("Import")) {
                         exportedPreferencesFileName =  "exported_preferences.ed";
                         loadSharedPreferencesFromFile(sharedPreferences);
                     } else if (currentValue.equals("Reset")) {
                         resetPreferences(sharedPreferences);
-                    } else if (currentValue.equals("Export - specific to this host")) {
-                        exportedPreferencesFileName =  mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]","_")+".ed";
-                        saveSharedPreferencesToFile(sharedPreferences);
-                    } else if (currentValue.equals("Import - specific to this host")) {
-                        exportedPreferencesFileName =  mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]","_")+".ed";
-                        loadSharedPreferencesFromFile(sharedPreferences);
                     }
                 }
                 break;
