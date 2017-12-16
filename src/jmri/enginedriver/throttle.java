@@ -3449,8 +3449,8 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
             case ACTIVITY_SELECT_LOCO:
                 if (resultCode == select_loco.RESULT_LOCO_EDIT)
                     ActivityConsistUpdate(resultCode, data.getExtras());
-                if (!getConsist(whichVolume).isActive()) {          // if consist on Volume throttle was released
-                    setNextActiveThrottle();                        // move to next throttle
+                if ((getConsist(whichVolume) != null) && (!getConsist(whichVolume).isActive())) {
+                    setNextActiveThrottle(); // if consist on Volume throttle was released, move to next throttle
                 }
                 break;
             case ACTIVITY_CONSIST:         // edit loco or edit consist

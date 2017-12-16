@@ -359,6 +359,7 @@ public class threaded_application extends Application {
           add known configuration of digitrax LnWi to discovered list, since they do not provide jmDNS
          */
         void addDtxToDiscoveredList() {
+            if (client_address == null) return; //don't continue if address not yet set
             String server_addr = client_address.substring(0, client_address.lastIndexOf("."));
             server_addr += ".1";
             HashMap<String, String> hm = new HashMap<>();
