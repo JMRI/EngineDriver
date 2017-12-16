@@ -317,18 +317,9 @@
 
     <string-array name="prefImportExportOptions">
         <item >None</item>
-        <item >Export - any host</item>
-        <item >Import - any host</item>
+        <item >Export</item>
+        <item >Import</item>
         <item >Reset</item>
-        <item >Export - specific to this host</item>
-        <item >Import - specific to this host</item>
-    </string-array>
-
-    <string-array name="prefAutoImportExportOptions">
-        <item >None</item>
-        <item >Auto - Import on connect</item>
- <!--        <item >Auto - Import on connect + Export on disconnect</item>
-        -->
     </string-array>
 
 </resources>

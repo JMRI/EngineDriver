@@ -250,19 +250,11 @@ public class connection_activity extends Activity {
                 case message_type.CONNECTED:
                     //use asynctask to save the updated connections list to the connections_list.txt file
                     new saveConnectionsList().execute();
-                    mainapp.connectedHostName = connected_hostname;
-
-                    SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
-                    String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
-                    if (!prefAutoImportExport.equals("None")) {  // automatically load the host specific preferences, if the preference is set
-                        loadSharedPreferencesFromFile();
-                    }
 
                     start_throttle_activity();
                     break;
 
                 case message_type.DISCONNECT:
-                    mainapp.connectedHostName = "";
                 case message_type.SHUTDOWN:
                     shutdown();
                     break;
@@ -611,74 +603,6 @@ public class connection_activity extends Activity {
             connections_list.add(hm);
         }
         connection_list_adapter.notifyDataSetChanged();
-    }
-
-    // note this is almost the same as the equivalent function in preferences.java
-    @SuppressWarnings({ "unchecked" })
-    private boolean loadSharedPreferencesFromFile() {
-        boolean res = false;
-
-        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]","_")+".ed";
-
-        // save the current throttle name so that we can set it back after the restore is done
-        String currentThrottleNameValue = sharedPreferences.getString("throttle_name_preference", getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)).trim();
-
-        File path = Environment.getExternalStorageDirectory();
-        File engine_driver_dir = new File(path, "engine_driver");
-
-        File src = new File(path, "engine_driver/" + exportedPreferencesFileName);
-
-        if (src.exists()) {
-            ObjectInputStream input = null;
-            try {
-                input = new ObjectInputStream(new FileInputStream(src));
-                SharedPreferences.Editor prefEdit = sharedPreferences.edit();
-                prefEdit.clear();
-
-                Map<String, ?> entries = (Map<String, ?>) input.readObject();
-                for (Map.Entry<String, ?> entry : entries.entrySet()) {
-                    Object v = entry.getValue();
-                    String key = entry.getKey();
-
-                    if (v instanceof Boolean)
-                        prefEdit.putBoolean(key, ((Boolean) v).booleanValue());
-                    else if (v instanceof Float)
-                        prefEdit.putFloat(key, ((Float) v).floatValue());
-                    else if (v instanceof Integer)
-                        prefEdit.putInt(key, ((Integer) v).intValue());
-                    else if (v instanceof Long) prefEdit.putLong(key, ((Long) v).longValue());
-                    else if (v instanceof String) prefEdit.putString(key, ((String) v));
-                }
-                prefEdit.commit();
-                res = true;
-
-                // restore the remembered throttle name to avoid a duplicate throttle name
-                sharedPreferences.edit().putString("throttle_name_preference", currentThrottleNameValue).commit();
-                sharedPreferences.edit().putString("prefImportExport", "None").commit();  //reset the preference
-
-                Toast.makeText(getApplicationContext(), "Import from 'engine_driver/" + exportedPreferencesFileName + "' succeeded.", Toast.LENGTH_SHORT).show();
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (input != null) {
-                        input.close();
-                    }
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
-        if (!res) {
-            Toast.makeText(getApplicationContext(), "Import from 'engine_driver/" + exportedPreferencesFileName + "' failed! You may not have saved the preferences for this host yet.", Toast.LENGTH_LONG).show();
-        }
-        return res;
     }
 
     //for debugging only

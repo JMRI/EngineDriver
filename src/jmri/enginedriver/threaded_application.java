@@ -183,8 +183,6 @@ public class threaded_application extends Application {
     //Used to tell set_Labels in Throttle not to update padding for throttle sliders after onCreate.
     public boolean firstCreate = true;
 
-    public String connectedHostName = "";
-
     class comm_thread extends Thread {
         JmDNS jmdns = null;
         volatile boolean endingJmdns = false;
