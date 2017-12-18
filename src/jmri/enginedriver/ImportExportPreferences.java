@@ -199,6 +199,7 @@ public class ImportExportPreferences {
         return res;
     }
 
+    // simliar, but different, code exists in select_loco.java. if you modify one, make sure you modify the other
     private void getRecentLocosListFromFile() {
         try {
             // Populate the List with the recent engines saved in a file. This
