@@ -625,6 +625,8 @@ public class select_loco extends Activity {
         engine_list_view.setAdapter(recent_list_adapter);
         engine_list_view.setOnItemClickListener(new engine_item());
 
+        // simliar code exists in preferences.java, connection_activity.java and select_loco.java.
+        // if you modify ones, make sure you modify the others
         engine_address_list = new ArrayList<>();
         address_size_list = new ArrayList<>();
         //if no SD Card present then there is no recent locos list

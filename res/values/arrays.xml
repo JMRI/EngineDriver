@@ -316,10 +316,22 @@
     </integer-array>
 
     <string-array name="prefImportExportOptions">
-        <item >None</item>
-        <item >Export</item>
-        <item >Import</item>
-        <item >Reset</item>
+        <item>None</item>
+        <item>Export</item>
+        <item>Import</item>
+        <item>Reset</item>
+    </string-array>
+
+    <string-array name="prefAutoImportExportOptionsDisplay">
+        <item>None</item>
+        <item>Auto import/export on connect/disconnect</item>
+        <item>Auto import on connect only</item>
+     </string-array>
+
+    <string-array name="prefAutoImportExportOptions">
+        <item>None</item>
+        <item>Connect Disconnect</item>
+        <item>Connect Only</item>
     </string-array>
 
 </resources>

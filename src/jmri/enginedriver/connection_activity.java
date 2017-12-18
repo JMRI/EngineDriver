@@ -24,7 +24,9 @@ import android.os.Bundle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -87,7 +89,15 @@ public class connection_activity extends Activity {
 
     private static Method overridePendingTransition;
 
-    static {
+    private ArrayList<Integer> engine_address_list;
+    private ArrayList<Integer> address_size_list; // Look at address_type.java
+    public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
+
+    private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
+    private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY = "Connect Only";
+
+
+        static {
         try {
             overridePendingTransition = Activity.class.getMethod("overridePendingTransition", Integer.TYPE, Integer.TYPE); //$NON-NLS-1$
         } catch (NoSuchMethodException e) {
@@ -250,12 +260,16 @@ public class connection_activity extends Activity {
                 case message_type.CONNECTED:
                     //use asynctask to save the updated connections list to the connections_list.txt file
                     new saveConnectionsList().execute();
+                    mainapp.connectedHostName = connected_hostname;
+                    loadSharedPreferencesFromFile();
 
                     start_throttle_activity();
                     break;
 
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
+                    saveSharedPreferencesToFile();
+                    mainapp.connectedHostName = "";
                     shutdown();
                     break;
             }
@@ -627,4 +641,42 @@ public class connection_activity extends Activity {
 	}
 	 */
 
+    private boolean saveSharedPreferencesToFile() {
+        boolean res = false;
+
+        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
+
+        if (prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT)) {
+            String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+
+            if (!exportedPreferencesFileName.equals(".ed")) {
+                File path = Environment.getExternalStorageDirectory();
+                File engine_driver_dir = new File(path, "engine_driver");
+                engine_driver_dir.mkdir();            // create directory if it doesn't exist
+
+                res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);;
+            }
+        } else { // preference is NOT to save the preferences for the host
+            res = true;
+        }
+        return res;
+    }
+
+   @SuppressWarnings({ "unchecked" })
+   private boolean loadSharedPreferencesFromFile() {
+       boolean res = false;
+       SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+       String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
+
+       String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+
+       if ((prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT))
+       || (prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
+           res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+       } else {// preference is NOT to load the preferences for the host
+           res = true;
+       }
+       return res;
+   }
 }

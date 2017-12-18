@@ -44,4 +44,7 @@
     <bool name="prefGamePadMultipleDevicesDefaultValue">true</bool>
 
     <bool name="prefSwapForwardReverseButtonsDefaultValue">false</bool>
+
+    <bool name="prefImportExportLocoListDefaultValue">true</bool>
+    <bool name="prefAutoImportExportDefaultValue">false</bool>
 </resources>

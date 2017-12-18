@@ -298,12 +298,17 @@
     <string name="consistLights_help">Click on a Loco to toggle the lights for that Loco \'Off\' or \'Follow Function Button\'. \n\nLong Click on a Loco to force the light status \'Off\', without sending the command to the Loco .(i.e. if ED is confused). \n\nPress Back Arrow when done.</string>
 
     <string name="prefThrottleImportExportTitle">Import/Export/Reset Preferences</string>
-    <string name="prefImportExportTitle">Import or Export the Preferences</string>
-    <string name="prefImportExportSummary">\'Import\', \'Export\' or \'Reset\' your preferences to the \'engine_driver/\' folder on your SD card. Action will occur IMMEDIATELY on selecting the option.</string>
+    <string name="prefThrottleImportExportSummary">Import/Export/Reset Preferences</string>
+
+    <string name="prefImportExportTitle">Import, Export or Reset</string>
+    <string name="prefImportExportSummary">\'Import\', \'Export\' or \'Reset\' your preferences to the \'engine_driver/\' folder on your SD card. \nAction will occur IMMEDIATELY on selecting the option.</string>
     <string name="prefImportExportDefaultValue">None</string>
 
-    <string name="prefAutoImportExportTitle">Auto import host specifc Preferences</string>
-    <string name="prefAutoImportExportSummary">Automatically import any preferences for the current host on connection. Requires that you have already used the \'export\' function above.</string>
+    <string name="prefImportExportLocoListTitle">Include recent loco list</string>
+    <string name="prefImportExportLocoListSummary">Include the locos in the recent loco list in \'Imports\' and \'Exports\'.</string>
+
+    <string name="prefAutoImportExportTitle">Auto import/export host specifc preferences</string>
+    <string name="prefAutoImportExportSummary">On connection to a host, automatically import preferences for that host, and optionally save on disconnect. \n(i.e. If you wish to constantly reset back to a known state, set to \'Auto import on connect only\' after the first time.)</string>
     <string name="prefAutoImportExportDefaultValue">None</string>
 
     <string name="prefSwapForwardReverseButtonsTitle">Swap Forward and Reverse</string>
