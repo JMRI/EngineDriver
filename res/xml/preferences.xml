@@ -480,13 +480,32 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/prefThrottleImportExportTitle" >
-        <ListPreference
-            android:defaultValue="@string/prefImportExportDefaultValue"
-            android:entries="@array/prefImportExportOptions"
-            android:entryValues="@array/prefImportExportOptions"
-            android:key="prefImportExport"
-            android:summary="@string/prefImportExportSummary"
-            android:title="@string/prefImportExportTitle" />
+        <PreferenceScreen
+            android:key="importExport_preferences"
+            android:title="@string/prefThrottleImportExportTitle"
+            android:summary="@string/prefThrottleImportExportSummary"
+            android:persistent="false">
+            <ListPreference
+                android:defaultValue="@string/prefImportExportDefaultValue"
+                android:entries="@array/prefImportExportOptions"
+                android:entryValues="@array/prefImportExportOptions"
+                android:key="prefImportExport"
+                android:summary="@string/prefImportExportSummary"
+                android:title="@string/prefImportExportTitle" />
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefImportExportLocoListDefaultValue"
+                android:key="prefImportExportLocoList"
+                android:summary="@string/prefImportExportLocoListSummary"
+                android:title="@string/prefImportExportLocoListTitle" >
+            </CheckBoxPreference>
+            <ListPreference
+                android:defaultValue="@string/prefAutoImportExportDefaultValue"
+                android:entries="@array/prefAutoImportExportOptionsDisplay"
+                android:entryValues="@array/prefAutoImportExportOptions"
+                android:key="prefAutoImportExport"
+                android:summary="@string/prefAutoImportExportSummary"
+                android:title="@string/prefAutoImportExportTitle" />
+        </PreferenceScreen>
     </PreferenceCategory>
 
 </PreferenceScreen>
