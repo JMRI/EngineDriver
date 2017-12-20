@@ -301,15 +301,19 @@
     <string name="prefThrottleImportExportSummary">Import/Export/Reset Preferences</string>
 
     <string name="prefImportExportTitle">Import, Export or Reset</string>
-    <string name="prefImportExportSummary">\'Import\', \'Export\' or \'Reset\' your preferences to the \'engine_driver/\' folder on your SD card. \nAction will occur IMMEDIATELY on selecting the option.</string>
+    <string name="prefImportExportSummary">\'Import\' or \'Export\' preferences to the \'engine_driver/\' folder, or \'Reset\' them. \nWill occur IMMEDIATELY on selecting the option.\n(You can transfer the preferences to a different phone by copying the file.)</string>
     <string name="prefImportExportDefaultValue">None</string>
 
     <string name="prefImportExportLocoListTitle">Include recent loco list</string>
     <string name="prefImportExportLocoListSummary">Include the locos in the recent loco list in \'Imports\' and \'Exports\'.</string>
 
-    <string name="prefAutoImportExportTitle">Auto import/export host specifc preferences</string>
-    <string name="prefAutoImportExportSummary">On connection to a host, automatically import preferences for that host, and optionally save on disconnect. \n(i.e. If you wish to constantly reset back to a known state, set to \'Auto import on connect only\' after the first time.)</string>
+    <string name="prefAutoImportExportTitle">Auto host specifc import/export</string>
+    <string name="prefAutoImportExportSummary">On every connection to a host, AUTOMATICALLY \'Import\' preferences for that host, and optionally \'Export\' them on disconnect. \n(To constantly reset back to a known state, set to \'Auto import on connect only\' after the first time, or after a manual save (below).)</string>
     <string name="prefAutoImportExportDefaultValue">None</string>
+
+    <string name="prefHostImportExportTitle">Manual host specific import/export</string>
+    <string name="prefHostImportExportSummary">\'Import\' or \'Export\' your preferences for a specific host to the \'engine_driver/\' folder. The host must be in your recent connection list.\nWill occur IMMEDIATELY on selecting the option.</string>
+    <string name="prefHostImportExportDefaultValue">None</string>
 
     <string name="prefSwapForwardReverseButtonsTitle">Swap Forward and Reverse</string>
     <string name="prefSwapForwardReverseButtonsSummary">Swap the Forward and Reverse Buttons. REQUIRES a restart of Engine Driver, or it will behave unpredictably.</string>

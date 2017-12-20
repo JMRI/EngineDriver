@@ -153,6 +153,7 @@ public class ImportExportPreferences {
                     // restore the remembered throttle name to avoid a duplicate throttle name
                     sharedPreferences.edit().putString("throttle_name_preference", currentThrottleNameValue).commit();
                     sharedPreferences.edit().putString("prefImportExport", "None").commit();  //reset the preference
+                    sharedPreferences.edit().putString("prefHostImportExport", "None").commit();  //reset the preference
                     sharedPreferences.edit().putString("prefAutoImportExport", prefAutoImportExport).commit();  //reset the preference
                     sharedPreferences.edit().putBoolean("prefImportExportLocoList", prefImportExportLocoList).commit();  //reset the preference
 

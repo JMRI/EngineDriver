@@ -28,6 +28,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.provider.Settings;
 import android.util.Log;
@@ -49,7 +50,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -68,12 +71,19 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private ArrayList<Integer> address_size_list; // Look at address_type.java
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
 
+    private static final String EXAMPLE_HOST = "jmri.mstevetodd.com";
+    private String[] prefHostImportExportOptionsFound = {"None"};
+    private static final String IMPORT_PREFIX = "Import- "; // these two have to bee the same length
+    private static final String EXPORT_PREFIX = "Export- ";
+
     /**
      * Called when the activity is first created.
      */
     @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        ListPreference preference;
+
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) getApplication();
         addPreferencesFromResource(R.xml.preferences);
@@ -90,6 +100,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             getPreferenceScreen().findPreference("prefThrottleViewImmersiveMode").setEnabled(false);
         }
         result = RESULT_OK;
+
+        getConnectionsList();
+
+        preference = (ListPreference)findPreference("prefHostImportExport");
+        preference.setEntries(prefHostImportExportOptionsFound);
+        preference.setEntryValues(prefHostImportExportOptionsFound);
     }
 
     @SuppressWarnings("deprecation")
@@ -209,7 +225,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 result = RESULT_GAMEPAD;
                 break;
             case "prefImportExport":
-                //if (!currentlyImporting) {
                 if (!importExportPreferences.currentlyImporting) {
                     String currentValue = sharedPreferences.getString(key, "");
                     if (currentValue.equals("Export")) {
@@ -218,6 +233,20 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         loadSharedPreferencesFromFile(sharedPreferences,exportedPreferencesFileName);
                     } else if (currentValue.equals("Reset")) {
                         resetPreferences(sharedPreferences);
+                    }
+                }
+                break;
+            case "prefHostImportExport":
+                if (!importExportPreferences.currentlyImporting) {
+                    String currentValue = sharedPreferences.getString(key, "");
+                    if (!currentValue.equals("None")) {
+                        String action = currentValue.substring(0,IMPORT_PREFIX.length());
+                        String fileName = currentValue.substring(IMPORT_PREFIX.length(),currentValue.length());
+                        if (action.equals(EXPORT_PREFIX)) {
+                            saveSharedPreferencesToFile(sharedPreferences,fileName);
+                        } else if (action.equals(IMPORT_PREFIX)) {
+                            loadSharedPreferencesFromFile(sharedPreferences, fileName);
+                        }
                     }
                 }
                 break;
@@ -292,7 +321,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 boolean res = false;
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
-                        //writeExportFile(sharedPreferences, dst);
                         res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                         overwiteFile = true;
                         break;
@@ -378,4 +406,62 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         return newVal;
     }
 
+    private void getConnectionsList() {
+        boolean foundExampleHost = false;
+        String host_name;
+        String host_name_filename;
+        String errMsg;
+
+        try {
+            File sdcard_path = Environment.getExternalStorageDirectory();
+            File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
+
+            if (connections_list_file.exists()) {
+                BufferedReader list_reader = new BufferedReader(new FileReader(connections_list_file));
+                while (list_reader.ready()) {
+                    String line = list_reader.readLine();
+                    List<String> parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
+                    if (parts.size() > 1) {  //skip if not split
+                        host_name = parts.get(0);
+                        host_name_filename = host_name.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+                        if (host_name.equals(EXAMPLE_HOST)) {
+                            foundExampleHost = true;
+                        }
+                        if (!isAlreadyInArray(prefHostImportExportOptionsFound, IMPORT_PREFIX + host_name_filename)) {
+                            prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, IMPORT_PREFIX + host_name_filename);
+                            prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, EXPORT_PREFIX + host_name_filename);
+                         }
+                    }
+                }
+                list_reader.close();
+            }
+        } catch (IOException except) {
+            errMsg = except.getMessage();
+            Log.e("connection_activity", "Error reading recent connections list: " + errMsg);
+            Toast.makeText(getApplicationContext(), "Error reading recent connections list: " + errMsg, Toast.LENGTH_SHORT).show();
+        }
+
+        if (!foundExampleHost) {
+            prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, IMPORT_PREFIX + EXAMPLE_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+            prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, EXPORT_PREFIX+ EXAMPLE_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+        }
+
+    }
+
+    private static String[] add(String[] stringArray, String newValue) {
+        String[] tempArray = new String[ stringArray.length + 1 ];
+        for (int i=0; i<stringArray.length; i++) {
+            tempArray[i] = stringArray[i];
+        }
+        tempArray[stringArray.length] = newValue;
+        return tempArray;
+    }
+
+    public static boolean isAlreadyInArray(String[] arr, String targetValue) {
+        for(String s: arr){
+            if(s.equals(targetValue))
+                return true;
+        }
+        return false;
+    }
 }
