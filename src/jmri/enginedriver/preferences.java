@@ -103,11 +103,15 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         result = RESULT_OK;
 
-        getConnectionsList();
-
-        preference = (ListPreference)findPreference("prefHostImportExport");
-        preference.setEntries(prefHostImportExportOptionsFound);
-        preference.setEntryValues(prefHostImportExportOptionsFound);
+        if (mainapp.connectedHostName.equals("")) { // option is only available when there is no curent connection
+            getConnectionsList();
+            preference = (ListPreference) findPreference("prefHostImportExport");
+            preference.setEntries(prefHostImportExportOptionsFound);
+            preference.setEntryValues(prefHostImportExportOptionsFound);
+        } else {
+            getPreferenceScreen().findPreference("prefHostImportExport").setSelectable(false);
+            getPreferenceScreen().findPreference("prefHostImportExport").setEnabled(false);
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -228,6 +232,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 break;
             case "prefImportExport":
                 if (!importExportPreferences.currentlyImporting) {
+                    exportedPreferencesFileName =  "exported_preferences.ed";
                     String currentValue = sharedPreferences.getString(key, "");
                     if (currentValue.equals("Export")) {
                         saveSharedPreferencesToFile(sharedPreferences,exportedPreferencesFileName);
@@ -243,11 +248,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     String currentValue = sharedPreferences.getString(key, "");
                     if (!currentValue.equals(OPTION_NONE)) {
                         String action = currentValue.substring(0,IMPORT_PREFIX.length());
-                        String fileName = currentValue.substring(IMPORT_PREFIX.length(),currentValue.length());
+                        exportedPreferencesFileName = currentValue.substring(IMPORT_PREFIX.length(),currentValue.length());
                         if (action.equals(EXPORT_PREFIX)) {
-                            saveSharedPreferencesToFile(sharedPreferences,fileName);
+                            saveSharedPreferencesToFile(sharedPreferences,exportedPreferencesFileName);
                         } else if (action.equals(IMPORT_PREFIX)) {
-                            loadSharedPreferencesFromFile(sharedPreferences, fileName);
+                            loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName);
                         }
                     }
                 }
@@ -262,7 +267,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         if (!res) {
             Toast.makeText(getApplicationContext(), "Import from 'engine_driver/" + exportedPreferencesFileName + "' failed! You may not have saved the preferences for this host yet.", Toast.LENGTH_LONG).show();
         }
-        resetAndReloadImportExportPreference(sharedPreferences);
+        fixAndReloadImportExportPreference(sharedPreferences);
         return res;
     }
 
@@ -309,7 +314,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         Toast.makeText(getApplicationContext(), "Preferences Reset to defaults!", Toast.LENGTH_LONG).show();
     }
 
-    private void resetAndReloadImportExportPreference(SharedPreferences sharedPreferences){
+    private void fixAndReloadImportExportPreference(SharedPreferences sharedPreferences){
         sharedPreferences.edit().putString("prefImportExport", OPTION_NONE).commit();  //reset the preference
         sharedPreferences.edit().putString("prefHostImportExport", OPTION_NONE).commit();  //reset the preference
         reload();
@@ -332,7 +337,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         overwiteFile = false;
                         break;
                 }
-                resetAndReloadImportExportPreference(sharedPreferences);
+                fixAndReloadImportExportPreference(sharedPreferences);
             }
         };
         AlertDialog.Builder ab = new AlertDialog.Builder(preferences.this);
@@ -430,7 +435,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         if (host_name.equals(EXAMPLE_HOST)) {
                             foundExampleHost = true;
                         }
-                        if (!isAlreadyInArray(prefHostImportExportOptionsFound, IMPORT_PREFIX + host_name_filename)) {
+                        if ((!host_name.equals("")) && (!isAlreadyInArray(prefHostImportExportOptionsFound, IMPORT_PREFIX + host_name_filename))) {
                             prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, IMPORT_PREFIX + host_name_filename);
                             prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, EXPORT_PREFIX + host_name_filename);
                          }
