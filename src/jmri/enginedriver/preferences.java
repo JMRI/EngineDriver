@@ -76,6 +76,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final String IMPORT_PREFIX = "Import- "; // these two have to bee the same length
     private static final String EXPORT_PREFIX = "Export- ";
 
+    private static final String OPTION_NONE = "None";
+
     /**
      * Called when the activity is first created.
      */
@@ -239,7 +241,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             case "prefHostImportExport":
                 if (!importExportPreferences.currentlyImporting) {
                     String currentValue = sharedPreferences.getString(key, "");
-                    if (!currentValue.equals("None")) {
+                    if (!currentValue.equals(OPTION_NONE)) {
                         String action = currentValue.substring(0,IMPORT_PREFIX.length());
                         String fileName = currentValue.substring(IMPORT_PREFIX.length(),currentValue.length());
                         if (action.equals(EXPORT_PREFIX)) {
@@ -308,7 +310,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     private void resetAndReloadImportExportPreference(SharedPreferences sharedPreferences){
-        sharedPreferences.edit().putString("prefImportExport", "None").commit();  //reset the preference
+        sharedPreferences.edit().putString("prefImportExport", OPTION_NONE).commit();  //reset the preference
+        sharedPreferences.edit().putString("prefHostImportExport", OPTION_NONE).commit();  //reset the preference
         reload();
     }
 
