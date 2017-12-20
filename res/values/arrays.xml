@@ -334,4 +334,8 @@
         <item>Connect Only</item>
     </string-array>
 
+    <string-array name="prefHostImportExportOptions">
+        <item>None</item>
+    </string-array>
+
 </resources>
