@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,6 +33,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -61,6 +61,10 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import eu.esu.mobilecontrol2.sdk.MobileControl2;
+import eu.esu.mobilecontrol2.sdk.StopButtonFragment;
+import eu.esu.mobilecontrol2.sdk.ThrottleFragment;
+import eu.esu.mobilecontrol2.sdk.ThrottleScale;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
 import static android.view.KeyEvent.ACTION_DOWN;
@@ -82,7 +86,7 @@ import static android.view.KeyEvent.KEYCODE_X;
 
 // used for supporting Keyboard and Gamepad input;
 
-public class throttle extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
+public class throttle extends FragmentActivity implements android.gesture.GestureOverlayView.OnGestureListener {
 
     private threaded_application mainapp; // hold pointer to mainapp
     private SharedPreferences prefs;
@@ -301,6 +305,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     //Throttle Array
     private final char[] allThrottleLetters = {'T', 'S', 'G'};
+
+    // For ESU MobileControlII
+    private final boolean IS_ESU_MCII = MobileControl2.isMobileControl2();
+    private ThrottleScale esuThrottleScaleT;
+    private ThrottleScale esuThrottleScaleS;
+    private ThrottleScale esuThrottleScaleG;
+    private ThrottleFragment esuThrottleFragment;
 
     // For speed slider speed buttons.
     private class RptUpdater implements Runnable {
@@ -855,26 +866,34 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
     //adjust maxspeedsteps from code passed from JMRI, but only if set to Auto, else do not change
     private void setSpeedStepsFromWiT(char whichThrottle, int speedStepCode) {
         int maxSpeedStep = 100;
+        ThrottleScale esuThrottleScale = new ThrottleScale(10, 127);
         switch (speedStepCode) {
             case SPEED_STEP_CODE_128:
                 maxSpeedStep = 126;
+                esuThrottleScale = new ThrottleScale(10, 127);
                 break;
             case SPEED_STEP_CODE_27:
                 maxSpeedStep = 27;
+                esuThrottleScale = new ThrottleScale(10, 28);
                 break;
             case SPEED_STEP_CODE_14:
                 maxSpeedStep = 14;
+                esuThrottleScale = new ThrottleScale(10, 15);
                 break;
             case SPEED_STEP_CODE_28:
                 maxSpeedStep = 28;
+                esuThrottleScale = new ThrottleScale(10, 29);
                 break;
         }
         if (whichThrottle == 'T') {
             maxSpeedStepT = maxSpeedStep;
+            esuThrottleScaleT = esuThrottleScale;
         } else if (whichThrottle == 'G') {
             maxSpeedStepG = maxSpeedStep;
+            esuThrottleScaleG = esuThrottleScale;
         } else {
             maxSpeedStepS = maxSpeedStep;
+            esuThrottleScaleS = esuThrottleScale;
         }
         setDisplayUnitScale(whichThrottle);
     }
@@ -1378,6 +1397,11 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         } else {
             tvVolG.setText(VOLUME_INDICATOR);
         }
+        // Ensure ESU MCII tracks selected throttle
+        if (IS_ESU_MCII) {
+            Log.d("Engine_Driver", "ESU_MCII: Throttle changed to: " + whichVolume);
+            speedChangeAndNotify(whichVolume, 0);
+        }
     }
 
     private void setGamepadIndicator() {
@@ -1872,6 +1896,55 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
+    // Callback for ESU MCII throttle knob events
+    private ThrottleFragment.OnThrottleListener esuOnThrottleListener = new ThrottleFragment.OnThrottleListener() {
+
+        @Override
+        public void onButtonDown() {
+            Log.d("Engine_Driver", "ESU_MCII: Knob button down for throttle " + whichVolume);
+            Log.d("Engine_Driver", "ESU_MCII: Attempting to switch direction");
+            changeDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1 ));
+        }
+
+        @Override
+        public void onButtonUp() {
+            Log.d("Engine_Driver", "ESU_MCII: Knob button up for throttle " + whichVolume);
+        }
+
+        @Override
+        public void onPositionChanged(int knobPos) {
+            int speed;
+            if (whichVolume == 'T') {
+                speed = esuThrottleScaleT.positionToStep(knobPos);
+            } else if (whichVolume == 'G') {
+                speed = esuThrottleScaleG.positionToStep(knobPos);
+            } else {
+                speed = esuThrottleScaleS.positionToStep(knobPos);
+            }
+            Log.d("Engine_Driver", "ESU_MCII: Knob position changed for throttle " + whichVolume);
+            Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
+            speedUpdateAndNotify(whichVolume, speed);
+        }
+    };
+
+    // Callback for ESU MCII stop button
+    private StopButtonFragment.OnStopButtonListener esuOnStopButtonListener = new StopButtonFragment.OnStopButtonListener() {
+        private int origSpeed;
+        @Override
+        public void onStopButtonDown() {
+            Log.d("Engine_Driver", "ESU_MCII: Stop button down for throttle " + whichVolume);
+            origSpeed = getSpeed(whichVolume);
+            Log.d("Engine_Driver", "ESU_MCII: Speed value was: " + origSpeed);
+            speedUpdateAndNotify(whichVolume, 0);
+        }
+
+        @Override
+        public void onStopButtonUp() {
+            Log.d("Engine_Driver", "ESU_MCII: Stop button up for throttle " + whichVolume);
+            Log.d("Engine_Driver", "ESU_MCII: Revert speed value to: " + origSpeed);
+            speedUpdateAndNotify(whichVolume, origSpeed);
+        }
+    };
 
 // Listeners for the Select Loco buttons
     private class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
@@ -2148,6 +2221,22 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 else {                      // got a touch while processing limitJump
                     speed = lastSpeed;    //   so suppress multiple touches
                     throttle.setProgress(lastSpeed);
+                }
+                // Now update ESU MCII Knob position
+                if (IS_ESU_MCII) {
+                    if (whichThrottle == whichVolume) {
+                        int knobPos;
+                        if (whichThrottle == 'T') {
+                            knobPos = esuThrottleScaleT.stepToPosition(speed);
+                        } else if (whichThrottle == 'G') {
+                            knobPos = esuThrottleScaleG.stepToPosition(speed);
+                        } else {
+                            knobPos = esuThrottleScaleS.stepToPosition(speed);
+                        }
+                        Log.d("Engine_Driver", "ESU_MCII: Update knob position for throttle " + whichVolume);
+                        Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
+                        esuThrottleFragment.moveThrottle(knobPos);
+                    }
                 }
             } else {
                 if (limitedJump) {
@@ -2565,6 +2654,17 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
         // set GamePad Support
         setGamepadKeys();
+
+        // initialise ESU MCII
+        if (IS_ESU_MCII) {
+            esuThrottleFragment = ThrottleFragment.newInstance(1);
+            StopButtonFragment esuStopButtonFragment = StopButtonFragment.newInstance();
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(esuThrottleFragment, "mc2:throttle")
+                    .add(esuStopButtonFragment, "mc2:stopKey")
+                    .commit();
+        }
 
     } // end of onCreate()
 

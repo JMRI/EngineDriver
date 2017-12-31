@@ -11,6 +11,7 @@
  * New swipe-up Prefs to dim and lock
  * remove min android check for gamepad support
  * prevent some NPEs reported to Play Store
+ * Add support for ESU Mobile Control II throttle
 **Version 2.15
  * fix incorrect loco request on reconnect when loco is not in roster (found by Bob Grandle)
  * prevent crash caused by empty JMRI consists
