@@ -117,8 +117,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         // Disable ESU MCII preferences if not an ESU MCII
         if (!MobileControl2.isMobileControl2()) {
-            getPreferenceScreen().findPreference("esumcii_preferences").setSelectable(false);
-            getPreferenceScreen().findPreference("esumcii_preferences").setEnabled(false);
+            getPreferenceScreen().findPreference("prefEsuMc2").setSelectable(false);
+            getPreferenceScreen().findPreference("prefEsuMc2").setEnabled(false);
         }
     }
 

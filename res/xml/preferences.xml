@@ -346,7 +346,7 @@
             android:title="@string/prefSelectiveLeadSoundTitle" >
         </CheckBoxPreference>
         <PreferenceScreen
-            android:key="esumcii_preferences"
+            android:key="prefEsuMc2"
             android:title="@string/prefEsuMc2Title"
             android:summary="@string/prefEsuMc2Summary"
             android:persistent="false"
