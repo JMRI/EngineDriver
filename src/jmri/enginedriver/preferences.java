@@ -56,6 +56,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import eu.esu.mobilecontrol2.sdk.MobileControl2;
+
 public class preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
     static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
 
@@ -111,6 +113,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         } else {
             getPreferenceScreen().findPreference("prefHostImportExport").setSelectable(false);
             getPreferenceScreen().findPreference("prefHostImportExport").setEnabled(false);
+        }
+
+        // Disable ESU MCII preferences if not an ESU MCII
+        if (!MobileControl2.isMobileControl2()) {
+            getPreferenceScreen().findPreference("esumcii_preferences").setSelectable(false);
+            getPreferenceScreen().findPreference("esumcii_preferences").setEnabled(false);
         }
     }
 

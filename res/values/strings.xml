@@ -174,6 +174,25 @@
     <string name="prefGamePadButtonDownDefaultValue">Decrease Speed</string>
     <string name="prefGamePadButtonLeftDefaultValue">Forward</string>
     <!--    Gamepad button preferences   -->
+
+    <!-- ESU MCII preferences -->
+    <string name="prefEsuMc2ButtonTLTitle">Top-left button action</string>
+    <string name="prefEsuMc2ButtonTLSummary">Choose the action when you press the button.</string>
+    <string name="prefEsuMc2ButtonTLDefaultValue">Increase Speed</string>
+    <string name="prefEsuMc2ButtonBLTitle">Bottom-left button action</string>
+    <string name="prefEsuMc2ButtonBLSummary">Choose the action when you press the button.</string>
+    <string name="prefEsuMc2ButtonBLDefaultValue">Decrease Speed</string>
+    <string name="prefEsuMc2ButtonTRTitle">Top-right button action</string>
+    <string name="prefEsuMc2ButtonTRSummary">Choose the action when you press the button.</string>
+    <string name="prefEsuMc2ButtonTRDefaultValue">Forward/Reverse Toggle</string>
+    <string name="prefEsuMc2ButtonBRTitle">Bottom-right button action</string>
+    <string name="prefEsuMc2ButtonBRSummary">Choose the action when you press the button.</string>
+    <string name="prefEsuMc2ButtonBRDefaultValue">Next Throttle</string>
+    <string name="prefEsuMc2ButtonsRepeatTitle">Button repeat delay</string>
+    <string name="prefEsuMc2ButtonsRepeatSummary">How long between repeats on device side buttons.  Smaller is faster.</string>
+    <string name="prefEsuMc2ButtonsRepeatDefaultValue">300</string>
+    <!-- ESU MCII preferences -->
+    
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default function labels instead of labels from roster entries.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. Height?</string>
