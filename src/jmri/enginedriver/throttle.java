@@ -1946,6 +1946,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             Log.d("Engine_Driver", "ESU_MCII: Stop button down for throttle " + whichVolume);
             origSpeed = getSpeed(whichVolume);
             Log.d("Engine_Driver", "ESU_MCII: Speed value was: " + origSpeed);
+            setEsuThrottleKnobPosition(whichVolume, 0);
             speedUpdateAndNotify(whichVolume, 0);
         }
 
@@ -1953,6 +1954,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         public void onStopButtonUp() {
             Log.d("Engine_Driver", "ESU_MCII: Stop button up for throttle " + whichVolume);
             Log.d("Engine_Driver", "ESU_MCII: Revert speed value to: " + origSpeed);
+            setEsuThrottleKnobPosition(whichVolume, origSpeed);
             speedUpdateAndNotify(whichVolume, origSpeed);
         }
     };
@@ -2142,6 +2144,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         case function_button.STOP:
                             set_stop_button(whichThrottle, true);
                             speedUpdateAndNotify(whichThrottle, 0);
+                            if (IS_ESU_MCII) {
+                                setEsuThrottleKnobPosition(whichThrottle, 0);
+                            }
                             break;
                         case function_button.SPEED_LABEL:  // specify which throttle the volume button controls
                             if (getConsist(whichThrottle).isActive()) { // only assign if Active
