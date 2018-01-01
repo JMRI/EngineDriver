@@ -176,6 +176,8 @@
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
+    <string name="prefEsuMc2Title">ESU MobileControl II Options</string>
+    <string name="prefEsuMc2Summary">Choose ESU MobileControl II options</string>
     <string name="prefEsuMc2ButtonTLTitle">Top-left button action</string>
     <string name="prefEsuMc2ButtonTLSummary">Choose the action when you press the button.</string>
     <string name="prefEsuMc2ButtonTLDefaultValue">Increase Speed</string>
