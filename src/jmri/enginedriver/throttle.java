@@ -2065,6 +2065,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     performButtonAction(9, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
                 return (true); // stop processing this key
             }
+//  for now pass all keystrokes not in gamePadKeys[] to super
+//  if problems occur, we can uncomment the next 2 lines
+//            else if (!((keyCode == KEYCODE_BACK) || (keyCode == KEYCODE_VOLUME_DOWN) || (keyCode == KEYCODE_VOLUME_UP) || (keyCode == KEYCODE_MENU)))
+//            return (true); // swallow all other keystrokes except back, menu and the volume keys
+        }
         } else if(IS_ESU_MCII) {
             // Process ESU MCII keys
             int action = event.getAction();
@@ -2092,11 +2097,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
                 }
             }
-//  for now pass all keystrokes not in gamePadKeys[] to super
-//  if problems occur, we can uncomment the next 2 lines
-//            else if (!((keyCode == KEYCODE_BACK) || (keyCode == KEYCODE_VOLUME_DOWN) || (keyCode == KEYCODE_VOLUME_UP) || (keyCode == KEYCODE_MENU)))
-//            return (true); // swallow all other keystrokes except back, menu and the volume keys
-        }
         }
         return super.dispatchKeyEvent(event);
     }
