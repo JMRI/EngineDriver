@@ -413,7 +413,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // Build immutable map of String name to enum pairs
 
         static {
-            Map<String,EsuMc2ButtonAction> map = new ConcurrentHashMap<String,EsuMc2ButtonAction>();
+            Map<String,EsuMc2ButtonAction> map = new ConcurrentHashMap<>();
             for (EsuMc2ButtonAction action: EsuMc2ButtonAction.values()) {
                 map.put(action.getAction(),action);
             }
@@ -430,6 +430,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         EsuMc2LedState stateGreen;
 
         private void setState(EsuMc2Led which, EsuMc2LedState state) {
+            this.setState(which, state, false);
+        }
+
+        private void setState(EsuMc2Led which, EsuMc2LedState state, boolean storeState) {
             switch (state) {
                 case OFF:
                     MobileControl2.setLedState(which.getValue(), false);
@@ -453,6 +457,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     // Default off
                     MobileControl2.setLedState(which.getValue(), false);
             }
+            if (storeState) {
+                switch (which) {
+                    case RED:
+                        stateRed = state;
+                        break;
+                    case GREEN:
+                        stateGreen = state;
+                        break;
+                }
+            }
         }
 
         private EsuMc2LedState getState(EsuMc2Led which) {
@@ -461,6 +475,15 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             } else {
                 return this.stateGreen;
             }
+        }
+
+        private void revertLEDStates() {
+            revertLEDState(EsuMc2Led.RED);
+            revertLEDState(EsuMc2Led.GREEN);
+        }
+
+        private void revertLEDState(EsuMc2Led which) {
+            setState(which, getState(which), false);
         }
     }
 
@@ -1556,6 +1579,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (IS_ESU_MCII) {
             Log.d("Engine_Driver", "ESU_MCII: Throttle changed to: " + whichVolume);
             setEsuThrottleKnobPosition(whichVolume, getSpeed(whichVolume));
+            if (getConsist(whichVolume).isActive()) {
+                esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.ON, true);
+            } else {
+                esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.STEADY_FLASH, true);
+            }
         }
     }
 
@@ -2172,6 +2200,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             set_stop_button(whichVolume, true);
             speedUpdateAndNotify(whichVolume, 0);
             esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.ON);
+            esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
             // Read current stop button delay pref value
             delay = preferences.getIntPrefValue(prefs,"prefEsuMc2StopButtonDelay",
                     getApplicationContext().getResources().getString(R.string.prefEsuMc2StopButtonDelayDefaultValue));
@@ -2190,6 +2219,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     wasLongPress = true;
                     Log.d("Engine_Driver", "ESU_MCII: Stop button press was long - long flash Red LED");
                     esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.LONG_FLASH);
+                    esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
                     // Set all throttles to zero
                     for (char t : allThrottleLetters) {
                         set_stop_button(t, true);
@@ -2199,6 +2229,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     wasLongPress = false;
                     Log.d("Engine_Driver", "ESU_MCII: Stop button press was short - short flash Red LED");
                     esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.QUICK_FLASH);
+                    esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
                 }
             } else {
                 if (!wasLongPress) {
@@ -2213,8 +2244,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         set_stop_button(t, false);
                     }
                 }
-                // Switch off RED LED
-                esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.OFF);
+                // Revert LED states
+                esuMc2Led.revertLEDStates();
             }
         }
     };
@@ -3062,6 +3093,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     .add(esuThrottleFragment, "mc2:throttle")
                     .add(esuStopButtonFragment, "mc2:stopKey")
                     .commit();
+            esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.OFF, true);
+            esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.STEADY_FLASH, true);
             Log.d("Engine_Driver", "ESU_MCII: Initialisation complete");
         }
 
@@ -3954,6 +3987,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     ActivityConsistUpdate(resultCode, data.getExtras());
                 if ((getConsist(whichVolume) != null) && (!getConsist(whichVolume).isActive())) {
                     setNextActiveThrottle(); // if consist on Volume throttle was released, move to next throttle
+                } else {
+                    if (IS_ESU_MCII) {
+                        esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.STEADY_FLASH, true);
+                    }
                 }
                 break;
             case ACTIVITY_CONSIST:         // edit loco or edit consist
