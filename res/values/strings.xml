@@ -191,8 +191,12 @@
     <string name="prefEsuMc2ButtonBRSummary">Choose the action when you press the button.</string>
     <string name="prefEsuMc2ButtonBRDefaultValue">Next Throttle</string>
     <string name="prefEsuMc2ButtonsRepeatTitle">Button repeat delay</string>
-    <string name="prefEsuMc2ButtonsRepeatSummary">How long between repeats on device side buttons.  Smaller is faster.</string>
+    <string name="prefEsuMc2ButtonsRepeatSummary">How long between repeats on device side buttons.\nSmaller is faster.</string>
     <string name="prefEsuMc2ButtonsRepeatDefaultValue">300</string>
+    <string name="prefEsuMc2StopButtonDelayTitle">Stop Button long-press delay</string>
+    <string name="prefEsuMc2StopButtonDelaySummary">How long for a \'long-press\' of the Stop button.
+        \nA \'long-press\' stops all active throttles; a \'short-press\' pauses the current throttle.\nSmaller is faster.</string>
+    <string name="prefEsuMc2StopButtonDelayDefaultValue">500</string>
     <!-- ESU MCII preferences -->
     
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>

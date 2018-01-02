@@ -351,43 +351,53 @@
             android:summary="@string/prefEsuMc2Summary"
             android:persistent="false"
             android:shouldDisableView="true">
-            <!-- Button preferences -->
+<!-- Seems that ESU MCII buttons don't register holds
             <EditTextPreference
+                android:key="prefEsuMc2ButtonsRepeatDelay"
+                android:title="@string/prefEsuMc2ButtonsRepeatTitle"
+                android:summary="@string/prefEsuMc2ButtonsRepeatSummary"
                 android:defaultValue="@string/prefEsuMc2ButtonsRepeatDefaultValue"
                 android:dialogTitle="@string/prefEsuMc2ButtonsRepeatTitle"
-                android:key="prefEsuMc2ButtonsRepeatDelay"
                 android:maxLength="4"
-                android:numeric="integer"
-                android:summary="@string/prefGamePadSpeedButtonsRepeatSummary"
-                android:title="@string/prefGamePadSpeedButtonsRepeatTitle" />
+                android:numeric="integer" />
+-->
+            <EditTextPreference
+                android:key="prefEsuMc2StopButtonDelay"
+                android:title="@string/prefEsuMc2StopButtonDelayTitle"
+                android:summary="@string/prefEsuMc2StopButtonDelaySummary"
+                android:defaultValue="@string/prefEsuMc2StopButtonDelayDefaultValue"
+                android:dialogTitle="@string/prefEsuMc2StopButtonDelayTitle"
+                android:maxLength="4"
+                android:numeric="integer" />
+            <!-- Button preferences -->
             <ListPreference
+                android:key="prefEsuMc2ButtonTL"
+                android:title="@string/prefEsuMc2ButtonTLTitle"
+                android:summary="@string/prefEsuMc2ButtonTLSummary"
                 android:defaultValue="@string/prefEsuMc2ButtonTLDefaultValue"
                 android:entries="@array/prefEsuMc2KeyOptions"
-                android:entryValues="@array/prefEsuMc2KeyOptions"
-                android:key="prefEsuMc2ButtonTL"
-                android:summary="@string/prefEsuMc2ButtonTLSummary"
-                android:title="@string/prefEsuMc2ButtonTLTitle" />
+                android:entryValues="@array/prefEsuMc2KeyOptions" />
             <ListPreference
+                android:key="prefEsuMc2ButtonBL"
+                android:title="@string/prefEsuMc2ButtonBLTitle"
+                android:summary="@string/prefEsuMc2ButtonBLSummary"
                 android:defaultValue="@string/prefEsuMc2ButtonBLDefaultValue"
                 android:entries="@array/prefEsuMc2KeyOptions"
-                android:entryValues="@array/prefEsuMc2KeyOptions"
-                android:key="prefEsuMc2ButtonBL"
-                android:summary="@string/prefEsuMc2ButtonBLSummary"
-                android:title="@string/prefEsuMc2ButtonBLTitle" />
+                android:entryValues="@array/prefEsuMc2KeyOptions" />
             <ListPreference
+                android:key="prefEsuMc2ButtonTR"
+                android:title="@string/prefEsuMc2ButtonTRTitle"
+                android:summary="@string/prefEsuMc2ButtonTRSummary"
                 android:defaultValue="@string/prefEsuMc2ButtonTRDefaultValue"
                 android:entries="@array/prefEsuMc2KeyOptions"
-                android:entryValues="@array/prefEsuMc2KeyOptions"
-                android:key="prefEsuMc2ButtonTR"
-                android:summary="@string/prefEsuMc2ButtonTRSummary"
-                android:title="@string/prefEsuMc2ButtonTRTitle" />
+                android:entryValues="@array/prefEsuMc2KeyOptions" />
             <ListPreference
+                android:key="prefEsuMc2ButtonBR"
+                android:title="@string/prefEsuMc2ButtonBRTitle"
+                android:summary="@string/prefEsuMc2ButtonBRSummary"
                 android:defaultValue="@string/prefEsuMc2ButtonBRDefaultValue"
                 android:entries="@array/prefEsuMc2KeyOptions"
-                android:entryValues="@array/prefEsuMc2KeyOptions"
-                android:key="prefEsuMc2ButtonBR"
-                android:summary="@string/prefEsuMc2ButtonBRSummary"
-                android:title="@string/prefEsuMc2ButtonBRTitle" />
+                android:entryValues="@array/prefEsuMc2KeyOptions" />
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
