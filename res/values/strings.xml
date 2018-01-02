@@ -154,11 +154,12 @@
     <string name="prefGamePadSpeedButtonsRepeatDefaultValue">300</string>
 
     <!--    Gamepad button preferences   -->
-    <string name="prefGamePadButton1Title">Gamepad Button X action</string>
+    <string name="prefGamePadButton1Title">Gamepad Button X(C) action</string>
     <string name="prefGamePadButton2Title">Gamepad Button A action</string>
-    <string name="prefGamePadButton3Title">Gamepad Button Y action</string>
+    <string name="prefGamePadButton3Title">Gamepad Button Y(D) action</string>
     <string name="prefGamePadButton4Title">Gamepad Button B action</string>
-    <string name="prefGamePadButtonStartTitle">Gamepad Start Button action</string>
+    <string name="prefGamePadButtonStartTitle">Gamepad Start(Lower) Button action</string>
+    <string name="prefGamePadButtonReturnTitle">Gamepad Return(Upper) Button action</string>
     <string name="prefGamePadButtonUpTitle">Gamepad Button DPAD Up action</string>
     <string name="prefGamePadButtonRightTitle">Gamepad Button DPAD Right action</string>
     <string name="prefGamePadButtonDownTitle">Gamepad Button DPAD Down action</string>
@@ -169,6 +170,7 @@
     <string name="prefGamePadButton3DefaultValue">Function 01/Bell</string>
     <string name="prefGamePadButton4DefaultValue">Function 02/Horn</string>
     <string name="prefGamePadButtonStartDefaultValue">Next Throttle</string>
+    <string name="prefGamePadButtonReturnDefaultValue">All Stop</string>
     <string name="prefGamePadButtonUpDefaultValue">Increase Speed</string>
     <string name="prefGamePadButtonRightDefaultValue">Reverse</string>
     <string name="prefGamePadButtonDownDefaultValue">Decrease Speed</string>

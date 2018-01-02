@@ -75,7 +75,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private static final String EXAMPLE_HOST = "jmri.mstevetodd.com";
     private String[] prefHostImportExportOptionsFound = {"None"};
-    private static final String IMPORT_PREFIX = "Import- "; // these two have to bee the same length
+    private static final String IMPORT_PREFIX = "Import- "; // these two have to be the same length
     private static final String EXPORT_PREFIX = "Export- ";
 
     private static final String OPTION_NONE = "None";

@@ -244,6 +244,13 @@
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButtonStartTitle" />
             <ListPreference
+                android:defaultValue="@string/prefGamePadButtonReturnDefaultValue"
+                android:entries="@array/prefGamePadKeyOptions"
+                android:entryValues="@array/prefGamePadKeyOptions"
+                android:key="prefGamePadButtonReturn"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonReturnTitle" />
+            <ListPreference
                 android:defaultValue="@string/prefGamePadButtonUpDefaultValue"
                 android:entries="@array/prefGamePadKeyOptions"
                 android:entryValues="@array/prefGamePadKeyOptions"
