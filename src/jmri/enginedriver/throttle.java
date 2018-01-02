@@ -2272,6 +2272,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private void performEsuMc2ButtonAction(int buttonNo, int action, boolean isActive, char whichThrottle, int repeatCnt) {
 
+        if (isEsuMc2Stopped) {
+            Log.d("Engine_Driver", "ESU_MCII: Device button presses whilst stopped ignored");
+            return;
+        }
+
         EsuMc2ButtonAction buttonAction;
 
         switch (buttonNo) {
