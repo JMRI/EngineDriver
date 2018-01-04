@@ -112,6 +112,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             getPreferenceScreen().findPreference("prefHostImportExport").setSelectable(false);
             getPreferenceScreen().findPreference("prefHostImportExport").setEnabled(false);
         }
+
+        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        setGamePadPrefLabels(sharedPreferences);
     }
 
     @SuppressWarnings("deprecation")
@@ -227,6 +230,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 result = RESULT_GAMEPAD;
                 break;
             case "prefGamePadType":
+                setGamePadPrefLabels(sharedPreferences);
             case "prefGamePadStartButton":
                 result = RESULT_GAMEPAD;
                 break;
@@ -472,4 +476,40 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         return false;
     }
+
+    private void setGamePadPrefLabels(SharedPreferences sharedPreferences) {
+        String whichGamePadMode = sharedPreferences.getString("prefGamePadType", "None").trim();
+        String[] gamePadPrefLabels;
+        String[] gamePadPrefButtonReferences = this.getResources().getStringArray(R.array.prefGamePadPrefButtonReferences);
+
+        switch (whichGamePadMode) {
+            case "iCade+DPAD":
+            case "iCade+DPAD-rotate":
+            case "MTK":
+            case "MTK-rotate":
+            case "Game":
+            case "Game-rotate":
+                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMocuteLabels);
+                break;
+            case "VRBoxA":
+            case "VRBoxA-rotate":
+            case "VRBoxC":
+            case "VRBoxC-rotate":
+            case "VRBoxiC":
+            case "VRBoxiC-rotate":
+                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadVRBoxLabels);
+                break;
+            case "MagicseeR1B":
+                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMagicseeR1Labels);
+                break;
+            default:
+                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMocuteLabels);
+                break;
+        }
+        for (int i=1; i<gamePadPrefLabels.length; i++) {  // skip the first one
+            getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]).setTitle(gamePadPrefLabels[i]);
+        }
+
+    }
+
 }
