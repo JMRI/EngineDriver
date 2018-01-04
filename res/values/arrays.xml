@@ -139,23 +139,23 @@
 
     <string-array name="prefGamePadTypeEntries">
         <item >None</item>
-        <item >Mocute-iOS- iCade Mode</item>
-        <item >Mocute-iOS- iCade Mode - DPAD rotated</item>
-        <item >Mocute-iOS- iCade+DPAD Mode</item>
-        <item >Mocute-iOS- iCade+DPAD Mode - DPAD rotated</item>
-        <item >Mocute-Android- MTK Mode</item>
-        <item >Mocute-Android- MTK Mode - DPAD rotated</item>
-        <item >Mocute-Android- Game Mode</item>
-        <item >Mocute-Android- Game Mode - DPAD rotated</item>
+        <item >Mocute/iOS- iCade Mode</item>
+        <item >Mocute/iOS- iCade Mode - DPAD rotated</item>
+        <item >Mocute/iOS- iCade+DPAD Mode</item>
+        <item >Mocute/iOS- iCade+DPAD Mode - DPAD rotated</item>
+        <item >Mocute/Android- MTK Mode</item>
+        <item >Mocute/Android- MTK Mode - DPAD rotated</item>
+        <item >Mocute/Android- Game Mode</item>
+        <item >Mocute/Android- Game Mode - DPAD rotated</item>
 <!--
-        <item >VRBOX-Android- A Mode</item>
-        <item >VRBOX-Android- A Mode - DPAD rotated</item>
-        <item >VRBOX-Android- C Mode</item>
-        <item >VRBOX-Android- C Mode - DPAD rotated</item>
-        <item >VRBOX-iOS- C Mode</item>
-        <item >VRBOX-iOS- C Mode - DPAD rotated</item>
+        <item >VRBOX/Android- A Mode</item>
+        <item >VRBOX/Android- A Mode - DPAD rotated</item>
+        <item >VRBOX/Android- C Mode</item>
+        <item >VRBOX/Android- C Mode - DPAD rotated</item>
+        <item >VRBOX/iOS- C Mode</item>
+        <item >VRBOX/iOS- C Mode - DPAD rotated</item>
 -->
-        <item>MagicseeR1-Android- B Mode</item>
+        <item>Magicsee R1/Android- Game (B) Mode</item>
     </string-array>
 
     <string-array name="prefSwipeUpOptions">
