@@ -526,6 +526,24 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             thisPref.setSelectable(thisEnabled);
             thisPref.setEnabled(thisEnabled);
         }
+
+        boolean thisEnabled = true;
+        if (whichGamePadMode.equals("None")) {
+            thisEnabled = false;
+        }
+        Preference thisPref;
+
+        thisPref = getPreferenceScreen().findPreference("prefGamePadFeedbackVolume");
+        thisPref.setSelectable(thisEnabled);
+        thisPref.setEnabled(thisEnabled);
+
+        thisPref = getPreferenceScreen().findPreference("prefGamePadMultipleDevices");
+        thisPref.setSelectable(thisEnabled);
+        thisPref.setEnabled(thisEnabled);
+
+        thisPref = getPreferenceScreen().findPreference("prefGamePadSpeedArrowsThrottleRepeatDelay");
+        thisPref.setSelectable(thisEnabled);
+        thisPref.setEnabled(thisEnabled);
     }
 
 }
