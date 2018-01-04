@@ -78,6 +78,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private static final String OPTION_NONE = "None";
 
+    private static String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
+    private static String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
+
     /**
      * Called when the activity is first created.
      */
@@ -477,6 +480,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     private void setGamePadPrefLabels(SharedPreferences sharedPreferences) {
         String whichGamePadMode = sharedPreferences.getString("prefGamePadType", "None").trim();
         String[] gamePadPrefLabels;
@@ -491,6 +495,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             case "Game-rotate":
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMocuteLabels);
                 break;
+/*
             case "VRBoxA":
             case "VRBoxA-rotate":
             case "VRBoxC":
@@ -499,6 +504,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             case "VRBoxiC-rotate":
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadVRBoxLabels);
                 break;
+*/
             case "MagicseeR1B":
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMagicseeR1Labels);
                 break;
@@ -508,8 +514,14 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         for (int i=1; i<gamePadPrefLabels.length; i++) {  // skip the first one
             getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]).setTitle(gamePadPrefLabels[i]);
+            if ((gamePadPrefLabels[i].equals(GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL)) || (gamePadPrefLabels[i].equals(GAMEPAD_BUTTON_NOT_USABLE_LABEL))) {
+                getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]).setSelectable(false);
+                getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]).setEnabled(false);
+            } else {
+                getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]).setSelectable(true);
+                getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]).setEnabled(true);
+            }
         }
-
     }
 
 }
