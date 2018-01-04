@@ -329,6 +329,62 @@
         <item>@integer/KeyCode_Button_A</item> //gamepadB
     </integer-array>
 
+    <string-array name="prefGamePadMocuteLabels">
+        <item> </item> //not used
+        <item>Not available</item>
+        <item>Gamepad Button DPAD Up action</item>
+        <item>Gamepad Button DPAD Down action</item>
+        <item>Gamepad Button DPAD Left action</item>
+        <item>Gamepad Button DPAD Right action</item>
+        <item>Gamepad Button Start/Select action</item>
+        <item>Gamepad Button X (iOS) action</item>
+        <item>Gamepad Button Y (Triangle) action</item>
+        <item>Gamepad Button A (X) action</item>
+        <item>Gamepad Button B (@) action</item>
+    </string-array>
+
+    <string-array name="prefGamePadVRBoxLabels">
+        <item> </item> //not used
+        <item>Gamepad Button Esc (Front Upper)</item>
+        <item>Gamepad Button DPAD Up action</item>
+        <item>Gamepad Button DPAD Down action</item>
+        <item>Gamepad Button DPAD Left action</item>
+        <item>Gamepad Button DPAD Right action</item>
+        <item>Gamepad Button Enter (Front Lower)</item>
+        <item>Gamepad Button C action</item>
+        <item>Gamepad Button A action</item>
+        <item>Gamepad Button B action</item>
+        <item>Gamepad Button D action</item>
+    </string-array>
+
+    <string-array name="prefGamePadMagicseeR1Labels">
+        <item> </item> //not used
+        <item>Gamepad Button OK (Front Upper)</item>
+        <item>Gamepad Button DPAD Up action</item>
+        <item>Gamepad Button DPAD Down action</item>
+        <item>Gamepad Button DPAD Left action</item>
+        <item>Gamepad Button DPAD Right action</item>
+        <item>Gamepad Button Return (Front Lower)</item>
+        <item>Gamepad Button C action</item>
+        <item>Gamepad Button D action</item>
+        <item>Gamepad Button A action</item>
+        <item>Gamepad Button B action</item>
+    </string-array>
+
+    <string-array name="prefGamePadPrefButtonReferences">
+        <item> </item> //not used
+        <item>prefGamePadButtonReturn</item>
+        <item>prefGamePadButtonUp</item>
+        <item>prefGamePadButtonDown</item>
+        <item>prefGamePadButtonLeft</item>
+        <item>prefGamePadButtonRight</item>
+        <item>prefGamePadButtonStart</item>
+        <item>prefGamePadButton1</item>
+        <item>prefGamePadButton3</item>
+        <item>prefGamePadButton2</item>
+        <item>prefGamePadButton4</item>
+    </string-array>
+
     <string-array name="prefImportExportOptions">
         <item>None</item>
         <item>Export</item>
