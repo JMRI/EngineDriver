@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.provider.Settings;
 import android.util.Log;
@@ -513,14 +514,14 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 break;
         }
         for (int i=1; i<gamePadPrefLabels.length; i++) {  // skip the first one
-            getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]).setTitle(gamePadPrefLabels[i]);
+            boolean thisEnabled = true;
+            Preference thisPref = getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]);
+            thisPref.setTitle(gamePadPrefLabels[i]);
             if ((gamePadPrefLabels[i].equals(GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL)) || (gamePadPrefLabels[i].equals(GAMEPAD_BUTTON_NOT_USABLE_LABEL))) {
-                getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]).setSelectable(false);
-                getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]).setEnabled(false);
-            } else {
-                getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]).setSelectable(true);
-                getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]).setEnabled(true);
+                thisEnabled = false;
             }
+            thisPref.setSelectable(thisEnabled);
+            thisPref.setEnabled(thisEnabled);
         }
     }
 
