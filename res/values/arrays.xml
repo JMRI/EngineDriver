@@ -398,6 +398,20 @@
         <item>Gamepad Button B action</item>
     </string-array>
 
+    <string-array name="prefGamePadNoneLabels">
+        <item> </item> //not used
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+    </string-array>
+
     <string-array name="prefGamePadPrefButtonReferences">
         <item> </item> //not used
         <item>prefGamePadButtonReturn</item>

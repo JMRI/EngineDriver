@@ -509,6 +509,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             case "MagicseeR1B":
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMagicseeR1Labels);
                 break;
+            case "None":
+                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadNoneLabels);
+                break;
             default:
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMocuteLabels);
                 break;
