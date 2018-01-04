@@ -178,7 +178,7 @@
             android:persistent="false">
             <ListPreference
                 android:defaultValue="@string/prefGamePadTypeDefaultValue"
-                android:entries="@array/prefGamePadTypeOptions"
+                android:entries="@array/prefGamePadTypeEntries"
                 android:entryValues="@array/prefGamePadTypeOptions"
                 android:key="prefGamePadType"
                 android:summary="@string/prefGamePadTypeSummary"

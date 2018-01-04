@@ -126,13 +126,36 @@
         <item >MTK-rotate</item>
         <item >Game</item>
         <item >Game-rotate</item>
+<!--
         <item >VRBoxA</item>
         <item >VRBoxA-rotate</item>
         <item >VRBoxC</item>
         <item >VRBoxC-rotate</item>
         <item >VRBoxiC</item>
         <item >VRBoxiC-rotate</item>
+-->
         <item>MagicseeR1B</item>
+    </string-array>
+
+    <string-array name="prefGamePadTypeEntries">
+        <item >None</item>
+        <item >Mocute/iOS- iCade Mode</item>
+        <item >Mocute/iOS- iCade Mode - DPAD rotated</item>
+        <item >Mocute/iOS- iCade+DPAD Mode</item>
+        <item >Mocute/iOS- iCade+DPAD Mode - DPAD rotated</item>
+        <item >Mocute/Android- MTK Mode</item>
+        <item >Mocute/Android- MTK Mode - DPAD rotated</item>
+        <item >Mocute/Android- Game Mode</item>
+        <item >Mocute/Android- Game Mode - DPAD rotated</item>
+<!--
+        <item >VRBOX/Android- A Mode</item>
+        <item >VRBOX/Android- A Mode - DPAD rotated</item>
+        <item >VRBOX/Android- C Mode</item>
+        <item >VRBOX/Android- C Mode - DPAD rotated</item>
+        <item >VRBOX/iOS- C Mode</item>
+        <item >VRBOX/iOS- C Mode - DPAD rotated</item>
+-->
+        <item>Magicsee R1/Android- Game (B) Mode</item>
     </string-array>
 
     <string-array name="prefSwipeUpOptions">
@@ -263,6 +286,7 @@
         <item>@integer/KeyCode_Volume_Up</item> //gamepadA
         <item>@integer/KeyCode_Enter</item> //gamepadB
     </integer-array>
+<!--
     <integer-array name="prefGamePadVRBoxA">
         <item>0</item> //not used
         <item>0</item> //not used
@@ -315,6 +339,7 @@
         <item>@integer/KeyCode_N</item>
         <item>@integer/KeyCode_T</item>
     </integer-array>
+-->
     <integer-array name="prefGamePadMagicseeR1B">
         <item>0</item> //not used
         <item>@integer/KeyCode_Button_R1</item> // Return button - upper front button
@@ -331,18 +356,19 @@
 
     <string-array name="prefGamePadMocuteLabels">
         <item> </item> //not used
-        <item>Not available</item>
+        <item>Button not available</item>
         <item>Gamepad Button DPAD Up action</item>
         <item>Gamepad Button DPAD Down action</item>
         <item>Gamepad Button DPAD Left action</item>
         <item>Gamepad Button DPAD Right action</item>
-        <item>Gamepad Button Start/Select action</item>
-        <item>Gamepad Button X (iOS) action</item>
-        <item>Gamepad Button Y (Triangle) action</item>
-        <item>Gamepad Button A (X) action</item>
-        <item>Gamepad Button B (@) action</item>
+        <item>Gamepad Button Select [Start] action</item>
+        <item>Gamepad Button X [iOS] action</item>
+        <item>Gamepad Button Y [Triangle] action</item>
+        <item>Gamepad Button A [Cross] action</item>
+        <item>Gamepad Button B [@] action</item>
     </string-array>
 
+<!--
     <string-array name="prefGamePadVRBoxLabels">
         <item> </item> //not used
         <item>Gamepad Button Esc (Front Upper)</item>
@@ -353,9 +379,10 @@
         <item>Gamepad Button Enter (Front Lower)</item>
         <item>Gamepad Button C action</item>
         <item>Gamepad Button A action</item>
-        <item>Gamepad Button B action</item>
+        <item>Button not usable</item> // Gamepad Button B action
         <item>Gamepad Button D action</item>
     </string-array>
+-->
 
     <string-array name="prefGamePadMagicseeR1Labels">
         <item> </item> //not used
@@ -369,6 +396,20 @@
         <item>Gamepad Button D action</item>
         <item>Gamepad Button A action</item>
         <item>Gamepad Button B action</item>
+    </string-array>
+
+    <string-array name="prefGamePadNoneLabels">
+        <item> </item> //not used
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
     </string-array>
 
     <string-array name="prefGamePadPrefButtonReferences">
