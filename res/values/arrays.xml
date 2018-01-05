@@ -356,16 +356,16 @@
 
     <string-array name="prefGamePadMocuteLabels">
         <item> </item> //not used
-        <item>Button not available</item>
-        <item>Gamepad Button DPAD Up action</item>
-        <item>Gamepad Button DPAD Down action</item>
-        <item>Gamepad Button DPAD Left action</item>
-        <item>Gamepad Button DPAD Right action</item>
-        <item>Gamepad Button Select [Start] action</item>
-        <item>Gamepad Button X [iOS] action</item>
-        <item>Gamepad Button Y [Triangle] action</item>
-        <item>Gamepad Button A [Cross] action</item>
-        <item>Gamepad Button B [@] action</item>
+        <item>Button Select (if present) action</item>
+        <item>Button DPAD Up action</item>
+        <item>Button DPAD Down action</item>
+        <item>Button DPAD Left action</item>
+        <item>Button DPAD Right action</item>
+        <item>Button Start action</item>
+        <item>Button X [iOS] action</item>
+        <item>Button Y [Triangle] action</item>
+        <item>Button A [Cross] action</item>
+        <item>Button B [@] action</item>
     </string-array>
 
 <!--
@@ -386,16 +386,16 @@
 
     <string-array name="prefGamePadMagicseeR1Labels">
         <item> </item> //not used
-        <item>Gamepad Button OK (Front Upper)</item>
-        <item>Gamepad Button DPAD Up action</item>
-        <item>Gamepad Button DPAD Down action</item>
-        <item>Gamepad Button DPAD Left action</item>
-        <item>Gamepad Button DPAD Right action</item>
-        <item>Gamepad Button Return (Front Lower)</item>
-        <item>Gamepad Button C action</item>
-        <item>Gamepad Button D action</item>
-        <item>Gamepad Button A action</item>
-        <item>Gamepad Button B action</item>
+        <item>Button OK (Front Upper)</item>
+        <item>Button DPAD Up action</item>
+        <item>Button DPAD Down action</item>
+        <item>Button DPAD Left action</item>
+        <item>Button DPAD Right action</item>
+        <item>Button Return (Front Lower)</item>
+        <item>Button C action</item>
+        <item>Button D action</item>
+        <item>Button A action</item>
+        <item>Button B action</item>
     </string-array>
 
     <string-array name="prefGamePadNoneLabels">
