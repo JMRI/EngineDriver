@@ -2228,6 +2228,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             Log.d("Engine_Driver", "ESU_MCII: Knob button down for throttle " + whichVolume);
             Log.d("Engine_Driver", "ESU_MCII: Attempting to switch direction");
             changeDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1 ));
+            speedUpdateAndNotify(whichVolume, 0, false);
         }
 
         @Override
@@ -2278,7 +2279,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
             // Toggle press status
             isEsuMc2Stopped = !isEsuMc2Stopped;
-            setEsuThrottleKnobPosition(whichVolume, 0);
             set_stop_button(whichVolume, true);
             speedUpdateAndNotify(whichVolume, 0);
             esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.ON);
@@ -2316,7 +2316,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             } else {
                 if (!wasLongPress) {
                     Log.d("Engine_Driver", "ESU_MCII: Revert speed value to: " + origSpeed);
-                    setEsuThrottleKnobPosition(whichVolume, origSpeed);
                     set_stop_button(whichVolume, false);
                     speedUpdateAndNotify(whichVolume, origSpeed);
                 } else {
