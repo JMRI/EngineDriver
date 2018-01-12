@@ -523,7 +523,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             default:
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMocuteLabels);
                 break;
-}
+        }
         for (int i=1; i<gamePadPrefLabels.length; i++) {  // skip the first one
             boolean thisEnabled = true;
             Preference thisPref = getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]);

@@ -1006,8 +1006,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     // set speed slider and notify server for one throttle
     void speedUpdateAndNotify(char whichThrottle, int speed) {
+        speedUpdateAndNotify(whichThrottle, speed, true);
+    }
+
+    // set speed slider and notify server for one throttle and optionally move ESU MCII knob
+    void speedUpdateAndNotify(char whichThrottle, int speed, boolean moveMc2Knob) {
         speedUpdate(whichThrottle, speed);
         sendSpeedMsg(whichThrottle, speed);
+        // Now update ESU MCII Knob position
+        if (IS_ESU_MCII && moveMc2Knob) {
+            Log.d("Engine_Driver", "ESU_MCII: Move knob request for speed update");
+            setEsuThrottleKnobPosition(whichThrottle, speed);
+        }
     }
 
     // change speed slider by scaled value and notify server
@@ -1016,6 +1026,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         sendSpeedMsg(whichThrottle, speed);
         // Now update ESU MCII Knob position
         if (IS_ESU_MCII) {
+            Log.d("Engine_Driver", "ESU_MCII: Move knob request for speed change");
             setEsuThrottleKnobPosition(whichThrottle, speed);
         }
     }
@@ -2237,7 +2248,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 }
                 Log.d("Engine_Driver", "ESU_MCII: Knob position changed for throttle " + whichVolume);
                 Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
-                speedUpdateAndNotify(whichVolume, speed);
+                speedUpdateAndNotify(whichVolume, speed, false); // No need to move knob
             } else {
                 // Ignore knob movements for stopped or inactive throttles
                 Log.d("Engine_Driver", "ESU_MCII: Knob position moved for " + (isEsuMc2Stopped ? "stopped": "inactive") + " throttle " + whichVolume);
@@ -2378,13 +2389,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     break;
                 case ALL_STOP:
                     if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
-                        setEsuThrottleKnobPosition(whichThrottle, 0);
                         speedUpdateAndNotify(0);    // update all three throttles
                     }
                     break;
                 case STOP:
                     if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
-                        setEsuThrottleKnobPosition(whichThrottle, 0);
                         speedUpdateAndNotify(whichThrottle, 0);
                     }
                     break;
@@ -2617,9 +2626,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         case function_button.STOP:
                             set_stop_button(whichThrottle, true);
                             speedUpdateAndNotify(whichThrottle, 0);
-                            if (IS_ESU_MCII) {
-                                setEsuThrottleKnobPosition(whichThrottle, 0);
-                            }
                             break;
                         case function_button.SPEED_LABEL:  // specify which throttle the volume button controls
                             if (getConsist(whichThrottle).isActive()) { // only assign if Active
