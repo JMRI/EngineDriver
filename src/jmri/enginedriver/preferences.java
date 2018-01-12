@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.provider.Settings;
 import android.util.Log;
@@ -80,6 +81,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private static final String OPTION_NONE = "None";
 
+    private static String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
+    private static String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
+
     /**
      * Called when the activity is first created.
      */
@@ -114,6 +118,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             getPreferenceScreen().findPreference("prefHostImportExport").setSelectable(false);
             getPreferenceScreen().findPreference("prefHostImportExport").setEnabled(false);
         }
+
+        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        setGamePadPrefLabels(sharedPreferences);
 
         // Disable ESU MCII preferences if not an ESU MCII
         if (!MobileControl2.isMobileControl2()) {
@@ -235,6 +242,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 result = RESULT_GAMEPAD;
                 break;
             case "prefGamePadType":
+                setGamePadPrefLabels(sharedPreferences);
             case "prefGamePadStartButton":
                 result = RESULT_GAMEPAD;
                 break;
@@ -480,4 +488,70 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         return false;
     }
+
+    @SuppressWarnings("deprecation")
+    private void setGamePadPrefLabels(SharedPreferences sharedPreferences) {
+        String whichGamePadMode = sharedPreferences.getString("prefGamePadType", "None").trim();
+        String[] gamePadPrefLabels;
+        String[] gamePadPrefButtonReferences = this.getResources().getStringArray(R.array.prefGamePadPrefButtonReferences);
+
+        switch (whichGamePadMode) {
+            case "iCade+DPAD":
+            case "iCade+DPAD-rotate":
+            case "MTK":
+            case "MTK-rotate":
+            case "Game":
+            case "Game-rotate":
+                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMocuteLabels);
+                break;
+/*
+            case "VRBoxA":
+            case "VRBoxA-rotate":
+            case "VRBoxC":
+            case "VRBoxC-rotate":
+            case "VRBoxiC":
+            case "VRBoxiC-rotate":
+                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadVRBoxLabels);
+                break;
+*/
+            case "MagicseeR1B":
+                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMagicseeR1Labels);
+                break;
+            case "None":
+                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadNoneLabels);
+                break;
+            default:
+                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMocuteLabels);
+                break;
+}
+        for (int i=1; i<gamePadPrefLabels.length; i++) {  // skip the first one
+            boolean thisEnabled = true;
+            Preference thisPref = getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]);
+            thisPref.setTitle(gamePadPrefLabels[i]);
+            if ((gamePadPrefLabels[i].equals(GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL)) || (gamePadPrefLabels[i].equals(GAMEPAD_BUTTON_NOT_USABLE_LABEL))) {
+                thisEnabled = false;
+            }
+            thisPref.setSelectable(thisEnabled);
+            thisPref.setEnabled(thisEnabled);
+        }
+
+        boolean thisEnabled = true;
+        if (whichGamePadMode.equals("None")) {
+            thisEnabled = false;
+        }
+        Preference thisPref;
+
+        thisPref = getPreferenceScreen().findPreference("prefGamePadFeedbackVolume");
+        thisPref.setSelectable(thisEnabled);
+        thisPref.setEnabled(thisEnabled);
+
+        thisPref = getPreferenceScreen().findPreference("prefGamePadMultipleDevices");
+        thisPref.setSelectable(thisEnabled);
+        thisPref.setEnabled(thisEnabled);
+
+        thisPref = getPreferenceScreen().findPreference("prefGamePadSpeedArrowsThrottleRepeatDelay");
+        thisPref.setSelectable(thisEnabled);
+        thisPref.setEnabled(thisEnabled);
+    }
+
 }

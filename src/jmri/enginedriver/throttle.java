@@ -1678,6 +1678,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGame);
                 bGamePadKeysUp = bGamePadKeys;
                 break;
+/*
             case "VRBoxA":
             case "VRBoxA-rotate":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadVRBoxA);
@@ -1693,6 +1694,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadVRBoxiC);
                 bGamePadKeysUp = this.getResources().getIntArray(R.array.prefGamePadVRBoxiC_UpCodes);
                 break;
+*/
             case "MagicseeR1B":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1B);
                 bGamePadKeysUp = bGamePadKeys;

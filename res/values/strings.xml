@@ -154,16 +154,16 @@
     <string name="prefGamePadSpeedButtonsRepeatDefaultValue">300</string>
 
     <!--    Gamepad button preferences   -->
-    <string name="prefGamePadButton1Title">Gamepad Button X(C) action</string>
-    <string name="prefGamePadButton2Title">Gamepad Button A action</string>
-    <string name="prefGamePadButton3Title">Gamepad Button Y(D) action</string>
-    <string name="prefGamePadButton4Title">Gamepad Button B action</string>
-    <string name="prefGamePadButtonStartTitle">Gamepad Start(Lower) Button action</string>
-    <string name="prefGamePadButtonReturnTitle">Gamepad Return(Upper) Button action</string>
-    <string name="prefGamePadButtonUpTitle">Gamepad Button DPAD Up action</string>
-    <string name="prefGamePadButtonRightTitle">Gamepad Button DPAD Right action</string>
-    <string name="prefGamePadButtonDownTitle">Gamepad Button DPAD Down action</string>
-    <string name="prefGamePadButtonLeftTitle">Gamepad Button DPAD Left action</string>
+    <string name="prefGamePadButton1Title">Gamepad button action</string> <!-- X     -->
+    <string name="prefGamePadButton2Title">Gamepad button action</string> <!-- A     -->
+    <string name="prefGamePadButton3Title">Gamepad button action</string> <!-- Y    -->
+    <string name="prefGamePadButton4Title">Gamepad button action</string> <!-- B     -->
+    <string name="prefGamePadButtonStartTitle">Gamepad button action</string> <!-- Start(Lower)     -->
+    <string name="prefGamePadButtonReturnTitle">Gamepad button action</string> <!-- Return(Upper)     -->
+    <string name="prefGamePadButtonUpTitle">Gamepad DPAD Up action</string>
+    <string name="prefGamePadButtonRightTitle">Gamepad DPAD Right action</string>
+    <string name="prefGamePadButtonDownTitle">Gamepad DPAD Down action</string>
+    <string name="prefGamePadButtonLeftTitle">Gamepad DPAD Left action</string>
     <string name="prefGamePadButtonSummary">Choose the action when you press the button.</string>
     <string name="prefGamePadButton1DefaultValue">Stop</string>
     <string name="prefGamePadButton2DefaultValue">Function 00/Light</string>
