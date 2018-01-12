@@ -1988,7 +1988,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         return super.dispatchGenericMotionEvent(event);
     }
 
-        // listener for physical keyboard events
+    // listener for physical keyboard events
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
@@ -2000,89 +2000,89 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         if (isExternal) { // if has come from the phone itself, don't try to process it here
-        if (!whichGamePadMode.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
-            int action = event.getAction();
-            int keyCode = event.getKeyCode();
-            int repeatCnt = event.getRepeatCount();
-            char whichThrottle;
+            if (!whichGamePadMode.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
+                int action = event.getAction();
+                int keyCode = event.getKeyCode();
+                int repeatCnt = event.getRepeatCount();
+                char whichThrottle;
                 int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getKeyCode());
 
-            if ((usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
-                if (whichGamePadIsEventFrom >= 0) {
-                    whichThrottle = allThrottleLetters[whichGamePadIsEventFrom];
+                if ((usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
+                    if (whichGamePadIsEventFrom >= 0) {
+                        whichThrottle = allThrottleLetters[whichGamePadIsEventFrom];
+                    } else {
+                        GamepadFeedbackSound(true);
+                        return (true);
+                    }
                 } else {
-                    GamepadFeedbackSound(true);
-                    return (true);
+                    whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
                 }
-            } else {
-                whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
-            }
 
-            boolean isActive = getConsist(whichThrottle).isActive();
+                boolean isActive = getConsist(whichThrottle).isActive();
 
-            if (keyCode != 0) {
-                Log.d("Engine_Driver", "keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
-            }
+                if (keyCode != 0) {
+                    Log.d("Engine_Driver", "keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
+                }
 
-            if (action == ACTION_UP) {
-                mGamepadAutoIncrement = false;
-                mGamepadAutoDecrement = false;
-                GamepadFeedbackSoundStop();
-            }
+                if (action == ACTION_UP) {
+                    mGamepadAutoIncrement = false;
+                    mGamepadAutoDecrement = false;
+                    GamepadFeedbackSoundStop();
+                }
 
-            if (keyCode == gamePadKeys[2]) { // DPAD Up Button
-                performButtonAction(5, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                return (true); // stop processing this key
+                if (keyCode == gamePadKeys[2]) { // DPAD Up Button
+                    performButtonAction(5, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                    return (true); // stop processing this key
 
-            } else if (keyCode == gamePadKeys[3]) { // DPAD Down Button
-                performButtonAction(7, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                return (true); // stop processing this key
+                } else if (keyCode == gamePadKeys[3]) { // DPAD Down Button
+                    performButtonAction(7, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                    return (true); // stop processing this key
 
-            } else if (keyCode == gamePadKeys[4]) { // DPAD Left Button
-                performButtonAction(8, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                return (true); // stop processing this key
+                } else if (keyCode == gamePadKeys[4]) { // DPAD Left Button
+                    performButtonAction(8, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                    return (true); // stop processing this key
 
-            } else if (keyCode == gamePadKeys[5]) { // DPAD Right Button
-                performButtonAction(6, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                return (true); // stop processing this key
+                } else if (keyCode == gamePadKeys[5]) { // DPAD Right Button
+                    performButtonAction(6, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                    return (true); // stop processing this key
 
-            } else if (keyCode == gamePadKeys[7]) { // ios button
-                performButtonAction(1, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                return (true); // stop processing this key
+                } else if (keyCode == gamePadKeys[7]) { // ios button
+                    performButtonAction(1, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                    return (true); // stop processing this key
 
-            } else if (keyCode == gamePadKeys_Up[8]) { // X button
-                performButtonAction(3, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                return (true); // stop processing this key
+                } else if (keyCode == gamePadKeys_Up[8]) { // X button
+                    performButtonAction(3, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                    return (true); // stop processing this key
 
-            } else if (keyCode == gamePadKeys_Up[9]) { // Triangle button
-                performButtonAction(2, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                return (true); // stop processing this key
+                } else if (keyCode == gamePadKeys_Up[9]) { // Triangle button
+                    performButtonAction(2, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                    return (true); // stop processing this key
 
-            } else if (keyCode == gamePadKeys_Up[10]) { // @ button
-                performButtonAction(4, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                return (true); // stop processing this key
+                } else if (keyCode == gamePadKeys_Up[10]) { // @ button
+                    performButtonAction(4, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                    return (true); // stop processing this key
 
-            } else if (keyCode == gamePadKeys[6]) { // start button
-                performButtonAction(0, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                return (true); // stop processing this key
+                } else if (keyCode == gamePadKeys[6]) { // start button
+                    performButtonAction(0, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                    return (true); // stop processing this key
 
                 } else if (keyCode == gamePadKeys[1]) { // Return button
-                // NextThrottle
-                /* if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
-                    if (usingMultiplePads && whichGamePadIsEventFrom >= 0) {
-                        whichGamePadIsEventFrom = swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
-                    } else {
-                        setNextActiveThrottle(true);
-                    }
-                } */
+                    // NextThrottle
+                    /* if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                        if (usingMultiplePads && whichGamePadIsEventFrom >= 0) {
+                            whichGamePadIsEventFrom = swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
+                        } else {
+                            setNextActiveThrottle(true);
+                        }
+                    } */
                     performButtonAction(9, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                return (true); // stop processing this key
-            }
+                    return (true); // stop processing this key
+                }
 //  for now pass all keystrokes not in gamePadKeys[] to super
 //  if problems occur, we can uncomment the next 2 lines
 //            else if (!((keyCode == KEYCODE_BACK) || (keyCode == KEYCODE_VOLUME_DOWN) || (keyCode == KEYCODE_VOLUME_UP) || (keyCode == KEYCODE_MENU)))
 //            return (true); // swallow all other keystrokes except back, menu and the volume keys
-        }
+            }
         } else if(IS_ESU_MCII) {
             // Process ESU MCII keys
             int action = event.getAction();
