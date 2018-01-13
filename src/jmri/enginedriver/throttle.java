@@ -2355,9 +2355,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         Log.d("Engine_Driver", "ESU_MCII: Update zero trim for throttle to: " + zeroTrim);
 
         // first the knob
-        if (esuThrottleFragment.getZeroPosition() != zeroTrim) {
-            esuThrottleFragment.setZeroPosition(zeroTrim);
-        }
+        esuThrottleFragment.setZeroPosition(zeroTrim);
 
         // now throttle scales
         esuThrottleScaleT = new ThrottleScale(zeroTrim, esuThrottleScaleT.getStepCount());
@@ -3178,7 +3176,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // initialise ESU MCII
         if (IS_ESU_MCII) {
             Log.d("Engine_Driver", "ESU_MCII: Initialise fragments...");
-            esuThrottleFragment = ThrottleFragment.newInstance(1);
+            int zeroTrim = preferences.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
+            esuThrottleFragment = ThrottleFragment.newInstance(zeroTrim);
             esuThrottleFragment.setOnThrottleListener(esuOnThrottleListener);
             esuStopButtonFragment = StopButtonFragment.newInstance();
             esuStopButtonFragment.setOnStopButtonListener(esuOnStopButtonListener);
