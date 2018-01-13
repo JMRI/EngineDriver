@@ -1057,25 +1057,24 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     //adjust maxspeedsteps from code passed from JMRI, but only if set to Auto, else do not change
     private void setSpeedStepsFromWiT(char whichThrottle, int speedStepCode) {
         int maxSpeedStep = 100;
-        ThrottleScale esuThrottleScale = new ThrottleScale(10, 127);
         switch (speedStepCode) {
             case SPEED_STEP_CODE_128:
                 maxSpeedStep = 126;
-                esuThrottleScale = new ThrottleScale(10, 127);
                 break;
             case SPEED_STEP_CODE_27:
                 maxSpeedStep = 27;
-                esuThrottleScale = new ThrottleScale(10, 28);
                 break;
             case SPEED_STEP_CODE_14:
                 maxSpeedStep = 14;
-                esuThrottleScale = new ThrottleScale(10, 15);
                 break;
             case SPEED_STEP_CODE_28:
                 maxSpeedStep = 28;
-                esuThrottleScale = new ThrottleScale(10, 29);
                 break;
         }
+
+        int zeroTrim = preferences.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
+        ThrottleScale esuThrottleScale = new ThrottleScale(zeroTrim, maxSpeedStep + 1);
+
         if (whichThrottle == 'T') {
             maxSpeedStepT = maxSpeedStep;
             esuThrottleScaleT = esuThrottleScale;
@@ -2351,6 +2350,21 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+    private void updateEsuMc2ZeroTrim() {
+        int zeroTrim = preferences.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
+        Log.d("Engine_Driver", "ESU_MCII: Update zero trim for throttle to: " + zeroTrim);
+
+        // first the knob
+        if (esuThrottleFragment.getZeroPosition() != zeroTrim) {
+            esuThrottleFragment.setZeroPosition(zeroTrim);
+        }
+
+        // now throttle scales
+        esuThrottleScaleT = new ThrottleScale(zeroTrim, esuThrottleScaleT.getStepCount());
+        esuThrottleScaleS = new ThrottleScale(zeroTrim, esuThrottleScaleS.getStepCount());
+        esuThrottleScaleG = new ThrottleScale(zeroTrim, esuThrottleScaleG.getStepCount());
+    }
+
     private void performEsuMc2ButtonAction(int buttonNo, int action, boolean isActive, char whichThrottle, int repeatCnt) {
 
         if (isEsuMc2Stopped) {
@@ -3176,6 +3190,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     .commit();
             esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.OFF, true);
             esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.STEADY_FLASH, true);
+
+            // Now apply knob zero trim
+            updateEsuMc2ZeroTrim();
             Log.d("Engine_Driver", "ESU_MCII: Initialisation complete");
         }
 
@@ -4088,6 +4105,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             preferences.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
                     // update GamePad Support
                     setGamepadKeys();
+                }
+                if (resultCode == preferences.RESULT_ESUMCII) { // ESU MCII pref change
+                    // update zero trim values
+                    updateEsuMc2ZeroTrim();
                 }
                 break;
             }
