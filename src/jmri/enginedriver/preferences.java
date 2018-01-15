@@ -57,8 +57,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import eu.esu.mobilecontrol2.sdk.MobileControl2;
+
 public class preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
     static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
+    static public final int RESULT_ESUMCII = RESULT_GAMEPAD + 1;
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu PRMenu;
@@ -119,6 +122,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         setGamePadPrefLabels(sharedPreferences);
+
+        // Disable ESU MCII preferences if not an ESU MCII
+        if (!MobileControl2.isMobileControl2()) {
+            getPreferenceScreen().findPreference("prefEsuMc2").setSelectable(false);
+            getPreferenceScreen().findPreference("prefEsuMc2").setEnabled(false);
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -237,6 +246,19 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 setGamePadPrefLabels(sharedPreferences);
             case "prefGamePadStartButton":
                 result = RESULT_GAMEPAD;
+                break;
+            case "prefEsuMc2ZeroTrim":
+                // limit check new value
+                limitIntPrefValue(sharedPreferences, key, 0, 255, "10");
+                result = RESULT_ESUMCII;
+                break;
+            case "prefEsuMc2ButtonsRepeatDelay":
+                // limit check new value
+                limitIntPrefValue(sharedPreferences, key, 0, 9999, "500");
+                break;
+            case "prefEsuMc2StopButtonDelay":
+                // limit check new value
+                limitIntPrefValue(sharedPreferences, key, 0, 9999, "500");
                 break;
             case "prefImportExport":
                 if (!importExportPreferences.currentlyImporting) {

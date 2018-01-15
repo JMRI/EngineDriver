@@ -1,4 +1,5 @@
 **Version 2.17
+ * Add support for ESU Mobile Control II throttle
 **Version 2.16
  * Preference grouping
  * new gamepad repeat handling and sound feedback

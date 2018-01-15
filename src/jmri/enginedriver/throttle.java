@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,6 +33,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -60,8 +60,15 @@ import android.widget.Toast;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
+import eu.esu.mobilecontrol2.sdk.MobileControl2;
+import eu.esu.mobilecontrol2.sdk.StopButtonFragment;
+import eu.esu.mobilecontrol2.sdk.ThrottleFragment;
+import eu.esu.mobilecontrol2.sdk.ThrottleScale;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
 import static android.view.InputDevice.getDevice;
@@ -84,7 +91,7 @@ import static android.view.KeyEvent.KEYCODE_X;
 
 // used for supporting Keyboard and Gamepad input;
 
-public class throttle extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
+public class throttle extends FragmentActivity implements android.gesture.GestureOverlayView.OnGestureListener {
 
     private threaded_application mainapp; // hold pointer to mainapp
     private SharedPreferences prefs;
@@ -303,6 +310,184 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     //Throttle Array
     private final char[] allThrottleLetters = {'T', 'S', 'G'};
+
+    // For ESU MobileControlII
+    private static final boolean IS_ESU_MCII = MobileControl2.isMobileControl2();
+    private boolean isEsuMc2Stopped = false; // for tracking status of Stop button
+    private ThrottleFragment esuThrottleFragment;
+    private StopButtonFragment esuStopButtonFragment;
+    private EsuMc2LedControl esuMc2Led = new EsuMc2LedControl();
+    private Handler esuButtonRepeatUpdateHandler = new Handler();
+    private boolean esuButtonAutoIncrement = false;
+    private boolean esuButtonAutoDecrement = false;
+
+    // Create default ESU MCII ThrottleScale for each throttle
+    private ThrottleScale esuThrottleScaleT = new ThrottleScale(10, 127);
+    private ThrottleScale esuThrottleScaleS = new ThrottleScale(10, 127);
+    private ThrottleScale esuThrottleScaleG = new ThrottleScale(10, 127);
+
+    private enum EsuMc2Led {
+        RED (MobileControl2.LED_RED),
+        GREEN (MobileControl2.LED_GREEN);
+
+        private int value;
+
+        EsuMc2Led(int value) {
+            this.value = value;
+        }
+
+        private int getValue() {
+            return value;
+        }
+    }
+
+    private enum EsuMc2LedState {
+        OFF,
+        ON,
+        QUICK_FLASH,
+        STEADY_FLASH,
+        LONG_FLASH,
+        SHORT_FLASH
+    }
+
+    private enum EsuMc2ButtonAction {
+        NO_ACTION ("(no function)"),
+        ALL_STOP ("All Stop"),
+        STOP ("Stop"),
+        DIRECTION_FORWARD ("Forward"),
+        DIRECTION_REVERSE ("Reverse"),
+        DIRECTION_TOGGLE ("Forward/Reverse Toggle"),
+        SPEED_INCREASE ("Increase Speed"),
+        SPEED_DECREASE ("Decrease Speed"),
+        NEXT_THROTTLE ("Next Throttle"),
+        FN00 ("Function 00/Light", 0),
+        FN01 ("Function 01/Bell", 1),
+        FN02 ("Function 02/Horn", 2),
+        FN03 ("Function 03", 3),
+        FN04 ("Function 04", 4),
+        FN05 ("Function 05", 5),
+        FN06 ("Function 06", 6),
+        FN07 ("Function 07", 7),
+        FN08 ("Function 08", 8),
+        FN09 ("Function 09", 9),
+        FN10 ("Function 10", 10),
+        FN11 ("Function 11", 11),
+        FN12 ("Function 12", 12),
+        FN13 ("Function 13", 13),
+        FN14 ("Function 14", 14),
+        FN15 ("Function 15", 15),
+        FN16 ("Function 16", 16),
+        FN17 ("Function 17", 17),
+        FN18 ("Function 18", 18),
+        FN19 ("Function 19", 19),
+        FN20 ("Function 20", 20),
+        FN21 ("Function 21", 21),
+        FN22 ("Function 22", 22),
+        FN23 ("Function 23", 23),
+        FN24 ("Function 24", 24),
+        FN25 ("Function 25", 25),
+        FN26 ("Function 26", 26),
+        FN27 ("Function 27", 27),
+        FN28 ("Function 28", 28);
+
+        private String action;
+        private int function;
+
+        private static final Map<String,EsuMc2ButtonAction> ENUM_MAP;
+
+        EsuMc2ButtonAction(String action) {
+            this(action, -1);
+        }
+
+        EsuMc2ButtonAction(String action, int function) {
+            this.action = action;
+            this.function = function;
+        }
+
+        private String getAction() {
+            return this.action;
+        }
+
+        private int getFunction() {
+            return this.function;
+        }
+
+        // Build immutable map of String name to enum pairs
+
+        static {
+            Map<String,EsuMc2ButtonAction> map = new ConcurrentHashMap<>();
+            for (EsuMc2ButtonAction action: EsuMc2ButtonAction.values()) {
+                map.put(action.getAction(),action);
+            }
+            ENUM_MAP = Collections.unmodifiableMap(map);
+        }
+
+        private static EsuMc2ButtonAction getAction(String action) {
+            return ENUM_MAP.get(action);
+        }
+    }
+
+    private static class EsuMc2LedControl {
+        EsuMc2LedState stateRed;
+        EsuMc2LedState stateGreen;
+
+        private void setState(EsuMc2Led which, EsuMc2LedState state) {
+            this.setState(which, state, false);
+        }
+
+        private void setState(EsuMc2Led which, EsuMc2LedState state, boolean storeState) {
+            switch (state) {
+                case OFF:
+                    MobileControl2.setLedState(which.getValue(), false);
+                    break;
+                case ON:
+                    MobileControl2.setLedState(which.getValue(), true);
+                    break;
+                case QUICK_FLASH:
+                    MobileControl2.setLedState(which.getValue(), 125, 125);
+                    break;
+                case STEADY_FLASH:
+                    MobileControl2.setLedState(which.getValue(), 250, 250);
+                    break;
+                case LONG_FLASH:
+                    MobileControl2.setLedState(which.getValue(), 375, 125);
+                    break;
+                case SHORT_FLASH:
+                    MobileControl2.setLedState(which.getValue(), 125, 375);
+                    break;
+                default:
+                    // Default off
+                    MobileControl2.setLedState(which.getValue(), false);
+            }
+            if (storeState) {
+                switch (which) {
+                    case RED:
+                        stateRed = state;
+                        break;
+                    case GREEN:
+                        stateGreen = state;
+                        break;
+                }
+            }
+        }
+
+        private EsuMc2LedState getState(EsuMc2Led which) {
+            if (which == EsuMc2Led.RED) {
+                return this.stateRed;
+            } else {
+                return this.stateGreen;
+            }
+        }
+
+        private void revertLEDStates() {
+            revertLEDState(EsuMc2Led.RED);
+            revertLEDState(EsuMc2Led.GREEN);
+        }
+
+        private void revertLEDState(EsuMc2Led which) {
+            setState(which, getState(which), false);
+        }
+    }
 
     // For speed slider speed buttons.
     private class RptUpdater implements Runnable {
@@ -821,14 +1006,29 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
     // set speed slider and notify server for one throttle
     void speedUpdateAndNotify(char whichThrottle, int speed) {
+        speedUpdateAndNotify(whichThrottle, speed, true);
+    }
+
+    // set speed slider and notify server for one throttle and optionally move ESU MCII knob
+    void speedUpdateAndNotify(char whichThrottle, int speed, boolean moveMc2Knob) {
         speedUpdate(whichThrottle, speed);
         sendSpeedMsg(whichThrottle, speed);
+        // Now update ESU MCII Knob position
+        if (IS_ESU_MCII && moveMc2Knob) {
+            Log.d("Engine_Driver", "ESU_MCII: Move knob request for speed update");
+            setEsuThrottleKnobPosition(whichThrottle, speed);
+        }
     }
 
     // change speed slider by scaled value and notify server
     public void speedChangeAndNotify(char whichThrottle, int change) {
         int speed = speedChange(whichThrottle, change);
         sendSpeedMsg(whichThrottle, speed);
+        // Now update ESU MCII Knob position
+        if (IS_ESU_MCII) {
+            Log.d("Engine_Driver", "ESU_MCII: Move knob request for speed change");
+            setEsuThrottleKnobPosition(whichThrottle, speed);
+        }
     }
 
     // set the displayed numeric speed value
@@ -871,12 +1071,19 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 maxSpeedStep = 28;
                 break;
         }
+
+        int zeroTrim = preferences.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
+        ThrottleScale esuThrottleScale = new ThrottleScale(zeroTrim, maxSpeedStep + 1);
+
         if (whichThrottle == 'T') {
             maxSpeedStepT = maxSpeedStep;
+            esuThrottleScaleT = esuThrottleScale;
         } else if (whichThrottle == 'G') {
             maxSpeedStepG = maxSpeedStep;
+            esuThrottleScaleG = esuThrottleScale;
         } else {
             maxSpeedStepS = maxSpeedStep;
+            esuThrottleScaleS = esuThrottleScale;
         }
         setDisplayUnitScale(whichThrottle);
     }
@@ -1380,6 +1587,16 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         } else {
             tvVolG.setText(VOLUME_INDICATOR);
         }
+        // Ensure ESU MCII tracks selected throttle
+        if (IS_ESU_MCII) {
+            Log.d("Engine_Driver", "ESU_MCII: Throttle changed to: " + whichVolume);
+            setEsuThrottleKnobPosition(whichVolume, getSpeed(whichVolume));
+            if (getConsist(whichVolume).isActive()) {
+                esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.ON, true);
+            } else {
+                esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.STEADY_FLASH, true);
+            }
+        }
     }
 
     private void setGamepadIndicator() {
@@ -1850,13 +2067,13 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 
                 } else if (keyCode == gamePadKeys[1]) { // Return button
                     // NextThrottle
-                /* if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
-                    if (usingMultiplePads && whichGamePadIsEventFrom >= 0) {
-                        whichGamePadIsEventFrom = swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
-                    } else {
-                        setNextActiveThrottle(true);
-                    }
-                } */
+                    /* if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                        if (usingMultiplePads && whichGamePadIsEventFrom >= 0) {
+                            whichGamePadIsEventFrom = swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
+                        } else {
+                            setNextActiveThrottle(true);
+                        }
+                    } */
                     performButtonAction(9, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
                     return (true); // stop processing this key
                 }
@@ -1864,6 +2081,33 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
 //  if problems occur, we can uncomment the next 2 lines
 //            else if (!((keyCode == KEYCODE_BACK) || (keyCode == KEYCODE_VOLUME_DOWN) || (keyCode == KEYCODE_VOLUME_UP) || (keyCode == KEYCODE_MENU)))
 //            return (true); // swallow all other keystrokes except back, menu and the volume keys
+            }
+        } else if(IS_ESU_MCII) {
+            // Process ESU MCII keys
+            int action = event.getAction();
+            int keyCode = event.getKeyCode();
+            int repeatCnt = event.getRepeatCount();
+            boolean isActive = getConsist(whichVolume).isActive();
+
+            if (keyCode != 0) {
+                Log.d("Engine_Driver", "ESU_MCII: keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
+                if (action == ACTION_UP) {
+                    esuButtonAutoIncrement = false;
+                    esuButtonAutoDecrement = false;
+                }
+
+                switch (keyCode) {
+                    case MobileControl2.KEYCODE_TOP_LEFT:
+                    case MobileControl2.KEYCODE_BOTTOM_LEFT:
+                    case MobileControl2.KEYCODE_TOP_RIGHT:
+                    case MobileControl2.KEYCODE_BOTTOM_RIGHT:
+                        performEsuMc2ButtonAction(keyCode, action, isActive, whichVolume, repeatCnt);
+                        return true; // stop processing this key
+                    default:
+                        // Unrecognised key - do nothing
+                        Log.d("Engine_Driver", "ESU_MCII: Unrecognised keyCode: " + keyCode);
+
+                }
             }
         }
         return super.dispatchKeyEvent(event);
@@ -1943,6 +2187,294 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         }
     }
 
+    /**
+     * For ESU MCII buttons.
+     *
+     * However, it seems that the ESU MCII buttons report UP immediately even if held down
+     * so this, right now, is rather superfluous...
+     */
+    private class EsuMc2ButtonRptUpdater implements Runnable {
+        char whichThrottle;
+
+        private EsuMc2ButtonRptUpdater(char whichThrottle) {
+            this.whichThrottle = whichThrottle;
+
+            try {
+                REP_DELAY = Integer.parseInt(prefs.getString("prefEsuMc2ButtonsRepeatDelay",
+                        getApplicationContext().getResources().getString(R.string.prefEsuMc2ButtonsRepeatDefaultValue)));
+            } catch (NumberFormatException ex) {
+                REP_DELAY = 300;
+            }
+        }
+
+        @Override
+        public void run() {
+            if (esuButtonAutoIncrement) {
+                incrementSpeed(whichThrottle);
+                esuButtonRepeatUpdateHandler.postDelayed(new EsuMc2ButtonRptUpdater(whichThrottle), REP_DELAY);
+            } else if (esuButtonAutoDecrement) {
+                decrementSpeed(whichThrottle);
+                gamepadRepeatUpdateHandler.postDelayed(new EsuMc2ButtonRptUpdater(whichThrottle), REP_DELAY);
+            }
+        }
+    }
+
+    // Callback for ESU MCII throttle knob events
+    private ThrottleFragment.OnThrottleListener esuOnThrottleListener = new ThrottleFragment.OnThrottleListener() {
+
+        @Override
+        public void onButtonDown() {
+            Log.d("Engine_Driver", "ESU_MCII: Knob button down for throttle " + whichVolume);
+            Log.d("Engine_Driver", "ESU_MCII: Attempting to switch direction");
+            changeDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1 ));
+            speedUpdateAndNotify(whichVolume, 0, false);
+        }
+
+        @Override
+        public void onButtonUp() {
+            Log.d("Engine_Driver", "ESU_MCII: Knob button up for throttle " + whichVolume);
+        }
+
+        @Override
+        public void onPositionChanged(int knobPos) {
+            int speed;
+            if (getConsist(whichVolume).isActive() && !isEsuMc2Stopped) {
+                if (whichVolume == 'T') {
+                    speed = esuThrottleScaleT.positionToStep(knobPos);
+                } else if (whichVolume == 'G') {
+                    speed = esuThrottleScaleG.positionToStep(knobPos);
+                } else {
+                    speed = esuThrottleScaleS.positionToStep(knobPos);
+                }
+                Log.d("Engine_Driver", "ESU_MCII: Knob position changed for throttle " + whichVolume);
+                Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
+                speedUpdateAndNotify(whichVolume, speed, false); // No need to move knob
+            } else {
+                // Ignore knob movements for stopped or inactive throttles
+                Log.d("Engine_Driver", "ESU_MCII: Knob position moved for " + (isEsuMc2Stopped ? "stopped": "inactive") + " throttle " + whichVolume);
+                Log.d("Engine_Driver", "ESU_MCII: Nothing updated");
+            }
+        }
+    };
+
+    // Callback for ESU MCII stop button
+    private StopButtonFragment.OnStopButtonListener esuOnStopButtonListener = new StopButtonFragment.OnStopButtonListener() {
+        private int origSpeed;
+        private long timePressed;
+        private boolean wasLongPress = false;
+        private int delay;
+
+        @Override
+        public void onStopButtonDown() {
+            if (!getConsist(whichVolume).isActive()) {
+                Log.d("Engine_Driver", "ESU_MCII: Stop button down for inactive throttle " + whichVolume);
+                return;
+            }
+            Log.d("Engine_Driver", "ESU_MCII: Stop button down for throttle " + whichVolume);
+            if (!isEsuMc2Stopped) {
+                origSpeed = getSpeed(whichVolume);
+                timePressed = System.currentTimeMillis();
+                Log.d("Engine_Driver", "ESU_MCII: Speed value was: " + origSpeed);
+            }
+            // Toggle press status
+            isEsuMc2Stopped = !isEsuMc2Stopped;
+            set_stop_button(whichVolume, true);
+            speedUpdateAndNotify(whichVolume, 0);
+            esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.ON);
+            esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
+            // Read current stop button delay pref value
+            delay = preferences.getIntPrefValue(prefs,"prefEsuMc2StopButtonDelay",
+                    getApplicationContext().getResources().getString(R.string.prefEsuMc2StopButtonDelayDefaultValue));
+        }
+
+        @Override
+        public void onStopButtonUp() {
+            if (!getConsist(whichVolume).isActive()) {
+                Log.d("Engine_Driver", "ESU_MCII: Stop button up for inactive throttle " + whichVolume);
+                return;
+            }
+            Log.d("Engine_Driver", "ESU_MCII: Stop button up for throttle " + whichVolume);
+            if (isEsuMc2Stopped) {
+                if (System.currentTimeMillis() - timePressed > delay) {
+                    // It's a long initial press so record this
+                    wasLongPress = true;
+                    Log.d("Engine_Driver", "ESU_MCII: Stop button press was long - long flash Red LED");
+                    esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.LONG_FLASH);
+                    esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
+                    // Set all throttles to zero
+                    for (char t : allThrottleLetters) {
+                        set_stop_button(t, true);
+                        speedUpdateAndNotify(t, 0);
+                    }
+                } else {
+                    wasLongPress = false;
+                    Log.d("Engine_Driver", "ESU_MCII: Stop button press was short - short flash Red LED");
+                    esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.QUICK_FLASH);
+                    esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
+                }
+            } else {
+                if (!wasLongPress) {
+                    Log.d("Engine_Driver", "ESU_MCII: Revert speed value to: " + origSpeed);
+                    set_stop_button(whichVolume, false);
+                    speedUpdateAndNotify(whichVolume, origSpeed);
+                } else {
+                    Log.d("Engine_Driver", "ESU_MCII: Resume control without speed revert");
+                    origSpeed = 0;
+                    for (char t : allThrottleLetters) {
+                        set_stop_button(t, false);
+                    }
+                }
+                // Revert LED states
+                esuMc2Led.revertLEDStates();
+            }
+        }
+    };
+
+    // Function to move ESU MCII control knob
+    private void setEsuThrottleKnobPosition(char whichThrottle, int speed) {
+        Log.d("Engine_Driver", "ESU_MCII: Request to update knob position for throttle " + whichThrottle);
+        if (whichThrottle == whichVolume) {
+            int knobPos;
+            if (whichThrottle == 'T') {
+                knobPos = esuThrottleScaleT.stepToPosition(speed);
+            } else if (whichThrottle == 'G') {
+                knobPos = esuThrottleScaleG.stepToPosition(speed);
+            } else {
+                knobPos = esuThrottleScaleS.stepToPosition(speed);
+            }
+            Log.d("Engine_Driver", "ESU_MCII: Update knob position for throttle " + whichThrottle);
+            Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
+            esuThrottleFragment.moveThrottle(knobPos);
+        } else {
+            Log.d("Engine_Driver", "ESU_MCII: This throttle not selected for control by knob");
+        }
+    }
+
+    private void updateEsuMc2ZeroTrim() {
+        int zeroTrim = preferences.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
+        Log.d("Engine_Driver", "ESU_MCII: Update zero trim for throttle to: " + zeroTrim);
+
+        // first the knob
+        esuThrottleFragment.setZeroPosition(zeroTrim);
+
+        // now throttle scales
+        esuThrottleScaleT = new ThrottleScale(zeroTrim, esuThrottleScaleT.getStepCount());
+        esuThrottleScaleS = new ThrottleScale(zeroTrim, esuThrottleScaleS.getStepCount());
+        esuThrottleScaleG = new ThrottleScale(zeroTrim, esuThrottleScaleG.getStepCount());
+    }
+
+    private void performEsuMc2ButtonAction(int buttonNo, int action, boolean isActive, char whichThrottle, int repeatCnt) {
+
+        if (isEsuMc2Stopped) {
+            Log.d("Engine_Driver", "ESU_MCII: Device button presses whilst stopped ignored");
+            return;
+        }
+
+        EsuMc2ButtonAction buttonAction;
+
+        switch (buttonNo) {
+            case MobileControl2.KEYCODE_TOP_LEFT:
+                buttonAction = EsuMc2ButtonAction.getAction(prefs.getString("prefEsuMc2ButtonTL",
+                        getApplicationContext().getResources().getString(R.string.prefEsuMc2ButtonTLDefaultValue)));
+                break;
+            case MobileControl2.KEYCODE_BOTTOM_LEFT:
+                buttonAction = EsuMc2ButtonAction.getAction(prefs.getString("prefEsuMc2ButtonBL",
+                        getApplicationContext().getResources().getString(R.string.prefEsuMc2ButtonBLDefaultValue)));
+                break;
+            case MobileControl2.KEYCODE_TOP_RIGHT:
+                buttonAction = EsuMc2ButtonAction.getAction(prefs.getString("prefEsuMc2ButtonTR",
+                        getApplicationContext().getResources().getString(R.string.prefEsuMc2ButtonTRDefaultValue)));
+                break;
+            case MobileControl2.KEYCODE_BOTTOM_RIGHT:
+                buttonAction = EsuMc2ButtonAction.getAction(prefs.getString("prefEsuMc2ButtonBR",
+                        getApplicationContext().getResources().getString(R.string.prefEsuMc2ButtonBRDefaultValue)));
+                break;
+            default:
+                buttonAction = EsuMc2ButtonAction.NO_ACTION;
+        }
+
+        if (isActive) {
+            switch (buttonAction) {
+                case NO_ACTION:
+                    // Do nothing
+                    break;
+                case ALL_STOP:
+                    if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                        speedUpdateAndNotify(0);    // update all three throttles
+                    }
+                    break;
+                case STOP:
+                    if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                        speedUpdateAndNotify(whichThrottle, 0);
+                    }
+                    break;
+                case DIRECTION_FORWARD:
+                    if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                        changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
+                    }
+                    break;
+                case DIRECTION_REVERSE:
+                    if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                        changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
+                    }
+                    break;
+                case DIRECTION_TOGGLE:
+                    if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                        if ((getDirection(whichThrottle) == DIRECTION_FORWARD)) {
+                            changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
+                        } else {
+                            changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
+                        }
+                    }
+                    break;
+                case SPEED_INCREASE:
+                    if (action == ACTION_DOWN) {
+                        if (repeatCnt == 0) {
+                            esuButtonAutoIncrement = true;
+                            esuButtonRepeatUpdateHandler.post(new EsuMc2ButtonRptUpdater(whichThrottle));
+                        }
+                    }
+                        break;
+                case SPEED_DECREASE:
+                    if (action == ACTION_DOWN) {
+                        if (repeatCnt == 0) {
+                            esuButtonAutoDecrement = true;
+                            esuButtonRepeatUpdateHandler.post(new EsuMc2ButtonRptUpdater(whichThrottle));
+                        }
+                    }
+                    break;
+                case NEXT_THROTTLE:
+                    if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                        setNextActiveThrottle();
+                    }
+                    break;
+                case FN00: case FN01: case FN02: case FN03: case FN04: case FN05:
+                case FN06: case FN07: case FN08: case FN09: case FN10: case FN11:
+                case FN12: case FN13: case FN14: case FN15: case FN16: case FN17:
+                case FN18: case FN19: case FN20: case FN21: case FN22: case FN23:
+                case FN24: case FN25: case FN26: case FN27: case FN28:
+                    if (repeatCnt == 0) {
+                        if (action == ACTION_DOWN) {
+                            mainapp.sendMsg(mainapp.comm_msg_handler,
+                                    message_type.FUNCTION,
+                                    whichThrottle + "",
+                                    buttonAction.getFunction(),
+                                    1);
+                        } else {
+                            mainapp.sendMsg(mainapp.comm_msg_handler,
+                                    message_type.FUNCTION,
+                                    whichThrottle + "",
+                                    buttonAction.getFunction(),
+                                    0);
+                        }
+                    }
+                    break;
+                default:
+                    // Do nothing
+                    break;
+            }
+        }
+    }
 
 // Listeners for the Select Loco buttons
     private class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
@@ -2219,6 +2751,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                 else {                      // got a touch while processing limitJump
                     speed = lastSpeed;    //   so suppress multiple touches
                     throttle.setProgress(lastSpeed);
+                }
+                // Now update ESU MCII Knob position
+                if (IS_ESU_MCII) {
+                    setEsuThrottleKnobPosition(whichThrottle, speed);
                 }
             } else {
                 if (limitedJump) {
@@ -2637,6 +3173,28 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         // set GamePad Support
         setGamepadKeys();
 
+        // initialise ESU MCII
+        if (IS_ESU_MCII) {
+            Log.d("Engine_Driver", "ESU_MCII: Initialise fragments...");
+            int zeroTrim = preferences.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
+            esuThrottleFragment = ThrottleFragment.newInstance(zeroTrim);
+            esuThrottleFragment.setOnThrottleListener(esuOnThrottleListener);
+            esuStopButtonFragment = StopButtonFragment.newInstance();
+            esuStopButtonFragment.setOnStopButtonListener(esuOnStopButtonListener);
+            Log.d("Engine_Driver", "ESU_MCII: ...fragments initialised");
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(esuThrottleFragment, "mc2:throttle")
+                    .add(esuStopButtonFragment, "mc2:stopKey")
+                    .commit();
+            esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.OFF, true);
+            esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.STEADY_FLASH, true);
+
+            // Now apply knob zero trim
+            updateEsuMc2ZeroTrim();
+            Log.d("Engine_Driver", "ESU_MCII: Initialisation complete");
+        }
+
     } // end of onCreate()
 
     @Override
@@ -2780,6 +3338,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
         repeatUpdateHandler = null;
         volumeKeysRepeatUpdateHandler = null;
         gamepadRepeatUpdateHandler = null;
+        if (IS_ESU_MCII) {
+            esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.OFF);
+            esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
+        }
 
         tg.release();
         mainapp.throttle_msg_handler = null;
@@ -3522,6 +4084,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                     ActivityConsistUpdate(resultCode, data.getExtras());
                 if ((getConsist(whichVolume) != null) && (!getConsist(whichVolume).isActive())) {
                     setNextActiveThrottle(); // if consist on Volume throttle was released, move to next throttle
+                } else {
+                    if (IS_ESU_MCII) {
+                        esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.STEADY_FLASH, true);
+                    }
                 }
                 break;
             case ACTIVITY_CONSIST:         // edit loco or edit consist
@@ -3538,6 +4104,10 @@ public class throttle extends Activity implements android.gesture.GestureOverlay
                             preferences.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
                     // update GamePad Support
                     setGamepadKeys();
+                }
+                if (resultCode == preferences.RESULT_ESUMCII) { // ESU MCII pref change
+                    // update zero trim values
+                    updateEsuMc2ZeroTrim();
                 }
                 break;
             }

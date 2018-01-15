@@ -352,6 +352,81 @@
             android:summary="@string/prefSelectiveLeadSoundSummary"
             android:title="@string/prefSelectiveLeadSoundTitle" >
         </CheckBoxPreference>
+        <PreferenceScreen
+            android:key="prefEsuMc2"
+            android:title="@string/prefEsuMc2Title"
+            android:summary="@string/prefEsuMc2Summary"
+            android:persistent="false"
+            android:shouldDisableView="true">
+            <PreferenceCategory android:title="@string/prefEsuMc2StopButtonCategoryTitle">
+                <EditTextPreference
+                    android:key="prefEsuMc2StopButtonDelay"
+                    android:title="@string/prefEsuMc2StopButtonDelayTitle"
+                    android:summary="@string/prefEsuMc2StopButtonDelaySummary"
+                    android:defaultValue="@string/prefEsuMc2StopButtonDelayDefaultValue"
+                    android:dialogTitle="@string/prefEsuMc2StopButtonDelayTitle"
+                    android:maxLength="4"
+                    android:numeric="integer"
+                    android:digits="0123456789"
+                    android:inputType="number" />
+            </PreferenceCategory>
+            <!-- Button preferences -->
+            <PreferenceCategory android:title="@string/prefEsuMc2ButtonsCategoryTitle">
+                <ListPreference
+                    android:key="prefEsuMc2ButtonTL"
+                    android:title="@string/prefEsuMc2ButtonTLTitle"
+                    android:summary="@string/prefEsuMc2ButtonTLSummary"
+                    android:defaultValue="@string/prefEsuMc2ButtonTLDefaultValue"
+                    android:entries="@array/prefEsuMc2KeyOptions"
+                    android:entryValues="@array/prefEsuMc2KeyOptions" />
+                <ListPreference
+                    android:key="prefEsuMc2ButtonBL"
+                    android:title="@string/prefEsuMc2ButtonBLTitle"
+                    android:summary="@string/prefEsuMc2ButtonBLSummary"
+                    android:defaultValue="@string/prefEsuMc2ButtonBLDefaultValue"
+                    android:entries="@array/prefEsuMc2KeyOptions"
+                    android:entryValues="@array/prefEsuMc2KeyOptions" />
+                <ListPreference
+                    android:key="prefEsuMc2ButtonTR"
+                    android:title="@string/prefEsuMc2ButtonTRTitle"
+                    android:summary="@string/prefEsuMc2ButtonTRSummary"
+                    android:defaultValue="@string/prefEsuMc2ButtonTRDefaultValue"
+                    android:entries="@array/prefEsuMc2KeyOptions"
+                    android:entryValues="@array/prefEsuMc2KeyOptions" />
+                <ListPreference
+                    android:key="prefEsuMc2ButtonBR"
+                    android:title="@string/prefEsuMc2ButtonBRTitle"
+                    android:summary="@string/prefEsuMc2ButtonBRSummary"
+                    android:defaultValue="@string/prefEsuMc2ButtonBRDefaultValue"
+                    android:entries="@array/prefEsuMc2KeyOptions"
+                    android:entryValues="@array/prefEsuMc2KeyOptions" />
+                <!-- Seems that ESU MCII buttons don't always register holds
+                    Leaving this in anyway -->
+                <EditTextPreference
+                    android:key="prefEsuMc2ButtonsRepeatDelay"
+                    android:title="@string/prefEsuMc2ButtonsRepeatTitle"
+                    android:summary="@string/prefEsuMc2ButtonsRepeatSummary"
+                    android:defaultValue="@string/prefEsuMc2ButtonsRepeatDefaultValue"
+                    android:dialogTitle="@string/prefEsuMc2ButtonsRepeatTitle"
+                    android:maxLength="4"
+                    android:numeric="integer"
+                    android:digits="0123456789"
+                    android:inputType="number" />
+            </PreferenceCategory>
+            <!-- knob zero position trim setting -->
+            <PreferenceCategory android:title="@string/prefEsuMc2ZeroTrimCategoryTitle">
+                <EditTextPreference
+                    android:key="prefEsuMc2ZeroTrim"
+                    android:title="@string/prefEsuMc2ZeroTrimTitle"
+                    android:summary="@string/prefEsuMc2ZeroTrimSummary"
+                    android:defaultValue="@string/prefEsuMc2ZeroTrimDefaultValue"
+                    android:dialogTitle="@string/prefEsuMc2ZeroTrimTitle"
+                    android:maxLength="3"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:numeric="integer" />
+            </PreferenceCategory>
+        </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference
