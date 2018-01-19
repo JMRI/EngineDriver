@@ -202,7 +202,7 @@
     <string name="prefEsuMc2StopButtonDelayDefaultValue">500</string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Control Knob options</string>
     <string name="prefEsuMc2ZeroTrimTitle">Control Knob Zero Trim</string>
-    <string name="prefEsuMc2ZeroTrimSummary">Set the Control Knob zero trim setting.\nSmaller is closer to counter-clockwise end-stop position.\nPermitted range 0-255.</string>
+    <string name="prefEsuMc2ZeroTrimSummary">Set the Control Knob zero trim setting.\nSmaller is closer to counter-clockwise end-stop position.\nPermitted range 0&#8211;255.</string>
     <string name="prefEsuMc2ZeroTrimDefaultValue">10</string>
     <!-- ESU MCII preferences -->
 
