@@ -582,6 +582,13 @@ public class select_loco extends Activity {
         if (mainapp.isForcingFinish()) {     // expedite
             return;
         }
+
+        String prefTheme;
+        prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        if (prefTheme.equals("Black")) {
+            setTheme(R.style.app_theme_black);
+        }
+
         setContentView(R.layout.select_loco);
 
         // put pointer to this activity's handler in main app's shared variable

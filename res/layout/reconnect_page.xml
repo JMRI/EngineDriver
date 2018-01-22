@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
     <TextView
-        style="@style/small_heading_style"
+        style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/reconnect_label" />
 
     <LinearLayout

@@ -6,7 +6,7 @@
     android:orientation="vertical" >
     <TextView
         android:id="@+id/consist_lead_label"
-        style="@style/small_heading_style"
+        style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/consist_lead_label" />
     <LinearLayout
         android:layout_width="fill_parent"
@@ -22,7 +22,7 @@
     </LinearLayout>
     <TextView
         android:id="@+id/consist_list_label"
-        style="@style/small_heading_style"
+        style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/consist_list_label" />
     <ListView
         android:id="@+id/consist_list"

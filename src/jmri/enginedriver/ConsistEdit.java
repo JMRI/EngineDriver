@@ -20,6 +20,7 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -170,6 +171,14 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         mainapp = (threaded_application) getApplication();
         if (mainapp.isForcingFinish()) {     // expedite
             return;
+        }
+
+        SharedPreferences prefs;
+        String prefTheme;
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        if (prefTheme.equals("Black")) {
+            setTheme(R.style.app_theme_black);
         }
 
         setContentView(R.layout.consist);

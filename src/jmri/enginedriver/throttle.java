@@ -326,6 +326,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private ThrottleScale esuThrottleScaleS = new ThrottleScale(10, 127);
     private ThrottleScale esuThrottleScaleG = new ThrottleScale(10, 127);
 
+    private String prefTheme;
+
     private enum EsuMc2Led {
         RED (MobileControl2.LED_RED),
         GREEN (MobileControl2.LED_GREEN);
@@ -2865,6 +2867,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         if (mainapp.isForcingFinish()) { // expedite
             return;
+        }
+
+        prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        if (prefTheme.equals("Black")) {
+            setTheme(R.style.app_theme_black);
         }
 
         setContentView(R.layout.throttle);

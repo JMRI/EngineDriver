@@ -48,7 +48,7 @@
             android:text="@string/connect_button" />
     </RelativeLayout>
     <TextView
-        style="@style/small_heading_style"
+        style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/discovered_services" />
     <LinearLayout
         android:layout_width="fill_parent"
@@ -65,7 +65,7 @@
         </ListView>
     </LinearLayout>
     <TextView
-        style="@style/small_heading_style"
+        style="?android:attr/listSeparatorTextViewStyle"
         android:id="@+id/recent_connections_heading"
         android:text="@string/recent_connections" />
     <LinearLayout

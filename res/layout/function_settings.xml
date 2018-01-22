@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/fs_heading"
-            style="@style/small_heading_style"
+            style="?android:attr/listSeparatorTextViewStyle"
             android:text="@string/fb_header" />
 
         <TextView

@@ -14,12 +14,23 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
 <resources>
-    <style name="app_theme" parent="@android:Theme">
+    <color name="solidBlack">#ff000000</color>
+
+    <style name="app_theme" parent="@android:style/Theme">
         <item name="android:windowBackground">@drawable/app_background</item>
         <item name="android:windowTitleStyle">@style/app_title</item>
         <item name="android:listViewStyle">@style/EDListView</item>
         <item name="android:expandableListViewStyle">@style/EDListView</item>
         <item name="android:listSeparatorTextViewStyle">@style/small_heading_style</item>
+    </style>
+
+    <style name="app_theme_black" parent="@android:style/Theme">
+        <item name="android:windowBackground">@color/solidBlack</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:windowTitleStyle">@style/app_title_black</item>
+        <item name="android:listViewStyle">@style/EDListView_black</item>
+        <item name="android:expandableListViewStyle">@style/EDListView_black</item>
+        <item name="android:listSeparatorTextViewStyle">@style/small_heading_style_black</item>
     </style>
 </resources>
     

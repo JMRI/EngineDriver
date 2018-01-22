@@ -20,6 +20,7 @@ package jmri.enginedriver;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -40,6 +41,14 @@ public class about_page extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) this.getApplication();
+
+        SharedPreferences prefs;
+        String prefTheme;
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        if (prefTheme.equals("Black")) {
+            setTheme(R.style.app_theme_black);
+        }
 
         setContentView(R.layout.about_page);
 

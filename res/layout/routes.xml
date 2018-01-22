@@ -6,7 +6,7 @@
     android:orientation="vertical" >
     <TextView
         android:id="@+id/routes_direct_entry_label"
-        style="@style/small_heading_style"
+        style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/routes_direct_entry_label" />
     <LinearLayout
         android:layout_width="fill_parent"
@@ -35,7 +35,7 @@
     </LinearLayout>
     <TextView
         android:id="@+id/routes_location_label"
-        style="@style/small_heading_style"
+        style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/routes_location_label" />
     <LinearLayout
         android:layout_width="fill_parent"
@@ -52,7 +52,7 @@
     </LinearLayout>
     <TextView
         android:id="@+id/routes_list_label"
-        style="@style/small_heading_style"
+        style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/routes_list_label" />
     <ListView
         android:id="@+id/routes_list"

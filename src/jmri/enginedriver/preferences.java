@@ -93,6 +93,13 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     public void onCreate(Bundle savedInstanceState) {
         ListPreference preference;
 
+        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        String prefTheme;
+        prefTheme = sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        if (prefTheme.equals("Black")) {
+            setTheme(R.style.app_theme_black);
+        }
+
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) getApplication();
         addPreferencesFromResource(R.xml.preferences);
@@ -120,7 +127,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             getPreferenceScreen().findPreference("prefHostImportExport").setEnabled(false);
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+//        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         setGamePadPrefLabels(sharedPreferences);
 
         // Disable ESU MCII preferences if not an ESU MCII
