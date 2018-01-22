@@ -1,5 +1,8 @@
 **Version 2.17
  * Add support for ESU Mobile Control II throttle
+ * Add toast messages when ESU Mobile Control II in stop mode
+ * Add relevant British English translations
+ * Enable/disable speed buttons & seekbar when ESU Mobile Control II in stop mode
 **Version 2.16
  * Preference grouping
  * new gamepad repeat handling and sound feedback

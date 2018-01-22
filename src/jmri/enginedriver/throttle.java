@@ -314,6 +314,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     // For ESU MobileControlII
     private static final boolean IS_ESU_MCII = MobileControl2.isMobileControl2();
     private boolean isEsuMc2Stopped = false; // for tracking status of Stop button
+    private boolean isEsuMc2AllStopped = false; // for tracking if all throttles stopped
     private ThrottleFragment esuThrottleFragment;
     private StopButtonFragment esuStopButtonFragment;
     private EsuMc2LedControl esuMc2Led = new EsuMc2LedControl();
@@ -1591,10 +1592,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (IS_ESU_MCII) {
             Log.d("Engine_Driver", "ESU_MCII: Throttle changed to: " + whichVolume);
             setEsuThrottleKnobPosition(whichVolume, getSpeed(whichVolume));
-            if (getConsist(whichVolume).isActive()) {
-                esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.ON, true);
-            } else {
-                esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.STEADY_FLASH, true);
+            if (!isEsuMc2Stopped) {
+                // Set green LED on if controlling a throttle; flash if nothing selected
+                // Only do this if ESU MCII not in Stop mode
+                if (getConsist(whichVolume).isActive()) {
+                    esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.ON, true);
+                } else {
+                    esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.STEADY_FLASH, true);
+                }
             }
         }
     }
@@ -2305,24 +2310,30 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     for (char t : allThrottleLetters) {
                         set_stop_button(t, true);
                         speedUpdateAndNotify(t, 0);
+                        setEnabledEsuMc2ThrottleScreenButtons(t, false);
                     }
+                    isEsuMc2AllStopped = true;
                 } else {
                     wasLongPress = false;
                     Log.d("Engine_Driver", "ESU_MCII: Stop button press was short - short flash Red LED");
                     esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.QUICK_FLASH);
                     esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
+                    setEnabledEsuMc2ThrottleScreenButtons(whichVolume, false);
                 }
             } else {
                 if (!wasLongPress) {
                     Log.d("Engine_Driver", "ESU_MCII: Revert speed value to: " + origSpeed);
                     set_stop_button(whichVolume, false);
                     speedUpdateAndNotify(whichVolume, origSpeed);
+                    setEnabledEsuMc2ThrottleScreenButtons(whichVolume, true);
                 } else {
                     Log.d("Engine_Driver", "ESU_MCII: Resume control without speed revert");
                     origSpeed = 0;
                     for (char t : allThrottleLetters) {
                         set_stop_button(t, false);
+                        setEnabledEsuMc2ThrottleScreenButtons(t, true);
                     }
+                    isEsuMc2AllStopped = false;
                 }
                 // Revert LED states
                 esuMc2Led.revertLEDStates();
@@ -2367,6 +2378,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         if (isEsuMc2Stopped) {
             Log.d("Engine_Driver", "ESU_MCII: Device button presses whilst stopped ignored");
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastEsuMc2NoButtonPresses), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -2476,6 +2488,24 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+    private void setEnabledEsuMc2ThrottleScreenButtons(char whichThrottle, boolean enabled) {
+
+        // Disables/enables seekbar and speed buttons
+        if (whichThrottle == 'T') {
+            bLSpdT.setEnabled(enabled);
+            bRSpdT.setEnabled(enabled);
+            sbT.setEnabled(enabled);
+        } else if (whichThrottle == 'G') {
+            bLSpdG.setEnabled(enabled);
+            bRSpdG.setEnabled(enabled);
+            sbG.setEnabled(enabled);
+        } else {
+            bLSpdS.setEnabled(enabled);
+            bRSpdS.setEnabled(enabled);
+            sbS.setEnabled(enabled);
+        }
+    }
+
 // Listeners for the Select Loco buttons
     private class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
         char whichThrottle;     // T for first throttle, S for second, G for third
@@ -2486,8 +2516,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         @Override
         public void onClick(View v) {
-            // don't loco change while moving if the preference is set
-            if (isSelectLocoAllowed(whichThrottle)) {
+            if (IS_ESU_MCII && isEsuMc2Stopped) {
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastEsuMc2NoLocoChange), Toast.LENGTH_SHORT).show();
+            } else if (isSelectLocoAllowed(whichThrottle)) {
+                // don't loco change while moving if the preference is set
                 start_select_loco_activity(whichThrottle); // pass throttle #
             } else {
                 Toast.makeText(getApplicationContext(), "Loco change not allowed: 'Direction change while moving' is disabled in the preferences", Toast.LENGTH_SHORT).show();
@@ -2639,9 +2671,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             speedUpdateAndNotify(whichThrottle, 0);
                             break;
                         case function_button.SPEED_LABEL:  // specify which throttle the volume button controls
-                            if (getConsist(whichThrottle).isActive()) { // only assign if Active
+                            if (getConsist(whichThrottle).isActive() && !(IS_ESU_MCII && isEsuMc2Stopped)) { // only assign if Active and, if an ESU MCII not in Stop mode
                                 whichVolume = whichThrottle;
                                 set_labels();
+                            }
+                            if (IS_ESU_MCII && isEsuMc2Stopped) {
+                                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getText(R.string.toastEsuMc2NoThrottleChange), Toast.LENGTH_SHORT).show();
                             }
                             break;
 
@@ -3258,6 +3293,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             applySpeedRelatedOptions();  // update all three throttles
 
             mainapp.EStopActivated = false;
+        }
+
+        if (IS_ESU_MCII && isEsuMc2Stopped) {
+            if (isEsuMc2AllStopped) {
+                // disable buttons for all throttles
+                for (char t: allThrottleLetters) {
+                    setEnabledEsuMc2ThrottleScreenButtons(t, false);
+                }
+            } else {
+                // disable buttons for current throttle
+                setEnabledEsuMc2ThrottleScreenButtons(whichVolume, false);
+            }
         }
 
         // update the direction indicators

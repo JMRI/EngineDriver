@@ -209,6 +209,7 @@
     <!-- ESU MCII Messages -->
     <string name="toastEsuMc2NoLocoChange">Loco change not allowed: Mobile Control II currently in stop mode</string>
     <string name="toastEsuMc2NoThrottleChange">Throttle change not allowed: Mobile Control II currently in stop mode</string>
+    <string name="toastEsuMc2NoButtonPresses">Button presses not allowed: Mobile Control II currently in stop mode</string>
     <!-- ESU MCII Messages -->
 
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>
