@@ -178,6 +178,7 @@
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
+    <string name="prefEsuMc2ThrottleNameDefaultValue">ESU MobileControl II</string>
     <string name="prefEsuMc2Title">ESU MobileControl II Options</string>
     <string name="prefEsuMc2Summary">Choose ESU MobileControl II options</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Device side button options</string>
