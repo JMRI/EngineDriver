@@ -20,7 +20,7 @@
   <color name="solidBlack">#ff000000</color>
   <color name="solidWhite">#ffffffff</color>
   <color name="holoBlue">#ff33b5e5</color>
-  <color name="divider">#ff000000</color>
+  <color name="divider">#ffc1c1c1</color>
 
   <style name="large_button_style" parent="@android:style/Widget.Button">
       <item name="android:textColor">@color/btn_text_states</item>
