@@ -20,6 +20,7 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -127,6 +128,13 @@ public class power_control extends Activity {
         if (mainapp.isForcingFinish()) {     // expedite
             return;
         }
+        
+        SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        String prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        if (prefTheme.equals("Black")) {
+            setTheme(R.style.app_theme_black);
+        }
+
         setContentView(R.layout.power_control);
 
 //      String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);

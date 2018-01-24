@@ -28,6 +28,7 @@
         <item name="android:listViewStyle">@style/EDListView_black</item>
         <item name="android:expandableListViewStyle">@style/EDListView_black</item>
         <item name="android:listSeparatorTextViewStyle">@style/small_heading_style_black</item>
+        <item name="android:itemBackground">#ff000000</item>
     </style>
 </resources>
     
