@@ -24,7 +24,6 @@
 
     <style name="app_theme_black" parent="@android:style/Theme.Holo">
         <item name="android:windowBackground">@color/solidBlack</item>
-        <item name="android:background">#ff000000</item>
         <item name="android:windowTitleStyle">@style/app_title_black</item>
         <item name="android:listViewStyle">@style/EDListView_black</item>
         <item name="android:expandableListViewStyle">@style/EDListView_black</item>
@@ -32,6 +31,7 @@
         <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
         <item name="android:dialogTheme">@style/dialogStyle_black</item>
         <item name="android:alertDialogTheme">@style/dialogStyle_black</item>
+        <item name="android:itemBackground">#ff000000</item>
     </style>
 </resources>
     

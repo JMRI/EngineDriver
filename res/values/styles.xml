@@ -18,8 +18,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
   <color name="transparent">#00000000</color>
   <color name="solidBlack">#ff000000</color>
+  <color name="solidWhite">#ffffffff</color>
   <color name="holoBlue">#ff33b5e5</color>
-  <color name="divider">#cacaca</color>
+  <color name="divider">#ff000000</color>
 
   <style name="large_button_style" parent="@android:style/Widget.Button">
       <item name="android:textColor">@color/btn_text_states</item>
@@ -188,8 +189,10 @@
     <item name="android:shadowRadius">0</item>
   </style>
   <style name="EDListView_black" parent="@android:style/Widget.ListView">
-    <item name="android:textColor">#ffffffff</item>
+    <item name="android:textColor">@color/solidWhite</item>
+    <item name="android:textSize">12sp</item>
     <item name="android:background">#ff000000</item>
+    <item name="android:windowBackground">@color/solidBlack</item>
     <item name="android:divider">@color/divider</item>
     <item name="android:dividerHeight">1dp</item>
     <item name="android:cacheColorHint">@android:color/transparent</item>
@@ -203,28 +206,12 @@
     <item name="android:background">#00000000</item>
   </style>
 
-  <style name="dialogStyle_black" parent="@android:style/Theme.Holo.Dialog" tools:targetApi="honeycomb">
-    <item name="android:topBright">@color/solidBlack</item>
-    <item name="android:topDark">@color/solidBlack</item>
-
+  <style name="dialogStyle_black" parent="@android:style/Theme.Dialog" tools:targetApi="honeycomb">
     <item name="android:backgroundDimEnabled">true</item>
-    <item name="android:backgroundDimAmount">50</item>
-    <item name="android:divider">@color/divider</item>
-    <item name="android:listDivider">@color/divider</item>
-    <item name="android:background">@color/solidBlack</item>
+    <item name="android:backgroundDimAmount">60</item>
     <item name="android:windowBackground">@color/solidBlack</item>
-    <item name="android:windowTitleStyle">@style/dialogTitleStyle_black</item>
-    <item name="android:windowTitleBackgroundStyle">@style/dialogTitleBackgroundStyle_black</item>
-  </style>
-
-  <style name="dialogTitleStyle_black" parent="@android:style/TextAppearance.Holo.DialogWindowTitle" tools:targetApi="honeycomb_mr2">
-    <item name="android:textColor">@color/holoBlue</item>
     <item name="android:textSize">18sp</item>
-  </style>
-
-  <style name="dialogTitleBackgroundStyle_black">
-    <item name="android:background">@color/solidBlack</item>
-    <item name="android:padding">0px</item>
+<!--    <item name="android:background">@color/solidBlack</item> -->
   </style>
 
 </resources>
