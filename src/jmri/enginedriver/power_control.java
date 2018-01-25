@@ -128,7 +128,7 @@ public class power_control extends Activity {
         if (mainapp.isForcingFinish()) {     // expedite
             return;
         }
-        
+
         SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
         if (prefTheme.equals("Black")) {

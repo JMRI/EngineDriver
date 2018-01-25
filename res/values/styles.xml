@@ -211,7 +211,10 @@
     <item name="android:backgroundDimAmount">60</item>
     <item name="android:windowBackground">@color/solidBlack</item>
     <item name="android:textSize">18sp</item>
-<!--    <item name="android:background">@color/solidBlack</item> -->
+    <item name="android:background">@color/solidBlack</item>
+    <item name="android:textColorAlertDialogListItem">@color/solidWhite</item>
+    <item name="android:editTextColor">@color/solidWhite</item>
+    <item name="android:textColorPrimary">@color/solidWhite</item>
   </style>
 
 </resources>
