@@ -53,4 +53,11 @@
     <color name="buttonStopSelectedFill_outline">#00000000</color>
     <color name="buttonStopSelectedStroke_outline">#ffff0000</color>
 
+    <color name="buttonFnFill_outline">#00000000</color>
+    <color name="buttonFnStroke_outline">#a6a6a6</color>
+    <color name="buttonFnDisabledFill_outline">#00000000</color>
+    <color name="buttonFnDisabledStroke_outline">#3cd6d6d6</color>
+    <color name="buttonFnSelectedFill_outline">#00000000</color>
+    <color name="buttonFnSelectedStroke_outline">#ff00b2e1</color>
+
 </resources>

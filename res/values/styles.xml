@@ -311,9 +311,11 @@
 
   <style name="fn_button_style_black" parent="@android:style/Widget.Button">
     <item name="android:textColor">@color/btn_text_states</item>
-    <item name="android:textSize">18sp</item>
-    <item name="android:singleLine">true</item>
-    <item name="android:ellipsize">none</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:singleLine">false</item>
+    <item name="android:maxLines">2</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:layout_gravity"></item> <!-- this is deliberately empty.-->
     <item name="android:layout_width">60dp</item>
     <item name="android:layout_height">48dp</item>
     <item name="android:padding">2dp</item>
@@ -420,15 +422,17 @@
   </style>
 
   <style name="fn_button_style_outline" parent="@android:style/Widget.Button">
-    <item name="android:textColor">@color/btn_text_states_outline</item>
-    <item name="android:textSize">18sp</item>
-    <item name="android:singleLine">true</item>
-    <item name="android:ellipsize">none</item>
+    <item name="android:textColor">@color/fn_btn_text_states_outline</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:singleLine">false</item>
+    <item name="android:maxLines">2</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:layout_gravity"></item>  <!-- this is deliberately empty.-->
     <item name="android:layout_width">60dp</item>
     <item name="android:layout_height">48dp</item>
     <item name="android:padding">2dp</item>
 
-    <item name="android:background">@drawable/sticky_button_states_round_outline</item>
+    <item name="android:background">@drawable/fn_button_states_round_outline</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
