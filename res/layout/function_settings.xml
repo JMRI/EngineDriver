@@ -25,7 +25,7 @@
 
         <Button
             android:id="@+id/fb_copy_labels_from_roster"
-            style="@style/normal_button_style"
+            style="?attr/ed_small_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/copy_function_labels" />

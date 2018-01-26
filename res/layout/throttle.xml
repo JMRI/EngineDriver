@@ -37,13 +37,13 @@
                         android:layout_weight=".73" >
                         <Button
                             android:id="@+id/button_select_loco_T"
-                            style="@style/normal_button_style"
+                            style="?attr/ed_normal_button_style"
                             android:layout_width="fill_parent"
                             android:layout_alignParentRight="true"
                             android:text="@string/none" />
                         <TextView
                             android:id="@+id/loco_label_T"
-                            style="@style/loco_label_style"
+                            style="?attr/ed_loco_label_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="6dp"
@@ -112,19 +112,19 @@
                     <TableRow android:layout_height="wrap_content">
                         <Button
                             android:id="@+id/button_fwd_T"
-                            style="@style/large_button_style"
+                            style="?attr/ed_large_button_style"
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/forward" />
                         <Button
                             android:id="@+id/button_stop_T"
-                            style="@style/stop_button_style"
+                            style="?attr/ed_stop_button_style"
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/stop" />
                         <Button
                             android:id="@+id/button_rev_T"
-                            style="@style/large_button_style"
+                            style="?attr/ed_large_button_style"
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/reverse" />
@@ -138,7 +138,7 @@
                     android:orientation="horizontal" >
                     <Button
                         android:id="@+id/Left_speed_button_T"
-                        style="@style/normal_button_style"
+                        style="?attr/ed_normal_button_style"
                	 	    android:layout_width="0dip"
                	 	    android:layout_weight="0.15"
                         android:layout_height="match_parent"
@@ -156,7 +156,7 @@
                 	</SeekBar>
                		<Button
                		    android:id="@+id/Right_speed_button_T"
-               		    style="@style/normal_button_style"
+               		    style="?attr/ed_normal_button_style"
                		    android:layout_width="0dip"
                		    android:layout_weight="0.15"
                		    android:layout_height="match_parent"
@@ -178,105 +178,105 @@
                         android:stretchColumns="0,1,2,3" >
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton00DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton01DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton02DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton03DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton04DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton05DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton06DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton07DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton08DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton09DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton10DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton11DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton12DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton13DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton14DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton15DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton16DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton17DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton18DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton19DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton20DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton21DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton22DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton23DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton24DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton25DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton26DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton27DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton28DefultValue" />
                         </TableRow>
                     </TableLayout>
@@ -310,7 +310,7 @@
                         android:layout_weight=".73" >
                         <Button
                             android:id="@+id/button_select_loco_S"
-                            style="@style/normal_button_style"
+                            style="?attr/ed_normal_button_style"
                             android:layout_width="fill_parent"
                             android:layout_alignParentRight="true"
                             android:text="@string/none" />
@@ -321,7 +321,7 @@
                             android:paddingLeft="6dp"
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
-                            style="@style/loco_label_style"
+                            style="?attr/ed_loco_label_style"
                             android:text="@string/loco" />
                     </RelativeLayout>
                     <RelativeLayout
@@ -385,19 +385,19 @@
                     <TableRow android:layout_height="wrap_content">
                         <Button
                             android:id="@+id/button_fwd_S"
-                            style="@style/large_button_style"
+                            style="?attr/ed_large_button_style"
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/forward" />
                         <Button
                             android:id="@+id/button_stop_S"
-                            style="@style/stop_button_style"
+                            style="?attr/ed_stop_button_style"
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/stop" />
                         <Button
                             android:id="@+id/button_rev_S"
-                            style="@style/large_button_style"
+                            style="?attr/ed_large_button_style"
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/reverse" />
@@ -412,7 +412,7 @@
                     android:orientation="horizontal" >
                     <Button
                         android:id="@+id/Left_speed_button_S"
-                        style="@style/normal_button_style"
+                        style="?attr/ed_normal_button_style"
                	 	    android:layout_width="0dip"
                	 	    android:layout_weight="0.15"
                         android:layout_height="match_parent"
@@ -430,7 +430,7 @@
                 	</SeekBar>
                		<Button
              			android:id="@+id/Right_speed_button_S"
-                    	style="@style/normal_button_style"
+                    	style="?attr/ed_normal_button_style"
                	 	    android:layout_width="0dip"
                	 	    android:layout_weight="0.15"
                     	android:layout_height="match_parent"
@@ -452,114 +452,114 @@
                         android:stretchColumns="0,1,2,3" >
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton00DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton01DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton02DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton03DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton04DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton05DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton06DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton07DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton08DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton09DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton10DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton11DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton12DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton13DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton14DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton15DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton16DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton17DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton18DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton19DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton20DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton21DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton22DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton23DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton24DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton25DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton26DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton27DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton28DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton29DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton30DefultValue" />
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton31DefultValue" />
                         </TableRow>
                     </TableLayout>
@@ -593,14 +593,14 @@
 
                         <Button
                             android:id="@+id/button_select_loco_G"
-                            style="@style/normal_button_style"
+                            style="?attr/ed_normal_button_style"
                             android:layout_width="fill_parent"
                             android:layout_alignParentRight="true"
                             android:text="@string/none" />
 
                         <TextView
                             android:id="@+id/loco_label_G"
-                            style="@style/loco_label_style"
+                            style="?attr/ed_loco_label_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="6dp"
@@ -673,20 +673,20 @@
                     <TableRow android:layout_height="wrap_content">
                         <Button
                             android:id="@+id/button_fwd_G"
-                            style="@style/large_button_style"
+                            style="?attr/ed_large_button_style"
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/forward" />
                         <Button
                             android:id="@+id/button_stop_G"
-                            style="@style/stop_button_style"
+                            style="?attr/ed_stop_button_style"
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/stop" />
 
                         <Button
                             android:id="@+id/button_rev_G"
-                            style="@style/large_button_style"
+                            style="?attr/ed_large_button_style"
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/reverse" />
@@ -699,7 +699,7 @@
                     android:orientation="horizontal" >
                     <Button
                         android:id="@+id/Left_speed_button_G"
-                        style="@style/normal_button_style"
+                        style="?attr/ed_normal_button_style"
                	 	    android:layout_width="0dip"
                	 	    android:layout_weight="0.15"
                         android:layout_height="match_parent"
@@ -717,7 +717,7 @@
                 	</SeekBar>
                		<Button
              			android:id="@+id/Right_speed_button_G"
-                    	style="@style/normal_button_style"
+                    	style="?attr/ed_normal_button_style"
                	 	    android:layout_width="0dip"
                	 	    android:layout_weight="0.15"
                     	android:layout_height="match_parent"
@@ -739,138 +739,138 @@
                         <TableRow>
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton00DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton01DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton02DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton03DefultValue" />
                         </TableRow>
 
                         <TableRow>
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton04DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton05DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton06DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton07DefultValue" />
                         </TableRow>
 
                         <TableRow>
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton08DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton09DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton10DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton11DefultValue" />
                         </TableRow>
 
                         <TableRow>
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton12DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton13DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton14DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton15DefultValue" />
                         </TableRow>
 
                         <TableRow>
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton16DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton17DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton18DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton19DefultValue" />
                         </TableRow>
 
                         <TableRow>
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton20DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton21DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton22DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton23DefultValue" />
                         </TableRow>
 
                         <TableRow>
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton24DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton25DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton26DefultValue" />
 
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton27DefultValue" />
                         </TableRow>
                         <TableRow>
                             <Button
-                                style="@style/fn_button_style"
+                                style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton28DefultValue" />
                         </TableRow>
                     </TableLayout>

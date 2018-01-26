@@ -133,6 +133,8 @@ public class power_control extends Activity {
         String prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
         if (prefTheme.equals("Black")) {
             setTheme(R.style.app_theme_black);
+        } else if (prefTheme.equals("Outline")) {
+            setTheme(R.style.app_theme_outline);
         }
 
         setContentView(R.layout.power_control);

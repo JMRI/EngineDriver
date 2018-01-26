@@ -493,10 +493,12 @@
     <string-array name="prefThemeOptions">
         <item>Default</item>
         <item>Black</item>
+        <item>Outline</item>
     </string-array>
     <string-array name="prefThemeEntries">
         <item>Default Theme</item>
         <item>High Contrast Theme</item>
+        <item>High Contrast Outline Theme</item>
     </string-array>
 
 </resources>

@@ -32,7 +32,7 @@
 
     <Button
         android:id="@+id/rt_current_state_desc"
-        style="@style/list_button_style"
+        style="?attr/ed_list_button_style"
         android:layout_width="0dp"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.25"

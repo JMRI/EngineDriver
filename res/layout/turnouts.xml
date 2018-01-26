@@ -31,18 +31,21 @@
             android:singleLine="true" />
         <Button
             android:id="@+id/turnout_throw"
+            style="?attr/ed_normal_button_style"
             android:layout_width="60sp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:text="@string/throw_button" />
         <Button
             android:id="@+id/turnout_close"
+            style="?attr/ed_normal_button_style"
             android:layout_width="60sp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:text="@string/close_button" />
         <Button
             android:id="@+id/turnout_toggle"
+            style="?attr/ed_normal_button_style"
             android:layout_width="60sp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"

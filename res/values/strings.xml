@@ -353,7 +353,7 @@
     <string name="prefSwapForwardReverseButtonsSummary">Swap the Forward and Reverse Buttons. REQUIRES a restart of Engine Driver, or it will behave unpredictably.</string>
 
     <string name="prefThemeTitle">Theme/Style</string>
-    <string name="prefThemeSummary">Theme to use on all pages.\n(Requires restart.)</string>
+    <string name="prefThemeSummary">App theme. REQUIRES restart of Engine Driver. \nRequires Android Honeycomb or later.</string>
     <string name="prefThemeDefaultValue">Default</string>
 
     <string name="functionButton00DefultValue">Light</string>

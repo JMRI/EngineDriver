@@ -98,6 +98,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         prefTheme = sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
         if (prefTheme.equals("Black")) {
             setTheme(R.style.app_theme_black);
+        } else if (prefTheme.equals("Outline")) {
+            setTheme(R.style.app_theme_outline);
         }
 
         super.onCreate(savedInstanceState);
@@ -114,6 +116,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
             getPreferenceScreen().findPreference("prefThrottleViewImmersiveMode").setSelectable(false);
             getPreferenceScreen().findPreference("prefThrottleViewImmersiveMode").setEnabled(false);
+        }
+        if (mainapp.androidVersion < mainapp.minThemeVersion) {
+            getPreferenceScreen().findPreference("prefTheme").setSelectable(false);
+            getPreferenceScreen().findPreference("prefTheme").setEnabled(false);
         }
         result = RESULT_OK;
 
