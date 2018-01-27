@@ -202,6 +202,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         Random rand = new Random();
                         deviceId = String.valueOf(rand.nextInt(9999));  //use random string
                     }
+                    if (MobileControl2.isMobileControl2()) {
+                        // Change default name for ESU MCII
+                        defaultName = getApplicationContext().getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
+                    }
                     String uniqueDefaultName = defaultName + " " + deviceId;
                     sharedPreferences.edit().putString(key, uniqueDefaultName).commit();  //save new name to prefs
                 }

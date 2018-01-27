@@ -56,8 +56,8 @@
     <string name="fb_helptext">Enter labels and function#s in list at right.  Leave label blank to hide button.  These are used when roster functions are not available.</string>
     <string name="copy_function_labels">Copy Labels from Roster</string>
     <string name="fb_header">Edit Functions</string>
-	<string name="consist_help">Click an engine to change its direction with respect to the top of the consist.  Long press an engine to remove it from the consist.  Press Back Arrow when done.</string>
-	<string name="about">About</string>
+    <string name="consist_help">Click an engine to change its direction with respect to the top of the consist.  Long press an engine to remove it from the consist.  Press Back Arrow when done.</string>
+    <string name="about">About</string>
     <string name="web">Web</string>
     <string name="mrc_settings">MRC Settings</string>
     <string name="loco">Loco:</string>
@@ -68,7 +68,7 @@
     <string name="turnouts_direct_entry_label">Enter Turnout#</string>
     <string name="turnouts_location_label">Filter by Location</string>
     <string name="turnouts_list_label">Turnouts (click state to toggle)</string>
-	<string name="turnouts_turnout">Turnout</string>
+    <string name="turnouts_turnout">Turnout</string>
     <string name="location_all">ALL LOCATIONS</string>
     <string name="routes">Routes</string>
     <string name="routes_label">Control Routes</string>
@@ -87,10 +87,10 @@
     <string name="reconnect_label">Reconnect Attempt Status</string>
     <string name="reconnect_help">Attempting to Reconnect automatically.  Wait for Reconnection or press BackArrow to Exit.</string>
     <string name="reconnect_success">RECONNECTED.  Resuming normal operation.</string>
-    	<string name="fs_edit_notice">WARNING: changes to Default Functions Setttings will be lost on exit - No SD Card found.</string>
-	<string name="ca_recent_conn_notice">Recent Connections unavailable - No SD Card found.</string>
-	<string name="sl_recent_engine_notice">Recent Locos unavailable - No SD Card found.</string>
-	<string name="power">Power</string>
+    <string name="fs_edit_notice">WARNING: changes to Default Functions Setttings will be lost on exit - No SD Card found.</string>
+    <string name="ca_recent_conn_notice">Recent Connections unavailable - No SD Card found.</string>
+    <string name="sl_recent_engine_notice">Recent Locos unavailable - No SD Card found.</string>
+    <string name="power">Power</string>
     <string name="throttle">Throttle</string>
     <string name="on">On</string>
     <string name="off">Off</string>
@@ -178,6 +178,7 @@
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
+    <string name="prefEsuMc2ThrottleNameDefaultValue">ESU MobileControl II</string>
     <string name="prefEsuMc2Title">ESU MobileControl II Options</string>
     <string name="prefEsuMc2Summary">Choose ESU MobileControl II options</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Device side button options</string>
@@ -198,16 +199,20 @@
     <string name="prefEsuMc2ButtonsRepeatDefaultValue">300</string>
     <string name="prefEsuMc2StopButtonCategoryTitle">Device Stop button options</string>
     <string name="prefEsuMc2StopButtonDelayTitle">Stop Button long-press delay</string>
-    <string name="prefEsuMc2StopButtonDelaySummary">How long for a \'long-press\' of the Stop button.
-        \nA \'long-press\' stops all active throttles; a \'short-press\' pauses the current throttle.\nSmaller is faster.</string>
+    <string name="prefEsuMc2StopButtonDelaySummary">How long for a \'long-press\' of the Stop button.\nA \'long-press\' stops all active throttles; a \'short-press\' pauses the current throttle.\nSmaller is faster.</string>
     <string name="prefEsuMc2StopButtonDelayDefaultValue">500</string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Control Knob options</string>
     <string name="prefEsuMc2ZeroTrimTitle">Control Knob Zero Trim</string>
-    <string name="prefEsuMc2ZeroTrimSummary">Set the Control Knob zero trim setting.\n
-        Smaller is closer to counter-clockwise end-stop position.\nPermitted range 0-255.</string>
+    <string name="prefEsuMc2ZeroTrimSummary">Set the Control Knob zero trim setting.\nSmaller is closer to counter-clockwise end-stop position.\nPermitted range 0&#8211;255.</string>
     <string name="prefEsuMc2ZeroTrimDefaultValue">10</string>
     <!-- ESU MCII preferences -->
-    
+
+    <!-- ESU MCII Messages -->
+    <string name="toastEsuMc2NoLocoChange">Loco change not allowed: Mobile Control II currently in stop mode</string>
+    <string name="toastEsuMc2NoThrottleChange">Throttle change not allowed: Mobile Control II currently in stop mode</string>
+    <string name="toastEsuMc2NoButtonPresses">Button presses not allowed: Mobile Control II currently in stop mode</string>
+    <!-- ESU MCII Messages -->
+
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default function labels instead of labels from roster entries.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. Height?</string>
@@ -308,23 +313,23 @@
 
     <string name="prefSpeedButtonsRepeatTitle">Speed button repeat delay</string>
     <string name="prefSpeedButtonsRepeatSummary">How long between repeats on speed buttons.  Smaller is faster. Excludes gamepad buttons. (See separate gamepad setting.)</string>
-	<string name="prefSpeedButtonsRepeatDefaultValue">100</string>
+    <string name="prefSpeedButtonsRepeatDefaultValue">100</string>
 
     <string name="prefSpeedButtonsSpeedStepTitle">Speed button change amount</string>
     <string name="prefSpeedButtonsSpeedStepSummary">How much Speed arrows jump throttle speed.</string>
-	<string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>
+    <string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>
 
     <string name="prefGamePadTypeDefaultValue">None</string>
-	<string name="prefSwipeUpOptionDefaultValue">None</string>
+    <string name="prefSwipeUpOptionDefaultValue">None</string>
     <string name="prefGamePadStartButtonDefaultValue">Next Throttle</string>
     <string name="NumThrottleDefaulValue">Two</string>
     <string name="server_address">Server address</string>
-	<string name="routes_route">Route System Name</string>
-	<string name="label_percent">%</string>
+    <string name="routes_route">Route System Name</string>
+    <string name="label_percent">%</string>
     <string name="label_14step">14</string>
-	<string name="label_27step">27</string>
+    <string name="label_27step">27</string>
     <string name="label_28step">28</string>
-	<string name="label_128step">128</string>
+    <string name="label_128step">128</string>
     <string name="throttle_name">Throttle Name: %1$s</string>
 
     <string name="prefConsistLightsLongClickTitle">Control Consist lights on long click</string>
