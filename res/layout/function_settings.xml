@@ -8,12 +8,12 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:layout_weight=".5"
+        android:layout_weight=".45"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/fs_heading"
-            style="@style/small_heading_style"
+            style="?android:attr/listSeparatorTextViewStyle"
             android:text="@string/fb_header" />
 
         <TextView
@@ -25,9 +25,16 @@
 
         <Button
             android:id="@+id/fb_copy_labels_from_roster"
+            style="?attr/ed_small_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/copy_function_labels" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight=".05" >
     </LinearLayout>
 
     <ScrollView

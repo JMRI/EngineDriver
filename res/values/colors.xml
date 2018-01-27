@@ -17,4 +17,47 @@
     <color name="black_half_trans">#88000000</color>
     <color name="black">#ff000000</color>
     <color name="grey">#ff888888</color>
+    <color name="lightGrey">#a6a6a6</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="solidBlack">#ff000000</color>
+    <color name="solidWhite">#ffffffff</color>
+    <color name="holoBlue">#ff33b5e5</color>
+    <color name="divider">#ffc1c1c1</color>
+
+    <color name="buttonFill_black">#ffd6d6d6</color>
+    <color name="buttonStroke_black">#ffd6d6d6</color>
+    <color name="buttonDisabledFill_black">#4bd6d6d6</color>
+    <color name="buttonDisabledStroke_black">#32d6d6d6</color>
+    <color name="buttonSelectedFill_black">#ffa6e0f2</color>
+    <color name="buttonSelectedStroke_black">#ff00b2e1</color>
+
+    <color name="buttonStopFill_black">#ffe5b0b2</color>
+    <color name="buttonStopStroke_black">#ffe5b0b2</color>
+    <color name="buttonStopDisabledFill_black">#4bd6d6d6</color>
+    <color name="buttonStopDisabledStroke_black">#32d6d6d6</color>
+    <color name="buttonStopSelectedFill_black">#ffff0000</color>
+    <color name="buttonStopSelectedStroke_black">#d50000</color>
+
+    <color name="buttonFill_outline">#00000000</color>
+    <color name="buttonStroke_outline">#d9d9d9</color>
+    <color name="buttonDisabledFill_outline">#00000000</color>
+    <color name="buttonDisabledStroke_outline">#3cd6d6d6</color>
+    <color name="buttonSelectedFill_outline">#00000000</color>
+    <color name="buttonSelectedStroke_outline">#ff00b2e1</color>
+
+    <color name="buttonStopFill_outline">#00000000</color>
+    <color name="buttonStopStroke_outline">#ffe5b0b2</color>
+    <color name="buttonStopDisabledFill_outline">#00000000</color>
+    <color name="buttonStopDisabledStroke_outline">#3cd6d6d6</color>
+    <color name="buttonStopSelectedFill_outline">#00000000</color>
+    <color name="buttonStopSelectedStroke_outline">#ffff0000</color>
+
+    <color name="buttonFnFill_outline">#00000000</color>
+    <color name="buttonFnStroke_outline">#a6a6a6</color>
+    <color name="buttonFnDisabledFill_outline">#00000000</color>
+    <color name="buttonFnDisabledStroke_outline">#3cd6d6d6</color>
+    <color name="buttonFnSelectedFill_outline">#00000000</color>
+    <color name="buttonFnSelectedStroke_outline">#ff00b2e1</color>
+
 </resources>

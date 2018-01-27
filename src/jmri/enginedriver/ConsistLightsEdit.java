@@ -20,6 +20,7 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -174,6 +175,14 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         mainapp = (threaded_application) getApplication();
         if (mainapp.isForcingFinish()) {     // expedite
             return;
+        }
+
+        SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        String prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        if (prefTheme.equals("Black")) {
+            setTheme(R.style.app_theme_black);
+        } else if (prefTheme.equals("Outline")) {
+            setTheme(R.style.app_theme_outline);
         }
 
         setContentView(R.layout.consist_lights);

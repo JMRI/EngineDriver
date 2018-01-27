@@ -308,6 +308,14 @@ public class connection_activity extends Activity {
 
         }
 
+        String prefTheme;
+        prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        if (prefTheme.equals("Black")) {
+            setTheme(R.style.app_theme_black);
+        } else if (prefTheme.equals("Outline")) {
+            setTheme(R.style.app_theme_outline);
+        }
+
         setContentView(R.layout.connection);
 
         //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.

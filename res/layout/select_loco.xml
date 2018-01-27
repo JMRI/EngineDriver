@@ -11,7 +11,7 @@
         android:orientation="vertical" >
         <TextView
             android:id="@+id/throttle_name_header"
-            style="@style/small_heading_style"
+            style="?android:attr/listSeparatorTextViewStyle"
             android:text="@string/none" />
 
         <LinearLayout
@@ -33,7 +33,7 @@
                 android:textColor="#FFFFFF" />
             <Button
                 android:id="@+id/sl_release_T"
-                style="@style/normal_button_style"
+                style="?attr/ed_normal_button_style"
                 android:layout_height="wrap_content"
                 android:text="@string/release" />
             <TextView
@@ -48,7 +48,7 @@
                 android:textColor="#FFFFFF" />
             <Button
                 android:id="@+id/sl_release_S"
-                style="@style/normal_button_style"
+                style="?attr/ed_normal_button_style"
                 android:layout_height="wrap_content"
                 android:text="@string/release" />
             
@@ -64,7 +64,7 @@
                 android:textColor="#FFFFFF" />
             <Button
                 android:id="@+id/sl_release_G"
-                style="@style/normal_button_style"
+                style="?attr/ed_normal_button_style"
                 android:layout_height="wrap_content"
                 android:text="@string/release" />
         </LinearLayout>
@@ -77,7 +77,7 @@
         android:paddingTop="2dp" >
         <TextView
             android:id="@+id/select_loco_label"
-            style="@style/small_heading_style"
+            style="?android:attr/listSeparatorTextViewStyle"
             android:text="@string/select_loco" />
         <EditText
             android:id="@+id/loco_address"
@@ -103,7 +103,7 @@
 
         <Button
             android:id="@+id/acquire"
-            style="@style/normal_button_style"
+            style="?attr/ed_normal_button_style"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/address_length"
@@ -114,7 +114,7 @@
     </RelativeLayout>
     <TextView
         android:id="@+id/roster_list_heading"
-        style="@style/small_heading_style"
+        style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/roster_list" />
 
     <LinearLayout
@@ -130,32 +130,33 @@
         </jmri.enginedriver.TransparentListView>
     </LinearLayout>
 
-     <RelativeLayout
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:paddingBottom="2dp"
-         android:paddingTop="2dp" >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp">
 
         <TextView
             android:id="@+id/recent_engines_heading"
-            style="@style/small_heading_style"
+            style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_alignBottom="@+id/clear_Loco_List_button"
+
             android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/clear_Loco_List_button"
             android:layout_toLeftOf="@+id/clear_Loco_List_button"
             android:text="@string/recent_engines" />
 
         <Button
             android:id="@+id/clear_Loco_List_button"
-            style="?android:attr/buttonStyleSmall"
+            style="?attr/ed_small_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="@string/clearLocoList"
-            android:textSize="16sp" />
-        
-</RelativeLayout>
+            android:layout_alignParentTop="true"
+            android:text="@string/clearLocoList" />
+
+    </RelativeLayout>
         
         
     <LinearLayout

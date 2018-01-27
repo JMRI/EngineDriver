@@ -20,6 +20,14 @@
         android:summary="@string/prefThrottleOrientationSummary"
         android:title="@string/prefThrottleOrientationTitle" />
 
+    <ListPreference
+        android:defaultValue="@string/prefThemeDefaultValue"
+        android:entries="@array/prefThemeEntries"
+        android:entryValues="@array/prefThemeOptions"
+        android:key="prefTheme"
+        android:summary="@string/prefThemeSummary"
+        android:title="@string/prefThemeTitle" />
+
     <PreferenceCategory android:title="@string/prefThrottleStatusTitle" >
         <CheckBoxPreference
             android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"

@@ -93,6 +93,15 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     public void onCreate(Bundle savedInstanceState) {
         ListPreference preference;
 
+        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        String prefTheme;
+        prefTheme = sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        if (prefTheme.equals("Black")) {
+            setTheme(R.style.app_theme_black);
+        } else if (prefTheme.equals("Outline")) {
+            setTheme(R.style.app_theme_outline);
+        }
+
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) getApplication();
         addPreferencesFromResource(R.xml.preferences);
@@ -108,6 +117,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             getPreferenceScreen().findPreference("prefThrottleViewImmersiveMode").setSelectable(false);
             getPreferenceScreen().findPreference("prefThrottleViewImmersiveMode").setEnabled(false);
         }
+        if (mainapp.androidVersion < mainapp.minThemeVersion) {
+            getPreferenceScreen().findPreference("prefTheme").setSelectable(false);
+            getPreferenceScreen().findPreference("prefTheme").setEnabled(false);
+        }
         result = RESULT_OK;
 
         if (mainapp.connectedHostName.equals("")) { // option is only available when there is no curent connection
@@ -120,7 +133,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             getPreferenceScreen().findPreference("prefHostImportExport").setEnabled(false);
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+//        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         setGamePadPrefLabels(sharedPreferences);
 
         // Disable ESU MCII preferences if not an ESU MCII

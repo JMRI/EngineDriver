@@ -41,14 +41,14 @@
             android:text="@string/port" />
         <Button
             android:id="@+id/connect"
-            style="@style/normal_button_style"
+            style="?attr/ed_normal_button_style"
             android:layout_width="fill_parent"
             android:layout_alignBottom="@id/port"
             android:layout_toRightOf="@id/port"
             android:text="@string/connect_button" />
     </RelativeLayout>
     <TextView
-        style="@style/small_heading_style"
+        style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/discovered_services" />
     <LinearLayout
         android:layout_width="fill_parent"
@@ -65,7 +65,7 @@
         </ListView>
     </LinearLayout>
     <TextView
-        style="@style/small_heading_style"
+        style="?android:attr/listSeparatorTextViewStyle"
         android:id="@+id/recent_connections_heading"
         android:text="@string/recent_connections" />
     <LinearLayout

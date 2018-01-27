@@ -15,8 +15,8 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
 
-<resources>
-    <style name="large_button_style" parent="@android:style/Widget.Button">
+<resources xmlns:tools="http://schemas.android.com/tools">
+  <style name="large_button_style" parent="@android:style/Widget.Button">
       <item name="android:textColor">@color/btn_text_states</item>
       <item name="android:textSize">24sp</item>
       <item name="android:layout_height">60dp</item>
@@ -56,6 +56,20 @@
       <item name="android:ellipsize">end</item>
       <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
+    <style name="small_button_style" parent="@android:style/Widget.Button">
+      <item name="android:textColor">@color/btn_text_states</item>
+      <item name="android:textSize">14sp</item>
+      <item name="android:padding">2dp</item>
+      <item name="android:background">@drawable/sticky_button_states</item>
+      <item name="android:layout_width">wrap_content</item>
+      <item name="android:layout_height">fill_parent</item>
+      <item name="android:shadowColor">#88ffffff</item>
+      <item name="android:shadowDx">2</item>
+      <item name="android:shadowDy">2</item>
+      <item name="android:shadowRadius">1</item>
+      <item name="android:ellipsize">end</item>
+      <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
     <style name="fn_button_style" parent="@android:style/Widget.Button">
       <item name="android:textColor">@color/btn_text_states</item>
       <item name="android:textSize">18sp</item>
@@ -72,6 +86,7 @@
       <item name="android:shadowRadius">1</item>
     </style>
     <style name="edit_label_style">
+      <item name="android:background">#00000000</item>
       <item name="android:textSize">18sp</item>
       <item name="android:singleLine">true</item>
       <item name="android:ellipsize">none</item>
@@ -84,6 +99,7 @@
       <item name="android:shadowRadius">0.2</item>
     </style>
     <style name="edit_func_style">
+      <item name="android:background">#00000000</item>
       <item name="android:textSize">18sp</item>
       <item name="android:singleLine">true</item>
       <item name="android:maxLength">2</item>
@@ -94,12 +110,14 @@
       <item name="android:shadowRadius">0.2</item>
     </style>
     <style name="app_title" parent="@android:style/TextAppearance.WindowTitle">
+      <item name="android:background">#00000000</item>
       <item name="android:shadowColor">#FF000000</item>
       <item name="android:shadowDx">2</item>
       <item name="android:shadowDy">2</item>
       <item name="android:shadowRadius">1</item>
     </style>
     <style name="EDListView" parent="@android:style/Widget.ListView">
+      <item name="android:background">#00000000</item>
       <item name="android:divider">#8c8a8c</item>
       <item name="android:dividerHeight">1dp</item>
       <item name="android:cacheColorHint">@android:color/transparent</item>
@@ -115,12 +133,14 @@
       <item name="android:shadowRadius">1</item>
     </style>
     <style name="floating_text_style" parent="@android:style/Widget.TextView">
+      <item name="android:background">#00000000</item>
       <item name="android:shadowColor">#FF000000</item>
       <item name="android:shadowDx">2</item>
       <item name="android:shadowDy">2</item>
       <item name="android:shadowRadius">1</item>
     </style>
     <style name="list_item_style" parent="@android:style/Widget.TextView">
+      <item name="android:background">#00000000</item>
       <item name="android:textColor">#FFFFFF</item>
       <item name="android:shadowColor">#FF000000</item>
       <item name="android:shadowDx">2</item>
@@ -128,6 +148,7 @@
       <item name="android:shadowRadius">1</item>
     </style>
     <style name="list_id_style" parent="@android:style/Widget.TextView">
+      <item name="android:background">#00000000</item>
       <item name="android:textSize">12sp</item>
       <item name="android:textStyle">italic</item>
       <item name="android:textColor">#FFFFFF</item>
@@ -147,4 +168,299 @@
       <item name="android:shadowRadius">1</item>
       <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
+
+  <style name="loco_label_style" parent="@android:style/Widget.TextView">
+    <item name="android:background">#00000000</item>
+    <item name="android:shadowColor">#FFFFFFFF</item>
+    <item name="android:shadowDx">1</item>
+    <item name="android:shadowDy">1</item>
+    <item name="android:shadowRadius">1</item>
+    <item name="android:textColor">#666666</item>
+  </style>
+
+  <!-- High Contrast Theme -->
+
+  <style name="app_title_black" parent="@android:style/TextAppearance.WindowTitle">
+    <item name="android:background">#FF000000</item>
+    <item name="android:shadowColor">#00000000</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">0</item>
+  </style>
+  <style name="small_heading_style_black" parent="@android:style/Widget.TextView">
+    <item name="android:textColor">#FF000000</item>
+    <item name="android:background">#FFFFFFFF</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:shadowColor">#00000000</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">0</item>
+  </style>
+  <style name="EDListView_black" parent="@android:style/Widget.ListView">
+    <item name="android:textColor">@color/solidWhite</item>
+    <item name="android:textSize">12sp</item>
+    <item name="android:background">#ff000000</item>
+    <item name="android:windowBackground">@color/solidBlack</item>
+    <item name="android:divider">@color/divider</item>
+    <item name="android:dividerHeight">1dp</item>
+    <item name="android:cacheColorHint">@android:color/transparent</item>
+    <item name="android:shadowColor">#00000000</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">0</item>
+  </style>
+
+  <style name="actionBarStyle_black" parent="@android:style/Widget.ActionBar" tools:targetApi="honeycomb">
+    <item name="android:background">#00000000</item>
+    <item name="android:icon">@drawable/ic_launcher_outline</item>
+  </style>
+
+  <style name="dialogStyle_black" parent="@android:style/Theme.Dialog" tools:targetApi="honeycomb">
+    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:backgroundDimAmount">60</item>
+    <item name="android:windowBackground">@color/solidBlack</item>
+    <item name="android:textSize">18sp</item>
+    <item name="android:background">@color/solidBlack</item>
+    <item name="android:textColorAlertDialogListItem">@color/solidWhite</item>
+    <item name="android:editTextColor">@color/solidWhite</item>
+    <item name="android:textColorPrimary">@color/solidWhite</item>
+  </style>
+
+  <style name="large_button_style_black" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states</item>
+    <item name="android:textSize">24sp</item>
+    <item name="android:layout_height">60dp</item>
+    <item name="android:padding">2dp</item>
+    <item name="android:layout_width">0dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_round</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:shadowColor">#88ffffff</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">1</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="stop_button_style_black" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states</item>
+    <item name="android:textSize">24sp</item>
+    <item name="android:padding">2dp</item>
+
+    <item name="android:background">@drawable/stop_button_states_round</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:shadowColor">#88ffffff</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">1</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="normal_button_style_black" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states</item>
+    <item name="android:textSize">18sp</item>
+    <item name="android:padding">2dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_round</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:shadowColor">#88ffffff</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">1</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="small_button_style_black" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:padding">2dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_round</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:shadowColor">#88ffffff</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">1</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="fn_button_style_black" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:singleLine">false</item>
+    <item name="android:maxLines">2</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:layout_gravity"></item> <!-- this is deliberately empty.-->
+    <item name="android:layout_width">60dp</item>
+    <item name="android:layout_height">48dp</item>
+    <item name="android:padding">2dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_round</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+    <item name="android:shadowColor">#88ffffff</item>
+    <item name="android:shadowDx">1</item>
+    <item name="android:shadowDy">1</item>
+    <item name="android:shadowRadius">1</item>
+  </style>
+
+  <style name="list_button_style_black" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states</item>
+    <item name="android:textSize">22sp</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:padding">2dp</item>
+    <item name="android:layout_width">0dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_round</item>
+    <item name="android:layout_marginTop">4dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:shadowColor">#88ffffff</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">1</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <!-- Outline Theme. Uses the base colours from the High Contrast Theme.  Mostly the buttons are different -->
+
+  <style name="large_button_style_outline" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_outline</item>
+    <item name="android:textSize">24sp</item>
+    <item name="android:layout_height">60dp</item>
+    <item name="android:padding">2dp</item>
+    <item name="android:layout_width">0dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_round_outline</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="stop_button_style_outline" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_stop_btn_outline</item>
+    <item name="android:textSize">24sp</item>
+    <item name="android:padding">2dp</item>
+
+    <item name="android:background">@drawable/stop_button_states_round_outline</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="normal_button_style_outline" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_outline</item>
+    <item name="android:textSize">18sp</item>
+    <item name="android:padding">2dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_round_outline</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="small_button_style_outline" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_outline</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:padding">2dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_round_outline</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="fn_button_style_outline" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/fn_btn_text_states_outline</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:singleLine">false</item>
+    <item name="android:maxLines">2</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:layout_gravity"></item>  <!-- this is deliberately empty.-->
+    <item name="android:layout_width">60dp</item>
+    <item name="android:layout_height">48dp</item>
+    <item name="android:padding">2dp</item>
+
+    <item name="android:background">@drawable/fn_button_states_round_outline</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="list_button_style_outline" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_outline</item>
+    <item name="android:textSize">22sp</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:padding">2dp</item>
+    <item name="android:layout_width">0dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_round_outline</item>
+    <item name="android:layout_marginTop">4dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="loco_label_style_outline" parent="@android:style/Widget.TextView">
+    <item name="android:background">@color/transparent</item>
+    <item name="android:textColor">@color/lightGrey</item>
+  </style>
+
+
 </resources>
