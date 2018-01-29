@@ -42,13 +42,7 @@ public class about_page extends Activity {
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) this.getApplication();
 
-        SharedPreferences prefs;
-        String prefTheme;
-        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
-        if (prefTheme.equals("Black")) {
-            setTheme(R.style.app_theme_black);
-        }
+        mainapp.applyTheme(this);
 
         setContentView(R.layout.about_page);
 

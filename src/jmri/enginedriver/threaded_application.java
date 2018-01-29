@@ -2478,6 +2478,29 @@ public class threaded_application extends Application {
     }
 
     /**
+     * Applies the chosen theme from preferences to the specified activity
+     *
+     * @param activity the activity to set the theme for
+     */
+    public void applyTheme(Activity activity) {
+        String prefTheme = getCurrentTheme();
+        if (prefTheme.equals("Black")) {
+            activity.setTheme(R.style.app_theme_black);
+        } else if (prefTheme.equals("Outline")) {
+            activity.setTheme(R.style.app_theme_outline);
+        }
+    }
+
+    /**
+     * Retrieve the currently configure theme from preferences
+     *
+     * @return a String representation of the selected theme
+     */
+    public String getCurrentTheme() {
+        return prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+    }
+
+    /**
      * Set activity screen orientation based on prefs, check to avoid sending change when already there.
      * checks "auto Web on landscape" preference and returns false if orientation requires activity switch
      *

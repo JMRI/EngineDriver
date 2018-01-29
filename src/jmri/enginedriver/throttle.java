@@ -327,8 +327,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private ThrottleScale esuThrottleScaleS = new ThrottleScale(10, 127);
     private ThrottleScale esuThrottleScaleG = new ThrottleScale(10, 127);
 
-    private String prefTheme;
-
     private enum EsuMc2Led {
         RED (MobileControl2.LED_RED),
         GREEN (MobileControl2.LED_GREEN);
@@ -2904,12 +2902,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             return;
         }
 
-        prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
-        if (prefTheme.equals("Black")) {
-            setTheme(R.style.app_theme_black);
-        } else if (prefTheme.equals("Outline")) {
-            setTheme(R.style.app_theme_outline);
-        }
+        mainapp.applyTheme(this);
 
         setContentView(R.layout.throttle);
 
@@ -3514,7 +3507,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     String bt = function_labels_temp.get(func);
                     fbtl = new function_button_touch_listener(func, whichThrottle, bt);
                     b.setOnTouchListener(fbtl);
-                    if ((prefTheme.equals("Default"))) {
+                    if ((mainapp.getCurrentTheme().equals("Default"))) {
                         bt = bt + "        ";  // pad with spaces, and limit to 7 characters
                         b.setText(bt.substring(0, 7));
                     } else {
