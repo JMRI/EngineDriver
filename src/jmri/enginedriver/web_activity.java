@@ -137,6 +137,8 @@ public class web_activity extends Activity {
         }
         setContentView(R.layout.web_activity);
 
+        mainapp.applyTheme(this);
+
         webView = (WebView) findViewById(R.id.webview);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
         webView.getSettings().setDatabasePath(databasePath);

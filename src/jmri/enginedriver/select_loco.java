@@ -583,13 +583,7 @@ public class select_loco extends Activity {
             return;
         }
 
-        String prefTheme;
-        prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
-        if (prefTheme.equals("Black")) {
-            setTheme(R.style.app_theme_black);
-        } else if (prefTheme.equals("Outline")) {
-            setTheme(R.style.app_theme_outline);
-        }
+        mainapp.applyTheme(this);
 
         setContentView(R.layout.select_loco);
 

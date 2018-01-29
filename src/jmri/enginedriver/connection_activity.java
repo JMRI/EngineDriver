@@ -308,13 +308,7 @@ public class connection_activity extends Activity {
 
         }
 
-        String prefTheme;
-        prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
-        if (prefTheme.equals("Black")) {
-            setTheme(R.style.app_theme_black);
-        } else if (prefTheme.equals("Outline")) {
-            setTheme(R.style.app_theme_outline);
-        }
+        mainapp.applyTheme(this);
 
         setContentView(R.layout.connection);
 

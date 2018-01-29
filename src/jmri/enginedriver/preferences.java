@@ -94,16 +94,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         ListPreference preference;
 
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        String prefTheme;
-        prefTheme = sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
-        if (prefTheme.equals("Black")) {
-            setTheme(R.style.app_theme_black);
-        } else if (prefTheme.equals("Outline")) {
-            setTheme(R.style.app_theme_outline);
-        }
+
+        mainapp = (threaded_application) getApplication();
+        mainapp.applyTheme(this);
 
         super.onCreate(savedInstanceState);
-        mainapp = (threaded_application) getApplication();
         addPreferencesFromResource(R.xml.preferences);
         if (!mainapp.isPowerControlAllowed()) {
             getPreferenceScreen().findPreference("show_layout_power_button_preference").setSelectable(false);
