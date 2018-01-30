@@ -977,8 +977,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         double displayUnitScale = getDisplayUnitScale(whichThrottle);
         int lastSpeed = throttle_slider.getProgress();
         int lastScaleSpeed = (int) Math.round(lastSpeed * displayUnitScale);
-        int speed = (int) Math.round(lastSpeed + (change / displayUnitScale));
-        int scaleSpeed = (int) Math.round(speed * displayUnitScale);
+//        int speed = (int) Math.round(lastSpeed + (change / displayUnitScale));
+//        int scaleSpeed = (int) Math.round(speed * displayUnitScale);
+        int scaleSpeed = (int) lastScaleSpeed + change;
+        int speed = (int) Math.round(scaleSpeed / displayUnitScale);
         if (lastScaleSpeed == scaleSpeed) {
             speed += Math.signum(change);
         }
