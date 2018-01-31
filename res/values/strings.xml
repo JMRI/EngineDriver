@@ -117,8 +117,8 @@
     <string name="prefThrottlePageTitle">Throttle Page Appearance Preferences</string>
     <string name="prefThrottleTitle">Throttle Control Preferences</string>
     <string name="prefThrottleStatusTitle">Throttle Page Status Row Preferences</string>
-    <string name="prefSliderTitle">Slider Preferences</string>
-    <string name="prefSliderSummary">Options for Speed Slider and Speed Buttons</string>
+    <string name="prefSliderTitle">Slider and Direction Button Preferences</string>
+    <string name="prefSliderSummary">Options for Speed Slider, Speed Buttons and Direction Buttons</string>
     <string name="prefIncreaseSliderHeightTitle">Increase Slider Height?</string>
     <string name="prefIncreaseSliderHeightSummary">Use a taller slider, or speed buttons, for throttles.</string>
     <string name="prefHideSliderTitle">Hide Speed Slider?</string>
@@ -360,6 +360,10 @@
     <string name="prefThemeTitle">Theme/Style</string>
     <string name="prefThemeSummary">App theme. REQUIRES restart of Engine Driver. \nRequires Android Honeycomb or later.</string>
     <string name="prefThemeDefaultValue">Default</string>
+
+    <string name="prefDirectionButtonsTitle">Direction Button labels</string>
+    <string name="prefDirectionButtonsSummary">Labels for all direction buttons.</string>
+    <string name="prefDirectionButtonsDefaultValue">Forward</string>
 
     <string name="functionButton00DefultValue">Light</string>
     <string name="functionButton01DefultValue">Bell</string>

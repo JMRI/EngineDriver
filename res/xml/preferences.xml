@@ -92,6 +92,14 @@
                 android:summary="@string/prefSwapForwardReverseButtonsSummary"
                 android:title="@string/prefSwapForwardReverseButtonsTitle" >
             </CheckBoxPreference>
+            <ListPreference
+                android:defaultValue="@string/prefDirectionButtonsDefaultValue"
+                android:entries="@array/prefDirectionButtonsEntries"
+                android:entryValues="@array/prefDirectionButtonsOptions"
+                android:key="prefDirectionButtons"
+                android:summary="@string/prefDirectionButtonsSummary"
+                android:title="@string/prefDirectionButtonsTitle" />
+
         </PreferenceScreen>
 
         <CheckBoxPreference
