@@ -501,4 +501,23 @@
         <item>High Contrast Outline Theme</item>
     </string-array>
 
+    <string-array name="prefDirectionButtonsOptions">
+        <item>Forward</item>
+        <item>East</item>
+        <item>West</item>
+        <item>North</item>
+        <item>South</item>
+        <item>Up</item>
+        <item>Down</item>
+    </string-array>
+    <string-array name="prefDirectionButtonsEntries">
+        <item>Forward / Reverse</item>
+        <item>East \u00B7F\u00B7 / West \u00B7R\u00B7</item>
+        <item>West \u00B7F\u00B7 / East \u00B7R\u00B7</item>
+        <item>North \u00B7F\u00B7 / South \u00B7R\u00B7</item>
+        <item>South \u00B7F\u00B7 / North \u00B7R\u00B7</item>
+        <item>Up \u00B7F\u00B7 / Down \u00B7R\u00B7</item>
+        <item>Down \u00B7F\u00B7 / Up \u00B7R\u00B7</item>
+    </string-array>
+
 </resources>

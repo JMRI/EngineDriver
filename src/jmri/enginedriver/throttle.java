@@ -307,6 +307,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private boolean prefSwapForwardReverseButtons = false;
     private String DirectionButtonLeftText = "Forward";
     private String DirectionButtonRightText = "Reverse";
+    private String prefDirectionButtons = "Forward";
 
     //Throttle Array
     private final char[] allThrottleLetters = {'T', 'S', 'G'};
@@ -860,6 +861,57 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
             webView.invalidate();
         }
+    }
+
+    private void setDirectionButtonLabels() {
+        prefDirectionButtons = prefs.getString("prefDirectionButtons", getApplicationContext().getResources().getString(R.string.prefDirectionButtonsDefaultValue));
+
+        String dirLeftText = "Forward";
+        String dirRightText = "Reverse";
+        String dirLeftExtraText = " \u00B7F\u00B7";
+        String dirRightExtraText = " \u00B7R\u00B7";
+
+        switch (prefDirectionButtons) {
+            case "East":
+                dirLeftText = "East" + dirLeftExtraText;
+                dirRightText = "West" + dirRightExtraText;
+                break;
+            case "West":
+                dirLeftText = "West" + dirLeftExtraText;
+                dirRightText = "East" + dirRightExtraText;
+                break;
+            case "North":
+                dirLeftText = "North" + dirLeftExtraText;
+                dirRightText = "South" + dirRightExtraText;
+                break;
+            case "South":
+                dirLeftText = "South" + dirLeftExtraText;
+                dirRightText = "North" + dirRightExtraText;
+                break;
+            case "Up":
+                dirLeftText = "Up" + dirLeftExtraText;
+                dirRightText = "Down" + dirRightExtraText;
+                break;
+            case "Down":
+                dirLeftText = "Down" + dirLeftExtraText;
+                dirRightText = "Up" + dirRightExtraText;
+        }
+
+        if (!prefSwapForwardReverseButtons) {
+            DirectionButtonLeftText = dirLeftText;
+            DirectionButtonRightText = dirRightText;
+        } else {
+            DirectionButtonLeftText = dirRightText;
+            DirectionButtonRightText = dirLeftText;
+        }
+
+        bFwdT.setText(DirectionButtonLeftText);
+        bFwdS.setText(DirectionButtonLeftText);
+        bFwdG.setText(DirectionButtonLeftText);
+        bRevT.setText(DirectionButtonRightText);
+        bRevS.setText(DirectionButtonRightText);
+        bRevG.setText(DirectionButtonRightText);
+
     }
 
     private void reloadWeb() {
@@ -2915,14 +2967,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         prefSwapForwardReverseButtons = prefs.getBoolean("prefSwapForwardReverseButtons", getResources().getBoolean(R.bool.prefSwapForwardReverseButtonsDefaultValue));
 
-        if (prefSwapForwardReverseButtons) {
-            DirectionButtonLeftText = getApplicationContext().getResources().getString(R.string.reverse);
-            DirectionButtonRightText = getApplicationContext().getResources().getString(R.string.forward);
-        } else {
-            DirectionButtonLeftText = getApplicationContext().getResources().getString(R.string.forward);
-            DirectionButtonRightText = getApplicationContext().getResources().getString(R.string.reverse);
-        }
-
         webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
         webViewIsOn = !webViewLocation.equals("none");
         keepWebViewLocation = webViewLocation;
@@ -3023,7 +3067,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             fbtl = new function_button_touch_listener(function_button.FORWARD, 'T');
         }
         bFwdT.setOnTouchListener(fbtl);
-        bFwdT.setText(DirectionButtonLeftText);
         bStopT = (Button) findViewById(R.id.button_stop_T);
         fbtl = new function_button_touch_listener(function_button.STOP, 'T');
         bStopT.setOnTouchListener(fbtl);
@@ -3034,7 +3077,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             fbtl = new function_button_touch_listener(function_button.REVERSE, 'T');
         }
         bRevT.setOnTouchListener(fbtl);
-        bRevT.setText(DirectionButtonRightText);
         View v = findViewById(R.id.speed_cell_T);
         fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'T');
         v.setOnTouchListener(fbtl);
@@ -3046,7 +3088,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             fbtl = new function_button_touch_listener(function_button.FORWARD, 'S');
         }
         bFwdS.setOnTouchListener(fbtl);
-        bFwdS.setText(DirectionButtonLeftText);
         bStopS = (Button) findViewById(R.id.button_stop_S);
         fbtl = new function_button_touch_listener(function_button.STOP, 'S');
         bStopS.setOnTouchListener(fbtl);
@@ -3057,7 +3098,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             fbtl = new function_button_touch_listener(function_button.REVERSE, 'S');
         }
         bRevS.setOnTouchListener(fbtl);
-        bRevS.setText(DirectionButtonRightText);
         v = findViewById(R.id.speed_cell_S);
         fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'S');
         v.setOnTouchListener(fbtl);
@@ -3069,7 +3109,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             fbtl = new function_button_touch_listener(function_button.FORWARD, 'G');
         }
         bFwdG.setOnTouchListener(fbtl);
-        bFwdG.setText(DirectionButtonLeftText);
         bStopG = (Button) findViewById(R.id.button_stop_G);
         fbtl = new function_button_touch_listener(function_button.STOP, 'G');
         bStopG.setOnTouchListener(fbtl);
@@ -3084,6 +3123,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         v = findViewById(R.id.speed_cell_G);
         fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'G');
         v.setOnTouchListener(fbtl);
+
+        setDirectionButtonLabels(); // set all the direction button labels
 
         // set up listeners for all throttles
         throttle_listener thl;
@@ -3276,6 +3317,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefConsistLightsLongClick = prefs.getBoolean("ConsistLightsLongClickPreference", getResources().getBoolean(R.bool.prefConsistLightsLongClickDefaultValue));
 
         prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
+
+        setDirectionButtonLabels(); // set all the direction button labels
 
         setGamepadKeys();
 
