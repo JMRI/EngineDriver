@@ -74,18 +74,36 @@ import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import static android.view.InputDevice.getDevice;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
+import static android.view.KeyEvent.KEYCODE_0;
+import static android.view.KeyEvent.KEYCODE_5;
 import static android.view.KeyEvent.KEYCODE_A;
 import static android.view.KeyEvent.KEYCODE_BACK;
+import static android.view.KeyEvent.KEYCODE_BUTTON_A;
+import static android.view.KeyEvent.KEYCODE_BUTTON_B;
+import static android.view.KeyEvent.KEYCODE_BUTTON_L1;
+import static android.view.KeyEvent.KEYCODE_BUTTON_L2;
+import static android.view.KeyEvent.KEYCODE_BUTTON_R1;
+import static android.view.KeyEvent.KEYCODE_BUTTON_R2;
+import static android.view.KeyEvent.KEYCODE_BUTTON_X;
+import static android.view.KeyEvent.KEYCODE_BUTTON_Y;
 import static android.view.KeyEvent.KEYCODE_D;
+import static android.view.KeyEvent.KEYCODE_DEL;
+import static android.view.KeyEvent.KEYCODE_DPAD_DOWN;
+import static android.view.KeyEvent.KEYCODE_DPAD_LEFT;
+import static android.view.KeyEvent.KEYCODE_DPAD_RIGHT;
+import static android.view.KeyEvent.KEYCODE_DPAD_UP;
+import static android.view.KeyEvent.KEYCODE_ENTER;
 import static android.view.KeyEvent.KEYCODE_F;
 import static android.view.KeyEvent.KEYCODE_N;
 import static android.view.KeyEvent.KEYCODE_R;
+import static android.view.KeyEvent.KEYCODE_SPACE;
 import static android.view.KeyEvent.KEYCODE_T;
 import static android.view.KeyEvent.KEYCODE_V;
 import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
 import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
+import static android.view.KeyEvent.KEYCODE_Z;
 
 // for changing the screen brightness
 
@@ -305,6 +323,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     public static final int LIGHT_FOLLOW = 1;
 
     private boolean prefSwapForwardReverseButtons = false;
+    private boolean currentSwapForwardReverseButtonText = false;
     private String DirectionButtonLeftText = "Forward";
     private String DirectionButtonRightText = "Reverse";
     private String prefDirectionButtons = "Forward";
@@ -866,51 +885,66 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private void setDirectionButtonLabels() {
         prefDirectionButtons = prefs.getString("prefDirectionButtons", getApplicationContext().getResources().getString(R.string.prefDirectionButtonsDefaultValue));
 
+        String FullLeftText = "Forward";
+        String FullRightText = "Reverse";
         String dirLeftText = "Forward";
         String dirRightText = "Reverse";
         String dirLeftExtraText = " \u00B7F\u00B7";
         String dirRightExtraText = " \u00B7R\u00B7";
 
-        switch (prefDirectionButtons) {
-            case "East":
-                dirLeftText = "East" + dirLeftExtraText;
-                dirRightText = "West" + dirRightExtraText;
-                break;
-            case "West":
-                dirLeftText = "West" + dirLeftExtraText;
-                dirRightText = "East" + dirRightExtraText;
-                break;
-            case "North":
-                dirLeftText = "North" + dirLeftExtraText;
-                dirRightText = "South" + dirRightExtraText;
-                break;
-            case "South":
-                dirLeftText = "South" + dirLeftExtraText;
-                dirRightText = "North" + dirRightExtraText;
-                break;
-            case "Up":
-                dirLeftText = "Up" + dirLeftExtraText;
-                dirRightText = "Down" + dirRightExtraText;
-                break;
-            case "Down":
-                dirLeftText = "Down" + dirLeftExtraText;
-                dirRightText = "Up" + dirRightExtraText;
-        }
-
-        if (!prefSwapForwardReverseButtons) {
-            DirectionButtonLeftText = dirLeftText;
-            DirectionButtonRightText = dirRightText;
+        if (prefDirectionButtons.equals("Forward")) {
+            if(prefSwapForwardReverseButtons) {
+                dirLeftText = "Reverse";
+                dirRightText = "Forward";
+            }
         } else {
-            DirectionButtonLeftText = dirRightText;
-            DirectionButtonRightText = dirLeftText;
+            switch (prefDirectionButtons) {
+                case "East":
+                    dirLeftText = "East";
+                    dirRightText = "West";
+                    break;
+                case "West":
+                    dirLeftText = "West";
+                    dirRightText = "East";
+                    break;
+                case "North":
+                    dirLeftText = "North";
+                    dirRightText = "South";
+                    break;
+                case "South":
+                    dirLeftText = "South";
+                    dirRightText = "North";
+                    break;
+                case "Up":
+                    dirLeftText = "Up";
+                    dirRightText = "Down";
+                    break;
+                case "Down":
+                    dirLeftText = "Down";
+                    dirRightText = "Up";
+            }
+            if (!currentSwapForwardReverseButtonText) {
+                FullLeftText = dirLeftText;
+                FullRightText = dirRightText;
+            } else {
+                FullLeftText = dirRightText;
+                FullRightText = dirLeftText;
+            }
+            if (!prefSwapForwardReverseButtons) {
+                FullLeftText = FullLeftText + dirLeftExtraText;
+                FullRightText = FullRightText + dirRightExtraText;
+            } else {
+                FullLeftText = FullLeftText + dirRightExtraText;
+                FullRightText = FullRightText + dirLeftExtraText;
+            }
         }
 
-        bFwdT.setText(DirectionButtonLeftText);
-        bFwdS.setText(DirectionButtonLeftText);
-        bFwdG.setText(DirectionButtonLeftText);
-        bRevT.setText(DirectionButtonRightText);
-        bRevS.setText(DirectionButtonRightText);
-        bRevG.setText(DirectionButtonRightText);
+        bFwdT.setText(FullLeftText);
+        bFwdS.setText(FullLeftText);
+        bFwdG.setText(FullLeftText);
+        bRevT.setText(FullRightText);
+        bRevS.setText(FullRightText);
+        bRevG.setText(FullRightText);
 
     }
 
@@ -1793,6 +1827,60 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+    private boolean isInvalidGamePadKey(int key, int action) {
+        boolean isOk = true;
+
+        switch (whichGamePadMode) {
+            case "iCade+DPAD":
+            case "iCade+DPAD-rotate": // all keys should be A-Z plus DPAD keys
+                if (action == ACTION_UP) { // only check the up codes
+                    if (((key < KEYCODE_A) || (key > KEYCODE_Z))
+                        && (key != KEYCODE_DPAD_LEFT) && (key != KEYCODE_DPAD_RIGHT) && (key != KEYCODE_DPAD_DOWN) && (key != KEYCODE_DPAD_UP)) {
+                    isOk = false;
+                    }
+                }
+                break;
+            case "MTK":
+            case "MTK-rotate":   // all keys should be 0-5 plus DPAD keys
+                if (action == ACTION_UP) { // only check the up codes
+                    if (((key < KEYCODE_0) || (key > KEYCODE_5))
+                            && (key != KEYCODE_DPAD_LEFT) && (key != KEYCODE_DPAD_RIGHT) && (key != KEYCODE_DPAD_DOWN) && (key != KEYCODE_DPAD_UP)) {
+                        isOk = false;
+                    }
+                }
+                break;
+            case "Game":
+            case "Game-rotate":
+                if (action == ACTION_UP) { // only check the up codes
+                    if ((key!=KEYCODE_BUTTON_Y) && (key!=KEYCODE_BUTTON_X) && (key!=KEYCODE_BUTTON_A)
+                    && (key!=KEYCODE_BUTTON_B)&& (key!=KEYCODE_VOLUME_UP)&& (key!=KEYCODE_ENTER)
+                    && (key!=KEYCODE_DPAD_LEFT) && (key!=KEYCODE_DPAD_RIGHT) && (key!=KEYCODE_DPAD_DOWN) && (key!=KEYCODE_DPAD_UP)) {
+                        isOk = false;
+                    }
+                }
+                break;
+            case "MagicseeR1B":
+                if (action == ACTION_UP) { // only check the up codes
+                    if ((key != KEYCODE_BUTTON_L1) && (key != KEYCODE_BUTTON_L2) && (key != KEYCODE_BUTTON_A)
+                            && (key != KEYCODE_BUTTON_B) && (key != KEYCODE_BUTTON_R1) && (key != KEYCODE_BUTTON_R2) //real keys
+                            && (key != KEYCODE_BUTTON_Y) && (key != KEYCODE_SPACE) && (key != KEYCODE_BUTTON_X) && (key != KEYCODE_DEL) // discarded keys
+                        ) {
+                        isOk = false;
+                    }
+                }
+                break;
+            default: // "iCade" or iCade-rotate   // all keys should be A-Z   DPAD keys are sent as well
+                if (action == ACTION_UP) { // only check the up codes
+                    if (((key < KEYCODE_A) || (key > KEYCODE_Z)) // real keys
+                    && (key!=KEYCODE_DPAD_LEFT) && (key!=KEYCODE_DPAD_RIGHT) && (key!=KEYCODE_DPAD_DOWN) && (key!=KEYCODE_DPAD_UP) // discarded keys
+                        ) {
+                        isOk = false;
+                    }
+                }
+                break;
+        }
+        return isOk;
+    }
     //
     private int swapToNextAvilableThrottleForGamePad(int fromThrottle, boolean quiet) {
         int whichThrottle = -1;
@@ -2059,11 +2147,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         if (isExternal) { // if has come from the phone itself, don't try to process it here
             if (!whichGamePadMode.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
+
                 int action = event.getAction();
                 int keyCode = event.getKeyCode();
                 int repeatCnt = event.getRepeatCount();
                 char whichThrottle;
                 int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getKeyCode());
+
+                //boolean isOk = isInvalidGamePadKey(keyCode, action);
 
                 if ((usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
                     if (whichGamePadIsEventFrom >= 0) {
@@ -2654,7 +2745,52 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
-    private class function_button_touch_listener implements View.OnTouchListener {
+    // Listeners for the direction buttons
+    private class direction_button_touch_listener implements View.OnClickListener, View.OnLongClickListener {
+        int function;
+        char whichThrottle;     // T for first throttle, S for second, G for third
+
+        private direction_button_touch_listener(int new_function, char new_whichThrottle) {
+            function = new_function;    // store these values for this button
+            whichThrottle = new_whichThrottle;
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            currentSwapForwardReverseButtonText = !currentSwapForwardReverseButtonText;
+            setDirectionButtonLabels();
+            return true;
+        }
+
+        @Override
+        public void onClick(View v) {
+            // Log.d("Engine_Driver", "onTouch direction " + function + " action " +
+            // event.getAction());
+
+            // make the click sound once
+            v.playSoundEffect(SoundEffectConstants.CLICK);
+
+            switch (this.function) {
+                case direction_button.LEFT:
+                    if (!prefSwapForwardReverseButtons) {
+                        changeDirectionIfAllowed(whichThrottle, 1);
+                    } else {
+                        changeDirectionIfAllowed(whichThrottle, 0);
+                    }
+                    break;
+                case direction_button.RIGHT: {
+                    if (!prefSwapForwardReverseButtons) {
+                        changeDirectionIfAllowed(whichThrottle, 0);
+                    } else {
+                        changeDirectionIfAllowed(whichThrottle, 1);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+        private class function_button_touch_listener implements View.OnTouchListener {
         int function;
         char whichThrottle;     // T for first throttle, S for second, G for third
         boolean leadOnly;       // function only applies to the lead loco
@@ -2713,13 +2849,23 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
                     switch (this.function) {
-                        case function_button.FORWARD:
-                            changeDirectionIfAllowed(whichThrottle,1);
+ /**
+                        case function_button.LEFT:
+                            if (!prefSwapForwardReverseButtons) {
+                                changeDirectionIfAllowed(whichThrottle, 1);
+                            } else {
+                                changeDirectionIfAllowed(whichThrottle, 0);
+                            }
                             break;
-                        case function_button.REVERSE: {
-                             changeDirectionIfAllowed(whichThrottle,0);
+                        case function_button.RIGHT: {
+                            if (!prefSwapForwardReverseButtons) {
+                                changeDirectionIfAllowed(whichThrottle, 0);
+                            } else {
+                                changeDirectionIfAllowed(whichThrottle, 1);
+                                }
                             break;
                         }
+  **/
                         case function_button.STOP:
                             set_stop_button(whichThrottle, true);
                             speedUpdateAndNotify(whichThrottle, 0);
@@ -2888,7 +3034,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     // implement delay for briefly ignoring WiT speed reports after sending a throttle speed update
-    // this prevents use of speed reports sent by WiT just prior to WiT processing the speed update 
+    // this prevents use of speed reports sent by WiT just prior to WiT processing the speed update
     private class ChangeDelay {
         boolean delayInProg;
         Runnable changeTimer;
@@ -2918,7 +3064,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         }
     }
-    
+
 
     /*
      * private void requestSpeedMsg(char whichThrottle) { // always load
@@ -2983,6 +3129,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         ov.addOnGestureListener(this);
         ov.setGestureVisible(false);
 
+        direction_button_touch_listener dbtl;
         function_button_touch_listener fbtl;
         select_function_button_touch_listener sfbt;
         arrow_speed_button_touch_listener asbl;
@@ -3060,66 +3207,61 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         // set listeners for 3 direction buttons for each throttle
+        //----------------------------------------
         bFwdT = (Button) findViewById(R.id.button_fwd_T);
-        if (prefSwapForwardReverseButtons) {
-            fbtl = new function_button_touch_listener(function_button.REVERSE, 'T');
-        } else {
-            fbtl = new function_button_touch_listener(function_button.FORWARD, 'T');
-        }
-        bFwdT.setOnTouchListener(fbtl);
+        dbtl = new direction_button_touch_listener(direction_button.LEFT, 'T');
+        bFwdT.setOnClickListener(dbtl);
+        bFwdT.setOnLongClickListener(dbtl);
+
         bStopT = (Button) findViewById(R.id.button_stop_T);
         fbtl = new function_button_touch_listener(function_button.STOP, 'T');
         bStopT.setOnTouchListener(fbtl);
+
         bRevT = (Button) findViewById(R.id.button_rev_T);
-        if (prefSwapForwardReverseButtons) {
-            fbtl = new function_button_touch_listener(function_button.FORWARD, 'T');
-        } else {
-            fbtl = new function_button_touch_listener(function_button.REVERSE, 'T');
-        }
-        bRevT.setOnTouchListener(fbtl);
+        dbtl = new direction_button_touch_listener(direction_button.RIGHT, 'T');
+        bRevT.setOnClickListener(dbtl);
+        bRevT.setOnLongClickListener(dbtl);
+        //----------------------------------------
         View v = findViewById(R.id.speed_cell_T);
         fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'T');
         v.setOnTouchListener(fbtl);
+        bRevT.setOnLongClickListener(dbtl);
 
+        //----------------------------------------
         bFwdS = (Button) findViewById(R.id.button_fwd_S);
-        if (prefSwapForwardReverseButtons) {
-            fbtl = new function_button_touch_listener(function_button.REVERSE, 'S');
-        } else {
-            fbtl = new function_button_touch_listener(function_button.FORWARD, 'S');
-        }
-        bFwdS.setOnTouchListener(fbtl);
+        dbtl = new direction_button_touch_listener(direction_button.LEFT, 'S');
+        bFwdS.setOnClickListener(dbtl);
+        bFwdS.setOnLongClickListener(dbtl);
+
         bStopS = (Button) findViewById(R.id.button_stop_S);
         fbtl = new function_button_touch_listener(function_button.STOP, 'S');
         bStopS.setOnTouchListener(fbtl);
+
         bRevS = (Button) findViewById(R.id.button_rev_S);
-        if (prefSwapForwardReverseButtons) {
-            fbtl = new function_button_touch_listener(function_button.FORWARD, 'S');
-        } else {
-            fbtl = new function_button_touch_listener(function_button.REVERSE, 'S');
-        }
-        bRevS.setOnTouchListener(fbtl);
+        dbtl = new direction_button_touch_listener(direction_button.RIGHT, 'S');
+        bRevS.setOnClickListener(dbtl);
+        bRevS.setOnLongClickListener(dbtl);
+        //----------------------------------------
         v = findViewById(R.id.speed_cell_S);
         fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'S');
         v.setOnTouchListener(fbtl);
+        bRevS.setOnLongClickListener(dbtl);
 
+        //----------------------------------------
         bFwdG = (Button) findViewById(R.id.button_fwd_G);
-        if (prefSwapForwardReverseButtons) {
-            fbtl = new function_button_touch_listener(function_button.REVERSE, 'G');
-        } else {
-            fbtl = new function_button_touch_listener(function_button.FORWARD, 'G');
-        }
-        bFwdG.setOnTouchListener(fbtl);
+        dbtl = new direction_button_touch_listener(direction_button.RIGHT, 'G');
+        bFwdG.setOnClickListener(dbtl);
+        bFwdG.setOnLongClickListener(dbtl);
+
         bStopG = (Button) findViewById(R.id.button_stop_G);
         fbtl = new function_button_touch_listener(function_button.STOP, 'G');
         bStopG.setOnTouchListener(fbtl);
+
         bRevG = (Button) findViewById(R.id.button_rev_G);
-        if (prefSwapForwardReverseButtons) {
-            fbtl = new function_button_touch_listener(function_button.FORWARD, 'G');
-        } else {
-            fbtl = new function_button_touch_listener(function_button.REVERSE, 'G');
-        }
-        bRevG.setOnTouchListener(fbtl);
-        bRevG.setText(DirectionButtonRightText);
+        dbtl = new direction_button_touch_listener(direction_button.LEFT, 'G');
+        bRevG.setOnClickListener(dbtl);
+        bRevG.setOnLongClickListener(dbtl);
+        //----------------------------------------
         v = findViewById(R.id.speed_cell_G);
         fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'G');
         v.setOnTouchListener(fbtl);
