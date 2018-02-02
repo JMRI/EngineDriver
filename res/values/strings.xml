@@ -354,8 +354,19 @@
     <string name="prefHostImportExportSummary">\'Import\' or \'Export\' your preferences for a specific host to the \'engine_driver/\' folder. The host must be in your recent connection list.\nWill occur IMMEDIATELY on selecting the option.\n(Only available when not currently connected.)</string>
     <string name="prefHostImportExportDefaultValue">None</string>
 
-    <string name="prefSwapForwardReverseButtonsTitle">Swap Forward and Reverse</string>
-    <string name="prefSwapForwardReverseButtonsSummary">Swap the Forward and Reverse Buttons. REQUIRES a restart of Engine Driver, or it will behave unpredictably.</string>
+    <string name="prefSwapForwardReverseButtonsTitle">Swap Direction Buttons</string>
+    <string name="prefSwapForwardReverseButtonsSummary">Permanently swap the two Direction Buttons for all throttles.</string>
+
+    <string name="prefSwapForwardReverseButtonsLongPressTitle">Long press Swap Direction Buttons</string>
+    <string name="prefSwapForwardReverseButtonsLongPressSummary">Temporarily swap the two Direction Buttons with a long press of any of Direction Button.</string>
+
+    <string name="prefLeftDirectionButtonsTitle">Left Direction Button label</string>
+    <string name="prefLeftDirectionButtonsSummary">Labels for all LEFT direction buttons. Enter \'Foward\' or blank for normal behaviour.\nNote: If the \'Swap\' option above is selected, this is the for the Right Button. </string>
+    <string name="prefLeftDirectionButtonsDefaultValue">Forward</string>
+
+    <string name="prefRightDirectionButtonsTitle">Right Direction Button label</string>
+    <string name="prefRightDirectionButtonsSummary">Labels for all RIGHT direction buttons. Enter \'Reverse\' or blank for normal behaviour.\nNote: If the \'Swap\' option above is selected, this is the for the Left Button.</string>
+    <string name="prefRightDirectionButtonsDefaultValue">Reverse</string>
 
     <string name="prefThemeTitle">Theme/Style</string>
     <string name="prefThemeSummary">App theme. REQUIRES restart of Engine Driver. \nRequires Android Honeycomb or later.</string>
