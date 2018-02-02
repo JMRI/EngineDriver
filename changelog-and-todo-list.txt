@@ -3,7 +3,9 @@
  * Add toast messages when ESU Mobile Control II in stop mode
  * Add relevant British English translations
  * Enable/disable speed buttons & seekbar when ESU Mobile Control II in stop mode
- * Optional high contrast colour theme
+ * Optional high contrast colour themes
+ * Improved the rounding error on scale speed calculations (The throttle will zero more reliably)
+ * prevent some crashes reported to Play Store
 **Version 2.16
  * Preference grouping
  * new gamepad repeat handling and sound feedback
@@ -368,13 +370,14 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: gamepad, handle incorrect mode better
+ *   TODO: handle button decrement showing 0 in display, but not actually speed 0 (rounding?)
+ *   TODO: new preference to set text of Forward and Reverse (e.g. East/West)
  *   TODO: eStop actually sends Stop, not eStop
  *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
  *   TODO: clear loco buttons on reconnect attempt until actual MT+ received
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected
- *   TODO: new preference to reverse order of Forward and Reverse buttons
  *   TODO: support webview on Top
- *   TODO: fix issue with direction indication lost on 2nd acquisition of same address
  *   TODO: retrieve vsDecoder sounds and play when appropriate
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: respect "Max Throttle %" from roster entry
@@ -402,8 +405,6 @@
  *   support resend of function and direction commands, even when WiT knows it has already sent (may be there now)
  *   WiT send MT-xxx when commands are received from a client for a loco that is not active.  (to get ED up to date with server after connection loss)
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
- *   disallow "steal"  (if requested addr "in use", return error)  probably should be a WiT pref
- *   add "E"rror response
  *   add throttle messages
  * 
  * These changes are likely to wait until ED3

@@ -3578,8 +3578,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.OFF);
             esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
         }
-
-        tg.release();
+        if (tg != null) {
+            tg.release();
+        }
         mainapp.throttle_msg_handler = null;
 
         super.onDestroy();
@@ -3683,30 +3684,32 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         ArrayList<Integer> aList = new ArrayList<>();
         aList.addAll(function_labels_temp.keySet());
 
-        for (int i = 0; i < tv.getChildCount(); i++) {
-            r = (ViewGroup) tv.getChildAt(i);
-            for (int j = 0; j < r.getChildCount(); j++) {
-                b = (Button) r.getChildAt(j);
-                if (k < function_labels_temp.size()) {
-                    Integer func = aList.get(k);
-                    functionButtonMap.put(func, b); // save function to button
-                    // mapping
-                    String bt = function_labels_temp.get(func);
-                    fbtl = new function_button_touch_listener(func, whichThrottle, bt);
-                    b.setOnTouchListener(fbtl);
-                    if ((mainapp.getCurrentTheme().equals("Default"))) {
-                        bt = bt + "        ";  // pad with spaces, and limit to 7 characters
-                        b.setText(bt.substring(0, 7));
+        if (tv != null) {
+            for (int i = 0; i < tv.getChildCount(); i++) {
+                r = (ViewGroup) tv.getChildAt(i);
+                for (int j = 0; j < r.getChildCount(); j++) {
+                    b = (Button) r.getChildAt(j);
+                    if (k < function_labels_temp.size()) {
+                        Integer func = aList.get(k);
+                        functionButtonMap.put(func, b); // save function to button
+                        // mapping
+                        String bt = function_labels_temp.get(func);
+                        fbtl = new function_button_touch_listener(func, whichThrottle, bt);
+                        b.setOnTouchListener(fbtl);
+                        if ((mainapp.getCurrentTheme().equals("Default"))) {
+                            bt = bt + "        ";  // pad with spaces, and limit to 7 characters
+                            b.setText(bt.substring(0, 7));
+                        } else {
+                            bt = bt + "                      ";  // pad with spaces, and limit to 20 characters
+                            b.setText(bt.trim());
+                        }
+                        b.setVisibility(View.VISIBLE);
+                        b.setEnabled(false); // start out with everything disabled
                     } else {
-                        bt = bt + "                      ";  // pad with spaces, and limit to 20 characters
-                        b.setText(bt.trim());
+                        b.setVisibility(View.GONE);
                     }
-                    b.setVisibility(View.VISIBLE);
-                    b.setEnabled(false); // start out with everything disabled
-                } else {
-                    b.setVisibility(View.GONE);
+                    k++;
                 }
-                k++;
             }
         }
 
