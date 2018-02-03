@@ -644,14 +644,19 @@ public class connection_activity extends Activity {
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
         if (prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT)) {
-            String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+            if (mainapp.connectedHostName != null) {
+                String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
 
-            if (!exportedPreferencesFileName.equals(".ed")) {
-                File path = Environment.getExternalStorageDirectory();
-                File engine_driver_dir = new File(path, "engine_driver");
-                engine_driver_dir.mkdir();            // create directory if it doesn't exist
+                if (!exportedPreferencesFileName.equals(".ed")) {
+                    File path = Environment.getExternalStorageDirectory();
+                    File engine_driver_dir = new File(path, "engine_driver");
+                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
 
-                res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);;
+                    res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+                    ;
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Unable to save host specific preferences. Can't get host name.", Toast.LENGTH_LONG).show();
             }
         } else { // preference is NOT to save the preferences for the host
             res = true;
@@ -665,12 +670,16 @@ public class connection_activity extends Activity {
        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
        String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
 
-       String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
-
        if ((prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT))
-       || (prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
-           res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
-       } else {// preference is NOT to load the preferences for the host
+               || (prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
+           if (mainapp.connectedHostName != null) {
+               String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+               res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+               res = true;
+           } else {
+               Toast.makeText(getApplicationContext(), "Unable to load host specific preferences. Can't get host name.", Toast.LENGTH_LONG).show();
+           }
+       } else { // preference is NOT to load the preferences for the host
            res = true;
        }
        return res;

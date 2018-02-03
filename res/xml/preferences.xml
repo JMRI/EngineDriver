@@ -86,19 +86,36 @@
                 android:summary="@string/prefHideSliderSummary"
                 android:title="@string/prefHideSliderTitle" >
             </CheckBoxPreference>
+
             <CheckBoxPreference
                 android:defaultValue="@bool/prefSwapForwardReverseButtonsDefaultValue"
                 android:key="prefSwapForwardReverseButtons"
                 android:summary="@string/prefSwapForwardReverseButtonsSummary"
                 android:title="@string/prefSwapForwardReverseButtonsTitle" >
             </CheckBoxPreference>
-            <ListPreference
-                android:defaultValue="@string/prefDirectionButtonsDefaultValue"
-                android:entries="@array/prefDirectionButtonsEntries"
-                android:entryValues="@array/prefDirectionButtonsOptions"
-                android:key="prefDirectionButtons"
-                android:summary="@string/prefDirectionButtonsSummary"
-                android:title="@string/prefDirectionButtonsTitle" />
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefSwapForwardReverseButtonsLongPressDefaultValue"
+                android:key="prefSwapForwardReverseButtonsLongPress"
+                android:summary="@string/prefSwapForwardReverseButtonsLongPressSummary"
+                android:title="@string/prefSwapForwardReverseButtonsLongPressTitle" >
+            </CheckBoxPreference>
+
+            <EditTextPreference
+                android:defaultValue="@string/prefLeftDirectionButtonsDefaultValue"
+                android:dialogTitle="@string/prefLeftDirectionButtonsTitle"
+                android:key="prefLeftDirectionButtons"
+                android:maxLength="7"
+                android:summary="@string/prefLeftDirectionButtonsSummary"
+                android:title="@string/prefLeftDirectionButtonsTitle" />
+            <EditTextPreference
+                android:defaultValue="@string/prefRightDirectionButtonsDefaultValue"
+                android:dialogTitle="@string/prefRightDirectionButtonsTitle"
+                android:key="prefRightDirectionButtons"
+                android:maxLength="7"
+                android:summary="@string/prefRightDirectionButtonsSummary"
+                android:title="@string/prefRightDirectionButtonsTitle" />
+
 
         </PreferenceScreen>
 

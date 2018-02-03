@@ -323,10 +323,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     public static final int LIGHT_FOLLOW = 1;
 
     private boolean prefSwapForwardReverseButtons = false;
-    private boolean currentSwapForwardReverseButtonText = false;
-    private String DirectionButtonLeftText = "Forward";
-    private String DirectionButtonRightText = "Reverse";
-    private String prefDirectionButtons = "Forward";
+    private boolean prefSwapForwardReverseButtonsLongPress = false;
+    private boolean currentSwapForwardReverseButtons = false;
+
+    private static String DIRECTION_BUTTON_LEFT_TEXT = "Forward";
+    private static String DIRECTION_BUTTON_RIGHT_TEXT = "Reverse";
+
+    private String prefLeftDirectionButtons = DIRECTION_BUTTON_LEFT_TEXT;
+    private String prefRightDirectionButtons = DIRECTION_BUTTON_RIGHT_TEXT;
 
     //Throttle Array
     private final char[] allThrottleLetters = {'T', 'S', 'G'};
@@ -543,6 +547,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         @Override
         public void handleMessage(Message msg) {
             String response_str = msg.obj.toString();
+
+            Log.d("Engine_Driver", "throttle handleMessage " + response_str );
+
             switch (msg.what) {
                 case message_type.RESPONSE: { // handle messages from WiThrottle server
                     if (response_str.length() < 2)
@@ -882,62 +889,50 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
-    private void setDirectionButtonLabels() {
-        prefDirectionButtons = prefs.getString("prefDirectionButtons", getApplicationContext().getResources().getString(R.string.prefDirectionButtonsDefaultValue));
+    private boolean directionButtonsAreCurrentlyReversed() {
+        boolean isOk = false;
+        if ( ((!prefSwapForwardReverseButtons) && (currentSwapForwardReverseButtons))
+                || (((prefSwapForwardReverseButtons) && (!currentSwapForwardReverseButtons))) ) {
+            isOk= true;
+        }
+        return isOk;
+    }
 
-        String FullLeftText = "Forward";
-        String FullRightText = "Reverse";
-        String dirLeftText = "Forward";
-        String dirRightText = "Reverse";
+    private void getDirectionButtonPrefs() {
+        prefSwapForwardReverseButtons = prefs.getBoolean("prefSwapForwardReverseButtons", getResources().getBoolean(R.bool.prefSwapForwardReverseButtonsDefaultValue));
+        prefSwapForwardReverseButtonsLongPress = prefs.getBoolean("prefSwapForwardReverseButtonsLongPress", getResources().getBoolean(R.bool.prefSwapForwardReverseButtonsLongPressDefaultValue));
+
+        prefLeftDirectionButtons = prefs.getString("prefLeftDirectionButtons", getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsDefaultValue)).trim();
+        prefRightDirectionButtons = prefs.getString("prefRightDirectionButtons", getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsDefaultValue)).trim();
+    }
+
+    private void setDirectionButtonLabels() {
+        String FullLeftText = DIRECTION_BUTTON_LEFT_TEXT;
+        String FullRightText = DIRECTION_BUTTON_RIGHT_TEXT;
+        String dirLeftText = DIRECTION_BUTTON_LEFT_TEXT;
+        String dirRightText = DIRECTION_BUTTON_RIGHT_TEXT;
         String dirLeftExtraText = " \u00B7F\u00B7";
         String dirRightExtraText = " \u00B7R\u00B7";
 
-        if (prefDirectionButtons.equals("Forward")) {
-            if(prefSwapForwardReverseButtons) {
-                dirLeftText = "Reverse";
-                dirRightText = "Forward";
+        if ( ((prefLeftDirectionButtons.equals(DIRECTION_BUTTON_LEFT_TEXT)) && (prefRightDirectionButtons.equals(DIRECTION_BUTTON_RIGHT_TEXT)))
+                || ((prefLeftDirectionButtons.equals("")) && (prefRightDirectionButtons.equals(""))) ){
+            if(directionButtonsAreCurrentlyReversed()) {
+                FullLeftText = DIRECTION_BUTTON_RIGHT_TEXT;
+                FullRightText = DIRECTION_BUTTON_LEFT_TEXT;
             }
         } else {
-            switch (prefDirectionButtons) {
-                case "East":
-                    dirLeftText = "East";
-                    dirRightText = "West";
-                    break;
-                case "West":
-                    dirLeftText = "West";
-                    dirRightText = "East";
-                    break;
-                case "North":
-                    dirLeftText = "North";
-                    dirRightText = "South";
-                    break;
-                case "South":
-                    dirLeftText = "South";
-                    dirRightText = "North";
-                    break;
-                case "Up":
-                    dirLeftText = "Up";
-                    dirRightText = "Down";
-                    break;
-                case "Down":
-                    dirLeftText = "Down";
-                    dirRightText = "Up";
-            }
-            if (!currentSwapForwardReverseButtonText) {
-                FullLeftText = dirLeftText;
-                FullRightText = dirRightText;
+            dirLeftText = prefLeftDirectionButtons;
+            dirRightText = prefRightDirectionButtons;
+
+            if (!directionButtonsAreCurrentlyReversed()) {
+                FullLeftText = dirLeftText + dirLeftExtraText;
+                FullRightText = dirRightText + dirRightExtraText;
             } else {
-                FullLeftText = dirRightText;
-                FullRightText = dirLeftText;
-            }
-            if (!prefSwapForwardReverseButtons) {
-                FullLeftText = FullLeftText + dirLeftExtraText;
-                FullRightText = FullRightText + dirRightExtraText;
-            } else {
-                FullLeftText = FullLeftText + dirRightExtraText;
-                FullRightText = FullRightText + dirLeftExtraText;
+                FullLeftText = dirLeftText + dirRightExtraText;
+                FullRightText = dirRightText + dirLeftExtraText;
             }
         }
+
 
         bFwdT.setText(FullLeftText);
         bFwdS.setText(FullLeftText);
@@ -1279,84 +1274,49 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     // indicate direction using the button pressed state
     void showDirectionIndication(char whichThrottle, int direction) {
-        Button bFwd;
-        Button bRev;
-        if (!prefSwapForwardReverseButtons) {
-            if (whichThrottle == 'T') {
-                bFwd = bFwdT;
-                bRev = bRevT;
-            } else if (whichThrottle == 'G') {
-                bFwd = bFwdG;
-                bRev = bRevG;
-            } else {
+        Button bFwd = bFwdT;
+        Button bRev = bRevT;
+        switch (whichThrottle) {
+            case 'S':
                 bFwd = bFwdS;
                 bRev = bRevS;
-            }
-        } else {
-            if (whichThrottle == 'T') {
-                bRev = bFwdT;
-                bFwd = bRevT;
-            } else if (whichThrottle == 'G') {
-                bRev = bFwdG;
-                bFwd = bRevG;
-            } else {
-                bRev = bFwdS;
-                bFwd = bRevS;
-            }
+                break;
+            case 'G':
+                bFwd = bFwdG;
+                bRev = bRevG;
         }
-        if (direction == 0) {
-            bFwd.setPressed(false);
-            bRev.setPressed(true);
+
+        boolean setLeftDirectionButtonEnabled = true;
+        if (direction == 0) {  //0=reverse 1=forward
+            if (!directionButtonsAreCurrentlyReversed())
+                setLeftDirectionButtonEnabled = false;
+            else
+                setLeftDirectionButtonEnabled = true;
         } else {
-            bFwd.setPressed(true);
-            bRev.setPressed(false);
+            if (!directionButtonsAreCurrentlyReversed())
+                setLeftDirectionButtonEnabled = true;
+            else
+                setLeftDirectionButtonEnabled = false;
         }
-//        bFwd.invalidate(); //button wasn't changing at times
-//        bRev.invalidate();
+
+        if (!setLeftDirectionButtonEnabled) {
+            bFwd.setSelected(false);
+            bRev.setSelected(true);
+            bFwd.setTypeface(null, Typeface.NORMAL);
+            bRev.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+        } else {
+            bFwd.setSelected(true);
+            bRev.setSelected(false);
+            bFwd.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+            bRev.setTypeface(null, Typeface.NORMAL);
+        }
+
+        //bFwd.invalidate(); //button wasn't changing at times
+        //bRev.invalidate();
     }
 
     // indicate requested direction using the button typeface
     void showDirectionRequest(char whichThrottle, int direction) {
-        Button bFwd;
-        Button bRev;
-        if (!prefSwapForwardReverseButtons) {
-            if (whichThrottle == 'T') {
-                bFwd = bFwdT;
-                bRev = bRevT;
-                dirT = direction;
-            } else if (whichThrottle == 'G') {
-                bFwd = bFwdG;
-                bRev = bRevG;
-                dirG = direction;
-            } else {
-                bFwd = bFwdS;
-                bRev = bRevS;
-                dirS = direction;
-            }
-        } else {
-            if (whichThrottle == 'T') {
-                bRev = bFwdT;
-                bFwd = bRevT;
-                dirT = direction;
-            } else if (whichThrottle == 'G') {
-                bRev = bFwdG;
-                bFwd = bRevG;
-                dirG = direction;
-            } else {
-                bRev = bFwdS;
-                bFwd = bRevS;
-                dirS = direction;
-            }
-
-        }
-        if (direction == 0) {
-            bFwd.setTypeface(null, Typeface.NORMAL);
-            bRev.setTypeface(null, Typeface.ITALIC);
-        } else {
-            bFwd.setTypeface(null, Typeface.ITALIC);
-            bRev.setTypeface(null, Typeface.NORMAL);
-        }
-
         /*
          * this code gathers direction feedback for the direction indication
          * 
@@ -1408,7 +1368,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
         if (pressed) {
             bStop.setPressed(true);
-            bStop.setTypeface(null, Typeface.ITALIC);
+            bStop.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
         } else {
             bStop.setPressed(false);
             bStop.setTypeface(null, Typeface.NORMAL);
@@ -1503,7 +1463,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     bRev.setEnabled(true);
             } else {
                 if (dir == 1) {
-                    if (!prefSwapForwardReverseButtons) {
+                    if (!directionButtonsAreCurrentlyReversed()) {
                         bFwd.setEnabled(true);
                         bRev.setEnabled(false);
                     } else {
@@ -1511,7 +1471,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         bRev.setEnabled(true);
                     }
                 } else {
-                    if (!prefSwapForwardReverseButtons) {
+                    if (!directionButtonsAreCurrentlyReversed()) {
                         bFwd.setEnabled(false);
                         bRev.setEnabled(true);
                     } else {
@@ -1632,7 +1592,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
         if (b != null && fs != null) {
             if (fs[function]) {
-                b.setTypeface(null, Typeface.ITALIC);
+                b.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
                 b.setPressed(true);
             } else {
                 b.setTypeface(null, Typeface.NORMAL);
@@ -1657,7 +1617,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
         if (b != null) {
             if (reqState != 0) {
-                b.setTypeface(null, Typeface.ITALIC);
+                b.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
             } else {
                 b.setTypeface(null, Typeface.NORMAL);
             }
@@ -2755,10 +2715,43 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             whichThrottle = new_whichThrottle;
         }
 
+        private void doButtonPress() {
+            switch (this.function) {
+                case direction_button.LEFT:
+                    if (!directionButtonsAreCurrentlyReversed()) {
+                        changeDirectionIfAllowed(whichThrottle, 1);
+                    } else {
+                        changeDirectionIfAllowed(whichThrottle, 0);
+                    }
+                    break;
+                case direction_button.RIGHT: {
+                    if (!directionButtonsAreCurrentlyReversed()) {
+                        changeDirectionIfAllowed(whichThrottle, 0);
+                    } else {
+                        changeDirectionIfAllowed(whichThrottle, 1);
+                    }
+                    break;
+                }
+            }
+
+        }
+
         @Override
         public boolean onLongClick(View v) {
-            currentSwapForwardReverseButtonText = !currentSwapForwardReverseButtonText;
-            setDirectionButtonLabels();
+            doButtonPress();  //in case the the direction button long clicked is not the current direction change the direction first
+
+            if (prefSwapForwardReverseButtonsLongPress) {
+                v.playSoundEffect(SoundEffectConstants.CLICK);
+                if (currentSwapForwardReverseButtons) {
+                    currentSwapForwardReverseButtons = false;
+                } else {
+                    currentSwapForwardReverseButtons = true;
+                }
+                setDirectionButtonLabels();
+                Toast.makeText(getApplicationContext(), "Direction Buttons temporarily swaped. To permanently swap them, change in preferences", Toast.LENGTH_SHORT).show();
+            }
+            doButtonPress();
+
             return true;
         }
 
@@ -2770,23 +2763,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             // make the click sound once
             v.playSoundEffect(SoundEffectConstants.CLICK);
 
-            switch (this.function) {
-                case direction_button.LEFT:
-                    if (!prefSwapForwardReverseButtons) {
-                        changeDirectionIfAllowed(whichThrottle, 1);
-                    } else {
-                        changeDirectionIfAllowed(whichThrottle, 0);
-                    }
-                    break;
-                case direction_button.RIGHT: {
-                    if (!prefSwapForwardReverseButtons) {
-                        changeDirectionIfAllowed(whichThrottle, 0);
-                    } else {
-                        changeDirectionIfAllowed(whichThrottle, 1);
-                    }
-                    break;
-                }
-            }
+            doButtonPress();
         }
     }
 
@@ -2849,23 +2826,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
                     switch (this.function) {
- /**
-                        case function_button.LEFT:
-                            if (!prefSwapForwardReverseButtons) {
-                                changeDirectionIfAllowed(whichThrottle, 1);
-                            } else {
-                                changeDirectionIfAllowed(whichThrottle, 0);
-                            }
-                            break;
-                        case function_button.RIGHT: {
-                            if (!prefSwapForwardReverseButtons) {
-                                changeDirectionIfAllowed(whichThrottle, 0);
-                            } else {
-                                changeDirectionIfAllowed(whichThrottle, 1);
-                                }
-                            break;
-                        }
-  **/
                         case function_button.STOP:
                             set_stop_button(whichThrottle, true);
                             speedUpdateAndNotify(whichThrottle, 0);
@@ -2924,7 +2884,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         set_stop_button(whichThrottle, false);
                     }
                     // only process UP event if this is a "function" button
-                    else if (function < function_button.FORWARD) {
+                    else if (function < direction_button.LEFT) {
                         Consist con;
                         if (whichThrottle == 'T') {
                             con = mainapp.consistT;
@@ -3111,7 +3071,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         speedButtonUpText = getApplicationContext().getResources().getString(R.string.UpButton);
         speedButtonDownText = getApplicationContext().getResources().getString(R.string.DownButton);
 
-        prefSwapForwardReverseButtons = prefs.getBoolean("prefSwapForwardReverseButtons", getResources().getBoolean(R.bool.prefSwapForwardReverseButtonsDefaultValue));
+        getDirectionButtonPrefs();
 
         webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
         webViewIsOn = !webViewLocation.equals("none");
@@ -3460,6 +3420,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
 
+        getDirectionButtonPrefs();
         setDirectionButtonLabels(); // set all the direction button labels
 
         setGamepadKeys();
