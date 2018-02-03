@@ -12,7 +12,15 @@
     <item android:state_pressed="true" android:state_enabled="true">
         <shape android:shape="rectangle"  >
             <corners android:radius="5dip" />
-            <stroke android:width="2dip" android:color="@color/buttonSelectedStroke_outline" />
+            <stroke android:width="3dip" android:color="@color/buttonSelectedStroke_outline" />
+            <solid android:color="@color/buttonSelectedFill_outline"/>
+        </shape>
+    </item>
+
+    <item android:state_selected="true" android:state_enabled="true">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="5dip" />
+            <stroke android:width="3dip" android:color="@color/buttonSelectedStroke_outline" />
             <solid android:color="@color/buttonSelectedFill_outline"/>
         </shape>
     </item>
