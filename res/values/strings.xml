@@ -119,7 +119,7 @@
     <string name="prefThrottleStatusTitle">Throttle Page Status Row Preferences</string>
     <string name="prefSliderTitle">Slider and Direction Button Preferences</string>
     <string name="prefSliderSummary">Options for Speed Slider, Speed Buttons and Direction Buttons</string>
-    <string name="prefIncreaseSliderHeightTitle">Increase Slider Height?</string>
+    <string name="prefIncreaseSliderHeightTitle">Increase Slider/Speed Height?</string>
     <string name="prefIncreaseSliderHeightSummary">Use a taller slider, or speed buttons, for throttles.</string>
     <string name="prefHideSliderTitle">Hide Speed Slider?</string>
     <string name="prefHideSliderSummary">Do not show speed slider, use speed buttons instead.</string>
@@ -361,11 +361,11 @@
     <string name="prefSwapForwardReverseButtonsLongPressSummary">Temporarily swap the two Direction Buttons with a long press of any of Direction Button.</string>
 
     <string name="prefLeftDirectionButtonsTitle">Left Direction Button label</string>
-    <string name="prefLeftDirectionButtonsSummary">Labels for all LEFT direction buttons. Enter \'Foward\' or blank for normal behaviour.\nNote: If the \'Swap\' option above is selected, this is the for the Right Button. </string>
+    <string name="prefLeftDirectionButtonsSummary">Labels for all LEFT direction buttons. Enter \'Foward\' or blank for normal behaviour.</string>
     <string name="prefLeftDirectionButtonsDefaultValue">Forward</string>
 
     <string name="prefRightDirectionButtonsTitle">Right Direction Button label</string>
-    <string name="prefRightDirectionButtonsSummary">Labels for all RIGHT direction buttons. Enter \'Reverse\' or blank for normal behaviour.\nNote: If the \'Swap\' option above is selected, this is the for the Left Button.</string>
+    <string name="prefRightDirectionButtonsSummary">Labels for all RIGHT direction buttons. Enter \'Reverse\' or blank for normal behaviour.</string>
     <string name="prefRightDirectionButtonsDefaultValue">Reverse</string>
 
     <string name="prefThemeTitle">Theme/Style</string>
