@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Black theme -->
+
+    <dimen name="buttonDisabledStroke_black">1dip</dimen>
+    <dimen name="buttonSelectedStroke_black">1dip</dimen>
+    <dimen name="buttonSelectedInsideStroke_black">1dip</dimen>
+    <dimen name="buttonSelectedInsideStrokePadding_black">2dip</dimen>
+    <dimen name="buttonStroke_black">2dip</dimen>
+    <dimen name="buttonCornerRadius_black">5dip</dimen>
+
+    <dimen name="buttonStopDisabledStroke_black">1dip</dimen>
+    <dimen name="buttonStopSelectedStroke_black">1dip</dimen>
+    <dimen name="buttonStopSelectedInsideStroke_black">2dip</dimen>
+    <dimen name="buttonStopSelectedInsideStrokePadding_black">1dip</dimen>
+    <dimen name="buttonStopStroke_black">2dip</dimen>
+    <dimen name="buttonStopCornerRadius_black">5dip</dimen>
+
+    <!-- Outline theme -->
+
+    <dimen name="buttonDisabledStroke_outline">1dip</dimen>
+    <dimen name="buttonSelectedStroke_outline">2dip</dimen>
+    <dimen name="buttonSelectedInsideStroke_outline">1dip</dimen>
+    <dimen name="buttonSelectedInsideStrokePadding_outline">4dip</dimen>
+    <dimen name="buttonStroke_outline">2dip</dimen>
+    <dimen name="buttonCornerRadius_outline">5dip</dimen>
+
+    <dimen name="buttonFnDisabledStroke_outline">1dip</dimen>
+    <dimen name="buttonFnSelectedStroke_outline">1dip</dimen>
+    <dimen name="buttonFnSelectedInsideStroke_outline">1dip</dimen>
+    <dimen name="buttonFnSelectedInsideStrokePadding_outline">3dip</dimen>
+    <dimen name="buttonFnStroke_outline">1dip</dimen>
+    <dimen name="buttonFnCornerRadius_outline">5dip</dimen>
+
+    <dimen name="buttonStopDisabledStroke_outline">1dip</dimen>
+    <dimen name="buttonStopSelectedStroke_outline">1dip</dimen>
+    <dimen name="buttonStopSelectedInsideStroke_outline">1dip</dimen>
+    <dimen name="buttonStopSelectedInsideStrokePadding_outline">3dip</dimen>
+    <dimen name="buttonStopStroke_outline">1dip</dimen>
+    <dimen name="buttonStopCornerRadius_outline">5dip</dimen>
+
+</resources>
