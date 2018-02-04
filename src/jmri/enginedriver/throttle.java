@@ -794,12 +794,20 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         // Make sure brightness value between 0 to 255
         if(brightnessValue >= 0 && brightnessValue <= 255){
-            setScreenBrightnessMode(SCREEN_BRIGHTNESS_MODE_MANUAL);
 
-            if (Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessValue)) {
-                Log.d("Engine_Driver", "screen brightness successfully changed to " + brightnessValue);
+            if (mainapp.androidVersion >= mainapp.minScreenDimNewMethodVersion) {
+
+                setScreenBrightnessMode(SCREEN_BRIGHTNESS_MODE_MANUAL);
+
+                if (Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessValue)) {
+                    Log.d("Engine_Driver", "screen brightness successfully changed to " + brightnessValue);
+                } else {
+                    Log.e("Engine_Driver", "screen brightness was NOT changed to " + brightnessValue);
+                }
             } else {
-                Log.e("Engine_Driver", "screen brightness was NOT changed to " + brightnessValue);
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.screenBrightness = ((float) brightnessValue)/255;
+                getWindow().setAttributes(lp);
             }
         }
     }
@@ -823,11 +831,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             Returns
                 The setting's current value, or 'def' if it is not defined or not a valid integer.
         */
-        int brightnessValue = Settings.System.getInt(
+        int brightnessValue;
+        brightnessValue = Settings.System.getInt(
                 mContext.getContentResolver(),
                 Settings.System.SCREEN_BRIGHTNESS,
                 0
         );
+
         return brightnessValue;
     }
 
@@ -835,9 +845,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         Context mContext;
         mContext = getApplicationContext();
 
-        if(brightnessModeValue >= 0 && brightnessModeValue <= 1){
-            if (!Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, brightnessModeValue)) {
-                Toast.makeText(getApplicationContext(), "Unable to set the Auto Brightness/ Adaptive Brightness.", Toast.LENGTH_SHORT).show();
+        if (mainapp.androidVersion >= mainapp.minScreenDimNewMethodVersion) {
+            if(brightnessModeValue >= 0 && brightnessModeValue <= 1){
+                if (!Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, brightnessModeValue)) {
+                    Toast.makeText(getApplicationContext(), "Unable to set the Auto Brightness/ Adaptive Brightness.", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
@@ -847,7 +859,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         mContext = getApplicationContext();
         int BrightnessModeValue = 0;
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+        if (mainapp.androidVersion >= mainapp.minScreenDimNewMethodVersion) {
             BrightnessModeValue = Settings.System.getInt(
                     mContext.getContentResolver(),
                     Settings.System.SCREEN_BRIGHTNESS_MODE,
@@ -2738,19 +2750,22 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         @Override
         public boolean onLongClick(View v) {
-            doButtonPress();  //in case the the direction button long clicked is not the current direction change the direction first
 
-            if (prefSwapForwardReverseButtonsLongPress) {
-                v.playSoundEffect(SoundEffectConstants.CLICK);
-                if (currentSwapForwardReverseButtons) {
-                    currentSwapForwardReverseButtons = false;
-                } else {
-                    currentSwapForwardReverseButtons = true;
+            if(isChangeDirectionAllowed(whichThrottle)) { // only respond to the long click if it is ok to change directions
+                doButtonPress();  //in case the the direction button long clicked is not the current direction change the direction first
+
+                if (prefSwapForwardReverseButtonsLongPress) {
+                    v.playSoundEffect(SoundEffectConstants.CLICK);
+                    if (currentSwapForwardReverseButtons) {
+                        currentSwapForwardReverseButtons = false;
+                    } else {
+                        currentSwapForwardReverseButtons = true;
+                    }
+                    setDirectionButtonLabels();
+                    Toast.makeText(getApplicationContext(), "Direction Buttons temporarily swaped. To permanently swap them, change in preferences", Toast.LENGTH_SHORT).show();
                 }
-                setDirectionButtonLabels();
-                Toast.makeText(getApplicationContext(), "Direction Buttons temporarily swaped. To permanently swap them, change in preferences", Toast.LENGTH_SHORT).show();
+                doButtonPress();
             }
-            doButtonPress();
 
             return true;
         }
