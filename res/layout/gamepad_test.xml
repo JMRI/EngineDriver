@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/throttle_screen_wrapper"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:keepScreenOn="true"
+    android:orientation="vertical" >
+        <LinearLayout
+            android:id="@+id/gamepad_test_screen"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/gamepad_test"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/gamepad_test_mode_label_group"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+                    <TextView
+                        android:id="@+id/gamepad_test_mode_label"
+                        style="@style/floating_text_style"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gamepad type: " />
+
+                    <TextView
+                        android:id="@+id/gamepad_test_mode"
+                        style="@style/floating_text_style"
+                        android:layout_toRightOf="@id/gamepad_test_mode_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="gamepad type goes here"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <TableLayout
+                    android:id="@+id/gamepad_dpad"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp">
+
+                    <TableRow  android:gravity="center_horizontal">
+
+                        <Button
+                            android:id="@+id/gamepad_test_dpad_up"
+                            style="?attr/ed_normal_button_style"
+                            android:text="Up" />
+                    </TableRow>
+
+                    <TableRow android:gravity="center_horizontal">
+
+                        <Button
+                            android:id="@+id/gamepad_test_dpad_left"
+                            style="?attr/ed_normal_button_style"
+                            android:text="Left" />
+
+                        <Button
+                            android:id="@+id/gamepad_test_dpad_right"
+                            style="?attr/ed_normal_button_style"
+                            android:text="Right" />
+                    </TableRow>
+
+                    <TableRow android:gravity="center_horizontal">
+
+                        <Button
+                            android:id="@+id/gamepad_test_dpad_down"
+                            style="?attr/ed_normal_button_style"
+                            android:text="Down" />
+                    </TableRow>
+
+                </TableLayout>
+
+                <TableLayout
+                    android:id="@+id/gamepad_buttons"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp">
+
+                    <TableRow android:gravity="center_horizontal">
+
+                        <Button
+                            android:id="@+id/gamepad_test_button_x"
+                            style="?attr/ed_normal_button_style"
+                            android:text="X" />
+
+                        <Button
+                            android:id="@+id/gamepad_test_button_y"
+                            style="?attr/ed_normal_button_style"
+                            android:text="Y" />
+                    </TableRow>
+
+                    <TableRow android:gravity="center_horizontal">
+
+                        <Button
+                            android:id="@+id/gamepad_test_button_a"
+                            style="?attr/ed_normal_button_style"
+                            android:text="A" />
+
+                        <Button
+                            android:id="@+id/gamepad_test_button_b"
+                            style="?attr/ed_normal_button_style"
+                            android:text="B" />
+                    </TableRow>
+                </TableLayout>
+
+                <RelativeLayout
+                    android:id="@+id/gamepad_test_keycode_label_group"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:id="@+id/gamepad_test_keycode_label"
+                        style="@style/floating_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="key_code: "
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/gamepad_test_keycode"
+                        style="@style/floating_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/gamepad_test_keycode_label"
+                        android:text="keycode goes here"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/gamepad_test_keyfunction_label_group"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:id="@+id/gamepad_test_keyfunction_label"
+                        style="@style/floating_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="function: "
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/gamepad_test_keyfunction"
+                        style="@style/floating_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/gamepad_test_keyfunction_label"
+                        android:text="function goes here"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/separator"
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:background="#888888"
+                    android:orientation="vertical" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/gamepad_test_help"
+                style="@style/floating_text_style"
+                android:textSize="15sp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gamepad_test_help" />
+
+        </LinearLayout>
+</LinearLayout>

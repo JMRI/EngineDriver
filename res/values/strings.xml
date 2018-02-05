@@ -33,6 +33,8 @@
     <string name="app_name_select_loco">Engine Driver - Select Loco</string>
     <string name="app_name_ConsistEdit">Engine Driver - Consist Edit</string>
     <string name="app_name_ConsistLightsEdit">Engine Driver - Consist Lights</string>
+    <string name="app_name_gamepad_test">Gamepad Test - Engine Driver</string>
+    <string name="gamepad_test">Gamepad Test</string>
     <string name="notification_title">Engine Driver is running</string>
     <string name="notification_text">Tap to reopen Engine Driver</string>
     <string name="host_ip">Host Name or Address</string>
@@ -176,6 +178,11 @@
     <string name="prefGamePadButtonDownDefaultValue">Decrease Speed</string>
     <string name="prefGamePadButtonLeftDefaultValue">Forward</string>
     <!--    Gamepad button preferences   -->
+
+    <!--    Gamepad test page -->
+    <string name="gamepad_test_help">Move the DPad in all four directions and press the four main buttons to confirm.  Press Back Arrow when done.</string>
+    <!--    Gamepad test page -->
+
 
     <!-- ESU MCII preferences -->
     <string name="prefEsuMc2ThrottleNameDefaultValue">ESU MobileControl II</string>
