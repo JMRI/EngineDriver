@@ -33,6 +33,8 @@
     <string name="app_name_select_loco">Engine Driver - Select Loco</string>
     <string name="app_name_ConsistEdit">Engine Driver - Consist Edit</string>
     <string name="app_name_ConsistLightsEdit">Engine Driver - Consist Lights</string>
+    <string name="app_name_gamepad_test">Gamepad Test - Engine Driver</string>
+    <string name="gamepad_test">Gamepad Test</string>
     <string name="notification_title">Engine Driver is running</string>
     <string name="notification_text">Tap to reopen Engine Driver</string>
     <string name="host_ip">Host Name or Address</string>
@@ -123,6 +125,8 @@
     <string name="prefIncreaseSliderHeightSummary">Use a taller slider, or speed buttons, for throttles.</string>
     <string name="prefHideSliderTitle">Hide Speed Slider?</string>
     <string name="prefHideSliderSummary">Do not show speed slider, use speed buttons instead.</string>
+    <string name="prefHideSliderAndSpeedButtonsTitle">Hide Slider AND Speed Buttons?</string>
+    <string name="prefHideSliderAndSpeedButtonsSummary">Do not show either speed slider or speed buttons.\nNote: Overrides the \'Hide Slider\', \'Slider Height\' and \'Display Speed buttons\' options.</string>
     <string name="prefDirChangeWhileMovingTitle">Direction change while moving?</string>
     <string name="prefDirChangeWhileMovingSummary">Allow direction change when moving.</string>
     <string name="prefStopOnDirectionChangeTitle">Stop on direction change?</string>
@@ -176,6 +180,11 @@
     <string name="prefGamePadButtonDownDefaultValue">Decrease Speed</string>
     <string name="prefGamePadButtonLeftDefaultValue">Forward</string>
     <!--    Gamepad button preferences   -->
+
+    <!--    Gamepad test page -->
+    <string name="gamepad_test_help">Move the DPad in all four directions and press the four main buttons to confirm.  Press Back Arrow when done.</string>
+    <!--    Gamepad test page -->
+
 
     <!-- ESU MCII preferences -->
     <string name="prefEsuMc2ThrottleNameDefaultValue">ESU MobileControl II</string>
@@ -412,4 +421,19 @@
     <string name="functionButton30DefultValue">30</string>
     <string name="functionButton31DefultValue">31</string>
 
+    <string name="gamepadTestButtonLabelDpadUp">Up</string>
+    <string name="gamepadTestButtonLabelDpadDown">Down</string>
+    <string name="gamepadTestButtonLabelDpadLeft">Left</string>
+    <string name="gamepadTestButtonLabelDpadRight">Right</string>
+    <string name="gamepadTestButtonLabelButtonX">C | X [iOS]</string>
+    <string name="gamepadTestButtonLabelButtonY">D | Y [Triangle]</string>
+    <string name="gamepadTestButtonLabelButtonA">A [Cross]</string>
+    <string name="gamepadTestButtonLabelButtonB">B [@]</string>
+    <string name="gamepadTestButtonLabelButtonStart">Start | Enter</string>
+    <string name="gamepadTestButtonLabelButtonEnter">Select | Enter</string>
+
+    <string name="gamepadTestOptionalLabel">Optional (may not be on the device)</string>
+    <string name="gamepadTestModeLabel">Gamepad mode/type: </string>
+    <string name="gamepadTestKeycodeLabel">key_code: </string>
+    <string name="gamepadTestFunctionLabel">function: </string>
 </resources>

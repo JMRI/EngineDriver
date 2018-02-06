@@ -116,5 +116,12 @@
             android:launchMode="singleTask" 
             android:label="LogViewerActivity" >
         </activity>
+        <activity
+            android:name=".gamepad_test"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustNothing"
+            android:label="@string/app_name_gamepad_test" >
+        </activity>
     </application>
 </manifest>

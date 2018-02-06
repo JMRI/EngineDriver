@@ -1799,6 +1799,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+/*
     private boolean isInvalidGamePadKey(int key, int action) {
         boolean isOk = true;
 
@@ -1853,6 +1854,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
         return isOk;
     }
+*/
+
     //
     private int swapToNextAvilableThrottleForGamePad(int fromThrottle, boolean quiet) {
         int whichThrottle = -1;
@@ -3974,6 +3977,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             bRSpdG.setVisibility(View.GONE);
             sliderMargin += 30;  //a little extra margin previously in button
         }
+        if (prefs.getBoolean("prefHideSliderAndSpeedButtons", getResources().getBoolean(R.bool.prefHideSliderAndSpeedButtonsDefaultValue))) {
+            llTSetSpd.setVisibility(View.GONE);
+            llSSetSpd.setVisibility(View.GONE);
+            llGSetSpd.setVisibility(View.GONE);
+        }
 
         sbS.setPadding(sliderMargin, 0, sliderMargin, 0);
         sbG.setPadding(sliderMargin, 0, sliderMargin, 0);
@@ -4083,6 +4091,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.setWebMenuOption(TMenu);
             mainapp.setRoutesMenuOption(TMenu);
             mainapp.setTurnoutsMenuOption(TMenu);
+            mainapp.setGamepadTestMenuOption(TMenu);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");
@@ -4289,6 +4298,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 consistLightsEdit3.putExtra("whichThrottle", 'G');
                 navigatingAway = true;
                 startActivityForResult(consistLightsEdit3, ACTIVITY_CONSIST_LIGHTS);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.gamepad_test_mnu:
+                in = new Intent().setClass(this, gamepad_test.class);
+                navigatingAway = true;
+                startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
         }
