@@ -3977,6 +3977,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             bRSpdG.setVisibility(View.GONE);
             sliderMargin += 30;  //a little extra margin previously in button
         }
+        if (prefs.getBoolean("prefHideSliderAndSpeedButtons", getResources().getBoolean(R.bool.prefHideSliderAndSpeedButtonsDefaultValue))) {
+            llTSetSpd.setVisibility(View.GONE);
+            llSSetSpd.setVisibility(View.GONE);
+            llGSetSpd.setVisibility(View.GONE);
+        }
 
         sbS.setPadding(sliderMargin, 0, sliderMargin, 0);
         sbG.setPadding(sliderMargin, 0, sliderMargin, 0);
@@ -4086,6 +4091,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.setWebMenuOption(TMenu);
             mainapp.setRoutesMenuOption(TMenu);
             mainapp.setTurnoutsMenuOption(TMenu);
+            mainapp.setGamepadTestMenuOption(TMenu);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");

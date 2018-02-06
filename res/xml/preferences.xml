@@ -86,6 +86,12 @@
                 android:summary="@string/prefHideSliderSummary"
                 android:title="@string/prefHideSliderTitle" >
             </CheckBoxPreference>
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefHideSliderAndSpeedButtonsDefaultValue"
+                android:key="prefHideSliderAndSpeedButtons"
+                android:summary="@string/prefHideSliderAndSpeedButtonsSummary"
+                android:title="@string/prefHideSliderAndSpeedButtonsTitle" >
+            </CheckBoxPreference>
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefSwapForwardReverseButtonsDefaultValue"

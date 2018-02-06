@@ -2193,6 +2193,26 @@ public class threaded_application extends Application {
     }
 
     /**
+     * for menu passed in, hide or show the gamepad test menu
+     *
+     * @param menu - menu object that will be adjusted
+     */
+    public void setGamepadTestMenuOption(Menu menu) {
+        String whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
+
+        if (menu != null) {
+            MenuItem item = menu.findItem(R.id.gamepad_test_mnu);
+            if (item != null) {
+                if (!whichGamePadMode .equals("None")) {
+                    item.setVisible(true);
+                } else {
+                    item.setVisible(false);
+                }
+            }
+        }
+    }
+
+    /**
      * for menu passed in, hide or show the routes menu
      *
      * @param menu - menu object that will be adjusted

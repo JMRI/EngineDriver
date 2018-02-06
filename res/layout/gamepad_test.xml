@@ -16,27 +16,28 @@
                 android:id="@+id/gamepad_test"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:id="@+id/gamepad_test_mode_label_group"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
+                    android:layout_height="fill_parent"
+                    android:layout_margin="5dp">
+
                     <TextView
                         android:id="@+id/gamepad_test_mode_label"
                         style="@style/floating_text_style"
-                        android:textSize="12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Gamepad type: " />
+                        android:text="@string/gamepadTestModeLabel"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/gamepad_test_mode"
                         style="@style/floating_text_style"
-                        android:layout_toRightOf="@id/gamepad_test_mode_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/gamepad_test_mode_label"
                         android:text="gamepad type goes here"
                         android:textSize="15sp" />
                 </RelativeLayout>
@@ -45,16 +46,18 @@
                     android:id="@+id/gamepad_dpad"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:paddingLeft="6dp"
                     android:paddingRight="6dp">
 
-                    <TableRow  android:gravity="center_horizontal">
+                    <TableRow android:gravity="center_horizontal">
 
                         <Button
                             android:id="@+id/gamepad_test_dpad_up"
                             style="?attr/ed_normal_button_style"
-                            android:text="Up" />
+                            android:layout_height="30dip"
+                            android:text="@string/gamepadTestButtonLabelDpadUp"
+                            android:textSize="14sp" />
                     </TableRow>
 
                     <TableRow android:gravity="center_horizontal">
@@ -62,12 +65,16 @@
                         <Button
                             android:id="@+id/gamepad_test_dpad_left"
                             style="?attr/ed_normal_button_style"
-                            android:text="Left" />
+                            android:layout_height="30dip"
+                            android:text="@string/gamepadTestButtonLabelDpadLeft"
+                            android:textSize="14sp" />
 
                         <Button
                             android:id="@+id/gamepad_test_dpad_right"
                             style="?attr/ed_normal_button_style"
-                            android:text="Right" />
+                            android:layout_height="30dip"
+                            android:text="@string/gamepadTestButtonLabelDpadRight"
+                            android:textSize="14sp" />
                     </TableRow>
 
                     <TableRow android:gravity="center_horizontal">
@@ -75,7 +82,9 @@
                         <Button
                             android:id="@+id/gamepad_test_dpad_down"
                             style="?attr/ed_normal_button_style"
-                            android:text="Down" />
+                            android:layout_height="30dip"
+                            android:text="@string/gamepadTestButtonLabelDpadDown"
+                            android:textSize="14sp" />
                     </TableRow>
 
                 </TableLayout>
@@ -85,7 +94,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:paddingLeft="6dp"
                     android:paddingRight="6dp">
 
@@ -94,12 +103,18 @@
                         <Button
                             android:id="@+id/gamepad_test_button_x"
                             style="?attr/ed_normal_button_style"
-                            android:text="X" />
+                            android:layout_width="100dip"
+                            android:layout_height="30dip"
+                            android:text="@string/gamepadTestButtonLabelButtonX"
+                            android:textSize="14sp" />
 
                         <Button
                             android:id="@+id/gamepad_test_button_y"
                             style="?attr/ed_normal_button_style"
-                            android:text="Y" />
+                            android:layout_width="100dip"
+                            android:layout_height="30dip"
+                            android:text="@string/gamepadTestButtonLabelButtonY"
+                            android:textSize="14sp" />
                     </TableRow>
 
                     <TableRow android:gravity="center_horizontal">
@@ -107,12 +122,62 @@
                         <Button
                             android:id="@+id/gamepad_test_button_a"
                             style="?attr/ed_normal_button_style"
-                            android:text="A" />
+                            android:layout_width="100dip"
+                            android:layout_height="30dip"
+                            android:text="@string/gamepadTestButtonLabelButtonA"
+                            android:textSize="14sp" />
 
                         <Button
                             android:id="@+id/gamepad_test_button_b"
                             style="?attr/ed_normal_button_style"
-                            android:text="B" />
+                            android:layout_width="100dip"
+                            android:layout_height="30dip"
+                            android:text="@string/gamepadTestButtonLabelButtonB"
+                            android:textSize="14sp" />
+                    </TableRow>
+                </TableLayout>
+
+                <RelativeLayout
+                    android:id="@+id/gamepad_test_optional_group"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:id="@+id/gamepad_test_optional_label"
+                        style="@style/floating_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gamepadTestOptionalLabel"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <TableLayout
+                    android:id="@+id/gamepad_buttons_extra"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="5dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp">
+
+                    <TableRow android:gravity="center_horizontal">
+
+                        <Button
+                            android:id="@+id/gamepad_test_button_start"
+                            style="?attr/ed_normal_button_style"
+                            android:layout_width="100dip"
+                            android:layout_height="30dip"
+                            android:text="@string/gamepadTestButtonLabelButtonStart"
+                            android:textSize="14sp" />
+
+                        <Button
+                            android:id="@+id/gamepad_test_button_enter"
+                            style="?attr/ed_normal_button_style"
+                            android:layout_width="100dip"
+                            android:layout_height="30dip"
+                            android:text="@string/gamepadTestButtonLabelButtonEnter"
+                            android:textSize="14sp" />
                     </TableRow>
                 </TableLayout>
 
@@ -127,7 +192,7 @@
                         style="@style/floating_text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="key_code: "
+                        android:text="@string/gamepadTestKeycodeLabel"
                         android:textSize="12sp" />
 
                     <TextView
@@ -151,7 +216,7 @@
                         style="@style/floating_text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="function: "
+                        android:text="@string/gamepadTestFunctionLabel"
                         android:textSize="12sp" />
 
                     <TextView
@@ -164,6 +229,30 @@
                         android:textSize="15sp" />
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:id="@+id/gamepad_test_complete_group"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:id="@+id/gamepad_test_complete_label"
+                        style="@style/floating_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="complete?: "
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/gamepad_test_complete"
+                        style="@style/floating_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/gamepad_test_complete_label"
+                        android:text="test complete or incomplete goes here"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
                 <LinearLayout
                     android:id="@+id/separator"
                     android:layout_width="fill_parent"
@@ -171,13 +260,15 @@
                     android:background="#888888"
                     android:orientation="vertical" />
             </LinearLayout>
+
             <TextView
                 android:id="@+id/gamepad_test_help"
                 style="@style/floating_text_style"
-                android:textSize="15sp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/gamepad_test_help" />
+                android:layout_margin="5dp"
+                android:text="@string/gamepad_test_help"
+                android:textSize="15sp" />
 
         </LinearLayout>
 </LinearLayout>
