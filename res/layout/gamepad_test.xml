@@ -31,7 +31,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/gamepadTestModeLabel"
                         android:textSize="12sp" />
-
+<!--
                     <TextView
                         android:id="@+id/gamepad_test_mode"
                         style="@style/floating_text_style"
@@ -40,6 +40,13 @@
                         android:layout_toRightOf="@id/gamepad_test_mode_label"
                         android:text="gamepad type goes here"
                         android:textSize="15sp" />
+-->
+                    <Spinner
+                        android:id="@+id/gamepad_test_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/gamepad_test_mode_label"
+                        />
                 </RelativeLayout>
 
                 <TableLayout
@@ -201,7 +208,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/gamepad_test_keycode_label"
-                        android:text="keycode goes here"
+                        android:text=""
                         android:textSize="15sp" />
                 </RelativeLayout>
 
@@ -225,7 +232,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/gamepad_test_keyfunction_label"
-                        android:text="function goes here"
+                        android:text=""
                         android:textSize="15sp" />
                 </RelativeLayout>
 
@@ -240,7 +247,7 @@
                         style="@style/floating_text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="complete?: "
+                        android:text="@string/gamepadTestCompleteLabel"
                         android:textSize="12sp" />
 
                     <TextView
@@ -249,7 +256,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/gamepad_test_complete_label"
-                        android:text="test complete or incomplete goes here"
+                        android:text=""
                         android:textSize="15sp" />
                 </RelativeLayout>
 
@@ -267,7 +274,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="@string/gamepad_test_help"
+                android:text="@string/gamepadTestHelp"
                 android:textSize="15sp" />
 
         </LinearLayout>

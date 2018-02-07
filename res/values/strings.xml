@@ -181,11 +181,6 @@
     <string name="prefGamePadButtonLeftDefaultValue">Forward</string>
     <!--    Gamepad button preferences   -->
 
-    <!--    Gamepad test page -->
-    <string name="gamepad_test_help">Move the DPad in all four directions and press the four main buttons to confirm.  Press Back Arrow when done.</string>
-    <!--    Gamepad test page -->
-
-
     <!-- ESU MCII preferences -->
     <string name="prefEsuMc2ThrottleNameDefaultValue">ESU MobileControl II</string>
     <string name="prefEsuMc2Title">ESU MobileControl II Options</string>
@@ -320,6 +315,10 @@
     <string name="prefDisplaySpeedArrowsTitle">Display Speed buttons?</string>
     <string name="prefDisplaySpeedArrowsSummary">Display buttons next to speed sliders to change loco speed?</string>
 
+    <string name="prefSelectedLocoIndicatorTitle">Selected Loco Indicator</string>
+    <string name="prefSelectedLocoIndicatorSummary">Highlight the Loco Select button based on the selection method.\nRequires Android Honeycomb or later.</string>
+    <string name="prefSelectedLocoIndicatorDefaultValue">None</string>
+
     <string name="prefSpeedButtonsRepeatTitle">Speed button repeat delay</string>
     <string name="prefSpeedButtonsRepeatSummary">How long between repeats on speed buttons.  Smaller is faster. Excludes gamepad buttons. (See separate gamepad setting.)</string>
     <string name="prefSpeedButtonsRepeatDefaultValue">100</string>
@@ -421,6 +420,8 @@
     <string name="functionButton30DefultValue">30</string>
     <string name="functionButton31DefultValue">31</string>
 
+
+    <!--    Gamepad test page -->
     <string name="gamepadTestButtonLabelDpadUp">Up</string>
     <string name="gamepadTestButtonLabelDpadDown">Down</string>
     <string name="gamepadTestButtonLabelDpadLeft">Left</string>
@@ -433,7 +434,14 @@
     <string name="gamepadTestButtonLabelButtonEnter">Select | Enter</string>
 
     <string name="gamepadTestOptionalLabel">Optional (may not be on the device)</string>
-    <string name="gamepadTestModeLabel">Gamepad mode/type: </string>
-    <string name="gamepadTestKeycodeLabel">key_code: </string>
-    <string name="gamepadTestFunctionLabel">function: </string>
+    <string name="gamepadTestModeLabel">Type:\s</string>
+    <string name="gamepadTestKeycodeLabel">key_code:\s</string>
+    <string name="gamepadTestFunctionLabel">function:\s</string>
+    <string name="gamepadTestCompleteLabel">complete?: </string>
+    <string name="gamepadTestHelp">You MUST move the DPad in all directions\nAND press the four main buttons to confirm.\nPress Back Arrow when done.\nIf you can\'t activate all buttons, try a different mode (above) or on the device.</string>
+    <string name="gamepadTestIncomplete">"Test Incomplete"</string>
+    <string name="gamepadTestComplete">"Test Complete"</string>
+    <string name="gamepadTestInvalidKeycode">"Invalid Keycode for this mode"</string>
+    <!--    Gamepad test page -->
+
 </resources>

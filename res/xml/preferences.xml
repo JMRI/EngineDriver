@@ -319,6 +319,15 @@
                 android:title="@string/prefGamePadButtonLeftTitle" />
             <!--    Gamepad button preferences   -->
         </PreferenceScreen>
+
+        <ListPreference
+            android:defaultValue="@string/prefSelectedLocoIndicatorDefaultValue"
+            android:entries="@array/prefSelectedLocoIndicatorEntries"
+            android:entryValues="@array/prefSelectedLocoIndicatorOptions"
+            android:key="prefSelectedLocoIndicator"
+            android:summary="@string/prefSelectedLocoIndicatorSummary"
+            android:title="@string/prefSelectedLocoIndicatorTitle" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/prefThrottleTitle" >

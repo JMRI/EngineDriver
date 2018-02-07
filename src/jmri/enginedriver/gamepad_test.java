@@ -19,6 +19,7 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -40,17 +41,22 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.Consist.ConLoco;
@@ -78,6 +84,9 @@ public class gamepad_test extends Activity implements OnGestureListener {
     private SharedPreferences prefs;
 
     private String whichGamePadMode = "None";
+    private int whichGamePadModeIndex = 0;
+    private int oldWhichGamePadModeIndex = 0;
+    String[] gamePadModesArray;
 
     private boolean[] gamepadButtonsChecked = {false,false,false,false,false,false,false,false,false,false};
 
@@ -127,6 +136,15 @@ public class gamepad_test extends Activity implements OnGestureListener {
     private void setGamepadKeys() {
         whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
 
+        gamePadModesArray = this.getResources().getStringArray(R.array.prefGamePadTypeOptions);
+        final List<String> gamePadModesList = new ArrayList<>(Arrays.asList(gamePadModesArray));
+
+        whichGamePadModeIndex = Arrays.asList(gamePadModesArray).indexOf(whichGamePadMode);
+        if (whichGamePadModeIndex<0) whichGamePadModeIndex=0;
+
+        Spinner spinner = (Spinner) findViewById(R.id.gamepad_test_mode);
+        spinner.setSelection(whichGamePadModeIndex);
+
         // Gamepad button Preferences
         prefGamePadButtons[0] = prefs.getString("prefGamePadButtonStart", getApplicationContext().getResources().getString(R.string.prefGamePadButtonStartDefaultValue));
         prefGamePadButtons[9] = prefs.getString("prefGamePadButtonReturn", getApplicationContext().getResources().getString(R.string.prefGamePadButtonReturnDefaultValue));
@@ -140,11 +158,20 @@ public class gamepad_test extends Activity implements OnGestureListener {
         prefGamePadButtons[7] = prefs.getString("prefGamePadButtonDown", getApplicationContext().getResources().getString(R.string.prefGamePadButtonDownDefaultValue));
         prefGamePadButtons[8] = prefs.getString("prefGamePadButtonLeft", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftDefaultValue));
 
-        if (!whichGamePadMode.equals("None")) {
-            // make sure the Softkeyboard is hidden
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
-                    WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        }
+        bDpadUp.setSelected(false);
+        bDpadDown.setSelected(false);
+        bDpadLeft.setSelected(false);
+        bDpadRight.setSelected(false);
+        bButtonX.setSelected(false);
+        bButtonY.setSelected(false);
+        bButtonA.setSelected(false);
+        bButtonB.setSelected(false);
+        bButtonStart.setSelected(false);
+        bButtonEnter.setSelected(false);
+
+        // make sure the Softkeyboard is hidden
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
+                WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 
         int[] bGamePadKeys;
         int[] bGamePadKeysUp;
@@ -204,7 +231,7 @@ public class gamepad_test extends Activity implements OnGestureListener {
         }
 
         if (testComplete) {
-            tvGamepadComplete.setText("Test Complete");
+            tvGamepadComplete.setText(R.string.gamepadTestComplete);
         }
 		return testComplete;
 }
@@ -219,8 +246,66 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
     private void invalidKeyCode(int keyCode) {
         tvGamepadKeyCode.setText(String.valueOf(keyCode));
-        tvGamepadKeyFunction.setText("Invalid Keycode for this mode");
+        tvGamepadKeyFunction.setText(R.string.gamepadTestInvalidKeycode);
     }
+
+
+/*
+    private boolean isInvalidGamePadKey(int key, int action) {
+        boolean isOk = true;
+
+        switch (whichGamePadMode) {
+            case "iCade+DPAD":
+            case "iCade+DPAD-rotate": // all keys should be A-Z plus DPAD keys
+                if (action == ACTION_UP) { // only check the up codes
+                    if (((key < KEYCODE_A) || (key > KEYCODE_Z))
+                        && (key != KEYCODE_DPAD_LEFT) && (key != KEYCODE_DPAD_RIGHT) && (key != KEYCODE_DPAD_DOWN) && (key != KEYCODE_DPAD_UP)) {
+                    isOk = false;
+                    }
+                }
+                break;
+            case "MTK":
+            case "MTK-rotate":   // all keys should be 0-5 plus DPAD keys
+                if (action == ACTION_UP) { // only check the up codes
+                    if (((key < KEYCODE_0) || (key > KEYCODE_5))
+                            && (key != KEYCODE_DPAD_LEFT) && (key != KEYCODE_DPAD_RIGHT) && (key != KEYCODE_DPAD_DOWN) && (key != KEYCODE_DPAD_UP)) {
+                        isOk = false;
+                    }
+                }
+                break;
+            case "Game":
+            case "Game-rotate":
+                if (action == ACTION_UP) { // only check the up codes
+                    if ((key!=KEYCODE_BUTTON_Y) && (key!=KEYCODE_BUTTON_X) && (key!=KEYCODE_BUTTON_A)
+                    && (key!=KEYCODE_BUTTON_B)&& (key!=KEYCODE_VOLUME_UP)&& (key!=KEYCODE_ENTER)
+                    && (key!=KEYCODE_DPAD_LEFT) && (key!=KEYCODE_DPAD_RIGHT) && (key!=KEYCODE_DPAD_DOWN) && (key!=KEYCODE_DPAD_UP)) {
+                        isOk = false;
+                    }
+                }
+                break;
+            case "MagicseeR1B":
+                if (action == ACTION_UP) { // only check the up codes
+                    if ((key != KEYCODE_BUTTON_L1) && (key != KEYCODE_BUTTON_L2) && (key != KEYCODE_BUTTON_A)
+                            && (key != KEYCODE_BUTTON_B) && (key != KEYCODE_BUTTON_R1) && (key != KEYCODE_BUTTON_R2) //real keys
+                            && (key != KEYCODE_BUTTON_Y) && (key != KEYCODE_SPACE) && (key != KEYCODE_BUTTON_X) && (key != KEYCODE_DEL) // discarded keys
+                        ) {
+                        isOk = false;
+                    }
+                }
+                break;
+            default: // "iCade" or iCade-rotate   // all keys should be A-Z   DPAD keys are sent as well
+                if (action == ACTION_UP) { // only check the up codes
+                    if (((key < KEYCODE_A) || (key > KEYCODE_Z)) // real keys
+                    && (key!=KEYCODE_DPAD_LEFT) && (key!=KEYCODE_DPAD_RIGHT) && (key!=KEYCODE_DPAD_DOWN) && (key!=KEYCODE_DPAD_UP) // discarded keys
+                        ) {
+                        isOk = false;
+                    }
+                }
+                break;
+        }
+        return isOk;
+    }
+*/
 
     // listener for the joystick events
     @Override
@@ -352,6 +437,30 @@ public class gamepad_test extends Activity implements OnGestureListener {
         return super.dispatchKeyEvent(event);
     }
 
+    public class spinner_listener implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            Spinner spinner = (Spinner) findViewById(R.id.gamepad_test_mode);
+            whichGamePadModeIndex = spinner.getSelectedItemPosition();
+
+            prefs.edit().putString("prefGamePadType", gamePadModesArray[whichGamePadModeIndex]).commit();  //reset the preference
+
+        if (oldWhichGamePadModeIndex != whichGamePadModeIndex) {
+            setGamepadKeys();
+            oldWhichGamePadModeIndex = whichGamePadModeIndex;
+        }
+            InputMethodManager imm =
+                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }
 
     /**
      * Called when the activity is first created.
@@ -377,8 +486,6 @@ public class gamepad_test extends Activity implements OnGestureListener {
         // tone generator for feedback sounds
         tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                 preferences.getIntPrefValue(prefs,"prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
-
-        setGamepadKeys();
 
         // set listener for select loco buttons
         bDpadUp = (Button) findViewById(R.id.gamepad_test_dpad_up);
@@ -411,18 +518,24 @@ public class gamepad_test extends Activity implements OnGestureListener {
         bButtonEnter = (Button) findViewById(R.id.gamepad_test_button_enter);
         bButtonEnter.setClickable(false);
 
-        tvGamepadMode =(TextView) findViewById(R.id.gamepad_test_mode);
+        //tvGamepadMode =(TextView) findViewById(R.id.gamepad_test_mode);
 
         tvGamepadKeyCode =(TextView) findViewById(R.id.gamepad_test_keycode);
         tvGamepadKeyFunction =(TextView) findViewById(R.id.gamepad_test_keyfunction);
         tvGamepadComplete =(TextView) findViewById(R.id.gamepad_test_complete);
 
-        tvGamepadMode.setText(whichGamePadMode);
-
-//        tvGamepadMode.setText("");
         tvGamepadKeyCode.setText("");
         tvGamepadKeyFunction.setText("");
-        tvGamepadComplete.setText("Test Incomplete");
+        tvGamepadComplete.setText(R.string.gamepadTestIncomplete);
+
+        // Set the options for the mode.
+        Spinner mode_spinner = (Spinner) findViewById(R.id.gamepad_test_mode);
+        ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.prefGamePadTypeOptions, android.R.layout.simple_spinner_item);
+        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mode_spinner.setAdapter(spinner_adapter);
+        mode_spinner.setOnItemSelectedListener(new spinner_listener());
+
+        setGamepadKeys();
     }
 
     @Override
