@@ -10,6 +10,12 @@
       android:state_pressed="true"
       android:state_enabled="true"
       android:drawable="@drawable/btn_pressed" />
+
+   <item
+       android:state_activated="true"
+       android:state_enabled="true"
+       android:drawable="@drawable/btn_activated" />
+
    <item
        android:state_selected="true"
        android:state_enabled="true"

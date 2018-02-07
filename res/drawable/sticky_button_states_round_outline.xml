@@ -15,6 +15,9 @@
     <item android:state_selected="true" android:state_enabled="true" android:drawable="@drawable/button_layers_selected_outline">
     </item>
 
+    <item android:state_activated="true" android:state_enabled="true" android:drawable="@drawable/button_layers_activated_outline">
+    </item>
+
     <item>
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_outline" />

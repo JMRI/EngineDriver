@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -143,6 +144,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private static String VOLUME_INDICATOR = "v";
     private static String[] GAMEPAD_INDICATOR = {"1", "2", "3"};
+
+    private String prefSelectedLocoIndicator = "None";
 
     private SeekBar sbT; // seekbars
     private SeekBar sbS;
@@ -1636,6 +1639,54 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+    @SuppressLint("NewApi")
+    private void setSelectedLocoIndicator(char whichThrottle) {
+
+        if (!prefSelectedLocoIndicator.equals("None")) {
+
+            if (whichThrottle == 'T') {
+                if (mainapp.androidVersion >= mainapp.minActivatedButtonsVersion) {
+                    bSelT.setActivated(true);
+                    bSelS.setActivated(false);
+                    bSelG.setActivated(false);
+                }
+                bSelT.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+                bSelS.setTypeface(null, Typeface.NORMAL);
+                bSelG.setTypeface(null, Typeface.NORMAL);
+            } else if (whichThrottle == 'S') {
+                if (mainapp.androidVersion >= mainapp.minActivatedButtonsVersion) {
+                    bSelT.setActivated(false);
+                    bSelS.setActivated(true);
+                    bSelG.setActivated(false);
+                }
+                bSelT.setTypeface(null, Typeface.NORMAL);
+                bSelS.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+                bSelG.setTypeface(null, Typeface.NORMAL);
+            } else if (whichThrottle == 'G') {
+                if (mainapp.androidVersion >= mainapp.minActivatedButtonsVersion) {
+                    bSelT.setActivated(false);
+                    bSelS.setActivated(false);
+                    bSelG.setActivated(true);
+                }
+                bSelT.setTypeface(null, Typeface.NORMAL);
+                bSelS.setTypeface(null, Typeface.NORMAL);
+                bSelG.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+            }
+
+            if ((!prefSelectedLocoIndicator.equals("Gamepad")) && (whichThrottle == ' ')) {  // if it a gamepad, then nothing may be selected
+                if (mainapp.androidVersion >= mainapp.minActivatedButtonsVersion) {
+                    bSelT.setActivated(false);
+                    bSelS.setActivated(false);
+                    bSelG.setActivated(false);
+                }
+                bSelT.setTypeface(null, Typeface.NORMAL);
+                bSelS.setTypeface(null, Typeface.NORMAL);
+                bSelG.setTypeface(null, Typeface.NORMAL);
+            }
+        }
+    }
+
+
     private void setVolumeIndicator() {
         // hide or display volume control indicator based on variable
         tvVolT.setText("");
@@ -1643,10 +1694,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         tvVolG.setText("");
         if (whichVolume == 'T') {
             tvVolT.setText(VOLUME_INDICATOR);
+            setSelectedLocoIndicator('T');
         } else if (whichVolume == 'S') {
             tvVolS.setText(VOLUME_INDICATOR);
+            setSelectedLocoIndicator('S');
         } else {
             tvVolG.setText(VOLUME_INDICATOR);
+            setSelectedLocoIndicator('G');
         }
         // Ensure ESU MCII tracks selected throttle
         if (IS_ESU_MCII) {
@@ -1669,6 +1723,15 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         tvGamePadT.setText(gamePadThrottleAssignment[0]);
         tvGamePadS.setText(gamePadThrottleAssignment[1]);
         tvGamePadG.setText(gamePadThrottleAssignment[2]);
+
+        if (gamePadThrottleAssignment[0] == "1") {
+            setSelectedLocoIndicator('T');
+        } else if (gamePadThrottleAssignment[1] == "1") {
+            setSelectedLocoIndicator('S');
+        } else if (gamePadThrottleAssignment[2] == "1") {
+            setSelectedLocoIndicator('G');
+        } else setSelectedLocoIndicator(' ');
+
     }
 
     private void setNextActiveThrottle() {
@@ -1798,63 +1861,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             gamePadKeys_Up[5] = bGamePadKeysUp[2];
         }
     }
-
-/*
-    private boolean isInvalidGamePadKey(int key, int action) {
-        boolean isOk = true;
-
-        switch (whichGamePadMode) {
-            case "iCade+DPAD":
-            case "iCade+DPAD-rotate": // all keys should be A-Z plus DPAD keys
-                if (action == ACTION_UP) { // only check the up codes
-                    if (((key < KEYCODE_A) || (key > KEYCODE_Z))
-                        && (key != KEYCODE_DPAD_LEFT) && (key != KEYCODE_DPAD_RIGHT) && (key != KEYCODE_DPAD_DOWN) && (key != KEYCODE_DPAD_UP)) {
-                    isOk = false;
-                    }
-                }
-                break;
-            case "MTK":
-            case "MTK-rotate":   // all keys should be 0-5 plus DPAD keys
-                if (action == ACTION_UP) { // only check the up codes
-                    if (((key < KEYCODE_0) || (key > KEYCODE_5))
-                            && (key != KEYCODE_DPAD_LEFT) && (key != KEYCODE_DPAD_RIGHT) && (key != KEYCODE_DPAD_DOWN) && (key != KEYCODE_DPAD_UP)) {
-                        isOk = false;
-                    }
-                }
-                break;
-            case "Game":
-            case "Game-rotate":
-                if (action == ACTION_UP) { // only check the up codes
-                    if ((key!=KEYCODE_BUTTON_Y) && (key!=KEYCODE_BUTTON_X) && (key!=KEYCODE_BUTTON_A)
-                    && (key!=KEYCODE_BUTTON_B)&& (key!=KEYCODE_VOLUME_UP)&& (key!=KEYCODE_ENTER)
-                    && (key!=KEYCODE_DPAD_LEFT) && (key!=KEYCODE_DPAD_RIGHT) && (key!=KEYCODE_DPAD_DOWN) && (key!=KEYCODE_DPAD_UP)) {
-                        isOk = false;
-                    }
-                }
-                break;
-            case "MagicseeR1B":
-                if (action == ACTION_UP) { // only check the up codes
-                    if ((key != KEYCODE_BUTTON_L1) && (key != KEYCODE_BUTTON_L2) && (key != KEYCODE_BUTTON_A)
-                            && (key != KEYCODE_BUTTON_B) && (key != KEYCODE_BUTTON_R1) && (key != KEYCODE_BUTTON_R2) //real keys
-                            && (key != KEYCODE_BUTTON_Y) && (key != KEYCODE_SPACE) && (key != KEYCODE_BUTTON_X) && (key != KEYCODE_DEL) // discarded keys
-                        ) {
-                        isOk = false;
-                    }
-                }
-                break;
-            default: // "iCade" or iCade-rotate   // all keys should be A-Z   DPAD keys are sent as well
-                if (action == ACTION_UP) { // only check the up codes
-                    if (((key < KEYCODE_A) || (key > KEYCODE_Z)) // real keys
-                    && (key!=KEYCODE_DPAD_LEFT) && (key!=KEYCODE_DPAD_RIGHT) && (key!=KEYCODE_DPAD_DOWN) && (key!=KEYCODE_DPAD_UP) // discarded keys
-                        ) {
-                        isOk = false;
-                    }
-                }
-                break;
-        }
-        return isOk;
-    }
-*/
 
     //
     private int swapToNextAvilableThrottleForGamePad(int fromThrottle, boolean quiet) {
@@ -3089,6 +3095,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         speedButtonUpText = getApplicationContext().getResources().getString(R.string.UpButton);
         speedButtonDownText = getApplicationContext().getResources().getString(R.string.DownButton);
 
+        prefSelectedLocoIndicator = prefs.getString("prefSelectedLocoIndicator", getResources().getString(R.string.prefSelectedLocoIndicatorDefaultValue));
         getDirectionButtonPrefs();
 
         webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
@@ -3437,6 +3444,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefConsistLightsLongClick = prefs.getBoolean("ConsistLightsLongClickPreference", getResources().getBoolean(R.bool.prefConsistLightsLongClickDefaultValue));
 
         prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
+
+        prefSelectedLocoIndicator = prefs.getString("prefSelectedLocoIndicator", getResources().getString(R.string.prefSelectedLocoIndicatorDefaultValue));
 
         getDirectionButtonPrefs();
         setDirectionButtonLabels(); // set all the direction button labels
@@ -3940,6 +3949,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         int sliderMargin = preferences.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
 
         //show speed buttons based on pref
+        llTSetSpd.setVisibility(View.VISIBLE); //always show as a default
+        llSSetSpd.setVisibility(View.VISIBLE);
+        llGSetSpd.setVisibility(View.VISIBLE);
+
         sbS.setVisibility(View.VISIBLE);  //always show slider if buttons not shown
         sbG.setVisibility(View.VISIBLE);
         sbT.setVisibility(View.VISIBLE);

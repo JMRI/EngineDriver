@@ -501,4 +501,15 @@
         <item>High Contrast Outline Theme</item>
     </string-array>
 
+    <string-array name="prefSelectedLocoIndicatorOptions">
+        <item>None</item>
+        <item>Volume</item>
+        <item>Gamepad</item>
+    </string-array>
+    <string-array name="prefSelectedLocoIndicatorEntries">
+        <item>None</item>
+        <item>Selected via Volume buttons</item>
+        <item>Selected via Gamepad buttons</item>
+    </string-array>
+
 </resources>
