@@ -503,13 +503,11 @@
 
     <string-array name="prefSelectedLocoIndicatorOptions">
         <item>None</item>
-        <item>Volume</item>
-        <item>Gamepad</item>
+        <item>Both</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>None</item>
-        <item>Selected via Volume buttons</item>
-        <item>Selected via Gamepad buttons</item>
+        <item>Volume and Gamepad 1</item>
     </string-array>
 
 </resources>
