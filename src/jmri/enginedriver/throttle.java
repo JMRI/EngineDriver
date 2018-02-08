@@ -1639,53 +1639,68 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
-    @SuppressLint("NewApi")
-    private void setSelectedLocoIndicator(char whichThrottle) {
-
-        if (!prefSelectedLocoIndicator.equals("None")) {
-
-            if (whichThrottle == 'T') {
-                if (mainapp.androidVersion >= mainapp.minActivatedButtonsVersion) {
-                    bSelT.setActivated(true);
-                    bSelS.setActivated(false);
-                    bSelG.setActivated(false);
-                }
-                bSelT.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
-                bSelS.setTypeface(null, Typeface.NORMAL);
-                bSelG.setTypeface(null, Typeface.NORMAL);
-            } else if (whichThrottle == 'S') {
-                if (mainapp.androidVersion >= mainapp.minActivatedButtonsVersion) {
-                    bSelT.setActivated(false);
-                    bSelS.setActivated(true);
-                    bSelG.setActivated(false);
-                }
-                bSelT.setTypeface(null, Typeface.NORMAL);
-                bSelS.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
-                bSelG.setTypeface(null, Typeface.NORMAL);
-            } else if (whichThrottle == 'G') {
-                if (mainapp.androidVersion >= mainapp.minActivatedButtonsVersion) {
-                    bSelT.setActivated(false);
-                    bSelS.setActivated(false);
-                    bSelG.setActivated(true);
-                }
-                bSelT.setTypeface(null, Typeface.NORMAL);
-                bSelS.setTypeface(null, Typeface.NORMAL);
-                bSelG.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+    private void clearVolumeAndGamepadIndicators() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            if ((prefSelectedLocoIndicator.equals("None")) || (prefSelectedLocoIndicator.equals("Gamepad"))) {
+                bSelT.setActivated(false);
+                bSelS.setActivated(false);
+                bSelG.setActivated(false);
             }
-
-            if ((!prefSelectedLocoIndicator.equals("Gamepad")) && (whichThrottle == ' ')) {  // if it a gamepad, then nothing may be selected
-                if (mainapp.androidVersion >= mainapp.minActivatedButtonsVersion) {
-                    bSelT.setActivated(false);
-                    bSelS.setActivated(false);
-                    bSelG.setActivated(false);
-                }
-                bSelT.setTypeface(null, Typeface.NORMAL);
-                bSelS.setTypeface(null, Typeface.NORMAL);
-                bSelG.setTypeface(null, Typeface.NORMAL);
+            if ((prefSelectedLocoIndicator.equals("None")) || (prefSelectedLocoIndicator.equals("Volume"))) {
+                bSelT.setHovered(false);
+                bSelS.setHovered(false);
+                bSelG.setHovered(false);
             }
         }
     }
 
+    @SuppressLint("NewApi")
+    private void setSelectedLocoIndicator(char whichThrottle, boolean isVolume) {
+
+        if (!prefSelectedLocoIndicator.equals("None")) {
+
+            if (mainapp.androidVersion >= mainapp.minActivatedButtonsVersion) {
+
+                if ((isVolume) && (((prefSelectedLocoIndicator.equals("Both")) || (prefSelectedLocoIndicator.equals("Volume"))))) {
+
+                    if (whichThrottle == 'T') {
+                        bSelT.setActivated(true);
+                        bSelS.setActivated(false);
+                        bSelG.setActivated(false);
+                    } else if (whichThrottle == 'S') {
+                        bSelT.setActivated(false);
+                        bSelS.setActivated(true);
+                        bSelG.setActivated(false);
+                    } else if (whichThrottle == 'G') {
+                        bSelT.setActivated(false);
+                        bSelS.setActivated(false);
+                        bSelG.setActivated(true);
+                    }
+
+                    if ((!prefSelectedLocoIndicator.equals("Gamepad")) && (whichThrottle == ' ')) {  // if it a gamepad, then nothing may be selected
+                        bSelT.setActivated(false);
+                        bSelS.setActivated(false);
+                        bSelG.setActivated(false);
+                    }
+                }
+                if ((!isVolume) && (((prefSelectedLocoIndicator.equals("Both")) || (prefSelectedLocoIndicator.equals("Gamepad"))))) {
+                    if (whichThrottle == 'T') {
+                        bSelT.setHovered(true);
+                        bSelS.setHovered(false);
+                        bSelG.setHovered(false);
+                    } else if (whichThrottle == 'S') {
+                        bSelT.setHovered(false);
+                        bSelS.setHovered(true);
+                        bSelG.setHovered(false);
+                    } else if (whichThrottle == 'G') {
+                        bSelT.setHovered(false);
+                        bSelS.setHovered(false);
+                        bSelG.setHovered(true);
+                    }
+                }
+            }
+        }
+    }
 
     private void setVolumeIndicator() {
         // hide or display volume control indicator based on variable
@@ -1694,13 +1709,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         tvVolG.setText("");
         if (whichVolume == 'T') {
             tvVolT.setText(VOLUME_INDICATOR);
-            setSelectedLocoIndicator('T');
+            setSelectedLocoIndicator('T',true);
         } else if (whichVolume == 'S') {
             tvVolS.setText(VOLUME_INDICATOR);
-            setSelectedLocoIndicator('S');
+            setSelectedLocoIndicator('S',true);
         } else {
             tvVolG.setText(VOLUME_INDICATOR);
-            setSelectedLocoIndicator('G');
+            setSelectedLocoIndicator('G',true);
         }
         // Ensure ESU MCII tracks selected throttle
         if (IS_ESU_MCII) {
@@ -1725,12 +1740,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         tvGamePadG.setText(gamePadThrottleAssignment[2]);
 
         if (gamePadThrottleAssignment[0] == "1") {
-            setSelectedLocoIndicator('T');
+            setSelectedLocoIndicator('T',false);
         } else if (gamePadThrottleAssignment[1] == "1") {
-            setSelectedLocoIndicator('S');
+            setSelectedLocoIndicator('S',false);
         } else if (gamePadThrottleAssignment[2] == "1") {
-            setSelectedLocoIndicator('G');
-        } else setSelectedLocoIndicator(' ');
+            setSelectedLocoIndicator('G',false);
+        } else setSelectedLocoIndicator(' ',false);
 
     }
 
@@ -3064,6 +3079,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @SuppressLint({"Recycle", "SetJavaScriptEnabled"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -3140,6 +3156,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         bSelG.setOnClickListener(sfbt);
         bSelG.setOnTouchListener(sfbt);
         bSelG.setOnLongClickListener(sfbt);  // Consist Light Edit
+
+        clearVolumeAndGamepadIndicators();
+
 
         // Arrow Keys
         try {
@@ -3446,6 +3465,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
 
         prefSelectedLocoIndicator = prefs.getString("prefSelectedLocoIndicator", getResources().getString(R.string.prefSelectedLocoIndicatorDefaultValue));
+        clearVolumeAndGamepadIndicators();
 
         getDirectionButtonPrefs();
         setDirectionButtonLabels(); // set all the direction button labels

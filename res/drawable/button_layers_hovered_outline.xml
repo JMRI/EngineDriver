@@ -9,7 +9,7 @@
         </shape>
     </item>
 
-    <!-- inside border  -->
+    <!-- inside border 2 -->
     <item
         android:top="@dimen/buttonActivated2InsideStrokePadding_outline" android:left="@dimen/buttonActivated2InsideStrokePadding_outline" android:right="@dimen/buttonActivated2InsideStrokePadding_outline" android:bottom="@dimen/buttonActivated2InsideStrokePadding_outline">
         <shape android:shape="rectangle"  >
