@@ -12,7 +12,35 @@
     <item android:state_pressed="true" android:state_enabled="true" android:drawable="@drawable/button_layers_selected_outline">
     </item>
 
-    <item android:state_selected="true" android:state_enabled="true" android:drawable="@drawable/button_layers_selected_outline">
+    <item
+        android:state_selected="true"
+        android:state_activated="false"
+        android:state_enabled="true"
+        android:drawable="@drawable/button_layers_selected_outline">
+    </item>
+
+    <item
+        android:state_selected="false"
+        android:state_activated="true"
+        android:state_hovered="true"
+        android:state_enabled="true"
+        android:drawable="@drawable/button_layers_activated_hovered_outline">
+    </item>
+
+    <item
+        android:state_selected="false"
+        android:state_activated="true"
+        android:state_hovered="false"
+        android:state_enabled="true"
+        android:drawable="@drawable/button_layers_activated_outline">
+    </item>
+
+    <item
+        android:state_selected="false"
+        android:state_activated="false"
+        android:state_hovered="true"
+        android:state_enabled="true"
+        android:drawable="@drawable/button_layers_hovered_outline">
     </item>
 
     <item>

@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -143,6 +144,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private static String VOLUME_INDICATOR = "v";
     private static String[] GAMEPAD_INDICATOR = {"1", "2", "3"};
+
+    private String prefSelectedLocoIndicator = "None";
 
     private SeekBar sbT; // seekbars
     private SeekBar sbS;
@@ -1636,6 +1639,69 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+    private void clearVolumeAndGamepadIndicators() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            if ((prefSelectedLocoIndicator.equals("None")) || (prefSelectedLocoIndicator.equals("Gamepad"))) {
+                bSelT.setActivated(false);
+                bSelS.setActivated(false);
+                bSelG.setActivated(false);
+            }
+            if ((prefSelectedLocoIndicator.equals("None")) || (prefSelectedLocoIndicator.equals("Volume"))) {
+                bSelT.setHovered(false);
+                bSelS.setHovered(false);
+                bSelG.setHovered(false);
+            }
+        }
+    }
+
+    @SuppressLint("NewApi")
+    private void setSelectedLocoIndicator(char whichThrottle, boolean isVolume) {
+
+        if (!prefSelectedLocoIndicator.equals("None")) {
+
+            if (mainapp.androidVersion >= mainapp.minActivatedButtonsVersion) {
+
+                if ((isVolume) && (((prefSelectedLocoIndicator.equals("Both")) || (prefSelectedLocoIndicator.equals("Volume"))))) {
+
+                    if (whichThrottle == 'T') {
+                        bSelT.setActivated(true);
+                        bSelS.setActivated(false);
+                        bSelG.setActivated(false);
+                    } else if (whichThrottle == 'S') {
+                        bSelT.setActivated(false);
+                        bSelS.setActivated(true);
+                        bSelG.setActivated(false);
+                    } else if (whichThrottle == 'G') {
+                        bSelT.setActivated(false);
+                        bSelS.setActivated(false);
+                        bSelG.setActivated(true);
+                    }
+
+                    if ((!prefSelectedLocoIndicator.equals("Gamepad")) && (whichThrottle == ' ')) {  // if it a gamepad, then nothing may be selected
+                        bSelT.setActivated(false);
+                        bSelS.setActivated(false);
+                        bSelG.setActivated(false);
+                    }
+                }
+                if ((!isVolume) && (((prefSelectedLocoIndicator.equals("Both")) || (prefSelectedLocoIndicator.equals("Gamepad"))))) {
+                    if (whichThrottle == 'T') {
+                        bSelT.setHovered(true);
+                        bSelS.setHovered(false);
+                        bSelG.setHovered(false);
+                    } else if (whichThrottle == 'S') {
+                        bSelT.setHovered(false);
+                        bSelS.setHovered(true);
+                        bSelG.setHovered(false);
+                    } else if (whichThrottle == 'G') {
+                        bSelT.setHovered(false);
+                        bSelS.setHovered(false);
+                        bSelG.setHovered(true);
+                    }
+                }
+            }
+        }
+    }
+
     private void setVolumeIndicator() {
         // hide or display volume control indicator based on variable
         tvVolT.setText("");
@@ -1643,10 +1709,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         tvVolG.setText("");
         if (whichVolume == 'T') {
             tvVolT.setText(VOLUME_INDICATOR);
+            setSelectedLocoIndicator('T',true);
         } else if (whichVolume == 'S') {
             tvVolS.setText(VOLUME_INDICATOR);
+            setSelectedLocoIndicator('S',true);
         } else {
             tvVolG.setText(VOLUME_INDICATOR);
+            setSelectedLocoIndicator('G',true);
         }
         // Ensure ESU MCII tracks selected throttle
         if (IS_ESU_MCII) {
@@ -1669,6 +1738,15 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         tvGamePadT.setText(gamePadThrottleAssignment[0]);
         tvGamePadS.setText(gamePadThrottleAssignment[1]);
         tvGamePadG.setText(gamePadThrottleAssignment[2]);
+
+        if (gamePadThrottleAssignment[0] == "1") {
+            setSelectedLocoIndicator('T',false);
+        } else if (gamePadThrottleAssignment[1] == "1") {
+            setSelectedLocoIndicator('S',false);
+        } else if (gamePadThrottleAssignment[2] == "1") {
+            setSelectedLocoIndicator('G',false);
+        } else setSelectedLocoIndicator(' ',false);
+
     }
 
     private void setNextActiveThrottle() {
@@ -1799,60 +1877,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
-    private boolean isInvalidGamePadKey(int key, int action) {
-        boolean isOk = true;
-
-        switch (whichGamePadMode) {
-            case "iCade+DPAD":
-            case "iCade+DPAD-rotate": // all keys should be A-Z plus DPAD keys
-                if (action == ACTION_UP) { // only check the up codes
-                    if (((key < KEYCODE_A) || (key > KEYCODE_Z))
-                        && (key != KEYCODE_DPAD_LEFT) && (key != KEYCODE_DPAD_RIGHT) && (key != KEYCODE_DPAD_DOWN) && (key != KEYCODE_DPAD_UP)) {
-                    isOk = false;
-                    }
-                }
-                break;
-            case "MTK":
-            case "MTK-rotate":   // all keys should be 0-5 plus DPAD keys
-                if (action == ACTION_UP) { // only check the up codes
-                    if (((key < KEYCODE_0) || (key > KEYCODE_5))
-                            && (key != KEYCODE_DPAD_LEFT) && (key != KEYCODE_DPAD_RIGHT) && (key != KEYCODE_DPAD_DOWN) && (key != KEYCODE_DPAD_UP)) {
-                        isOk = false;
-                    }
-                }
-                break;
-            case "Game":
-            case "Game-rotate":
-                if (action == ACTION_UP) { // only check the up codes
-                    if ((key!=KEYCODE_BUTTON_Y) && (key!=KEYCODE_BUTTON_X) && (key!=KEYCODE_BUTTON_A)
-                    && (key!=KEYCODE_BUTTON_B)&& (key!=KEYCODE_VOLUME_UP)&& (key!=KEYCODE_ENTER)
-                    && (key!=KEYCODE_DPAD_LEFT) && (key!=KEYCODE_DPAD_RIGHT) && (key!=KEYCODE_DPAD_DOWN) && (key!=KEYCODE_DPAD_UP)) {
-                        isOk = false;
-                    }
-                }
-                break;
-            case "MagicseeR1B":
-                if (action == ACTION_UP) { // only check the up codes
-                    if ((key != KEYCODE_BUTTON_L1) && (key != KEYCODE_BUTTON_L2) && (key != KEYCODE_BUTTON_A)
-                            && (key != KEYCODE_BUTTON_B) && (key != KEYCODE_BUTTON_R1) && (key != KEYCODE_BUTTON_R2) //real keys
-                            && (key != KEYCODE_BUTTON_Y) && (key != KEYCODE_SPACE) && (key != KEYCODE_BUTTON_X) && (key != KEYCODE_DEL) // discarded keys
-                        ) {
-                        isOk = false;
-                    }
-                }
-                break;
-            default: // "iCade" or iCade-rotate   // all keys should be A-Z   DPAD keys are sent as well
-                if (action == ACTION_UP) { // only check the up codes
-                    if (((key < KEYCODE_A) || (key > KEYCODE_Z)) // real keys
-                    && (key!=KEYCODE_DPAD_LEFT) && (key!=KEYCODE_DPAD_RIGHT) && (key!=KEYCODE_DPAD_DOWN) && (key!=KEYCODE_DPAD_UP) // discarded keys
-                        ) {
-                        isOk = false;
-                    }
-                }
-                break;
-        }
-        return isOk;
-    }
     //
     private int swapToNextAvilableThrottleForGamePad(int fromThrottle, boolean quiet) {
         int whichThrottle = -1;
@@ -3055,6 +3079,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @SuppressLint({"Recycle", "SetJavaScriptEnabled"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -3086,6 +3111,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         speedButtonUpText = getApplicationContext().getResources().getString(R.string.UpButton);
         speedButtonDownText = getApplicationContext().getResources().getString(R.string.DownButton);
 
+        prefSelectedLocoIndicator = prefs.getString("prefSelectedLocoIndicator", getResources().getString(R.string.prefSelectedLocoIndicatorDefaultValue));
         getDirectionButtonPrefs();
 
         webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
@@ -3130,6 +3156,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         bSelG.setOnClickListener(sfbt);
         bSelG.setOnTouchListener(sfbt);
         bSelG.setOnLongClickListener(sfbt);  // Consist Light Edit
+
+        clearVolumeAndGamepadIndicators();
+
 
         // Arrow Keys
         try {
@@ -3434,6 +3463,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefConsistLightsLongClick = prefs.getBoolean("ConsistLightsLongClickPreference", getResources().getBoolean(R.bool.prefConsistLightsLongClickDefaultValue));
 
         prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
+
+        prefSelectedLocoIndicator = prefs.getString("prefSelectedLocoIndicator", getResources().getString(R.string.prefSelectedLocoIndicatorDefaultValue));
+        clearVolumeAndGamepadIndicators();
 
         getDirectionButtonPrefs();
         setDirectionButtonLabels(); // set all the direction button labels
@@ -3937,6 +3969,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         int sliderMargin = preferences.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
 
         //show speed buttons based on pref
+        llTSetSpd.setVisibility(View.VISIBLE); //always show as a default
+        llSSetSpd.setVisibility(View.VISIBLE);
+        llGSetSpd.setVisibility(View.VISIBLE);
+
         sbS.setVisibility(View.VISIBLE);  //always show slider if buttons not shown
         sbG.setVisibility(View.VISIBLE);
         sbT.setVisibility(View.VISIBLE);
@@ -3973,6 +4009,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             bRSpdS.setVisibility(View.GONE);
             bRSpdG.setVisibility(View.GONE);
             sliderMargin += 30;  //a little extra margin previously in button
+        }
+        if (prefs.getBoolean("prefHideSliderAndSpeedButtons", getResources().getBoolean(R.bool.prefHideSliderAndSpeedButtonsDefaultValue))) {
+            llTSetSpd.setVisibility(View.GONE);
+            llSSetSpd.setVisibility(View.GONE);
+            llGSetSpd.setVisibility(View.GONE);
         }
 
         sbS.setPadding(sliderMargin, 0, sliderMargin, 0);
@@ -4083,6 +4124,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.setWebMenuOption(TMenu);
             mainapp.setRoutesMenuOption(TMenu);
             mainapp.setTurnoutsMenuOption(TMenu);
+            mainapp.setGamepadTestMenuOption(TMenu);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");
@@ -4289,6 +4331,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 consistLightsEdit3.putExtra("whichThrottle", 'G');
                 navigatingAway = true;
                 startActivityForResult(consistLightsEdit3, ACTIVITY_CONSIST_LIGHTS);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.gamepad_test_mnu:
+                in = new Intent().setClass(this, gamepad_test.class);
+                navigatingAway = true;
+                startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
         }

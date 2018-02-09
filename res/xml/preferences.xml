@@ -86,6 +86,12 @@
                 android:summary="@string/prefHideSliderSummary"
                 android:title="@string/prefHideSliderTitle" >
             </CheckBoxPreference>
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefHideSliderAndSpeedButtonsDefaultValue"
+                android:key="prefHideSliderAndSpeedButtons"
+                android:summary="@string/prefHideSliderAndSpeedButtonsSummary"
+                android:title="@string/prefHideSliderAndSpeedButtonsTitle" >
+            </CheckBoxPreference>
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefSwapForwardReverseButtonsDefaultValue"
@@ -313,6 +319,15 @@
                 android:title="@string/prefGamePadButtonLeftTitle" />
             <!--    Gamepad button preferences   -->
         </PreferenceScreen>
+
+        <ListPreference
+            android:defaultValue="@string/prefSelectedLocoIndicatorDefaultValue"
+            android:entries="@array/prefSelectedLocoIndicatorEntries"
+            android:entryValues="@array/prefSelectedLocoIndicatorOptions"
+            android:key="prefSelectedLocoIndicator"
+            android:summary="@string/prefSelectedLocoIndicatorSummary"
+            android:title="@string/prefSelectedLocoIndicatorTitle" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/prefThrottleTitle" >

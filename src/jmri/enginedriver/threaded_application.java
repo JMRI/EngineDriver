@@ -140,6 +140,7 @@ public class threaded_application extends Application {
     public final int minGamepadVersion = Build.VERSION_CODES.KITKAT;
     public final int minThemeVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
     public final int minScreenDimNewMethodVersion = Build.VERSION_CODES.KITKAT;
+    public final int minActivatedButtonsVersion = Build.VERSION_CODES.HONEYCOMB;
 
     static final int DEFAULT_HEARTBEAT_INTERVAL = 10;       //interval for heartbeat when WiT heartbeat is disabled
     static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;   //minimum allowed interval for outbound heartbeat generator
@@ -2185,6 +2186,26 @@ public class threaded_application extends Application {
                         //for MRC, the web view is only for settings, so also change the text
                         item.setTitle(R.string.mrc_settings);
                     }
+                } else {
+                    item.setVisible(false);
+                }
+            }
+        }
+    }
+
+    /**
+     * for menu passed in, hide or show the gamepad test menu
+     *
+     * @param menu - menu object that will be adjusted
+     */
+    public void setGamepadTestMenuOption(Menu menu) {
+        String whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
+
+        if (menu != null) {
+            MenuItem item = menu.findItem(R.id.gamepad_test_mnu);
+            if (item != null) {
+                if (!whichGamePadMode .equals("None")) {
+                    item.setVisible(true);
                 } else {
                     item.setVisible(false);
                 }

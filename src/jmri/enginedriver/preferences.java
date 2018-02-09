@@ -230,7 +230,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 limitIntPrefValue(sharedPreferences, key, 1, 99, "4");
                 break;
             case "prefScreenBrightnessDim":
-                limitIntPrefValue(sharedPreferences, key, 0, 100, "5");
+                limitIntPrefValue(sharedPreferences, key, 1, 100, "5");
                 break;
             case "WebViewLocation":
                 mainapp.alert_activities(message_type.WEBVIEW_LOC, "");
