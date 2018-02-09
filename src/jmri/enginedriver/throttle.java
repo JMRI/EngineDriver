@@ -330,6 +330,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private boolean prefSwapForwardReverseButtonsLongPress = false;
     private boolean currentSwapForwardReverseButtons = false;
 
+    private boolean prefGamepadSwapForwardReverseWithScreenButtons = false;
+
     private static String DIRECTION_BUTTON_LEFT_TEXT = "Forward";
     private static String DIRECTION_BUTTON_RIGHT_TEXT = "Reverse";
 
@@ -914,12 +916,22 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         return isOk;
     }
 
+    private boolean gamepadDirectionButtonsAreCurrentlyReversed() {
+        boolean isOk = false;
+        if ((prefGamepadSwapForwardReverseWithScreenButtons) && (currentSwapForwardReverseButtons)) {
+            isOk= true;
+        }
+        return isOk;
+    }
+
     private void getDirectionButtonPrefs() {
         prefSwapForwardReverseButtons = prefs.getBoolean("prefSwapForwardReverseButtons", getResources().getBoolean(R.bool.prefSwapForwardReverseButtonsDefaultValue));
         prefSwapForwardReverseButtonsLongPress = prefs.getBoolean("prefSwapForwardReverseButtonsLongPress", getResources().getBoolean(R.bool.prefSwapForwardReverseButtonsLongPressDefaultValue));
 
         prefLeftDirectionButtons = prefs.getString("prefLeftDirectionButtons", getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsDefaultValue)).trim();
         prefRightDirectionButtons = prefs.getString("prefRightDirectionButtons", getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsDefaultValue)).trim();
+
+        prefGamepadSwapForwardReverseWithScreenButtons = prefs.getBoolean("prefGamepadSwapForwardReverseWithScreenButtons", getResources().getBoolean(R.bool.prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue));
     }
 
     private void setDirectionButtonLabels() {
@@ -2019,12 +2031,22 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_FORWARD)) {  // Forward
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
-                boolean dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
+                boolean dirChangeFailed = false;
+                if (!gamepadDirectionButtonsAreCurrentlyReversed()) {
+                    dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
+                } else {
+                    dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
+                }
                 GamepadFeedbackSound(dirChangeFailed);
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_REVERSE)) {  // Reverse
+            boolean dirChangeFailed = false;
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
-                boolean dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
+                if (!gamepadDirectionButtonsAreCurrentlyReversed()) {
+                    dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
+                } else {
+                    dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
+                }
                 GamepadFeedbackSound(dirChangeFailed);
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_FORWARD_REVERSE_TOGGLE)) {  // Toggle Forward/Reverse

@@ -331,6 +331,12 @@
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButtonLeftTitle" />
             <!--    Gamepad button preferences   -->
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue"
+                android:key="prefGamepadSwapForwardReverseWithScreenButtons"
+                android:summary="@string/prefGamepadSwapForwardReverseWithScreenButtonsSummary"
+                android:title="@string/prefGamepadSwapForwardReverseWithScreenButtonsTitle" >
+            </CheckBoxPreference>
         </PreferenceScreen>
 
         <ListPreference
