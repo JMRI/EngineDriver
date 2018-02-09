@@ -49,4 +49,5 @@
 
     <bool name="prefImportExportLocoListDefaultValue">true</bool>
     <bool name="prefAutoImportExportDefaultValue">false</bool>
+    <bool name="prefDisableVolumeKeysDefaultValue">false</bool>
 </resources>

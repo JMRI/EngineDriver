@@ -94,6 +94,20 @@
             </CheckBoxPreference>
 
             <CheckBoxPreference
+                android:defaultValue="@bool/prefDisableVolumeKeysDefaultValue"
+                android:key="prefDisableVolumeKeys"
+                android:summary="@string/prefDisableVolumeKeysSummary"
+                android:title="@string/prefDisableVolumeKeysTitle" >
+            </CheckBoxPreference>
+
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:key="throttle_direction_preference"
+            android:title="@string/prefDirectionTitle"
+            android:summary="@string/prefDirectionSummary"
+            android:persistent="false">
+            <CheckBoxPreference
                 android:defaultValue="@bool/prefSwapForwardReverseButtonsDefaultValue"
                 android:key="prefSwapForwardReverseButtons"
                 android:summary="@string/prefSwapForwardReverseButtonsSummary"
@@ -121,7 +135,6 @@
                 android:maxLength="7"
                 android:summary="@string/prefRightDirectionButtonsSummary"
                 android:title="@string/prefRightDirectionButtonsTitle" />
-
 
         </PreferenceScreen>
 

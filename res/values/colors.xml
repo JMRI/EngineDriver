@@ -34,6 +34,8 @@
     <color name="buttonSelectedFill_black">#ffa6e0f2</color>
     <color name="buttonSelectedStroke_black">#ff00b2e1</color>
     <color name="buttonSelectedInsideStroke_black">#ff000000</color>
+    <color name="buttonActivatedHoveredInsideStroke_black">#aa00ff</color>
+    <color name="buttonActivatedHoveredInside2Stroke_black">#bf360c</color>
 
     <color name="buttonStopFill_black">#ffe5b0b2</color>
     <color name="buttonStopStroke_black">#ffe5b0b2</color>
@@ -52,6 +54,8 @@
     <color name="buttonSelectedFill_outline">#00000000</color>
     <color name="buttonSelectedStroke_outline">#ff00b2e1</color>
     <color name="buttonSelectedInsideStroke_outline">#ff00b2e1</color>
+    <color name="buttonActivatedHoveredInsideStroke_outline">#ffa000</color>
+    <color name="buttonActivatedHoveredInside2Stroke_outline">#ffea00</color>
 
     <color name="buttonStopFill_outline">#00000000</color>
     <color name="buttonStopStroke_outline">#ffe5b0b2</color>

@@ -16,7 +16,7 @@
         android:top="@dimen/buttonActivated2InsideStrokePadding_black" android:left="@dimen/buttonActivated2InsideStrokePadding_black" android:right="@dimen/buttonActivated2InsideStrokePadding_black" android:bottom="@dimen/buttonActivated2InsideStrokePadding_black">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_black" />
-            <stroke android:width="@dimen/buttonSelectedInsideStroke_black" android:color="@color/buttonSelectedInsideStroke_black" />
+            <stroke android:width="@dimen/buttonSelectedInsideStroke_black" android:color="@color/buttonActivatedHoveredInside2Stroke_black" />
             <solid android:color="@color/transparent"/>
         </shape>
     </item>

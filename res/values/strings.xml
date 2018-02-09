@@ -119,14 +119,22 @@
     <string name="prefThrottlePageTitle">Throttle Page Appearance Preferences</string>
     <string name="prefThrottleTitle">Throttle Control Preferences</string>
     <string name="prefThrottleStatusTitle">Throttle Page Status Row Preferences</string>
-    <string name="prefSliderTitle">Slider and Direction Button Preferences</string>
-    <string name="prefSliderSummary">Options for Speed Slider, Speed Buttons and Direction Buttons</string>
+
+    <string name="prefSliderTitle">Speed Slider+Btns &amp; Volume key Preferences</string>
+    <string name="prefSliderSummary">Options for Speed Slider, Speed Buttons and Volume Keys</string>
+
+    <string name="prefDirectionTitle">Direction button Preferences</string>
+    <string name="prefDirectionSummary">Options for the Direction Buttons</string>
+
     <string name="prefIncreaseSliderHeightTitle">Increase Slider/Speed Height?</string>
     <string name="prefIncreaseSliderHeightSummary">Use a taller slider, or speed buttons, for throttles.</string>
+
     <string name="prefHideSliderTitle">Hide Speed Slider?</string>
     <string name="prefHideSliderSummary">Do not show speed slider, use speed buttons instead.</string>
+
     <string name="prefHideSliderAndSpeedButtonsTitle">Hide Slider AND Speed Buttons?</string>
-    <string name="prefHideSliderAndSpeedButtonsSummary">Do not show either speed slider or speed buttons.\nNote: Overrides the \'Hide Slider\', \'Slider Height\' and \'Display Speed buttons\' options.</string>
+    <string name="prefHideSliderAndSpeedButtonsSummary">Show neither speed slider nor speed buttons.\nNote: Overrides the \'Hide Slider\', \'Slider Height\' and \'Display Speed buttons\' options.</string>
+
     <string name="prefDirChangeWhileMovingTitle">Direction change while moving?</string>
     <string name="prefDirChangeWhileMovingSummary">Allow direction change when moving.</string>
     <string name="prefStopOnDirectionChangeTitle">Stop on direction change?</string>
@@ -315,9 +323,12 @@
     <string name="prefDisplaySpeedArrowsTitle">Display Speed buttons?</string>
     <string name="prefDisplaySpeedArrowsSummary">Display buttons next to speed sliders to change loco speed?</string>
 
-    <string name="prefSelectedLocoIndicatorTitle">Selected Loco Indicator</string>
-    <string name="prefSelectedLocoIndicatorSummary">Highlight the Loco Select button based on the selection method.\nRequires Android Honeycomb or later.</string>
+    <string name="prefSelectedLocoIndicatorTitle">Additional Selected Loco Indicator</string>
+    <string name="prefSelectedLocoIndicatorSummary">Additional highlight of the Loco Select button based on the selection method.\nRequires Android Honeycomb or later.</string>
     <string name="prefSelectedLocoIndicatorDefaultValue">None</string>
+
+    <string name="prefDisableVolumeKeysTitle">Disable Volume keys</string>
+    <string name="prefDisableVolumeKeysSummary">Disables the hardware Volume keys on the phone/tablet that would otherwise control speed. Note: If selected overrides \'Additional Selected Loco Indicator\'. </string>
 
     <string name="prefSpeedButtonsRepeatTitle">Speed button repeat delay</string>
     <string name="prefSpeedButtonsRepeatSummary">How long between repeats on speed buttons.  Smaller is faster. Excludes gamepad buttons. (See separate gamepad setting.)</string>
