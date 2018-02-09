@@ -314,6 +314,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private Handler volumeKeysRepeatUpdateHandler = new Handler();
     private boolean mVolumeKeysAutoIncrement = false;
     private boolean mVolumeKeysAutoDecrement = false;
+    private boolean prefDisableVolumeKeys = false;
 
     private int[] gamePadIds = {0,0,0}; // which device id if assigned to each of the three throttles
     private String[] gamePadThrottleAssignment = {"","",""};
@@ -328,6 +329,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private boolean prefSwapForwardReverseButtons = false;
     private boolean prefSwapForwardReverseButtonsLongPress = false;
     private boolean currentSwapForwardReverseButtons = false;
+
+    private boolean prefGamepadSwapForwardReverseWithScreenButtons = false;
 
     private static String DIRECTION_BUTTON_LEFT_TEXT = "Forward";
     private static String DIRECTION_BUTTON_RIGHT_TEXT = "Reverse";
@@ -913,12 +916,22 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         return isOk;
     }
 
+    private boolean gamepadDirectionButtonsAreCurrentlyReversed() {
+        boolean isOk = false;
+        if ((prefGamepadSwapForwardReverseWithScreenButtons) && (currentSwapForwardReverseButtons)) {
+            isOk= true;
+        }
+        return isOk;
+    }
+
     private void getDirectionButtonPrefs() {
         prefSwapForwardReverseButtons = prefs.getBoolean("prefSwapForwardReverseButtons", getResources().getBoolean(R.bool.prefSwapForwardReverseButtonsDefaultValue));
         prefSwapForwardReverseButtonsLongPress = prefs.getBoolean("prefSwapForwardReverseButtonsLongPress", getResources().getBoolean(R.bool.prefSwapForwardReverseButtonsLongPressDefaultValue));
 
         prefLeftDirectionButtons = prefs.getString("prefLeftDirectionButtons", getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsDefaultValue)).trim();
         prefRightDirectionButtons = prefs.getString("prefRightDirectionButtons", getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsDefaultValue)).trim();
+
+        prefGamepadSwapForwardReverseWithScreenButtons = prefs.getBoolean("prefGamepadSwapForwardReverseWithScreenButtons", getResources().getBoolean(R.bool.prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue));
     }
 
     private void setDirectionButtonLabels() {
@@ -1639,7 +1652,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
-    private void clearVolumeAndGamepadIndicators() {
+    private void clearVolumeAndGamepadAdditionalIndicators() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             if ((prefSelectedLocoIndicator.equals("None")) || (prefSelectedLocoIndicator.equals("Gamepad"))) {
                 bSelT.setActivated(false);
@@ -1655,33 +1668,31 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     @SuppressLint("NewApi")
-    private void setSelectedLocoIndicator(char whichThrottle, boolean isVolume) {
+    private void setSelectedLocoAdditionalIndicator(char whichThrottle, boolean isVolume) {
 
         if (!prefSelectedLocoIndicator.equals("None")) {
 
             if (mainapp.androidVersion >= mainapp.minActivatedButtonsVersion) {
 
-                if ((isVolume) && (((prefSelectedLocoIndicator.equals("Both")) || (prefSelectedLocoIndicator.equals("Volume"))))) {
+                if ((isVolume) && (((prefSelectedLocoIndicator.equals("Both")) || (prefSelectedLocoIndicator.equals("Volume"))))) { // note: 'Volume' option is no longer available
 
-                    if (whichThrottle == 'T') {
-                        bSelT.setActivated(true);
-                        bSelS.setActivated(false);
-                        bSelG.setActivated(false);
-                    } else if (whichThrottle == 'S') {
-                        bSelT.setActivated(false);
-                        bSelS.setActivated(true);
-                        bSelG.setActivated(false);
-                    } else if (whichThrottle == 'G') {
-                        bSelT.setActivated(false);
-                        bSelS.setActivated(false);
-                        bSelG.setActivated(true);
+                    if (!prefDisableVolumeKeys) { // don't set the indicators if the volume keys are disabled the preferences
+
+                        if (whichThrottle == 'T') {
+                            bSelT.setActivated(true);
+                            bSelS.setActivated(false);
+                            bSelG.setActivated(false);
+                        } else if (whichThrottle == 'S') {
+                            bSelT.setActivated(false);
+                            bSelS.setActivated(true);
+                            bSelG.setActivated(false);
+                        } else if (whichThrottle == 'G') {
+                            bSelT.setActivated(false);
+                            bSelS.setActivated(false);
+                            bSelG.setActivated(true);
+                        }
                     }
 
-                    if ((!prefSelectedLocoIndicator.equals("Gamepad")) && (whichThrottle == ' ')) {  // if it a gamepad, then nothing may be selected
-                        bSelT.setActivated(false);
-                        bSelS.setActivated(false);
-                        bSelG.setActivated(false);
-                    }
                 }
                 if ((!isVolume) && (((prefSelectedLocoIndicator.equals("Both")) || (prefSelectedLocoIndicator.equals("Gamepad"))))) {
                     if (whichThrottle == 'T') {
@@ -1696,6 +1707,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         bSelT.setHovered(false);
                         bSelS.setHovered(false);
                         bSelG.setHovered(true);
+                    } else if (whichThrottle == ' ') {  // if it a gamepad, then nothing may be selected
+                        bSelT.setHovered(false);
+                        bSelS.setHovered(false);
+                        bSelG.setHovered(false);
                     }
                 }
             }
@@ -1707,15 +1722,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         tvVolT.setText("");
         tvVolS.setText("");
         tvVolG.setText("");
-        if (whichVolume == 'T') {
-            tvVolT.setText(VOLUME_INDICATOR);
-            setSelectedLocoIndicator('T',true);
-        } else if (whichVolume == 'S') {
-            tvVolS.setText(VOLUME_INDICATOR);
-            setSelectedLocoIndicator('S',true);
-        } else {
-            tvVolG.setText(VOLUME_INDICATOR);
-            setSelectedLocoIndicator('G',true);
+        if (!prefDisableVolumeKeys) { // don't set the indicators if the volume keys are disabled
+            if (whichVolume == 'T') {
+                tvVolT.setText(VOLUME_INDICATOR);
+                setSelectedLocoAdditionalIndicator('T', true);
+            } else if (whichVolume == 'S') {
+                tvVolS.setText(VOLUME_INDICATOR);
+                setSelectedLocoAdditionalIndicator('S', true);
+            } else {
+                tvVolG.setText(VOLUME_INDICATOR);
+                setSelectedLocoAdditionalIndicator('G', true);
+            }
         }
         // Ensure ESU MCII tracks selected throttle
         if (IS_ESU_MCII) {
@@ -1740,12 +1757,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         tvGamePadG.setText(gamePadThrottleAssignment[2]);
 
         if (gamePadThrottleAssignment[0] == "1") {
-            setSelectedLocoIndicator('T',false);
+            setSelectedLocoAdditionalIndicator('T',false);
         } else if (gamePadThrottleAssignment[1] == "1") {
-            setSelectedLocoIndicator('S',false);
+            setSelectedLocoAdditionalIndicator('S',false);
         } else if (gamePadThrottleAssignment[2] == "1") {
-            setSelectedLocoIndicator('G',false);
-        } else setSelectedLocoIndicator(' ',false);
+            setSelectedLocoAdditionalIndicator('G',false);
+        } else setSelectedLocoAdditionalIndicator(' ',false);
 
     }
 
@@ -2014,12 +2031,22 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_FORWARD)) {  // Forward
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
-                boolean dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
+                boolean dirChangeFailed = false;
+                if (!gamepadDirectionButtonsAreCurrentlyReversed()) {
+                    dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
+                } else {
+                    dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
+                }
                 GamepadFeedbackSound(dirChangeFailed);
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_REVERSE)) {  // Reverse
+            boolean dirChangeFailed = false;
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
-                boolean dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
+                if (!gamepadDirectionButtonsAreCurrentlyReversed()) {
+                    dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
+                } else {
+                    dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
+                }
                 GamepadFeedbackSound(dirChangeFailed);
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_FORWARD_REVERSE_TOGGLE)) {  // Toggle Forward/Reverse
@@ -3157,7 +3184,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         bSelG.setOnTouchListener(sfbt);
         bSelG.setOnLongClickListener(sfbt);  // Consist Light Edit
 
-        clearVolumeAndGamepadIndicators();
+        prefDisableVolumeKeys = prefs.getBoolean("prefDisableVolumeKeys", getResources().getBoolean(R.bool.prefDisableVolumeKeysDefaultValue));
+
+        clearVolumeAndGamepadAdditionalIndicators();
 
 
         // Arrow Keys
@@ -3464,8 +3493,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
 
+        prefDisableVolumeKeys = prefs.getBoolean("prefDisableVolumeKeys", getResources().getBoolean(R.bool.prefDisableVolumeKeysDefaultValue));
+
         prefSelectedLocoIndicator = prefs.getString("prefSelectedLocoIndicator", getResources().getString(R.string.prefSelectedLocoIndicatorDefaultValue));
-        clearVolumeAndGamepadIndicators();
+        clearVolumeAndGamepadAdditionalIndicators();
+
 
         getDirectionButtonPrefs();
         setDirectionButtonLabels(); // set all the direction button labels
@@ -4163,26 +4195,29 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 mainapp.checkExit(this);
             return (true); // stop processing this key
         } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
-            char wVol = 0;
-            if (whichVolume == 'T' && mainapp.consistT.isActive()) {
-                wVol = 'T';
-            }
-            if (whichVolume == 'S' && mainapp.consistS.isActive()) {
-                wVol = 'S';
-            }
-            if (whichVolume == 'G' && mainapp.consistG.isActive()) {
-                wVol = 'G';
-            }
-            if (wVol != 0) {
-                if (key == KEYCODE_VOLUME_UP) {
-                    if (repeatCnt == 0) {
-                        mVolumeKeysAutoIncrement = true;
-                        volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(wVol));
-                    }
-                } else {
-                    if (repeatCnt == 0) {
-                        mVolumeKeysAutoDecrement = true;
-                        volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(wVol));
+
+            if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
+                char wVol = 0;
+                if (whichVolume == 'T' && mainapp.consistT.isActive()) {
+                    wVol = 'T';
+                }
+                if (whichVolume == 'S' && mainapp.consistS.isActive()) {
+                    wVol = 'S';
+                }
+                if (whichVolume == 'G' && mainapp.consistG.isActive()) {
+                    wVol = 'G';
+                }
+                if (wVol != 0) {
+                    if (key == KEYCODE_VOLUME_UP) {
+                        if (repeatCnt == 0) {
+                            mVolumeKeysAutoIncrement = true;
+                            volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(wVol));
+                        }
+                    } else {
+                        if (repeatCnt == 0) {
+                            mVolumeKeysAutoDecrement = true;
+                            volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(wVol));
+                        }
                     }
                 }
             }
