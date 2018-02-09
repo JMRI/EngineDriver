@@ -13,10 +13,10 @@
 
     <!-- inside border  -->
     <item
-        android:top="@dimen/buttonSelectedInsideStrokePadding_black" android:left="@dimen/buttonSelectedInsideStrokePadding_black" android:right="@dimen/buttonSelectedInsideStrokePadding_black" android:bottom="@dimen/buttonSelectedInsideStrokePadding_black">
+        android:top="@dimen/buttonActivatedInsideStrokePadding_black" android:left="@dimen/buttonActivatedInsideStrokePadding_black" android:right="@dimen/buttonActivatedInsideStrokePadding_black" android:bottom="@dimen/buttonActivatedInsideStrokePadding_black">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_black" />
-            <stroke android:width="@dimen/buttonSelectedStroke_black" android:color="@color/buttonSelectedInsideStroke_black" />
+            <stroke android:width="@dimen/buttonSelectedStroke_black" android:color="@color/buttonActivatedHoveredInsideStroke_black" />
             <solid android:color="@color/transparent"/>
         </shape>
     </item>
@@ -26,7 +26,7 @@
         android:top="@dimen/buttonActivated2InsideStrokePadding_black" android:left="@dimen/buttonActivated2InsideStrokePadding_black" android:right="@dimen/buttonActivated2InsideStrokePadding_black" android:bottom="@dimen/buttonActivated2InsideStrokePadding_black">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_black" />
-            <stroke android:width="@dimen/buttonSelectedInsideStroke_black" android:color="@color/buttonSelectedInsideStroke_black" />
+            <stroke android:width="@dimen/buttonSelectedInsideStroke_black" android:color="@color/buttonActivatedHoveredInside2Stroke_black" />
             <solid android:color="@color/transparent"/>
         </shape>
     </item>

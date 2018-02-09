@@ -11,10 +11,10 @@
 
     <!-- inside border  -->
     <item
-        android:top="@dimen/buttonActivated2InsideStrokePadding_outline" android:left="@dimen/buttonActivated2InsideStrokePadding_outline" android:right="@dimen/buttonActivated2InsideStrokePadding_outline" android:bottom="@dimen/buttonActivated2InsideStrokePadding_outline">
+        android:top="@dimen/buttonActivatedInsideStrokePadding_outline" android:left="@dimen/buttonActivatedInsideStrokePadding_outline" android:right="@dimen/buttonActivatedInsideStrokePadding_outline" android:bottom="@dimen/buttonActivatedInsideStrokePadding_outline">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_outline" />
-            <stroke android:width="@dimen/buttonSelectedInsideStroke_outline" android:color="@color/buttonStroke_outline" />
+            <stroke android:width="@dimen/buttonSelectedInsideStroke_outline" android:color="@color/buttonActivatedHoveredInsideStroke_outline" />
             <solid android:color="@color/transparent"/>
         </shape>
     </item>

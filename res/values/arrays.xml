@@ -504,14 +504,12 @@
     <string-array name="prefSelectedLocoIndicatorOptions">
         <item>None</item>
         <item>Both</item>
-        <item>Volume</item>
         <item>Gamepad</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
-        <item>None</item>
+        <item>None (Use \'v\',\'1\' only)</item>
         <item>Both Volume and Gamepad 1</item>
-        <item>Volume buttons</item>
-        <item>Gamepad 1</item>
+        <item>Gamepad 1 only</item>
     </string-array>
 
 </resources>

@@ -6,7 +6,7 @@
     <dimen name="buttonSelectedStroke_black">1dip</dimen>
     <dimen name="buttonSelectedInsideStroke_black">1dip</dimen>
     <dimen name="buttonSelectedInsideStrokePadding_black">1dip</dimen>
-    <dimen name="buttonActivateInsideStrokePadding_black">1dip</dimen>
+    <dimen name="buttonActivatedInsideStrokePadding_black">1dip</dimen>
     <dimen name="buttonActivated2InsideStrokePadding_black">3dip</dimen>
     <dimen name="buttonStroke_black">2dip</dimen>
     <dimen name="buttonCornerRadius_black">5dip</dimen>
@@ -24,8 +24,8 @@
     <dimen name="buttonSelectedStroke_outline">2dip</dimen>
     <dimen name="buttonSelectedInsideStroke_outline">1dip</dimen>
     <dimen name="buttonSelectedInsideStrokePadding_outline">3dip</dimen>
-    <dimen name="buttonActivateInsideStrokePadding_outline">3dip</dimen>
-    <dimen name="buttonActivated2InsideStrokePadding_outline">5dip</dimen>
+    <dimen name="buttonActivatedInsideStrokePadding_outline">3dip</dimen>
+    <dimen name="buttonActivated2InsideStrokePadding_outline">4dip</dimen>
     <dimen name="buttonStroke_outline">2dip</dimen>
     <dimen name="buttonCornerRadius_outline">5dip</dimen>
 

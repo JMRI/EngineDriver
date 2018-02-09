@@ -47,6 +47,9 @@
     <bool name="prefSwapForwardReverseButtonsDefaultValue">false</bool>
     <bool name="prefSwapForwardReverseButtonsLongPressDefaultValue">false</bool>
 
+    <bool name="prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue">true</bool>
+
     <bool name="prefImportExportLocoListDefaultValue">true</bool>
     <bool name="prefAutoImportExportDefaultValue">false</bool>
+    <bool name="prefDisableVolumeKeysDefaultValue">false</bool>
 </resources>
