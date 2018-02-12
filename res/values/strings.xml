@@ -382,6 +382,9 @@
     <string name="prefGamepadSwapForwardReverseWithScreenButtonsTitle">Swap Direction Buttons with Screen Buttons</string>
     <string name="prefGamepadSwapForwardReverseWithScreenButtonsSummary">Temporarily swap the two Gamepad Direction Buttons if the Screen Direction buttons are swaped.</string>
 
+    <string name="prefGamepadTestEnforceTestingTitle">Enforce Gamepad Testing</string>
+    <string name="prefGamepadTestEnforceTestingSummary">Test each gamepad every time they are connected.</string>
+
     <string name="prefLeftDirectionButtonsTitle">Left Direction Button label</string>
     <string name="prefLeftDirectionButtonsSummary">Labels for all LEFT direction buttons. Enter \'Foward\' or blank for normal behaviour.</string>
     <string name="prefLeftDirectionButtonsDefaultValue">Forward</string>
@@ -452,9 +455,10 @@
     <string name="gamepadTestKeycodeLabel">key_code:\s</string>
     <string name="gamepadTestFunctionLabel">function:\s</string>
     <string name="gamepadTestCompleteLabel">complete?: </string>
-    <string name="gamepadTestHelp">You MUST move the DPad in all directions\nAND press the four main buttons to confirm.\nPress Back Arrow when done.\nIf you can\'t activate all buttons, try a different mode (above) or on the device.</string>
+    <string name="gamepadTestHelp">You MUST move the DPad in all directions\nAND press the four main buttons to confirm.\nIf you can\'t activate all buttons, try a different mode (above) or on the device.\nPress Back Arrow if you can\'t complete the, but the Gamepad won\'t work correctly.</string>
     <string name="gamepadTestIncomplete">"Test Incomplete"</string>
     <string name="gamepadTestComplete">"Test Complete"</string>
+    <string name="gamepadTestCompleteToast">"Gamepad test completed successfully"</string>
     <string name="gamepadTestInvalidKeycode">"Invalid Keycode for this mode"</string>
     <!--    Gamepad test page -->
 

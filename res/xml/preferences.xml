@@ -337,6 +337,12 @@
                 android:summary="@string/prefGamepadSwapForwardReverseWithScreenButtonsSummary"
                 android:title="@string/prefGamepadSwapForwardReverseWithScreenButtonsTitle" >
             </CheckBoxPreference>
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefGamepadTestEnforceTestingDefaultValue"
+                android:key="prefGamepadTestEnforceTesting"
+                android:summary="@string/prefGamepadTestEnforceTestingSummary"
+                android:title="@string/prefGamepadTestEnforceTestingTitle" >
+            </CheckBoxPreference>
         </PreferenceScreen>
 
         <ListPreference

@@ -120,6 +120,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     public static final int ACTIVITY_SELECT_LOCO = 1;
     public static final int ACTIVITY_CONSIST = 2;
     public static final int ACTIVITY_CONSIST_LIGHTS = 3;
+    public static final int ACTIVITY_GAMEPAD_TEST = 4;
 
     private static final int GONE = 8;
     private static final int VISIBLE = 0;
@@ -321,6 +322,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private boolean prefGamePadMultipleDevices = false;
     private boolean usingMultiplePads = false;
     private int[] gamePadDeviceIds = {0,0,0,0,0,0,0}; // which device ids have we seen
+    private int[] gamePadDeviceIdsTested = {-1,-1,-1,-1,-1,-1,-1}; // which device ids have we tested  -1 = not tested 0 = test started 1 = test passed 2 = test failed
     private int gamepadCount = 0;
     // preference to chnage the consist's on long clicks
     boolean prefConsistLightsLongClick;
@@ -328,9 +330,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private boolean prefSwapForwardReverseButtons = false;
     private boolean prefSwapForwardReverseButtonsLongPress = false;
-    private boolean currentSwapForwardReverseButtons = false;
+    private boolean[] currentSwapForwardReverseButtons = {false,false,false};
 
     private boolean prefGamepadSwapForwardReverseWithScreenButtons = false;
+    private boolean prefGamepadTestEnforceTesting = true;
 
     private static String DIRECTION_BUTTON_LEFT_TEXT = "Forward";
     private static String DIRECTION_BUTTON_RIGHT_TEXT = "Reverse";
@@ -907,21 +910,29 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
-    private boolean directionButtonsAreCurrentlyReversed() {
+    private boolean directionButtonsAreCurrentlyReversed(int throttleIndexNo) {
         boolean isOk = false;
-        if ( ((!prefSwapForwardReverseButtons) && (currentSwapForwardReverseButtons))
-                || (((prefSwapForwardReverseButtons) && (!currentSwapForwardReverseButtons))) ) {
+        if ( ((!prefSwapForwardReverseButtons) && (currentSwapForwardReverseButtons[throttleIndexNo]))
+                || (((prefSwapForwardReverseButtons) && (!currentSwapForwardReverseButtons[throttleIndexNo]))) ) {
             isOk= true;
         }
         return isOk;
     }
 
-    private boolean gamepadDirectionButtonsAreCurrentlyReversed() {
+    private boolean gamepadDirectionButtonsAreCurrentlyReversed(int throttleIndexNo) {
         boolean isOk = false;
-        if ((prefGamepadSwapForwardReverseWithScreenButtons) && (currentSwapForwardReverseButtons)) {
+        if ((prefGamepadSwapForwardReverseWithScreenButtons) && (currentSwapForwardReverseButtons[throttleIndexNo])) {
             isOk= true;
         }
         return isOk;
+    }
+
+    private int getThrottleIndexFromChar(char t) {  // for use to index allThrottleLetters
+        switch (t) {
+            case 'T': return 0;
+            case 'S': return 1;
+            default: return 2;  // 'G'
+        }
     }
 
     private void getDirectionButtonPrefs() {
@@ -935,8 +946,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     private void setDirectionButtonLabels() {
-        String FullLeftText = DIRECTION_BUTTON_LEFT_TEXT;
-        String FullRightText = DIRECTION_BUTTON_RIGHT_TEXT;
+        String[] FullLeftText = {DIRECTION_BUTTON_LEFT_TEXT, DIRECTION_BUTTON_LEFT_TEXT, DIRECTION_BUTTON_LEFT_TEXT};
+        String[] FullRightText = {DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT};
         String dirLeftText = DIRECTION_BUTTON_LEFT_TEXT;
         String dirRightText = DIRECTION_BUTTON_RIGHT_TEXT;
         String dirLeftExtraText = " \u00B7F\u00B7";
@@ -944,30 +955,34 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         if ( ((prefLeftDirectionButtons.equals(DIRECTION_BUTTON_LEFT_TEXT)) && (prefRightDirectionButtons.equals(DIRECTION_BUTTON_RIGHT_TEXT)))
                 || ((prefLeftDirectionButtons.equals("")) && (prefRightDirectionButtons.equals(""))) ){
-            if(directionButtonsAreCurrentlyReversed()) {
-                FullLeftText = DIRECTION_BUTTON_RIGHT_TEXT;
-                FullRightText = DIRECTION_BUTTON_LEFT_TEXT;
+            for (int i=0; i<=2;i++){
+                if (directionButtonsAreCurrentlyReversed(i)) {
+                    FullLeftText[i] = DIRECTION_BUTTON_RIGHT_TEXT;
+                    FullRightText[i] = DIRECTION_BUTTON_LEFT_TEXT;
+                }
             }
         } else {
             dirLeftText = prefLeftDirectionButtons;
             dirRightText = prefRightDirectionButtons;
 
-            if (!directionButtonsAreCurrentlyReversed()) {
-                FullLeftText = dirLeftText + dirLeftExtraText;
-                FullRightText = dirRightText + dirRightExtraText;
-            } else {
-                FullLeftText = dirLeftText + dirRightExtraText;
-                FullRightText = dirRightText + dirLeftExtraText;
+            for (int i=0; i<=2;i++) {
+                if (!directionButtonsAreCurrentlyReversed(i)) {
+                    FullLeftText[i] = dirLeftText + dirLeftExtraText;
+                    FullRightText[i] = dirRightText + dirRightExtraText;
+                } else {
+                    FullLeftText[i] = dirLeftText + dirRightExtraText;
+                    FullRightText[i] = dirRightText + dirLeftExtraText;
+                }
             }
         }
 
 
-        bFwdT.setText(FullLeftText);
-        bFwdS.setText(FullLeftText);
-        bFwdG.setText(FullLeftText);
-        bRevT.setText(FullRightText);
-        bRevS.setText(FullRightText);
-        bRevG.setText(FullRightText);
+        bFwdT.setText(FullLeftText[0]);
+        bFwdS.setText(FullLeftText[1]);
+        bFwdG.setText(FullLeftText[2]);
+        bRevT.setText(FullRightText[0]);
+        bRevS.setText(FullRightText[1]);
+        bRevG.setText(FullRightText[2]);
 
     }
 
@@ -1302,6 +1317,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     // indicate direction using the button pressed state
     void showDirectionIndication(char whichThrottle, int direction) {
+        int throttleIndexNo = getThrottleIndexFromChar(whichThrottle);
+
         Button bFwd = bFwdT;
         Button bRev = bRevT;
         switch (whichThrottle) {
@@ -1316,12 +1333,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         boolean setLeftDirectionButtonEnabled = true;
         if (direction == 0) {  //0=reverse 1=forward
-            if (!directionButtonsAreCurrentlyReversed())
+            if (!directionButtonsAreCurrentlyReversed(throttleIndexNo))
                 setLeftDirectionButtonEnabled = false;
             else
                 setLeftDirectionButtonEnabled = true;
         } else {
-            if (!directionButtonsAreCurrentlyReversed())
+            if (!directionButtonsAreCurrentlyReversed(throttleIndexNo))
                 setLeftDirectionButtonEnabled = true;
             else
                 setLeftDirectionButtonEnabled = false;
@@ -1432,6 +1449,24 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+    void start_gamepad_test_activity(int gamepadNo) {
+
+        if (prefGamepadTestEnforceTesting) {
+            gamePadDeviceIdsTested[gamepadNo] = 0;
+            try {
+                Intent in = new Intent().setClass(this, gamepad_test.class);
+                in.putExtra("whichGamepadNo", Integer.toString(gamepadNo));
+                navigatingAway = true;
+                startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            } catch (Exception ex) {
+                Log.d("Engine_Driver", ex.getMessage());
+            }
+        } else {
+            gamePadDeviceIdsTested[gamepadNo] = 1; // don't bother doing the test if the preference is set not to
+        }
+    }
+
     // Edit the Consist Lights
     void start_consist_lights_edit(char whichThrottle) {
         if (prefConsistLightsLongClick) {  // only allow the editing in the consist lights if the preference is set
@@ -1461,6 +1496,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     void applySpeedRelatedOptions(char whichThrottle) {
+        int throttleIndexNo = getThrottleIndexFromChar(whichThrottle);
+
         // default to throttle 'T'
         Button bFwd = bFwdT;
         Button bRev = bRevT;
@@ -1491,7 +1528,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     bRev.setEnabled(true);
             } else {
                 if (dir == 1) {
-                    if (!directionButtonsAreCurrentlyReversed()) {
+                    if (!directionButtonsAreCurrentlyReversed(throttleIndexNo)) {
                         bFwd.setEnabled(true);
                         bRev.setEnabled(false);
                     } else {
@@ -1499,7 +1536,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         bRev.setEnabled(true);
                     }
                 } else {
-                    if (!directionButtonsAreCurrentlyReversed()) {
+                    if (!directionButtonsAreCurrentlyReversed(throttleIndexNo)) {
                         bFwd.setEnabled(false);
                         bRev.setEnabled(true);
                     } else {
@@ -1918,8 +1955,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
             if (whichThrottle>=0) {
                 gamePadIds[whichThrottle] = gamePadIds[fromThrottle];
+                gamePadDeviceIdsTested[whichThrottle] = gamePadDeviceIdsTested[fromThrottle];
                 gamePadThrottleAssignment[whichThrottle] = gamePadThrottleAssignment[fromThrottle];
                 gamePadIds[fromThrottle] = 0;
+                gamePadDeviceIdsTested[fromThrottle] = -1;
                 gamePadThrottleAssignment[fromThrottle] = "";
                 setGamepadIndicator();
             }
@@ -1979,6 +2018,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             gamepadCount++;
                             gamePadDeviceIds[gamepadCount - 1] = eventDeviceId;
                             whichGamePadDeviceId = gamepadCount - 1;
+
+                            start_gamepad_test_activity(gamepadCount - 1);
+
                         }
 
                         for (i = 0; i < numThrottles; i++) {
@@ -1996,6 +2038,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                 }
                             }
                         }
+                    } else {
+                        if (gamePadDeviceIdsTested[whichGamePad]==2){  // gamepad is known but failed the test last time
+                            start_gamepad_test_activity(whichGamePad);
+                        }
                     }
                 }
                 if (gamepadCount > 0) {
@@ -2008,6 +2054,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     // map the button pressed to the user selected action for that button on the gamepad
     private void performButtonAction(int buttonNo, int action, boolean isActive, char whichThrottle, int whichGamePadIsEventFrom, int repeatCnt) {
+
+        int throttleIndexNo = getThrottleIndexFromChar(whichThrottle);
 
         String x =prefGamePadButtons[buttonNo];
 
@@ -2024,7 +2072,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_NEXT_THROTTLE)) {  // Next Throttle
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 if ( usingMultiplePads && whichGamePadIsEventFrom >= 0) {
-                    whichGamePadIsEventFrom = swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
+                    swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
                 } else {
                     setNextActiveThrottle(true);
                 }
@@ -2032,7 +2080,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_FORWARD)) {  // Forward
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 boolean dirChangeFailed = false;
-                if (!gamepadDirectionButtonsAreCurrentlyReversed()) {
+                if (!gamepadDirectionButtonsAreCurrentlyReversed(throttleIndexNo)) {
                     dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
                 } else {
                     dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
@@ -2042,7 +2090,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_REVERSE)) {  // Reverse
             boolean dirChangeFailed = false;
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
-                if (!gamepadDirectionButtonsAreCurrentlyReversed()) {
+                if (!gamepadDirectionButtonsAreCurrentlyReversed(throttleIndexNo)) {
                     dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
                 } else {
                     dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
@@ -2103,53 +2151,68 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         //Log.d("Engine_Driver", "dgme " + event.getAction());
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
             if (!whichGamePadMode.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
+
+                boolean acceptEvent = true; // default to assuming that we will respond to the event
+
                 int action;
                 char whichThrottle;
                 int repeatCnt = 0;
                 int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), 0); // dummy eventKeyCode
 
-                float xAxis = 0;
-                    xAxis = event.getAxisValue(MotionEvent.AXIS_X);
-                float yAxis = event.getAxisValue(MotionEvent.AXIS_Y);
-
-                if ((xAxis!=0) || (yAxis!=0)) {
-                    action = ACTION_DOWN;
-                } else {
-                    action = ACTION_UP;
-                }
-                if ((usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
-                    if (whichGamePadIsEventFrom >= 0) {
-                        whichThrottle = allThrottleLetters[whichGamePadIsEventFrom];
-                    } else {
-                        GamepadFeedbackSound(true);
-                        return (true);
+                if (whichGamePadIsEventFrom > -1) { // the event came for a gamepad
+                    if (gamePadDeviceIdsTested[whichGamePadIsEventFrom]!=1) { //if not, testing for this gamepad is not complete or has failed
+                        acceptEvent = false;
                     }
                 } else {
-                    whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
+                    acceptEvent = false;
                 }
 
-                boolean isActive = getConsist(whichThrottle).isActive();
+                if (acceptEvent) {
+                    float xAxis = 0;
+                    xAxis = event.getAxisValue(MotionEvent.AXIS_X);
+                    float yAxis = event.getAxisValue(MotionEvent.AXIS_Y);
 
-                if (action == ACTION_UP) {
-                    mGamepadAutoIncrement = false;
-                    mGamepadAutoDecrement = false;
-                    GamepadFeedbackSoundStop();
-                }
+                    if ((xAxis != 0) || (yAxis != 0)) {
+                        action = ACTION_DOWN;
+                    } else {
+                        action = ACTION_UP;
+                    }
+                    if ((usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
+                        if (whichGamePadIsEventFrom >= 0) {
+                            whichThrottle = allThrottleLetters[whichGamePadIsEventFrom];
+                        } else {
+                            GamepadFeedbackSound(true);
+                            return (true);
+                        }
+                    } else {
+                        whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
+                    }
 
-                if (yAxis == -1) { // DPAD Up Button
-                    performButtonAction(5, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                    return (true); // stop processing this key
+                    boolean isActive = getConsist(whichThrottle).isActive();
 
-                } else if (yAxis == 1) { // DPAD Down Button
-                    performButtonAction(7, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                    return (true); // stop processing this key
+                    if (action == ACTION_UP) {
+                        mGamepadAutoIncrement = false;
+                        mGamepadAutoDecrement = false;
+                        GamepadFeedbackSoundStop();
+                    }
 
-                } else if (xAxis == -1) { // DPAD Left Button
-                    performButtonAction(8, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                    return (true); // stop processing this key
+                    if (yAxis == -1) { // DPAD Up Button
+                        performButtonAction(5, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
 
-                } else if (xAxis == 1) { // DPAD Right Button
-                    performButtonAction(6, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                    } else if (yAxis == 1) { // DPAD Down Button
+                        performButtonAction(7, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
+
+                    } else if (xAxis == -1) { // DPAD Left Button
+                        performButtonAction(8, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
+
+                    } else if (xAxis == 1) { // DPAD Right Button
+                        performButtonAction(6, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
+                    }
+                } else { // event is from a gamepad that has not finished testing. Ignore it
                     return (true); // stop processing this key
                 }
             }
@@ -2171,75 +2234,84 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (isExternal) { // if has come from the phone itself, don't try to process it here
             if (!whichGamePadMode.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
 
+                boolean acceptEvent = true; // default to assuming that we will respond to the event
+
                 int action = event.getAction();
                 int keyCode = event.getKeyCode();
                 int repeatCnt = event.getRepeatCount();
                 char whichThrottle;
                 int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getKeyCode());
 
-                //boolean isOk = isInvalidGamePadKey(keyCode, action);
-
-                if ((usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
-                    if (whichGamePadIsEventFrom >= 0) {
-                        whichThrottle = allThrottleLetters[whichGamePadIsEventFrom];
-                    } else {
-                        GamepadFeedbackSound(true);
-                        return (true);
+                if (whichGamePadIsEventFrom > -1) { // the event came for a gamepad
+                    if (gamePadDeviceIdsTested[whichGamePadIsEventFrom]!=1) { //if not, testing for this gamepad is not complete or has failed
+                        acceptEvent = false;
                     }
                 } else {
-                    whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
+                    acceptEvent = false;
                 }
 
-                boolean isActive = getConsist(whichThrottle).isActive();
+                if (acceptEvent) {
+                    if ((usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
+                        if (whichGamePadIsEventFrom >= 0) {
+                            whichThrottle = allThrottleLetters[whichGamePadIsEventFrom];
+                        } else {
+                            GamepadFeedbackSound(true);
+                            return (true);
+                        }
+                    } else {
+                        whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
+                    }
 
-                if (keyCode != 0) {
-                    Log.d("Engine_Driver", "keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
-                }
+                    boolean isActive = getConsist(whichThrottle).isActive();
 
-                if (action == ACTION_UP) {
-                    mGamepadAutoIncrement = false;
-                    mGamepadAutoDecrement = false;
-                    GamepadFeedbackSoundStop();
-                }
+                    if (keyCode != 0) {
+                        Log.d("Engine_Driver", "keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
+                    }
 
-                if (keyCode == gamePadKeys[2]) { // DPAD Up Button
-                    performButtonAction(5, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                    return (true); // stop processing this key
+                    if (action == ACTION_UP) {
+                        mGamepadAutoIncrement = false;
+                        mGamepadAutoDecrement = false;
+                        GamepadFeedbackSoundStop();
+                    }
 
-                } else if (keyCode == gamePadKeys[3]) { // DPAD Down Button
-                    performButtonAction(7, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                    return (true); // stop processing this key
+                    if (keyCode == gamePadKeys[2]) { // DPAD Up Button
+                        performButtonAction(5, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
 
-                } else if (keyCode == gamePadKeys[4]) { // DPAD Left Button
-                    performButtonAction(8, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                    return (true); // stop processing this key
+                    } else if (keyCode == gamePadKeys[3]) { // DPAD Down Button
+                        performButtonAction(7, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
 
-                } else if (keyCode == gamePadKeys[5]) { // DPAD Right Button
-                    performButtonAction(6, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                    return (true); // stop processing this key
+                    } else if (keyCode == gamePadKeys[4]) { // DPAD Left Button
+                        performButtonAction(8, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
 
-                } else if (keyCode == gamePadKeys[7]) { // ios button
-                    performButtonAction(1, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                    return (true); // stop processing this key
+                    } else if (keyCode == gamePadKeys[5]) { // DPAD Right Button
+                        performButtonAction(6, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
 
-                } else if (keyCode == gamePadKeys_Up[8]) { // X button
-                    performButtonAction(3, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                    return (true); // stop processing this key
+                    } else if (keyCode == gamePadKeys[7]) { // ios button
+                        performButtonAction(1, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
 
-                } else if (keyCode == gamePadKeys_Up[9]) { // Triangle button
-                    performButtonAction(2, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                    return (true); // stop processing this key
+                    } else if (keyCode == gamePadKeys_Up[8]) { // X button
+                        performButtonAction(3, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
 
-                } else if (keyCode == gamePadKeys_Up[10]) { // @ button
-                    performButtonAction(4, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                    return (true); // stop processing this key
+                    } else if (keyCode == gamePadKeys_Up[9]) { // Triangle button
+                        performButtonAction(2, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
 
-                } else if (keyCode == gamePadKeys[6]) { // start button
-                    performButtonAction(0, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                    return (true); // stop processing this key
+                    } else if (keyCode == gamePadKeys_Up[10]) { // @ button
+                        performButtonAction(4, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
 
-                } else if (keyCode == gamePadKeys[1]) { // Return button
-                    // NextThrottle
+                    } else if (keyCode == gamePadKeys[6]) { // start button
+                        performButtonAction(0, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
+
+                    } else if (keyCode == gamePadKeys[1]) { // Return button
+                        // NextThrottle
                     /* if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
                         if (usingMultiplePads && whichGamePadIsEventFrom >= 0) {
                             whichGamePadIsEventFrom = swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
@@ -2247,7 +2319,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             setNextActiveThrottle(true);
                         }
                     } */
-                    performButtonAction(9, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        performButtonAction(9, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
+                    }
+                } else { // event is from a gamepad that has not finished testing. Ignore it
                     return (true); // stop processing this key
                 }
 //  for now pass all keystrokes not in gamePadKeys[] to super
@@ -2779,16 +2854,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         private void doButtonPress() {
+            int throttleIndexNo = getThrottleIndexFromChar(whichThrottle);
+
             switch (this.function) {
                 case direction_button.LEFT:
-                    if (!directionButtonsAreCurrentlyReversed()) {
+                    if (!directionButtonsAreCurrentlyReversed(throttleIndexNo)) {
                         changeDirectionIfAllowed(whichThrottle, 1);
                     } else {
                         changeDirectionIfAllowed(whichThrottle, 0);
                     }
                     break;
                 case direction_button.RIGHT: {
-                    if (!directionButtonsAreCurrentlyReversed()) {
+                    if (!directionButtonsAreCurrentlyReversed(throttleIndexNo)) {
                         changeDirectionIfAllowed(whichThrottle, 0);
                     } else {
                         changeDirectionIfAllowed(whichThrottle, 1);
@@ -2801,16 +2878,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         @Override
         public boolean onLongClick(View v) {
+            int throttleIndex = getThrottleIndexFromChar(whichThrottle);
 
             if(isChangeDirectionAllowed(whichThrottle)) { // only respond to the long click if it is ok to change directions
                 doButtonPress();  //in case the the direction button long clicked is not the current direction change the direction first
 
-                if (prefSwapForwardReverseButtonsLongPress) {
+                 if (prefSwapForwardReverseButtonsLongPress) {
                     v.playSoundEffect(SoundEffectConstants.CLICK);
-                    if (currentSwapForwardReverseButtons) {
-                        currentSwapForwardReverseButtons = false;
+                    if (currentSwapForwardReverseButtons[throttleIndex]) {
+                        currentSwapForwardReverseButtons[throttleIndex] = false;
                     } else {
-                        currentSwapForwardReverseButtons = true;
+                        currentSwapForwardReverseButtons[throttleIndex] = true;
                     }
                     setDirectionButtonLabels();
                     Toast.makeText(getApplicationContext(), "Direction Buttons temporarily swaped. To permanently swap them, change in preferences", Toast.LENGTH_SHORT).show();
@@ -3186,6 +3264,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         prefDisableVolumeKeys = prefs.getBoolean("prefDisableVolumeKeys", getResources().getBoolean(R.bool.prefDisableVolumeKeysDefaultValue));
 
+        prefGamepadTestEnforceTesting = prefs.getBoolean("prefGamepadTestEnforceTesting", getResources().getBoolean(R.bool.prefGamepadTestEnforceTestingDefaultValue));
+
         clearVolumeAndGamepadAdditionalIndicators();
 
 
@@ -3282,7 +3362,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         //----------------------------------------
         bFwdG = (Button) findViewById(R.id.button_fwd_G);
-        dbtl = new direction_button_touch_listener(direction_button.RIGHT, 'G');
+        dbtl = new direction_button_touch_listener(direction_button.LEFT, 'G');
         bFwdG.setOnClickListener(dbtl);
         bFwdG.setOnLongClickListener(dbtl);
 
@@ -3291,7 +3371,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         bStopG.setOnTouchListener(fbtl);
 
         bRevG = (Button) findViewById(R.id.button_rev_G);
-        dbtl = new direction_button_touch_listener(direction_button.LEFT, 'G');
+        dbtl = new direction_button_touch_listener(direction_button.RIGHT, 'G');
         bRevG.setOnClickListener(dbtl);
         bRevG.setOnLongClickListener(dbtl);
         //----------------------------------------
@@ -3492,6 +3572,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefConsistLightsLongClick = prefs.getBoolean("ConsistLightsLongClickPreference", getResources().getBoolean(R.bool.prefConsistLightsLongClickDefaultValue));
 
         prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
+        prefGamepadTestEnforceTesting = prefs.getBoolean("prefGamepadTestEnforceTesting", getResources().getBoolean(R.bool.prefGamepadTestEnforceTestingDefaultValue));
 
         prefDisableVolumeKeys = prefs.getBoolean("prefDisableVolumeKeys", getResources().getBoolean(R.bool.prefDisableVolumeKeysDefaultValue));
 
@@ -4156,7 +4237,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.setWebMenuOption(TMenu);
             mainapp.setRoutesMenuOption(TMenu);
             mainapp.setTurnoutsMenuOption(TMenu);
-            mainapp.setGamepadTestMenuOption(TMenu);
+            //mainapp.setGamepadTestMenuOption(TMenu);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");
@@ -4368,12 +4449,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 startActivityForResult(consistLightsEdit3, ACTIVITY_CONSIST_LIGHTS);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
+                /*
             case R.id.gamepad_test_mnu:
                 in = new Intent().setClass(this, gamepad_test.class);
                 navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
+                */
         }
         return super.onOptionsItemSelected(item);
     }
@@ -4412,6 +4495,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     // update zero trim values
                     updateEsuMc2ZeroTrim();
                 }
+                break;
+            }
+            case ACTIVITY_GAMEPAD_TEST: {
+                //if (resultCode == gamepad_test.RESULT_OK) {
+                    String whichGamepadNo = data.getExtras().getString("whichGamepadNo");
+                    if (whichGamepadNo != null) {
+                        int gamepadNo = Integer.valueOf(whichGamepadNo.substring(0,1));
+                        int result = Integer.valueOf(whichGamepadNo.substring(1,2));
+                        gamePadDeviceIdsTested[gamepadNo] = result;
+                    }
+                //}
                 break;
             }
         }
