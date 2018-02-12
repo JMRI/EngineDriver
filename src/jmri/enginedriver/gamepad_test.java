@@ -81,7 +81,11 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
     private GestureDetector myGesture;
 
+    private int result;
+
     private SharedPreferences prefs;
+
+    private String whichGamepadNo = " "; //text version of the arr index of the gamepad we are testing.  Sent in and out
 
     private String whichGamePadMode = "None";
     private int whichGamePadModeIndex = 0;
@@ -231,7 +235,13 @@ public class gamepad_test extends Activity implements OnGestureListener {
         }
 
         if (testComplete) {
+
             tvGamepadComplete.setText(R.string.gamepadTestComplete);
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.gamepadTestCompleteToast), Toast.LENGTH_SHORT).show();
+            if (result!=RESULT_OK) {
+                result = RESULT_OK;
+                end_this_activity();
+            }
         }
 		return testComplete;
 }
@@ -474,7 +484,13 @@ public class gamepad_test extends Activity implements OnGestureListener {
             return;
         }
 
-        mainapp.applyTheme(this);
+        result = RESULT_CANCELED;
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            whichGamepadNo = extras.getString("whichGamepadNo");
+            mainapp.applyTheme(this);
+        }
 
         setContentView(R.layout.gamepad_test);
         //put pointer to this activity's handler in main app's shared variable
@@ -569,6 +585,15 @@ public class gamepad_test extends Activity implements OnGestureListener {
         super.onDestroy();
     }
 
+    // end current activity
+    void end_this_activity() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("whichGamepadNo", whichGamepadNo+"1");  //pass whichGamepadNo as an extra - plus "1" for pass
+        setResult(result, resultIntent);
+        this.finish();
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -594,9 +619,13 @@ public class gamepad_test extends Activity implements OnGestureListener {
     public boolean onKeyDown(int key, KeyEvent event) {
         if (key == KeyEvent.KEYCODE_BACK) {
             Intent resultIntent = new Intent();
-            this.finish();  //end this activity
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            return true;
+            resultIntent.putExtra("whichGamepadNo", whichGamepadNo+"2");  //pass whichGamepadNo as an extra - plus "2" for fail
+            setResult(result, resultIntent);
+
+            //this.finish();  //end this activity
+            //connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            //return true;
+//            super.onBackPressed();
         }
         return (super.onKeyDown(key, event));
     }
