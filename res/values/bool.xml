@@ -49,6 +49,8 @@
 
     <bool name="prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue">true</bool>
 
+    <bool name="prefGamepadTestEnforceTestingDefaultValue">true</bool>
+
     <bool name="prefImportExportLocoListDefaultValue">true</bool>
     <bool name="prefAutoImportExportDefaultValue">false</bool>
     <bool name="prefDisableVolumeKeysDefaultValue">false</bool>
