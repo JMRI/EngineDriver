@@ -454,8 +454,8 @@
     <string name="gamepadTestModeLabel">Type:\s</string>
     <string name="gamepadTestKeycodeLabel">key_code:\s</string>
     <string name="gamepadTestFunctionLabel">function:\s</string>
-    <string name="gamepadTestCompleteLabel">complete?: </string>
-    <string name="gamepadTestHelp">You MUST move the DPad in all directions\nAND press the four main buttons to confirm.\nIf you can\'t activate all buttons, try a different mode (above) or on the device.\nPress Back Arrow if you can\'t complete the, but the Gamepad won\'t work correctly.</string>
+    <string name="gamepadTestCompleteLabel">test status: </string>
+    <string name="gamepadTestHelp">You MUST move the DPad in all directions AND press the four main buttons to confirm.\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your device) or try a different gamepad Type (above).\nPress Back Arrow to exit the test without completing it but note that the Gamepad may not work correctly.</string>
     <string name="gamepadTestIncomplete">"Test Incomplete"</string>
     <string name="gamepadTestComplete">"Test Complete"</string>
     <string name="gamepadTestCompleteToast">"Gamepad test completed successfully"</string>
