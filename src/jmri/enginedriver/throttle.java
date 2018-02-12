@@ -2891,7 +2891,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         currentSwapForwardReverseButtons[throttleIndex] = true;
                     }
                     setDirectionButtonLabels();
-                    Toast.makeText(getApplicationContext(), "Direction Buttons temporarily swaped. To permanently swap them, change in preferences", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Direction Buttons temporarily swapped. To permanently swap them, change in preferences", Toast.LENGTH_SHORT).show();
                 }
                 doButtonPress();
             }

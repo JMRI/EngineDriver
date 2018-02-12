@@ -380,13 +380,13 @@
     <string name="prefSwapForwardReverseButtonsLongPressSummary">Temporarily swap the two Direction Buttons with a long press of any of Direction Button.</string>
 
     <string name="prefGamepadSwapForwardReverseWithScreenButtonsTitle">Swap Direction Buttons with Screen Buttons</string>
-    <string name="prefGamepadSwapForwardReverseWithScreenButtonsSummary">Temporarily swap the two Gamepad Direction Buttons if the Screen Direction buttons are swaped.</string>
+    <string name="prefGamepadSwapForwardReverseWithScreenButtonsSummary">Temporarily swap the two Gamepad Direction Buttons if the Screen Direction buttons are swapped.</string>
 
     <string name="prefGamepadTestEnforceTestingTitle">Enforce Gamepad Testing</string>
     <string name="prefGamepadTestEnforceTestingSummary">Test each gamepad every time they are connected.</string>
 
     <string name="prefLeftDirectionButtonsTitle">Left Direction Button label</string>
-    <string name="prefLeftDirectionButtonsSummary">Labels for all LEFT direction buttons. Enter \'Foward\' or blank for normal behaviour.</string>
+    <string name="prefLeftDirectionButtonsSummary">Labels for all LEFT direction buttons. Enter \'Forward\' or blank for normal behaviour.</string>
     <string name="prefLeftDirectionButtonsDefaultValue">Forward</string>
 
     <string name="prefRightDirectionButtonsTitle">Right Direction Button label</string>
