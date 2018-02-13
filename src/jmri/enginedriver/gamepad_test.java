@@ -461,13 +461,15 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
             prefs.edit().putString("prefGamePadType", gamePadModesArray[whichGamePadModeIndex]).commit();  //reset the preference
 
-        if (oldWhichGamePadModeIndex != whichGamePadModeIndex) {
-            setGamepadKeys();
-            oldWhichGamePadModeIndex = whichGamePadModeIndex;
-        }
+            if (oldWhichGamePadModeIndex != whichGamePadModeIndex) {
+                setGamepadKeys();
+                oldWhichGamePadModeIndex = whichGamePadModeIndex;
+            }
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+            if ((imm != null) && (view != null)) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+            }
         }
 
         @Override
@@ -584,7 +586,7 @@ public class gamepad_test extends Activity implements OnGestureListener {
      */
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "ConsistLightsEdit.onDestroy()");
+        Log.d("Engine_Driver", "gamepad_test.onDestroy()");
 
         //mainapp.consist_lights_edit_msg_handler = null;
         super.onDestroy();

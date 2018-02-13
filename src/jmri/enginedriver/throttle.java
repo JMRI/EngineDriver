@@ -4526,12 +4526,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
             case ACTIVITY_GAMEPAD_TEST: {
                 //if (resultCode == gamepad_test.RESULT_OK) {
+                if (data != null) {
                     String whichGamepadNo = data.getExtras().getString("whichGamepadNo");
                     if (whichGamepadNo != null) {
-                        int gamepadNo = Integer.valueOf(whichGamepadNo.substring(0,1));
-                        int result = Integer.valueOf(whichGamepadNo.substring(1,2));
+                        int gamepadNo = Integer.valueOf(whichGamepadNo.substring(0, 1));
+                        int result = Integer.valueOf(whichGamepadNo.substring(1, 2));
                         gamePadDeviceIdsTested[gamepadNo] = result;
                     }
+                } else {
+                    Log.e("Engine_Driver", "OnActivityResult(ACTIVITY_GAMEPAD_TEST) called with null data!");
+                }
                 //}
                 break;
             }
