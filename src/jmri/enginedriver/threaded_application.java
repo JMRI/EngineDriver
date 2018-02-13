@@ -2345,10 +2345,13 @@ public class threaded_application extends Application {
     }
 
     public void displayEStop(Menu menu) {
+        MenuItem mi = menu.findItem(R.id.EmerStop);
+        if (mi == null) return;
+
         if (prefs.getBoolean("show_emergency_stop_menu_preference", false)) {
-            menu.findItem(R.id.EmerStop).setVisible(true);
+            mi.setVisible(true);
         } else {
-            menu.findItem(R.id.EmerStop).setVisible(false);
+            mi.setVisible(false);
         }
 
     }
