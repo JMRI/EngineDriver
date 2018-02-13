@@ -3563,6 +3563,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         mainapp.removeNotification();
         if (mainapp.isForcingFinish()) { // expedite
             this.finish();
+            overridePendingTransition(0, 0);
             return;
         }
         if (!mainapp.setActivityOrientation(this)) // set screen orientation based on prefs
@@ -4344,6 +4345,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         webView.stopLoading();
         this.finish(); // end this activity
+        overridePendingTransition(0, 0);
     }
 
     @Override
