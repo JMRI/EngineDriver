@@ -4529,8 +4529,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 if (data != null) {
                     String whichGamepadNo = data.getExtras().getString("whichGamepadNo");
                     if (whichGamepadNo != null) {
-                        int gamepadNo = Integer.valueOf(whichGamepadNo.substring(0, 1));
-                        int result = Integer.valueOf(whichGamepadNo.substring(1, 2));
+                        int gamepadNo = Integer.valueOf(whichGamepadNo.substring(0,1));
+                        int result = Integer.valueOf(whichGamepadNo.substring(1,2));
                         gamePadDeviceIdsTested[gamepadNo] = result;
                     }
                 }
