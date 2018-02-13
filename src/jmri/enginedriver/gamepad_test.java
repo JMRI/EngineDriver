@@ -91,6 +91,7 @@ public class gamepad_test extends Activity implements OnGestureListener {
     private int whichGamePadModeIndex = 0;
     private int oldWhichGamePadModeIndex = 0;
     String[] gamePadModesArray;
+    String[] gamePadModeEntriesArray;
 
     private boolean[] gamepadButtonsChecked = {false,false,false,false,false,false,false,false,false,false};
 
@@ -142,6 +143,9 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
         gamePadModesArray = this.getResources().getStringArray(R.array.prefGamePadTypeOptions);
         final List<String> gamePadModesList = new ArrayList<>(Arrays.asList(gamePadModesArray));
+
+        gamePadModeEntriesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntries);
+        final List<String> gamePadModeEntriesList = new ArrayList<>(Arrays.asList(gamePadModeEntriesArray));
 
         whichGamePadModeIndex = Arrays.asList(gamePadModesArray).indexOf(whichGamePadMode);
         if (whichGamePadModeIndex<0) whichGamePadModeIndex=0;
@@ -546,7 +550,8 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
         // Set the options for the mode.
         Spinner mode_spinner = (Spinner) findViewById(R.id.gamepad_test_mode);
-        ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.prefGamePadTypeOptions, android.R.layout.simple_spinner_item);
+        //ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.prefGamePadTypeOptions, android.R.layout.simple_spinner_item);
+        ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.prefGamePadTypeEntries, android.R.layout.simple_spinner_item);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mode_spinner.setAdapter(spinner_adapter);
         mode_spinner.setOnItemSelectedListener(new spinner_listener());
