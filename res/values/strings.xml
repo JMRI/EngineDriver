@@ -63,6 +63,8 @@
     <string name="web">Web</string>
     <string name="mrc_settings">MRC Settings</string>
     <string name="loco">Loco:</string>
+    <string name="loco_direction_left_extra">"\u00B7F\u00B7"</string>
+    <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>
     <string name="current_locos">Currently Selected Locos</string>
     <string name="release">Release</string>
     <string name="turnouts">Turnouts</string>

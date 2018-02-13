@@ -182,6 +182,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private TextView tvVolS;
     private TextView tvVolG;
 
+    private TextView tvLeftDirIndT; // direction indicators
+    private TextView tvRightDirIndT;
+    private TextView tvLeftDirIndS;
+    private TextView tvRightDirIndS;
+    private TextView tvLeftDirIndG;
+    private TextView tvRightDirIndG;
+
     private TextView tvGamePadT; // volume indicators
     private TextView tvGamePadS;
     private TextView tvGamePadG;
@@ -950,8 +957,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         String[] FullRightText = {DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT};
         String dirLeftText = DIRECTION_BUTTON_LEFT_TEXT;
         String dirRightText = DIRECTION_BUTTON_RIGHT_TEXT;
-        String dirLeftExtraText = " \u00B7F\u00B7";
-        String dirRightExtraText = " \u00B7R\u00B7";
+        String[] dirLeftIndicationText = {"","",""};
+        String[] dirRightIndicationText = {"","",""};
 
         if ( ((prefLeftDirectionButtons.equals(DIRECTION_BUTTON_LEFT_TEXT)) && (prefRightDirectionButtons.equals(DIRECTION_BUTTON_RIGHT_TEXT)))
                 || ((prefLeftDirectionButtons.equals("")) && (prefRightDirectionButtons.equals(""))) ){
@@ -967,11 +974,15 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
             for (int i=0; i<=2;i++) {
                 if (!directionButtonsAreCurrentlyReversed(i)) {
-                    FullLeftText[i] = dirLeftText + dirLeftExtraText;
-                    FullRightText[i] = dirRightText + dirRightExtraText;
+                    FullLeftText[i] = dirLeftText;
+                    dirLeftIndicationText[i] = getApplicationContext().getResources().getString(R.string.loco_direction_left_extra);
+                    FullRightText[i] = dirRightText;
+                    dirRightIndicationText[i] = getApplicationContext().getResources().getString(R.string.loco_direction_right_extra);
                 } else {
-                    FullLeftText[i] = dirLeftText + dirRightExtraText;
-                    FullRightText[i] = dirRightText + dirLeftExtraText;
+                    FullLeftText[i] = dirLeftText;
+                    dirLeftIndicationText[i] = getApplicationContext().getResources().getString(R.string.loco_direction_right_extra);
+                    FullRightText[i] = dirRightText;
+                    dirRightIndicationText[i] = getApplicationContext().getResources().getString(R.string.loco_direction_left_extra);
                 }
             }
         }
@@ -980,10 +991,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         bFwdT.setText(FullLeftText[0]);
         bFwdS.setText(FullLeftText[1]);
         bFwdG.setText(FullLeftText[2]);
+
         bRevT.setText(FullRightText[0]);
         bRevS.setText(FullRightText[1]);
         bRevG.setText(FullRightText[2]);
 
+        tvLeftDirIndT.setText(dirLeftIndicationText[0]);
+        tvLeftDirIndS.setText(dirLeftIndicationText[1]);
+        tvLeftDirIndG.setText(dirLeftIndicationText[2]);
+
+        tvRightDirIndT.setText(dirRightIndicationText[0]);
+        tvRightDirIndS.setText(dirRightIndicationText[1]);
+        tvRightDirIndG.setText(dirRightIndicationText[2]);
     }
 
     private void reloadWeb() {
@@ -3247,6 +3266,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         bSelT.setOnClickListener(sfbt);
         bSelT.setOnTouchListener(sfbt);
         bSelT.setOnLongClickListener(sfbt);  // Consist Light Edit
+        tvLeftDirIndT = (TextView) findViewById(R.id.loco_left_direction_indicaton_T);
+        tvRightDirIndT = (TextView) findViewById(R.id.loco_right_direction_indicaton_T);
 
         bSelS = (Button) findViewById(R.id.button_select_loco_S);
         bSelS.setClickable(true);
@@ -3254,6 +3275,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         bSelS.setOnClickListener(sfbt);
         bSelS.setOnTouchListener(sfbt);
         bSelS.setOnLongClickListener(sfbt);  // Consist Light Edit
+        tvLeftDirIndS = (TextView) findViewById(R.id.loco_left_direction_indicaton_S);
+        tvRightDirIndS = (TextView) findViewById(R.id.loco_right_direction_indicaton_S);
 
         bSelG = (Button) findViewById(R.id.button_select_loco_G);
         bSelG.setClickable(true);
@@ -3261,6 +3284,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         bSelG.setOnClickListener(sfbt);
         bSelG.setOnTouchListener(sfbt);
         bSelG.setOnLongClickListener(sfbt);  // Consist Light Edit
+        tvLeftDirIndG = (TextView) findViewById(R.id.loco_left_direction_indicaton_G);
+        tvRightDirIndG = (TextView) findViewById(R.id.loco_right_direction_indicaton_G);
 
         prefDisableVolumeKeys = prefs.getBoolean("prefDisableVolumeKeys", getResources().getBoolean(R.bool.prefDisableVolumeKeysDefaultValue));
 
