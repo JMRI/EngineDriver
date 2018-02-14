@@ -241,10 +241,12 @@ public class gamepad_test extends Activity implements OnGestureListener {
         if (testComplete) {
 
             tvGamepadComplete.setText(R.string.gamepadTestComplete);
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.gamepadTestCompleteToast), Toast.LENGTH_SHORT).show();
-            if (result!=RESULT_OK) {
-                result = RESULT_OK;
-                end_this_activity();
+            if (!whichGamepadNo.equals(" ")) {
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.gamepadTestCompleteToast), Toast.LENGTH_SHORT).show();
+                if (result != RESULT_OK) {
+                    result = RESULT_OK;
+                    end_this_activity(true);
+                }
             }
         }
 		return testComplete;
@@ -478,6 +480,18 @@ public class gamepad_test extends Activity implements OnGestureListener {
         }
     }
 
+    private class cancel_button_listener implements View.OnClickListener {
+        public void onClick(View v) {
+            end_this_activity(false);
+        }
+    }
+
+    private class skip_button_listener implements View.OnClickListener {
+        public void onClick(View v) {
+            end_this_activity(true);
+        }
+    }
+
     /**
      * Called when the activity is first created.
      */
@@ -495,8 +509,9 @@ public class gamepad_test extends Activity implements OnGestureListener {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             whichGamepadNo = extras.getString("whichGamepadNo");
-            mainapp.applyTheme(this);
         }
+
+        mainapp.applyTheme(this);
 
         setContentView(R.layout.gamepad_test);
         //put pointer to this activity's handler in main app's shared variable
@@ -559,6 +574,22 @@ public class gamepad_test extends Activity implements OnGestureListener {
         mode_spinner.setOnItemSelectedListener(new spinner_listener());
 
         setGamepadKeys();
+
+        //Set the button
+        Button cancelButton = (Button) findViewById(R.id.gamepad_test_button_cancel);
+        gamepad_test.cancel_button_listener cancel_click_listener = new gamepad_test.cancel_button_listener();
+        cancelButton.setOnClickListener(cancel_click_listener);
+
+        Button skipButton = (Button) findViewById(R.id.gamepad_test_button_skip);
+        if (whichGamepadNo.equals(" ")) {
+            skipButton.setVisibility(View.GONE);
+            cancelButton.setText(R.string.gamepadTestCancelNonForced);
+            TextView tvHelpText = (TextView) findViewById(R.id.gamepad_test_help);
+            tvHelpText.setText(R.string.gamepadTestHelpNonForced);
+        } else {
+            gamepad_test.skip_button_listener skip_click_listener = new gamepad_test.skip_button_listener();
+            skipButton.setOnClickListener(skip_click_listener);
+        }
     }
 
     @Override
@@ -593,9 +624,13 @@ public class gamepad_test extends Activity implements OnGestureListener {
     }
 
     // end current activity
-    void end_this_activity() {
+    void end_this_activity(boolean passedTest) {
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("whichGamepadNo", whichGamepadNo+"1");  //pass whichGamepadNo as an extra - plus "1" for pass
+        if (passedTest) {
+            resultIntent.putExtra("whichGamepadNo", whichGamepadNo + "1");  //pass whichGamepadNo as an extra - plus "1" for pass
+        } else {
+            resultIntent.putExtra("whichGamepadNo", whichGamepadNo+"2");  //pass whichGamepadNo as an extra - plus "2" for fail
+        }
         setResult(result, resultIntent);
         this.finish();
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
