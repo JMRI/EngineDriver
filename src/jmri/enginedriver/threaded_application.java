@@ -2198,16 +2198,30 @@ public class threaded_application extends Application {
      *
      * @param menu - menu object that will be adjusted
      */
-    public void setGamepadTestMenuOption(Menu menu) {
+    public void setGamepadTestMenuOption(Menu menu,int gamepadCount) {
         String whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
+        boolean result = false;
 
         if (menu != null) {
-            MenuItem item = menu.findItem(R.id.gamepad_test_mnu);
-            if (item != null) {
-                if (!whichGamePadMode .equals("None")) {
-                    item.setVisible(true);
-                } else {
-                    item.setVisible(false);
+            for (int i = 1; i <= 3; i++) {
+                MenuItem item = menu.findItem(R.id.gamepad_test_mnu1);
+                switch (i) {
+                    case 2:
+                        item = menu.findItem(R.id.gamepad_test_mnu2);
+                        break;
+                    case 3:
+                        item = menu.findItem(R.id.gamepad_test_mnu3);
+                }
+
+                if (i<=gamepadCount) {result = true;}
+                else {result =false;}
+
+                if (item != null) {
+                    if ((!whichGamePadMode.equals("None")) && (result)) {
+                        item.setVisible(true);
+                    } else {
+                        item.setVisible(false);
+                    }
                 }
             }
         }

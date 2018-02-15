@@ -50,4 +50,5 @@
     <bool name="prefImportExportLocoListDefaultValue">true</bool>
     <bool name="prefAutoImportExportDefaultValue">false</bool>
     <bool name="prefDisableVolumeKeysDefaultValue">false</bool>
+    <bool name="prefGamepadTestNowDefaultValue">false</bool>
 </resources>
