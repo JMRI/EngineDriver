@@ -136,6 +136,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             getPreferenceScreen().findPreference("prefEsuMc2").setSelectable(false);
             getPreferenceScreen().findPreference("prefEsuMc2").setEnabled(false);
         }
+
+        sharedPreferences.edit().putBoolean("prefGamepadTestNow", false).commit();  //reset the preference
     }
 
     @SuppressWarnings("deprecation")
@@ -299,6 +301,30 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     }
                 }
                 break;
+            case "prefGamepadTestNow":
+                start_gamepad_test_activity();
+                break;
+        }
+    }
+
+    void start_gamepad_test_activity() {
+        SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
+        boolean result = prefs.getBoolean("prefGamepadTestNow", getResources().getBoolean(R.bool.prefGamepadTestNowDefaultValue));
+
+        if (result) {
+            prefs.edit().putBoolean("prefGamepadTestNow", false).commit();  //reset the preference
+            reload();
+
+            try {
+                Intent in = new Intent().setClass(this, gamepad_test.class);
+                //navigatingAway = true;
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            } catch (Exception ex) {
+                Log.d("Engine_Driver", ex.getMessage());
+            }
+
         }
     }
 
@@ -576,6 +602,18 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         thisPref.setEnabled(thisEnabled);
 
         thisPref = getPreferenceScreen().findPreference("prefGamePadSpeedArrowsThrottleRepeatDelay");
+        thisPref.setSelectable(thisEnabled);
+        thisPref.setEnabled(thisEnabled);
+
+        thisPref = getPreferenceScreen().findPreference("prefGamepadSwapForwardReverseWithScreenButtons");
+        thisPref.setSelectable(thisEnabled);
+        thisPref.setEnabled(thisEnabled);
+
+        thisPref = getPreferenceScreen().findPreference("prefGamepadTestEnforceTesting");
+        thisPref.setSelectable(thisEnabled);
+        thisPref.setEnabled(thisEnabled);
+
+        thisPref = getPreferenceScreen().findPreference("prefGamepadTestNow");
         thisPref.setSelectable(thisEnabled);
         thisPref.setEnabled(thisEnabled);
     }

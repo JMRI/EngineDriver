@@ -2038,6 +2038,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             gamePadDeviceIds[gamepadCount - 1] = eventDeviceId;
                             whichGamePadDeviceId = gamepadCount - 1;
 
+                            mainapp.setGamepadTestMenuOption(TMenu,gamepadCount);
+
                             start_gamepad_test_activity(gamepadCount - 1);
 
                         }
@@ -4263,7 +4265,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.setWebMenuOption(TMenu);
             mainapp.setRoutesMenuOption(TMenu);
             mainapp.setTurnoutsMenuOption(TMenu);
-            mainapp.setGamepadTestMenuOption(TMenu);
+            mainapp.setGamepadTestMenuOption(TMenu,gamepadCount);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");
@@ -4477,10 +4479,27 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
 
-            case R.id.gamepad_test_mnu:
+            case R.id.gamepad_test_mnu1:
                 in = new Intent().setClass(this, gamepad_test.class);
+                in.putExtra("whichGamepadNo", "0");
                 navigatingAway = true;
-                startActivity(in);
+                startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+
+            case R.id.gamepad_test_mnu2:
+                in = new Intent().setClass(this, gamepad_test.class);
+                in.putExtra("whichGamepadNo", "1");
+                navigatingAway = true;
+                startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+
+            case R.id.gamepad_test_mnu3:
+                in = new Intent().setClass(this, gamepad_test.class);
+                in.putExtra("whichGamepadNo", "2");
+                navigatingAway = true;
+                startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
 

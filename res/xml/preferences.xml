@@ -235,6 +235,12 @@
                 android:key="prefGamePadType"
                 android:summary="@string/prefGamePadTypeSummary"
                 android:title="@string/prefGamePadTypeTitle" />
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefGamepadTestNowDefaultValue"
+                android:key="prefGamepadTestNow"
+                android:summary="@string/prefGamepadTestNowSummary"
+                android:title="@string/prefGamepadTestNowTitle" >
+            </CheckBoxPreference>
             <EditTextPreference
                 android:defaultValue="@string/prefGamePadFeedbackVolumeDefaultValue"
                 android:dialogTitle="@string/prefGamePadFeedbackVolumeTitle"

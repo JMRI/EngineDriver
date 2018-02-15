@@ -34,7 +34,9 @@
     <string name="app_name_ConsistEdit">Engine Driver - Consist Edit</string>
     <string name="app_name_ConsistLightsEdit">Engine Driver - Consist Lights</string>
     <string name="app_name_gamepad_test">Gamepad Test - Engine Driver</string>
-    <string name="gamepad_test">Gamepad Test</string>
+    <string name="gamepad1_test">Gamepad 1 Test</string>
+    <string name="gamepad2_test">Gamepad 2 Test</string>
+    <string name="gamepad3_test">Gamepad 3 Test</string>
     <string name="notification_title">Engine Driver is running</string>
     <string name="notification_text">Tap to reopen Engine Driver</string>
     <string name="host_ip">Host Name or Address</string>
@@ -458,7 +460,7 @@
     <string name="gamepadTestFunctionLabel">function:\s</string>
     <string name="gamepadTestCompleteLabel">test status:\s</string>
     <string name="gamepadTestHelp">You MUST press all Dpad AND four main buttons.\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your device) or try a different gamepad Type (above).\n\'Back\' or \'Cancel\' will exit the test but the Gamepad will not work.\n\'Skip\' will force the test to pass, even if the gamepad does not work correctly.</string>
-    <string name="gamepadTestHelpNonForced">If you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your device) or try a different gamepad Type (above).\nYou may be required to re-test the gamepad from the throttle screen.</string>
+    <string name="gamepadTestHelpNonForced">If you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your device) or try a different gamepad Type (above).\nYou may be required to re-test the gamepad when you first use it from the throttle screen.</string>
     <string name="gamepadTestIncomplete">"Test Incomplete"</string>
     <string name="gamepadTestComplete">"Test Complete"</string>
     <string name="gamepadTestCompleteToast">"Gamepad test completed successfully"</string>
@@ -468,5 +470,8 @@
     <string name="gamepadTestCancelNonForced">"Close"</string>
     <string name="gamepadTestSkip">"Skip"</string>
     <!--    Gamepad test page -->
+
+    <string name="prefGamepadTestNowTitle">Test Gamepad Setting Now!</string>
+    <string name="prefGamepadTestNowSummary">Allows you to confirm that the chosen setting works correctly.\nTest page will launch IMMEDIATELY on selection.</string>
 
 </resources>
