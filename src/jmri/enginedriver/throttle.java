@@ -342,6 +342,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private boolean prefGamepadSwapForwardReverseWithScreenButtons = false;
     private boolean prefGamepadTestEnforceTesting = true;
 
+    private static String GAMEPAD_TEST_PASS = "1";
+    private static String GAMEPAD_TEST_FAIL = "2";
+    private static String GAMEPAD_TEST_RESET = "9";
+
     private static String DIRECTION_BUTTON_LEFT_TEXT = "Forward";
     private static String DIRECTION_BUTTON_RIGHT_TEXT = "Reverse";
 
@@ -4544,18 +4548,30 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 break;
             }
             case ACTIVITY_GAMEPAD_TEST: {
-                //if (resultCode == gamepad_test.RESULT_OK) {
                 if (data != null) {
                     String whichGamepadNo = data.getExtras().getString("whichGamepadNo");
                     if (whichGamepadNo != null) {
-                        int gamepadNo = Integer.valueOf(whichGamepadNo.substring(0, 1));
-                        int result = Integer.valueOf(whichGamepadNo.substring(1, 2));
-                        gamePadDeviceIdsTested[gamepadNo] = result;
+                        if (!whichGamepadNo.substring(1, 2).equals(GAMEPAD_TEST_RESET)) {
+                            int gamepadNo = Integer.valueOf(whichGamepadNo.substring(0, 1));
+                            int result = Integer.valueOf(whichGamepadNo.substring(1, 2));
+                            gamePadDeviceIdsTested[gamepadNo] = result;
+                        } else { // reset command
+                            gamepadCount = 0;
+                            for (int i=0;i<gamePadDeviceIds.length;i++) {
+                                gamePadDeviceIds[i]=0;
+                                gamePadDeviceIdsTested[i]=0;
+                            }
+                            for (int i = 0; i < 3; i++) {
+                                gamePadIds[i] = 0;
+                                gamePadThrottleAssignment[0] = "";
+                            }
+                            mainapp.setGamepadTestMenuOption(TMenu,gamepadCount);
+                            setGamepadIndicator();
+                        }
                     }
                 } else {
                     Log.e("Engine_Driver", "OnActivityResult(ACTIVITY_GAMEPAD_TEST) called with null data!");
                 }
-                //}
                 break;
             }
         }

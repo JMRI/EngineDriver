@@ -455,20 +455,31 @@
     <string name="gamepadTestButtonLabelButtonEnter">Select | Enter</string>
 
     <string name="gamepadTestOptionalLabel">Optional (may not be on the device)</string>
-    <string name="gamepadTestModeLabel">Type:\s</string>
-    <string name="gamepadTestKeycodeLabel">key_code:\s</string>
-    <string name="gamepadTestFunctionLabel">function:\s</string>
-    <string name="gamepadTestCompleteLabel">test status:\s</string>
-    <string name="gamepadTestHelp">You MUST press all Dpad AND four main buttons.\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your device) or try a different gamepad Type (above).\n\'Back\' or \'Cancel\' will exit the test but the Gamepad will not work.\n\'Skip\' will force the test to pass, even if the gamepad does not work correctly.</string>
+    <string name="gamepadTestAllKeyCodesLabel">All codes:\s\s</string>
+    <string name="gamepadTestModeLabel">Type:\s\s</string>
+    <string name="gamepadTestKeycodeLabel">Key code:\s\s</string>
+    <string name="gamepadTestFunctionLabel">Function:\s\s</string>
+    <string name="gamepadTestCompleteLabel">Test status:\s\s</string>
+    <string name="gamepadTestHelp">Scroll down to see the full instructions...\n\nPress ALL Dpad AND four primary buttons or the gamepad WILL NOT WORK.\n\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your gamepad) or try a different gamepad Type (above).\n\n\'BACK\' or \'CANCEL\' will exit the test but the gamepad WILL NOT WORK.\n\'SKIP\' will force the test to pass, even if the gamepad does not work properly.\n\'RESET\' will make ED think no gamepads have been used yet.\Use the \'Gamepad Test n\' menu options to get back to this page.</string>
     <string name="gamepadTestHelpNonForced">If you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your device) or try a different gamepad Type (above).\nYou may be required to re-test the gamepad when you first use it from the throttle screen.</string>
     <string name="gamepadTestIncomplete">"Test Incomplete"</string>
     <string name="gamepadTestComplete">"Test Complete"</string>
     <string name="gamepadTestCompleteToast">"Gamepad test completed successfully"</string>
     <string name="gamepadTestInvalidKeycode">"Invalid Keycode for this mode"</string>
 
+    <string name="gamepadTestReset">"Reset"</string>
     <string name="gamepadTestCancel">"Cancel"</string>
     <string name="gamepadTestCancelNonForced">"Close"</string>
     <string name="gamepadTestSkip">"Skip"</string>
+
+    <string name="gamepadTestKeyCodesUpAction">"\u2191"</string>
+    <string name="gamepadTestKeyCodesDownAction">"\u2193"</string>
+
+    <string name="gamepadTestKeyCodesUpCode">"Up"</string>
+    <string name="gamepadTestKeyCodesDownCode">"Dn"</string>
+    <string name="gamepadTestKeyCodesLeftCode">"Lf"</string>
+    <string name="gamepadTestKeyCodesRightCode">"Rt"</string>
+
     <!--    Gamepad test page -->
 
     <string name="prefGamepadTestNowTitle">Test Gamepad Setting Now!</string>

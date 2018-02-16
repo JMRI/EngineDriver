@@ -119,6 +119,14 @@ public class gamepad_test extends Activity implements OnGestureListener {
     private TextView tvGamepadKeyCode;
     private TextView tvGamepadKeyFunction;
     private TextView tvGamepadComplete;
+    private TextView tvGamepadAllKeyCodes;
+
+    private String allKeyCodes = "";
+
+    private static String GAMEPAD_TEST_PASS = "1";
+    private static String GAMEPAD_TEST_FAIL = "2";
+    private static String GAMEPAD_TEST_RESET = "9";
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -245,7 +253,7 @@ public class gamepad_test extends Activity implements OnGestureListener {
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.gamepadTestCompleteToast), Toast.LENGTH_SHORT).show();
                 if (result != RESULT_OK) {
                     result = RESULT_OK;
-                    end_this_activity(true);
+                    end_this_activity(GAMEPAD_TEST_PASS);
                 }
             }
         }
@@ -323,6 +331,21 @@ public class gamepad_test extends Activity implements OnGestureListener {
     }
 */
 
+    private void setAllKeyCodes(String sKeyCode, int action) {
+
+        if(action == ACTION_DOWN) {
+            allKeyCodes = allKeyCodes + this.getResources().getString(R.string.gamepadTestKeyCodesDownAction);
+        } else {
+            allKeyCodes = allKeyCodes + this.getResources().getString(R.string.gamepadTestKeyCodesUpAction);
+        }
+        allKeyCodes = allKeyCodes +  sKeyCode + " ";
+        if( allKeyCodes.length()>45) {
+            allKeyCodes = allKeyCodes.substring( allKeyCodes.length()-45,allKeyCodes.length());
+        }
+        tvGamepadAllKeyCodes.setText(allKeyCodes);
+    }
+
+
     // listener for the joystick events
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
@@ -347,21 +370,25 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
                 if (yAxis == -1) { // DPAD Up Button
                     setButtonOn(bDpadUp, prefGamePadButtons[5],"DPad Up");
+                    setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesUpCode), action);
                     isTestComplete(5);
                     return (true); // stop processing this key
 
                 } else if (yAxis == 1) { // DPAD Down Button
                     setButtonOn(bDpadDown, prefGamePadButtons[7],"DPad Down");
+                    setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesDownCode), action);
                     isTestComplete(7);
                     return (true); // stop processing this key
 
                 } else if (xAxis == -1) { // DPAD Left Button
                     setButtonOn(bDpadLeft, prefGamePadButtons[8],"DPad Left");
+                    setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesLeftCode), action);
                     isTestComplete(8);
                     return (true); // stop processing this key
 
                 } else if (xAxis == 1) { // DPAD Right Button
                     setButtonOn(bDpadRight, prefGamePadButtons[6],"DPad Right");
+                    setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesRightCode), action);
                     isTestComplete(6);
                     return (true); // stop processing this key
                 }
@@ -391,6 +418,8 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
                 if (keyCode != 0) {
                     Log.d("Engine_Driver", "keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
+
+                    setAllKeyCodes( String.valueOf(keyCode), action);
                 }
 
                 if (action == ACTION_UP) {
@@ -482,13 +511,18 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
     private class cancel_button_listener implements View.OnClickListener {
         public void onClick(View v) {
-            end_this_activity(false);
+            end_this_activity(GAMEPAD_TEST_FAIL);
         }
     }
 
+    private class reset_button_listener implements View.OnClickListener {
+        public void onClick(View v) {
+            end_this_activity(GAMEPAD_TEST_RESET);
+        }
+    }
     private class skip_button_listener implements View.OnClickListener {
         public void onClick(View v) {
-            end_this_activity(true);
+            end_this_activity(GAMEPAD_TEST_PASS);
         }
     }
 
@@ -557,6 +591,8 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
         //tvGamepadMode =(TextView) findViewById(R.id.gamepad_test_mode);
 
+        tvGamepadAllKeyCodes =(TextView) findViewById(R.id.gamepad_test_all_keycodes);
+
         tvGamepadKeyCode =(TextView) findViewById(R.id.gamepad_test_keycode);
         tvGamepadKeyFunction =(TextView) findViewById(R.id.gamepad_test_keyfunction);
         tvGamepadComplete =(TextView) findViewById(R.id.gamepad_test_complete);
@@ -580,8 +616,13 @@ public class gamepad_test extends Activity implements OnGestureListener {
         gamepad_test.cancel_button_listener cancel_click_listener = new gamepad_test.cancel_button_listener();
         cancelButton.setOnClickListener(cancel_click_listener);
 
+        Button resetButton = (Button) findViewById(R.id.gamepad_test_button_reset);
+        gamepad_test.reset_button_listener reset_click_listener = new gamepad_test.reset_button_listener();
+        resetButton.setOnClickListener(reset_click_listener);
+
         Button skipButton = (Button) findViewById(R.id.gamepad_test_button_skip);
         if (whichGamepadNo.equals(" ")) {
+            cancelButton.setVisibility(View.GONE);
             skipButton.setVisibility(View.GONE);
             cancelButton.setText(R.string.gamepadTestCancelNonForced);
             TextView tvHelpText = (TextView) findViewById(R.id.gamepad_test_help);
@@ -624,13 +665,9 @@ public class gamepad_test extends Activity implements OnGestureListener {
     }
 
     // end current activity
-    void end_this_activity(boolean passedTest) {
+    void end_this_activity(String passedTest) {
         Intent resultIntent = new Intent();
-        if (passedTest) {
-            resultIntent.putExtra("whichGamepadNo", whichGamepadNo + "1");  //pass whichGamepadNo as an extra - plus "1" for pass
-        } else {
-            resultIntent.putExtra("whichGamepadNo", whichGamepadNo+"2");  //pass whichGamepadNo as an extra - plus "2" for fail
-        }
+        resultIntent.putExtra("whichGamepadNo", whichGamepadNo +passedTest);  //pass whichGamepadNo as an extra - pass/fail/reset
         setResult(result, resultIntent);
         this.finish();
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
