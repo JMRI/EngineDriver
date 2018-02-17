@@ -258,8 +258,35 @@ public class gamepad_test extends Activity implements OnGestureListener {
             }
         }
 		return testComplete;
-}
+    }
+
+    private void setButtonOff(Button btn) {
+        btn.setClickable(false);
+        btn.setSelected(false);
+        btn.setTypeface(null, Typeface.NORMAL);
+    }
+
+    private void setAllButtonsOff(){
+        setButtonOff(bDpadUp);
+        setButtonOff(bDpadDown);
+        setButtonOff(bDpadLeft);
+        setButtonOff(bDpadRight);
+        setButtonOff(bButtonX);
+        setButtonOff(bButtonY);
+        setButtonOff(bButtonA);
+        setButtonOff(bButtonB);
+        setButtonOff(bButtonStart);
+        setButtonOff(bButtonEnter);
+
+    }
+
+
     private void setButtonOn(Button btn, String fn, String keyCodeString) {
+
+        if (whichGamepadNo.equals(" ")) {
+            setAllButtonsOff();
+        }
+
         btn.setClickable(true);
         btn.setSelected(true);
         btn.setTypeface(null, Typeface.ITALIC);
@@ -622,7 +649,7 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
         Button skipButton = (Button) findViewById(R.id.gamepad_test_button_skip);
         if (whichGamepadNo.equals(" ")) {
-            cancelButton.setVisibility(View.GONE);
+            resetButton.setVisibility(View.GONE);
             skipButton.setVisibility(View.GONE);
             cancelButton.setText(R.string.gamepadTestCancelNonForced);
             TextView tvHelpText = (TextView) findViewById(R.id.gamepad_test_help);
