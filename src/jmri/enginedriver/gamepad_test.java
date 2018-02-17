@@ -503,6 +503,7 @@ public class gamepad_test extends Activity implements OnGestureListener {
                     isTestComplete(9);
                     return (true); // stop processing this key
                 }
+                return (true); // ignore any other keycodes
             }
         }
 
