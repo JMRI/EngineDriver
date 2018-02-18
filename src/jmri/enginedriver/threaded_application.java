@@ -49,8 +49,10 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.webkit.CookieSyncManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 import org.apache.http.client.HttpClient;
@@ -2591,6 +2593,21 @@ public class threaded_application extends Application {
         b.setNegativeButton(R.string.no, null);
         AlertDialog alert = b.create();
         alert.show();
+
+        // find positiveButton and negativeButton
+        Button positiveButton = (Button) alert.findViewById(android.R.id.button1);
+        Button negativeButton = (Button) alert.findViewById(android.R.id.button2);
+        // then get their parent ViewGroup
+        ViewGroup buttonPanelContainer = (ViewGroup) positiveButton.getParent();
+        int positiveButtonIndex = buttonPanelContainer.indexOfChild(positiveButton);
+        int negativeButtonIndex = buttonPanelContainer.indexOfChild(negativeButton);
+        if (positiveButtonIndex < negativeButtonIndex) {  // force 'No' 'Yes' order
+            // prepare exchange their index in ViewGroup
+            buttonPanelContainer.removeView(positiveButton);
+            buttonPanelContainer.removeView(negativeButton);
+            buttonPanelContainer.addView(negativeButton, positiveButtonIndex);
+            buttonPanelContainer.addView(positiveButton, negativeButtonIndex);
+        }
     }
 }
 
