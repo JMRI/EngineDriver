@@ -217,8 +217,6 @@
   </style>
 
   <style name="dialogStyle_black" parent="@android:style/Theme.Dialog" tools:targetApi="honeycomb">
-    <item name="android:backgroundDimEnabled">true</item>
-    <item name="android:backgroundDimAmount">60</item>
     <item name="android:windowBackground">@color/solidBlack</item>
     <item name="android:textSize">18sp</item>
     <item name="android:background">@color/solidBlack</item>

@@ -4282,6 +4282,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         int action = event.getAction();
 
         // Handle pressing of the back button
+        if (key == KeyEvent.KEYCODE_BACK) {
+            return true; // stop processing this key
+        }
+
         if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {
             mVolumeKeysAutoIncrement = false;
             mVolumeKeysAutoDecrement = false;
