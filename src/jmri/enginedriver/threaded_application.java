@@ -49,6 +49,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
 import android.webkit.CookieSyncManager;
 import android.widget.Toast;
 
