@@ -2255,7 +2255,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         boolean isExternal = false;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             InputDevice idev = getDevice(event.getDeviceId());
-            if( idev.toString().contains("Location: external")) isExternal = true;
+            if( idev != null && idev.toString().contains("Location: external")) isExternal = true;
         }
 
         if (isExternal) { // if has come from the phone itself, don't try to process it here
