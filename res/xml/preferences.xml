@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:key="engine_driver_preference"
     android:summary="@string/prefSummary"
-    android:title="@string/prefTitle" >
+    android:title="@string/app_name_preferences" >
     <EditTextPreference
         android:defaultValue="@string/prefThrottleNameDefaultValue"
         android:dialogTitle="@string/prefThrottleNameTitle"

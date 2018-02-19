@@ -932,7 +932,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private boolean gamepadDirectionButtonsAreCurrentlyReversed(int throttleIndexNo) {
         boolean isOk = false;
-        if ((prefGamepadSwapForwardReverseWithScreenButtons) && (currentSwapForwardReverseButtons[throttleIndexNo])) {
+        if ((prefGamepadSwapForwardReverseWithScreenButtons)
+                && (((currentSwapForwardReverseButtons[throttleIndexNo]) && (!prefSwapForwardReverseButtons))
+                    ||((!currentSwapForwardReverseButtons[throttleIndexNo]) && (prefSwapForwardReverseButtons)))) {
             isOk= true;
         }
         return isOk;
@@ -3204,7 +3206,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     // set the title, optionally adding the current time.
     public void setTitle() {
         if (mainapp.displayClock)
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name) + "  " + currentTime);
+            setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_short) + "  " + currentTime);
         else
             setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
     }
