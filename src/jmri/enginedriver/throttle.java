@@ -961,8 +961,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private void setDirectionButtonLabels() {
         String[] FullLeftText = {DIRECTION_BUTTON_LEFT_TEXT, DIRECTION_BUTTON_LEFT_TEXT, DIRECTION_BUTTON_LEFT_TEXT};
         String[] FullRightText = {DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT};
-        String dirLeftText = DIRECTION_BUTTON_LEFT_TEXT;
-        String dirRightText = DIRECTION_BUTTON_RIGHT_TEXT;
+        String dirLeftText;
+        String dirRightText;
         String[] dirLeftIndicationText = {"","",""};
         String[] dirRightIndicationText = {"","",""};
 
@@ -1818,11 +1818,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         tvGamePadS.setText(gamePadThrottleAssignment[1]);
         tvGamePadG.setText(gamePadThrottleAssignment[2]);
 
-        if (gamePadThrottleAssignment[0] == "1") {
+        if (gamePadThrottleAssignment[0].equals("1")) {
             setSelectedLocoAdditionalIndicator('T',false);
-        } else if (gamePadThrottleAssignment[1] == "1") {
+        } else if (gamePadThrottleAssignment[1].equals("1")) {
             setSelectedLocoAdditionalIndicator('S',false);
-        } else if (gamePadThrottleAssignment[2] == "1") {
+        } else if (gamePadThrottleAssignment[2].equals("1")) {
             setSelectedLocoAdditionalIndicator('G',false);
         } else setSelectedLocoAdditionalIndicator(' ',false);
 
@@ -2106,7 +2106,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_FORWARD)) {  // Forward
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
-                boolean dirChangeFailed = false;
+                boolean dirChangeFailed;
                 if (!gamepadDirectionButtonsAreCurrentlyReversed(throttleIndexNo)) {
                     dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
                 } else {
@@ -2115,7 +2115,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 GamepadFeedbackSound(dirChangeFailed);
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_REVERSE)) {  // Reverse
-            boolean dirChangeFailed = false;
+            boolean dirChangeFailed;
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 if (!gamepadDirectionButtonsAreCurrentlyReversed(throttleIndexNo)) {
                     dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
@@ -2195,7 +2195,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 }
 
                 if (acceptEvent) {
-                    float xAxis = 0;
+                    float xAxis;
                     xAxis = event.getAxisValue(MotionEvent.AXIS_X);
                     float yAxis = event.getAxisValue(MotionEvent.AXIS_Y);
 

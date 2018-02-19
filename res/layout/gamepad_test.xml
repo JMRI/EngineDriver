@@ -19,7 +19,7 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_margin="5dp"
-            android:layout_weight=".9">
+            android:layout_weight=".3">
 
             <TextView
                 android:id="@+id/gamepad_test_mode_label"
@@ -34,14 +34,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
+                android:layout_margin="0dp"
                 android:layout_toEndOf="@+id/gamepad_test_mode_label"
-                android:layout_toRightOf="@+id/gamepad_test_mode_label" />
+                android:layout_toRightOf="@+id/gamepad_test_mode_label"
+                android:padding="0dp" />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="8.2"
+            android:layout_weight="7.1"
             android:orientation="vertical">
 
             <ScrollView
@@ -242,7 +244,7 @@
                                 android:textSize="12sp" />
                         </LinearLayout>
 
-                            <LinearLayout
+                        <LinearLayout
                             android:id="@+id/gamepad_test_keys"
                             android:layout_width="fill_parent"
                             android:layout_height="25dip"
@@ -339,7 +341,7 @@
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="3dp"
-            android:layout_weight=".9"
+            android:layout_weight="1"
             android:paddingLeft="6dp"
             android:paddingRight="6dp">
 
