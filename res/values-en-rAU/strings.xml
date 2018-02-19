@@ -14,8 +14,7 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
 <resources>
-    <string name="prefEsuMc2ZeroTrimSummary">Set the Control Knob zero trim setting.\nSmaller is closer to anti-clockwise end-stop position.\nPermitted range 0&#8211;255.</string>
-
+    <string name="app_name_turnouts">Points - Engine Driver</string>
 
     <string name="turnouts">Points</string>
     <string name="turnouts_label">Control Points</string>
@@ -30,9 +29,8 @@
     <string name="prefTurnoutsTitle">Points and Routes Preferences</string>
     <string name="prefHardwareSystemTitle">Points Hardware System</string>
 
-    <string name="prefHardwareSystemSummary">Select hardware system to use for direct entry Point commands</string>
+    <string name="prefHardwareSystemSummary">Select hardware system to use for direct entry point commands</string>
     <string name="prefDelimiterSummary">Set the character that marks the end of the Location portion of Point and Route names</string>
 
     <string name="prefPowerButtonBarSummary">Display layout power button in Throttle, Point and Routes screens?</string>
-
 </resources>
