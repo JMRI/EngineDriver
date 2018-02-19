@@ -296,7 +296,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
      */
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "ConsistedEdit.onDestroy()");
+        Log.d("Engine_Driver", "ConsistEdit.onDestroy()");
 
         mainapp.consist_edit_msg_handler = null;
         super.onDestroy();
