@@ -19,7 +19,7 @@
     <string name="fb_label">Function Label</string>
     <string name="function_buttons">function_buttons</string>
     <string name="app_name">Engine Driver</string>
-    <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI (or MRC) WiThrottle server, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one or two locomotives. </string>
+    <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI, MRC or DigiTrax WiThrottle server, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one or two locomotives. </string>
     <string name="app_name_connect">Connect to Server - Engine Driver</string>
     <string name="app_name_throttle">Throttle - Engine Driver</string>
     <string name="app_name_throttle_short">Throttle</string>
@@ -370,7 +370,7 @@
     <string name="prefImportExportLocoListTitle">Include recent loco list</string>
     <string name="prefImportExportLocoListSummary">Include the locos in the recent loco list in \'Imports\' and \'Exports\'.</string>
 
-    <string name="prefAutoImportExportTitle">Auto host specifc import/export</string>
+    <string name="prefAutoImportExportTitle">Auto host specific import/export</string>
     <string name="prefAutoImportExportSummary">On every connection to a host, AUTOMATICALLY \'Import\' preferences for that host, and optionally \'Export\' them on disconnect. \n(To constantly reset back to a known state, set to \'Auto import on connect only\' after the first time, or after a manual save (below).)</string>
     <string name="prefAutoImportExportDefaultValue">None</string>
 
@@ -382,7 +382,7 @@
     <string name="prefSwapForwardReverseButtonsSummary">Permanently swap the two Direction Buttons for all throttles.</string>
 
     <string name="prefSwapForwardReverseButtonsLongPressTitle">Long press Swap Direction Buttons</string>
-    <string name="prefSwapForwardReverseButtonsLongPressSummary">Temporarily swap the two Direction Buttons with a long press of any of Direction Button.</string>
+    <string name="prefSwapForwardReverseButtonsLongPressSummary">Temporarily swap the two Direction Buttons with a long press of any Direction Button.</string>
 
     <string name="prefGamepadSwapForwardReverseWithScreenButtonsTitle">Swap Direction Buttons with Screen Buttons</string>
     <string name="prefGamepadSwapForwardReverseWithScreenButtonsSummary">Temporarily swap the two Gamepad Direction Buttons if the Screen Direction buttons are swapped.</string>

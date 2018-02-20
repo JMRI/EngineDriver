@@ -5,6 +5,10 @@
  * Enable/disable speed buttons & seekbar when ESU Mobile Control II in stop mode
  * Optional high contrast colour themes
  * Improved the rounding error on scale speed calculations (The throttle will zero more reliably)
+ * Option for additional highlight of the Loco selected. Either via the Volume keys or Gamepad 1 or both
+ * Option to disable the hardware volume keys to control the throttle
+ * Enforce a test each time you use a gamepad, with an option to disable the test
+ * Some regionalisation for Australia and Great Britain
  * prevent some crashes reported to Play Store
 **Version 2.16
  * Preference grouping
@@ -347,6 +351,7 @@
  *   TODO: hide or add option for MRC to turnout system list
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
+ *   TODO: disallow web menu option if "Auto-web" is enabled, or fix it to diplay web anyway
  * routes
  *   TODO: use PRT titles for Active/inactive
  * turnouts

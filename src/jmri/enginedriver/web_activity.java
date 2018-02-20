@@ -36,6 +36,7 @@ import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebSettings;
+import android.widget.Toast;
 
 public class web_activity extends Activity {
 
@@ -128,6 +129,7 @@ public class web_activity extends Activity {
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("Engine_Driver","web_activity.onCreate()");
         super.onCreate(savedInstanceState);
 
         mainapp = (threaded_application) this.getApplication();
@@ -199,6 +201,7 @@ public class web_activity extends Activity {
         }
         if (!mainapp.setActivityOrientation(this, true))    //set screen orientation based on prefs
         {
+            Toast.makeText(getApplicationContext(), "Auto-Web enabled, rotate device for web", Toast.LENGTH_LONG).show();
             navigatingAway = true;
             this.finish();                                // if autoweb and portrait, switch to throttle screen
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -236,6 +239,7 @@ public class web_activity extends Activity {
 
     @Override
     public void onPause() {
+        Log.d("Engine_Driver", "web_activity.onPause() called");
         super.onPause();
         if (webView != null) {
             if (!callHiddenWebViewOnPause())
