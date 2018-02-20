@@ -13,34 +13,9 @@
    </item>
 
    <item
-      android:state_selected="true"
-      android:state_activated="false"
-      android:state_enabled="true"
-      android:drawable="@drawable/btn_pressed">
-   </item>
-
-   <item
-      android:state_selected="false"
-      android:state_activated="true"
-      android:state_hovered="true"
-      android:state_enabled="true"
-      android:drawable="@drawable/btn_activated_hovered">
-   </item>
-
-   <item
-      android:state_selected="false"
-      android:state_activated="true"
-      android:state_hovered="false"
-      android:state_enabled="true"
-      android:drawable="@drawable/btn_activated">
-   </item>
-
-   <item
-      android:state_selected="false"
-      android:state_activated="false"
-      android:state_hovered="true"
-      android:state_enabled="true"
-      android:drawable="@drawable/btn_hovered">
+       android:state_selected="true"
+       android:state_enabled="true"
+       android:drawable="@drawable/btn_pressed">
    </item>
 
    <item

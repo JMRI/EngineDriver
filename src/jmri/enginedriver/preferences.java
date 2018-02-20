@@ -138,6 +138,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
 
         sharedPreferences.edit().putBoolean("prefGamepadTestNow", false).commit();  //reset the preference
+
+        if (mainapp.androidVersion < mainapp.minActivatedButtonsVersion) {
+            getPreferenceScreen().findPreference("prefSelectedLocoIndicator").setSelectable(false);
+            getPreferenceScreen().findPreference("prefSelectedLocoIndicator").setEnabled(false);
+        }
     }
 
     @SuppressWarnings("deprecation")
