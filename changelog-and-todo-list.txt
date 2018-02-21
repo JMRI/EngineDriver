@@ -341,8 +341,8 @@
  *   added html About page
  */
 /*
+ *   TODO: handle MRC, Digitrax and new WiThrottle fastclock messages
  *   TODO: convert all WiThrottle commands to 2.0+ protocol, drop older protocol
- *   TODO: handle MRC and Digitrax fastclock messages
  *   TODO: change config files to use db instead of .txt files, turn off sd card permission
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
@@ -350,8 +350,9 @@
  * MRC
  *   TODO: hide or add option for MRC to turnout system list
  * web
+ *   TODO: diagnose why Web menu option doesn't work when Auto-Web enabled
+ *   TODO: can we preserve current state of web? currently it "refreshes" on every load
  *   TODO: allow user to specify initial zoom-level of each web view
- *   TODO: disallow web menu option if "Auto-web" is enabled, or fix it to diplay web anyway
  * routes
  *   TODO: use PRT titles for Active/inactive
  * turnouts
@@ -375,9 +376,6 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
- *   TODO: gamepad, handle incorrect mode better
- *   TODO: handle button decrement showing 0 in display, but not actually speed 0 (rounding?)
- *   TODO: new preference to set text of Forward and Reverse (e.g. East/West)
  *   TODO: eStop actually sends Stop, not eStop
  *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
  *   TODO: clear loco buttons on reconnect attempt until actual MT+ received
@@ -393,7 +391,6 @@
  *   TODO: add graphics (slider, stop, directions, functions?)  add colors
  *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
- *   TODO: 
  * select_loco:
  *   TODO: disconnect connections made by roster stuff
  *   TODO: add close button and roster image to details dialog
