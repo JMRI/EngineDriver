@@ -444,7 +444,7 @@ public class routes extends Activity implements OnGestureListener {
         //make sure the soft keyboard is closed
         EditText rte = (EditText) findViewById(R.id.route_entry);
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
+        if (imm != null && rte != null) {
             imm.hideSoftInputFromWindow(rte.getWindowToken(), 0);
         }
 

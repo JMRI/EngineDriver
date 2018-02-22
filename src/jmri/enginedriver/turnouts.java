@@ -446,7 +446,7 @@ public class turnouts extends Activity implements OnGestureListener {
         //make sure the soft keyboard is closed
         EditText trn = (EditText) findViewById(R.id.turnout_entry);
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
+        if (imm != null && trn != null) {
             imm.hideSoftInputFromWindow(trn.getWindowToken(), 0);
         }
 
