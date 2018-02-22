@@ -1,5 +1,6 @@
 **Version 2.18
  * prevent some crashes reported to Google Play
+ * Fix issue with ESU Mobile Control II knob position not updating on EStop
 **Version 2.17
  * Add support for ESU Mobile Control II throttle
  * Add toast messages when ESU Mobile Control II in stop mode
