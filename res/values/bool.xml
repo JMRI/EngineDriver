@@ -54,5 +54,5 @@
     <bool name="prefVolumeKeysFollowLastTouchedThrottleDefaultValue">false</bool>
 
     <bool name="prefGamepadTestNowDefaultValue">false</bool>
-    <bool name="prefHideExampleServerDefaultValue">false</bool>
+    <bool name="prefHideDemoServerDefaultValue">false</bool>
 </resources>

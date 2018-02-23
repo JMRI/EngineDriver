@@ -78,10 +78,10 @@ public class connection_activity extends Activity {
     private int connected_port;
     private boolean navigatingAway = false;        // flag for onPause: set to true when another activity is selected, false if going into background
 
-    private static final String example_host = "jmri.mstevetodd.com";
-    private static final String example_port = "44444";
+    private static final String demo_host = "jmri.mstevetodd.com";
+    private static final String demo_port = "44444";
 
-    private boolean prefHideExampleServer = false;
+    private boolean prefHideDemoServer = false;
 
     private static Method overridePendingTransition;
 
@@ -314,7 +314,7 @@ public class connection_activity extends Activity {
 
         setContentView(R.layout.connection);
 
-        prefHideExampleServer = prefs.getBoolean("prefHideExampleServer", getResources().getBoolean(R.bool.prefHideExampleServerDefaultValue));
+        prefHideDemoServer = prefs.getBoolean("prefHideDemoServer", getResources().getBoolean(R.bool.prefHideDemoServerDefaultValue));
 
 
         //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
@@ -551,7 +551,7 @@ public class connection_activity extends Activity {
     }
 
     private void getConnectionsList() {
-        boolean foundExampleHost = false;
+        boolean foundDemoHost = false;
         connections_list.clear();
         String errMsg;
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
@@ -588,8 +588,8 @@ public class connection_activity extends Activity {
                             }
                             if (port > 0) {  //skip if port not converted to integer
 
-                                if ((!prefHideExampleServer)
-                                        || ((prefHideExampleServer)  && !((host_name.equals(example_host)) && (port.toString().equals(example_port))))) {
+                                if ((!prefHideDemoServer)
+                                        || ((prefHideDemoServer)  && !((host_name.equals(demo_host)) && (port.toString().equals(demo_port))))) {
                                     HashMap<String, String> hm = new HashMap<>();
                                     hm.put("ip_address", ip_address);
                                     hm.put("host_name", host_name);
@@ -598,8 +598,8 @@ public class connection_activity extends Activity {
                                         connections_list.add(hm);
                                     }
                                 }
-                                if (host_name.equals(example_host) && port.toString().equals(example_port)) {
-                                    foundExampleHost = true;
+                                if (host_name.equals(demo_host) && port.toString().equals(demo_port)) {
+                                    foundDemoHost = true;
                                 }
                             }
                         }
@@ -613,12 +613,12 @@ public class connection_activity extends Activity {
             }
         }
 
-        //if example host not already in list, add it at end
-        if ((!prefHideExampleServer) && (!foundExampleHost)) {
+        //if demo host not already in list, add it at end
+        if ((!prefHideDemoServer) && (!foundDemoHost)) {
             HashMap<String, String> hm = new HashMap<>();
-            hm.put("ip_address", example_host);
-            hm.put("host_name", example_host);
-            hm.put("port", example_port);
+            hm.put("ip_address", demo_host);
+            hm.put("host_name", demo_host);
+            hm.put("port", demo_port);
             connections_list.add(hm);
         }
         connection_list_adapter.notifyDataSetChanged();
