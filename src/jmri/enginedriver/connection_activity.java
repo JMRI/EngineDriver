@@ -81,6 +81,8 @@ public class connection_activity extends Activity {
     private static final String example_host = "jmri.mstevetodd.com";
     private static final String example_port = "44444";
 
+    private boolean prefHideExampleServer = false;
+
     private static Method overridePendingTransition;
 
     private ArrayList<Integer> engine_address_list;
@@ -311,6 +313,9 @@ public class connection_activity extends Activity {
         mainapp.applyTheme(this);
 
         setContentView(R.layout.connection);
+
+        prefHideExampleServer = prefs.getBoolean("prefHideExampleServer", getResources().getBoolean(R.bool.prefHideExampleServerDefaultValue));
+
 
         //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
         discovery_list = new ArrayList<>();
@@ -582,12 +587,16 @@ public class connection_activity extends Activity {
                             } catch (Exception ignored) {
                             }
                             if (port > 0) {  //skip if port not converted to integer
-                                HashMap<String, String> hm = new HashMap<>();
-                                hm.put("ip_address", ip_address);
-                                hm.put("host_name", host_name);
-                                hm.put("port", port.toString());
-                                if (!connections_list.contains(hm)) {    // suppress dups
-                                    connections_list.add(hm);
+
+                                if ((!prefHideExampleServer)
+                                        || ((prefHideExampleServer)  && !((host_name.equals(example_host)) && (port.toString().equals(example_port))))) {
+                                    HashMap<String, String> hm = new HashMap<>();
+                                    hm.put("ip_address", ip_address);
+                                    hm.put("host_name", host_name);
+                                    hm.put("port", port.toString());
+                                    if (!connections_list.contains(hm)) {    // suppress dups
+                                        connections_list.add(hm);
+                                    }
                                 }
                                 if (host_name.equals(example_host) && port.toString().equals(example_port)) {
                                     foundExampleHost = true;
@@ -605,7 +614,7 @@ public class connection_activity extends Activity {
         }
 
         //if example host not already in list, add it at end
-        if (!foundExampleHost) {
+        if ((!prefHideExampleServer) && (!foundExampleHost)) {
             HashMap<String, String> hm = new HashMap<>();
             hm.put("ip_address", example_host);
             hm.put("host_name", example_host);

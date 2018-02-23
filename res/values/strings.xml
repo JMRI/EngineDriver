@@ -160,6 +160,7 @@
     <string name="prefGamePadTypeSummary">Choose the option that best supports your gamepad.</string>
     <string name="prefGamePadStartButtonTitle">Gamepad Start Button action</string>
     <string name="prefGamePadStartButtonSummary">Choose the action when you press the Start button.</string>
+
     <string name="prefGamePadFeedbackVolumeTitle">Gamepad Button Click Volume %</string>
     <string name="prefGamePadFeedbackVolumeSummary">Set the volume percent for gamepad button clicks.</string>
     <string name="prefGamePadFeedbackVolumeDefaultValue">100</string>
@@ -335,6 +336,9 @@
     <string name="prefDisableVolumeKeysTitle">Disable Volume keys</string>
     <string name="prefDisableVolumeKeysSummary">Disables the hardware Volume keys on the phone/tablet that would otherwise control speed. Note: If selected overrides \'Additional Selected Loco Indicator\'. </string>
 
+    <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Volume keys follow Touch</string>
+    <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">The Volume keys speed control will follow the last touched throttle.</string>
+
     <string name="prefSpeedButtonsRepeatTitle">Speed button repeat delay</string>
     <string name="prefSpeedButtonsRepeatSummary">How long between repeats on speed buttons.  Smaller is faster. Excludes gamepad buttons. (See separate gamepad setting.)</string>
     <string name="prefSpeedButtonsRepeatDefaultValue">100</string>
@@ -401,6 +405,9 @@
     <string name="prefThemeTitle">Theme/Style</string>
     <string name="prefThemeSummary">App theme. REQUIRES restart of Engine Driver. \nRequires Android Honeycomb or later.</string>
     <string name="prefThemeDefaultValue">Default</string>
+
+    <string name="prefHideExampleServerTitle">Hide Example Server</string>
+    <string name="prefHideExampleServerSummary">Hide the example server \'jmri.mstevetodd.com\' in the connection list.</string>
 
     <string name="prefDirectionButtonsTitle">Direction Button labels</string>
     <string name="prefDirectionButtonsSummary">Labels for all direction buttons.</string>

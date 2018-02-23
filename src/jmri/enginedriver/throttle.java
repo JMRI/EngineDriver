@@ -323,6 +323,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private boolean mVolumeKeysAutoIncrement = false;
     private boolean mVolumeKeysAutoDecrement = false;
     private boolean prefDisableVolumeKeys = false;
+    private boolean prefVolumeKeysFollowLastTouchedThrottle = false;
+
+    private boolean prefThrottleViewImmersiveMode = false;
+    private boolean prefAlwaysUseDefaultFunctionLabels = false;
+    private boolean prefDecreaseLocoNumberHeight = false;
+    private boolean pref_increase_slider_height_preference = false;
+    private boolean prefShowAddressInsteadOfName = false;
+    private boolean prefIncreaseWebViewSize = false;
 
     private int[] gamePadIds = {0,0,0}; // which device id if assigned to each of the three throttles
     private String[] gamePadThrottleAssignment = {"","",""};
@@ -890,10 +898,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     private void setImmersiveModeOn(View webView) {
-        boolean tvim = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
         immersiveModeIsOn = false;
 
-        if (tvim) {   // if the preference is set use Immersive mode
+        if (prefThrottleViewImmersiveMode) {   // if the preference is set use Immersive mode
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 immersiveModeIsOn = true;
                 webView.setSystemUiVisibility(
@@ -909,10 +916,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     private void setImmersiveModeOff(View webView) {
-        boolean tvim = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
-        immersiveModeIsOn = false;
+         immersiveModeIsOn = false;
 
-        if (tvim) {   // if the preference is set use Immersive mode
+        if (prefThrottleViewImmersiveMode) {   // if the preference is set use Immersive mode
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 webView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_VISIBLE);
@@ -946,6 +952,50 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             case 'S': return 1;
             default: return 2;  // 'G'
         }
+    }
+
+    // get all the preferences that should be read when the activity is created or resumes
+    private void getCreateAndResumePrefs() {
+
+        webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+
+        // increase height of throttle slider (if requested in preferences)
+        pref_increase_slider_height_preference = prefs.getBoolean("increase_slider_height_preference", getResources().getBoolean(R.bool.prefIncreaseSliderHeightDefaultValue));
+
+        // decrease height of Loco Id (if requested in preferences)
+        prefDecreaseLocoNumberHeight = prefs.getBoolean("prefDecreaseLocoNumberHeight", getResources().getBoolean(R.bool.prefDecreaseLocoNumberHeightDefaultValue));
+
+        // increase the web view height if the preference is set
+        prefIncreaseWebViewSize = prefs.getBoolean("prefIncreaseWebViewSize", getResources().getBoolean(R.bool.prefIncreaseWebViewSizeDefaultValue));
+
+        prefThrottleViewImmersiveMode = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
+
+        prefShowAddressInsteadOfName = prefs.getBoolean("prefShowAddressInsteadOfName", getResources().getBoolean(R.bool.prefShowAddressInsteadOfNameDefaultValue));
+
+        prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
+        isScreenLocked = false;
+
+        dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
+        stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
+        locoSelectWhileMoving = prefs.getBoolean("SelLocoWhileMovingPreference", getResources().getBoolean(R.bool.prefSelLocoWhileMovingDefaultValue));
+
+        screenBrightnessDim = Integer.parseInt(prefs.getString("prefScreenBrightnessDim", getResources().getString(R.string.prefScreenBrightnessDimDefaultValue))) * 255 /100;
+        //screenBrightnessBright = Integer.parseInt(prefs.getString("prefScreenBrightnessBright", getResources().getString(R.string.prefScreenBrightnessBrightDefaultValue))) * 255 /100;
+
+        prefConsistLightsLongClick = prefs.getBoolean("ConsistLightsLongClickPreference", getResources().getBoolean(R.bool.prefConsistLightsLongClickDefaultValue));
+
+        prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
+        prefGamepadTestEnforceTesting = prefs.getBoolean("prefGamepadTestEnforceTesting", getResources().getBoolean(R.bool.prefGamepadTestEnforceTestingDefaultValue));
+
+        prefDisableVolumeKeys = prefs.getBoolean("prefDisableVolumeKeys", getResources().getBoolean(R.bool.prefDisableVolumeKeysDefaultValue));
+
+        prefSelectedLocoIndicator = prefs.getString("prefSelectedLocoIndicator", getResources().getString(R.string.prefSelectedLocoIndicatorDefaultValue));
+
+        prefVolumeKeysFollowLastTouchedThrottle = prefs.getBoolean("prefVolumeKeysFollowLastTouchedThrottle", getResources().getBoolean(R.bool.prefVolumeKeysFollowLastTouchedThrottleDefaultValue));
+
+        // Ignore the labels for the loco in the Roster and use the defaults... if requested in preferences
+        prefAlwaysUseDefaultFunctionLabels = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
+
     }
 
     private void getDirectionButtonPrefs() {
@@ -1779,6 +1829,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+    // Set the original volume indicator a small 'v' near the speed
     private void setVolumeIndicator() {
         // hide or display volume control indicator based on variable
         tvVolT.setText("");
@@ -1866,8 +1917,20 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+    // if the preference is set, set the specific active throttle for the volume keys based on the throttle used
+    private void setActiveThrottle(char whichThrottle) {
+        if (tvVolT!=null) { // if it is null assume that the page is not fully drawn yet
+            if (prefVolumeKeysFollowLastTouchedThrottle) {
+                if (whichVolume != whichThrottle) {
+                    whichVolume = whichThrottle;
+                    setVolumeIndicator();
+                    setSelectedLocoAdditionalIndicator(whichThrottle, true);
+                }
+            }
+        }
+    }
 
-    // setup the appropriate keycodes for the type of gamepad that has been selected in the preferences
+        // setup the appropriate keycodes for the type of gamepad that has been selected in the preferences
     private void setGamepadKeys() {
         whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
         prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
@@ -2792,6 +2855,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             } else if (isSelectLocoAllowed(whichThrottle)) {
                 // don't loco change while moving if the preference is set
                 start_select_loco_activity(whichThrottle); // pass throttle #
+                setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
             } else {
                 Toast.makeText(getApplicationContext(), "Loco change not allowed: 'Direction change while moving' is disabled in the preferences", Toast.LENGTH_SHORT).show();
             }
@@ -2800,6 +2864,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         @Override
         public boolean onLongClick(View v) {
             start_consist_lights_edit(whichThrottle);
+            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
 
             return true;
         }
@@ -2844,6 +2909,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 mAutoDecrement = true;
             }
             repeatUpdateHandler.post(new RptUpdater(whichThrottle));
+
+            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
             return false;
         }
 
@@ -2856,6 +2923,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 mAutoDecrement = false;
                 decrementSpeed(whichThrottle);
             }
+            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
         }
 
         @Override
@@ -2867,6 +2935,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) && mAutoDecrement) {
                 mAutoDecrement = false;
             }
+            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
             return false;
         }
     }
@@ -2901,7 +2970,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     break;
                 }
             }
-
+            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
         }
 
         @Override
@@ -2924,6 +2993,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 doButtonPress();
             }
 
+            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
             return true;
         }
 
@@ -2936,6 +3006,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             v.playSoundEffect(SoundEffectConstants.CLICK);
 
             doButtonPress();
+            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
         }
     }
 
@@ -3075,6 +3146,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     }
                     break;
             }
+            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
         }
     }
 
@@ -3137,6 +3209,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 applySpeedRelatedOptions(whichThrottle);
             }
             lastSpeed = speed;
+
+            setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
         }
 
         @Override
@@ -3239,19 +3313,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         setContentView(R.layout.throttle);
 
+        getCreateAndResumePrefs(); // get all the common preferences
+
         speedButtonLeftText = getApplicationContext().getResources().getString(R.string.LeftButton);
         speedButtonRightText = getApplicationContext().getResources().getString(R.string.RightButton);
         speedButtonUpText = getApplicationContext().getResources().getString(R.string.UpButton);
         speedButtonDownText = getApplicationContext().getResources().getString(R.string.DownButton);
 
-        prefSelectedLocoIndicator = prefs.getString("prefSelectedLocoIndicator", getResources().getString(R.string.prefSelectedLocoIndicatorDefaultValue));
         getDirectionButtonPrefs();
 
-        webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
         webViewIsOn = !webViewLocation.equals("none");
         keepWebViewLocation = webViewLocation;
 
-        prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
         isScreenLocked = false;
 
         // get the screen brightness on create
@@ -3295,10 +3368,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         bSelG.setOnLongClickListener(sfbt);  // Consist Light Edit
         tvLeftDirIndG = (TextView) findViewById(R.id.loco_left_direction_indicaton_G);
         tvRightDirIndG = (TextView) findViewById(R.id.loco_right_direction_indicaton_G);
-
-        prefDisableVolumeKeys = prefs.getBoolean("prefDisableVolumeKeys", getResources().getBoolean(R.bool.prefDisableVolumeKeysDefaultValue));
-
-        prefGamepadTestEnforceTesting = prefs.getBoolean("prefGamepadTestEnforceTesting", getResources().getBoolean(R.bool.prefGamepadTestEnforceTestingDefaultValue));
 
         clearVolumeAndGamepadAdditionalIndicators();
 
@@ -3482,7 +3551,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mVelocityTracker = VelocityTracker.obtain();
         }
 
-       webView = (WebView) findViewById(R.id.throttle_webview);
+        setActiveThrottle('T'); // set the throttle the volume keys control depending on the preference to the default 'T'
+
+        webView = (WebView) findViewById(R.id.throttle_webview);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
         webView.getSettings().setDatabasePath(databasePath);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -3594,26 +3665,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         gestureFailed = false;
         gestureInProgress = false;
 
-        prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
-        isScreenLocked = false;
+        getCreateAndResumePrefs();
 
-        dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
-        stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
-        locoSelectWhileMoving = prefs.getBoolean("SelLocoWhileMovingPreference", getResources().getBoolean(R.bool.prefSelLocoWhileMovingDefaultValue));
-
-        screenBrightnessDim = Integer.parseInt(prefs.getString("prefScreenBrightnessDim", getResources().getString(R.string.prefScreenBrightnessDimDefaultValue))) * 255 /100;
-        //screenBrightnessBright = Integer.parseInt(prefs.getString("prefScreenBrightnessBright", getResources().getString(R.string.prefScreenBrightnessBrightDefaultValue))) * 255 /100;
-
-        prefConsistLightsLongClick = prefs.getBoolean("ConsistLightsLongClickPreference", getResources().getBoolean(R.bool.prefConsistLightsLongClickDefaultValue));
-
-        prefGamePadMultipleDevices = prefs.getBoolean("prefGamePadMultipleDevices", getResources().getBoolean(R.bool.prefGamePadMultipleDevicesDefaultValue));
-        prefGamepadTestEnforceTesting = prefs.getBoolean("prefGamepadTestEnforceTesting", getResources().getBoolean(R.bool.prefGamepadTestEnforceTestingDefaultValue));
-
-        prefDisableVolumeKeys = prefs.getBoolean("prefDisableVolumeKeys", getResources().getBoolean(R.bool.prefDisableVolumeKeysDefaultValue));
-
-        prefSelectedLocoIndicator = prefs.getString("prefSelectedLocoIndicator", getResources().getString(R.string.prefSelectedLocoIndicatorDefaultValue));
         clearVolumeAndGamepadAdditionalIndicators();
-
 
         getDirectionButtonPrefs();
         setDirectionButtonLabels(); // set all the direction button labels
@@ -3816,12 +3870,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             tv = fbS;
         }
 
-        // Ignore the labels for the loco in the Roster and use the defaults... if requested in preferences
-        boolean audfl = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
-
         // note: we make a copy of function_labels_x because TA might change it
         // while we are using it (causing issues during button update below)
-        if (!audfl) {
+        if (!prefAlwaysUseDefaultFunctionLabels) {
             if (whichThrottle == 'T' && mainapp.function_labels_T != null && mainapp.function_labels_T.size() > 0) {
                 function_labels_temp = new LinkedHashMap<>(mainapp.function_labels_T);
             } else if (whichThrottle == 'G' && mainapp.function_labels_G != null && mainapp.function_labels_G.size() > 0) {
@@ -3949,12 +4000,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // Get the screen's density scale
         final float denScale = dm.density;
 
-        // SPDHT decrease height of Loco Id (if requested in preferences)
-        boolean dlih = prefs.getBoolean("prefDecreaseLocoNumberHeight", getResources().getBoolean(R.bool.prefDecreaseLocoNumberHeightDefaultValue));
         // Convert the dps to pixels, based on density scale
         int newDlihHeight;
         int newDlihFontSize;
-        if (dlih) {
+        if (prefDecreaseLocoNumberHeight) {
             newDlihHeight = (int) (40 * denScale + 0.5f); // decreased height
             newDlihFontSize = 32; // decreased height
         } else {
@@ -3963,27 +4012,20 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
         // SPDHT
 
-        // increase height of throttle slider (if requested in preferences)
-        boolean ish = prefs.getBoolean("increase_slider_height_preference", getResources().getBoolean(R.bool.prefIncreaseSliderHeightDefaultValue));
-
         // Convert the dps to pixels, based on density scale
         int newHeight;
-        if (ish) {
+        if (pref_increase_slider_height_preference) {
             newHeight = (int) (80 * denScale + 0.5f); // increased height
         } else {
             newHeight = (int) (50 * denScale + 0.5f); // normal height
         }
-
-        //
-        boolean sadion = prefs.getBoolean("prefShowAddressInsteadOfName", getResources().getBoolean(R.bool.prefShowAddressInsteadOfNameDefaultValue));
-        //
 
         final int conNomTextSize = 24;
         final double minTextScale = 0.5;
         String bLabel;
         Button b = bSelT;
         if (mainapp.consistT.isActive()) {
-            if (!sadion) {
+            if (!prefShowAddressInsteadOfName) {
                 bLabel = mainapp.consistT.toString();
             } else {
                 bLabel = mainapp.consistT.formatConsistAddr();
@@ -4015,7 +4057,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         b = bSelS;
         if (mainapp.consistS.isActive()) {
-            if (!sadion) {
+            if (!prefShowAddressInsteadOfName) {
                 bLabel = mainapp.consistS.toString();
             } else {
                 bLabel = mainapp.consistS.formatConsistAddr();
@@ -4041,7 +4083,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         b = bSelG;
         if (mainapp.consistG.isActive()) {
-            if (!sadion) {
+            if (!prefShowAddressInsteadOfName) {
                 bLabel = mainapp.consistG.toString();
             } else {
                 bLabel = mainapp.consistG.formatConsistAddr();
@@ -4073,13 +4115,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
-        // increase the web view height if the preference is set
-        boolean iwvs = prefs.getBoolean("prefIncreaseWebViewSize", getResources().getBoolean(R.bool.prefIncreaseWebViewSizeDefaultValue));
-
         // save part the screen for webview
         if (webViewLocation.equals("Top") || webViewLocation.equals("Bottom")) {
             webViewIsOn = true;
-            if (!iwvs) {
+            if (!prefIncreaseWebViewSize) {
                 // save half the screen
                 screenHeight *= 0.5;
             } else {
