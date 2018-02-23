@@ -3195,6 +3195,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 if (IS_ESU_MCII) {
                     setEsuThrottleKnobPosition(whichThrottle, speed);
                 }
+
+                setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
             } else {
                 if (limitedJump) {
                     if (speed >= jumpSpeed) {   // stop when we reach the target
@@ -3209,8 +3211,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 applySpeedRelatedOptions(whichThrottle);
             }
             lastSpeed = speed;
-
-            setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
         }
 
         @Override
