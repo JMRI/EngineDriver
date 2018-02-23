@@ -111,7 +111,7 @@ public class select_loco extends Activity {
 
             //put roster entries into screen list
             if (mainapp.roster_entries != null) {
-                Collection<String> rns = mainapp.roster_entries.keySet(); //copy to prevent concurrentmodification
+                ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy to prevent concurrentmodification
                 for (String rostername : rns) {
                     // put key and values into temp hashmap
                     HashMap<String, String> hm = new HashMap<>();
