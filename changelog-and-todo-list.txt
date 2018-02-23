@@ -1,6 +1,6 @@
 **Version 2.18
  * prevent some crashes reported to Google Play
- * option to hide the example server
+ * option to hide the demo server
  * option for the volume keys to follow the last touched throttle
  * Fix issue with ESU Mobile Control II knob position not updating on EStop
 **Version 2.17

@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,24 +36,15 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
@@ -75,7 +65,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private ArrayList<Integer> address_size_list; // Look at address_type.java
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
 
-    private static final String EXAMPLE_HOST = "jmri.mstevetodd.com";
+    private static final String DEMO_HOST = "jmri.mstevetodd.com";
     private String[] prefHostImportExportOptionsFound = {"None"};
     private static final String IMPORT_PREFIX = "Import- "; // these two have to be the same length
     private static final String EXPORT_PREFIX = "Export- ";
@@ -488,7 +478,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     private void getConnectionsList() {
-        boolean foundExampleHost = false;
+        boolean foundDemoHost = false;
         String host_name;
         String host_name_filename;
         String errMsg;
@@ -505,8 +495,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     if (parts.size() > 1) {  //skip if not split
                         host_name = parts.get(0);
                         host_name_filename = host_name.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
-                        if (host_name.equals(EXAMPLE_HOST)) {
-                            foundExampleHost = true;
+                        if (host_name.equals(DEMO_HOST)) {
+                            foundDemoHost = true;
                         }
                         if ((!host_name.equals("")) && (!isAlreadyInArray(prefHostImportExportOptionsFound, IMPORT_PREFIX + host_name_filename))) {
                             prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, IMPORT_PREFIX + host_name_filename);
@@ -522,9 +512,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             Toast.makeText(getApplicationContext(), "Error reading recent connections list: " + errMsg, Toast.LENGTH_SHORT).show();
         }
 
-        if (!foundExampleHost) {
-            prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, IMPORT_PREFIX + EXAMPLE_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
-            prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, EXPORT_PREFIX+ EXAMPLE_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+        if (!foundDemoHost) {
+            prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, IMPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+            prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, EXPORT_PREFIX+ DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
         }
 
     }

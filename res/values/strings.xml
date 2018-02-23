@@ -406,8 +406,8 @@
     <string name="prefThemeSummary">App theme. REQUIRES restart of Engine Driver. \nRequires Android Honeycomb or later.</string>
     <string name="prefThemeDefaultValue">Default</string>
 
-    <string name="prefHideExampleServerTitle">Hide Example Server</string>
-    <string name="prefHideExampleServerSummary">Hide the example server \'jmri.mstevetodd.com\' in the connection list.</string>
+    <string name="prefHideDemoServerTitle">Hide Demo Server</string>
+    <string name="prefHideDemoServerSummary">Hide the demo server \'jmri.mstevetodd.com\' in the connection list.</string>
 
     <string name="prefDirectionButtonsTitle">Direction Button labels</string>
     <string name="prefDirectionButtonsSummary">Labels for all direction buttons.</string>

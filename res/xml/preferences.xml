@@ -586,10 +586,10 @@
             android:summary="@string/PrefConnectToFirstServerSummary"
             android:title="@string/PrefConnectToFirstServerTitle" />
         <CheckBoxPreference
-            android:defaultValue="@bool/prefHideExampleServerDefaultValue"
-            android:key="prefHideExampleServer"
-            android:summary="@string/prefHideExampleServerSummary"
-            android:title="@string/prefHideExampleServerTitle" >
+            android:defaultValue="@bool/prefHideDemoServerDefaultValue"
+            android:key="prefHideDemoServer"
+            android:summary="@string/prefHideDemoServerSummary"
+            android:title="@string/prefHideDemoServerTitle" >
         </CheckBoxPreference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefWebTitle" >
