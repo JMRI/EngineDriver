@@ -100,6 +100,13 @@
                 android:title="@string/prefDisableVolumeKeysTitle" >
             </CheckBoxPreference>
 
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefVolumeKeysFollowLastTouchedThrottleDefaultValue"
+                android:key="prefVolumeKeysFollowLastTouchedThrottle"
+                android:summary="@string/prefVolumeKeysFollowLastTouchedThrottleSummary"
+                android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle" >
+            </CheckBoxPreference>
+
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -578,6 +585,12 @@
             android:key="connect_to_first_server_preference"
             android:summary="@string/PrefConnectToFirstServerSummary"
             android:title="@string/PrefConnectToFirstServerTitle" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefHideExampleServerDefaultValue"
+            android:key="prefHideExampleServer"
+            android:summary="@string/prefHideExampleServerSummary"
+            android:title="@string/prefHideExampleServerTitle" >
+        </CheckBoxPreference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefWebTitle" >
         <ListPreference
