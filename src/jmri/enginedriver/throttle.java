@@ -4469,6 +4469,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 mainapp.sendEStopMsg();
                 speedUpdate(0);  // update all three throttles
                 applySpeedRelatedOptions();  // update all three throttles
+                if (IS_ESU_MCII) {
+                    Log.d("Engine_Driver", "ESU_MCII: Move knob request for EStop");
+                    setEsuThrottleKnobPosition(whichVolume, 0);
+                }
 
                 break;
             case R.id.power_layout_button:
