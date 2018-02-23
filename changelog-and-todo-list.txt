@@ -1,5 +1,7 @@
 **Version 2.18
  * prevent some crashes reported to Google Play
+ * option to hide the example server
+ * option for the volume keys to follow the last touched throttle
 **Version 2.17
  * Add support for ESU Mobile Control II throttle
  * Add toast messages when ESU Mobile Control II in stop mode
