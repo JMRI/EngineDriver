@@ -78,6 +78,8 @@ public class connection_activity extends Activity {
     private int connected_port;
     private boolean navigatingAway = false;        // flag for onPause: set to true when another activity is selected, false if going into background
 
+    private String deviceId = "";
+
     private static final String demo_host = "jmri.mstevetodd.com";
     private static final String demo_port = "44444";
 
@@ -679,11 +681,14 @@ public class connection_activity extends Activity {
        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
        String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
 
+       deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+       sharedPreferences.edit().putString("prefAndroidId", deviceId).commit();
+
        if ((prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT))
                || (prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
            if (mainapp.connectedHostName != null) {
                String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
-               res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+               res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
                res = true;
            } else {
                Toast.makeText(getApplicationContext(), "Unable to load host specific preferences. Can't get host name.", Toast.LENGTH_LONG).show();
