@@ -23,6 +23,7 @@ package jmri.enginedriver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -107,7 +108,7 @@ public class ImportExportPreferences {
     }
 
     @SuppressWarnings({ "unchecked" })
-    public boolean loadSharedPreferencesFromFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
+    public boolean loadSharedPreferencesFromFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId) {
         currentlyImporting = true;
         boolean res = false;
         boolean srcExists = false;
@@ -150,8 +151,12 @@ public class ImportExportPreferences {
                     res = true;
 
                     res = true;
-                    // restore the remembered throttle name to avoid a duplicate throttle name
-                    sharedPreferences.edit().putString("throttle_name_preference", currentThrottleNameValue).commit();
+
+                    // restore the remembered throttle name to avoid a duplicate throttle name if this is a differnt to device to where it was originally saved
+                    String restoredDeviceId = sharedPreferences.getString("prefAndroidId", "").trim();
+                    if ((!restoredDeviceId.equals(deviceId)) || (restoredDeviceId.equals(""))) {
+                        sharedPreferences.edit().putString("throttle_name_preference", currentThrottleNameValue).commit();
+                    }
                     sharedPreferences.edit().putString("prefImportExport", "None").commit();  //reset the preference
                     sharedPreferences.edit().putString("prefHostImportExport", "None").commit();  //reset the preference
                     sharedPreferences.edit().putString("prefAutoImportExport", prefAutoImportExport).commit();  //reset the preference

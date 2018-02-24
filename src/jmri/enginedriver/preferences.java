@@ -57,6 +57,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private Menu PRMenu;
     private int result;                     // set to RESULT_FIRST_USER when something is edited
 
+    private String deviceId = "";
+
     private boolean currentlyImporting = false;
     private String exportedPreferencesFileName =  "exported_preferences.ed";
     private boolean overwiteFile = false;
@@ -133,6 +135,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             getPreferenceScreen().findPreference("prefSelectedLocoIndicator").setSelectable(false);
             getPreferenceScreen().findPreference("prefSelectedLocoIndicator").setEnabled(false);
         }
+
+        deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+        sharedPreferences.edit().putString("prefAndroidId", deviceId).commit();
     }
 
     @SuppressWarnings("deprecation")
@@ -276,7 +281,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     if (currentValue.equals("Export")) {
                         saveSharedPreferencesToFile(sharedPreferences,exportedPreferencesFileName);
                     } else if (currentValue.equals("Import")) {
-                        loadSharedPreferencesFromFile(sharedPreferences,exportedPreferencesFileName);
+                        loadSharedPreferencesFromFile(sharedPreferences,exportedPreferencesFileName, deviceId);
                     } else if (currentValue.equals("Reset")) {
                         resetPreferences(sharedPreferences);
                     }
@@ -291,7 +296,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         if (action.equals(EXPORT_PREFIX)) {
                             saveSharedPreferencesToFile(sharedPreferences,exportedPreferencesFileName);
                         } else if (action.equals(IMPORT_PREFIX)) {
-                            loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName);
+                            loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName, deviceId);
                         }
                     }
                 }
@@ -324,8 +329,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     @SuppressWarnings({ "unchecked" })
-    private boolean loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
-        boolean res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+    private boolean loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId) {
+        boolean res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
 
         if (!res) {
             Toast.makeText(getApplicationContext(), "Import from 'engine_driver/" + exportedPreferencesFileName + "' failed! You may not have saved the preferences for this host yet.", Toast.LENGTH_LONG).show();
