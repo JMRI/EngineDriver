@@ -26,6 +26,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.gesture.GestureOverlayView;
 import android.graphics.Typeface;
+import android.hardware.Sensor;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Build;
@@ -146,7 +149,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static String VOLUME_INDICATOR = "v";
     private static String[] GAMEPAD_INDICATOR = {"1", "2", "3"};
 
-    private String prefSelectedLocoIndicator = "None";
+    private static final String SELECTED_LOCO_INDICATOR_NONE = "None";
+    private static final String SELECTED_LOCO_INDICATOR_GAMEPAD = "Gamepad";
+    private static final String SELECTED_LOCO_INDICATOR_VOLUME = "Volume";
+    private static final String SELECTED_LOCO_INDICATOR_BOTH = "Both";
+    private String prefSelectedLocoIndicator = SELECTED_LOCO_INDICATOR_NONE;
 
     private SeekBar sbT; // seekbars
     private SeekBar sbS;
@@ -241,10 +248,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private int dirS = 1;
     private int dirG = 1;
 
+    private static final String WEB_VIEW_LOCATION_NONE = "none";
+    private static final String WEB_VIEW_LOCATION_BOTTOM = "Bottom";
+    private static final String WEB_VIEW_LOCATION_TOP = "Top";
     private static final String noUrl = "file:///android_asset/blank_page.html";
     private static final float initialScale = 1.5f;
     private WebView webView = null;
-    private String webViewLocation;
+    private String webViewLocation = WEB_VIEW_LOCATION_NONE;
+
     private static float scale = initialScale;      // used to restore throttle web zoom level (after rotation)
     private static boolean clearHistory = false;    // flags webViewClient to clear history when page load finishes
     private static String firstUrl = null;          // desired first url when clearing history
@@ -276,7 +287,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     //used in the gesture for temporarily showing the Web View
     private boolean webViewIsOn = false;
     private String prefSwipeUpOption;
-    private String keepWebViewLocation = "none";
+    private String keepWebViewLocation = WEB_VIEW_LOCATION_NONE;
     // use for locking the screen on swipe up
     private boolean isScreenLocked = false;
     private boolean screenDimmed = false;
@@ -294,10 +305,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     boolean locoSelectWhileMoving;
 
     // used for the GamePad Support
+    private static final String WHICH_GAMEPAD_MODE_NONE = "None";
     private static final int DIRECTION_FORWARD = 1;
     private static final int DIRECTION_REVERSE = 0;
     // default to the iOS iCade mappings
-    private String whichGamePadMode = "None";
+    private String whichGamePadMode = WHICH_GAMEPAD_MODE_NONE;
     private static String PREF_GAMEPAD_BUTTON_OPTION_ALL_STOP = "All Stop";
     private static String PREF_GAMEPAD_BUTTON_OPTION_STOP = "Stop";
     private static String PREF_GAMEPAD_BUTTON_OPTION_NEXT_THROTTLE = "Next Throttle";
@@ -362,6 +374,19 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     //Throttle Array
     private final char[] allThrottleLetters = {'T', 'S', 'G'};
+
+    // The following are used for the shake detection
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private shakeDetector shakeDetector;
+    private static final String ACCELERATOROMETER_SHAKE_NONE = "None";
+    private static final String ACCELERATOROMETER_SHAKE_NEXT_V = "NextV";
+    private static final String ACCELERATOROMETER_SHAKE_DIM_SCREEN= "Dim";
+    private static final String ACCELERATOROMETER_SHAKE_LOCK_DIM_SCREEN= "LockDim";
+    private static final String ACCELERATOROMETER_SHAKE_WEB_VIEW= "Web";
+    private static final String ACCELERATOROMETER_SHAKE_ALL_STOP= "AllStop";
+    private String prefAccelerometerShake = ACCELERATOROMETER_SHAKE_NONE;
+    private boolean accelerometerCurrent = false;
 
     // For ESU MobileControlII
     private static final boolean IS_ESU_MCII = MobileControl2.isMobileControl2();
@@ -876,7 +901,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (mainapp.androidVersion >= mainapp.minScreenDimNewMethodVersion) {
             if(brightnessModeValue >= 0 && brightnessModeValue <= 1){
                 if (!Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, brightnessModeValue)) {
-                    Toast.makeText(getApplicationContext(), "Unable to set the Auto Brightness/ Adaptive Brightness.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastUnableToSetBrightness), Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -954,10 +979,91 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
-    // get all the preferences that should be read when the activity is created or resumes
-    private void getCreateAndResumePrefs() {
+    // set or restore the screen brightness when used for the Swipe Up or Shake
+    private void setRestoreScreenDim(String toastMsg){
+        if (screenDimmed) {
+            screenDimmed = false;
+            setScreenBrightness(screenBrightnessOriginal);
+            setScreenBrightnessMode(screenBrightnessModeOriginal);
+        } else {
+            screenDimmed = true;
+            Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
+            screenBrightnessOriginal = getScreenBrightness();
+            setScreenBrightness(screenBrightnessDim);
+        }
 
-        webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+    }
+
+    // set or restore the screen brightness and lock or unlock the sceen when used for the Swipe Up or Shake
+    private void setRestoreScreenLockDim( String toastMsg) {
+        if (isScreenLocked) {
+            isScreenLocked = false;
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleScreenUnlocked), Toast.LENGTH_SHORT).show();
+            setScreenBrightness(screenBrightnessOriginal);
+            setScreenBrightnessMode(screenBrightnessModeOriginal);
+        } else {
+            isScreenLocked = true;
+            Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
+            screenBrightnessOriginal = getScreenBrightness();
+            setScreenBrightness(screenBrightnessDim);
+        }
+
+    }
+
+    private void setupSensor () {
+        if (!prefAccelerometerShake.equals(ACCELERATOROMETER_SHAKE_NONE)) {
+            // ShakeDetector initialization
+            sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            if (accelerometer != null) {
+                shakeDetector = new shakeDetector(getApplicationContext());
+                shakeDetector.setOnShakeListener(new shakeDetector.OnShakeListener() {
+
+                    @Override
+                    public void onShake(int count) {
+
+                        switch (prefAccelerometerShake) {
+                            case ACCELERATOROMETER_SHAKE_WEB_VIEW:
+                                if ((webViewLocation.equals(WEB_VIEW_LOCATION_NONE)) && (keepWebViewLocation.equals(WEB_VIEW_LOCATION_NONE))) {
+                                    GamepadFeedbackSound(true);
+                                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastShakeWebViewUnavailable), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    GamepadFeedbackSound(false);
+                                    showHideWebView(getApplicationContext().getResources().getString(R.string.toastShakeWebViewHidden));
+                                }
+                                break;
+                            case ACCELERATOROMETER_SHAKE_NEXT_V:
+                                GamepadFeedbackSound(false);
+                                setNextActiveThrottle();
+                                break;
+                            case ACCELERATOROMETER_SHAKE_LOCK_DIM_SCREEN:
+                                GamepadFeedbackSound(false);
+                                setRestoreScreenLockDim(getApplicationContext().getResources().getString(R.string.toastShakeScreenLocked));
+                                break;
+                            case ACCELERATOROMETER_SHAKE_DIM_SCREEN:
+                                GamepadFeedbackSound(false);
+                                setRestoreScreenDim(getApplicationContext().getResources().getString(R.string.toastShakeScreenDimmed));
+                                break;
+                            case ACCELERATOROMETER_SHAKE_ALL_STOP:
+                                GamepadFeedbackSound(false);
+                                speedUpdateAndNotify(0);         // update all three throttles
+                            }
+                    }
+                });
+                accelerometerCurrent = true;
+            } else {
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastAccelerometerNotFound), Toast.LENGTH_LONG).show();
+            }
+
+        }
+    }
+
+    // get all the preferences that should be read when the activity is created or resumes
+    private void getCommonPrefs(boolean isCreate) {
+
+        if (isCreate) {  //only do onCreate
+            webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+        }
 
         // increase height of throttle slider (if requested in preferences)
         pref_increase_slider_height_preference = prefs.getBoolean("increase_slider_height_preference", getResources().getBoolean(R.bool.prefIncreaseSliderHeightDefaultValue));
@@ -996,6 +1102,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // Ignore the labels for the loco in the Roster and use the defaults... if requested in preferences
         prefAlwaysUseDefaultFunctionLabels = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
 
+        prefAccelerometerShake = prefs.getString("prefAccelerometerShake", getApplicationContext().getResources().getString(R.string.prefAccelerometerShakeDefaultValue));
     }
 
     private void getDirectionButtonPrefs() {
@@ -1070,6 +1177,21 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // reload from the initial webpage
         currentUrl = null;
         reloadWeb();
+    }
+
+    // used for the swipe up option and the shake, to show or hide the web view at the bottom of the throttle page
+    private void showHideWebView(String toastMsg) {
+        if (!(keepWebViewLocation.equals(WEB_VIEW_LOCATION_NONE))) { // show/hide the web view if the preference is set
+            if (!webViewIsOn) {
+                webViewLocation = keepWebViewLocation;
+            } else {
+                webViewLocation = WEB_VIEW_LOCATION_NONE;
+                Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
+            }
+            webViewIsOn = !webViewIsOn;
+
+            this.onResume();
+        }
     }
 
     private void witRetry(String s) {
@@ -1766,12 +1888,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private void clearVolumeAndGamepadAdditionalIndicators() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            if ((prefSelectedLocoIndicator.equals("None")) || (prefSelectedLocoIndicator.equals("Gamepad"))) {
+            if ((prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_NONE)) || (prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_GAMEPAD))) {
                 bSelT.setActivated(false);
                 bSelS.setActivated(false);
                 bSelG.setActivated(false);
             }
-            if ((prefSelectedLocoIndicator.equals("None")) || (prefSelectedLocoIndicator.equals("Volume"))) {
+            if ((prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_NONE)) || (prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_VOLUME))) {
                 bSelT.setHovered(false);
                 bSelS.setHovered(false);
                 bSelG.setHovered(false);
@@ -1782,11 +1904,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     @SuppressLint("NewApi")
     private void setSelectedLocoAdditionalIndicator(char whichThrottle, boolean isVolume) {
 
-        if (!prefSelectedLocoIndicator.equals("None")) {
+        if (!prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_NONE)) {
 
             if (mainapp.androidVersion >= mainapp.minActivatedButtonsVersion) {
 
-                if ((isVolume) && (((prefSelectedLocoIndicator.equals("Both")) || (prefSelectedLocoIndicator.equals("Volume"))))) { // note: 'Volume' option is no longer available
+                if ((isVolume) && (((prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_BOTH)) || (prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_VOLUME))))) { // note: 'Volume' option is no longer available
 
                     if (!prefDisableVolumeKeys) { // don't set the indicators if the volume keys are disabled the preferences
 
@@ -1806,7 +1928,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     }
 
                 }
-                if ((!isVolume) && (((prefSelectedLocoIndicator.equals("Both")) || (prefSelectedLocoIndicator.equals("Gamepad"))))) {
+                if ((!isVolume) && (((prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_BOTH)) || (prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_GAMEPAD))))) {
                     if (whichThrottle == 'T') {
                         bSelT.setHovered(true);
                         bSelS.setHovered(false);
@@ -1948,7 +2070,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefGamePadButtons[7] = prefs.getString("prefGamePadButtonDown", getApplicationContext().getResources().getString(R.string.prefGamePadButtonDownDefaultValue));
         prefGamePadButtons[8] = prefs.getString("prefGamePadButtonLeft", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftDefaultValue));
 
-        if (!whichGamePadMode.equals("None")) {
+        if (!whichGamePadMode.equals(WHICH_GAMEPAD_MODE_NONE)) {
             // make sure the Softkeyboard is hidden
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                     WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
@@ -2240,7 +2362,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
         //Log.d("Engine_Driver", "dgme " + event.getAction());
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
-            if (!whichGamePadMode.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
+            if (!whichGamePadMode.equals(WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
                 boolean acceptEvent = true; // default to assuming that we will respond to the event
 
@@ -2323,7 +2445,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         if (isExternal) { // if has come from the phone itself, don't try to process it here
-            if (!whichGamePadMode.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
+            if (!whichGamePadMode.equals(WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
                 boolean acceptEvent = true; // default to assuming that we will respond to the event
 
@@ -2857,7 +2979,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 start_select_loco_activity(whichThrottle); // pass throttle #
                 setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
             } else {
-                Toast.makeText(getApplicationContext(), "Loco change not allowed: 'Direction change while moving' is disabled in the preferences", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastLocoChangeNotAllowed), Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -2988,7 +3110,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         currentSwapForwardReverseButtons[throttleIndex] = true;
                     }
                     setDirectionButtonLabels();
-                    Toast.makeText(getApplicationContext(), "Direction Buttons temporarily swapped. To permanently swap them, change in preferences", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDirectionButtonsSwapped), Toast.LENGTH_SHORT).show();
                 }
                 doButtonPress();
             }
@@ -3313,7 +3435,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         setContentView(R.layout.throttle);
 
-        getCreateAndResumePrefs(); // get all the common preferences
+        getCommonPrefs(true); // get all the common preferences
 
         speedButtonLeftText = getApplicationContext().getResources().getString(R.string.LeftButton);
         speedButtonRightText = getApplicationContext().getResources().getString(R.string.RightButton);
@@ -3322,7 +3444,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         getDirectionButtonPrefs();
 
-        webViewIsOn = !webViewLocation.equals("none");
+        webViewIsOn = !webViewLocation.equals(WEB_VIEW_LOCATION_NONE);
         keepWebViewLocation = webViewLocation;
 
         isScreenLocked = false;
@@ -3635,6 +3757,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             Log.d("Engine_Driver", "ESU_MCII: Initialisation complete");
         }
 
+        setupSensor(); // setup the support for shake actions.
+
     } // end of onCreate()
 
     @Override
@@ -3665,7 +3789,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         gestureFailed = false;
         gestureInProgress = false;
 
-        getCreateAndResumePrefs();
+        getCommonPrefs(false);
 
         clearVolumeAndGamepadAdditionalIndicators();
 
@@ -3720,6 +3844,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         CookieSyncManager.getInstance().startSync();
+
+        if (!prefAccelerometerShake.equals(ACCELERATOROMETER_SHAKE_NONE)) {
+            if (!accelerometerCurrent) { // perference has only just been changed to turn it on
+                setupSensor();
+            } else {
+                sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
+            }
+        }
     }
 
     @Override
@@ -3759,6 +3891,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             setScreenBrightness(screenBrightnessOriginal);
             setScreenBrightnessMode(screenBrightnessModeOriginal);
         }
+
+            if (accelerometerCurrent) {
+                sensorManager.unregisterListener(shakeDetector);
+            }
     }
 
     @Override
@@ -3819,7 +3955,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     // load the url
     private void load_webview() {
         String url = currentUrl;
-        if (webViewLocation.equals("none")) {       // if not displaying webview
+        if (webViewLocation.equals(WEB_VIEW_LOCATION_NONE)) {       // if not displaying webview
             webViewIsOn = false;
             url = noUrl;                            // load static url to stop javascript
             currentUrl = null;
@@ -4116,14 +4252,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         // save part the screen for webview
-        if (webViewLocation.equals("Top") || webViewLocation.equals("Bottom")) {
+        if (webViewLocation.equals(WEB_VIEW_LOCATION_TOP) || webViewLocation.equals(WEB_VIEW_LOCATION_BOTTOM)) {
             webViewIsOn = true;
             if (!prefIncreaseWebViewSize) {
                 // save half the screen
                 screenHeight *= 0.5;
             } else {
                 // save 60% of the screen
-                if (webViewLocation.equals("Bottom")) {
+                if (webViewLocation.equals(WEB_VIEW_LOCATION_BOTTOM)) {
                     screenHeight *= 0.40;
                 } else {
                     screenHeight *= 0.60;
@@ -4822,7 +4958,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             // enter or exit immersive mode only if the preference is set
                             if (immersiveModeIsOn) {
                                 setImmersiveModeOff(webView);
-                                Toast.makeText(getApplicationContext(), "Immersive mode temporarily disabled. To disable permanently change in preferences", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT).show();
                             } else {
                                 setImmersiveModeOn(webView);
                             }
@@ -4831,48 +4967,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         // swipe up
                         switch(prefSwipeUpOption) {
                             case "Hide Web View\n(requires 'Throttle Web View' preference)":
-                                if (!(keepWebViewLocation.equals("none"))) { // show/hide the web view if the preference is set
-                                    if (!webViewIsOn) {
-                                        webViewLocation = keepWebViewLocation;
-                                    } else {
-                                        webViewLocation = "none";
-                                        Toast.makeText(getApplicationContext(), "Web View temporarily hidden. To hide permanently change in preferences" + webViewLocation, Toast.LENGTH_SHORT).show();
-                                    }
-                                    webViewIsOn = !webViewIsOn;
-                                    //Toast.makeText(getApplicationContext(), "Swipe Up - " + webViewLocation, Toast.LENGTH_SHORT).show();
-
-                                    this.onResume();
-                                }
+                                showHideWebView(getApplicationContext().getResources().getString(R.string.toastSwipeUpViewHidden));
                                 break;
                             case "Lock and Dim Screen":
-                                if (isScreenLocked) {
-                                    isScreenLocked = false;
-                                    Toast.makeText(getApplicationContext(), "Throttle Screen Unlocked", Toast.LENGTH_SHORT).show();
-                                    setScreenBrightness(screenBrightnessOriginal);
-                                    setScreenBrightnessMode(screenBrightnessModeOriginal);
-                                } else {
-                                    isScreenLocked = true;
-                                    Toast.makeText(getApplicationContext(), "Throttle Screen Locked - Swipe up again to unlock", Toast.LENGTH_SHORT).show();
-                                    screenBrightnessOriginal = getScreenBrightness();
-                                    setScreenBrightness(screenBrightnessDim);
-                                }
+                                setRestoreScreenLockDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpScreenLocked));
                                 break;
                             case "Dim Screen":
-                                if (screenDimmed) {
-                                    screenDimmed = false;
-                                    setScreenBrightness(screenBrightnessOriginal);
-                                    setScreenBrightnessMode(screenBrightnessModeOriginal);
-                                } else {
-                                    screenDimmed = true;
-                                    Toast.makeText(getApplicationContext(), "Throttle Screen Dimmed - Swipe up to restore", Toast.LENGTH_SHORT).show();
-                                    screenBrightnessOriginal = getScreenBrightness();
-                                    setScreenBrightness(screenBrightnessDim);
-                                }
+                                setRestoreScreenDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpScreenDimmed));
                                 break;
                             case "Immersive Mode temporarily enable-disable":
                                 if (immersiveModeIsOn) {
                                     setImmersiveModeOff(webView);
-                                    Toast.makeText(getApplicationContext(), "Immersive mode temporarily disabled. To disable permanently change in preferences", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT).show();
                                 } else {
                                     setImmersiveModeOn(webView);
                                 }

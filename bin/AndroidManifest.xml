@@ -22,6 +22,7 @@
         tools:ignore="OldTargetApi" >
     </uses-sdk>
     <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" />
     <application
         android:name="jmri.enginedriver.threaded_application"
         android:allowBackup="true"
