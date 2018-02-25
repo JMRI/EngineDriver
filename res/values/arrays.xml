@@ -512,4 +512,21 @@
         <item>Gamepad 1 only</item>
     </string-array>
 
+    <string-array name="prefAccelerometerShakeOptions">
+        <item>None</item>
+        <item>Web</item>
+        <item>LockDim</item>
+        <item>Dim</item>
+        <item>NextV</item>
+        <item>AllStop</item>
+    </string-array>
+    <string-array name="prefAccelerometerShakeEntries">
+        <item>None</item>
+        <item>Hide Web View\n(requires \'Throttle Web View\' preference)</item>
+        <item>Lock and Dim Screen</item>
+        <item>Dim Screen</item>
+        <item>Next Throttle -for volume buttons</item>
+        <item>All Stop</item>
+    </string-array>
+
 </resources>

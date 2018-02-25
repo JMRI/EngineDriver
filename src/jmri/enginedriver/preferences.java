@@ -304,6 +304,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             case "prefGamepadTestNow":
                 start_gamepad_test_activity();
                 break;
+            case "prefAccelerometerShakeThreshold":
+                limitFloatPrefValue(sharedPreferences, key, 1.5F, 3.0F, "2.0"); // limit check new value
+                break;
         }
     }
 
@@ -440,18 +443,44 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 sharedPreferences.edit().putString(key, Integer.toString(maxVal)).commit();
                 prefText.setText(Integer.toString(maxVal));
                 isValid = false;
-                Toast.makeText(getApplicationContext(), "Value entered is outside the limits ("+Integer.toString(minVal)+"-"+Integer.toString(maxVal)+"). Reset to "+Integer.toString(maxVal)+".", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits).replace("%%1%%",Integer.toString(minVal)).replace("%%2%%",Integer.toString(minVal)).replace("%%3%%",Float.toString(maxVal)), Toast.LENGTH_LONG).show();
             } else if (newVal < minVal) {
                 sharedPreferences.edit().putString(key, Integer.toString(minVal)).commit();
                 prefText.setText(Integer.toString(minVal));
                 isValid = false;
-                Toast.makeText(getApplicationContext(), "Value entered is outside the limits ("+Integer.toString(minVal)+"-"+Integer.toString(maxVal)+"). Reset to "+Integer.toString(minVal)+".", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits).replace("%%1%%",Integer.toString(minVal)).replace("%%2%%",Integer.toString(minVal)).replace("%%3%%",Float.toString(minVal)), Toast.LENGTH_LONG).show();
             }
         } catch (NumberFormatException e) {
             sharedPreferences.edit().putString(key, defaultVal).commit();
             prefText.setText(defaultVal);
             isValid = false;
-            Toast.makeText(getApplicationContext(), "Value entered not numeric ("+Integer.toString(minVal)+"-"+Integer.toString(maxVal)+")! Reset to default.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric).replace("%%1%%",Integer.toString(minVal)).replace("%%2%%",Integer.toString(maxVal)).replace("%%3%%",defaultVal), Toast.LENGTH_LONG).show();
+        }
+        return isValid;
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean limitFloatPrefValue(SharedPreferences sharedPreferences, String key, Float minVal, Float maxVal, String defaultVal) {
+        boolean isValid = true;
+        EditTextPreference prefText = (EditTextPreference) getPreferenceScreen().findPreference(key);
+        try {
+            Float newVal = Float.parseFloat(sharedPreferences.getString(key, defaultVal).trim());
+            if (newVal > maxVal) {
+                sharedPreferences.edit().putString(key, Float.toString(maxVal)).commit();
+                prefText.setText(Float.toString(maxVal));
+                isValid = false;
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits).replace("%%1%%",Float.toString(minVal)).replace("%%2%%",Float.toString(maxVal)).replace("%%3%%",Float.toString(maxVal)), Toast.LENGTH_LONG).show();
+            } else if (newVal < minVal) {
+                sharedPreferences.edit().putString(key, Float.toString(minVal)).commit();
+                prefText.setText(Float.toString(minVal));
+                isValid = false;
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits).replace("%%1%%",Float.toString(minVal)).replace("%%2%%",Float.toString(maxVal)).replace("%%3%%",Float.toString(minVal)), Toast.LENGTH_LONG).show();
+            }
+        } catch (NumberFormatException e) {
+            sharedPreferences.edit().putString(key, defaultVal).commit();
+            prefText.setText(defaultVal);
+            isValid = false;
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric).replace("%%1%%",Float.toString(minVal)).replace("%%2%%",Float.toString(maxVal)).replace("%%3%%",defaultVal), Toast.LENGTH_LONG).show();
         }
         return isValid;
     }

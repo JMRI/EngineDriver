@@ -113,8 +113,8 @@
     <string name="prefTitle">Preferences</string>
     <string name="prefSummary">Preferences for Engine Driver</string>
     <string name="preferences">Preferences</string>
-    <string name="prefSwipeUpDownTitle">Swipe Up-Down options</string>
-    <string name="prefSwipeUpDownSummary">Preferences for swipe Up-Down on the Throttle Screen.</string>
+    <string name="prefSwipeUpDownTitle">Swipe Up-Down Preferences</string>
+    <string name="prefSwipeUpDownSummary">Options for swipe Up-Down on the Throttle Screen.</string>
     <string name="prefThrottleNameTitle">Throttle Name</string>
     <string name="prefThrottleNameDefaultValue">Engine Driver</string>
     <string name="prefThrottleNameSummary">Set a name for this device (shown on WiThrottle screen)</string>
@@ -413,6 +413,16 @@
     <string name="prefDirectionButtonsSummary">Labels for all direction buttons.</string>
     <string name="prefDirectionButtonsDefaultValue">Forward</string>
 
+    <string name="prefAccelerometerTitle">Accelerometer Preferences</string>
+    <string name="prefAccelerometerSummary">Options for device motion on the Throttle Page</string>
+    <string name="prefAccelerometerShakeTitle">Shake Action</string>
+    <string name="prefAccelerometerShakeSummary">Options for when you shake the device.</string>
+    <string name="prefAccelerometerShakeDefaultValue">None</string>
+
+    <string name="prefAccelerometerShakeThresholdTitle">Shake Threshold</string>
+    <string name="prefAccelerometerShakeThresholdSummary">Threshold at which the shake will register. (1.5-3.5) Lower value will respond to a gentle action.\nRequires restart of engine Driver after changing to take effect.</string>
+    <string name="prefAccelerometerShakeThresholdDefaultValue">2.0</string>
+
     <string name="functionButton00DefultValue">Light</string>
     <string name="functionButton01DefultValue">Bell</string>
     <string name="functionButton02DefultValue">Horn</string>
@@ -493,4 +503,19 @@
     <string name="prefGamepadTestNowTitle">Test Gamepad Setting Now!</string>
     <string name="prefGamepadTestNowSummary">Allows you to confirm that the chosen setting works correctly.\nTest page will launch IMMEDIATELY on selection.</string>
 
+    <!--    Toast messages for the Throttle page-->
+    <string name="toastUnableToSetBrightness">Unable to set the Auto Brightness/ Adaptive Brightness.</string>
+    <string name="toastAccelerometerNotFound">Accelerometer not found or is disabled</string>
+    <string name="toastLocoChangeNotAllowed">Loco change not allowed: \'Direction change while moving\' is disabled in the preferences</string>
+    <string name="toastDirectionButtonsSwapped">Direction Buttons temporarily swapped. To permanently swap them, change in preferences</string>
+    <string name="toastImmersiveModeDisabled">Immersive mode temporarily disabled. To disable permanently change in preferences</string>
+    <string name="toastThrottleScreenUnlocked">Throttle Screen Unlocked</string>
+    <string name="toastShakeWebViewHidden">Web View temporarily hidden. Shake again to show. To hide permanently change in preferences</string>
+    <string name="toastShakeWebViewUnavailable">Web View must be enabled in the preferences first</string>
+    <string name="toastShakeScreenLocked">Throttle Screen Locked - Shake again to unlock</string>
+    <string name="toastShakeScreenDimmed">Throttle Screen Dimmed - Shake again to restore</string>
+
+    <!--    Toast messages for the Preferences page-->
+    <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%%1%%-%%2%%). Reset to %%3%%.</string>
+    <string name="toastPreferencesNotNumeric">Value entered is not numeric (%%1%%-%%2%%). Reset to %%3%%.</string>
 </resources>

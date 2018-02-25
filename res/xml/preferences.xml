@@ -213,6 +213,28 @@
                 android:summary="@string/prefScreenBrightnessDimSummary"
                 android:title="@string/prefScreenBrightnessDimTitle" />
         </PreferenceScreen>
+        <PreferenceScreen
+            android:key="throttle_accelerometer_preference"
+            android:title="@string/prefAccelerometerTitle"
+            android:summary="@string/prefAccelerometerSummary"
+            android:persistent="false">
+            <ListPreference
+                android:defaultValue="@string/prefAccelerometerShakeDefaultValue"
+                android:entries="@array/prefAccelerometerShakeEntries"
+                android:entryValues="@array/prefAccelerometerShakeOptions"
+                android:key="prefAccelerometerShake"
+                android:summary="@string/prefAccelerometerShakeSummary"
+                android:title="@string/prefAccelerometerShakeTitle" />
+            <EditTextPreference
+                android:defaultValue="@string/prefAccelerometerShakeThresholdDefaultValue"
+                android:dialogTitle="@string/prefAccelerometerShakeThresholdTitle"
+                android:key="prefAccelerometerShakeThreshold"
+                android:maxLength="5"
+                android:numeric="decimal"
+                android:summary="@string/prefAccelerometerShakeThresholdSummary"
+                android:title="@string/prefAccelerometerShakeThresholdTitle" />
+
+        </PreferenceScreen>
 
         <CheckBoxPreference
             android:layout_width="wrap_content"
