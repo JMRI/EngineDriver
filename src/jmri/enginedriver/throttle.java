@@ -4967,13 +4967,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         // swipe up
                         switch(prefSwipeUpOption) {
                             case "Hide Web View\n(requires 'Throttle Web View' preference)":
-                                showHideWebView("Web View temporarily hidden. To hide permanently change in preferences");
+                                showHideWebView(getApplicationContext().getResources().getString(R.string.toastSwipeUpViewHidden));
                                 break;
                             case "Lock and Dim Screen":
-                                setRestoreScreenLockDim("Throttle Screen Locked - Swipe up again to unlock");
+                                setRestoreScreenLockDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpScreenLocked));
                                 break;
                             case "Dim Screen":
-                                setRestoreScreenDim("Throttle Screen Dimmed - Swipe up to restore");
+                                setRestoreScreenDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpScreenDimmed));
                                 break;
                             case "Immersive Mode temporarily enable-disable":
                                 if (immersiveModeIsOn) {

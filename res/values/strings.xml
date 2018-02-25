@@ -514,6 +514,9 @@
     <string name="toastShakeWebViewUnavailable">Web View must be enabled in the preferences first</string>
     <string name="toastShakeScreenLocked">Throttle Screen Locked - Shake again to unlock</string>
     <string name="toastShakeScreenDimmed">Throttle Screen Dimmed - Shake again to restore</string>
+    <string name="toastSwipeUpScreenLocked">Throttle Screen Locked - Swipe up to unlock</string>
+    <string name="toastSwipeUpScreenDimmed">Throttle Screen Dimmed - Swipe up to restore</string>
+    <string name="toastSwipeUpViewHidden">Web View temporarily hidden. To hide permanently change in preferences</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%%1%%-%%2%%). Reset to %%3%%.</string>
