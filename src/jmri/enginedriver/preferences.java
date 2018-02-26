@@ -72,7 +72,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final String IMPORT_PREFIX = "Import- "; // these two have to be the same length
     private static final String EXPORT_PREFIX = "Export- ";
 
-    private static final String OPTION_NONE = "None";
+    private static final String IMPORT_EXPORT_OPTION_NONE = "None";
+    private static final String IMPORT_EXPORT_OPTION_EXPORT = "Export";
+    private static final String IMPORT_EXPORT_OPTION_IMPORT ="Import";
+    private static final String IMPORT_EXPORT_OPTION_RESET = "Reset";
 
     private static String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
     private static String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
@@ -278,11 +281,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 if (!importExportPreferences.currentlyImporting) {
                     exportedPreferencesFileName =  "exported_preferences.ed";
                     String currentValue = sharedPreferences.getString(key, "");
-                    if (currentValue.equals("Export")) {
+                    if (currentValue.equals(IMPORT_EXPORT_OPTION_EXPORT)) {
                         saveSharedPreferencesToFile(sharedPreferences,exportedPreferencesFileName);
-                    } else if (currentValue.equals("Import")) {
+                    } else if (currentValue.equals(IMPORT_EXPORT_OPTION_IMPORT)) {
                         loadSharedPreferencesFromFile(sharedPreferences,exportedPreferencesFileName, deviceId);
-                    } else if (currentValue.equals("Reset")) {
+                    } else if (currentValue.equals(IMPORT_EXPORT_OPTION_RESET)) {
                         resetPreferences(sharedPreferences);
                     }
                 }
@@ -290,7 +293,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             case "prefHostImportExport":
                 if (!importExportPreferences.currentlyImporting) {
                     String currentValue = sharedPreferences.getString(key, "");
-                    if (!currentValue.equals(OPTION_NONE)) {
+                    if (!currentValue.equals(IMPORT_EXPORT_OPTION_NONE)) {
                         String action = currentValue.substring(0,IMPORT_PREFIX.length());
                         exportedPreferencesFileName = currentValue.substring(IMPORT_PREFIX.length(),currentValue.length());
                         if (action.equals(EXPORT_PREFIX)) {
@@ -305,7 +308,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 start_gamepad_test_activity();
                 break;
             case "prefAccelerometerShakeThreshold":
-                limitFloatPrefValue(sharedPreferences, key, 1.5F, 3.0F, "2.0"); // limit check new value
+                limitFloatPrefValue(sharedPreferences, key, 1.2F, 3.0F, "2.0"); // limit check new value
                 break;
         }
     }
@@ -386,8 +389,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     private void fixAndReloadImportExportPreference(SharedPreferences sharedPreferences){
-        sharedPreferences.edit().putString("prefImportExport", OPTION_NONE).commit();  //reset the preference
-        sharedPreferences.edit().putString("prefHostImportExport", OPTION_NONE).commit();  //reset the preference
+        sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
+        sharedPreferences.edit().putString("prefHostImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
         reload();
     }
 
