@@ -125,8 +125,8 @@
     <string name="prefThrottleTitle">Throttle Control Preferences</string>
     <string name="prefThrottleStatusTitle">Throttle Page Status Row Preferences</string>
 
-    <string name="prefSliderTitle">Speed Slider+Btns &amp; Volume key Preferences</string>
-    <string name="prefSliderSummary">Options for Speed Slider, Speed Buttons and Volume Keys</string>
+    <string name="prefSliderTitle">Speed Slider and Buttons Preferences</string>
+    <string name="prefSliderSummary">Options for Speed Slider and Speed Buttons</string>
 
     <string name="prefDirectionTitle">Direction button Preferences</string>
     <string name="prefDirectionSummary">Options for the Direction Buttons</string>
@@ -154,6 +154,16 @@
     <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  Swipe down to temporarily disable and reach the menu.</string>
     <string name="prefSwipeUpOptionTitle">Swipe up action in the Throttle view?</string>
     <string name="prefSwipeUpOptionSummary">What should happen when you swipe up on the Throttle view.</string>
+
+    <!--     Volume preferences  -->
+    <string name="prefVolumeTitle">Volume Preferences</string>
+    <string name="prefVolumeSummary">Options for Volume buttons</string>
+
+    <string name="prefVolumeSpeedButtonsSpeedStepTitle">Speed button change amount</string>
+    <string name="prefVolumeSpeedButtonsSpeedStepSummary">How much Volume buttons jump throttle speed.</string>
+    <string name="prefVolumeSpeedButtonsSpeedStepDefaultValue">1</string>
+
+    <!--     Gamepad preferences  -->
     <string name="prefGamePadTitle">Gamepad Preferences</string>
     <string name="prefGamePadSummary">Choose the Gamepad type and other options</string>
     <string name="prefGamePadTypeTitle">Gamepad type</string>
@@ -170,6 +180,10 @@
     <string name="prefGamePadSpeedButtonsRepeatTitle">Speed button repeat delay</string>
     <string name="prefGamePadSpeedButtonsRepeatSummary">How long between repeats on Gamepad speed buttons.  Smaller is faster.</string>
     <string name="prefGamePadSpeedButtonsRepeatDefaultValue">300</string>
+
+    <string name="prefGamePadSpeedButtonsSpeedStepTitle">Speed button change amount</string>
+    <string name="prefGamePadSpeedButtonsSpeedStepSummary">How much Gamepad buttons jump throttle speed.</string>
+    <string name="prefGamePadSpeedButtonsSpeedStepDefaultValue">4</string>
 
     <!--    Gamepad button preferences   -->
     <string name="prefGamePadButton1Title">Gamepad button action</string> <!-- X     -->
@@ -420,7 +434,7 @@
     <string name="prefAccelerometerShakeDefaultValue">None</string>
 
     <string name="prefAccelerometerShakeThresholdTitle">Shake Threshold</string>
-    <string name="prefAccelerometerShakeThresholdSummary">Threshold at which the shake will register. (1.5-3.5) Lower value will respond to a gentle action.\nRequires restart of engine Driver after changing to take effect.</string>
+    <string name="prefAccelerometerShakeThresholdSummary">Threshold at which the shake will register. (1.5&#8211;3.5) Lower value will respond to a gentle action.\nRequires restart of engine Driver after changing to take effect.</string>
     <string name="prefAccelerometerShakeThresholdDefaultValue">2.0</string>
 
     <string name="functionButton00DefultValue">Light</string>

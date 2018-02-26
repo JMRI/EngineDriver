@@ -93,20 +93,6 @@
                 android:title="@string/prefHideSliderAndSpeedButtonsTitle" >
             </CheckBoxPreference>
 
-            <CheckBoxPreference
-                android:defaultValue="@bool/prefDisableVolumeKeysDefaultValue"
-                android:key="prefDisableVolumeKeys"
-                android:summary="@string/prefDisableVolumeKeysSummary"
-                android:title="@string/prefDisableVolumeKeysTitle" >
-            </CheckBoxPreference>
-
-            <CheckBoxPreference
-                android:defaultValue="@bool/prefVolumeKeysFollowLastTouchedThrottleDefaultValue"
-                android:key="prefVolumeKeysFollowLastTouchedThrottle"
-                android:summary="@string/prefVolumeKeysFollowLastTouchedThrottleSummary"
-                android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle" >
-            </CheckBoxPreference>
-
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -252,6 +238,38 @@
             android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary"
             android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle">
         </CheckBoxPreference>
+
+        <PreferenceScreen
+            android:key="volume_preferences"
+            android:title="@string/prefVolumeTitle"
+            android:summary="@string/prefVolumeSummary"
+            android:persistent="false">
+
+            <EditTextPreference
+                android:defaultValue="@string/prefVolumeSpeedButtonsSpeedStepDefaultValue"
+                android:dialogTitle="@string/prefVolumeSpeedButtonsSpeedStepTitle"
+                android:key="prefVolumeSpeedButtonsSpeedStep"
+                android:maxLength="2"
+                android:numeric="integer"
+                android:summary="@string/prefVolumeSpeedButtonsSpeedStepSummary"
+                android:title="@string/prefVolumeSpeedButtonsSpeedStepTitle" />
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefDisableVolumeKeysDefaultValue"
+                android:key="prefDisableVolumeKeys"
+                android:summary="@string/prefDisableVolumeKeysSummary"
+                android:title="@string/prefDisableVolumeKeysTitle" >
+            </CheckBoxPreference>
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefVolumeKeysFollowLastTouchedThrottleDefaultValue"
+                android:key="prefVolumeKeysFollowLastTouchedThrottle"
+                android:summary="@string/prefVolumeKeysFollowLastTouchedThrottleSummary"
+                android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle" >
+            </CheckBoxPreference>
+
+        </PreferenceScreen>
+
         <PreferenceScreen
             android:key="gamepad_preferences"
             android:title="@string/prefGamePadTitle"
@@ -270,6 +288,16 @@
                 android:summary="@string/prefGamepadTestNowSummary"
                 android:title="@string/prefGamepadTestNowTitle" >
             </CheckBoxPreference>
+
+            <EditTextPreference
+                android:defaultValue="@string/prefGamePadSpeedButtonsSpeedStepDefaultValue"
+                android:dialogTitle="@string/prefGamePadSpeedButtonsSpeedStepTitle"
+                android:key="prefGamePadSpeedButtonsSpeedStep"
+                android:maxLength="2"
+                android:numeric="integer"
+                android:summary="@string/prefGamePadSpeedButtonsSpeedStepSummary"
+                android:title="@string/prefGamePadSpeedButtonsSpeedStepTitle" />
+
             <EditTextPreference
                 android:defaultValue="@string/prefGamePadFeedbackVolumeDefaultValue"
                 android:dialogTitle="@string/prefGamePadFeedbackVolumeTitle"

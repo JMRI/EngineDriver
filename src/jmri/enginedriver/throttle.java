@@ -263,7 +263,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private String currentTime = "";
     private Menu TMenu;
     static int REP_DELAY = 25;
-    static int BUTTON_SPEED_STEP = 4;
+    private int prefSpeedButtonsSpeedStep = 4;
+    private int prefVolumeSpeedButtonsSpeedStep = 1;
+    private int prefGamePadSpeedButtonsSpeedStep = 4;
+
+    private static final int SPEED_COMMAND_FROM_BUTTONS = 0;
+    private static final int SPEED_COMMAND_FROM_VOLUME = 1;
+    private static final int SPEED_COMMAND_FROM_GAMEPAD = 2;
 
     private String speedButtonLeftText;
     private String speedButtonRightText;
@@ -294,6 +300,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private int screenBrightnessDim;
     private static final int SCREEN_BRIGHTNESS_MODE_MANUAL = 0;
     private static final int SCREEN_BRIGHTNESS_MODE_AUTOMATIC = 1;
+
+    private static final String SWIPE_UP_OPTION_WEB = "Hide Web View\n(requires 'Throttle Web View' preference)";
+    private static final String SWIPE_UP_OPTION_LOCK = "Lock and Dim Screen";
+    private static final String SWIPE_UP_OPTION_DIM = "Dim Screen";
+    private static final String SWIPE_UP_OPTION_IMMERSIVE = "Immersive Mode temporarily enable-disable";
 
     //private int screenBrightnessBright;
     private int screenBrightnessOriginal;
@@ -584,10 +595,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         @Override
         public void run() {
             if (mAutoIncrement) {
-                incrementSpeed(whichThrottle);
+                incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
                 repeatUpdateHandler.postDelayed(new RptUpdater(whichThrottle), REP_DELAY);
             } else if (mAutoDecrement) {
-                decrementSpeed(whichThrottle);
+                decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
                 repeatUpdateHandler.postDelayed(new RptUpdater(whichThrottle), REP_DELAY);
             }
         }
@@ -1103,6 +1114,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefAlwaysUseDefaultFunctionLabels = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
 
         prefAccelerometerShake = prefs.getString("prefAccelerometerShake", getApplicationContext().getResources().getString(R.string.prefAccelerometerShakeDefaultValue));
+
+        // set speed buttons speed step
+        prefSpeedButtonsSpeedStep = preferences.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
+        prefVolumeSpeedButtonsSpeedStep= preferences.getIntPrefValue(prefs, "prefVolumeSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
+        prefGamePadSpeedButtonsSpeedStep = preferences.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
+
     }
 
     private void getDirectionButtonPrefs() {
@@ -1313,12 +1330,32 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         return speed;
     }
 
-    public void decrementSpeed(char whichThrottle) {
-        speedChangeAndNotify(whichThrottle, -BUTTON_SPEED_STEP);
+    public void decrementSpeed(char whichThrottle, int from) {
+        switch (from) {
+            case SPEED_COMMAND_FROM_BUTTONS:
+                speedChangeAndNotify(whichThrottle, -prefSpeedButtonsSpeedStep);
+                break;
+            case SPEED_COMMAND_FROM_VOLUME:
+                speedChangeAndNotify(whichThrottle, -prefVolumeSpeedButtonsSpeedStep);
+                break;
+            case SPEED_COMMAND_FROM_GAMEPAD:
+                speedChangeAndNotify(whichThrottle, -prefGamePadSpeedButtonsSpeedStep);
+                break;
+        }
     }
 
-    public void incrementSpeed(char whichThrottle) {
-        speedChangeAndNotify(whichThrottle, BUTTON_SPEED_STEP);
+    public void incrementSpeed(char whichThrottle, int from) {
+        switch (from) {
+            case SPEED_COMMAND_FROM_BUTTONS:
+                speedChangeAndNotify(whichThrottle, prefSpeedButtonsSpeedStep);
+                break;
+            case SPEED_COMMAND_FROM_VOLUME:
+                speedChangeAndNotify(whichThrottle, prefVolumeSpeedButtonsSpeedStep);
+                break;
+            case SPEED_COMMAND_FROM_GAMEPAD:
+                speedChangeAndNotify(whichThrottle, prefGamePadSpeedButtonsSpeedStep);
+                break;
+        }
     }
 
     // set speed slider and notify server for all throttles
@@ -2575,12 +2612,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     void GamepadIncrementSpeed(char whichThrottle) {
-        incrementSpeed(whichThrottle);
+        incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_GAMEPAD);
         GamepadFeedbackSound(atMaxSpeed(whichThrottle));
     }
 
     void GamepadDecrementSpeed(char whichThrottle) {
-        decrementSpeed(whichThrottle);
+        decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_GAMEPAD);
         GamepadFeedbackSound(atMinSpeed(whichThrottle));
     }
 
@@ -2639,10 +2676,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         @Override
         public void run() {
             if (mVolumeKeysAutoIncrement) {
-                incrementSpeed(whichThrottle);
+                incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_VOLUME);
                 volumeKeysRepeatUpdateHandler.postDelayed(new volumeKeysRptUpdater(whichThrottle), REP_DELAY);
             } else if (mVolumeKeysAutoDecrement) {
-                decrementSpeed(whichThrottle);
+                decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_VOLUME);
                 volumeKeysRepeatUpdateHandler.postDelayed(new volumeKeysRptUpdater(whichThrottle), REP_DELAY);
             }
         }
@@ -2671,10 +2708,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         @Override
         public void run() {
             if (esuButtonAutoIncrement) {
-                incrementSpeed(whichThrottle);
+                incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_VOLUME);
                 esuButtonRepeatUpdateHandler.postDelayed(new EsuMc2ButtonRptUpdater(whichThrottle), REP_DELAY);
             } else if (esuButtonAutoDecrement) {
-                decrementSpeed(whichThrottle);
+                decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_VOLUME);
                 gamepadRepeatUpdateHandler.postDelayed(new EsuMc2ButtonRptUpdater(whichThrottle), REP_DELAY);
             }
         }
@@ -3040,10 +3077,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         public void onClick(View v) {
             if (arrowDirection.equals("right")) {
                 mAutoIncrement = false;
-                incrementSpeed(whichThrottle);
+                incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
             } else {
                 mAutoDecrement = false;
-                decrementSpeed(whichThrottle);
+                decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
             }
             setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
         }
@@ -4099,9 +4136,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         setVolumeIndicator();
         setGamepadIndicator();
 
-        // set speed buttons speed step
-        BUTTON_SPEED_STEP = preferences.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
-
         // set up max speeds for throttles
         int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
@@ -4966,16 +5000,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     } else {
                         // swipe up
                         switch(prefSwipeUpOption) {
-                            case "Hide Web View\n(requires 'Throttle Web View' preference)":
+                            case SWIPE_UP_OPTION_WEB:
                                 showHideWebView(getApplicationContext().getResources().getString(R.string.toastSwipeUpViewHidden));
                                 break;
-                            case "Lock and Dim Screen":
+                            case SWIPE_UP_OPTION_LOCK:
                                 setRestoreScreenLockDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpScreenLocked));
                                 break;
-                            case "Dim Screen":
+                            case SWIPE_UP_OPTION_DIM:
                                 setRestoreScreenDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpScreenDimmed));
                                 break;
-                            case "Immersive Mode temporarily enable-disable":
+                            case SWIPE_UP_OPTION_IMMERSIVE:
                                 if (immersiveModeIsOn) {
                                     setImmersiveModeOff(webView);
                                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT).show();
