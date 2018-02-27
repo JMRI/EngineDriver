@@ -4744,6 +4744,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     if (IS_ESU_MCII) {
                         esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.STEADY_FLASH, true);
                     }
+                    setActiveThrottle(whichVolume);
                 }
                 break;
             case ACTIVITY_CONSIST:         // edit loco or edit consist

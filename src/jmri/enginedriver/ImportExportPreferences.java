@@ -64,7 +64,7 @@ public class ImportExportPreferences {
             output = new ObjectOutputStream(new FileOutputStream(dst));
             output.writeObject(sharedPreferences.getAll());
 
-            Toast.makeText(context, "Export to 'engine_driver/" + exportedPreferencesFileName + "' succeeded.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getResources().getString(R.string.toastImportExportExportSucceeded).replace("%%1%%",exportedPreferencesFileName), Toast.LENGTH_SHORT).show();
             res = true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -163,7 +163,7 @@ public class ImportExportPreferences {
                     sharedPreferences.edit().putBoolean("prefImportExportLocoList", prefImportExportLocoList).commit();  //reset the preference
 
 
-                    Toast.makeText(context, "Preferences import from 'engine_driver/" + exportedPreferencesFileName + "' succeeded.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.toastImportExportImportSucceeded).replace("%%1%%",exportedPreferencesFileName), Toast.LENGTH_LONG).show();
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -193,13 +193,13 @@ public class ImportExportPreferences {
             }
             if (!res) {
                 if (srcExists) {
-                    Toast.makeText(context, "Preferences import from 'engine_driver/" + exportedPreferencesFileName + "' failed!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.toastImportExportImportFailed).replace("%%1%%",exportedPreferencesFileName), Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(context, "Preferences not imported from 'engine_driver/" + exportedPreferencesFileName + "'. You may not have saved the preferences for this host yet.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.toastImportExportServerImportFailed).replace("%%1%%",exportedPreferencesFileName), Toast.LENGTH_LONG).show();
                 }
             }
         } else {
-            Toast.makeText(context, "Can't import preferences. Not connected to a host.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getResources().getString(R.string.toastImportExportCannotImport), Toast.LENGTH_LONG).show();
         }
 
         return res;

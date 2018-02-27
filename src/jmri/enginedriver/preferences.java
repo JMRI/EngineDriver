@@ -385,7 +385,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         prefEdit.clear();
         prefEdit.commit();
         reload();
-        Toast.makeText(getApplicationContext(), "Preferences Reset to defaults!", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesResetSucceeded), Toast.LENGTH_LONG).show();
     }
 
     private void fixAndReloadImportExportPreference(SharedPreferences sharedPreferences){

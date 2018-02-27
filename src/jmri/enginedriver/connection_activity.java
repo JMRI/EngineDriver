@@ -171,14 +171,14 @@ public class connection_activity extends Activity {
                 try {
                     connected_port = Integer.valueOf(entry.getText().toString());
                 } catch (Exception except) {
-                    Toast.makeText(getApplicationContext(), "Invalid port#, retry.\n" + except.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT).show();
                     connected_port = 0;
                     return;
                 }
                 connected_hostname = connected_hostip; //copy ip to name
                 connect();
             } else {
-                Toast.makeText(getApplicationContext(), "Enter or select an address and port", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -195,15 +195,15 @@ public class connection_activity extends Activity {
                     try {
                         connected_port = Integer.valueOf(tm.get("port"));
                     } catch (Exception except) {
-                        Toast.makeText(getApplicationContext(), "Invalid port#, retry.\n" + except.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT).show();
                         connected_port = 0;
                         return;
                     }
                     connected_hostname = tm.get("host_name"); //copy ip to name
                     connect();
-                    Toast.makeText(getApplicationContext(), "Connected to Server: " + connected_hostname + "  Port : " + connected_port, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectConnected).replace("%%1%%",connected_hostname).replace("%%2%%", Integer.toString(connected_port)), Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Enter or select an address and port", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (Exception ex) {
@@ -664,7 +664,6 @@ public class connection_activity extends Activity {
                     engine_driver_dir.mkdir();            // create directory if it doesn't exist
 
                     res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
-                    ;
                 }
             } else {
                 Toast.makeText(getApplicationContext(), "Unable to save host specific preferences. Can't get host name.", Toast.LENGTH_LONG).show();

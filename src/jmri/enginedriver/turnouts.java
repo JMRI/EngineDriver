@@ -269,7 +269,7 @@ public class turnouts extends Activity implements OnGestureListener {
                         //noinspection ResultOfMethodCallIgnored
                         Integer.valueOf(entrytext);  //edit check address by attempting conversion to int
                     } catch (Exception except) {
-                        Toast.makeText(getApplicationContext(), "Invalid turnout number.\n" + except.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastTurnoutInvalidNumber) + " " + except.getMessage(), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     //use preference for system name in command string unless system is MRC
@@ -279,9 +279,9 @@ public class turnouts extends Activity implements OnGestureListener {
                     }
                 }
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, whichCommand + entrytext);
-                Toast.makeText(getApplicationContext(), "Command sent to " +
-                                (whichCommand == 'C' ? "Close" : whichCommand == 'T' ? "Throw" : "Toggle") +
-                                " turnout " + entrytext,
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastTurnoutCommandTo).replace("%%1%%",
+                        (whichCommand == 'C' ? getApplicationContext().getResources().getString(R.string.toastTurnoutCommandToClose) : whichCommand == 'T' ? getApplicationContext().getResources().getString(R.string.toastTurnoutCommandToThrow) : getApplicationContext().getResources().getString(R.string.toastTurnoutCommandToToggle))) +
+                        " " + entrytext,
                         Toast.LENGTH_SHORT).show();
             }
         }

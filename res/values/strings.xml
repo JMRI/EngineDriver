@@ -535,4 +535,29 @@
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%%1%%-%%2%%). Reset to %%3%%.</string>
     <string name="toastPreferencesNotNumeric">Value entered is not numeric (%%1%%-%%2%%). Reset to %%3%%.</string>
+    <string name="toastPreferencesResetSucceeded">Preferences Reset to defaults!</string>
+
+    <!--    Toast messages for the Turnout Activity -->
+    <string name="toastTurnoutInvalidNumber">Invalid turnout number.</string>
+    <string name="toastTurnoutCommandTo">Command sent to %%1%% turnout</string>
+    <string name="toastTurnoutCommandToClose">Close</string>
+    <string name="toastTurnoutCommandToThrow">Throw</string>
+    <string name="toastTurnoutCommandToToggle">Toggle</string>
+
+    <!--    Toast messages for the Connection Activity -->
+    <string name="toastConnectEnterAddress">Enter or select an address and port</string>
+    <string name="toastConnectInvalidPort">Invalid port#, retry.</string>
+    <string name="toastConnectConnected">"Connected to Server: %%1%%  Port : %%2%%"</string>
+
+    <!--    Toast messages for the Routes Activity -->
+    <string name="toastRoutesCommandSent">"Command sent to Set route "</string>
+
+
+    <string name="toastImportExportExportSucceeded">Preferences export to \'engine_driver/%%1%%\' succeeded.</string>
+    <string name="toastImportExportImportSucceeded">Preferences import to \'engine_driver/%%1%%\' succeeded.</string>
+    <string name="toastImportExportExportFailed">Preferences export to \'engine_driver/%%1%%\' failed!</string>
+    <string name="toastImportExportImportFailed">Preferences import to \'engine_driver/%%1%%\' failed!</string>
+    <string name="toastImportExportServerImportFailed">Preferences not imported from \'engine_driver/%%1%%\'. You may not have saved the preferences for this host yet.</string>
+    <string name="toastImportExportCannotImport">Can\'t import preferences. Not connected to a host.</string>
+
 </resources>
