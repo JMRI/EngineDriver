@@ -3,6 +3,9 @@
  * option to hide the demo server
  * option for the volume keys to follow the last touched throttle
  * Fix issue with ESU Mobile Control II knob position not updating on EStop
+ * Import includes throttle name if on the same device that exported them
+ * multiple options for shaking the phone to perform an action
+ * separate preferences for Volume key and Gamepad speed increments
 **Version 2.17
  * Add support for ESU Mobile Control II throttle
  * Add toast messages when ESU Mobile Control II in stop mode
@@ -402,6 +405,7 @@
  *   TODO: clean up code for new MT (Multi-throttle) feature 
  *   TODO: simplify select_loco by removing handler
  *   TODO: manually create roster entries and store on device
+ *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
  * preferences:
  *   TODO: show error if invalid entry
  *
