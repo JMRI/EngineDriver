@@ -35,4 +35,8 @@
 
     <string name="prefPowerButtonBarSummary">Display layout power button in Throttle, Point and Routes screens?</string>
 
+    <!--    Toast message for the Turnout Activity -->
+    <string name="toastTurnoutInvalidNumber">Invalid point number.</string>
+    <string name="toastTurnoutCommandTo">Command sent to %%1%% point</string>
+
 </resources>
