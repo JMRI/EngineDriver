@@ -380,6 +380,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static String DIRECTION_BUTTON_LEFT_TEXT = "Forward";
     private static String DIRECTION_BUTTON_RIGHT_TEXT = "Reverse";
 
+    private static String GAMEPAD_FUNCTION_PREFIX = "Function ";
+
     private String prefLeftDirectionButtons = DIRECTION_BUTTON_LEFT_TEXT;
     private String prefRightDirectionButtons = DIRECTION_BUTTON_RIGHT_TEXT;
 
@@ -398,6 +400,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static final String ACCELERATOROMETER_SHAKE_ALL_STOP= "AllStop";
     private String prefAccelerometerShake = ACCELERATOROMETER_SHAKE_NONE;
     private boolean accelerometerCurrent = false;
+
+    private static final String THEME_DEFAULT = "Default";
 
     // For ESU MobileControlII
     private static final boolean IS_ESU_MCII = MobileControl2.isMobileControl2();
@@ -1408,7 +1412,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             con = mainapp.consistS;
         }
         if (speed < 0) {
-            Toast.makeText(getApplicationContext(), "Alert: Engine " + con.toString() + " is set to ESTOP", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop).replace("%%1%%","Alert: Engine "), Toast.LENGTH_LONG).show();
             speed = 0;
         }
         int scaleSpeed = (int) Math.round(speed * speedScale);
@@ -2380,7 +2384,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle));
                 }
             }
-        } else if ((prefGamePadButtons[buttonNo].length()>=11) && (prefGamePadButtons[buttonNo].substring(0,9).equals("Function "))) { // one of the Function Buttons
+        } else if ((prefGamePadButtons[buttonNo].length()>=11) && (prefGamePadButtons[buttonNo].substring(0,9).equals(GAMEPAD_FUNCTION_PREFIX))) { // one of the Function Buttons
             int fKey = Integer.parseInt(prefGamePadButtons[buttonNo].substring(10,11));
             if (isActive && (repeatCnt == 0)) {
                 if (action==ACTION_DOWN) {
@@ -4076,7 +4080,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         String bt = function_labels_temp.get(func);
                         fbtl = new function_button_touch_listener(func, whichThrottle, bt);
                         b.setOnTouchListener(fbtl);
-                        if ((mainapp.getCurrentTheme().equals("Default"))) {
+                        if ((mainapp.getCurrentTheme().equals(THEME_DEFAULT))) {
                             bt = bt + "        ";  // pad with spaces, and limit to 7 characters
                             b.setText(bt.substring(0, 7));
                         } else {
@@ -4202,7 +4206,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
             throttle_count++;
         } else {
-            bLabel = "Press to select";
+            bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
             // whichVolume = 'S'; //set the next throttle to use volume control
         }
         double textScale = 1.0;
@@ -4234,7 +4238,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
             throttle_count++;
         } else {
-            bLabel = "Press to select";
+            bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
         }
         textScale = 1.0;
         bWidth = b.getWidth(); // scale text if required to fit the textView
@@ -4260,7 +4264,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
             throttle_count++;
         } else {
-            bLabel = "Press to select";
+            bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
         }
         textScale = 1.0;
         bWidth = b.getWidth(); // scale text if required to fit the textView
@@ -4649,8 +4653,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 if (!mainapp.isPowerControlAllowed()) {
                     AlertDialog.Builder b = new AlertDialog.Builder(this);
                     b.setIcon(android.R.drawable.ic_dialog_alert);
-                    b.setTitle("Will Not Work!");
-                    b.setMessage("JMRI has the wiThrottle power control setting to off.\n\nWill now remove Power Icon.\n\nWill display again when JMRI setting is on.");
+                    b.setTitle(getApplicationContext().getResources().getString(R.string.powerWillNotWorkTitle));
+                    b.setMessage(getApplicationContext().getResources().getString(R.string.powerWillNotWork));
                     b.setCancelable(true);
                     b.setNegativeButton("OK", null);
                     AlertDialog alert = b.create();

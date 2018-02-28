@@ -97,7 +97,6 @@ public class select_loco extends Activity {
     private Menu SMenu;
     private boolean navigatingAway = false;     // flag for onPause: set to true when another activity is selected, false if going into background 
 
-    private static final String CLEAR_LIST_LONG_PRESS_INSTRUCTION = "Confirm that you want remove all the Recent Locomotives by pressing the 'Clear List' button AGAIN.";
     private int clearListCount = 0;
 
     // populate the on-screen roster view from global hashmap
@@ -524,7 +523,7 @@ public class select_loco extends Activity {
         public void onClick(View v) {
             clearListCount++;
             if (clearListCount <= 1) {
-                Toast.makeText(getApplicationContext(), CLEAR_LIST_LONG_PRESS_INSTRUCTION, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSelectLocoConfirmClear), Toast.LENGTH_LONG).show();
             } else { // only clear the list if the button is clicked a second time
                 clearList();
                 clearListCount=0;
