@@ -562,9 +562,9 @@
 
     <!--    Toast messages for the Import/Export -->
     <string name="toastImportExportExportSucceeded">Preferences export to \'engine_driver/%%1%%\' succeeded.</string>
-    <string name="toastImportExportImportSucceeded">Preferences import to \'engine_driver/%%1%%\' succeeded.</string>
+    <string name="toastImportExportImportSucceeded">Preferences import from \'engine_driver/%%1%%\' succeeded.</string>
     <string name="toastImportExportExportFailed">Preferences export to \'engine_driver/%%1%%\' failed!</string>
-    <string name="toastImportExportImportFailed">Preferences import to \'engine_driver/%%1%%\' failed!</string>
+    <string name="toastImportExportImportFailed">Preferences import from \'engine_driver/%%1%%\' failed!</string>
     <string name="toastImportExportServerImportFailed">Preferences not imported from \'engine_driver/%%1%%\'. You may not have saved the preferences for this host yet.</string>
     <string name="toastImportExportCannotImport">Can\'t import preferences. Not connected to a host.</string>
     <string name="toastImportExportCannotExport">Can\'t export host specific preferences. Not connected to a host.</string>
