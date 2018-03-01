@@ -530,7 +530,7 @@ public class connection_activity extends Activity {
         @Override
         protected void onPostExecute(String errMsg) {
             if (errMsg.length() > 0)
-                Toast.makeText(getApplicationContext(), "Error saving recent connection: " + errMsg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorSavingRecentConnection) + " " + errMsg, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -611,7 +611,7 @@ public class connection_activity extends Activity {
             } catch (IOException except) {
                 errMsg = except.getMessage();
                 Log.e("connection_activity", "Error reading recent connections list: " + errMsg);
-                Toast.makeText(getApplicationContext(), "Error reading recent connections list: " + errMsg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + errMsg, Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -666,7 +666,7 @@ public class connection_activity extends Activity {
                     res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "Unable to save host specific preferences. Can't get host name.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG).show();
             }
         } else { // preference is NOT to save the preferences for the host
             res = true;
@@ -690,7 +690,7 @@ public class connection_activity extends Activity {
                res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
                res = true;
            } else {
-               Toast.makeText(getApplicationContext(), "Unable to load host specific preferences. Can't get host name.", Toast.LENGTH_LONG).show();
+               Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG).show();
            }
        } else { // preference is NOT to load the preferences for the host
            res = true;

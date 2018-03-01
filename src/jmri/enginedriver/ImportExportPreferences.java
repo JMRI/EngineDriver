@@ -101,7 +101,7 @@ public class ImportExportPreferences {
         if (!exportedPreferencesFileName.equals(".ed")) {
             res = writeExportFile(context, sharedPreferences, exportedPreferencesFileName);
         } else {
-            Toast.makeText(context, "Can't export host specific preferences. Not connected to a host.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getResources().getString(R.string.toastImportExportExportFailed), Toast.LENGTH_LONG).show();
         }
 
         return res;
