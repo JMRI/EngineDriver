@@ -377,8 +377,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static String GAMEPAD_TEST_FAIL = "2";
     private static String GAMEPAD_TEST_RESET = "9";
 
-    private static String DIRECTION_BUTTON_LEFT_TEXT = "Forward";
-    private static String DIRECTION_BUTTON_RIGHT_TEXT = "Reverse";
+    private String DIRECTION_BUTTON_LEFT_TEXT = "Forward";
+    private String DIRECTION_BUTTON_RIGHT_TEXT = "Reverse";
 
     private static String GAMEPAD_FUNCTION_PREFIX = "Function ";
 
@@ -3477,6 +3477,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         setContentView(R.layout.throttle);
 
         getCommonPrefs(true); // get all the common preferences
+
+        DIRECTION_BUTTON_LEFT_TEXT = getApplicationContext().getResources().getString(R.string.forward);
+        DIRECTION_BUTTON_RIGHT_TEXT = getApplicationContext().getResources().getString(R.string.reverse);
 
         speedButtonLeftText = getApplicationContext().getResources().getString(R.string.LeftButton);
         speedButtonRightText = getApplicationContext().getResources().getString(R.string.RightButton);

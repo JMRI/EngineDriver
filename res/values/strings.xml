@@ -551,18 +551,23 @@
     <!--    Toast messages for the Connection Activity -->
     <string name="toastConnectEnterAddress">Enter or select an address and port</string>
     <string name="toastConnectInvalidPort">Invalid port#, retry.</string>
-    <string name="toastConnectConnected">"Connected to Server: %%1%%  Port : %%2%%"</string>
+    <string name="toastConnectConnected">Connected to Server: %%1%%  Port : %%2%%</string>
+    <string name="toastConnectUnableToSavePref">Unable to save host specific preferences. Can\'t get host name.</string>
+    <string name="toastConnectUnableToLoadPref">Unable to load host specific preferences. Can\'t get host name.</string>
+    <string name="toastConnectErrorReadingRecentConnections">Error reading recent connections list:</string>
+    <string name="toastConnectErrorSavingRecentConnection">Error saving recent connection:</string>
 
     <!--    Toast messages for the Routes Activity -->
     <string name="toastRoutesCommandSent">"Command sent to Set route "</string>
 
     <!--    Toast messages for the Import/Export -->
     <string name="toastImportExportExportSucceeded">Preferences export to \'engine_driver/%%1%%\' succeeded.</string>
-    <string name="toastImportExportImportSucceeded">Preferences import to \'engine_driver/%%1%%\' succeeded.</string>
+    <string name="toastImportExportImportSucceeded">Preferences import from \'engine_driver/%%1%%\' succeeded.</string>
     <string name="toastImportExportExportFailed">Preferences export to \'engine_driver/%%1%%\' failed!</string>
-    <string name="toastImportExportImportFailed">Preferences import to \'engine_driver/%%1%%\' failed!</string>
+    <string name="toastImportExportImportFailed">Preferences import from \'engine_driver/%%1%%\' failed!</string>
     <string name="toastImportExportServerImportFailed">Preferences not imported from \'engine_driver/%%1%%\'. You may not have saved the preferences for this host yet.</string>
     <string name="toastImportExportCannotImport">Can\'t import preferences. Not connected to a host.</string>
+    <string name="toastImportExportCannotExport">Can\'t export host specific preferences. Not connected to a host.</string>
 
     <!--    Toast messages for the Select Loco Activity -->
     <string name="toastSelectLocoConfirmClear">Confirm that you want remove all the Recent Locomotives by pressing the \'Clear List\' button AGAIN.</string>
