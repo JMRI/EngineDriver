@@ -37,7 +37,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentActivity;
+import android.text.format.Time;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -66,6 +68,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 
@@ -220,6 +223,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private boolean stealPromptActive = false; //true while steal dialog is open
     private boolean navigatingAway = false; // true if another activity was selected (false in onPause if going into background)
     private char whichVolume = 'T';
+    private char whichLastVolume = ' ';
+    private char whichLastGamepad1 = ' ';
 
     // screen coordinates for throttle sliders, so we can ignore swipe on them
     private int T_top;
@@ -337,6 +342,15 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     //                              none     NextThr  Speed+    Speed-      Fwd         Rev       All Stop    F2         F1          F0        Stop
     private int[] gamePadKeys =     {0,        0,   KEYCODE_W, KEYCODE_X,   KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
     private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
+
+    // For TTS
+    private int MY_TTS_DATA_CHECK_CODE = 1234;
+    private TextToSpeech myTts;
+    private String lastTts = "none";
+    private String prefTtsWhen = "None";
+    private Time lastTtsTime;
+    private static final int TTS_MSG_VOLUME_THROTTLE = 1;
+    private static final int TTS_MSG_GAMEPAD_THROTTLE = 2;
 
     private ToneGenerator tg;
     private Handler gamepadRepeatUpdateHandler = new Handler();
@@ -1124,6 +1138,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefVolumeSpeedButtonsSpeedStep= preferences.getIntPrefValue(prefs, "prefVolumeSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefGamePadSpeedButtonsSpeedStep = preferences.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
 
+        prefTtsWhen = prefs.getString("prefTtsWhen", getResources().getString(R.string.prefTtsWhenDefaultValue));
     }
 
     private void getDirectionButtonPrefs() {
@@ -1992,6 +2007,67 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+    // For TTS
+    private void speakWords(int msgNo, char whichThrottle) {
+        boolean result = false;
+        String speech = "";
+        if (!prefTtsWhen.equals(getApplicationContext().getResources().getString(R.string.prefTtsWhenDefaultValue))) {
+            if (myTts != null) {
+                switch (msgNo) {
+                    case TTS_MSG_VOLUME_THROTTLE:
+                        if (whichLastVolume != whichThrottle) {
+                            result = true;
+                            whichLastVolume = whichThrottle;
+                            speech = getApplicationContext().getResources().getString(R.string.TtsVolumeThrottle) + " " + (getThrottleIndexFromChar(whichThrottle) + 1);
+                        }
+                        break;
+                    case TTS_MSG_GAMEPAD_THROTTLE:
+                        if (whichLastGamepad1 != whichThrottle) {
+                            result = true;
+                            whichLastGamepad1 = whichThrottle;
+                            speech = getApplicationContext().getResources().getString(R.string.TtsGamepadThrottle) + " " + (getThrottleIndexFromChar(whichThrottle) + 1);
+                        }
+                        break;
+                }
+
+                if (result) {
+                    Time currentTime = new Time();
+                    currentTime.setToNow();
+                    // //don't repeat what was last spoken withing 6 seconds
+                    if (((currentTime.toMillis(true) >= (lastTtsTime.toMillis(true) + 6000)) || (!speech.equals(lastTts)))) {
+                        myTts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+                        lastTtsTime = currentTime;
+                    }
+                    lastTts = speech;
+                }
+            }
+        }
+    }
+
+    // For TTS
+    private void setupTts() {
+        if (!prefTtsWhen.equals(getApplicationContext().getResources().getString(R.string.prefTtsWhenDefaultValue))) {
+            if (myTts == null) {
+                Intent checkTTSIntent = new Intent();
+//                checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+//                startActivityForResult(checkTTSIntent, MY_TTS_DATA_CHECK_CODE);
+                lastTtsTime = new Time();
+                lastTtsTime.setToNow();
+
+                myTts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                    @Override
+                    public void onInit(int status) {
+                        if (status != TextToSpeech.ERROR) {
+                            myTts.setLanguage(Locale.getDefault());
+                        } else {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastTtsFailed), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        }
+    }
+
     // Set the original volume indicator a small 'v' near the speed
     private void setVolumeIndicator() {
         // hide or display volume control indicator based on variable
@@ -2009,6 +2085,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 tvVolG.setText(VOLUME_INDICATOR);
                 setSelectedLocoAdditionalIndicator('G', true);
             }
+            speakWords(TTS_MSG_VOLUME_THROTTLE, whichVolume);
         }
         // Ensure ESU MCII tracks selected throttle
         if (IS_ESU_MCII) {
@@ -2034,10 +2111,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         if (gamePadThrottleAssignment[0].equals("1")) {
             setSelectedLocoAdditionalIndicator('T',false);
+            speakWords(TTS_MSG_GAMEPAD_THROTTLE,'T');
         } else if (gamePadThrottleAssignment[1].equals("1")) {
             setSelectedLocoAdditionalIndicator('S',false);
+            speakWords(TTS_MSG_GAMEPAD_THROTTLE,'S');
         } else if (gamePadThrottleAssignment[2].equals("1")) {
             setSelectedLocoAdditionalIndicator('G',false);
+            speakWords(TTS_MSG_GAMEPAD_THROTTLE,'G');
         } else setSelectedLocoAdditionalIndicator(' ',false);
 
     }
@@ -2088,6 +2168,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     whichVolume = whichThrottle;
                     setVolumeIndicator();
                     setSelectedLocoAdditionalIndicator(whichThrottle, true);
+
+                    speakWords(TTS_MSG_VOLUME_THROTTLE, whichVolume);
                 }
             }
         }
@@ -3803,6 +3885,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         setupSensor(); // setup the support for shake actions.
 
+        setupTts();
+
     } // end of onCreate()
 
     @Override
@@ -3896,6 +3980,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
             }
         }
+
+        setupTts();
     }
 
     @Override

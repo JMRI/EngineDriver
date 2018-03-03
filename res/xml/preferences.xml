@@ -222,6 +222,21 @@
 
         </PreferenceScreen>
 
+        <PreferenceScreen
+            android:key="prefTts"
+            android:title="@string/prefTtsTitle"
+            android:summary="@string/prefTtsSummary"
+            android:persistent="false">
+            <ListPreference
+                android:defaultValue="@string/prefTtsWhenDefaultValue"
+                android:entries="@array/prefTtsWhenEntries"
+                android:entryValues="@array/prefTtsWhenOptions"
+                android:key="prefTtsWhen"
+                android:summary="@string/prefTtsWhenSummary"
+                android:title="@string/prefTtsWhenTitle" />
+
+        </PreferenceScreen>
+
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

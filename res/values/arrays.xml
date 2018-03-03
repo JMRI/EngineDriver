@@ -529,4 +529,13 @@
         <item>All Stop</item>
     </string-array>
 
+    <string-array name="prefTtsWhenOptions">
+        <item>None</item>
+        <item>Throttle</item>
+    </string-array>
+    <string-array name="prefTtsWhenEntries">
+        <item>None</item>
+        <item>On throttle change</item>
+    </string-array>
+
 </resources>
