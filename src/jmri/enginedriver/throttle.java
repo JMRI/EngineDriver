@@ -2727,9 +2727,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         @Override
         public void onButtonDown() {
             Log.d("Engine_Driver", "ESU_MCII: Knob button down for throttle " + whichVolume);
-            Log.d("Engine_Driver", "ESU_MCII: Attempting to switch direction");
-            changeDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1 ));
-            speedUpdateAndNotify(whichVolume, 0, false);
+            if (!isScreenLocked) {
+                Log.d("Engine_Driver", "ESU_MCII: Attempting to switch direction");
+                changeDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1));
+                speedUpdateAndNotify(whichVolume, 0, false);
+            } else {
+                Log.d("Engine_Driver", "ESU_MCII: Screen locked - do nothing");
+            }
         }
 
         @Override
@@ -2740,21 +2744,25 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         @Override
         public void onPositionChanged(int knobPos) {
             int speed;
-            if (getConsist(whichVolume).isActive() && !isEsuMc2Stopped) {
-                if (whichVolume == 'T') {
-                    speed = esuThrottleScaleT.positionToStep(knobPos);
-                } else if (whichVolume == 'G') {
-                    speed = esuThrottleScaleG.positionToStep(knobPos);
+            if (!isScreenLocked) {
+                if (getConsist(whichVolume).isActive() && !isEsuMc2Stopped) {
+                    if (whichVolume == 'T') {
+                        speed = esuThrottleScaleT.positionToStep(knobPos);
+                    } else if (whichVolume == 'G') {
+                        speed = esuThrottleScaleG.positionToStep(knobPos);
+                    } else {
+                        speed = esuThrottleScaleS.positionToStep(knobPos);
+                    }
+                    Log.d("Engine_Driver", "ESU_MCII: Knob position changed for throttle " + whichVolume);
+                    Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
+                    speedUpdateAndNotify(whichVolume, speed, false); // No need to move knob
                 } else {
-                    speed = esuThrottleScaleS.positionToStep(knobPos);
+                    // Ignore knob movements for stopped or inactive throttles
+                    Log.d("Engine_Driver", "ESU_MCII: Knob position moved for " + (isEsuMc2Stopped ? "stopped" : "inactive") + " throttle " + whichVolume);
+                    Log.d("Engine_Driver", "ESU_MCII: Nothing updated");
                 }
-                Log.d("Engine_Driver", "ESU_MCII: Knob position changed for throttle " + whichVolume);
-                Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
-                speedUpdateAndNotify(whichVolume, speed, false); // No need to move knob
             } else {
-                // Ignore knob movements for stopped or inactive throttles
-                Log.d("Engine_Driver", "ESU_MCII: Knob position moved for " + (isEsuMc2Stopped ? "stopped": "inactive") + " throttle " + whichVolume);
-                Log.d("Engine_Driver", "ESU_MCII: Nothing updated");
+                Log.d("Engine_Driver", "ESU_MCII: Screen locked - do nothing");
             }
         }
     };
@@ -2918,17 +2926,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     }
                     break;
                 case DIRECTION_FORWARD:
-                    if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                    if (!isScreenLocked && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                         changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
                     }
                     break;
                 case DIRECTION_REVERSE:
-                    if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                    if (!isScreenLocked && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                         changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
                     }
                     break;
                 case DIRECTION_TOGGLE:
-                    if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                    if (!isScreenLocked && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                         if ((getDirection(whichThrottle) == DIRECTION_FORWARD)) {
                             changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
                         } else {
@@ -2937,7 +2945,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     }
                     break;
                 case SPEED_INCREASE:
-                    if (action == ACTION_DOWN) {
+                    if (!isScreenLocked && action == ACTION_DOWN) {
                         if (repeatCnt == 0) {
                             esuButtonAutoIncrement = true;
                             esuButtonRepeatUpdateHandler.post(new EsuMc2ButtonRptUpdater(whichThrottle));
@@ -2945,7 +2953,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     }
                         break;
                 case SPEED_DECREASE:
-                    if (action == ACTION_DOWN) {
+                    if (!isScreenLocked && action == ACTION_DOWN) {
                         if (repeatCnt == 0) {
                             esuButtonAutoDecrement = true;
                             esuButtonRepeatUpdateHandler.post(new EsuMc2ButtonRptUpdater(whichThrottle));
@@ -2953,7 +2961,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     }
                     break;
                 case NEXT_THROTTLE:
-                    if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                    if (!isScreenLocked && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                         setNextActiveThrottle();
                     }
                     break;
@@ -2962,7 +2970,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 case FN12: case FN13: case FN14: case FN15: case FN16: case FN17:
                 case FN18: case FN19: case FN20: case FN21: case FN22: case FN23:
                 case FN24: case FN25: case FN26: case FN27: case FN28:
-                    if (repeatCnt == 0) {
+                    if (!isScreenLocked && repeatCnt == 0) {
                         if (action == ACTION_DOWN) {
                             mainapp.sendMsg(mainapp.comm_msg_handler,
                                     message_type.FUNCTION,
