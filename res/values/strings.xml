@@ -581,6 +581,7 @@
 
     <string name="TtsVolumeThrottle">Volume Throttle</string>
     <string name="TtsGamepadThrottle">Gamepad Throttle</string>
+    <string name="TtsSpeed">Speed</string>
 <!--
     <string name="TTS_Screen_Dimmed">Dimmed, swipe up to restore</string>
     <string name="TTS_Screen_Locked">Locked, swipe up to restore</string>

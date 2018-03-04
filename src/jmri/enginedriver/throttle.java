@@ -349,6 +349,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private String lastTts = "none";
     private String prefTtsWhen = "None";
     private Time lastTtsTime;
+    private static final String PREF_TT_WHEN_NONE = "None";
+    private static final String PREF_TT_WHEN_THROTTLE = "Throttle";
+    private static final String PREF_TT_WHEN_THROTTLE_PLUS_SPEED = "Throttle+Speed";
     private static final int TTS_MSG_VOLUME_THROTTLE = 1;
     private static final int TTS_MSG_GAMEPAD_THROTTLE = 2;
 
@@ -1310,6 +1313,26 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         return getThrottleSlider(whichThrottle).getProgress();
     }
 
+    private int getScaleSpeed(char whichThrottle) {
+        Consist con;
+        int speed = getSpeed(whichThrottle);
+        double speedScale = getDisplayUnitScale(whichThrottle);
+        if (whichThrottle == 'T') {
+            con = mainapp.consistT;
+        } else if (whichThrottle == 'G') {
+            con = mainapp.consistG;
+        } else {
+            con = mainapp.consistS;
+        }
+        if (speed < 0) {
+            speed = 0;
+        }
+        int scaleSpeed = (int) Math.round(speed * speedScale) -1;
+
+        return scaleSpeed;
+    }
+
+
     int getMaxSpeed(char whichThrottle) {
         return getThrottleSlider(whichThrottle).getMax();
     }
@@ -2011,21 +2034,31 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private void speakWords(int msgNo, char whichThrottle) {
         boolean result = false;
         String speech = "";
-        if (!prefTtsWhen.equals(getApplicationContext().getResources().getString(R.string.prefTtsWhenDefaultValue))) {
+        if (!prefTtsWhen.equals(PREF_TT_WHEN_NONE)) {
             if (myTts != null) {
                 switch (msgNo) {
                     case TTS_MSG_VOLUME_THROTTLE:
-                        if (whichLastVolume != whichThrottle) {
-                            result = true;
-                            whichLastVolume = whichThrottle;
-                            speech = getApplicationContext().getResources().getString(R.string.TtsVolumeThrottle) + " " + (getThrottleIndexFromChar(whichThrottle) + 1);
+                        if ((prefTtsWhen.equals(PREF_TT_WHEN_THROTTLE)) || (prefTtsWhen.equals(PREF_TT_WHEN_THROTTLE_PLUS_SPEED))) {
+                            if (whichLastVolume != whichThrottle) {
+                                result = true;
+                                whichLastVolume = whichThrottle;
+                                speech = getApplicationContext().getResources().getString(R.string.TtsVolumeThrottle) + " " + (getThrottleIndexFromChar(whichThrottle) + 1);
+                            }
+                            if (prefTtsWhen.equals(PREF_TT_WHEN_THROTTLE_PLUS_SPEED)) {
+                                speech = speech  + " " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " " + (getScaleSpeed(whichThrottle) + 1);
+                            }
                         }
                         break;
                     case TTS_MSG_GAMEPAD_THROTTLE:
-                        if (whichLastGamepad1 != whichThrottle) {
-                            result = true;
-                            whichLastGamepad1 = whichThrottle;
-                            speech = getApplicationContext().getResources().getString(R.string.TtsGamepadThrottle) + " " + (getThrottleIndexFromChar(whichThrottle) + 1);
+                        if ((prefTtsWhen.equals(PREF_TT_WHEN_THROTTLE)) || (prefTtsWhen.equals(PREF_TT_WHEN_THROTTLE_PLUS_SPEED))) {
+                            if (whichLastGamepad1 != whichThrottle) {
+                                result = true;
+                                whichLastGamepad1 = whichThrottle;
+                                speech = getApplicationContext().getResources().getString(R.string.TtsGamepadThrottle) + " " + (getThrottleIndexFromChar(whichThrottle) + 1);
+                            }
+                            if (prefTtsWhen.equals(PREF_TT_WHEN_THROTTLE_PLUS_SPEED)) {
+                                speech = speech  + " " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " " + (getScaleSpeed(whichThrottle) + 1);
+                            }
                         }
                         break;
                 }
