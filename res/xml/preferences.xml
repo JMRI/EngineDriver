@@ -251,6 +251,13 @@
             <CheckBoxPreference
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:defaultValue="@bool/prefTtsThrottleLocoSpeedDefaultValue"
+                android:key="prefTtsThrottleLocoSpeed"
+                android:summary="@string/prefTtsThrottleLocoSpeedSummary"
+                android:title="@string/prefTtsThrottleLocoSpeedTitle" />
+            <CheckBoxPreference
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:defaultValue="@bool/prefTtsGamepadTestDefaultValue"
                 android:key="prefTtsGamepadTest"
                 android:summary="@string/prefTtsGamepadTestSummary"

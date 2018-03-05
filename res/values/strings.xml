@@ -585,6 +585,9 @@
     <string name="prefTtsThrottleSpeedTitle">On Throttle Change + speed</string>
     <string name="prefTtsThrottleSpeedSummary">When you select a different throttle, also speak speed. Overrides throttle alone option. </string>
 
+    <string name="prefTtsThrottleLocoSpeedTitle">On Throttle Change + loco</string>
+    <string name="prefTtsThrottleLocoSpeedSummary">When you select a different throttle, also speak loco numbers and speed. Overrides throttle alone option. </string>
+
     <string name="prefTtsGamepadTestTitle">On Gamepad test</string>
     <string name="prefTtsGamepadTestSummary">When the gamepad test page is launched. </string>
 
@@ -593,9 +596,12 @@
 
     <string name="TtsVolumeThrottle">Throttle</string>
     <string name="TtsGamepadThrottle">Throttle</string>
+    <string name="TtsLoco">Loco</string>
     <string name="TtsSpeed">Speed</string>
     <string name="TtsGamepadTest">Gamepad Test</string>
     <string name="TtsGamepadTestComplete">Test Complete</string>
+    <string name="TtsGamepadTestSkipped">Test Skipped</string>
+    <string name="TtsGamepadTestReset">Gamepad Reset</string>
 <!--
     <string name="TTS_Screen_Dimmed">Dimmed, swipe up to restore</string>
     <string name="TTS_Screen_Locked">Locked, swipe up to restore</string>
