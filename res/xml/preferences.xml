@@ -234,6 +234,41 @@
                 android:key="prefTtsWhen"
                 android:summary="@string/prefTtsWhenSummary"
                 android:title="@string/prefTtsWhenTitle" />
+            <CheckBoxPreference
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:defaultValue="@bool/prefTtsThrottleDefaultValue"
+                android:key="prefTtsThrottle"
+                android:summary="@string/prefTtsThrottleSummary"
+                android:title="@string/prefTtsThrottleTitle" />
+            <CheckBoxPreference
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:defaultValue="@bool/prefTtsThrottleSpeedDefaultValue"
+                android:key="prefTtsThrottleSpeed"
+                android:summary="@string/prefTtsThrottleSpeedSummary"
+                android:title="@string/prefTtsThrottleSpeedTitle" />
+            <CheckBoxPreference
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:defaultValue="@bool/prefTtsThrottleLocoSpeedDefaultValue"
+                android:key="prefTtsThrottleLocoSpeed"
+                android:summary="@string/prefTtsThrottleLocoSpeedSummary"
+                android:title="@string/prefTtsThrottleLocoSpeedTitle" />
+            <CheckBoxPreference
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:defaultValue="@bool/prefTtsGamepadTestDefaultValue"
+                android:key="prefTtsGamepadTest"
+                android:summary="@string/prefTtsGamepadTestSummary"
+                android:title="@string/prefTtsGamepadTestTitle" />
+            <CheckBoxPreference
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:defaultValue="@bool/prefTtsGamepadTestCompleteDefaultValue"
+                android:key="prefTtsGamepadTestComplete"
+                android:summary="@string/prefTtsGamepadTestCompleteSummary"
+                android:title="@string/prefTtsGamepadTestCompleteTitle" />
 
         </PreferenceScreen>
 

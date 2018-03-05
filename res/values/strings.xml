@@ -495,7 +495,7 @@
     <string name="gamepadTestKeycodeLabel">Key code:\s\s</string>
     <string name="gamepadTestFunctionLabel">Function:\s\s</string>
     <string name="gamepadTestCompleteLabel">Test status:\s\s</string>
-    <string name="gamepadTestHelp">Scroll down to see the full instructions…\n\nPress ALL Dpad AND four primary buttons or the gamepad WILL NOT WORK.\n\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your gamepad) or try a different gamepad Type (above).\n\n\'BACK\' or \'CANCEL\' will exit the test but the gamepad WILL NOT WORK.\n\'SKIP\' will force the test to pass, even if the gamepad does not work properly.\n\'RESET\' will make ED think no gamepads have been used yet.\n\nUse the \'Gamepad Test n\' menu options to get back to this page.</string>
+    <string name="gamepadTestHelp">Scroll down to see the full instructions…\n\nPress ALL Dpad AND four primary buttons or the gamepad WILL NOT WORK.\n\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your gamepad) or try a different gamepad Type (above).\n\n\'BACK\' or \'CANCEL\' will exit the test but the gamepad WILL NOT WORK.\n\'SKIP\', or pressing the \'Decrease Speed\' gamepad button three times, will force the test to pass, even if the gamepad does not work properly.\n\'RESET\' will make ED think no gamepads have been used yet.\n\nUse the \'Gamepad Test n\' menu options to get back to this page.</string>
     <string name="gamepadTestHelpNonForced">If you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your device) or try a different gamepad Type (above).\nYou may be required to re-test the gamepad when you first use it from the throttle screen.</string>
     <string name="gamepadTestIncomplete">"Test Incomplete"</string>
     <string name="gamepadTestComplete">"Test Complete"</string>
@@ -579,9 +579,29 @@
     <string name="prefTtsWhenSummary">When to speak key events and actions using Text to Speech (TTS).</string>
     <string name="prefTtsWhenDefaultValue">None</string>
 
-    <string name="TtsVolumeThrottle">Volume Throttle</string>
-    <string name="TtsGamepadThrottle">Gamepad Throttle</string>
+    <string name="prefTtsThrottleTitle">On Throttle Change</string>
+    <string name="prefTtsThrottleSummary">When you select a different throttle.</string>
+
+    <string name="prefTtsThrottleSpeedTitle">On Throttle Change + speed</string>
+    <string name="prefTtsThrottleSpeedSummary">When you select a different throttle, also speak speed. Overrides throttle alone option. </string>
+
+    <string name="prefTtsThrottleLocoSpeedTitle">On Throttle Change + loco</string>
+    <string name="prefTtsThrottleLocoSpeedSummary">When you select a different throttle, also speak loco numbers and speed. Overrides throttle alone option. </string>
+
+    <string name="prefTtsGamepadTestTitle">On Gamepad test</string>
+    <string name="prefTtsGamepadTestSummary">When the gamepad test page is launched. </string>
+
+    <string name="prefTtsGamepadTestCompleteTitle">On Gamepad test complete</string>
+    <string name="prefTtsGamepadTestCompleteSummary">When the gamepad test page is finished. </string>
+
+    <string name="TtsVolumeThrottle">Throttle</string>
+    <string name="TtsGamepadThrottle">Throttle</string>
+    <string name="TtsLoco">Loco</string>
     <string name="TtsSpeed">Speed</string>
+    <string name="TtsGamepadTest">Gamepad Test</string>
+    <string name="TtsGamepadTestComplete">Test Complete</string>
+    <string name="TtsGamepadTestSkipped">Test Skipped</string>
+    <string name="TtsGamepadTestReset">Gamepad Reset</string>
 <!--
     <string name="TTS_Screen_Dimmed">Dimmed, swipe up to restore</string>
     <string name="TTS_Screen_Locked">Locked, swipe up to restore</string>

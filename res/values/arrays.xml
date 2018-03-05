@@ -531,13 +531,11 @@
 
     <string-array name="prefTtsWhenOptions">
         <item>None</item>
-        <item>Throttle</item>
-        <item>Throttle+Speed</item>
+        <item>Key</item>
     </string-array>
     <string-array name="prefTtsWhenEntries">
         <item>None</item>
-        <item>On throttle change</item>
-        <item>On throttle change + current speed</item>
+        <item>Key events only</item>
     </string-array>
 
 </resources>
