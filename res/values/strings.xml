@@ -572,7 +572,7 @@
     <!--    Toast messages for the Select Loco Activity -->
     <string name="toastSelectLocoConfirmClear">Confirm that you want remove all the Recent Locomotives by pressing the \'Clear List\' button AGAIN.</string>
 
-    <string name="prefTtsTitle">Voice Response (Text to Speech)</string>
+    <string name="prefTtsTitle">Voice Response</string>
     <string name="prefTtsSummary">Speak key events</string>
 
     <string name="prefTtsWhenTitle">Voice Response</string>
@@ -586,7 +586,7 @@
     <string name="prefTtsThrottleSpeedSummary">When you select a different throttle, also speak speed. Overrides throttle alone option. </string>
 
     <string name="prefTtsThrottleLocoSpeedTitle">On Throttle Change + loco</string>
-    <string name="prefTtsThrottleLocoSpeedSummary">When you select a different throttle, also speak loco numbers and speed. Overrides throttle alone option. </string>
+    <string name="prefTtsThrottleLocoSpeedSummary">When you select a different throttle, also speak loco numbers. Overrides throttle alone option. </string>
 
     <string name="prefTtsGamepadTestTitle">On Gamepad test</string>
     <string name="prefTtsGamepadTestSummary">When the gamepad test page is launched. </string>

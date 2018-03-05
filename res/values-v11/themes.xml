@@ -43,6 +43,7 @@
         <item name="android:itemBackground">#ff000000</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style</item>
+        <item name="floating_text_style">@style/floating_text_style_black</item>
 
         <item name="ed_large_button_style">@style/large_button_style_black</item>
         <item name="ed_normal_button_style">@style/normal_button_style_black</item>
@@ -67,6 +68,7 @@
         <item name="android:itemBackground">#ff000000</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
+        <item name="floating_text_style">@style/floating_text_style_outline</item>
 
         <item name="ed_large_button_style">@style/large_button_style_outline</item>
         <item name="ed_normal_button_style">@style/normal_button_style_outline</item>

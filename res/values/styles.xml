@@ -129,6 +129,7 @@
       <item name="android:shadowRadius">1</item>
     </style>
     <style name="floating_text_style" parent="@android:style/Widget.TextView">
+      <item name="android:textColor">@color/solidWhite</item>
       <item name="android:shadowColor">#FF000000</item>
       <item name="android:shadowDx">2</item>
       <item name="android:shadowDy">2</item>
@@ -163,11 +164,10 @@
     </style>
 
   <style name="loco_label_style" parent="@android:style/Widget.TextView">
-\    <item name="android:shadowColor">#FFFFFFFF</item>
+    <item name="android:shadowColor">#FFFFFFFF</item>
     <item name="android:shadowDx">1</item>
     <item name="android:shadowDy">1</item>
     <item name="android:shadowRadius">1</item>
-    <item name="android:textColor">#666666</item>
   </style>
 
 

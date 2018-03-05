@@ -22,6 +22,7 @@
         <item name="android:listSeparatorTextViewStyle">@style/small_heading_style</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style</item>
+        <item name="floating_text_style">@style/floating_text_style</item>
 
         <item name="ed_large_button_style">@style/large_button_style</item>
         <item name="ed_normal_button_style">@style/normal_button_style</item>
