@@ -127,6 +127,7 @@ public class gamepad_test extends Activity implements OnGestureListener {
     private static String GAMEPAD_TEST_FAIL = "2";
     private static String GAMEPAD_TEST_RESET = "9";
 
+    private int decreaseButtonCount = 0;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -293,6 +294,15 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
         tvGamepadKeyCode.setText(String.valueOf(keyCodeString));
         tvGamepadKeyFunction.setText(fn);
+        if (fn.equals("Decrease Speed")) {
+            decreaseButtonCount++;
+            if (decreaseButtonCount>=3) {
+                result = RESULT_OK;
+                end_this_activity(GAMEPAD_TEST_PASS);
+            }
+        } else {
+            decreaseButtonCount = 0;
+        }
     }
 
     private void invalidKeyCode(int keyCode) {

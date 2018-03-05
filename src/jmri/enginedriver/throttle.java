@@ -348,12 +348,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private TextToSpeech myTts;
     private String lastTts = "none";
     private String prefTtsWhen = "None";
+    private boolean prefTtsThrottle = true;
+    private boolean prefTtsThrottleSpeed = false;
+    private boolean prefTtsGamepadTest = true;
+    private boolean prefTtsGamepadTestComplete = true;
     private Time lastTtsTime;
     private static final String PREF_TT_WHEN_NONE = "None";
-    private static final String PREF_TT_WHEN_THROTTLE = "Throttle";
-    private static final String PREF_TT_WHEN_THROTTLE_PLUS_SPEED = "Throttle+Speed";
+    private static final String PREF_TT_WHEN_KEY = "Key";
     private static final int TTS_MSG_VOLUME_THROTTLE = 1;
     private static final int TTS_MSG_GAMEPAD_THROTTLE = 2;
+    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST = 3;
+    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_COMPLETE = 4;
 
     private ToneGenerator tg;
     private Handler gamepadRepeatUpdateHandler = new Handler();
@@ -1142,6 +1147,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefGamePadSpeedButtonsSpeedStep = preferences.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
 
         prefTtsWhen = prefs.getString("prefTtsWhen", getResources().getString(R.string.prefTtsWhenDefaultValue));
+        prefTtsThrottle = prefs.getBoolean("prefTtsThrottle", getResources().getBoolean(R.bool.prefTtsThrottleDefaultValue));
+        prefTtsThrottleSpeed = prefs.getBoolean("prefTtsThrottleSpeed", getResources().getBoolean(R.bool.prefTtsThrottleSpeedDefaultValue));
+        prefTtsGamepadTest = prefs.getBoolean("prefTtsGamepadTest", getResources().getBoolean(R.bool.prefTtsGamepadTestDefaultValue));
+        prefTtsGamepadTestComplete = prefs.getBoolean("prefTtsGamepadTestComplete", getResources().getBoolean(R.bool.prefTtsGamepadTestCompleteDefaultValue));
     }
 
     private void getDirectionButtonPrefs() {
@@ -1733,6 +1742,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 Intent in = new Intent().setClass(this, gamepad_test.class);
                 in.putExtra("whichGamepadNo", Integer.toString(gamepadNo));
                 navigatingAway = true;
+                speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST,' ');
                 startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {
@@ -2038,27 +2048,39 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             if (myTts != null) {
                 switch (msgNo) {
                     case TTS_MSG_VOLUME_THROTTLE:
-                        if ((prefTtsWhen.equals(PREF_TT_WHEN_THROTTLE)) || (prefTtsWhen.equals(PREF_TT_WHEN_THROTTLE_PLUS_SPEED))) {
+                        if ((prefTtsThrottle) || (prefTtsThrottleSpeed)) {
                             if (whichLastVolume != whichThrottle) {
                                 result = true;
                                 whichLastVolume = whichThrottle;
                                 speech = getApplicationContext().getResources().getString(R.string.TtsVolumeThrottle) + " " + (getThrottleIndexFromChar(whichThrottle) + 1);
                             }
-                            if (prefTtsWhen.equals(PREF_TT_WHEN_THROTTLE_PLUS_SPEED)) {
+                            if (prefTtsThrottleSpeed) {
                                 speech = speech  + " " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " " + (getScaleSpeed(whichThrottle) + 1);
                             }
                         }
                         break;
                     case TTS_MSG_GAMEPAD_THROTTLE:
-                        if ((prefTtsWhen.equals(PREF_TT_WHEN_THROTTLE)) || (prefTtsWhen.equals(PREF_TT_WHEN_THROTTLE_PLUS_SPEED))) {
+                        if ((prefTtsThrottle) || (prefTtsThrottleSpeed)) {
                             if (whichLastGamepad1 != whichThrottle) {
                                 result = true;
                                 whichLastGamepad1 = whichThrottle;
                                 speech = getApplicationContext().getResources().getString(R.string.TtsGamepadThrottle) + " " + (getThrottleIndexFromChar(whichThrottle) + 1);
                             }
-                            if (prefTtsWhen.equals(PREF_TT_WHEN_THROTTLE_PLUS_SPEED)) {
+                            if (prefTtsThrottleSpeed) {
                                 speech = speech  + " " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " " + (getScaleSpeed(whichThrottle) + 1);
                             }
+                        }
+                        break;
+                    case TTS_MSG_GAMEPAD_GAMEPAD_TEST:
+                        if ((prefTtsGamepadTest)) {
+                            result = true;
+                            speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTest);
+                        }
+                        break;
+                    case TTS_MSG_GAMEPAD_GAMEPAD_TEST_COMPLETE:
+                        if ((prefTtsGamepadTestComplete)) {
+                            result = true;
+                            speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTestComplete);
                         }
                         break;
                 }
@@ -2068,7 +2090,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     currentTime.setToNow();
                     // //don't repeat what was last spoken withing 6 seconds
                     if (((currentTime.toMillis(true) >= (lastTtsTime.toMillis(true) + 6000)) || (!speech.equals(lastTts)))) {
-                        myTts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+                        //myTts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+                        myTts.speak(speech, TextToSpeech.QUEUE_ADD, null);
                         lastTtsTime = currentTime;
                     }
                     lastTts = speech;
@@ -4924,6 +4947,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             setGamepadIndicator();
                         }
                     }
+                    speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_COMPLETE,' ');
                 } else {
                     Log.e("Engine_Driver", "OnActivityResult(ACTIVITY_GAMEPAD_TEST) called with null data!");
                 }
