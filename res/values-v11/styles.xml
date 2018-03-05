@@ -246,6 +246,10 @@
     <item name="android:gravity">center_vertical|center_horizontal</item>
   </style>
 
+  <style name="floating_text_style_black" parent="@android:style/Widget.TextView">
+    <item name="android:textColor">@color/solidWhite</item>
+  </style>
+
   <!-- Outline Theme. Uses the base colours from the High Contrast Theme.  Mostly the buttons are different -->
 
   <style name="large_button_style_outline" parent="@android:style/Widget.Button">
@@ -353,6 +357,10 @@
   <style name="loco_label_style_outline" parent="@android:style/Widget.TextView">
     <item name="android:background">@color/transparent</item>
     <item name="android:textColor">@color/lightGrey</item>
+  </style>
+
+  <style name="floating_text_style_outline" parent="@android:style/Widget.TextView">
+    <item name="android:textColor">@color/solidWhite</item>
   </style>
 
 </resources>

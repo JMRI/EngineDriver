@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="ed_loco_label_style" format="reference" />
+    <attr name="floating_text_style" format="reference" />
 
     <attr name="ed_large_button_style" format="reference" />
     <attr name="ed_normal_button_style" format="reference" />

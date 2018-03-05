@@ -56,7 +56,7 @@
     <bool name="prefGamepadTestNowDefaultValue">false</bool>
     <bool name="prefHideDemoServerDefaultValue">false</bool>
 
-    <bool name="prefTtsThrottleDefaultValue">true</bool>
+     <bool name="prefTtsThrottleDefaultValue">true</bool>
     <bool name="prefTtsThrottleSpeedDefaultValue">false</bool>
     <bool name="prefTtsThrottleLocoSpeedDefaultValue">false</bool>
     <bool name="prefTtsGamepadTestDefaultValue">true</bool>
