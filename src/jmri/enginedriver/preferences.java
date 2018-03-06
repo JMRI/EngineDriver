@@ -96,20 +96,16 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
         if (!mainapp.isPowerControlAllowed()) {
-            getPreferenceScreen().findPreference("show_layout_power_button_preference").setSelectable(false);
-            getPreferenceScreen().findPreference("show_layout_power_button_preference").setEnabled(false);
+            enableDisablePreference("show_layout_power_button_preference", false);
         }
         if (mainapp.androidVersion < mainapp.minWebSocketVersion) {
-            getPreferenceScreen().findPreference("ClockDisplayTypePreference").setSelectable(false);
-            getPreferenceScreen().findPreference("ClockDisplayTypePreference").setEnabled(false);
+            enableDisablePreference("ClockDisplayTypePreference", false);
         }
         if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
-            getPreferenceScreen().findPreference("prefThrottleViewImmersiveMode").setSelectable(false);
-            getPreferenceScreen().findPreference("prefThrottleViewImmersiveMode").setEnabled(false);
+            enableDisablePreference("prefThrottleViewImmersiveMode", false);
         }
         if (mainapp.androidVersion < mainapp.minThemeVersion) {
-            getPreferenceScreen().findPreference("prefTheme").setSelectable(false);
-            getPreferenceScreen().findPreference("prefTheme").setEnabled(false);
+            enableDisablePreference("prefTheme", false);
         }
         result = RESULT_OK;
 
@@ -119,8 +115,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             preference.setEntries(prefHostImportExportOptionsFound);
             preference.setEntryValues(prefHostImportExportOptionsFound);
         } else {
-            getPreferenceScreen().findPreference("prefHostImportExport").setSelectable(false);
-            getPreferenceScreen().findPreference("prefHostImportExport").setEnabled(false);
+            enableDisablePreference("prefHostImportExport", false);
         }
 
 //        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -128,19 +123,26 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         // Disable ESU MCII preferences if not an ESU MCII
         if (!MobileControl2.isMobileControl2()) {
-            getPreferenceScreen().findPreference("prefEsuMc2").setSelectable(false);
-            getPreferenceScreen().findPreference("prefEsuMc2").setEnabled(false);
+            enableDisablePreference("prefEsuMc2", false);
         }
 
         sharedPreferences.edit().putBoolean("prefGamepadTestNow", false).commit();  //reset the preference
 
         if (mainapp.androidVersion < mainapp.minActivatedButtonsVersion) {
-            getPreferenceScreen().findPreference("prefSelectedLocoIndicator").setSelectable(false);
-            getPreferenceScreen().findPreference("prefSelectedLocoIndicator").setEnabled(false);
+            enableDisablePreference("prefSelectedLocoIndicator",false);
         }
 
         deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
         sharedPreferences.edit().putString("prefAndroidId", deviceId).commit();
+
+        String currentValue = sharedPreferences.getString("prefTtsWhen", "");
+        if (currentValue.equals("None")) {
+            enableDisablePreference("prefTtsThrottle",false);
+            enableDisablePreference("prefTtsThrottleSpeed",false);
+            enableDisablePreference("prefTtsThrottleLocoSpeed", false);
+            enableDisablePreference("prefTtsGamepadTest", false);
+            enableDisablePreference("prefTtsGamepadTestComplete",false);
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -310,6 +312,19 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             case "prefAccelerometerShakeThreshold":
                 limitFloatPrefValue(sharedPreferences, key, 1.2F, 3.0F, "2.0"); // limit check new value
                 break;
+            case "prefTtsWhen":
+                String currentValue = sharedPreferences.getString("prefTtsWhen", "");
+                boolean enable = true;
+                if (currentValue.equals("None")) {
+                    enable = false;
+                }
+                enableDisablePreference("prefTtsThrottle",enable);
+                enableDisablePreference("prefTtsThrottleSpeed",enable);
+                enableDisablePreference("prefTtsThrottleLocoSpeed", enable);
+                enableDisablePreference("prefTtsGamepadTest", enable);
+                enableDisablePreference("prefTtsGamepadTestComplete",enable);
+                break;
+
         }
     }
 
@@ -332,6 +347,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             }
 
         }
+    }
+
+    private void enableDisablePreference(String key, boolean enable) {
+        getPreferenceScreen().findPreference(key).setSelectable(enable);
+        getPreferenceScreen().findPreference(key).setEnabled(enable);
     }
 
     @SuppressWarnings({ "unchecked" })
