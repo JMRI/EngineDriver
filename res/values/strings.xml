@@ -572,8 +572,8 @@
     <!--    Toast messages for the Select Loco Activity -->
     <string name="toastSelectLocoConfirmClear">Confirm that you want remove all the Recent Locomotives by pressing the \'Clear List\' button AGAIN.</string>
 
-    <string name="prefTtsTitle">Voice Response</string>
-    <string name="prefTtsSummary">Speak key events</string>
+    <string name="prefTtsTitle">Voice Response Preferences</string>
+    <string name="prefTtsSummary">Options to speak key events</string>
 
     <string name="prefTtsWhenTitle">Voice Response</string>
     <string name="prefTtsWhenSummary">When to speak key events and actions using Text to Speech (TTS).</string>
