@@ -362,6 +362,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_COMPLETE = 4;
     private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_SKIPPED = 5;
     private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET = 6;
+    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_FAIL = 7;
 
     private ToneGenerator tg;
     private Handler gamepadRepeatUpdateHandler = new Handler();
@@ -398,9 +399,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private boolean prefGamepadSwapForwardReverseWithScreenButtons = false;
     private boolean prefGamepadTestEnforceTesting = true;
 
-    private static String GAMEPAD_TEST_PASS = "1";
-    private static String GAMEPAD_TEST_FAIL = "2";
-    private static String GAMEPAD_TEST_RESET = "9";
+    private static final int GAMEPAD_TEST_PASS = 1;
+    private static final int GAMEPAD_TEST_FAIL = 2;
+    private static final int GAMEPAD_TEST_SKIPPED = 3;
+    private static final int GAMEPAD_TEST_RESET = 9;
+    private static final int GAMEPAD_GOOD = 1;
+    private static final int GAMEPAD_BAD = 2;
 
     private String DIRECTION_BUTTON_LEFT_TEXT = "Forward";
     private String DIRECTION_BUTTON_RIGHT_TEXT = "Reverse";
@@ -1075,6 +1079,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             case ACCELERATOROMETER_SHAKE_NEXT_V:
                                 GamepadFeedbackSound(false);
                                 setNextActiveThrottle();
+                                speakWords(TTS_MSG_VOLUME_THROTTLE, whichVolume);
                                 break;
                             case ACCELERATOROMETER_SHAKE_LOCK_DIM_SCREEN:
                                 GamepadFeedbackSound(false);
@@ -1781,8 +1786,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             } catch (Exception ex) {
                 Log.d("Engine_Driver", ex.getMessage());
             }
-        } else {
-            gamePadDeviceIdsTested[gamepadNo] = 1; // don't bother doing the test if the preference is set not to
+        } else { // don't bother doing the test if the preference is set not to
+            gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_GOOD;
         }
     }
 
@@ -2128,6 +2133,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTestSkipped);
                         }
                         break;
+                    case TTS_MSG_GAMEPAD_GAMEPAD_TEST_FAIL:
+                        if ((prefTtsGamepadTestComplete)) {
+                            result = true;
+                            speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTestFail);
+                        }
+                        break;
                     case TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET:
                         if ((prefTtsGamepadTestComplete)) {
                             result = true;
@@ -2192,7 +2203,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 tvVolG.setText(VOLUME_INDICATOR);
                 setSelectedLocoAdditionalIndicator('G', true);
             }
-            speakWords(TTS_MSG_VOLUME_THROTTLE, whichVolume);
         }
         // Ensure ESU MCII tracks selected throttle
         if (IS_ESU_MCII) {
@@ -2275,8 +2285,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     whichVolume = whichThrottle;
                     setVolumeIndicator();
                     setSelectedLocoAdditionalIndicator(whichThrottle, true);
-
-                    speakWords(TTS_MSG_VOLUME_THROTTLE, whichVolume);
                 }
             }
         }
@@ -2481,7 +2489,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             }
                         }
                     } else {
-                        if (gamePadDeviceIdsTested[whichGamePad]==2){  // gamepad is known but failed the test last time
+                        if (gamePadDeviceIdsTested[whichGamePad]==GAMEPAD_BAD){  // gamepad is known but failed the test last time
                             start_gamepad_test_activity(whichGamePad);
                         }
                     }
@@ -2602,7 +2610,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), 0); // dummy eventKeyCode
 
                 if (whichGamePadIsEventFrom > -1) { // the event came for a gamepad
-                    if (gamePadDeviceIdsTested[whichGamePadIsEventFrom]!=1) { //if not, testing for this gamepad is not complete or has failed
+                    if (gamePadDeviceIdsTested[whichGamePadIsEventFrom]!=GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
                         acceptEvent = false;
                     }
                 } else {
@@ -2686,7 +2694,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getKeyCode());
 
                 if (whichGamePadIsEventFrom > -1) { // the event came for a gamepad
-                    if (gamePadDeviceIdsTested[whichGamePadIsEventFrom]!=1) { //if not, testing for this gamepad is not complete or has failed
+                    if (gamePadDeviceIdsTested[whichGamePadIsEventFrom]!=GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
                         acceptEvent = false;
                     }
                 } else {
@@ -4980,24 +4988,37 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 if (data != null) {
                     String whichGamepadNo = data.getExtras().getString("whichGamepadNo");
                     if (whichGamepadNo != null) {
-                        if (!whichGamepadNo.substring(1, 2).equals(GAMEPAD_TEST_RESET)) {
-                            int gamepadNo = Integer.valueOf(whichGamepadNo.substring(0, 1));
-                            int result = Integer.valueOf(whichGamepadNo.substring(1, 2));
-                            gamePadDeviceIdsTested[gamepadNo] = result;
-                            speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_COMPLETE,' ');
-                        } else { // reset command
-                            gamepadCount = 0;
-                            for (int i=0;i<gamePadDeviceIds.length;i++) {
-                                gamePadDeviceIds[i]=0;
-                                gamePadDeviceIdsTested[i]=0;
-                            }
-                            for (int i = 0; i < 3; i++) {
-                                gamePadIds[i] = 0;
-                                gamePadThrottleAssignment[0] = "";
-                            }
-                            mainapp.setGamepadTestMenuOption(TMenu,gamepadCount);
-                            setGamepadIndicator();
-                            speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET,' ');
+                        int result = Integer.valueOf(whichGamepadNo.substring(1, 2));
+                        int gamepadNo = Integer.valueOf(whichGamepadNo.substring(0, 1));
+                        switch (result) {
+                            case GAMEPAD_TEST_PASS:
+                                gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_GOOD;
+                                speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_COMPLETE,' ');
+                                break;
+                            case GAMEPAD_TEST_SKIPPED:
+                                gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_GOOD;
+                                speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_SKIPPED, ' ');
+                                break;
+                            case GAMEPAD_TEST_FAIL:
+                                gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_BAD;
+                                speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_FAIL, ' ');
+                                break;
+                            case GAMEPAD_TEST_RESET:
+                                gamepadCount = 0;
+                                for (int i=0;i<gamePadDeviceIds.length;i++) {
+                                    gamePadDeviceIds[i]=0;
+                                    gamePadDeviceIdsTested[i]=0;
+                                }
+                                for (int i = 0; i < 3; i++) {
+                                    gamePadIds[i] = 0;
+                                    gamePadThrottleAssignment[0] = "";
+                                }
+                                mainapp.setGamepadTestMenuOption(TMenu,gamepadCount);
+                                setGamepadIndicator();
+                                speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET,' ');
+                                break;
+                            default:
+                                Log.e("Engine_Driver", "OnActivityResult(ACTIVITY_GAMEPAD_TEST) invalid result!");
                         }
                     }
                 } else {
