@@ -583,13 +583,13 @@
     <string name="prefTtsWhenDefaultValue">None</string>
 
     <string name="prefTtsThrottleTitle">On Gamepad Throttle change</string>
-    <string name="prefTtsThrottleSummary">When you select a different throttle.</string>
+    <string name="prefTtsThrottleSummary">When you select a different throttle on the gamepad.</string>
 
-    <string name="prefTtsThrottleSpeedTitle">On Gamepad Throttle change + speed</string>
-    <string name="prefTtsThrottleSpeedSummary">When you select a different throttle, also speak speed. Overrides throttle alone option. </string>
+    <string name="prefTtsThrottleSpeedTitle">+ speed</string>
+    <string name="prefTtsThrottleSpeedSummary">When you select a different throttle on the gamepad, also speak speed. Overrides throttle alone option. </string>
 
-    <string name="prefTtsThrottleLocoSpeedTitle">On Gamepad Throttle Change + loco</string>
-    <string name="prefTtsThrottleLocoSpeedSummary">When you select a different throttle, also speak loco numbers. Overrides throttle alone option. </string>
+    <string name="prefTtsThrottleLocoSpeedTitle">+ loco</string>
+    <string name="prefTtsThrottleLocoSpeedSummary">When you select a different throttle on the gamepad, also speak loco numbers. Overrides throttle alone option. </string>
 
     <string name="prefTtsGamepadTestTitle">On Gamepad Test</string>
     <string name="prefTtsGamepadTestSummary">When the gamepad test page is launched. </string>
@@ -621,6 +621,13 @@
     <string name="TTS_Function">Function </string>
 -->
     <string name="toastTtsFailed">Sorry! Text to speech failed...</string>
+
+    <string name="functionButtonLookForWhistle">WHISTLE</string>
+    <string name="functionButtonLookForHorn">HORN</string>
+    <string name="functionButtonLookForBell">BELL</string>
+    <string name="functionButtonLookForHead">HEAD</string>
+    <string name="functionButtonLookForLight">LIGHT</string>
+    <string name="functionButtonLookForRear">REAR</string>
 
 
 </resources>

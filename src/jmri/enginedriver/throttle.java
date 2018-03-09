@@ -243,6 +243,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static final long gestureCheckRate = 200; // rate in milliseconds to check velocity
     private VelocityTracker mVelocityTracker;
 
+    private String FUNCTION_BUTTON_LOOK_FOR_WHISTLE = "WHISTLE";
+    private String FUNCTION_BUTTON_LOOK_FOR_HORN = "HORN";
+    private String FUNCTION_BUTTON_LOOK_FOR_BELL = "BELL";
+    private String FUNCTION_BUTTON_LOOK_FOR_HEAD = "HEAD";
+    private String FUNCTION_BUTTON_LOOK_FOR_LIGHT = "LIGHT";
+    private String FUNCTION_BUTTON_LOOK_FOR_REAR = "REAR";
+
     // function number-to-button maps
     private LinkedHashMap<Integer, Button> functionMapT;
     private LinkedHashMap<Integer, Button> functionMapS;
@@ -306,10 +313,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static final int SCREEN_BRIGHTNESS_MODE_MANUAL = 0;
     private static final int SCREEN_BRIGHTNESS_MODE_AUTOMATIC = 1;
 
-    private static final String SWIPE_UP_OPTION_WEB = "Hide Web View\n(requires 'Throttle Web View' preference)";
+    private static final String SWIPE_UP_OPTION_WEB = "Hide Web View";
     private static final String SWIPE_UP_OPTION_LOCK = "Lock and Dim Screen";
     private static final String SWIPE_UP_OPTION_DIM = "Dim Screen";
-    private static final String SWIPE_UP_OPTION_IMMERSIVE = "Immersive Mode temporarily enable-disable";
+    private static final String SWIPE_UP_OPTION_IMMERSIVE = "Immersive Mode";
 
     //private int screenBrightnessBright;
     private int screenBrightnessOriginal;
@@ -1109,6 +1116,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (isCreate) {  //only do onCreate
             webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
         }
+
+        DIRECTION_BUTTON_LEFT_TEXT = getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsDefaultValue).trim();
+        DIRECTION_BUTTON_RIGHT_TEXT = getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsDefaultValue).trim();
+
+        FUNCTION_BUTTON_LOOK_FOR_WHISTLE = getApplicationContext().getResources().getString(R.string.functionButtonLookForWhistle).trim();
+        FUNCTION_BUTTON_LOOK_FOR_HORN = getApplicationContext().getResources().getString(R.string.functionButtonLookForHorn).trim();
+        FUNCTION_BUTTON_LOOK_FOR_BELL = getApplicationContext().getResources().getString(R.string.functionButtonLookForBell).trim();
+        FUNCTION_BUTTON_LOOK_FOR_HEAD = getApplicationContext().getResources().getString(R.string.functionButtonLookForHead).trim();
+        FUNCTION_BUTTON_LOOK_FOR_LIGHT = getApplicationContext().getResources().getString(R.string.functionButtonLookForLight).trim();
+        FUNCTION_BUTTON_LOOK_FOR_REAR = getApplicationContext().getResources().getString(R.string.functionButtonLookForRear).trim();
+
 
         // increase height of throttle slider (if requested in preferences)
         pref_increase_slider_height_preference = prefs.getBoolean("increase_slider_height_preference", getResources().getBoolean(R.bool.prefIncreaseSliderHeightDefaultValue));
@@ -3400,11 +3418,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             if (!lab.equals("")) {
                 boolean selectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
                 leadOnly = (selectiveLeadSound &&
-                        (lab.contains("WHISTLE") || lab.contains("HORN") || lab.contains("BELL"))
-                        || lab.contains("HEAD")
-                        || (lab.contains("LIGHT") && !lab.contains("REAR")));
-                followLeadFunction = (lab.contains("LIGHT"));
-                trailOnly = lab.contains("REAR");
+                        (lab.contains(FUNCTION_BUTTON_LOOK_FOR_WHISTLE) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HORN) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_BELL))
+                        || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HEAD)
+                        || (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT) && !lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR)));
+                followLeadFunction = (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT));
+                trailOnly = lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR);
             }
         }
 
