@@ -96,11 +96,21 @@
         <item>Função 27</item>
         <item>Função 28</item>
     </string-array>
-    <string-array name="prefAutoImportExportOptionsDisplayEntries">
+    <string-array name="prefImportExportEntries">  <!-- display version -->
+        <item>Nada</item>
+        <item>Exportar</item>
+        <item>Importar</item>
+        <item>Reiniciar</item>
+    </string-array>
+    <string-array name="prefAutoImportExportEntries">
         <item>Nada</item>
         <item>Auto importar/exportar na conexão/desconexão</item>
         <item>Auto importar somente na conexão</item>
     </string-array>
+    <string-array name="prefHostImportExportEntryValues">   <!-- this is dynamically built so does not follow the norms -->
+        <item>Nada</item>
+    </string-array>
+
     <string-array name="prefThemeEntries">
         <item>Tema Padrão</item>
         <item>Tema Alto Contraste</item>

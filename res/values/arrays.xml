@@ -608,7 +608,10 @@
         <item>Connect Only</item>
     </string-array>
 
-    <string-array name="prefHostImportExportOptions">   <!-- this is dynamically built so does not follow the norms -->
+    <string-array name="prefHostImportExportEntries">   <!-- this is dynamically built so does not follow the norms -->
+        <item>None</item>
+    </string-array>
+    <string-array name="prefHostImportExportEntryValues">   <!-- this is dynamically built so does not follow the norms -->
         <item>None</item>
     </string-array>
 

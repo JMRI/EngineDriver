@@ -68,7 +68,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
 
     private static final String DEMO_HOST = "jmri.mstevetodd.com";
-    private String[] prefHostImportExportOptionsFound = {"None"};
+    private String[] prefHostImportExportEntriesFound = {"None"};
+    private String[] prefHostImportExportEntryValuesFound = {"None"};
     private static final String IMPORT_PREFIX = "Import- "; // these two have to be the same length
     private static final String EXPORT_PREFIX = "Export- ";
 
@@ -112,8 +113,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         if (mainapp.connectedHostName.equals("")) { // option is only available when there is no curent connection
             getConnectionsList();
             preference = (ListPreference) findPreference("prefHostImportExport");
-            preference.setEntries(prefHostImportExportOptionsFound);
-            preference.setEntryValues(prefHostImportExportOptionsFound);
+            preference.setEntries(prefHostImportExportEntriesFound);
+            preference.setEntryValues(prefHostImportExportEntryValuesFound);
         } else {
             enableDisablePreference("prefHostImportExport", false);
         }
@@ -359,7 +360,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         boolean res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
 
         if (!res) {
-            Toast.makeText(getApplicationContext(), "Import from 'engine_driver/" + exportedPreferencesFileName + "' failed! You may not have saved the preferences for this host yet.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom).replace("%%1%%",exportedPreferencesFileName), Toast.LENGTH_LONG).show();
         }
         fixAndReloadImportExportPreference(sharedPreferences);
         return res;
@@ -380,7 +381,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
             }
         } else {
-            Toast.makeText(getApplicationContext(), "Not connected to a host.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.prefImportExportErrorNotConnected, Toast.LENGTH_LONG).show();
         }
         return res;
     }
@@ -435,9 +436,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             }
         };
         AlertDialog.Builder ab = new AlertDialog.Builder(preferences.this);
-        ab.setMessage("File already exists. Overwite?")
-                .setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("Cancel", dialogClickListener);
+        ab.setMessage(R.string.prefImportExportOverwite)
+                .setPositiveButton(R.string.yes, dialogClickListener)
+                .setNegativeButton(R.string.cancel, dialogClickListener);
         ab.show();
         return overwiteFile;
     }
@@ -555,9 +556,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         if (host_name.equals(DEMO_HOST)) {
                             foundDemoHost = true;
                         }
-                        if ((!host_name.equals("")) && (!isAlreadyInArray(prefHostImportExportOptionsFound, IMPORT_PREFIX + host_name_filename))) {
-                            prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, IMPORT_PREFIX + host_name_filename);
-                            prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, EXPORT_PREFIX + host_name_filename);
+                        if ((!host_name.equals("")) && (!isAlreadyInArray(prefHostImportExportEntriesFound, IMPORT_PREFIX + host_name_filename))) {
+                            prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, IMPORT_PREFIX + host_name_filename);
+                            prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, EXPORT_PREFIX + host_name_filename);
+                            prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, IMPORT_PREFIX + host_name_filename);
+                            prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, EXPORT_PREFIX + host_name_filename);
                          }
                     }
                 }
@@ -566,12 +569,14 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         } catch (IOException except) {
             errMsg = except.getMessage();
             Log.e("connection_activity", "Error reading recent connections list: " + errMsg);
-            Toast.makeText(getApplicationContext(), "Error reading recent connections list: " + errMsg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.prefImportExportErrorReadingList + " " + errMsg, Toast.LENGTH_SHORT).show();
         }
 
         if (!foundDemoHost) {
-            prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, IMPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
-            prefHostImportExportOptionsFound = add(prefHostImportExportOptionsFound, EXPORT_PREFIX+ DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+            prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, IMPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+            prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, EXPORT_PREFIX+ DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+            prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, IMPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+            prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, EXPORT_PREFIX+ DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
         }
 
     }

@@ -793,8 +793,8 @@
                 android:title="@string/prefAutoImportExportTitle" />
             <ListPreference
                 android:defaultValue="@string/prefHostImportExportDefaultValue"
-                android:entries="@array/prefHostImportExportOptions"
-                android:entryValues="@array/prefHostImportExportOptions"
+                android:entries="@array/prefHostImportExportEntries"
+                android:entryValues="@array/prefHostImportExportEntryValues"
                 android:key="prefHostImportExport"
                 android:summary="@string/prefHostImportExportSummary"
                 android:title="@string/prefHostImportExportTitle" />

@@ -58,12 +58,12 @@
     <string name="save_settings">Salvar Configuração</string>
     <string name="stop">Pare</string>
     <string name="forward">Frente</string>
-    <string name="reverse">Trás</string>
+    <string name="reverse">Reverso</string>
     <string name="none">Nada</string>
-    <string name="fb_helptext">Inserir etiquetas e funções#s na lista a direita. Deixar em branco para esconder o botão. Estes são usados quando as funções de lista não estão disponíveis.</string>
+    <string name="fb_helptext">Inserir etiquetas e n. funções na lista a direita. Deixar em branco para esconder o botão. Estes são usados quando as funções de lista não estão disponíveis.</string>
     <string name="copy_function_labels">Copiar Etiquetas da Lista</string>
     <string name="fb_header">Editar Funções</string>
-    <string name="consist_help">Clicar uma locomotiva para mudar sua direção em relação à cabeça do comboio. Manter apertado para remover uma locomotiva do comboio. Apertar a seta Atrás quando for pronto.</string>
+    <string name="consist_help">Clicar uma locomotiva para mudar sua direção em relação à cabeça do comboio. Manter apertado para remover uma locomotiva do comboio. Apertar a seta Voltar quando for pronto.</string>
     <string name="about">Sobre</string>
     <string name="web">Web</string>
     <string name="mrc_settings">Configuração MRC</string>
@@ -77,7 +77,7 @@
     <string name="release">Soltar</string>
     <string name="turnouts">Desvios</string>
     <string name="turnouts_label">Controle Desvios</string>
-    <string name="turnouts_direct_entry_label">Inserir Desvio#</string>
+    <string name="turnouts_direct_entry_label">Inserir n. Desvio</string>
     <string name="turnouts_location_label">Filtrar por Local</string>
     <string name="turnouts_list_label">Desvios (clicar para alterar direção)</string>
     <string name="turnouts_turnout">Desvio</string>
@@ -111,6 +111,7 @@
     <string name="volume_indicator">v</string>
     <string name="yes">Sim</string>
     <string name="no">Não</string>
+    <string name="cancel">Cancelar</string>
     <string name="exit_text">Sair de Engine Driver?</string>
     <string name="exit_title">Sair</string>
     <string name="steal_text">Apropriar-se do endereço %1$s?</string>
@@ -341,7 +342,12 @@
 
     <string name="prefHostImportExportTitle">Importar/Exportar específico para host Manual</string>
     <string name="prefHostImportExportSummary">\'Importar\' ou \'Exportar\' suas preferências para um host específico para a pasta \'engine_driver/\'. P host deve estar em sua lista de conexões recentes.\nOcorrerá IMEDIATAMENTE após a seleção da opção.\n(Somente disponível quando não atualmente conectado.)</string>
-
+<!--
+    <string name="prefImportExportOverwite">File already exists. Overwite?</string>
+    <string name="prefImportExportErrorReadingList">Error reading recent connections list:</string>
+    <string name="prefImportExportErrorReadingFrom">Import from \'engine_driver/%%1%%\' failed! You may not have saved the preferences for this host yet.</string>
+    <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
+-->
     <string name="prefSwapForwardReverseButtonsTitle">Troca Direção dos  Botões</string>
     <string name="prefSwapForwardReverseButtonsSummary">Troca permanentemente os dois Botões Direção para todos os controladores.</string>
     <string name="prefSwapForwardReverseButtonsLongPressTitle">Aperto prolongado troca Botões Direção</string>
@@ -395,7 +401,7 @@
     <string name="gamepadTestKeycodeLabel">Código tecla:\s\s</string>
     <string name="gamepadTestFunctionLabel">Função:\s\s</string>
     <string name="gamepadTestCompleteLabel">Status teste:\s\s</string>
-    <string name="gamepadTestHelp">Rolar para baixo para ler as instruções completas...\n\bApertar TODOS Dpad E os quatros botões principais do gamepad NÃO FUNCIONARÁ.\n\Se não conseguir ativar todos os botões, mude o modo do gamepad (vide instruções do seu gamepad) ou tente outro tipo de gamepad (acima).\n\n\'VOLTAR\' ou \'Cancelar\' sairá do teste mas o gamepad NÃO FUNCIONARÁ.\n\'SALTAR\', ou premer o botão do gamepad \'Diminuir Velocidade\' três vezes, forçará o teste a passar, mesmo que o gamepad não funcione corretamente.\n\'RESET\' dirá ao ED que nenhum gamepad foi usado ainda.\nSe um teste \'SIMPLES\' foi selecionado, um unico aperto do botão \'Diminuir Velocidade\' saltará o teste.\n\nUse a opção \'Teste Gamepad\' no menu para voltar a esta página.</string>
+    <string name="gamepadTestHelp">Rolar para baixo para ler as instruções completas&#8230;\n\bApertar TODOS Dpad E os quatros botões principais do gamepad NÃO FUNCIONARÁ.\n\Se não conseguir ativar todos os botões, mude o modo do gamepad (vide instruções do seu gamepad) ou tente outro tipo de gamepad (acima).\n\n\'VOLTAR\' ou \'Cancelar\' sairá do teste mas o gamepad NÃO FUNCIONARÁ.\n\'SALTAR\', ou premer o botão do gamepad \'Diminuir Velocidade\' três vezes, forçará o teste a passar, mesmo que o gamepad não funcione corretamente.\n\'RESET\' dirá ao ED que nenhum gamepad foi usado ainda.\nSe um teste \'SIMPLES\' foi selecionado, um unico aperto do botão \'Diminuir Velocidade\' saltará o teste.\n\nUse a opção \'Teste Gamepad\' no menu para voltar a esta página.</string>
     <string name="gamepadTestHelpNonForced">\Se não conseguir ativar todos os botões, mude o modo do gamepad (vide instruções do seu gamepad) ou tente outro tipo de gamepad (acima).\n Poderá ser necessário testar de novo o gamepad quando será usado pela primeira vez a partir da tela do controlador.</string>
     <string name="gamepadTestIncomplete">"Teste Incompleto"</string>
     <string name="gamepadTestComplete">"Teste Completo"</string>
@@ -486,10 +492,12 @@
     <string name="TTS_EStop">Parada de Emergência</string>
     <string name="TTS_Dir_Change_While_Moving_Disabled">Direção não mudada</string>
     <string name="TTS_Function">Função</string>
-    <string name="toastTtsFailed">Sinto muito! Text to Speech falhou...</string>
+    <string name="toastTtsFailed">Sinto muito! Text to Speech falhou&#8230;</string>
 
+    <string name="functionButtonLookForWhistle">APITO</string>
     <string name="functionButtonLookForHorn">BUZINA</string>
     <string name="functionButtonLookForBell">SINO</string>
-
+    <string name="functionButtonLookForHead">ANTERIOR</string>
     <string name="functionButtonLookForLight">LUZ</string>
+    <string name="functionButtonLookForRear">POSTERIOR</string>
 </resources>

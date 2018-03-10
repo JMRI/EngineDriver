@@ -20,7 +20,7 @@
     <string name="exit">Uscita</string>
     <string name="settings">Funzioni Standard</string>
     <string name="fb_label">Etichetta Funzione</string>
-    <string name="function_buttons">tasti_funzione</string>
+    <string name="function_buttons">Default Funzioni</string>
 
     <string name="app_description">Engine Driver - Controllo per il tuo telefono Android. Questa app può connettersi a JMRI, MRC o server Digitrax WiThrottle, e controllare gli scambi e le locomotive. Velocità, direzione, e fino a 29 funzioni DCC sono supportatte per una o due locomotive.</string>
     <string name="app_name_connect">Connessione al Server - Engine Driver</string>
@@ -32,7 +32,7 @@
     <string name="app_name_turnouts">Scambi - Engine Driver</string>
     <string name="app_name_about">Circa - Engine Driver</string>
     <string name="app_name_web">Web - Engine Driver</string>
-    <string name="app_name_functions">Configurazione Funzioni Standard - Engine Driver</string>
+    <string name="app_name_functions">Configurazione Funzioni Default - Engine Driver</string>
     <string name="app_name_preferences">Preferenze - Engine Driver</string>
     <string name="app_name_select_loco">Selezione Locomotiva - Engine Driver</string>
     <string name="app_name_ConsistEdit">Edizione Convoglio - Engine Driver</string>
@@ -56,12 +56,12 @@
     <string name="direction">Avanti</string>
     <string name="speed">Velocità:</string>
     <string name="discovered_services">Server Individuati</string>
-    <string name="save_settings">Salvare Settaggi</string>
+    <string name="save_settings">Salvare Impostazioni</string>
     <string name="stop">Stop</string>
     <string name="forward">Avanti</string>
     <string name="reverse">Indietro</string>
     <string name="none">Niente</string>
-    <string name="fb_helptext">Inserire etichette e funzioni#s nella lista a destra. Lasciare in bianco per nascondere il pulsante. Questi sono usati quando le funzioni di elenco non sono disponibili.</string>
+    <string name="fb_helptext">Inserire etichette e n. funzioni nella lista a destra. Lasciare in bianco per nascondere il pulsante. Questi sono usati quando le funzioni di elenco non sono disponibili.</string>
     <string name="copy_function_labels">Copiare Etichette dall\'Elenco</string>
     <string name="fb_header">Modifica Funzioni</string>
     <string name="consist_help">Cliccare una locomotiva per cambiare la sua direzione rispetto alla testa del convoglio. Premere a lungo per rimuovere una locmotiva dal convoglio. Premere Indietro quando pronto.</string>
@@ -78,7 +78,7 @@
     <string name="release">Rilasciare</string>
     <string name="turnouts">Scambi</string>
     <string name="turnouts_label">Controllo Scambi</string>
-    <string name="turnouts_direct_entry_label">Inserire Scambio#</string>
+    <string name="turnouts_direct_entry_label">Inserire n. Scambio</string>
     <string name="turnouts_location_label">Filtrare per Localizzazione</string>
     <string name="turnouts_list_label">Scambi (cliccare per cambiare direzione)</string>
     <string name="turnouts_turnout">Scambio</string>
@@ -96,7 +96,7 @@
     <string name="power_control_label">Controllo Energia del Plastico</string>
     <string name="power_control_button">sconosciuto</string>
     <string name="press_to_toggle">Premere il tasto per cambiare lo stato di energia del plastico.</string>
-    <string name="power_control_not_allowed">Controllo di Energia non permesso. Cambiare in Preferenze/Settaggi sul server.</string>
+    <string name="power_control_not_allowed">Controllo di Energia non permesso. Cambiare in Preferenze/Impostazioni sul server.</string>
     <string name="reconnect_label">Status Tentativi di Riconnessione</string>
     <string name="reconnect_help">Tentando riconnettere autimaticamente. Attendere la riconnessione o premere la freccia Indietro per Uscire.</string>
     <string name="reconnect_success">RICONNESSO. Riprendendo operazioni normali.</string>
@@ -112,6 +112,7 @@
     <string name="volume_indicator">v</string>
     <string name="yes">Sì</string>
     <string name="no">No</string>
+    <string name="cancel">Cancellare</string>
     <string name="exit_text">Uscire da Engine Driver?</string>
     <string name="exit_title">Uscire</string>
     <string name="steal_text">Appropriarsi dell\'indirizzo %1$s?</string>
@@ -343,7 +344,12 @@
 
     <string name="prefHostImportExportTitle">Importare/Esportare specifico per host Manuale</string>
     <string name="prefHostImportExportSummary">\'Importare\' o \'Esportare\' le tue preferenze per un host specifico nella cartella \'engine_driver/\'. L\'host deve essere nella tua lista di connessioni recenti.\nAvverrà IMMEDIATAMENTE dopo la selezione dell\'opzione.\n(Disponibile solo quando non attualmente connesso.)</string>
-
+    <!--
+        <string name="prefImportExportOverwite">File already exists. Overwite?</string>
+        <string name="prefImportExportErrorReadingList">Error reading recent connections list:</string>
+        <string name="prefImportExportErrorReadingFrom">Import from \'engine_driver/%%1%%\' failed! You may not have saved the preferences for this host yet.</string>
+        <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
+    -->
     <string name="prefSwapForwardReverseButtonsTitle">Cambia Direzione Pulsanti</string>
     <string name="prefSwapForwardReverseButtonsSummary">Scambia permanentemente i due Plsanti Direzione per tutti i controllori.</string>
     <string name="prefSwapForwardReverseButtonsLongPressTitle">Pressione prolungata provoca scambio Pulsanti Direzione</string>
@@ -397,7 +403,7 @@
     <string name="gamepadTestKeycodeLabel">Codice tasto:\s\s</string>
     <string name="gamepadTestFunctionLabel">Funzione:\s\s</string>
     <string name="gamepadTestCompleteLabel">Status test:\s\s</string>
-    <string name="gamepadTestHelp">Scorrere verso il basso per leggere le istruzioni complete...\n\bPremere  Dpad E TUTTI i quattro pulsanti principali NON FUNZIONERÀ.\n\Se non riesci ad attivare tutti i pulsanti, cambia il modo del tuo gamepad (leggi le istruzioni del gamepad per come fare) o prova a cambiare il tipo di  gamepad (alto).\n\n\'RITORNARE\' ou \'CANCELLARE\' uscirá dal test ma il  gamepad NON FUNZIONERÀ.\n\'SALTARE\', o premere il pulsante del gamepad \'Diminuire Velocità\' tre volte, forzerà test a passare, anche se il gamepad non funziona correttamente.\n\'RESET\' comunicherà a ED che nessun gamepad è stato usato.\nSe il test \'SEMPLICE\' è stato selezionato, una unica pressione del pulsante  \'Diminuire Velocità\' salterà il test.\n\nUsa l\'opzione \'Test Gamepad\' nel menu per tornare a questa pagina.</string>
+    <string name="gamepadTestHelp">Scorrere verso il basso per leggere le istruzioni complete&#8230;\n\bPremere  Dpad E TUTTI i quattro pulsanti principali NON FUNZIONERÀ.\n\Se non riesci ad attivare tutti i pulsanti, cambia il modo del tuo gamepad (leggi le istruzioni del gamepad per come fare) o prova a cambiare il tipo di  gamepad (alto).\n\n\'RITORNARE\' ou \'CANCELLARE\' uscirá dal test ma il  gamepad NON FUNZIONERÀ.\n\'SALTARE\', o premere il pulsante del gamepad \'Diminuire Velocità\' tre volte, forzerà test a passare, anche se il gamepad non funziona correttamente.\n\'RESET\' comunicherà a ED che nessun gamepad è stato usato.\nSe il test \'SEMPLICE\' è stato selezionato, una unica pressione del pulsante  \'Diminuire Velocità\' salterà il test.\n\nUsa l\'opzione \'Test Gamepad\' nel menu per tornare a questa pagina.</string>
     <string name="gamepadTestHelpNonForced">\Se non riesci ad attivare tutti i pulsanti, cambia il modo del tuo gamepad (leggi le istruzioni del gamepad per come fare) o prova a cambiare il tipo di  gamepad (alto).\n Potrà essere necessario ritestare il gamepad quando sará usato per la prima volta dallo schermo del controllore.</string>
     <string name="gamepadTestIncomplete">"Test Incompleto"</string>
     <string name="gamepadTestComplete">"Test Completo"</string>
@@ -488,10 +494,12 @@
     <string name="TTS_EStop">Fermata di Emergenza</string>
     <string name="TTS_Dir_Change_While_Moving_Disabled">Direzione non alterata</string>
     <string name="TTS_Function">Funzione</string>
-    <string name="toastTtsFailed">Mi dispiace! Text To Speech non funziona...</string>
+    <string name="toastTtsFailed">Mi dispiace! Text To Speech non funziona&#8230;</string>
 
+    <string name="functionButtonLookForWhistle">FISCHIO</string>
     <string name="functionButtonLookForHorn">FISCHIO</string>
     <string name="functionButtonLookForBell">CAMPANA</string>
-
+    <string name="functionButtonLookForHead">ANTERIORE</string>
     <string name="functionButtonLookForLight">LUCE</string>
+    <string name="functionButtonLookForRear">POSTERIORE</string>
 </resources>

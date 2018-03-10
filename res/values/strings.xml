@@ -109,6 +109,7 @@
     <string name="volume_indicator">v</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="cancel">"Cancel"</string>
     <string name="exit_text">Exit Engine Driver?</string>
     <string name="exit_title">Exit</string>
     <string name="steal_text">Steal address %1$s?</string>
@@ -399,6 +400,11 @@
     <string name="prefHostImportExportSummary">\'Import\' or \'Export\' your preferences for a specific host to the \'engine_driver/\' folder. The host must be in your recent connection list.\nWill occur IMMEDIATELY on selecting the option.\n(Only available when not currently connected.)</string>
     <string name="prefHostImportExportDefaultValue">None</string>
 
+    <string name="prefImportExportOverwite">File already exists. Overwite?</string>
+    <string name="prefImportExportErrorReadingList">Error reading recent connections list:</string>
+    <string name="prefImportExportErrorReadingFrom">Import from \'engine_driver/%%1%%\' failed! You may not have saved the preferences for this host yet.</string>
+    <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
+
     <string name="prefSwapForwardReverseButtonsTitle">Swap Direction Buttons</string>
     <string name="prefSwapForwardReverseButtonsSummary">Permanently swap the two Direction Buttons for all throttles.</string>
 
@@ -620,7 +626,7 @@
     <string name="TTS_Dir_Change_While_Moving_Disabled">Direction not changed</string>
     <string name="TTS_Function">Function </string>
 -->
-    <string name="toastTtsFailed">Sorry! Text to speech failed...</string>
+    <string name="toastTtsFailed">Sorry! Text to speech failed&#8230;</string>
 
     <string name="functionButtonLookForWhistle">WHISTLE</string>
     <string name="functionButtonLookForHorn">HORN</string>
