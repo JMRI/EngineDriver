@@ -68,10 +68,9 @@
     <string name="about">Circa</string>
     <string name="web">Web</string>
     <string name="mrc_settings">Configurazione MRC</string>
-    <string name="loco">Locomotiva:</string>
     <string name="loco_direction_left_extra">"\u00B7A\u00B7"</string>
     <string name="loco_direction_right_extra">"\u00B7I\u00B7"</string>
-    <string name="locoPressToSelect">Premere per selezionare</string>
+    <string name="locoPressToSelect">Selezionare</string>
     <string name="powerWillNotWorkTitle">Non funzionerà!</string>
     <string name="powerWillNotWork">JMRI ha regolato il  controllo di energia wiThrottle su spento.\nRimuoverà adesso l\'icona di energia.\nMostrerà di nuovo quando la regolazione di JMRI sarà su acceso.</string>
     <string name="current_locos">Locomotive Attualmente Selezionate</string>
@@ -344,12 +343,12 @@
 
     <string name="prefHostImportExportTitle">Importare/Esportare specifico per host Manuale</string>
     <string name="prefHostImportExportSummary">\'Importare\' o \'Esportare\' le tue preferenze per un host specifico nella cartella \'engine_driver/\'. L\'host deve essere nella tua lista di connessioni recenti.\nAvverrà IMMEDIATAMENTE dopo la selezione dell\'opzione.\n(Disponibile solo quando non attualmente connesso.)</string>
-    <!--
-        <string name="prefImportExportOverwite">File already exists. Overwite?</string>
-        <string name="prefImportExportErrorReadingList">Error reading recent connections list:</string>
-        <string name="prefImportExportErrorReadingFrom">Import from \'engine_driver/%%1%%\' failed! You may not have saved the preferences for this host yet.</string>
-        <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
-    -->
+
+    <string name="prefImportExportOverwite">File giá presente. Sovrascrivere?</string>
+    <string name="prefImportExportErrorReadingList">Errore lettura lista connessioni recenti:</string>
+    <string name="prefImportExportErrorReadingFrom">Importazione da \'engine_driver/%%1%%\' fallita! Puoi non aver ancora salvato le preferenze per questo host.</string>
+    <string name="prefImportExportErrorNotConnected">Host non connesso.</string>
+
     <string name="prefSwapForwardReverseButtonsTitle">Cambia Direzione Pulsanti</string>
     <string name="prefSwapForwardReverseButtonsSummary">Scambia permanentemente i due Plsanti Direzione per tutti i controllori.</string>
     <string name="prefSwapForwardReverseButtonsLongPressTitle">Pressione prolungata provoca scambio Pulsanti Direzione</string>

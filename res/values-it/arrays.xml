@@ -129,7 +129,7 @@
         <item>Nascondere vista Web\n(richiede preferenze \'Vista Controllore Web\')</item>
         <item>Bloccare e diminuire brillantezza Schermo</item>
         <item>Diminuire brillantezza Schermo</item>
-        <item>Immersive Mode temporarily enable-disable</item>
+        <item>Abilitazione-disabilitazione provvisoria del Modo Immersivo</item>
     </string-array>
 
     <string-array name="prefAccelerometerShakeEntries">

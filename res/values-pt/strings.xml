@@ -67,10 +67,9 @@
     <string name="about">Sobre</string>
     <string name="web">Web</string>
     <string name="mrc_settings">Configuração MRC</string>
-    <string name="loco">Locomotiva:</string>
     <string name="loco_direction_left_extra">"\u00B7F\u00B7"</string>
     <string name="loco_direction_right_extra">"\u00B7T\u00B7"</string>
-    <string name="locoPressToSelect">Apertar para selecionar</string>
+    <string name="locoPressToSelect">Selecionar</string>
     <string name="powerWillNotWorkTitle">Não funcionará!</string>
     <string name="powerWillNotWork">JMRI tem regulado o controle de energia wiThrottle para desligado.\nremoverá agora o Ícone de Energia.\nMostrará de novo quando a regulagem JMRI estará ligada.</string>
     <string name="current_locos">Locomotivas Atualmente Selecionadas</string>
@@ -342,12 +341,12 @@
 
     <string name="prefHostImportExportTitle">Importar/Exportar específico para host Manual</string>
     <string name="prefHostImportExportSummary">\'Importar\' ou \'Exportar\' suas preferências para um host específico para a pasta \'engine_driver/\'. P host deve estar em sua lista de conexões recentes.\nOcorrerá IMEDIATAMENTE após a seleção da opção.\n(Somente disponível quando não atualmente conectado.)</string>
-<!--
-    <string name="prefImportExportOverwite">File already exists. Overwite?</string>
-    <string name="prefImportExportErrorReadingList">Error reading recent connections list:</string>
-    <string name="prefImportExportErrorReadingFrom">Import from \'engine_driver/%%1%%\' failed! You may not have saved the preferences for this host yet.</string>
-    <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
--->
+
+    <string name="prefImportExportOverwite">Arquivo já presente. Sobregravar?</string>
+    <string name="prefImportExportErrorReadingList">Erro leitura lista conexões recentes:</string>
+    <string name="prefImportExportErrorReadingFrom">Importação de \'engine_driver/%%1%%\' falhou! Pode não ter salvo ainda as preferências para este host.</string>
+    <string name="prefImportExportErrorNotConnected">Host não conectado.</string>
+
     <string name="prefSwapForwardReverseButtonsTitle">Troca Direção dos  Botões</string>
     <string name="prefSwapForwardReverseButtonsSummary">Troca permanentemente os dois Botões Direção para todos os controladores.</string>
     <string name="prefSwapForwardReverseButtonsLongPressTitle">Aperto prolongado troca Botões Direção</string>
