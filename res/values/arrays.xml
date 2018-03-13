@@ -663,4 +663,20 @@
         <item>Key events only</item>
     </string-array>
 
+    <string-array name="prefTtsThrottleResponseEntryValues">
+        <item>None</item>
+        <item>Throttle</item>
+        <item>Loco</item>
+        <item>Speed</item>
+        <item>LocoSpeed</item>
+    </string-array>
+
+    <string-array name="prefTtsThrottleResponseEntries">  <!-- display version -->
+        <item>None</item>
+        <item>Throttle</item>
+        <item>Throttle + Loco</item>
+        <item>Throttle + Speed</item>
+        <item>Throttle + Loco + Speed</item>
+    </string-array>
+
 </resources>

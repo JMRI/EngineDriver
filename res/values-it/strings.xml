@@ -462,12 +462,9 @@
     <string name="prefTtsWhenTitle">Risposta Vocale</string>
     <string name="prefTtsWhenSummary">Quando annunciare eventi chiave e azioni usando Text to Speech (TTS).</string>
 
-    <string name="prefTtsThrottleTitle">Al cambio di controllore</string>
-    <string name="prefTtsThrottleSummary">Quando é selezionato un altro controllore.</string>
-    <string name="prefTtsThrottleSpeedTitle">+ velocità</string>
-    <string name="prefTtsThrottleSpeedSummary">Quando è selezionato un altro controllore, annuncia anche la velocità. Prevale sulle opzioni del controllore.</string>
-    <string name="prefTtsThrottleLocoSpeedTitle">+ locomotiva</string>
-    <string name="prefTtsThrottleLocoSpeedSummary">Quando è selezionato un altro controllore, annuncia il numero della locomotiva. Prevale sulle opzioni del controllore.</string>
+    <string name="prefTtsThrottleResponeseTitle">Al cambio di controllore</string>
+    <string name="prefTtsThrottleResponseSummary">Quando é selezionato un altro controllore.</string>
+
     <string name="prefTtsGamepadTestTitle">Testando il Gamepad</string>
     <string name="prefTtsGamepadTestSummary">Quando é lanciata la pagina di test del gamepad.</string>
     <string name="prefTtsGamepadTestCompleteTitle">Al completamento del test del Gamepad</string>

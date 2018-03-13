@@ -352,12 +352,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     // For TTS
     private int MY_TTS_DATA_CHECK_CODE = 1234;
+    private static final String PREF_TTS_THROTTLE_RESPONSE_NONE = "None";
+    private static final String PREF_TTS_THROTTLE_RESPONSE_THROTTLE = "Throttle";
+    private static final String PREF_TTS_THROTTLE_RESPONSE_LOCO = "Loco";
+    private static final String PREF_TTS_THROTTLE_RESPONSE_SPEED = "Speed";
+    private static final String PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED = "LocoSpeed";
+
     private TextToSpeech myTts;
     private String lastTts = "none";
     private String prefTtsWhen = "None";
-    private boolean prefTtsThrottle = true;
-    private boolean prefTtsThrottleSpeed = false;
-    private boolean prefTtsThrottleLocoSpeed = false;
+    private String prefTtsThrottleResponse = "Throttle";
     private boolean prefTtsGamepadTest = true;
     private boolean prefTtsGamepadTestComplete = true;
     private Time lastTtsTime;
@@ -1173,9 +1177,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefGamePadSpeedButtonsSpeedStep = preferences.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
 
         prefTtsWhen = prefs.getString("prefTtsWhen", getResources().getString(R.string.prefTtsWhenDefaultValue));
-        prefTtsThrottle = prefs.getBoolean("prefTtsThrottle", getResources().getBoolean(R.bool.prefTtsThrottleDefaultValue));
-        prefTtsThrottleSpeed = prefs.getBoolean("prefTtsThrottleSpeed", getResources().getBoolean(R.bool.prefTtsThrottleSpeedDefaultValue));
-        prefTtsThrottleLocoSpeed = prefs.getBoolean("prefTtsThrottleLocoSpeed", getResources().getBoolean(R.bool.prefTtsThrottleLocoSpeedDefaultValue));
+        prefTtsThrottleResponse = prefs.getString("prefTtsThrottleResponse", getResources().getString(R.string.prefTtsThrottleResponseDefaultValue));
         prefTtsGamepadTest = prefs.getBoolean("prefTtsGamepadTest", getResources().getBoolean(R.bool.prefTtsGamepadTestDefaultValue));
         prefTtsGamepadTestComplete = prefs.getBoolean("prefTtsGamepadTestComplete", getResources().getBoolean(R.bool.prefTtsGamepadTestCompleteDefaultValue));
     }
@@ -2104,31 +2106,31 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             if (myTts != null) {
                 switch (msgNo) {
                     case TTS_MSG_VOLUME_THROTTLE:
-                        if ((prefTtsThrottle) || (prefTtsThrottleSpeed) || (prefTtsThrottleLocoSpeed)) {
+                        if (!prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_NONE)) {
                             if (whichLastVolume != whichThrottle) {
                                 result = true;
                                 whichLastVolume = whichThrottle;
                                 speech = getApplicationContext().getResources().getString(R.string.TtsVolumeThrottle) + " " + (getThrottleIndexFromChar(whichThrottle) + 1);
                             }
-                            if (prefTtsThrottleLocoSpeed) {
+                            if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
                                 speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsLoco) + " " + (getConsistAddressString(whichThrottle));
                             }
-                            if (prefTtsThrottleSpeed) {
+                            if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
                                 speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " " + (getScaleSpeed(whichThrottle) + 1);
                             }
                         }
                         break;
                     case TTS_MSG_GAMEPAD_THROTTLE:
-                        if ((prefTtsThrottle) || (prefTtsThrottleSpeed) || (prefTtsThrottleLocoSpeed)) {
+                        if (!prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_NONE)) {
                             if (whichLastGamepad1 != whichThrottle) {
                                 result = true;
                                 whichLastGamepad1 = whichThrottle;
                                 speech = getApplicationContext().getResources().getString(R.string.TtsGamepadThrottle) + " " + (getThrottleIndexFromChar(whichThrottle) + 1);
                             }
-                            if (prefTtsThrottleLocoSpeed) {
+                            if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
                                 speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsLoco) + " " + (getConsistAddressString(whichThrottle));
                             }
-                            if (prefTtsThrottleSpeed) {
+                            if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
                                 speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " " + (getScaleSpeed(whichThrottle) + 1);
                             }
                         }

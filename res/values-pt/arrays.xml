@@ -143,4 +143,12 @@
         <item>Somente eventos chaves</item>
     </string-array>
 
+    <string-array name="prefTtsThrottleResponseEntries">  <!-- display version -->
+        <item>None</item>
+        <item>Controlador</item>
+        <item>Controlador + Locomotiva</item>
+        <item>Controlador + Velocidade</item>
+        <item>Controlador + Locomotiva + Velocidade</item>
+    </string-array>
+
 </resources>
