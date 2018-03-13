@@ -56,7 +56,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="Light" >
+                    android:text="@string/functionButton00DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -66,7 +66,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="Bell" >
+                    android:text="@string/functionButton01DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -76,7 +76,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="Horn" >
+                    android:text="@string/functionButton02DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -86,7 +86,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="03" >
+                    android:text="@string/functionButton03DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -96,7 +96,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="04" >
+                    android:text="@string/functionButton04DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -106,7 +106,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="05" >
+                    android:text="@string/functionButton05DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -116,7 +116,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="06" >
+                    android:text="@string/functionButton06DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -126,7 +126,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="07" >
+                    android:text="@string/functionButton07DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -136,7 +136,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="08" >
+                    android:text="@string/functionButton08DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -146,7 +146,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="09" >
+                    android:text="@string/functionButton09DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -156,7 +156,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="10" >
+                    android:text="@string/functionButton10DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -166,7 +166,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="11" >
+                    android:text="@string/functionButton11DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -176,7 +176,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="12" >
+                    android:text="@string/functionButton12DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -186,7 +186,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="13" >
+                    android:text="@string/functionButton13DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -196,7 +196,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="14" >
+                    android:text="@string/functionButton14DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -206,7 +206,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="15" >
+                    android:text="@string/functionButton15DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -216,7 +216,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="16" >
+                    android:text="@string/functionButton16DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -226,7 +226,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="17" >
+                    android:text="@string/functionButton17DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -236,7 +236,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="18" >
+                    android:text="@string/functionButton18DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -246,7 +246,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="19" >
+                    android:text="@string/functionButton19DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -256,7 +256,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="20" >
+                    android:text="@string/functionButton20DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -266,7 +266,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="21" >
+                    android:text="@string/functionButton21DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -276,7 +276,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="22" >
+                    android:text="@string/functionButton22DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -286,7 +286,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="23" >
+                    android:text="@string/functionButton23DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -296,7 +296,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="24" >
+                    android:text="@string/functionButton24DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -306,7 +306,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="25" >
+                    android:text="@string/functionButton25DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -316,7 +316,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="26" >
+                    android:text="@string/functionButton26DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -326,7 +326,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="27" >
+                    android:text="@string/functionButton27DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"
@@ -336,7 +336,7 @@
             <TableRow>
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="28" >
+                    android:text="@string/functionButton28DefultValue" >
                 </EditText>
                 <EditText
                     style="@style/edit_func_style"

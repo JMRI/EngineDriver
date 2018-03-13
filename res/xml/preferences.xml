@@ -14,8 +14,8 @@
     </EditTextPreference>
     <ListPreference
         android:defaultValue="@string/prefThrottleOrientationDefaultValue"
-        android:entries="@array/OrientationOptions"
-        android:entryValues="@array/OrientationOptions"
+        android:entries="@array/OrientationEntries"
+        android:entryValues="@array/OrientationEntryValues"
         android:key="ThrottleOrientation"
         android:summary="@string/prefThrottleOrientationSummary"
         android:title="@string/prefThrottleOrientationTitle" />
@@ -23,7 +23,7 @@
     <ListPreference
         android:defaultValue="@string/prefThemeDefaultValue"
         android:entries="@array/prefThemeEntries"
-        android:entryValues="@array/prefThemeOptions"
+        android:entryValues="@array/prefThemeEntryValues"
         android:key="prefTheme"
         android:summary="@string/prefThemeSummary"
         android:title="@string/prefThemeTitle" />
@@ -41,8 +41,8 @@
             android:title="@string/prefPowerButtonBarTitle" />
         <ListPreference
             android:defaultValue="@string/prefDisplayClockDefaultValue"
-            android:entries="@array/DisplayClockOptions"
-            android:entryValues="@array/DisplayClockValues"
+            android:entries="@array/DisplayClockEntries"
+            android:entryValues="@array/DisplayClockEntryValues"
             android:key="ClockDisplayTypePreference"
             android:summary="@string/prefDisplayClockSummary"
             android:title="@string/prefDisplayClockTitle" />
@@ -51,8 +51,8 @@
     <PreferenceCategory android:title="@string/prefThrottlePageTitle" >
         <ListPreference
             android:defaultValue="@string/NumThrottleDefaulValue"
-            android:entries="@array/NumOfThrottlesOptions"
-            android:entryValues="@array/NumOfThrottlesOptions"
+            android:entries="@array/NumOfThrottlesEntries"
+            android:entryValues="@array/NumOfThrottlesEntryValues"
             android:key="NumThrottle"
             android:summary="@string/prefNumOfThrottlesSummary"
             android:title="@string/prefNumOfThrottles" />
@@ -147,8 +147,8 @@
             android:persistent="false">
             <ListPreference
                 android:defaultValue="@string/prefWebViewLocationDefaultValue"
-                android:entries="@array/WebViewLocation"
-                android:entryValues="@array/WebViewLocation"
+                android:entries="@array/WebViewLocationEntries"
+                android:entryValues="@array/WebViewLocationEntryValues"
                 android:key="WebViewLocation"
                 android:summary="@string/prefWebViewLocationSummary"
                 android:title="@string/prefWebViewLocationTitle" />
@@ -185,8 +185,8 @@
             </CheckBoxPreference>
             <ListPreference
                 android:defaultValue="@string/prefSwipeUpOptionDefaultValue"
-                android:entries="@array/prefSwipeUpOptions"
-                android:entryValues="@array/prefSwipeUpOptions"
+                android:entries="@array/prefSwipeUpOptionsEntries"
+                android:entryValues="@array/prefSwipeUpOptionsEntryValues"
                 android:key="SwipeUpOption"
                 android:summary="@string/prefSwipeUpOptionSummary"
                 android:title="@string/prefSwipeUpOptionTitle" />
@@ -207,7 +207,7 @@
             <ListPreference
                 android:defaultValue="@string/prefAccelerometerShakeDefaultValue"
                 android:entries="@array/prefAccelerometerShakeEntries"
-                android:entryValues="@array/prefAccelerometerShakeOptions"
+                android:entryValues="@array/prefAccelerometerShakeEntryValues"
                 android:key="prefAccelerometerShake"
                 android:summary="@string/prefAccelerometerShakeSummary"
                 android:title="@string/prefAccelerometerShakeTitle" />
@@ -278,7 +278,7 @@
             <ListPreference
                 android:defaultValue="@string/prefTtsWhenDefaultValue"
                 android:entries="@array/prefTtsWhenEntries"
-                android:entryValues="@array/prefTtsWhenOptions"
+                android:entryValues="@array/prefTtsWhenEntryValues"
                 android:key="prefTtsWhen"
                 android:summary="@string/prefTtsWhenSummary"
                 android:title="@string/prefTtsWhenTitle" />
@@ -333,7 +333,7 @@
             <ListPreference
                 android:defaultValue="@string/prefGamePadTypeDefaultValue"
                 android:entries="@array/prefGamePadTypeEntries"
-                android:entryValues="@array/prefGamePadTypeOptions"
+                android:entryValues="@array/prefGamePadTypeEntryValues"
                 android:key="prefGamePadType"
                 android:summary="@string/prefGamePadTypeSummary"
                 android:title="@string/prefGamePadTypeTitle" />
@@ -381,71 +381,71 @@
             <!--    Gamepad button preferences   -->
             <ListPreference
                 android:defaultValue="@string/prefGamePadButton1DefaultValue"
-                android:entries="@array/prefGamePadKeyOptions"
-                android:entryValues="@array/prefGamePadKeyOptions"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButton1"
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButton1Title" />
             <ListPreference
                 android:defaultValue="@string/prefGamePadButton3DefaultValue"
-                android:entries="@array/prefGamePadKeyOptions"
-                android:entryValues="@array/prefGamePadKeyOptions"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButton3"
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButton3Title" />
             <ListPreference
                 android:defaultValue="@string/prefGamePadButton2DefaultValue"
-                android:entries="@array/prefGamePadKeyOptions"
-                android:entryValues="@array/prefGamePadKeyOptions"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButton2"
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButton2Title" />
             <ListPreference
                 android:defaultValue="@string/prefGamePadButton4DefaultValue"
-                android:entries="@array/prefGamePadKeyOptions"
-                android:entryValues="@array/prefGamePadKeyOptions"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButton4"
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButton4Title" />
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonStartDefaultValue"
-                android:entries="@array/prefGamePadKeyOptions"
-                android:entryValues="@array/prefGamePadKeyOptions"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonStart"
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButtonStartTitle" />
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonReturnDefaultValue"
-                android:entries="@array/prefGamePadKeyOptions"
-                android:entryValues="@array/prefGamePadKeyOptions"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonReturn"
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButtonReturnTitle" />
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonUpDefaultValue"
-                android:entries="@array/prefGamePadKeyOptions"
-                android:entryValues="@array/prefGamePadKeyOptions"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonUp"
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButtonUpTitle" />
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonRightDefaultValue"
-                android:entries="@array/prefGamePadKeyOptions"
-                android:entryValues="@array/prefGamePadKeyOptions"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonRight"
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButtonRightTitle" />
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonDownDefaultValue"
-                android:entries="@array/prefGamePadKeyOptions"
-                android:entryValues="@array/prefGamePadKeyOptions"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonDown"
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButtonDownTitle" />
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonLeftDefaultValue"
-                android:entries="@array/prefGamePadKeyOptions"
-                android:entryValues="@array/prefGamePadKeyOptions"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonLeft"
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButtonLeftTitle" />
@@ -473,7 +473,7 @@
         <ListPreference
             android:defaultValue="@string/prefSelectedLocoIndicatorDefaultValue"
             android:entries="@array/prefSelectedLocoIndicatorEntries"
-            android:entryValues="@array/prefSelectedLocoIndicatorOptions"
+            android:entryValues="@array/prefSelectedLocoIndicatorEntryValues"
             android:key="prefSelectedLocoIndicator"
             android:summary="@string/prefSelectedLocoIndicatorSummary"
             android:title="@string/prefSelectedLocoIndicatorTitle" />
@@ -483,8 +483,8 @@
     <PreferenceCategory android:title="@string/prefThrottleTitle" >
         <ListPreference
             android:defaultValue="@string/prefDisplaySpeedUnitsDefaultValue"
-            android:entries="@array/DisplaySpeedUnits"
-            android:entryValues="@array/DisplaySpeedUnitValues"
+            android:entries="@array/DisplaySpeedUnitsEntries"
+            android:entryValues="@array/DisplaySpeedUnitEntryValues"
             android:key="DisplaySpeedUnits"
             android:summary="@string/prefDisplaySpeedUnitsSummary"
             android:title="@string/prefDisplaySpeedUnitsTitle" />
@@ -575,29 +575,29 @@
                     android:title="@string/prefEsuMc2ButtonTLTitle"
                     android:summary="@string/prefEsuMc2ButtonTLSummary"
                     android:defaultValue="@string/prefEsuMc2ButtonTLDefaultValue"
-                    android:entries="@array/prefEsuMc2KeyOptions"
-                    android:entryValues="@array/prefEsuMc2KeyOptions" />
+                    android:entries="@array/prefEsuMc2KeyEntries"
+                    android:entryValues="@array/prefEsuMc2KeyEntryValues" />
                 <ListPreference
                     android:key="prefEsuMc2ButtonBL"
                     android:title="@string/prefEsuMc2ButtonBLTitle"
                     android:summary="@string/prefEsuMc2ButtonBLSummary"
                     android:defaultValue="@string/prefEsuMc2ButtonBLDefaultValue"
-                    android:entries="@array/prefEsuMc2KeyOptions"
-                    android:entryValues="@array/prefEsuMc2KeyOptions" />
+                    android:entries="@array/prefEsuMc2KeyEntries"
+                    android:entryValues="@array/prefEsuMc2KeyEntryValues" />
                 <ListPreference
                     android:key="prefEsuMc2ButtonTR"
                     android:title="@string/prefEsuMc2ButtonTRTitle"
                     android:summary="@string/prefEsuMc2ButtonTRSummary"
                     android:defaultValue="@string/prefEsuMc2ButtonTRDefaultValue"
-                    android:entries="@array/prefEsuMc2KeyOptions"
-                    android:entryValues="@array/prefEsuMc2KeyOptions" />
+                    android:entries="@array/prefEsuMc2KeyEntries"
+                    android:entryValues="@array/prefEsuMc2KeyEntryValues" />
                 <ListPreference
                     android:key="prefEsuMc2ButtonBR"
                     android:title="@string/prefEsuMc2ButtonBRTitle"
                     android:summary="@string/prefEsuMc2ButtonBRSummary"
                     android:defaultValue="@string/prefEsuMc2ButtonBRDefaultValue"
-                    android:entries="@array/prefEsuMc2KeyOptions"
-                    android:entryValues="@array/prefEsuMc2KeyOptions" />
+                    android:entries="@array/prefEsuMc2KeyEntries"
+                    android:entryValues="@array/prefEsuMc2KeyEntryValues" />
                 <!-- Seems that ESU MCII buttons don't always register holds
                     Leaving this in anyway -->
                 <EditTextPreference
@@ -649,8 +649,8 @@
         </CheckBoxPreference>
         <ListPreference
             android:defaultValue="@string/prefDefaultAddressLengthDefaultValue"
-            android:entries="@array/address_size_defaults"
-            android:entryValues="@array/address_size_defaults"
+            android:entries="@array/address_size_defaultsEntries"
+            android:entryValues="@array/address_size_defaultsEntryValues"
             android:key="default_address_length"
             android:summary="@string/prefDefaultAddressLengthSummary"
             android:title="@string/prefDefaultAddressLengthTitle" />
@@ -707,8 +707,8 @@
     <PreferenceCategory android:title="@string/prefWebTitle" >
         <ListPreference
             android:defaultValue="@string/prefWebOrientationDefaultValue"
-            android:entries="@array/OrientationOptions"
-            android:entryValues="@array/OrientationOptions"
+            android:entries="@array/OrientationEntries"
+            android:entryValues="@array/OrientationEntryValues"
             android:key="WebOrientation"
             android:summary="@string/prefWebOrientationSummary"
             android:title="@string/prefWebOrientationTitle" />
@@ -724,8 +724,8 @@
     <PreferenceCategory android:title="@string/prefTurnoutsTitle" >
         <ListPreference
             android:defaultValue="@string/prefHardwareSystemDefaultValue"
-            android:entries="@array/hardware_system_names"
-            android:entryValues="@array/hardware_systems"
+            android:entries="@array/hardware_system_namesEntries"
+            android:entryValues="@array/hardware_system_namesEntryValues"
             android:key="hardware_system"
             android:summary="@string/prefHardwareSystemSummary"
             android:title="@string/prefHardwareSystemTitle" />
@@ -773,8 +773,8 @@
             android:persistent="false">
             <ListPreference
                 android:defaultValue="@string/prefImportExportDefaultValue"
-                android:entries="@array/prefImportExportOptions"
-                android:entryValues="@array/prefImportExportOptions"
+                android:entries="@array/prefImportExportEntries"
+                android:entryValues="@array/prefImportExportEntryValues"
                 android:key="prefImportExport"
                 android:summary="@string/prefImportExportSummary"
                 android:title="@string/prefImportExportTitle" />
@@ -786,15 +786,15 @@
             </CheckBoxPreference>
             <ListPreference
                 android:defaultValue="@string/prefAutoImportExportDefaultValue"
-                android:entries="@array/prefAutoImportExportOptionsDisplay"
-                android:entryValues="@array/prefAutoImportExportOptions"
+                android:entries="@array/prefAutoImportExportEntries"
+                android:entryValues="@array/prefAutoImportExportEntryValues"
                 android:key="prefAutoImportExport"
                 android:summary="@string/prefAutoImportExportSummary"
                 android:title="@string/prefAutoImportExportTitle" />
             <ListPreference
                 android:defaultValue="@string/prefHostImportExportDefaultValue"
-                android:entries="@array/prefHostImportExportOptions"
-                android:entryValues="@array/prefHostImportExportOptions"
+                android:entries="@array/prefHostImportExportEntries"
+                android:entryValues="@array/prefHostImportExportEntryValues"
                 android:key="prefHostImportExport"
                 android:summary="@string/prefHostImportExportSummary"
                 android:title="@string/prefHostImportExportTitle" />

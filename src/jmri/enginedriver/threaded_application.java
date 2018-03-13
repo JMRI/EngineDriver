@@ -1904,9 +1904,9 @@ public class threaded_application extends Application {
                 }
                 settings_reader.close();
             } else {          //hard-code some buttons and default the rest
-                function_labels_default.put(0, "Light");
-                function_labels_default.put(1, "Bell");
-                function_labels_default.put(2, "Horn");
+                function_labels_default.put(0, getApplicationContext().getResources().getString(R.string.functionButton00DefultValue));
+                function_labels_default.put(1, getApplicationContext().getResources().getString(R.string.functionButton01DefultValue));
+                function_labels_default.put(2, getApplicationContext().getResources().getString(R.string.functionButton02DefultValue));
                 for (int k = 3; k <= 28; k++) {
                     function_labels_default.put(k, Integer.toString(k));        //String.format("%d",k));
                 }
