@@ -460,12 +460,9 @@
     <string name="prefTtsWhenTitle">Resposta Vocal</string>
     <string name="prefTtsWhenSummary">Quando falar  eventos chaves e ações usando Text to Speech (TTS).</string>
 
-    <string name="prefTtsThrottleTitle">Ao mudar de controlador</string>
-    <string name="prefTtsThrottleSummary">Quando é selecionado outro controlador.</string>
-    <string name="prefTtsThrottleSpeedTitle">+ velocidade</string>
-    <string name="prefTtsThrottleSpeedSummary">Quando é selecionado um outro controlador, fala também a velocidade. Prevalece sobre a opção do controlador.</string>
-    <string name="prefTtsThrottleLocoSpeedTitle">+ locomotiva</string>
-    <string name="prefTtsThrottleLocoSpeedSummary">Quando é selecionado um controlador diferente, fala também o número da locomotiva. Prevalece sobre a opção do controlador.</string>
+    <string name="prefTtsThrottleResponseTitle">Ao mudar de controlador</string>
+    <string name="prefTtsThrottleResponseSummary">Quando é selecionado outro controlador.</string>
+
     <string name="prefTtsGamepadTestTitle">Ao testar o Gamepad</string>
     <string name="prefTtsGamepadTestSummary">Quando a página de teste do gamepad é ativada.</string>
     <string name="prefTtsGamepadTestCompleteTitle">Ao completar o teste do Gamepad</string>
@@ -479,6 +476,7 @@
     <string name="TtsGamepadTestSkipped">Teste pulado</string>
     <string name="TtsGamepadTestFail">Teste cancelado</string>
     <string name="TtsGamepadTestReset">Reset Gamepad</string>
+<!--
     <string name="TTS_Screen_Dimmed">Brilho reduzido, deslizar para cima para restabelecer</string>
     <string name="TTS_Screen_Locked">Bloqueado, deslizar para restabelecer</string>
     <string name="TTS_Screen_Unlocked">Desbloqueado</string>
@@ -491,6 +489,7 @@
     <string name="TTS_EStop">Parada de Emergência</string>
     <string name="TTS_Dir_Change_While_Moving_Disabled">Direção não mudada</string>
     <string name="TTS_Function">Função</string>
+-->
     <string name="toastTtsFailed">Sinto muito! Text to Speech falhou&#8230;</string>
 
     <string name="functionButtonLookForWhistle">APITO</string>

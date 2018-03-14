@@ -115,6 +115,7 @@
         <item>Tema Padrão</item>
         <item>Tema Alto Contraste</item>
         <item>Tema Bordas de Alto Contraste</item>
+        <item>Tema Escuro</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Nada (Usar somente \'v\',\'1\')</item>
@@ -141,6 +142,14 @@
     <string-array name="prefTtsWhenEntries">
         <item>Nada</item>
         <item>Somente eventos chaves</item>
+    </string-array>
+
+    <string-array name="prefTtsThrottleResponseEntries">  <!-- display version -->
+        <item>None</item>
+        <item>Controlador</item>
+        <item>Controlador + Locomotiva</item>
+        <item>Controlador + Velocidade</item>
+        <item>Controlador + Locomotiva + Velocidade</item>
     </string-array>
 
 </resources>

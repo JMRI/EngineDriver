@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle"  >
+            <stroke android:width="@dimen/buttonStopDisabledStroke_ultra" android:color="@color/buttonStopDisabledStroke_ultra" />
+            <solid android:color="@color/buttonStopDisabledFill_ultra" />
+        </shape>
+    </item>
+
+    <item android:state_pressed="true" android:state_enabled="true" android:drawable="@drawable/button_stop_layers_selected_ultra">
+    </item>
+
+    <item >
+        <shape android:shape="rectangle"  >
+            <stroke android:width="@dimen/buttonStroke_ultra" android:color="@color/buttonStopStroke_ultra" />
+            <solid android:color="@color/buttonStopFill_ultra" />
+        </shape>
+    </item>
+</selector>

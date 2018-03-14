@@ -619,11 +619,13 @@
         <item>Default</item>
         <item>Black</item>
         <item>Outline</item>
+        <item>Ultra</item>
     </string-array>
     <string-array name="prefThemeEntries">  <!-- display version -->
         <item>Default Theme</item>
         <item>High Contrast Theme</item>
         <item>High Contrast Outline Theme</item>
+        <item>Dark Theme</item>
     </string-array>
 
     <string-array name="prefSelectedLocoIndicatorEntryValues">
@@ -661,6 +663,22 @@
     <string-array name="prefTtsWhenEntries">  <!-- display version -->
         <item>None</item>
         <item>Key events only</item>
+    </string-array>
+
+    <string-array name="prefTtsThrottleResponseEntryValues">
+        <item>None</item>
+        <item>Throttle</item>
+        <item>Loco</item>
+        <item>Speed</item>
+        <item>LocoSpeed</item>
+    </string-array>
+
+    <string-array name="prefTtsThrottleResponseEntries">  <!-- display version -->
+        <item>None</item>
+        <item>Throttle</item>
+        <item>Throttle + Loco</item>
+        <item>Throttle + Speed</item>
+        <item>Throttle + Loco + Speed</item>
     </string-array>
 
 </resources>

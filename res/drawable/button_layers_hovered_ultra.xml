@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle"  >
+            <stroke android:width="@dimen/buttonSelectedStroke_ultra" android:color="@color/buttonStroke_ultra" />
+            <solid android:color="@color/buttonSelectedFill_ultra"/>
+        </shape>
+    </item>
+
+    <!-- inside border 2 -->
+    <item
+        android:top="@dimen/buttonActivated2InsideStrokePadding_ultra" android:left="@dimen/buttonActivated2InsideStrokePadding_ultra" android:right="@dimen/buttonActivated2InsideStrokePadding_ultra" android:bottom="@dimen/buttonActivated2InsideStrokePadding_ultra">
+        <shape android:shape="rectangle"  >
+            <stroke android:width="@dimen/buttonSelectedInsideStroke_ultra" android:color="@color/buttonActivatedHoveredInside2Stroke_ultra" />
+            <solid android:color="@color/transparent"/>
+        </shape>
+    </item>
+
+</layer-list>
