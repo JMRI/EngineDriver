@@ -462,7 +462,7 @@
     <string name="prefTtsWhenTitle">Risposta Vocale</string>
     <string name="prefTtsWhenSummary">Quando annunciare eventi chiave e azioni usando Text to Speech (TTS).</string>
 
-    <string name="prefTtsThrottleResponeseTitle">Al cambio di controllore</string>
+    <string name="prefTtsThrottleResponseTitle">Al cambio di controllore</string>
     <string name="prefTtsThrottleResponseSummary">Quando é selezionato un altro controllore.</string>
 
     <string name="prefTtsGamepadTestTitle">Testando il Gamepad</string>

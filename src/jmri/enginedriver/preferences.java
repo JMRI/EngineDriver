@@ -138,9 +138,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         String currentValue = sharedPreferences.getString("prefTtsWhen", "");
         if (currentValue.equals("None")) {
-            enableDisablePreference("prefTtsThrottle",false);
-            enableDisablePreference("prefTtsThrottleSpeed",false);
-            enableDisablePreference("prefTtsThrottleLocoSpeed", false);
+            enableDisablePreference("prefTtsThrottleResponse",false);
             enableDisablePreference("prefTtsGamepadTest", false);
             enableDisablePreference("prefTtsGamepadTestComplete",false);
         }
