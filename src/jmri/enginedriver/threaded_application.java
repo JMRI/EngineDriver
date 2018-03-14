@@ -2530,6 +2530,8 @@ public class threaded_application extends Application {
             activity.setTheme(R.style.app_theme_black);
         } else if (prefTheme.equals("Outline")) {
             activity.setTheme(R.style.app_theme_outline);
+        } else if (prefTheme.equals("Ultra")) {
+            activity.setTheme(R.style.app_theme_ultra);
         }
     }
 

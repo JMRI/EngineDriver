@@ -43,4 +43,29 @@
     <dimen name="buttonStopStroke_outline">1dip</dimen>
     <dimen name="buttonStopCornerRadius_outline">5dip</dimen>
 
+    <!-- Ultra Black theme -->
+
+    <dimen name="buttonDisabledStroke_ultra">1dip</dimen>
+    <dimen name="buttonSelectedStroke_ultra">1dip</dimen>
+    <dimen name="buttonSelectedInsideStroke_ultra">1dip</dimen>
+    <dimen name="buttonSelectedInsideStrokePadding_ultra">2dip</dimen>
+    <dimen name="buttonActivatedInsideStrokePadding_ultra">2dip</dimen>
+    <dimen name="buttonActivated2InsideStrokePadding_ultra">3dip</dimen>
+    <dimen name="buttonStroke_ultra">1dip</dimen>
+    <dimen name="buttonCornerRadius_ultra">0dip</dimen>
+
+    <dimen name="buttonFnDisabledStroke_ultra">1dip</dimen>
+    <dimen name="buttonFnSelectedStroke_ultra">1dip</dimen>
+    <dimen name="buttonFnSelectedInsideStroke_ultra">1dip</dimen>
+    <dimen name="buttonFnSelectedInsideStrokePadding_ultra">2dip</dimen>
+    <dimen name="buttonFnStroke_ultra">1dip</dimen>
+    <dimen name="buttonFnCornerRadius_ultra">0dip</dimen>
+
+    <dimen name="buttonStopDisabledStroke_ultra">1dip</dimen>
+    <dimen name="buttonStopSelectedStroke_ultra">1dip</dimen>
+    <dimen name="buttonStopSelectedInsideStroke_ultra">1dip</dimen>
+    <dimen name="buttonStopSelectedInsideStrokePadding_ultra">2dip</dimen>
+    <dimen name="buttonStopStroke_ultra">1dip</dimen>
+    <dimen name="buttonStopCornerRadius_ultra">0dip</dimen>
+
 </resources>

@@ -363,4 +363,119 @@
     <item name="android:textColor">@color/solidWhite</item>
   </style>
 
+  <!-- Ultra Theme. Uses the base colours from the High Contrast Theme.  Mostly the buttons are different -->
+
+  <style name="small_heading_style_ultra" parent="@android:style/Widget.TextView">
+    <item name="android:textColor">#a6a6a6</item>
+    <item name="android:background">#FF262626</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:shadowColor">#00000000</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">0</item>
+  </style>
+
+  <style name="large_button_style_ultra" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_outline</item>
+    <item name="android:textSize">24sp</item>
+    <item name="android:layout_height">60dp</item>
+    <item name="android:padding">2dp</item>
+    <item name="android:layout_width">0dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_ultra</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="normal_button_style_ultra" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_ultra</item>
+    <item name="android:textSize">18sp</item>
+    <item name="android:padding">2dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_ultra</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="stop_button_style_ultra" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_stop_btn_ultra</item>
+    <item name="android:textSize">24sp</item>
+    <item name="android:padding">2dp</item>
+
+    <item name="android:background">@drawable/stop_button_states_ultra</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="small_button_style_ultra" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_ultra</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:padding">2dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_ultra</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="fn_button_style_ultra" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/fn_btn_text_states_ultra</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:singleLine">false</item>
+    <item name="android:maxLines">2</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:layout_gravity"></item>  <!-- this is deliberately empty.-->
+    <item name="android:layout_width">60dp</item>
+    <item name="android:layout_height">48dp</item>
+    <item name="android:padding">2dp</item>
+
+    <item name="android:background">@drawable/fn_button_states_ultra</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="list_button_style_ultra" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_ultra</item>
+    <item name="android:textSize">22sp</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:padding">2dp</item>
+    <item name="android:layout_width">0dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_ultra</item>
+    <item name="android:layout_marginTop">4dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
 </resources>

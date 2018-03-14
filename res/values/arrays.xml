@@ -619,11 +619,13 @@
         <item>Default</item>
         <item>Black</item>
         <item>Outline</item>
+        <item>Ultra</item>
     </string-array>
     <string-array name="prefThemeEntries">  <!-- display version -->
         <item>Default Theme</item>
         <item>High Contrast Theme</item>
         <item>High Contrast Outline Theme</item>
+        <item>Dark Theme</item>
     </string-array>
 
     <string-array name="prefSelectedLocoIndicatorEntryValues">

@@ -476,6 +476,7 @@
     <string name="TtsGamepadTestSkipped">Teste pulado</string>
     <string name="TtsGamepadTestFail">Teste cancelado</string>
     <string name="TtsGamepadTestReset">Reset Gamepad</string>
+<!--
     <string name="TTS_Screen_Dimmed">Brilho reduzido, deslizar para cima para restabelecer</string>
     <string name="TTS_Screen_Locked">Bloqueado, deslizar para restabelecer</string>
     <string name="TTS_Screen_Unlocked">Desbloqueado</string>
@@ -488,6 +489,7 @@
     <string name="TTS_EStop">Parada de Emergência</string>
     <string name="TTS_Dir_Change_While_Moving_Disabled">Direção não mudada</string>
     <string name="TTS_Function">Função</string>
+-->
     <string name="toastTtsFailed">Sinto muito! Text to Speech falhou&#8230;</string>
 
     <string name="functionButtonLookForWhistle">APITO</string>
