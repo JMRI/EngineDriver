@@ -74,25 +74,23 @@
     <color name="buttonFnSelectedInsideStroke_outline">#ff00b2e1</color>
 
     <!-- Ultra Theme -->
-    <color name="buttonFill_ultra">#FF262626</color>
-    <color name="buttonSelectedFill_ultra">#FF262626</color>
-    <color name="buttonStopFill_ultra">#FF262626</color>
-<!--    <color name="buttonStopStroke_ultra">#ba5054</color> -->
-    <color name="buttonStopStroke_ultra">#FF262626</color>
-    <color name="buttonStopDisabledStroke_ultra">#FF262626</color>
+    <color name="buttonStopFill_ultra">#FF2d2d2d</color>
+    <color name="buttonStopStroke_ultra">#FF2d2d2d</color>
+    <color name="buttonStopDisabledStroke_ultra">#FF2d2d2d</color>
     <color name="buttonStopDisabledFill_ultra">#00000000</color>
-    <color name="buttonStopSelectedFill_ultra">#FF262626</color>
+    <color name="buttonStopSelectedFill_ultra">#FF2d2d2d</color>
     <color name="buttonStopSelectedText_ultra">#acc20000</color>
-<!--    <color name="buttonStopSelectedStroke_ultra">#7fc20000</color> -->
-    <color name="buttonStopSelectedStroke_ultra">#FF262626</color>
+    <color name="buttonStopSelectedStroke_ultra">#FF2d2d2d</color>
     <color name="buttonStopSelectedInsideStroke_ultra">#46c20000</color>
+
+    <color name="buttonFill_ultra">#FF2d2d2d</color>
     <color name="buttonText_ultra">#d9d9d9</color>
-    <color name="buttonStroke_ultra">#FF262626</color>
+    <color name="buttonStroke_ultra">#FF2d2d2d</color>
     <color name="buttonDisabledFill_ultra">#00000000</color>
-    <color name="buttonDisabledStroke_ultra">#FF262626</color>
+    <color name="buttonDisabledStroke_ultra">#FF2d2d2d</color>
     <color name="buttonSelectedText_ultra">#ff00b2e1</color>
-<!--    <color name="buttonSelectedStroke_ultra">#89008cb1</color> -->
-    <color name="buttonSelectedStroke_ultra">#FF262626</color>
+    <color name="buttonSelectedFill_ultra">#FF2d2d2d</color>
+    <color name="buttonSelectedStroke_ultra">#FF2d2d2d</color>
     <color name="buttonSelectedInsideStroke_ultra">#7f0074b3</color>
     <color name="buttonActivatedHoveredInsideStroke_ultra">#7fffa000</color>
     <color name="buttonActivatedHoveredInside2Stroke_ultra">#7fffea00</color>
@@ -103,7 +101,6 @@
     <color name="buttonFnDisabledStroke_ultra">#FF262626</color>
     <color name="buttonFnSelectedText_ultra">#ff00b2e1</color>
     <color name="buttonFnSelectedFill_ultra">#FF262626</color>
-<!--    <color name="buttonFnSelectedStroke_ultra">#89008cb1</color> -->
     <color name="buttonFnSelectedStroke_ultra">#FF262626</color>
     <color name="buttonFnSelectedInsideStroke_ultra">#7f0074b3</color>
 
