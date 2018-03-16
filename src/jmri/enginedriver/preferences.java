@@ -317,9 +317,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 if (currentValue.equals("None")) {
                     enable = false;
                 }
-                enableDisablePreference("prefTtsThrottle",enable);
-                enableDisablePreference("prefTtsThrottleSpeed",enable);
-                enableDisablePreference("prefTtsThrottleLocoSpeed", enable);
                 enableDisablePreference("prefTtsGamepadTest", enable);
                 enableDisablePreference("prefTtsGamepadTestComplete",enable);
                 break;
