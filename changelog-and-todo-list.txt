@@ -7,6 +7,10 @@
  * multiple options for shaking the phone to perform an action
  * separate preferences for Volume key and Gamepad speed increments
  * fix issue with ESU Mobile Control II knob position updating speed even when screen locked
+ * option to speak some gamepad related events
+ * option to skip the gamepad test with just one 'decrease speed' button press
+ * Italian and Portugese translations from Roberto Falorni added
+ * New Dark theme option
 **Version 2.17
  * Add support for ESU Mobile Control II throttle
  * Add toast messages when ESU Mobile Control II in stop mode
@@ -371,6 +375,7 @@
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
+ *   TODO: add View Log to this menu
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: stay on Connect screen until we receive an actual response from server
@@ -385,6 +390,7 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: add "FlashLight" button
  *   TODO: eStop actually sends Stop, not eStop
  *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
  *   TODO: clear loco buttons on reconnect attempt until actual MT+ received

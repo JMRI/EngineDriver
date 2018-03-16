@@ -164,7 +164,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     @SuppressWarnings("deprecation")
     @Override
     protected void onPause() {
-        Log.d("Engine_Driver", "preferences.onPause() called");
+        //Log.d("Engine_Driver", "preferences.onPause() called");
         super.onPause();
 
         // Unregister the listener            
@@ -176,7 +176,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     @Override
     protected void onDestroy() {
-        Log.d("Engine_Driver", "preferences.onDestroy() called");
+        //Log.d("Engine_Driver", "preferences.onDestroy() called");
         super.onDestroy();
     }
 
@@ -349,8 +349,13 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     private void enableDisablePreference(String key, boolean enable) {
-        getPreferenceScreen().findPreference(key).setSelectable(enable);
-        getPreferenceScreen().findPreference(key).setEnabled(enable);
+        Preference p = getPreferenceScreen().findPreference(key);
+        if (p != null) {
+            p.setSelectable(enable);
+            p.setEnabled(enable);
+        } else {
+            Log.w("Engine_Driver", "Preference key '" + key + "' not found, not set to " + enable);
+        }
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -404,7 +409,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         prefEdit.clear();
         prefEdit.commit();
         reload();
-        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesResetSucceeded), Toast.LENGTH_LONG).show();
+        String m = getApplicationContext().getResources().getString(R.string.toastPreferencesResetSucceeded);
+        Toast.makeText(getApplicationContext(), m, Toast.LENGTH_LONG).show();
+        Log.d("Engine_Driver", m);
     }
 
     private void fixAndReloadImportExportPreference(SharedPreferences sharedPreferences){
