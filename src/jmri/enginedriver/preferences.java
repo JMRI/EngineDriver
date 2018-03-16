@@ -349,8 +349,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     private void enableDisablePreference(String key, boolean enable) {
-        getPreferenceScreen().findPreference(key).setSelectable(enable);
-        getPreferenceScreen().findPreference(key).setEnabled(enable);
+        Preference p = getPreferenceScreen().findPreference(key);
+        if (p != null) {
+            p.setSelectable(enable);
+            p.setEnabled(enable);
+        }
     }
 
     @SuppressWarnings({ "unchecked" })
