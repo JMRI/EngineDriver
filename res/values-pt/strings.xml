@@ -168,8 +168,6 @@
     <string name="prefGamePadFeedbackVolumeTitle">Volume do Click % do Botão do Gamepad</string>
     <string name="prefGamePadFeedbackVolumeSummary">Definir a porcentagem de volume dos clicks dos botões do Gamepad.</string>
 
-    <string name="prefGamePadMultipleDevicesTitle">Suporte Gamepads Múltiplos</string>
-    <string name="prefGamePadMultipleDevicesSummary">Controlar Controladores separados para cada Gamepad.\nNecessita de Android Jelly Bean ou sucessivo.</string>
     <string name="prefGamePadSpeedButtonsRepeatTitle">Velocidade  de repetição dos botões de velocidade</string>
     <string name="prefGamePadSpeedButtonsRepeatSummary">Atraso entre repetições nos botões de velocidade do Gamepad. Menor é mais rápido.</string>
 

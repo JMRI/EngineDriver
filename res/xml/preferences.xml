@@ -346,14 +346,6 @@
                 android:numeric="integer"
                 android:summary="@string/prefGamePadFeedbackVolumeSummary"
                 android:title="@string/prefGamePadFeedbackVolumeTitle" />
-            <CheckBoxPreference
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:defaultValue="@bool/prefGamePadMultipleDevicesDefaultValue"
-                android:key="prefGamePadMultipleDevices"
-                android:summary="@string/prefGamePadMultipleDevicesSummary"
-                android:title="@string/prefGamePadMultipleDevicesTitle">
-            </CheckBoxPreference>
             <EditTextPreference
                 android:defaultValue="@string/prefGamePadSpeedButtonsRepeatDefaultValue"
                 android:dialogTitle="@string/prefGamePadSpeedButtonsRepeatTitle"

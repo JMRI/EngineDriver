@@ -178,8 +178,6 @@
     <string name="prefGamePadFeedbackVolumeTitle">Gamepad Button Click Volume %</string>
     <string name="prefGamePadFeedbackVolumeSummary">Set the volume percent for gamepad button clicks.</string>
     <string name="prefGamePadFeedbackVolumeDefaultValue">100</string>
-    <string name="prefGamePadMultipleDevicesTitle">Support Multiple Gamepads</string>
-    <string name="prefGamePadMultipleDevicesSummary">Control separate throttles with each gamepad. \nRequires Android Jelly Bean or later.</string>
 
     <string name="prefGamePadSpeedButtonsRepeatTitle">Speed button repeat delay</string>
     <string name="prefGamePadSpeedButtonsRepeatSummary">How long between repeats on Gamepad speed buttons.  Smaller is faster.</string>
