@@ -60,9 +60,9 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     public static final int LIGHT_OFF = 0;
     public static final int LIGHT_FOLLOW = 1;
     public static final int LIGHT_UNKNOWN = 2;
-    public static final String LIGHT_TEXT_OFF = "Off";
-    public static final String LIGHT_TEXT_FOLLOW = "Follow Fn Btn";
-    public static final String LIGHT_TEXT_UNKNOWN = "Unknown";
+    public static String LIGHT_TEXT_OFF = "Off";
+    public static String LIGHT_TEXT_FOLLOW = "Follow Fn Btn";
+    public static String LIGHT_TEXT_UNKNOWN = "Unknown";
 
     static public final int RESULT_CON_LIGHTS_EDIT = RESULT_FIRST_USER;
 
@@ -188,6 +188,10 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         if (extras != null) {
             whichThrottle = extras.getChar("whichThrottle");
         }
+
+        LIGHT_TEXT_OFF = getApplicationContext().getResources().getString(R.string.lightsTextOff);
+        LIGHT_TEXT_FOLLOW = getApplicationContext().getResources().getString(R.string.lightsTextFollow);
+        LIGHT_TEXT_UNKNOWN = getApplicationContext().getResources().getString(R.string.lightsTextUnknown);
 
         //consist = (whichThrottle == 'T') ? mainapp.consistT : mainapp.consistS;
         if (whichThrottle == 'T') {

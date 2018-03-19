@@ -1873,7 +1873,7 @@ public class threaded_application extends Application {
         //use worker thread to initialize default function labels from file so UI can continue
         new Thread(new Runnable() {
             public void run() {
-                set_default_function_labels();
+                set_default_function_labels(false);
             }
         }, "DefaultFunctionLabels").start();
         CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
@@ -1889,7 +1889,12 @@ public class threaded_application extends Application {
 
 
     //init default function labels from the settings files or set to default
-    private void set_default_function_labels() {
+    public void set_default_function_labels(boolean getAll) {
+        int numberOfDefaultFunctionLabels = 28;
+        if (!getAll) {
+            numberOfDefaultFunctionLabels = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabels", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsDefaultValue)))-1;
+        }
+
         function_labels_default = new LinkedHashMap<>();
         try {
             File sdcard_path = Environment.getExternalStorageDirectory();
@@ -1897,18 +1902,24 @@ public class threaded_application extends Application {
             if (settings_file.exists()) {  //if file found, use it for settings arrays
                 BufferedReader settings_reader = new BufferedReader(new FileReader(settings_file));
                 //read settings into local arrays
+                int i=0;
                 while (settings_reader.ready()) {
                     String line = settings_reader.readLine();
-                    String temp[] = line.split(":");
-                    function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
+                    if (i<=numberOfDefaultFunctionLabels) {
+                        String temp[] = line.split(":");
+                        function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
+                    }
+                    i++;
                 }
                 settings_reader.close();
             } else {          //hard-code some buttons and default the rest
-                function_labels_default.put(0, getApplicationContext().getResources().getString(R.string.functionButton00DefultValue));
-                function_labels_default.put(1, getApplicationContext().getResources().getString(R.string.functionButton01DefultValue));
-                function_labels_default.put(2, getApplicationContext().getResources().getString(R.string.functionButton02DefultValue));
-                for (int k = 3; k <= 28; k++) {
-                    function_labels_default.put(k, Integer.toString(k));        //String.format("%d",k));
+                if (numberOfDefaultFunctionLabels>=0) function_labels_default.put(0, getApplicationContext().getResources().getString(R.string.functionButton00DefultValue));
+                if (numberOfDefaultFunctionLabels>=1) function_labels_default.put(1, getApplicationContext().getResources().getString(R.string.functionButton01DefultValue));
+                if (numberOfDefaultFunctionLabels>=2) function_labels_default.put(2, getApplicationContext().getResources().getString(R.string.functionButton02DefultValue));
+                if (numberOfDefaultFunctionLabels>=3) {
+                    for (int k = 3; k <= numberOfDefaultFunctionLabels; k++) {
+                        function_labels_default.put(k, Integer.toString(k));        //String.format("%d",k));
+                    }
                 }
             }
         } catch (IOException except) {

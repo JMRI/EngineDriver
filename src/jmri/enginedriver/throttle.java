@@ -387,6 +387,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private boolean prefThrottleViewImmersiveMode = false;
     private boolean prefAlwaysUseDefaultFunctionLabels = false;
+    private int prefNumberOfDefaultFunctionLabels = 28;
     private boolean prefDecreaseLocoNumberHeight = false;
     private boolean pref_increase_slider_height_preference = false;
     private boolean prefShowAddressInsteadOfName = false;
@@ -1166,6 +1167,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         // Ignore the labels for the loco in the Roster and use the defaults... if requested in preferences
         prefAlwaysUseDefaultFunctionLabels = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
+        prefNumberOfDefaultFunctionLabels = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabels", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsDefaultValue)));
 
         prefAccelerometerShake = prefs.getString("prefAccelerometerShake", getApplicationContext().getResources().getString(R.string.prefAccelerometerShakeDefaultValue));
 

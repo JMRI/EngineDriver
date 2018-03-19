@@ -115,6 +115,11 @@
     <string name="exit_title">Sair</string>
     <string name="steal_text">Apropriar-se do endereço %1$s?</string>
     <string name="steal_title">Apropriar-se </string>
+
+    <string name="lightsTextOff">Spento</string>
+    <string name="lightsTextFollow">Follow Fn Btn</string>
+    <string name="lightsTextUnknown">Sconosciuto</string>
+
     <string name="prefTitle">Preferências</string>
     <string name="prefSummary">Preferências para Engine Driver</string>
     <string name="preferences">Preferências</string>

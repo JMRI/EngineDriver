@@ -320,6 +320,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 enableDisablePreference("prefTtsGamepadTest", enable);
                 enableDisablePreference("prefTtsGamepadTestComplete",enable);
                 break;
+            case "prefNumberOfDefaultFunctionLabels":
+                // limit check new value
+                limitIntPrefValue(sharedPreferences, key, 0, 28, "28");
+                mainapp.set_default_function_labels(false);
+                break;
 
         }
     }
