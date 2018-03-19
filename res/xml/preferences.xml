@@ -454,6 +454,14 @@
             android:summary="@string/prefSelectedLocoIndicatorSummary"
             android:title="@string/prefSelectedLocoIndicatorTitle" />
 
+        <EditTextPreference
+            android:defaultValue="@string/prefNumberOfDefaultFunctionLabelsDefaultValue"
+            android:dialogTitle="@string/prefNumberOfDefaultFunctionLabelsTitle"
+            android:key="prefNumberOfDefaultFunctionLabels"
+            android:maxLength="2"
+            android:summary="@string/prefNumberOfDefaultFunctionLabelsSummary"
+            android:title="@string/prefNumberOfDefaultFunctionLabelsTitle" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/prefThrottleTitle" >

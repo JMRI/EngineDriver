@@ -29,6 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/copy_function_labels" />
+
+        <Button
+            android:id="@+id/fb_reset_function_labels"
+            style="?attr/ed_small_button_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fbResetFunctionLabels" />
+
     </LinearLayout>
 
     <LinearLayout

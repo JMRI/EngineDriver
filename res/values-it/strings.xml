@@ -116,6 +116,11 @@
     <string name="exit_title">Uscire</string>
     <string name="steal_text">Appropriarsi dell\'indirizzo %1$s?</string>
     <string name="steal_title">Appropriarsi</string>
+
+    <string name="lightsTextOff">Desligado</string>
+    <string name="lightsTextFollow">Follow Fn Btn</string>
+    <string name="lightsTextUnknown">Desconhecido</string>
+
     <string name="prefTitle">Preferenze</string>
     <string name="prefSummary">Preferenze per Engine Driver</string>
     <string name="preferences">Preferenze</string>

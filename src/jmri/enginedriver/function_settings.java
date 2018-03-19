@@ -77,6 +77,7 @@ public class function_settings extends Activity {
             initSettings();
             settingsCurrent = true;
         }
+        mainapp.set_default_function_labels(true);
         move_settings_to_view();            //copy settings array to view
 
         // suppress popup keyboard until EditText is touched
@@ -91,6 +92,11 @@ public class function_settings extends Activity {
             b.setOnClickListener(click_listener);
             b.setEnabled(true);
         }
+
+        Button bReset = (Button) findViewById(R.id.fb_reset_function_labels);
+        reset_button_listener reset_click_listener = new reset_button_listener();
+        bReset.setOnClickListener(reset_click_listener);
+        bReset.setEnabled(true);
 
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             //warn user that saving Default Function Settings requires SD Card
@@ -130,6 +136,8 @@ public class function_settings extends Activity {
 
     @Override
     public void onDestroy() {
+        mainapp.set_default_function_labels(false); // reload the preference in cases the display number is less than the total number
+
         Log.d("Engine_Driver", "function_settings.onDestroy() called");
         if (!orientationChange) {
             aLbl.clear();
@@ -162,6 +170,8 @@ public class function_settings extends Activity {
     //function_labels_default was loaded from settings file by TA
     //(and updated by saveSettings() when required) so just copy it
     void initSettings() {
+        mainapp.set_default_function_labels(true);
+
         aLbl.clear();
         aFnc.clear();
         //read settings into local arrays
@@ -267,6 +277,35 @@ public class function_settings extends Activity {
     public class button_listener implements View.OnClickListener {
         public void onClick(View v) {
             move_roster_to_settings();
+            move_settings_to_view();
+        }
+    }
+
+    public class reset_button_listener implements View.OnClickListener {
+        public void onClick(View v) {
+            SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+            String label = "";
+            int func = 0;
+
+            for (int i = 0; i <= 28; i++) {
+                if (i==0) label = getResources().getString(R.string.functionButton00DefultValue);
+                if (i==1) label = getResources().getString(R.string.functionButton01DefultValue);
+                if (i==2) label = getResources().getString(R.string.functionButton02DefultValue);
+                if(i>=3) {
+                    label = ""+i;
+                }
+                func = i;
+                if (aFnc.size() <= i) {
+                    aLbl.add(label);
+                    aFnc.add(func);
+                    settingsCurrent = false;
+                } else {
+                    aLbl.set(i, label);
+                    aFnc.set(i, func);
+                    settingsCurrent = false;
+                }
+            }
+
             move_settings_to_view();
         }
     }
