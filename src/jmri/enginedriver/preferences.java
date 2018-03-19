@@ -652,29 +652,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         Preference thisPref;
 
-        thisPref = getPreferenceScreen().findPreference("prefGamePadFeedbackVolume");
-        thisPref.setSelectable(thisEnabled);
-        thisPref.setEnabled(thisEnabled);
+        enableDisablePreference("prefGamePadFeedbackVolume",thisEnabled);
+        enableDisablePreference("prefGamePadSpeedArrowsThrottleRepeatDelay",thisEnabled);
+        enableDisablePreference("prefGamepadSwapForwardReverseWithScreenButtons",thisEnabled);
+        enableDisablePreference("prefGamepadTestEnforceTesting",thisEnabled);
+        enableDisablePreference("prefGamepadTestNow",thisEnabled);
 
-        thisPref = getPreferenceScreen().findPreference("prefGamePadMultipleDevices");
-        thisPref.setSelectable(thisEnabled);
-        thisPref.setEnabled(thisEnabled);
-
-        thisPref = getPreferenceScreen().findPreference("prefGamePadSpeedArrowsThrottleRepeatDelay");
-        thisPref.setSelectable(thisEnabled);
-        thisPref.setEnabled(thisEnabled);
-
-        thisPref = getPreferenceScreen().findPreference("prefGamepadSwapForwardReverseWithScreenButtons");
-        thisPref.setSelectable(thisEnabled);
-        thisPref.setEnabled(thisEnabled);
-
-        thisPref = getPreferenceScreen().findPreference("prefGamepadTestEnforceTesting");
-        thisPref.setSelectable(thisEnabled);
-        thisPref.setEnabled(thisEnabled);
-
-        thisPref = getPreferenceScreen().findPreference("prefGamepadTestNow");
-        thisPref.setSelectable(thisEnabled);
-        thisPref.setEnabled(thisEnabled);
     }
 
 }
