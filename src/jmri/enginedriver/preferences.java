@@ -322,7 +322,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 break;
             case "prefNumberOfDefaultFunctionLabels":
                 // limit check new value
-                limitIntPrefValue(sharedPreferences, key, 0, 28, "28");
+                limitIntPrefValue(sharedPreferences, key, 0, 29, "29");
                 mainapp.set_default_function_labels(false);
                 break;
 

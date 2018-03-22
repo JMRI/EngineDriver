@@ -65,7 +65,7 @@
     <string name="fbResetFunctionLabels">Reset All</string>
     <string name="prefNumberOfDefaultFunctionLabelsTitle">Number of Default Functions</string>
     <string name="prefNumberOfDefaultFunctionLabelsSummary">Limit the Function Labels shown if not available from the JMRI roster.</string>
-    <string name="prefNumberOfDefaultFunctionLabelsDefaultValue">28</string>
+    <string name="prefNumberOfDefaultFunctionLabelsDefaultValue">29</string>
 
     <string name="consist_help">Click an engine to change its direction with respect to the top of the consist.  Long press an engine to remove it from the consist.  Press Back Arrow when done.</string>
     <string name="about">About</string>
@@ -258,8 +258,11 @@
     <string name="toastEsuMc2NoButtonPresses">Button presses not allowed: Mobile Control II currently in stop mode</string>
     <!-- ESU MCII Messages -->
 
+    <string name="prefDefaultFunctionsTitle">Default Function Preferences</string>
+    <string name="prefDefaultFunctionsSummary">When and how the default function labels are displayed.</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default function labels instead of labels from roster entries.</string>
+
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. Height?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Use smaller buttons for the loco Number, speed and direction buttons.</string>
     <string name="prefNumOfThrottles">Number of throttles</string>

@@ -1890,7 +1890,7 @@ public class threaded_application extends Application {
 
     //init default function labels from the settings files or set to default
     public void set_default_function_labels(boolean getAll) {
-        int numberOfDefaultFunctionLabels = 28;
+        int numberOfDefaultFunctionLabels = 29;
         if (!getAll) {
             numberOfDefaultFunctionLabels = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabels", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsDefaultValue)))-1;
         }
