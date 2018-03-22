@@ -681,4 +681,13 @@
         <item>Throttle + Loco + Speed</item>
     </string-array>
 
+    <string-array name="prefYesNoEntryValues">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string-array name="prefYesNoEntries">  <!-- display version -->
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
 </resources>

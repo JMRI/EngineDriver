@@ -64,6 +64,11 @@
     <string name="fb_helptext">Inserire etichette e n. funzioni nella lista a destra. Lasciare in bianco per nascondere il pulsante. Questi sono usati quando le funzioni di elenco non sono disponibili.</string>
     <string name="copy_function_labels">Copiare Etichette dall\'Elenco</string>
     <string name="fb_header">Modifica Funzioni</string>
+
+    <string name="fbResetFunctionLabels">Resettare Tutto</string>
+    <string name="prefNumberOfDefaultFunctionLabelsTitle">Numero Funzioni Default</string>
+    <string name="prefNumberOfDefaultFunctionLabelsSummary">Limita Etichette Funzioni se indisponibili dall\'Elenco JMRI</string>
+
     <string name="consist_help">Cliccare una locomotiva per cambiare la sua direzione rispetto alla testa del convoglio. Premere a lungo per rimuovere una locmotiva dal convoglio. Premere Indietro quando pronto.</string>
     <string name="about">Circa</string>
     <string name="web">Web</string>
@@ -117,9 +122,9 @@
     <string name="steal_text">Appropriarsi dell\'indirizzo %1$s?</string>
     <string name="steal_title">Appropriarsi</string>
 
-    <string name="lightsTextOff">Desligado</string>
-    <string name="lightsTextFollow">Follow Fn Btn</string>
-    <string name="lightsTextUnknown">Desconhecido</string>
+    <string name="lightsTextOff">Spento</string>
+    <string name="lightsTextFollow">Puls. Funz. Succ.</string>
+    <string name="lightsTextUnknown">Sconosciuto</string>
 
     <string name="prefTitle">Preferenze</string>
     <string name="prefSummary">Preferenze per Engine Driver</string>
@@ -221,6 +226,9 @@
     <string name="toastEsuMc2NoLocoChange">Cambio di locomotiva non permesso: Mobile Control II attualmente in modalitá stop</string>
     <string name="toastEsuMc2NoThrottleChange">Cambio di Controllore non permesso: Mobile Control II attualmente in modalitá stop</string>
     <string name="toastEsuMc2NoButtonPresses">Pressione pulsanti non permessa: Mobile Control II attualmente in modalitá stop</string>
+
+    <string name="prefDefaultFunctionsTitle">Preferenze Funzioni Default</string>
+    <!-- <string name="prefDefaultFunctionsSummary"></string> -->
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Usare etichette funzioni default?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Visualizzare le etichette funzione di default al posto delle etichette delle entrate dell\'elenco locomotive.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Diminuire altezza numero Locomotiva?</string>

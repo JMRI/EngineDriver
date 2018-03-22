@@ -18,9 +18,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.EditTextPreference;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,6 +32,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -36,6 +42,7 @@ import java.io.*;
 import android.text.method.TextKeyListener;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,10 +56,16 @@ public class function_settings extends Activity {
     private static ArrayList<String> aLbl = new ArrayList<>();
     private static ArrayList<Integer> aFnc = new ArrayList<>();
     private Menu FMenu;
+    private EditText et;
+    private String prefNumberOfDefaultFunctionLabels = "29";
+    private String originalPrefNumberOfDefaultFunctionLabels = "29";
+    private boolean prefAlwaysUseDefaultFunctionLabels = false;
+    private int alwaysUseDefaultFunctionLabelsIndex = 1;
+    private Spinner spinner;
 
+    SharedPreferences prefs;
 
     public void setTitleToIncludeThrotName() {
-        SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
         setTitle(getApplicationContext().getResources().getString(R.string.app_name_functions) + "    |    Throttle Name: " +
                 prefs.getString("throttle_name_preference", defaultName));
@@ -77,8 +90,11 @@ public class function_settings extends Activity {
             initSettings();
             settingsCurrent = true;
         }
-        mainapp.set_default_function_labels(true);
-        move_settings_to_view();            //copy settings array to view
+
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        prefNumberOfDefaultFunctionLabels = prefs.getString("prefNumberOfDefaultFunctionLabels", getApplicationContext().getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsDefaultValue));
+        originalPrefNumberOfDefaultFunctionLabels = prefNumberOfDefaultFunctionLabels;
+        prefAlwaysUseDefaultFunctionLabels = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
 
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -97,6 +113,22 @@ public class function_settings extends Activity {
         reset_button_listener reset_click_listener = new reset_button_listener();
         bReset.setOnClickListener(reset_click_listener);
         bReset.setEnabled(true);
+
+        et = (EditText) findViewById(R.id.fb_number_of_default_function_labels);
+        et.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+
+        spinner = (Spinner) findViewById(R.id.fb_always_use_default_function_labels);
+        spinner.setOnItemSelectedListener(new spinner_listener());
+
+        mainapp.set_default_function_labels(true);
+        move_settings_to_view();            //copy settings array to view
 
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             //warn user that saving Default Function Settings requires SD Card
@@ -204,6 +236,14 @@ public class function_settings extends Activity {
                 TextKeyListener.clear(((EditText) r.getChildAt(1)).getText());
             }
         }
+
+        if (prefAlwaysUseDefaultFunctionLabels) {
+            spinner.setSelection(0);
+        } else {
+            spinner.setSelection(1);
+        }
+
+        et.setText(prefNumberOfDefaultFunctionLabels);
     }
 
     //Save the valid function labels in the settings array
@@ -306,6 +346,8 @@ public class function_settings extends Activity {
                 }
             }
 
+            prefAlwaysUseDefaultFunctionLabels = false;
+            prefNumberOfDefaultFunctionLabels = "29";
             move_settings_to_view();
         }
     }
@@ -313,9 +355,11 @@ public class function_settings extends Activity {
     //Handle pressing of the back button to save settings
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
+        limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, 29, "29");;
+
         if (key == KeyEvent.KEYCODE_BACK) {
             move_view_to_settings();        //sync settings array to view
-            if (!settingsCurrent)            //if settings array is not current
+            if ( (!settingsCurrent) || (!originalPrefNumberOfDefaultFunctionLabels.equals(prefNumberOfDefaultFunctionLabels)))  //if settings array is not current
                 saveSettings();         //save function labels to file
             this.finish();  //end this activity
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -355,5 +399,66 @@ public class function_settings extends Activity {
             Toast.makeText(getApplicationContext(), "Save Settings Failed." + errMsg, Toast.LENGTH_LONG).show();
         else
             Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();
+
+        prefs.edit().putString("prefNumberOfDefaultFunctionLabels", prefNumberOfDefaultFunctionLabels).commit();  //reset the preference
+        prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", prefAlwaysUseDefaultFunctionLabels);
     }
+
+    @SuppressWarnings("deprecation")
+    private boolean limitIntEditValue(String key, EditText et, int minVal, int maxVal, String defaultVal) {
+        boolean isValid = true;
+        int newVal = maxVal;
+        try {
+            newVal = Integer.parseInt(et.getText().toString().trim());
+            if (newVal > maxVal) {
+                prefs.edit().putString(key, Integer.toString(maxVal)).commit();
+                prefNumberOfDefaultFunctionLabels = Integer.toString(maxVal);
+                et.setText(prefNumberOfDefaultFunctionLabels);
+                isValid = false;
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits).replace("%%1%%",Integer.toString(minVal)).replace("%%2%%",Integer.toString(minVal)).replace("%%3%%",Float.toString(maxVal)), Toast.LENGTH_LONG).show();
+            } else if (newVal < minVal) {
+                prefs.edit().putString(key, Integer.toString(minVal)).commit();
+                prefNumberOfDefaultFunctionLabels = Integer.toString(minVal);
+                et.setText(prefNumberOfDefaultFunctionLabels);
+                isValid = false;
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits).replace("%%1%%",Integer.toString(minVal)).replace("%%2%%",Integer.toString(minVal)).replace("%%3%%",Float.toString(minVal)), Toast.LENGTH_LONG).show();
+            }
+        } catch (NumberFormatException e) {
+            prefs.edit().putString(key, defaultVal).commit();
+            prefNumberOfDefaultFunctionLabels = defaultVal;
+            et.setText(prefNumberOfDefaultFunctionLabels);
+            isValid = false;
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric).replace("%%1%%",Integer.toString(minVal)).replace("%%2%%",Integer.toString(maxVal)).replace("%%3%%",defaultVal), Toast.LENGTH_LONG).show();
+        }
+        if (isValid) prefNumberOfDefaultFunctionLabels = Integer.toString(newVal);
+        return isValid;
+    }
+
+    public class spinner_listener implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            alwaysUseDefaultFunctionLabelsIndex = spinner.getSelectedItemPosition();
+
+            if (alwaysUseDefaultFunctionLabelsIndex == 0) {
+                prefAlwaysUseDefaultFunctionLabels = true;
+            } else {
+                prefAlwaysUseDefaultFunctionLabels = false;
+            }
+            prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", prefAlwaysUseDefaultFunctionLabels).commit();  //reset the preference
+
+            InputMethodManager imm =
+                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if ((imm != null) && (view != null)) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }
+
 }

@@ -230,14 +230,30 @@
             android:summary="@string/prefShowAddressInsteadOfNameSummary"
             android:title="@string/prefShowAddressInsteadOfNameTitle">
         </CheckBoxPreference>
-        <CheckBoxPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:defaultValue="@bool/prefAlwaysUseDefaultFunctionLabelsDefaultValue"
-            android:key="prefAlwaysUseDefaultFunctionLabels"
-            android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary"
-            android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle">
-        </CheckBoxPreference>
+
+        <PreferenceScreen
+            android:key="default_function_preferences"
+            android:title="@string/prefDefaultFunctionsTitle"
+            android:summary="@string/prefDefaultFunctionsSummary"
+            android:persistent="false">
+
+            <CheckBoxPreference
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:defaultValue="@bool/prefAlwaysUseDefaultFunctionLabelsDefaultValue"
+                android:key="prefAlwaysUseDefaultFunctionLabels"
+                android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary"
+                android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle">
+            </CheckBoxPreference>
+            <EditTextPreference
+                android:defaultValue="@string/prefNumberOfDefaultFunctionLabelsDefaultValue"
+                android:dialogTitle="@string/prefNumberOfDefaultFunctionLabelsTitle"
+                android:key="prefNumberOfDefaultFunctionLabels"
+                android:maxLength="2"
+                android:summary="@string/prefNumberOfDefaultFunctionLabelsSummary"
+                android:title="@string/prefNumberOfDefaultFunctionLabelsTitle" />
+        </PreferenceScreen>
+
 
         <PreferenceScreen
             android:key="volume_preferences"
@@ -453,14 +469,6 @@
             android:key="prefSelectedLocoIndicator"
             android:summary="@string/prefSelectedLocoIndicatorSummary"
             android:title="@string/prefSelectedLocoIndicatorTitle" />
-
-        <EditTextPreference
-            android:defaultValue="@string/prefNumberOfDefaultFunctionLabelsDefaultValue"
-            android:dialogTitle="@string/prefNumberOfDefaultFunctionLabelsTitle"
-            android:key="prefNumberOfDefaultFunctionLabels"
-            android:maxLength="2"
-            android:summary="@string/prefNumberOfDefaultFunctionLabelsSummary"
-            android:title="@string/prefNumberOfDefaultFunctionLabelsTitle" />
 
     </PreferenceCategory>
 
