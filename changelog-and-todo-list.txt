@@ -13,6 +13,7 @@
  * New Dark theme option
  * option to reset the Function Label defaults
  * option to reduce the number of displayed default Function Labels
+ * only send release for throttle3s actually in use
 **Version 2.17
  * Add support for ESU Mobile Control II throttle
  * Add toast messages when ESU Mobile Control II in stop mode
