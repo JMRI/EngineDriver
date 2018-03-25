@@ -250,6 +250,10 @@
     <item name="android:textColor">@color/solidWhite</item>
   </style>
 
+  <style name="fn_scrollview_style_black">
+    <item name="android:layout_marginTop">2dp</item>
+  </style>
+
   <!-- Outline Theme. Uses the base colours from the High Contrast Theme.  Mostly the buttons are different -->
 
   <style name="large_button_style_outline" parent="@android:style/Widget.Button">
@@ -366,14 +370,15 @@
   <!-- Ultra Theme. Uses the base colours from the High Contrast Theme.  Mostly the buttons are different -->
 
   <style name="small_heading_style_ultra" parent="@android:style/Widget.TextView">
-    <item name="android:textColor">#a6a6a6</item>
-    <item name="android:background">#FF262626</item>
+    <item name="android:textColor">#CFCFCF</item>
+    <item name="android:background">#FF3A3A3A</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:shadowColor">#00000000</item>
     <item name="android:shadowDx">0</item>
     <item name="android:shadowDy">0</item>
     <item name="android:shadowRadius">0</item>
+    <item name="android:padding">2dp</item>
   </style>
 
   <style name="large_button_style_ultra" parent="@android:style/Widget.Button">
@@ -385,7 +390,7 @@
 
     <item name="android:background">@drawable/sticky_button_states_ultra</item>
     <item name="android:layout_marginTop">1dp</item>
-    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
     <item name="android:layout_marginRight">2dp</item>
 
@@ -399,9 +404,9 @@
 
     <item name="android:background">@drawable/sticky_button_states_ultra</item>
     <item name="android:layout_marginTop">1dp</item>
-    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
-    <item name="android:layout_marginRight">2dp</item>
+    <item name="android:layout_marginRight">3dp</item>
 
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">fill_parent</item>
@@ -416,9 +421,9 @@
 
     <item name="android:background">@drawable/stop_button_states_ultra</item>
     <item name="android:layout_marginTop">1dp</item>
-    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
-    <item name="android:layout_marginRight">2dp</item>
+    <item name="android:layout_marginRight">3dp</item>
 
     <item name="android:layout_width">0dp</item>
     <item name="android:layout_height">fill_parent</item>
@@ -434,7 +439,7 @@
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
-    <item name="android:layout_marginRight">2dp</item>
+    <item name="android:layout_marginRight">3dp</item>
 
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">fill_parent</item>
@@ -455,9 +460,9 @@
 
     <item name="android:background">@drawable/fn_button_states_ultra</item>
     <item name="android:layout_marginTop">1dp</item>
-    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
-    <item name="android:layout_marginRight">2dp</item>
+    <item name="android:layout_marginRight">3dp</item>
 
     <item name="android:gravity">center_vertical|center_horizontal</item>
   </style>
@@ -476,6 +481,12 @@
     <item name="android:layout_marginRight">2dp</item>
 
     <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="fn_scrollview_style_ultra">
+    <item name="android:layout_marginTop">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
   </style>
 
 </resources>

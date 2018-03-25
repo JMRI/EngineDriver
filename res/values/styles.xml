@@ -170,5 +170,7 @@
     <item name="android:shadowRadius">1</item>
   </style>
 
+  <style name="fn_scrollview_style"> <!-- dummy so that the other themes can alter the spacing without impacting the default theme -->
+  </style>
 
 </resources>

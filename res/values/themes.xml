@@ -24,6 +24,8 @@
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style</item>
 
+        <item name="ed_fn_scrollview_style">@style/fn_scrollview_style</item>
+
         <item name="ed_large_button_style">@style/large_button_style</item>
         <item name="ed_normal_button_style">@style/normal_button_style</item>
         <item name="ed_small_button_style">@style/small_button_style</item>

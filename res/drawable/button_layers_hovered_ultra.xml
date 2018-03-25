@@ -3,7 +3,8 @@
 
     <item>
         <shape android:shape="rectangle"  >
-            <stroke android:width="@dimen/buttonSelectedStroke_ultra" android:color="@color/buttonStroke_ultra" />
+            <corners android:radius="@dimen/buttonCornerRadius_ultra" />
+            <stroke android:width="@dimen/buttonSelectedStroke_ultra" android:color="@color/buttonCommonSelectedStroke_ultra" />
             <solid android:color="@color/buttonSelectedFill_ultra"/>
         </shape>
     </item>
@@ -12,6 +13,7 @@
     <item
         android:top="@dimen/buttonActivated2InsideStrokePadding_ultra" android:left="@dimen/buttonActivated2InsideStrokePadding_ultra" android:right="@dimen/buttonActivated2InsideStrokePadding_ultra" android:bottom="@dimen/buttonActivated2InsideStrokePadding_ultra">
         <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_ultra" />
             <stroke android:width="@dimen/buttonSelectedInsideStroke_ultra" android:color="@color/buttonActivatedHoveredInside2Stroke_ultra" />
             <solid android:color="@color/transparent"/>
         </shape>
