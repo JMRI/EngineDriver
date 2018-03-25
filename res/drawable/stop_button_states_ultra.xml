@@ -3,6 +3,7 @@
 
     <item android:state_enabled="false">
         <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonStopCornerRadius_ultra" />
             <stroke android:width="@dimen/buttonStopDisabledStroke_ultra" android:color="@color/buttonStopDisabledStroke_ultra" />
             <solid android:color="@color/buttonStopDisabledFill_ultra" />
         </shape>
@@ -13,8 +14,17 @@
 
     <item >
         <shape android:shape="rectangle"  >
-            <stroke android:width="@dimen/buttonStroke_ultra" android:color="@color/buttonStopStroke_ultra" />
-            <solid android:color="@color/buttonStopFill_ultra" />
+            <corners android:radius="@dimen/buttonStopCornerRadius_ultra" />
+            <stroke android:width="@dimen/buttonStroke_ultra" android:color="@color/buttonCommonSelectedStroke_ultra" />
+            <!-- <solid android:color="@color/buttonStopFill_ultra" /> -->
+            <gradient
+                android:angle="135"
+                android:centerX="20%"
+                android:startColor="@color/buttonCommonFillGradiantLight_ultra"
+                android:centerColor="@color/buttonCommonFillGradiantCenter_ultra"
+                android:endColor="@color/buttonCommonFillGradiantDark_ultra"
+                android:type="linear"
+                />
         </shape>
     </item>
 </selector>

@@ -3,8 +3,17 @@
 
     <item>
         <shape android:shape="rectangle"  >
-            <stroke android:width="@dimen/buttonFnSelectedStroke_ultra" android:color="@color/buttonFnSelectedStroke_ultra" />
-            <solid android:color="@color/buttonFnSelectedFill_ultra"/>
+            <corners android:radius="@dimen/buttonFnCornerRadius_ultra" />
+            <stroke android:width="@dimen/buttonFnSelectedStroke_ultra" android:color="@color/buttonCommonSelectedStroke_ultra" />
+            <!-- <solid android:color="@color/buttonFnSelectedFill_ultra"/> -->
+            <gradient
+                android:angle="135"
+                android:centerX="20%"
+                android:startColor="@color/buttonCommonFillGradiantLight_ultra"
+                android:centerColor="@color/buttonCommonFillGradiantCenter_ultra"
+                android:endColor="@color/buttonCommonFillGradiantDark_ultra"
+                android:type="linear"
+                />
         </shape>
     </item>
 
@@ -12,6 +21,7 @@
     <item
         android:top="@dimen/buttonFnSelectedInsideStrokePadding_ultra" android:left="@dimen/buttonFnSelectedInsideStrokePadding_ultra" android:right="@dimen/buttonFnSelectedInsideStrokePadding_ultra" android:bottom="@dimen/buttonFnSelectedInsideStrokePadding_ultra">
         <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonFnCornerRadius_ultra" />
             <stroke android:width="@dimen/buttonFnSelectedStroke_ultra" android:color="@color/buttonFnSelectedInsideStroke_ultra" />
             <solid android:color="@color/transparent"/>
         </shape>
