@@ -220,6 +220,7 @@
 				
                 <ScrollView
                     android:id="@+id/function_buttons_scroller_T"
+                    style="?attr/ed_fn_scrollview_style"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
                     <TableLayout
@@ -547,6 +548,7 @@
 
                 <ScrollView
                     android:id="@+id/function_buttons_scroller_S"
+                    style="?attr/ed_fn_scrollview_style"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
                     <TableLayout
@@ -885,6 +887,7 @@
 				</LinearLayout>
                 <ScrollView
                     android:id="@+id/function_buttons_scroller_G"
+                    style="?attr/ed_fn_scrollview_style"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
                     <TableLayout
