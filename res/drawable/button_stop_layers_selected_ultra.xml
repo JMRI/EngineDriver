@@ -5,10 +5,18 @@
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_ultra" />
             <stroke android:width="@dimen/buttonStopSelectedStroke_ultra" android:color="@color/buttonCommonSelectedStroke_ultra" />
-            <!-- <solid android:color="@color/buttonStopSelectedFill_ultra"/> -->
+            <solid android:color="@color/transparent" />
+        </shape>
+    </item>
+
+    <item
+        android:top="1px" android:left="1px" android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_ultra" />
+            <stroke android:width="0px" android:color="@color/black" />
             <gradient
                 android:angle="135"
-                android:centerX="20%"
+                android:centerX="5%"
                 android:startColor="@color/buttonCommonFillGradiantLight_ultra"
                 android:centerColor="@color/buttonCommonFillGradiantCenter_ultra"
                 android:endColor="@color/buttonCommonFillGradiantDark_ultra"
@@ -22,7 +30,7 @@
         android:top="@dimen/buttonSelectedInsideStrokePadding_ultra" android:left="@dimen/buttonSelectedInsideStrokePadding_ultra" android:right="@dimen/buttonSelectedInsideStrokePadding_ultra" android:bottom="@dimen/buttonSelectedInsideStrokePadding_ultra">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_ultra" />
-            <stroke android:width="@dimen/buttonStopSelectedStroke_ultra" android:color="@color/buttonStopSelectedInsideStroke_ultra" />
+            <stroke android:width="@dimen/buttonStopSelectedInsideStroke_ultra" android:color="@color/buttonStopSelectedInsideStroke_ultra" />
             <solid android:color="@color/transparent"/>
         </shape>
     </item>
