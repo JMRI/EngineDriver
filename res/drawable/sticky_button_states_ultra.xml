@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_enabled="false">
-        <shape android:shape="rectangle"  >
+        <shape android:shape="rectangle">
             <corners android:radius="@dimen/buttonCornerRadius_ultra" />
             <stroke android:width="@dimen/buttonDisabledStroke_ultra" android:color="@color/buttonDisabledStroke_ultra" />
             <solid android:color="@color/buttonDisabledFill_ultra" />
         </shape>
     </item>
 
-    <item android:state_pressed="true" android:state_enabled="true" android:drawable="@drawable/button_layers_selected_ultra">
+    <item
+        android:state_pressed="true"
+        android:drawable="@drawable/button_layers_selected_ultra">
     </item>
 
     <item
         android:state_selected="true"
-        android:state_activated="false"
-        android:state_enabled="true"
         android:drawable="@drawable/button_layers_selected_ultra">
     </item>
 
@@ -43,21 +43,12 @@
         android:drawable="@drawable/button_layers_hovered_ultra">
     </item>
 
-    <item>
-        <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonCornerRadius_ultra" />
-            <stroke android:width="@dimen/buttonStroke_ultra" android:color="@color/buttonCommonSelectedStroke_ultra" />
-            <!-- <solid android:color="@color/buttonFill_ultra" /> -->
-            <gradient
-                android:angle="135"
-                android:centerX="20%"
-                android:startColor="@color/buttonCommonFillGradiantLight_ultra"
-                android:centerColor="@color/buttonCommonFillGradiantCenter_ultra"
-                android:endColor="@color/buttonCommonFillGradiantDark_ultra"
-                android:type="linear"
-                />
-        </shape>
+    <item
+        android:state_selected="false"
+        android:state_activated="false"
+        android:state_hovered="false"
+        android:state_enabled="true"
+        android:drawable="@drawable/button_layers_enabled_ultra">
     </item>
-
 
 </selector>

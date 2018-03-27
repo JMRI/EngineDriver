@@ -9,22 +9,14 @@
         </shape>
     </item>
 
-    <item android:state_pressed="true" android:state_enabled="true" android:drawable="@drawable/button_stop_layers_selected_ultra">
+    <item
+        android:state_pressed="true"
+        android:state_enabled="true"
+        android:drawable="@drawable/button_stop_layers_selected_ultra">
     </item>
 
-    <item >
-        <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonStopCornerRadius_ultra" />
-            <stroke android:width="@dimen/buttonStroke_ultra" android:color="@color/buttonCommonSelectedStroke_ultra" />
-            <!-- <solid android:color="@color/buttonStopFill_ultra" /> -->
-            <gradient
-                android:angle="135"
-                android:centerX="20%"
-                android:startColor="@color/buttonCommonFillGradiantLight_ultra"
-                android:centerColor="@color/buttonCommonFillGradiantCenter_ultra"
-                android:endColor="@color/buttonCommonFillGradiantDark_ultra"
-                android:type="linear"
-                />
-        </shape>
+    <item
+        android:drawable="@drawable/button_stop_layers_enabled_ultra">
     </item>
+
 </selector>
