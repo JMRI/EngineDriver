@@ -548,7 +548,13 @@ public class select_loco extends Activity {
                 address_size = (ras[1].charAt(0) == 'L')
                         ? address_type.LONG
                         : address_type.SHORT;   // convert S/L to 0/1
-                engine_address = Integer.valueOf(ras[0]);   // convert address to int
+                try {
+                    engine_address = Integer.valueOf(ras[0]);   // convert address to int
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getApplicationContext(), "ERROR - could not parse address\n" + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                    return; //get out, don't try to acquire
+                }
                 if ("loco".equals(rosterEntryType)) {
                     sWhichThrottle += rosterNameString;     //append rostername if type is loco (not consist) 
                 }
