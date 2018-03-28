@@ -250,6 +250,8 @@
     <string name="prefEsuMc2ZeroTrimTitle">Control Knob Zero Trim</string>
     <string name="prefEsuMc2ZeroTrimSummary">Set the Control Knob zero trim setting.\nSmaller is closer to counter-clockwise end-stop position.\nPermitted range 0&#8211;255.</string>
     <string name="prefEsuMc2ZeroTrimDefaultValue">10</string>
+    <string name="prefEsuMc2EndStopDirectionChangeTitle">Direction Change at end-stop</string>
+    <string name="prefEsuMc2EndStopDirectionChangeSummary">Allow Loco direction to change when control knob at counter-clockwise end-stop position.</string>
     <!-- ESU MCII preferences -->
 
     <!-- ESU MCII Messages -->
