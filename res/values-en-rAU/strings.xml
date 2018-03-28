@@ -14,6 +14,9 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
 <resources>
+    <string name="prefEsuMc2ZeroTrimSummary">Set the Control Knob zero trim setting.\nSmaller is closer to anti-clockwise end-stop position.\nPermitted range 0&#8211;255.</string>
+    <string name="prefEsuMc2EndStopDirectionChangeSummary">Allow Loco direction to change when control knob at anti-clockwise end-stop position.</string>
+
     <string name="app_name_turnouts">Points - Engine Driver</string>
 
     <string name="turnouts">Points</string>

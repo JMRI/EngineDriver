@@ -615,6 +615,11 @@
                     android:inputType="number"
                     android:digits="0123456789"
                     android:numeric="integer" />
+                <CheckBoxPreference
+                    android:key="prefEsuMc2EndStopDirectionChange"
+                    android:title="@string/prefEsuMc2EndStopDirectionChangeTitle"
+                    android:summary="@string/prefEsuMc2EndStopDirectionChangeSummary"
+                    android:defaultValue="@bool/prefEsuMc2EndStopDirectionChangeDefaultValue" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

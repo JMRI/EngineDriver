@@ -453,6 +453,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private Handler esuButtonRepeatUpdateHandler = new Handler();
     private boolean esuButtonAutoIncrement = false;
     private boolean esuButtonAutoDecrement = false;
+    private boolean prefEsuMc2EndStopDirectionChange = true;
 
     // Create default ESU MCII ThrottleScale for each throttle
     private ThrottleScale esuThrottleScaleT = new ThrottleScale(10, 127);
@@ -1180,6 +1181,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefTtsThrottleResponse = prefs.getString("prefTtsThrottleResponse", getResources().getString(R.string.prefTtsThrottleResponseDefaultValue));
         prefTtsGamepadTest = prefs.getBoolean("prefTtsGamepadTest", getResources().getBoolean(R.bool.prefTtsGamepadTestDefaultValue));
         prefTtsGamepadTestComplete = prefs.getBoolean("prefTtsGamepadTestComplete", getResources().getBoolean(R.bool.prefTtsGamepadTestCompleteDefaultValue));
+
+        prefEsuMc2EndStopDirectionChange = prefs.getBoolean("prefEsuMc2EndStopDirectionChange", getResources().getBoolean(R.bool.prefEsuMc2EndStopDirectionChangeDefaultValue));
     }
 
     private void getDirectionButtonPrefs() {
@@ -2943,9 +2946,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         public void onButtonDown() {
             Log.d("Engine_Driver", "ESU_MCII: Knob button down for throttle " + whichVolume);
             if (!isScreenLocked) {
-                Log.d("Engine_Driver", "ESU_MCII: Attempting to switch direction");
-                changeDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1));
-                speedUpdateAndNotify(whichVolume, 0, false);
+                if (prefEsuMc2EndStopDirectionChange) {
+                    Log.d("Engine_Driver", "ESU_MCII: Attempting to switch direction");
+                    changeDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1));
+                    speedUpdateAndNotify(whichVolume, 0, false);
+                } else {
+                    Log.d("Engine_Driver", "ESU_MCII: Direction change option disabled - do nothing");
+                    speedUpdateAndNotify(whichVolume, 0, false);
+                }
             } else {
                 Log.d("Engine_Driver", "ESU_MCII: Screen locked - do nothing");
             }
