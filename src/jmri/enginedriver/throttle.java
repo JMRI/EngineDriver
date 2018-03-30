@@ -4813,18 +4813,31 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     private void disconnect() {
-        // release the locos
-        mainapp.consistT.release();
-        mainapp.consistS.release();
-        mainapp.consistG.release();
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", 'T');   // release first loco
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", 'S');   // release second loco
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", 'G');   // release third loco
+        //loop thru all throttles and send release to server for any that are active
+        for (char throttleLetter : allThrottleLetters) {
+            if (getConsist(throttleLetter).isActive()) {
+                release_loco(throttleLetter);
+            }
+        }
 
         webView.stopLoading();
         this.finish(); // end this activity
         overridePendingTransition(0, 0);
     }
+
+    // request release of specified throttle
+    void release_loco(char whichThrottle) {
+        if (whichThrottle == 'T') {
+            mainapp.consistT.release();
+        } else if (whichThrottle == 'G') {
+            mainapp.consistG.release();
+        } else {
+            mainapp.consistS.release();
+        }
+
+        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", whichThrottle); // pass T, S or G in message
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
