@@ -246,10 +246,14 @@
     <string name="prefEsuMc2StopButtonDelayTitle">Stop Button long-press delay</string>
     <string name="prefEsuMc2StopButtonDelaySummary">How long for a \'long-press\' of the Stop button.\nA \'long-press\' stops all active throttles; a \'short-press\' pauses the current throttle.\nSmaller is faster.</string>
     <string name="prefEsuMc2StopButtonDelayDefaultValue">500</string>
+    <string name="prefEsuMc2StopButtonShortPressTitle">Enable Short Press</string>
+    <string name="prefEsuMc2StopButtonShortPressSummary">A \'short-press\' pauses the currently controlled locomotive/consist.\nWill revert to original speed when operations resume.</string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Control Knob options</string>
     <string name="prefEsuMc2ZeroTrimTitle">Control Knob Zero Trim</string>
     <string name="prefEsuMc2ZeroTrimSummary">Set the Control Knob zero trim setting.\nSmaller is closer to counter-clockwise end-stop position.\nPermitted range 0&#8211;255.</string>
     <string name="prefEsuMc2ZeroTrimDefaultValue">10</string>
+    <string name="prefEsuMc2EndStopDirectionChangeTitle">Direction Change at end-stop</string>
+    <string name="prefEsuMc2EndStopDirectionChangeSummary">Allow Loco direction to change when control knob at counter-clockwise end-stop position.</string>
     <!-- ESU MCII preferences -->
 
     <!-- ESU MCII Messages -->

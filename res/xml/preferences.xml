@@ -559,6 +559,11 @@
                     android:numeric="integer"
                     android:digits="0123456789"
                     android:inputType="number" />
+                <CheckBoxPreference
+                    android:key="prefEsuMc2StopButtonShortPress"
+                    android:title="@string/prefEsuMc2StopButtonShortPressTitle"
+                    android:summary="@string/prefEsuMc2StopButtonShortPressSummary"
+                    android:defaultValue="@bool/prefEsuMc2StopButtonShortPressDefaultValue" />
             </PreferenceCategory>
             <!-- Button preferences -->
             <PreferenceCategory android:title="@string/prefEsuMc2ButtonsCategoryTitle">
@@ -615,6 +620,11 @@
                     android:inputType="number"
                     android:digits="0123456789"
                     android:numeric="integer" />
+                <CheckBoxPreference
+                    android:key="prefEsuMc2EndStopDirectionChange"
+                    android:title="@string/prefEsuMc2EndStopDirectionChangeTitle"
+                    android:summary="@string/prefEsuMc2EndStopDirectionChangeSummary"
+                    android:defaultValue="@bool/prefEsuMc2EndStopDirectionChangeDefaultValue" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
