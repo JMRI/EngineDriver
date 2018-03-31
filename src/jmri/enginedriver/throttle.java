@@ -454,6 +454,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private boolean esuButtonAutoIncrement = false;
     private boolean esuButtonAutoDecrement = false;
     private boolean prefEsuMc2EndStopDirectionChange = true;
+    private boolean prefEsuMc2StopButtonShortPress = true;
 
     // Create default ESU MCII ThrottleScale for each throttle
     private ThrottleScale esuThrottleScaleT = new ThrottleScale(10, 127);
@@ -1183,6 +1184,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefTtsGamepadTestComplete = prefs.getBoolean("prefTtsGamepadTestComplete", getResources().getBoolean(R.bool.prefTtsGamepadTestCompleteDefaultValue));
 
         prefEsuMc2EndStopDirectionChange = prefs.getBoolean("prefEsuMc2EndStopDirectionChange", getResources().getBoolean(R.bool.prefEsuMc2EndStopDirectionChangeDefaultValue));
+        prefEsuMc2StopButtonShortPress = prefs.getBoolean("prefEsuMc2StopButtonShortPress", getResources().getBoolean(R.bool.prefEsuMc2StopButtonShortPressDefaultValue));
     }
 
     private void getDirectionButtonPrefs() {
@@ -3011,8 +3013,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
             // Toggle press status
             isEsuMc2Stopped = !isEsuMc2Stopped;
-            set_stop_button(whichVolume, true);
-            speedUpdateAndNotify(whichVolume, 0);
+            if (prefEsuMc2StopButtonShortPress) {
+                set_stop_button(whichVolume, true);
+                speedUpdateAndNotify(whichVolume, 0);
+            }
             esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.ON);
             esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
             // Read current stop button delay pref value
@@ -3043,17 +3047,27 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     isEsuMc2AllStopped = true;
                 } else {
                     wasLongPress = false;
-                    Log.d("Engine_Driver", "ESU_MCII: Stop button press was short - short flash Red LED");
-                    esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.QUICK_FLASH);
-                    esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
-                    setEnabledEsuMc2ThrottleScreenButtons(whichVolume, false);
+                    if (prefEsuMc2StopButtonShortPress) {
+                        Log.d("Engine_Driver", "ESU_MCII: Stop button press was short - short flash Red LED");
+                        esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.QUICK_FLASH);
+                        esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
+                        setEnabledEsuMc2ThrottleScreenButtons(whichVolume, false);
+                    } else {
+                        Log.d("Engine_Driver", "ESU_MCII: Stop button press was short but action disabled");
+                        isEsuMc2Stopped = !isEsuMc2Stopped;
+                        esuMc2Led.revertLEDStates();
+                    }
                 }
             } else {
                 if (!wasLongPress) {
-                    Log.d("Engine_Driver", "ESU_MCII: Revert speed value to: " + origSpeed);
-                    set_stop_button(whichVolume, false);
-                    speedUpdateAndNotify(whichVolume, origSpeed);
-                    setEnabledEsuMc2ThrottleScreenButtons(whichVolume, true);
+                    if (prefEsuMc2StopButtonShortPress) {
+                        Log.d("Engine_Driver", "ESU_MCII: Revert speed value to: " + origSpeed);
+                        set_stop_button(whichVolume, false);
+                        speedUpdateAndNotify(whichVolume, origSpeed);
+                        setEnabledEsuMc2ThrottleScreenButtons(whichVolume, true);
+                    } else {
+                        Log.d("Engine_Driver", "ESU_MCII: Stop button press was short but revert action disabled");
+                    }
                 } else {
                     Log.d("Engine_Driver", "ESU_MCII: Resume control without speed revert");
                     origSpeed = 0;
@@ -4799,18 +4813,31 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     private void disconnect() {
-        // release the locos
-        mainapp.consistT.release();
-        mainapp.consistS.release();
-        mainapp.consistG.release();
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", 'T');   // release first loco
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", 'S');   // release second loco
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", 'G');   // release third loco
+        //loop thru all throttles and send release to server for any that are active
+        for (char throttleLetter : allThrottleLetters) {
+            if (getConsist(throttleLetter).isActive()) {
+                release_loco(throttleLetter);
+            }
+        }
 
         webView.stopLoading();
         this.finish(); // end this activity
         overridePendingTransition(0, 0);
     }
+
+    // request release of specified throttle
+    void release_loco(char whichThrottle) {
+        if (whichThrottle == 'T') {
+            mainapp.consistT.release();
+        } else if (whichThrottle == 'G') {
+            mainapp.consistG.release();
+        } else {
+            mainapp.consistS.release();
+        }
+
+        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", whichThrottle); // pass T, S or G in message
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
