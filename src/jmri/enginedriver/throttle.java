@@ -658,7 +658,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         public void handleMessage(Message msg) {
             String response_str = msg.obj.toString();
 
-            Log.d("Engine_Driver", "throttle handleMessage " + response_str );
+//            Log.d("Engine_Driver", "throttle handleMessage " + response_str );
 
             switch (msg.what) {
                 case message_type.RESPONSE: { // handle messages from WiThrottle server
