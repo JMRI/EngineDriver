@@ -16,6 +16,7 @@
  * only send release for throttles actually in use
  * option for ESU Mobile Control II to disable direction change at zero end-stop position
  * option for ESU Mobile Control II to disable on-device stop button short-press
+ * fixed mis-handling of WiThrottle-created consists
 **Version 2.17
  * Add support for ESU Mobile Control II throttle
  * Add toast messages when ESU Mobile Control II in stop mode
