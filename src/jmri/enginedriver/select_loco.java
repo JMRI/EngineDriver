@@ -139,11 +139,11 @@ public class select_loco extends Activity {
             //add consist entries to screen list
             if (mainapp.consist_entries != null) {
                 Set<String> ces = mainapp.consist_entries.keySet();
-                for (String consistname : ces) {
+                for (String consist_addr : ces) {
                     // put key and values into temp hashmap
                     HashMap<String, String> hm = new HashMap<>();
-                    hm.put("roster_name", mainapp.consist_entries.get(consistname));
-                    hm.put("roster_address", consistname);
+                    hm.put("roster_name", mainapp.consist_entries.get(consist_addr));
+                    hm.put("roster_address", consist_addr);
                     hm.put("roster_entry_type", "consist");
 
                     // add temp hashmap to list which view is hooked to

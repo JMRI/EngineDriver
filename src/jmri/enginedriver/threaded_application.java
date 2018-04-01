@@ -805,6 +805,7 @@ public class threaded_application extends Application {
                         if (consistname != null) { //if found, request function keys for lead, format MTAS13<;>CL1234
                             String[] cna = splitByString(consistname, "+");
                             String cmd = "M" + whichThrottle + "A" + addr + "<;>C" + cvtToLAddr(cna[0]);
+                            Log.d("Engine_Driver", "rqsting fkeys for lead loco " + cvtToLAddr(cna[0]));
                             withrottle_send(cmd);
                         }
 
@@ -880,7 +881,7 @@ public class threaded_application extends Application {
                         case 'C':
                             if (response_str.charAt(2) == 'C' || response_str.charAt(2) == 'L') {  //RCC1 or RCL1 (treated the same in ED)
                                 clear_consist_list();
-                            } else if (response_str.charAt(2) == 'D') {  //RCD}|{88(S)}|{88(S)]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
+                            } else if (response_str.charAt(2) == 'D') {  //RCD}|{88(S)}|{Consist Name]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
                                 process_consist_list(response_str);
                             }
                             break;
@@ -1023,7 +1024,7 @@ public class threaded_application extends Application {
         }
 
         //parse consist list into appropriate mainapp hashmap
-        //RCD}|{88(S)}|{88(S)]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
+        //RCD}|{88(S)}|{Consist Name]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
         private void process_consist_list(String response_str) {
             String consist_addr = null;
             String consist_desc = "";
@@ -1045,11 +1046,13 @@ public class threaded_application extends Application {
                 }  //end if i==0
                 i++;
             }  //end for
-            if (!consist_name.equals(consist_addr) && (consist_name.length() > 4)) {
-                consist_desc = consist_name; // use entered name if significant
-            }
+//            if (!consist_name.equals(consist_addr) && (consist_name.length() > 4)) {
+//                consist_desc = consist_name; // use entered name if significant
+//            }
+            Log.d("Engine_Driver","consist header, addr=" + consist_addr
+                    + ", name=" + consist_name + ", desc=" + consist_desc);
             //don't add empty consists to list
-            if (consist_desc != null && consist_desc.length() > 0) {
+            if (consist_desc.length() > 0) {
                 consist_entries.put(consist_addr, consist_desc);
             }
         }
