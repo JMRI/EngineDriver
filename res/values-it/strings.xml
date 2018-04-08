@@ -375,7 +375,7 @@
 
     <string name="prefRightDirectionButtonsTitle">Etichetta Pulsante Direzione Destro</string>
     <string name="prefRightDirectionButtonsSummary">Etichette per tutti i pulsanti direzione DESTRI. Inserire \'Indietro\' o lasciare in bianco per funzionamento normale.</string>
-    <string name="prefRightDirectionButtonsDefaultValue">Invertire</string>
+    <string name="prefRightDirectionButtonsDefaultValue">Indietro</string>
 
     <string name="prefThemeTitle">Tema/Stile</string>
     <string name="prefThemeSummary">Tema App. RICHIEDE riavvio di Engine Driver. \nRichiede Android Honeycomb o successivo.</string>
@@ -396,6 +396,9 @@
 
     <string name="prefAccelerometerShakeThresholdTitle">Livello scuotimento</string>
     <string name="prefAccelerometerShakeThresholdSummary">Livello al quale lo scuotimento sará registrato.(1.5&#8211;3.5) Valori minori risponderanno ad una azione più lieve.\nRichiede il riavvio di Engine Driver per avere effetto.</string>
+
+    <string name="prefLocaleTitle">Posizione</string>
+    <string name="prefLocaleSummary">Lingua da usare. \nAVVERTIMENTO! Engine Driver si riavvierà immediatamente. Le etichette dei pulsanti di direzione verranno ripristinate.</string>
 
     <string name="gamepadTestButtonLabelDpadUp">Su</string>
     <string name="gamepadTestButtonLabelDpadDown">Giu</string>
@@ -444,9 +447,12 @@
     <string name="toastSwipeUpScreenDimmed">Schermo Controllore Scurito - Scorrere per ripristinare</string>
     <string name="toastSwipeUpViewHidden">Vista Web temporaneamente nascosta.  Per nascondere permanentemente, alterare le preferenze.</string>
     <string name="toastThrottleAlertEstop">Avviso: Locomotiva %%1%% é impostata in stato di ESTOP</string>
+
     <string name="toastPreferencesOutsideLimits">Il valore inserito è fuori dai limiti  (%%1%%-%%2%%). Ristabilito %%3%%.</string>
     <string name="toastPreferencesNotNumeric">Il valore inserito non è un numero.(%%1%%-%%2%%). Ristabilito %%3%%.</string>
     <string name="toastPreferencesResetSucceeded">Preferenze resettate a valori default!</string>
+<!--    <string name="toastPreferencesLocaleChange">Engine Driver riavviato con la lingua scelta.</string> -->
+
     <string name="toastTurnoutInvalidNumber">Nomero dello scambio non valido.</string>
     <string name="toastTurnoutCommandTo">Comando inviato allo scambio %%1%%</string>
     <string name="toastTurnoutCommandToClose">Corretto Tracciato</string>

@@ -324,6 +324,7 @@ public class turnouts extends Activity implements OnGestureListener {
         }
 
         mainapp.applyTheme(this);
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts)); // needed in case the langauge was changed from the default
 
         setContentView(R.layout.turnouts);
 
@@ -650,5 +651,11 @@ public class turnouts extends Activity implements OnGestureListener {
 
     private void disconnect() {
         this.finish();
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 }

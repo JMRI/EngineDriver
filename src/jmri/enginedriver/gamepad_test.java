@@ -803,4 +803,9 @@ public class gamepad_test extends Activity implements OnGestureListener {
     private void disconnect() {
         this.finish();
     }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
 }

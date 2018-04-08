@@ -3718,6 +3718,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         mainapp.applyTheme(this);
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle)); // needed in case the langauge was changed from the default
 
         setContentView(R.layout.throttle);
 
@@ -5387,4 +5388,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         alert.show();
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
 }

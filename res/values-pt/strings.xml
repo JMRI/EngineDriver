@@ -374,7 +374,7 @@
 
     <string name="prefRightDirectionButtonsTitle">Etiqueta Botão Direção Direito</string>
     <string name="prefRightDirectionButtonsSummary">Etiquetas para todos os botões direção DIREITOS. Inserir \'Reverso\' ou deixarem branco para funcionamento normal.</string>
-    <string name="prefRightDirectionButtonsDefaultValue">Inverter</string>
+    <string name="prefRightDirectionButtonsDefaultValue">Reverso</string>
 
     <string name="prefThemeTitle">Tema/Estilo</string>
     <string name="prefThemeSummary">Tema App. NECESSITA reiniciar o Enfine Driver. \nNecessita Android Honeycomb ou sucessivo.</string>
@@ -391,6 +391,9 @@
 
     <string name="prefAccelerometerShakeThresholdTitle">Patamar agitar</string>
     <string name="prefAccelerometerShakeThresholdSummary">Patamar no qual a agitação será registrada. (1.5&#8211;3.5).Valores abaixos responderão a uma ação mais suave.\nNecessita reiniciar Engine Driver para a mudança  ter efeito.</string>
+
+    <string name="prefLocaleTitle">Localização</string>
+    <string name="prefLocaleSummary">Idioma para usar. \nATENÇÃO! Engine Driver irá reiniciar imediatamente. Etiquetas de botão de direção serão redefinidas.</string>
 
     <string name="functionButton00DefultValue">Luz</string>
     <string name="functionButton01DefultValue">Sino</string>
@@ -443,9 +446,12 @@
     <string name="toastSwipeUpScreenDimmed">Tela Controlador Esmaecida - Deslizar para reativar</string>
     <string name="toastSwipeUpViewHidden">Vista Web temporariamente escondida. Para esconder permanentemente alterar as preferências</string>
     <string name="toastThrottleAlertEstop">Alerta: Locomotiva %%1%% está Configurada em estado de ESTOP</string>
+
     <string name="toastPreferencesOutsideLimits">O valor inserido está fora dos limites  (%%1%%-%%2%%). Reiniciado para %%3%%.</string>
     <string name="toastPreferencesNotNumeric">O valor inserido não é um número.(%%1%%-%%2%%). Reiniciado para %%3%%.</string>
     <string name="toastPreferencesResetSucceeded">Preferências Reiniciadas a valores Padrão!</string>
+<!--    <string name="toastPreferencesLocaleChange">Engine Driver reiniciado com o idioma escolhido.</string> -->
+
     <string name="toastTurnoutInvalidNumber">Numero de desvio inválido.</string>
     <string name="toastTurnoutCommandTo">Comando enviado para o desvio %%1%%</string>
     <string name="toastTurnoutCommandToClose">Reto</string>

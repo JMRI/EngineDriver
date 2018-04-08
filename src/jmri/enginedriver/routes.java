@@ -300,6 +300,7 @@ public class routes extends Activity implements OnGestureListener {
 //      setTitleToIncludeThrotName();
 
         mainapp.applyTheme(this);
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_routes)); // needed in case the langauge was changed from the default
 
         setContentView(R.layout.routes);
         //put pointer to this activity's handler in main app's shared variable
@@ -598,4 +599,8 @@ public class routes extends Activity implements OnGestureListener {
         this.finish();
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
 }

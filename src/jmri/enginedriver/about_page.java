@@ -43,6 +43,7 @@ public class about_page extends Activity {
         mainapp = (threaded_application) this.getApplication();
 
         mainapp.applyTheme(this);
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_about)); // needed in case the langauge was changed from the default
 
         setContentView(R.layout.about_page);
 
