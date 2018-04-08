@@ -148,9 +148,9 @@
     <string name="prefIncreaseSliderHeightSummary">Usar acelerador, ou botoões de velocidade, mais altos no controlador.</string>
     <string name="prefHideSliderTitle">Esconder acelerador?</string>
     <string name="prefHideSliderSummary">Não mostrar acelerador, usar botões de velocidade.</string>
-    <string name="prefHideSliderAndSpeedButtonsTitle">Esconder acelerador E Botões de velocidade?</string>
+    <string name="prefHideSliderAndSpeedButtonsTitle">Escond. Acel. E Botões de velocidade?</string>
     <string name="prefHideSliderAndSpeedButtonsSummary">Não mostrar nem acelerador nem botões de velocidade.\nNota: Ignora as opções  \'Esconder Acelerador\', \'Altura Acelerador\' e \'Mostrar Botões velocidades\' .</string>
-    <string name="prefDirChangeWhileMovingTitle">Inversão de direção em movimento?</string>
+    <string name="prefDirChangeWhileMovingTitle">Inversão direção em movimento?</string>
     <string name="prefDirChangeWhileMovingSummary">Permitir inversão de direção em movimento.</string>
     <string name="prefStopOnDirectionChangeTitle">Parar ao inverter direção?</string>
     <string name="prefStopOnDirectionChangeSummary">Parar o trem se inverter direção em movimento.</string>
@@ -227,7 +227,7 @@
     <string name="toastEsuMc2NoButtonPresses">Pressão de botões não permitida:Mobile Control II atualmente em modo parada</string>
 
     <string name="prefDefaultFunctionsTitle">Preferências Funções Padrão</string>
-    <!-- <string name="prefDefaultFunctionsSummary"></string> -->
+    <string name="prefDefaultFunctionsSummary">Quando e como as etiquetas das funções padrão são mostradas.</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Usar etiquestas funções padrão?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Visualizar as etiquetas padrão das funções no lugar das etiquetas das entradas da lista de locomotivas.</string>
 
@@ -304,11 +304,11 @@
     <string name="logViewer">Ver Relatório</string>
     <string name="clearLocoList">Limpar Lista</string>
     <string name="ClearConnList">Limpar Lista Recente</string>
-    <string name="prefEmerStopTitle">Mostrar Botão Parada de Emergência?</string>
+    <string name="prefEmerStopTitle">Mostrar Botão Parada Emergência?</string>
     <string name="prefEmerStopSummary">Mostrar Botão Parada de Emergência da locomotiva na barra de ação?</string>
     <string name="EStop">Estop</string>
     <string name="PowerButtonBar">botão_energia</string>
-    <string name="prefPowerButtonBarTitle">Mostrar botão de energia da maquete?</string>
+    <string name="prefPowerButtonBarTitle">Mostrar botão energia maquete?</string>
     <string name="prefPowerButtonBarSummary">Mostrar botão de energia nas telas Controlador, Desvios e Rotas?</string>
     <string name="prefSliderLeftMarginTitle">Margem Controlador de Velocidade</string>
     <string name="prefSliderLeftMarginSummary">Número de pixels de deslocamento das bordas do controlador de velocidade.</string>
@@ -377,7 +377,7 @@
     <string name="prefRightDirectionButtonsDefaultValue">Reverso</string>
 
     <string name="prefThemeTitle">Tema/Estilo</string>
-    <string name="prefThemeSummary">Tema App. NECESSITA reiniciar o Enfine Driver. \nNecessita Android Honeycomb ou sucessivo.</string>
+    <string name="prefThemeSummary">Tema App. NECESSITA reiniciar o Engine Driver. \nNecessita Android Honeycomb ou sucessivo.</string>
 
     <string name="prefHideDemoServerTitle">Esconder Servidor Demo</string>
     <string name="prefHideDemoServerSummary">Esconder o servidor demo \'jmri.mstevetodd.com\' na lista de conexões.</string>
@@ -393,7 +393,7 @@
     <string name="prefAccelerometerShakeThresholdSummary">Patamar no qual a agitação será registrada. (1.5&#8211;3.5).Valores abaixos responderão a uma ação mais suave.\nNecessita reiniciar Engine Driver para a mudança  ter efeito.</string>
 
     <string name="prefLocaleTitle">Localização</string>
-    <string name="prefLocaleSummary">Idioma para usar. \nATENÇÃO! Engine Driver irá reiniciar imediatamente. Etiquetas de botão de direção serão redefinidas.</string>
+    <string name="prefLocaleSummary">Idioma para usar. \nATENÇÃO! Engine Driver irá reiniciar imediatamente. As etiquetas dos botões de direção serão redefinidas.</string>
 
     <string name="functionButton00DefultValue">Luz</string>
     <string name="functionButton01DefultValue">Sino</string>

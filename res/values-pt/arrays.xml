@@ -153,7 +153,7 @@
     </string-array>
 
     <string-array name="prefLocaleEntries">  <!-- display version -->
-        <item>Use a configuração global do Phoneg</item>
+        <item>Usar a configuração global do telefone</item>
         <item>Inglês (EUA) - padrão do Engine Driver</item>
         <item>Italiano</item>
         <item>Português</item>

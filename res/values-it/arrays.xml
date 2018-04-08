@@ -155,7 +155,7 @@
     </string-array>
 
     <string-array name="prefLocaleEntries">  <!-- display version -->
-        <item>Usa le impostazioni globali del telefono</item>
+        <item>Usare le impostazioni globali del telefono</item>
         <item>Inglese (USA) - Impostazione predefinita Engine Driver</item>
         <item>Italiano</item>
         <item>Portoghese</item>

@@ -148,10 +148,10 @@
     <string name="prefIncreaseSliderHeightTitle">Aumentare altezza acceleratore?</string>
     <string name="prefIncreaseSliderHeightSummary">Usare acceleratore, o Pulsanti Velocitá, più alti per il controllore.</string>
     <string name="prefHideSliderTitle">Nascondere acceleratore?</string>
-    <string name="prefHideSliderSummary">Non mostrare acceleratore., usare pulsanti velocità al suo posto.</string>
-    <string name="prefHideSliderAndSpeedButtonsTitle">Nascondere acceleratore E Pulsanti Velocità? </string>
+    <string name="prefHideSliderSummary">Non mostrare acceleratore, usare pulsanti velocità al suo posto.</string>
+    <string name="prefHideSliderAndSpeedButtonsTitle">Nasc. Accel. E Pulsanti Velocità?</string>
     <string name="prefHideSliderAndSpeedButtonsSummary">Non mostrare nè acceleratore nè Pulsanti di velocità.\nNota: Ignora le ozioni  \'Nascondi Acceleratore\', \'Altezza Acceleratore\' e \'Mostrare Pulsanti velocità\' .</string>
-    <string name="prefDirChangeWhileMovingTitle">Inversione di drezione in movimento?</string>
+    <string name="prefDirChangeWhileMovingTitle">Inversione dir. in movimento?</string>
     <string name="prefDirChangeWhileMovingSummary">Permettere inversione di direzione in movimento.</string>
     <string name="prefStopOnDirectionChangeTitle">Stop per inversione di direzione?</string>
     <string name="prefStopOnDirectionChangeSummary">Ferma il treno all\'inversione di direzione in movimento.</string>
@@ -182,7 +182,7 @@
     <string name="prefGamePadSpeedButtonsRepeatTitle">Velocità di ripetizione dei pulsanti velocità.</string>
     <string name="prefGamePadSpeedButtonsRepeatSummary">Ritardo fra le ripetizioni del pulsante velocitá del Gamepad. Minore è più veloce.</string>
 
-    <string name="prefGamePadSpeedButtonsSpeedStepTitle">Incremento pulsante di velcoità</string>
+    <string name="prefGamePadSpeedButtonsSpeedStepTitle">Incremento pulsante di velocità</string>
     <string name="prefGamePadSpeedButtonsSpeedStepSummary">Quanto i pulsanti del Gamepad alterano la velocità.</string>
 
     <string name="prefGamePadButton1Title">Azione del pulsante del Gamepad</string>
@@ -228,7 +228,7 @@
     <string name="toastEsuMc2NoButtonPresses">Pressione pulsanti non permessa: Mobile Control II attualmente in modalitá stop</string>
 
     <string name="prefDefaultFunctionsTitle">Preferenze Funzioni Default</string>
-    <!-- <string name="prefDefaultFunctionsSummary"></string> -->
+    <string name="prefDefaultFunctionsSummary">Quando e come le etichette funzioni di default sono visualizzate.</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Usare etichette funzioni default?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Visualizzare le etichette funzione di default al posto delle etichette delle entrate dell\'elenco locomotive.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Diminuire altezza numero Locomotiva?</string>
@@ -304,14 +304,14 @@
     <string name="logViewer">Vedere Relazione</string>
     <string name="clearLocoList">Pulire Lista</string>
     <string name="ClearConnList">Pulire LIsta Recente</string>
-    <string name="prefEmerStopTitle">Mostrate Pulsante Fermata di Emergenza?</string>
+    <string name="prefEmerStopTitle">Mostrate Puls. Fermata Emergenza?</string>
     <string name="prefEmerStopSummary">Mostrate Pulsante Fermata di Emergenza della locomotiva nella barra di azione?</string>
     <string name="EStop">Estop</string>
     <string name="PowerButtonBar">pulsante_energia</string>
-    <string name="prefPowerButtonBarTitle">Mostrare pulsante energia del plastico?</string>
+    <string name="prefPowerButtonBarTitle">Mostrare puls. energia plastico?</string>
     <string name="prefPowerButtonBarSummary">Mostrare pulsante energia negli schermi Controllore, Scambi e Rotte?</string>
     <string name="prefSliderLeftMarginTitle">Margine Controllo di Velocità</string>
-    <string name="prefSliderLeftMarginSummary">Numero di pixels di dislocamento dei bordi delcontrollo di velocità.</string>
+    <string name="prefSliderLeftMarginSummary">Numero di pixels di dislocamento dei bordi del controllo di velocità.</string>
 
     <string name="PrefConnectToFirstServerTitle">Auto-Connessione al primo Server WiThrottle?</string>
     <string name="PrefConnectToFirstServerSummary">Connessione automatica al primo Server WiThrottle trovato?</string>
@@ -361,7 +361,7 @@
     <string name="prefImportExportErrorNotConnected">Host non connesso.</string>
 
     <string name="prefSwapForwardReverseButtonsTitle">Cambia Direzione Pulsanti</string>
-    <string name="prefSwapForwardReverseButtonsSummary">Scambia permanentemente i due Plsanti Direzione per tutti i controllori.</string>
+    <string name="prefSwapForwardReverseButtonsSummary">Scambia permanentemente i due Pulsanti Direzione per tutti i controllori.</string>
     <string name="prefSwapForwardReverseButtonsLongPressTitle">Pressione prolungata provoca scambio Pulsanti Direzione</string>
     <string name="prefSwapForwardReverseButtonsLongPressSummary">Invertire temporaneamente i due Pulsanti Direzione con una pressione prolungata di qualunque Pulsante Direzione.</string>
     <string name="prefGamepadSwapForwardReverseWithScreenButtonsTitle">Scambaire Pulsanti di Direzione con i Pulsanti Schermo</string>
@@ -370,7 +370,7 @@
     <string name="prefGamepadTestEnforceTestingSummary">Testare i gampead ogni volta che sono connessi.</string>
 
     <string name="prefLeftDirectionButtonsTitle">Etichetta Pulsante Direzione Sinistro</string>
-    <string name="prefLeftDirectionButtonsSummary">Etichette per tutti i pulsanti direzione DESTRI. Inserire \'Avanti\' o lasciare in bianco per funzionamento normale.</string>
+    <string name="prefLeftDirectionButtonsSummary">Etichette per tutti i pulsanti direzione SINISTRI. Inserire \'Avanti\' o lasciare in bianco per funzionamento normale.</string>
     <string name="prefLeftDirectionButtonsDefaultValue">Avanti</string>
 
     <string name="prefRightDirectionButtonsTitle">Etichetta Pulsante Direzione Destro</string>
@@ -397,8 +397,8 @@
     <string name="prefAccelerometerShakeThresholdTitle">Livello scuotimento</string>
     <string name="prefAccelerometerShakeThresholdSummary">Livello al quale lo scuotimento sará registrato.(1.5&#8211;3.5) Valori minori risponderanno ad una azione più lieve.\nRichiede il riavvio di Engine Driver per avere effetto.</string>
 
-    <string name="prefLocaleTitle">Posizione</string>
-    <string name="prefLocaleSummary">Lingua da usare. \nAVVERTIMENTO! Engine Driver si riavvierà immediatamente. Le etichette dei pulsanti di direzione verranno ripristinate.</string>
+    <string name="prefLocaleTitle">Localizzazione</string>
+    <string name="prefLocaleSummary">Lingua da usare. \nATTENZIONE! Engine Driver si riavvierà immediatamente. Le etichette dei pulsanti di direzione verranno ripristinate.</string>
 
     <string name="gamepadTestButtonLabelDpadUp">Su</string>
     <string name="gamepadTestButtonLabelDpadDown">Giu</string>
