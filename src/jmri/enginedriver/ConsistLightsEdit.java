@@ -48,6 +48,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import android.content.Context;
+
 import jmri.enginedriver.Consist;
 import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.R;
@@ -178,6 +180,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         }
 
         mainapp.applyTheme(this);
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_ConsistLightsEdit)); // needed in case the langauge was changed from the default
 
         setContentView(R.layout.consist_lights);
         //put pointer to this activity's handler in main app's shared variable
@@ -376,5 +379,10 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
 
     private void disconnect() {
         this.finish();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 }

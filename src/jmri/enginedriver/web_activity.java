@@ -139,6 +139,7 @@ public class web_activity extends Activity {
         setContentView(R.layout.web_activity);
 
         mainapp.applyTheme(this);
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_web)); // needed in case the langauge was changed from the default
 
         webView = (WebView) findViewById(R.id.webview);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
@@ -405,4 +406,8 @@ public class web_activity extends Activity {
         firstUrl = null;
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
 }

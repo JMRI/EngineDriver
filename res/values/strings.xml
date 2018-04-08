@@ -465,6 +465,10 @@
     <string name="prefAccelerometerShakeThresholdSummary">Threshold at which the shake will register. (1.5&#8211;3.5) Lower value will respond to a gentle action.\nRequires restart of engine Driver after changing to take effect.</string>
     <string name="prefAccelerometerShakeThresholdDefaultValue">2.0</string>
 
+    <string name="prefLocaleTitle">Localisation</string>
+    <string name="prefLocaleSummary">Language to use.\nWARNING! Engine Driver will restart immediately. Direction Button labels will be reset.</string>
+    <string name="prefLocaleDefaultValue">Default</string>
+
     <string name="functionButton00DefultValue">Light</string>
     <string name="functionButton01DefultValue">Bell</string>
     <string name="functionButton02DefultValue">Horn</string>
@@ -565,6 +569,7 @@
     <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%%1%%-%%2%%). Reset to %%3%%.</string>
     <string name="toastPreferencesNotNumeric">Value entered is not numeric (%%1%%-%%2%%). Reset to %%3%%.</string>
     <string name="toastPreferencesResetSucceeded">Preferences Reset to defaults!</string>
+<!--    <string name="toastPreferencesLocaleChange">Engine Driver restarted with chosen Language.</string> -->
 
     <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Invalid turnout number.</string>

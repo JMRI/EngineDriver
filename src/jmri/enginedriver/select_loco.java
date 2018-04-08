@@ -589,6 +589,7 @@ public class select_loco extends Activity {
         }
 
         mainapp.applyTheme(this);
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_select_loco)); // needed in case the langauge was changed from the default
 
         setContentView(R.layout.select_loco);
 
@@ -907,5 +908,10 @@ public class select_loco extends Activity {
 
             return view;
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 }
