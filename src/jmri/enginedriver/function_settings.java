@@ -82,6 +82,7 @@ public class function_settings extends Activity {
         //setTitleToIncludeThrotName();
 
         mainapp.applyTheme(this);
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_functions)); // needed in case the langauge was changed from the default
 
         setContentView(R.layout.function_settings);
         orientationChange = false;
@@ -461,4 +462,9 @@ public class function_settings extends Activity {
         }
     }
 
+    // needed in case the langauge was changed from the default
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
 }

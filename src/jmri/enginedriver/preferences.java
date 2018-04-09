@@ -47,6 +47,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import android.content.Context;
+
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 
 public class preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
@@ -93,6 +95,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         mainapp = (threaded_application) getApplication();
         mainapp.applyTheme(this);
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_preferences)); // needed in case the langauge was changed from the default
 
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
@@ -325,8 +328,22 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 limitIntPrefValue(sharedPreferences, key, 0, 29, "29");
                 mainapp.set_default_function_labels(false);
                 break;
-
+            case "prefLocale":
+                sharedPreferences.edit().putString("prefLeftDirectionButtons", "").commit();
+                sharedPreferences.edit().putString("prefRightDirectionButtons", "").commit();
+                forceRestartApp();
+                break;
         }
+    }
+
+    void forceRestartApp() {
+        // Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesLocaleChange), Toast.LENGTH_LONG).show(); // app dies before this shows
+
+        Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+        Runtime.getRuntime().exit(0); // really force the kill
     }
 
     void start_gamepad_test_activity() {
@@ -665,4 +682,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     }
 
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
 }

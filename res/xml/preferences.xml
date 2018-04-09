@@ -28,6 +28,14 @@
         android:summary="@string/prefThemeSummary"
         android:title="@string/prefThemeTitle" />
 
+    <ListPreference
+        android:defaultValue="@string/prefLocaleDefaultValue"
+        android:entries="@array/prefLocaleEntries"
+        android:entryValues="@array/prefLocaleEntryValues"
+        android:key="prefLocale"
+        android:summary="@string/prefLocaleSummary"
+        android:title="@string/prefLocaleTitle" />
+
     <PreferenceCategory android:title="@string/prefThrottleStatusTitle" >
         <CheckBoxPreference
             android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"

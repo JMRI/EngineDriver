@@ -27,11 +27,13 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -83,6 +85,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
@@ -95,6 +98,8 @@ import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
+
+import static android.content.pm.PackageManager.GET_META_DATA;
 
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
@@ -190,6 +195,8 @@ public class threaded_application extends Application {
     public boolean firstCreate = true;
 
     public String connectedHostName = "";
+
+    public String languageCountry = "en";
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -2546,6 +2553,8 @@ public class threaded_application extends Application {
             activity.setTheme(R.style.app_theme_outline);
         } else if (prefTheme.equals("Ultra")) {
             activity.setTheme(R.style.app_theme_ultra);
+        } else {
+            activity.setTheme(R.style.app_theme);
         }
     }
 
@@ -2625,6 +2634,16 @@ public class threaded_application extends Application {
             buttonPanelContainer.addView(positiveButton, negativeButtonIndex);
         }
     }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        languageCountry = Locale.getDefault().getLanguage();
+        if (!Locale.getDefault().getCountry().equals("")) {
+            languageCountry = languageCountry + "_" + Locale.getDefault().getCountry();
+        }
+        super.attachBaseContext(LocaleHelper.onAttach(base, languageCountry));
+    }
+
 }
 
 

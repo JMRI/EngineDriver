@@ -19,6 +19,7 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -130,6 +131,7 @@ public class power_control extends Activity {
         }
 
         mainapp.applyTheme(this);
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_power_control)); // needed in case the langauge was changed from the default
 
         setContentView(R.layout.power_control);
 
@@ -221,4 +223,9 @@ public class power_control extends Activity {
         this.finish();
     }
 
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
 }

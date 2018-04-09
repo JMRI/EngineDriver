@@ -63,6 +63,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.AdapterView;
 
+import android.content.Context;
+
 public class connection_activity extends Activity {
     private ArrayList<HashMap<String, String>> connections_list;
     private ArrayList<HashMap<String, String>> discovery_list;
@@ -313,6 +315,7 @@ public class connection_activity extends Activity {
         }
 
         mainapp.applyTheme(this);
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect)); // needed in case the langauge was changed from the default
 
         setContentView(R.layout.connection);
 
@@ -697,4 +700,9 @@ public class connection_activity extends Activity {
        }
        return res;
    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
 }

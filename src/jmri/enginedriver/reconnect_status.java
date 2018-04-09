@@ -19,6 +19,7 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -113,6 +114,7 @@ public class reconnect_status extends Activity {
         }
 
         mainapp.applyTheme(this);
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_reconnect_status)); // needed in case the langauge was changed from the default
 
         setContentView(R.layout.reconnect_page);
 
@@ -174,4 +176,9 @@ public class reconnect_status extends Activity {
         this.finish();
     }
 
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
 }
