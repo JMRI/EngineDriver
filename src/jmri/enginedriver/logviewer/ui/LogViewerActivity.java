@@ -48,6 +48,8 @@ public class LogViewerActivity extends ListActivity{
 		if(mainapp.isForcingFinish()) {		// expedite
 			return;
 		}
+
+		mainapp.applyTheme(this);
 		setContentView(R.layout.log_main);
 
 		setTitleToIncludeThrotName();
