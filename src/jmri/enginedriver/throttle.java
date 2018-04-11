@@ -4534,6 +4534,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         b.setSelected(false);
         b.setPressed(false);
 
+        if (webView!=null) {
+            setImmersiveModeOn(webView);
+        }
+
         int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
         //Log.d("Engine_Driver","vThrotScrWrap.getHeight(), screenHeight=" + screenHeight);
         if (screenHeight == 0) {
@@ -4850,6 +4854,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (webView != null) {
+            setImmersiveModeOn(webView);
+        }
+
         // Handle all of the possible menu actions.
         Intent in;
         switch (item.getItemId()) {
