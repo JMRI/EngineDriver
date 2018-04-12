@@ -4782,6 +4782,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 webView.goBack();
                 webView.setInitialScale((int) (100 * scale)); // restore scale
             } else
+                if (webView != null) {
+                    setImmersiveModeOn(webView);
+                }
                 mainapp.checkExit(this);
             return (true); // stop processing this key
         } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
