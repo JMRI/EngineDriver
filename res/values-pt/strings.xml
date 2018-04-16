@@ -376,6 +376,9 @@
     <string name="prefRightDirectionButtonsSummary">Etiquetas para todos os botões direção DIREITOS. Inserir \'Reverso\' ou deixarem branco para funcionamento normal.</string>
     <string name="prefRightDirectionButtonsDefaultValue">Reverso</string>
 
+    <string name="prefDirectionButtonLongPressDelayTitle">Botão Direcional Longo Pressionar Atraso</string>
+    <string name="prefDirectionButtonLongPressDelaySummary">Quantos milissegundos constituem um toque longo para os botões de direção.</string>
+
     <string name="prefThemeTitle">Tema/Estilo</string>
     <string name="prefThemeSummary">Tema App. NECESSITA reiniciar o Engine Driver. \nNecessita Android Honeycomb ou sucessivo.</string>
 
