@@ -123,6 +123,15 @@
             </CheckBoxPreference>
 
             <EditTextPreference
+                android:defaultValue="@string/prefDirectionButtonLongPressDelayDefaultValue"
+                android:dialogTitle="@string/prefDirectionButtonLongPressDelayTitle"
+                android:key="prefDirectionButtonLongPressDelay"
+                android:maxLength="4"
+                android:summary="@string/prefDirectionButtonLongPressDelaySummary"
+                android:title="@string/prefDirectionButtonLongPressDelayTitle" />
+
+
+            <EditTextPreference
                 android:defaultValue="@string/prefLeftDirectionButtonsDefaultValue"
                 android:dialogTitle="@string/prefLeftDirectionButtonsTitle"
                 android:key="prefLeftDirectionButtons"
