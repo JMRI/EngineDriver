@@ -455,6 +455,10 @@
     <string name="prefDirectionButtonsSummary">Labels for all direction buttons.</string>
     <string name="prefDirectionButtonsDefaultValue">Forward</string>
 
+    <string name="prefDirectionButtonLongPressDelayTitle">Direction Button Long Press Delay</string>
+    <string name="prefDirectionButtonLongPressDelaySummary">How many milliseconds constitutes a long press for the direction buttons.</string>
+    <string name="prefDirectionButtonLongPressDelayDefaultValue">1000</string>
+
     <string name="prefAccelerometerTitle">Accelerometer Preferences</string>
     <string name="prefAccelerometerSummary">Options for device motion on the Throttle Page</string>
     <string name="prefAccelerometerShakeTitle">Shake Action</string>

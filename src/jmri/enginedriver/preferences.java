@@ -333,6 +333,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 sharedPreferences.edit().putString("prefRightDirectionButtons", "").commit();
                 forceRestartApp();
                 break;
+            case "prefDirectionButtonLongPressDelay":
+                // limit check new value
+                limitIntPrefValue(sharedPreferences, key, 500, 9999, "1000");
+                break;
         }
     }
 

@@ -424,6 +424,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private String prefLeftDirectionButtons = DIRECTION_BUTTON_LEFT_TEXT;
     private String prefRightDirectionButtons = DIRECTION_BUTTON_RIGHT_TEXT;
+    private int prefDirectionButtonLongPressDelay = 1000;
 
     //Throttle Array
     private final char[] allThrottleLetters = {'T', 'S', 'G'};
@@ -1125,6 +1126,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         DIRECTION_BUTTON_LEFT_TEXT = getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsDefaultValue).trim();
         DIRECTION_BUTTON_RIGHT_TEXT = getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsDefaultValue).trim();
+
+        prefDirectionButtonLongPressDelay = preferences.getIntPrefValue(prefs, "prefDirectionButtonLongPressDelay", getApplicationContext().getResources().getString(R.string.prefDirectionButtonLongPressDelayDefaultValue));
 
         FUNCTION_BUTTON_LOOK_FOR_WHISTLE = getApplicationContext().getResources().getString(R.string.functionButtonLookForWhistle).trim();
         FUNCTION_BUTTON_LOOK_FOR_HORN = getApplicationContext().getResources().getString(R.string.functionButtonLookForHorn).trim();
@@ -3349,7 +3352,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     // Listeners for the direction buttons
-    private class direction_button_touch_listener implements View.OnClickListener, View.OnLongClickListener {
+    private class direction_button_touch_listener implements View.OnTouchListener {
         int function;
         char whichThrottle;     // T for first throttle, S for second, G for third
 
@@ -3382,40 +3385,49 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         @Override
-        public boolean onLongClick(View v) {
-            int throttleIndex = getThrottleIndexFromChar(whichThrottle);
+        public boolean onTouch(final View v, MotionEvent event) {
 
-            if(isChangeDirectionAllowed(whichThrottle)) { // only respond to the long click if it is ok to change directions
-                doButtonPress();  //in case the the direction button long clicked is not the current direction change the direction first
+            if (v.isPressed() && event.getAction() == MotionEvent.ACTION_UP) {
+                long eventDuration = event.getEventTime() - event.getDownTime();
+                if (eventDuration <= prefDirectionButtonLongPressDelay) { // click
 
-                 if (prefSwapForwardReverseButtonsLongPress) {
+                    // Log.d("Engine_Driver", "onTouch direction " + function + " action " +
+                    // event.getAction());
+
+                    // make the click sound once
                     v.playSoundEffect(SoundEffectConstants.CLICK);
-                    if (currentSwapForwardReverseButtons[throttleIndex]) {
-                        currentSwapForwardReverseButtons[throttleIndex] = false;
-                    } else {
-                        currentSwapForwardReverseButtons[throttleIndex] = true;
+
+                    doButtonPress();
+                    setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+
+
+                } else { // long click
+
+                    int throttleIndex = getThrottleIndexFromChar(whichThrottle);
+
+                    if (isChangeDirectionAllowed(whichThrottle)) { // only respond to the long click if it is ok to change directions
+                        doButtonPress();  //in case the the direction button long clicked is not the current direction change the direction first
+
+                        if (prefSwapForwardReverseButtonsLongPress) {
+                            v.playSoundEffect(SoundEffectConstants.CLICK);
+                            if (currentSwapForwardReverseButtons[throttleIndex]) {
+                                currentSwapForwardReverseButtons[throttleIndex] = false;
+                            } else {
+                                currentSwapForwardReverseButtons[throttleIndex] = true;
+                            }
+                            setDirectionButtonLabels();
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDirectionButtonsSwapped), Toast.LENGTH_SHORT).show();
+                        }
+                        doButtonPress();
                     }
-                    setDirectionButtonLabels();
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDirectionButtonsSwapped), Toast.LENGTH_SHORT).show();
+
+                    setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
                 }
-                doButtonPress();
             }
 
-            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
-            return true;
+            return false;
         }
 
-        @Override
-        public void onClick(View v) {
-            // Log.d("Engine_Driver", "onTouch direction " + function + " action " +
-            // event.getAction());
-
-            // make the click sound once
-            v.playSoundEffect(SoundEffectConstants.CLICK);
-
-            doButtonPress();
-            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
-        }
     }
 
         private class function_button_touch_listener implements View.OnTouchListener {
@@ -3838,8 +3850,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         //----------------------------------------
         bFwdT = (Button) findViewById(R.id.button_fwd_T);
         dbtl = new direction_button_touch_listener(direction_button.LEFT, 'T');
-        bFwdT.setOnClickListener(dbtl);
-        bFwdT.setOnLongClickListener(dbtl);
+        bFwdT.setOnTouchListener(dbtl);
 
         bStopT = (Button) findViewById(R.id.button_stop_T);
         fbtl = new function_button_touch_listener(function_button.STOP, 'T');
@@ -3847,19 +3858,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         bRevT = (Button) findViewById(R.id.button_rev_T);
         dbtl = new direction_button_touch_listener(direction_button.RIGHT, 'T');
-        bRevT.setOnClickListener(dbtl);
-        bRevT.setOnLongClickListener(dbtl);
+        bRevT.setOnTouchListener(dbtl);
         //----------------------------------------
         View v = findViewById(R.id.speed_cell_T);
         fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'T');
         v.setOnTouchListener(fbtl);
-        bRevT.setOnLongClickListener(dbtl);
 
         //----------------------------------------
         bFwdS = (Button) findViewById(R.id.button_fwd_S);
         dbtl = new direction_button_touch_listener(direction_button.LEFT, 'S');
-        bFwdS.setOnClickListener(dbtl);
-        bFwdS.setOnLongClickListener(dbtl);
+        bFwdS.setOnTouchListener(dbtl);
 
         bStopS = (Button) findViewById(R.id.button_stop_S);
         fbtl = new function_button_touch_listener(function_button.STOP, 'S');
@@ -3867,19 +3875,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         bRevS = (Button) findViewById(R.id.button_rev_S);
         dbtl = new direction_button_touch_listener(direction_button.RIGHT, 'S');
-        bRevS.setOnClickListener(dbtl);
-        bRevS.setOnLongClickListener(dbtl);
+        bRevS.setOnTouchListener(dbtl);
         //----------------------------------------
         v = findViewById(R.id.speed_cell_S);
         fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'S');
         v.setOnTouchListener(fbtl);
-        bRevS.setOnLongClickListener(dbtl);
 
         //----------------------------------------
         bFwdG = (Button) findViewById(R.id.button_fwd_G);
         dbtl = new direction_button_touch_listener(direction_button.LEFT, 'G');
-        bFwdG.setOnClickListener(dbtl);
-        bFwdG.setOnLongClickListener(dbtl);
+        bFwdG.setOnTouchListener(dbtl);
 
         bStopG = (Button) findViewById(R.id.button_stop_G);
         fbtl = new function_button_touch_listener(function_button.STOP, 'G');
@@ -3887,8 +3892,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         bRevG = (Button) findViewById(R.id.button_rev_G);
         dbtl = new direction_button_touch_listener(direction_button.RIGHT, 'G');
-        bRevG.setOnClickListener(dbtl);
-        bRevG.setOnLongClickListener(dbtl);
+        bRevG.setOnTouchListener(dbtl);
         //----------------------------------------
         v = findViewById(R.id.speed_cell_G);
         fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'G');
