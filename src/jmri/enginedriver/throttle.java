@@ -69,6 +69,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 
@@ -425,6 +426,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private String prefLeftDirectionButtons = DIRECTION_BUTTON_LEFT_TEXT;
     private String prefRightDirectionButtons = DIRECTION_BUTTON_RIGHT_TEXT;
     private int prefDirectionButtonLongPressDelay = 1000;
+    private boolean isDirectionButtonLongPress;
+    Handler directionButtonLongPressHandler = new Handler();
 
     //Throttle Array
     private final char[] allThrottleLetters = {'T', 'S', 'G'};
@@ -3384,24 +3387,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
         }
 
-        @Override
-        public boolean onTouch(final View v, MotionEvent event) {
-
-            if (v.isPressed() && event.getAction() == MotionEvent.ACTION_UP) {
-                long eventDuration = event.getEventTime() - event.getDownTime();
-                if (eventDuration <= prefDirectionButtonLongPressDelay) { // click
-
-                    // Log.d("Engine_Driver", "onTouch direction " + function + " action " +
-                    // event.getAction());
-
-                    // make the click sound once
-                    v.playSoundEffect(SoundEffectConstants.CLICK);
-
-                    doButtonPress();
-                    setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
-
-
-                } else { // long click
+        Runnable run = new Runnable() {
+            @Override
+            public void run() {
+                if (isDirectionButtonLongPress) {
 
                     int throttleIndex = getThrottleIndexFromChar(whichThrottle);
 
@@ -3409,7 +3398,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         doButtonPress();  //in case the the direction button long clicked is not the current direction change the direction first
 
                         if (prefSwapForwardReverseButtonsLongPress) {
-                            v.playSoundEffect(SoundEffectConstants.CLICK);
+                            //v.playSoundEffect(SoundEffectConstants.CLICK);
                             if (currentSwapForwardReverseButtons[throttleIndex]) {
                                 currentSwapForwardReverseButtons[throttleIndex] = false;
                             } else {
@@ -3424,8 +3413,28 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
                 }
             }
+        };
 
-            return false;
+        @Override
+        public boolean onTouch(final View v, MotionEvent event) {
+
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                isDirectionButtonLongPress = true;
+                directionButtonLongPressHandler.postDelayed(run, prefDirectionButtonLongPressDelay);
+
+                // Log.d("Engine_Driver", "onTouch direction " + function + " action " +
+                // event.getAction());
+
+                v.playSoundEffect(SoundEffectConstants.CLICK);  // make the click sound once
+
+                doButtonPress();
+                setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                isDirectionButtonLongPress = false;
+                directionButtonLongPressHandler.removeCallbacks(run);
+            }
+            return true;
         }
 
     }
