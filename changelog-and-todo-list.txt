@@ -1,3 +1,4 @@
+**Version 2.19
 **Version 2.18.1
  * option to change languages from the preferences screen
  * no longer requires an accelerometer in the device to install from the Play Store (reported bug)
