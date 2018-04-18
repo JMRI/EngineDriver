@@ -35,6 +35,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.hardware.Camera;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -177,6 +178,10 @@ public class threaded_application extends Application {
     public volatile Handler consist_lights_edit_msg_handler;
     public volatile Handler power_control_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
+
+    // for handling control of camera flash
+    public static Camera camera;
+    private boolean hasFlash = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 
     //these constants are used for onFling
     public static final int SWIPE_MIN_DISTANCE = 120;
@@ -2644,6 +2649,25 @@ public class threaded_application extends Application {
         super.attachBaseContext(LocaleHelper.onAttach(base, languageCountry));
     }
 
+    public boolean isFlashlightAvailable() {
+        return this.hasFlash;
+    }
+
+    public void setFlashlightOn() {
+        camera = Camera.open();
+        Camera.Parameters parameters = camera.getParameters();
+        parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        camera.setParameters(parameters);
+        camera.startPreview();
+    }
+
+    public void setFlashlightOff() {
+        if (camera != null) {
+            camera.stopPreview();
+            camera.release();
+            camera = null;
+        }
+    }
 }
 
 
