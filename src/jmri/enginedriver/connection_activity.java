@@ -484,7 +484,10 @@ public class connection_activity extends Activity {
     private class saveConnectionsList extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... params) {
+
             String errMsg = "";
+            //exit if values not set, avoid NPE reported to Play Store
+            if(connected_hostip == null || connected_port == 0) return errMsg;
 
             //if no SD Card present then nothing to do
             if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
@@ -517,8 +520,7 @@ public class connection_activity extends Activity {
                     String li = t.get("ip_address");
                     String lh = t.get("host_name");
                     Integer lp = Integer.valueOf(t.get("port"));
-                    //***        			if(connected_hostip != null && connected_port != 0)
-                    if (!connected_hostip.equals(li) || connected_port != lp) {  //write it out if not same as selected
+                    if (!connected_hostip.equals(li) || (connected_port != lp)) {  //write it out if not same as selected
                         list_output.format("%s:%s:%d\n", lh, li, lp);
                     }
                 }
