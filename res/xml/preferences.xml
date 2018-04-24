@@ -47,6 +47,11 @@
             android:key="show_layout_power_button_preference"
             android:summary="@string/prefPowerButtonBarSummary"
             android:title="@string/prefPowerButtonBarTitle" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefFlashlightButtonDefaultValue"
+            android:key="prefFlashlightButtonDisplay"
+            android:summary="@string/prefFlashlightSummary"
+            android:title="@string/prefFlashlightTitle" />
         <ListPreference
             android:defaultValue="@string/prefDisplayClockDefaultValue"
             android:entries="@array/DisplayClockEntries"

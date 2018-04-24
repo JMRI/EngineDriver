@@ -21,6 +21,7 @@
     <item android:id="@+id/power_control_mnu" android:title="@string/power"></item>
     <item android:id="@+id/preferences_mnu" android:title="@string/preferences"></item>
     <item android:id="@+id/about_mnu" android:title="@string/about"></item>
+    <item android:id="@+id/flashlight_button" android:showAsAction="ifRoom" android:title="@string/flashlightAction" android:visible="false"></item>
     <item android:id="@+id/power_layout_button" android:showAsAction="ifRoom" android:title="@string/PowerButtonBar" android:visible="false"></item>
     <item android:id="@+id/EmerStop" android:title="@string/EStop" android:visible="false" android:showAsAction="ifRoom"></item>
     <!-- android:showAsAction="ifRoom" -->

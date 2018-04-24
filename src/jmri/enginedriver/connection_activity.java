@@ -74,6 +74,7 @@ public class connection_activity extends Activity {
 
     //pointer back to application
     private threaded_application mainapp;
+    private Menu CMenu;
     //The IP address and port that are used to connect.
     private String connected_hostip;
     private String connected_hostname;
@@ -380,6 +381,10 @@ public class connection_activity extends Activity {
         if (prefs.getBoolean("connect_to_first_server_preference", false)) {
             connectA();
         }
+        if (CMenu != null) {
+            mainapp.displayFlashlightMenuButton(CMenu);
+            mainapp.setFlashlightButton(CMenu);
+        }
     }  //end of onResume
 
     @Override
@@ -424,6 +429,9 @@ public class connection_activity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.connection_menu, menu);
+        CMenu = menu;
+        mainapp.displayFlashlightMenuButton(menu);
+        mainapp.setFlashlightButton(menu);
         return true;
     }
 
@@ -450,6 +458,9 @@ public class connection_activity extends Activity {
             case R.id.ClearconnList:
                 clearConnectionsList();
                 getConnectionsList();
+                break;
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, CMenu);
                 break;
         }
         return super.onOptionsItemSelected(item);

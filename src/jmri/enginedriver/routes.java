@@ -418,6 +418,8 @@ public class routes extends Activity implements OnGestureListener {
         if (RMenu != null) {
             mainapp.displayEStop(RMenu);
             mainapp.displayPowerStateMenuButton(RMenu);
+            mainapp.displayFlashlightMenuButton(RMenu);
+            mainapp.setFlashlightButton(RMenu);
         }
         updateRouteEntry(); // enable/disable button
         // suppress popup keyboard until EditText is touched
@@ -531,6 +533,8 @@ public class routes extends Activity implements OnGestureListener {
         mainapp.setPowerStateButton(menu);
         mainapp.setWebMenuOption(menu);
         mainapp.setTurnoutsMenuOption(menu);
+        mainapp.displayFlashlightMenuButton(menu);
+        mainapp.setFlashlightButton(menu);
         return true;
     }
 
@@ -584,6 +588,9 @@ public class routes extends Activity implements OnGestureListener {
                 break;
             case R.id.power_layout_button:
                 mainapp.powerStateMenuButton();
+                break;
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, RMenu);
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -18,4 +18,5 @@
     <item android:id="@+id/preferences_mnu" android:title="@string/preferences"></item>
     <item android:id="@+id/about_mnu" android:title="@string/about"></item>
     <item android:id="@+id/ClearconnList" android:title="@string/ClearConnList"></item>
-</menu> 
+    <item android:id="@+id/flashlight_button" android:showAsAction="ifRoom" android:title="@string/flashlightAction" android:visible="false"></item>
+</menu>
