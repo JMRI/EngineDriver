@@ -703,7 +703,11 @@ public class threaded_application extends Application {
             }
             host_ip = null;
             port = 0;
-            doFinish = false;                   //ok for activities to run if restarted after this 
+            doFinish = false;                   //ok for activities to run if restarted after this
+
+            // make sure flashlight is switched off at shutdown
+            setFlashlightOff();
+            flashState = false;
         }
 
         private void sendThrottleName() {
