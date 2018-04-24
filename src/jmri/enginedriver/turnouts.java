@@ -585,6 +585,8 @@ public class turnouts extends Activity implements OnGestureListener {
         mainapp.setPowerStateButton(menu);
         mainapp.setWebMenuOption(menu);
         mainapp.setRoutesMenuOption(menu);
+        mainapp.displayFlashlightMenuButton(menu);
+        mainapp.setFlashlightButton(menu);
         return true;
     }
 
@@ -638,6 +640,9 @@ public class turnouts extends Activity implements OnGestureListener {
                 break;
             case R.id.power_layout_button:
                 mainapp.powerStateMenuButton();
+                break;
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, TuMenu);
                 break;
         }
         return super.onOptionsItemSelected(item);
