@@ -18,9 +18,9 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="flashlight_off.svg"
-   inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-xhdpi\flashlight_on.png"
-   inkscape:export-xdpi="14.4"
-   inkscape:export-ydpi="14.4">
+   inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-mdpi\flashlight_off.png"
+   inkscape:export-xdpi="7.2000008"
+   inkscape:export-ydpi="7.2000008">
   <defs
      id="defs4">
     <linearGradient
@@ -39,17 +39,16 @@
          id="stop4151" />
     </linearGradient>
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient4139"
        osb:paint="gradient">
       <stop
-         style="stop-color:#2b2200;stop-opacity:1;"
+         id="stop4143"
          offset="0"
-         id="stop4141" />
+         style="stop-color:#2b2200;stop-opacity:0;" />
       <stop
-         style="stop-color:#2b2200;stop-opacity:0;"
+         id="stop4141"
          offset="1"
-         id="stop4143" />
+         style="stop-color:#2b2200;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
@@ -70,7 +69,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="134.26225"
+     inkscape:cx="243.67406"
      inkscape:cy="248.42618"
      inkscape:document-units="px"
      inkscape:current-layer="g4165"
@@ -93,7 +92,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -114,7 +113,10 @@
          y="-196.9404"
          transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)"
          ry="95"
-         rx="95" />
+         rx="95"
+         inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-xhdpi\flashlight_off.png"
+         inkscape:export-xdpi="14.4"
+         inkscape:export-ydpi="14.4" />
       <rect
          ry="13"
          y="462.36221"

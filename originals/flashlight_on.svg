@@ -18,9 +18,9 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="flashlight_on.svg"
-   inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-xhdpi\flashlight_on.png"
-   inkscape:export-xdpi="14.4"
-   inkscape:export-ydpi="14.4">
+   inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-hdpi\flashlight_on.png"
+   inkscape:export-xdpi="10.8"
+   inkscape:export-ydpi="10.8">
   <defs
      id="defs4">
     <linearGradient
@@ -39,17 +39,16 @@
          id="stop4151" />
     </linearGradient>
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient4139"
        osb:paint="gradient">
       <stop
-         id="stop4143"
+         style="stop-color:#2b2200;stop-opacity:1;"
          offset="0"
-         style="stop-color:#2b2200;stop-opacity:0;" />
+         id="stop4141" />
       <stop
-         id="stop4141"
+         style="stop-color:#2b2200;stop-opacity:0;"
          offset="1"
-         style="stop-color:#2b2200;stop-opacity:1;" />
+         id="stop4143" />
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
@@ -71,7 +70,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1"
      inkscape:cx="134.26225"
-     inkscape:cy="248.42618"
+     inkscape:cy="258.0875"
      inkscape:document-units="px"
      inkscape:current-layer="g4165"
      showgrid="false"
@@ -114,7 +113,10 @@
          y="-196.9404"
          transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)"
          ry="95"
-         rx="95" />
+         rx="95"
+         inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-xhdpi\flashlight_on.png"
+         inkscape:export-xdpi="14.4"
+         inkscape:export-ydpi="14.4" />
       <path
          transform="matrix(0.68392089,0.00183489,-0.00166605,0.75323097,145.88887,124.46345)"
          inkscape:transform-center-y="-0.20872218"
