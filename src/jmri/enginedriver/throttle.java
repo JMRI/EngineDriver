@@ -1656,31 +1656,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
               applySpeedRelatedOptions(throttleIndex);}  // repeat for all three throttles
     }
 
-//    void applySpeedRelatedOptions(char whichThrottle) {
     void applySpeedRelatedOptions(int whichThrottle) {
-//        int throttleIndexNo = getThrottleIndexFromChar(whichThrottle);
 
-        // default to throttle 'T'
-//        Button bFwd = bFwdT;
-//        Button bRev = bRevT;
-//        Button bSel = bSelT;
-//        boolean tIsEnabled = llT.isEnabled();
-//        int dir = dirT;
-//        switch (whichThrottle) {
-//            case 'S':
-//                bFwd = bFwdS;
-//                bRev = bRevS;
-//                bSel = bSelS;
-//                tIsEnabled = llS.isEnabled();
-//                dir = dirS;
-//                break;
-//            case 'G':
-//                bFwd = bFwdG;
-//                bRev = bRevG;
-//                bSel = bSelG;
-//                tIsEnabled = llG.isEnabled();
-//                dir = dirG;
-//        }
         Button bFwd = bFwds[whichThrottle];
         Button bRev = bRevs[whichThrottle];
         Button bSel = bSels[whichThrottle];
@@ -1695,7 +1672,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 bRev.setEnabled(true);
             } else {
                 if (dir == 1) {
-//                    if (!directionButtonsAreCurrentlyReversed(throttleIndexNo)) {
                     if (!directionButtonsAreCurrentlyReversed(whichThrottle)) {
                         bFwd.setEnabled(true);
                         bRev.setEnabled(false);
@@ -1704,7 +1680,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         bRev.setEnabled(true);
                     }
                 } else {
-//                    if (!directionButtonsAreCurrentlyReversed(throttleIndexNo)) {
                     if (!directionButtonsAreCurrentlyReversed(whichThrottle)) {
                         bFwd.setEnabled(false);
                         bRev.setEnabled(true);
@@ -1759,7 +1734,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     } // enable_disable_buttons_for_view
 
     // update the appearance of all function buttons
-//    void set_all_function_states(char whichThrottle) {
     void set_all_function_states(int whichThrottle) {
         // Log.d("Engine_Driver","set_function_states");
 
@@ -1772,7 +1746,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     // update a function button appearance based on its state
-//    void set_function_state(char whichThrottle, int function) {
     void set_function_state(int whichThrottle, int function) {
         // Log.d("Engine_Driver","starting set_function_request");
         Button b;
@@ -1853,7 +1826,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     // For TTS
-//    private void speakWords(int msgNo, char whichThrottle) {
     private void speakWords(int msgNo, int whichThrottle) {
         boolean result = false;
         String speech = "";
@@ -1865,7 +1837,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             if (whichLastVolume != whichThrottle) {
                                 result = true;
                                 whichLastVolume = whichThrottle;
-//                                speech = getApplicationContext().getResources().getString(R.string.TtsVolumeThrottle) + " " + (getThrottleIndexFromChar(whichThrottle) + 1);
                                 speech = getApplicationContext().getResources().getString(R.string.TtsVolumeThrottle) + " " + (whichThrottle + 1);
                             }
                             if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
@@ -1881,7 +1852,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             if (whichLastGamepad1 != whichThrottle) {
                                 result = true;
                                 whichLastGamepad1 = whichThrottle;
-//                                speech = getApplicationContext().getResources().getString(R.string.TtsGamepadThrottle) + " " + (getThrottleIndexFromChar(whichThrottle) + 1);
                                 speech = getApplicationContext().getResources().getString(R.string.TtsGamepadThrottle) + " " + (whichThrottle + 1);
                             }
                             if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
@@ -1991,21 +1961,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private void setGamepadIndicator() {
         // hide or display gamepad number indicator based on variable
-//        tvGamePadT.setText(gamePadThrottleAssignment[0]);
-//        tvGamePadS.setText(gamePadThrottleAssignment[1]);
-//        tvGamePadG.setText(gamePadThrottleAssignment[2]);
-
-//        if (gamePadThrottleAssignment[0].equals("1")) {
-//            setSelectedLocoAdditionalIndicator('T',false);
-//            speakWords(TTS_MSG_GAMEPAD_THROTTLE,'T');
-//        } else if (gamePadThrottleAssignment[1].equals("1")) {
-//            setSelectedLocoAdditionalIndicator('S',false);
-//            speakWords(TTS_MSG_GAMEPAD_THROTTLE,'S');
-//        } else if (gamePadThrottleAssignment[2].equals("1")) {
-//            setSelectedLocoAdditionalIndicator('G',false);
-//            speakWords(TTS_MSG_GAMEPAD_THROTTLE,'G');
-//        } else setSelectedLocoAdditionalIndicator(' ',false);
-
         boolean isSet = false;
         for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
             if (gamePadThrottleAssignment[throttleIndex]!=-1) {
@@ -2191,7 +2146,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             gamePadThrottleAssignment[whichThrottle] = gamePadThrottleAssignment[fromThrottle];
             gamePadIds[fromThrottle] = 0;
             gamePadDeviceIdsTested[fromThrottle] = -1;
-//            gamePadThrottleAssignment[fromThrottle] = "";
             gamePadThrottleAssignment[fromThrottle] = -1;
             setGamepadIndicator();
         }
@@ -2219,10 +2173,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (eventDeviceId >= 0) { // event is from a gamepad (or at least not from a screen touch)
             whichGamePad = -1;  // gamepad
 
-//            String reassigningGamepad = "X";
             int reassigningGamepad = -1;
             int i;
-//            int numThrottles = allThrottleLetters.length;
             // find out if this gamepad is alread assigned
             for (i = 0; i < mainapp.numThrottles; i++) {
                 if (gamePadIds[i] == eventDeviceId) {
@@ -2262,7 +2214,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     if (gamePadIds[i] == 0) {  // throttle is not assigned a gamepad
                         if (getConsist(i).isActive()) { // found next active throttle
                             gamePadIds[i] = eventDeviceId;
-//                            if (reassigningGamepad.equals("X")) { // not a reassignment
                             if (reassigningGamepad==-1) { // not a reassignment
                                 gamePadThrottleAssignment[i] = GAMEPAD_INDICATOR[whichGamePadDeviceId];
                             } else { // reasigning
@@ -3500,6 +3451,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (mainapp.numThrottles > MAX_SCREEN_THROTTLES) {   // Maximum number of throttles this screen supports
             mainapp.numThrottles = MAX_SCREEN_THROTTLES;
         }
+        if (mainapp.maxThrottles > MAX_SCREEN_THROTTLES) {   // Maximum number of throttles this screen supports
+            mainapp.maxThrottles = MAX_SCREEN_THROTTLES;
+        }
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
@@ -3578,7 +3532,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
 //        int numT = Math.max(mainapp.numThrottles, 3); // prevent this from stomping over throttles 3-5
 
-        for (int i=0; i < mainapp.numThrottles; i++) {
+        for (int i=0; i < mainapp.maxThrottles; i++) {
             // set listener for select loco buttons
             Button bSel = (Button) findViewById(R.id.button_select_loco_0);
             TextView tvLeft = (TextView) findViewById(R.id.loco_left_direction_indicaton_0);
@@ -3980,7 +3934,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //        changeTimerT = new ChangeDelay('T');
 //        changeTimerG = new ChangeDelay('G');
 //        changeTimerS = new ChangeDelay('S');
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             changeTimers[throttleIndex] = new ChangeDelay(throttleIndex);
         }
 
@@ -4045,7 +3999,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //        enable_disable_buttons('S');
 //        enable_disable_buttons('G');
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             enable_disable_buttons(throttleIndex);
         }
 
@@ -4086,7 +4040,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 // disable buttons for all throttles
 //                for (char t: allThrottleLetters) {
 //                    setEnabledEsuMc2ThrottleScreenButtons(t, false);
-                for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+                for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
                     setEnabledEsuMc2ThrottleScreenButtons(throttleIndex, false);
                 }
             } else {
@@ -4129,7 +4083,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // save the requested throttle direction so we can update the
         // direction indication immediately in OnCreate following a rotate
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             outState.putSerializable("dir" + (char) (throttleIndex + '0'), dirs[throttleIndex]);
         }
     }
@@ -4247,7 +4201,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     void setAllFunctionLabelsAndListeners() {
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             set_function_labels_and_listeners_for_view(throttleIndex);
         }
     }
@@ -4346,7 +4300,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // set up max speeds for throttles
         int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             sbs[throttleIndex].setMax(maxThrottle);
         }
 
@@ -4354,7 +4308,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
         max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             sbs[throttleIndex].setMax(maxThrottle);
             if (mainapp.consists[throttleIndex].isEmpty()) {
                 maxSpeedSteps[throttleIndex] = 100;
@@ -4393,7 +4347,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         final int conNomTextSize = 24;
         final double minTextScale = 0.5;
         String bLabel;
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             Button b = bSels[throttleIndex];
             if (mainapp.consists[throttleIndex].isActive()) {
                 if (!prefShowAddressInsteadOfName) {
@@ -4540,7 +4494,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         // SPDHT set height of Loco Id and Direction Button areas
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
 
             LinearLayout.LayoutParams llLidp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newDlihHeight);
             llLocoIds[throttleIndex].setLayoutParams(llLidp);
@@ -4643,7 +4597,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
 
             LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
-            for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
                 // set height of each area
                 llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, heights[throttleIndex]);
                 llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
@@ -4737,7 +4691,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         showDirectionIndications();
 
 //        // update the state of each function button based on shared variable
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             set_all_function_states(throttleIndex);
         }
 
@@ -4825,9 +4779,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private void disconnect() {
         //loop thru all throttles and send release to server for any that are active
-//        for (char throttleLetter : allThrottleLetters) {
-//        if (getConsist(throttleLetter).isActive()) {
-//            release_loco(throttleLetter);
         for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
             if (getConsist(throttleIndex).isActive()) {
                 release_loco(throttleIndex);
@@ -5086,7 +5037,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                 }
                                 for (int i = 0; i < 3; i++) {
                                     gamePadIds[i] = 0;
-//                                    gamePadThrottleAssignment[0] = "";
                                     gamePadThrottleAssignment[0] = -1;
                                 }
                                 mainapp.setGamepadTestMenuOption(TMenu,gamepadCount);
@@ -5113,22 +5063,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private void ActivityConsistUpdate(int resultCode, Bundle extras) {
         if (extras != null) {
-//            char whichThrottle = extras.getChar("whichThrottle");
             int whichThrottle = extras.getInt("whichThrottle");
             int dir;
             int speed;
             dir = dirs[whichThrottle];
             speed = (sbs[whichThrottle] == null ? 0 : sbs[whichThrottle].getProgress());
-//            if (whichThrottle == 'T') {
-//                dir = dirT;
-//                speed = (sbT == null ? 0 : sbT.getProgress());
-//            } else if (whichThrottle == 'G') {
-//                dir = dirG;
-//                speed = (sbG == null ? 0 : sbG.getProgress());
-//            } else {
-//                dir = dirS;
-//                speed = (sbS == null ? 0 : sbS.getProgress());
-//            }
             setEngineDirection(whichThrottle, dir, false);  // update direction for each loco in consist
             sendSpeedMsg(whichThrottle, speed);             // ensure all trailing units have the same speed as the lead engine
         }

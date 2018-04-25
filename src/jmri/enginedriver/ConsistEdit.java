@@ -232,7 +232,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
 
                 if (!consist.getLeadAddr().equals(addr)) {
                     consist.remove(addr);
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, addr, whichThrottle);   //release the loco
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, addr, (int) whichThrottle);   //release the loco
                     refreshConsistLists();
                 }
                 return true;

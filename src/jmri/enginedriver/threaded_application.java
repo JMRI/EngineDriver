@@ -116,18 +116,9 @@ public class threaded_application extends Application {
     private String serverType = "JMRI"; //currently, only JMRI or MRC
     private volatile boolean doFinish = false;  // when true, tells any Activities that are being created/resumed to finish()
     //shared variables returned from the withrottle server, stored here for easy access by other activities
-//    volatile Consist consistT;
-//    volatile Consist consistS;
-//    volatile Consist consistG;
     volatile Consist[] consists;
-//    LinkedHashMap<Integer, String> function_labels_T;  //function#s and labels from roster for throttle #1
-//    LinkedHashMap<Integer, String> function_labels_S;  //function#s and labels from roster for throttle #2
-//    LinkedHashMap<Integer, String> function_labels_G;  //function#s and labels from roster for throttle #3
     LinkedHashMap<Integer, String>[] function_labels;  //function#s and labels from roster for throttles
     LinkedHashMap<Integer, String> function_labels_default;  //function#s and labels from local settings
-//    boolean[] function_states_T;  //current function states for first throttle
-//    boolean[] function_states_S;  //current function states for second throttle
-//    boolean[] function_states_G;  //current function states for second throttle
     boolean[][] function_states = {null, null, null, null, null, null};  //current function states for second throttle
     String[] to_system_names;
     String[] to_user_names;
@@ -746,12 +737,8 @@ public class threaded_application extends Application {
         private void reacquireAllConsists() {
             for (int i = 0; i < maxThrottles; i++ )
                 reacquireConsist(consists[i], i);
-//            reacquireConsist(consistT, 'T');
-//            reacquireConsist(consistS, 'S');
-//            reacquireConsist(consistG, 'G');
         }
 
-//        private void reacquireConsist(Consist c, char whichThrottle) {
         private void reacquireConsist(Consist c, int whichThrottle) {
             int delays = 0;
             for (ConLoco l : c.getLocos()) {                  // reacquire each loco in the consist
@@ -1859,9 +1846,6 @@ public class threaded_application extends Application {
         for (int i =0; i < maxThrottles; i++) {
             function_states[i] = new boolean[32];
         }
-//        function_states_T = new boolean[32];
-//        function_states_S = new boolean[32];
-//        function_states_G = new boolean[32];
 
         dlMetadataTask = new DownloadMetaTask();
         dlRosterTask = new DownloadRosterTask();
@@ -2104,17 +2088,8 @@ public class threaded_application extends Application {
         for (int i =0; i < maxThrottles; i++) {
             consists[i] = new Consist();
             function_labels[i] = new LinkedHashMap<Integer, String>();
-//            function_states[i] = new boolean[32];
+            function_states[i] = new boolean[32];        // also allocated in onCreate() ???
         }
-//        consistT = new Consist();
-//        consistS = new Consist();
-//        consistG = new Consist();
-//        function_labels_S = new LinkedHashMap<>();
-//        function_labels_T = new LinkedHashMap<>();
-//        function_labels_G = new LinkedHashMap<>();
-//        function_states_T = new boolean[32];        // also allocated in onCreate() ???
-//        function_states_S = new boolean[32];
-//        function_states_G = new boolean[32];
 
         consist_entries = new LinkedHashMap<>();
         roster = null;
@@ -2398,15 +2373,6 @@ public class threaded_application extends Application {
                     sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
                 }
             }
-//            if (consistT.isActive()) {
-//                sendMsg(comm_msg_handler, message_type.ESTOP, "", (int) 'T');
-//            }
-//            if (consistS.isActive()) {
-//                sendMsg(comm_msg_handler, message_type.ESTOP, "", (int) 'S');
-//            }
-//            if (consistG.isActive()) {
-//                sendMsg(comm_msg_handler, message_type.ESTOP, "", (int) 'G');
-//            }
         }
 
         EStopActivated = true;
