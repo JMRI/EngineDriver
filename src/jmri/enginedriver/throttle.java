@@ -4359,26 +4359,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             if (mainapp.consists[throttleIndex].isEmpty()) {
                 maxSpeedSteps[throttleIndex] = 100;
             }
-//        if (mainapp.consistT.isEmpty()) {
-//            maxSpeedStepT = 100;
-//        }
-//        if (mainapp.consistG.isEmpty()) {
-//            maxSpeedStepG = 100;
-//        }
-//        if (mainapp.consistS.isEmpty()) {
-//            maxSpeedStepS = 100;
-//        }
             //get speed steps from prefs
             speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
             setDisplayUnitScale(throttleIndex);
-//            setDisplayUnitScale('T');
-//            setDisplayUnitScale('G');
-//            setDisplayUnitScale('S');
 
             setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
-//            setDisplayedSpeed('T', sbT.getProgress());  // update numeric speeds since units might have changed
-//            setDisplayedSpeed('G', sbG.getProgress());
-//            setDisplayedSpeed('S', sbS.getProgress());
         }
 
         final DisplayMetrics dm = getResources().getDisplayMetrics();
@@ -4747,100 +4732,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //        sbG.setPadding(sliderMargin, 0, sliderMargin, 0);
 //        sbT.setPadding(sliderMargin, 0, sliderMargin, 0);
 //
-//        if (screenHeight > throttleMargin) { // don't do this if height is invalid
-//            //Log.d("Engine_Driver","starting screen height adjustments, screenHeight=" + screenHeight);
-//            // determine how to split the screen (evenly if all three, 45/45/10 for two, 80/10/10 if only one)
-//            screenHeight -= throttleMargin;
-//            String numThrot = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumOfThrottlesDefault));
-//
-//            // don't allow third throttle if not supported in JMRI (prior to multithrottle change)
-//            if (mainapp.withrottle_version < 2.0 && numThrot.matches("Three")) {
-//                numThrot = "Two";
-//            }
-//
-//            if (numThrot.matches("One")) {
-//                height_T = screenHeight;
-//                height_S = 0;
-//                height_G = 0;
-//            } else if (numThrot.matches("Two") && !mainapp.consistS.isActive()) {
-//                height_T = (int) (screenHeight * 0.9);
-//                height_S = (int) (screenHeight * 0.10);
-//                height_G = 0;
-//            } else if (numThrot.matches("Two") && !mainapp.consistT.isActive()) {
-//                height_T = (int) (screenHeight * 0.10);
-//                height_S = (int) (screenHeight * 0.9);
-//                height_G = 0;
-//            } else if (numThrot.matches("Two")) {
-//                height_T = (int) (screenHeight * 0.5);
-//                height_S = (int) (screenHeight * 0.5);
-//                height_G = 0;
-//            } else if (throttle_count == 0 || throttle_count == 3) {
-//                height_T = (int) (screenHeight * 0.33);
-//                height_S = (int) (screenHeight * 0.33);
-//                height_G = (int) (screenHeight * 0.33);
-//            } else if (!mainapp.consistT.isActive() && !mainapp.consistS.isActive()) {
-//                height_T = (int) (screenHeight * 0.10);
-//                height_S = (int) (screenHeight * 0.10);
-//                height_G = (int) (screenHeight * 0.80);
-//            } else if (!mainapp.consistT.isActive() && !mainapp.consistG.isActive()) {
-//                height_T = (int) (screenHeight * 0.10);
-//                height_S = (int) (screenHeight * 0.80);
-//                height_G = (int) (screenHeight * 0.10);
-//            } else if (!mainapp.consistS.isActive() && !mainapp.consistG.isActive()) {
-//                height_T = (int) (screenHeight * 0.80);
-//                height_S = (int) (screenHeight * 0.10);
-//                height_G = (int) (screenHeight * 0.10);
-//            } else if (!mainapp.consistT.isActive()) {
-//                height_T = (int) (screenHeight * 0.10);
-//                height_S = (int) (screenHeight * 0.45);
-//                height_G = (int) (screenHeight * 0.45);
-//            } else if (!mainapp.consistS.isActive()) {
-//                height_T = (int) (screenHeight * 0.45);
-//                height_S = (int) (screenHeight * 0.10);
-//                height_G = (int) (screenHeight * 0.45);
-//            } else {
-//                height_T = (int) (screenHeight * 0.45);
-//                height_S = (int) (screenHeight * 0.45);
-//                height_G = (int) (screenHeight * 0.10);
-//            }
-//
-//            // set height of T area
-//            llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, height_T);
-//            llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
-//            llT.setLayoutParams(llLp);
-//
-//            // update throttle slider top/bottom
-//            T_top = llT.getTop() + sbT.getTop() + bSelT.getHeight() + bFwdT.getHeight();
-//            T_bottom = llT.getTop() + sbT.getBottom() + bSelT.getHeight() + bFwdT.getHeight();
-//
-//            // set height of S area
-//            llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, height_S);
-//            llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
-//            llS.setLayoutParams(llLp);
-//
-//            // update throttle slider top/bottom
-//            S_top = llS.getTop() + sbS.getTop() + bSelS.getHeight() + bFwdS.getHeight();
-//            S_bottom = llS.getTop() + sbS.getBottom() + bSelS.getHeight() + bFwdS.getHeight();
-//
-//            // set height of G area
-//            llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, height_G);
-//            llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
-//            llG.setLayoutParams(llLp);
-//
-//            // update throttle slider top/bottom
-//            G_top = llG.getTop() + sbG.getTop() + bSelG.getHeight() + bFwdG.getHeight();
-//            G_bottom = llG.getTop() + sbG.getBottom() + bSelG.getHeight() + bFwdG.getHeight();
-//        } else {
-//            Log.d("Engine_Driver","screen height adjustments skipped, screenHeight=" + screenHeight);
-//        }
 
         // update the direction indicators
         showDirectionIndications();
 
 //        // update the state of each function button based on shared variable
-//        set_all_function_states('T');
-//        set_all_function_states('S');
-//        set_all_function_states('G');
         for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
             set_all_function_states(throttleIndex);
         }
@@ -4905,30 +4801,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
 
             if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
-//                char wVol = 0;
-//                if (whichVolume == 'T' && mainapp.consistT.isActive()) {
-//                    wVol = 'T';
-//                }
-//                if (whichVolume == 'S' && mainapp.consistS.isActive()) {
-//                    wVol = 'S';
-//                }
-//                if (whichVolume == 'G' && mainapp.consistG.isActive()) {
-//                    wVol = 'G';
-//                }
-//                if (wVol != 0) {
-//                    if (key == KEYCODE_VOLUME_UP) {
-//                        if (repeatCnt == 0) {
-//                            mVolumeKeysAutoIncrement = true;
-//                            volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(wVol));
-//                        }
-//                    } else {
-//                        if (repeatCnt == 0) {
-//                            mVolumeKeysAutoDecrement = true;
-//                            volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(wVol));
-//                        }
-//                    }
-//                }
-
                 for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
                     if (throttleIndex == whichVolume && mainapp.consists[throttleIndex].isActive()) {
                         if (key == KEYCODE_VOLUME_UP) {
@@ -4968,15 +4840,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     // request release of specified throttle
-//    void release_loco(char whichThrottle) {
     void release_loco(int whichThrottle) {
-//        if (whichThrottle == 'T') {
-//            mainapp.consistT.release();
-//        } else if (whichThrottle == 'G') {
-//            mainapp.consistG.release();
-//        } else {
-//            mainapp.consistS.release();
-//        }
         mainapp.consists[whichThrottle].release();
 
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", whichThrottle); // pass T, S or G in message
@@ -5088,10 +4952,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 startActivityForResult(consistEdit, ACTIVITY_CONSIST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
-//            case R.id.EditConsistS_menu:
             case R.id.EditConsist1_menu:
                 Intent consistEdit2 = new Intent().setClass(this, ConsistEdit.class);
-//                consistEdit2.putExtra("whichThrottle", 'S');
                 consistEdit2.putExtra("whichThrottle", '1');
                 navigatingAway = true;
                 startActivityForResult(consistEdit2, ACTIVITY_CONSIST);
@@ -5100,7 +4962,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                                                                                                                                                                                                                                                                                                                             
             case R.id.EditConsist2_menu:
                 Intent consistEdit3 = new Intent().setClass(this, ConsistEdit.class);
-//                consistEdit3.putExtra("whichThrottle", 'G');
                 consistEdit3.putExtra("whichThrottle", '2');
                 navigatingAway = true;
                 startActivityForResult(consistEdit3, ACTIVITY_CONSIST);
@@ -5109,7 +4970,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
             case R.id.EditLightsConsist0_menu:
                 Intent consistLightsEdit = new Intent().setClass(this, ConsistLightsEdit.class);
-//                consistLightsEdit.putExtra("whichThrottle", 'T');
                 consistLightsEdit.putExtra("whichThrottle", '0');
                 navigatingAway = true;
                 startActivityForResult(consistLightsEdit, ACTIVITY_CONSIST_LIGHTS);
@@ -5118,16 +4978,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
             case R.id.EditLightsConsist1_menu:
                 Intent consistLightsEdit2 = new Intent().setClass(this, ConsistLightsEdit.class);
-//                consistLightsEdit2.putExtra("whichThrottle", 'S');
                 consistLightsEdit2.putExtra("whichThrottle", '1');
                 navigatingAway = true;
                 startActivityForResult(consistLightsEdit2, ACTIVITY_CONSIST_LIGHTS);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
-//            case R.id.EditLightsConsistG_menu:
             case R.id.EditLightsConsist2_menu:
                 Intent consistLightsEdit3 = new Intent().setClass(this, ConsistLightsEdit.class);
-//                consistLightsEdit3.putExtra("whichThrottle", 'G');
                 consistLightsEdit3.putExtra("whichThrottle", '2');
                 navigatingAway = true;
                 startActivityForResult(consistLightsEdit3, ACTIVITY_CONSIST_LIGHTS);

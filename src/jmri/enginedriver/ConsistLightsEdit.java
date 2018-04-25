@@ -197,14 +197,6 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         LIGHT_TEXT_FOLLOW = getApplicationContext().getResources().getString(R.string.lightsTextFollow);
         LIGHT_TEXT_UNKNOWN = getApplicationContext().getResources().getString(R.string.lightsTextUnknown);
 
-        //consist = (whichThrottle == 'T') ? mainapp.consistT : mainapp.consistS;
-//        if (whichThrottle == 'T') {
-//            consist = mainapp.consistT;
-//        } else if (whichThrottle == 'G') {
-//            consist = mainapp.consistG;
-//        } else {
-//            consist = mainapp.consistS;
-//        }
         consist = mainapp.consists[whichThrottle];
 
         //Set up a list adapter to allow adding the list of recent connections to the UI.
