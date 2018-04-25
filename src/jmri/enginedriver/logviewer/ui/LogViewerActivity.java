@@ -264,7 +264,7 @@ public class LogViewerActivity extends ListActivity{
 
 		public void stopTask(){
 			isRunning = false;
-			logprocess.destroy();			
+			if (logprocess != null)	logprocess.destroy();
 		}
 	}
 }
