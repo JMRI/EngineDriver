@@ -130,6 +130,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             enableDisablePreference("prefEsuMc2", false);
         }
 
+        enableDisablePreference("prefFlashlightButtonDisplay", mainapp.isFlashlightAvailable());
+
         sharedPreferences.edit().putBoolean("prefGamepadTestNow", false).commit();  //reset the preference
 
         if (mainapp.androidVersion < mainapp.minActivatedButtonsVersion) {
