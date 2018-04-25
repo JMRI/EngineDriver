@@ -73,7 +73,8 @@ public class ConsistEdit extends Activity implements OnGestureListener {
     private Consist consist;
     private int result;                     // set to RESULT_FIRST_USER when something is edited
 
-    private char whichThrottle;
+//    private char whichThrottle;
+    private int whichThrottle;
 
     private GestureDetector myGesture;
 
@@ -185,17 +186,18 @@ public class ConsistEdit extends Activity implements OnGestureListener {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            whichThrottle = extras.getChar("whichThrottle");
+            whichThrottle = Character.getNumericValue(extras.getChar("whichThrottle"));
         }
 
         //consist = (whichThrottle == 'T') ? mainapp.consistT : mainapp.consistS;
-        if (whichThrottle == 'T') {
-            consist = mainapp.consistT;
-        } else if (whichThrottle == 'G') {
-            consist = mainapp.consistG;
-        } else {
-            consist = mainapp.consistS;
-        }
+//        if (whichThrottle == 'T') {
+//            consist = mainapp.consistT;
+//        } else if (whichThrottle == 'G') {
+//            consist = mainapp.consistG;
+//        } else {
+//            consist = mainapp.consistS;
+//        }
+        consist = mainapp.consists[whichThrottle];
 
         //Set up a list adapter to allow adding the list of recent connections to the UI.
         consistList = new ArrayList<>();
@@ -230,7 +232,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
 
                 if (!consist.getLeadAddr().equals(addr)) {
                     consist.remove(addr);
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, addr, (int) whichThrottle);   //release the loco
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, addr, whichThrottle);   //release the loco
                     refreshConsistLists();
                 }
                 return true;

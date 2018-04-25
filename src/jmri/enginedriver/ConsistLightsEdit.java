@@ -78,7 +78,8 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     private Consist consist;
     private int result;                     // set to RESULT_FIRST_USER when something is edited
 
-    private char whichThrottle;
+//    private char whichThrottle;
+    private int whichThrottle;
 
     private GestureDetector myGesture;
 
@@ -189,7 +190,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            whichThrottle = extras.getChar("whichThrottle");
+            whichThrottle = Character.getNumericValue(extras.getChar("whichThrottle"));
         }
 
         LIGHT_TEXT_OFF = getApplicationContext().getResources().getString(R.string.lightsTextOff);
@@ -197,13 +198,14 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         LIGHT_TEXT_UNKNOWN = getApplicationContext().getResources().getString(R.string.lightsTextUnknown);
 
         //consist = (whichThrottle == 'T') ? mainapp.consistT : mainapp.consistS;
-        if (whichThrottle == 'T') {
-            consist = mainapp.consistT;
-        } else if (whichThrottle == 'G') {
-            consist = mainapp.consistG;
-        } else {
-            consist = mainapp.consistS;
-        }
+//        if (whichThrottle == 'T') {
+//            consist = mainapp.consistT;
+//        } else if (whichThrottle == 'G') {
+//            consist = mainapp.consistG;
+//        } else {
+//            consist = mainapp.consistS;
+//        }
+        consist = mainapp.consists[whichThrottle];
 
         //Set up a list adapter to allow adding the list of recent connections to the UI.
         consistList = new ArrayList<>();

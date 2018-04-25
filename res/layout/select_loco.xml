@@ -22,7 +22,7 @@
             android:paddingTop="2dp" >
 
             <TextView
-                android:id="@+id/sl_loco_T"
+                android:id="@+id/Sl_loco_0"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.3"
@@ -32,12 +32,12 @@
                 android:text="@string/none"
                 android:textColor="#FFFFFF" />
             <Button
-                android:id="@+id/sl_release_T"
-                style="?attr/ed_normal_button_style"
+                android:id="@+id/Sl_release_0"
+                style="@style/normal_button_style"
                 android:layout_height="wrap_content"
                 android:text="@string/release" />
             <TextView
-                android:id="@+id/sl_loco_S"
+                android:id="@+id/Sl_loco_1"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.3"
@@ -47,13 +47,13 @@
                 android:text="@string/none"
                 android:textColor="#FFFFFF" />
             <Button
-                android:id="@+id/sl_release_S"
-                style="?attr/ed_normal_button_style"
+                android:id="@+id/Sl_release_1"
+                style="@style/normal_button_style"
                 android:layout_height="wrap_content"
                 android:text="@string/release" />
-            
+
             <TextView
-                android:id="@+id/sl_loco_G"
+                android:id="@+id/Sl_loco_2"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.3"
@@ -63,8 +63,8 @@
                 android:text="@string/none"
                 android:textColor="#FFFFFF" />
             <Button
-                android:id="@+id/sl_release_G"
-                style="?attr/ed_normal_button_style"
+                android:id="@+id/Sl_release_2"
+                style="@style/normal_button_style"
                 android:layout_height="wrap_content"
                 android:text="@string/release" />
         </LinearLayout>

@@ -26,12 +26,12 @@
     <item android:id="@+id/logviewer_menu" android:title="@string/logViewer"></item>
 	<item android:id="@+id/power_layout_button" android:showAsAction="ifRoom" android:title="@string/PowerButtonBar" android:visible="false"></item>
 	<item android:id="@+id/EmerStop" android:title="@string/EStop" android:visible="false" android:showAsAction="ifRoom"></item>
-	<item android:id="@+id/EditConsistT_menu" android:title="Edit Consist Throttle 1" android:visible="false"></item>
- 	<item android:id="@+id/EditConsistS_menu" android:title="Edit Consist Throttle 2" android:visible="false"></item>
-	<item android:id="@+id/EditConsistG_menu" android:title="Edit Consist Throttle 3" android:visible="false"></item>
-    <item android:id="@+id/EditLightsConsistT_menu" android:title="Edit Consist Lights Throttle 1" android:visible="false"></item>
-    <item android:id="@+id/EditLightsConsistS_menu" android:title="Edit Consist Lights Throttle 2" android:visible="false"></item>
-    <item android:id="@+id/EditLightsConsistG_menu" android:title="Edit Consist Lights Throttle 3" android:visible="false"></item>
+    <item android:id="@+id/EditConsist0_menu" android:title="Edit Consist Throttle 1" android:visible="false"></item>
+    <item android:id="@+id/EditConsist1_menu" android:title="Edit Consist Throttle 2" android:visible="false"></item>
+    <item android:id="@+id/EditConsist2_menu" android:title="Edit Consist Throttle 3" android:visible="false"></item>
+    <item android:id="@+id/EditLightsConsist0_menu" android:title="Edit Consist Lights Throttle 1" android:visible="false"></item>
+    <item android:id="@+id/EditLightsConsist1_menu" android:title="Edit Consist Lights Throttle 2" android:visible="false"></item>
+    <item android:id="@+id/EditLightsConsist2_menu" android:title="Edit Consist Lights Throttle 3" android:visible="false"></item>
     <item android:id="@+id/gamepad_test_mnu1" android:title="@string/gamepad1_test" android:visible="false"></item>
     <item android:id="@+id/gamepad_test_mnu2" android:title="@string/gamepad2_test" android:visible="false"></item>
     <item android:id="@+id/gamepad_test_mnu3" android:title="@string/gamepad3_test" android:visible="false"></item>
