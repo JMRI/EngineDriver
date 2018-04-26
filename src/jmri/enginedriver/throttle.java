@@ -3498,38 +3498,38 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         select_function_button_touch_listener sfbt;
         arrow_speed_button_touch_listener asbl;
 
-        bSels = new Button[mainapp.numThrottles];
-        bRSpds = new Button[mainapp.numThrottles];
-        bLSpds = new Button[mainapp.numThrottles];
+        bSels = new Button[mainapp.maxThrottles];
+        bRSpds = new Button[mainapp.maxThrottles];
+        bLSpds = new Button[mainapp.maxThrottles];
 
-        tvLeftDirInds = new TextView[mainapp.numThrottles];
-        tvRightDirInds = new TextView[mainapp.numThrottles];
+        tvLeftDirInds = new TextView[mainapp.maxThrottles];
+        tvRightDirInds = new TextView[mainapp.maxThrottles];
 
-        bFwds = new Button[mainapp.numThrottles];
-        bStops = new Button[mainapp.numThrottles];
-        bRevs = new Button[mainapp.numThrottles];
-        sbs = new SeekBar[mainapp.numThrottles];
+        bFwds = new Button[mainapp.maxThrottles];
+        bStops = new Button[mainapp.maxThrottles];
+        bRevs = new Button[mainapp.maxThrottles];
+        sbs = new SeekBar[mainapp.maxThrottles];
 
-        tvGamePads = new TextView[mainapp.numThrottles];
-        tvSpdLabs = new TextView[mainapp.numThrottles];
-        tvSpdVals = new TextView[mainapp.numThrottles];
-        tvVols = new TextView[mainapp.numThrottles];
+        tvGamePads = new TextView[mainapp.maxThrottles];
+        tvSpdLabs = new TextView[mainapp.maxThrottles];
+        tvSpdVals = new TextView[mainapp.maxThrottles];
+        tvVols = new TextView[mainapp.maxThrottles];
 
-        lls = new LinearLayout[mainapp.numThrottles];
-        llSetSpds = new LinearLayout[mainapp.numThrottles];
-        llLocoIds = new LinearLayout[mainapp.numThrottles];
-        llLocoDirs = new LinearLayout[mainapp.numThrottles];
+        lls = new LinearLayout[mainapp.maxThrottles];
+        llSetSpds = new LinearLayout[mainapp.maxThrottles];
+        llLocoIds = new LinearLayout[mainapp.maxThrottles];
+        llLocoDirs = new LinearLayout[mainapp.maxThrottles];
 
-        fbs = new ViewGroup[mainapp.numThrottles];
+        fbs = new ViewGroup[mainapp.maxThrottles];
 
-        tops = new int[mainapp.numThrottles];
-        bottoms= new int[mainapp.numThrottles];
+        tops = new int[mainapp.maxThrottles];
+        bottoms= new int[mainapp.maxThrottles];
 
-        functionMaps = ( LinkedHashMap<Integer, Button>[]) new LinkedHashMap<?,?>[mainapp.numThrottles];
+        functionMaps = ( LinkedHashMap<Integer, Button>[]) new LinkedHashMap<?,?>[mainapp.maxThrottles];
 
-        displayUnitScales = new double[mainapp.numThrottles];
+        displayUnitScales = new double[mainapp.maxThrottles];
 
-        changeTimers = new ChangeDelay[mainapp.numThrottles];
+        changeTimers = new ChangeDelay[mainapp.maxThrottles];
 
 //        int numT = Math.max(mainapp.numThrottles, 3); // prevent this from stomping over throttles 3-5
 
