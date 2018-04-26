@@ -1,5 +1,6 @@
 **Version 2.19
  * New flashlight button option for devices with on-board camera flash. Needs Camera permission for this.
+ * prevent some crashes reported to Play Store
 **Version 2.18.1
  * option to change languages from the preferences screen
  * no longer requires an accelerometer in the device to install from the Play Store (reported bug)

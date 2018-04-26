@@ -2020,7 +2020,7 @@ public class threaded_application extends Application {
     public String getRosterNameFromAddress(String addr_str) {
 
         if ((roster_entries != null) && (roster_entries.size() > 0)) {
-            for (String rostername : roster_entries.keySet()) {  // loop thru roster entries, 
+            for (String rostername : roster_entries.keySet()) {  // loop thru roster entries,
                 if (roster_entries.get(rostername).equals(addr_str)) { //looking for value = input parm
                     return rostername;  //if found, return the roster name (key)
                 }

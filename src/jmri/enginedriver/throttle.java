@@ -3399,6 +3399,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         private void changeDelay() {
+            if (mainapp.throttle_msg_handler == null) return;
             mainapp.throttle_msg_handler.removeCallbacks(changeTimer);          //remove any pending requests
             delayInProg = true;
             mainapp.throttle_msg_handler.postDelayed(changeTimer, changeDelay);
