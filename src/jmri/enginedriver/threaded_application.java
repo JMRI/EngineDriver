@@ -463,7 +463,7 @@ public class threaded_application extends Application {
                         socketWiT = new socket_WiT();
                         if (socketWiT.connect()) {
                             sendThrottleName();
-                            sendMsg(connection_msg_handler, message_type.CONNECTED);
+//                            sendMsg(connection_msg_handler, message_type.CONNECTED);
                             phone = new PhoneListener();
                         /*future Notification
                          showNotification();
@@ -868,6 +868,13 @@ public class threaded_application extends Application {
                     } catch (Exception e) {
                         Log.d("Engine_Driver", "process response: invalid WiT version string");
                         withrottle_version = 0.0;
+                    }
+                    //only move on to Throttle screen if version received is 2.0+
+                    if (withrottle_version >= 2.0) {
+                        sendMsg(connection_msg_handler, message_type.CONNECTED);
+                    } else {
+                        show_toast_message("WiThrottle version " + response_str.substring(2) + " not supported.", Toast.LENGTH_LONG);
+                        socketWiT.disconnect(false);
                     }
                     break;
 
