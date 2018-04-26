@@ -74,6 +74,7 @@ public class connection_activity extends Activity {
 
     //pointer back to application
     private threaded_application mainapp;
+    private Menu CMenu;
     //The IP address and port that are used to connect.
     private String connected_hostip;
     private String connected_hostname;
@@ -380,6 +381,10 @@ public class connection_activity extends Activity {
         if (prefs.getBoolean("connect_to_first_server_preference", false)) {
             connectA();
         }
+        if (CMenu != null) {
+            mainapp.displayFlashlightMenuButton(CMenu);
+            mainapp.setFlashlightButton(CMenu);
+        }
     }  //end of onResume
 
     @Override
@@ -424,6 +429,9 @@ public class connection_activity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.connection_menu, menu);
+        CMenu = menu;
+        mainapp.displayFlashlightMenuButton(menu);
+        mainapp.setFlashlightButton(menu);
         return true;
     }
 
@@ -450,6 +458,9 @@ public class connection_activity extends Activity {
             case R.id.ClearconnList:
                 clearConnectionsList();
                 getConnectionsList();
+                break;
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, CMenu);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -484,7 +495,10 @@ public class connection_activity extends Activity {
     private class saveConnectionsList extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... params) {
+
             String errMsg = "";
+            //exit if values not set, avoid NPE reported to Play Store
+            if(connected_hostip == null || connected_port == 0) return errMsg;
 
             //if no SD Card present then nothing to do
             if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
@@ -517,8 +531,7 @@ public class connection_activity extends Activity {
                     String li = t.get("ip_address");
                     String lh = t.get("host_name");
                     Integer lp = Integer.valueOf(t.get("port"));
-                    //***        			if(connected_hostip != null && connected_port != 0)
-                    if (!connected_hostip.equals(li) || connected_port != lp) {  //write it out if not same as selected
+                    if (!connected_hostip.equals(li) || (connected_port != lp)) {  //write it out if not same as selected
                         list_output.format("%s:%s:%d\n", lh, li, lp);
                     }
                 }

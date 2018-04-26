@@ -35,6 +35,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.hardware.Camera;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -51,6 +52,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Surface;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.webkit.CookieSyncManager;
@@ -177,6 +179,10 @@ public class threaded_application extends Application {
     public volatile Handler consist_lights_edit_msg_handler;
     public volatile Handler power_control_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
+
+    // for handling control of camera flash
+    public static Camera camera;
+    private boolean flashState = false;
 
     //these constants are used for onFling
     public static final int SWIPE_MIN_DISTANCE = 120;
@@ -697,7 +703,11 @@ public class threaded_application extends Application {
             }
             host_ip = null;
             port = 0;
-            doFinish = false;                   //ok for activities to run if restarted after this 
+            doFinish = false;                   //ok for activities to run if restarted after this
+
+            // make sure flashlight is switched off at shutdown
+            setFlashlightOff();
+            flashState = false;
         }
 
         private void sendThrottleName() {
@@ -2050,7 +2060,7 @@ public class threaded_application extends Application {
     public String getRosterNameFromAddress(String addr_str) {
 
         if ((roster_entries != null) && (roster_entries.size() > 0)) {
-            for (String rostername : roster_entries.keySet()) {  // loop thru roster entries, 
+            for (String rostername : roster_entries.keySet()) {  // loop thru roster entries,
                 if (roster_entries.get(rostername).equals(addr_str)) { //looking for value = input parm
                     return rostername;  //if found, return the roster name (key)
                 }
@@ -2644,6 +2654,122 @@ public class threaded_application extends Application {
         super.attachBaseContext(LocaleHelper.onAttach(base, languageCountry));
     }
 
+    /**
+     * Set the state of the flashlight action button/menu entry
+     *
+     * @param menu the menu upon which the action is shown
+     */
+    public void setFlashlightButton(Menu menu) {
+        if (menu != null) {
+            if (flashState) {
+                menu.findItem(R.id.flashlight_button).setIcon(R.drawable.flashlight_on);
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                    menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOn);
+                }
+            } else {
+                menu.findItem(R.id.flashlight_button).setIcon(R.drawable.flashlight_off);
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                    menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
+                }
+            }
+        }
+    }
+
+    /**
+     * Display the flashlight action if configured
+     *
+     * @param menu the menu upon which the action should be shown
+     */
+    public void displayFlashlightMenuButton(Menu menu) {
+        MenuItem mi = menu.findItem(R.id.flashlight_button);
+        if (mi == null) return;
+
+        if (prefs.getBoolean("prefFlashlightButtonDisplay", false)) {
+            mi.setVisible(true);
+        } else {
+            mi.setVisible(false);
+        }
+
+    }
+
+    /**
+     * Checks to see if this device has a flashlight
+     *
+     * @return true if a flashlight is available; false if not
+     */
+    public boolean isFlashlightAvailable() {
+        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+    }
+
+    /**
+     * Toggle the flashlight (where supported)
+     *
+     * @param activity the requesting activity
+     * @param menu the menu upon which the entry/button should be updated
+     */
+    public void toggleFlashlight(Activity activity, Menu menu) {
+        if (flashState) {
+            setFlashlightOff();
+            flashState = false;
+        } else {
+            flashState = setFlashlightOn(activity);
+        }
+        setFlashlightButton(menu);
+    }
+
+    /**
+     * Switch on the flashlight.
+     *
+     * On certain devices, we need to ensure that the orientation of the camera preview
+     * matches that of the activity, otherwise 'bad things happen'
+     *
+     * @param activity the requesting activity
+     * @return true if flashlight successfully switch on; false if unsuccessful
+     */
+    private boolean setFlashlightOn(Activity activity) {
+        try {
+            camera = Camera.open();
+            Camera.Parameters parameters = camera.getParameters();
+            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+            camera.setParameters(parameters);
+            camera.setDisplayOrientation(getDisplayOrientation(activity));
+            camera.startPreview();
+            Log.d("Engine_Driver", "Flashlight switched on");
+            return true;
+        } catch (Exception ex) {
+            Log.e("Engine_Driver", "Error switching on flashlight: " + ex.getMessage());
+            Toast.makeText(getApplicationContext(),getApplicationContext().getResources().getString(R.string.toastFlashlightFailed), Toast.LENGTH_LONG).show();
+            return false;
+        }
+    }
+
+    /**
+     * Switch off the flashlight
+     */
+    private void setFlashlightOff() {
+        if (camera != null) {
+            camera.stopPreview();
+            camera.release();
+            camera = null;
+            Log.d("Engine_Driver", "Flashlight switched off");
+        }
+    }
+
+    /**
+     * Retrieves the screen orientation for the specified activity
+     *
+     * @param activity the required activity
+     * @return screen orientation as integer number of degrees
+     */
+    private int getDisplayOrientation(Activity activity) {
+        switch (activity.getWindowManager().getDefaultDisplay().getRotation()) {
+            case Surface.ROTATION_0: return 0;
+            case Surface.ROTATION_90: return 90;
+            case Surface.ROTATION_180: return 180;
+            case Surface.ROTATION_270: return 270;
+            default: return 90;
+        }
+    }
 }
 
 

@@ -3682,6 +3682,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         private void changeDelay() {
+            if (mainapp.throttle_msg_handler == null) return;
             mainapp.throttle_msg_handler.removeCallbacks(changeTimer);          //remove any pending requests
             delayInProg = true;
             mainapp.throttle_msg_handler.postDelayed(changeTimer, changeDelay);
@@ -4756,6 +4757,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.setRoutesMenuOption(TMenu);
             mainapp.setTurnoutsMenuOption(TMenu);
             mainapp.setGamepadTestMenuOption(TMenu,gamepadCount);
+            mainapp.setFlashlightButton(TMenu);
+            mainapp.displayFlashlightMenuButton(TMenu);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");
@@ -4865,6 +4868,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.throttle_menu, menu);
         TMenu = menu;
+        mainapp.displayFlashlightMenuButton(menu);
+        mainapp.setFlashlightButton(menu);
         return true;
     }
 
@@ -5022,6 +5027,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
 
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, TMenu);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
