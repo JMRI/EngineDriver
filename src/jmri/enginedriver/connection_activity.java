@@ -126,6 +126,7 @@ public class connection_activity extends Activity {
     //Request connection to the WiThrottle server.
     private void connect() {
         //	  sendMsgErr(0, message_type.CONNECT, connected_hostip, connected_port, "ERROR in ca.connect: comm thread not started.");
+        Log.d("Engine_Driver", "in connection_activity.connect()");
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CONNECT, connected_hostip, connected_port);
     }
 
