@@ -1227,9 +1227,9 @@ public class threaded_application extends Application {
             }
             // if version >= 2.0, convert certain messages to MultiThrottle format
             if (withrottle_version >= 2.0) {
-                char whichThrottle = msg.charAt(0);
+                char cWhichThrottle = msg.charAt(0);
 //                if ('T' == whichThrottle || 'S' == whichThrottle || 'G' == whichThrottle) {     //acquire loco
-                 if (whichThrottle >= '0' && whichThrottle <= maxThrottles ) { //acquire loco
+                 if (cWhichThrottle >= '0' && cWhichThrottle <= (char) (maxThrottles + '0') ) { //acquire loco
                     String cmd = msg.substring(1);
                     char com = cmd.charAt(0);
                     String addr = "";
@@ -1240,7 +1240,7 @@ public class threaded_application extends Application {
                             cmd = as[0];
                         }
                     }
-                    String prefix = "M" + whichThrottle;                    // use a multithrottle command
+                    String prefix = "M" + cWhichThrottle;                    // use a multithrottle command
                     if ('L' == com || 'S' == com) {                     //if address length
                         String rosterName = addr;
                         addr = cmd;
@@ -2754,6 +2754,25 @@ public class threaded_application extends Application {
         return 0;
     }
 
+    public int throttleCharToInt(char cWhichThrottle) {
+        switch (cWhichThrottle) { // should not be needed but...
+            case 'T':
+                return 0;
+            case 'S':
+                return 1;
+            case 'G':
+                return 2;
+        }
+        return Character.getNumericValue(cWhichThrottle);
+    }
+
+    public char throttleIntToChar(int whichThrottle) {
+        return (char) (whichThrottle + '0');
+    }
+
+    public String throttleIntToString(int whichThrottle) {
+        return Integer.toString(whichThrottle);
+    }
 }
 
 

@@ -635,7 +635,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         return;  //bail if too short, to avoid crash
                     char com1 = response_str.charAt(0);
 //                    char whichThrottle = response_str.charAt(1);
-                    int whichThrottle = response_str.charAt(1) - 48; // '0'
+                    int whichThrottle = mainapp.throttleCharToInt(response_str.charAt(1)); // '0'
 
                     switch (com1) {
                         // various MultiThrottle messages
@@ -692,7 +692,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                                 if (con.isReverseOfLead(addr))
                                                     locoDir ^= 1;
                                                 if (locoDir != dir) {// if loco has wrong direction then correct it
-                                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, (char) (whichThrottle + '0'), locoDir);
+                                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, mainapp.throttleIntToChar(whichThrottle), locoDir);
                                                 }
                                             } catch (Exception e) {     // isReverseOfLead returns null if addr is not in con
                                                 // - should not happen unless WiT is reporting on engine user just dropped from ED consist?
@@ -746,7 +746,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                 try {
                                     String scom2 = response_str.substring(1, 6);
                                     if (scom2.equals("PF}|{")) {
-                                        whichThrottle = response_str.charAt(6);
+                                        whichThrottle = mainapp.throttleCharToInt(response_str.charAt(6));
                                         set_all_function_states(whichThrottle);
                                     }
                                 } catch (IndexOutOfBoundsException ignored) {
@@ -801,7 +801,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //                    String addr = msg.obj.toString();
 //                    char whichThrottle = (char) msg.arg1;
 //                    promptForSteal(addr, whichThrottle);
-                    promptForSteal( msg.obj.toString(), (char) (msg.arg1 + 48) );
+                    promptForSteal( msg.obj.toString(), (char) (msg.arg1) );
                     break;
             }
         }
@@ -1461,9 +1461,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 try {
                     if (con.isReverseOfLead(addr)) // if engine faces opposite of lead loco
                         locoDir ^= 1; // then reverse the commanded direction
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, (char) (whichThrottle + '0'), locoDir);
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, mainapp.throttleIntToChar(whichThrottle), locoDir);
                 } catch (Exception e) { // isReverseOfLead returns null if addr is not in con - should never happen since we are walking through consist list
-                    Log.d("Engine_Driver", "throttle " + whichThrottle + " direction change for unselected loco " + addr);
+                    Log.d("Engine_Driver", "throttle " + mainapp.throttleIntToString(whichThrottle) + " direction change for unselected loco " + addr);
                 }
             }
         }
@@ -1597,7 +1597,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         try {
             Intent select_loco = new Intent().setClass(this, select_loco.class);
 //            select_loco.putExtra("sWhichThrottle", Character.toString(whichThrottle));  // pass whichThrottle as an extra to activity
-            select_loco.putExtra("sWhichThrottle", ((char) (whichThrottle + '0'))+"");  // pass whichThrottle as an extra to activity
+            select_loco.putExtra("sWhichThrottle", mainapp.throttleIntToString(whichThrottle));  // pass whichThrottle as an extra to activity
             navigatingAway = true;
             startActivityForResult(select_loco, ACTIVITY_SELECT_LOCO);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -1631,7 +1631,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (prefConsistLightsLongClick) {  // only allow the editing in the consist lights if the preference is set
             try {
                 Intent consistLightsEdit = new Intent().setClass(this, ConsistLightsEdit.class);
-                consistLightsEdit.putExtra("whichThrottle", whichThrottle);
+                consistLightsEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle) ) ;
                 navigatingAway = true;
                 startActivityForResult(consistLightsEdit, throttle.ACTIVITY_CONSIST_LIGHTS);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -2322,9 +2322,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             if (isActive && (repeatCnt == 0)) {
                 if (action==ACTION_DOWN) {
                     GamepadFeedbackSound(false);
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, ((char) (whichThrottle + '0')) + "", fKey, 1);
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle), fKey, 1);
                 } else {
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, ((char) (whichThrottle + '0')) + "", fKey, 0);
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle), fKey, 0);
                 }
             }
 
@@ -2820,7 +2820,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //                knobPos = esuThrottleScaleS.stepToPosition(speed);
 //            }
             knobPos = esuThrottleScales[whichThrottle].stepToPosition(speed);
-            Log.d("Engine_Driver", "ESU_MCII: Update knob position for throttle " + whichThrottle);
+            Log.d("Engine_Driver", "ESU_MCII: Update knob position for throttle " + mainapp.throttleIntToString(whichThrottle));
             Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
             esuThrottleFragment.moveThrottle(knobPos);
         } else {
@@ -2940,13 +2940,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         if (action == ACTION_DOWN) {
                             mainapp.sendMsg(mainapp.comm_msg_handler,
                                     message_type.FUNCTION,
-                                    whichThrottle + "",
+                                    mainapp.throttleIntToString(whichThrottle),
                                     buttonAction.getFunction(),
                                     1);
                         } else {
                             mainapp.sendMsg(mainapp.comm_msg_handler,
                                     message_type.FUNCTION,
-                                    whichThrottle + "",
+                                    mainapp.throttleIntToString(whichThrottle),
                                     buttonAction.getFunction(),
                                     0);
                         }
@@ -3246,14 +3246,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //                              addr = con.getTrailAddr();
 
                             //mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + addr, this.function, 1);
-                            mainapp.toggleFunction(((char) (whichThrottle + '0')) + addr, this.function);
+                            mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + addr, this.function);
                             // set_function_request(whichThrottle, function, 1);
 
                             if(followLeadFunction) {
                                 for (Consist.ConLoco l : con.getLocos()) {
                                     if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
                                         if (l.isLightOn() == LIGHT_FOLLOW) {
-                                            mainapp.toggleFunction(((char) whichThrottle) + l.getAddress(), this.function);
+                                            mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), this.function);
                                         }
                                     }
                                 }
@@ -3281,7 +3281,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             addr = con.getLeadAddr();
 // ***future            else if (trailOnly)
 //                          addr = con.getTrailAddr();
-                       mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, ((char) (whichThrottle + '0')) + addr, function, 0);
+                       mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, 0);
                         // set_function_request(whichThrottle, function, 0);
                     }
                     break;
@@ -3382,7 +3382,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         // send speed update to WiT
 //        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "", whichThrottle, speed);
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "", (char) (whichThrottle + '0'), speed);
+        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "", mainapp.throttleIntToChar(whichThrottle), speed);
     }
 
     // implement delay for briefly ignoring WiT speed reports after sending a throttle speed update
@@ -3442,7 +3442,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             // restore the requested throttle direction so we can update the
             // direction indication while we wait for an update from WiT
             for (int throttleIndex = 0; throttleIndex < MAX_SCREEN_THROTTLES; throttleIndex++) {
-                if (savedInstanceState.getSerializable("dir" + ((char) (throttleIndex + '0')) ) != null)
+                if (savedInstanceState.getSerializable("dir" + mainapp.throttleIntToString(throttleIndex) ) != null)
                     dirs[throttleIndex] = (int) savedInstanceState.getSerializable("dir" + throttleIndex);
             }
         }
@@ -4085,7 +4085,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // direction indication immediately in OnCreate following a rotate
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-            outState.putSerializable("dir" + (char) (throttleIndex + '0'), dirs[throttleIndex]);
+            outState.putSerializable("dir" + mainapp.throttleIntToChar(throttleIndex), dirs[throttleIndex]);
         }
     }
 
@@ -5146,11 +5146,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     // Log.d("Engine_Driver","exiting gestureStart");
                     return;
                 }
-//            if ((sbT.isEnabled() && gestureStartY >= T_top && gestureStartY <= T_bottom)
-//                    || (sbS.isEnabled() && gestureStartY >= S_top && gestureStartY <= S_bottom)
-//                    || (sbG.isEnabled() && gestureStartY >= G_top && gestureStartY <= G_bottom)) {
-//                // Log.d("Engine_Driver","exiting gestureStart");
-//                return;
             }
         }
         gestureInProgress = true;
@@ -5344,7 +5339,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         b.setCancelable(true);
         b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() { //if yes pressed, tell ta to proceed with steal
             public void onClick(DialogInterface dialog, int id) {
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.STEAL, addr, (char) (whichThrottle + '0'));
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.STEAL, addr, mainapp.throttleIntToChar(whichThrottle));
                 stealPromptActive = false;
             }
         });

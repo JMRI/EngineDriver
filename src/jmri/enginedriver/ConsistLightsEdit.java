@@ -78,7 +78,6 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     private Consist consist;
     private int result;                     // set to RESULT_FIRST_USER when something is edited
 
-//    private char whichThrottle;
     private int whichThrottle;
 
     private GestureDetector myGesture;
@@ -108,7 +107,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                 } else {
                     if (l.isLightOn() == LIGHT_OFF) {
                         hm.put("loco_light", LIGHT_TEXT_OFF);
-                        mainapp.forceFunction(whichThrottle + l.getAddress(), 0, false);
+                        mainapp.forceFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), 0, false);
                     } else if (l.isLightOn() == LIGHT_FOLLOW) {
                         hm.put("loco_light", LIGHT_TEXT_FOLLOW);
                         // because we can't be sure if the function has been set elsewhere, force it to what we think it should be
@@ -190,7 +189,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            whichThrottle = Character.getNumericValue(extras.getChar("whichThrottle"));
+            whichThrottle = mainapp.throttleCharToInt(extras.getChar("whichThrottle"));
         }
 
         LIGHT_TEXT_OFF = getApplicationContext().getResources().getString(R.string.lightsTextOff);
@@ -334,7 +333,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     public boolean onKeyDown(int key, KeyEvent event) {
         if (key == KeyEvent.KEYCODE_BACK) {
             Intent resultIntent = new Intent();
-            resultIntent.putExtra("whichThrottle", whichThrottle);  //pass whichThrottle as an extra
+            resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle) );  //pass whichThrottle as an extra
             setResult(result, resultIntent);
             this.finish();  //end this activity
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

@@ -339,7 +339,7 @@ public class select_loco extends Activity {
 
     void acquire_engine(boolean bUpdateList) {
 //        char whichThrottle = sWhichThrottle.charAt(0);
-        int whichThrottle = Character.getNumericValue(sWhichThrottle.charAt(0));
+        int whichThrottle = mainapp.throttleCharToInt(sWhichThrottle.charAt(0));
         String roster_name = sWhichThrottle.substring(1);
         String addr = (address_size == address_type.LONG ? "L" : "S") + engine_address;
         Loco l = new Loco(addr);
@@ -368,7 +368,6 @@ public class select_loco extends Activity {
             if (mainapp.withrottle_version < 1.6) {  //auto-confirm for older WiT, since no response will come
                 consist.setConfirmed(l.getAddress());
             }
-//            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, addr, (int) whichThrottle);
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, addr, whichThrottle);
             updateRecentEngines(bUpdateList);
             result = RESULT_OK;
@@ -384,7 +383,7 @@ public class select_loco extends Activity {
 
                 saveUpdateList = bUpdateList;
                 Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
-                consistEdit.putExtra("whichThrottle", (char) (whichThrottle + '0'));
+                consistEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
                 navigatingAway = true;
                 startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
