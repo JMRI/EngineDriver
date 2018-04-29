@@ -409,6 +409,9 @@ public class threaded_application extends Application {
              */
             public void handleMessage(Message msg) {
                 switch (msg.what) {
+                    // note: if the Thottle is sent in arg1, it is always expected to be a int
+                    // if it is sent in arg0, it will be a string
+
                     //Start or Stop the WiThrottle listener and required jmdns stuff
                     case message_type.SET_LISTENER:
                         getWifiInfo();
@@ -482,7 +485,6 @@ public class threaded_application extends Application {
                     case message_type.RELEASE: {
                         int delays = 0;
                         String addr = msg.obj.toString();
-//                        final char whichThrottle = (char) msg.arg1;
                         final int whichThrottle = msg.arg1;
                         final boolean releaseAll = (addr.length() == 0);
 
@@ -502,16 +504,16 @@ public class threaded_application extends Application {
                     }
                     //request speed. arg1 holds whichThrottle
                     case message_type.REQ_VEL_AND_DIR: {
-                        final char whichThrottle = (char) msg.arg1;
-                        withrottle_send(whichThrottle + "qV");
-                        withrottle_send(whichThrottle + "qR");  //request updated direction
+                        final int whichThrottle = msg.arg1;
+                        withrottle_send(throttleIntToString(whichThrottle) + "qV");
+                        withrottle_send(throttleIntToString(whichThrottle) + "qR");  //request updated direction
                         break;
                     }
 
                     //estop requested.   arg1 holds whichThrottle
                     case message_type.ESTOP: {
-                        final char whichThrottle = (char) msg.arg1;
-                        withrottle_send(whichThrottle + "X");  //send eStop request
+                        final int whichThrottle = msg.arg1;
+                        withrottle_send(throttleIntToString(whichThrottle) + "X");  //send eStop request
                         break;
                     }
 
@@ -547,10 +549,10 @@ public class threaded_application extends Application {
                     case message_type.REQ_LOCO_ADDR: {
                         long delays = 0;
                         final String addr = msg.obj.toString();
-                        final char whichThrottle = (char) msg.arg1;
+                        final int whichThrottle = msg.arg1;
                         if (prefs.getBoolean("drop_on_acquire_preference",
                                 getResources().getBoolean(R.bool.prefDropOnAcquireDefaultValue))) {
-                            withrottle_send(whichThrottle + "r");  //send release command for any already acquired locos (if set in prefs)
+                            withrottle_send(throttleIntToString(whichThrottle) + "r");  //send release command for any already acquired locos (if set in prefs)
                             delays++;
                         }
                         acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL);
@@ -560,8 +562,8 @@ public class threaded_application extends Application {
                     //send commands to steal the last requested address
                     case message_type.STEAL: {
                         String addr = msg.obj.toString();
-                        char whichThrottle = (char) msg.arg1;
-                        stealLoco(addr, whichThrottle);
+                        int whichThrottle = msg.arg1;
+                        stealLoco(addr, throttleIntToChar(whichThrottle));
                         break;
                     }
                     //          case message_type.ERROR:
@@ -569,31 +571,31 @@ public class threaded_application extends Application {
 
                     //Adjust the locomotive's speed. whichThrottle is in arg 1 and arg2 holds the value of the speed to set.
                     case message_type.VELOCITY: {
-                        final char whichThrottle = (char) msg.arg1;
-                        withrottle_send(String.format(whichThrottle + "V%d", msg.arg2));
+                        final int whichThrottle = msg.arg1;
+                        withrottle_send(String.format(throttleIntToString(whichThrottle) + "V%d", msg.arg2));
                         break;
                     }
                     //Change direction. address in in msg, whichThrottle is in arg 1 and arg2 holds the direction to change to.
                     case message_type.DIRECTION: {
                         final String addr = msg.obj.toString();
-                        final char whichThrottle = (char) msg.arg1;
-                        withrottle_send(String.format(whichThrottle + "R%d<;>" + addr, msg.arg2));
+                        final int whichThrottle = msg.arg1;
+                        withrottle_send(String.format(throttleIntToString(whichThrottle) + "R%d<;>" + addr, msg.arg2));
                         break;
                     }
                     //Set or unset a function. whichThrottle+addr is in the msg, arg1 is the function number, arg2 is set or unset.
                     case message_type.FUNCTION: {
                         String addr = msg.obj.toString();
-                        final char whichThrottle = addr.charAt(0);
+                        final char cWhichThrottle = addr.charAt(0);
                         addr = addr.substring(1);
-                        withrottle_send(String.format(whichThrottle + "F%d%d<;>" + addr, msg.arg2, msg.arg1));
+                        withrottle_send(String.format(cWhichThrottle + "F%d%d<;>" + addr, msg.arg2, msg.arg1));
                         break;
                     }
                     //Set or unset a function. whichThrottle+addr is in the msg, arg1 is the function number, arg2 is set or unset.
                     case message_type.FORCE_FUNCTION: {
                         String addr = msg.obj.toString();
-                        final char whichThrottle = addr.charAt(0);
+                        final char cWhichThrottle = addr.charAt(0);
                         addr = addr.substring(1);
-                        withrottle_send(String.format(whichThrottle + "f%d%d<;>" + addr, msg.arg2, msg.arg1));
+                        withrottle_send(String.format(cWhichThrottle + "f%d%d<;>" + addr, msg.arg2, msg.arg1));
                         break;
                     }
                     //send command to change turnout.  msg = (T)hrow, (C)lose or (2)(toggle) + systemName
@@ -708,11 +710,10 @@ public class threaded_application extends Application {
         }
 
         /* ask for specific loco to be added to a throttle */
-//        private void acquireLoco(String addr, char whichThrottle, long interval) {
         private void acquireLoco(String addr, int whichThrottle, long interval) {
 
 //            sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, whichThrottle + addr);
-            sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, (char)(whichThrottle+'0') + addr);
+            sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, throttleIntToString(whichThrottle) + addr);
 
             if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
                 sendMsgDelay(comm_msg_handler, interval + WITHROTTLE_SPACING_INTERVAL, message_type.SEND_HEARTBEAT_START);
@@ -1228,8 +1229,8 @@ public class threaded_application extends Application {
             // if version >= 2.0, convert certain messages to MultiThrottle format
             if (withrottle_version >= 2.0) {
                 char cWhichThrottle = msg.charAt(0);
-//                if ('T' == whichThrottle || 'S' == whichThrottle || 'G' == whichThrottle) {     //acquire loco
-                 if (cWhichThrottle >= '0' && cWhichThrottle <= (char) (maxThrottles + '0') ) { //acquire loco
+                 if (('T' == cWhichThrottle || 'S' == cWhichThrottle || 'G' == cWhichThrottle)  // should not be needed
+                 || (cWhichThrottle >= '0' && cWhichThrottle <= (char) (maxThrottles + '0') )) { //acquire loco
                     String cmd = msg.substring(1);
                     char com = cmd.charAt(0);
                     String addr = "";
@@ -2755,13 +2756,18 @@ public class threaded_application extends Application {
     }
 
     public int throttleCharToInt(char cWhichThrottle) {
-        switch (cWhichThrottle) { // should not be needed but...
+        switch (cWhichThrottle) {
+            case 'F':
             case 'T':
                 return 0;
             case 'S':
                 return 1;
             case 'G':
                 return 2;
+            case 'W':
+                return 39; // PW - web server port info
+            case 'P':
+                return 32; // PP - power state change
         }
         return Character.getNumericValue(cWhichThrottle);
     }

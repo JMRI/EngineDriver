@@ -634,8 +634,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     if (response_str.length() < 2)
                         return;  //bail if too short, to avoid crash
                     char com1 = response_str.charAt(0);
-//                    char whichThrottle = response_str.charAt(1);
-                    int whichThrottle = mainapp.throttleCharToInt(response_str.charAt(1)); // '0'
+                    int whichThrottle = mainapp.throttleCharToInt(response_str.charAt(1)); // '0', '1'',2' etc.
 
                     switch (com1) {
                         // various MultiThrottle messages
@@ -692,7 +691,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                                 if (con.isReverseOfLead(addr))
                                                     locoDir ^= 1;
                                                 if (locoDir != dir) {// if loco has wrong direction then correct it
-                                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, mainapp.throttleIntToChar(whichThrottle), locoDir);
+                                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, whichThrottle, locoDir);
                                                 }
                                             } catch (Exception e) {     // isReverseOfLead returns null if addr is not in con
                                                 // - should not happen unless WiT is reporting on engine user just dropped from ED consist?
@@ -733,10 +732,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             break;
 
                         case 'R':
-//                            if (whichThrottle == 'F' || whichThrottle == 'S' || whichThrottle == 'G') { // roster function labels - legacy
-//                                if (whichThrottle == 'F') { // used to use 'F' instead of 'T'
-//                                    whichThrottle = 'T';
-//                                }
                             if (whichThrottle >= 0 && whichThrottle <= mainapp.numThrottles) {
                                 set_function_labels_and_listeners_for_view(whichThrottle);
                                 enable_disable_buttons_for_view(fbs[whichThrottle], true);
@@ -801,7 +796,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //                    String addr = msg.obj.toString();
 //                    char whichThrottle = (char) msg.arg1;
 //                    promptForSteal(addr, whichThrottle);
-                    promptForSteal( msg.obj.toString(), (char) (msg.arg1) );
+                    promptForSteal( msg.obj.toString(), mainapp.throttleCharToInt((char) (msg.arg1)) );
                     break;
             }
         }
@@ -1461,7 +1456,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 try {
                     if (con.isReverseOfLead(addr)) // if engine faces opposite of lead loco
                         locoDir ^= 1; // then reverse the commanded direction
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, mainapp.throttleIntToChar(whichThrottle), locoDir);
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, whichThrottle, locoDir);
                 } catch (Exception e) { // isReverseOfLead returns null if addr is not in con - should never happen since we are walking through consist list
                     Log.d("Engine_Driver", "throttle " + mainapp.throttleIntToString(whichThrottle) + " direction change for unselected loco " + addr);
                 }
@@ -3381,8 +3376,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 // moved to onCreate
 
         // send speed update to WiT
-//        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "", whichThrottle, speed);
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "", mainapp.throttleIntToChar(whichThrottle), speed);
+        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "", whichThrottle, speed);
     }
 
     // implement delay for briefly ignoring WiT speed reports after sending a throttle speed update
@@ -4382,90 +4376,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             b.setPressed(false);
         }
 
-//        Button b = bSelT;
-//        if (mainapp.consistT.isActive()) {
-//            if (!prefShowAddressInsteadOfName) {
-//                bLabel = mainapp.consistT.toString();
-//            } else {
-//                bLabel = mainapp.consistT.formatConsistAddr();
-//            }
-//            throttle_count++;
-//        } else {
-//            bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
-//            // whichVolume = 'S'; //set the next throttle to use volume control
-//        }
-//        double textScale = 1.0;
-//        int bWidth = b.getWidth(); // scale text if required to fit the textView
-//        b.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-//        double textWidth = b.getPaint().measureText(bLabel);
-//        if (bWidth == 0)
-//            selectLocoRendered = false;
-//        else {
-//            selectLocoRendered = true;
-//            if (textWidth > 0 && textWidth > bWidth) {
-//                textScale = bWidth / textWidth;
-//                if (textScale < minTextScale)
-//                    textScale = minTextScale;
-//            }
-//        }
-//        int textSize = (int) (conNomTextSize * textScale);
-//        b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
-//        b.setText(bLabel);
-//        b.setSelected(false);
-//        b.setPressed(false);
-//
-//        b = bSelS;
-//        if (mainapp.consistS.isActive()) {
-//            if (!prefShowAddressInsteadOfName) {
-//                bLabel = mainapp.consistS.toString();
-//            } else {
-//                bLabel = mainapp.consistS.formatConsistAddr();
-//            }
-//            throttle_count++;
-//        } else {
-//            bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
-//        }
-//        textScale = 1.0;
-//        bWidth = b.getWidth(); // scale text if required to fit the textView
-//        b.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-//        textWidth = b.getPaint().measureText(bLabel);
-//        if (bWidth != 0 && textWidth > 0 && textWidth > bWidth) {
-//            textScale = bWidth / textWidth;
-//            if (textScale < minTextScale)
-//                textScale = minTextScale;
-//        }
-//        textSize = (int) (conNomTextSize * textScale);
-//        b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
-//        b.setText(bLabel);
-//        b.setSelected(false);
-//        b.setPressed(false);
-//
-//        b = bSelG;
-//        if (mainapp.consistG.isActive()) {
-//            if (!prefShowAddressInsteadOfName) {
-//                bLabel = mainapp.consistG.toString();
-//            } else {
-//                bLabel = mainapp.consistG.formatConsistAddr();
-//            }
-//            throttle_count++;
-//        } else {
-//            bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
-//        }
-//        textScale = 1.0;
-//        bWidth = b.getWidth(); // scale text if required to fit the textView
-//        b.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-//        textWidth = b.getPaint().measureText(bLabel);
-//        if (bWidth != 0 && textWidth > 0 && textWidth > bWidth) {
-//            textScale = bWidth / textWidth;
-//            if (textScale < 0.5)
-//                textScale = 0.5;
-//        }
-//        textSize = (int) (conNomTextSize * textScale);
-//        b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
-//        b.setText(bLabel);
-//        b.setSelected(false);
-//        b.setPressed(false);
-
         if (webView!=null) {
             setImmersiveModeOn(webView);
         }
@@ -4611,82 +4521,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         } else {
             Log.d("Engine_Driver", "screen height adjustments skipped, screenHeight=" + screenHeight);
         }
-
-//        LinearLayout.LayoutParams llLidp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newDlihHeight);
-//        llTLocoId.setLayoutParams(llLidp);
-//        llSLocoId.setLayoutParams(llLidp);
-//        llGLocoId.setLayoutParams(llLidp);
-//        llTLocoDir.setLayoutParams(llLidp);
-//        llSLocoDir.setLayoutParams(llLidp);
-//        llGLocoDir.setLayoutParams(llLidp);
-//        //
-//        tvSpdValT.setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
-//        tvSpdValS.setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
-//        tvSpdValG.setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
-        // SPDHT
-
-
-        //set height of slider areas
-//        LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
-//        llTSetSpd.setLayoutParams(llLp);
-//        llSSetSpd.setLayoutParams(llLp);
-//        llGSetSpd.setLayoutParams(llLp);
-//
-//        //set margins of slider areas
-//        int sliderMargin = preferences.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
-//
-//        //show speed buttons based on pref
-//        llTSetSpd.setVisibility(View.VISIBLE); //always show as a default
-//        llSSetSpd.setVisibility(View.VISIBLE);
-//        llGSetSpd.setVisibility(View.VISIBLE);
-//
-//        sbS.setVisibility(View.VISIBLE);  //always show slider if buttons not shown
-//        sbG.setVisibility(View.VISIBLE);
-//        sbT.setVisibility(View.VISIBLE);
-//        if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
-//            bLSpdT.setVisibility(View.VISIBLE);
-//            bLSpdS.setVisibility(View.VISIBLE);
-//            bLSpdG.setVisibility(View.VISIBLE);
-//            bRSpdT.setVisibility(View.VISIBLE);
-//            bRSpdS.setVisibility(View.VISIBLE);
-//            bRSpdG.setVisibility(View.VISIBLE);
-//            bLSpdT.setText(speedButtonLeftText);
-//            bLSpdG.setText(speedButtonLeftText);
-//            bLSpdS.setText(speedButtonLeftText);
-//            bRSpdT.setText(speedButtonRightText);
-//            bRSpdG.setText(speedButtonRightText);
-//            bRSpdS.setText(speedButtonRightText);
-//            //if buttons enabled, hide the slider if requested
-//            if (prefs.getBoolean("hide_slider_preference", false)) {
-//                sbS.setVisibility(View.GONE);
-//                sbG.setVisibility(View.GONE);
-//                sbT.setVisibility(View.GONE);
-//                bLSpdT.setText(speedButtonDownText);
-//                bLSpdG.setText(speedButtonDownText);
-//                bLSpdS.setText(speedButtonDownText);
-//                bRSpdT.setText(speedButtonUpText);
-//                bRSpdG.setText(speedButtonUpText);
-//                bRSpdS.setText(speedButtonUpText);
-//            }
-//        } else {  //hide speed buttons based on pref
-//            bLSpdT.setVisibility(View.GONE);
-//            bLSpdS.setVisibility(View.GONE);
-//            bLSpdG.setVisibility(View.GONE);
-//            bRSpdT.setVisibility(View.GONE);
-//            bRSpdS.setVisibility(View.GONE);
-//            bRSpdG.setVisibility(View.GONE);
-//            sliderMargin += 30;  //a little extra margin previously in button
-//        }
-//        if (prefs.getBoolean("prefHideSliderAndSpeedButtons", getResources().getBoolean(R.bool.prefHideSliderAndSpeedButtonsDefaultValue))) {
-//            llTSetSpd.setVisibility(View.GONE);
-//            llSSetSpd.setVisibility(View.GONE);
-//            llGSetSpd.setVisibility(View.GONE);
-//        }
-//
-//        sbS.setPadding(sliderMargin, 0, sliderMargin, 0);
-//        sbG.setPadding(sliderMargin, 0, sliderMargin, 0);
-//        sbT.setPadding(sliderMargin, 0, sliderMargin, 0);
-//
 
         // update the direction indicators
         showDirectionIndications();
@@ -5329,7 +5163,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         firstUrl = null;
     }
     // prompt for Steal? Address, if yes, send message to execute the steal
-    public void promptForSteal(String addr, char whichThrottle) {
+//    public void promptForSteal(String addr, char whichThrottle) {
+    public void promptForSteal(String addr, int whichThrottle) {
         if (stealPromptActive) return;
         stealPromptActive = true;
         final AlertDialog.Builder b = new AlertDialog.Builder(this);
@@ -5339,7 +5174,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         b.setCancelable(true);
         b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() { //if yes pressed, tell ta to proceed with steal
             public void onClick(DialogInterface dialog, int id) {
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.STEAL, addr, mainapp.throttleIntToChar(whichThrottle));
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.STEAL, addr, whichThrottle);
                 stealPromptActive = false;
             }
         });
