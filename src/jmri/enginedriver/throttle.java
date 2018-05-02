@@ -1147,7 +1147,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         if ( ((prefLeftDirectionButtons.equals(DIRECTION_BUTTON_LEFT_TEXT)) && (prefRightDirectionButtons.equals(DIRECTION_BUTTON_RIGHT_TEXT)))
                 || ((prefLeftDirectionButtons.equals("")) && (prefRightDirectionButtons.equals(""))) ){
-            for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
                 if (directionButtonsAreCurrentlyReversed(throttleIndex)) {
                     FullLeftText[throttleIndex] = DIRECTION_BUTTON_RIGHT_TEXT;
                     FullRightText[throttleIndex] = DIRECTION_BUTTON_LEFT_TEXT;
@@ -1157,7 +1157,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             dirLeftText = prefLeftDirectionButtons;
             dirRightText = prefRightDirectionButtons;
 
-            for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
                 if (!directionButtonsAreCurrentlyReversed(throttleIndex)) {
                     FullLeftText[throttleIndex] = dirLeftText;
                     dirLeftIndicationText[throttleIndex] = getApplicationContext().getResources().getString(R.string.loco_direction_left_extra);
@@ -1172,7 +1172,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         }
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             bFwds[throttleIndex].setText(FullLeftText[throttleIndex]);
             bRevs[throttleIndex].setText(FullRightText[throttleIndex]);
             tvLeftDirInds[throttleIndex].setText(dirLeftIndicationText[throttleIndex]);
