@@ -1,6 +1,6 @@
 **Version 2.19
  * New flashlight button option for devices with on-board camera flash. Needs Camera permission for this.
- * require WiThrottle v2.0
+ * require WiThrottle v2.0, also fixes issue where user connects to web port
  * prevent some crashes reported to Play Store
 **Version 2.18.1
  * option to change languages from the preferences screen
@@ -392,9 +392,7 @@
  *   TODO: add View Log to this menu
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
- *   TODO: stay on Connect screen until we receive an actual response from server
  *   TODO: if user enters ":" into address input, jump to port input
- *   TODO: verify network connection is to an actual WiT server (e.g. connect to http port doesn't error)
  * threaded_application
  *   TODO: limit/throttle message traffic via queue to avoid overloading hardware, esp. after acquire/release
  *   TODO: remember consist details

@@ -446,8 +446,14 @@ public class threaded_application extends Application {
                     //Connect to the WiThrottle server.
                     case message_type.CONNECT:
 
+                        //The IP address is stored in the obj as a String, the port is stored in arg1.
+                        String new_host_ip = msg.obj.toString();
+                        new_host_ip = new_host_ip.trim();
+                        int new_port = msg.arg1;
+
                         //avoid duplicate connects, seen when user clicks address multiple times quickly
-                        if (socketWiT != null && socketWiT.SocketGood()) {
+                        if (socketWiT != null && socketWiT.SocketGood()
+                                && new_host_ip.equals(host_ip) && new_port == port) {
                             Log.d("Engine_Driver", "Duplicate CONNECT message received.");
                             return;
                         }
@@ -455,10 +461,9 @@ public class threaded_application extends Application {
                         //clear app.thread shared variables so they can be reinitialized
                         initShared();
 
-                        //The IP address is stored in the obj as a String, the port is stored in arg1.
-                        host_ip = msg.obj.toString();
-                        host_ip = host_ip.trim();
-                        port = msg.arg1;
+                        //store ip and port in global variables
+                        host_ip = new_host_ip;
+                        port = new_port;
 
                         //attempt connection to WiThrottle server
                         socketWiT = new socket_WiT();
