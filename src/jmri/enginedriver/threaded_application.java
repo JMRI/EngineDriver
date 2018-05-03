@@ -2741,7 +2741,7 @@ public class threaded_application extends Application {
             default: return 90;
         }
     }
-    private int Numeralise(String value) {
+    public int Numeralise(String value) {
         switch (value)
         {
             case "One":
