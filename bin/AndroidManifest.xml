@@ -23,6 +23,10 @@
     </uses-sdk>
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
     <application
         android:name="jmri.enginedriver.threaded_application"
         android:allowBackup="true"

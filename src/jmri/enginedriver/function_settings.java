@@ -101,7 +101,7 @@ public class function_settings extends Activity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Button b = (Button) findViewById(R.id.fb_copy_labels_from_roster);
-        if (mainapp.function_labels_T == null || mainapp.function_labels_T.size() == 0) {
+        if (mainapp.function_labels[0] == null || mainapp.function_labels[0].size() == 0) {
             b.setEnabled(false);  //disable button if no roster
         } else {
             //Set the button callback.
@@ -292,8 +292,8 @@ public class function_settings extends Activity {
     //replace arrays using data from roster entry (called by button)
     void move_roster_to_settings() {
         int ndx = 0;
-        for (Integer func : mainapp.function_labels_T.keySet()) {
-            String label = mainapp.function_labels_T.get(func);
+        for (Integer func : mainapp.function_labels[0].keySet()) {
+            String label = mainapp.function_labels[0].get(func);
             if (label.length() > 0 && func >= 0 && func <= 28) {
                 if (aFnc.size() <= ndx) {
                     aLbl.add(label);
