@@ -4715,7 +4715,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private void ActivityConsistUpdate(int resultCode, Bundle extras) {
         if (extras != null) {
-            int whichThrottle = extras.getInt("whichThrottle");
+            int whichThrottle = mainapp.throttleCharToInt(extras.getChar("whichThrottle"));
             int dir;
             int speed;
             dir = dirs[whichThrottle];
