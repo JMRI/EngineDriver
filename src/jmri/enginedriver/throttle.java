@@ -1593,7 +1593,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         bSels[whichThrottle].setPressed(true);
         try {
             Intent select_loco = new Intent().setClass(this, select_loco.class);
-//            select_loco.putExtra("sWhichThrottle", Character.toString(whichThrottle));  // pass whichThrottle as an extra to activity
             select_loco.putExtra("sWhichThrottle", mainapp.throttleIntToString(whichThrottle));  // pass whichThrottle as an extra to activity
             navigatingAway = true;
             startActivityForResult(select_loco, ACTIVITY_SELECT_LOCO);
@@ -3555,35 +3554,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             tvLeftDirInds[i] = tvLeft;
             tvRightDirInds[i] = tvRight;
 
-//        bSelT = (Button) findViewById(R.id.button_select_loco_T);
-//        bSelT.setClickable(true);
-//        sfbt = new select_function_button_touch_listener('T');
-//        bSelT.setOnClickListener(sfbt);
-//        bSelT.setOnTouchListener(sfbt);
-//        bSelT.setOnLongClickListener(sfbt);  // Consist Light Edit
-//        tvLeftDirIndT = (TextView) findViewById(R.id.loco_left_direction_indicaton_T);
-//        tvRightDirIndT = (TextView) findViewById(R.id.loco_right_direction_indicaton_T);
-//
-//        bSelS = (Button) findViewById(R.id.button_select_loco_S);
-//        bSelS.setClickable(true);
-//        sfbt = new select_function_button_touch_listener('S');
-//        bSelS.setOnClickListener(sfbt);
-//        bSelS.setOnTouchListener(sfbt);
-//        bSelS.setOnLongClickListener(sfbt);  // Consist Light Edit
-//        tvLeftDirIndS = (TextView) findViewById(R.id.loco_left_direction_indicaton_S);
-//        tvRightDirIndS = (TextView) findViewById(R.id.loco_right_direction_indicaton_S);
-//
-//        bSelG = (Button) findViewById(R.id.button_select_loco_G);
-//        bSelG.setClickable(true);
-//        sfbt = new select_function_button_touch_listener('G');
-//        bSelG.setOnClickListener(sfbt);
-//        bSelG.setOnTouchListener(sfbt);
-//        bSelG.setOnLongClickListener(sfbt);  // Consist Light Edit
-//        tvLeftDirIndG = (TextView) findViewById(R.id.loco_left_direction_indicaton_G);
-//        tvRightDirIndG = (TextView) findViewById(R.id.loco_right_direction_indicaton_G);
-
-
-
             // Arrow Keys
             try {
 
@@ -3614,50 +3584,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 bLSpds[i].setOnTouchListener(asbl);
                 bLSpds[i].setOnClickListener(asbl);
 
-//            // Throttle T speed buttons.
-//            bRSpdT = (Button) findViewById(R.id.Right_speed_button_T);
-//            bRSpdT.setClickable(true);
-//            asbl = new arrow_speed_button_touch_listener('T', "right");
-//            bRSpdT.setOnLongClickListener(asbl);
-//            bRSpdT.setOnTouchListener(asbl);
-//            bRSpdT.setOnClickListener(asbl);
-//
-//            bLSpdT = (Button) findViewById(R.id.Left_speed_button_T);
-//            bLSpdT.setClickable(true);
-//            asbl = new arrow_speed_button_touch_listener('T', "left");
-//            bLSpdT.setOnLongClickListener(asbl);
-//            bLSpdT.setOnTouchListener(asbl);
-//            bLSpdT.setOnClickListener(asbl);
-//
-//            // Throttle S speed buttons
-//            bRSpdS = (Button) findViewById(R.id.Right_speed_button_S);
-//            bRSpdS.setClickable(true);
-//            asbl = new arrow_speed_button_touch_listener('S', "right");
-//            bRSpdS.setOnLongClickListener(asbl);
-//            bRSpdS.setOnTouchListener(asbl);
-//            bRSpdS.setOnClickListener(asbl);
-//
-//            bLSpdS = (Button) findViewById(R.id.Left_speed_button_S);
-//            bLSpdS.setClickable(true);
-//            asbl = new arrow_speed_button_touch_listener('S', "left");
-//            bLSpdS.setOnLongClickListener(asbl);
-//            bLSpdS.setOnTouchListener(asbl);
-//            bLSpdS.setOnClickListener(asbl);
-//
-//            // Throttle G speed buttons.
-//            bRSpdG = (Button) findViewById(R.id.Right_speed_button_G);
-//            bRSpdG.setClickable(true);
-//            asbl = new arrow_speed_button_touch_listener('G', "right");
-//            bRSpdG.setOnLongClickListener(asbl);
-//            bRSpdG.setOnTouchListener(asbl);
-//            bRSpdG.setOnClickListener(asbl);
-//
-//            bLSpdG = (Button) findViewById(R.id.Left_speed_button_G);
-//            bLSpdG.setClickable(true);
-//            asbl = new arrow_speed_button_touch_listener('G', "left");
-//            bLSpdG.setOnLongClickListener(asbl);
-//            bLSpdG.setOnTouchListener(asbl);
-//            bLSpdG.setOnClickListener(asbl);
             } catch (Exception ex) {
                 Log.d("debug", "onCreate: " + ex.getMessage());
             }
@@ -3698,56 +3624,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, i);
             v.setOnTouchListener(fbtl);
 
-//        bFwdT = (Button) findViewById(R.id.button_fwd_T);
-//        dbtl = new direction_button_touch_listener(direction_button.LEFT, 'T');
-//        bFwdT.setOnTouchListener(dbtl);
-//
-//        bStopT = (Button) findViewById(R.id.button_stop_T);
-//        fbtl = new function_button_touch_listener(function_button.STOP, 'T');
-//        bStopT.setOnTouchListener(fbtl);
-//
-//        bRevT = (Button) findViewById(R.id.button_rev_T);
-//        dbtl = new direction_button_touch_listener(direction_button.RIGHT, 'T');
-//        bRevT.setOnTouchListener(dbtl);
-//        //----------------------------------------
-//        View v = findViewById(R.id.speed_cell_T);
-//        fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'T');
-//        v.setOnTouchListener(fbtl);
-//
-//        //----------------------------------------
-//        bFwdS = (Button) findViewById(R.id.button_fwd_S);
-//        dbtl = new direction_button_touch_listener(direction_button.LEFT, 'S');
-//        bFwdS.setOnTouchListener(dbtl);
-//
-//        bStopS = (Button) findViewById(R.id.button_stop_S);
-//        fbtl = new function_button_touch_listener(function_button.STOP, 'S');
-//        bStopS.setOnTouchListener(fbtl);
-//
-//        bRevS = (Button) findViewById(R.id.button_rev_S);
-//        dbtl = new direction_button_touch_listener(direction_button.RIGHT, 'S');
-//        bRevS.setOnTouchListener(dbtl);
-//        //----------------------------------------
-//        v = findViewById(R.id.speed_cell_S);
-//        fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'S');
-//        v.setOnTouchListener(fbtl);
-//
-//        //----------------------------------------
-//        bFwdG = (Button) findViewById(R.id.button_fwd_G);
-//        dbtl = new direction_button_touch_listener(direction_button.LEFT, 'G');
-//        bFwdG.setOnTouchListener(dbtl);
-//
-//        bStopG = (Button) findViewById(R.id.button_stop_G);
-//        fbtl = new function_button_touch_listener(function_button.STOP, 'G');
-//        bStopG.setOnTouchListener(fbtl);
-//
-//        bRevG = (Button) findViewById(R.id.button_rev_G);
-//        dbtl = new direction_button_touch_listener(direction_button.RIGHT, 'G');
-//        bRevG.setOnTouchListener(dbtl);
-//        //----------------------------------------
-//        v = findViewById(R.id.speed_cell_G);
-//        fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, 'G');
-//        v.setOnTouchListener(fbtl);
-
             // set up listeners for all throttles
             SeekBar s = (SeekBar) findViewById(R.id.speed_0);
             switch (i) {
@@ -3763,22 +3639,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             thl = new throttle_listener(i);
             sbs[i].setOnSeekBarChangeListener(thl);
             sbs[i].setOnTouchListener(thl);
-
-//        throttle_listener thl;
-//        sbT = (SeekBar) findViewById(R.id.speed_T);
-//        thl = new throttle_listener('T');
-//        sbT.setOnSeekBarChangeListener(thl);
-//        sbT.setOnTouchListener(thl);
-//
-//        sbS = (SeekBar) findViewById(R.id.speed_S);
-//        thl = new throttle_listener('S');
-//        sbS.setOnSeekBarChangeListener(thl);
-//        sbS.setOnTouchListener(thl);
-//
-//        sbG = (SeekBar) findViewById(R.id.speed_G);
-//        thl = new throttle_listener('G');
-//        sbG.setOnSeekBarChangeListener(thl);
-//        sbG.setOnTouchListener(thl);
 
             max_throttle_change = 1;
 //          displaySpeedSteps = false;
@@ -3825,44 +3685,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
             // set throttle change delay timers
             changeTimers[i] = new ChangeDelay(i);
-
-//        llT = (LinearLayout) findViewById(R.id.throttle_T);
-//        llG = (LinearLayout) findViewById(R.id.throttle_G);
-//        llS = (LinearLayout) findViewById(R.id.throttle_S);
-//        llTSetSpd = (LinearLayout) findViewById(R.id.Throttle_T_SetSpeed);
-//        llSSetSpd = (LinearLayout) findViewById(R.id.Throttle_S_SetSpeed);
-//        llGSetSpd = (LinearLayout) findViewById(R.id.Throttle_G_SetSpeed);
-//        // SPDHT
-//        llTLocoId = (LinearLayout) findViewById(R.id.loco_buttons_group_T);
-//        llSLocoId = (LinearLayout) findViewById(R.id.loco_buttons_group_S);
-//        llGLocoId = (LinearLayout) findViewById(R.id.loco_buttons_group_G);
-//        //
-//        llTLocoDir = (LinearLayout) findViewById(R.id.dir_buttons_table_T);
-//        llSLocoDir = (LinearLayout) findViewById(R.id.dir_buttons_table_S);
-//        llGLocoDir = (LinearLayout) findViewById(R.id.dir_buttons_table_G);
-//        // SPDHT
-//
-//        // volume indicators
-//        tvVolT =(TextView) findViewById(R.id.volume_indicator_T);
-//        tvVolS =(TextView) findViewById(R.id.volume_indicator_S);
-//        tvVolG =(TextView) findViewById(R.id.volume_indicator_G);
-//
-//        // gamepad indicators
-//        tvGamePadT =(TextView) findViewById(R.id.gamepad_indicator_T);
-//        tvGamePadS =(TextView) findViewById(R.id.gamepad_indicator_S);
-//        tvGamePadG =(TextView) findViewById(R.id.gamepad_indicator_G);
-//
-//        // set_default_function_labels();
-//        tvSpdLabT = (TextView) findViewById(R.id.speed_label_T);
-//        tvSpdValT = (TextView) findViewById(R.id.speed_value_label_T);
-//        tvSpdLabG = (TextView) findViewById(R.id.speed_label_G);
-//        tvSpdValG = (TextView) findViewById(R.id.speed_value_label_G);
-//        tvSpdLabS = (TextView) findViewById(R.id.speed_label_S);
-//        tvSpdValS = (TextView) findViewById(R.id.speed_value_label_S);
-//
-//        fbT = (ViewGroup) findViewById(R.id.function_buttons_table_T);
-//        fbS = (ViewGroup) findViewById(R.id.function_buttons_table_S);
-//        fbG = (ViewGroup) findViewById(R.id.function_buttons_table_G);
 
         }
 
@@ -3928,9 +3750,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         mainapp.throttle_msg_handler = new throttle_handler();
 
         // set throttle change delay timers
-//        changeTimerT = new ChangeDelay('T');
-//        changeTimerG = new ChangeDelay('G');
-//        changeTimerS = new ChangeDelay('S');
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             changeTimers[throttleIndex] = new ChangeDelay(throttleIndex);
         }
@@ -3992,10 +3811,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CURRENT_TIME); // request time update
 
         // format the screen area
-//        enable_disable_buttons('T');
-//        enable_disable_buttons('S');
-//        enable_disable_buttons('G');
-
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             enable_disable_buttons(throttleIndex);
         }
