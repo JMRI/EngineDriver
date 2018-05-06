@@ -568,7 +568,7 @@ public class threaded_application extends Application {
                     case message_type.STEAL: {
                         String addr = msg.obj.toString();
                         int whichThrottle = msg.arg1;
-                        stealLoco(addr, throttleIntToChar(whichThrottle));
+                        stealLoco(addr, whichThrottle);
                         break;
                     }
                     //          case message_type.ERROR:
@@ -726,17 +726,15 @@ public class threaded_application extends Application {
         }
 
         /* "steal" will send the MTS command */
-        private void stealLoco(String addr, char whichThrottle) {
+        private void stealLoco(String addr, int whichThrottle) {
             if (addr != null) {
-                String msgtxt = "M" + whichThrottle + "S" + addr + "<;>" + addr;
+                String msgtxt = "M" + throttleIntToString(whichThrottle) + "S" + addr + "<;>" + addr;
                 sendMsg(comm_msg_handler, message_type.WITHROTTLE_SEND, msgtxt);
             }
         }
 
-//        private void releaseLoco(String addr, char whichThrottle, long interval) {
         private void releaseLoco(String addr, int whichThrottle, long interval) {
-//            String msgtxt = whichThrottle + "r" + (!addr.equals("") ? "<;>" + addr : "");
-            String msgtxt = ((char)(whichThrottle + '0')) + "r" + (!addr.equals("") ? "<;>" + addr : "");
+            String msgtxt = throttleIntToString(whichThrottle) + "r" + (!addr.equals("") ? "<;>" + addr : "");
             sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, msgtxt);
         }
 
@@ -795,7 +793,7 @@ public class threaded_application extends Application {
                 //handle responses from MultiThrottle function
                 case 'M': {
                     String sWhichThrottle = response_str.substring(1, 2);
-                    int whichThrottle = (int)sWhichThrottle.charAt(0)-48;
+                    int whichThrottle = throttleCharToInt(sWhichThrottle.charAt(0));
                     String[] ls = splitByString(response_str, "<;>");    //drop off separator
                     String addr = ls[0].substring(3);
                     char com2 = response_str.charAt(2);
@@ -810,14 +808,14 @@ public class threaded_application extends Application {
                         String consistname = getConsistNameFromAddress(addr); //check for a JMRI consist for this address,
                         if (consistname != null) { //if found, request function keys for lead, format MTAS13<;>CL1234
                             String[] cna = splitByString(consistname, "+");
-                            String cmd = "M" + whichThrottle + "A" + addr + "<;>C" + cvtToLAddr(cna[0]);
+                            String cmd = "M" + throttleIntToString(whichThrottle) + "A" + addr + "<;>C" + cvtToLAddr(cna[0]);
                             Log.d("Engine_Driver", "rqsting fkeys for lead loco " + cvtToLAddr(cna[0]));
                             withrottle_send(cmd);
                         }
 
                     } else if (com2 == '-') { //"MS-L6318<;>"  loco removed from throttle
                         consists[whichThrottle].remove(addr);
-                        Log.d("Engine_Driver", "loco " + addr + " dropped from " + whichThrottle);
+                        Log.d("Engine_Driver", "loco " + addr + " dropped from " + throttleIntToString(whichThrottle));
 
                     } else if (com2 == 'L') { //list of function buttons
                         String lead;
@@ -836,7 +834,7 @@ public class threaded_application extends Application {
                         }
 
                     } else if (com2 == 'S') { //"MTSL4425<;>L4425" loco is in use, prompt for Steal
-                        Log.d("Engine_Driver", "rcvd MTS, request prompt for " + addr + " on " + whichThrottle);
+                        Log.d("Engine_Driver", "rcvd MTS, request prompt for " + addr + " on " + throttleIntToString(whichThrottle));
                         sendMsg(throttle_msg_handler, message_type.REQ_STEAL, addr, whichThrottle);
                     }
 
@@ -980,10 +978,9 @@ public class threaded_application extends Application {
 
         //parse roster functions list into appropriate app variable array
         //  //RF29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
-//        private void process_roster_function_string(String response_str, String whichThrottle) {
         private void process_roster_function_string(String response_str, int whichThrottle) {
 
-            Log.d("Engine_Driver", "processing function labels for " + whichThrottle);
+            Log.d("Engine_Driver", "processing function labels for " + throttleIntToString(whichThrottle));
             String[] ta = splitByString(response_str, "]\\[");  //split into list of labels
 
             //populate a temp label array from RF command string
@@ -1196,7 +1193,7 @@ public class threaded_application extends Application {
                 String[] fa = splitByString(fs, "}|{");  //split these into 2 parts, key and value
                 if (i == 0) { //first chunk is different, contains whichThrottle
 //                    whichThrottle = fa[1];
-                    whichThrottle = (fa[1].charAt(0)-48);
+                    whichThrottle = throttleCharToInt(fa[1].charAt(0));
                 } else {  //all others have function#, then value
                     int fn = Integer.parseInt(fa[0]);
                     boolean fState = Boolean.parseBoolean(fa[1]);
@@ -1628,8 +1625,8 @@ public class threaded_application extends Application {
                         if (withrottle_version >= 2.0) {
                             for (int i = 0; i < numThrottles; i++) {
                                 if (consists[i].isActive()) {
-                                    withrottle_send("M" + ((char) (i + '0')) + "A*<;>qV"); //request speed
-                                    withrottle_send("M" + ((char) (i + '0')) + "A*<;>qR"); //request direction
+                                    withrottle_send("M" + throttleIntToString(i) + "A*<;>qV"); //request speed
+                                    withrottle_send("M" + throttleIntToString(i) + "A*<;>qR"); //request direction
                                     anySent = true;
                                 }
                             }
@@ -1682,7 +1679,7 @@ public class threaded_application extends Application {
                         Log.d("Engine_Driver", "Phone is OffHook, Stopping Trains");
                         for(int i = 0; i < numThrottles; i++) {
                             if (consists[i].isActive()) {
-                                withrottle_send("M" + ((char) (i + '0')) + "A*<;>V0");
+                                withrottle_send("M" + throttleIntToString(i) + "A*<;>V0");
                             }
                         }
                     }
