@@ -793,10 +793,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     initWeb();
                     break;
                 case message_type.REQ_STEAL:
-//                    String addr = msg.obj.toString();
-//                    char whichThrottle = (char) msg.arg1;
-//                    promptForSteal(addr, whichThrottle);
-                    promptForSteal( msg.obj.toString(), mainapp.throttleCharToInt((char) (msg.arg1)) );
+                    promptForSteal( msg.obj.toString(), msg.arg1);
                     break;
             }
         }
