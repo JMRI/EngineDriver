@@ -1218,71 +1218,69 @@ public class threaded_application extends Application {
         //
         // withrottle_send(String msg)
         //
-        //send msg to the socket using multithrottle format
-        //
-        //msg format is generally whichThrottle+cmd+<;>addr 
-        //if <;>addr is omitted then command is sent to all locos on whichThrottle
-        //
-        //msg format for acquire loco is whichThrottle+addr+<;>rosterName
-        //where <;>rosterName is optional
-        //
+        //send formatted msg to the socket using multithrottle format
         private void withrottle_send(String msg) {
 //            Log.d("Engine_Driver", "WiT send '" + msg + "'");
 
-            String newMsg = msg;
+//            String newMsg = msg;
 
-            if (newMsg == null) {
+//            if (newMsg == null) {
+            if (msg == null) {
                 Log.d("Engine_Driver", "--> null msg");
                 return;
             }
             // if version >= 2.0, convert certain messages to MultiThrottle format
-            if (withrottle_version >= 2.0) {
-                char cWhichThrottle = msg.charAt(0);
-                 if (('T' == cWhichThrottle || 'S' == cWhichThrottle || 'G' == cWhichThrottle)  // should not be needed
-                 || (cWhichThrottle >= '0' && cWhichThrottle <= (char) (maxThrottles + '0') )) { //acquire loco
-                    String cmd = msg.substring(1);
-                    char com = cmd.charAt(0);
-                    String addr = "";
-                    if (cmd.length() > 0) {                                  //check for loco address after the command
-                        String[] as = splitByString(cmd, "<;>");
-                        if (as.length > 1) {
-                            addr = as[1];
-                            cmd = as[0];
-                        }
-                    }
-                    String prefix = "M" + cWhichThrottle;                    // use a multithrottle command
-                    if ('L' == com || 'S' == com) {                     //if address length
-                        String rosterName = addr;
-                        addr = cmd;
-                        if (rosterName.length() > 0) {
-                            rosterName = "E" + rosterName;  //use E to indicate rostername
-                        } else {
-                            rosterName = addr;
-                        }
-                        newMsg = prefix + "+" + addr + "<;>" + rosterName;  //add requested loco to this throttle
-                    } else if ('r' == com) {                          //if release loco(s)
-                        if (addr.length() > 0)
-                            newMsg = prefix + "-" + addr + "<;>r"; //release one loco
-                        else
-                            newMsg = prefix + "-*<;>r";            //release all locos from this throttle
-                    } else {                                              //if anything else
-                        if (addr.length() == 0)
-                            addr = "*";
-                        newMsg = prefix + "A" + addr + "<;>" + cmd;
-                    }
-                }
-            }
+//            if (withrottle_version >= 2.0) {
+//                char cWhichThrottle = msg.charAt(0);
+//                 if (('T' == cWhichThrottle || 'S' == cWhichThrottle || 'G' == cWhichThrottle)  // should not be needed
+//                 || (cWhichThrottle >= '0' && cWhichThrottle <= (char) (maxThrottles + '0') )) { //acquire loco
+//                    String cmd = msg.substring(1);
+//                    char com = cmd.charAt(0);
+//                    String addr = "";
+//                    if (cmd.length() > 0) {                                  //check for loco address after the command
+//                        String[] as = splitByString(cmd, "<;>");
+//                        if (as.length > 1) {
+//                            addr = as[1];
+//                            cmd = as[0];
+//                        }
+//                    }
+//                    String prefix = "M" + cWhichThrottle;                    // use a multithrottle command
+//                    if ('L' == com || 'S' == com) {                     //if address length
+//                        String rosterName = addr;
+//                        addr = cmd;
+//                        if (rosterName.length() > 0) {
+//                            rosterName = "E" + rosterName;  //use E to indicate rostername
+//                        } else {
+//                            rosterName = addr;
+//                        }
+//                        newMsg = prefix + "+" + addr + "<;>" + rosterName;  //add requested loco to this throttle
+//                    } else if ('r' == com) {                          //if release loco(s)
+//                        if (addr.length() > 0)
+//                            newMsg = prefix + "-" + addr + "<;>r"; //release one loco
+//                        else
+//                            newMsg = prefix + "-*<;>r";            //release all locos from this throttle
+//                    } else {                                              //if anything else
+//                        if (addr.length() == 0)
+//                            addr = "*";
+//                        newMsg = prefix + "A" + addr + "<;>" + cmd;
+//                    }
+//                }
+//            }
 
             //send response to debug log for review
-            String lm = "-->:" + newMsg;
-            if (!newMsg.equals(msg)) {
-                lm += "  was(" + msg + ")";
-            }
-            Log.d("Engine_Driver", lm);
+//            String lm = "-->:" + newMsg;
+//            if (!newMsg.equals(msg)) {
+//                lm += "  was(" + msg + ")";
+//            }
+//            Log.d("Engine_Driver", lm);
+
+            Log.d("Engine_Driver", "-->:" + msg);
 
             //perform the send
             if (socketWiT != null) {
-                socketWiT.Send(newMsg);
+                socketWiT.Send(msg);
+            } else {
+                Log.e("Engine_Driver", "socketWiT is null, message '" + msg + "' not sent!");
             }
 
         }  //end withrottle_send()
