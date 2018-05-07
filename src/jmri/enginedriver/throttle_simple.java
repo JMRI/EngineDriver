@@ -247,6 +247,18 @@ public class throttle_simple extends throttle {
             lThrottles[throttleIndex].requestLayout();
         }
 
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            //show speed buttons based on pref
+            if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
+                bLSpds[throttleIndex].setVisibility(View.VISIBLE);
+                bRSpds[throttleIndex].setVisibility(View.VISIBLE);
+            } else {
+                bLSpds[throttleIndex].setVisibility(View.GONE);
+                bRSpds[throttleIndex].setVisibility(View.GONE);
+            }
+            //bLSpds[throttleIndex].setText(speedButtonLeftText);
+            //bRSpds[throttleIndex].setText(speedButtonRightText);
+        }
 
 //        // update the state of each function button based on shared variable
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {

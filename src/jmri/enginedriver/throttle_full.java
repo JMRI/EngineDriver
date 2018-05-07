@@ -122,7 +122,7 @@ public class throttle_full extends throttle {
         super.layoutViewId = R.layout.throttle;
         super.onCreate(savedInstanceState);
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             switch (throttleIndex) {
                 case 0:
                     fbs[throttleIndex] = (ViewGroup) findViewById(R.id.function_buttons_table_0);
@@ -157,7 +157,7 @@ public class throttle_full extends throttle {
 
 
     void setAllFunctionLabelsAndListeners() {
-        for (int i = 0; i < mainapp.numThrottles; i++) {
+        for (int i = 0; i < mainapp.maxThrottles; i++) {
             set_function_labels_and_listeners_for_view(i);
         }
     }

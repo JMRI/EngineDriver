@@ -3496,8 +3496,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         changeTimers = new ChangeDelay[mainapp.maxThrottles];
 
-//        int numT = Math.max(mainapp.numThrottles, 3); // prevent this from stomping over throttles 3-5
-
         // throttle layouts
         vThrotScr = findViewById(R.id.throttle_screen);
         vThrotScrWrap = findViewById(R.id.throttle_screen_wrapper);
