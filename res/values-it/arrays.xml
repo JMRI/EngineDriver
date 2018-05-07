@@ -47,6 +47,9 @@
         <item>Uno</item>
         <item>Due</item>
         <item>Tre</item>
+        <item >Quattro</item>
+        <item >Cinque</item>
+        <item >Sei</item>
     </string-array>
     <string-array name="DisplayClockEntries">
         <item>Niente</item>

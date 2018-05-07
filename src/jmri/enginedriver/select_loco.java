@@ -86,12 +86,11 @@ public class select_loco extends Activity {
 
     private int engine_address;
     private int address_size;
-//    private String sWhichThrottle = "T"; // "T" or "S" or "G" + roster name
     private String sWhichThrottle =  "0";  // "0" or "1" or "2" + roster name
     private int result;
-    private boolean selectLocoRendered = false;         // this will be true once set_labels() runs following rendering of the loco select textViews
+    protected boolean selectLocoRendered = false;         // this will be true once set_labels() runs following rendering of the loco select textViews
 
-    private threaded_application mainapp; // hold pointer to mainapp
+    protected threaded_application mainapp; // hold pointer to mainapp
 
     private SharedPreferences prefs;
     private String default_address_length;
@@ -178,7 +177,7 @@ public class select_loco extends Activity {
     }
 
     // lookup and set values of various text labels
-    private void set_labels() {
+    protected void set_labels() {
 
         boolean prefShowAddressInsteadOfName = prefs.getBoolean("prefShowAddressInsteadOfName", getResources().getBoolean(R.bool.prefShowAddressInsteadOfNameDefaultValue));
 
@@ -195,7 +194,7 @@ public class select_loco extends Activity {
         TextView vS = (TextView) findViewById(R.id.Sl_loco_0);
         Button bR = (Button) findViewById(R.id.Sl_release_0);
 
-        for (int i = 0; i < mainapp.maxThrottles; i++) {
+        for (int i = 0; i < 6; i++) {
             switch (i)
             {
                 case 1:
@@ -206,52 +205,49 @@ public class select_loco extends Activity {
                     vS = (TextView) findViewById(R.id.Sl_loco_2);
                     bR = (Button) findViewById(R.id.Sl_release_2);
                     break;
-            }
-
-            vS.setVisibility(View.GONE);
-            bR.setVisibility(View.GONE);
-        }
-
-        vS = (TextView) findViewById(R.id.Sl_loco_0);
-        bR = (Button) findViewById(R.id.Sl_release_0);
-
-        for (int i = 0; i < Math.min(mainapp.numThrottles,3); i++) {
-            switch (i)
-            {
-                case 1:
-                    vS = (TextView) findViewById(R.id.Sl_loco_1);
-                    bR = (Button) findViewById(R.id.Sl_release_1);
+                case 3:
+                    vS = (TextView) findViewById(R.id.Sl_loco_3);
+                    bR = (Button) findViewById(R.id.Sl_release_3);
                     break;
-                case 2:
-                    vS = (TextView) findViewById(R.id.Sl_loco_2);
-                    bR = (Button) findViewById(R.id.Sl_release_2);
+                case 4:
+                    vS = (TextView) findViewById(R.id.Sl_loco_4);
+                    bR = (Button) findViewById(R.id.Sl_release_4);
+                    break;
+                case 5:
+                    vS = (TextView) findViewById(R.id.Sl_loco_5);
+                    bR = (Button) findViewById(R.id.Sl_release_5);
                     break;
             }
 
-            vS.setVisibility(View.VISIBLE);
-            bR.setVisibility(View.VISIBLE);
-
-            if (mainapp.consists[i].isActive()) {
-                String vLabel = mainapp.consists[i].toString();
-                if (prefShowAddressInsteadOfName) { // show the DCC Address instead of the loco name if the preference is set
-                    vLabel = mainapp.consists[i].formatConsistAddr();
-                }
-                int vWidth = vS.getWidth();                // scale text if required to fit the textView
-                vS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-                double textWidth = vS.getPaint().measureText(vLabel);
-                if (vWidth == 0)
-                    selectLocoRendered = false;
-                else {
-                    selectLocoRendered = true;
-                    if (textWidth > vWidth) {
-                        vS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
-                    }
-                }
-                vS.setText(vLabel);
-                bR.setEnabled(true);
+            if (i>=mainapp.numThrottles) {
+                vS.setVisibility(View.GONE);
+                bR.setVisibility(View.GONE);
             } else {
-                vS.setText("");
-                bR.setEnabled(false);
+                vS.setVisibility(View.VISIBLE);
+                bR.setVisibility(View.VISIBLE);
+
+                if (mainapp.consists[i].isActive()) {
+                    String vLabel = mainapp.consists[i].toString();
+                    if (prefShowAddressInsteadOfName) { // show the DCC Address instead of the loco name if the preference is set
+                        vLabel = mainapp.consists[i].formatConsistAddr();
+                    }
+                    int vWidth = vS.getWidth();                // scale text if required to fit the textView
+                    vS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+                    double textWidth = vS.getPaint().measureText(vLabel);
+                    if (vWidth == 0)
+                        selectLocoRendered = false;
+                    else {
+                        selectLocoRendered = true;
+                        if (textWidth > vWidth) {
+                            vS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
+                        }
+                    }
+                    vS.setText(vLabel);
+                    bR.setEnabled(true);
+                } else {
+                    vS.setText("");
+                    bR.setEnabled(false);
+                }
             }
         }
 
@@ -543,6 +539,7 @@ public class select_loco extends Activity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -554,7 +551,8 @@ public class select_loco extends Activity {
         mainapp.applyTheme(this);
         setTitle(getApplicationContext().getResources().getString(R.string.app_name_select_loco)); // needed in case the langauge was changed from the default
 
-        setContentView(R.layout.select_loco);
+//        setContentView(R.layout.select_loco);
+        setContentView(layoutViewId);
 
         // put pointer to this activity's handler in main app's shared variable
         mainapp.select_loco_msg_handler = new select_loco_handler();

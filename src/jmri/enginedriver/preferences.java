@@ -339,6 +339,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 // limit check new value
                 limitIntPrefValue(sharedPreferences, key, 500, 9999, "1000");
                 break;
+            case "prefThrottleScreenType":
+            case "NumThrottle":
+                limitNumThrottles(sharedPreferences);
+                break;
         }
     }
 
@@ -537,6 +541,16 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric).replace("%%1%%",Float.toString(minVal)).replace("%%2%%",Float.toString(maxVal)).replace("%%3%%",defaultVal), Toast.LENGTH_LONG).show();
         }
         return isValid;
+    }
+
+    private void limitNumThrottles(SharedPreferences sharedPreferences) {
+        int numThrottles = mainapp.Numeralise(sharedPreferences.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
+        String prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        if (prefThrottleScreenType.equals("Default") && (numThrottles>3)) {
+            sharedPreferences.edit().putString("NumThrottle", "Three").commit();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles).replace("%%1%%","Three"), Toast.LENGTH_SHORT).show();
+            reload();
+        }
     }
 
     //Handle pressing of the back button to end this activity

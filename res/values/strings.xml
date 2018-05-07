@@ -57,6 +57,8 @@
     <string name="stop">Stop</string>
     <string name="forward">Forward</string>
     <string name="reverse">Reverse</string>
+    <string name="fwd">Fwd</string>
+    <string name="rev">Rev</string>
     <string name="none">None</string>
     <string name="fb_helptext">Enter labels and function#s in list at right.  Leave label blank to hide button.  These are used when roster functions are not available.</string>
     <string name="copy_function_labels">Copy Labels from Roster</string>
@@ -272,6 +274,11 @@
     <string name="prefNumOfThrottles">Number of throttles</string>
     <string name="prefNumOfThrottlesSummary">Choose how many throttles you want to display.</string>
     <string name="prefNumOfThrottlesDefault">Two</string>
+
+    <string name="prefThrottleScreenTypeTitle">Throttle Screen Type</string>
+    <string name="prefThrottleScreenTypeSummary">Which type of throttle screen to use. REQUIRES restart of Engine Driver.</string>
+    <string name="prefThrottleScreenTypeDefault">Default</string>
+
     <string name="prefMaximumThrottleTitle">Maximum Throttle Percentage</string>
     <string name="prefMaximumThrottleDefaultValue">100</string>
     <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value in %</string>
@@ -605,6 +612,7 @@
 
     <!--    Toast messages for the Select Loco Activity -->
     <string name="toastSelectLocoConfirmClear">Confirm that you want remove all the Recent Locomotives by pressing the \'Clear List\' button AGAIN.</string>
+    <string name="toastNumThrottles">Chosen Throttle Screen Type does not support that many throttles. Reducing to %%1%%.</string>
 
     <string name="prefTtsTitle">Voice Response Preferences</string>
     <string name="prefTtsSummary">Options to speak key events</string>

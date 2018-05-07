@@ -46,6 +46,9 @@
         <item>Um</item>
         <item>Dois</item>
         <item>Três</item>
+        <item >Quatro</item>
+        <item >Cinco</item>
+        <item >Seis</item>
     </string-array>
     <string-array name="DisplayClockEntries">
         <item>Nada</item>
