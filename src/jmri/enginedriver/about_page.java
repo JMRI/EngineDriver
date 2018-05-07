@@ -69,9 +69,9 @@ public class about_page extends Activity {
             // WiT info
             if (mainapp.withrottle_version != 0.0) {
                 s += "\nWiThrottle: v" + mainapp.withrottle_version;
-                s += String.format("    Heartbeat: %d secs\n", mainapp.heartbeatInterval);
+                s += String.format("    Heartbeat: %d secs", mainapp.heartbeatInterval);
             }
-            s += String.format("SSID: %s\n", mainapp.client_ssid);
+            s += String.format("\nSSID: %s", mainapp.client_ssid);
         }
         // show info
         v.setText(s);

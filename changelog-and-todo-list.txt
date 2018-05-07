@@ -1,6 +1,7 @@
 **Version 2.19
  * New flashlight button option for devices with on-board camera flash. Needs Camera permission for this.
  * require WiThrottle v2.0, also fixes issue where user connects to web port
+ * remove checks and coding for withrottle_version < 2.0
  * major throttle change from T/S/G to array
  * prevent some crashes reported to Play Store
 **Version 2.18.1

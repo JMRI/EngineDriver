@@ -396,25 +396,13 @@ public class turnouts extends Activity implements OnGestureListener {
         button_listener click_listener = new button_listener('2');
         b.setOnClickListener(click_listener);
 
-        //don't show throw and close buttons if withrottle version < 1.6
-        if (mainapp.withrottle_version >= 1.6) {
-            b = (Button) findViewById(R.id.turnout_close);
-            click_listener = new button_listener('C');
-            b.setOnClickListener(click_listener);
+        b = (Button) findViewById(R.id.turnout_close);
+        click_listener = new button_listener('C');
+        b.setOnClickListener(click_listener);
 
-            b = (Button) findViewById(R.id.turnout_throw);
-            click_listener = new button_listener('T');
-            b.setOnClickListener(click_listener);
-
-        } else {
-            //hide the buttons
-            b = (Button) findViewById(R.id.turnout_close);
-            b.setVisibility(View.GONE);
-
-            b = (Button) findViewById(R.id.turnout_throw);
-            b.setVisibility(View.GONE);
-        }
-        //((EditText) findViewById(R.id.turnout_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
+        b = (Button) findViewById(R.id.turnout_throw);
+        click_listener = new button_listener('T');
+        b.setOnClickListener(click_listener);
 
         locationList = new ArrayList<>();
         locationSpinner = (Spinner) findViewById(R.id.turnouts_location);
