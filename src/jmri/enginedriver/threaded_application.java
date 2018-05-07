@@ -27,7 +27,6 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -54,7 +53,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Surface;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.Toast;
@@ -101,8 +99,6 @@ import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
-
-import static android.content.pm.PackageManager.GET_META_DATA;
 
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
@@ -749,7 +745,7 @@ public class threaded_application extends Application {
                 String addr = l.getAddress();
                 String desc = l.getDesc();
                 String roster_name = l.getRosterName();
-                if (roster_name != null && withrottle_version >= 1.6)  // add roster selection info if present and supported
+                if (roster_name != null)  // add roster selection info if present
                     addr += "<;>" + roster_name;
                 acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL); //ask for next loco, with 0 or more delays
                 delays++;
@@ -826,8 +822,8 @@ public class threaded_application extends Application {
                     } else if (com2 == 'A') { //process change in function value  MTAL4805<;>F028
                         if (ls.length == 2 && "F".equals(ls[1].substring(0, 1))) {
                             try {
-//                                process_function_state_20(sWhichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1, 2)));
-                                process_function_state_20(whichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1, 2)));
+//                                process_function_state(sWhichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1, 2)));
+                                process_function_state(whichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1, 2)));
                             } catch (NumberFormatException | StringIndexOutOfBoundsException ignore) {
                                 Log.d("Engine_Driver", "bad incoming message data, unable to parse '" + response_str + "'");
                             }
@@ -904,11 +900,6 @@ public class threaded_application extends Application {
                             process_roster_function_string(response_str.substring(2), 1);
                             break;
 
-                        case 'P': //Properties   RPF}|{whichThrottle]\[function}|{state]\[function}|{state...
-                            if (response_str.charAt(2) == 'F') {  //function state
-                                process_function_state(response_str);  //process function state message (passing the whole message)
-                            }
-                            break;
                     }  //end switch inside R
                     break;
                 case 'P': //Panel
@@ -1181,30 +1172,8 @@ public class threaded_application extends Application {
             }  //end for
         }
 
-        //parse function state string into appropriate app variable array (format for WiT < 2.0)
-        private void process_function_state(String response_str) {
-
-//            String whichThrottle = null;
-            int whichThrottle = 0;
-
-            String[] sa = splitByString(response_str, "]\\[F");  //initial separation (note that I include the F just to strip it off and simplify later stuff
-            int i = 0;
-            for (String fs : sa) {
-                String[] fa = splitByString(fs, "}|{");  //split these into 2 parts, key and value
-                if (i == 0) { //first chunk is different, contains whichThrottle
-//                    whichThrottle = fa[1];
-                    whichThrottle = throttleCharToInt(fa[1].charAt(0));
-                } else {  //all others have function#, then value
-                    int fn = Integer.parseInt(fa[0]);
-                    boolean fState = Boolean.parseBoolean(fa[1]);
-                    function_states[whichThrottle][fn] = fState;
-                }  //end if i==0
-                i++;
-            }  //end for
-        }
-
-        //parse function state string into appropriate app variable array (format for WiT >= 2.0)
-        private void process_function_state_20(int whichThrottle, Integer fn, boolean fState) {
+        //parse function state string into appropriate app variable array
+        private void process_function_state(int whichThrottle, Integer fn, boolean fState) {
             function_states[whichThrottle][fn] = fState;
         }
 
@@ -1622,13 +1591,11 @@ public class threaded_application extends Application {
                     comm_msg_handler.removeCallbacks(this);             //remove pending requests
                     if (heartbeatIntervalSetpoint != 0) {
                         boolean anySent = false;
-                        if (withrottle_version >= 2.0) {
-                            for (int i = 0; i < numThrottles; i++) {
-                                if (consists[i].isActive()) {
-                                    withrottle_send("M" + throttleIntToString(i) + "A*<;>qV"); //request speed
-                                    withrottle_send("M" + throttleIntToString(i) + "A*<;>qR"); //request direction
-                                    anySent = true;
-                                }
+                        for (int i = 0; i < numThrottles; i++) {
+                            if (consists[i].isActive()) {
+                                withrottle_send("M" + throttleIntToString(i) + "A*<;>qV"); //request speed
+                                withrottle_send("M" + throttleIntToString(i) + "A*<;>qR"); //request direction
+                                anySent = true;
                             }
                         }
                         if (!anySent) {
@@ -2377,11 +2344,9 @@ public class threaded_application extends Application {
     }
 
     public void sendEStopMsg() {
-        if (withrottle_version >= 2.0) {
-            for (int i = 0; i < maxThrottles; i++) {
-                if (consists[i].isActive()) {
-                    sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
-                }
+        for (int i = 0; i < maxThrottles; i++) {
+            if (consists[i].isActive()) {
+                sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
             }
         }
 
