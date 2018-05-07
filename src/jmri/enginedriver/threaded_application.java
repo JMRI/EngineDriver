@@ -498,7 +498,7 @@ public class threaded_application extends Application {
                                 getResources().getBoolean(R.bool.prefStopOnReleaseDefaultValue))) {
 //                            withrottle_send(whichThrottle + "V0" + (!addr.equals("") ? "<;>" + addr : ""));
 //                            String msgtxt = "M" + throttleIntToString(whichThrottle) + "-" + (!addr.equals("") ? addr : "*") + "<;>V0";
-                            withrottle_send(String.format("M%s-%s<;>V0", throttleIntToString(whichThrottle), (!addr.equals("") ? addr : "*")));
+                            withrottle_send(String.format("M%sA*<;>V0", throttleIntToString(whichThrottle)));
                             delays++;
                         }
 
@@ -520,7 +520,7 @@ public class threaded_application extends Application {
                     case message_type.ESTOP: {
                         final int whichThrottle = msg.arg1;
 //                        withrottle_send(throttleIntToString(whichThrottle) + "X");  //send eStop request
-                        withrottle_send(String.format("M%sA*<>X", throttleIntToString(whichThrottle)));  //send eStop request
+                        withrottle_send(String.format("M%sA*<;>X", throttleIntToString(whichThrottle)));  //send eStop request
                         break;
                     }
 
