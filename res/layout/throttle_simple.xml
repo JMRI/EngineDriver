@@ -130,15 +130,18 @@
                 <TableLayout
                     android:id="@+id/dir_buttons_table_0"
                     android:layout_width="fill_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:stretchColumns="0,1,2">
 
-                    <TableRow android:layout_height="wrap_content">
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:weightSum="1.0">
 
                         <RelativeLayout
                             android:id="@+id/direction_left_cell_0"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
 
                             <Button
                                 android:id="@+id/button_fwd_0"
@@ -164,7 +167,8 @@
                         <RelativeLayout
                             android:id="@+id/direction_right_cell_0"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
 
                             <Button
                                 android:id="@+id/button_rev_0"
@@ -210,8 +214,8 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"></jmri.enginedriver.VerticalSeekBar>
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
 
                     <Button
                         android:id="@+id/left_speed_button_0"
@@ -343,15 +347,18 @@
                 <TableLayout
                     android:id="@+id/dir_buttons_table_1"
                     android:layout_width="fill_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:stretchColumns="0,1,2">
 
-                    <TableRow android:layout_height="wrap_content">
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:weightSum="1.0">
 
                         <RelativeLayout
                             android:id="@+id/direction_left_cell_1"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
 
                             <Button
                                 android:id="@+id/button_fwd_1"
@@ -377,7 +384,8 @@
                         <RelativeLayout
                             android:id="@+id/direction_right_cell_1"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
 
                             <Button
                                 android:id="@+id/button_rev_1"
@@ -423,8 +431,8 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"></jmri.enginedriver.VerticalSeekBar>
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
 
                     <Button
                         android:id="@+id/left_speed_button_1"
@@ -556,15 +564,18 @@
                 <TableLayout
                     android:id="@+id/dir_buttons_table_2"
                     android:layout_width="fill_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:stretchColumns="0,1,2">
 
-                    <TableRow android:layout_height="wrap_content">
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:weightSum="1.0">
 
                         <RelativeLayout
                             android:id="@+id/direction_left_cell_2"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
 
                             <Button
                                 android:id="@+id/button_fwd_2"
@@ -590,7 +601,8 @@
                         <RelativeLayout
                             android:id="@+id/direction_right_cell_2"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
 
                             <Button
                                 android:id="@+id/button_rev_2"
@@ -636,8 +648,8 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"></jmri.enginedriver.VerticalSeekBar>
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
 
                     <Button
                         android:id="@+id/left_speed_button_2"
@@ -769,15 +781,18 @@
                 <TableLayout
                     android:id="@+id/dir_buttons_table_3"
                     android:layout_width="fill_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:stretchColumns="0,1,2">
 
-                    <TableRow android:layout_height="wrap_content">
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:weightSum="1.0">
 
                         <RelativeLayout
                             android:id="@+id/direction_left_cell_3"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
 
                             <Button
                                 android:id="@+id/button_fwd_3"
@@ -803,7 +818,8 @@
                         <RelativeLayout
                             android:id="@+id/direction_right_cell_3"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
 
                             <Button
                                 android:id="@+id/button_rev_3"
@@ -849,8 +865,8 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"></jmri.enginedriver.VerticalSeekBar>
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
 
                     <Button
                         android:id="@+id/left_speed_button_3"
@@ -982,15 +998,18 @@
                 <TableLayout
                     android:id="@+id/dir_buttons_table_4"
                     android:layout_width="fill_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:stretchColumns="0,1,2">
 
-                    <TableRow android:layout_height="wrap_content">
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:weightSum="1.0">
 
                         <RelativeLayout
                             android:id="@+id/direction_left_cell_4"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
 
                             <Button
                                 android:id="@+id/button_fwd_4"
@@ -1016,7 +1035,8 @@
                         <RelativeLayout
                             android:id="@+id/direction_right_cell_4"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
 
                             <Button
                                 android:id="@+id/button_rev_4"
@@ -1062,8 +1082,8 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"></jmri.enginedriver.VerticalSeekBar>
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
 
                     <Button
                         android:id="@+id/left_speed_button_4"
@@ -1195,15 +1215,18 @@
                 <TableLayout
                     android:id="@+id/dir_buttons_table_5"
                     android:layout_width="fill_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:stretchColumns="0,1,2">
 
-                    <TableRow android:layout_height="wrap_content">
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:weightSum="1.0">
 
                         <RelativeLayout
                             android:id="@+id/direction_left_cell_5"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
 
                             <Button
                                 android:id="@+id/button_fwd_5"
@@ -1229,7 +1252,8 @@
                         <RelativeLayout
                             android:id="@+id/direction_right_cell_5"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
 
                             <Button
                                 android:id="@+id/button_rev_5"
@@ -1275,8 +1299,8 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"></jmri.enginedriver.VerticalSeekBar>
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
 
                     <Button
                         android:id="@+id/left_speed_button_5"
