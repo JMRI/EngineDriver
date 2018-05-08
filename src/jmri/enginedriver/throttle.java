@@ -1508,17 +1508,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     // indicate requested direction using the button typeface
     void showDirectionRequest(int whichThrottle, int direction) {
-    /*
-         * this code gathers direction feedback for the direction indication
-         * 
-         * if (mainapp.withrottle_version < 2.0) { // no feedback avail so just
-         * let indication follow request showDirectionIndication(whichThrottle,
-         * direction); } else { //get confirmation of direction changes
-         * mainapp.sendMsgDelay(mainapp.comm_msg_handler, 100,
-         * message_type.REQ_DIRECTION, "", (int) whichThrottle, 0); }
-         * 
-         * due to response lags, for now just track the setting: //******
-         */
         showDirectionIndication(whichThrottle, direction);
     }
 
@@ -4193,11 +4182,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             // determine how to split the screen (evenly if all three, 45/45/10 for two, 80/10/10 if only one)
             screenHeight -= throttleMargin;
             String numThrot = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumOfThrottlesDefault));
-
-            // don't allow third throttle if not supported in JMRI (prior to multithrottle change)
-            if (mainapp.withrottle_version < 2.0 && numThrot.matches("Three")) {
-                numThrot = "Two";
-            }
 
             if (numThrot.matches("One")) {
                 heights[0] = screenHeight;

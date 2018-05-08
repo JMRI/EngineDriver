@@ -328,7 +328,6 @@ public class select_loco extends Activity {
     }
 
     // request release of specified throttle
-//    void release_loco(char whichThrottle) {
     void release_loco(int whichThrottle) {
         mainapp.consists[whichThrottle].release();
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", whichThrottle); // pass 0, 1 or 2 in message
@@ -357,8 +356,7 @@ public class select_loco extends Activity {
 
 
         //user preference set to not consist, or consisting not supported in this JMRI, so drop before adding
-        if ((prefs.getBoolean("drop_on_acquire_preference", false))
-                || (mainapp.withrottle_version < 2.0)) {
+        if (prefs.getBoolean("drop_on_acquire_preference", false)) {
             release_loco(whichThrottle);
         }
 
