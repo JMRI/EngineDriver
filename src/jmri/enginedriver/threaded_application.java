@@ -1,5 +1,5 @@
-/*Copyright (C) 2017 M. Steve Todd
-  mstevetodd@enginedriver.rrclubs.org
+/*Copyright (C) 2018 M. Steve Todd
+  mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,7 +27,6 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -54,7 +53,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Surface;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.Toast;
@@ -101,8 +99,6 @@ import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
-
-import static android.content.pm.PackageManager.GET_META_DATA;
 
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
@@ -498,27 +494,21 @@ public class threaded_application extends Application {
                                 function_labels[whichThrottle] = new LinkedHashMap<>();
                                 function_states[whichThrottle] = new boolean[32];
                         }
-                        if (prefs.getBoolean("stop_on_release_preference",
+                        if (prefs.getBoolean("stop_on_release_preference",                         //send stop command before releasing (if set in prefs)
                                 getResources().getBoolean(R.bool.prefStopOnReleaseDefaultValue))) {
-                            withrottle_send(whichThrottle + "V0" + (!addr.equals("") ? "<;>" + addr : ""));  //send stop command before releasing (if set in prefs)
+                            withrottle_send(String.format("M%sA*<;>V0", throttleIntToString(whichThrottle)));
                             delays++;
                         }
 
                         releaseLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL);
                         break;
                     }
-                    //request speed. arg1 holds whichThrottle
-                    case message_type.REQ_VEL_AND_DIR: {
-                        final int whichThrottle = msg.arg1;
-                        withrottle_send(throttleIntToString(whichThrottle) + "qV");
-                        withrottle_send(throttleIntToString(whichThrottle) + "qR");  //request updated direction
-                        break;
-                    }
 
                     //estop requested.   arg1 holds whichThrottle
+                    //  M0A*<;>X  was(0X)
                     case message_type.ESTOP: {
                         final int whichThrottle = msg.arg1;
-                        withrottle_send(throttleIntToString(whichThrottle) + "X");  //send eStop request
+                        withrottle_send(String.format("M%sA*<;>X", throttleIntToString(whichThrottle)));  //send eStop request
                         break;
                     }
 
@@ -557,7 +547,7 @@ public class threaded_application extends Application {
                         final int whichThrottle = msg.arg1;
                         if (prefs.getBoolean("drop_on_acquire_preference",
                                 getResources().getBoolean(R.bool.prefDropOnAcquireDefaultValue))) {
-                            withrottle_send(throttleIntToString(whichThrottle) + "r");  //send release command for any already acquired locos (if set in prefs)
+                            releaseLoco("*", whichThrottle, 0);
                             delays++;
                         }
                         acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL);
@@ -574,25 +564,30 @@ public class threaded_application extends Application {
                     //          case message_type.ERROR:
                     //            break;
 
-                    //Adjust the locomotive's speed. whichThrottle is in arg 1 and arg2 holds the value of the speed to set.
+                    //Adjust the throttle's speed. whichThrottle is in arg 1 and arg2 holds the value of the speed to set.
+                    //  message sent is formatted M1A*<;>V13  was(1V13)
                     case message_type.VELOCITY: {
                         final int whichThrottle = msg.arg1;
-                        withrottle_send(String.format(throttleIntToString(whichThrottle) + "V%d", msg.arg2));
+                        withrottle_send(String.format("M%sA*<;>V%d", throttleIntToString(whichThrottle), msg.arg2));
                         break;
                     }
-                    //Change direction. address in in msg, whichThrottle is in arg 1 and arg2 holds the direction to change to.
+                    //Change direction. address is in msg, whichThrottle is in arg 1 and arg2 holds the direction to change to.
+                    //  message sent is formatted M1AS96<;>R0  was(1R0<;>S96)
                     case message_type.DIRECTION: {
                         final String addr = msg.obj.toString();
                         final int whichThrottle = msg.arg1;
-                        withrottle_send(String.format(throttleIntToString(whichThrottle) + "R%d<;>" + addr, msg.arg2));
+                        withrottle_send(String.format("M%sA%s<;>R%d", throttleIntToString(whichThrottle), addr, msg.arg2));
                         break;
                     }
                     //Set or unset a function. whichThrottle+addr is in the msg, arg1 is the function number, arg2 is set or unset.
+                    //  M1AS96<;>F01  was(1F01<;>S96)
                     case message_type.FUNCTION: {
                         String addr = msg.obj.toString();
                         final char cWhichThrottle = addr.charAt(0);
                         addr = addr.substring(1);
-                        withrottle_send(String.format(cWhichThrottle + "F%d%d<;>" + addr, msg.arg2, msg.arg1));
+                        if (addr.length() == 0)
+                            addr = "*";
+                        withrottle_send(String.format("M%sA%s<;>F%d%d", cWhichThrottle, addr, msg.arg2, msg.arg1));
                         break;
                     }
                     //Set or unset a function. whichThrottle+addr is in the msg, arg1 is the function number, arg2 is set or unset.
@@ -600,7 +595,9 @@ public class threaded_application extends Application {
                         String addr = msg.obj.toString();
                         final char cWhichThrottle = addr.charAt(0);
                         addr = addr.substring(1);
-                        withrottle_send(String.format(cWhichThrottle + "f%d%d<;>" + addr, msg.arg2, msg.arg1));
+                        if (addr.length() == 0)
+                            addr = "*";
+                        withrottle_send(String.format("M%sA%s<;>f%d%d", cWhichThrottle, addr, msg.arg2, msg.arg1));
                         break;
                     }
                     //send command to change turnout.  msg = (T)hrow, (C)lose or (2)(toggle) + systemName
@@ -714,11 +711,24 @@ public class threaded_application extends Application {
                 withrottle_send("HU" + s);  //also send throttle name as the UDID
         }
 
-        /* ask for specific loco to be added to a throttle */
+        /* ask for specific loco to be added to a throttle
+             input addr is formatted "L37<;>CSX37" or "S96" (if no roster name)
+             msgTxt will be formatted M0+L1012<;>EACL1012 or M1+S96<;>S96 */
         private void acquireLoco(String addr, int whichThrottle, long interval) {
+            String rosterName = "";
+            String address = "";
+            String[] as = splitByString(addr, "<;>");
+            if (as.length > 1) {
+                address = as[0];
+                rosterName = "E" + as[1];
+            } else { //if no rostername, just use address for both
+                address = addr;
+                rosterName = addr;
+            }
 
-//            sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, whichThrottle + addr);
-            sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, throttleIntToString(whichThrottle) + addr);
+            //format multithrottle request for loco M1+L37<;>ECSX37
+            String msgTxt = String.format("M%s+%s<;>%s", throttleIntToString(whichThrottle), address, rosterName);  //add requested loco to this throttle
+            sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, msgTxt);
 
             if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
                 sendMsgDelay(comm_msg_handler, interval + WITHROTTLE_SPACING_INTERVAL, message_type.SEND_HEARTBEAT_START);
@@ -728,13 +738,14 @@ public class threaded_application extends Application {
         /* "steal" will send the MTS command */
         private void stealLoco(String addr, int whichThrottle) {
             if (addr != null) {
-                String msgtxt = "M" + throttleIntToString(whichThrottle) + "S" + addr + "<;>" + addr;
+                String msgtxt = String.format("M%sS%s<;>%s", throttleIntToString(whichThrottle), addr, addr);
                 sendMsg(comm_msg_handler, message_type.WITHROTTLE_SEND, msgtxt);
             }
         }
 
+        //release all locos for throttle using '*', or a single loco using address
         private void releaseLoco(String addr, int whichThrottle, long interval) {
-            String msgtxt = throttleIntToString(whichThrottle) + "r" + (!addr.equals("") ? "<;>" + addr : "");
+            String msgtxt = String.format("M%s-%s<;>r", throttleIntToString(whichThrottle), (!addr.equals("") ? addr : "*"));
             sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, msgtxt);
         }
 
@@ -749,7 +760,7 @@ public class threaded_application extends Application {
                 String addr = l.getAddress();
                 String desc = l.getDesc();
                 String roster_name = l.getRosterName();
-                if (roster_name != null && withrottle_version >= 1.6)  // add roster selection info if present and supported
+                if (roster_name != null)  // add roster selection info if present
                     addr += "<;>" + roster_name;
                 acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL); //ask for next loco, with 0 or more delays
                 delays++;
@@ -808,7 +819,7 @@ public class threaded_application extends Application {
                         String consistname = getConsistNameFromAddress(addr); //check for a JMRI consist for this address,
                         if (consistname != null) { //if found, request function keys for lead, format MTAS13<;>CL1234
                             String[] cna = splitByString(consistname, "+");
-                            String cmd = "M" + throttleIntToString(whichThrottle) + "A" + addr + "<;>C" + cvtToLAddr(cna[0]);
+                            String cmd = String.format("M%sA%s<;>C%s", throttleIntToString(whichThrottle), addr, cvtToLAddr(cna[0]));
                             Log.d("Engine_Driver", "rqsting fkeys for lead loco " + cvtToLAddr(cna[0]));
                             withrottle_send(cmd);
                         }
@@ -821,13 +832,11 @@ public class threaded_application extends Application {
                         String lead;
                         lead = consists[whichThrottle].getLeadAddr();
                         if (lead.equals(addr))                       //*** temp - only process if for lead engine in consist
-//                            process_roster_function_string("RF29}|{1234(L)" + ls[1], sWhichThrottle);  //prepend some stuff to match old-style
                             process_roster_function_string("RF29}|{1234(L)" + ls[1], whichThrottle);  //prepend some stuff to match old-style
                     } else if (com2 == 'A') { //process change in function value  MTAL4805<;>F028
                         if (ls.length == 2 && "F".equals(ls[1].substring(0, 1))) {
                             try {
-//                                process_function_state_20(sWhichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1, 2)));
-                                process_function_state_20(whichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1, 2)));
+                                process_function_state(whichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1, 2)));
                             } catch (NumberFormatException | StringIndexOutOfBoundsException ignore) {
                                 Log.d("Engine_Driver", "bad incoming message data, unable to parse '" + response_str + "'");
                             }
@@ -895,20 +904,13 @@ public class threaded_application extends Application {
                             break;
 
                         case 'F':   //RF29}|{2591(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
-//                            process_roster_function_string(response_str.substring(2), "T");
                             process_roster_function_string(response_str.substring(2), 0);
                             break;
 
                         case 'S': //RS29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
-//                            process_roster_function_string(response_str.substring(2), "S");
                             process_roster_function_string(response_str.substring(2), 1);
                             break;
 
-                        case 'P': //Properties   RPF}|{whichThrottle]\[function}|{state]\[function}|{state...
-                            if (response_str.charAt(2) == 'F') {  //function state
-                                process_function_state(response_str);  //process function state message (passing the whole message)
-                            }
-                            break;
                     }  //end switch inside R
                     break;
                 case 'P': //Panel
@@ -1038,15 +1040,11 @@ public class threaded_application extends Application {
                     consist_name = tv[2];
                 } else {  //list of locos in consist
                     String[] tv = splitByString(ts, "}|{");  //split these into loco address and direction
-//                  tv = splitByString(tv[0],"(");  //split again to strip off address size (L)
                     consist_desc += plus + tv[0];
                     plus = "+";
                 }  //end if i==0
                 i++;
             }  //end for
-//            if (!consist_name.equals(consist_addr) && (consist_name.length() > 4)) {
-//                consist_desc = consist_name; // use entered name if significant
-//            }
             Log.d("Engine_Driver","consist header, addr=" + consist_addr
                     + ", name=" + consist_name + ", desc=" + consist_desc);
             //don't add empty consists to list
@@ -1181,101 +1179,31 @@ public class threaded_application extends Application {
             }  //end for
         }
 
-        //parse function state string into appropriate app variable array (format for WiT < 2.0)
-        private void process_function_state(String response_str) {
-
-//            String whichThrottle = null;
-            int whichThrottle = 0;
-
-            String[] sa = splitByString(response_str, "]\\[F");  //initial separation (note that I include the F just to strip it off and simplify later stuff
-            int i = 0;
-            for (String fs : sa) {
-                String[] fa = splitByString(fs, "}|{");  //split these into 2 parts, key and value
-                if (i == 0) { //first chunk is different, contains whichThrottle
-//                    whichThrottle = fa[1];
-                    whichThrottle = throttleCharToInt(fa[1].charAt(0));
-                } else {  //all others have function#, then value
-                    int fn = Integer.parseInt(fa[0]);
-                    boolean fState = Boolean.parseBoolean(fa[1]);
-                    function_states[whichThrottle][fn] = fState;
-                }  //end if i==0
-                i++;
-            }  //end for
-        }
-
-        //parse function state string into appropriate app variable array (format for WiT >= 2.0)
-        private void process_function_state_20(int whichThrottle, Integer fn, boolean fState) {
+        //parse function state string into appropriate app variable array
+        private void process_function_state(int whichThrottle, Integer fn, boolean fState) {
             function_states[whichThrottle][fn] = fState;
         }
 
         //
         // withrottle_send(String msg)
         //
-        //send msg to the socket using multithrottle format
-        //
-        //msg format is generally whichThrottle+cmd+<;>addr 
-        //if <;>addr is omitted then command is sent to all locos on whichThrottle
-        //
-        //msg format for acquire loco is whichThrottle+addr+<;>rosterName
-        //where <;>rosterName is optional
-        //
+        //send formatted msg to the socket using multithrottle format
         private void withrottle_send(String msg) {
 //            Log.d("Engine_Driver", "WiT send '" + msg + "'");
 
-            String newMsg = msg;
-
-            if (newMsg == null) {
+            if (msg == null) {
                 Log.d("Engine_Driver", "--> null msg");
                 return;
             }
-            // if version >= 2.0, convert certain messages to MultiThrottle format
-            if (withrottle_version >= 2.0) {
-                char cWhichThrottle = msg.charAt(0);
-                 if (('T' == cWhichThrottle || 'S' == cWhichThrottle || 'G' == cWhichThrottle)  // should not be needed
-                 || (cWhichThrottle >= '0' && cWhichThrottle <= (char) (maxThrottles + '0') )) { //acquire loco
-                    String cmd = msg.substring(1);
-                    char com = cmd.charAt(0);
-                    String addr = "";
-                    if (cmd.length() > 0) {                                  //check for loco address after the command
-                        String[] as = splitByString(cmd, "<;>");
-                        if (as.length > 1) {
-                            addr = as[1];
-                            cmd = as[0];
-                        }
-                    }
-                    String prefix = "M" + cWhichThrottle;                    // use a multithrottle command
-                    if ('L' == com || 'S' == com) {                     //if address length
-                        String rosterName = addr;
-                        addr = cmd;
-                        if (rosterName.length() > 0) {
-                            rosterName = "E" + rosterName;  //use E to indicate rostername
-                        } else {
-                            rosterName = addr;
-                        }
-                        newMsg = prefix + "+" + addr + "<;>" + rosterName;  //add requested loco to this throttle
-                    } else if ('r' == com) {                          //if release loco(s)
-                        if (addr.length() > 0)
-                            newMsg = prefix + "-" + addr + "<;>r"; //release one loco
-                        else
-                            newMsg = prefix + "-*<;>r";            //release all locos from this throttle
-                    } else {                                              //if anything else
-                        if (addr.length() == 0)
-                            addr = "*";
-                        newMsg = prefix + "A" + addr + "<;>" + cmd;
-                    }
-                }
-            }
 
-            //send response to debug log for review
-            String lm = "-->:" + newMsg;
-            if (!newMsg.equals(msg)) {
-                lm += "  was(" + msg + ")";
-            }
-            Log.d("Engine_Driver", lm);
+            //log message
+            Log.d("Engine_Driver", "-->:" + msg);
 
             //perform the send
             if (socketWiT != null) {
-                socketWiT.Send(newMsg);
+                socketWiT.Send(msg);
+            } else {
+                Log.e("Engine_Driver", "socketWiT is null, message '" + msg + "' not sent!");
             }
 
         }  //end withrottle_send()
@@ -1431,7 +1359,6 @@ public class threaded_application extends Application {
             public void Send(String msg) {
                 boolean reconInProg = false;
                 //reconnect socket if needed
-//              if(!socketGood || !this.SocketCheck()) {
                 if (!socketGood || inboundTimeout) {
                     String status;
                     getWifiInfo();                  //update address in case network connection was lost
@@ -1622,13 +1549,11 @@ public class threaded_application extends Application {
                     comm_msg_handler.removeCallbacks(this);             //remove pending requests
                     if (heartbeatIntervalSetpoint != 0) {
                         boolean anySent = false;
-                        if (withrottle_version >= 2.0) {
-                            for (int i = 0; i < numThrottles; i++) {
-                                if (consists[i].isActive()) {
-                                    withrottle_send("M" + throttleIntToString(i) + "A*<;>qV"); //request speed
-                                    withrottle_send("M" + throttleIntToString(i) + "A*<;>qR"); //request direction
-                                    anySent = true;
-                                }
+                        for (int i = 0; i < numThrottles; i++) {
+                            if (consists[i].isActive()) {
+                                withrottle_send(String.format("M%sA*<;>qV", throttleIntToString(i))); //request speed
+                                withrottle_send(String.format("M%sA*<;>qR", throttleIntToString(i))); //request direction
+                                anySent = true;
                             }
                         }
                         if (!anySent) {
@@ -1679,7 +1604,7 @@ public class threaded_application extends Application {
                         Log.d("Engine_Driver", "Phone is OffHook, Stopping Trains");
                         for(int i = 0; i < numThrottles; i++) {
                             if (consists[i].isActive()) {
-                                withrottle_send("M" + throttleIntToString(i) + "A*<;>V0");
+                                withrottle_send(String.format("M%sA*<;>V0", throttleIntToString(i)));
                             }
                         }
                     }
@@ -1846,8 +1771,6 @@ public class threaded_application extends Application {
         try {
             Map<String, ?> ddd = prefs.getAll();
             String dwr = prefs.getString("TypeThrottle", "false");
-//            if (!prefs.getBoolean("TypeThrottle", getResources().getBoolean(R.bool.prefTypeOfThrottleDefaultValue)))
-//                   numThrottles = Math.min(numThrottles,3);
         }
         catch (Exception ex) {
             String dwr = ex.toString();
@@ -2377,11 +2300,9 @@ public class threaded_application extends Application {
     }
 
     public void sendEStopMsg() {
-        if (withrottle_version >= 2.0) {
-            for (int i = 0; i < maxThrottles; i++) {
-                if (consists[i].isActive()) {
-                    sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
-                }
+        for (int i = 0; i < maxThrottles; i++) {
+            if (consists[i].isActive()) {
+                sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
             }
         }
 
