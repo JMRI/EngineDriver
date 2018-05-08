@@ -1044,6 +1044,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 
+    /* ********************** Dummy Elements *************************** */
 
     <LinearLayout
         android:id="@+id/dummy_throttles"
@@ -1161,9 +1162,7 @@
             android:layout_height="0dp"
             />
 
-        /* ************************************************* */
-
-        <LinearLayout
+         <LinearLayout
             android:id="@+id/throttle_4"
             android:layout_width="0dp"
             android:layout_height="0dp"

@@ -34,7 +34,7 @@ import java.util.LinkedHashMap;
 
 public class throttle_full extends throttle {
 
-    private static final int MAX_SCREEN_THROTTLES = 3;
+    protected static final int MAX_SCREEN_THROTTLES = 3;
 
     protected void removeLoco(int whichThrottle) {
         super.removeLoco(whichThrottle);
@@ -111,13 +111,7 @@ public class throttle_full extends throttle {
     public void onCreate(Bundle savedInstanceState) {
 
         mainapp = (threaded_application) this.getApplication();
-
-        if (mainapp.numThrottles > MAX_SCREEN_THROTTLES) {   // Maximum number of throttles this screen supports
-            mainapp.numThrottles = MAX_SCREEN_THROTTLES;
-        }
-        if (mainapp.maxThrottles > MAX_SCREEN_THROTTLES) {   // Maximum number of throttles this screen supports
-            mainapp.maxThrottles = MAX_SCREEN_THROTTLES;
-        }
+        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
 
         super.layoutViewId = R.layout.throttle;
         super.onCreate(savedInstanceState);
@@ -317,7 +311,6 @@ public class throttle_full extends throttle {
                 throttle_count++;
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
-                // whichVolume = 'S'; //set the next throttle to use volume control
             }
             double textScale = 1.0;
             int bWidth = b.getWidth(); // scale text if required to fit the textView
@@ -340,7 +333,7 @@ public class throttle_full extends throttle {
             b.setPressed(false);
         }
 
-        if (webView != null) {
+        if (webView!=null) {
             setImmersiveModeOn(webView);
         }
 
@@ -420,11 +413,6 @@ public class throttle_full extends throttle {
             screenHeight -= throttleMargin;
             String numThrot = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumOfThrottlesDefault));
 
-            // don't allow third throttle if not supported in JMRI (prior to multithrottle change)
-            if (mainapp.withrottle_version < 2.0 && numThrot.matches("Three")) {
-                numThrot = "Two";
-            }
-
             if (numThrot.matches("One")) {
                 heights[0] = screenHeight;
                 heights[1] = 0;
@@ -493,6 +481,7 @@ public class throttle_full extends throttle {
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             set_all_function_states(throttleIndex);
         }
+
 
         // Log.d("Engine_Driver","ending set_labels");
 

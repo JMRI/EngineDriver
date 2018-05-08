@@ -84,7 +84,8 @@ import static android.view.KeyEvent.KEYCODE_X;
 
 public class throttle_simple extends throttle {
 
-    private static final int MAX_SCREEN_THROTTLES = 6;
+    protected static final int MAX_SCREEN_THROTTLES = 6;
+
     private LinearLayout[] lThrottles;
     private LinearLayout[] Separators;
 
@@ -93,13 +94,7 @@ public class throttle_simple extends throttle {
     public void onCreate(Bundle savedInstanceState) {
 
         mainapp = (threaded_application) this.getApplication();
-
-        if (mainapp.numThrottles > MAX_SCREEN_THROTTLES) {   // Maximum number of throttles this screen supports
-            mainapp.numThrottles = MAX_SCREEN_THROTTLES;
-        }
-        if (mainapp.maxThrottles > MAX_SCREEN_THROTTLES) {   // Maximum number of throttles this screen supports
-            mainapp.maxThrottles = MAX_SCREEN_THROTTLES;
-        }
+        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
 
         super.layoutViewId = R.layout.throttle_simple;
         super.onCreate(savedInstanceState);

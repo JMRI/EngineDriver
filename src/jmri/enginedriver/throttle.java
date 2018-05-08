@@ -124,7 +124,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected threaded_application mainapp; // hold pointer to mainapp
     protected SharedPreferences prefs;
 
-    private static final int MAX_SCREEN_THROTTLES = 3;
+    protected static final int MAX_SCREEN_THROTTLES = 3;
     // activity codes
     public static final int ACTIVITY_PREFS = 0;
     public static final int ACTIVITY_SELECT_LOCO = 1;
@@ -1043,7 +1043,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     // get all the preferences that should be read when the activity is created or resumes
-    private void getCommonPrefs(boolean isCreate) {
+    protected void getCommonPrefs(boolean isCreate) {
 
         if (isCreate) {  //only do onCreate
             webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
@@ -3362,20 +3362,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (savedInstanceState != null) {
             // restore the requested throttle direction so we can update the
             // direction indication while we wait for an update from WiT
-            for (int throttleIndex = 0; throttleIndex < MAX_SCREEN_THROTTLES; throttleIndex++) {
+            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                 if (savedInstanceState.getSerializable("dir" + mainapp.throttleIntToString(throttleIndex) ) != null)
                     dirs[throttleIndex] = (int) savedInstanceState.getSerializable("dir" + throttleIndex);
             }
         }
 
-//        mainapp = (threaded_application) this.getApplication();
-//
-//        if (mainapp.numThrottles > MAX_SCREEN_THROTTLES) {   // Maximum number of throttles this screen supports
-//            mainapp.numThrottles = MAX_SCREEN_THROTTLES;
-//        }
-//        if (mainapp.maxThrottles > MAX_SCREEN_THROTTLES) {   // Maximum number of throttles this screen supports
-//            mainapp.maxThrottles = MAX_SCREEN_THROTTLES;
-//        }
+        mainapp = (threaded_application) this.getApplication();
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
@@ -3390,6 +3383,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         setContentView(layoutViewId);
 
         getCommonPrefs(true); // get all the common preferences
+        setThottleNumLimits();
 
         DIRECTION_BUTTON_LEFT_TEXT = getApplicationContext().getResources().getString(R.string.forward);
         DIRECTION_BUTTON_RIGHT_TEXT = getApplicationContext().getResources().getString(R.string.reverse);
@@ -3830,6 +3824,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         gestureInProgress = false;
 
         getCommonPrefs(false);
+        setThottleNumLimits();
 
         clearVolumeAndGamepadAdditionalIndicators();
 
@@ -4107,251 +4102,250 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     // lookup and set values of various informational text labels and size the
     // screen elements
     @SuppressWarnings("deprecation")
-    private void set_labels() {
-        // Log.d("Engine_Driver","starting set_labels");
-
-        int throttle_count = 0;
-        int[] heights = {0, 0, 0, 0, 0, 0};
-
-        // avoid NPE by not letting this run too early (reported to Play Store)
-        if (tvVols[0] == null) return;
-
-        // hide or display volume control indicator based on variable
-        setVolumeIndicator();
-        setGamepadIndicator();
-
-        // set up max speeds for throttles
-        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
-        maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-            sbs[throttleIndex].setMax(maxThrottle);
-        }
-
-        // set max allowed change for throttles from prefs
-        int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
-        max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
-
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-            sbs[throttleIndex].setMax(maxThrottle);
-            if (mainapp.consists[throttleIndex].isEmpty()) {
-                maxSpeedSteps[throttleIndex] = 100;
-            }
-            //get speed steps from prefs
-            speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
-            setDisplayUnitScale(throttleIndex);
-
-            setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
-        }
-
-        final DisplayMetrics dm = getResources().getDisplayMetrics();
-        // Get the screen's density scale
-        final float denScale = dm.density;
-
-        // Convert the dps to pixels, based on density scale
-        int newDlihHeight;
-        int newDlihFontSize;
-        if (prefDecreaseLocoNumberHeight) {
-            newDlihHeight = (int) (40 * denScale + 0.5f); // decreased height
-            newDlihFontSize = 32; // decreased height
-        } else {
-            newDlihHeight = (int) (50 * denScale + 0.5f); // normal height
-            newDlihFontSize = 36; // normal height
-        }
-        // SPDHT
-
-        // Convert the dps to pixels, based on density scale
-        int newHeight;
-        if (pref_increase_slider_height_preference) {
-            newHeight = (int) (80 * denScale + 0.5f); // increased height
-        } else {
-            newHeight = (int) (50 * denScale + 0.5f); // normal height
-        }
-
-        final int conNomTextSize = 24;
-        final double minTextScale = 0.5;
-        String bLabel;
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-            Button b = bSels[throttleIndex];
-            if (mainapp.consists[throttleIndex].isActive()) {
-                if (!prefShowAddressInsteadOfName) {
-                    bLabel = mainapp.consists[throttleIndex].toString();
-                } else {
-                    bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
-                }
-                throttle_count++;
-            } else {
-                bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
-            }
-            double textScale = 1.0;
-            int bWidth = b.getWidth(); // scale text if required to fit the textView
-            b.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-            double textWidth = b.getPaint().measureText(bLabel);
-            if (bWidth == 0)
-                selectLocoRendered = false;
-            else {
-                selectLocoRendered = true;
-                if (textWidth > 0 && textWidth > bWidth) {
-                    textScale = bWidth / textWidth;
-                    if (textScale < minTextScale)
-                        textScale = minTextScale;
-                }
-            }
-            int textSize = (int) (conNomTextSize * textScale);
-            b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
-            b.setText(bLabel);
-            b.setSelected(false);
-            b.setPressed(false);
-        }
-
-        if (webView!=null) {
-            setImmersiveModeOn(webView);
-        }
-
-        int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
-        //Log.d("Engine_Driver","vThrotScrWrap.getHeight(), screenHeight=" + screenHeight);
-        if (screenHeight == 0) {
-            // throttle screen hasn't been drawn yet, so use display metrics for now
-            screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
-            //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
-        }
-
-        // save part the screen for webview
-        if (webViewLocation.equals(WEB_VIEW_LOCATION_TOP) || webViewLocation.equals(WEB_VIEW_LOCATION_BOTTOM)) {
-            webViewIsOn = true;
-            if (!prefIncreaseWebViewSize) {
-                // save half the screen
-                screenHeight *= 0.5;
-            } else {
-                // save 60% of the screen
-                if (webViewLocation.equals(WEB_VIEW_LOCATION_BOTTOM)) {
-                    screenHeight *= 0.40;
-                } else {
-                    screenHeight *= 0.60;
-                }
-            }
-        }
-
-        // SPDHT set height of Loco Id and Direction Button areas
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-
-            LinearLayout.LayoutParams llLidp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newDlihHeight);
-            llLocoIds[throttleIndex].setLayoutParams(llLidp);
-            llLocoDirs[throttleIndex].setLayoutParams(llLidp);
-            //
-            tvSpdVals[throttleIndex].setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
-            // SPDHT
-
-            //set height of slider areas
-            LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
-            llSetSpds[throttleIndex].setLayoutParams(llLp);
-
-            //set margins of slider areas
-            int sliderMargin = preferences.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
-
-            //show speed buttons based on pref
-            llSetSpds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
-
-            sbs[throttleIndex].setVisibility(View.VISIBLE);  //always show slider if buttons not shown
-            if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
-                bLSpds[throttleIndex].setVisibility(View.VISIBLE);
-                bRSpds[throttleIndex].setVisibility(View.VISIBLE);
-                bLSpds[throttleIndex].setText(speedButtonLeftText);
-                bRSpds[throttleIndex].setText(speedButtonRightText);
-                //if buttons enabled, hide the slider if requested
-                if (prefs.getBoolean("hide_slider_preference", false)) {
-                    sbs[throttleIndex].setVisibility(View.GONE);
-                    bLSpds[throttleIndex].setText(speedButtonDownText);
-                    bRSpds[throttleIndex].setText(speedButtonUpText);
-                }
-            } else {  //hide speed buttons based on pref
-                bLSpds[throttleIndex].setVisibility(View.GONE);
-                bRSpds[throttleIndex].setVisibility(View.GONE);
-                sliderMargin += 30;  //a little extra margin previously in button
-            }
-            if (prefs.getBoolean("prefHideSliderAndSpeedButtons", getResources().getBoolean(R.bool.prefHideSliderAndSpeedButtonsDefaultValue))) {
-                llSetSpds[throttleIndex].setVisibility(View.GONE);
-            }
-
-            sbs[throttleIndex].setPadding(sliderMargin, 0, sliderMargin, 0);
-
-            // update the state of each function button based on shared variable
-            set_all_function_states(throttleIndex);
-        }
-        if (screenHeight > throttleMargin) { // don't do this if height is invalid
-            //Log.d("Engine_Driver","starting screen height adjustments, screenHeight=" + screenHeight);
-            // determine how to split the screen (evenly if all three, 45/45/10 for two, 80/10/10 if only one)
-            screenHeight -= throttleMargin;
-            String numThrot = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumOfThrottlesDefault));
-
-            if (numThrot.matches("One")) {
-                heights[0] = screenHeight;
-                heights[1] = 0;
-                heights[2] = 0;
-            } else if (numThrot.matches("Two") && !mainapp.consists[1].isActive()) {
-                heights[0] = (int) (screenHeight * 0.9);
-                heights[1] = (int) (screenHeight * 0.10);
-                heights[2] = 0;
-            } else if (numThrot.matches("Two") && !mainapp.consists[0].isActive()) {
-                heights[0] = (int) (screenHeight * 0.10);
-                heights[1] = (int) (screenHeight * 0.9);
-                heights[2] = 0;
-            } else if (numThrot.matches("Two")) {
-                heights[0] = (int) (screenHeight * 0.5);
-                heights[1] = (int) (screenHeight * 0.5);
-                heights[2] = 0;
-            } else if (throttle_count == 0 || throttle_count == 3) {
-                heights[0] = (int) (screenHeight * 0.33);
-                heights[1] = (int) (screenHeight * 0.33);
-                heights[2] = (int) (screenHeight * 0.33);
-            } else if (!mainapp.consists[0].isActive() && !mainapp.consists[1].isActive()) {
-                heights[0] = (int) (screenHeight * 0.10);
-                heights[1] = (int) (screenHeight * 0.10);
-                heights[2] = (int) (screenHeight * 0.80);
-            } else if (!mainapp.consists[0].isActive() && !mainapp.consists[2].isActive()) {
-                heights[0] = (int) (screenHeight * 0.10);
-                heights[1] = (int) (screenHeight * 0.80);
-                heights[2] = (int) (screenHeight * 0.10);
-            } else if (!mainapp.consists[1].isActive() && !mainapp.consists[2].isActive()) {
-                heights[0] = (int) (screenHeight * 0.80);
-                heights[1] = (int) (screenHeight * 0.10);
-                heights[2] = (int) (screenHeight * 0.10);
-            } else if (!mainapp.consists[0].isActive()) {
-                heights[0] = (int) (screenHeight * 0.10);
-                heights[1] = (int) (screenHeight * 0.45);
-                heights[2] = (int) (screenHeight * 0.45);
-            } else if (!mainapp.consists[1].isActive()) {
-                heights[0] = (int) (screenHeight * 0.45);
-                heights[1] = (int) (screenHeight * 0.10);
-                heights[2] = (int) (screenHeight * 0.45);
-            } else {
-                heights[0] = (int) (screenHeight * 0.45);
-                heights[1] = (int) (screenHeight * 0.45);
-                heights[2] = (int) (screenHeight * 0.10);
-            }
-
-            LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
-            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-                // set height of each area
-                llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, heights[throttleIndex]);
-                llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
-                lls[throttleIndex].setLayoutParams(llLp);
-
-                // update throttle slider top/bottom
-                tops[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
-                bottoms[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
-            }
-        } else {
-            Log.d("Engine_Driver", "screen height adjustments skipped, screenHeight=" + screenHeight);
-        }
-
-        // update the direction indicators
-        showDirectionIndications();
-
-//        // update the state of each function button based on shared variable
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-            set_all_function_states(throttleIndex);
-        }
-
+    protected void set_labels() {
+//        // Log.d("Engine_Driver","starting set_labels");
+//
+//        int throttle_count = 0;
+//        int[] heights = {0, 0, 0, 0, 0, 0};
+//
+//        // avoid NPE by not letting this run too early (reported to Play Store)
+//        if (tvVols[0] == null) return;
+//
+//        // hide or display volume control indicator based on variable
+//        setVolumeIndicator();
+//        setGamepadIndicator();
+//
+//        // set up max speeds for throttles
+//        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+//        maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
+//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+//            sbs[throttleIndex].setMax(maxThrottle);
+//        }
+//
+//        // set max allowed change for throttles from prefs
+//        int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
+//        max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
+//
+//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+//            sbs[throttleIndex].setMax(maxThrottle);
+//            if (mainapp.consists[throttleIndex].isEmpty()) {
+//                maxSpeedSteps[throttleIndex] = 100;
+//            }
+//            //get speed steps from prefs
+//            speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+//            setDisplayUnitScale(throttleIndex);
+//
+//            setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
+//        }
+//
+//        final DisplayMetrics dm = getResources().getDisplayMetrics();
+//        // Get the screen's density scale
+//        final float denScale = dm.density;
+//
+//        // Convert the dps to pixels, based on density scale
+//        int newDlihHeight;
+//        int newDlihFontSize;
+//        if (prefDecreaseLocoNumberHeight) {
+//            newDlihHeight = (int) (40 * denScale + 0.5f); // decreased height
+//            newDlihFontSize = 32; // decreased height
+//        } else {
+//            newDlihHeight = (int) (50 * denScale + 0.5f); // normal height
+//            newDlihFontSize = 36; // normal height
+//        }
+//        // SPDHT
+//
+//        // Convert the dps to pixels, based on density scale
+//        int newHeight;
+//        if (pref_increase_slider_height_preference) {
+//            newHeight = (int) (80 * denScale + 0.5f); // increased height
+//        } else {
+//            newHeight = (int) (50 * denScale + 0.5f); // normal height
+//        }
+//
+//        final int conNomTextSize = 24;
+//        final double minTextScale = 0.5;
+//        String bLabel;
+//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+//            Button b = bSels[throttleIndex];
+//            if (mainapp.consists[throttleIndex].isActive()) {
+//                if (!prefShowAddressInsteadOfName) {
+//                    bLabel = mainapp.consists[throttleIndex].toString();
+//                } else {
+//                    bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
+//                }
+//                throttle_count++;
+//            } else {
+//                bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
+//            }
+//            double textScale = 1.0;
+//            int bWidth = b.getWidth(); // scale text if required to fit the textView
+//            b.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+//            double textWidth = b.getPaint().measureText(bLabel);
+//            if (bWidth == 0)
+//                selectLocoRendered = false;
+//            else {
+//                selectLocoRendered = true;
+//                if (textWidth > 0 && textWidth > bWidth) {
+//                    textScale = bWidth / textWidth;
+//                    if (textScale < minTextScale)
+//                        textScale = minTextScale;
+//                }
+//            }
+//            int textSize = (int) (conNomTextSize * textScale);
+//            b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+//            b.setText(bLabel);
+//            b.setSelected(false);
+//            b.setPressed(false);
+//        }
+//
+//        if (webView!=null) {
+//            setImmersiveModeOn(webView);
+//        }
+//
+//        int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
+//        //Log.d("Engine_Driver","vThrotScrWrap.getHeight(), screenHeight=" + screenHeight);
+//        if (screenHeight == 0) {
+//            // throttle screen hasn't been drawn yet, so use display metrics for now
+//            screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
+//            //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
+//        }
+//
+//        // save part the screen for webview
+//        if (webViewLocation.equals(WEB_VIEW_LOCATION_TOP) || webViewLocation.equals(WEB_VIEW_LOCATION_BOTTOM)) {
+//            webViewIsOn = true;
+//            if (!prefIncreaseWebViewSize) {
+//                // save half the screen
+//                screenHeight *= 0.5;
+//            } else {
+//                // save 60% of the screen
+//                if (webViewLocation.equals(WEB_VIEW_LOCATION_BOTTOM)) {
+//                    screenHeight *= 0.40;
+//                } else {
+//                    screenHeight *= 0.60;
+//                }
+//            }
+//        }
+//
+//        // SPDHT set height of Loco Id and Direction Button areas
+//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+//
+//            LinearLayout.LayoutParams llLidp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newDlihHeight);
+//            llLocoIds[throttleIndex].setLayoutParams(llLidp);
+//            llLocoDirs[throttleIndex].setLayoutParams(llLidp);
+//            //
+//            tvSpdVals[throttleIndex].setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
+//            // SPDHT
+//
+//            //set height of slider areas
+//            LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
+//            llSetSpds[throttleIndex].setLayoutParams(llLp);
+//
+//            //set margins of slider areas
+//            int sliderMargin = preferences.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
+//
+//            //show speed buttons based on pref
+//            llSetSpds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
+//
+//            sbs[throttleIndex].setVisibility(View.VISIBLE);  //always show slider if buttons not shown
+//            if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
+//                bLSpds[throttleIndex].setVisibility(View.VISIBLE);
+//                bRSpds[throttleIndex].setVisibility(View.VISIBLE);
+//                bLSpds[throttleIndex].setText(speedButtonLeftText);
+//                bRSpds[throttleIndex].setText(speedButtonRightText);
+//                //if buttons enabled, hide the slider if requested
+//                if (prefs.getBoolean("hide_slider_preference", false)) {
+//                    sbs[throttleIndex].setVisibility(View.GONE);
+//                    bLSpds[throttleIndex].setText(speedButtonDownText);
+//                    bRSpds[throttleIndex].setText(speedButtonUpText);
+//                }
+//            } else {  //hide speed buttons based on pref
+//                bLSpds[throttleIndex].setVisibility(View.GONE);
+//                bRSpds[throttleIndex].setVisibility(View.GONE);
+//                sliderMargin += 30;  //a little extra margin previously in button
+//            }
+//            if (prefs.getBoolean("prefHideSliderAndSpeedButtons", getResources().getBoolean(R.bool.prefHideSliderAndSpeedButtonsDefaultValue))) {
+//                llSetSpds[throttleIndex].setVisibility(View.GONE);
+//            }
+//
+//            sbs[throttleIndex].setPadding(sliderMargin, 0, sliderMargin, 0);
+//
+//            // update the state of each function button based on shared variable
+//            set_all_function_states(throttleIndex);
+//        }
+//        if (screenHeight > throttleMargin) { // don't do this if height is invalid
+//            //Log.d("Engine_Driver","starting screen height adjustments, screenHeight=" + screenHeight);
+//            // determine how to split the screen (evenly if all three, 45/45/10 for two, 80/10/10 if only one)
+//            screenHeight -= throttleMargin;
+//            String numThrot = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumOfThrottlesDefault));
+//
+//            if (numThrot.matches("One")) {
+//                heights[0] = screenHeight;
+//                heights[1] = 0;
+//                heights[2] = 0;
+//            } else if (numThrot.matches("Two") && !mainapp.consists[1].isActive()) {
+//                heights[0] = (int) (screenHeight * 0.9);
+//                heights[1] = (int) (screenHeight * 0.10);
+//                heights[2] = 0;
+//            } else if (numThrot.matches("Two") && !mainapp.consists[0].isActive()) {
+//                heights[0] = (int) (screenHeight * 0.10);
+//                heights[1] = (int) (screenHeight * 0.9);
+//                heights[2] = 0;
+//            } else if (numThrot.matches("Two")) {
+//                heights[0] = (int) (screenHeight * 0.5);
+//                heights[1] = (int) (screenHeight * 0.5);
+//                heights[2] = 0;
+//            } else if (throttle_count == 0 || throttle_count == 3) {
+//                heights[0] = (int) (screenHeight * 0.33);
+//                heights[1] = (int) (screenHeight * 0.33);
+//                heights[2] = (int) (screenHeight * 0.33);
+//            } else if (!mainapp.consists[0].isActive() && !mainapp.consists[1].isActive()) {
+//                heights[0] = (int) (screenHeight * 0.10);
+//                heights[1] = (int) (screenHeight * 0.10);
+//                heights[2] = (int) (screenHeight * 0.80);
+//            } else if (!mainapp.consists[0].isActive() && !mainapp.consists[2].isActive()) {
+//                heights[0] = (int) (screenHeight * 0.10);
+//                heights[1] = (int) (screenHeight * 0.80);
+//                heights[2] = (int) (screenHeight * 0.10);
+//            } else if (!mainapp.consists[1].isActive() && !mainapp.consists[2].isActive()) {
+//                heights[0] = (int) (screenHeight * 0.80);
+//                heights[1] = (int) (screenHeight * 0.10);
+//                heights[2] = (int) (screenHeight * 0.10);
+//            } else if (!mainapp.consists[0].isActive()) {
+//                heights[0] = (int) (screenHeight * 0.10);
+//                heights[1] = (int) (screenHeight * 0.45);
+//                heights[2] = (int) (screenHeight * 0.45);
+//            } else if (!mainapp.consists[1].isActive()) {
+//                heights[0] = (int) (screenHeight * 0.45);
+//                heights[1] = (int) (screenHeight * 0.10);
+//                heights[2] = (int) (screenHeight * 0.45);
+//            } else {
+//                heights[0] = (int) (screenHeight * 0.45);
+//                heights[1] = (int) (screenHeight * 0.45);
+//                heights[2] = (int) (screenHeight * 0.10);
+//            }
+//
+//            LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
+//            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+//                // set height of each area
+//                llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, heights[throttleIndex]);
+//                llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
+//                lls[throttleIndex].setLayoutParams(llLp);
+//
+//                // update throttle slider top/bottom
+//                tops[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+//                bottoms[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+//            }
+//        } else {
+//            Log.d("Engine_Driver", "screen height adjustments skipped, screenHeight=" + screenHeight);
+//        }
+//
+//        // update the direction indicators
+//        showDirectionIndications();
+//
+////        // update the state of each function button based on shared variable
+//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+//            set_all_function_states(throttleIndex);
+//        }
 
         //adjust several items in the menu
         if (TMenu != null) {
@@ -4665,6 +4659,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     // update zero trim values
                     updateEsuMc2ZeroTrim();
                 }
+                // in case the preference has changed but the current screen does not support the number selected.
+                setThottleNumLimits();
                 break;
             }
             case ACTIVITY_GAMEPAD_TEST: {
@@ -5012,5 +5008,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+
+    protected void setThottleNumLimits() {
+        if (mainapp.numThrottles > mainapp.maxThrottlesCurrentScreen) {   // Maximum number of throttles this screen supports
+            mainapp.numThrottles = mainapp.maxThrottlesCurrentScreen;
+        }
+        if (mainapp.maxThrottles > mainapp.maxThrottlesCurrentScreen) {   // Maximum number of throttles this screen supports
+            mainapp.maxThrottles = mainapp.maxThrottlesCurrentScreen;
+        }
     }
 }

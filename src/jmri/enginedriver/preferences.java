@@ -83,6 +83,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
     private static String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
 
+    private String prefThrottleScreenTypeOriginal = "Default";
     /**
      * Called when the activity is first created.
      */
@@ -147,6 +148,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             enableDisablePreference("prefTtsGamepadTest", false);
             enableDisablePreference("prefTtsGamepadTestComplete",false);
         }
+
+        prefThrottleScreenTypeOriginal = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        showHideThrottleTypePreferences();
     }
 
     @SuppressWarnings("deprecation")
@@ -551,6 +555,29 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles).replace("%%1%%","Three"), Toast.LENGTH_SHORT).show();
             reload();
         }
+
+        if (!prefThrottleScreenType.equals(prefThrottleScreenTypeOriginal)) {
+            SharedPreferences.Editor prefEdit = sharedPreferences.edit();
+            prefEdit.commit();
+            reload();
+            forceRestartApp();
+        }
+    }
+
+    private void showHideThrottleTypePreferences() {
+        boolean enable = true;
+        if (prefThrottleScreenTypeOriginal.equals("Simple")) {
+            enable = false;
+        }
+        enableDisablePreference("increase_slider_height_preference",enable);
+        enableDisablePreference("left_slider_margin",enable);
+        enableDisablePreference("hide_slider_preference",enable);
+        enableDisablePreference("prefHideSliderAndSpeedButtons",enable);
+        enableDisablePreference("WebViewLocation",enable);
+        enableDisablePreference("prefIncreaseWebViewSize",enable);
+        enableDisablePreference("InitialThrotWebPage",enable);
+        enableDisablePreference("prefAlwaysUseDefaultFunctionLabels",enable);
+        enableDisablePreference("prefNumberOfDefaultFunctionLabels",enable);
     }
 
     //Handle pressing of the back button to end this activity
