@@ -387,9 +387,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private boolean isDirectionButtonLongPress;
     Handler directionButtonLongPressHandler = new Handler();
 
-    //Throttle Array
-//    private final char[] allThrottleLetters = {'T', 'S', 'G'};
-
     // The following are used for the shake detection
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -419,9 +416,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private boolean prefEsuMc2StopButtonShortPress = true;
 
     // Create default ESU MCII ThrottleScale for each throttle
-//    private ThrottleScale esuThrottleScaleT = new ThrottleScale(10, 127);
-//    private ThrottleScale esuThrottleScaleS = new ThrottleScale(10, 127);
-//    private ThrottleScale esuThrottleScaleG = new ThrottleScale(10, 127);
     private ThrottleScale[] esuThrottleScales
             = {new ThrottleScale(10, 127),
             new ThrottleScale(10, 127),
@@ -963,14 +957,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         return isOk;
     }
 
-//    private int getThrottleIndexFromChar(char t) {  // for use to index allThrottleLetters
-//        switch (t) {
-//            case 'T': return 0;
-//            case 'S': return 1;
-//            default: return 2;  // 'G'
-//        }
-//    }
-
     // set or restore the screen brightness when used for the Swipe Up or Shake
     private void setRestoreScreenDim(String toastMsg){
         if (screenDimmed) {
@@ -1374,10 +1360,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     // set the displayed numeric speed value
     private void setDisplayedSpeed(int whichThrottle, int speed) {
         TextView speed_label;
-//        Consist con;
         double speedScale = getDisplayUnitScale(whichThrottle);
         speed_label = tvSpdVals[whichThrottle];
-//        con = mainapp.consists[whichThrottle];
         if (speed < 0) {
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop).replace("%%1%%","Alert: Engine "), Toast.LENGTH_LONG).show();
             speed = 0;
@@ -1520,8 +1504,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             bRevs[whichThrottle].setTypeface(null, Typeface.NORMAL);
         }
 
-        //bFwd.invalidate(); //button wasn't changing at times
-        //bRev.invalidate();
     }
 
     // indicate requested direction using the button typeface
@@ -1643,8 +1625,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     void applySpeedRelatedOptions() {
-//        for (char throttleLetter : allThrottleLetters) {
-//            applySpeedRelatedOptions(throttleLetter);}  // repeat for all three throttles
           for (int throttleIndex = 0;throttleIndex < mainapp.numThrottles; throttleIndex++) {
               applySpeedRelatedOptions(throttleIndex);}  // repeat for all three throttles
     }
@@ -2679,13 +2659,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             int speed;
             if (!isScreenLocked) {
                 if (getConsist(whichVolume).isActive() && !isEsuMc2Stopped) {
-//                    if (whichVolume == 'T') {
-//                        speed = esuThrottleScaleT.positionToStep(knobPos);
-//                    } else if (whichVolume == 'G') {
-//                        speed = esuThrottleScaleG.positionToStep(knobPos);
-//                    } else {
-//                        speed = esuThrottleScaleS.positionToStep(knobPos);
-//                    }
                     speed = esuThrottleScales[whichVolume].positionToStep(knobPos);
                     Log.d("Engine_Driver", "ESU_MCII: Knob position changed for throttle " + whichVolume);
                     Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
@@ -2748,10 +2721,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.LONG_FLASH);
                     esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
                     // Set all throttles to zero
-//                    for (char t : allThrottleLetters) {
-//                        set_stop_button(t, true);
-//                        speedUpdateAndNotify(t, 0);
-//                        setEnabledEsuMc2ThrottleScreenButtons(t, false);
                     for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
                         set_stop_button(throttleIndex, true);
                         speedUpdateAndNotify(throttleIndex, 0);
@@ -2784,9 +2753,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 } else {
                     Log.d("Engine_Driver", "ESU_MCII: Resume control without speed revert");
                     origSpeed = 0;
-//                    for (char t : allThrottleLetters) {
-//                        set_stop_button(t, false);
-//                        setEnabledEsuMc2ThrottleScreenButtons(t, true);
                     for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
                         set_stop_button(throttleIndex, false);
                         setEnabledEsuMc2ThrottleScreenButtons(throttleIndex, true);
@@ -2805,13 +2771,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         Log.d("Engine_Driver", "ESU_MCII: Request to update knob position for throttle " + whichThrottle);
         if (whichThrottle == whichVolume) {
             int knobPos;
-//            if (whichThrottle == 'T') {
-//                knobPos = esuThrottleScaleT.stepToPosition(speed);
-//            } else if (whichThrottle == 'G') {
-//                knobPos = esuThrottleScaleG.stepToPosition(speed);
-//            } else {
-//                knobPos = esuThrottleScaleS.stepToPosition(speed);
-//            }
             knobPos = esuThrottleScales[whichThrottle].stepToPosition(speed);
             Log.d("Engine_Driver", "ESU_MCII: Update knob position for throttle " + mainapp.throttleIntToString(whichThrottle));
             Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
@@ -2829,9 +2788,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         esuThrottleFragment.setZeroPosition(zeroTrim);
 
         // now throttle scales
-//        esuThrottleScaleT = new ThrottleScale(zeroTrim, esuThrottleScaleT.getStepCount());
-//        esuThrottleScaleS = new ThrottleScale(zeroTrim, esuThrottleScaleS.getStepCount());
-//        esuThrottleScaleG = new ThrottleScale(zeroTrim, esuThrottleScaleG.getStepCount());
         for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
             esuThrottleScales[throttleIndex] = new ThrottleScale(zeroTrim, esuThrottleScales[throttleIndex].getStepCount());
         }
@@ -2956,19 +2912,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private void setEnabledEsuMc2ThrottleScreenButtons(int whichThrottle, boolean enabled) {
 
         // Disables/enables seekbar and speed buttons
-//        if (whichThrottle == 'T') {
-//            bLSpdT.setEnabled(enabled);
-//            bRSpdT.setEnabled(enabled);
-//            sbT.setEnabled(enabled);
-//        } else if (whichThrottle == 'G') {
-//            bLSpdG.setEnabled(enabled);
-//            bRSpdG.setEnabled(enabled);
-//            sbG.setEnabled(enabled);
-//        } else {
-//            bLSpdS.setEnabled(enabled);
-//            bRSpdS.setEnabled(enabled);
-//            sbS.setEnabled(enabled);
-//        }
         bLSpds[whichThrottle].setEnabled(enabled);
         bRSpds[whichThrottle].setEnabled(enabled);
         sbs[whichThrottle].setEnabled(enabled);
@@ -3363,16 +3306,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     // send a throttle speed message to WiT
 //    public void sendSpeedMsg(char whichThrottle, int speed) {
     public void sendSpeedMsg(int whichThrottle, int speed) {
-        // start timer to briefly ignore WiT speed messages - avoids speed "jumping"
-//        if (whichThrottle == 'T') {
-//            changeTimerT.changeDelay();
-//        } else if (whichThrottle == 'G') {
-//            changeTimerG.changeDelay();
-//        } else {
-//            changeTimerS.changeDelay();
-//        }
-// moved to onCreate
-
         // send speed update to WiT
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "", whichThrottle, speed);
     }
@@ -3409,12 +3342,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         }
     }
-
-    /*
-     * private void requestSpeedMsg(char whichThrottle) { // always load
-     * whichThrottle into message mainapp.sendMsg(mainapp.comm_msg_handler,
-     * message_type.REQ_VELOCITY, "", (int) whichThrottle); }
-     */
 
     // set the title, optionally adding the current time.
     public void setTitle() {
@@ -3847,8 +3774,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (IS_ESU_MCII && isEsuMc2Stopped) {
             if (isEsuMc2AllStopped) {
                 // disable buttons for all throttles
-//                for (char t: allThrottleLetters) {
-//                    setEnabledEsuMc2ThrottleScreenButtons(t, false);
                 for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
                     setEnabledEsuMc2ThrottleScreenButtons(throttleIndex, false);
                 }
@@ -4167,7 +4092,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 throttle_count++;
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
-                // whichVolume = 'S'; //set the next throttle to use volume control
             }
             double textScale = 1.0;
             int bWidth = b.getWidth(); // scale text if required to fit the textView
