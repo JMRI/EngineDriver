@@ -556,6 +556,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             reload();
         }
 
+        if (prefThrottleScreenType.equals("Vertical") && (numThrottles!=2)) {
+            sharedPreferences.edit().putString("NumThrottle", "Two").commit();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles).replace("%%1%%","Two"), Toast.LENGTH_SHORT).show();
+            reload();
+        }
+
         if (!prefThrottleScreenType.equals(prefThrottleScreenTypeOriginal)) {
             SharedPreferences.Editor prefEdit = sharedPreferences.edit();
             prefEdit.commit();
@@ -566,7 +572,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private void showHideThrottleTypePreferences() {
         boolean enable = true;
-        if (prefThrottleScreenTypeOriginal.equals("Simple")) {
+        if ((prefThrottleScreenTypeOriginal.equals("Simple")) || (prefThrottleScreenTypeOriginal.equals("Vertical"))) {
             enable = false;
         }
         enableDisablePreference("increase_slider_height_preference",enable);

@@ -138,6 +138,9 @@ public class connection_activity extends Activity {
             case "Simple":
                 throttle = new Intent().setClass(this, throttle_simple.class);
                 break;
+            case "Vertical":
+                throttle = new Intent().setClass(this, throttle_vertical.class);
+                break;
             case "Default":
             default:
                 throttle = new Intent().setClass(this, throttle_full.class);

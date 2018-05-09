@@ -1,0 +1,355 @@
+/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+Original version of the simple throttle is by radsolutions.
+ */
+
+package jmri.enginedriver;
+
+import android.annotation.SuppressLint;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
+// for changing the screen brightness
+
+// used for supporting Keyboard and Gamepad input;
+
+public class throttle_vertical extends throttle {
+
+    protected static final int MAX_SCREEN_THROTTLES = 2;
+
+    private LinearLayout[] lThrottles;
+    private LinearLayout[] Separators;
+
+    protected void removeLoco(int whichThrottle) {
+        super.removeLoco(whichThrottle);
+        set_function_labels_and_listeners_for_view(whichThrottle);
+    }
+
+    @SuppressLint({"Recycle", "SetJavaScriptEnabled"})
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+
+        mainapp = (threaded_application) this.getApplication();
+        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
+
+        super.layoutViewId = R.layout.throttle_vertical;
+        super.onCreate(savedInstanceState);
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            switch (throttleIndex) {
+                case 0:
+                    fbs[throttleIndex] = (ViewGroup) findViewById(R.id.function_buttons_table_0);
+                    break;
+                case 1:
+                    fbs[throttleIndex] = (ViewGroup) findViewById(R.id.function_buttons_table_1);
+                    break;
+            }
+
+        }
+        lThrottles = new LinearLayout[mainapp.maxThrottles];
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            switch (throttleIndex) {
+                default:
+                case 0:
+                    lThrottles[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_0);
+                    break;
+                case 1:
+                    lThrottles[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_1);
+                    break;
+            }
+        }
+
+        setAllFunctionLabelsAndListeners();
+
+    } // end of onCreate()
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            if( throttleIndex < mainapp.numThrottles) {
+                lThrottles[throttleIndex].setVisibility(LinearLayout.VISIBLE);
+            } else {
+                lThrottles[throttleIndex].setVisibility(LinearLayout.GONE);
+            }
+        }
+
+    } // end of onResume()
+
+    @Override
+    protected void getDirectionButtonPrefs() {
+        super.getDirectionButtonPrefs();
+        super.DIRECTION_BUTTON_LEFT_TEXT = getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsShortDefaultValue);
+        super.DIRECTION_BUTTON_RIGHT_TEXT = getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsShortDefaultValue);
+
+        super.prefLeftDirectionButtons = prefs.getString("prefLeftDirectionButtonsShort", getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsShortDefaultValue)).trim();
+        super.prefRightDirectionButtons = prefs.getString("prefRightDirectionButtonsShort", getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsShortDefaultValue)).trim();
+    }
+
+    // helper function to set up function buttons for each throttle
+    // loop through all function buttons and
+    // set label and dcc functions (based on settings) or hide if no label
+    @Override
+    void set_function_labels_and_listeners_for_view(int whichThrottle) {
+        // Log.d("Engine_Driver","starting set_function_labels_and_listeners_for_view");
+
+        ViewGroup tv; // group
+        ViewGroup r; // row
+        function_button_touch_listener fbtl;
+        Button b; // button
+        int k = 0; // button count
+        LinkedHashMap<Integer, String> function_labels_temp;
+        LinkedHashMap<Integer, Button> functionButtonMap = new LinkedHashMap<>();
+
+        tv = fbs[whichThrottle];
+
+        // note: we make a copy of function_labels_x because TA might change it
+        // while we are using it (causing issues during button update below)
+        function_labels_temp = mainapp.function_labels_default;
+        if (!prefAlwaysUseDefaultFunctionLabels) {
+            if (mainapp.function_labels[whichThrottle] != null && mainapp.function_labels[whichThrottle].size() > 0) {
+                function_labels_temp = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
+            } else {
+                function_labels_temp = mainapp.function_labels_default;
+            }
+        }
+
+        // put values in array for indexing in next step
+        // to do this
+        ArrayList<Integer> aList = new ArrayList<>();
+        aList.addAll(function_labels_temp.keySet());
+
+        if (tv != null) {
+            for (int i = 0; i < tv.getChildCount(); i++) {
+                r = (ViewGroup) tv.getChildAt(i);
+                for (int j = 0; j < r.getChildCount(); j++) {
+                    b = (Button) r.getChildAt(j);
+                    if (k < function_labels_temp.size()) {
+                        Integer func = aList.get(k);
+                        functionButtonMap.put(func, b); // save function to button
+                        // mapping
+                        String bt = function_labels_temp.get(func);
+                        fbtl = new function_button_touch_listener(func, whichThrottle, bt);
+                        b.setOnTouchListener(fbtl);
+                        if ((mainapp.getCurrentTheme().equals(THEME_DEFAULT))) {
+                            bt = bt + "        ";  // pad with spaces, and limit to 7 characters
+                            b.setText(bt.substring(0, 7));
+                        } else {
+                            bt = bt + "                      ";  // pad with spaces, and limit to 20 characters
+                            b.setText(bt.trim());
+                        }
+                        b.setVisibility(View.VISIBLE);
+                        b.setEnabled(false); // start out with everything disabled
+                    } else {
+                        b.setVisibility(View.GONE);
+                    }
+                    k++;
+                }
+            }
+        }
+
+        // update the function-to-button map for the current throttle
+        functionMaps[whichThrottle] = functionButtonMap;
+    }
+
+
+    protected void set_labels() {
+        super.set_labels();
+        // Log.d("Engine_Driver","starting set_labels");
+
+        // avoid NPE by not letting this run too early (reported to Play Store)
+        if (tvVols[0] == null) return;
+
+//        // hide or display volume control indicator based on variable
+//        setVolumeIndicator();
+//        setGamepadIndicator();
+//
+//        // set up max speeds for throttles
+//        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+//        maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
+//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+//            sbs[throttleIndex].setMax(maxThrottle);
+//        }
+//
+//        // set max allowed change for throttles from prefs
+//        int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
+//        max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
+//
+//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+//            sbs[throttleIndex].setMax(maxThrottle);
+//            if (mainapp.consists[throttleIndex].isEmpty()) {
+//                maxSpeedSteps[throttleIndex] = 100;
+//            }
+//            //get speed steps from prefs
+//            speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+//            setDisplayUnitScale(throttleIndex);
+//
+//            setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
+//        }
+
+        final int conNomTextSize = 24;
+        final double minTextScale = 0.5;
+        String bLabel;
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            Button b = bSels[throttleIndex];
+            if (mainapp.consists[throttleIndex].isActive()) {
+                if (!prefShowAddressInsteadOfName) {
+                    bLabel = mainapp.consists[throttleIndex].toString();
+                } else {
+                    bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
+                }
+            } else {
+                bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
+                // whichVolume = 'S'; //set the next throttle to use volume control
+            }
+            double textScale = 1.0;
+            int bWidth = b.getWidth(); // scale text if required to fit the textView
+            b.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+            double textWidth = b.getPaint().measureText(bLabel);
+            if (bWidth == 0)
+                selectLocoRendered = false;
+            else {
+                selectLocoRendered = true;
+                if (textWidth > 0 && textWidth > bWidth) {
+                    textScale = bWidth / textWidth;
+                    if (textScale < minTextScale)
+                        textScale = minTextScale;
+                }
+            }
+            int textSize = (int) (conNomTextSize * textScale);
+            b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+            b.setText(bLabel);
+            b.setSelected(false);
+            b.setPressed(false);
+        }
+
+        if (webView != null) {
+            setImmersiveModeOn(webView);
+        }
+
+        // update the direction indicators
+        showDirectionIndications();
+
+
+        final DisplayMetrics dm = getResources().getDisplayMetrics();
+        // Get the screen's density scale
+        final float denScale = dm.density;
+        int btn = (int) (denScale * 81); // seperator
+
+        int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
+        int throttleWidth = (screenWidth - (btn * (mainapp.numThrottles)))/ mainapp.numThrottles;
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.FILL_PARENT;
+            lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
+            lThrottles[throttleIndex].requestLayout();
+        }
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            //show speed buttons based on pref
+            if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
+                bLSpds[throttleIndex].setVisibility(View.VISIBLE);
+                bRSpds[throttleIndex].setVisibility(View.VISIBLE);
+            } else {
+                bLSpds[throttleIndex].setVisibility(View.GONE);
+                bRSpds[throttleIndex].setVisibility(View.GONE);
+            }
+            //bLSpds[throttleIndex].setText(speedButtonLeftText);
+            //bRSpds[throttleIndex].setText(speedButtonRightText);
+        }
+
+//        // update the state of each function button based on shared variable
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            set_all_function_states(throttleIndex);
+        }
+
+        // Log.d("Engine_Driver","ending set_labels");
+
+    }
+
+    @Override
+    void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
+        super.enable_disable_buttons(whichThrottle, forceDisable);
+
+        boolean newEnabledState = false;
+        if (!forceDisable) {
+            newEnabledState = mainapp.consists[whichThrottle].isActive();      // set false if lead loco is not assigned
+        }
+
+    } // end of enable_disable_buttons
+    // helper function to enable/disable all children for a group
+    @Override
+    void enable_disable_buttons_for_view(ViewGroup vg, boolean newEnabledState) {
+        // Log.d("Engine_Driver","starting enable_disable_buttons_for_view " +
+        // newEnabledState);
+
+        ViewGroup r; // row
+        Button b; // button
+        for (int i = 0; i < vg.getChildCount(); i++) {
+            r = (ViewGroup) vg.getChildAt(i);
+            for (int j = 0; j < r.getChildCount(); j++) {
+                b = (Button) r.getChildAt(j);
+                b.setEnabled(newEnabledState);
+            }
+        }
+    } // enable_disable_buttons_for_view
+
+    // update the appearance of all function buttons
+    @Override
+    void set_all_function_states(int whichThrottle) {
+        // Log.d("Engine_Driver","set_function_states");
+
+        LinkedHashMap<Integer, Button> fMap;
+        fMap = functionMaps[whichThrottle];
+
+        for (Integer f : fMap.keySet()) {
+            set_function_state(whichThrottle, f);
+        }
+    }
+
+
+    // update a function button appearance based on its state
+    @Override
+    void set_function_state(int whichThrottle, int function) {
+        // Log.d("Engine_Driver","starting set_function_request");
+
+        Button b;
+        boolean[] fs;   // copy of this throttle's function state array
+        b = functionMaps[whichThrottle].get(function);
+        fs = mainapp.function_states[whichThrottle];
+
+        if (b != null && fs != null) {
+            if (fs[function]) {
+                b.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+                b.setPressed(true);
+            } else {
+                b.setTypeface(null, Typeface.NORMAL);
+                b.setPressed(false);
+            }
+        }
+
+    }
+}

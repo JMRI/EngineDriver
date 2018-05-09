@@ -150,11 +150,11 @@ public class throttle_full extends throttle {
     }
 
 
-    void setAllFunctionLabelsAndListeners() {
-        for (int i = 0; i < mainapp.maxThrottles; i++) {
-            set_function_labels_and_listeners_for_view(i);
-        }
-    }
+//    void setAllFunctionLabelsAndListeners() {
+//        for (int i = 0; i < mainapp.maxThrottles; i++) {
+//            set_function_labels_and_listeners_for_view(i);
+//        }
+//    }
 
     // helper function to set up function buttons for each throttle
     // loop through all function buttons and
@@ -223,14 +223,14 @@ public class throttle_full extends throttle {
     }
 
     // helper function to get a numbered function button from its throttle and function number
-    Button getFunctionButton(int whichThrottle, int func) {
-        Button b; // button
-        LinkedHashMap<Integer, Button> functionButtonMap;
-
-        functionButtonMap = functionMaps[whichThrottle];
-        b = functionButtonMap.get(func);
-        return b;
-    }
+//    Button getFunctionButton(int whichThrottle, int func) {
+//        Button b; // button
+//        LinkedHashMap<Integer, Button> functionButtonMap;
+//
+//        functionButtonMap = functionMaps[whichThrottle];
+//        b = functionButtonMap.get(func);
+//        return b;
+//    }
 
 //    // lookup and set values of various informational text labels and size the
 //    // screen elements

@@ -3877,13 +3877,35 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         showDirectionIndications();
 
         if (TMenu != null) {
-            TMenu.findItem(R.id.EditConsist0_menu).setVisible(mainapp.consists[0].isMulti());
-            TMenu.findItem(R.id.EditConsist1_menu).setVisible(mainapp.consists[1].isMulti());
-            TMenu.findItem(R.id.EditConsist2_menu).setVisible(mainapp.consists[2].isMulti());
+            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
 
-            TMenu.findItem(R.id.EditLightsConsist0_menu).setVisible(mainapp.consists[0].isMulti());
-            TMenu.findItem(R.id.EditLightsConsist1_menu).setVisible(mainapp.consists[1].isMulti());
-            TMenu.findItem(R.id.EditLightsConsist2_menu).setVisible(mainapp.consists[2].isMulti());
+                switch (throttleIndex) {
+                    case 0:
+                        TMenu.findItem(R.id.EditConsist0_menu).setVisible(mainapp.consists[0].isMulti());
+                        TMenu.findItem(R.id.EditLightsConsist0_menu).setVisible(mainapp.consists[0].isMulti());
+                        break;
+                    case 1:
+                        TMenu.findItem(R.id.EditLightsConsist1_menu).setVisible(mainapp.consists[1].isMulti());
+                        TMenu.findItem(R.id.EditConsist1_menu).setVisible(mainapp.consists[1].isMulti());
+                        break;
+                    case 2:
+                        TMenu.findItem(R.id.EditLightsConsist2_menu).setVisible(mainapp.consists[2].isMulti());
+                        TMenu.findItem(R.id.EditConsist2_menu).setVisible(mainapp.consists[2].isMulti());
+                        break;
+                    case 3:
+                        TMenu.findItem(R.id.EditLightsConsist2_menu).setVisible(mainapp.consists[3].isMulti());
+                        TMenu.findItem(R.id.EditConsist2_menu).setVisible(mainapp.consists[3].isMulti());
+                        break;
+                    case 4:
+                        TMenu.findItem(R.id.EditLightsConsist2_menu).setVisible(mainapp.consists[4].isMulti());
+                        TMenu.findItem(R.id.EditConsist2_menu).setVisible(mainapp.consists[4].isMulti());
+                        break;
+                    case 5:
+                        TMenu.findItem(R.id.EditLightsConsist2_menu).setVisible(mainapp.consists[5].isMulti());
+                        TMenu.findItem(R.id.EditConsist2_menu).setVisible(mainapp.consists[5].isMulti());
+                        break;
+                }
+            }
         }
 
         CookieSyncManager.getInstance().startSync();
@@ -4098,14 +4120,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     // helper function to get a numbered function button from its throttle and function number
-////    Button getFunctionButton(char whichThrottle, int func) {
-////        Button b; // button
-////        LinkedHashMap<Integer, Button> functionButtonMap;
-////
-////        functionButtonMap = functionMaps[whichThrottle];
-////        b = functionButtonMap.get(func);
-////        return b;
-////   }
+    Button getFunctionButton(char whichThrottle, int func) {
+        Button b; // button
+        LinkedHashMap<Integer, Button> functionButtonMap;
+
+        functionButtonMap = functionMaps[whichThrottle];
+        b = functionButtonMap.get(func);
+        return b;
+   }
 
     // lookup and set values of various informational text labels and size the
     // screen elements
