@@ -3893,16 +3893,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         TMenu.findItem(R.id.EditConsist2_menu).setVisible(mainapp.consists[2].isMulti());
                         break;
                     case 3:
-                        TMenu.findItem(R.id.EditLightsConsist2_menu).setVisible(mainapp.consists[3].isMulti());
-                        TMenu.findItem(R.id.EditConsist2_menu).setVisible(mainapp.consists[3].isMulti());
+                        TMenu.findItem(R.id.EditLightsConsist3_menu).setVisible(mainapp.consists[3].isMulti());
+                        TMenu.findItem(R.id.EditConsist3_menu).setVisible(mainapp.consists[3].isMulti());
                         break;
                     case 4:
-                        TMenu.findItem(R.id.EditLightsConsist2_menu).setVisible(mainapp.consists[4].isMulti());
-                        TMenu.findItem(R.id.EditConsist2_menu).setVisible(mainapp.consists[4].isMulti());
+                        TMenu.findItem(R.id.EditLightsConsist4_menu).setVisible(mainapp.consists[4].isMulti());
+                        TMenu.findItem(R.id.EditConsist4_menu).setVisible(mainapp.consists[4].isMulti());
                         break;
                     case 5:
-                        TMenu.findItem(R.id.EditLightsConsist2_menu).setVisible(mainapp.consists[5].isMulti());
-                        TMenu.findItem(R.id.EditConsist2_menu).setVisible(mainapp.consists[5].isMulti());
+                        TMenu.findItem(R.id.EditLightsConsist5_menu).setVisible(mainapp.consists[5].isMulti());
+                        TMenu.findItem(R.id.EditConsist5_menu).setVisible(mainapp.consists[5].isMulti());
                         break;
                 }
             }
