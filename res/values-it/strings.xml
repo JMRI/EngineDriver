@@ -236,6 +236,10 @@
     <string name="prefNumOfThrottles">Numero di Controllori</string>
     <string name="prefNumOfThrottlesSummary">Scegli quanti Controllori visualizzare sullo schermo.</string>
     <string name="prefNumOfThrottlesDefault">Due</string>
+
+    <string name="prefThrottleScreenTypeTitle">Throttle Screen Type</string>
+    <string name="prefThrottleScreenTypeSummary">Which type of throttle screen to use.\nWARNING! Engine Driver will restart immediately!</string>
+
     <string name="prefMaximumThrottleTitle">Percentuale massima di controllo</string>
 
     <string name="prefMaximumThrottleSummary">Massimo valore ammesso in %</string>
@@ -376,6 +380,14 @@
     <string name="prefRightDirectionButtonsTitle">Etichetta Pulsante Direzione Destro</string>
     <string name="prefRightDirectionButtonsSummary">Etichette per tutti i pulsanti direzione DESTRI. Inserire \'Indietro\' o lasciare in bianco per funzionamento normale.</string>
     <string name="prefRightDirectionButtonsDefaultValue">Indietro</string>
+
+    <string name="prefLeftDirectionButtonsShorTitle">Etichetta Del Pulsante Direzione Sinistro</string>
+    <string name="prefLeftDirectionButtonsShorSummary">Etichette brevi breviper tutti i pulsanti direzione SINISTRI. Inserire \'Ava\' o lasciare in bianco per funzionamento normale.</string>
+    <string name="prefLeftDirectionButtonsShorDefaultValue">Ava</string>
+
+    <string name="prefRightDirectionButtonsShortTitle">Etichetta Del Pulsante Direzione Destro</string>
+    <string name="prefRightDirectionButtonsShortSummary">Etichette brevi per tutti i pulsanti direzione DESTRI. Inserire \'Ind\' o lasciare in bianco per funzionamento normale.</string>
+    <string name="prefRightDirectionButtonsShortDefaultValue">Ind</string>
 
     <string name="prefDirectionButtonLongPressDelayTitle">Ritardo prolungato del pulsante di direzione</string>
     <string name="prefDirectionButtonLongPressDelaySummary">Quanti millisecondi costituiscono una pressione prolungata per i pulsanti di direzione.</string>

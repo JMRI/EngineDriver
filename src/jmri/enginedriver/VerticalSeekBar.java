@@ -1,6 +1,6 @@
 package jmri.enginedriver;
 /*
-  VerticalSeekBar code copied from de.eisfeldj.augendiagnose project, as referred to on StackOverflow
+  VerticalSeekBar code based on code from de.eisfeldj.augendiagnose project, as referred to on StackOverflow
   https://github.com/jeisfeld/Augendiagnose/blob/master/AugendiagnoseIdea/augendiagnoseLib/src/main/java/de/jeisfeld/augendiagnoselib/components/VerticalSeekBar.java
 */
 
@@ -74,6 +74,7 @@ public class VerticalSeekBar extends SeekBar {
             case MotionEvent.ACTION_DOWN:
                 progress = getMax() - (int) (getMax() * event.getY() / getHeight());
                 if (progress<0) {progress = 0;}
+                if (progress>getMax()) {progress = getMax();}
                 setSeekBarProgress(progress,true);
                 mOnSeekBarChangeListener.onStartTrackingTouch(this);
                 break;
@@ -81,12 +82,14 @@ public class VerticalSeekBar extends SeekBar {
             case MotionEvent.ACTION_MOVE:
                 progress = getMax() - (int) (getMax() * event.getY() / getHeight());
                 if (progress<0) {progress = 0;}
+                if (progress>getMax()) {progress = getMax();}
                 setSeekBarProgress(progress,true);
                 break;
 
             case MotionEvent.ACTION_UP:
                 progress = getMax() - (int) (getMax() * event.getY() / getHeight());
                 if (progress<0) {progress = 0;}
+                if (progress>getMax()) {progress = getMax();}
                 setSeekBarProgress(progress,true);
                 mOnSeekBarChangeListener.onStopTrackingTouch(this);
                 break;
@@ -104,23 +107,17 @@ public class VerticalSeekBar extends SeekBar {
 
     @Override
     public final void setProgress(final int progress) {
-        super.setProgress(progress);
-        onSizeChanged(getWidth(), getHeight(), 0, 0);
+        setSeekBarProgress(progress, false);
     }
 
     private void setSeekBarProgress(int progress, final boolean fromUser) {
 
-        Method privateSetProgressMethod = null;
-
-        try {
-            privateSetProgressMethod = ProgressBar.class.getDeclaredMethod("setProgress", Integer.TYPE, Boolean.TYPE);
-            privateSetProgressMethod.setAccessible(true);
-            privateSetProgressMethod.invoke(this, progress, true);
+        if (progress != getProgress()) {
+            super.setProgress(progress);
+            if (mOnSeekBarChangeListener != null) {
+                mOnSeekBarChangeListener.onProgressChanged(this, progress, fromUser);
+            }
         }
-        catch (Exception ex) {
-        }
-        super.setProgress(progress);
-        mOnSeekBarChangeListener.onProgressChanged(this, progress, fromUser);
 
         onSizeChanged(getWidth(), getHeight(), 0, 0);
     }

@@ -381,8 +381,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static final int GAMEPAD_GOOD = 1;
     private static final int GAMEPAD_BAD = 2;
 
-    private String DIRECTION_BUTTON_LEFT_TEXT = "Forward";
-    private String DIRECTION_BUTTON_RIGHT_TEXT = "Reverse";
+    protected String DIRECTION_BUTTON_LEFT_TEXT = "Forward";
+    protected String DIRECTION_BUTTON_RIGHT_TEXT = "Reverse";
+
+    protected String[] FullLeftText = {DIRECTION_BUTTON_LEFT_TEXT, DIRECTION_BUTTON_LEFT_TEXT, DIRECTION_BUTTON_LEFT_TEXT, DIRECTION_BUTTON_LEFT_TEXT, DIRECTION_BUTTON_LEFT_TEXT, DIRECTION_BUTTON_LEFT_TEXT};
+    protected String[] FullRightText = {DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT};
+    protected String[] dirLeftIndicationText = {"", "", "", "", "", ""};
+    protected String[] dirRightIndicationText = {"", "", "", "", "", ""};
 
     private static String GAMEPAD_FUNCTION_PREFIX = "Function ";
 
@@ -1049,8 +1054,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
         }
 
-        DIRECTION_BUTTON_LEFT_TEXT = getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsDefaultValue).trim();
-        DIRECTION_BUTTON_RIGHT_TEXT = getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsDefaultValue).trim();
+//        DIRECTION_BUTTON_LEFT_TEXT = getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsDefaultValue).trim();
+//        DIRECTION_BUTTON_RIGHT_TEXT = getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsDefaultValue).trim();
 
         prefDirectionButtonLongPressDelay = preferences.getIntPrefValue(prefs, "prefDirectionButtonLongPressDelay", getApplicationContext().getResources().getString(R.string.prefDirectionButtonLongPressDelayDefaultValue));
 
@@ -1118,7 +1123,15 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
     }
 
-    private void getDirectionButtonPrefs() {
+    protected void getDirectionButtonPrefs() {
+        DIRECTION_BUTTON_LEFT_TEXT = getApplicationContext().getResources().getString(R.string.forward);
+        DIRECTION_BUTTON_RIGHT_TEXT = getApplicationContext().getResources().getString(R.string.reverse);
+
+        speedButtonLeftText = getApplicationContext().getResources().getString(R.string.LeftButton);
+        speedButtonRightText = getApplicationContext().getResources().getString(R.string.RightButton);
+        speedButtonUpText = getApplicationContext().getResources().getString(R.string.UpButton);
+        speedButtonDownText = getApplicationContext().getResources().getString(R.string.DownButton);
+
         prefSwapForwardReverseButtons = prefs.getBoolean("prefSwapForwardReverseButtons", getResources().getBoolean(R.bool.prefSwapForwardReverseButtonsDefaultValue));
         prefSwapForwardReverseButtonsLongPress = prefs.getBoolean("prefSwapForwardReverseButtonsLongPress", getResources().getBoolean(R.bool.prefSwapForwardReverseButtonsLongPressDefaultValue));
 
@@ -1129,12 +1142,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     private void setDirectionButtonLabels() {
-        String[] FullLeftText = {DIRECTION_BUTTON_LEFT_TEXT, DIRECTION_BUTTON_LEFT_TEXT, DIRECTION_BUTTON_LEFT_TEXT, DIRECTION_BUTTON_LEFT_TEXT, DIRECTION_BUTTON_LEFT_TEXT, DIRECTION_BUTTON_LEFT_TEXT};
-        String[] FullRightText = {DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT, DIRECTION_BUTTON_RIGHT_TEXT};
         String dirLeftText;
         String dirRightText;
-        String[] dirLeftIndicationText = {"", "", "", "", "", ""};
-        String[] dirRightIndicationText = {"", "", "", "", "", ""};
+        for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+            FullLeftText[throttleIndex] = DIRECTION_BUTTON_LEFT_TEXT;
+            FullRightText[throttleIndex] = DIRECTION_BUTTON_RIGHT_TEXT;
+            dirLeftIndicationText[throttleIndex] = "";
+            dirRightIndicationText[throttleIndex] = "";
+        }
 
         if ( ((prefLeftDirectionButtons.equals(DIRECTION_BUTTON_LEFT_TEXT)) && (prefRightDirectionButtons.equals(DIRECTION_BUTTON_RIGHT_TEXT)))
                 || ((prefLeftDirectionButtons.equals("")) && (prefRightDirectionButtons.equals(""))) ){
@@ -3385,14 +3400,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         getCommonPrefs(true); // get all the common preferences
         setThottleNumLimits();
 
-        DIRECTION_BUTTON_LEFT_TEXT = getApplicationContext().getResources().getString(R.string.forward);
-        DIRECTION_BUTTON_RIGHT_TEXT = getApplicationContext().getResources().getString(R.string.reverse);
-
-        speedButtonLeftText = getApplicationContext().getResources().getString(R.string.LeftButton);
-        speedButtonRightText = getApplicationContext().getResources().getString(R.string.RightButton);
-        speedButtonUpText = getApplicationContext().getResources().getString(R.string.UpButton);
-        speedButtonDownText = getApplicationContext().getResources().getString(R.string.DownButton);
-
         getDirectionButtonPrefs();
 
         webViewIsOn = !webViewLocation.equals(WEB_VIEW_LOCATION_NONE);
@@ -3824,6 +3831,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         gestureInProgress = false;
 
         getCommonPrefs(false);
+        getDirectionButtonPrefs();
         setThottleNumLimits();
 
         clearVolumeAndGamepadAdditionalIndicators();
@@ -4108,35 +4116,35 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //        int throttle_count = 0;
 //        int[] heights = {0, 0, 0, 0, 0, 0};
 //
-//        // avoid NPE by not letting this run too early (reported to Play Store)
-//        if (tvVols[0] == null) return;
-//
-//        // hide or display volume control indicator based on variable
-//        setVolumeIndicator();
-//        setGamepadIndicator();
-//
-//        // set up max speeds for throttles
-//        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
-//        maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
-//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-//            sbs[throttleIndex].setMax(maxThrottle);
-//        }
-//
-//        // set max allowed change for throttles from prefs
-//        int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
-//        max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
-//
-//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-//            sbs[throttleIndex].setMax(maxThrottle);
-//            if (mainapp.consists[throttleIndex].isEmpty()) {
-//                maxSpeedSteps[throttleIndex] = 100;
-//            }
-//            //get speed steps from prefs
-//            speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
-//            setDisplayUnitScale(throttleIndex);
-//
-//            setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
-//        }
+        // avoid NPE by not letting this run too early (reported to Play Store)
+        if (tvVols[0] == null) return;
+
+        // hide or display volume control indicator based on variable
+        setVolumeIndicator();
+        setGamepadIndicator();
+
+        // set up max speeds for throttles
+        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            sbs[throttleIndex].setMax(maxThrottle);
+        }
+
+        // set max allowed change for throttles from prefs
+        int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
+        max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            sbs[throttleIndex].setMax(maxThrottle);
+            if (mainapp.consists[throttleIndex].isEmpty()) {
+                maxSpeedSteps[throttleIndex] = 100;
+            }
+            //get speed steps from prefs
+            speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+            setDisplayUnitScale(throttleIndex);
+
+            setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
+        }
 //
 //        final DisplayMetrics dm = getResources().getDisplayMetrics();
 //        // Get the screen's density scale

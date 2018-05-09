@@ -57,8 +57,6 @@
     <string name="stop">Stop</string>
     <string name="forward">Forward</string>
     <string name="reverse">Reverse</string>
-    <string name="fwd">Fwd</string>
-    <string name="rev">Rev</string>
     <string name="none">None</string>
     <string name="fb_helptext">Enter labels and function#s in list at right.  Leave label blank to hide button.  These are used when roster functions are not available.</string>
     <string name="copy_function_labels">Copy Labels from Roster</string>
@@ -76,7 +74,7 @@
     <string name="loco">Loco:</string>
     <string name="loco_direction_left_extra">"\u00B7F\u00B7"</string>
     <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>
-    <string name="locoPressToSelect">Press to select</string>
+    <string name="locoPressToSelect">Select</string>
     <string name="powerWillNotWorkTitle">Will Not Work!</string>
     <string name="powerWillNotWork">JMRI has the wiThrottle power control setting to off.\nWill now remove Power Icon.\nWill display again when JMRI setting is on.</string>
     <string name="current_locos">Currently Selected Locos</string>
@@ -450,6 +448,14 @@
     <string name="prefRightDirectionButtonsTitle">Right Direction Button label</string>
     <string name="prefRightDirectionButtonsSummary">Labels for all RIGHT direction buttons. Enter \'Reverse\' or blank for normal behaviour.</string>
     <string name="prefRightDirectionButtonsDefaultValue">Reverse</string>
+
+    <string name="prefLeftDirectionButtonsShortTitle">Short Left Direction Button label</string>
+    <string name="prefLeftDirectionButtonsShortSummary">Short Labels for all LEFT direction buttons. Enter \'Fwd\' or blank for normal behaviour.</string>
+    <string name="prefLeftDirectionButtonsShortDefaultValue">Fwd</string>
+
+    <string name="prefRightDirectionButtonsShortTitle">Short Right Direction Button label</string>
+    <string name="prefRightDirectionButtonsShortSummary">Labels for all Short RIGHT direction buttons. Enter \'Rev\' or blank for normal behaviour.</string>
+    <string name="prefRightDirectionButtonsShortDefaultValue">Rev</string>
 
     <string name="prefThemeTitle">Theme/Style</string>
     <string name="prefThemeSummary">App theme. REQUIRES restart of Engine Driver. \nRequires Android Honeycomb or later.</string>

@@ -232,7 +232,7 @@ public class throttle_full extends throttle {
         return b;
     }
 
-    //    // lookup and set values of various informational text labels and size the
+//    // lookup and set values of various informational text labels and size the
 //    // screen elements
 //    @SuppressWarnings("deprecation")
 //    @Override
@@ -246,32 +246,32 @@ public class throttle_full extends throttle {
         // avoid NPE by not letting this run too early (reported to Play Store)
         if (tvVols[0] == null) return;
 
-        // hide or display volume control indicator based on variable
-        setVolumeIndicator();
-        setGamepadIndicator();
-
-        // set up max speeds for throttles
-        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
-        maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-            sbs[throttleIndex].setMax(maxThrottle);
-        }
-
-        // set max allowed change for throttles from prefs
-        int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
-        max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
-
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-            sbs[throttleIndex].setMax(maxThrottle);
-            if (mainapp.consists[throttleIndex].isEmpty()) {
-                maxSpeedSteps[throttleIndex] = 100;
-            }
-            //get speed steps from prefs
-            speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
-            setDisplayUnitScale(throttleIndex);
-
-            setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
-        }
+//        // hide or display volume control indicator based on variable
+//        setVolumeIndicator();
+//        setGamepadIndicator();
+//
+//        // set up max speeds for throttles
+//        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+//        maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
+//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+//            sbs[throttleIndex].setMax(maxThrottle);
+//        }
+//
+//        // set max allowed change for throttles from prefs
+//        int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
+//        max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
+//
+//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+//            sbs[throttleIndex].setMax(maxThrottle);
+//            if (mainapp.consists[throttleIndex].isEmpty()) {
+//                maxSpeedSteps[throttleIndex] = 100;
+//            }
+//            //get speed steps from prefs
+//            speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+//            setDisplayUnitScale(throttleIndex);
+//
+//            setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
+//        }
 
         final DisplayMetrics dm = getResources().getDisplayMetrics();
         // Get the screen's density scale

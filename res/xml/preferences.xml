@@ -158,6 +158,21 @@
                 android:summary="@string/prefRightDirectionButtonsSummary"
                 android:title="@string/prefRightDirectionButtonsTitle" />
 
+            <EditTextPreference
+                android:defaultValue="@string/prefLeftDirectionButtonsShortDefaultValue"
+                android:dialogTitle="@string/prefLeftDirectionButtonsShortTitle"
+                android:key="prefLeftDirectionButtonsShort"
+                android:maxLength="7"
+                android:summary="@string/prefLeftDirectionButtonsShortSummary"
+                android:title="@string/prefLeftDirectionButtonsShortTitle" />
+            <EditTextPreference
+                android:defaultValue="@string/prefRightDirectionButtonsShortDefaultValue"
+                android:dialogTitle="@string/prefRightDirectionButtonsShortTitle"
+                android:key="prefRightDirectionButtonsShort"
+                android:maxLength="7"
+                android:summary="@string/prefRightDirectionButtonsShortSummary"
+                android:title="@string/prefRightDirectionButtonsShortTitle" />
+
         </PreferenceScreen>
 
         <CheckBoxPreference

@@ -51,6 +51,12 @@
         <item >Cinque</item>
         <item >Sei</item>
     </string-array>
+
+    <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
+        <item >Originale - Telefono o tablet (1-3 valvole a farfalla)</item>
+        <item >Semplice - Consigliato Tablet (1-6 throttles)</item>
+    </string-array>
+
     <string-array name="DisplayClockEntries">
         <item>Niente</item>
         <item>Formato 12 ore</item>

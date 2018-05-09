@@ -13,6 +13,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+Original version of the simple throttle is by radsolutions.
  */
 
 package jmri.enginedriver;
@@ -89,6 +91,16 @@ public class throttle_simple extends throttle {
     private LinearLayout[] lThrottles;
     private LinearLayout[] Separators;
 
+    @Override
+    protected void getDirectionButtonPrefs() {
+        super.getDirectionButtonPrefs();
+        super.DIRECTION_BUTTON_LEFT_TEXT = getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsShortDefaultValue);
+        super.DIRECTION_BUTTON_RIGHT_TEXT = getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsShortDefaultValue);
+
+        super.prefLeftDirectionButtons = prefs.getString("prefLeftDirectionButtonsShort", getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsShortDefaultValue)).trim();
+        super.prefRightDirectionButtons = prefs.getString("prefRightDirectionButtonsShort", getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsShortDefaultValue)).trim();
+    }
+
     @SuppressLint({"Recycle", "SetJavaScriptEnabled"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,11 +151,11 @@ public class throttle_simple extends throttle {
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             if( throttleIndex < mainapp.numThrottles) {
-                lThrottles[throttleIndex].setVisibility(LinearLayout.VISIBLE);;
-                Separators[throttleIndex].setVisibility(LinearLayout.VISIBLE);;
+                lThrottles[throttleIndex].setVisibility(LinearLayout.VISIBLE);
+                Separators[throttleIndex].setVisibility(LinearLayout.VISIBLE);
             } else {
-                lThrottles[throttleIndex].setVisibility(LinearLayout.GONE);;
-                Separators[throttleIndex].setVisibility(LinearLayout.GONE);;
+                lThrottles[throttleIndex].setVisibility(LinearLayout.GONE);
+                Separators[throttleIndex].setVisibility(LinearLayout.GONE);
             }
         }
         Separators[0].setVisibility(LinearLayout.GONE);;
@@ -158,32 +170,32 @@ public class throttle_simple extends throttle {
         // avoid NPE by not letting this run too early (reported to Play Store)
         if (tvVols[0] == null) return;
 
-        // hide or display volume control indicator based on variable
-        setVolumeIndicator();
-        setGamepadIndicator();
-
-        // set up max speeds for throttles
-        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
-        maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-            sbs[throttleIndex].setMax(maxThrottle);
-        }
-
-        // set max allowed change for throttles from prefs
-        int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
-        max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
-
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-            sbs[throttleIndex].setMax(maxThrottle);
-            if (mainapp.consists[throttleIndex].isEmpty()) {
-                maxSpeedSteps[throttleIndex] = 100;
-            }
-            //get speed steps from prefs
-            speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
-            setDisplayUnitScale(throttleIndex);
-
-            setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
-        }
+//        // hide or display volume control indicator based on variable
+//        setVolumeIndicator();
+//        setGamepadIndicator();
+//
+//        // set up max speeds for throttles
+//        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+//        maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
+//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+//            sbs[throttleIndex].setMax(maxThrottle);
+//        }
+//
+//        // set max allowed change for throttles from prefs
+//        int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
+//        max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
+//
+//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+//            sbs[throttleIndex].setMax(maxThrottle);
+//            if (mainapp.consists[throttleIndex].isEmpty()) {
+//                maxSpeedSteps[throttleIndex] = 100;
+//            }
+//            //get speed steps from prefs
+//            speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+//            setDisplayUnitScale(throttleIndex);
+//
+//            setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
+//        }
 
         final int conNomTextSize = 24;
         final double minTextScale = 0.5;
