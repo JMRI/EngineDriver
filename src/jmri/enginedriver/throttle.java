@@ -181,6 +181,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     protected LinearLayout[] lls; // throttles
     protected LinearLayout[] llSetSpds;
+    protected VerticalSeekBar[] vsbSpeeds;
 
     // SPDHT for Speed Id and Direction Button Heights
     protected LinearLayout[] llLocoIds;
@@ -1518,11 +1519,19 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             bRevs[whichThrottle].setSelected(true);
             bFwds[whichThrottle].setTypeface(null, Typeface.NORMAL);
             bRevs[whichThrottle].setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+            if ((getSpeed(whichThrottle)>0) && (!dirChangeWhileMoving)) {
+                bFwds[whichThrottle].setEnabled(false);
+            }
+            bRevs[whichThrottle].setEnabled(true);
         } else {
             bFwds[whichThrottle].setSelected(true);
             bRevs[whichThrottle].setSelected(false);
             bFwds[whichThrottle].setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
             bRevs[whichThrottle].setTypeface(null, Typeface.NORMAL);
+            bFwds[whichThrottle].setEnabled(true);
+            if ((getSpeed(whichThrottle)>0) && (!dirChangeWhileMoving)) {
+                bRevs[whichThrottle].setEnabled(false);
+            }
         }
 
     }
@@ -3629,7 +3638,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             switch (i) {
                 case 0:
                     lls[i] = (LinearLayout) findViewById(R.id.throttle_0);
-                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_0_setspeed);
+//                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_0_setspeed);
                     llLocoIds[i] = (LinearLayout) findViewById(R.id.loco_buttons_group_0);
                     llLocoDirs[i] = (LinearLayout) findViewById(R.id.dir_buttons_table_0);
                     tvVols[i] = (TextView) findViewById(R.id.volume_indicator_0); // volume indicators
@@ -3640,7 +3649,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     break;
                 case 1:
                     lls[i] = (LinearLayout) findViewById(R.id.throttle_1);
-                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_1_setspeed);
+//                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_1_setspeed);
                     llLocoIds[i] = (LinearLayout) findViewById(R.id.loco_buttons_group_1);
                     llLocoDirs[i] = (LinearLayout) findViewById(R.id.dir_buttons_table_1);
                     tvVols[i] = (TextView) findViewById(R.id.volume_indicator_1); // volume indicators
@@ -3651,7 +3660,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     break;
                 case 2:
                     lls[i] = (LinearLayout) findViewById(R.id.throttle_2);
-                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_2_setspeed);
+//                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_2_setspeed);
                     llLocoIds[i] = (LinearLayout) findViewById(R.id.loco_buttons_group_2);
                     llLocoDirs[i] = (LinearLayout) findViewById(R.id.dir_buttons_table_2);
                     tvVols[i] = (TextView) findViewById(R.id.volume_indicator_2); // volume indicators
@@ -3662,7 +3671,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     break;
                 case 3:
                     lls[i] = (LinearLayout) findViewById(R.id.throttle_3);
-                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_3_setspeed);
+//                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_3_setspeed);
                     llLocoIds[i] = (LinearLayout) findViewById(R.id.loco_buttons_group_3);
                     llLocoDirs[i] = (LinearLayout) findViewById(R.id.dir_buttons_table_3);
                     tvVols[i] = (TextView) findViewById(R.id.volume_indicator_3); // volume indicators
@@ -3673,7 +3682,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     break;
                 case 4:
                     lls[i] = (LinearLayout) findViewById(R.id.throttle_4);
-                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_4_setspeed);
+//                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_4_setspeed);
                     llLocoIds[i] = (LinearLayout) findViewById(R.id.loco_buttons_group_4);
                     llLocoDirs[i] = (LinearLayout) findViewById(R.id.dir_buttons_table_4);
                     tvVols[i] = (TextView) findViewById(R.id.volume_indicator_4); // volume indicators
@@ -3684,7 +3693,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     break;
                 case 5:
                     lls[i] = (LinearLayout) findViewById(R.id.throttle_5);
-                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_5_setspeed);
+//                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_5_setspeed);
                     llLocoIds[i] = (LinearLayout) findViewById(R.id.loco_buttons_group_5);
                     llLocoDirs[i] = (LinearLayout) findViewById(R.id.dir_buttons_table_5);
                     tvVols[i] = (TextView) findViewById(R.id.volume_indicator_5); // volume indicators

@@ -63,19 +63,19 @@
 
     <PreferenceCategory android:title="@string/prefThrottlePageTitle" >
         <ListPreference
-            android:defaultValue="@string/NumThrottleDefaulValue"
-            android:entries="@array/NumOfThrottlesEntries"
-            android:entryValues="@array/NumOfThrottlesEntryValues"
-            android:key="NumThrottle"
-            android:summary="@string/prefNumOfThrottlesSummary"
-            android:title="@string/prefNumOfThrottles" />
-        <ListPreference
             android:defaultValue="@string/prefThrottleScreenTypeDefault"
             android:entries="@array/prefThrottleScreenTypeEntries"
             android:entryValues="@array/prefThrottleScreenTypeEntryValues"
             android:key="prefThrottleScreenType"
             android:summary="@string/prefThrottleScreenTypeSummary"
             android:title="@string/prefThrottleScreenTypeTitle" />
+        <ListPreference
+            android:defaultValue="@string/NumThrottleDefaulValue"
+            android:entries="@array/NumOfThrottlesEntries"
+            android:entryValues="@array/NumOfThrottlesEntryValues"
+            android:key="NumThrottle"
+            android:summary="@string/prefNumOfThrottlesSummary"
+            android:title="@string/prefNumOfThrottles" />
         <PreferenceScreen
             android:key="throttle_slider_preference"
             android:title="@string/prefSliderTitle"

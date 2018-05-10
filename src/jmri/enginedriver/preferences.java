@@ -577,7 +577,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         enableDisablePreference("increase_slider_height_preference",enable);
         enableDisablePreference("left_slider_margin",enable);
-        enableDisablePreference("hide_slider_preference",enable);
+//        enableDisablePreference("hide_slider_preference",enable);
         enableDisablePreference("prefHideSliderAndSpeedButtons",enable);
         enableDisablePreference("WebViewLocation",enable);
         enableDisablePreference("prefIncreaseWebViewSize",enable);

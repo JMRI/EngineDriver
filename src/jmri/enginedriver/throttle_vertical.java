@@ -69,15 +69,20 @@ public class throttle_vertical extends throttle {
             }
 
         }
+
         lThrottles = new LinearLayout[mainapp.maxThrottles];
+        vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottles];
+
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             switch (throttleIndex) {
                 default:
                 case 0:
                     lThrottles[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_0);
+                    vsbSpeeds[throttleIndex] = (VerticalSeekBar) findViewById(R.id.speed_0);
                     break;
                 case 1:
                     lThrottles[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_1);
+                    vsbSpeeds[throttleIndex] = (VerticalSeekBar) findViewById(R.id.speed_1);
                     break;
             }
         }
@@ -184,33 +189,6 @@ public class throttle_vertical extends throttle {
         // avoid NPE by not letting this run too early (reported to Play Store)
         if (tvVols[0] == null) return;
 
-//        // hide or display volume control indicator based on variable
-//        setVolumeIndicator();
-//        setGamepadIndicator();
-//
-//        // set up max speeds for throttles
-//        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
-//        maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
-//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-//            sbs[throttleIndex].setMax(maxThrottle);
-//        }
-//
-//        // set max allowed change for throttles from prefs
-//        int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
-//        max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
-//
-//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
-//            sbs[throttleIndex].setMax(maxThrottle);
-//            if (mainapp.consists[throttleIndex].isEmpty()) {
-//                maxSpeedSteps[throttleIndex] = 100;
-//            }
-//            //get speed steps from prefs
-//            speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
-//            setDisplayUnitScale(throttleIndex);
-//
-//            setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
-//        }
-
         final int conNomTextSize = 24;
         final double minTextScale = 0.5;
         String bLabel;
@@ -249,6 +227,15 @@ public class throttle_vertical extends throttle {
 
         if (webView != null) {
             setImmersiveModeOn(webView);
+        }
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+
+            //show speed buttons based on pref
+            vsbSpeeds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
+            if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
+                vsbSpeeds[throttleIndex].setVisibility(View.GONE);
+            }
         }
 
         // update the direction indicators
