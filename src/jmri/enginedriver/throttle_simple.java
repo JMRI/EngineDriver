@@ -165,7 +165,7 @@ public class throttle_simple extends throttle {
                 Separators[throttleIndex].setVisibility(LinearLayout.GONE);
             }
         }
-        Separators[0].setVisibility(LinearLayout.GONE);;
+        Separators[0].setVisibility(LinearLayout.GONE);
 
     } // end of onResume()
 
@@ -243,11 +243,29 @@ public class throttle_simple extends throttle {
             lThrottles[throttleIndex].requestLayout();
         }
 
+        int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area
+        if (screenHeight == 0) {
+            // throttle screen hasn't been drawn yet, so use display metrics for now
+            screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
+            //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
+        }
+
+        int speedButtonHeight = (int) (50 * denScale);
+        if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
+            speedButtonHeight = (int) ((screenHeight - (200 * denScale)) / 2);
+        }
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             //show speed buttons based on pref
             if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
                 bLSpds[throttleIndex].setVisibility(View.VISIBLE);
                 bRSpds[throttleIndex].setVisibility(View.VISIBLE);
+
+                bLSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.FILL_PARENT;
+                bLSpds[throttleIndex].getLayoutParams().height = speedButtonHeight;
+                bLSpds[throttleIndex].requestLayout();
+                bRSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.FILL_PARENT;
+                bRSpds[throttleIndex].getLayoutParams().height = speedButtonHeight;
+                bRSpds[throttleIndex].requestLayout();
             } else {
                 bLSpds[throttleIndex].setVisibility(View.GONE);
                 bRSpds[throttleIndex].setVisibility(View.GONE);
