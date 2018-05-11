@@ -577,13 +577,18 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         enableDisablePreference("increase_slider_height_preference",enable);
         enableDisablePreference("left_slider_margin",enable);
-//        enableDisablePreference("hide_slider_preference",enable);
         enableDisablePreference("prefHideSliderAndSpeedButtons",enable);
+        enableDisablePreference("prefAlwaysUseDefaultFunctionLabels",enable);
+        enableDisablePreference("prefNumberOfDefaultFunctionLabels",enable);
+
+        enable = true;
+        if (prefThrottleScreenTypeOriginal.equals("Simple")) {
+            enable = false;
+        }
         enableDisablePreference("WebViewLocation",enable);
         enableDisablePreference("prefIncreaseWebViewSize",enable);
         enableDisablePreference("InitialThrotWebPage",enable);
-        enableDisablePreference("prefAlwaysUseDefaultFunctionLabels",enable);
-        enableDisablePreference("prefNumberOfDefaultFunctionLabels",enable);
+
     }
 
     //Handle pressing of the back button to end this activity

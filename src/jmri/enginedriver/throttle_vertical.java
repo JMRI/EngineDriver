@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -41,7 +42,7 @@ public class throttle_vertical extends throttle {
     protected static final int MAX_SCREEN_THROTTLES = 2;
 
     private LinearLayout[] lThrottles;
-    private LinearLayout[] Separators;
+    private ScrollView[] svFnBtns;
 
     protected void removeLoco(int whichThrottle) {
         super.removeLoco(whichThrottle);
@@ -71,6 +72,7 @@ public class throttle_vertical extends throttle {
         }
 
         lThrottles = new LinearLayout[mainapp.maxThrottles];
+        svFnBtns = new ScrollView[mainapp.maxThrottles];
         vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottles];
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
@@ -79,10 +81,12 @@ public class throttle_vertical extends throttle {
                 case 0:
                     lThrottles[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_0);
                     vsbSpeeds[throttleIndex] = (VerticalSeekBar) findViewById(R.id.speed_0);
+                    svFnBtns[throttleIndex] = (ScrollView) findViewById(R.id.function_buttons_scroller_0);
                     break;
                 case 1:
                     lThrottles[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_1);
                     vsbSpeeds[throttleIndex] = (VerticalSeekBar) findViewById(R.id.speed_1);
+                    svFnBtns[throttleIndex] = (ScrollView) findViewById(R.id.function_buttons_scroller_1);
                     break;
             }
         }
@@ -245,10 +249,10 @@ public class throttle_vertical extends throttle {
         final DisplayMetrics dm = getResources().getDisplayMetrics();
         // Get the screen's density scale
         final float denScale = dm.density;
-        int btn = (int) (denScale * 81); // function button width
+        int fnBtnWidth = (int) (denScale * 81); // function button width
 
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
-        int throttleWidth = (screenWidth - (btn * (mainapp.numThrottles)))/ mainapp.numThrottles;
+        int throttleWidth = (screenWidth - (fnBtnWidth * (mainapp.numThrottles)))/ mainapp.numThrottles;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.FILL_PARENT;
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
@@ -256,10 +260,31 @@ public class throttle_vertical extends throttle {
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the Hight of usable area
+        int keepHeight = screenHeight;  // default height
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
             //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
+        }
+
+        if (webView!=null) {
+            setImmersiveModeOn(webView);
+        }
+
+        // save part the screen for webview
+        if (webViewLocation.equals(WEB_VIEW_LOCATION_TOP) || webViewLocation.equals(WEB_VIEW_LOCATION_BOTTOM)) {
+            webViewIsOn = true;
+            if (!prefIncreaseWebViewSize) {
+                // save half the screen
+                screenHeight *= 0.5;
+            } else {
+                // save 60% of the screen
+                if (webViewLocation.equals(WEB_VIEW_LOCATION_BOTTOM)) {
+                    screenHeight *= 0.40;
+                } else {
+                    screenHeight *= 0.60;
+                }
+            }
         }
 
         int speedButtonHeight = (int) (50 * denScale);
@@ -286,6 +311,18 @@ public class throttle_vertical extends throttle {
             //bLSpds[throttleIndex].setText(speedButtonLeftText);
             //bRSpds[throttleIndex].setText(speedButtonRightText);
         }
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            // set height of each function button area
+            svFnBtns[throttleIndex].getLayoutParams().height = screenHeight;
+            svFnBtns[throttleIndex].requestLayout();
+
+            // update throttle slider top/bottom
+            tops[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+            bottoms[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+        }
+
+
 
 //        // update the state of each function button based on shared variable
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {

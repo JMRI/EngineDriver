@@ -24,15 +24,15 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:keepScreenOn="true"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
     <android.gesture.GestureOverlayView
         android:id="@+id/throttle_overlay"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:eventsInterceptionEnabled="true"
         android:gestureStrokeType="single"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/throttle_screen"
