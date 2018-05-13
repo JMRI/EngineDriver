@@ -3347,11 +3347,15 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
-            // restore the requested throttle direction so we can update the
-            // direction indication while we wait for an update from WiT
-            for (int throttleIndex = 0; throttleIndex < MAX_SCREEN_THROTTLES; throttleIndex++) {
-                if (savedInstanceState.getSerializable("dir" + mainapp.throttleIntToString(throttleIndex) ) != null)
-                    dirs[throttleIndex] = (int) savedInstanceState.getSerializable("dir" + throttleIndex);
+            try {
+                // restore the requested throttle direction so we can update the
+                // direction indication while we wait for an update from WiT
+                for (int throttleIndex = 0; throttleIndex < MAX_SCREEN_THROTTLES; throttleIndex++) {
+                    if (savedInstanceState.getSerializable("dir" + mainapp.throttleIntToString(throttleIndex) ) != null)
+                        dirs[throttleIndex] = (int) savedInstanceState.getSerializable("dir" + throttleIndex);
+                }
+            } catch (Exception ignored) {              // log the error, but otherwise keep going.
+                Log.d("Engine_Driver", "Restore of saved instance state failed " + android.os.Build.VERSION.SDK_INT);
             }
         }
 
