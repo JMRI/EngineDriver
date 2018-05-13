@@ -1,6 +1,9 @@
 **Version 2.19
  * New flashlight button option for devices with on-board camera flash. Needs Camera permission for this.
+ * major throttle change from T/S/G to array
  * require WiThrottle v2.0, also fixes issue where user connects to web port
+ * remove checks and coding for withrottle_version < 2.0
+ * standardize withrottle_send command formatting
  * prevent some crashes reported to Play Store
 **Version 2.18.1
  * option to change languages from the preferences screen
@@ -369,7 +372,6 @@
  */
 /*
  *   TODO: handle MRC, Digitrax and new WiThrottle fastclock messages
- *   TODO: convert all WiThrottle commands to 2.0+ protocol, drop older protocol
  *   TODO: change config files to use db instead of .txt files, turn off sd card permission
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
@@ -402,7 +404,6 @@
  *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
- *   TODO: eStop actually sends Stop, not eStop
  *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
  *   TODO: clear loco buttons on reconnect attempt until actual MT+ received
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected

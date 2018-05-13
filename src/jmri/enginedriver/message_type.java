@@ -40,7 +40,7 @@ interface message_type {
     int SHUTDOWN = 17;          // ca -> ta
     int SET_LISTENER = 18;      // ca -> ta, pass 1 to turn on, 0 to turn off
     int SERVICE_REMOVED = 19;   // ta(service removed) -> ca ipaddr, ,port  (removes from list)
-    int REQ_VEL_AND_DIR = 20;      // ed(delay after sliderchg) -> ta, pass whichThrottle, (requests velocity and direction from WiT)
+//    int REQ_VEL_AND_DIR = 20;      // ed(delay after sliderchg) -> ta, pass whichThrottle, (requests velocity and direction from WiT)
 //    int REQ_DIRECTION = 21;     // ed -> ta , pass whichThrottle, (requests direction from WiT)
     int WEBVIEW_LOC = 22;       // pref -> throt  user changed webview location pref
     int ROSTER_UPDATE = 23;     // ta -> ed  roster-related data updated in background
