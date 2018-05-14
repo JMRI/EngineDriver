@@ -3384,11 +3384,15 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
-            // restore the requested throttle direction so we can update the
-            // direction indication while we wait for an update from WiT
-            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-                if (savedInstanceState.getSerializable("dir" + mainapp.throttleIntToString(throttleIndex) ) != null)
-                    dirs[throttleIndex] = (int) savedInstanceState.getSerializable("dir" + throttleIndex);
+            try {
+                // restore the requested throttle direction so we can update the
+                // direction indication while we wait for an update from WiT
+                for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+                    if (savedInstanceState.getSerializable("dir" + mainapp.throttleIntToString(throttleIndex) ) != null)
+                        dirs[throttleIndex] = (int) savedInstanceState.getSerializable("dir" + throttleIndex);
+                }
+            } catch (Exception ignored) {              // log the error, but otherwise keep going.
+                Log.d("Engine_Driver", "Restore of saved instance state failed " + android.os.Build.VERSION.SDK_INT);
             }
         }
 
@@ -4067,65 +4071,69 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     void set_function_labels_and_listeners_for_view(int whichThrottle) {
         // Log.d("Engine_Driver","starting set_function_labels_and_listeners_for_view");
 
-        // implemented in derived class, but called from this class
+//        // implemented in derived class, but called from this class
 
-////        ViewGroup tv; // group
-////        ViewGroup r; // row
-////        function_button_touch_listener fbtl;
-////        Button b; // button
-////        int k = 0; // button count
-////        LinkedHashMap<Integer, String> function_labels_temp;
-////        LinkedHashMap<Integer, Button> functionButtonMap = new LinkedHashMap<>();
-////
-////        tv = fbs[whichThrottle];
-////
-////        // note: we make a copy of function_labels_x because TA might change it
-////        // while we are using it (causing issues during button update below)
-////        function_labels_temp = mainapp.function_labels_default;
-////        if (!prefAlwaysUseDefaultFunctionLabels) {
-////            if (mainapp.function_labels[whichThrottle] != null && mainapp.function_labels[whichThrottle].size() > 0) {
-////                function_labels_temp = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
-////            } else {
-////                function_labels_temp = mainapp.function_labels_default;
-////            }
-////        }
-////
-////        // put values in array for indexing in next step
-////        // to do this
-////        ArrayList<Integer> aList = new ArrayList<>();
-////        aList.addAll(function_labels_temp.keySet());
-////
-////        if (tv != null) {
-////            for (int i = 0; i < tv.getChildCount(); i++) {
-////                r = (ViewGroup) tv.getChildAt(i);
-////                for (int j = 0; j < r.getChildCount(); j++) {
-////                    b = (Button) r.getChildAt(j);
-////                    if (k < function_labels_temp.size()) {
-////                        Integer func = aList.get(k);
-////                        functionButtonMap.put(func, b); // save function to button
-////                        // mapping
-////                        String bt = function_labels_temp.get(func);
-////                        fbtl = new function_button_touch_listener(func, whichThrottle, bt);
-////                        b.setOnTouchListener(fbtl);
-////                        if ((mainapp.getCurrentTheme().equals(THEME_DEFAULT))) {
-////                            bt = bt + "        ";  // pad with spaces, and limit to 7 characters
-////                            b.setText(bt.substring(0, 7));
-////                        } else {
-////                            bt = bt + "                      ";  // pad with spaces, and limit to 20 characters
-////                            b.setText(bt.trim());
-////                        }
-////                        b.setVisibility(View.VISIBLE);
-////                        b.setEnabled(false); // start out with everything disabled
-////                    } else {
-////                        b.setVisibility(View.GONE);
-////                    }
-////                    k++;
-////                }
-////            }
-////        }
-////
-////        // update the function-to-button map for the current throttle
-////        functionMaps[whichThrottle] = functionButtonMap;
+        if (fbs != null) { // if it is null it probably because the Throttle Screen Type does not have Functions Buttons
+            if (fbs[0] != null) {
+                ViewGroup tv; // group
+                ViewGroup r; // row
+                function_button_touch_listener fbtl;
+                Button b; // button
+                int k = 0; // button count
+                LinkedHashMap<Integer, String> function_labels_temp;
+                LinkedHashMap<Integer, Button> functionButtonMap = new LinkedHashMap<>();
+
+                tv = fbs[whichThrottle];
+
+                // note: we make a copy of function_labels_x because TA might change it
+                // while we are using it (causing issues during button update below)
+                function_labels_temp = mainapp.function_labels_default;
+                if (!prefAlwaysUseDefaultFunctionLabels) {
+                    if (mainapp.function_labels[whichThrottle] != null && mainapp.function_labels[whichThrottle].size() > 0) {
+                        function_labels_temp = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
+                    } else {
+                        function_labels_temp = mainapp.function_labels_default;
+                    }
+                }
+
+                // put values in array for indexing in next step
+                // to do this
+                ArrayList<Integer> aList = new ArrayList<>();
+                aList.addAll(function_labels_temp.keySet());
+
+                if (tv != null) {
+                    for (int i = 0; i < tv.getChildCount(); i++) {
+                        r = (ViewGroup) tv.getChildAt(i);
+                        for (int j = 0; j < r.getChildCount(); j++) {
+                            b = (Button) r.getChildAt(j);
+                            if (k < function_labels_temp.size()) {
+                                Integer func = aList.get(k);
+                                functionButtonMap.put(func, b); // save function to button
+                                // mapping
+                                String bt = function_labels_temp.get(func);
+                                fbtl = new function_button_touch_listener(func, whichThrottle, bt);
+                                b.setOnTouchListener(fbtl);
+                                if ((mainapp.getCurrentTheme().equals(THEME_DEFAULT))) {
+                                    bt = bt + "        ";  // pad with spaces, and limit to 7 characters
+                                    b.setText(bt.substring(0, 7));
+                                } else {
+                                    bt = bt + "                      ";  // pad with spaces, and limit to 20 characters
+                                    b.setText(bt.trim());
+                                }
+                                b.setVisibility(View.VISIBLE);
+                                b.setEnabled(false); // start out with everything disabled
+                            } else {
+                                b.setVisibility(View.GONE);
+                            }
+                            k++;
+                        }
+                    }
+                }
+
+                // update the function-to-button map for the current throttle
+                functionMaps[whichThrottle] = functionButtonMap;
+            }
+        }
     }
 
     // helper function to get a numbered function button from its throttle and function number
