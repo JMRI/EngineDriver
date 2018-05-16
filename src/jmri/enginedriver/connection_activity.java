@@ -132,7 +132,22 @@ public class connection_activity extends Activity {
 
 
     private void start_throttle_activity() {
-        Intent throttle = new Intent().setClass(this, throttle.class);
+//        Intent throttle = new Intent().setClass(this, throttle.class);
+        Intent throttle;
+        switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
+            case "Simple":
+                throttle = new Intent().setClass(this, throttle_simple.class);
+                break;
+            case "Vertical":
+                throttle = new Intent().setClass(this, throttle_vertical.class);
+                break;
+            case "Default":
+            default:
+                throttle = new Intent().setClass(this, throttle_full.class);
+                break;
+        }
+
+
         navigatingAway = true;
         startActivity(throttle);
         this.finish();
@@ -293,7 +308,9 @@ public class connection_activity extends Activity {
 
         //ensure statics in all activities are reinitialize since Android might not have killed app since it was last Exited.
         //do this here instead of TA.onCreate() because that method won't be invoked if app is still running.
-        throttle.initStatics();
+//        throttle.initStatics();
+        throttle_full.initStatics();
+        throttle_simple.initStatics();
         web_activity.initStatics();
 
 

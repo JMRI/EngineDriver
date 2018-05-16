@@ -36,6 +36,7 @@
                 style="@style/normal_button_style"
                 android:layout_height="wrap_content"
                 android:text="@string/release" />
+
             <TextView
                 android:id="@+id/Sl_loco_1"
                 android:layout_width="0dp"
@@ -64,6 +65,54 @@
                 android:textColor="#FFFFFF" />
             <Button
                 android:id="@+id/Sl_release_2"
+                style="@style/normal_button_style"
+                android:layout_height="wrap_content"
+                android:text="@string/release" />
+
+            <TextView
+                android:id="@+id/Sl_loco_3"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.3"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:padding="0dp"
+                android:text="@string/none"
+                android:textColor="#FFFFFF" />
+            <Button
+                android:id="@+id/Sl_release_3"
+                style="@style/normal_button_style"
+                android:layout_height="wrap_content"
+                android:text="@string/release" />
+
+            <TextView
+                android:id="@+id/Sl_loco_4"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.3"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:padding="0dp"
+                android:text="@string/none"
+                android:textColor="#FFFFFF" />
+            <Button
+                android:id="@+id/Sl_release_4"
+                style="@style/normal_button_style"
+                android:layout_height="wrap_content"
+                android:text="@string/release" />
+
+            <TextView
+                android:id="@+id/Sl_loco_5"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.3"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:padding="0dp"
+                android:text="@string/none"
+                android:textColor="#FFFFFF" />
+            <Button
+                android:id="@+id/Sl_release_5"
                 style="@style/normal_button_style"
                 android:layout_height="wrap_content"
                 android:text="@string/release" />

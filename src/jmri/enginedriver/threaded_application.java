@@ -193,6 +193,7 @@ public class threaded_application extends Application {
 
     public int numThrottles = 0;
     public int maxThrottles = 6;   // maximum number of throttles the system supports
+    public int maxThrottlesCurrentScreen = 6;   // maximum number of throttles the current screen supports
 
     public String connectedHostName = "";
 

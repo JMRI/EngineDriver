@@ -236,6 +236,10 @@
     <string name="prefNumOfThrottles">Número de Controladores</string>
     <string name="prefNumOfThrottlesSummary">Escolha quantos Controladores quer visualizar na tela.</string>
     <string name="prefNumOfThrottlesDefault">Dois</string>
+
+    <string name="prefThrottleScreenTypeTitle">Tipo de tela do acelerador</string>
+    <string name="prefThrottleScreenTypeSummary">Que tipo de tela de acelerador usar. \ nATENÇÃO! Engine Driver irá reiniciar imediatamente.</string>
+
     <string name="prefMaximumThrottleTitle">Porcentagem máxima Controle</string>
 
     <string name="prefMaximumThrottleSummary">Máximo valor permitido in %</string>
@@ -375,6 +379,14 @@
     <string name="prefRightDirectionButtonsTitle">Etiqueta Botão Direção Direito</string>
     <string name="prefRightDirectionButtonsSummary">Etiquetas para todos os botões direção DIREITOS. Inserir \'Reverso\' ou deixarem branco para funcionamento normal.</string>
     <string name="prefRightDirectionButtonsDefaultValue">Reverso</string>
+
+    <string name="prefLeftDirectionButtonsShortTitle">Etiqueta Do Botão Direção Esquerdo</string>
+    <string name="prefLeftDirectionButtonsShortSummary">Etiquetas curtas para todos os botões direção ESQUERDOS. Inserir \'Frente\' ou deixar em branco para funcionamento normal.</string>
+    <string name="prefLeftDirectionButtonsShortDefaultValue">Fre</string>
+
+    <string name="prefRightDirectionButtonsShortTitle">Etiqueta Do Botão Direção Direito</string>
+    <string name="prefRightDirectionButtonsShortSummary">Etiquetas curtas para todos os botões direção DIREITOS. Inserir \'Reverso\' ou deixarem branco para funcionamento normal.</string>
+    <string name="prefRightDirectionButtonsShortDefaultValue">Rev</string>
 
     <string name="prefDirectionButtonLongPressDelayTitle">Botão Direcional Longo Pressionar Atraso</string>
     <string name="prefDirectionButtonLongPressDelaySummary">Quantos milissegundos constituem um toque longo para os botões de direção.</string>
