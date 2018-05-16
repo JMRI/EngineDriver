@@ -248,6 +248,8 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
+                            android:minHeight="9999dp"
+                            android:maxHeight="9999dp"
                             android:paddingLeft="30dp"
                             android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
 
@@ -941,6 +943,8 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
+                            android:minHeight="9999dp"
+                            android:maxHeight="9999dp"
                             android:paddingLeft="30dp"
                             android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
 
