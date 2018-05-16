@@ -63,6 +63,13 @@
 
     <PreferenceCategory android:title="@string/prefThrottlePageTitle" >
         <ListPreference
+            android:defaultValue="@string/prefThrottleScreenTypeDefault"
+            android:entries="@array/prefThrottleScreenTypeEntries"
+            android:entryValues="@array/prefThrottleScreenTypeEntryValues"
+            android:key="prefThrottleScreenType"
+            android:summary="@string/prefThrottleScreenTypeSummary"
+            android:title="@string/prefThrottleScreenTypeTitle" />
+        <ListPreference
             android:defaultValue="@string/NumThrottleDefaulValue"
             android:entries="@array/NumOfThrottlesEntries"
             android:entryValues="@array/NumOfThrottlesEntryValues"
@@ -150,6 +157,21 @@
                 android:maxLength="7"
                 android:summary="@string/prefRightDirectionButtonsSummary"
                 android:title="@string/prefRightDirectionButtonsTitle" />
+
+            <EditTextPreference
+                android:defaultValue="@string/prefLeftDirectionButtonsShortDefaultValue"
+                android:dialogTitle="@string/prefLeftDirectionButtonsShortTitle"
+                android:key="prefLeftDirectionButtonsShort"
+                android:maxLength="7"
+                android:summary="@string/prefLeftDirectionButtonsShortSummary"
+                android:title="@string/prefLeftDirectionButtonsShortTitle" />
+            <EditTextPreference
+                android:defaultValue="@string/prefRightDirectionButtonsShortDefaultValue"
+                android:dialogTitle="@string/prefRightDirectionButtonsShortTitle"
+                android:key="prefRightDirectionButtonsShort"
+                android:maxLength="7"
+                android:summary="@string/prefRightDirectionButtonsShortSummary"
+                android:title="@string/prefRightDirectionButtonsShortTitle" />
 
         </PreferenceScreen>
 
