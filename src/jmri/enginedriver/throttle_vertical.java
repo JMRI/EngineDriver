@@ -42,6 +42,9 @@ public class throttle_vertical extends throttle {
     protected static final int MAX_SCREEN_THROTTLES = 2;
 
     private LinearLayout[] lThrottles;
+    private LinearLayout[] lUppers;
+    private LinearLayout[] lLowers;
+    private LinearLayout[] lSpeeds;
     private ScrollView[] svFnBtns;
 
     protected void removeLoco(int whichThrottle) {
@@ -72,19 +75,28 @@ public class throttle_vertical extends throttle {
         }
 
         lThrottles = new LinearLayout[mainapp.maxThrottles];
+        lSpeeds = new LinearLayout[mainapp.maxThrottles];
         svFnBtns = new ScrollView[mainapp.maxThrottles];
         vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottles];
+        lUppers = new LinearLayout[mainapp.maxThrottles];
+        lLowers = new LinearLayout[mainapp.maxThrottles];
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             switch (throttleIndex) {
                 default:
                 case 0:
                     lThrottles[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_0);
+                    lUppers[throttleIndex] = (LinearLayout) findViewById(R.id.loco_upper_0);
+                    lLowers[throttleIndex] = (LinearLayout) findViewById(R.id.loco_lower_0);
+                    lSpeeds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_0_SetSpeed);
                     vsbSpeeds[throttleIndex] = (VerticalSeekBar) findViewById(R.id.speed_0);
                     svFnBtns[throttleIndex] = (ScrollView) findViewById(R.id.function_buttons_scroller_0);
                     break;
                 case 1:
                     lThrottles[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_1);
+                    lUppers[throttleIndex] = (LinearLayout) findViewById(R.id.loco_upper_1);
+                    lLowers[throttleIndex] = (LinearLayout) findViewById(R.id.loco_lower_1);
+                    lSpeeds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_1_SetSpeed);
                     vsbSpeeds[throttleIndex] = (VerticalSeekBar) findViewById(R.id.speed_1);
                     svFnBtns[throttleIndex] = (ScrollView) findViewById(R.id.function_buttons_scroller_1);
                     break;
@@ -249,14 +261,17 @@ public class throttle_vertical extends throttle {
         final DisplayMetrics dm = getResources().getDisplayMetrics();
         // Get the screen's density scale
         final float denScale = dm.density;
-        int fnBtnWidth = (int) (denScale * 81); // function button width
+        int fnBtnWidth = (int) (denScale * 79); // function button width
 
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
-        int throttleWidth = (screenWidth - (fnBtnWidth * (mainapp.numThrottles)))/ mainapp.numThrottles;
+        int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.numThrottles;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.FILL_PARENT;
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
             lThrottles[throttleIndex].requestLayout();
+
+            lSpeeds[throttleIndex].getLayoutParams().width = throttleWidth - fnBtnWidth;
+            lSpeeds[throttleIndex].requestLayout();
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the Hight of usable area
@@ -314,8 +329,10 @@ public class throttle_vertical extends throttle {
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             // set height of each function button area
-            svFnBtns[throttleIndex].getLayoutParams().height = screenHeight;
+            svFnBtns[throttleIndex].getLayoutParams().height = screenHeight - lUppers[throttleIndex].getHeight();
             svFnBtns[throttleIndex].requestLayout();
+            lLowers[throttleIndex].getLayoutParams().height = screenHeight - lUppers[throttleIndex].getHeight();
+            lLowers[throttleIndex].requestLayout();
 
             // update throttle slider top/bottom
             tops[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();

@@ -20,6 +20,7 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/throttle_screen_wrapper"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -38,881 +39,929 @@
             android:id="@+id/throttle_screen"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1.0">
 
             <LinearLayout
                 android:id="@+id/throttle_0"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:orientation="vertical">
+                android:layout_weight="0.5"
+                android:orientation="vertical"
+                android:paddingRight="3dp">
 
                 <LinearLayout
-                    android:id="@+id/loco_buttons_group_0"
-                    android:layout_width="fill_parent"
+                    android:id="@+id/loco_upper_0"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:baselineAligned="false"
-                    android:orientation="vertical"
-                    android:weightSum="1.0">
+                    android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:id="@+id/loco_cell_0"
-                        android:layout_width="fill_parent"
-                        android:layout_height="40dp"
-                        android:layout_weight=".73">
-
-                        <Button
-                            android:id="@+id/button_select_loco_0"
-                            style="?attr/ed_normal_button_style"
-                            android:layout_width="fill_parent"
-                            android:text="@string/none" />
-
-                        <TextView
-                            android:id="@+id/loco_label_0"
-                            style="?attr/ed_loco_label_style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="6dp"
-                            android:paddingRight="0dp"
-                            android:paddingTop="2dp"
-                            android:shadowColor="#FFFFFFFF"
-                            android:shadowDx="1"
-                            android:shadowDy="1"
-                            android:shadowRadius="1"
-                            android:textColor="#666666" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/speed_cell_0"
+                    <LinearLayout
+                        android:id="@+id/loco_buttons_group_0"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".27">
-
-                        <TextView
-                            android:id="@+id/speed_label_0"
-                            style="@style/floating_text_style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:enabled="false"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="0dp"
-                            android:paddingTop="2dp"
-                            android:text="@string/label_percent"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/speed_value_label_0"
-                            style="@style/floating_text_style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:enabled="false"
-                            android:text="126"
-                            android:textSize="36sp" />
-
-                        <TextView
-                            android:id="@+id/volume_indicator_0"
-                            style="@style/floating_text_style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/speed_value_label_0"
-                            android:layout_alignParentLeft="true"
-                            android:enabled="false"
-                            android:paddingBottom="2dp"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="0dp"
-                            android:text="@string/volume_indicator"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/gamepad_indicator_0"
-                            style="@style/floating_text_style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/volume_indicator_0"
-                            android:layout_alignParentLeft="true"
-                            android:enabled="false"
-                            android:paddingBottom="2dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="0dp"
-                            android:text=""
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <TableLayout
-                    android:id="@+id/dir_buttons_table_0"
-                    android:layout_width="fill_parent"
-                    android:layout_height="50dp"
-                    android:stretchColumns="0,1,2">
-
-                    <TableRow
-                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="vertical"
                         android:weightSum="1.0">
 
                         <RelativeLayout
-                            android:id="@+id/direction_left_cell_0"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5">
+                            android:id="@+id/loco_cell_0"
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight=".73">
 
                             <Button
-                                android:id="@+id/button_fwd_0"
+                                android:id="@+id/button_select_loco_0"
                                 style="?attr/ed_normal_button_style"
                                 android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:enabled="false"
-                                android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
+                                android:text="@string/none" />
 
                             <TextView
-                                android:id="@+id/loco_left_direction_indicaton_0"
+                                android:id="@+id/loco_label_0"
                                 style="?attr/ed_loco_label_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignRight="@+id/button_fwd_0"
-                                android:paddingLeft="0dp"
-                                android:paddingRight="6dp"
+                                android:paddingLeft="6dp"
+                                android:paddingRight="0dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:shadowColor="#FFFFFFFF"
+                                android:shadowDx="1"
+                                android:shadowDy="1"
+                                android:shadowRadius="1"
+                                android:textColor="#666666" />
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:id="@+id/direction_right_cell_0"
-                            android:layout_width="match_parent"
+                            android:id="@+id/speed_cell_0"
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".5">
-
-                            <Button
-                                android:id="@+id/button_rev_0"
-                                style="?attr/ed_normal_button_style"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:enabled="false"
-                                android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
+                            android:layout_weight=".27">
 
                             <TextView
-                                android:id="@+id/loco_right_direction_indicaton_0"
-                                style="?attr/ed_loco_label_style"
+                                android:id="@+id/speed_label_0"
+                                style="@style/floating_text_style"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:enabled="false"
+                                android:paddingLeft="2dp"
+                                android:paddingRight="0dp"
+                                android:paddingTop="2dp"
+                                android:text="@string/label_percent"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/speed_value_label_0"
+                                style="@style/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:layout_alignRight="@+id/button_rev_0"
-                                android:paddingLeft="0dp"
-                                android:paddingRight="6dp"
-                                android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:enabled="false"
+                                android:text="126"
+                                android:textSize="36sp" />
+
+                            <TextView
+                                android:id="@+id/volume_indicator_0"
+                                style="@style/floating_text_style"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignBottom="@id/speed_value_label_0"
+                                android:layout_alignParentLeft="true"
+                                android:enabled="false"
+                                android:paddingBottom="2dp"
+                                android:paddingLeft="2dp"
+                                android:paddingRight="0dp"
+                                android:text="@string/volume_indicator"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/gamepad_indicator_0"
+                                style="@style/floating_text_style"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignBottom="@id/volume_indicator_0"
+                                android:layout_alignParentLeft="true"
+                                android:enabled="false"
+                                android:paddingBottom="2dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="0dp"
+                                android:text=""
+                                android:textSize="12sp" />
                         </RelativeLayout>
-                    </TableRow>
-                </TableLayout>
+                    </LinearLayout>
+
+                    <TableLayout
+                        android:id="@+id/dir_buttons_table_0"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:stretchColumns="0,1,2">
+
+                        <TableRow
+                            android:layout_height="wrap_content"
+                            android:weightSum="1.0">
+
+                            <RelativeLayout
+                                android:id="@+id/direction_left_cell_0"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5">
+
+                                <Button
+                                    android:id="@+id/button_fwd_0"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
+
+                                <TextView
+                                    android:id="@+id/loco_left_direction_indicaton_0"
+                                    style="?attr/ed_loco_label_style"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignRight="@+id/button_fwd_0"
+                                    android:paddingLeft="0dp"
+                                    android:paddingRight="6dp"
+                                    android:paddingTop="2dp"
+                                    android:text="@string/none" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/direction_right_cell_0"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5">
+
+                                <Button
+                                    android:id="@+id/button_rev_0"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
+
+                                <TextView
+                                    android:id="@+id/loco_right_direction_indicaton_0"
+                                    style="?attr/ed_loco_label_style"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignRight="@+id/button_rev_0"
+                                    android:paddingLeft="0dp"
+                                    android:paddingRight="6dp"
+                                    android:paddingTop="2dp"
+                                    android:text="@string/none" />
+                            </RelativeLayout>
+                        </TableRow>
+                    </TableLayout>
+
+                </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/throttle_0_SetSpeed"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="vertical">
+                    android:id="@+id/loco_lower_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:layoutDirection="rtl"
+                    android:orientation="horizontal"
+                    android:weightSum="1.0">
 
-                    <Button
-                        android:id="@+id/right_speed_button_0"
-                        style="?attr/ed_normal_button_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="40dp"
-                        android:layout_weight="0"
-                        android:padding="0dp"
-                        android:text="@string/UpButton"
-                        android:textSize="30sp" />
-
-                    <jmri.enginedriver.VerticalSeekBar
-                        android:id="@+id/speed_0"
+                    <LinearLayout
+                        android:id="@+id/throttle_0_SetSpeed"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:paddingLeft="30dp"
-                        android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
+                        android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/left_speed_button_0"
-                        style="?attr/ed_normal_button_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="40dp"
-                        android:padding="0dp"
-                        android:text="@string/DownButton"
-                        android:textSize="30sp" />
+                        <Button
+                            android:id="@+id/right_speed_button_0"
+                            style="?attr/ed_normal_button_style"
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight="0"
+                            android:padding="0dp"
+                            android:text="@string/UpButton"
+                            android:textSize="30sp" />
 
-                    <Button
-                        android:id="@+id/button_stop_0"
-                        style="?attr/ed_stop_button_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:text="@string/stop" />
+                        <jmri.enginedriver.VerticalSeekBar
+                            android:id="@+id/speed_0"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
+
+                        <Button
+                            android:id="@+id/left_speed_button_0"
+                            style="?attr/ed_normal_button_style"
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dp"
+                            android:padding="0dp"
+                            android:text="@string/DownButton"
+                            android:textSize="30sp" />
+
+                        <Button
+                            android:id="@+id/button_stop_0"
+                            style="?attr/ed_stop_button_style"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:enabled="false"
+                            android:text="@string/stop" />
+                    </LinearLayout>
+
+                    <ScrollView
+                        android:id="@+id/function_buttons_scroller_0"
+                        style="?attr/ed_fn_scrollview_style"
+                        android:layout_width="75dp"
+                        android:layout_height="fill_parent">
+
+                        <TableLayout
+                            android:id="@+id/function_buttons_table_0"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:stretchColumns="0">
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton00DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton01DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton02DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton03DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton04DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton05DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton06DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton07DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton08DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton09DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton10DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton11DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton12DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton13DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton14DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton15DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton16DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton17DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton18DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton19DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton20DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton21DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton22DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton23DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton24DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton25DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton26DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton27DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton28DefultValue" />
+                            </TableRow>
+                        </TableLayout>
+                    </ScrollView>
+
+
                 </LinearLayout>
+
+
             </LinearLayout>
-
-            <ScrollView
-                android:id="@+id/function_buttons_scroller_0"
-                style="?attr/ed_fn_scrollview_style"
-                android:layout_width="75dp"
-                android:layout_height="fill_parent">
-
-                <TableLayout
-                    android:id="@+id/function_buttons_table_0"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp"
-                    android:stretchColumns="0">
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton00DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton01DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton02DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton03DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton04DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton05DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton06DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton07DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton08DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton09DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton10DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton11DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton12DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton13DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton14DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton15DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton16DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton17DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton18DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton19DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton20DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton21DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton22DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton23DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton24DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton25DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton26DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton27DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton28DefultValue" />
-                    </TableRow>
-                </TableLayout>
-            </ScrollView>
-
-            <ScrollView
-                android:id="@+id/function_buttons_scroller_1"
-                style="?attr/ed_fn_scrollview_style"
-                android:layout_width="75dp"
-                android:layout_height="fill_parent">
-
-                <TableLayout
-                    android:id="@+id/function_buttons_table_1"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp"
-                    android:stretchColumns="0">
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton00DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton01DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton02DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton03DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton04DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton05DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton06DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton07DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton08DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton09DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton10DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton11DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton12DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton13DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton14DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton15DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton16DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton17DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton18DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton19DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton20DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton21DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton22DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton23DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton24DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton25DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton26DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton27DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton28DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton29DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton30DefultValue" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <Button
-                            style="?attr/ed_fn_button_style"
-                            android:text="@string/functionButton31DefultValue" />
-                    </TableRow>
-                </TableLayout>
-            </ScrollView>
 
             <LinearLayout
                 android:id="@+id/throttle_1"
                 android:layout_width="100dp"
                 android:layout_height="fill_parent"
-                android:orientation="vertical">
+                android:layout_weight="0.5"
+                android:orientation="vertical"
+                android:paddingLeft="3dp">
 
                 <LinearLayout
-                    android:id="@+id/loco_buttons_group_1"
-                    android:layout_width="fill_parent"
+                    android:id="@+id/loco_upper_1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:baselineAligned="false"
-                    android:orientation="vertical"
-                    android:weightSum="1.0">
+                    android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:id="@+id/loco_cell_1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="40dp"
-                        android:layout_weight=".73">
-
-                        <Button
-                            android:id="@+id/button_select_loco_1"
-                            style="?attr/ed_normal_button_style"
-                            android:layout_width="fill_parent"
-                            android:text="@string/none" />
-
-                        <TextView
-                            android:id="@+id/loco_label_1"
-                            style="?attr/ed_loco_label_style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="6dp"
-                            android:paddingRight="0dp"
-                            android:paddingTop="2dp"
-                            android:shadowColor="#FFFFFFFF"
-                            android:shadowDx="1"
-                            android:shadowDy="1"
-                            android:shadowRadius="1"
-                            android:textColor="#666666" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/speed_cell_1"
+                    <LinearLayout
+                        android:id="@+id/loco_buttons_group_1"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".27">
-
-                        <TextView
-                            android:id="@+id/speed_label_1"
-                            style="@style/floating_text_style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:enabled="false"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="0dp"
-                            android:paddingTop="2dp"
-                            android:text="@string/label_percent"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/speed_value_label_1"
-                            style="@style/floating_text_style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:enabled="false"
-                            android:text="126"
-                            android:textSize="36sp" />
-
-                        <TextView
-                            android:id="@+id/volume_indicator_1"
-                            style="@style/floating_text_style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/speed_value_label_1"
-                            android:layout_alignParentLeft="true"
-                            android:enabled="false"
-                            android:paddingBottom="2dp"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="0dp"
-                            android:text="@string/volume_indicator"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/gamepad_indicator_1"
-                            style="@style/floating_text_style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/volume_indicator_1"
-                            android:layout_alignParentLeft="true"
-                            android:enabled="false"
-                            android:paddingBottom="2dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="0dp"
-                            android:text=""
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <TableLayout
-                    android:id="@+id/dir_buttons_table_1"
-                    android:layout_width="fill_parent"
-                    android:layout_height="50dp"
-                    android:stretchColumns="0,1,2">
-
-                    <TableRow
-                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="vertical"
                         android:weightSum="1.0">
 
                         <RelativeLayout
-                            android:id="@+id/direction_left_cell_1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5">
+                            android:id="@+id/loco_cell_1"
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight=".73">
 
                             <Button
-                                android:id="@+id/button_fwd_1"
+                                android:id="@+id/button_select_loco_1"
                                 style="?attr/ed_normal_button_style"
                                 android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:enabled="false"
-                                android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
+                                android:text="@string/none" />
 
                             <TextView
-                                android:id="@+id/loco_left_direction_indicaton_1"
+                                android:id="@+id/loco_label_1"
                                 style="?attr/ed_loco_label_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignRight="@+id/button_fwd_1"
-                                android:paddingLeft="0dp"
-                                android:paddingRight="6dp"
+                                android:paddingLeft="6dp"
+                                android:paddingRight="0dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:shadowColor="#FFFFFFFF"
+                                android:shadowDx="1"
+                                android:shadowDy="1"
+                                android:shadowRadius="1"
+                                android:textColor="#666666" />
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:id="@+id/direction_right_cell_1"
-                            android:layout_width="match_parent"
+                            android:id="@+id/speed_cell_1"
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".5">
-
-                            <Button
-                                android:id="@+id/button_rev_1"
-                                style="?attr/ed_normal_button_style"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:enabled="false"
-                                android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
+                            android:layout_weight=".27">
 
                             <TextView
-                                android:id="@+id/loco_right_direction_indicaton_1"
-                                style="?attr/ed_loco_label_style"
+                                android:id="@+id/speed_label_1"
+                                style="@style/floating_text_style"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:enabled="false"
+                                android:paddingLeft="2dp"
+                                android:paddingRight="0dp"
+                                android:paddingTop="2dp"
+                                android:text="@string/label_percent"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/speed_value_label_1"
+                                style="@style/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:layout_alignRight="@+id/button_rev_1"
-                                android:paddingLeft="0dp"
-                                android:paddingRight="6dp"
-                                android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:enabled="false"
+                                android:text="126"
+                                android:textSize="36sp" />
+
+                            <TextView
+                                android:id="@+id/volume_indicator_1"
+                                style="@style/floating_text_style"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignBottom="@id/speed_value_label_1"
+                                android:layout_alignParentLeft="true"
+                                android:enabled="false"
+                                android:paddingBottom="2dp"
+                                android:paddingLeft="2dp"
+                                android:paddingRight="0dp"
+                                android:text="@string/volume_indicator"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/gamepad_indicator_1"
+                                style="@style/floating_text_style"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignBottom="@id/volume_indicator_1"
+                                android:layout_alignParentLeft="true"
+                                android:enabled="false"
+                                android:paddingBottom="2dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="0dp"
+                                android:text=""
+                                android:textSize="12sp" />
                         </RelativeLayout>
-                    </TableRow>
-                </TableLayout>
+                    </LinearLayout>
+
+                    <TableLayout
+                        android:id="@+id/dir_buttons_table_1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:stretchColumns="0,1,2">
+
+                        <TableRow
+                            android:layout_height="wrap_content"
+                            android:weightSum="1.0">
+
+                            <RelativeLayout
+                                android:id="@+id/direction_left_cell_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5">
+
+                                <Button
+                                    android:id="@+id/button_fwd_1"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
+
+                                <TextView
+                                    android:id="@+id/loco_left_direction_indicaton_1"
+                                    style="?attr/ed_loco_label_style"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignRight="@+id/button_fwd_1"
+                                    android:paddingLeft="0dp"
+                                    android:paddingRight="6dp"
+                                    android:paddingTop="2dp"
+                                    android:text="@string/none" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/direction_right_cell_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5">
+
+                                <Button
+                                    android:id="@+id/button_rev_1"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
+
+                                <TextView
+                                    android:id="@+id/loco_right_direction_indicaton_1"
+                                    style="?attr/ed_loco_label_style"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignRight="@+id/button_rev_1"
+                                    android:paddingLeft="0dp"
+                                    android:paddingRight="6dp"
+                                    android:paddingTop="2dp"
+                                    android:text="@string/none" />
+                            </RelativeLayout>
+                        </TableRow>
+                    </TableLayout>
+
+                </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/throttle_1_SetSpeed"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="vertical">
+                    android:id="@+id/loco_lower_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1.0">
 
-                    <Button
-                        android:id="@+id/right_speed_button_1"
-                        style="?attr/ed_normal_button_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="40dp"
-                        android:layout_weight="0"
-                        android:padding="0dp"
-                        android:text="@string/UpButton"
-                        android:textSize="30sp" />
+                    <ScrollView
+                        android:id="@+id/function_buttons_scroller_1"
+                        style="?attr/ed_fn_scrollview_style"
+                        android:layout_width="75dp"
+                        android:layout_height="fill_parent">
 
-                    <jmri.enginedriver.VerticalSeekBar
-                        android:id="@+id/speed_1"
+                        <TableLayout
+                            android:id="@+id/function_buttons_table_1"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:stretchColumns="0">
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton00DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton01DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton02DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton03DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton04DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton05DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton06DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton07DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton08DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton09DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton10DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton11DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton12DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton13DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton14DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton15DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton16DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton17DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton18DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton19DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton20DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton21DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton22DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton23DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton24DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton25DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton26DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton27DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton28DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton29DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton30DefultValue" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton31DefultValue" />
+                            </TableRow>
+                        </TableLayout>
+                    </ScrollView>
+
+                    <LinearLayout
+                        android:id="@+id/throttle_1_SetSpeed"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:paddingLeft="30dp"
-                        android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
+                        android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/left_speed_button_1"
-                        style="?attr/ed_normal_button_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="40dp"
-                        android:padding="0dp"
-                        android:text="@string/DownButton"
-                        android:textSize="30sp" />
+                        <Button
+                            android:id="@+id/right_speed_button_1"
+                            style="?attr/ed_normal_button_style"
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight="0"
+                            android:padding="0dp"
+                            android:text="@string/UpButton"
+                            android:textSize="30sp" />
 
-                    <Button
-                        android:id="@+id/button_stop_1"
-                        style="?attr/ed_stop_button_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:text="@string/stop" />
+                        <jmri.enginedriver.VerticalSeekBar
+                            android:id="@+id/speed_1"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
+
+                        <Button
+                            android:id="@+id/left_speed_button_1"
+                            style="?attr/ed_normal_button_style"
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dp"
+                            android:padding="0dp"
+                            android:text="@string/DownButton"
+                            android:textSize="30sp" />
+
+                        <Button
+                            android:id="@+id/button_stop_1"
+                            style="?attr/ed_stop_button_style"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:enabled="false"
+                            android:text="@string/stop" />
+                    </LinearLayout>
+
                 </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
