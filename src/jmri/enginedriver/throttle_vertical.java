@@ -261,7 +261,6 @@ public class throttle_vertical extends throttle {
         final DisplayMetrics dm = getResources().getDisplayMetrics();
         // Get the screen's density scale
         final float denScale = dm.density;
-        int fnBtnWidth = (int) (denScale * 79); // function button width
 
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
         int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.numThrottles;
@@ -270,7 +269,7 @@ public class throttle_vertical extends throttle {
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
             lThrottles[throttleIndex].requestLayout();
 
-            lSpeeds[throttleIndex].getLayoutParams().width = throttleWidth - fnBtnWidth;
+            lSpeeds[throttleIndex].getLayoutParams().width = throttleWidth - svFnBtns[throttleIndex].getWidth();
             lSpeeds[throttleIndex].requestLayout();
         }
 

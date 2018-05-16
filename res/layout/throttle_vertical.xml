@@ -273,14 +273,15 @@
                         android:id="@+id/function_buttons_scroller_0"
                         style="?attr/ed_fn_scrollview_style"
                         android:layout_width="75dp"
-                        android:layout_height="fill_parent">
+                        android:layout_height="fill_parent"
+                        android:paddingTop="4dp">
 
                         <TableLayout
                             android:id="@+id/function_buttons_table_0"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="3dp"
-                            android:paddingRight="3dp"
+                            android:paddingRight="0dp"
                             android:stretchColumns="0">
 
                             <TableRow>
@@ -682,13 +683,14 @@
                         android:id="@+id/function_buttons_scroller_1"
                         style="?attr/ed_fn_scrollview_style"
                         android:layout_width="75dp"
-                        android:layout_height="fill_parent">
+                        android:layout_height="fill_parent"
+                        android:paddingTop="4dp">
 
                         <TableLayout
                             android:id="@+id/function_buttons_table_1"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
+                            android:paddingLeft="0dp"
                             android:paddingRight="3dp"
                             android:stretchColumns="0">
 
