@@ -136,7 +136,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         sharedPreferences.edit().putBoolean("prefGamepadTestNow", false).commit();  //reset the preference
 
         if (mainapp.androidVersion < mainapp.minActivatedButtonsVersion) {
-            enableDisablePreference("prefSelectedLocoIndicator",false);
+            enableDisablePreference("prefSelectedLocoIndicator", false);
         }
 
         deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
@@ -144,13 +144,18 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         String currentValue = sharedPreferences.getString("prefTtsWhen", "");
         if (currentValue.equals("None")) {
-            enableDisablePreference("prefTtsThrottleResponse",false);
+            enableDisablePreference("prefTtsThrottleResponse", false);
             enableDisablePreference("prefTtsGamepadTest", false);
-            enableDisablePreference("prefTtsGamepadTestComplete",false);
+            enableDisablePreference("prefTtsGamepadTestComplete", false);
         }
 
         prefThrottleScreenTypeOriginal = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         showHideThrottleTypePreferences();
+        if (mainapp.connectedHostName.equals("")) { // option is only available when there is no curent connection
+            enableDisablePreference("prefThrottleScreenType", true);
+        } else {
+            enableDisablePreference("prefThrottleScreenType", false);
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -355,6 +360,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
         Runtime.getRuntime().exit(0); // really force the kill

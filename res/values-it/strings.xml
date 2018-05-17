@@ -238,7 +238,7 @@
     <string name="prefNumOfThrottlesDefault">Due</string>
 
     <string name="prefThrottleScreenTypeTitle">Tipo di schermo dell\'acceleratore</string>
-    <string name="prefThrottleScreenTypeSummary">Quale tipo di schermo del throttle usare.  \nATTENZIONE! Engine Driver si riavvierà immediatamente.</string>
+    <string name="prefThrottleScreenTypeSummary">Quale tipo di schermo del throttle usare.  \nATTENZIONE! Engine Driver si riavvierà immediatamente.\n(Disponibile solo quando non attualmente connesso.)</string>
 
     <string name="prefMaximumThrottleTitle">Percentuale massima di controllo</string>
 

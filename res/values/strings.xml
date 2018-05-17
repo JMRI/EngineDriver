@@ -274,7 +274,7 @@
     <string name="prefNumOfThrottlesDefault">Two</string>
 
     <string name="prefThrottleScreenTypeTitle">Throttle Screen Type</string>
-    <string name="prefThrottleScreenTypeSummary">Which type of throttle screen to use.\nWARNING! Engine Driver will restart immediately!</string>
+    <string name="prefThrottleScreenTypeSummary">Which type of throttle screen to use.\nWARNING! Engine Driver will restart immediately!\n(Only available when not currently connected.)</string>
     <string name="prefThrottleScreenTypeDefault">Default</string>
 
     <string name="prefMaximumThrottleTitle">Maximum Throttle Percentage</string>

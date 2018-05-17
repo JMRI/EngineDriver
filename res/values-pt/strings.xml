@@ -238,7 +238,7 @@
     <string name="prefNumOfThrottlesDefault">Dois</string>
 
     <string name="prefThrottleScreenTypeTitle">Tipo de tela do acelerador</string>
-    <string name="prefThrottleScreenTypeSummary">Que tipo de tela de acelerador usar. \ nATENÇÃO! Engine Driver irá reiniciar imediatamente.</string>
+    <string name="prefThrottleScreenTypeSummary">Que tipo de tela de acelerador usar. \ nATENÇÃO! Engine Driver irá reiniciar imediatamente.\n(Somente disponível quando não atualmente conectado.)</string>
 
     <string name="prefMaximumThrottleTitle">Porcentagem máxima Controle</string>
 
