@@ -727,6 +727,14 @@
             android:summary="@string/prefConsistLightsLongClickSummary"
             android:title="@string/prefConsistLightsLongClickTitle" >
         </CheckBoxPreference>
+        <EditTextPreference
+            android:defaultValue="@string/prefRosterFilterDefaultValue"
+            android:dialogTitle="@string/prefRosterFilterTitle"
+            android:key="prefRosterFilter"
+            android:maxLength="10"
+            android:summary="@string/prefRosterFilterSummary"
+            android:title="@string/prefRosterFilterTitle" >
+        </EditTextPreference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefConnectTitle" >
         <EditTextPreference

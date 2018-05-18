@@ -310,6 +310,13 @@
     <string name="prefHideRecentLocosSummary">Leave more room for roster locos.</string>
     <string name="prefRosterRecentLocosTitle">Roster in Recent Locos?</string>
     <string name="prefRosterRecentLocosSummary">Include roster selections in Recent list?</string>
+
+    <string name="prefRosterFilterTitle">Filter Roster</string>
+    <string name="prefRosterFilterSummary">Only include roster entries starting with...</string>
+    <string name="prefRosterFilterDefaultValue"></string>
+    <string name="FilterRosterList">Filter</string>
+    <string name="FilterRosterListHint">Begins…</string>
+
     <string name="prefMaximumRecentLocosTitle">Maximum Recent Locos</string>
     <string name="prefMaximumRecentLocosDefaultValue">10</string>
     <string name="prefMaximumRecentLocosSummary">Maximum Recent Locos to show in list</string>
