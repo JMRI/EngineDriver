@@ -101,6 +101,9 @@ public class select_loco extends Activity {
 
     private int clearListCount = 0;
 
+    private String prefRosterFilter = "";
+    EditText filter_roster_text;
+
     // populate the on-screen roster view from global hashmap
     public void refresh_roster_list() {
         // clear and rebuild
@@ -114,27 +117,29 @@ public class select_loco extends Activity {
             if (mainapp.roster_entries != null) {
                 Set<String> rns = mainapp.roster_entries.keySet();  //copy to prevent concurrentmodification
                 for (String rostername : rns) {
-                    // put key and values into temp hashmap
-                    HashMap<String, String> hm = new HashMap<>();
-                    hm.put("roster_name", rostername);
-                    hm.put("roster_address", mainapp.roster_entries.get(rostername));
-                    hm.put("roster_entry_type", "loco");
-                    //add icon if url set
-                    if (mainapp.roster != null) {
-                        if (mainapp.roster.get(rostername) != null) {
-                            if ((mainapp.roster != null) && (mainapp.roster.get(rostername) != null) && (mainapp.roster.get(rostername).getIconPath() != null)) {
-                                hm.put("roster_icon", mainapp.roster.get(rostername).getIconPath() + "?maxHeight=52");  //include sizing instructions
+                    if ((prefRosterFilter.length() == 0) || (rostername.toUpperCase().startsWith(prefRosterFilter.toUpperCase()))) {
+                        // put key and values into temp hashmap
+                        HashMap<String, String> hm = new HashMap<>();
+                        hm.put("roster_name", rostername);
+                        hm.put("roster_address", mainapp.roster_entries.get(rostername));
+                        hm.put("roster_entry_type", "loco");
+                        //add icon if url set
+                        if (mainapp.roster != null) {
+                            if (mainapp.roster.get(rostername) != null) {
+                                if ((mainapp.roster != null) && (mainapp.roster.get(rostername) != null) && (mainapp.roster.get(rostername).getIconPath() != null)) {
+                                    hm.put("roster_icon", mainapp.roster.get(rostername).getIconPath() + "?maxHeight=52");  //include sizing instructions
+                                } else {
+                                    Log.d("Engine_Driver", "xml roster entry " + rostername + " found, but no icon specified.");
+                                }
                             } else {
-                                Log.d("Engine_Driver", "xml roster entry " + rostername + " found, but no icon specified.");
+                                Log.w("Engine_Driver", "WiThrottle roster entry " + rostername + " not found in xml roster.");
                             }
                         } else {
-                            Log.w("Engine_Driver", "WiThrottle roster entry " + rostername + " not found in xml roster.");
+                            Log.w("Engine_Driver", "xml roster not available");
                         }
-                    } else {
-                        Log.w("Engine_Driver", "xml roster not available");
+                        // add temp hashmap to list which view is hooked to
+                        roster_list.add(hm);
                     }
-                    // add temp hashmap to list which view is hooked to
-                    roster_list.add(hm);
                 }
             }
 
@@ -487,6 +492,13 @@ public class select_loco extends Activity {
         }
     }
 
+    public class filter_Roster_List_button implements AdapterView.OnClickListener {
+        public void onClick(View v) {
+            prefs.edit().putString("prefRosterFilter", filter_roster_text.getText().toString().trim() ).commit();
+            onCreate(null);
+        }
+    }
+
     public class roster_item_ClickListener implements
             AdapterView.OnItemClickListener {
         // When a roster item is clicked, send request to acquire that engine.
@@ -552,6 +564,8 @@ public class select_loco extends Activity {
 
         // put pointer to this activity's handler in main app's shared variable
         mainapp.select_loco_msg_handler = new select_loco_handler();
+
+        prefRosterFilter = prefs.getString("prefRosterFilter", this.getResources().getString(R.string.prefRosterFilterDefaultValue));
 
         // Set the options for the address length.
         Spinner address_spinner = (Spinner) findViewById(R.id.address_length);
@@ -661,6 +675,11 @@ public class select_loco extends Activity {
         //Jeffrey added 7/3/2013
         button = (Button) findViewById(R.id.clear_Loco_List_button);
         button.setOnClickListener(new clear_Loco_List_button());
+
+        button = (Button) findViewById(R.id.filter_roster_List_button);
+        button.setOnClickListener(new filter_Roster_List_button());
+        filter_roster_text = (EditText) findViewById(R.id.filter_roster_text);
+        filter_roster_text.setText(prefRosterFilter);
 
         default_address_length = prefs.getString("default_address_length", this
                 .getResources().getString(
