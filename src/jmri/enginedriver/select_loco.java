@@ -672,6 +672,15 @@ public class select_loco extends Activity {
         button = (Button) findViewById(R.id.Sl_release_2);
         button.setOnClickListener(new release_button_listener(2));
 
+        button = (Button) findViewById(R.id.Sl_release_3);
+        button.setOnClickListener(new release_button_listener(3));
+
+        button = (Button) findViewById(R.id.Sl_release_4);
+        button.setOnClickListener(new release_button_listener(4));
+
+        button = (Button) findViewById(R.id.Sl_release_5);
+        button.setOnClickListener(new release_button_listener(5));
+
         //Jeffrey added 7/3/2013
         button = (Button) findViewById(R.id.clear_Loco_List_button);
         button.setOnClickListener(new clear_Loco_List_button());
