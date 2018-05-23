@@ -151,11 +151,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         prefThrottleScreenTypeOriginal = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         showHideThrottleTypePreferences();
-/*        if (mainapp.connectedHostName.equals("")) { // option is only available when there is no curent connection
+        if (mainapp.connectedHostName.equals("")) { // option is only available when there is no curent connection
             enableDisablePreference("prefThrottleScreenType", true);
         } else {
             enableDisablePreference("prefThrottleScreenType", false);
-        } */
+        }
     }
 
     @SuppressWarnings("deprecation")
