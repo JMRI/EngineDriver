@@ -1,5 +1,8 @@
 **Version 2.19
  * New flashlight button option for devices with on-board camera flash. Needs Camera permission for this.
+ * optional 'simple' throttle screen allowing up to six throttles with vertical speed sliders but no function buttons
+ * optional 'vertical' throttle screen allowing exactly two throttles with vertical speed sliders and function buttons
+ * option to filter the roster
  * major throttle change from T/S/G to array
  * require WiThrottle v2.0, also fixes issue where user connects to web port
  * remove checks and coding for withrottle_version < 2.0
