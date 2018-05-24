@@ -124,8 +124,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected threaded_application mainapp; // hold pointer to mainapp
     protected SharedPreferences prefs;
 
-    protected boolean appIsFinishing = false;
-
     protected static final int MAX_SCREEN_THROTTLES = 3;
     // activity codes
     public static final int ACTIVITY_PREFS = 0;
@@ -2560,7 +2558,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     void GamepadFeedbackSound(boolean invalidAction) {
-        if (appIsFinishing) { return;}
+        if (mainapp.appIsFinishing) { return;}
 
         if (invalidAction)
             tg.startTone(ToneGenerator.TONE_PROP_NACK);
@@ -2590,7 +2588,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         @Override
         public void run() {
-            if (appIsFinishing) { return;}
+            if (mainapp.appIsFinishing) { return;}
 
             if (mGamepadAutoIncrement) {
                 GamepadIncrementSpeed(whichThrottle);
@@ -3408,7 +3406,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         if (mainapp.isForcingFinish()) { // expedite
-            appIsFinishing = true;
+            mainapp.appIsFinishing = true;
             return;
         }
 
@@ -3827,7 +3825,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         super.onResume();
         mainapp.removeNotification();
         if (mainapp.isForcingFinish()) { // expedite
-            appIsFinishing = true;
+            mainapp.appIsFinishing = true;
             this.finish();
             overridePendingTransition(0, 0);
             return;
@@ -4493,7 +4491,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         webView.stopLoading();
-        appIsFinishing = true;
+        mainapp.appIsFinishing = true;
         this.finish(); // end this activity
         overridePendingTransition(0, 0);
     }

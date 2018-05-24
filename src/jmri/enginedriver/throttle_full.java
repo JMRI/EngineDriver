@@ -116,6 +116,8 @@ public class throttle_full extends throttle {
         super.layoutViewId = R.layout.throttle;
         super.onCreate(savedInstanceState);
 
+        if (mainapp.appIsFinishing) { return;}
+
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             switch (throttleIndex) {
                 case 0:

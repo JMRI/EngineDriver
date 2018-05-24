@@ -199,6 +199,8 @@ public class threaded_application extends Application {
 
     public String languageCountry = "en";
 
+    public boolean appIsFinishing = false;
+
     class comm_thread extends Thread {
         JmDNS jmdns = null;
         volatile boolean endingJmdns = false;

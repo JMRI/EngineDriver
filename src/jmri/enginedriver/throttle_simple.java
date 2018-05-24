@@ -156,6 +156,8 @@ public class throttle_simple extends throttle {
     public void onResume() {
         super.onResume();
 
+        if (mainapp.appIsFinishing) { return;}
+
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             if( throttleIndex < mainapp.numThrottles) {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.VISIBLE);
