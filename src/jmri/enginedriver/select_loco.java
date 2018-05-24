@@ -117,7 +117,7 @@ public class select_loco extends Activity {
             if (mainapp.roster_entries != null) {
                 Set<String> rns = mainapp.roster_entries.keySet();  //copy to prevent concurrentmodification
                 for (String rostername : rns) {
-                    if ((prefRosterFilter.length() == 0) || (rostername.toUpperCase().startsWith(prefRosterFilter.toUpperCase()))) {
+                    if ((prefRosterFilter.length() == 0) || (rostername.toUpperCase().contains(prefRosterFilter.toUpperCase()))) {
                         // put key and values into temp hashmap
                         HashMap<String, String> hm = new HashMap<>();
                         hm.put("roster_name", rostername);
@@ -492,13 +492,6 @@ public class select_loco extends Activity {
         }
     }
 
-    public class filter_Roster_List_button implements AdapterView.OnClickListener {
-        public void onClick(View v) {
-            prefs.edit().putString("prefRosterFilter", filter_roster_text.getText().toString().trim() ).commit();
-            onCreate(null);
-        }
-    }
-
     public class roster_item_ClickListener implements
             AdapterView.OnItemClickListener {
         // When a roster item is clicked, send request to acquire that engine.
@@ -530,6 +523,13 @@ public class select_loco extends Activity {
                 acquire_engine(bRosterRecent);
             }
         }
+    }
+
+    private void filterRoster() {
+        prefRosterFilter = filter_roster_text.getText().toString().trim();
+        prefs.edit().putString("prefRosterFilter", prefRosterFilter ).commit();
+        refresh_roster_list();
+        //        onCreate(null);
     }
 
     // Handle pressing of the back button to simply return to caller
@@ -685,10 +685,25 @@ public class select_loco extends Activity {
         button = (Button) findViewById(R.id.clear_Loco_List_button);
         button.setOnClickListener(new clear_Loco_List_button());
 
-        button = (Button) findViewById(R.id.filter_roster_List_button);
-        button.setOnClickListener(new filter_Roster_List_button());
         filter_roster_text = (EditText) findViewById(R.id.filter_roster_text);
         filter_roster_text.setText(prefRosterFilter);
+        filter_roster_text.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                filterRoster();
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        });
+        filter_roster_text.setOnEditorActionListener(new OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
+                    filterRoster();
+                    return true;
+                } else
+                    return false;
+            }
+        });
 
         default_address_length = prefs.getString("default_address_length", this
                 .getResources().getString(

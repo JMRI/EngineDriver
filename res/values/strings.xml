@@ -315,7 +315,7 @@
     <string name="prefRosterFilterSummary">Only include roster entries starting with...</string>
     <string name="prefRosterFilterDefaultValue"></string>
     <string name="FilterRosterList">Filter</string>
-    <string name="FilterRosterListHint">Begins…</string>
+    <string name="FilterRosterListHint">Contains…</string>
 
     <string name="prefMaximumRecentLocosTitle">Maximum Recent Locos</string>
     <string name="prefMaximumRecentLocosDefaultValue">10</string>
