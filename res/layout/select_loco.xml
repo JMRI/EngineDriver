@@ -172,18 +172,17 @@
             android:id="@+id/roster_list_heading"
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="wrap_content"
-
             android:layout_alignParentLeft="true"
-            android:layout_alignTop="@+id/filter_roster_List_button"
             android:layout_toLeftOf="@+id/filter_roster_text"
             android:text="@string/roster_list" />
 
         <EditText
             android:id="@+id/filter_roster_text"
-            android:layout_width="60sp"
+            android:layout_width="80sp"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/filter_roster_List_button"
-            android:layout_toLeftOf="@+id/filter_roster_List_button"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:hint="@string/FilterRosterListHint"
             android:imeOptions="actionDone"
             android:inputType="text"
@@ -193,17 +192,7 @@
             android:shadowDy="1"
             android:shadowRadius="0.2"
             android:singleLine="true"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/filter_roster_List_button"
-            style="?attr/ed_small_button_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/FilterRosterList" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
