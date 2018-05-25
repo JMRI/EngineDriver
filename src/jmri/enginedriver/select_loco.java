@@ -46,7 +46,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
@@ -77,6 +80,10 @@ public class select_loco extends Activity {
     private static final int GONE = 8;
     private static final int VISIBLE = 0;
 
+    private static final String WHICH_METHOD_ADDRESS = "0";
+    private static final String WHICH_METHOD_ROSTER = "1";
+    private static final String WHICH_METHOD_RECENT = "2";
+
     ArrayList<HashMap<String, String>> recent_engine_list;
     ArrayList<HashMap<String, String>> roster_list;
     private RosterSimpleAdapter roster_list_adapter;
@@ -103,6 +110,16 @@ public class select_loco extends Activity {
 
     private String prefRosterFilter = "";
     EditText filter_roster_text;
+
+    RelativeLayout rlAddress;
+    RelativeLayout rlRosterHeader;
+    LinearLayout llRoster;
+    RelativeLayout rlRecentHeader;
+    LinearLayout llRecent;
+    RadioButton rbAddress;
+    RadioButton rbRoster;
+    RadioButton rbRecent;
+    String prefSelectLocoMethod = WHICH_METHOD_ADDRESS;
 
     // populate the on-screen roster view from global hashmap
     public void refresh_roster_list() {
@@ -737,8 +754,85 @@ public class select_loco extends Activity {
                     return false;
             }
         });
+
+        rbAddress=(RadioButton)findViewById(R.id.select_loco_method_address_button);
+        rbAddress.setChecked(true);
+        rbRoster=(RadioButton)findViewById(R.id.select_loco_method_roster_button);
+        rbRoster.setChecked(false);
+        rbRecent =(RadioButton)findViewById(R.id.select_loco_method_recent_button);
+        rbRecent.setChecked(false);
+
+        prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", WHICH_METHOD_ADDRESS);
+
+        rlAddress = (RelativeLayout) findViewById(R.id.enter_loco_group);
+        rlRosterHeader = (RelativeLayout) findViewById(R.id.roster_list_header_group);
+        llRoster = (LinearLayout) findViewById(R.id.roster_list_group);
+        rlRecentHeader = (RelativeLayout) findViewById(R.id.engine_list_header_group);
+        llRecent = (LinearLayout) findViewById(R.id.engine_list_wrapper);
+        showMethod(prefSelectLocoMethod);
+
+        RadioGroup rgLocoSelect = (RadioGroup) findViewById(R.id.select_loco_method_address_button_radio_group);
+        rgLocoSelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.select_loco_method_address_button: { }
+                        showMethod(WHICH_METHOD_ADDRESS);
+                        break;
+                    case R.id.select_loco_method_roster_button: { }
+                        showMethod(WHICH_METHOD_ROSTER);
+                        break;
+                    case R.id.select_loco_method_recent_button: { }
+                        showMethod(WHICH_METHOD_RECENT);
+                }
+            }
+        });
+
         set_labels();
     }
+
+    private void showMethod(String whichMethod) {
+        switch (whichMethod) {
+            default:
+            case WHICH_METHOD_ADDRESS: {
+                rlAddress.setVisibility(View.VISIBLE);
+                rlRosterHeader.setVisibility(View.GONE);
+                llRoster.setVisibility(View.GONE);
+                rlRecentHeader.setVisibility(View.GONE);
+                llRecent.setVisibility(View.GONE);
+
+                rbAddress.setChecked(true);
+                rbRoster.setChecked(false);
+                rbRecent.setChecked(false);
+                break;
+            }
+            case WHICH_METHOD_ROSTER: {
+                rlAddress.setVisibility(View.GONE);
+                rlRosterHeader.setVisibility(View.VISIBLE);
+                llRoster.setVisibility(View.VISIBLE);
+                rlRecentHeader.setVisibility(View.GONE);
+                llRecent.setVisibility(View.GONE);
+
+                rbAddress.setChecked(false);
+                rbRoster.setChecked(true);
+                rbRecent.setChecked(false);
+                break;
+            }
+            case WHICH_METHOD_RECENT: {
+                rlAddress.setVisibility(View.GONE);
+                rlRosterHeader.setVisibility(View.GONE);
+                llRoster.setVisibility(View.GONE);
+                rlRecentHeader.setVisibility(View.VISIBLE);
+                llRecent.setVisibility(View.VISIBLE);
+
+                rbAddress.setChecked(false);
+                rbRoster.setChecked(false);
+                rbRecent.setChecked(true);
+            }
+        }
+        prefs.edit().putString("prefSelectLocoMethod", whichMethod ).commit();
+    }
+
 
     //Jeffrey added 7/3/2013
     //Clears recent connection list of locos

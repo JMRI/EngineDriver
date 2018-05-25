@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/select_loco_screen"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
     <LinearLayout
         android:id="@+id/current_locos_group_w_header"
         android:layout_width="fill_parent"
@@ -118,6 +119,60 @@
                 android:text="@string/release" />
         </LinearLayout>
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/select_loco_method_group"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp" >
+
+        <TableRow
+            android:id="@+id/select_loco_method_group_tableRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/fb_number_of_default_function_labels_label"
+                style="@style/floating_text_style"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:padding="8sp"
+                android:text="@string/LocoSelectMethodQuestion"
+                android:textSize="12sp" />
+
+            <RadioGroup
+                tools:ignore="UselessParent"
+                android:id="@+id/select_loco_method_address_button_radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/select_loco_method_address_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/LocoSelectMethodAddress"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/select_loco_method_roster_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/LocoSelectMethodRoster"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/select_loco_method_recent_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/LocoSelectMethodRecent"
+                    android:textSize="14sp" />
+            </RadioGroup>
+        </TableRow>
+
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/enter_loco_group"
         android:layout_width="fill_parent"
@@ -163,6 +218,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/roster_list_header_group"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
         android:paddingBottom="2dp"
@@ -197,6 +253,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/roster_list_group"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.44"
@@ -210,6 +267,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/engine_list_header_group"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
         android:paddingBottom="2dp"

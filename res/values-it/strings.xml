@@ -51,8 +51,8 @@
     <string name="select_loco">Inserire Indirizzo Locomotiva da Acquisire</string>
     <string name="select_loco_address">Indirizzo</string>
     <string name="acquire_button">Acquisire</string>
-    <string name="roster_list">-O- Selezionare da Elenco/Convogli</string>
-    <string name="recent_engines">-O- Selezionare da Locomotive Recenti</string>
+    <string name="roster_list">Selezionare da Elenco/Convogli</string>
+    <string name="recent_engines">Selezionare da Locomotive Recenti</string>
     <string name="direction">Avanti</string>
     <string name="speed">Velocità:</string>
     <string name="discovered_services">Server Individuati</string>

@@ -50,8 +50,8 @@
     <string name="select_loco">Inserir Endereço Locomotiva a Adquirir</string>
     <string name="select_loco_address">Endereço  </string>
     <string name="acquire_button">Adquirir</string>
-    <string name="roster_list">-OU- Selecionar da Lista/Comboios</string>
-    <string name="recent_engines">-OU- Selecionar das Locomotivas Recentes</string>
+    <string name="roster_list">-Selecionar da Lista/Comboios</string>
+    <string name="recent_engines">Selecionar das Locomotivas Recentes</string>
     <string name="direction">Frente</string>
     <string name="speed">Velocidade:</string>
     <string name="discovered_services">Servidores Encontrados</string>
