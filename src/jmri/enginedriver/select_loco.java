@@ -121,6 +121,8 @@ public class select_loco extends Activity {
     RadioButton rbRecent;
     String prefSelectLocoMethod = WHICH_METHOD_ADDRESS;
 
+    boolean prefHideRecentLocos = false;
+
     // populate the on-screen roster view from global hashmap
     public void refresh_roster_list() {
         // clear and rebuild
@@ -274,15 +276,20 @@ public class select_loco extends Activity {
         }
 
         // hide the recent locos list if selected in prefs
-        boolean hrl = prefs.getBoolean("hide_recent_locos_preference",
+        prefHideRecentLocos = prefs.getBoolean("hide_recent_locos_preference",
                 getResources().getBoolean(R.bool.prefHideRecentLocosDefaultValue));
-        if (hrl) {
+        if (prefHideRecentLocos) {
             View rlv = findViewById(R.id.recent_engines_heading);
             rlv.setVisibility(View.GONE);
             rlv = findViewById(R.id.engine_list_wrapper);
             rlv.setVisibility(View.GONE);
             rlv = findViewById(R.id.clear_Loco_List_button);
             rlv.setVisibility(View.GONE);
+
+            rbRecent.setVisibility(View.GONE);
+            if (prefSelectLocoMethod==WHICH_METHOD_RECENT) {
+                showMethod(WHICH_METHOD_ADDRESS);
+            }
         }
         if (SMenu != null) {
             mainapp.displayEStop(SMenu);
@@ -756,11 +763,8 @@ public class select_loco extends Activity {
         });
 
         rbAddress=(RadioButton)findViewById(R.id.select_loco_method_address_button);
-        rbAddress.setChecked(true);
         rbRoster=(RadioButton)findViewById(R.id.select_loco_method_roster_button);
-        rbRoster.setChecked(false);
         rbRecent =(RadioButton)findViewById(R.id.select_loco_method_recent_button);
-        rbRecent.setChecked(false);
 
         prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", WHICH_METHOD_ADDRESS);
 
