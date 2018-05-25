@@ -275,6 +275,17 @@
     <string name="prefRosterRecentLocosSummary">Includere selezioni Elenco in Locomotive Recenti?</string>
     <string name="prefMaximumRecentLocosTitle">Massimo Locomotive Recenti</string>
 
+    <string name="prefRosterFilterTitle">Elenco dei filtri</string>
+    <string name="prefRosterFilterSummary">Includere solo voci di ruolo che iniziano con…</string>
+    <string name="prefRosterFilterDefaultValue"></string>
+    <string name="FilterRosterList">Filtro</string>
+    <string name="FilterRosterListHint">Contiene…</string>
+
+    <string name="LocoSelectMethodQuestion">Metodo: </string>
+    <string name="LocoSelectMethodAddress">Indirizzo</string>
+    <string name="LocoSelectMethodRoster">Ruolino</string>
+    <string name="LocoSelectMethodRecent">Recenti</string>
+
     <string name="prefMaximumRecentLocosSummary">Massimo di Locomotive Recenti per mostrare nella lista</string>
     <string name="prefDefaultAddressLengthTitle">Lunghezza Indirizzo Default</string>
 

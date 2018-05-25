@@ -275,6 +275,17 @@
     <string name="prefRosterRecentLocosSummary">Incluir seleções da Lista in Locomotivas Recentes?</string>
     <string name="prefMaximumRecentLocosTitle">Máximo Locomotivas Recentes</string>
 
+    <string name="prefRosterFilterTitle">Roster do Filtro</string>
+    <string name="prefRosterFilterSummary">Incluir apenas entradas de lista de partidas começando com…</string>
+    <string name="prefRosterFilterDefaultValue"></string>
+    <string name="FilterRosterList">Filtro</string>
+    <string name="FilterRosterListHint">Contém…</string>
+
+    <string name="LocoSelectMethodQuestion">Método: </string>
+    <string name="LocoSelectMethodAddress">Endereço</string>
+    <string name="LocoSelectMethodRoster">Roster</string>
+    <string name="LocoSelectMethodRecent">Recentes</string>
+
     <string name="prefMaximumRecentLocosSummary">Máximo de Locomotivas Recentes para mostrar na lista</string>
     <string name="prefDefaultAddressLengthTitle">Comprimento do Endereço Padrão</string>
 

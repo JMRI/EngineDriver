@@ -312,7 +312,7 @@
     <string name="prefRosterRecentLocosSummary">Include roster selections in Recent list?</string>
 
     <string name="prefRosterFilterTitle">Filter Roster</string>
-    <string name="prefRosterFilterSummary">Only include roster entries starting with...</string>
+    <string name="prefRosterFilterSummary">Only include roster entries starting with…</string>
     <string name="prefRosterFilterDefaultValue"></string>
     <string name="FilterRosterList">Filter</string>
     <string name="FilterRosterListHint">Contains…</string>
