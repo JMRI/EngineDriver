@@ -50,8 +50,8 @@
     <string name="select_loco">Inserir Endereço Locomotiva a Adquirir</string>
     <string name="select_loco_address">Endereço  </string>
     <string name="acquire_button">Adquirir</string>
-    <string name="roster_list">-OU- Selecionar da Lista/Comboios</string>
-    <string name="recent_engines">-OU- Selecionar das Locomotivas Recentes</string>
+    <string name="roster_list">-Selecionar da Lista/Comboios</string>
+    <string name="recent_engines">Selecionar das Locomotivas Recentes</string>
     <string name="direction">Frente</string>
     <string name="speed">Velocidade:</string>
     <string name="discovered_services">Servidores Encontrados</string>
@@ -274,6 +274,17 @@
     <string name="prefRosterRecentLocosTitle">Lista em Locmotivas Recentes?</string>
     <string name="prefRosterRecentLocosSummary">Incluir seleções da Lista in Locomotivas Recentes?</string>
     <string name="prefMaximumRecentLocosTitle">Máximo Locomotivas Recentes</string>
+
+    <string name="prefRosterFilterTitle">Roster do Filtro</string>
+    <string name="prefRosterFilterSummary">Incluir apenas entradas de lista de partidas começando com…</string>
+    <string name="prefRosterFilterDefaultValue"></string>
+    <string name="FilterRosterList">Filtro</string>
+    <string name="FilterRosterListHint">Contém…</string>
+
+    <string name="LocoSelectMethodQuestion">Método: </string>
+    <string name="LocoSelectMethodAddress">Endereço</string>
+    <string name="LocoSelectMethodRoster">Roster</string>
+    <string name="LocoSelectMethodRecent">Recentes</string>
 
     <string name="prefMaximumRecentLocosSummary">Máximo de Locomotivas Recentes para mostrar na lista</string>
     <string name="prefDefaultAddressLengthTitle">Comprimento do Endereço Padrão</string>

@@ -48,8 +48,8 @@
     <string name="select_loco">Enter Locomotive Address to Acquire</string>
     <string name="select_loco_address">Address</string>
     <string name="acquire_button">Acquire</string>
-    <string name="roster_list">-OR- Select from Roster/Consist Entries</string>
-    <string name="recent_engines">-OR- Select from Recent Locomotives</string>
+    <string name="roster_list">Select from Roster/Consist Entries</string>
+    <string name="recent_engines">Select from Recent Locomotives</string>
     <string name="direction">Fwd</string>
     <string name="speed">Speed:</string>
     <string name="discovered_services">Discovered Servers</string>
@@ -312,10 +312,15 @@
     <string name="prefRosterRecentLocosSummary">Include roster selections in Recent list?</string>
 
     <string name="prefRosterFilterTitle">Filter Roster</string>
-    <string name="prefRosterFilterSummary">Only include roster entries starting with...</string>
+    <string name="prefRosterFilterSummary">Only include roster entries starting with…</string>
     <string name="prefRosterFilterDefaultValue"></string>
     <string name="FilterRosterList">Filter</string>
     <string name="FilterRosterListHint">Contains…</string>
+
+    <string name="LocoSelectMethodQuestion">Method: </string>
+    <string name="LocoSelectMethodAddress">Address</string>
+    <string name="LocoSelectMethodRoster">Roster</string>
+    <string name="LocoSelectMethodRecent">Recent</string>
 
     <string name="prefMaximumRecentLocosTitle">Maximum Recent Locos</string>
     <string name="prefMaximumRecentLocosDefaultValue">10</string>
