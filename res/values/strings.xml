@@ -31,7 +31,7 @@
     <string name="app_name_web">Web - Engine Driver</string>
     <string name="app_name_functions">Default Function Settings - Engine Driver</string>
     <string name="app_name_preferences">Preferences - Engine Driver</string>
-    <string name="app_name_select_loco">Select Loco - Engine Driver</string>
+    <string name="app_name_select_loco">Select/Release Loco - Engine Driver</string>
     <string name="app_name_ConsistEdit">Consist Edit - Engine Driver</string>
     <string name="app_name_ConsistLightsEdit">Consist Lights - Engine Driver</string>
     <string name="app_name_gamepad_test">Gamepad Test - Engine Driver</string>

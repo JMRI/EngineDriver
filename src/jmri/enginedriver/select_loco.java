@@ -238,13 +238,18 @@ public class select_loco extends Activity {
                 activeThrottleCount++;
             }
         }
+
+        //hide the realease button row if nothing currently aquired
+        TextView tvThrottleNameHeader = (TextView) findViewById(R.id.throttle_name_header);
         LinearLayout llCurrentLocos = (LinearLayout) findViewById(R.id.current_locos_row);
         if (activeThrottleCount == 0) {
             currentLocosWidth = 0;
             llCurrentLocos.setVisibility(View.GONE);
+            tvThrottleNameHeader.setVisibility(View.VISIBLE);
         } else {
             currentLocosWidth = (int) currentLocosWidth / activeThrottleCount;
             llCurrentLocos.setVisibility(View.VISIBLE);
+            tvThrottleNameHeader.setVisibility(View.GONE);
         }
 
         for (int i = 0; i < mainapp.numThrottles; i++) {

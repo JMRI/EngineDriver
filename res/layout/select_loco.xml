@@ -13,9 +13,12 @@
 
         <TextView
             android:id="@+id/throttle_name_header"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:text="@string/none"
-            android:visibility="gone" />
+            style="@style/floating_text_style"
+            android:layout_width="wrap_content"
+            android:textSize="12sp"
+            android:layout_height="16sp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/none" />
 
         <LinearLayout
             android:id="@+id/current_locos_row"
