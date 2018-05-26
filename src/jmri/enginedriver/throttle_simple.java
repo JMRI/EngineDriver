@@ -176,6 +176,8 @@ public class throttle_simple extends throttle {
         super.set_labels();
         // Log.d("Engine_Driver","starting set_labels");
 
+        if (mainapp.appIsFinishing) { return;}
+
         // avoid NPE by not letting this run too early (reported to Play Store)
         if (tvVols[0] == null) return;
 

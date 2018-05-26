@@ -10,115 +10,232 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
+
         <TextView
             android:id="@+id/throttle_name_header"
             style="?android:attr/listSeparatorTextViewStyle"
-            android:text="@string/none" />
+            android:text="@string/none"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/current_locos_row"
             android:layout_width="fill_parent"
-            android:layout_height="68dp"
-            android:orientation="horizontal"
-            android:paddingTop="2dp" >
+            android:layout_height="70dp"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/Sl_loco_0"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/LL_loco_0"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="0.3"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:padding="0dp"
-                android:text="@string/none"
-                android:textColor="#FFFFFF" />
-            <Button
-                android:id="@+id/Sl_release_0"
-                style="@style/normal_button_style"
-                android:layout_height="wrap_content"
-                android:text="@string/release" />
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginTop="2dp"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <TextView
-                android:id="@+id/Sl_loco_1"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.3"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:padding="0dp"
-                android:text="@string/none"
-                android:textColor="#FFFFFF" />
-            <Button
-                android:id="@+id/Sl_release_1"
-                style="@style/normal_button_style"
-                android:layout_height="wrap_content"
-                android:text="@string/release" />
+                <Button
+                    android:id="@+id/Sl_release_0"
+                    style="?attr/ed_normal_button_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="35sp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="@string/release"
+                    android:textAlignment="center"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/Sl_loco_2"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.3"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:padding="0dp"
-                android:text="@string/none"
-                android:textColor="#FFFFFF" />
-            <Button
-                android:id="@+id/Sl_release_2"
-                style="@style/normal_button_style"
-                android:layout_height="wrap_content"
-                android:text="@string/release" />
+                <TextView
+                    android:id="@+id/Sl_loco_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35sp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="@string/none"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/Sl_loco_3"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/LL_loco_1"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="0.3"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:padding="0dp"
-                android:text="@string/none"
-                android:textColor="#FFFFFF" />
-            <Button
-                android:id="@+id/Sl_release_3"
-                style="@style/normal_button_style"
-                android:layout_height="wrap_content"
-                android:text="@string/release" />
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginTop="2dp"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <TextView
-                android:id="@+id/Sl_loco_4"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.3"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:padding="0dp"
-                android:text="@string/none"
-                android:textColor="#FFFFFF" />
-            <Button
-                android:id="@+id/Sl_release_4"
-                style="@style/normal_button_style"
-                android:layout_height="wrap_content"
-                android:text="@string/release" />
+                <Button
+                    android:id="@+id/Sl_release_1"
+                    style="?attr/ed_normal_button_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="35sp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="@string/release"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/Sl_loco_5"
-                android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/Sl_loco_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35sp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="@string/none"
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LL_loco_2"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="0.3"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:padding="0dp"
-                android:text="@string/none"
-                android:textColor="#FFFFFF" />
-            <Button
-                android:id="@+id/Sl_release_5"
-                style="@style/normal_button_style"
-                android:layout_height="wrap_content"
-                android:text="@string/release" />
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginTop="2dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/Sl_release_2"
+                    style="?attr/ed_normal_button_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="35sp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="@string/release"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/Sl_loco_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35sp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="@string/none"
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LL_loco_3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginTop="2dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/Sl_release_3"
+                    style="?attr/ed_normal_button_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="35sp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="@string/release"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/Sl_loco_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35sp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="@string/none"
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LL_loco_4"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginTop="2dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/Sl_release_4"
+                    style="?attr/ed_normal_button_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="35sp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="@string/release"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/Sl_loco_4"
+                    android:layout_width="fill_parent"
+                    android:layout_height="35sp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="@string/none"
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LL_loco_5"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginTop="2dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/Sl_release_5"
+                    style="?attr/ed_normal_button_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="35sp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="@string/release"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/Sl_loco_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35sp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="@string/none"
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp" >
+
+        <TextView
+            android:id="@+id/select_loco_heading"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:text="@string/select_loco_heading" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/select_loco_method_group"
@@ -135,7 +252,7 @@
             <TextView
                 android:id="@+id/fb_number_of_default_function_labels_label"
                 style="@style/floating_text_style"
-                android:layout_width="60dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:padding="8sp"
                 android:text="@string/LocoSelectMethodQuestion"
@@ -179,9 +296,11 @@
         android:layout_height="wrap_content"
         android:paddingBottom="2dp"
         android:paddingTop="2dp" >
+
         <TextView
             android:id="@+id/select_loco_label"
             style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_marginBottom="10dp"
             android:text="@string/select_loco" />
         <EditText
             android:id="@+id/loco_address"
@@ -215,6 +334,24 @@
             android:layout_toRightOf="@id/address_length"
             android:state_enabled="false"
             android:text="@string/acquire_button" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/enter_loco_group_help"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp" >
+
+        <TextView
+            android:id="@+id/select_loco_help"
+            style="@style/floating_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8sp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/LocoSelectMethodHelp" />
+
     </RelativeLayout>
 
     <RelativeLayout

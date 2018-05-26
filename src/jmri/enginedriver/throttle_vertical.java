@@ -62,6 +62,8 @@ public class throttle_vertical extends throttle {
         super.layoutViewId = R.layout.throttle_vertical;
         super.onCreate(savedInstanceState);
 
+        if (mainapp.appIsFinishing) { return;}
+
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             switch (throttleIndex) {
                 case 0:
@@ -110,6 +112,8 @@ public class throttle_vertical extends throttle {
     @Override
     public void onResume() {
         super.onResume();
+
+        if (mainapp.appIsFinishing) { return;}
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             if( throttleIndex < mainapp.numThrottles) {
@@ -201,6 +205,8 @@ public class throttle_vertical extends throttle {
     protected void set_labels() {
         super.set_labels();
         // Log.d("Engine_Driver","starting set_labels");
+
+        if (mainapp.appIsFinishing) { return;}
 
         // avoid NPE by not letting this run too early (reported to Play Store)
         if (tvVols[0] == null) return;
@@ -365,6 +371,8 @@ public class throttle_vertical extends throttle {
         // Log.d("Engine_Driver","starting enable_disable_buttons_for_view " +
         // newEnabledState);
 
+        if (mainapp.appIsFinishing) { return;}
+
         ViewGroup r; // row
         Button b; // button
         for (int i = 0; i < vg.getChildCount(); i++) {
@@ -380,6 +388,8 @@ public class throttle_vertical extends throttle {
     @Override
     void set_all_function_states(int whichThrottle) {
         // Log.d("Engine_Driver","set_function_states");
+
+        if (mainapp.appIsFinishing) { return;}
 
         LinkedHashMap<Integer, Button> fMap;
         fMap = functionMaps[whichThrottle];
