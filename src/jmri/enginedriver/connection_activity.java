@@ -134,6 +134,7 @@ public class connection_activity extends Activity {
     private void start_throttle_activity() {
 //        Intent throttle = new Intent().setClass(this, throttle.class);
         Intent throttle;
+        mainapp.appIsFinishing = false;
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
             case "Simple":
                 throttle = new Intent().setClass(this, throttle_simple.class);

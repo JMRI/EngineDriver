@@ -392,9 +392,9 @@
     <string name="prefRightDirectionButtonsSummary">Etichette per tutti i pulsanti direzione DESTRI. Inserire \'Indietro\' o lasciare in bianco per funzionamento normale.</string>
     <string name="prefRightDirectionButtonsDefaultValue">Indietro</string>
 
-    <string name="prefLeftDirectionButtonsShorTitle">Etichetta Del Pulsante Direzione Sinistro</string>
-    <string name="prefLeftDirectionButtonsShorSummary">Etichette brevi breviper tutti i pulsanti direzione SINISTRI. Inserire \'Ava\' o lasciare in bianco per funzionamento normale.</string>
-    <string name="prefLeftDirectionButtonsShorDefaultValue">Ava</string>
+    <string name="prefLeftDirectionButtonsShortTitle">Etichetta Del Pulsante Direzione Sinistro</string>
+    <string name="prefLeftDirectionButtonsShortSummary">Etichette brevi breviper tutti i pulsanti direzione SINISTRI. Inserire \'Ava\' o lasciare in bianco per funzionamento normale.</string>
+    <string name="prefLeftDirectionButtonsShortDefaultValue">Ava</string>
 
     <string name="prefRightDirectionButtonsShortTitle">Etichetta Del Pulsante Direzione Destro</string>
     <string name="prefRightDirectionButtonsShortSummary">Etichette brevi per tutti i pulsanti direzione DESTRI. Inserire \'Ind\' o lasciare in bianco per funzionamento normale.</string>
