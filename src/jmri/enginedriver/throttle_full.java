@@ -59,6 +59,8 @@ public class throttle_full extends throttle {
         // Log.d("Engine_Driver","starting enable_disable_buttons_for_view " +
         // newEnabledState);
 
+        if (mainapp.appIsFinishing) { return;}
+
         ViewGroup r; // row
         Button b; // button
         for (int i = 0; i < vg.getChildCount(); i++) {
@@ -74,6 +76,8 @@ public class throttle_full extends throttle {
     @Override
     void set_all_function_states(int whichThrottle) {
         // Log.d("Engine_Driver","set_function_states");
+
+        if (mainapp.appIsFinishing) { return;}
 
         LinkedHashMap<Integer, Button> fMap;
         fMap = functionMaps[whichThrottle];
@@ -241,6 +245,8 @@ public class throttle_full extends throttle {
     protected void set_labels() {
         super.set_labels();
         // Log.d("Engine_Driver","starting set_labels");
+
+        if (mainapp.appIsFinishing) { return;}
 
         int throttle_count = 0;
         int[] heights = {0, 0, 0, 0, 0, 0};

@@ -4158,10 +4158,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     @SuppressWarnings("deprecation")
     protected void set_labels() {
 //        // Log.d("Engine_Driver","starting set_labels");
-//
-//        int throttle_count = 0;
-//        int[] heights = {0, 0, 0, 0, 0, 0};
-//
+
+        if (mainapp.appIsFinishing) { return;}
+
         // avoid NPE by not letting this run too early (reported to Play Store)
         if (tvVols[0] == null) return;
 

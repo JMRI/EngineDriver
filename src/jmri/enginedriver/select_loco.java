@@ -29,6 +29,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -112,6 +113,7 @@ public class select_loco extends Activity {
     EditText filter_roster_text;
 
     RelativeLayout rlAddress;
+    RelativeLayout rlAddressHelp;
     RelativeLayout rlRosterHeader;
     LinearLayout llRoster;
     RelativeLayout rlRecentHeader;
@@ -217,31 +219,68 @@ public class select_loco extends Activity {
 
         TextView vS = (TextView) findViewById(R.id.Sl_loco_0);
         Button bR = (Button) findViewById(R.id.Sl_release_0);
+        LinearLayout llThrottle = (LinearLayout) findViewById(R.id.LL_loco_0);
 
-        for (int i = 0; i < 6; i++) {
+        TextView tvSelectLocoHeading = (TextView) findViewById(R.id.select_loco_heading);
+        tvSelectLocoHeading.setText(this.getResources().getString(R.string.select_loco_heading).replace("%1$s",Integer.toString(mainapp.throttleCharToInt(sWhichThrottle.charAt(0))+1)));
+
+        //set the widths of the release buttons
+        LinearLayout llAllThrottle = (LinearLayout) findViewById(R.id.select_loco_screen);
+        int currentLocosWidth = llAllThrottle.getWidth();
+        if (currentLocosWidth == 0) {
+            // throttle screen hasn't been drawn yet, so use display metrics for now
+            final DisplayMetrics dm = getResources().getDisplayMetrics();
+            currentLocosWidth = dm.widthPixels - 20;
+        }
+        int activeThrottleCount = 0;
+        for (int i = 0; i < mainapp.numThrottles; i++) {
+            if (mainapp.consists[i].isActive()) {
+                activeThrottleCount++;
+            }
+        }
+        LinearLayout llCurrentLocos = (LinearLayout) findViewById(R.id.current_locos_row);
+        if (activeThrottleCount == 0) {
+            currentLocosWidth = 0;
+            llCurrentLocos.setVisibility(View.GONE);
+        } else {
+            currentLocosWidth = (int) currentLocosWidth / activeThrottleCount;
+            llCurrentLocos.setVisibility(View.VISIBLE);
+        }
+
+        for (int i = 0; i < mainapp.numThrottles; i++) {
             switch (i)
             {
                 case 1:
                     vS = (TextView) findViewById(R.id.Sl_loco_1);
                     bR = (Button) findViewById(R.id.Sl_release_1);
+                    llThrottle = (LinearLayout) findViewById(R.id.LL_loco_1);
                     break;
                 case 2:
                     vS = (TextView) findViewById(R.id.Sl_loco_2);
                     bR = (Button) findViewById(R.id.Sl_release_2);
+                    llThrottle = (LinearLayout) findViewById(R.id.LL_loco_2);
                     break;
                 case 3:
                     vS = (TextView) findViewById(R.id.Sl_loco_3);
                     bR = (Button) findViewById(R.id.Sl_release_3);
+                    llThrottle = (LinearLayout) findViewById(R.id.LL_loco_3);
                     break;
                 case 4:
                     vS = (TextView) findViewById(R.id.Sl_loco_4);
                     bR = (Button) findViewById(R.id.Sl_release_4);
+                    llThrottle = (LinearLayout) findViewById(R.id.LL_loco_4);
                     break;
                 case 5:
                     vS = (TextView) findViewById(R.id.Sl_loco_5);
                     bR = (Button) findViewById(R.id.Sl_release_5);
+                    llThrottle = (LinearLayout) findViewById(R.id.LL_loco_5);
                     break;
             }
+            ViewGroup.LayoutParams params = llThrottle.getLayoutParams();
+            params.width = (int) currentLocosWidth;
+            llThrottle.setLayoutParams(params);
+
+            bR.setText(this.getResources().getString(R.string.releaseThrottleNumber).replace("%1$s",Integer.toString(i+1)));
 
             if (i>=mainapp.numThrottles) {
                 vS.setVisibility(View.GONE);
@@ -249,28 +288,32 @@ public class select_loco extends Activity {
             } else {
                 vS.setVisibility(View.VISIBLE);
                 bR.setVisibility(View.VISIBLE);
+                llThrottle.setVisibility(View.VISIBLE);
 
                 if (mainapp.consists[i].isActive()) {
                     String vLabel = mainapp.consists[i].toString();
                     if (prefShowAddressInsteadOfName) { // show the DCC Address instead of the loco name if the preference is set
                         vLabel = mainapp.consists[i].formatConsistAddr();
                     }
-                    int vWidth = vS.getWidth();                // scale text if required to fit the textView
+//                    int vWidth = vS.getWidth();                // scale text if required to fit the textView
                     vS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
                     double textWidth = vS.getPaint().measureText(vLabel);
-                    if (vWidth == 0)
-                        selectLocoRendered = false;
-                    else {
+//                    if (vWidth == 0)
+//                        selectLocoRendered = false;
+//                    else {
                         selectLocoRendered = true;
-                        if (textWidth > vWidth) {
+                        if (textWidth > currentLocosWidth) {
                             vS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
                         }
-                    }
+//                    }
                     vS.setText(vLabel);
                     bR.setEnabled(true);
                 } else {
                     vS.setText("");
                     bR.setEnabled(false);
+                    vS.setVisibility(View.GONE);
+                    bR.setVisibility(View.GONE);
+                    llThrottle.setVisibility(View.GONE);
                 }
             }
         }
@@ -362,7 +405,6 @@ public class select_loco extends Activity {
     boolean newEngine;              // save value across ConsistEdit activity
 
     void acquire_engine(boolean bUpdateList) {
-//        char whichThrottle = sWhichThrottle.charAt(0);
         int whichThrottle = mainapp.throttleCharToInt(sWhichThrottle.charAt(0));
         String roster_name = sWhichThrottle.substring(1);
         String addr = (address_size == address_type.LONG ? "L" : "S") + engine_address;
@@ -769,6 +811,7 @@ public class select_loco extends Activity {
         prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", WHICH_METHOD_ADDRESS);
 
         rlAddress = (RelativeLayout) findViewById(R.id.enter_loco_group);
+        rlAddressHelp = (RelativeLayout) findViewById(R.id.enter_loco_group_help);
         rlRosterHeader = (RelativeLayout) findViewById(R.id.roster_list_header_group);
         llRoster = (LinearLayout) findViewById(R.id.roster_list_group);
         rlRecentHeader = (RelativeLayout) findViewById(R.id.engine_list_header_group);
@@ -800,6 +843,7 @@ public class select_loco extends Activity {
             default:
             case WHICH_METHOD_ADDRESS: {
                 rlAddress.setVisibility(View.VISIBLE);
+                rlAddressHelp.setVisibility(View.VISIBLE);
                 rlRosterHeader.setVisibility(View.GONE);
                 llRoster.setVisibility(View.GONE);
                 rlRecentHeader.setVisibility(View.GONE);
@@ -812,6 +856,7 @@ public class select_loco extends Activity {
             }
             case WHICH_METHOD_ROSTER: {
                 rlAddress.setVisibility(View.GONE);
+                rlAddressHelp.setVisibility(View.GONE);
                 rlRosterHeader.setVisibility(View.VISIBLE);
                 llRoster.setVisibility(View.VISIBLE);
                 rlRecentHeader.setVisibility(View.GONE);
@@ -824,6 +869,7 @@ public class select_loco extends Activity {
             }
             case WHICH_METHOD_RECENT: {
                 rlAddress.setVisibility(View.GONE);
+                rlAddressHelp.setVisibility(View.GONE);
                 rlRosterHeader.setVisibility(View.GONE);
                 llRoster.setVisibility(View.GONE);
                 rlRecentHeader.setVisibility(View.VISIBLE);
