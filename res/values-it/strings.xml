@@ -80,6 +80,7 @@
     <string name="powerWillNotWork">JMRI ha regolato il  controllo di energia wiThrottle su spento.\nRimuoverà adesso l\'icona di energia.\nMostrerà di nuovo quando la regolazione di JMRI sarà su acceso.</string>
     <string name="current_locos">Locomotive Attualmente Selezionate</string>
     <string name="release">Rilasciare</string>
+    <string name="releaseThrottleNumber">Rilasciare\nAcceleratore %1$s</string>
     <string name="turnouts">Scambi</string>
     <string name="turnouts_label">Controllo Scambi</string>
     <string name="turnouts_direct_entry_label">Inserire n. Scambio</string>
@@ -238,7 +239,7 @@
     <string name="prefNumOfThrottlesDefault">Due</string>
 
     <string name="prefThrottleScreenTypeTitle">Tipo di schermo dell\'acceleratore</string>
-    <string name="prefThrottleScreenTypeSummary">Quale tipo di schermo del throttle usare.  \nATTENZIONE! Engine Driver si riavvierà immediatamente.\n(Disponibile solo quando non attualmente connesso.)</string>
+    <string name="prefThrottleScreenTypeSummary">Quale tipo di schermo del throttle usare.  \nATTENZIONE! Engine Driver si riavvierà immediatamente.</string>
 
     <string name="prefMaximumThrottleTitle">Percentuale massima di controllo</string>
 
@@ -280,6 +281,7 @@
     <string name="prefRosterFilterDefaultValue"></string>
     <string name="FilterRosterList">Filtro</string>
     <string name="FilterRosterListHint">Contiene…</string>
+    <string name="LocoSelectMethodHelp">Inserisci l\'indirizzo DCC della tua locomotiva sopra e fai clic su \'Acquisisci\'.\n\nAlternamente, seleziona una loco da JMRI \'Roster\' o seleziona tra le tue locazioni \'Recentemente\' facendo clic su una delle radio pulsanti sopra.</string>
 
     <string name="LocoSelectMethodQuestion">Metodo: </string>
     <string name="LocoSelectMethodAddress">Indirizzo</string>
