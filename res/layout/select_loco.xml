@@ -50,12 +50,13 @@
 
                 <TextView
                     android:id="@+id/Sl_loco_0"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="35sp"
                     android:ellipsize="end"
-                    android:gravity="center"
+                    android:gravity="top|center_vertical|center_horizontal|center"
                     android:padding="0dp"
                     android:text="@string/none"
+                    android:textAlignment="center"
                     android:textColor="#FFFFFF" />
             </LinearLayout>
 
@@ -82,12 +83,13 @@
 
                 <TextView
                     android:id="@+id/Sl_loco_1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="35sp"
                     android:ellipsize="end"
-                    android:gravity="center"
+                    android:gravity="top|center_vertical|center_horizontal|center"
                     android:padding="0dp"
                     android:text="@string/none"
+                    android:textAlignment="center"
                     android:textColor="#FFFFFF" />
 
             </LinearLayout>
@@ -115,12 +117,13 @@
 
                 <TextView
                     android:id="@+id/Sl_loco_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="35sp"
                     android:ellipsize="end"
-                    android:gravity="center"
+                    android:gravity="top|center_vertical|center_horizontal|center"
                     android:padding="0dp"
                     android:text="@string/none"
+                    android:textAlignment="center"
                     android:textColor="#FFFFFF" />
 
             </LinearLayout>
@@ -148,12 +151,13 @@
 
                 <TextView
                     android:id="@+id/Sl_loco_3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="35sp"
                     android:ellipsize="end"
-                    android:gravity="center"
+                    android:gravity="top|center_vertical|center_horizontal|center"
                     android:padding="0dp"
                     android:text="@string/none"
+                    android:textAlignment="center"
                     android:textColor="#FFFFFF" />
 
             </LinearLayout>
@@ -181,12 +185,13 @@
 
                 <TextView
                     android:id="@+id/Sl_loco_4"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="35sp"
                     android:ellipsize="end"
-                    android:gravity="center"
+                    android:gravity="top|center_vertical|center_horizontal|center"
                     android:padding="0dp"
                     android:text="@string/none"
+                    android:textAlignment="center"
                     android:textColor="#FFFFFF" />
 
             </LinearLayout>
@@ -214,12 +219,13 @@
 
                 <TextView
                     android:id="@+id/Sl_loco_5"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="35sp"
                     android:ellipsize="end"
-                    android:gravity="center"
+                    android:gravity="top|center_vertical|center_horizontal|center"
                     android:padding="0dp"
                     android:text="@string/none"
+                    android:textAlignment="center"
                     android:textColor="#FFFFFF" />
 
             </LinearLayout>

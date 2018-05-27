@@ -47,10 +47,11 @@
     <string name="loco_address">Endereço Locomotiva</string>
     <string name="connect_button">Conectar</string>
     <string name="recent_connections">Conexões Recentes</string>
+    <string name="select_loco_heading">Adquira Locomotiva - Controlador %1$s</string>
     <string name="select_loco">Inserir Endereço Locomotiva a Adquirir</string>
     <string name="select_loco_address">Endereço  </string>
     <string name="acquire_button">Adquirir</string>
-    <string name="roster_list">-Selecionar da Lista/Comboios</string>
+    <string name="roster_list">Selecionar da Lista/Comboios</string>
     <string name="recent_engines">Selecionar das Locomotivas Recentes</string>
     <string name="direction">Frente</string>
     <string name="speed">Velocidade:</string>
@@ -238,8 +239,8 @@
     <string name="prefNumOfThrottlesSummary">Escolha quantos Controladores quer visualizar na tela.</string>
     <string name="prefNumOfThrottlesDefault">Dois</string>
 
-    <string name="prefThrottleScreenTypeTitle">Tipo de tela do acelerador</string>
-    <string name="prefThrottleScreenTypeSummary">Que tipo de tela de acelerador usar. \ nATENÇÃO! Engine Driver irá reiniciar imediatamente.</string>
+    <string name="prefThrottleScreenTypeTitle">Tipo de tela do controlador</string>
+    <string name="prefThrottleScreenTypeSummary">Que tipo de tela de controlador usar.\nATENÇÃO! Engine Driver irá reiniciar imediatamente.</string>
 
     <string name="prefMaximumThrottleTitle">Porcentagem máxima Controle</string>
 
@@ -247,7 +248,7 @@
     <string name="prefMaximumThrottleChangeTitle">Máxima Mudança de Controle</string>
 
     <string name="prefMaximumThrottleChangeSummary">Máxima mudança de controle permitida em %</string>
-    <string name="prefWebViewTitle">Preverências vista Web</string>
+    <string name="prefWebViewTitle">Preferências vista Web</string>
     <string name="prefWebViewSummary">Opções de aspeto para vista Web</string>
     <string name="prefInitialThrotWebPageTitle">Página Web inicial do Controlador</string>
 
@@ -276,17 +277,17 @@
     <string name="prefRosterRecentLocosSummary">Incluir seleções da Lista in Locomotivas Recentes?</string>
     <string name="prefMaximumRecentLocosTitle">Máximo Locomotivas Recentes</string>
 
-    <string name="prefRosterFilterTitle">Roster do Filtro</string>
-    <string name="prefRosterFilterSummary">Incluir apenas entradas de lista de partidas começando com…</string>
+    <string name="prefRosterFilterTitle">Filtro da Lista</string>
+    <string name="prefRosterFilterSummary">Incluir apenas entradas de lista que iniciem com…</string>
     <string name="prefRosterFilterDefaultValue"></string>
     <string name="FilterRosterList">Filtro</string>
     <string name="FilterRosterListHint">Contém…</string>
-    <string name="LocoSelectMethodHelp">Digite o endereço DCC da sua locomotiva acima e clique em \'Acquire\'.\n\nAlternadamente, selecione uma locomotiva da JMRI \'Roster\' ou selecione uma das locações usadas \'Recentemente\', clicando em uma das estações de rádio. botões acima.</string>
+    <string name="LocoSelectMethodHelp">Digite o endereço DCC da sua locomotiva acima e clique em \'Acquire\'.\n\nAlternadamente, selecione uma locomotiva da \'Lista\' JMRI ou selecione uma locmotivas usadas \'Recentemente\', clicando em um dos botões acima.</string>
 
     <string name="LocoSelectMethodQuestion">Método: </string>
     <string name="LocoSelectMethodAddress">Endereço</string>
-    <string name="LocoSelectMethodRoster">Roster</string>
-    <string name="LocoSelectMethodRecent">Recentes</string>
+    <string name="LocoSelectMethodRoster">Lista</string>
+    <string name="LocoSelectMethodRecent">Recente</string>
 
     <string name="prefMaximumRecentLocosSummary">Máximo de Locomotivas Recentes para mostrar na lista</string>
     <string name="prefDefaultAddressLengthTitle">Comprimento do Endereço Padrão</string>
@@ -393,15 +394,15 @@
     <string name="prefRightDirectionButtonsSummary">Etiquetas para todos os botões direção DIREITOS. Inserir \'Reverso\' ou deixarem branco para funcionamento normal.</string>
     <string name="prefRightDirectionButtonsDefaultValue">Reverso</string>
 
-    <string name="prefLeftDirectionButtonsShortTitle">Etiqueta Do Botão Direção Esquerdo</string>
-    <string name="prefLeftDirectionButtonsShortSummary">Etiquetas curtas para todos os botões direção ESQUERDOS. Inserir \'Frente\' ou deixar em branco para funcionamento normal.</string>
+    <string name="prefLeftDirectionButtonsShortTitle">Etiqueta Breve Do Botão Direção Esquerdo</string>
+    <string name="prefLeftDirectionButtonsShortSummary">Etiquetas brevespara todos os botões direção ESQUERDOS. Inserir \'Fre\' ou deixar em branco para funcionamento normal.</string>
     <string name="prefLeftDirectionButtonsShortDefaultValue">Fre</string>
 
-    <string name="prefRightDirectionButtonsShortTitle">Etiqueta Do Botão Direção Direito</string>
-    <string name="prefRightDirectionButtonsShortSummary">Etiquetas curtas para todos os botões direção DIREITOS. Inserir \'Reverso\' ou deixarem branco para funcionamento normal.</string>
+    <string name="prefRightDirectionButtonsShortTitle">Etiqueta Breve Do Botão Direção Direito</string>
+    <string name="prefRightDirectionButtonsShortSummary">Etiquetas breves para todos os botões direção DIREITOS. Inserir \'Rev\' ou deixarem branco para funcionamento normal.</string>
     <string name="prefRightDirectionButtonsShortDefaultValue">Rev</string>
 
-    <string name="prefDirectionButtonLongPressDelayTitle">Botão Direcional Longo Pressionar Atraso</string>
+    <string name="prefDirectionButtonLongPressDelayTitle">Atraso Pressão Prolongada Botão Direcional </string>
     <string name="prefDirectionButtonLongPressDelaySummary">Quantos milissegundos constituem um toque longo para os botões de direção.</string>
 
     <string name="prefThemeTitle">Tema/Estilo</string>
