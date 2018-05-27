@@ -48,6 +48,7 @@
     <string name="loco_address">Indirizzo Locomotiva</string>
     <string name="connect_button">Collegamento</string>
     <string name="recent_connections">Connessioni Recenti</string>
+    <string name="select_loco_heading">Acquisisci Locomotive - Controllo %1$s</string>
     <string name="select_loco">Inserire Indirizzo Locomotiva da Acquisire</string>
     <string name="select_loco_address">Indirizzo</string>
     <string name="acquire_button">Acquisire</string>
@@ -238,8 +239,8 @@
     <string name="prefNumOfThrottlesSummary">Scegli quanti Controllori visualizzare sullo schermo.</string>
     <string name="prefNumOfThrottlesDefault">Due</string>
 
-    <string name="prefThrottleScreenTypeTitle">Tipo di schermo dell\'acceleratore</string>
-    <string name="prefThrottleScreenTypeSummary">Quale tipo di schermo del throttle usare.  \nATTENZIONE! Engine Driver si riavvierà immediatamente.</string>
+    <string name="prefThrottleScreenTypeTitle">Tipo di schermo del controllore</string>
+    <string name="prefThrottleScreenTypeSummary">Quale tipo di schermo del controllore usare.\nATTENZIONE! Engine Driver si riavvierà immediatamente.</string>
 
     <string name="prefMaximumThrottleTitle">Percentuale massima di controllo</string>
 
@@ -276,16 +277,16 @@
     <string name="prefRosterRecentLocosSummary">Includere selezioni Elenco in Locomotive Recenti?</string>
     <string name="prefMaximumRecentLocosTitle">Massimo Locomotive Recenti</string>
 
-    <string name="prefRosterFilterTitle">Elenco dei filtri</string>
-    <string name="prefRosterFilterSummary">Includere solo voci di ruolo che iniziano con…</string>
+    <string name="prefRosterFilterTitle">Filtro dell\'Elenco</string>
+    <string name="prefRosterFilterSummary">Includere solo voci di elenco che iniziano con…</string>
     <string name="prefRosterFilterDefaultValue"></string>
     <string name="FilterRosterList">Filtro</string>
     <string name="FilterRosterListHint">Contiene…</string>
-    <string name="LocoSelectMethodHelp">Inserisci l\'indirizzo DCC della tua locomotiva sopra e fai clic su \'Acquisisci\'.\n\nAlternamente, seleziona una loco da JMRI \'Roster\' o seleziona tra le tue locazioni \'Recentemente\' facendo clic su una delle radio pulsanti sopra.</string>
+    <string name="LocoSelectMethodHelp">Inserisci sopra  l\'indirizzo DCC della tua locomotiva  e fai clic su \'Acquisisci\'.\n\nAlterntivamente, seleziona una loco \'dall\'Elenco\' JMRI  o selezionala fra quelle usate \'Recentemente\' facendo clic su uno dei pulsanti.</string>
 
     <string name="LocoSelectMethodQuestion">Metodo: </string>
     <string name="LocoSelectMethodAddress">Indirizzo</string>
-    <string name="LocoSelectMethodRoster">Ruolino</string>
+    <string name="LocoSelectMethodRoster">Elenco</string>
     <string name="LocoSelectMethodRecent">Recenti</string>
 
     <string name="prefMaximumRecentLocosSummary">Massimo di Locomotive Recenti per mostrare nella lista</string>
@@ -394,11 +395,11 @@
     <string name="prefRightDirectionButtonsSummary">Etichette per tutti i pulsanti direzione DESTRI. Inserire \'Indietro\' o lasciare in bianco per funzionamento normale.</string>
     <string name="prefRightDirectionButtonsDefaultValue">Indietro</string>
 
-    <string name="prefLeftDirectionButtonsShortTitle">Etichetta Del Pulsante Direzione Sinistro</string>
-    <string name="prefLeftDirectionButtonsShortSummary">Etichette brevi breviper tutti i pulsanti direzione SINISTRI. Inserire \'Ava\' o lasciare in bianco per funzionamento normale.</string>
+    <string name="prefLeftDirectionButtonsShortTitle">Etichetta Breve Del Pulsante Direzione Sinistro</string>
+    <string name="prefLeftDirectionButtonsShortSummary">Etichette brevi per tutti i pulsanti direzione SINISTRI. Inserire \'Ava\' o lasciare in bianco per funzionamento normale.</string>
     <string name="prefLeftDirectionButtonsShortDefaultValue">Ava</string>
 
-    <string name="prefRightDirectionButtonsShortTitle">Etichetta Del Pulsante Direzione Destro</string>
+    <string name="prefRightDirectionButtonsShortTitle">Etichetta Breve Del Pulsante Direzione Destro</string>
     <string name="prefRightDirectionButtonsShortSummary">Etichette brevi per tutti i pulsanti direzione DESTRI. Inserire \'Ind\' o lasciare in bianco per funzionamento normale.</string>
     <string name="prefRightDirectionButtonsShortDefaultValue">Ind</string>
 
