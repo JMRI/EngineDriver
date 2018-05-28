@@ -47,7 +47,7 @@
     <string name="loco_address">Endereço Locomotiva</string>
     <string name="connect_button">Conectar</string>
     <string name="recent_connections">Conexões Recentes</string>
-    <string name="select_loco_heading">Adquira Locomotiva - Controlador %1$s</string>
+    <string name="select_loco_heading">Adquira Loco, Método - Controlador %1$s</string>
     <string name="select_loco">Inserir Endereço Locomotiva a Adquirir</string>
     <string name="select_loco_address">Endereço  </string>
     <string name="acquire_button">Adquirir</string>
@@ -80,7 +80,7 @@
     <string name="powerWillNotWork">JMRI tem regulado o controle de energia wiThrottle para desligado.\nremoverá agora o Ícone de Energia.\nMostrará de novo quando a regulagem JMRI estará ligada.</string>
     <string name="current_locos">Locomotivas Atualmente Selecionadas</string>
     <string name="release">Soltar</string>
-    <string name="releaseThrottleNumber">Soltar\nAcelerador %1$s</string>
+    <string name="releaseThrottleNumber">Soltar Acelerador %1$s</string>
     <string name="turnouts">Desvios</string>
     <string name="turnouts_label">Controle Desvios</string>
     <string name="turnouts_direct_entry_label">Inserir n. Desvio</string>
@@ -285,8 +285,8 @@
     <string name="LocoSelectMethodHelp">Digite o endereço DCC da sua locomotiva acima e clique em \'Acquire\'.\n\nAlternadamente, selecione uma locomotiva da \'Lista\' JMRI ou selecione uma locmotivas usadas \'Recentemente\', clicando em um dos botões acima.</string>
 
     <string name="LocoSelectMethodQuestion">Método: </string>
-    <string name="LocoSelectMethodAddress">Endereço</string>
-    <string name="LocoSelectMethodRoster">Lista</string>
+    <string name="LocoSelectMethodAddress">DCC Endereço</string>
+    <string name="LocoSelectMethodRoster">JMRI Lista</string>
     <string name="LocoSelectMethodRecent">Recente</string>
 
     <string name="prefMaximumRecentLocosSummary">Máximo de Locomotivas Recentes para mostrar na lista</string>

@@ -81,9 +81,10 @@ public class select_loco extends Activity {
     private static final int GONE = 8;
     private static final int VISIBLE = 0;
 
-    private static final String WHICH_METHOD_ADDRESS = "0";
-    private static final String WHICH_METHOD_ROSTER = "1";
-    private static final String WHICH_METHOD_RECENT = "2";
+    private static final String WHICH_METHOD_FIRST = "0"; // furst time the app has been used
+    private static final String WHICH_METHOD_ADDRESS = "1";
+    private static final String WHICH_METHOD_ROSTER = "2";
+    private static final String WHICH_METHOD_RECENT = "3";
 
     ArrayList<HashMap<String, String>> recent_engine_list;
     ArrayList<HashMap<String, String>> roster_list;
@@ -121,7 +122,7 @@ public class select_loco extends Activity {
     RadioButton rbAddress;
     RadioButton rbRoster;
     RadioButton rbRecent;
-    String prefSelectLocoMethod = WHICH_METHOD_ADDRESS;
+    String prefSelectLocoMethod = WHICH_METHOD_FIRST;
 
     boolean prefHideRecentLocos = false;
 
@@ -204,6 +205,18 @@ public class select_loco extends Activity {
 
     // lookup and set values of various text labels
     protected void set_labels() {
+        int whichThrottle = mainapp.throttleCharToInt(sWhichThrottle.charAt(0));
+
+        refresh_roster_list();
+        if (prefSelectLocoMethod.equals(WHICH_METHOD_FIRST)) {
+            if ((mainapp.roster != null) && (mainapp.roster.size() >0)) {
+                prefSelectLocoMethod = WHICH_METHOD_ROSTER;
+                showMethod(WHICH_METHOD_ROSTER);
+            } else {
+                prefSelectLocoMethod = WHICH_METHOD_ADDRESS;
+                showMethod(WHICH_METHOD_ADDRESS);
+            }
+        }
 
         boolean prefShowAddressInsteadOfName = prefs.getBoolean("prefShowAddressInsteadOfName", getResources().getBoolean(R.bool.prefShowAddressInsteadOfNameDefaultValue));
 
@@ -217,110 +230,45 @@ public class select_loco extends Activity {
         final int conNomTextSize = 16;
         final int conSmallTextSize = 10;
 
-        TextView vS = (TextView) findViewById(R.id.Sl_loco_0);
-        Button bR = (Button) findViewById(R.id.Sl_release_0);
-        LinearLayout llThrottle = (LinearLayout) findViewById(R.id.LL_loco_0);
+        TextView vS = (TextView) findViewById(R.id.Sl_loco);
+        Button bR = (Button) findViewById(R.id.Sl_release);
+        LinearLayout llThrottle = (LinearLayout) findViewById(R.id.LL_loco);
 
         TextView tvSelectLocoHeading = (TextView) findViewById(R.id.select_loco_heading);
         tvSelectLocoHeading.setText(this.getResources().getString(R.string.select_loco_heading).replace("%1$s",Integer.toString(mainapp.throttleCharToInt(sWhichThrottle.charAt(0))+1)));
 
-        //set the widths of the release buttons
-        LinearLayout llAllThrottle = (LinearLayout) findViewById(R.id.select_loco_screen);
-        int currentLocosWidth = llAllThrottle.getWidth();
-        if (currentLocosWidth == 0) {
-            // throttle screen hasn't been drawn yet, so use display metrics for now
-            final DisplayMetrics dm = getResources().getDisplayMetrics();
-            currentLocosWidth = dm.widthPixels - 20;
-        }
-        int activeThrottleCount = 0;
-        for (int i = 0; i < mainapp.numThrottles; i++) {
-            if (mainapp.consists[i].isActive()) {
-                activeThrottleCount++;
-            }
-        }
-
-        //hide the realease button row if nothing currently aquired
+        //hide the release button row if nothing currently aquired
         TextView tvThrottleNameHeader = (TextView) findViewById(R.id.throttle_name_header);
-        LinearLayout llCurrentLocos = (LinearLayout) findViewById(R.id.current_locos_row);
-        if (activeThrottleCount == 0) {
-            currentLocosWidth = 0;
-            llCurrentLocos.setVisibility(View.GONE);
+            if (mainapp.consists[whichThrottle].isActive()) {
+            llThrottle.setVisibility(View.GONE);
             tvThrottleNameHeader.setVisibility(View.VISIBLE);
         } else {
-            currentLocosWidth = (int) currentLocosWidth / activeThrottleCount;
-            llCurrentLocos.setVisibility(View.VISIBLE);
+            llThrottle.setVisibility(View.VISIBLE);
             tvThrottleNameHeader.setVisibility(View.GONE);
         }
 
-        for (int i = 0; i < mainapp.numThrottles; i++) {
-            switch (i)
-            {
-                case 1:
-                    vS = (TextView) findViewById(R.id.Sl_loco_1);
-                    bR = (Button) findViewById(R.id.Sl_release_1);
-                    llThrottle = (LinearLayout) findViewById(R.id.LL_loco_1);
-                    break;
-                case 2:
-                    vS = (TextView) findViewById(R.id.Sl_loco_2);
-                    bR = (Button) findViewById(R.id.Sl_release_2);
-                    llThrottle = (LinearLayout) findViewById(R.id.LL_loco_2);
-                    break;
-                case 3:
-                    vS = (TextView) findViewById(R.id.Sl_loco_3);
-                    bR = (Button) findViewById(R.id.Sl_release_3);
-                    llThrottle = (LinearLayout) findViewById(R.id.LL_loco_3);
-                    break;
-                case 4:
-                    vS = (TextView) findViewById(R.id.Sl_loco_4);
-                    bR = (Button) findViewById(R.id.Sl_release_4);
-                    llThrottle = (LinearLayout) findViewById(R.id.LL_loco_4);
-                    break;
-                case 5:
-                    vS = (TextView) findViewById(R.id.Sl_loco_5);
-                    bR = (Button) findViewById(R.id.Sl_release_5);
-                    llThrottle = (LinearLayout) findViewById(R.id.LL_loco_5);
-                    break;
+//        bR.setText(this.getResources().getString(R.string.releaseThrottleNumber).replace("%1$s",Integer.toString(whichThrottle+1)));
+
+        vS.setVisibility(View.VISIBLE);
+        bR.setVisibility(View.VISIBLE);
+        llThrottle.setVisibility(View.VISIBLE);
+
+         if (mainapp.consists[whichThrottle].isActive()) {
+            String vLabel = mainapp.consists[whichThrottle].toString();
+            if (prefShowAddressInsteadOfName) { // show the DCC Address instead of the loco name if the preference is set
+                vLabel = mainapp.consists[whichThrottle].formatConsistAddr();
             }
-            ViewGroup.LayoutParams params = llThrottle.getLayoutParams();
-            params.width = (int) currentLocosWidth;
-            llThrottle.setLayoutParams(params);
-
-            bR.setText(this.getResources().getString(R.string.releaseThrottleNumber).replace("%1$s",Integer.toString(i+1)));
-
-            if (i>=mainapp.numThrottles) {
-                vS.setVisibility(View.GONE);
-                bR.setVisibility(View.GONE);
-            } else {
-                vS.setVisibility(View.VISIBLE);
-                bR.setVisibility(View.VISIBLE);
-                llThrottle.setVisibility(View.VISIBLE);
-
-                if (mainapp.consists[i].isActive()) {
-                    String vLabel = mainapp.consists[i].toString();
-                    if (prefShowAddressInsteadOfName) { // show the DCC Address instead of the loco name if the preference is set
-                        vLabel = mainapp.consists[i].formatConsistAddr();
-                    }
-//                    int vWidth = vS.getWidth();                // scale text if required to fit the textView
-                    vS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-                    double textWidth = vS.getPaint().measureText(vLabel);
-//                    if (vWidth == 0)
-//                        selectLocoRendered = false;
-//                    else {
-                        selectLocoRendered = true;
-                        if (textWidth > currentLocosWidth) {
-                            vS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conSmallTextSize);
-                        }
-//                    }
-                    vS.setText(vLabel);
-                    bR.setEnabled(true);
-                } else {
-                    vS.setText("");
-                    bR.setEnabled(false);
-                    vS.setVisibility(View.GONE);
-                    bR.setVisibility(View.GONE);
-                    llThrottle.setVisibility(View.GONE);
-                }
-            }
+            vS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+            double textWidth = vS.getPaint().measureText(vLabel);
+                selectLocoRendered = true;
+            vS.setText(vLabel);
+            bR.setEnabled(true);
+        } else {
+            vS.setText("");
+            bR.setEnabled(false);
+            vS.setVisibility(View.GONE);
+            bR.setVisibility(View.GONE);
+            llThrottle.setVisibility(View.GONE);
         }
 
         // hide the recent locos list if selected in prefs
@@ -335,7 +283,7 @@ public class select_loco extends Activity {
             rlv.setVisibility(View.GONE);
 
             rbRecent.setVisibility(View.GONE);
-            if (prefSelectLocoMethod==WHICH_METHOD_RECENT) {
+            if (prefSelectLocoMethod.equals(WHICH_METHOD_RECENT)) {
                 showMethod(WHICH_METHOD_ADDRESS);
             }
         }
@@ -343,11 +291,6 @@ public class select_loco extends Activity {
             mainapp.displayEStop(SMenu);
         }
 
-        //      String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-        //      setTitle(getApplicationContext().getResources().getString(R.string.app_name_select_loco) + "    |    Throttle Name: " + 
-        //              prefs.getString("throttle_name_preference", defaultName));
-
-        refresh_roster_list();
     }
 
     // Handle messages from the communication thread back to this thread
@@ -734,23 +677,8 @@ public class select_loco extends Activity {
         button_listener click_listener = new button_listener();
         button.setOnClickListener(click_listener);
 
-        button = (Button) findViewById(R.id.Sl_release_0);
-        button.setOnClickListener(new release_button_listener(0));
-
-        button = (Button) findViewById(R.id.Sl_release_1);
-        button.setOnClickListener(new release_button_listener(1));
-
-        button = (Button) findViewById(R.id.Sl_release_2);
-        button.setOnClickListener(new release_button_listener(2));
-
-        button = (Button) findViewById(R.id.Sl_release_3);
-        button.setOnClickListener(new release_button_listener(3));
-
-        button = (Button) findViewById(R.id.Sl_release_4);
-        button.setOnClickListener(new release_button_listener(4));
-
-        button = (Button) findViewById(R.id.Sl_release_5);
-        button.setOnClickListener(new release_button_listener(5));
+        button = (Button) findViewById(R.id.Sl_release);
+        button.setOnClickListener(new release_button_listener(mainapp.throttleCharToInt(sWhichThrottle.charAt(0))));
 
         //Jeffrey added 7/3/2013
         button = (Button) findViewById(R.id.clear_Loco_List_button);
@@ -813,7 +741,7 @@ public class select_loco extends Activity {
         rbRoster=(RadioButton)findViewById(R.id.select_loco_method_roster_button);
         rbRecent =(RadioButton)findViewById(R.id.select_loco_method_recent_button);
 
-        prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", WHICH_METHOD_ADDRESS);
+        prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", WHICH_METHOD_FIRST);
 
         rlAddress = (RelativeLayout) findViewById(R.id.enter_loco_group);
         rlAddressHelp = (RelativeLayout) findViewById(R.id.enter_loco_group_help);
@@ -826,16 +754,18 @@ public class select_loco extends Activity {
         RadioGroup rgLocoSelect = (RadioGroup) findViewById(R.id.select_loco_method_address_button_radio_group);
         rgLocoSelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
+
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
-                    case R.id.select_loco_method_address_button: { }
-                        showMethod(WHICH_METHOD_ADDRESS);
-                        break;
-                    case R.id.select_loco_method_roster_button: { }
+                    case R.id.select_loco_method_roster_button:
                         showMethod(WHICH_METHOD_ROSTER);
                         break;
-                    case R.id.select_loco_method_recent_button: { }
+                    case R.id.select_loco_method_recent_button:
                         showMethod(WHICH_METHOD_RECENT);
+                        break;
+                    case R.id.select_loco_method_address_button:
+                        showMethod(WHICH_METHOD_ADDRESS);
+                        break;
                 }
             }
         });
