@@ -11,293 +11,99 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/throttle_name_header"
-            style="@style/floating_text_style"
-            android:layout_width="wrap_content"
-            android:textSize="12sp"
-            android:layout_height="16sp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/none" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp">
+
+            <TextView
+                android:id="@+id/select_loco_heading"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:text="@string/select_loco_heading" />
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/current_locos_row"
             android:layout_width="fill_parent"
-            android:layout_height="70dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <RelativeLayout
+                android:id="@+id/select_loco_method_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp">
+
+                <RadioGroup
+                    android:id="@+id/select_loco_method_address_button_radio_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:ignore="UselessParent">
+
+                    <RadioButton
+                        android:id="@+id/select_loco_method_address_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/LocoSelectMethodAddress"
+                        android:textSize="18sp" />
+
+                    <RadioButton
+                        android:id="@+id/select_loco_method_roster_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/LocoSelectMethodRoster"
+                        android:textSize="18sp" />
+
+                    <RadioButton
+                        android:id="@+id/select_loco_method_recent_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/LocoSelectMethodRecent"
+                        android:textSize="18sp" />
+                </RadioGroup>
+
+            </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/LL_loco_0"
-                android:layout_width="fill_parent"
+                android:id="@+id/LL_loco"
+                android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp"
                 android:layout_marginTop="2dp"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:layout_weight="0.5"
+                android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/Sl_release_0"
+                    android:id="@+id/Sl_release"
                     style="?attr/ed_normal_button_style"
                     android:layout_width="match_parent"
-                    android:layout_height="35sp"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:text="@string/release"
-                    android:textAlignment="center"
-                    android:textSize="12sp"
-                    android:visibility="gone" />
+                    android:textAlignment="center" />
 
                 <TextView
-                    android:id="@+id/Sl_loco_0"
+                    android:id="@+id/Sl_loco"
                     android:layout_width="match_parent"
-                    android:layout_height="35sp"
+                    android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:gravity="top|center_vertical|center_horizontal|center"
                     android:padding="0dp"
                     android:text="@string/none"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/LL_loco_1"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
-                android:layout_marginTop="2dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/Sl_release_1"
-                    style="?attr/ed_normal_button_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="35sp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:text="@string/release"
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/Sl_loco_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="35sp"
-                    android:ellipsize="end"
-                    android:gravity="top|center_vertical|center_horizontal|center"
-                    android:padding="0dp"
-                    android:text="@string/none"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/LL_loco_2"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
-                android:layout_marginTop="2dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/Sl_release_2"
-                    style="?attr/ed_normal_button_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="35sp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:text="@string/release"
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/Sl_loco_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="35sp"
-                    android:ellipsize="end"
-                    android:gravity="top|center_vertical|center_horizontal|center"
-                    android:padding="0dp"
-                    android:text="@string/none"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/LL_loco_3"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
-                android:layout_marginTop="2dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/Sl_release_3"
-                    style="?attr/ed_normal_button_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="35sp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:text="@string/release"
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/Sl_loco_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="35sp"
-                    android:ellipsize="end"
-                    android:gravity="top|center_vertical|center_horizontal|center"
-                    android:padding="0dp"
-                    android:text="@string/none"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/LL_loco_4"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
-                android:layout_marginTop="2dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/Sl_release_4"
-                    style="?attr/ed_normal_button_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="35sp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:text="@string/release"
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/Sl_loco_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="35sp"
-                    android:ellipsize="end"
-                    android:gravity="top|center_vertical|center_horizontal|center"
-                    android:padding="0dp"
-                    android:text="@string/none"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/LL_loco_5"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
-                android:layout_marginTop="2dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/Sl_release_5"
-                    style="?attr/ed_normal_button_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="35sp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:text="@string/release"
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/Sl_loco_5"
-                    android:layout_width="match_parent"
-                    android:layout_height="35sp"
-                    android:ellipsize="end"
-                    android:gravity="top|center_vertical|center_horizontal|center"
-                    android:padding="0dp"
-                    android:text="@string/none"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF" />
-
             </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp" >
-
-        <TextView
-            android:id="@+id/select_loco_heading"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:layout_width="match_parent"
-            android:text="@string/select_loco_heading" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/select_loco_method_group"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp" >
-
-        <TableRow
-            android:id="@+id/select_loco_method_group_tableRow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/fb_number_of_default_function_labels_label"
-                style="@style/floating_text_style"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:padding="8sp"
-                android:text="@string/LocoSelectMethodQuestion"
-                android:textSize="12sp" />
-
-            <RadioGroup
-                tools:ignore="UselessParent"
-                android:id="@+id/select_loco_method_address_button_radio_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <RadioButton
-                    android:id="@+id/select_loco_method_address_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/LocoSelectMethodAddress"
-                    android:textSize="14sp" />
-
-                <RadioButton
-                    android:id="@+id/select_loco_method_roster_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/LocoSelectMethodRoster"
-                    android:textSize="14sp" />
-
-                <RadioButton
-                    android:id="@+id/select_loco_method_recent_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/LocoSelectMethodRecent"
-                    android:textSize="14sp" />
-            </RadioGroup>
-        </TableRow>
-
-    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/enter_loco_group"
@@ -455,4 +261,14 @@
             android:layout_height="wrap_content" >
         </ListView>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/throttle_name_header"
+        style="@style/floating_text_style"
+        android:layout_width="wrap_content"
+        android:textSize="12sp"
+        android:layout_height="16sp"
+        android:layout_marginBottom="2dp"
+        android:text="@string/none" />
+
 </LinearLayout>

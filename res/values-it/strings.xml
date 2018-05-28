@@ -48,7 +48,7 @@
     <string name="loco_address">Indirizzo Locomotiva</string>
     <string name="connect_button">Collegamento</string>
     <string name="recent_connections">Connessioni Recenti</string>
-    <string name="select_loco_heading">Acquisisci Locomotive - Controllo %1$s</string>
+    <string name="select_loco_heading">Acquisisci Loco, Metodo - Controllo %1$s</string>
     <string name="select_loco">Inserire Indirizzo Locomotiva da Acquisire</string>
     <string name="select_loco_address">Indirizzo</string>
     <string name="acquire_button">Acquisire</string>
@@ -81,7 +81,7 @@
     <string name="powerWillNotWork">JMRI ha regolato il  controllo di energia wiThrottle su spento.\nRimuoverà adesso l\'icona di energia.\nMostrerà di nuovo quando la regolazione di JMRI sarà su acceso.</string>
     <string name="current_locos">Locomotive Attualmente Selezionate</string>
     <string name="release">Rilasciare</string>
-    <string name="releaseThrottleNumber">Rilasciare\nAcceleratore %1$s</string>
+    <string name="releaseThrottleNumber">Rilasciare Acceleratore %1$s</string>
     <string name="turnouts">Scambi</string>
     <string name="turnouts_label">Controllo Scambi</string>
     <string name="turnouts_direct_entry_label">Inserire n. Scambio</string>
@@ -285,8 +285,8 @@
     <string name="LocoSelectMethodHelp">Inserisci sopra  l\'indirizzo DCC della tua locomotiva  e fai clic su \'Acquisisci\'.\n\nAlterntivamente, seleziona una loco \'dall\'Elenco\' JMRI  o selezionala fra quelle usate \'Recentemente\' facendo clic su uno dei pulsanti.</string>
 
     <string name="LocoSelectMethodQuestion">Metodo: </string>
-    <string name="LocoSelectMethodAddress">Indirizzo</string>
-    <string name="LocoSelectMethodRoster">Elenco</string>
+    <string name="LocoSelectMethodAddress">DCC Indirizzo</string>
+    <string name="LocoSelectMethodRoster">JMRI Elenco</string>
     <string name="LocoSelectMethodRecent">Recenti</string>
 
     <string name="prefMaximumRecentLocosSummary">Massimo di Locomotive Recenti per mostrare nella lista</string>
