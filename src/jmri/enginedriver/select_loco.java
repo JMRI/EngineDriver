@@ -96,6 +96,7 @@ public class select_loco extends Activity {
     private int engine_address;
     private int address_size;
     private String sWhichThrottle =  "0";  // "0" or "1" or "2" + roster name
+    int whichThrottle = 0;
     private int result;
     protected boolean selectLocoRendered = false;         // this will be true once set_labels() runs following rendering of the loco select textViews
 
@@ -205,7 +206,6 @@ public class select_loco extends Activity {
 
     // lookup and set values of various text labels
     protected void set_labels() {
-        int whichThrottle = mainapp.throttleCharToInt(sWhichThrottle.charAt(0));
 
         refresh_roster_list();
         if (prefSelectLocoMethod.equals(WHICH_METHOD_FIRST)) {
@@ -353,7 +353,6 @@ public class select_loco extends Activity {
     boolean newEngine;              // save value across ConsistEdit activity
 
     void acquire_engine(boolean bUpdateList) {
-        int whichThrottle = mainapp.throttleCharToInt(sWhichThrottle.charAt(0));
         String roster_name = sWhichThrottle.substring(1);
         String addr = (address_size == address_type.LONG ? "L" : "S") + engine_address;
         Loco l = new Loco(addr);
@@ -677,9 +676,6 @@ public class select_loco extends Activity {
         button_listener click_listener = new button_listener();
         button.setOnClickListener(click_listener);
 
-        button = (Button) findViewById(R.id.Sl_release);
-        button.setOnClickListener(new release_button_listener(mainapp.throttleCharToInt(sWhichThrottle.charAt(0))));
-
         //Jeffrey added 7/3/2013
         button = (Button) findViewById(R.id.clear_Loco_List_button);
         button.setOnClickListener(new clear_Loco_List_button());
@@ -710,7 +706,11 @@ public class select_loco extends Activity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             sWhichThrottle = extras.getString("sWhichThrottle");
+            whichThrottle = mainapp.throttleCharToInt(sWhichThrottle.charAt(0));
         }
+
+        button = (Button) findViewById(R.id.Sl_release);
+        button.setOnClickListener(new release_button_listener(whichThrottle));
 
         EditText la = (EditText) findViewById(R.id.loco_address);
         la.addTextChangedListener(new TextWatcher() {
