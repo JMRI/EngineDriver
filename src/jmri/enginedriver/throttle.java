@@ -1514,23 +1514,28 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 setLeftDirectionButtonEnabled = false;
         }
 
-        if (!setLeftDirectionButtonEnabled) {
+        if (!getConsist(whichThrottle).isActive()) {
             bFwds[whichThrottle].setSelected(false);
-            bRevs[whichThrottle].setSelected(true);
-            bFwds[whichThrottle].setTypeface(null, Typeface.NORMAL);
-            bRevs[whichThrottle].setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
-            if ((getSpeed(whichThrottle)>0) && (!dirChangeWhileMoving)) {
-                bFwds[whichThrottle].setEnabled(false);
-            }
-            bRevs[whichThrottle].setEnabled(true);
-        } else {
-            bFwds[whichThrottle].setSelected(true);
             bRevs[whichThrottle].setSelected(false);
-            bFwds[whichThrottle].setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
-            bRevs[whichThrottle].setTypeface(null, Typeface.NORMAL);
-            bFwds[whichThrottle].setEnabled(true);
-            if ((getSpeed(whichThrottle)>0) && (!dirChangeWhileMoving)) {
-                bRevs[whichThrottle].setEnabled(false);
+        } else {
+            if (!setLeftDirectionButtonEnabled) {
+                bFwds[whichThrottle].setSelected(false);
+                bRevs[whichThrottle].setSelected(true);
+                bFwds[whichThrottle].setTypeface(null, Typeface.NORMAL);
+                bRevs[whichThrottle].setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+                if ((getSpeed(whichThrottle) > 0) && (!dirChangeWhileMoving)) {
+                    bFwds[whichThrottle].setEnabled(false);
+                }
+                bRevs[whichThrottle].setEnabled(true);
+            } else {
+                bFwds[whichThrottle].setSelected(true);
+                bRevs[whichThrottle].setSelected(false);
+                bFwds[whichThrottle].setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+                bRevs[whichThrottle].setTypeface(null, Typeface.NORMAL);
+                bFwds[whichThrottle].setEnabled(true);
+                if ((getSpeed(whichThrottle) > 0) && (!dirChangeWhileMoving)) {
+                    bRevs[whichThrottle].setEnabled(false);
+                }
             }
         }
 

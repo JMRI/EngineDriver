@@ -84,7 +84,7 @@
                     android:id="@+id/Sl_release"
                     style="?attr/ed_normal_button_style"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40sp"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:text="@string/release"
