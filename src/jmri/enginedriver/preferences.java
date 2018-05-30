@@ -87,6 +87,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     /**
      * Called when the activity is first created.
      */
+
+    private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
+
     @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -297,7 +300,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     exportedPreferencesFileName =  "exported_preferences.ed";
                     String currentValue = sharedPreferences.getString(key, "");
                     if (currentValue.equals(IMPORT_EXPORT_OPTION_EXPORT)) {
-                        saveSharedPreferencesToFile(sharedPreferences,exportedPreferencesFileName);
+                        saveSharedPreferencesToFile(sharedPreferences,exportedPreferencesFileName ,true);
                     } else if (currentValue.equals(IMPORT_EXPORT_OPTION_IMPORT)) {
                         loadSharedPreferencesFromFile(sharedPreferences,exportedPreferencesFileName, deviceId);
                     } else if (currentValue.equals(IMPORT_EXPORT_OPTION_RESET)) {
@@ -312,7 +315,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         String action = currentValue.substring(0,IMPORT_PREFIX.length());
                         exportedPreferencesFileName = currentValue.substring(IMPORT_PREFIX.length(),currentValue.length());
                         if (action.equals(EXPORT_PREFIX)) {
-                            saveSharedPreferencesToFile(sharedPreferences,exportedPreferencesFileName);
+                            saveSharedPreferencesToFile(sharedPreferences,exportedPreferencesFileName, true);
                         } else if (action.equals(IMPORT_PREFIX)) {
                             loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName, deviceId);
                         }
@@ -358,6 +361,15 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     void forceRestartApp() {
         // Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesLocaleChange), Toast.LENGTH_LONG).show(); // app dies before this shows
 
+        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
+
+        if (prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT)) {
+            if (mainapp.connectedHostName != null) {
+                String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+                saveSharedPreferencesToFile(sharedPreferences, exportedPreferencesFileName, false);
+            }
+        }
         Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -408,7 +420,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         return res;
     }
 
-    private boolean saveSharedPreferencesToFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
+    private boolean saveSharedPreferencesToFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, boolean confirmDialog) {
         boolean res = false;
         if (!exportedPreferencesFileName.equals(".ed")) {
             File path = Environment.getExternalStorageDirectory();
@@ -417,7 +429,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
             File dst = new File(path, "engine_driver/"+exportedPreferencesFileName);
 
-            if(dst.exists()) {
+            if ((dst.exists()) && (confirmDialog)) {
                 overwiteFileDialog(sharedPreferences, dst);
             } else {
                 res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
