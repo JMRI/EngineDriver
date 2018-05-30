@@ -1717,20 +1717,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     // helper function to enable/disable all children for a group
     void enable_disable_buttons_for_view(ViewGroup vg, boolean newEnabledState) {
         // Log.d("Engine_Driver","starting enable_disable_buttons_for_view " +
-        // newEnabledState);
 
         // implemented in derived class, but called from this class
 
-//        ViewGroup r; // row
-//        Button b; // button
-//        for (int i = 0; i < vg.getChildCount(); i++) {
-//            r = (ViewGroup) vg.getChildAt(i);
-//            for (int j = 0; j < r.getChildCount(); j++) {
-//                b = (Button) r.getChildAt(j);
-//                b.setEnabled(newEnabledState);
-//            }
-//        }
-    } // enable_disable_buttons_for_view
+    }
 
     // update the appearance of all function buttons
     void set_all_function_states(int whichThrottle) {
@@ -1738,12 +1728,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         // implemented in derived class, but called from this class
 
-//        LinkedHashMap<Integer, Button> fMap;
-//        fMap = functionMaps[whichThrottle];
-//
-//        for (Integer f : fMap.keySet()) {
-//            set_function_state(whichThrottle, f);
-//        }
     }
 
     // update a function button appearance based on its state
@@ -1752,20 +1736,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         // implemented in derived class, but called from this class
 
-//        Button b;
-//        boolean[] fs;   // copy of this throttle's function state array
-//        b = functionMaps[whichThrottle].get(function);
-//        fs = mainapp.function_states[whichThrottle];
-//
-//        if (b != null && fs != null) {
-//            if (fs[function]) {
-//                b.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
-//                b.setPressed(true);
-//            } else {
-//                b.setTypeface(null, Typeface.NORMAL);
-//                b.setPressed(false);
-//            }
-//        }
     }
 
     /*
@@ -2146,10 +2116,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         if (whichThrottle>=0) {
             gamePadIds[whichThrottle] = gamePadIds[fromThrottle];
-            gamePadDeviceIdsTested[whichThrottle] = gamePadDeviceIdsTested[fromThrottle];
+//            gamePadDeviceIdsTested[whichThrottle] = gamePadDeviceIdsTested[fromThrottle];
             gamePadThrottleAssignment[whichThrottle] = gamePadThrottleAssignment[fromThrottle];
             gamePadIds[fromThrottle] = 0;
-            gamePadDeviceIdsTested[fromThrottle] = -1;
+//            gamePadDeviceIdsTested[fromThrottle] = -1;
             gamePadThrottleAssignment[fromThrottle] = -1;
             setGamepadIndicator();
         }
@@ -2179,7 +2149,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
             int reassigningGamepad = -1;
             int i;
-            // find out if this gamepad is alread assigned
+            // find out if this gamepad is already assigned
             for (i = 0; i < mainapp.numThrottles; i++) {
                 if (gamePadIds[i] == eventDeviceId) {
                     if (getConsist(i).isActive()) { //found the throttle and it is active
@@ -2230,8 +2200,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     }
                 }
             } else {
-                if (gamePadDeviceIdsTested[whichGamePad]==GAMEPAD_BAD){  // gamepad is known but failed the test last time
-                    start_gamepad_test_activity(whichGamePad);
+                if (gamePadDeviceIdsTested[i]==GAMEPAD_BAD){  // gamepad is known but failed the test last time
+                    start_gamepad_test_activity(i);
                 }
             }
         }
@@ -2335,6 +2305,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+    private int getGamePadIndexFromThrottleNo (int whichThrottle) {
+        int whichGamepad = -1;
+        for (int i = 0; i < mainapp.numThrottles; i++) {
+            if (gamePadIds[whichThrottle] == gamePadDeviceIds[i]) {
+                whichGamepad = i;
+                break;
+            }
+        }
+        return whichGamepad;
+    }
+
     // listener for the joystick events
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
@@ -2350,7 +2331,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), 0); // dummy eventKeyCode
 
                 if (whichGamePadIsEventFrom > -1) { // the event came for a gamepad
-                    if (gamePadDeviceIdsTested[whichGamePadIsEventFrom]!=GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
+                    if (gamePadDeviceIdsTested[getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)]!=GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
                         acceptEvent = false;
                     }
                 } else {
@@ -2434,7 +2415,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getKeyCode());
 
                 if (whichGamePadIsEventFrom > -1) { // the event came for a gamepad
-                    if (gamePadDeviceIdsTested[whichGamePadIsEventFrom]!=GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
+                    if (gamePadDeviceIdsTested[getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)]!=GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
                         acceptEvent = false;
                     }
                 } else {
