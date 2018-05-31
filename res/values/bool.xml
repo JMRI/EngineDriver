@@ -21,7 +21,6 @@
     <bool name="prefStopOnPhonecallDefaultValue">true</bool>
     <bool name="prefStopOnReleaseDefaultValue">true</bool>
     <bool name="prefDropOnAcquireDefaultValue">false</bool>
-    <bool name="prefHideRecentLocosDefaultValue">false</bool>
     <bool name="prefRosterRecentLocosDefaultValue">true</bool>
     <bool name="prefHideSystemRouteNamesDefaultValue">false</bool>
     <bool name="prefHideIfNoUserNameDefaultValue">true</bool>

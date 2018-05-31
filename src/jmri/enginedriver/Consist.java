@@ -174,6 +174,18 @@ import java.util.Set;
     }
 
     //
+    // returns true if consist is not empty and the lead loco is from the roster
+    public Boolean isLeadFromRoster() {
+        boolean isRoster = false;
+        if (!isEmpty() && leadAddr != null) {
+            ConLoco l = con.get(leadAddr);
+            if ((l != null) && (l.getIsFromRoster()))
+                isRoster = true;
+        }
+        return isRoster;
+    }
+
+    //
     // returns true if consist is not empty and the lead loco has been confirmed
     public Boolean isActive() {
         boolean conGood = false;

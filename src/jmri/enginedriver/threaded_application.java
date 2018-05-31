@@ -115,6 +115,7 @@ public class threaded_application extends Application {
     volatile Consist[] consists;
     LinkedHashMap<Integer, String>[] function_labels;  //function#s and labels from roster for throttles
     LinkedHashMap<Integer, String> function_labels_default;  //function#s and labels from local settings
+    LinkedHashMap<Integer, String> function_labels_default_for_roster;  //function#s and labels from local settings for roster entries with not function labels only
     boolean[][] function_states = {null, null, null, null, null, null};  //current function states for second throttle
     String[] to_system_names;
     String[] to_user_names;
@@ -1807,11 +1808,14 @@ public class threaded_application extends Application {
     //init default function labels from the settings files or set to default
     public void set_default_function_labels(boolean getAll) {
         int numberOfDefaultFunctionLabels = 29;
+        int numberOfDefaultFunctionLabelsForRoster = 29;
         if (!getAll) {
             numberOfDefaultFunctionLabels = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabels", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsDefaultValue)))-1;
+            numberOfDefaultFunctionLabelsForRoster = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabelsForRoster", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsForRosterDefaultValue)))-1;
         }
 
         function_labels_default = new LinkedHashMap<>();
+        function_labels_default_for_roster = new LinkedHashMap<>();
         try {
             File sdcard_path = Environment.getExternalStorageDirectory();
             File settings_file = new File(sdcard_path + "/engine_driver/function_settings.txt");
@@ -1821,9 +1825,12 @@ public class threaded_application extends Application {
                 int i=0;
                 while (settings_reader.ready()) {
                     String line = settings_reader.readLine();
+                    String temp[] = line.split(":");
                     if (i<=numberOfDefaultFunctionLabels) {
-                        String temp[] = line.split(":");
                         function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
+                    }
+                    if (i<=numberOfDefaultFunctionLabelsForRoster) {
+                        function_labels_default_for_roster.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
                     }
                     i++;
                 }

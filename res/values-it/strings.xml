@@ -70,6 +70,9 @@
     <string name="prefNumberOfDefaultFunctionLabelsTitle">Numero Funzioni Default</string>
     <string name="prefNumberOfDefaultFunctionLabelsSummary">Limita Etichette Funzioni se indisponibili dall\'Elenco JMRI</string>
 
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Numero Funzioni Default per l\'elenco</string>
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limita le etichette delle funzioni mostrate per le voci dell\'helter JMRI senza alcuna etichetta.</string>
+
     <string name="consist_help">Cliccare una locomotiva per cambiare la sua direzione rispetto alla testa del convoglio. Premere a lungo per rimuovere una locmotiva dal convoglio. Premere Indietro quando pronto.</string>
     <string name="about">Circa</string>
     <string name="web">Web</string>
@@ -82,6 +85,7 @@
     <string name="current_locos">Locomotive Attualmente Selezionate</string>
     <string name="release">Rilasciare</string>
     <string name="releaseThrottleNumber">Rilasciare Acceleratore %1$s</string>
+    <string name="releaseThrottleLocos">Rilasciare\n%1$s</string>
     <string name="turnouts">Scambi</string>
     <string name="turnouts_label">Controllo Scambi</string>
     <string name="turnouts_direct_entry_label">Inserire n. Scambio</string>
@@ -271,8 +275,6 @@
     <string name="prefDropOnAcquireSummary">Libera Locomotiva prima di Acquisire un\'altra.</string>
     <string name="prefHideIfNoUserNameTitle">Nascondere se non esiste Nome Utente?</string>
     <string name="prefHideIfNoUserNameSummary">Omette lo Scambio se il nome utente é vuoto.</string>
-    <string name="prefHideRecentLocosTitle">Nascondere il pannello Locomotive Recenti?</string>
-    <string name="prefHideRecentLocosSummary">Lascia più spazio per le locomotive dell\'Elenco.</string>
     <string name="prefRosterRecentLocosTitle">Elenco in Locomotive Recenti?</string>
     <string name="prefRosterRecentLocosSummary">Includere selezioni Elenco in Locomotive Recenti?</string>
     <string name="prefMaximumRecentLocosTitle">Massimo Locomotive Recenti</string>
@@ -407,7 +409,7 @@
     <string name="prefDirectionButtonLongPressDelaySummary">Quanti millisecondi costituiscono una pressione prolungata per i pulsanti di direzione.</string>
 
     <string name="prefThemeTitle">Tema/Stile</string>
-    <string name="prefThemeSummary">Tema App. RICHIEDE riavvio di Engine Driver. \nRichiede Android Honeycomb o successivo.</string>
+    <string name="prefThemeSummary">Tema App. ATTENZIONE! Engine Driver si riavvierà immediatamente.\nRichiede Android Honeycomb o successivo.</string>
 
     <string name="prefHideDemoServerTitle">Nascondere Server Demo</string>
     <string name="prefHideDemoServerSummary">Nascondere il server demo \'jmri.mstevetodd.com\' dalla lista di connessioni.</string>
@@ -427,7 +429,7 @@
     <string name="prefAccelerometerShakeThresholdSummary">Livello al quale lo scuotimento sará registrato.(1.5&#8211;3.5) Valori minori risponderanno ad una azione più lieve.\nRichiede il riavvio di Engine Driver per avere effetto.</string>
 
     <string name="prefLocaleTitle">Localizzazione</string>
-    <string name="prefLocaleSummary">Lingua da usare. \nATTENZIONE! Engine Driver si riavvierà immediatamente. Le etichette dei pulsanti di direzione verranno ripristinate.</string>
+    <string name="prefLocaleSummary">Lingua da usare. ATTENZIONE! Engine Driver si riavvierà immediatamente. Le etichette dei pulsanti di direzione verranno ripristinate.</string>
 
     <string name="gamepadTestButtonLabelDpadUp">Su</string>
     <string name="gamepadTestButtonLabelDpadDown">Giu</string>

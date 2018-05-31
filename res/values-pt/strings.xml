@@ -69,6 +69,9 @@
     <string name="prefNumberOfDefaultFunctionLabelsTitle">Número Funções Padrão</string>
     <string name="prefNumberOfDefaultFunctionLabelsSummary">Limita Etiquetas Funções exibidas se não disponível na Lista de Locos do JMRI</string>
 
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Número Funções Padrão para lista</string>
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limite os rótulos de função mostrados para entradas de lista JMRI sem rótulos de função.</string>
+
     <string name="consist_help">Clicar uma locomotiva para mudar sua direção em relação à cabeça do comboio. Manter apertado para remover uma locomotiva do comboio. Apertar a seta Voltar quando for pronto.</string>
     <string name="about">Sobre</string>
     <string name="web">Web</string>
@@ -81,6 +84,7 @@
     <string name="current_locos">Locomotivas Atualmente Selecionadas</string>
     <string name="release">Soltar</string>
     <string name="releaseThrottleNumber">Soltar Acelerador %1$s</string>
+    <string name="releaseThrottleLocos">Soltar\n%1$s</string>
     <string name="turnouts">Desvios</string>
     <string name="turnouts_label">Controle Desvios</string>
     <string name="turnouts_direct_entry_label">Inserir n. Desvio</string>
@@ -271,8 +275,6 @@
     <string name="prefDropOnAcquireSummary">Liberta Locomotiva atual antes de Adquirir outra.</string>
     <string name="prefHideIfNoUserNameTitle">Esconder se não tiver Nome de Usuário?</string>
     <string name="prefHideIfNoUserNameSummary">Omitir Desvio da lista se o nome do usuário é vazio.</string>
-    <string name="prefHideRecentLocosTitle">Esconder painelde Locomotivas recentes?</string>
-    <string name="prefHideRecentLocosSummary">Deixa mais espaço para locomotivas da Lista.</string>
     <string name="prefRosterRecentLocosTitle">Lista em Locmotivas Recentes?</string>
     <string name="prefRosterRecentLocosSummary">Incluir seleções da Lista in Locomotivas Recentes?</string>
     <string name="prefMaximumRecentLocosTitle">Máximo Locomotivas Recentes</string>
@@ -406,7 +408,7 @@
     <string name="prefDirectionButtonLongPressDelaySummary">Quantos milissegundos constituem um toque longo para os botões de direção.</string>
 
     <string name="prefThemeTitle">Tema/Estilo</string>
-    <string name="prefThemeSummary">Tema App. NECESSITA reiniciar o Engine Driver. \nNecessita Android Honeycomb ou sucessivo.</string>
+    <string name="prefThemeSummary">Tema App. ATENÇÃO! Engine Driver irá reiniciar imediatamente.\nNecessita Android Honeycomb ou sucessivo.</string>
 
     <string name="prefHideDemoServerTitle">Esconder Servidor Demo</string>
     <string name="prefHideDemoServerSummary">Esconder o servidor demo \'jmri.mstevetodd.com\' na lista de conexões.</string>
@@ -422,7 +424,7 @@
     <string name="prefAccelerometerShakeThresholdSummary">Patamar no qual a agitação será registrada. (1.5&#8211;3.5).Valores abaixos responderão a uma ação mais suave.\nNecessita reiniciar Engine Driver para a mudança  ter efeito.</string>
 
     <string name="prefLocaleTitle">Localização</string>
-    <string name="prefLocaleSummary">Idioma para usar. \nATENÇÃO! Engine Driver irá reiniciar imediatamente. As etiquetas dos botões de direção serão redefinidas.</string>
+    <string name="prefLocaleSummary">Idioma para usar. ATENÇÃO! Engine Driver irá reiniciar imediatamente. As etiquetas dos botões de direção serão redefinidas.</string>
 
     <string name="functionButton00DefultValue">Luz</string>
     <string name="functionButton01DefultValue">Sino</string>

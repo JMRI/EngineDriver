@@ -8,8 +8,8 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:layout_weight=".45"
-        android:orientation="vertical" >
+        android:layout_weight=".5"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/fs_heading"
@@ -21,7 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8sp"
-            android:text="@string/fb_helptext" />
+            android:text="@string/fb_helptext"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/fb_copy_labels_from_roster"
@@ -47,6 +48,7 @@
                 android:id="@+id/fb_number_of_default_function_labels"
                 style="@style/edit_label_style"
                 android:layout_width="60sp"
+                android:layout_toRightOf="@+id/fb_number_of_default_function_labels_label"
                 android:inputType="number"
                 android:maxLength="2"
                 android:shadowColor="#FFFFFFFF"
@@ -54,8 +56,35 @@
                 android:shadowDy="1"
                 android:shadowRadius="0.2"
                 android:singleLine="true"
-                android:text="@string/prefNumberOfDefaultFunctionLabelsDefaultValue"
-                android:layout_toRightOf="@+id/fb_number_of_default_function_labels_label" />
+                android:text="@string/prefNumberOfDefaultFunctionLabelsDefaultValue" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/fb_number_of_default_function_labels_for_roster_label"
+                style="@style/floating_text_style"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:padding="8sp"
+                android:text="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle" />
+
+            <EditText
+                android:id="@+id/fb_number_of_default_function_labels_for_roster"
+                style="@style/edit_label_style"
+                android:layout_width="60sp"
+                android:layout_toRightOf="@+id/fb_number_of_default_function_labels_for_roster_label"
+                android:inputType="number"
+                android:maxLength="2"
+                android:shadowColor="#FFFFFFFF"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="0.2"
+                android:singleLine="true"
+                android:text="@string/prefNumberOfDefaultFunctionLabelsForRosterDefaultValue" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -80,9 +109,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_margin="0dp"
                 android:layout_toRightOf="@+id/fb_always_use_default_function_labels_label"
-                android:padding="0dp"
                 android:entries="@array/prefYesNoEntryValues"
-                android:entryValues="@array/prefYesNoEntryValues" />
+                android:entryValues="@array/prefYesNoEntryValues"
+                android:padding="0dp" />
         </RelativeLayout>
 
         <Button

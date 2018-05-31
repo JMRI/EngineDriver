@@ -27,6 +27,7 @@ public class Loco {
     private String desc;                        //typically the roster name
     private String rosterName;                  //null if loco has no roster entry
     private boolean confirmed;                  //set after WiT responds that engine is assigned to throttle
+    private boolean isFromRoster;                  //true if the entry was found in the roster (for the function button label check)
 
     public Loco(String address) {
         if (address != null)
@@ -37,6 +38,7 @@ public class Loco {
         this.desc = "";
         this.confirmed = false;
         this.rosterName = null;
+        this.isFromRoster = false;
     }
 
     public Loco(Loco l) {
@@ -44,6 +46,7 @@ public class Loco {
         this.desc = l.desc;
         this.rosterName = l.rosterName;
         this.confirmed = l.confirmed;
+        this.isFromRoster = l.isFromRoster;
     }
 
     public boolean isConfirmed() {
@@ -78,6 +81,13 @@ public class Loco {
     }
     public void setRosterName(String rosterName) {
         this.rosterName = rosterName;
+    }
+
+    public boolean getIsFromRoster() {
+        return this.isFromRoster;
+    }
+    public void setIsFromRoster(boolean isFromRoster) {
+        this.isFromRoster = isFromRoster;
     }
 
     //provide description if present, otherwise provide formatted address
