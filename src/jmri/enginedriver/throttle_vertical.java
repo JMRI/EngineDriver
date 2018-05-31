@@ -371,6 +371,7 @@ public class throttle_vertical extends throttle {
         // Log.d("Engine_Driver","starting enable_disable_buttons_for_view " +
         // newEnabledState);
 
+        if (vg == null) { return;}
         if (mainapp.appIsFinishing) { return;}
 
         ViewGroup r; // row
