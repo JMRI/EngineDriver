@@ -19,7 +19,7 @@
     <string name="fb_label">Function Label</string>
     <string name="function_buttons">function_buttons</string>
     <string name="app_name">Engine Driver</string>
-    <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI, MRC or DigiTrax WiThrottle server, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one or two locomotives. </string>
+    <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI, MRC or DigiTrax WiThrottle server, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one to six locomotives. </string>
     <string name="app_name_connect">Connect to Server - Engine Driver</string>
     <string name="app_name_throttle">Throttle - Engine Driver</string>
     <string name="app_name_throttle_short">Throttle</string>
@@ -110,9 +110,9 @@
     <string name="reconnect_label">Reconnect Attempt Status</string>
     <string name="reconnect_help">Attempting to Reconnect automatically.  Wait for Reconnection or press BackArrow to Exit.</string>
     <string name="reconnect_success">RECONNECTED.  Resuming normal operation.</string>
-    <string name="fs_edit_notice">WARNING: changes to Default Functions Setttings will be lost on exit - No SD Card found.</string>
-    <string name="ca_recent_conn_notice">Recent Connections unavailable - No SD Card found.</string>
-    <string name="sl_recent_engine_notice">Recent Locos unavailable - No SD Card found.</string>
+    <string name="fs_edit_notice">WARNING: changes to Default Functions Settings will be lost on exit - No SD card found.</string>
+    <string name="ca_recent_conn_notice">Recent Connections unavailable - No SD card found.</string>
+    <string name="sl_recent_engine_notice">Recent Locos unavailable - No SD card found.</string>
     <string name="power">Power</string>
     <string name="throttle">Throttle</string>
     <string name="on">On</string>
@@ -317,7 +317,7 @@
     <string name="prefRosterRecentLocosSummary">Include roster selections in Recent list?</string>
 
     <string name="prefRosterFilterTitle">Filter Roster</string>
-    <string name="prefRosterFilterSummary">Only include roster entries starting with…</string>
+    <string name="prefRosterFilterSummary">Only show roster entries containing…</string>
     <string name="prefRosterFilterDefaultValue"></string>
     <string name="FilterRosterList">Filter</string>
     <string name="FilterRosterListHint">Contains…</string>
@@ -326,7 +326,7 @@
     <string name="LocoSelectMethodAddress">DCC Address</string>
     <string name="LocoSelectMethodRoster">JMRI Roster</string>
     <string name="LocoSelectMethodRecent">Recent</string>
-    <string name="LocoSelectMethodHelp">Enter the DCC Address of your loco above and click \'Acquire\'.\n\nAlternately, select a loco from the JMRI \'Roster\' or select from your \'Recently\' used locos by clicking on one of the radio buttons above.</string>
+    <string name="LocoSelectMethodHelp">Enter the DCC Address of your loco above and click \'Acquire\'.\n\nAlternately, select a loco from the JMRI \'Roster\' or select from \'Recent\' locos by clicking one of the radio buttons above.</string>
 
     <string name="prefMaximumRecentLocosTitle">Maximum Recent Locos</string>
     <string name="prefMaximumRecentLocosDefaultValue">10</string>
@@ -359,7 +359,7 @@
     <string name="prefDelimiterSummary">Set the character that marks the end of the Location portion of Turnout and Route names</string>
 
     <string name="prefScreenBrightnessDimTitle">Screen Dimming % Value</string>
-    <string name="prefScreenBrightnessDimSummary">Brightness setting to use when dimming the screen (0%-99%. Automatically disables Auto-brightness / Adaptive Brightness if set.</string>
+    <string name="prefScreenBrightnessDimSummary">Brightness setting to use when dimming the screen (0%-99%). Disables Auto or Adaptive Brightness if set.</string>
     <string name="prefScreenBrightnessDimDefaultValue">"5"</string>
 
     <string name="logViewer">View Log</string>

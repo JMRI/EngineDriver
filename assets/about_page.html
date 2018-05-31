@@ -3,28 +3,29 @@
 <head>
     <title>Engine Driver Throttle for Android</title>
     <style>
-        ul {list-style: outside disc;
-            margin-left: 1em;}
-        ul li {position: relative;
-            left: 1em;
-            padding-right: 1em;}​
+        p {margin-top:0;padding-left:1em;}
+        h3 {margin-bottom:0;}
+        dl {padding-left: 2em;}
+        ul {margin-left:1em;margin-top:-1em;padding-left:0;}
+        ul li {position:relative;left:1em;padding-right:1em;}​
     </style>
 </head>
 <body>
 <h1>Engine Driver Throttle for Android</h1>
-<div><img src="file:///android_asset/engine_driver_icon.png" height="144" width="166"
-          style="float:left;padding:0 16px 16px 0" alt=""/></div>
-<p>Latest changes for this version include:</p>
+<div style="float:left;padding-right:1em;">
+    <img src="file:///android_asset/engine_driver_icon.png" height="144" width="166" alt=""/>
+</div>
+<p><b>Latest changes for this version include:</b></p>
 <ul>
+    <li>Optional 'vertical' throttle screen with exactly two throttles with vertical speed sliders and function buttons</li>
+    <li>Optional 'simple' throttle screen with up to six throttles with vertical speed sliders but no function buttons (by radsolution)</li>
     <li>New flashlight button option for devices with on-board camera flash. Needs Camera permission for this.</li>
-    <li>require WiThrottle v2.0</li>
-    <li>major throttle change from T/S/G to arrays</li>
-    <li>prevent some crashes reported to Play Store</li>
-    <li>optional 'simple' throttle screen allowing up to six throttles with vertical speed sliders but no function buttons (by radsolution)</li>
-    <li>optional 'vertical' throttle screen allowing exactly two throttles with vertical speed sliders and function buttons</li>
-    <li>option to filter the roster</li>
-    <li>revised Select/Release screen design</li>
-    <li>additional translations by Roberto Falorni</li>
+    <li>Redesigned Select/Release screen</li>
+    <li>Require WiThrottle v2.0</li>
+    <li>Major throttle change from T/S/G to arrays</li>
+    <li>Prevent several crashes reported to Play Store</li>
+    <li>Option to filter the roster</li>
+    <li>Additional translations by Roberto Falorni</li>
     <li>Theme and Throttle Screen Type changes force an app restart and return to the preferences screen</li>
 </ul>
 <p><em><a
@@ -37,7 +38,7 @@
     to an <a href="http://www.modelrectifier.com/category-s/332.htm" target="_blank">MRC Prodigy WiFi</a>,
     or to a <a href="http://www.digitrax.com/products/wireless/lnwi/" target="_blank">Digitrax LnWi</a>,
     and in turn control your locomotives and your entire model railroad.
-    Speed, direction, and up to 29 DCC functions are supported for one to three locos or consists.
+    Speed, direction, and up to 29 DCC functions are supported for one to six locos or consists.
     You can control layout power, turnouts and routes, and display panels and other JMRI windows
     using the web views.
     You can also create and edit consists (software-defined).</p>
@@ -69,14 +70,14 @@
     There is an "Auto-Connect to First WiThrottle Server?" preference you can enable if desired.
     There is also a "demo" server at jmri.mstevetodd.com, port 44444 that you can connect to for
     testing.</p>
-<p>On the throttle screen, click on the "Press to Select" loco button for each loco.<br/>On the next
+<p>On the throttle screen, click on the "Select" loco button for each loco.<br/>On the next
     screen, click on a loco from the roster list,
     or enter the loco address (verify short or long), and press "Acquire". You will be returned to
     the Throttle screen.<br/>
-    Repeat using 2nd and 3rd "Press to Select" buttons to acquire a 2nd or 3rd train.<br/>
+    Repeat using additional "Select" buttons to acquire more trains.<br/>
     Note: press and hold a roster item to see additional details from the roster.</p>
-<p>Operate your loco using the slider (or volume control) (or arrow buttons) for speed, and the
-    reverse, stop and forward buttons to control direction. <br/>
+<p>Operate your loco using the slider (or volume control) (or optional arrow buttons) for speed,
+    and the reverse, stop and forward buttons to control direction. <br/>
     To release all locos, just press the Back button and exit the app. This will also stop your
     locos (can be overridden in preferences).
     You can reassign the volume control by clicking on the speed indicator (the small "v" shows
@@ -124,27 +125,31 @@
 <h3>Configuration:</h3>
 <p>Under Preferences, there is an extensive list of options where you can customize the screens
     and actions of EngineDriver to work best with your device, your layout and your personal style.
-    These include fast clock display, speed step options, web views, button size, additional
-    buttons,
-    slider size and behavior, number of throttles to display,
+    These include throttle layouts, fast clock display, speed step options, web views, button size,
+    additional buttons, slider size and behavior, number of throttles to display,
     stop on release, allow/disallow on-the-fly consisting, autoconnect, and many more.
 </p>
 <p>If you have entered function labels for a roster entry in the server, these labels will be used.
     If not, you can use the Function Defaults menu option to set default labels and function numbers
-    to display.&nbsp; Remove buttons by blanking out the labels.&nbsp; </p>
+    to display. Remove buttons by blanking out the labels.</p>
 <p>On the JMRI computer side, check your WiThrottle preferences to insure you allow or disallow the
-    control features desired.&nbsp;
+    control features desired.
     If you've defined your turnouts and routes in a panel, make sure to specify "user names" for
-    those you'd like to see listed on your throttle.&nbsp;
+    those you'd like to see listed on your throttle.
     You can also "filter" the turnouts shown using the WiThrottle-&gt;Filter Controls option in the
-    WiThrottle window.&nbsp;
-    Turning on "Use eStop" and "Use fixed port#" are also recommended.</p>
+    WiThrottle window. Enabling "Use eStop" is also recommended.</p>
 <p>Entering roster entries, and defining routes and turnouts in JMRI will all make your Engine
-    Driver throttle more powerful and easier to use (though not required).&nbsp;
+    Driver throttle more powerful and easier to use (though not required).
     EngineDriver will show additional info if the JMRI Web Server is started (such as roster details
     and icon images).</p>
-<p>You can browse the current development source code (with tags for earlier releases)
-    <a href="https://github.com/JMRI/JMRI" target="_blank">[HERE].</a></p>
+<h3>Development:</h3>
+<p>Engine Driver is free and open source software, part of the
+    <a href="http://jmri.org" target="_blank">JMRI</a> project. It is built in
+    <a href="https://developer.android.com/studio/" target="_blank">Android Studio</a>.
+    You can browse or clone the current development source code (with tags for earlier releases)
+    <a href="https://github.com/JMRI/EngineDriver" target="_blank">[HERE].</a> Pull Requests
+    appreciated.</p>
+<hr>
 <p><a href="https://enginedriver.mstevetodd.com" target="_blank">[Homepage for EngineDriver]</a></p>
 </body>
 </html>
