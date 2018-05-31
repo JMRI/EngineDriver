@@ -317,7 +317,7 @@
     <string name="prefRosterRecentLocosSummary">Include roster selections in Recent list?</string>
 
     <string name="prefRosterFilterTitle">Filter Roster</string>
-    <string name="prefRosterFilterSummary">Only include roster entries containing…</string>
+    <string name="prefRosterFilterSummary">Only show roster entries containing…</string>
     <string name="prefRosterFilterDefaultValue"></string>
     <string name="FilterRosterList">Filter</string>
     <string name="FilterRosterListHint">Contains…</string>
@@ -359,7 +359,7 @@
     <string name="prefDelimiterSummary">Set the character that marks the end of the Location portion of Turnout and Route names</string>
 
     <string name="prefScreenBrightnessDimTitle">Screen Dimming % Value</string>
-    <string name="prefScreenBrightnessDimSummary">Brightness setting to use when dimming the screen (0%-99%. Automatically disables Auto-brightness / Adaptive Brightness if set.</string>
+    <string name="prefScreenBrightnessDimSummary">Brightness setting to use when dimming the screen (0%-99%). Disables Auto or Adaptive Brightness if set.</string>
     <string name="prefScreenBrightnessDimDefaultValue">"5"</string>
 
     <string name="logViewer">View Log</string>
