@@ -296,6 +296,14 @@
                 android:maxLength="2"
                 android:summary="@string/prefNumberOfDefaultFunctionLabelsSummary"
                 android:title="@string/prefNumberOfDefaultFunctionLabelsTitle" />
+
+            <EditTextPreference
+                android:defaultValue="@string/prefNumberOfDefaultFunctionLabelsForRosterDefaultValue"
+                android:dialogTitle="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle"
+                android:key="prefNumberOfDefaultFunctionLabelsForRoster"
+                android:maxLength="2"
+                android:summary="@string/prefNumberOfDefaultFunctionLabelsForRosterSummary"
+                android:title="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle" />
         </PreferenceScreen>
 
 
@@ -700,12 +708,6 @@
             android:key="default_address_length"
             android:summary="@string/prefDefaultAddressLengthSummary"
             android:title="@string/prefDefaultAddressLengthTitle" />
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefHideRecentLocosDefaultValue"
-            android:key="hide_recent_locos_preference"
-            android:summary="@string/prefHideRecentLocosSummary"
-            android:title="@string/prefHideRecentLocosTitle" >
-        </CheckBoxPreference>
         <CheckBoxPreference
             android:defaultValue="@bool/prefRosterRecentLocosDefaultValue"
             android:key="roster_recent_locos_preference"

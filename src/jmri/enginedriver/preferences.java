@@ -84,6 +84,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
 
     private String prefThrottleScreenTypeOriginal = "Default";
+    private String prefThemeOriginal = "Default";
     /**
      * Called when the activity is first created.
      */
@@ -112,9 +113,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
             enableDisablePreference("prefThrottleViewImmersiveMode", false);
         }
+
+        prefThemeOriginal = sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
         if (mainapp.androidVersion < mainapp.minThemeVersion) {
             enableDisablePreference("prefTheme", false);
         }
+
         result = RESULT_OK;
 
         if (mainapp.connectedHostName.equals("")) { // option is only available when there is no curent connection
@@ -154,11 +158,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         prefThrottleScreenTypeOriginal = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         showHideThrottleTypePreferences();
-/*        if (mainapp.connectedHostName.equals("")) { // option is only available when there is no curent connection
-            enableDisablePreference("prefThrottleScreenType", true);
-        } else {
-            enableDisablePreference("prefThrottleScreenType", false);
-        } */
+
+        sharedPreferences.edit().putBoolean("prefForcedRestart", false).commit();
+
     }
 
     @SuppressWarnings("deprecation")
@@ -355,6 +357,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             case "NumThrottle":
                 limitNumThrottles(sharedPreferences);
                 break;
+            case "prefTheme":
+                String prefTheme = sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+                if (!prefTheme.equals(prefThemeOriginal)) {
+                    forceRestartApp();
+                }
+                break;
         }
     }
 
@@ -362,6 +370,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         // Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesLocaleChange), Toast.LENGTH_LONG).show(); // app dies before this shows
 
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
+        sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
+
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
         if (prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT)) {
@@ -596,12 +607,18 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         enableDisablePreference("increase_slider_height_preference",enable);
         enableDisablePreference("left_slider_margin",enable);
         enableDisablePreference("prefHideSliderAndSpeedButtons",enable);
-        enableDisablePreference("prefAlwaysUseDefaultFunctionLabels",enable);
-        enableDisablePreference("prefNumberOfDefaultFunctionLabels",enable);
 
         enable = true;
         if (prefThrottleScreenTypeOriginal.equals("Simple")) {
             enable = false;
+        }
+        enableDisablePreference("prefAlwaysUseDefaultFunctionLabels",enable);
+        enableDisablePreference("prefNumberOfDefaultFunctionLabels",enable);
+        enableDisablePreference("prefNumberOfDefaultFunctionLabelsForRoster",enable);
+
+        enable = true;
+        if (!prefThrottleScreenTypeOriginal.equals("Simple")) {
+            enable = true;
         }
         enableDisablePreference("WebViewLocation",enable);
         enableDisablePreference("prefIncreaseWebViewSize",enable);

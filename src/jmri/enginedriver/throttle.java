@@ -4085,7 +4085,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     if (mainapp.function_labels[whichThrottle] != null && mainapp.function_labels[whichThrottle].size() > 0) {
                         function_labels_temp = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
                     } else {
-                        function_labels_temp = mainapp.function_labels_default;
+                        if (!mainapp.consists[whichThrottle].isLeadFromRoster()) {
+                            function_labels_temp = mainapp.function_labels_default;
+                        } else {
+                            function_labels_temp = mainapp.function_labels_default_for_roster;
+                        }
                     }
                 }
 

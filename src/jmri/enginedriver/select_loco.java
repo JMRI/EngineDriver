@@ -125,8 +125,6 @@ public class select_loco extends Activity {
     RadioButton rbRecent;
     String prefSelectLocoMethod = WHICH_METHOD_FIRST;
 
-    boolean prefHideRecentLocos = false;
-
     // populate the on-screen roster view from global hashmap
     public void refresh_roster_list() {
         // clear and rebuild
@@ -228,9 +226,8 @@ public class select_loco extends Activity {
 
         // format and show currently selected locos, and hide or show Release buttons
         final int conNomTextSize = 16;
-        final int conSmallTextSize = 10;
+        final double minTextScale = 0.8;
 
-        TextView vS = (TextView) findViewById(R.id.Sl_loco);
         Button bR = (Button) findViewById(R.id.Sl_release);
         LinearLayout llThrottle = (LinearLayout) findViewById(R.id.LL_loco);
 
@@ -247,9 +244,6 @@ public class select_loco extends Activity {
             tvThrottleNameHeader.setVisibility(View.GONE);
         }
 
-//        bR.setText(this.getResources().getString(R.string.releaseThrottleNumber).replace("%1$s",Integer.toString(whichThrottle+1)));
-
-        vS.setVisibility(View.VISIBLE);
         bR.setVisibility(View.VISIBLE);
         llThrottle.setVisibility(View.VISIBLE);
 
@@ -258,35 +252,37 @@ public class select_loco extends Activity {
             if (prefShowAddressInsteadOfName) { // show the DCC Address instead of the loco name if the preference is set
                 vLabel = mainapp.consists[whichThrottle].formatConsistAddr();
             }
-            vS.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-            double textWidth = vS.getPaint().measureText(vLabel);
-                selectLocoRendered = true;
-            vS.setText(vLabel);
+            bR.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+
+             // scale text if required to fit the button
+             double textScale = 1.0;
+             int bWidth = bR.getWidth();
+             double textWidth = bR.getPaint().measureText(vLabel);
+
+             if (bWidth == 0) { // screen has probably not rendered yet
+                 final DisplayMetrics dm = getResources().getDisplayMetrics();
+                 // Get the screen's density scale
+                 final float denScale = dm.density;
+                 int screenWidth = dm.widthPixels; // get the width of usable area
+                 bWidth = (screenWidth - (int) (denScale * 6)) / 2 ;
+             }
+             if (textWidth > 0 && textWidth > bWidth) {
+                 textScale = bWidth / textWidth;
+                 if (textScale < minTextScale)
+                     textScale = minTextScale;
+             }
+             int textSize = (int) (conNomTextSize * textScale);
+             bR.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+
+             selectLocoRendered = true;
+            bR.setText(this.getResources().getString(R.string.releaseThrottleLocos).replace("%1$s",vLabel));
             bR.setEnabled(true);
         } else {
-            vS.setText("");
             bR.setEnabled(false);
-            vS.setVisibility(View.GONE);
             bR.setVisibility(View.GONE);
             llThrottle.setVisibility(View.GONE);
         }
 
-        // hide the recent locos list if selected in prefs
-        prefHideRecentLocos = prefs.getBoolean("hide_recent_locos_preference",
-                getResources().getBoolean(R.bool.prefHideRecentLocosDefaultValue));
-        if (prefHideRecentLocos) {
-            View rlv = findViewById(R.id.recent_engines_heading);
-            rlv.setVisibility(View.GONE);
-            rlv = findViewById(R.id.engine_list_wrapper);
-            rlv.setVisibility(View.GONE);
-            rlv = findViewById(R.id.clear_Loco_List_button);
-            rlv.setVisibility(View.GONE);
-
-            rbRecent.setVisibility(View.GONE);
-            if (prefSelectLocoMethod.equals(WHICH_METHOD_RECENT)) {
-                showMethod(WHICH_METHOD_ADDRESS);
-            }
-        }
         if (SMenu != null) {
             mainapp.displayEStop(SMenu);
         }
@@ -359,6 +355,7 @@ public class select_loco extends Activity {
         if (!roster_name.equals("")) {
             l.setDesc(roster_name);       //use rosterName if present
             l.setRosterName(roster_name); //use rosterName if present
+            l.setIsFromRoster(true);
         } else {
             l.setDesc(mainapp.getRosterNameFromAddress(l.toString()));  //lookup rostername from address if not set
             l.setRosterName(null); //make sure rosterName is null

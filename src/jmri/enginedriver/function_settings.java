@@ -57,8 +57,11 @@ public class function_settings extends Activity {
     private static ArrayList<Integer> aFnc = new ArrayList<>();
     private Menu FMenu;
     private EditText et;
+    private EditText etForRoster;
     private String prefNumberOfDefaultFunctionLabels = "29";
     private String originalPrefNumberOfDefaultFunctionLabels = "29";
+    private String prefNumberOfDefaultFunctionLabelsForRoster = "4";
+    private String originalPrefNumberOfDefaultFunctionLabelsForRoster = "4";
     private boolean prefAlwaysUseDefaultFunctionLabels = false;
     private int alwaysUseDefaultFunctionLabelsIndex = 1;
     private Spinner spinner;
@@ -94,7 +97,9 @@ public class function_settings extends Activity {
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         prefNumberOfDefaultFunctionLabels = prefs.getString("prefNumberOfDefaultFunctionLabels", getApplicationContext().getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsDefaultValue));
+        prefNumberOfDefaultFunctionLabelsForRoster = prefs.getString("prefNumberOfDefaultFunctionLabelsForRoster", getApplicationContext().getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsForRosterDefaultValue));
         originalPrefNumberOfDefaultFunctionLabels = prefNumberOfDefaultFunctionLabels;
+        originalPrefNumberOfDefaultFunctionLabelsForRoster = prefNumberOfDefaultFunctionLabelsForRoster;
         prefAlwaysUseDefaultFunctionLabels = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
 
         // suppress popup keyboard until EditText is touched
@@ -117,6 +122,16 @@ public class function_settings extends Activity {
 
         et = (EditText) findViewById(R.id.fb_number_of_default_function_labels);
         et.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+
+        etForRoster = (EditText) findViewById(R.id.fb_number_of_default_function_labels_for_roster);
+        etForRoster.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -245,6 +260,7 @@ public class function_settings extends Activity {
         }
 
         et.setText(prefNumberOfDefaultFunctionLabels);
+        etForRoster.setText(prefNumberOfDefaultFunctionLabelsForRoster);
     }
 
     //Save the valid function labels in the settings array
@@ -349,6 +365,7 @@ public class function_settings extends Activity {
 
             prefAlwaysUseDefaultFunctionLabels = false;
             prefNumberOfDefaultFunctionLabels = "29";
+            prefNumberOfDefaultFunctionLabelsForRoster = "4";
             move_settings_to_view();
         }
     }
@@ -356,11 +373,14 @@ public class function_settings extends Activity {
     //Handle pressing of the back button to save settings
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
-        limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, 29, "29");;
+        prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, 29, "29");;
+        prefNumberOfDefaultFunctionLabelsForRoster = limitIntEditValue("prefNumberOfDefaultFunctionLabelsForRoster", etForRoster, 0, 29, "4");;
 
         if (key == KeyEvent.KEYCODE_BACK) {
             move_view_to_settings();        //sync settings array to view
-            if ( (!settingsCurrent) || (!originalPrefNumberOfDefaultFunctionLabels.equals(prefNumberOfDefaultFunctionLabels)))  //if settings array is not current
+            if ( (!settingsCurrent)
+                    || (!originalPrefNumberOfDefaultFunctionLabels.equals(prefNumberOfDefaultFunctionLabels))
+                    || (!originalPrefNumberOfDefaultFunctionLabelsForRoster.equals(prefNumberOfDefaultFunctionLabelsForRoster)))  //if settings array is not current
                 saveSettings();         //save function labels to file
             this.finish();  //end this activity
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -402,37 +422,39 @@ public class function_settings extends Activity {
             Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();
 
         prefs.edit().putString("prefNumberOfDefaultFunctionLabels", prefNumberOfDefaultFunctionLabels).commit();  //reset the preference
+        prefs.edit().putString("prefNumberOfDefaultFunctionLabelsForRoster", prefNumberOfDefaultFunctionLabelsForRoster).commit();  //reset the preference
         prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", prefAlwaysUseDefaultFunctionLabels);
     }
 
     @SuppressWarnings("deprecation")
-    private boolean limitIntEditValue(String key, EditText et, int minVal, int maxVal, String defaultVal) {
+    private String limitIntEditValue(String key, EditText et, int minVal, int maxVal, String defaultVal) {
+        String sVal = defaultVal;
         boolean isValid = true;
         int newVal = maxVal;
         try {
             newVal = Integer.parseInt(et.getText().toString().trim());
             if (newVal > maxVal) {
                 prefs.edit().putString(key, Integer.toString(maxVal)).commit();
-                prefNumberOfDefaultFunctionLabels = Integer.toString(maxVal);
-                et.setText(prefNumberOfDefaultFunctionLabels);
+                sVal = Integer.toString(maxVal);
+                et.setText(sVal);
                 isValid = false;
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits).replace("%%1%%",Integer.toString(minVal)).replace("%%2%%",Integer.toString(minVal)).replace("%%3%%",Float.toString(maxVal)), Toast.LENGTH_LONG).show();
             } else if (newVal < minVal) {
                 prefs.edit().putString(key, Integer.toString(minVal)).commit();
-                prefNumberOfDefaultFunctionLabels = Integer.toString(minVal);
-                et.setText(prefNumberOfDefaultFunctionLabels);
+                sVal = Integer.toString(minVal);
+                et.setText(sVal);
                 isValid = false;
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits).replace("%%1%%",Integer.toString(minVal)).replace("%%2%%",Integer.toString(minVal)).replace("%%3%%",Float.toString(minVal)), Toast.LENGTH_LONG).show();
             }
         } catch (NumberFormatException e) {
             prefs.edit().putString(key, defaultVal).commit();
-            prefNumberOfDefaultFunctionLabels = defaultVal;
-            et.setText(prefNumberOfDefaultFunctionLabels);
+            sVal = defaultVal;
+            et.setText(sVal);
             isValid = false;
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric).replace("%%1%%",Integer.toString(minVal)).replace("%%2%%",Integer.toString(maxVal)).replace("%%3%%",defaultVal), Toast.LENGTH_LONG).show();
         }
-        if (isValid) prefNumberOfDefaultFunctionLabels = Integer.toString(newVal);
-        return isValid;
+        if (isValid) sVal = Integer.toString(newVal);
+        return sVal;
     }
 
     public class spinner_listener implements AdapterView.OnItemSelectedListener {

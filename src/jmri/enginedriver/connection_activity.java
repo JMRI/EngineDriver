@@ -373,6 +373,15 @@ public class connection_activity extends Activity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         threaded_application.min_fling_distance = (int) (threaded_application.SWIPE_MIN_DISTANCE * dm.densityDpi / 160.0f);
         threaded_application.min_fling_velocity = (int) (threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f);
+
+        if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restrat from the preferences reload the preferences
+            prefs.edit().putBoolean("prefForcedRestart", false).commit();
+
+            Intent in = new Intent().setClass(this, preferences.class);
+            navigatingAway = true;
+            startActivityForResult(in, 0);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        }
     }
 
     @Override
