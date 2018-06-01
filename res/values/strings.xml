@@ -387,7 +387,7 @@
     <string name="prefDisplaySpeedArrowsSummary">Display buttons next to speed sliders to change loco speed?</string>
 
     <string name="prefSelectedLocoIndicatorTitle">Additional Selected Loco Indicator</string>
-    <string name="prefSelectedLocoIndicatorSummary">Additional highlight of the Loco Select button based on the selection method.\nRequires Android Honeycomb or later.</string>
+    <string name="prefSelectedLocoIndicatorSummary">Additional highlight of the Loco Select button based on the selection method.</string>
     <string name="prefSelectedLocoIndicatorDefaultValue">None</string>
 
     <string name="prefDisableVolumeKeysTitle">Disable Volume keys</string>
@@ -476,7 +476,7 @@
     <string name="prefRightDirectionButtonsShortDefaultValue">Rev</string>
 
     <string name="prefThemeTitle">Theme/Style</string>
-    <string name="prefThemeSummary">App theme. WARNING! Engine Driver will restart immediately!\nRequires Android Honeycomb or later.</string>
+    <string name="prefThemeSummary">App theme. WARNING! Engine Driver will restart immediately!</string>
     <string name="prefThemeDefaultValue">Default</string>
 
     <string name="prefHideDemoServerTitle">Hide Demo Server</string>
