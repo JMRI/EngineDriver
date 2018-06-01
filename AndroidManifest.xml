@@ -17,11 +17,10 @@
         android:resizeable="true"
         android:smallScreens="true" />
     <!-- Orig.Min = 7 Orig.Target = 10 -->
+    <!-- 20180601: Min=7, Target=19 -->
     <uses-sdk
         android:minSdkVersion="7"
-        android:targetSdkVersion="19"
-        tools:ignore="OldTargetApi" >
-    </uses-sdk>
+        android:targetSdkVersion="26" />
     <uses-permission android:name="android.permission.READ_LOGS" tools:ignore="ProtectedPermissions"/>
     <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
     <uses-permission android:name="android.permission.CAMERA" />
