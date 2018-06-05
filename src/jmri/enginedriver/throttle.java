@@ -3321,8 +3321,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     // send a throttle speed message to WiT
     public void sendSpeedMsg(int whichThrottle, int speed) {
         // start timer to briefly ignore WiT speed messages - avoids speed "jumping"
-        // changeTimers moved to onCreate
-
+        changeTimers[whichThrottle].changeDelay();
         // send speed update to WiT
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "", whichThrottle, speed);
     }
