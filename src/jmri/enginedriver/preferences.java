@@ -130,7 +130,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             enableDisablePreference("prefHostImportExport", false);
         }
 
-//        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         setGamePadPrefLabels(sharedPreferences);
 
         // Disable ESU MCII preferences if not an ESU MCII
@@ -161,6 +160,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         sharedPreferences.edit().putBoolean("prefForcedRestart", false).commit();
 
+        if (!sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)).equals("None")) {
+            // preference is still confused after a reload or reset
+            sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -432,6 +435,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     private boolean saveSharedPreferencesToFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, boolean confirmDialog) {
+        sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
         boolean res = false;
         if (!exportedPreferencesFileName.equals(".ed")) {
             File path = Environment.getExternalStorageDirectory();
@@ -618,7 +622,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         enable = true;
         if (!prefThrottleScreenTypeOriginal.equals("Simple")) {
-            enable = true;
+            enable = false;
         }
         enableDisablePreference("WebViewLocation",enable);
         enableDisablePreference("prefIncreaseWebViewSize",enable);
