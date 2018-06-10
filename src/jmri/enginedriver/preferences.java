@@ -161,7 +161,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         sharedPreferences.edit().putBoolean("prefForcedRestart", false).commit();
 
         if (!sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)).equals("None")) {
-            // preference is still confused are a reload or reset
+            // preference is still confused after a reload or reset
             sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
         }
     }
