@@ -1228,6 +1228,9 @@ public class threaded_application extends Application {
             private volatile boolean socketGood = false;        //indicates socket condition
             private volatile boolean inboundTimeout = false;    //indicates inbound messages are not arriving from WiT
             private boolean firstConnect = false;               //indicates initial socket connection was achieved
+            private int connectTimeoutMs = 3000; //connection timeout in milliseconds
+            private int socketTimeoutMs = 500; //socket timeout in milliseconds
+
 
             socket_WiT() {
                 super("socket_WiT");
@@ -1237,6 +1240,9 @@ public class threaded_application extends Application {
 
                 //use local socketOk instead of setting socketGood so that the rcvr doesn't resume until connect() is done
                 boolean socketOk = HaveNetworkConnection();
+
+                connectTimeoutMs = Integer.parseInt(prefs.getString("prefConnectTimeoutMs", getResources().getString(R.string.prefConnectTimeoutMsDefaultValue)));
+                socketTimeoutMs = Integer.parseInt(prefs.getString("prefSocketTimeoutMs", getResources().getString(R.string.prefSocketTimeoutMsDefaultValue)));
 
                 //validate address
                 if (socketOk) {
@@ -1252,10 +1258,11 @@ public class threaded_application extends Application {
                 if (socketOk) {
                     try {
                         //look for someone to answer on specified socket, and set timeout
+                        Log.d("Engine_Driver", "Opening socket, connectTimeout=" + connectTimeoutMs + " and socketTimeout=" + socketTimeoutMs);
                         clientSocket = new Socket();
                         InetSocketAddress sa = new InetSocketAddress(host_ip, port);
-                        clientSocket.connect(sa, 3000);  //TODO: adjust these timeouts, or set in prefs
-                        clientSocket.setSoTimeout(500);
+                        clientSocket.connect(sa, connectTimeoutMs);
+                        clientSocket.setSoTimeout(socketTimeoutMs);
                     } catch (Exception except) {
                         if (!firstConnect) {
                             show_toast_message("Can't connect to host " + host_ip + " and port " + port +

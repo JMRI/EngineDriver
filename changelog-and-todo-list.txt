@@ -9,6 +9,8 @@
  * standardize withrottle_send command formatting
  * prevent several crashes reported to Play Store
  * revised Select/Release screen design
+ * moved connect and socket timeout values to preferences
+
 **Version 2.18.1
  * option to change languages from the preferences screen
  * no longer requires an accelerometer in the device to install from the Play Store (reported bug)
@@ -405,7 +407,6 @@
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: check for error on send and do something with it 
- *   TODO: move socket timeout values to preference
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
  *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
@@ -430,6 +431,7 @@
  *   TODO: manually create roster entries and store on device
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
  * preferences:
+ *   TODO: Reset should restart
  *   TODO: show error if invalid entry
  *
  * These require changes to WiThrottle

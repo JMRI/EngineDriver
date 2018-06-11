@@ -341,7 +341,6 @@ public class connection_activity extends Activity {
 
         prefHideDemoServer = prefs.getBoolean("prefHideDemoServer", getResources().getBoolean(R.bool.prefHideDemoServerDefaultValue));
 
-
         //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
         discovery_list = new ArrayList<>();
         discovery_list_adapter = new SimpleAdapter(this, discovery_list, R.layout.connections_list_item,

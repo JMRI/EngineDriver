@@ -348,6 +348,13 @@
     <string name="prefMaximumRecentConnectionsTitle">Maximum Recent Connections</string>
     <string name="prefMaximumRecentConnectionsDefaultValue">10</string>
     <string name="prefMaximumRecentConnectionsSummary">Maximum Recent Connections to show in list</string>
+    <string name="prefConnectTimeoutMsTitle">Initial Connection Timeout</string>
+    <string name="prefConnectTimeoutMsSummary">Set initial connection timeout in milliseconds</string>
+    <string name="prefConnectTimeoutMsDefaultValue">3000</string>
+    <string name="prefSocketTimeoutMsTitle">Socket Timeout</string>
+    <string name="prefSocketTimeoutMsSummary">Set socket read timeout in milliseconds</string>
+    <string name="prefSocketTimeoutMsDefaultValue">500</string>
+
     <string name="prefTurnoutsTitle">Turnouts and Routes Preferences</string>
     <string name="prefHardwareSystemTitle">Turnout Hardware System</string>
     <string name="prefHardwareSystemDefaultValue">L</string>

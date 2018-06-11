@@ -759,6 +759,22 @@
             android:summary="@string/prefHideDemoServerSummary"
             android:title="@string/prefHideDemoServerTitle" >
         </CheckBoxPreference>
+        <EditTextPreference
+            android:defaultValue="@string/prefConnectTimeoutMsDefaultValue"
+            android:key="prefConnectTimeoutMs"
+            android:maxLength="5"
+            android:numeric="integer"
+            android:summary="@string/prefConnectTimeoutMsSummary"
+            android:title="@string/prefConnectTimeoutMsTitle" >
+        </EditTextPreference>
+        <EditTextPreference
+            android:defaultValue="@string/prefSocketTimeoutMsDefaultValue"
+            android:key="prefSocketTimeoutMs"
+            android:maxLength="4"
+            android:numeric="integer"
+            android:summary="@string/prefSocketTimeoutMsSummary"
+            android:title="@string/prefSocketTimeoutMsTitle" >
+        </EditTextPreference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefWebTitle" >
         <ListPreference
