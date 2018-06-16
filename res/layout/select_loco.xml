@@ -198,6 +198,24 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/roster_list_empty_group"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp">
+
+        <TextView
+            android:id="@+id/roster_list_empty"
+            style="@style/floating_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:padding="8sp"
+            android:text="@string/rosterEmpty" />
+
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/roster_list_group"
         android:layout_width="fill_parent"
