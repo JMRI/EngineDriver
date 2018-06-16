@@ -117,6 +117,7 @@ public class select_loco extends Activity {
     RelativeLayout rlAddress;
     RelativeLayout rlAddressHelp;
     RelativeLayout rlRosterHeader;
+    RelativeLayout rlRosterEmpty;
     LinearLayout llRoster;
     RelativeLayout rlRecentHeader;
     LinearLayout llRecent;
@@ -191,14 +192,22 @@ public class select_loco extends Activity {
             roster_list_adapter.notifyDataSetChanged();
             View v = findViewById(R.id.roster_list_heading);
             v.setVisibility(View.VISIBLE);
+            v = findViewById(R.id.filter_roster_text);
+            v.setVisibility(View.VISIBLE);
             v = findViewById(R.id.roster_list);
             v.setVisibility(View.VISIBLE);
+            v = findViewById(R.id.roster_list_empty);
+            v.setVisibility(View.GONE);
 
         } else { // hide roster section if nothing to show
             View v = findViewById(R.id.roster_list_heading);
             v.setVisibility(View.GONE);
+            v = findViewById(R.id.filter_roster_text);
+            v.setVisibility(View.GONE);
             v = findViewById(R.id.roster_list);
             v.setVisibility(View.GONE);
+            v = findViewById(R.id.roster_list_empty);
+            v.setVisibility(View.VISIBLE);
         } // if roster_entries not null
     }
 
@@ -743,6 +752,7 @@ public class select_loco extends Activity {
         rlAddress = (RelativeLayout) findViewById(R.id.enter_loco_group);
         rlAddressHelp = (RelativeLayout) findViewById(R.id.enter_loco_group_help);
         rlRosterHeader = (RelativeLayout) findViewById(R.id.roster_list_header_group);
+        rlRosterEmpty = (RelativeLayout) findViewById(R.id.roster_list_empty_group);
         llRoster = (LinearLayout) findViewById(R.id.roster_list_group);
         rlRecentHeader = (RelativeLayout) findViewById(R.id.engine_list_header_group);
         llRecent = (LinearLayout) findViewById(R.id.engine_list_wrapper);
@@ -778,6 +788,7 @@ public class select_loco extends Activity {
                 rlAddressHelp.setVisibility(View.VISIBLE);
                 rlRosterHeader.setVisibility(View.GONE);
                 llRoster.setVisibility(View.GONE);
+                rlRosterEmpty.setVisibility(View.GONE);
                 rlRecentHeader.setVisibility(View.GONE);
                 llRecent.setVisibility(View.GONE);
 
@@ -791,6 +802,7 @@ public class select_loco extends Activity {
                 rlAddressHelp.setVisibility(View.GONE);
                 rlRosterHeader.setVisibility(View.VISIBLE);
                 llRoster.setVisibility(View.VISIBLE);
+                rlRosterEmpty.setVisibility(View.VISIBLE);
                 rlRecentHeader.setVisibility(View.GONE);
                 llRecent.setVisibility(View.GONE);
 
@@ -804,6 +816,7 @@ public class select_loco extends Activity {
                 rlAddressHelp.setVisibility(View.GONE);
                 rlRosterHeader.setVisibility(View.GONE);
                 llRoster.setVisibility(View.GONE);
+                rlRosterEmpty.setVisibility(View.GONE);
                 rlRecentHeader.setVisibility(View.VISIBLE);
                 llRecent.setVisibility(View.VISIBLE);
 
