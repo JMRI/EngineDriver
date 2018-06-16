@@ -187,7 +187,7 @@ public class threaded_application extends Application {
 
     private SharedPreferences prefs;
 
-    public boolean EStopActivated = false;  // Used to determine if user pressed the EStop button.
+    public boolean EStopActivated = false;  // Has EStop been sent?
 
     //Used to tell set_Labels in Throttle not to update padding for throttle sliders after onCreate.
     public boolean firstCreate = true;
@@ -2318,12 +2318,12 @@ public class threaded_application extends Application {
 
     public void sendEStopMsg() {
         for (int i = 0; i < maxThrottles; i++) {
-            if (consists[i].isActive()) {
+            if (consists != null && consists[i] != null && consists[i].isActive()) {
                 sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
+                EStopActivated = true;
+                Log.d("Engine_Driver", "EStop sent to server for " + i);
             }
         }
-
-        EStopActivated = true;
     }
 
     // forward a message to all running activities 
