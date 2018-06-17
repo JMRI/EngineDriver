@@ -478,6 +478,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         String m = getApplicationContext().getResources().getString(R.string.toastPreferencesResetSucceeded);
         Toast.makeText(getApplicationContext(), m, Toast.LENGTH_LONG).show();
         Log.d("Engine_Driver", m);
+
+        forceRestartApp();
     }
 
     private void fixAndReloadImportExportPreference(SharedPreferences sharedPreferences){

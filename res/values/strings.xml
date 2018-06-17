@@ -433,7 +433,7 @@
     <string name="prefThrottleImportExportSummary">Import/Export/Reset Preferences</string>
 
     <string name="prefImportExportTitle">Import, Export or Reset</string>
-    <string name="prefImportExportSummary">\'Import\' or \'Export\' preferences to the \'engine_driver/\' folder, or \'Reset\' them. \nWill occur IMMEDIATELY on selecting the option.\n(You can transfer the preferences to a different phone by copying the file.)</string>
+    <string name="prefImportExportSummary">\'Import\' or \'Export\' preferences to the \'engine_driver/\' folder, or \'Reset\' them. \nWill occur IMMEDIATELY on selecting the option.\nWARNING! With \'Reset\' and \'Import\', Engine Driver will restart!\n(You can transfer the preferences to a different phone by copying the file.)</string>
     <string name="prefImportExportDefaultValue">None</string>
 
     <string name="prefImportExportLocoListTitle">Include recent loco list</string>
