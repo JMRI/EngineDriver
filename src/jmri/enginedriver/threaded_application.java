@@ -1185,7 +1185,10 @@ public class threaded_application extends Application {
 
         //parse function state string into appropriate app variable array
         private void process_function_state(int whichThrottle, Integer fn, boolean fState) {
-            function_states[whichThrottle][fn] = fState;
+            try {
+                function_states[whichThrottle][fn] = fState;
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+            }
         }
 
         //
