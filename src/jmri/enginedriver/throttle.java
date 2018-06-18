@@ -2292,7 +2292,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 }
             }
         } else if ((prefGamePadButtons[buttonNo].length()>=11) && (prefGamePadButtons[buttonNo].substring(0,9).equals(GAMEPAD_FUNCTION_PREFIX))) { // one of the Function Buttons
-            int fKey = Integer.parseInt(prefGamePadButtons[buttonNo].substring(10,11));
+            int fKey = Integer.parseInt(prefGamePadButtons[buttonNo].substring(9,11));
             if (isActive && (repeatCnt == 0)) {
                 if (action==ACTION_DOWN) {
                     GamepadFeedbackSound(false);
