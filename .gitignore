@@ -1,38 +1,36 @@
-# build artifacts
-jmri.jar
-/dist
-java/docs
+#built application files
+*.apk
+*.ap_
 
-# test artifacts
-junit-results.xml
+# files for the dex VM
+*.dex
 
-# runtime artifacts
-messages.log*
-session.log
-
-# transient artifacts
-.ant-targets-build.xml
-/java/classes
-/java/tmp
+# Java class files
 *.class
-/temp
-.pydevproject
-*.swp
-/lib/cachedir
 
-# private / per-user configuration files
-/nbproject/private
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
 local.properties
 
-# CATS source, sometimes present for test
-/java/src/cats
+# Windows thumbnail db
+Thumbs.db
 
-# OS junk files
-[Tt]humbs.db
-*.DS_Store
-/bin/
-/gen/
+# OSX files
+.DS_Store
 
-# Android Studio stuff
-/out/
-*.apk
+# Android Studio
+*.iml
+.idea
+#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
+.gradle
+build/
+.navigation
+captures/
+output.json
+
+#NDK
+obj/
+.externalNativeBuild
