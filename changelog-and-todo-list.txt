@@ -1,6 +1,7 @@
 **Version 2.20
+ * Fix for Gamepad functions F10 and above
  * monochrome icon for the notification bar
- * prevent  crashes reported to Play Store
+ * prevent crashes reported to Play Store
 **Version 2.19
  * New flashlight button option for devices with on-board camera flash. Needs Camera permission for this.
  * optional 'simple' throttle screen allowing up to six throttles with vertical speed sliders but no function buttons
@@ -403,6 +404,7 @@
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: if user enters ":" into address input, jump to port input
+ *   TODO: allow user to delete individual recents (long-press?)
  * threaded_application
  *   TODO: limit/throttle message traffic via queue to avoid overloading hardware, esp. after acquire/release
  *   TODO: remember consist details
@@ -419,19 +421,17 @@
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: respect "Max Throttle %" from roster entry
  *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released" 
- *   TODO: make Forward, Stop, Reverse language-sensitive 
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
  *   TODO: add preference to disable other hardware buttons in throttle screen
  *   TODO: add graphics (slider, stop, directions, functions?)  add colors
- *   TODO: get 2nd line of label text working again
  *   TODO: unset all states when loco not selected
  * select_loco:
  *   TODO: disconnect connections made by roster stuff
  *   TODO: add close button and roster image to details dialog
- *   TODO: clean up code for new MT (Multi-throttle) feature 
  *   TODO: simplify select_loco by removing handler
  *   TODO: manually create roster entries and store on device
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
+ *   TODO: allow user to delete individual recents (long-press?)
  * preferences:
  *   TODO: Reset should restart
  *   TODO: show error if invalid entry
