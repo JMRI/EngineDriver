@@ -129,7 +129,7 @@ public class threaded_application extends Application {
     LinkedHashMap<String, String> consist_entries;
     private static DownloadRosterTask dlRosterTask = null;
     private static DownloadMetaTask dlMetadataTask = null;
-    HashMap<String, RosterEntry> roster;  //roster entries retrieved from roster.xml (null if not retrieved)
+    HashMap<String, RosterEntry> roster;  //roster entries retrieved from /roster/?format=xml (null if not retrieved)
     public static HashMap<String, String> metadata;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
     ImageDownloader imageDownloader = new ImageDownloader();
     String power_state;
@@ -1881,7 +1881,7 @@ public class threaded_application extends Application {
             } catch (Exception e) {
                 throw new IOException();
             }
-            Log.d("Engine_Driver", "Loaded " + rosterSize + " entries from roster.xml.");
+            Log.d("Engine_Driver", "Loaded " + rosterSize + " entries from /roster/?format=xml.");
         }
     }
 
