@@ -47,6 +47,7 @@
 
     <!-- Outline Theme -->
 
+    <color name="buttonLocoSelectText_outline">#ff00b2e1</color>
     <color name="buttonFill_outline">#00000000</color>
     <color name="buttonStroke_outline">#d9d9d9</color>
     <color name="buttonDisabledFill_outline">#00000000</color>
@@ -87,6 +88,7 @@
     <color name="buttonStopSelectedInsideStroke_ultra">#46c20000</color>
 
     <color name="buttonText_ultra">#d9d9d9</color>
+    <color name="buttonLocoSelectText_ultra">#ff00b2e1</color>
     <color name="buttonDisabledFill_ultra">#00000000</color>
     <color name="buttonDisabledStroke_ultra">#FF2d2d2d</color>
     <color name="buttonSelectedText_ultra">#ff00b2e1</color>
