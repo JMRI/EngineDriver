@@ -43,6 +43,9 @@
       <item name="android:ellipsize">end</item>
       <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
+  <style name="loco_select_button_style" parent="normal_button_style">
+    <item name="android:textColor">@color/btn_loco_select_text_states</item>
+  </style>
     <style name="small_button_style" parent="@android:style/Widget.Button">
       <item name="android:textColor">@color/btn_text_states</item>
       <item name="android:textSize">14sp</item>
@@ -180,6 +183,9 @@
     <item name="android:ellipsize">end</item>
     <item name="android:gravity">center_vertical|center_horizontal</item>
   </style>
+  <style name="loco_select_button_style_black" parent="normal_button_style_black">
+  <item name="android:textColor">@color/btn_loco_select_text_states</item>
+  </style>
 
   <style name="small_button_style_black" parent="@android:style/Widget.Button">
     <item name="android:textColor">@color/btn_text_states</item>
@@ -305,6 +311,10 @@
     <item name="android:gravity">center_vertical|center_horizontal</item>
   </style>
 
+  <style name="loco_select_button_style_outline" parent="normal_button_style_outline">
+  <item name="android:textColor">@color/btn_loco_select_text_states_outline</item>
+  </style>
+
   <style name="small_button_style_outline" parent="@android:style/Widget.Button">
     <item name="android:textColor">@color/btn_text_states_outline</item>
     <item name="android:textSize">14sp</item>
@@ -412,6 +422,9 @@
     <item name="android:layout_height">fill_parent</item>
     <!-- <item name="android:ellipsize">end</item> -->
     <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+  <style name="loco_select_button_style_ultra" parent="normal_button_style_ultra">
+    <item name="android:textColor">@color/btn_loco_select_text_states_ultra</item>
   </style>
 
   <style name="stop_button_style_ultra" parent="@android:style/Widget.Button">

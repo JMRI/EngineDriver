@@ -70,7 +70,7 @@
 
                         <Button
                             android:id="@+id/button_select_loco_0"
-                            style="?attr/ed_normal_button_style"
+                            style="?attr/ed_loco_select_button_style"
                             android:layout_width="fill_parent"
                             android:text="@string/none" />
 
@@ -289,7 +289,7 @@
 
                         <Button
                             android:id="@+id/button_select_loco_1"
-                            style="?attr/ed_normal_button_style"
+                            style="?attr/ed_loco_select_button_style"
                             android:layout_width="fill_parent"
                             android:text="@string/none" />
 
@@ -508,7 +508,7 @@
 
                         <Button
                             android:id="@+id/button_select_loco_2"
-                            style="?attr/ed_normal_button_style"
+                            style="?attr/ed_loco_select_button_style"
                             android:layout_width="fill_parent"
                             android:text="@string/none" />
 
@@ -727,7 +727,7 @@
 
                         <Button
                             android:id="@+id/button_select_loco_3"
-                            style="?attr/ed_normal_button_style"
+                            style="?attr/ed_loco_select_button_style"
                             android:layout_width="fill_parent"
                             android:text="@string/none" />
 
@@ -946,7 +946,7 @@
 
                         <Button
                             android:id="@+id/button_select_loco_4"
-                            style="?attr/ed_normal_button_style"
+                            style="?attr/ed_loco_select_button_style"
                             android:layout_width="fill_parent"
                             android:text="@string/none" />
 
@@ -1165,7 +1165,7 @@
 
                         <Button
                             android:id="@+id/button_select_loco_5"
-                            style="?attr/ed_normal_button_style"
+                            style="?attr/ed_loco_select_button_style"
                             android:layout_width="fill_parent"
                             android:text="@string/none" />
 
