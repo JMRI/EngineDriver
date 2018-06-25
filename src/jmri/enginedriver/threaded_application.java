@@ -787,15 +787,14 @@ public class threaded_application extends Application {
         private void process_response(String response_str) {
             /* see java/arc/jmri/jmrit/withrottle/deviceserver.java for server code and some documentation
           VN<Version#>
-          T<EngineAddress>(<LongOrShort>)  
-          S<2ndEngineAddress>(<LongOrShort>)
           RL<RosterSize>]<RosterList>
           RF<RosterFunctionList>
           RS<2ndRosterFunctionList>
-             *<HeartbeatIntervalInSeconds>      
+          *<HeartbeatIntervalInSeconds>
           PTL[<SystemTurnoutName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
           PTA<NewTurnoutState><SystemName>
           PPA<NewPowerState> where state 0=off, 1=on, 2=unknown
+          M<throttleid> multi-throttle command
           TODO: add remaining items, or move examples into code below
              */
 
@@ -854,15 +853,18 @@ public class threaded_application extends Application {
                     break;
                 }
                 case 'V':
+                    Double old_vn = withrottle_version;
                     try {
                         withrottle_version = Double.parseDouble(response_str.substring(2));
                     } catch (Exception e) {
-                        Log.d("Engine_Driver", "process response: invalid WiT version string");
+                        Log.e("Engine_Driver", "process response: invalid WiT version string");
                         withrottle_version = 0.0;
                     }
                     //only move on to Throttle screen if version received is 2.0+
                     if (withrottle_version >= 2.0) {
-                        sendMsg(connection_msg_handler, message_type.CONNECTED);
+                        if (!withrottle_version.equals(old_vn)) { //only if changed
+                            sendMsg(connection_msg_handler, message_type.CONNECTED);
+                        }
                     } else {
                         show_toast_message("WiThrottle version " + response_str.substring(2) + " not supported.", Toast.LENGTH_LONG);
                         socketWiT.disconnect(false);
