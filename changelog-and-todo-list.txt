@@ -1,6 +1,7 @@
 **Version 2.20
  * Fix for Gamepad functions F10 and above
  * monochrome icon for the notification bar
+ * handle MRC sending multiple VN messages
  * prevent crashes reported to Play Store
 **Version 2.19
  * New flashlight button option for devices with on-board camera flash. Needs Camera permission for this.
