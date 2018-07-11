@@ -806,6 +806,10 @@ public class threaded_application extends Application {
 
                 //handle responses from MultiThrottle function
                 case 'M': {
+                    if (response_str.length() < 5 ) { //must be at least Mtxs9
+                        Log.d("Engine_Driver", "invalid response string: '" + response_str + "'");
+                        break;
+                    }
                     String sWhichThrottle = response_str.substring(1, 2);
                     int whichThrottle = throttleCharToInt(sWhichThrottle.charAt(0));
                     String[] ls = splitByString(response_str, "<;>");    //drop off separator
