@@ -2739,12 +2739,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         @Override
         public void onStopButtonUp() {
-            buttonTimer.cancel();
+            if (buttonTimer != null) {
+                buttonTimer.cancel();
+            }
             doStopButtonUp(false);
         }
 
         private void doStopButtonUp(boolean fromTimer) {
-            buttonTimer.cancel();
+            if (buttonTimer != null) {
+                buttonTimer.cancel();
+            }
             if (!getConsist(whichVolume).isActive()) {
                 Log.d("Engine_Driver", "ESU_MCII: Stop button up for inactive throttle " + whichVolume);
                 return;
