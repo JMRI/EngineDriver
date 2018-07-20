@@ -1237,6 +1237,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             speed = 0;
             if (!changeTimers[whichThrottle].delayInProg) {
                 sbs[whichThrottle].setProgress(speed);
+                // Now update ESU MCII Knob position
+                if (IS_ESU_MCII) {
+                    Log.d("Engine_Driver", "ESU_MCII: Move knob request for WiT speed report");
+                    setEsuThrottleKnobPosition(whichThrottle, speed);
+                }
             }
     }
 
