@@ -2,6 +2,8 @@
  * Fix for Gamepad functions F10 and above
  * monochrome icon for the notification bar
  * handle MRC sending multiple VN messages
+ * add support for "HmXXXXX" info messages returned from server
+ * reduce 'Q'uit delay to avoid early socket close
  * prevent crashes reported to Play Store
  * ESU MC2 Stop button long-press behaviour modified to act on timeout rather than release
 **Version 2.19
