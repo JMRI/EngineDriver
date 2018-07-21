@@ -6,6 +6,7 @@
  * reduce 'Q'uit delay to avoid early socket close
  * prevent crashes reported to Play Store
  * ESU MC2 Stop button long-press behaviour modified to act on timeout rather than release
+ * ESU MC2 control knob now responds to external speed changes - fixes issue #292
 **Version 2.19
  * New flashlight button option for devices with on-board camera flash. Needs Camera permission for this.
  * optional 'simple' throttle screen allowing up to six throttles with vertical speed sliders but no function buttons
