@@ -3,7 +3,7 @@
  * monochrome icon for the notification bar
  * handle MRC sending multiple VN messages
  * add support for "HmXXXXX" info messages returned from server
- * reduce 'Q'uit delay to avoid early socket close
+ * reduce 'Q'uit delay to avoid early socket close which doesn't clear WiThrottle list
  * prevent crashes reported to Play Store
  * ESU MC2 Stop button long-press behaviour modified to act on timeout rather than release
  * ESU MC2 control knob now responds to external speed changes - fixes issue #292
