@@ -34,6 +34,7 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -2697,6 +2698,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         private long timePressed;
         private boolean wasLongPress = false;
         private int delay;
+        private CountDownTimer buttonTimer;
 
         @Override
         public void onStopButtonDown() {
@@ -2721,17 +2723,43 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             // Read current stop button delay pref value
             delay = preferences.getIntPrefValue(prefs,"prefEsuMc2StopButtonDelay",
                     getApplicationContext().getResources().getString(R.string.prefEsuMc2StopButtonDelayDefaultValue));
+            buttonTimer = new CountDownTimer(delay, delay) {
+                @Override
+                public void onTick(long l) {
+                    // do nothing...
+                }
+
+                @Override
+                public void onFinish() {
+                    doStopButtonUp(true);
+                }
+            };
+            buttonTimer.start();
         }
 
         @Override
         public void onStopButtonUp() {
+            if (buttonTimer != null) {
+                buttonTimer.cancel();
+            }
+            doStopButtonUp(false);
+        }
+
+        private void doStopButtonUp(boolean fromTimer) {
+            if (buttonTimer != null) {
+                buttonTimer.cancel();
+            }
             if (!getConsist(whichVolume).isActive()) {
                 Log.d("Engine_Driver", "ESU_MCII: Stop button up for inactive throttle " + whichVolume);
                 return;
             }
-            Log.d("Engine_Driver", "ESU_MCII: Stop button up for throttle " + whichVolume);
+            if (fromTimer) {
+                Log.d("Engine_Driver", "ESU_MCII: Stop button timer finished for throttle " + whichVolume);
+            } else {
+                Log.d("Engine_Driver", "ESU_MCII: Stop button up for throttle " + whichVolume);
+            }
             if (isEsuMc2Stopped) {
-                if (System.currentTimeMillis() - timePressed > delay) {
+                if (fromTimer || System.currentTimeMillis() - timePressed > delay) {
                     // It's a long initial press so record this
                     wasLongPress = true;
                     Log.d("Engine_Driver", "ESU_MCII: Stop button press was long - long flash Red LED");
