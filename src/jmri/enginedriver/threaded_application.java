@@ -533,7 +533,7 @@ public class threaded_application extends Application {
                         }
 
                         //send quit message to withrottle after a short delay for other activities to communicate
-                        sendMsgDelay(comm_msg_handler, 500L, message_type.WITHROTTLE_QUIT);
+                        sendMsgDelay(comm_msg_handler, 100L, message_type.WITHROTTLE_QUIT);
 
                         //give msgs a chance to xmit before closing socket
                         if (!sendMsgDelay(comm_msg_handler, 1500L, message_type.SHUTDOWN)) {
@@ -689,7 +689,7 @@ public class threaded_application extends Application {
         }
 
         private void shutdown() {
-            Log.d("Engine_Driver", "TA Shutdown");
+            Log.d("Engine_Driver", "TA.Shutdown");
             end_jmdns();                        //jmdns should already be down but no harm in making call
             if (socketWiT != null) {
                 socketWiT.disconnect(true);     //stop reading from the socket
@@ -881,8 +881,10 @@ public class threaded_application extends Application {
                         if (getServerType().equals("MRC")) {
                             web_server_port = 80; //hardcode web port for MRC
                         }
-                    } else if (response_str.charAt(1) == 'M') { //message sent from server to throttle
-                            show_toast_message(response_str.substring(2), Toast.LENGTH_SHORT); // copy to UI as toast message
+                    } else if (response_str.charAt(1) == 'M') { //alert message sent from server to throttle
+                        show_toast_message(response_str.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
+                    } else if (response_str.charAt(1) == 'm') { //info message sent from server to throttle
+                        show_toast_message(response_str.substring(2), Toast.LENGTH_SHORT); // copy to UI as toast message
                     }
                     break;
 
