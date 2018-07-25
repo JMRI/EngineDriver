@@ -794,13 +794,13 @@
             android:maxLines="1"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefTurnoutsTitle" >
-        <ListPreference
-            android:defaultValue="@string/prefHardwareSystemDefaultValue"
-            android:entries="@array/hardware_system_namesEntries"
-            android:entryValues="@array/hardware_system_namesEntryValues"
-            android:key="hardware_system"
-            android:summary="@string/prefHardwareSystemSummary"
-            android:title="@string/prefHardwareSystemTitle" />
+        <!--<ListPreference-->
+            <!--android:defaultValue="@string/prefHardwareSystemDefaultValue"-->
+            <!--android:entries="@array/hardware_system_namesEntries"-->
+            <!--android:entryValues="@array/hardware_system_namesEntryValues"-->
+            <!--android:key="hardware_system"-->
+            <!--android:summary="@string/prefHardwareSystemSummary"-->
+            <!--android:title="@string/prefHardwareSystemTitle" />-->
         <CheckBoxPreference
             android:defaultValue="@bool/prefHideSystemRouteNamesDefaultValue"
             android:key="hide_system_route_names_preference"
