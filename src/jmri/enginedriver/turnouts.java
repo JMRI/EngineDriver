@@ -273,10 +273,10 @@ public class turnouts extends Activity implements OnGestureListener {
                         return;
                     }
                     //use preference for system name in command string unless system is MRC
-                    if (!mainapp.getServerType().equals("MRC")) {
-                        String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
-                        entrytext = hs + "T" + entrytext;
-                    }
+//                    if (!mainapp.getServerType().equals("MRC")) {
+//                        String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
+//                        entrytext = hs + "T" + entrytext;
+//                    }
                 }
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, whichCommand + entrytext);
 //                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastTurnoutCommandTo).replace("%%1%%",
@@ -471,12 +471,12 @@ public class turnouts extends Activity implements OnGestureListener {
 //      setTitleToIncludeThrotName();
 
         //update hardware system prefix unless MRC
-        if (!mainapp.getServerType().equals("MRC")) {
-            String cmdPrefix = prefs.getString("hardware_system", getApplicationContext().getResources()
-                    .getString(R.string.prefHardwareSystemDefaultValue));
-            TextView trnPrefix = (TextView) findViewById(R.id.turnout_prefix);
-            trnPrefix.setText(cmdPrefix + "T");
-        }
+//        if (!mainapp.getServerType().equals("MRC")) {
+//            String cmdPrefix = prefs.getString("hardware_system", getApplicationContext().getResources()
+//                    .getString(R.string.prefHardwareSystemDefaultValue));
+//            TextView trnPrefix = (TextView) findViewById(R.id.turnout_prefix);
+//            trnPrefix.setText(cmdPrefix + "T");
+//        }
 
         // enable/disable buttons
         updateTurnoutEntry();
