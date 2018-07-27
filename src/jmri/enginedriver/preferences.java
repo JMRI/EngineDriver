@@ -350,6 +350,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             case "prefLocale":
                 sharedPreferences.edit().putString("prefLeftDirectionButtons", "").commit();
                 sharedPreferences.edit().putString("prefRightDirectionButtons", "").commit();
+                sharedPreferences.edit().putString("prefLeftDirectionButtonsShort", "").commit();
+                sharedPreferences.edit().putString("prefRightDirectionButtonsShort", "").commit();
                 forceRestartApp();
                 break;
             case "prefDirectionButtonLongPressDelay":
