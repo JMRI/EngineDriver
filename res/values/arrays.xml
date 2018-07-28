@@ -714,14 +714,14 @@
         <item>en_US</item>
         <item>it</item>
         <item>pt</item>
-<!--        <item>de</item> -->
+        <item>de</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->
         <item>Use Phone\'s global setting</item>
         <item>English (US) - Engine Driver\'s default </item>
         <item>Italian</item>
         <item>Portuguese</item>
-<!--        <item>German</item>  -->
+        <item>German</item>
     </string-array>
 
 </resources>
