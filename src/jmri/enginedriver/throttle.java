@@ -2552,15 +2552,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     void GamepadFeedbackSound(boolean invalidAction) {
         if (mainapp.appIsFinishing) { return;}
 
-        if (invalidAction)
-            tg.startTone(ToneGenerator.TONE_PROP_NACK);
-        else
-            tg.startTone(ToneGenerator.TONE_PROP_BEEP);
-
+        if (tg != null) {
+            if (invalidAction)
+                tg.startTone(ToneGenerator.TONE_PROP_NACK);
+            else
+                tg.startTone(ToneGenerator.TONE_PROP_BEEP);
+        }
     }
 
     void GamepadFeedbackSoundStop() {
-        tg.stopTone();
+        if (tg != null) {
+            tg.stopTone();
+        }
     }
 
     // For gamepad speed buttons.
@@ -3804,9 +3807,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         // tone generator for feedback sounds
-        tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
+        try {
+            tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                 preferences.getIntPrefValue(prefs,"prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
-
+        } catch (RuntimeException e) {
+            Log.d("Engine_Driver", "new ToneGenerateor failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
+        }
         // set GamePad Support
         setGamepadKeys();
 
@@ -4516,9 +4522,15 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             case ACTIVITY_PREFS: {    // edit prefs
                 if (resultCode == preferences.RESULT_GAMEPAD) { // gamepad pref changed
                     // update tone generator volume
-                    tg.release();
-                    tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
-                            preferences.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
+                    if (tg != null) {
+                        tg.release();
+                        try {
+                            tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
+                                preferences.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
+                        } catch (RuntimeException e) {
+                            Log.d("Engine_Driver", "new ToneGenerateor failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
+                        }
+                    }
                     // update GamePad Support
                     setGamepadKeys();
                 }

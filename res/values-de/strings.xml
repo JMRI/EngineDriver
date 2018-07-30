@@ -474,7 +474,7 @@
     <string name="toastConnectUnableToLoadPref">Host spezifische Voreinstellungen können nicht geladen werden. Erhalte keinen Hostnamen.</string>
     <string name="toastConnectErrorReadingRecentConnections">Fehler beim Lesen der Liste Letzte Verbindungen:</string>
     <string name="toastConnectErrorSavingRecentConnection">Fehler beim Speichern der letzten Verbindung:</string>
-    <string name="toastRoutesCommandSent">"Befehl geschickt zum Stellen der Fahrstrasse"</string>
+    <string name="toastRoutesCommandSent">"Befehl geschickt zum Stellen der Fahrstrasse "</string>
     <string name="toastImportExportExportSucceeded">Voreinstellungen exportieren zu \'engine_driver/%%1%%\' war erfolgreich.</string>
     <string name="toastImportExportImportSucceeded">Voreinstellungen importieren von \'engine_driver/%%1%%\' war erfolgreich.</string>
     <string name="toastImportExportExportFailed">Voreinstellungen exportieren zu \'engine_driver/%%1%%\' ist fehlgeschlagen!</string>
