@@ -316,11 +316,13 @@ public class threaded_application extends Application {
                     Log.d("Engine_Driver", "start_jmdns: listener created");
 
                 } else {
-                    show_toast_message("No local IP Address found.\nCheck your WiFi connection.", Toast.LENGTH_SHORT);
+//                    show_toast_message("No local IP Address found.\nCheck your WiFi connection.", Toast.LENGTH_SHORT);
+                    show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppNoLocalIp), Toast.LENGTH_SHORT);
                 }
             } catch (Exception except) {
                 Log.e("Engine_Driver", "start_jmdns - Error creating withrottle listener: " + except.getMessage());
-                show_toast_message("Error creating withrottle zeroconf listener: IOException: \n" + except.getMessage(), Toast.LENGTH_SHORT);
+//                show_toast_message("Error creating withrottle zeroconf listener: IOException: \n" + except.getMessage(), Toast.LENGTH_SHORT);
+                show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorCreatingWiThrottle).replace("%1$s",except.getMessage()), Toast.LENGTH_SHORT);
             }
         }
 
@@ -870,7 +872,8 @@ public class threaded_application extends Application {
                             sendMsg(connection_msg_handler, message_type.CONNECTED);
                         }
                     } else {
-                        show_toast_message("WiThrottle version " + response_str.substring(2) + " not supported.", Toast.LENGTH_LONG);
+//                        show_toast_message("WiThrottle version " + response_str.substring(2) + " not supported.", Toast.LENGTH_LONG);
+                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported).replace("%1$s",response_str.substring(2)), Toast.LENGTH_SHORT);
                         socketWiT.disconnect(false);
                     }
                     break;
@@ -1260,7 +1263,8 @@ public class threaded_application extends Application {
                     try {
                         host_address = InetAddress.getByName(host_ip);
                     } catch (UnknownHostException except) {
-                        show_toast_message("Can't determine IP address of " + host_ip, Toast.LENGTH_LONG);
+//                        show_toast_message("Can't determine IP address of " + host_ip, Toast.LENGTH_LONG);
+                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantDeterminIp).replace("%1$s",host_ip), Toast.LENGTH_SHORT);
                         socketOk = false;
                     }
                 }
@@ -1276,9 +1280,10 @@ public class threaded_application extends Application {
                         clientSocket.setSoTimeout(socketTimeoutMs);
                     } catch (Exception except) {
                         if (!firstConnect) {
-                            show_toast_message("Can't connect to host " + host_ip + " and port " + port +
-                                    " from " + client_address +
-                                    " - " + except.getMessage() + "\nCheck WiThrottle and network settings.", Toast.LENGTH_LONG);
+//                            show_toast_message("Can't connect to host " + host_ip + " and port " + port +
+//                                    " from " + client_address +
+//                                    " - " + except.getMessage() + "\nCheck WiThrottle and network settings.", Toast.LENGTH_LONG);
+                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantDeterminIp).replace("%1$s",host_ip).replace("%2$s",Integer.toString(port)).replace("%3$s",client_address).replace("%4$s",except.getMessage()), Toast.LENGTH_SHORT);
                         }
                         socketOk = false;
                     }
@@ -1289,7 +1294,8 @@ public class threaded_application extends Application {
                     try {
                         inputBR = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                     } catch (IOException except) {
-                        show_toast_message("Error creating input stream, IOException: " + except.getMessage(), Toast.LENGTH_LONG);
+//                        show_toast_message("Error creating input stream, IOException: " + except.getMessage(), Toast.LENGTH_LONG);
+                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorInputStream).replace("%1$s",except.getMessage()), Toast.LENGTH_SHORT);
                         socketOk = false;
                     }
                 }
@@ -1302,7 +1308,8 @@ public class threaded_application extends Application {
                             this.start();
                         } catch (IllegalThreadStateException except) {
                             //ignore "already started" errors
-                            show_toast_message("Error starting socket_WiT thread:  " + except.getMessage(), Toast.LENGTH_LONG);
+//                            show_toast_message("Error starting socket_WiT thread:  " + except.getMessage(), Toast.LENGTH_LONG);
+                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorStartingSocket).replace("%1$s",except.getMessage()), Toast.LENGTH_SHORT);
                         }
                     }
                 }
@@ -1315,7 +1322,8 @@ public class threaded_application extends Application {
                             socketOk = false;
                         }
                     } catch (IOException e) {
-                        show_toast_message("Error creating output stream, IOException: " + e.getMessage(), Toast.LENGTH_LONG);
+//                        show_toast_message("Error creating output stream, IOException: " + e.getMessage(), Toast.LENGTH_LONG);
+                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorCreatingOutputStream).replace("%1$s",e.getMessage()), Toast.LENGTH_SHORT);
                         socketOk = false;
                     }
                 }
@@ -1332,7 +1340,8 @@ public class threaded_application extends Application {
                         try {
                             Thread.sleep(500);              //  give run() a chance to see endRead and exit
                         } catch (InterruptedException e) {
-                            show_toast_message("Error sleeping the thread, InterruptedException: " + e.getMessage(), Toast.LENGTH_LONG);
+//                            show_toast_message("Error sleeping the thread, InterruptedException: " + e.getMessage(), Toast.LENGTH_LONG);
+                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorSleepingThread).replace("%1$s",e.getMessage()), Toast.LENGTH_SHORT);
                         }
                     }
                 }
@@ -1385,14 +1394,17 @@ public class threaded_application extends Application {
                     String status;
                     getWifiInfo();                  //update address in case network connection was lost
                     if (client_address == null) {
-                        status = "Not connected to a network.  Check WiFi settings.\n\nRetrying";
+//                        status = "Not connected to a network.  Check WiFi settings.\n\nRetrying";
+                        status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNotConnected);
                         Log.d("Engine_Driver", "WiT send reconnection attempt.");
                     } else if (inboundTimeout) {
-                        status = "No response from server " + host_ip + ":" + port + " for " + heart.sGetInboundInterval() + " seconds.  " +
-                                "Check that the WiThrottle server is running.\n\nRetrying";
+//                        status = "No response from server " + host_ip + ":" + port + " for " + heart.sGetInboundInterval() + " seconds.  " +
+//                                "Check that the WiThrottle server is running.\n\nRetrying";
+                        status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse).replace("%1$s",host_ip).replace("%2$s",Integer.toString(port)).replace("%3$s",heart.sGetInboundInterval());
                         Log.d("Engine_Driver", "WiT receive reconnection attempt.");
                     } else {
-                        status = "Unable to connect to server at " + host_ip + ":" + port + " from " + client_address + ".\n\nRetrying";
+//                        status = "Unable to connect to server at " + host_ip + ":" + port + " from " + client_address + ".\n\nRetrying";
+                        status = getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect).replace("%1$s",host_ip).replace("%2$s",Integer.toString(port)).replace("%3$s",client_address);
                         Log.d("Engine_Driver", "WiT send reconnection attempt.");
                     }
                     socketGood = false;

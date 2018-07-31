@@ -106,8 +106,8 @@
     </string-array>
     <string-array name="prefAutoImportExportOptionsDisplayEntries">
         <item>Keine</item>
-        <item>Auto Importieren/Exportieren beim Verbinden/Trennen</item>
-        <item>Auto Importieren nur beim Verbinden</item>
+        <item>Auto Import/Export beim Verbinden/Trennen</item>
+        <item>Auto Import nur beim Verbinden</item>
     </string-array>
     <string-array name="prefThemeEntries">
         <item>Standard Motiv</item>
