@@ -27,7 +27,7 @@
     <string name="app_name_throttle_short">Fahrregler</string>
     <string name="app_name_power_control">Anlagenstrom - Engine Driver</string>
     <string name="app_name_reconnect_status">Wiederverbindungsstatus - Engine Driver</string>
-    <string name="app_name_routes">Fahrstrassen - Engine Driver</string>
+    <string name="app_name_routes">Fahrstraßen - Engine Driver</string>
     <string name="app_name_turnouts">Weichen - Engine Driver</string>
     <string name="app_name_about">Über  - Engine Driver</string>
     <string name="app_name_web">Web - Engine Driver</string>
@@ -47,12 +47,12 @@
     <string name="loco_address">Lokadresse</string>
     <string name="connect_button">Verbinden</string>
     <string name="recent_connections">Letzte Verbindungen</string>
-    <string name="select_loco_heading">Lokübernehmungsmethode - Fahrregler %1$s</string>
+    <string name="select_loco_heading">Lokübernahme, Methode - Fahrregler %1$s</string>
     <string name="select_loco">Lokadresse eingeben zum Übernehmen</string>
     <string name="select_loco_address">Adresse</string>
     <string name="acquire_button">Übernehmen</string>
     <string name="roster_list">Auswahl aus Lokverzeichnis/Lokverbundeingaben</string>
-    <string name="recent_engines">Auswahl aus Liste Letzte Loks</string>
+    <string name="recent_engines">Auswahl aus kürzlich verwendeten Loks</string>
     <string name="direction">Vorwärts</string>
     <string name="speed">Geschwindigkeit:</string>
     <string name="discovered_services">Erkannte Server</string>
@@ -64,7 +64,7 @@
     <string name="fb_helptext">Bezeichnungen und Funktionsnummern auf der rechten Seite der Liste eingeben. Lasse die Beschriftung leer, um die Knöpfe auszublenden. Diese werden verwendet, wenn Funktionen des Lokverzeichnisses nicht verfügbar sind.</string>
     <string name="copy_function_labels">Bezeichnungen aus dem Lokverzeichnis kopieren</string>
     <string name="fb_header">Funktionen bearbeiten</string>
-    <string name="consist_help">Eine Lok anklicken um ihre Richtung im Vergleich zum Kopf des Lokverbundes zu ändern. Langer Druck auf eine Lok um sie aus dem Lokverbund zu entfernen. Zurück-Pfeil drücken wenn fertig.</string>
+    <string name="consist_help">Eine Lok anklicken um ihre Richtung im Vergleich zum Kopf des Lokverbundes zu ändern. Lange auf eine Lok drücken, um sie aus dem Lokverbund zu entfernen. Zurück-Pfeil drücken wenn fertig.</string>
     <string name="about">Über</string>
     <string name="web">Web</string>
     <string name="mrc_settings">MRC Einstellungen</string>
@@ -85,11 +85,11 @@
     <string name="turnouts_list_label">Weichen (anklicken für Richtungsänderung)</string>
     <string name="turnouts_turnout">Weiche</string>
     <string name="location_all">ALLE ORTE</string>
-    <string name="routes">Fahrstrassen</string>
-    <string name="routes_label">Fahrstrassen kontrollieren</string>
-    <string name="routes_direct_entry_label">Systemname für Fahrstrasse angeben</string>
+    <string name="routes">Fahrstraßen</string>
+    <string name="routes_label">Fahrstraßen steuern</string>
+    <string name="routes_direct_entry_label">Systemname für Fahrstraße eingeben</string>
     <string name="routes_location_label">Filtern nach Ort</string>
-    <string name="routes_list_label">Fahrstrasse (Zustand anklicken zum Aktivieren)</string>
+    <string name="routes_list_label">Fahrstraße (anklicken zum Aktivieren)</string>
     <string name="consist_lead_label">Führende Lok</string>
     <string name="consist_list_label">Kopf des Lokverbundes</string>
     <string name="throw_button">╡ / ╞</string>
@@ -98,13 +98,13 @@
     <string name="power_control_label">Anlagenstrom steuern</string>
     <string name="power_control_button">unbekannt</string>
     <string name="press_to_toggle">Knopf drücken um Anlagenstrom Ein/Aus zu schalten.</string>
-    <string name="power_control_not_allowed">Steuerung des Anlagenstroms nicht erlaubt. Ändere die Einstellung auf dem Server.</string>
+    <string name="power_control_not_allowed">Steuerung des Anlagenstroms nicht erlaubt. Ändere die Einstellungen auf dem Server.</string>
     <string name="reconnect_label">Wiederverbindungsstatus</string>
     <string name="reconnect_help">Versuche automatisch neu zu verbinden. Warte auf Wiederverbindung oder drücke Zurück-Pfeil zum Beenden.</string>
     <string name="reconnect_success">WIEDER VERBUNDEN. Normaler Betrieb wird aufgenommen.</string>
     <string name="fs_edit_notice">WARNUNG: Änderungen der Standardfunktionseinstellungen gehen beim Beenden verloren - Keine SD Karte gefunden.</string>
     <string name="ca_recent_conn_notice">Letzte Verbindungen nicht verfügbar - Keine SD Karte gefunden.</string>
-    <string name="sl_recent_engine_notice">Liste Letzte Loks nicht verfügbar - Keine SD Karte gefunden.</string>
+    <string name="sl_recent_engine_notice">Liste kürzlich verwendeter Loks nicht verfügbar - Keine SD Karte gefunden.</string>
     <string name="power">Anlagenstrom</string>
     <string name="throttle">Fahrregler</string>
     <string name="on">Ein</string>
@@ -118,7 +118,7 @@
     <string name="exit_title">Beenden</string>
     <string name="steal_text">Adresse %1$s stehlen?</string>
     <string name="steal_title">Stehlen</string>
-    <string name="prefTitle">Voreinstellungen  - Engine Driver</string>
+    <string name="prefTitle">Voreinstellungen</string>
     <string name="prefSummary">Voreinstellungen für Engine Driver</string>
     <string name="preferences">Voreinstellungen</string>
     <string name="prefSwipeUpDownTitle">Voreinstellungen für Wischen nach oben/unten</string>
@@ -128,21 +128,21 @@
     <string name="prefThrottleNameSummary">Wähle einen Namen für dieses Gerät (angezeigt auf WiThrottle Bildschirm)</string>
     <string name="prefThrottleOrientationTitle">Orientierung des Bildschirms</string>
     <string name="prefThrottleOrientationDefaultValue">Hochformat</string>
-    <string name="prefThrottleOrientationSummary">Bildschirmorientierung (ausser Web)</string>
-    <string name="prefThrottlePageTitle">Bevorzugte Erscheinung des Fahrreglers</string>
-    <string name="prefThrottleTitle">Bevorzugter Fahrregler</string>
-    <string name="prefThrottleStatusTitle">Bevorzugte Statuszeile im Fahrregler</string>
+    <string name="prefThrottleOrientationSummary">Bildschirmorientierung (außer Web)</string>
+    <string name="prefThrottlePageTitle">Voreinstellungen der Fahrreglerdarstellung</string>
+    <string name="prefThrottleTitle">Voreinstellungen des Fahrreglers</string>
+    <string name="prefThrottleStatusTitle">Voreinstellungen für Statuszeile im Fahrregler</string>
 
     <string name="prefSliderTitle">Voreinstellungen für Geschwindigkeitsschieber und -knöpfe</string>
     <string name="prefSliderSummary">Optionen für Geschwindigkeitsschieber und -knöpfe</string>
     <string name="prefDirectionTitle">Voreinstellungen für Fahrrichtungsknopf</string>
-    <string name="prefDirectionSummary">Optionen für den Fahrrichtungsknopf</string>
-    <string name="prefIncreaseSliderHeightTitle">Geschwindigkeit des Schiebers erhöhen?</string>
-    <string name="prefIncreaseSliderHeightSummary">Verwende grössere Geschwindigkeitsschieber oder -knöpfe für Fahrregler.</string>
+    <string name="prefDirectionSummary">Optionen für die Fahrrichtungsknöpfe</string>
+    <string name="prefIncreaseSliderHeightTitle">Erhöhe Geschwindigkeit vom Schieber?</string>
+    <string name="prefIncreaseSliderHeightSummary">Verwende größere Geschwindigkeitsschieber oder -knöpfe für Fahrregler.</string>
     <string name="prefHideSliderTitle">Geschwindigkeitsschieber ausblenden?</string>
     <string name="prefHideSliderSummary">Geschwindigkeitsschieber nicht anzeigen, stattdessen Geschwindigkeitsknöpfe verwenden.</string>
     <string name="prefHideSliderAndSpeedButtonsTitle">Geschwindigkeitsschieber UND -knöpfe ausblenden?</string>
-    <string name="prefHideSliderAndSpeedButtonsSummary">Weder Geschwindigkeitsschieber noch -knöpfe zeigen.\nHinweis: Übergeht die Einstellungen \'Geschwindigkeitsschieber ausblenden\', \'Geschwindigkeit des Schiebers\' und \'Geschwindigkeitsknöpfe anzeigen\'.</string>
+    <string name="prefHideSliderAndSpeedButtonsSummary">Weder Geschwindigkeitsschieber noch -knöpfe zeigen.\nHinweis: Übergeht die Einstellungen \'Geschwindigkeitsschieber ausblenden\', \'Geschwindigkeit vom Schieber\' und \'Geschwindigkeitsknöpfe anzeigen\'.</string>
     <string name="prefDirChangeWhileMovingTitle">Richtungswechsel während der Fahrt?</string>
     <string name="prefDirChangeWhileMovingSummary">Erlaube Richtungswechsel während der Fahrt.</string>
     <string name="prefStopOnDirectionChangeTitle">Anhalten beim Richtungswechsel?</string>
@@ -151,31 +151,31 @@
     <string name="prefSelLocoWhileMovingSummary">Ermöglicht Anzeige des Knopfs für Lokauswahl während der Fahrt.</string>
     <string name="prefShowAddressInsteadOfNameTitle">Zeige Adresse statt Name der Lok?</string>
     <string name="prefShowAddressInsteadOfNameSummary">DCC Adresse statt Name der Lok im Fahrregler anzeigen.</string>
-    <string name="prefIncreaseWebViewSizeTitle">Vergrössere Web Ansicht?</string>
-    <string name="prefIncreaseWebViewSizeSummary">Vergrössere Web Ansicht auf 60% für kleine Bildschirme.</string>
-    <string name="prefThrottleViewImmersiveModeTitle">Verwende immersiven Mode für den Fahrregler?</string>
-    <string name="prefThrottleViewImmersiveModeSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten um vorübergehend zu deaktivieren und das Menü zu erreichen.</string>
+    <string name="prefIncreaseWebViewSizeTitle">Vergrößere Web Ansicht?</string>
+    <string name="prefIncreaseWebViewSizeSummary">Vergrößere Web Ansicht auf 60% für kleine Bildschirme.</string>
+    <string name="prefThrottleViewImmersiveModeTitle">Verwende immersiven Modus für die Anzeige des Fahrregler?</string>
+    <string name="prefThrottleViewImmersiveModeSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
     <string name="prefSwipeUpOptionTitle">Aktion für Wischen nach oben im Fahrregler?</string>
     <string name="prefSwipeUpOptionSummary">Was soll geschehen beim Wischen nach oben im Fahrregler.</string>
     <string name="prefVolumeTitle">Voreinstellungen für Lautstärke</string>
     <string name="prefVolumeSummary">Optionen für Lautstärkeknöpfe</string>
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Veränderung durch Geschwindigkeitsknöpfe</string>
-    <string name="prefVolumeSpeedButtonsSpeedStepSummary">Wie viel wird die Geschwindigkeit durch Lautstärkeknöpfe ändert.</string>
+    <string name="prefVolumeSpeedButtonsSpeedStepSummary">Wie viel die Geschwindigkeit durch Lautstärkeknöpfe geändert wird.</string>
 
-    <string name="prefGamePadTitle">Gamepad vorzuege</string>
+    <string name="prefGamePadTitle">Voreinstellungen für Gamepad</string>
     <string name="prefGamePadSummary">Wähle den Gamepad Typ und andere Optionen</string>
     <string name="prefGamePadTypeTitle">Gamepad Typ</string>
     <string name="prefGamePadTypeSummary">Wähle die Option welche dein Gamepad am Besten unterstützt.</string>
     <string name="prefGamePadStartButtonTitle">Gamepad Startknopf Aktion</string>
     <string name="prefGamePadStartButtonSummary">Wähle die Aktion für das Drücken des Startknopfes.</string>
-    <string name="prefGamePadFeedbackVolumeTitle"> Gamepad Knopf klicken Lautstaerke%</string>
-    <string name="prefGamePadFeedbackVolumeSummary">setze den Perzent der Lautstaerke fuer Gamepad Knopf klicks</string>
+    <string name="prefGamePadFeedbackVolumeTitle">Klickausmaß in % für Gamepad Knopf</string>
+    <string name="prefGamePadFeedbackVolumeSummary">Setze das Prozentausmaß für Klicks mit dem Gamepad Knopf</string>
 
     <string name="prefGamePadSpeedButtonsRepeatTitle">Wiederholungsverzögerung für Geschwindigkeitsknopf</string>
     <string name="prefGamePadSpeedButtonsRepeatSummary">Wie lange zwischen Wiederholungen der Gamepad Knöpfe. Kleiner ist schneller.</string>
 
-    <string name="prefGamePadSpeedButtonsSpeedStepTitle">Wechselsumme der Geschwindigkeitsknöpfe</string>
-    <string name="prefGamePadSpeedButtonsSpeedStepSummary">Wie viel springt der Gamepadknopf die Fahrreglergeschwindigkeit</string>
+    <string name="prefGamePadSpeedButtonsSpeedStepTitle">Ausmaß der Veränderung durch Geschwindigkeitsknöpfe</string>
+    <string name="prefGamePadSpeedButtonsSpeedStepSummary">Wie viel Gamepad Knöpfe den Fahrregler verstellen.</string>
 
     <string name="prefGamePadButton1Title">Aktion für Gamepad Knopf</string>
     <string name="prefGamePadButton2Title">Aktion für Gamepad Knopf</string>
@@ -201,34 +201,34 @@
 
     <string name="prefEsuMc2Title">ESU MobileControl II Optionen</string>
     <string name="prefEsuMc2Summary">Wähle ESU MobileControl II Optionen</string>
-    <string name="prefEsuMc2ButtonsCategoryTitle">Optionen für seitliche Geraeteknöpfe</string>
-    <string name="prefEsuMc2ButtonTLTitle">Links OBEN Knopfaktion</string>
-    <string name="prefEsuMc2ButtonTLSummary">Wähle die Aktion wenn der Knopf gedrueckt wird</string>
-    <string name="prefEsuMc2ButtonTLDefaultValue">Erhöhe Geschwindigkeit</string>
+    <string name="prefEsuMc2ButtonsCategoryTitle">Optionen für seitliche Knöpfe</string>
+    <string name="prefEsuMc2ButtonTLTitle">Aktion für Knopf Oben-Links </string>
+    <string name="prefEsuMc2ButtonTLSummary">Wähle die Aktion für das Drücken des Knopfes.</string>
+    <string name="prefEsuMc2ButtonTLDefaultValue">Geschwindigkeit erhöhen</string>
     <string name="prefEsuMc2ButtonBLTitle">Aktion für Knopf Unten-Links</string>
-    <string name="prefEsuMc2ButtonBLSummary">Wähle die Aktion wenn der Knopf gedrueckt wird</string>
+    <string name="prefEsuMc2ButtonBLSummary">Wähle die Aktion für das Drücken des Knopfes.</string>
     <string name="prefEsuMc2ButtonBLDefaultValue"> Geschwindigkeit mindern</string>
-    <string name="prefEsuMc2ButtonTRTitle">Aktion für Knopf Rechts-OBEN</string>
-    <string name="prefEsuMc2ButtonTRSummary">Wähle die Aktion wenn der Knopf gedruckt wird</string>
-    <string name="prefEsuMc2ButtonTRDefaultValue">Vorwärts/Rückwärts schalten</string>
-    <string name="prefEsuMc2ButtonBRTitle">Aktion für Knopf rechts-UNTEN</string>
-    <string name="prefEsuMc2ButtonBRSummary">Wähle die Aktion wenn der  Knopf gedrueckt wird</string>
+    <string name="prefEsuMc2ButtonTRTitle">Aktion für Knopf Oben-Rechts</string>
+    <string name="prefEsuMc2ButtonTRSummary">Wähle die Aktion für das Drücken des Knopfes.</string>
+    <string name="prefEsuMc2ButtonTRDefaultValue">Vorwärts/Rückwärts umschalten</string>
+    <string name="prefEsuMc2ButtonBRTitle">Aktion für Knopf Unten-Rechts</string>
+    <string name="prefEsuMc2ButtonBRSummary">Wähle die Aktion für das Drücken des Knopfes.</string>
     <string name="prefEsuMc2ButtonBRDefaultValue">Nächster Fahrregler</string>
     <string name="prefEsuMc2ButtonsRepeatTitle">Knopf Wiederholungsverzögerung</string>
-    <string name="prefEsuMc2ButtonsRepeatSummary">Wie lange zwischen Wiederholungen an den seitlichen Knöpfe des geraetes.\n  Kleiner ist schneller.</string>
+    <string name="prefEsuMc2ButtonsRepeatSummary">Wie lange zwischen Wiederholungen der seitlichen Knöpfe.\n Kleiner ist schneller.</string>
 
-    <string name="prefEsuMc2StopButtonCategoryTitle">Geraete Haltknopf Optionen</string>
-    <string name="prefEsuMc2StopButtonDelayTitle">Haltknopf Langdruck verzoegern</string>
-    <string name="prefEsuMc2StopButtonDelaySummary">Wie lange für ein \'langes Drücken\' des Haltknopfes.\nA \'langes Drücken\' stoppt alle aktiven Fahrregler; ein \'kurzes Drücken\' pausiert den aktuellen Fahrregler.\nKleiner ist schneller.</string>
+    <string name="prefEsuMc2StopButtonCategoryTitle">Stop Knopf Optionen</string>
+    <string name="prefEsuMc2StopButtonDelayTitle">Verzögerung für ein langes Drücken des Stop Knopfes</string>
+    <string name="prefEsuMc2StopButtonDelaySummary">Wie lange für ein \'langes Drücken\' des Stop Knopfes.\nEin \'langes Drücken\' stoppt alle aktiven Fahrregler; ein \'kurzes Drücken\' pausiert den aktuellen Fahrregler.\nKleiner ist schneller.</string>
 
-    <string name="prefEsuMc2ZeroTrimCategoryTitle">Kontrolknopf Optionen</string>
-    <string name="prefEsuMc2ZeroTrimTitle">Kontrolknopf Null trimmen</string>
-    <string name="prefEsuMc2ZeroTrimSummary">Die Kontrolknopfnulleinstellung setzen\nKleiner ist näher zur Endposition im Antiuhrzeigersinn.\nErlaubter Bereich 0&#8211;255.</string>
+    <string name="prefEsuMc2ZeroTrimCategoryTitle">Drehregler Optionen</string>
+    <string name="prefEsuMc2ZeroTrimTitle">Drehregler Nullpunkt Kalibration</string>
+    <string name="prefEsuMc2ZeroTrimSummary">Drehregler Nullpunkt einstellen.\nKleiner ist näher zur Endposition im Gegenuhrzeigersinn.\nErlaubter Bereich 0&#8211;255.</string>
 
-    <string name="toastEsuMc2NoLocoChange">Lokwechsel nicht erlaubt: Mobile Contol II ist im Moment in Halt Mode</string>
-    <string name="toastEsuMc2NoThrottleChange">Fahrreglerwechsel nicht erlaubt: Mobile Control  II ist im Moment in Halt Mode</string>
-    <string name="toastEsuMc2NoButtonPresses">Knöpfe drücken nicht erlaubt: Mobile Control II ist im Moment in Halt Mode</string>
-    <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Gebrauche die voreingestellten Funktionsediketten</string>
+    <string name="toastEsuMc2NoLocoChange">Lokwechsel nicht erlaubt: Mobile Control II ist aktuell im Stop Mode</string>
+    <string name="toastEsuMc2NoThrottleChange">Fahrreglerwechsel nicht erlaubt: Mobile Control II ist aktuell im Stop Mode</string>
+    <string name="toastEsuMc2NoButtonPresses">Knöpfe drücken nicht erlaubt: Mobile Control II ist aktuell im Stop Mode</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Nutze Standard Funktionsbezeichnungen?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Zeige Standard Funktionsbezeichnungen statt jene aus dem Lokverzeichnis.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Verkleinere Loknummernhöhe?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Verwende kleinere Knöpfe für Loknummer, Geschwindigkeit und Fahrrichtung.</string>
@@ -246,7 +246,7 @@
     <string name="prefMaximumThrottleChangeSummary">Maximal erlaubte Fahrregleränderung in %</string>
     <string name="prefWebViewTitle">Web Ansicht Voreinstellungen</string>
     <string name="prefWebViewSummary">Optionen für die Web Ansicht</string>
-    <string name="prefInitialThrotWebPageTitle">Anfängliche Fahrregler Web  Seite</string>
+    <string name="prefInitialThrotWebPageTitle">Anfängliche Fahrregler Web Seite</string>
 
     <string name="prefInitialThrotWebPageSummary">Anfängliche Fahrregler Web  Seite (Typ \'/panel/\')</string>
     <string name="prefWebViewLocationTitle">Fahrregler Web Ansicht?</string>
@@ -258,21 +258,22 @@
     <string name="prefStopOnPhonecallTitle">Stop bei Telefonanruf?</string>
     <string name="prefStopOnPhonecallSummary">Stoppe Lok(s) wenn ein Telefonanruf angenommen oder gewählt wird</string>
     <string name="prefStopOnReleaseTitle">Stop beim Freigeben?</string>
-    <string name="prefStopOnReleaseSummary">Stoppe Lok(s) wenn aus Fahrregler freigegeben</string>
-    <string name="prefSwipeThroughRoutesTitle">Wischen durch Fahrstrassen?</string>
-    <string name="prefSwipeThroughRoutesSummary">Fahrstrassenanzeige einschliessen beim Wischen zwischen Anzeigen.</string>
+    <string name="prefStopOnReleaseSummary">Stoppe Lok(s) bei Freigabe aus dem Fahrregler</string>
+    <string name="prefSwipeThroughRoutesTitle">Wischen durch Fahrstraßen?</string>
+    <string name="prefSwipeThroughRoutesSummary">Fahrstraßenanzeige einschliessen beim Wischen zwischen Anzeigen.</string>
     <string name="prefSwipeThroughTurnoutsTitle">Wischen durch Weichen?</string>
-    <string name="prefSwipeThroughTurnoutsSummary">Weichenanzeige einschliessen beim Wischen zwischen Anzeigen.</string>
-    <string name="prefDropOnAcquireTitle">Lok Freigeben vor dem Übernehmen? </string>
+    <string name="prefSwipeThroughTurnoutsSummary">Weichenanzeige einschließen beim Wischen zwischen Anzeigen.</string>
+    <string name="prefDropOnAcquireTitle">Lok Freigeben vor dem Übernehmen?</string>
     <string name="prefDropOnAcquireSummary">Aktuelle Lok Freigeben vor der Übernahme einer neuen Lok.</string>
     <string name="prefHideIfNoUserNameTitle">Ausblenden falls kein Benutzername existiert?</string>
-    <string name="prefHideIfNoUserNameSummary">Weiche/Fahrstrasse aus Liste weglassen wenn der Benutzername leer ist.</string>
+    <string name="prefHideIfNoUserNameSummary">Weiche/Fahrstraße aus Liste weglassen wenn der Benutzername leer ist.</string>
+    <string name="prefHideRecentLocosTitle">Verberge die Liste Letzte Loks?</string>
+    <string name="prefHideRecentLocosSummary">Mehr Platz lassen für Loks aus dem Lokverzeichnis.</string>
+    <string name="prefRosterRecentLocosTitle">Auswahl aus kürzlich verwendeten Loks</string>
+    <string name="prefRosterRecentLocosSummary">Lokverzeichnisauswahlen in kürzlich verwendeten Loks einbeziehen?</string>
+    <string name="prefMaximumRecentLocosTitle">Maximum kürzlich verwendeter Loks</string>
 
-    <string name="prefRosterRecentLocosTitle">Lokverzeichnis in Letzte Loks?</string>
-    <string name="prefRosterRecentLocosSummary">Lokverzeichnisauswahlen in Liste Letzte Loks einbeziehen?</string>
-    <string name="prefMaximumRecentLocosTitle">Maximum Letzte Loks</string>
-
-    <string name="prefMaximumRecentLocosSummary">Maximum kürzlich verwendeter Loks für Anzeige in Liste</string>
+    <string name="prefMaximumRecentLocosSummary">Maximum kürzlich verwendeter Loks zum Anzeigen in Liste</string>
     <string name="prefDefaultAddressLengthTitle">Standard Adresslänge</string>
 
     <string name="prefDefaultAddressLengthSummary">Standard Adresslänge der Lok, (Auto setzt sie aufgrund der Anzahl Ziffern)</string>
@@ -286,19 +287,19 @@
     <string name="prefInitialWebPageTitle">Web Startseite</string>
 
     <string name="prefInitialWebPageSummary">Web Startseite (wie \'/panel\')</string>
-    <string name="prefConnectTitle">Einstellungen der Verbindungen</string>
+    <string name="prefConnectTitle">Voreinstellungen für Verbindungen</string>
     <string name="prefMaximumRecentConnectionsTitle">Maximum Letzte Verbindungen</string>
 
     <string name="prefMaximumRecentConnectionsSummary">Maximum kürzlich verwendeter Verbindungen zum Anzeigen in Liste</string>
-    <string name="prefTurnoutsTitle">Voreinstellungen für Weichen und Fahrstrassen</string>
+    <string name="prefTurnoutsTitle">Voreinstellungen für Weichen und Fahrstraßen</string>
     <string name="prefHardwareSystemTitle">Hardware System der Weichen</string>
 
     <string name="prefHardwareSystemSummary">Wähle Hardware System der Weichen für direkte Befehlseingaben</string>
-    <string name="prefHideSystemRouteNamesTitle">Namen für Fahrstrassen ausblenden?</string>
-    <string name="prefHideSystemRouteNamesSummary">Namen für Fahrstrassen ausblenden, verwendet zum Platz sparen in der Fahrstrassenliste.</string>
+    <string name="prefHideSystemRouteNamesTitle">Namen für Fahrstraßen ausblenden?</string>
+    <string name="prefHideSystemRouteNamesSummary">Namen für Fahrstraßen ausblenden, verwendet zum Platz sparen in der Fahrstraßenliste.</string>
     <string name="prefDelimiterTitle">Abgrenzer für den Standort</string>
 
-    <string name="prefDelimiterSummary">Setze das Zeichen welches das Ende des Standortanteils von Weichen und Fahrstrassennamen markiert</string>
+    <string name="prefDelimiterSummary">Setze das Zeichen welches das Ende des Standortanteils von Weichen und Fahrstraßennamen markiert</string>
     <string name="prefScreenBrightnessDimTitle">Anzeigenabdunklung % Wert</string>
     <string name="prefScreenBrightnessDimSummary">Anzuwendende Helligkeitseinstellung für Anzeigenabdunklung (0%-99%). Automatische Abschaltung von Auto-Helligkeit / Adaptive Helligkeit wenn gesetzt.</string>
 
@@ -310,7 +311,7 @@
     <string name="EStop">Not-Stop</string>
     <string name="PowerButtonBar">Stromknopf</string>
     <string name="prefPowerButtonBarTitle">Zeige Knopf für Anlagenstrom?</string>
-    <string name="prefPowerButtonBarSummary">Zeige Knopf für Anlagenstrom in Fahrregler-, Weichen- und Fahrstrassenanzeigen?</string>
+    <string name="prefPowerButtonBarSummary">Zeige Knopf für Anlagenstrom in Fahrregler-, Weichen- und Fahrstraßenanzeigen?</string>
     <string name="prefSliderLeftMarginTitle">Geschwindigkeitsschiebergrenzen</string>
     <string name="prefSliderLeftMarginSummary">Anzahl Pixels Versatz für Rand der Geschwindigkeitsschieber.</string>
 
@@ -324,12 +325,12 @@
 
 
     <string name="prefDisplaySpeedArrowsTitle">Geschwindigkeitsknöpfe anzeigen?</string>
-    <string name="prefDisplaySpeedArrowsSummary">Knöpfe neben Schieber für Geschwindigkeitsänderungen der Lok anzeigen? </string>
+    <string name="prefDisplaySpeedArrowsSummary">Knöpfe neben Schiebern für Geschwindigkeitsänderungen der Lok anzeigen?</string>
 
     <string name="prefSelectedLocoIndicatorTitle">Zusätzlicher Indikator für gewählte Lok</string>
-    <string name="prefSelectedLocoIndicatorSummary">Zusätzliches Hervorheben des Lokwahl Knopfes basierend auf der Auswahlmethode.\nBenötigt Android Honeycomb oder neuer.</string>
+    <string name="prefSelectedLocoIndicatorSummary">Zusätzliches Hervorheben des Knopfes für Lokauswahl basierend auf der Auswahlmethode.\nBenötigt Android Honeycomb oder neuer.</string>
     <string name="prefSelectedLocoIndicatorDefaultValue">Keine</string>
-    <string name="prefDisableVolumeKeysTitle">Lautstärketasten ausschalten </string>
+    <string name="prefDisableVolumeKeysTitle">Lautstärketasten ausschalten</string>
     <string name="prefDisableVolumeKeysSummary">Schaltet die Lautstärketasten des Telefons/Tablets aus, welche sonst Geschwindigkeit steuern. Hinweis: Wenn gewählt wird \'Zusätzlicher Indikator für gewählte Lok\' ignoriert.</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Lautstärketasten folgen Berührung</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">Die Geschwindigkeitssteuerung mit Lautstärketasten folgt dem zuletzt berührten Fahrregler.</string>
@@ -337,45 +338,44 @@
     <string name="prefSpeedButtonsRepeatSummary">Wie lange zwischen Wiederholungen bei Geschwindigkeitsknöpfen. Kleiner ist schneller. Gilt nicht für Gamepad-Knöpfe. (Siehe separate Einstellungen für Gamepad)</string>
 
     <string name="prefSpeedButtonsSpeedStepTitle">Veränderung durch Geschwindigkeitsknöpfe</string>
-    <string name="prefSpeedButtonsSpeedStepSummary">Wie viel die Geschwindigkeitsknöpfe den Fahrregler verändern.</string>
+    <string name="prefSpeedButtonsSpeedStepSummary">Wie viel die Geschwindigkeitspfeile die Geschwindigkeit des Fahrregler verändern.</string>
 
     <string name="prefGamePadTypeDefaultValue">Keine</string>
     <string name="prefSwipeUpOptionDefaultValue">Keine</string>
     <string name="prefGamePadStartButtonDefaultValue">Nächster Fahrregler</string>
     <string name="NumThrottleDefaulValue">Zwei</string>
     <string name="server_address">Serveradresse</string>
-    <string name="routes_route">Fahrstrassenname</string>
+    <string name="routes_route">Fahrstraßenname</string>
 
 
 
 
 
     <string name="throttle_name">Fahrreglername: %1$s</string>
-    <string name="prefConsistLightsLongClickTitle">Steuere Lokverbund-Lichter mit langem Klick</string>
+    <string name="prefConsistLightsLongClickTitle">Steuere die Lichter eines Lokverbunds mit langem Klick</string>
     <string name="prefConsistLightsLongClickSummary">Ändere die Lichter einzelner Loks in einem Verbund mit einem langen Klick auf den Lokwahl-Knopf.</string>
     <string name="consistLights_help">Klicke auf eine Lok, um deren Lichter zwischen \'Aus\' und \'Folge Funktionsknopf\' umzuschalten.\n\nErzwinge Lichtstatus \'Aus\' mit langem Klick, ohne den Befehl an die Lok zusenden.(z.B. wenn ED verwirrt ist).\n\nDrücke Zurück-Pfeil wenn fertig.</string>
-    <string name="prefThrottleImportExportTitle">Voreinstellungen importieren/exportieren/zurücksetzen</string>
-    <string name="prefThrottleImportExportSummary">Voreinstellungen importieren/exportieren/zurücksetzen</string>
-    <string name="prefImportExportTitle">Importieren, Exportieren oder Zurücksetzen</string>
-    <string name="prefImportExportSummary">\'Import\' oder \'Export\' der Voreinstellungen in \'engine_driver/\' Verzeichnis oder setze sie zurück.\nWird SOFORT nach Wahl der Option ausgeführt.
-    \n(Voreinstellungen können mit Kopieren der Datei auf ein anderes Telefon übertragen werden.)</string>
+    <string name="prefThrottleImportExportTitle">Voreinstellungen für Import/Export/Zurücksetzen</string>
+    <string name="prefThrottleImportExportSummary">Voreinstellungen für Import/Export/Zurücksetzen</string>
+    <string name="prefImportExportTitle">Import, Export, oder Zurücksetzen</string>
+    <string name="prefImportExportSummary">\'Import\' oder \'Export\' der Voreinstellungen im \'engine_driver/\' Verzeichnis oder setze sie zurück.\nWird SOFORT nach Wahl der Option ausgeführt.\n(Voreinstellungen können mit Kopieren der Datei auf ein anderes Telefon übertragen werden.)</string>
     <string name="prefImportExportDefaultValue">Keine</string>
-    <string name="prefImportExportLocoListTitle">Einbeziehen der Liste Letzte Loks</string>
-    <string name="prefImportExportLocoListSummary">Einbeziehen Loks in der Liste Letzte Loks beim \'Import\' oder \'Export\'.</string>
+    <string name="prefImportExportLocoListTitle">Einbeziehen der Liste kürzlich verwendeter Loks</string>
+    <string name="prefImportExportLocoListSummary">Einbeziehen der Loks in der Liste kürzlich verwendeter Loks beim \'Import\' oder \'Export\'.</string>
     <string name="prefAutoImportExportTitle">Auto Host spezifischer Import/Export</string>
-    <string name="prefAutoImportExportSummary">Bei jedem Verbindungsaufbau mit einem Host AUTOMATISCHER \'Import\'  der Voreinstellungen für diesen Host und optionaler \'Export\' zu diesem beim Trennen der Verbindung. \n(Um ständig auf einen bekannten Zustand zurückzusetzen. Setze auf \'Auto Import nur bei Verbindungsaufbau\' nach dem ersten Mal oder nach einem manuellen Speichern (unten).)</string>
+    <string name="prefAutoImportExportSummary">AUTOMATISCHER \'Import\'  der Voreinstellungen für diesen Host und optionaler \'Export\' zu diesem beim Trennen der Verbindung bei jedem Verbindungsaufbau mit einem Host. \n(Um ständig auf einen bekannten Zustand zurückzusetzen, setze \'Auto Import nur bei Verbindungsaufbau\' nach dem ersten Mal oder nach einem manuellen Speichern (unten).)</string>
     <string name="prefAutoImportExportDefaultValue">Keine</string>
     <string name="prefHostImportExportTitle">Manueller Host spezifischer Import/Export</string>
-    <string name="prefHostImportExportSummary">\'Import\' oder \'Export\' deiner Voreinstellungen für einen spezifischen Host in das \'engine_driver/\' Verzeichnis. Der Host muss in deiner Liste Letzte Verbindungen sein.\nWird SOFORT nach Auswahl der Option ausgeführt.\n(Nur verfügbar wenn momentan nicht verbunden.)</string>
+    <string name="prefHostImportExportSummary">\'Import\' oder \'Export\' deiner Voreinstellungen von/zu einem spezifischen Host in das \'engine_driver/\' Verzeichnis. Der Host muß in deiner Liste Letzte Verbindungen sein.\nWird SOFORT nach Auswahl der Option ausgeführt.\n(Nur verfügbar wenn momentan nicht verbunden.)</string>
     <string name="prefHostImportExportDefaultValue">Keine</string>
     <string name="prefSwapForwardReverseButtonsTitle">Vertausche Richtungsknöpfe</string>
     <string name="prefSwapForwardReverseButtonsSummary">Vertausche die beiden Richtungsknöpfe permanent für alle Fahrregler.</string>
-    <string name="prefSwapForwardReverseButtonsLongPressTitle">Vertausche Richtungsknöpfe lange Drücken</string>
-    <string name="prefSwapForwardReverseButtonsLongPressSummary">Vertausche die beiden Richtungsknöpfe temporär mit einem langen Drücken von einem Richtungsknopf.</string>
+    <string name="prefSwapForwardReverseButtonsLongPressTitle">Langes Drücken zum Vertauschen der Richtungsknöpfe</string>
+    <string name="prefSwapForwardReverseButtonsLongPressSummary">Vertausche die beiden Richtungsknöpfe temporär mit einem langen Drücken eines Richtungsknopfs.</string>
     <string name="prefGamepadSwapForwardReverseWithScreenButtonsTitle">Vertausche die Richtungsknöpfe mit Bildschirmknöpfen.</string>
     <string name="prefGamepadSwapForwardReverseWithScreenButtonsSummary">Vertausche die beiden Gamepad-Richtungsknöpfe temporär wenn die Bildschirm-Richtungsknöpfe vertauscht sind.</string>
     <string name="prefGamepadTestEnforceTestingTitle">Erzwinge Gamepad Test</string>
-    <string name="prefGamepadTestEnforceTestingSummary">Teste jedes Gamepad immer wenn sie verbunden sind.</string>
+    <string name="prefGamepadTestEnforceTestingSummary">Teste jedes Gamepad immer wenn es verbunden ist.</string>
     <string name="prefLeftDirectionButtonsTitle">Bezeichnung des Richtungsknopfs Links</string>
     <string name="prefLeftDirectionButtonsSummary">Bezeichnungen für alle Richtungsknöpfe LINKS. \'Vorwärts\' eingeben oder leer lassen für normales Verhalten.</string>
     <string name="prefLeftDirectionButtonsDefaultValue">Vorwärts</string>
@@ -389,6 +389,7 @@
     <string name="prefRightDirectionButtonsShortSummary">Kurzbezeichnungen für alle Richtungsknöpfe RECHTS. \'Rückwärts\' eingeben oder leer lassen für normales Verhalten.</string>
     <string name="prefRightDirectionButtonsShortDefaultValue">Rückw.</string>
     <string name="prefThemeTitle">Motiv/Stil</string>
+
     <string name="prefThemeSummary">App Motiv. WARNUNG! Engine Driver wird sofort neu starten.\'Benötigt Android Honeycomb oder neuer.</string>
     <string name="prefThemeDefaultValue">Standard</string>
     <string name="prefHideDemoServerTitle">Demo Server ausblenden</string>
@@ -399,7 +400,7 @@
 
     <string name="prefAccelerometerTitle">Voreinstellungen für Beschleunigungsmesser</string>
     <string name="prefAccelerometerSummary">Optionen für Gerätebewegung auf der Seite Fahrregler</string>
-    <string name="prefAccelerometerShakeTitle">Schütteln Aktion</string>
+    <string name="prefAccelerometerShakeTitle">Aktion beim Schütteln</string>
     <string name="prefAccelerometerShakeSummary">Optionen für das Schütteln des Gerätes</string>
     <string name="prefAccelerometerShakeDefaultValue">Keine</string>
     <string name="prefAccelerometerShakeThresholdTitle">Schütteln Schwellwert</string>
@@ -411,8 +412,8 @@
 
 
 
-    <string name="gamepadTestButtonLabelDpadUp">Auf</string>
-    <string name="gamepadTestButtonLabelDpadDown">Ab</string>
+    <string name="gamepadTestButtonLabelDpadUp">Oben</string>
+    <string name="gamepadTestButtonLabelDpadDown">Unten</string>
     <string name="gamepadTestButtonLabelDpadLeft">Links</string>
     <string name="gamepadTestButtonLabelDpadRight">Rechts</string>
     <string name="gamepadTestButtonLabelButtonX">C | X [iOS]</string>
@@ -427,7 +428,7 @@
     <string name="gamepadTestKeycodeLabel">Tastencode:\s\s</string>
     <string name="gamepadTestFunctionLabel">Funktion:\s\s</string>
     <string name="gamepadTestCompleteLabel">Test Status:\s\s</string>
-    <string name="gamepadTestHelp">Nach unten rollen um eine vollständige Anleitung zu sehen…\n\nDrücke ALLE Dpad UND vier primäre Knöpfe oder das Gamepad WIRD NICHT FUNKTIONIEREN.\n\nWenn nicht alle Knöpfe aktiviert werden können, dann wechsle den Gamepad Modus (siehe Anleitung zu deinem Gamepad) oder versuche ein anderer Gamepad Typ (oben).\n\n\'ZURÜCK\' oder \'ABBRECHEN\' wird den Test beenden, aber das Gamepad WIRD NICHT FUNKTIONIEREN.\n\'ÜBERSPRINGEN\', oder dreimaliges Drücken des Gamepad Knopfes \'Geschwindigkeit verringern\' erzwingt einen guten Test, selbst wenn das Gamepad nicht einwandfrei funktioniert.\n\'ZURÜCKSETZEN\' lässt ED annehmen, dass bisher keine Gamepads benutzt wurden.\nWenn für den Test \'einfach\' gewählt wurde, wird einmaliges Drücken des Knopfes \'Geschwindigkeit verringern\' den Test überspringen.\n\nVerwende die \'Gamepad Test n\' Menüoptionen, um zu dieser Seite zurück zu kommen.</string>
+    <string name="gamepadTestHelp">Nach unten rollen um eine vollständige Anleitung zu sehen…\n\nDrücke ALLE Dpad UND vier primäre Knöpfe oder das Gamepad WIRD NICHT FUNKTIONIEREN.\n\nWenn nicht alle Knöpfe aktiviert werden können, dann wechsle den Gamepad Modus (siehe Anleitung zu deinem Gamepad) oder versuche ein anderer Gamepad Typ (oben).\n\n\'ZURÜCK\' oder \'ABBRECHEN\' wird den Test beenden, aber das Gamepad WIRD NICHT FUNKTIONIEREN.\n\'ÜBERSPRINGEN\', oder dreimaliges Drücken des Gamepad Knopfes \'Geschwindigkeit verringern\' erzwingt einen guten Test, selbst wenn das Gamepad nicht einwandfrei funktioniert.\n\'ZURÜCKSETZEN\' läßt ED annehmen, daß bisher keine Gamepads benutzt wurden.\nWenn für den Test \'einfach\' gewählt wurde, wird einmaliges Drücken des Knopfes \'Geschwindigkeit verringern\' den Test überspringen.\n\nVerwende die \'Gamepad Test n\' Menüoptionen, um zu dieser Seite zurück zu kommen.</string>
     <string name="gamepadTestHelpNonForced">Wenn nicht alle Knöpfe aktiviert werden können, dann wechsle den Gamepad Modus (siehe Anleitung zu deinem Gamepad) oder versuche ein anderer Gamepad Typ (oben).\nMöglicherweise musst du das Gamepad erneut testen, sobald du es erstmals im Fahrregler Bildschirm benützt.</string>
     <string name="gamepadTestIncomplete">"Test unvollständig"</string>
     <string name="gamepadTestComplete">"Test beendet"</string>
@@ -435,16 +436,16 @@
     <string name="gamepadTestInvalidKeycode">"Ungültiger Tastencode für diesen Modus"</string>
     <string name="gamepadTestReset">"Zurücksetzen"</string>
     <string name="gamepadTestCancel">"Abbrechen"</string>
-    <string name="gamepadTestCancelNonForced">"Schliessen"</string>
+    <string name="gamepadTestCancelNonForced">"Schließen"</string>
     <string name="gamepadTestSkip">"Überspringen"</string>
 
 
-    <string name="gamepadTestKeyCodesUpCode">"Auf"</string>
-    <string name="gamepadTestKeyCodesDownCode">"Ab"</string>
-    <string name="gamepadTestKeyCodesLeftCode">"L"</string>
-    <string name="gamepadTestKeyCodesRightCode">"R"</string>
+    <string name="gamepadTestKeyCodesUpCode">"Ob"</string>
+    <string name="gamepadTestKeyCodesDownCode">"Un"</string>
+    <string name="gamepadTestKeyCodesLeftCode">"Li"</string>
+    <string name="gamepadTestKeyCodesRightCode">"Re"</string>
     <string name="prefGamepadTestNowTitle">Teste jetzt Gamepad Einstellungen!</string>
-    <string name="prefGamepadTestNowSummary">Erlaubt dir zu bestätigen, dass die gewählte Einstellung korrekt funktioniert.\nTest Seite wird SOFORT auf Auswahl gestartet.</string>
+    <string name="prefGamepadTestNowSummary">Erlaubt dir zu bestätigen, daß die gewählte Einstellung korrekt funktioniert.\nTest Seite wird SOFORT bei Auswahl gestartet.</string>
 
     <string name="toastThreadedAppNoLocalIp">Keine lokale IP Adresse gefunden.\n Überprüfe deine WiFi Verbindung.</string>
     <string name="toastThreadedAppErrorCreatingWiThrottle">Fehler beim Erstellen eines von WiThrottle selbständig konfigurierten Zuhörers: IOException:\n%1$s</string>
@@ -458,21 +459,21 @@
     <string name="statusThreadedAppNoResponse">Keine Antwort vom Server %1$s:%2$s für %3$s Sekunden. Überprüfe, ob der WiThrottle Server läuft.\n\nVersuche erneut</string>
     <string name="statusThreadedAppUnableToConnect">Kann nicht mit Server unter %1$s:%2$s von %3$s verbinden.\n\nVersuche erneut</string>
 
-    <string name="toastUnableToSetBrightness">Auto Helligkeit/ Adaptive Helligkeit kann nicht gesetellt werden</string>
+    <string name="toastUnableToSetBrightness">Auto Helligkeit/ Adaptive Helligkeit kann nicht gesetzt werden</string>
     <string name="toastAccelerometerNotFound">Beschleunigungsmesser nicht gefunden oder ausgeschaltet.</string>
     <string name="toastLocoChangeNotAllowed">Lokwechsel nicht erlaubt: \'Richtungswechsel während Fahrt\' ist in den Voreinstellungen ausgeschaltet.</string>
     <string name="toastDirectionButtonsSwapped">Richtungsknöpfe temporär vertauscht. Um sie permanent zu vertauschen, ändere die Voreinstellungen.</string>
     <string name="toastImmersiveModeDisabled">Immersiver Modus der Anzeige temporär ausgeschaltet. Um ihn permanent auszuschalten, ändere die Voreinstellungen.</string>
     <string name="toastThrottleScreenUnlocked">Fahrregler Bildschirm nicht blockiert.</string>
     <string name="toastShakeWebViewHidden">Web Ansicht temporär ausgeblendet. Schüttle nochmals zum Anzeigen. Um sie permanent auszublenden, ändere die Voreinstellungen.</string>
-    <string name="toastShakeWebViewUnavailable">Web Anzeige muss zuerst in den Voreinstellungen ermöglicht werden.</string>
+    <string name="toastShakeWebViewUnavailable">Web Anzeige muß zuerst in den Voreinstellungen ermöglicht werden.</string>
     <string name="toastShakeScreenLocked">Fahrregler Bildschirm blockiert - Schüttle nochmals zum Freigeben.</string>
     <string name="toastShakeScreenDimmed">Fahrregler Bildschirm gedimmt - Schüttle nochmals zum Wiederherstellen.</string>
     <string name="toastSwipeUpScreenLocked">Fahrregler Bildschirm blockiert - Wische nach oben um Blockierung aufzuheben.</string>
     <string name="toastSwipeUpScreenDimmed">Fahrregler Bildschirm gedimmt - Wische nach oben zum Wiederherstellen.</string>
     <string name="toastSwipeUpViewHidden">Web Ansicht temporär ausgeblendet. Um sie permanent auszublenden, ändere die Voreinstellungen.</string>
     <string name="toastThrottleAlertEstop">Warnung: Lok %%1%% hat NOT-STOP</string>
-    <string name="toastPreferencesOutsideLimits">Eingegebener Wert liegt ausserhalb der Grenzen (%%1%%-%%2%%). Zurücksetzen auf %%3%%.</string>
+    <string name="toastPreferencesOutsideLimits">Eingegebener Wert liegt außerhalb der Grenzen (%%1%%-%%2%%). Zurücksetzen auf %%3%%.</string>
     <string name="toastPreferencesNotNumeric">Eingegebener Wert ist nicht numerisch (%%1%%-%%2%%). Zurücksetzen auf %%3%%.</string>
     <string name="toastPreferencesResetSucceeded">Voreinstellungen werden auf Standardwerte zurückgesetzt!</string>
     <string name="toastTurnoutInvalidNumber">Ungültige Weichennummer.</string>
@@ -487,7 +488,7 @@
     <string name="toastConnectUnableToLoadPref">Host spezifische Voreinstellungen können nicht geladen werden. Erhalte keinen Hostnamen.</string>
     <string name="toastConnectErrorReadingRecentConnections">Fehler beim Lesen der Liste Letzte Verbindungen:</string>
     <string name="toastConnectErrorSavingRecentConnection">Fehler beim Speichern der letzten Verbindung:</string>
-    <string name="toastRoutesCommandSent">"Befehl geschickt zum Stellen der Fahrstrasse "</string>
+    <string name="toastRoutesCommandSent">"Befehl geschickt zum Stellen der Fahrstraße "</string>
     <string name="toastImportExportExportSucceeded">Voreinstellungen exportieren zu \'engine_driver/%%1%%\' war erfolgreich.</string>
     <string name="toastImportExportImportSucceeded">Voreinstellungen importieren von \'engine_driver/%%1%%\' war erfolgreich.</string>
     <string name="toastImportExportExportFailed">Voreinstellungen exportieren zu \'engine_driver/%%1%%\' ist fehlgeschlagen!</string>
@@ -495,7 +496,7 @@
     <string name="toastImportExportServerImportFailed">Voreinstellungen nicht importiert von \'engine_driver/%%1%%\'. Möglicherweise hast du die Voreinstellungen für diesen Host bisher nicht gespeichert.</string>
     <string name="toastImportExportCannotImport">Kann Voreinstellungen nicht importieren. Mit keinem Host verbunden.</string>
     <string name="toastImportExportCannotExport">Kann Host spezifische Voreinstellungen nicht exportieren. Mit keinem Host verbunden.</string>
-    <string name="toastSelectLocoConfirmClear">Bestätige das Entfernen aller Einträge in Letzte Loks durch ERNEUTES Drücken des Knopfs \'Lösche Liste\'.  </string>
+    <string name="toastSelectLocoConfirmClear">Bestätige das Entfernen aller Einträge in der Liste kürzlich verwendeter Loks durch ERNEUTES Drücken des Knopfs \'Lösche Liste\'.  </string>
     <string name="prefTtsTitle">Sprachausgabe</string>
     <string name="prefTtsSummary">Schlüsselereignisse ansagen</string>
     <string name="prefTtsWhenTitle">Sprachausgabe</string>
@@ -504,9 +505,9 @@
     <string name="prefTtsThrottleTitle">Beim Fahrreglerwechsel</string>
     <string name="prefTtsThrottleSummary">Wenn ein anderer Fahrregler gewählt wird.</string>
     <string name="prefTtsThrottleSpeedTitle">+ Geschwindigkeit</string>
-    <string name="prefTtsThrottleSpeedSummary">Wenn du ein anderes Gamepad wählst, dann wird auch die Geschwindigkeit angesagt. Übergeht die Optionen einzelner Fahrregler.</string>
+    <string name="prefTtsThrottleSpeedSummary">Wenn ein anderer Fahrregler auf dem Gamepad gewählt wird, dann wird auch die Geschwindigkeit angesagt. Übergeht die Optionen einzelner Fahrregler.</string>
     <string name="prefTtsThrottleLocoSpeedTitle">+ Lok</string>
-    <string name="prefTtsThrottleLocoSpeedSummary">Wenn du einen anderen Fahrregler für das Gamepad wählst, dann werden auch die Loknummern angesagt. Übergeht die Optionen einzelner Fahrregler.</string>
+    <string name="prefTtsThrottleLocoSpeedSummary">Wenn ein anderer Fahrregler auf dem Gamepad gewählt wird, dann werden auch die Loknummern angesagt. Übergeht die Optionen einzelner Fahrregler.</string>
     <string name="prefTtsGamepadTestTitle">Beim Gamepad-Test</string>
     <string name="prefTtsGamepadTestSummary">Wenn die Gamepad-Testseite gestartet wird.</string>
     <string name="prefTtsGamepadTestCompleteTitle">Wenn der Gamepad-Test fertig ist.</string>
@@ -522,7 +523,7 @@
     <string name="TtsGamepadTestReset">Gamepad Zurücksetzen</string>
     <string name="TTS_Screen_Dimmed">Gedimmt, wische nach oben zum Wiederherstellen</string>
     <string name="TTS_Screen_Locked">Blockiert, wische nach oben zum Wiederherstellen</string>
-    <string name="TTS_Screen_Unlocked">Ungeblockt</string>
+    <string name="TTS_Screen_Unlocked">Nicht blockiert</string>
     <string name="TTS_Immersive_Mode_Disabled">Immersiver Modus temporär ausgeschaltet</string>
     <string name="TTS_Forward">Vorwärts</string>
     <string name="TTS_Reverse">Rückwärts</string>
@@ -537,10 +538,10 @@
     <string name="prefDefaultFunctionsSummary">Wann und wie die Bezeichnungen für Standardfunktonen angezeigt werden.</string>
     <string name="fbResetFunctionLabels">Alles zurücksetzen</string>
     <string name="prefNumberOfDefaultFunctionLabelsTitle">Anzahl der Standardfunktionen</string>
-    <string name="prefNumberOfDefaultFunctionLabelsSummary">Begrenze die angezeigten Funktionsbezeichnungen wenn nicht verfügbar aus dem JMRI Lokverzeichnis.</string>
+    <string name="prefNumberOfDefaultFunctionLabelsSummary">Begrenze die angezeigten Funktionsbezeichnungen wenn nicht aus dem JMRI Lokverzeichnis erhältlich.</string>
 
     <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Anzahl der Standardfunktionen für das Lokverzeichnis</string>
-    <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Begrenze die angezeigten Funktionsbezeichnungen für Einträge im JMRI Lokverzeichnis ohne Funktionsbezeichnungen.</string>
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Begrenze die angezeigten Funktionsbezeichnungen bei Einträgen ohne Funktionsbezeichnungen im JMRI Lokverzeichnis.</string>
 
     <string name="lightsTextOff">Aus</string>
     <string name="lightsTextFollow">Folge F Knopf</string>
@@ -559,16 +560,16 @@
 
     <string name="LocoSelectMethodAddress">DCC Adresse</string>
     <string name="LocoSelectMethodRoster">JMRI Lokverzeichnis</string>
-    <string name="LocoSelectMethodRecent">Letzte</string>
-    <string name="LocoSelectMethodHelp">Gebe die DCC Adresse deiner Lok oben ein und klicke auf \Übernehmen\'.\n\nWähle alternativ eine Lok aus dem JMRI \'Lokverzeichnis\' oder aus deiner Liste \'Letzte Loks\' durch anklicken obiger Knöpfe.</string>
+    <string name="LocoSelectMethodRecent">Kürzlich verwendete</string>
+    <string name="LocoSelectMethodHelp">Gebe die DCC Adresse deiner Lok oben ein und klicke auf \Übernehmen\'.\n\nWähle alternativ eine Lok aus dem JMRI \'Lokverzeichnis\' oder aus deiner Liste \'Kürzlich verwendete\' durch anklicken obiger Knöpfe.</string>
     <string name="flashlightAction">Taschenlampe</string>
     <string name="flashlightStateOn">Taschenlampe ist an</string>
     <string name="flashlightStateOff">Taschenlampe ist aus</string>
-    <string name="prefFlashlightSummary">Zeige Knopf für Taschenlampe in Fahrregler-, Weichen- und Fahrstrassenanzeigen?</string>
+    <string name="prefFlashlightSummary">Zeige Knopf für Taschenlampe in Fahrregler-, Weichen- und Fahrstraßenanzeigen?</string>
     <string name="prefFlashlightTitle">Knopf für Taschenlampe anzeigen?</string>
     <string name="toastFlashlightFailed">Entschuldigung! Es gab ein Problem beim Einschalten der Taschenlampe&#8230;</string>
     <string name="prefConnectTimeoutMsTitle">Erstes Verbindungstimeout</string>
-    <string name="prefConnectTimeoutMsSummary">Lege das anfängliche Verbindungstimeout in Millisekunden fest</string>
+    <string name="prefConnectTimeoutMsSummary">Lege die anfängliche Zeitüberschreitung beim Verbinden in Millisekunden fest</string>
     <string name="prefSocketTimeoutMsTitle">Socket-Zeitüberschreitung</string>
     <string name="prefSocketTimeoutMsSummary">Setze die Lesezeit für Sockets in Millisekunden</string>
 
