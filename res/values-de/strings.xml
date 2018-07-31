@@ -445,6 +445,19 @@
     <string name="gamepadTestKeyCodesRightCode">"R"</string>
     <string name="prefGamepadTestNowTitle">Teste jetzt Gamepad Einstellungen!</string>
     <string name="prefGamepadTestNowSummary">Erlaubt dir zu bestätigen, dass die gewählte Einstellung korrekt funktioniert.\nTest Seite wird SOFORT auf Auswahl gestartet.</string>
+
+    <string name="toastThreadedAppNoLocalIp">Keine lokale IP Adresse gefunden.\n Überprüfe deine WiFi Verbindung.</string>
+    <string name="toastThreadedAppErrorCreatingWiThrottle">Fehler beim Erstellen eines von WiThrottle selbständig konfigurierten Zuhörers: IOException:\n%1$s</string>
+    <string name="toastThreadedAppWiThrottleNotSupported">WiThrottle Version %1$s wird nicht unterstützt.</string>
+    <string name="toastThreadedAppCantDeterminIp">Kann die IP-Adresse von %1$s nicht ermitteln.</string>
+    <string name="toastThreadedAppCantConnect">Kann keine Verbindung zu Host %1$s und Port %2$s von %3$s - %4$s herstellen. Überprüfe die Einstellungen von WiThrottle und Netzwerk.</string>
+    <string name="toastThreadedAppErrorInputStream">Fehler beim Erstellen des Eingabestreams, IOException: %1$s</string>
+    <string name="toastThreadedAppErrorStartingSocket">Fehler beim Starten von socket_WiT-Thread: %1$s</string>
+    <string name="toastThreadedAppErrorCreatingOutputStream">Fehler beim Erstellen des Ausgabestreams, IOException: %1$s</string>
+    <string name="toastThreadedAppErrorSleepingThread">Fehler beim Einschläfern des Threads, InterruptedException: %1$s</string>
+    <string name="statusThreadedAppNoResponse">Keine Antwort vom Server %1$s:%2$s für %3$s Sekunden. Überprüfe, ob der WiThrottle Server läuft.\n\nVersuche erneut</string>
+    <string name="statusThreadedAppUnableToConnect">Kann nicht mit Server unter %1$s:%2$s von %3$s verbinden.\n\nVersuche erneut</string>
+
     <string name="toastUnableToSetBrightness">Auto Helligkeit/ Adaptive Helligkeit kann nicht gesetellt werden</string>
     <string name="toastAccelerometerNotFound">Beschleunigungsmesser nicht gefunden oder ausgeschaltet.</string>
     <string name="toastLocoChangeNotAllowed">Lokwechsel nicht erlaubt: \'Richtungswechsel während Fahrt\' ist in den Voreinstellungen ausgeschaltet.</string>
