@@ -1703,8 +1703,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
         boolean newEnabledState = false;
-            if (!forceDisable) {
-                newEnabledState = mainapp.consists[whichThrottle].isActive();      // set false if lead loco is not assigned
+            if (!forceDisable && (whichThrottle < mainapp.consists.length)) { // avoid index crash, but may simply push to next line
+                newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
             }
             bFwds[whichThrottle].setEnabled(newEnabledState);
             bRevs[whichThrottle].setEnabled(newEnabledState);
@@ -3805,13 +3805,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             changeTimers[throttleIndex] = new ChangeDelay(throttleIndex);
         }
-
         // tone generator for feedback sounds
         try {
             tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                 preferences.getIntPrefValue(prefs,"prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
         } catch (RuntimeException e) {
-            Log.d("Engine_Driver", "new ToneGenerateor failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
+            Log.e("Engine_Driver", "new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
         }
         // set GamePad Support
         setGamepadKeys();
@@ -4120,7 +4119,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 // while we are using it (causing issues during button update below)
                 function_labels_temp = mainapp.function_labels_default;
                 if (!prefAlwaysUseDefaultFunctionLabels) {
-                    if (mainapp.function_labels[whichThrottle] != null && mainapp.function_labels[whichThrottle].size() > 0) {
+                    if (mainapp.function_labels != null
+                            && mainapp.function_labels[whichThrottle] != null
+                            && mainapp.function_labels[whichThrottle].size() > 0) {
                         function_labels_temp = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
                     } else {
                         if (!mainapp.consists[whichThrottle].isLeadFromRoster()) {
@@ -4528,7 +4529,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                                 preferences.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
                         } catch (RuntimeException e) {
-                            Log.d("Engine_Driver", "new ToneGenerateor failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
+                            Log.e("Engine_Driver", "new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
                         }
                     }
                     // update GamePad Support

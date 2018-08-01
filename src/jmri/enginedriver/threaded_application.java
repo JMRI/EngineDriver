@@ -125,7 +125,7 @@ public class threaded_application extends Application {
     String[] rt_user_names;
     String[] rt_states;
     HashMap<String, String> rt_state_names; //if not set, routes are not allowed
-    HashMap<String, String> roster_entries;  //roster sent by WiThrottle
+    LinkedHashMap<String, String> roster_entries;  //roster sent by WiThrottle
     LinkedHashMap<String, String> consist_entries;
     private static DownloadRosterTask dlRosterTask = null;
     private static DownloadMetaTask dlMetadataTask = null;
@@ -1019,7 +1019,7 @@ public class threaded_application extends Application {
         //  RL2]\[NS2591}|{2591}|{L]\[NS4805}|{4805}|{L
         private void process_roster_list(String response_str) {
             //clear the global variable
-            roster_entries = new HashMap<>();
+            roster_entries = new LinkedHashMap<>();
 
             String[] ta = splitByString(response_str, "]\\[");  //initial separation
             //initialize app arrays (skipping first)
@@ -2066,7 +2066,7 @@ public class threaded_application extends Application {
 
         consist_entries = new LinkedHashMap<>();
         roster = null;
-        roster_entries = null;
+        roster_entries = new LinkedHashMap<>();
         metadata = null;
         doFinish = false;
         turnouts_list_position = 0;
