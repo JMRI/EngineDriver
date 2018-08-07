@@ -2,6 +2,7 @@
  * remove turnout hardware list, WiThrottle Server changed to also handle numeric-only
  * changes to EngineDriver icon
  * remove toast info messages for turnouts and routes
+ * fix issue with premature address confirmation
  * prevent crashes reported to Play Store
 **Version 2.20
  * Fix for Gamepad functions F10 and above
