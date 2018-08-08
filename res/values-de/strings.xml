@@ -450,7 +450,7 @@
     <string name="toastThreadedAppNoLocalIp">Keine lokale IP Adresse gefunden.\n Überprüfe deine WiFi Verbindung.</string>
     <string name="toastThreadedAppErrorCreatingWiThrottle">Fehler beim Erstellen eines von WiThrottle selbständig konfigurierten Zuhörers: IOException:\n%1$s</string>
     <string name="toastThreadedAppWiThrottleNotSupported">WiThrottle Version %1$s wird nicht unterstützt.</string>
-    <string name="toastThreadedAppCantDeterminIp">Kann die IP-Adresse von %1$s nicht ermitteln.</string>
+    <string name="toastThreadedAppCantDetermineIp">Kann die IP-Adresse von %1$s nicht ermitteln.</string>
     <string name="toastThreadedAppCantConnect">Kann keine Verbindung zu Host %1$s und Port %2$s von %3$s - %4$s herstellen. Überprüfe die Einstellungen von WiThrottle und Netzwerk.</string>
     <string name="toastThreadedAppErrorInputStream">Fehler beim Erstellen des Eingabestreams, IOException: %1$s</string>
     <string name="toastThreadedAppErrorStartingSocket">Fehler beim Starten von socket_WiT-Thread: %1$s</string>
