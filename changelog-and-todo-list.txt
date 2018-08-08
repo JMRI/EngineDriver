@@ -1,5 +1,9 @@
 **Version 2.21
  * remove turnout hardware list, WiThrottle Server changed to also handle numeric-only
+ * changes to EngineDriver icon
+ * remove toast info messages for turnouts and routes
+ * fix issue with premature address confirmation
+ * prevent crashes reported to Play Store
 **Version 2.20
  * Fix for Gamepad functions F10 and above
  * monochrome icon for the notification bar
@@ -392,8 +396,6 @@
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
- * MRC
- *   TODO: hide or add option for MRC to turnout system list
  * web
  *   TODO: diagnose why Web menu option doesn't work when Auto-Web enabled
  *   TODO: can we preserve current state of web? currently it "refreshes" on every load
@@ -403,7 +405,6 @@
  * turnouts
  *   TODO: add turnouts to list as used, when no list available
  *   TODO: combine loco control and turnout control in one page
- *   TODO: list available "system" based on items in use, maybe with dropdown on Turnout
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
@@ -420,6 +421,7 @@
  *   TODO: check for error on send and do something with it 
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: manually create roster entries (function labels) and store on device
  *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
  *   TODO: clear loco buttons on reconnect attempt until actual MT+ received
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected
@@ -436,7 +438,6 @@
  *   TODO: disconnect connections made by roster stuff
  *   TODO: add close button and roster image to details dialog
  *   TODO: simplify select_loco by removing handler
- *   TODO: manually create roster entries and store on device
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
  *   TODO: allow user to delete individual recents (long-press?)
  * preferences:
@@ -444,7 +445,6 @@
  *   TODO: show error if invalid entry
  *
  * These require changes to WiThrottle
- *   allow setting of undefined turnouts (JMRI Turnout Tool creates them on-the-fly, so we could too)
  *   resend turnout and routes when items are added or removed, by adding listeners to WiT
  *   resend roster list when items are added or removed, by adding listeners to WiT
  *   support resend of function and direction commands, even when WiT knows it has already sent (may be there now)

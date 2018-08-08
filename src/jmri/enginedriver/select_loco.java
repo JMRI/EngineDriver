@@ -383,7 +383,7 @@ public class select_loco extends Activity {
         if (!consist.isActive()) {               // if this is the only loco in consist then just tell WiT and exit
             consist.add(l);
             consist.setLeadAddr(l.getAddress());
-            consist.setConfirmed(l.getAddress());
+//            consist.setConfirmed(l.getAddress()); //this happens after response from WiTS
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, addr, whichThrottle);
             updateRecentEngines(bUpdateList);
             result = RESULT_OK;
