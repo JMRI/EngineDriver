@@ -762,14 +762,16 @@ public class threaded_application extends Application {
 
         private void reacquireConsist(Consist c, int whichThrottle) {
             int delays = 0;
-            for (ConLoco l : c.getLocos()) {                  // reacquire each loco in the consist
-                String addr = l.getAddress();
-                String desc = l.getDesc();
-                String roster_name = l.getRosterName();
-                if (roster_name != null)  // add roster selection info if present
-                    addr += "<;>" + roster_name;
-                acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL); //ask for next loco, with 0 or more delays
-                delays++;
+            for (ConLoco l : c.getLocos()) { // reacquire each confirmed loco in the consist
+                if (l.isConfirmed()) {
+                    String addr = l.getAddress();
+                    String desc = l.getDesc();
+                    String roster_name = l.getRosterName();
+                    if (roster_name != null)  // add roster selection info if present
+                        addr += "<;>" + roster_name;
+                    acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL); //ask for next loco, with 0 or more delays
+                    delays++;
+                }
             }
         }
 
@@ -1264,7 +1266,7 @@ public class threaded_application extends Application {
                         host_address = InetAddress.getByName(host_ip);
                     } catch (UnknownHostException except) {
 //                        show_toast_message("Can't determine IP address of " + host_ip, Toast.LENGTH_LONG);
-                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantDeterminIp).replace("%1$s",host_ip), Toast.LENGTH_SHORT);
+                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantDetermineIp).replace("%1$s",host_ip), Toast.LENGTH_SHORT);
                         socketOk = false;
                     }
                 }
@@ -1283,7 +1285,10 @@ public class threaded_application extends Application {
 //                            show_toast_message("Can't connect to host " + host_ip + " and port " + port +
 //                                    " from " + client_address +
 //                                    " - " + except.getMessage() + "\nCheck WiThrottle and network settings.", Toast.LENGTH_LONG);
-                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantDeterminIp).replace("%1$s",host_ip).replace("%2$s",Integer.toString(port)).replace("%3$s",client_address).replace("%4$s",except.getMessage()), Toast.LENGTH_SHORT);
+                            if (host_ip != null) {
+                                show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantDetermineIp)
+                                        .replace("%1$s",host_ip), Toast.LENGTH_SHORT);
+                            }
                         }
                         socketOk = false;
                     }
@@ -1391,7 +1396,7 @@ public class threaded_application extends Application {
                 boolean reconInProg = false;
                 //reconnect socket if needed
                 if (!socketGood || inboundTimeout) {
-                    String status;
+                    String status = null;
                     getWifiInfo();                  //update address in case network connection was lost
                     if (client_address == null) {
 //                        status = "Not connected to a network.  Check WiFi settings.\n\nRetrying";
@@ -1402,13 +1407,13 @@ public class threaded_application extends Application {
 //                                "Check that the WiThrottle server is running.\n\nRetrying";
                         status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse).replace("%1$s",host_ip).replace("%2$s",Integer.toString(port)).replace("%3$s",heart.sGetInboundInterval());
                         Log.d("Engine_Driver", "WiT receive reconnection attempt.");
-                    } else {
+                    } else if (host_ip != null) {
 //                        status = "Unable to connect to server at " + host_ip + ":" + port + " from " + client_address + ".\n\nRetrying";
                         status = getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect).replace("%1$s",host_ip).replace("%2$s",Integer.toString(port)).replace("%3$s",client_address);
                         Log.d("Engine_Driver", "WiT send reconnection attempt.");
                     }
                     socketGood = false;
-                    sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY, status);
+                    if (status != null) sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY, status);
 
                     //perform the reconnection sequence
                     this.disconnect(false);             //clean up socket but do not shut down the receiver
