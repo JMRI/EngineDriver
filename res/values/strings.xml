@@ -599,7 +599,7 @@
     <string name="toastThreadedAppNoLocalIp">No local IP Address found.\nCheck your WiFi connection.</string>
     <string name="toastThreadedAppErrorCreatingWiThrottle">Error creating withrottle zeroconf listener: IOException:\n%1$s</string>
     <string name="toastThreadedAppWiThrottleNotSupported">WiThrottle version %1$s not supported.</string>
-    <string name="toastThreadedAppCantDeterminIp">Can\'t determine IP address of %1$s</string>
+    <string name="toastThreadedAppCantDetermineIp">Can\'t determine IP address of %1$s</string>
     <string name="toastThreadedAppCantConnect">Can\'t connect to host %1$s and port %2$s from %3$s - %4$s Check WiThrottle and network settings.</string>
     <string name="toastThreadedAppErrorInputStream">Error creating input stream, IOException: %1$s</string>
     <string name="toastThreadedAppErrorStartingSocket">Error starting socket_WiT thread: %1$s</string>

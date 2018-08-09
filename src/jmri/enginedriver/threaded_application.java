@@ -322,7 +322,7 @@ public class threaded_application extends Application {
             } catch (Exception except) {
                 Log.e("Engine_Driver", "start_jmdns - Error creating withrottle listener: " + except.getMessage());
 //                show_toast_message("Error creating withrottle zeroconf listener: IOException: \n" + except.getMessage(), Toast.LENGTH_SHORT);
-                show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorCreatingWiThrottle).replace("%1$s",except.getMessage()), Toast.LENGTH_SHORT);
+                show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorCreatingWiThrottle, except.getMessage()), Toast.LENGTH_SHORT);
             }
         }
 
@@ -496,9 +496,9 @@ public class threaded_application extends Application {
                         final boolean releaseAll = (addr.length() == 0);
 
                         if (releaseAll || consists[whichThrottle].isEmpty()) {
-                                addr = "";
-                                function_labels[whichThrottle] = new LinkedHashMap<>();
-                                function_states[whichThrottle] = new boolean[32];
+                            addr = "";
+                            function_labels[whichThrottle] = new LinkedHashMap<>();
+                            function_states[whichThrottle] = new boolean[32];
                         }
                         if (prefs.getBoolean("stop_on_release_preference",                         //send stop command before releasing (if set in prefs)
                                 getResources().getBoolean(R.bool.prefStopOnReleaseDefaultValue))) {
@@ -756,7 +756,7 @@ public class threaded_application extends Application {
         }
 
         private void reacquireAllConsists() {
-            for (int i = 0; i < maxThrottles; i++ )
+            for (int i = 0; i < maxThrottles; i++)
                 reacquireConsist(consists[i], i);
         }
 
@@ -775,7 +775,7 @@ public class threaded_application extends Application {
             }
         }
 
-         //display error msg using Toast()
+        //display error msg using Toast()
         private void show_toast_message(final String msg_txt, int length) {
             Log.d("Engine_Driver", "TA toast message: " + msg_txt);
             //need to do Toast() on the main thread so create a handler
@@ -810,7 +810,7 @@ public class threaded_application extends Application {
 
                 //handle responses from MultiThrottle function
                 case 'M': {
-                    if (response_str.length() < 5 ) { //must be at least Mtxs9
+                    if (response_str.length() < 5) { //must be at least Mtxs9
                         Log.d("Engine_Driver", "invalid response string: '" + response_str + "'");
                         break;
                     }
@@ -875,7 +875,7 @@ public class threaded_application extends Application {
                         }
                     } else {
 //                        show_toast_message("WiThrottle version " + response_str.substring(2) + " not supported.", Toast.LENGTH_LONG);
-                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported).replace("%1$s",response_str.substring(2)), Toast.LENGTH_SHORT);
+                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported, response_str.substring(2)), Toast.LENGTH_SHORT);
                         socketWiT.disconnect(false);
                     }
                     break;
@@ -1062,7 +1062,7 @@ public class threaded_application extends Application {
                 }  //end if i==0
                 i++;
             }  //end for
-            Log.d("Engine_Driver","consist header, addr=" + consist_addr
+            Log.d("Engine_Driver", "consist header, addr=" + consist_addr
                     + ", name=" + consist_name + ", desc=" + consist_desc);
             //don't add empty consists to list
             if (consist_desc.length() > 0) {
@@ -1266,7 +1266,7 @@ public class threaded_application extends Application {
                         host_address = InetAddress.getByName(host_ip);
                     } catch (UnknownHostException except) {
 //                        show_toast_message("Can't determine IP address of " + host_ip, Toast.LENGTH_LONG);
-                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantDetermineIp).replace("%1$s",host_ip), Toast.LENGTH_SHORT);
+                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantDetermineIp, host_ip), Toast.LENGTH_SHORT);
                         socketOk = false;
                     }
                 }
@@ -1285,10 +1285,10 @@ public class threaded_application extends Application {
 //                            show_toast_message("Can't connect to host " + host_ip + " and port " + port +
 //                                    " from " + client_address +
 //                                    " - " + except.getMessage() + "\nCheck WiThrottle and network settings.", Toast.LENGTH_LONG);
-                            if (host_ip != null) {
-                                show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantDetermineIp)
-                                        .replace("%1$s",host_ip), Toast.LENGTH_SHORT);
-                            }
+//                            if (host_ip != null) {
+                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantConnect,
+                                    host_ip, port, client_address, except.getMessage()), Toast.LENGTH_SHORT);
+//                            }
                         }
                         socketOk = false;
                     }
@@ -1300,7 +1300,7 @@ public class threaded_application extends Application {
                         inputBR = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                     } catch (IOException except) {
 //                        show_toast_message("Error creating input stream, IOException: " + except.getMessage(), Toast.LENGTH_LONG);
-                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorInputStream).replace("%1$s",except.getMessage()), Toast.LENGTH_SHORT);
+                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorInputStream, except.getMessage()), Toast.LENGTH_SHORT);
                         socketOk = false;
                     }
                 }
@@ -1314,7 +1314,7 @@ public class threaded_application extends Application {
                         } catch (IllegalThreadStateException except) {
                             //ignore "already started" errors
 //                            show_toast_message("Error starting socket_WiT thread:  " + except.getMessage(), Toast.LENGTH_LONG);
-                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorStartingSocket).replace("%1$s",except.getMessage()), Toast.LENGTH_SHORT);
+                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorStartingSocket, except.getMessage()), Toast.LENGTH_SHORT);
                         }
                     }
                 }
@@ -1328,7 +1328,7 @@ public class threaded_application extends Application {
                         }
                     } catch (IOException e) {
 //                        show_toast_message("Error creating output stream, IOException: " + e.getMessage(), Toast.LENGTH_LONG);
-                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorCreatingOutputStream).replace("%1$s",e.getMessage()), Toast.LENGTH_SHORT);
+                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorCreatingOutputStream, e.getMessage()), Toast.LENGTH_SHORT);
                         socketOk = false;
                     }
                 }
@@ -1346,7 +1346,7 @@ public class threaded_application extends Application {
                             Thread.sleep(500);              //  give run() a chance to see endRead and exit
                         } catch (InterruptedException e) {
 //                            show_toast_message("Error sleeping the thread, InterruptedException: " + e.getMessage(), Toast.LENGTH_LONG);
-                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorSleepingThread).replace("%1$s",e.getMessage()), Toast.LENGTH_SHORT);
+                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorSleepingThread, e.getMessage()), Toast.LENGTH_SHORT);
                         }
                     }
                 }
@@ -1405,15 +1405,16 @@ public class threaded_application extends Application {
                     } else if (inboundTimeout) {
 //                        status = "No response from server " + host_ip + ":" + port + " for " + heart.sGetInboundInterval() + " seconds.  " +
 //                                "Check that the WiThrottle server is running.\n\nRetrying";
-                        status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse).replace("%1$s",host_ip).replace("%2$s",Integer.toString(port)).replace("%3$s",heart.sGetInboundInterval());
+                        status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse, host_ip, port, heart.sGetInboundInterval());
                         Log.d("Engine_Driver", "WiT receive reconnection attempt.");
-                    } else if (host_ip != null) {
+                    } else {
 //                        status = "Unable to connect to server at " + host_ip + ":" + port + " from " + client_address + ".\n\nRetrying";
-                        status = getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect).replace("%1$s",host_ip).replace("%2$s",Integer.toString(port)).replace("%3$s",client_address);
+                        status = getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect, host_ip, port, client_address);
                         Log.d("Engine_Driver", "WiT send reconnection attempt.");
                     }
                     socketGood = false;
-                    if (status != null) sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY, status);
+                    if (status != null)
+                        sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY, status);
 
                     //perform the reconnection sequence
                     this.disconnect(false);             //clean up socket but do not shut down the receiver
@@ -1641,7 +1642,7 @@ public class threaded_application extends Application {
                     if (prefs.getBoolean("stop_on_phonecall_preference",
                             getResources().getBoolean(R.bool.prefStopOnPhonecallDefaultValue))) {
                         Log.d("Engine_Driver", "Phone is OffHook, Stopping Trains");
-                        for(int i = 0; i < numThrottles; i++) {
+                        for (int i = 0; i < numThrottles; i++) {
                             if (consists[i].isActive()) {
                                 withrottle_send(String.format("M%sA*<;>V0", throttleIntToString(i)));
                             }
@@ -1810,12 +1811,11 @@ public class threaded_application extends Application {
         try {
             Map<String, ?> ddd = prefs.getAll();
             String dwr = prefs.getString("TypeThrottle", "false");
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             String dwr = ex.toString();
         }
 
-        for (int i =0; i < maxThrottles; i++) {
+        for (int i = 0; i < maxThrottles; i++) {
             function_states[i] = new boolean[32];
         }
 
@@ -1845,8 +1845,8 @@ public class threaded_application extends Application {
         int numberOfDefaultFunctionLabels = 29;
         int numberOfDefaultFunctionLabelsForRoster = 29;
         if (!getAll) {
-            numberOfDefaultFunctionLabels = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabels", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsDefaultValue)))-1;
-            numberOfDefaultFunctionLabelsForRoster = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabelsForRoster", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsForRosterDefaultValue)))-1;
+            numberOfDefaultFunctionLabels = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabels", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsDefaultValue))) - 1;
+            numberOfDefaultFunctionLabelsForRoster = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabelsForRoster", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsForRosterDefaultValue))) - 1;
         }
 
         function_labels_default = new LinkedHashMap<>();
@@ -1857,24 +1857,27 @@ public class threaded_application extends Application {
             if (settings_file.exists()) {  //if file found, use it for settings arrays
                 BufferedReader settings_reader = new BufferedReader(new FileReader(settings_file));
                 //read settings into local arrays
-                int i=0;
+                int i = 0;
                 while (settings_reader.ready()) {
                     String line = settings_reader.readLine();
                     String temp[] = line.split(":");
-                    if (i<=numberOfDefaultFunctionLabels) {
+                    if (i <= numberOfDefaultFunctionLabels) {
                         function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
                     }
-                    if (i<=numberOfDefaultFunctionLabelsForRoster) {
+                    if (i <= numberOfDefaultFunctionLabelsForRoster) {
                         function_labels_default_for_roster.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
                     }
                     i++;
                 }
                 settings_reader.close();
             } else {          //hard-code some buttons and default the rest
-                if (numberOfDefaultFunctionLabels>=0) function_labels_default.put(0, getApplicationContext().getResources().getString(R.string.functionButton00DefultValue));
-                if (numberOfDefaultFunctionLabels>=1) function_labels_default.put(1, getApplicationContext().getResources().getString(R.string.functionButton01DefultValue));
-                if (numberOfDefaultFunctionLabels>=2) function_labels_default.put(2, getApplicationContext().getResources().getString(R.string.functionButton02DefultValue));
-                if (numberOfDefaultFunctionLabels>=3) {
+                if (numberOfDefaultFunctionLabels >= 0)
+                    function_labels_default.put(0, getApplicationContext().getResources().getString(R.string.functionButton00DefultValue));
+                if (numberOfDefaultFunctionLabels >= 1)
+                    function_labels_default.put(1, getApplicationContext().getResources().getString(R.string.functionButton01DefultValue));
+                if (numberOfDefaultFunctionLabels >= 2)
+                    function_labels_default.put(2, getApplicationContext().getResources().getString(R.string.functionButton02DefultValue));
+                if (numberOfDefaultFunctionLabels >= 3) {
                     for (int k = 3; k <= numberOfDefaultFunctionLabels; k++) {
                         function_labels_default.put(k, Integer.toString(k));        //String.format("%d",k));
                     }
@@ -2060,10 +2063,10 @@ public class threaded_application extends Application {
         rt_state_names = null;
 
         consists = new Consist[maxThrottles];
-        function_labels = ( LinkedHashMap<Integer, String>[]) new LinkedHashMap<?,?>[maxThrottles];
+        function_labels = (LinkedHashMap<Integer, String>[]) new LinkedHashMap<?, ?>[maxThrottles];
         function_states = new boolean[maxThrottles][32];
 
-        for (int i =0; i < maxThrottles; i++) {
+        for (int i = 0; i < maxThrottles; i++) {
             consists[i] = new Consist();
             function_labels[i] = new LinkedHashMap<Integer, String>();
             function_states[i] = new boolean[32];        // also allocated in onCreate() ???
@@ -2095,7 +2098,7 @@ public class threaded_application extends Application {
     static public String[] splitByString(String input, String divider) {
 
         //bail on empty input string, return input as single element
-        if (input == null || input.length() == 0) return new String[] { input };
+        if (input == null || input.length() == 0) return new String[]{input};
 
         int size = 0;
         String temp = input;
@@ -2172,7 +2175,7 @@ public class threaded_application extends Application {
      *
      * @param menu - menu object that will be adjusted
      */
-    public void setGamepadTestMenuOption(Menu menu,int gamepadCount) {
+    public void setGamepadTestMenuOption(Menu menu, int gamepadCount) {
         String whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
         boolean result = false;
 
@@ -2187,8 +2190,11 @@ public class threaded_application extends Application {
                         item = menu.findItem(R.id.gamepad_test_mnu3);
                 }
 
-                if (i<=gamepadCount) {result = true;}
-                else {result =false;}
+                if (i <= gamepadCount) {
+                    result = true;
+                } else {
+                    result = false;
+                }
 
                 if (item != null) {
                     if ((!whichGamePadMode.equals("None")) && (result)) {
@@ -2258,13 +2264,13 @@ public class threaded_application extends Application {
     public void forceFunction(String throttleAndAddr, int functionNumber, boolean state) {
         int onOff = 0;
         if (state) onOff = 1;
-        if ( (functionNumber>=0) && (functionNumber<=MAX_FUNCTION_NUMBER) ) {
+        if ((functionNumber >= 0) && (functionNumber <= MAX_FUNCTION_NUMBER)) {
             sendMsg(comm_msg_handler, message_type.FORCE_FUNCTION, throttleAndAddr, functionNumber, onOff);
         } // otherwise just ignore the request
     }
 
     public void toggleFunction(String throttleAndAddr, int functionNumber) {
-        if ( (functionNumber>=0) && (functionNumber<=MAX_FUNCTION_NUMBER) ) {
+        if ((functionNumber >= 0) && (functionNumber <= MAX_FUNCTION_NUMBER)) {
             sendMsg(comm_msg_handler, message_type.FUNCTION, throttleAndAddr, functionNumber, 1);
         } // otherwise just ignore the request
     }
@@ -2385,6 +2391,7 @@ public class threaded_application extends Application {
         } catch (Exception ignored) {
         }
         try {
+            sendMsg(power_control_msg_handler, msgType, msgBody);
             sendMsg(power_control_msg_handler, msgType, msgBody);
         } catch (Exception ignored) {
         }
@@ -2639,7 +2646,7 @@ public class threaded_application extends Application {
      * Toggle the flashlight (where supported)
      *
      * @param activity the requesting activity
-     * @param menu the menu upon which the entry/button should be updated
+     * @param menu     the menu upon which the entry/button should be updated
      */
     public void toggleFlashlight(Activity activity, Menu menu) {
         if (flashState) {
@@ -2653,7 +2660,7 @@ public class threaded_application extends Application {
 
     /**
      * Switch on the flashlight.
-     *
+     * <p>
      * On certain devices, we need to ensure that the orientation of the camera preview
      * matches that of the activity, otherwise 'bad things happen'
      *
@@ -2672,7 +2679,7 @@ public class threaded_application extends Application {
             return true;
         } catch (Exception ex) {
             Log.e("Engine_Driver", "Error switching on flashlight: " + ex.getMessage());
-            Toast.makeText(getApplicationContext(),getApplicationContext().getResources().getString(R.string.toastFlashlightFailed), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastFlashlightFailed), Toast.LENGTH_LONG).show();
             return false;
         }
     }
@@ -2697,16 +2704,21 @@ public class threaded_application extends Application {
      */
     private int getDisplayOrientation(Activity activity) {
         switch (activity.getWindowManager().getDefaultDisplay().getRotation()) {
-            case Surface.ROTATION_0: return 0;
-            case Surface.ROTATION_90: return 90;
-            case Surface.ROTATION_180: return 180;
-            case Surface.ROTATION_270: return 270;
-            default: return 90;
+            case Surface.ROTATION_0:
+                return 0;
+            case Surface.ROTATION_90:
+                return 90;
+            case Surface.ROTATION_180:
+                return 180;
+            case Surface.ROTATION_270:
+                return 270;
+            default:
+                return 90;
         }
     }
+
     public int Numeralise(String value) {
-        switch (value)
-        {
+        switch (value) {
             case "One":
                 return 1;
             case "Two":
