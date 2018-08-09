@@ -78,7 +78,7 @@ public class about_page extends Activity {
 
         // show ED webpage
         WebView webview = (WebView) findViewById(R.id.about_webview);
-        webview.loadUrl("file:///android_asset/about_page.html");
+        webview.loadUrl(getApplicationContext().getResources().getString(R.string.about_page_url));
 
     }
 

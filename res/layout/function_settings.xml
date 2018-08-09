@@ -140,9 +140,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
             <TableRow>
-                <TextView android:text="Label              " >
+                <TextView android:text="@string/fb_column_label" >
                 </TextView>
-                <TextView android:text="Func#  " >
+                <TextView android:text="@string/fb_column_function" >
                 </TextView>
             </TableRow>
             <TableRow>

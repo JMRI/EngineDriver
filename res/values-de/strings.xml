@@ -19,6 +19,8 @@
     <string name="exit">Beenden</string>
     <string name="settings">Funktionsvorgaben</string>
     <string name="fb_label">Funktionsbezeichnung</string>
+    <string name="fb_column_label">Bezeichn.</string>
+    <string name="fb_column_function">F-Nr.</string>
     <string name="function_buttons">Funktionstasten</string>
 
     <string name="app_description">Engine Driver - Fahrpult für ihr Android Telefon. Diese Anwendung kann eine Verbindung mit einem JMRI, MRC oder Digitrax WiThrottle Server erstellen und ermöglicht damit die Steuerung von Lokomotiven. Geschwindigkeit, Fahrrichtung und bis zu 29 DCC Funktionen werden für eine oder zwei Lokomotiven unterstützt.</string>
@@ -32,7 +34,7 @@
     <string name="app_name_about">Über  - Engine Driver</string>
     <string name="app_name_web">Web - Engine Driver</string>
     <string name="app_name_functions">Standardfunktionseinstellungen - Engine Driver</string>
-    <string name="app_name_preferences">Voreinstellungen  - Engine Driver</string>
+    <string name="app_name_preferences">Voreinstellungen - Engine Driver</string>
     <string name="app_name_select_loco">Lok Auswählen/Freigeben - Engine Driver</string>
     <string name="app_name_ConsistEdit">Lokverbund bearbeiten - Engine Driver</string>
     <string name="app_name_ConsistLightsEdit">Lokverbund-Lichter - Engine Driver</string>
@@ -61,12 +63,13 @@
     <string name="forward">Vorwärts</string>
     <string name="reverse">Rückwärts</string>
     <string name="none">Keine</string>
-    <string name="fb_helptext">Bezeichnungen und Funktionsnummern auf der rechten Seite der Liste eingeben. Lasse die Beschriftung leer, um die Knöpfe auszublenden. Diese werden verwendet, wenn Funktionen des Lokverzeichnisses nicht verfügbar sind.</string>
+    <string name="fb_helptext">Bezeichnungen und Funktionsnummern auf der rechten Seite der Liste eingeben. Lasse die Beschriftung leer, um die Knöpfe auszublenden. Diese werden verwendet, wenn Funktionen vom Lokverzeichnis nicht verfügbar sind.</string>
     <string name="copy_function_labels">Bezeichnungen aus dem Lokverzeichnis kopieren</string>
     <string name="fb_header">Funktionen bearbeiten</string>
     <string name="consist_help">Eine Lok anklicken um ihre Richtung im Vergleich zum Kopf des Lokverbundes zu ändern. Lange auf eine Lok drücken, um sie aus dem Lokverbund zu entfernen. Zurück-Pfeil drücken wenn fertig.</string>
     <string name="about">Über</string>
     <string name="web">Web</string>
+    <string name="about_page_url">file:///android_asset/about_page-de.html</string>
     <string name="mrc_settings">MRC Einstellungen</string>
     <string name="loco">Lok:</string>
     <string name="loco_direction_left_extra">"\u00B7V\u00B7"</string>
@@ -260,7 +263,7 @@
     <string name="prefStopOnReleaseTitle">Stop beim Freigeben?</string>
     <string name="prefStopOnReleaseSummary">Stoppe Lok(s) bei Freigabe aus dem Fahrregler</string>
     <string name="prefSwipeThroughRoutesTitle">Wischen durch Fahrstraßen?</string>
-    <string name="prefSwipeThroughRoutesSummary">Fahrstraßenanzeige einschliessen beim Wischen zwischen Anzeigen.</string>
+    <string name="prefSwipeThroughRoutesSummary">Fahrstraßenanzeige einschließen beim Wischen zwischen Anzeigen.</string>
     <string name="prefSwipeThroughTurnoutsTitle">Wischen durch Weichen?</string>
     <string name="prefSwipeThroughTurnoutsSummary">Weichenanzeige einschließen beim Wischen zwischen Anzeigen.</string>
     <string name="prefDropOnAcquireTitle">Lok Freigeben vor dem Übernehmen?</string>
@@ -583,4 +586,7 @@
     <string name="prefImportExportErrorReadingList">Fehler beim Lesen der Liste Letzte Verbindungen:</string>
     <string name="prefImportExportErrorReadingFrom">Import von \'engine_driver/%%1%%\' fehlgeschlagen! Möglicherweise hast du die Voreinstellungen für diesen Host bisher nicht gespeichert.</string>
     <string name="prefImportExportErrorNotConnected">Mit keinem Host verbunden.</string>
+
+    <string name="logViewerTitle">Aktivitäten-Log | Fahrregler Name: %1$s</string>
+
 </resources>

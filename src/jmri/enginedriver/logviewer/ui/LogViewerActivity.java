@@ -38,8 +38,9 @@ public class LogViewerActivity extends ListActivity{
 	{
 		SharedPreferences prefs  = getSharedPreferences("jmri.enginedriver_preferences", 0);
 		String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-		setTitle("LogViewerActivity" + "    |    Throttle Name: " + 
-				prefs.getString("throttle_name_preference", defaultName));
+//		setTitle("LogViewerActivity" + "    |    Throttle Name: " +
+//				prefs.getString("throttle_name_preference", defaultName));
+		setTitle(getApplicationContext().getResources().getString(R.string.logViewerTitle).replace("%1$s",defaultName));
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
