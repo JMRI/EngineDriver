@@ -452,7 +452,7 @@
 
     <string name="prefImportExportOverwite">File already exists. Overwite?</string>
     <string name="prefImportExportErrorReadingList">Error reading recent connections list:</string>
-    <string name="prefImportExportErrorReadingFrom">Import from \'engine_driver/%%1%%\' failed! You may not have saved the preferences for this host yet.</string>
+    <string name="prefImportExportErrorReadingFrom">Import from \'engine_driver/%1$s\' failed! You may not have saved the preferences for this host yet.</string>
     <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
 
     <string name="prefSwapForwardReverseButtonsTitle">Swap Direction Buttons</string>
@@ -623,17 +623,17 @@
     <string name="toastSwipeUpScreenLocked">Throttle Screen Locked - Swipe up to unlock</string>
     <string name="toastSwipeUpScreenDimmed">Throttle Screen Dimmed - Swipe up to restore</string>
     <string name="toastSwipeUpViewHidden">Web View temporarily hidden. To hide permanently change in preferences</string>
-    <string name="toastThrottleAlertEstop">Alert: Engine %%1%% is set to ESTOP</string>
+    <string name="toastThrottleAlertEstop">Alert: Engine %1$s is set to ESTOP</string>
 
     <!--    Toast messages for the Preferences page-->
-    <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%%1%%-%%2%%). Reset to %%3%%.</string>
-    <string name="toastPreferencesNotNumeric">Value entered is not numeric (%%1%%-%%2%%). Reset to %%3%%.</string>
+    <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%1$s-%2$s). Reset to %3$s.</string>
+    <string name="toastPreferencesNotNumeric">Value entered is not numeric (%1$s-%2$s). Reset to %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferences Reset to defaults!</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver restarted with chosen Language.</string> -->
 
     <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Invalid turnout number.</string>
-    <string name="toastTurnoutCommandTo">Command sent to %%1%% turnout</string>
+    <string name="toastTurnoutCommandTo">Command sent to %1$s turnout</string>
     <string name="toastTurnoutCommandToClose">Close</string>
     <string name="toastTurnoutCommandToThrow">Throw</string>
     <string name="toastTurnoutCommandToToggle">Toggle</string>
@@ -641,7 +641,7 @@
     <!--    Toast messages for the Connection Activity -->
     <string name="toastConnectEnterAddress">Enter or select an address and port</string>
     <string name="toastConnectInvalidPort">Invalid port#, retry.</string>
-    <string name="toastConnectConnected">Connected to Server: %%1%%  Port : %%2%%</string>
+    <string name="toastConnectConnected">Connected to Server: %1$s  Port : %2$s</string>
     <string name="toastConnectUnableToSavePref">Unable to save host specific preferences. Can\'t get host name.</string>
     <string name="toastConnectUnableToLoadPref">Unable to load host specific preferences. Can\'t get host name.</string>
     <string name="toastConnectErrorReadingRecentConnections">Error reading recent connections list:</string>
@@ -651,17 +651,17 @@
     <string name="toastRoutesCommandSent">"Command sent to Set route "</string>
 
     <!--    Toast messages for the Import/Export -->
-    <string name="toastImportExportExportSucceeded">Preferences export to \'engine_driver/%%1%%\' succeeded.</string>
-    <string name="toastImportExportImportSucceeded">Preferences import from \'engine_driver/%%1%%\' succeeded.</string>
-    <string name="toastImportExportExportFailed">Preferences export to \'engine_driver/%%1%%\' failed!</string>
-    <string name="toastImportExportImportFailed">Preferences import from \'engine_driver/%%1%%\' failed!</string>
-    <string name="toastImportExportServerImportFailed">Preferences not imported from \'engine_driver/%%1%%\'. You may not have saved the preferences for this host yet.</string>
+    <string name="toastImportExportExportSucceeded">Preferences export to \'engine_driver/%1$s\' succeeded.</string>
+    <string name="toastImportExportImportSucceeded">Preferences import from \'engine_driver/%1$s\' succeeded.</string>
+    <string name="toastImportExportExportFailed">Preferences export to \'engine_driver/%1$s\' failed!</string>
+    <string name="toastImportExportImportFailed">Preferences import from \'engine_driver/%1$s\' failed!</string>
+    <string name="toastImportExportServerImportFailed">Preferences not imported from \'engine_driver/%1$s\'. You may not have saved the preferences for this host yet.</string>
     <string name="toastImportExportCannotImport">Can\'t import preferences. Not connected to a host.</string>
     <string name="toastImportExportCannotExport">Can\'t export host specific preferences. Not connected to a host.</string>
 
     <!--    Toast messages for the Select Loco Activity -->
     <string name="toastSelectLocoConfirmClear">Confirm that you want remove all the Recent Locomotives by pressing the \'Clear List\' button AGAIN.</string>
-    <string name="toastNumThrottles">Chosen Throttle Screen Type does not support that many throttles. Reducing to %%1%%.</string>
+    <string name="toastNumThrottles">Chosen Throttle Screen Type does not support that many throttles. Reducing to %1$s.</string>
 
     <string name="prefTtsTitle">Voice Response Preferences</string>
     <string name="prefTtsSummary">Options to speak key events</string>

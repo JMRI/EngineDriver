@@ -1391,7 +1391,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         double speedScale = getDisplayUnitScale(whichThrottle);
         speed_label = tvSpdVals[whichThrottle];
         if (speed < 0) {
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop).replace("%%1%%",getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG).show();
             speed = 0;
         }
         int scaleSpeed = (int) Math.round(speed * speedScale);
