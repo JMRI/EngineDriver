@@ -63,7 +63,7 @@ public class ImportExportPreferences {
         try {
             output = new ObjectOutputStream(new FileOutputStream(dst));
             output.writeObject(sharedPreferences.getAll());
-            String m = context.getResources().getString(R.string.toastImportExportExportSucceeded).replace("%%1%%",exportedPreferencesFileName);
+            String m = context.getResources().getString(R.string.toastImportExportExportSucceeded,exportedPreferencesFileName);
             Toast.makeText(context, m, Toast.LENGTH_SHORT).show();
             Log.d("Engine_Driver", m);
             res = true;
@@ -163,7 +163,7 @@ public class ImportExportPreferences {
                     sharedPreferences.edit().putString("prefAutoImportExport", prefAutoImportExport).commit();  //reset the preference
                     sharedPreferences.edit().putBoolean("prefImportExportLocoList", prefImportExportLocoList).commit();  //reset the preference
 
-                    String m = context.getResources().getString(R.string.toastImportExportImportSucceeded).replace("%%1%%", exportedPreferencesFileName);
+                    String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
                     Toast.makeText(context, m, Toast.LENGTH_LONG).show();
                     Log.d("Engine_Driver", m);
 
@@ -195,9 +195,9 @@ public class ImportExportPreferences {
             }
             if (!res) {
                 if (srcExists) {
-                    Toast.makeText(context, context.getResources().getString(R.string.toastImportExportImportFailed).replace("%%1%%",exportedPreferencesFileName), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.toastImportExportImportFailed, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(context, context.getResources().getString(R.string.toastImportExportServerImportFailed).replace("%%1%%",exportedPreferencesFileName), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.toastImportExportServerImportFailed, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
                 }
             }
         } else {

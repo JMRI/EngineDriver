@@ -65,7 +65,7 @@
 
     <string name="toastShakeWebViewUnavailable">Web Anzeige muss zuerst in den Voreinstellungen ermöglicht werden.</string>
 
-    <string name="toastPreferencesOutsideLimits">Eingegebener Wert liegt ausserhalb der Grenzen (%%1%%-%%2%%). Zurücksetzen auf %%3%%.</string>
+    <string name="toastPreferencesOutsideLimits">Eingegebener Wert liegt ausserhalb der Grenzen (%1$s-%2$s). Zurücksetzen auf %3$s.</string>
 
     <string name="toastRoutesCommandSent">"Befehl geschickt zum Stellen der Fahrstrasse "</string>
 

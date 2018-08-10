@@ -39,6 +39,6 @@
 
     <!--    Toast message for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Invalid point number.</string>
-    <string name="toastTurnoutCommandTo">Command sent to %%1%% point</string>
+    <string name="toastTurnoutCommandTo">Command sent to %1$s point</string>
 
 </resources>
