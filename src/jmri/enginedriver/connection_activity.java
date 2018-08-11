@@ -142,6 +142,9 @@ public class connection_activity extends Activity {
             case "Vertical":
                 throttle = new Intent().setClass(this, throttle_vertical.class);
                 break;
+            case "Big Left":
+                throttle = new Intent().setClass(this, throttle_big_buttons.class);
+                break;
             case "Default":
             default:
                 throttle = new Intent().setClass(this, throttle_full.class);
@@ -221,7 +224,7 @@ public class connection_activity extends Activity {
                     }
                     connected_hostname = tm.get("host_name"); //copy ip to name
                     connect();
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectConnected).replace("%%1%%",connected_hostname).replace("%%2%%", Integer.toString(connected_port)), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
                 }

@@ -376,7 +376,7 @@
 
     <string name="prefImportExportOverwite">Arquivo já presente. Sobregravar?</string>
     <string name="prefImportExportErrorReadingList">Erro leitura lista conexões recentes:</string>
-    <string name="prefImportExportErrorReadingFrom">Importação de \'engine_driver/%%1%%\' falhou! Pode não ter salvo ainda as preferências para este host.</string>
+    <string name="prefImportExportErrorReadingFrom">Importação de \'engine_driver/%1$s\' falhou! Pode não ter salvo ainda as preferências para este host.</string>
     <string name="prefImportExportErrorNotConnected">Host não conectado.</string>
 
     <string name="prefSwapForwardReverseButtonsTitle">Troca Direção dos  Botões</string>
@@ -476,31 +476,31 @@
     <string name="toastSwipeUpScreenLocked">Tela Controlador Bloqueada - Deslizar para desbloquear</string>
     <string name="toastSwipeUpScreenDimmed">Tela Controlador Esmaecida - Deslizar para reativar</string>
     <string name="toastSwipeUpViewHidden">Vista Web temporariamente escondida. Para esconder permanentemente alterar as preferências</string>
-    <string name="toastThrottleAlertEstop">Alerta: Locomotiva %%1%% está Configurada em estado de ESTOP</string>
+    <string name="toastThrottleAlertEstop">Alerta: Locomotiva %1$s está Configurada em estado de ESTOP</string>
 
-    <string name="toastPreferencesOutsideLimits">O valor inserido está fora dos limites  (%%1%%-%%2%%). Reiniciado para %%3%%.</string>
-    <string name="toastPreferencesNotNumeric">O valor inserido não é um número.(%%1%%-%%2%%). Reiniciado para %%3%%.</string>
+    <string name="toastPreferencesOutsideLimits">O valor inserido está fora dos limites  (%1$s-%2$s). Reiniciado para %3$s.</string>
+    <string name="toastPreferencesNotNumeric">O valor inserido não é um número.(%1$s-%2$s). Reiniciado para %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferências Reiniciadas a valores Padrão!</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver reiniciado com o idioma escolhido.</string> -->
 
     <string name="toastTurnoutInvalidNumber">Numero de desvio inválido.</string>
-    <string name="toastTurnoutCommandTo">Comando enviado para o desvio %%1%%</string>
+    <string name="toastTurnoutCommandTo">Comando enviado para o desvio %1$s</string>
     <string name="toastTurnoutCommandToClose">Reto</string>
     <string name="toastTurnoutCommandToThrow">Desviado</string>
     <string name="toastTurnoutCommandToToggle">Alternar</string>
     <string name="toastConnectEnterAddress">Inserir ou selecionar um endereço e uma porta</string>
     <string name="toastConnectInvalidPort">Número Porta inválido, tentar de novo.</string>
-    <string name="toastConnectConnected">Conectado ao Servidor: %%1%% Porta : %%2%%</string>
+    <string name="toastConnectConnected">Conectado ao Servidor: %1$s Porta : %2$s</string>
     <string name="toastConnectUnableToSavePref">Impossível salvar preferências específicas do host. Nome do host não disponível.</string>
     <string name="toastConnectUnableToLoadPref">Impossível carregar preferências específicas do host. Nome do host não disponível.</string>
     <string name="toastConnectErrorReadingRecentConnections">Erro de leitura da lista de conexões recentes:</string>
     <string name="toastConnectErrorSavingRecentConnection">Erro salvando conexões recentes:</string>
     <string name="toastRoutesCommandSent">"Comando enviado para escolher Rota"</string>
-    <string name="toastImportExportExportSucceeded">Exportação preferências para \'engine_driver/%%1%%\' realizada com sucesso.</string>
-    <string name="toastImportExportImportSucceeded">Importação preferências de \'engine_driver/%%1%%\' realizada com sucesso.</string>
-    <string name="toastImportExportExportFailed">Exportação preferências para \'engine_driver/%%1%%\' falhou!</string>
-    <string name="toastImportExportImportFailed">Importação preferências de \'engine_driver/%%1%%\' falhou!</string>
-    <string name="toastImportExportServerImportFailed">Preferências não importadas de \'engine_driver/%%1%%\'. Pode não ter salvo ainda as preferências para este host.</string>
+    <string name="toastImportExportExportSucceeded">Exportação preferências para \'engine_driver/%1$s\' realizada com sucesso.</string>
+    <string name="toastImportExportImportSucceeded">Importação preferências de \'engine_driver/%1$s\' realizada com sucesso.</string>
+    <string name="toastImportExportExportFailed">Exportação preferências para \'engine_driver/%1$s\' falhou!</string>
+    <string name="toastImportExportImportFailed">Importação preferências de \'engine_driver/%1$s\' falhou!</string>
+    <string name="toastImportExportServerImportFailed">Preferências não importadas de \'engine_driver/%1$s\'. Pode não ter salvo ainda as preferências para este host.</string>
     <string name="toastImportExportCannotImport">Impossível importar preferências. Não conectado ao host.</string>
     <string name="toastImportExportCannotExport">Impossível exportar preferências específicas do host. Não conectado ao host.</string>
     <string name="toastSelectLocoConfirmClear">Confirmar que deseja remover todas as Locomotivas Recentes apertando o botão \' Limpar Lista\' DE NOVO.</string>

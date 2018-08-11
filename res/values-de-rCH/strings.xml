@@ -19,6 +19,8 @@
 
     <string name="app_name_routes">Fahrstrassen - Engine Driver</string>
 
+    <string name="about_page_url">file:///android_asset/about_page-de-rAT-CH-LI.html</string>
+
     <string name="routes">Fahrstrassen</string>
     <string name="routes_label">Fahrstrassen steuern</string>
     <string name="routes_direct_entry_label">Systemname für Fahrstrasse eingeben</string>
@@ -65,7 +67,7 @@
 
     <string name="toastShakeWebViewUnavailable">Web Anzeige muss zuerst in den Voreinstellungen ermöglicht werden.</string>
 
-    <string name="toastPreferencesOutsideLimits">Eingegebener Wert liegt ausserhalb der Grenzen (%%1%%-%%2%%). Zurücksetzen auf %%3%%.</string>
+    <string name="toastPreferencesOutsideLimits">Eingegebener Wert liegt ausserhalb der Grenzen (%1$s-%2$s). Zurücksetzen auf %3$s.</string>
 
     <string name="toastRoutesCommandSent">"Befehl geschickt zum Stellen der Fahrstrasse "</string>
 
