@@ -55,6 +55,7 @@
         <item >Original - telefone ou tablet (1-3 controladores)</item>
         <item >Simples - Tablet Recomendado (1-6 controladores)</item>
         <item >Vertical - telefone ou tablet (1-3 controladores)</item>
+        <item >Big Buttons - Left (1 throttle)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">

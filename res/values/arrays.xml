@@ -145,11 +145,13 @@
         <item >Original - Phone or Tablet (1-3 throttles)</item>
         <item >Simple - Tablet Recommended (1-6 throttles)</item>
         <item >Vertical - Phone or Tablet (2 throttles)</item>
+        <item >Big Buttons - Left (1 throttle)</item>
     </string-array>
     <string-array name="prefThrottleScreenTypeEntryValues">
         <item >Default</item>
         <item >Simple</item>
         <item >Vertical</item>
+        <item >Big Left</item>
     </string-array>
 
     <string-array name="DisplayClockEntryValues">
