@@ -19,6 +19,8 @@
 
     <string name="app_name_routes">Fahrstrassen - Engine Driver</string>
 
+    <string name="about_page_url">file:///android_asset/about_page-de-rAT-CH-LI.html</string>
+
     <string name="routes">Fahrstrassen</string>
     <string name="routes_label">Fahrstrassen steuern</string>
     <string name="routes_direct_entry_label">Systemname für Fahrstrasse eingeben</string>
