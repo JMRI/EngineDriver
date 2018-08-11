@@ -142,6 +142,9 @@ public class connection_activity extends Activity {
             case "Vertical":
                 throttle = new Intent().setClass(this, throttle_vertical.class);
                 break;
+            case "Big Left":
+                throttle = new Intent().setClass(this, throttle_big_buttons.class);
+                break;
             case "Default":
             default:
                 throttle = new Intent().setClass(this, throttle_full.class);
