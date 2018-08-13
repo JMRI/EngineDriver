@@ -1703,21 +1703,24 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
         boolean newEnabledState = false;
-            if (!forceDisable && (whichThrottle < mainapp.consists.length)) { // avoid index crash, but may simply push to next line
-                newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
-            }
-            bFwds[whichThrottle].setEnabled(newEnabledState);
-            bRevs[whichThrottle].setEnabled(newEnabledState);
-            bStops[whichThrottle].setEnabled(newEnabledState);
-            tvSpdLabs[whichThrottle].setEnabled(newEnabledState);
-            tvSpdVals[whichThrottle].setEnabled(newEnabledState);
-            bLSpds[whichThrottle].setEnabled(newEnabledState);
-            bRSpds[whichThrottle].setEnabled(newEnabledState);
-            enable_disable_buttons_for_view(fbs[whichThrottle], newEnabledState);
-            if (!newEnabledState) {
-                sbs[whichThrottle].setProgress(0); // set slider to 0 if disabled
-            }
-            sbs[whichThrottle].setEnabled(newEnabledState);
+        if (whichThrottle >= mainapp.consists.length) { // avoid index crash
+            return;
+        }
+        if (!forceDisable) { // avoid index crash, but may simply push to next line
+            newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
+        }
+        bFwds[whichThrottle].setEnabled(newEnabledState);
+        bRevs[whichThrottle].setEnabled(newEnabledState);
+        bStops[whichThrottle].setEnabled(newEnabledState);
+        tvSpdLabs[whichThrottle].setEnabled(newEnabledState);
+        tvSpdVals[whichThrottle].setEnabled(newEnabledState);
+        bLSpds[whichThrottle].setEnabled(newEnabledState);
+        bRSpds[whichThrottle].setEnabled(newEnabledState);
+        enable_disable_buttons_for_view(fbs[whichThrottle], newEnabledState);
+        if (!newEnabledState) {
+            sbs[whichThrottle].setProgress(0); // set slider to 0 if disabled
+        }
+        sbs[whichThrottle].setEnabled(newEnabledState);
     } // end of enable_disable_buttons
 
     // helper function to enable/disable all children for a group
