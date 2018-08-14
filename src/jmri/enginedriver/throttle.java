@@ -3174,8 +3174,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             trailOnly = false;
             followLeadFunction = false;
 
+            boolean selectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
             if (!lab.equals("")) {
-                boolean selectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
                 leadOnly = (selectiveLeadSound &&
                         (lab.contains(FUNCTION_BUTTON_LOOK_FOR_WHISTLE) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HORN) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_BELL))
                         || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HEAD)
@@ -3183,6 +3183,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 followLeadFunction = (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT));
                 trailOnly = lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR);
             }
+            boolean selectiveLeadSoundF1 = prefs.getBoolean("SelectiveLeadSoundF1", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF1DefaultValue));
+            boolean selectiveLeadSoundF2 = prefs.getBoolean("SelectiveLeadSoundF2", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF2DefaultValue));
+            if ((selectiveLeadSound) && (new_function == 1) && (selectiveLeadSoundF1)) {leadOnly = true;}
+            if ((selectiveLeadSound) && (new_function == 2) && (selectiveLeadSoundF2)) {leadOnly = true;}
         }
 
         @Override

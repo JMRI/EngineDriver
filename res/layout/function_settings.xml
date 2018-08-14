@@ -133,307 +133,400 @@
         android:id="@+id/ScrollView01"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight=".5" >
+        android:layout_weight=".5">
+
         <TableLayout
             android:id="@+id/label_func_table"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
+
             <TableRow>
-                <TextView android:text="@string/fb_column_label" >
-                </TextView>
-                <TextView android:text="@string/fb_column_function" >
-                </TextView>
+
+                <TextView
+                    android:layout_weight=".5"
+                    android:text="@string/fb_column_label"></TextView>
+
+                <TextView
+                    android:layout_weight=".5"
+                    android:text="@string/fb_column_function"></TextView>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton00DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton00DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="00" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="00"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton01DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton01DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="01" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="01"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton02DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton02DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="02" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="02"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton03DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton03DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="03" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="03"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton04DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton04DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="04" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="04"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton05DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton05DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="05" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="05"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton06DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton06DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="06" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="06"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton07DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton07DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="07" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="07"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton08DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton08DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="08" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="08"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton09DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton09DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="09" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="09"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton10DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton10DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="10" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="10"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton11DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton11DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="11" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="11"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton12DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton12DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="12" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="12"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton13DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton13DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="13" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="13"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton14DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton14DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="14" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="14"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton15DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton15DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="15" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="15"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton16DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton16DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="16" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="16"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton17DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton17DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="17" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="17"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton18DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton18DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="18" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="18"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton19DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton19DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="19" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="19"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton20DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton20DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="20" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="20"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton21DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton21DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="21" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="21"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton22DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton22DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="22" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="22"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton23DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton23DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="23" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="23"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton24DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton24DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="24" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="24"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton25DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton25DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="25" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="25"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton26DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton26DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="26" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="26"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton27DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton27DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="27" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="27"></EditText>
             </TableRow>
+
             <TableRow>
+
                 <EditText
                     style="@style/edit_label_style"
-                    android:text="@string/functionButton28DefultValue" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="@string/functionButton28DefultValue"></EditText>
+
                 <EditText
                     style="@style/edit_func_style"
-                    android:text="28" >
-                </EditText>
+                    android:layout_weight=".5"
+                    android:text="28"></EditText>
             </TableRow>
         </TableLayout>
     </ScrollView>

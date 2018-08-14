@@ -263,6 +263,10 @@
     <string name="prefSelectLocoTitle">Selezionare Preferenze Locomotiva</string>
     <string name="prefSelectiveLeadSoundTitle">Suono selettivo della Unità di Testa?</string>
     <string name="prefSelectiveLeadSoundSummary">Inviare funzione Fischio/Campana solo per l\'unità di testa del Convoglio Engine Driver</string>
+    <string name="prefSelectiveLeadSoundF1Title">Tratta sempre F1 come suono</string>
+    <string name="prefSelectiveLeadSoundF1Summary">Per l\'opzione \'Selective Lead Unit Sound \'</string>
+    <string name="prefSelectiveLeadSoundF2Title">Tratta sempre F2 come suono</string>
+    <string name="prefSelectiveLeadSoundF2Summary">Per l\'opzione \'Selective Lead Unit Sound \'</string>
     <string name="prefStopOnPhonecallTitle">Stop incaso di Chiamata?</string>
     <string name="prefStopOnPhonecallSummary">Ferma locomotive quando si riceve o si effettua una chiamata</string>
     <string name="prefStopOnReleaseTitle">Stop al Rilascio?</string>
