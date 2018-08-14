@@ -303,7 +303,11 @@
     <string name="prefWebViewLocationSummary">Include web view on Throttle pane</string>
     <string name="prefSelectLocoTitle">Select Loco Preferences</string>
     <string name="prefSelectiveLeadSoundTitle">Selective Lead Unit Sound?</string>
-    <string name="prefSelectiveLeadSoundSummary">Send Horn/Bell functions to only the Lead unit in an EngineDriver consist</string>
+    <string name="prefSelectiveLeadSoundSummary">Send Horn/Bell functions to only the Lead unit in an EngineDriver consist. (Only/any function with a \'label\' that includes \'bell\', \'horn\' or \'whistle\' as part of the label.)</string>
+    <string name="prefSelectiveLeadSoundF1Title">Always treat F1 as Sound</string>
+    <string name="prefSelectiveLeadSoundF1Summary">For the \'Selective Lead Unit Sound\' option</string>
+    <string name="prefSelectiveLeadSoundF2Title">Always treat F2 as Sound</string>
+    <string name="prefSelectiveLeadSoundF2Summary">For the \'Selective Lead Unit Sound\' option</string>
     <string name="prefStopOnPhonecallTitle">Stop On Phonecall?</string>
     <string name="prefStopOnPhonecallSummary">Stop loco(s) when a phone call is answered or placed</string>
     <string name="prefStopOnReleaseTitle">Stop On Release?</string>

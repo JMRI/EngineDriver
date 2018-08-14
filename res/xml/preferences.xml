@@ -594,6 +594,18 @@
             android:summary="@string/prefSelectiveLeadSoundSummary"
             android:title="@string/prefSelectiveLeadSoundTitle" >
         </CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefSelectiveLeadSoundF1DefaultValue"
+            android:key="SelectiveLeadSoundF1"
+            android:summary="@string/prefSelectiveLeadSoundF1Summary"
+            android:title="@string/prefSelectiveLeadSoundF1Title" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefSelectiveLeadSoundF1DefaultValue"
+            android:key="SelectiveLeadSoundF2"
+            android:summary="@string/prefSelectiveLeadSoundF2Summary"
+            android:title="@string/prefSelectiveLeadSoundF2Title" >
+        </CheckBoxPreference>
         <PreferenceScreen
             android:key="prefEsuMc2"
             android:title="@string/prefEsuMc2Title"

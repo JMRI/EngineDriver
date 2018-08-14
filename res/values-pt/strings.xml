@@ -263,6 +263,10 @@
     <string name="prefSelectLocoTitle">Selecionar Preferências Locomotiva</string>
     <string name="prefSelectiveLeadSoundTitle">Som seletivo da Unidade de Frente?</string>
     <string name="prefSelectiveLeadSoundSummary">Enviar função Buzina/Sino somente para a unidade de frente de um Comboio Engine Driver</string>
+    <string name="prefSelectiveLeadSoundF1Title">Sempre trate F1 como som</string>
+    <string name="prefSelectiveLeadSoundF1Summary">Para a opção \'Selective Lead Unit Sound \'</string>
+    <string name="prefSelectiveLeadSoundF2Title">Sempre trate F2 como som</string>
+    <string name="prefSelectiveLeadSoundF2Summary">Para a opção \'Selective Lead Unit Sound \'</string>
     <string name="prefStopOnPhonecallTitle">Parar em caso de Chamada?</string>
     <string name="prefStopOnPhonecallSummary">Para locomotiva(s) quando uma chamada é recebida ou enviada</string>
     <string name="prefStopOnReleaseTitle">Parar ao Libertar?</string>

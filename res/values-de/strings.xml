@@ -258,6 +258,10 @@
     <string name="prefSelectLocoTitle">Wähle Lok Voreinstellungen</string>
     <string name="prefSelectiveLeadSoundTitle">Selektiver Sound der führenden Einheit?</string>
     <string name="prefSelectiveLeadSoundSummary">Sende Horn/Glocke Funktionen nur zur führenden Lok in einem EngineDriver Lokverbund</string>
+    <string name="prefSelectiveLeadSoundF1Title">Behandle F1 immer als Sound</string>
+    <string name="prefSelectiveLeadSoundF1Summary">Für die Option "Selective Lead Unit Sound"</string>
+    <string name="prefSelectiveLeadSoundF2Title">Behandle F2 immer als Sound</string>
+    <string name="prefSelectiveLeadSoundF2Summary">Für die Option "Selective Lead Unit Sound"</string>
     <string name="prefStopOnPhonecallTitle">Stop bei Telefonanruf?</string>
     <string name="prefStopOnPhonecallSummary">Stoppe Lok(s) wenn ein Telefonanruf angenommen oder gewählt wird</string>
     <string name="prefStopOnReleaseTitle">Stop beim Freigeben?</string>
