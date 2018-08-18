@@ -6,9 +6,12 @@
 
     <TextView
         android:id="@+id/con_loco_name"
-        style="@style/list_item_style"
+        style="?attr/list_item_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:paddingBottom="4dp"
         android:paddingTop="15dp"
         android:text="loco_name"
@@ -23,18 +26,18 @@
 
     <TextView
         android:id="@+id/con_lead_label"
-        style="@style/list_id_style"
+        style="?attr/list_id_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="lead" />
 
     <TextView
         android:id="@+id/con_loco_facing"
-        style="@style/list_item_style"
+        style="?attr/list_item_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="15dp"
         android:layout_alignParentRight="true"
+        android:paddingTop="15dp"
         android:text="facing"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 </RelativeLayout>

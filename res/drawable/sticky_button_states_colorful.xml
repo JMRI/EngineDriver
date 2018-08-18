@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/buttonCornerRadius_colorful" />
+            <stroke android:width="@dimen/buttonDisabledStroke_colorful" android:color="@color/buttonDisabledStroke_colorful" />
+            <solid android:color="@color/buttonDisabledFill_colorful" />
+        </shape>
+    </item>
+
+    <item
+        android:state_pressed="true"
+        android:drawable="@drawable/button_layers_selected_colorful">
+    </item>
+
+    <item
+        android:state_selected="true"
+        android:drawable="@drawable/button_layers_selected_colorful">
+    </item>
+
+    <item
+        android:state_selected="false"
+        android:state_activated="true"
+        android:state_hovered="true"
+        android:state_enabled="true"
+        android:drawable="@drawable/button_layers_activated_hovered_colorful">
+    </item>
+
+    <item
+        android:state_selected="false"
+        android:state_activated="true"
+        android:state_hovered="false"
+        android:state_enabled="true"
+        android:drawable="@drawable/button_layers_activated_colorful">
+    </item>
+
+    <item
+        android:state_selected="false"
+        android:state_activated="false"
+        android:state_hovered="true"
+        android:state_enabled="true"
+        android:drawable="@drawable/button_layers_hovered_colorful">
+    </item>
+
+    <item
+        android:state_selected="false"
+        android:state_activated="false"
+        android:state_hovered="false"
+        android:state_enabled="true"
+        android:drawable="@drawable/button_layers_enabled_colorful">
+    </item>
+
+</selector>

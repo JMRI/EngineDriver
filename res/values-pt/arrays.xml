@@ -127,6 +127,7 @@
         <item>Tema Alto Contraste</item>
         <item>Tema Bordas de Alto Contraste</item>
         <item>Tema Escuro</item>
+        <item>Tema das cores</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Nada (Usar somente \'v\',\'1\')</item>

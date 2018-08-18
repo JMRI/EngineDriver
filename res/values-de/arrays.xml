@@ -115,6 +115,7 @@
         <item>Kontrastreiches Motiv</item>
         <item>Kontrastreiches Hervorgehobenes Motiv</item>
         <item>Dunkles Motiv</item>
+        <item>Farben Motiv</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Keine (Benütze nur \'v\',\'1\')</item>

@@ -23,7 +23,7 @@
 
             <TextView
                 android:id="@+id/gamepad_test_mode_label"
-                style="@style/floating_text_style"
+                style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/gamepadTestModeLabel"
@@ -31,6 +31,7 @@
 
             <Spinner
                 android:id="@+id/gamepad_test_mode"
+                style="?attr/edit_label_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -185,7 +186,7 @@
 
                             <TextView
                                 android:id="@+id/gamepad_test_optional_label"
-                                style="@style/floating_text_style"
+                                style="?attr/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/gamepadTestOptionalLabel"
@@ -228,7 +229,7 @@
 
                             <TextView
                                 android:id="@+id/gamepad_test_all_keycodes_label"
-                                style="@style/floating_text_style"
+                                style="?attr/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/gamepadTestAllKeyCodesLabel"
@@ -252,7 +253,7 @@
 
                             <TextView
                                 android:id="@+id/gamepad_test_keycode_label"
-                                style="@style/floating_text_style"
+                                style="?attr/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.5"
@@ -271,7 +272,7 @@
 
                             <TextView
                                 android:id="@+id/gamepad_test_keyfunction_label"
-                                style="@style/floating_text_style"
+                                style="?attr/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.5"
@@ -291,13 +292,14 @@
 
                         <RelativeLayout
                             android:id="@+id/gamepad_test_complete_group"
+                            style="?attr/floating_text_style"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:layout_margin="3dp">
 
                             <TextView
                                 android:id="@+id/gamepad_test_complete_label"
-                                style="@style/floating_text_style"
+                                style="?attr/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/gamepadTestCompleteLabel"
@@ -323,7 +325,7 @@
 
                     <TextView
                         android:id="@+id/gamepad_test_help"
-                        style="@style/floating_text_style"
+                        style="?attr/floating_text_style"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="3dp"

@@ -50,6 +50,7 @@
 
         <item name="ed_large_button_style">@style/large_button_style</item>
         <item name="ed_normal_button_style">@style/normal_button_style</item>
+        <item name="ed_normal_button2_style">@style/normal_button2_style</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style</item>
         <item name="ed_small_button_style">@style/small_button_style</item>
         <item name="ed_stop_button_style">@style/stop_button_style</item>

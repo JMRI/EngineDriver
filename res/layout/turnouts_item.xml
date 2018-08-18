@@ -9,7 +9,7 @@
         android:layout_weight="0.75" >
         <TextView
             android:id="@+id/to_user_name"
-            style="@style/list_item_style"
+            style="?attr/list_item_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="4dp"
@@ -18,7 +18,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
         <TextView
             android:id="@+id/to_system_name"
-            style="@style/list_id_style"
+            style="?attr/list_id_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="2dp"
