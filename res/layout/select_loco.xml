@@ -48,6 +48,7 @@
 
                     <RadioButton
                         android:id="@+id/select_loco_method_address_button"
+                        style="?attr/floating_text_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodAddress"
@@ -55,6 +56,7 @@
 
                     <RadioButton
                         android:id="@+id/select_loco_method_roster_button"
+                        style="?attr/floating_text_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodRoster"
@@ -62,6 +64,7 @@
 
                     <RadioButton
                         android:id="@+id/select_loco_method_recent_button"
+                        style="?attr/floating_text_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodRecent"
@@ -105,11 +108,14 @@
         <TextView
             android:id="@+id/select_loco_label"
             style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="@string/select_loco" />
 
         <EditText
             android:id="@+id/loco_address"
+            style="?attr/edit_label_style"
             android:layout_width="120sp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -125,8 +131,10 @@
             android:shadowRadius="0.2"
             android:singleLine="true"
             android:textSize="24sp" />
+
         <Spinner
             android:id="@+id/address_length"
+            style="?attr/edit_label_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/loco_address"
@@ -154,11 +162,13 @@
 
         <TextView
             android:id="@+id/select_loco_help"
-            style="@style/floating_text_style"
+            style="?attr/floating_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:padding="8sp"
-            android:layout_marginBottom="2dp"
             android:text="@string/LocoSelectMethodHelp" />
 
     </RelativeLayout>
@@ -180,6 +190,7 @@
 
         <EditText
             android:id="@+id/filter_roster_text"
+            style="?attr/edit_label_style"
             android:layout_width="80sp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -207,7 +218,7 @@
 
         <TextView
             android:id="@+id/roster_list_empty"
-            style="@style/floating_text_style"
+            style="?attr/floating_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"

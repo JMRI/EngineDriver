@@ -97,7 +97,7 @@
 
                         <TextView
                             android:id="@+id/speed_label_0"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:enabled="false"
@@ -109,7 +109,7 @@
 
                         <TextView
                             android:id="@+id/speed_value_label_0"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -119,7 +119,7 @@
 
                         <TextView
                             android:id="@+id/volume_indicator_0"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/speed_value_label_0"
@@ -133,7 +133,7 @@
 
                         <TextView
                             android:id="@+id/gamepad_indicator_0"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/volume_indicator_0"
@@ -221,7 +221,7 @@
 
                     <Button
                         android:id="@+id/right_speed_button_0"
-                        style="?attr/ed_normal_button_style"
+                        style="?attr/ed_normal_button2_style"
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:layout_weight="0"
@@ -241,7 +241,7 @@
 
                     <Button
                         android:id="@+id/left_speed_button_0"
-                        style="?attr/ed_normal_button_style"
+                        style="?attr/ed_normal_button2_style"
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:padding="0dp"
@@ -316,7 +316,7 @@
 
                         <TextView
                             android:id="@+id/speed_label_1"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:enabled="false"
@@ -328,7 +328,7 @@
 
                         <TextView
                             android:id="@+id/speed_value_label_1"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -338,7 +338,7 @@
 
                         <TextView
                             android:id="@+id/volume_indicator_1"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/speed_value_label_1"
@@ -352,7 +352,7 @@
 
                         <TextView
                             android:id="@+id/gamepad_indicator_1"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/volume_indicator_1"
@@ -440,7 +440,7 @@
 
                     <Button
                         android:id="@+id/right_speed_button_1"
-                        style="?attr/ed_normal_button_style"
+                        style="?attr/ed_normal_button2_style"
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:layout_weight="0"
@@ -460,7 +460,7 @@
 
                     <Button
                         android:id="@+id/left_speed_button_1"
-                        style="?attr/ed_normal_button_style"
+                        style="?attr/ed_normal_button2_style"
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:padding="0dp"
@@ -535,7 +535,7 @@
 
                         <TextView
                             android:id="@+id/speed_label_2"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:enabled="false"
@@ -547,7 +547,7 @@
 
                         <TextView
                             android:id="@+id/speed_value_label_2"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -557,7 +557,7 @@
 
                         <TextView
                             android:id="@+id/volume_indicator_2"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/speed_value_label_2"
@@ -571,7 +571,7 @@
 
                         <TextView
                             android:id="@+id/gamepad_indicator_2"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/volume_indicator_2"
@@ -659,7 +659,7 @@
 
                     <Button
                         android:id="@+id/right_speed_button_2"
-                        style="?attr/ed_normal_button_style"
+                        style="?attr/ed_normal_button2_style"
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:layout_weight="0"
@@ -679,7 +679,7 @@
 
                     <Button
                         android:id="@+id/left_speed_button_2"
-                        style="?attr/ed_normal_button_style"
+                        style="?attr/ed_normal_button2_style"
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:padding="0dp"
@@ -754,7 +754,7 @@
 
                         <TextView
                             android:id="@+id/speed_label_3"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:enabled="false"
@@ -766,7 +766,7 @@
 
                         <TextView
                             android:id="@+id/speed_value_label_3"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -776,7 +776,7 @@
 
                         <TextView
                             android:id="@+id/volume_indicator_3"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/speed_value_label_3"
@@ -790,7 +790,7 @@
 
                         <TextView
                             android:id="@+id/gamepad_indicator_3"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/volume_indicator_3"
@@ -878,7 +878,7 @@
 
                     <Button
                         android:id="@+id/right_speed_button_3"
-                        style="?attr/ed_normal_button_style"
+                        style="?attr/ed_normal_button2_style"
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:layout_weight="0"
@@ -898,7 +898,7 @@
 
                     <Button
                         android:id="@+id/left_speed_button_3"
-                        style="?attr/ed_normal_button_style"
+                        style="?attr/ed_normal_button2_style"
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:padding="0dp"
@@ -973,7 +973,7 @@
 
                         <TextView
                             android:id="@+id/speed_label_4"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:enabled="false"
@@ -985,7 +985,7 @@
 
                         <TextView
                             android:id="@+id/speed_value_label_4"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -995,7 +995,7 @@
 
                         <TextView
                             android:id="@+id/volume_indicator_4"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/speed_value_label_4"
@@ -1009,7 +1009,7 @@
 
                         <TextView
                             android:id="@+id/gamepad_indicator_4"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/volume_indicator_4"
@@ -1097,7 +1097,7 @@
 
                     <Button
                         android:id="@+id/right_speed_button_4"
-                        style="?attr/ed_normal_button_style"
+                        style="?attr/ed_normal_button2_style"
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:layout_weight="0"
@@ -1117,7 +1117,7 @@
 
                     <Button
                         android:id="@+id/left_speed_button_4"
-                        style="?attr/ed_normal_button_style"
+                        style="?attr/ed_normal_button2_style"
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:padding="0dp"
@@ -1192,7 +1192,7 @@
 
                         <TextView
                             android:id="@+id/speed_label_5"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:enabled="false"
@@ -1204,7 +1204,7 @@
 
                         <TextView
                             android:id="@+id/speed_value_label_5"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -1214,7 +1214,7 @@
 
                         <TextView
                             android:id="@+id/volume_indicator_5"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/speed_value_label_5"
@@ -1228,7 +1228,7 @@
 
                         <TextView
                             android:id="@+id/gamepad_indicator_5"
-                            style="@style/floating_text_style"
+                            style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/volume_indicator_5"
@@ -1316,7 +1316,7 @@
 
                     <Button
                         android:id="@+id/right_speed_button_5"
-                        style="?attr/ed_normal_button_style"
+                        style="?attr/ed_normal_button2_style"
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:layout_weight="0"
@@ -1336,7 +1336,7 @@
 
                     <Button
                         android:id="@+id/left_speed_button_5"
-                        style="?attr/ed_normal_button_style"
+                        style="?attr/ed_normal_button2_style"
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:padding="0dp"

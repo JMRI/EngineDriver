@@ -15,7 +15,7 @@
         android:padding="4dp" >
         <TextView
             android:id="@+id/turnout_prefix"
-            style="@style/floating_text_style"
+            style="?attr/floating_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" />

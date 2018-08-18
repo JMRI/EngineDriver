@@ -75,6 +75,7 @@
                                 android:id="@+id/button_select_loco_0"
                                 style="?attr/ed_loco_select_button_style"
                                 android:layout_width="fill_parent"
+                                android:layout_marginBottom="5dp"
                                 android:text="@string/none" />
 
                             <TextView
@@ -112,10 +113,12 @@
 
                             <TextView
                                 android:id="@+id/speed_value_label_0"
-                                style="@style/floating_text_style"
+                                style="?attr/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
                                 android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
                                 android:enabled="false"
                                 android:text="126"
                                 android:textSize="36sp" />
@@ -154,6 +157,7 @@
                         android:id="@+id/dir_buttons_table_0"
                         android:layout_width="fill_parent"
                         android:layout_height="80dp"
+                        android:layout_marginTop="5dp"
                         android:stretchColumns="0,1,2">
 
                         <TableRow
@@ -164,7 +168,8 @@
                                 android:id="@+id/direction_left_cell_0"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight=".5">
+                                android:layout_weight=".5"
+                                android:paddingRight="5dp">
 
                                 <Button
                                     android:id="@+id/button_fwd_0"
@@ -191,7 +196,8 @@
                                 android:id="@+id/direction_right_cell_0"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight=".5">
+                                android:layout_weight=".5"
+                                android:paddingLeft="5dp">
 
                                 <Button
                                     android:id="@+id/button_rev_0"
@@ -237,10 +243,10 @@
 
                         <Button
                             android:id="@+id/right_speed_button_0"
-                            style="?attr/ed_normal_button_style"
+                            style="?attr/ed_normal_button2_style"
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginBottom="7dp"
                             android:layout_marginTop="14dp"
                             android:layout_weight=".4"
                             android:text="@string/UpButton"
@@ -258,11 +264,11 @@
 
                         <Button
                             android:id="@+id/left_speed_button_0"
-                            style="?attr/ed_normal_button_style"
+                            style="?attr/ed_normal_button2_style"
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:layout_marginBottom="30dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="7dp"
                             android:layout_weight=".4"
                             android:padding="0dp"
                             android:text="@string/DownButton"

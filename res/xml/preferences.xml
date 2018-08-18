@@ -6,12 +6,11 @@
     <EditTextPreference
         android:defaultValue="@string/prefThrottleNameDefaultValue"
         android:dialogTitle="@string/prefThrottleNameTitle"
-        android:key="throttle_name_preference"
-        android:summary="@string/prefThrottleNameSummary"
-        android:title="@string/prefThrottleNameTitle"
         android:inputType="text"
-        android:maxLines="1">
-    </EditTextPreference>
+        android:key="throttle_name_preference"
+        android:maxLines="1"
+        android:summary="@string/prefThrottleNameSummary"
+        android:title="@string/prefThrottleNameTitle"></EditTextPreference>
     <ListPreference
         android:defaultValue="@string/prefThrottleOrientationDefaultValue"
         android:entries="@array/OrientationEntries"

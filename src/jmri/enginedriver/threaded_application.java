@@ -1287,7 +1287,7 @@ public class threaded_application extends Application {
 //                                    " - " + except.getMessage() + "\nCheck WiThrottle and network settings.", Toast.LENGTH_LONG);
 //                            if (host_ip != null) {
                             show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantConnect,
-                                    host_ip, port, client_address, except.getMessage()), Toast.LENGTH_SHORT);
+                                    host_ip, Integer.toString(port), client_address, except.getMessage()), Toast.LENGTH_SHORT);
 //                            }
                         }
                         socketOk = false;
@@ -1405,11 +1405,11 @@ public class threaded_application extends Application {
                     } else if (inboundTimeout) {
 //                        status = "No response from server " + host_ip + ":" + port + " for " + heart.sGetInboundInterval() + " seconds.  " +
 //                                "Check that the WiThrottle server is running.\n\nRetrying";
-                        status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse, host_ip, port, heart.sGetInboundInterval());
+                        status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse, host_ip, Integer.toString(port), heart.sGetInboundInterval());
                         Log.d("Engine_Driver", "WiT receive reconnection attempt.");
                     } else {
 //                        status = "Unable to connect to server at " + host_ip + ":" + port + " from " + client_address + ".\n\nRetrying";
-                        status = getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect, host_ip, port, client_address);
+                        status = getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect, host_ip, Integer.toString(port), client_address);
                         Log.d("Engine_Driver", "WiT send reconnection attempt.");
                     }
                     socketGood = false;
@@ -2504,6 +2504,8 @@ public class threaded_application extends Application {
             activity.setTheme(R.style.app_theme_outline);
         } else if (prefTheme.equals("Ultra")) {
             activity.setTheme(R.style.app_theme_ultra);
+        } else if (prefTheme.equals("Colorful")) {
+            activity.setTheme(R.style.app_theme_colorful);
         } else {
             activity.setTheme(R.style.app_theme);
         }

@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/power_control_text"
-            style="@style/floating_text_style"
+            style="?attr/floating_text_style"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
