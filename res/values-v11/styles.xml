@@ -758,14 +758,20 @@
     <item name="android:background">@color/transparent</item>
   </style>
 
-  <style name="dialogStyle_colorful" parent="@android:style/Theme.Dialog" tools:targetApi="honeycomb">
-    <item name="android:windowBackground">@color/transparent</item>
+  <style name="alertDialogStyle_colorful" parent="@android:style/Theme.Dialog" tools:targetApi="honeycomb">
     <item name="android:textSize">18sp</item>
-    <item name="android:background">@color/transparent</item>
-    <item name="android:textColorAlertDialogListItem">@color/solidWhite</item>
-    <item name="android:textColor">@color/solidWhite</item>
-    <item name="android:editTextColor">@color/solidWhite</item>
-    <item name="android:textColorPrimary">@color/solidWhite</item>
+    <item name="android:background">@color/windowBackground_colorful</item>
+    <item name="android:textColorAlertDialogListItem">@color/primary_colorful</item>
+    <item name="android:textColorPrimary">@color/primary_colorful</item>
+    <item name="android:textColor">@color/primary_colorful</item>
+  </style>
+
+  <style name="dialogStyle_colorful" parent="@android:style/Theme.Dialog" tools:targetApi="honeycomb">
+    <item name="android:textSize">18sp</item>
+    <item name="android:background">@color/windowBackground_colorful</item>
+    <item name="android:textColorAlertDialogListItem">@color/primary_colorful</item>
+    <item name="android:textColorPrimary">@color/primary_colorful</item>
+    <item name="android:textColor">@color/primary_colorful</item>
   </style>
 
   <style name="actionBarStyle_colorful" parent="@android:style/Widget.Holo.Light.ActionBar" tools:targetApi="honeycomb">
