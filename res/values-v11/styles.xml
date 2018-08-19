@@ -759,21 +759,18 @@
   </style>
 
   <style name="alertDialogStyle_colorful" parent="@android:style/Theme.Dialog" tools:targetApi="honeycomb">
-    <item name="android:windowBackground">@color/windowBackground_colorful</item>
     <item name="android:textSize">18sp</item>
     <item name="android:background">@color/windowBackground_colorful</item>
     <item name="android:textColorAlertDialogListItem">@color/primary_colorful</item>
     <item name="android:textColorPrimary">@color/primary_colorful</item>
     <item name="android:textColor">@color/primary_colorful</item>
-    <item name="android:titleTextStyle">@style/dialogTitleTextStyle_colorful</item>
   </style>
 
   <style name="dialogStyle_colorful" parent="@android:style/Theme.Dialog" tools:targetApi="honeycomb">
-    <item name="android:windowBackground">@color/windowBackground_colorful</item>
     <item name="android:textSize">18sp</item>
     <item name="android:background">@color/windowBackground_colorful</item>
     <item name="android:textColorAlertDialogListItem">@color/primary_colorful</item>
-    <item name="android:textColorPrimary">@color/solidWhite</item>
+    <item name="android:textColorPrimary">@color/primary_colorful</item>
     <item name="android:textColor">@color/primary_colorful</item>
   </style>
 
@@ -789,9 +786,4 @@
     <item name="android:textColor">@color/primary_colorful</item>
   </style>
 
-  <style name="dialogTitleTextStyle_colorful">
-    <item name="android:windowBackground">@color/windowBackground_colorful</item>
-    <item name="android:background">@color/solidBlack</item>
-    <item name="android:textColor">@color/solidWhite</item>
-  </style>
 </resources>
