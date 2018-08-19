@@ -112,7 +112,7 @@
     <color name="heading_colorful">#ffad02</color>
     <color name="shadow_colorful">#d1ffffff</color>
 
-    <color name="windowBackground_colorful">#faefe7</color>
+    <color name="windowBackground_colorful">#fffaf6</color>
 
     <color name="buttonStopFillGradiantLight_colorful">#f59590</color>
     <color name="buttonStopFillGradiantCenter_colorful">#f77a74</color>
