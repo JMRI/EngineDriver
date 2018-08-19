@@ -106,6 +106,12 @@
     <!-- Colorful Theme -->
     <color name="divider_colorful">#ffad02</color>
 
+    <color name="primary_colorful">@color/solidBlack</color>
+    <color name="secondary_colorful">#747474</color>
+    <color name="hint_colorful">#747474</color>
+    <color name="heading_colorful">#ffad02</color>
+    <color name="shadow_colorful">#d1ffffff</color>
+
     <color name="windowBackground_colorful">#faefe7</color>
 
     <color name="buttonStopFillGradiantLight_colorful">#f59590</color>
@@ -135,15 +141,15 @@
     <color name="buttonActivatedHoveredInsideStroke_colorful">#8c00ff</color>
     <color name="buttonActivatedHoveredInside2Stroke_colorful">#f200ff</color>
 
-    <color name="buttonFnFillGradiantLight_colorful">#e3fff8</color>
-    <color name="buttonFnFillGradiantCenter_colorful">#a6ffe9</color>
-    <color name="buttonFnFillGradiantDark_colorful">#70fdda</color>
+    <color name="buttonFnFillGradiantLight_colorful">#c3d9d3</color>
+    <color name="buttonFnFillGradiantCenter_colorful">#8edac6</color>
+    <color name="buttonFnFillGradiantDark_colorful">#3ad7ac</color>
     <color name="buttonFnSelectedStroke_colorful">#404040</color>
     <color name="buttonFnDisabledFill_colorful">#faefe7</color>
     <color name="buttonFnDisabledStroke_colorful">#b79d88</color>
     <color name="buttonFnSelectedText_colorful">#45564c</color>
     <color name="buttonFnSelectedFill_colorful">#FF262626</color>
-    <color name="buttonFnSelectedInsideStroke_colorful">#00d19d</color>
+    <color name="buttonFnSelectedInsideStroke_colorful">#00ac7d</color>
 
 
 

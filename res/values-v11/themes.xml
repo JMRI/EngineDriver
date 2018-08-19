@@ -151,7 +151,7 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
-    <style name="app_theme_colorful" parent="@android:style/Theme.Holo">
+    <style name="app_theme_colorful" parent="@android:style/Theme.Holo.Light">
         <item name="android:windowTitleBackgroundStyle">@style/windowTitleBackground_colorful</item>
 
         <item name="android:windowBackground">@color/windowBackground_colorful</item>
@@ -165,11 +165,11 @@
         <item name="android:alertDialogTheme">@style/dialogStyle_colorful</item>
         <item name="android:itemBackground">@color/transparent</item>
         <item name="android:textColor">@color/solidBlack</item>
-        <item name="android:textColorPrimary">@color/solidBlack</item>
-        <item name="android:textColorSecondary">#747474</item>
-        <item name="android:textColorHint">#747474</item>
+        <item name="android:textColorPrimary">@color/primary_colorful</item>
+        <item name="android:textColorSecondary">@color/secondary_colorful</item>
+        <item name="android:textColorHint">@color/hint_colorful</item>
         <item name="android:background">@color/windowBackground_colorful</item>
-        <item name="android:actionMenuTextColor">@color/solidBlack</item>
+        <item name="android:actionMenuTextColor">@color/primary_colorful</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_colorful</item>
