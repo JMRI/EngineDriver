@@ -528,7 +528,6 @@
     <string name="TtsGamepadTestSkipped">Test übersprungen</string>
     <string name="TtsGamepadTestFail">Test abgebrochen</string>
     <string name="TtsGamepadTestReset">Gamepad Zurücksetzen</string>
- <!--
     <string name="TTS_Screen_Dimmed">Gedimmt, wische nach oben zum Wiederherstellen</string>
     <string name="TTS_Screen_Locked">Blockiert, wische nach oben zum Wiederherstellen</string>
     <string name="TTS_Screen_Unlocked">Nicht blockiert</string>
@@ -541,9 +540,7 @@
     <string name="TTS_EStop">Not-Stop</string>
     <string name="TTS_Dir_Change_While_Moving_Disabled">Richtung nicht gewechselt</string>
     <string name="TTS_Function">Funktion</string>
--->
     <string name="toastTtsFailed">Entschuldigung! Text To Speech funktionierte nicht...</string>
-
     <string name="prefDefaultFunctionsTitle">Voreinstellungen Standardfunktionen</string>
     <string name="prefDefaultFunctionsSummary">Wann und wie die Bezeichnungen für Standardfunktonen angezeigt werden.</string>
     <string name="fbResetFunctionLabels">Alles zurücksetzen</string>

@@ -177,7 +177,7 @@
                                     android:layout_width="fill_parent"
                                     android:layout_height="80dp"
                                     android:enabled="false"
-                                    android:text="@string/prefLeftDirectionButtonsDefaultValue" />
+                                    android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
 
                                 <TextView
                                     android:id="@+id/loco_left_direction_indicaton_0"
@@ -205,7 +205,7 @@
                                     android:layout_width="fill_parent"
                                     android:layout_height="80dp"
                                     android:enabled="false"
-                                    android:text="@string/prefRightDirectionButtonsDefaultValue" />
+                                    android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
 
                                 <TextView
                                     android:id="@+id/loco_right_direction_indicaton_0"
