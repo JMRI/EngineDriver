@@ -108,7 +108,11 @@
 
     <color name="primary_colorful">@color/solidBlack</color>
     <color name="secondary_colorful">#747474</color>
+    <color name="tertiary_colorful">#747474</color>
     <color name="hint_colorful">#747474</color>
+    <color name="primaryDisabled_colorful">#dac5b5</color>
+    <color name="secondaryDisabled_colorful">#dac5b5</color>
+
     <color name="heading_colorful">#ffad02</color>
     <color name="shadow_colorful">#d1ffffff</color>
 

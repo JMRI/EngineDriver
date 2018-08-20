@@ -164,10 +164,14 @@
         <item name="android:dialogTheme">@style/dialogStyle_colorful</item>
         <item name="android:alertDialogTheme">@style/alertDialogStyle_colorful</item>
         <item name="android:itemBackground">@color/transparent</item>
-        <item name="android:textColor">@color/solidBlack</item>
-        <item name="android:textColorPrimary">@color/primary_colorful</item>
-        <item name="android:textColorSecondary">@color/secondary_colorful</item>
+
+<!--        <item name="android:textColor">@color/solidBlack</item> -->
+        <item name="android:textColorPrimary">@color/primary_text_color_selector_colorful</item>
+        <item name="android:textColorSecondary">@color/secondary_text_color_selector_colorful</item>
+        <item name="android:textColorTertiary">@color/tertiary_colorful</item>
         <item name="android:textColorHint">@color/hint_colorful</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/primaryDisabled_colorful</item>
+
         <item name="android:background">@color/windowBackground_colorful</item>
         <item name="android:actionMenuTextColor">@color/primary_colorful</item>
 
