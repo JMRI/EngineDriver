@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/gamepad_test_mnu1" android:title="@string/gamepad1_test"></item>
+    <item android:id="@+id/gamepad_test_mnu2" android:title="@string/gamepad2_test"></item>
+    <item android:id="@+id/gamepad_test_mnu3" android:title="@string/gamepad3_test"></item>
+</menu>

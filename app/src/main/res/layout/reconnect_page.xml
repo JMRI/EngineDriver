@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <TextView
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:text="@string/reconnect_label" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="4dp" >
+
+        <TextView
+            android:id="@+id/reconnect_status"
+            style="?attr/floating_text_style"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/reconnect_help"
+            style="?attr/floating_text_style"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="20dp"
+            android:text="@string/reconnect_help" />
+
+    </LinearLayout>
+
+</LinearLayout>

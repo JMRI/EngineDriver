@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Black Theme -->
+
+    <item>
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_black" />
+            <stroke android:width="@dimen/buttonSelectedStroke_black" android:color="@color/buttonStroke_black" />
+            <solid android:color="@color/buttonFill_black"/>
+        </shape>
+    </item>
+
+    <!-- inside border 2 -->
+    <item
+        android:top="@dimen/buttonActivated2InsideStrokePadding_black" android:left="@dimen/buttonActivated2InsideStrokePadding_black" android:right="@dimen/buttonActivated2InsideStrokePadding_black" android:bottom="@dimen/buttonActivated2InsideStrokePadding_black">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_black" />
+            <stroke android:width="@dimen/buttonSelectedInsideStroke_black" android:color="@color/buttonActivatedHoveredInside2Stroke_black" />
+            <solid android:color="@color/transparent"/>
+        </shape>
+    </item>
+
+
+</layer-list>

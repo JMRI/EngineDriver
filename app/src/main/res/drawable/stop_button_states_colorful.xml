@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonStopCornerRadius_colorful" />
+            <stroke android:width="@dimen/buttonStopDisabledStroke_colorful" android:color="@color/buttonStopDisabledStroke_colorful" />
+            <solid android:color="@color/buttonStopDisabledFill_colorful" />
+        </shape>
+    </item>
+
+    <item
+        android:state_pressed="true"
+        android:state_enabled="true"
+        android:drawable="@drawable/button_stop_layers_selected_colorful">
+    </item>
+
+    <item
+        android:drawable="@drawable/button_stop_layers_enabled_colorful">
+    </item>
+
+</selector>

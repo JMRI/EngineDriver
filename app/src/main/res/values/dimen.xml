@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Black theme -->
+
+    <dimen name="buttonDisabledStroke_black">1dip</dimen>
+    <dimen name="buttonSelectedStroke_black">1dip</dimen>
+    <dimen name="buttonSelectedInsideStroke_black">1dip</dimen>
+    <dimen name="buttonSelectedInsideStrokePadding_black">1dip</dimen>
+    <dimen name="buttonActivatedInsideStrokePadding_black">1dip</dimen>
+    <dimen name="buttonActivated2InsideStrokePadding_black">3dip</dimen>
+    <dimen name="buttonStroke_black">2dip</dimen>
+    <dimen name="buttonCornerRadius_black">5dip</dimen>
+
+    <dimen name="buttonStopDisabledStroke_black">1dip</dimen>
+    <dimen name="buttonStopSelectedStroke_black">1dip</dimen>
+    <dimen name="buttonStopSelectedInsideStroke_black">2dip</dimen>
+    <dimen name="buttonStopSelectedInsideStrokePadding_black">1dip</dimen>
+    <dimen name="buttonStopStroke_black">2dip</dimen>
+    <dimen name="buttonStopCornerRadius_black">5dip</dimen>
+
+    <!-- Outline theme -->
+
+    <dimen name="buttonDisabledStroke_outline">1dip</dimen>
+    <dimen name="buttonSelectedStroke_outline">2dip</dimen>
+    <dimen name="buttonSelectedInsideStroke_outline">1dip</dimen>
+    <dimen name="buttonSelectedInsideStrokePadding_outline">3dip</dimen>
+    <dimen name="buttonActivatedInsideStrokePadding_outline">3dip</dimen>
+    <dimen name="buttonActivated2InsideStrokePadding_outline">4dip</dimen>
+    <dimen name="buttonStroke_outline">2dip</dimen>
+    <dimen name="buttonCornerRadius_outline">5dip</dimen>
+
+    <dimen name="buttonFnDisabledStroke_outline">1dip</dimen>
+    <dimen name="buttonFnSelectedStroke_outline">1dip</dimen>
+    <dimen name="buttonFnSelectedInsideStroke_outline">1dip</dimen>
+    <dimen name="buttonFnSelectedInsideStrokePadding_outline">3dip</dimen>
+    <dimen name="buttonFnStroke_outline">1dip</dimen>
+    <dimen name="buttonFnCornerRadius_outline">5dip</dimen>
+
+    <dimen name="buttonStopDisabledStroke_outline">1dip</dimen>
+    <dimen name="buttonStopSelectedStroke_outline">1dip</dimen>
+    <dimen name="buttonStopSelectedInsideStroke_outline">1dip</dimen>
+    <dimen name="buttonStopSelectedInsideStrokePadding_outline">3dip</dimen>
+    <dimen name="buttonStopStroke_outline">1dip</dimen>
+    <dimen name="buttonStopCornerRadius_outline">5dip</dimen>
+
+    <!-- Ultra Black theme -->
+
+    <dimen name="buttonDisabledStroke_ultra">1px</dimen>
+    <dimen name="buttonSelectedStroke_ultra">1px</dimen>
+    <dimen name="buttonSelectedInsideStroke_ultra">2dp</dimen>
+    <dimen name="buttonSelectedInsideStrokePadding_ultra">2dp</dimen>
+    <dimen name="buttonActivatedInsideStrokePadding_ultra">2dp</dimen>
+    <dimen name="buttonActivated2InsideStrokePadding_ultra">3dp</dimen>
+    <dimen name="buttonStroke_ultra">1dp</dimen>
+    <dimen name="buttonCornerRadius_ultra">2dp</dimen>
+
+    <dimen name="buttonFnDisabledStroke_ultra">1px</dimen>
+    <dimen name="buttonFnSelectedStroke_ultra">1px</dimen>
+    <dimen name="buttonFnSelectedInsideStroke_ultra">2dp</dimen>
+    <dimen name="buttonFnSelectedInsideStrokePadding_ultra">2dp</dimen>
+    <dimen name="buttonFnStroke_ultra">1dp</dimen>
+    <dimen name="buttonFnCornerRadius_ultra">2dp</dimen>
+
+    <dimen name="buttonStopDisabledStroke_ultra">1px</dimen>
+    <dimen name="buttonStopSelectedStroke_ultra">1px</dimen>
+    <dimen name="buttonStopSelectedInsideStroke_ultra">2dp</dimen>
+    <dimen name="buttonStopSelectedInsideStrokePadding_ultra">2dp</dimen>
+    <dimen name="buttonStopStroke_ultra">1dp</dimen>
+    <dimen name="buttonStopCornerRadius_ultra">2dp</dimen>
+
+
+    <!-- Colorful theme -->
+
+    <dimen name="buttonDisabledStroke_colorful">1px</dimen>
+    <dimen name="buttonSelectedStroke_colorful">1px</dimen>
+    <dimen name="buttonSelectedInsideStroke_colorful">2dp</dimen>
+    <dimen name="buttonSelectedInsideStrokePadding_colorful">2dp</dimen>
+    <dimen name="buttonActivatedInsideStrokePadding_colorful">2dp</dimen>
+    <dimen name="buttonActivated2InsideStrokePadding_colorful">3dp</dimen>
+    <dimen name="buttonStroke_colorful">1dp</dimen>
+    <dimen name="buttonCornerRadius_colorful">8dp</dimen>
+
+    <dimen name="buttonFnDisabledStroke_colorful">1px</dimen>
+    <dimen name="buttonFnSelectedStroke_colorful">1px</dimen>
+    <dimen name="buttonFnSelectedInsideStroke_colorful">2dp</dimen>
+    <dimen name="buttonFnSelectedInsideStrokePadding_colorful">2dp</dimen>
+    <dimen name="buttonFnStroke_colorful">1dp</dimen>
+    <dimen name="buttonFnCornerRadius_colorful">8dp</dimen>
+
+    <dimen name="buttonStopDisabledStroke_colorful">1px</dimen>
+    <dimen name="buttonStopSelectedStroke_colorful">1px</dimen>
+    <dimen name="buttonStopSelectedInsideStroke_colorful">2dp</dimen>
+    <dimen name="buttonStopSelectedInsideStrokePadding_colorful">2dp</dimen>
+    <dimen name="buttonStopStroke_colorful">1dp</dimen>
+    <dimen name="buttonStopCornerRadius_colorful">8dp</dimen>
+
+</resources>

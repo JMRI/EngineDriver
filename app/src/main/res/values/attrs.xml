@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="ed_loco_label_style" format="reference" />
+    <attr name="floating_text_style" format="reference" />
+    <attr name="edit_label_style" format="reference" />
+    <attr name="edit_func_style" format="reference" />
+    <attr name="list_item_style" format="reference" />
+    <attr name="list_id_style" format="reference" />
+    <attr name="EDListView" format="reference" />
+    <attr name="listSeparatorTextViewStyle" format="reference" />
+
+    <attr name="ed_large_button_style" format="reference" />
+    <attr name="ed_normal_button_style" format="reference" />
+    <attr name="ed_normal_button2_style" format="reference" />
+    <attr name="ed_loco_select_button_style" format="reference" />
+    <attr name="ed_small_button_style" format="reference" />
+    <attr name="ed_stop_button_style" format="reference" />
+    <attr name="ed_fn_button_style" format="reference" />
+    <attr name="ed_list_button_style" format="reference" />
+
+    <attr name="ed_fn_scrollview_style" format="reference" />
+</resources>
