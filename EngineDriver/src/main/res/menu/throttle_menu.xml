@@ -27,12 +27,12 @@
     <item android:id="@+id/logviewer_menu" android:title="@string/logViewer"></item>
     <item android:id="@+id/flashlight_button"
         android:title="@string/flashlightAction" android:visible="false"
-        app:showAsAction="ifRoom"></item>
+        android:showAsAction="ifRoom"></item>
 	<item android:id="@+id/power_layout_button"
         android:title="@string/PowerButtonBar" android:visible="false"
-        app:showAsAction="ifRoom"></item>
+        android:showAsAction="ifRoom"></item>
 	<item android:id="@+id/EmerStop" android:title="@string/EStop" android:visible="false"
-        app:showAsAction="ifRoom"></item>
+        android:showAsAction="ifRoom"></item>
     <item android:id="@+id/EditConsist0_menu" android:title="Edit Consist Throttle 1" android:visible="false"></item>
     <item android:id="@+id/EditConsist1_menu" android:title="Edit Consist Throttle 2" android:visible="false"></item>
     <item android:id="@+id/EditConsist2_menu" android:title="Edit Consist Throttle 3" android:visible="false"></item>

@@ -21,5 +21,5 @@
     <item android:id="@+id/ClearconnList" android:title="@string/ClearConnList"></item>
     <item android:id="@+id/flashlight_button"
         android:title="@string/flashlightAction" android:visible="false"
-        app:showAsAction="ifRoom"></item>
+        android:showAsAction="ifRoom"></item>
 </menu>
