@@ -1044,7 +1044,7 @@ public class threaded_application extends Application {
         //RCD}|{88(S)}|{Consist Name]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
         private void process_consist_list(String response_str) {
             String consist_addr = null;
-            String consist_desc = "";
+            StringBuilder consist_desc = new StringBuilder();
             String consist_name = "";
             String[] ta = splitByString(response_str, "]\\[");  //initial separation
             String plus = ""; //plus sign for a separator
@@ -1057,7 +1057,7 @@ public class threaded_application extends Application {
                     consist_name = tv[2];
                 } else {  //list of locos in consist
                     String[] tv = splitByString(ts, "}|{");  //split these into loco address and direction
-                    consist_desc += plus + tv[0];
+                    consist_desc.append(plus).append(tv[0]);
                     plus = "+";
                 }  //end if i==0
                 i++;
@@ -1066,7 +1066,7 @@ public class threaded_application extends Application {
                     + ", name=" + consist_name + ", desc=" + consist_desc);
             //don't add empty consists to list
             if (consist_desc.length() > 0) {
-                consist_entries.put(consist_addr, consist_desc);
+                consist_entries.put(consist_addr, consist_desc.toString());
             }
         }
 

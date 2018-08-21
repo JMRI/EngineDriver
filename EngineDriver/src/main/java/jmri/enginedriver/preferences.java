@@ -708,9 +708,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private static String[] add(String[] stringArray, String newValue) {
         String[] tempArray = new String[ stringArray.length + 1 ];
-        for (int i=0; i<stringArray.length; i++) {
-            tempArray[i] = stringArray[i];
-        }
+        System.arraycopy(stringArray, 0, tempArray, 0, stringArray.length);
         tempArray[stringArray.length] = newValue;
         return tempArray;
     }
