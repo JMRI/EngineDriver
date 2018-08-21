@@ -490,7 +490,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         reload();
     }
 
-    public boolean overwiteFileDialog(SharedPreferences sharedPreferences, File dst) {
+    public boolean overwiteFileDialog(final SharedPreferences sharedPreferences, File dst) {
         boolean res = false;
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
