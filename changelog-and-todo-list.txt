@@ -4,6 +4,7 @@
   * prevent crash reported to Play Store
   * update project to Gradle build tools
   * bump MinSDKVersion to 14 (from 7)
+  * replace JmDNS source with jar file
 **Version 2.21
  * remove turnout hardware list, WiThrottle Server changed to also handle numeric-only
  * changes to EngineDriver icon

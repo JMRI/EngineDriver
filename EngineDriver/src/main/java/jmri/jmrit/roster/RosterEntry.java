@@ -12,6 +12,7 @@ import org.w3c.dom.NodeList;
 
 import android.util.Log;
 
+@SuppressWarnings("UnnecessaryContinue")
 public class RosterEntry {
     // members to remember all the info
     protected String _fileName = null;
@@ -257,7 +258,7 @@ public class RosterEntry {
 
     // For Android 1.6 compatibility (else use e.getTextContent() )
     private String getTextContent(Node e) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         NodeList childList = e.getChildNodes();
         for (int i = 0; i < childList.getLength(); i++) {
             Node child = childList.item(i);

@@ -64,7 +64,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -546,7 +545,7 @@ public class select_loco extends Activity {
 
     private void filterRoster() {
         prefRosterFilter = filter_roster_text.getText().toString().trim();
-        prefs.edit().putString("prefRosterFilter", prefRosterFilter ).commit();
+        prefs.edit().putString("prefRosterFilter", prefRosterFilter ).apply();
         refresh_roster_list();
         //        onCreate(null);
     }
@@ -825,7 +824,7 @@ public class select_loco extends Activity {
                 rbRecent.setChecked(true);
             }
         }
-        prefs.edit().putString("prefSelectLocoMethod", whichMethod ).commit();
+        prefs.edit().putString("prefSelectLocoMethod", whichMethod ).apply();
     }
 
 

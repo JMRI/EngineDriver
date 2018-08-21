@@ -139,14 +139,14 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         enableDisablePreference("prefFlashlightButtonDisplay", mainapp.isFlashlightAvailable());
 
-        sharedPreferences.edit().putBoolean("prefGamepadTestNow", false).commit();  //reset the preference
+        sharedPreferences.edit().putBoolean("prefGamepadTestNow", false).apply();  //reset the preference
 
         if (mainapp.androidVersion < mainapp.minActivatedButtonsVersion) {
             enableDisablePreference("prefSelectedLocoIndicator", false);
         }
 
         deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-        sharedPreferences.edit().putString("prefAndroidId", deviceId).commit();
+        sharedPreferences.edit().putString("prefAndroidId", deviceId).apply();
 
         String currentValue = sharedPreferences.getString("prefTtsWhen", "");
         if (currentValue.equals("None")) {
@@ -158,11 +158,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         prefThrottleScreenTypeOriginal = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         showHideThrottleTypePreferences();
 
-        sharedPreferences.edit().putBoolean("prefForcedRestart", false).commit();
+        sharedPreferences.edit().putBoolean("prefForcedRestart", false).apply();
 
         if (!sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)).equals("None")) {
             // preference is still confused after a reload or reset
-            sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
+            sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).apply();  //reset the preference
         }
     }
 
@@ -243,7 +243,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         defaultName = getApplicationContext().getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
                     }
                     String uniqueDefaultName = defaultName + " " + deviceId;
-                    sharedPreferences.edit().putString(key, uniqueDefaultName).commit();  //save new name to prefs
+                    sharedPreferences.edit().putString(key, uniqueDefaultName).apply();  //save new name to prefs
                 }
                 break;
             }
@@ -348,10 +348,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 mainapp.set_default_function_labels(false);
                 break;
             case "prefLocale":
-                sharedPreferences.edit().putString("prefLeftDirectionButtons", "").commit();
-                sharedPreferences.edit().putString("prefRightDirectionButtons", "").commit();
-                sharedPreferences.edit().putString("prefLeftDirectionButtonsShort", "").commit();
-                sharedPreferences.edit().putString("prefRightDirectionButtonsShort", "").commit();
+                sharedPreferences.edit().putString("prefLeftDirectionButtons", "").apply();
+                sharedPreferences.edit().putString("prefRightDirectionButtons", "").apply();
+                sharedPreferences.edit().putString("prefLeftDirectionButtonsShort", "").apply();
+                sharedPreferences.edit().putString("prefRightDirectionButtonsShort", "").apply();
                 forceRestartApp();
                 break;
             case "prefDirectionButtonLongPressDelay":
@@ -376,7 +376,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
+        sharedPreferences.edit().putBoolean("prefForcedRestart", true).apply();
 
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -400,7 +400,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         boolean result = prefs.getBoolean("prefGamepadTestNow", getResources().getBoolean(R.bool.prefGamepadTestNowDefaultValue));
 
         if (result) {
-            prefs.edit().putBoolean("prefGamepadTestNow", false).commit();  //reset the preference
+            prefs.edit().putBoolean("prefGamepadTestNow", false).apply();  //reset the preference
             reload();
 
             try {
@@ -437,7 +437,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     private boolean saveSharedPreferencesToFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, boolean confirmDialog) {
-        sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
+        sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).apply();  //reset the preference
         boolean res = false;
         if (!exportedPreferencesFileName.equals(".ed")) {
             File path = Environment.getExternalStorageDirectory();
@@ -475,7 +475,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private void resetPreferences(SharedPreferences sharedPreferences){
         SharedPreferences.Editor prefEdit = sharedPreferences.edit();
         prefEdit.clear();
-        prefEdit.commit();
+        prefEdit.apply();
         reload();
         String m = getApplicationContext().getResources().getString(R.string.toastPreferencesResetSucceeded);
         Toast.makeText(getApplicationContext(), m, Toast.LENGTH_LONG).show();
@@ -485,8 +485,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     private void fixAndReloadImportExportPreference(SharedPreferences sharedPreferences){
-        sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
-        sharedPreferences.edit().putString("prefHostImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
+        sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).apply();  //reset the preference
+        sharedPreferences.edit().putString("prefHostImportExport", IMPORT_EXPORT_OPTION_NONE).apply();  //reset the preference
         reload();
     }
 
@@ -520,15 +520,15 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     static void putObject(SharedPreferences sharedPreferences, final String key, final Object val) {
         if (val instanceof Boolean)
-            sharedPreferences.edit().putBoolean(key, (Boolean) val).commit();
+            sharedPreferences.edit().putBoolean(key, (Boolean) val).apply();
         else if (val instanceof Float)
-            sharedPreferences.edit().putFloat(key, (Float) val).commit();
+            sharedPreferences.edit().putFloat(key, (Float) val).apply();
         else if (val instanceof Integer)
-            sharedPreferences.edit().putInt(key, (Integer) val).commit();
+            sharedPreferences.edit().putInt(key, (Integer) val).apply();
         else if (val instanceof Long)
-            sharedPreferences.edit().putLong(key, (Long) val).commit();
+            sharedPreferences.edit().putLong(key, (Long) val).apply();
         else if (val instanceof String)
-            sharedPreferences.edit().putString(key, ((String)val)).commit();
+            sharedPreferences.edit().putString(key, ((String)val)).apply();
 
     }
 
@@ -539,18 +539,18 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         try {
             int newVal = Integer.parseInt(sharedPreferences.getString(key, defaultVal).trim());
             if (newVal > maxVal) {
-                sharedPreferences.edit().putString(key, Integer.toString(maxVal)).commit();
+                sharedPreferences.edit().putString(key, Integer.toString(maxVal)).apply();
                 prefText.setText(Integer.toString(maxVal));
                 isValid = false;
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(maxVal)), Toast.LENGTH_LONG).show();
             } else if (newVal < minVal) {
-                sharedPreferences.edit().putString(key, Integer.toString(minVal)).commit();
+                sharedPreferences.edit().putString(key, Integer.toString(minVal)).apply();
                 prefText.setText(Integer.toString(minVal));
                 isValid = false;
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(minVal)), Toast.LENGTH_LONG).show();
             }
         } catch (NumberFormatException e) {
-            sharedPreferences.edit().putString(key, defaultVal).commit();
+            sharedPreferences.edit().putString(key, defaultVal).apply();
             prefText.setText(defaultVal);
             isValid = false;
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
@@ -565,18 +565,18 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         try {
             Float newVal = Float.parseFloat(sharedPreferences.getString(key, defaultVal).trim());
             if (newVal > maxVal) {
-                sharedPreferences.edit().putString(key, Float.toString(maxVal)).commit();
+                sharedPreferences.edit().putString(key, Float.toString(maxVal)).apply();
                 prefText.setText(Float.toString(maxVal));
                 isValid = false;
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Float.toString(minVal), Float.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
             } else if (newVal < minVal) {
-                sharedPreferences.edit().putString(key, Float.toString(minVal)).commit();
+                sharedPreferences.edit().putString(key, Float.toString(minVal)).apply();
                 prefText.setText(Float.toString(minVal));
                 isValid = false;
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Float.toString(minVal), Float.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
             }
         } catch (NumberFormatException e) {
-            sharedPreferences.edit().putString(key, defaultVal).commit();
+            sharedPreferences.edit().putString(key, defaultVal).apply();
             prefText.setText(defaultVal);
             isValid = false;
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Float.toString(minVal), Float.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
@@ -588,26 +588,26 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         int numThrottles = mainapp.Numeralise(sharedPreferences.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
         String prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         if (prefThrottleScreenType.equals("Default") && (numThrottles>3)) {
-            sharedPreferences.edit().putString("NumThrottle", "Three").commit();
+            sharedPreferences.edit().putString("NumThrottle", "Three").apply();
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles,"Three"), Toast.LENGTH_SHORT).show();
             reload();
         }
 
         if (prefThrottleScreenType.equals("Vertical") && (numThrottles!=2)) {
-            sharedPreferences.edit().putString("NumThrottle", "Two").commit();
+            sharedPreferences.edit().putString("NumThrottle", "Two").apply();
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles,"Two"), Toast.LENGTH_SHORT).show();
             reload();
         }
 
         if (prefThrottleScreenType.equals("Big Left") && (numThrottles!=1)) {
-            sharedPreferences.edit().putString("NumThrottle", "One").commit();
+            sharedPreferences.edit().putString("NumThrottle", "One").apply();
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles,"One"), Toast.LENGTH_SHORT).show();
             reload();
         }
 
         if (!prefThrottleScreenType.equals(prefThrottleScreenTypeOriginal)) {
             SharedPreferences.Editor prefEdit = sharedPreferences.edit();
-            prefEdit.commit();
+            prefEdit.apply();
             reload();
             forceRestartApp();
         }
@@ -622,18 +622,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         enableDisablePreference("left_slider_margin",enable);
         enableDisablePreference("prefHideSliderAndSpeedButtons",enable);
 
-        enable = true;
-        if (prefThrottleScreenTypeOriginal.equals("Simple")) {
-            enable = false;
-        }
+        enable = !prefThrottleScreenTypeOriginal.equals("Simple");
         enableDisablePreference("prefAlwaysUseDefaultFunctionLabels",enable);
         enableDisablePreference("prefNumberOfDefaultFunctionLabels",enable);
         enableDisablePreference("prefNumberOfDefaultFunctionLabelsForRoster",enable);
 
-        enable = true;
-        if (!prefThrottleScreenTypeOriginal.equals("Simple")) {
-            enable = false;
-        }
+        enable = prefThrottleScreenTypeOriginal.equals("Simple");
         enableDisablePreference("WebViewLocation",enable);
         enableDisablePreference("prefIncreaseWebViewSize",enable);
         enableDisablePreference("InitialThrotWebPage",enable);

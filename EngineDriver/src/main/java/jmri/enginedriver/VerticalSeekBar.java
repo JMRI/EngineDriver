@@ -8,11 +8,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 /**
  * Implementation of an easy vertical SeekBar, based on the normal SeekBar.

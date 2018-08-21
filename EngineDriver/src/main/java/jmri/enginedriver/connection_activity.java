@@ -333,7 +333,7 @@ public class connection_activity extends Activity {
                 deviceId = String.valueOf(rand.nextInt(9999));  //use random string
             }
             s = defaultName + " " + deviceId;
-            prefs.edit().putString("throttle_name_preference", s).commit();  //save new name to prefs
+            prefs.edit().putString("throttle_name_preference", s).apply();  //save new name to prefs
 
         }
 
@@ -377,7 +377,7 @@ public class connection_activity extends Activity {
         threaded_application.min_fling_velocity = (int) (threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f);
 
         if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restrat from the preferences reload the preferences
-            prefs.edit().putBoolean("prefForcedRestart", false).commit();
+            prefs.edit().putBoolean("prefForcedRestart", false).apply();
 
             Intent in = new Intent().setClass(this, preferences.class);
             navigatingAway = true;
@@ -727,7 +727,7 @@ public class connection_activity extends Activity {
        String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
 
        deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-       sharedPreferences.edit().putString("prefAndroidId", deviceId).commit();
+       sharedPreferences.edit().putString("prefAndroidId", deviceId).apply();
 
        if ((prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT))
                || (prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set

@@ -1310,7 +1310,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         double displayUnitScale = getDisplayUnitScale(whichThrottle);
         int lastSpeed = throttle_slider.getProgress();
         int lastScaleSpeed = (int) Math.round(lastSpeed * displayUnitScale);
-        int scaleSpeed = (int) lastScaleSpeed + change;
+        int scaleSpeed = lastScaleSpeed + change;
         int speed = (int) Math.round(scaleSpeed / displayUnitScale);
         if (lastScaleSpeed == scaleSpeed) {
             speed += Math.signum(change);
@@ -1509,15 +1509,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         boolean setLeftDirectionButtonEnabled = true;
         if (direction == 0) {  //0=reverse 1=forward
-            if (!directionButtonsAreCurrentlyReversed(whichThrottle))
-                setLeftDirectionButtonEnabled = false;
-            else
-                setLeftDirectionButtonEnabled = true;
+            setLeftDirectionButtonEnabled = directionButtonsAreCurrentlyReversed(whichThrottle);
         } else {
-            if (!directionButtonsAreCurrentlyReversed(whichThrottle))
-                setLeftDirectionButtonEnabled = true;
-            else
-                setLeftDirectionButtonEnabled = false;
+            setLeftDirectionButtonEnabled = !directionButtonsAreCurrentlyReversed(whichThrottle);
         }
 
         if (!getConsist(whichThrottle).isActive()) {
@@ -3014,10 +3008,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             if (gestureInProgress) {
                 // Log.d("Engine_Driver", "onTouch " + "Gesture- currentY: " + (pos[1]+event.getY()) + " startY: " + gestureStartY);
                 //check to see if we have a substantial vertical movement
-                if (Math.abs(pos[1] + event.getY() - gestureStartY) > (threaded_application.min_fling_distance)) {
-                    // Log.d("Engine_Driver", "onTouch " + "Gesture - long - cY: " + (pos[1]+event.getY()) + " sY: " + gestureStartY);
-                    return true;
-                }
+                return Math.abs(pos[1] + event.getY() - gestureStartY) > (threaded_application.min_fling_distance);
             }
             return false;
         }
@@ -3115,11 +3106,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
                         if (prefSwapForwardReverseButtonsLongPress) {
                             //v.playSoundEffect(SoundEffectConstants.CLICK);
-                            if (currentSwapForwardReverseButtons[whichThrottle]) {
-                                currentSwapForwardReverseButtons[whichThrottle] = false;
-                            } else {
-                                currentSwapForwardReverseButtons[whichThrottle] = true;
-                            }
+                            currentSwapForwardReverseButtons[whichThrottle] = !currentSwapForwardReverseButtons[whichThrottle];
                             setDirectionButtonLabels();
                             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDirectionButtonsSwapped), Toast.LENGTH_SHORT).show();
                         }
