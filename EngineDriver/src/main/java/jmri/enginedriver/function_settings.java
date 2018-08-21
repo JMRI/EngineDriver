@@ -464,11 +464,7 @@ public class function_settings extends Activity {
 
             alwaysUseDefaultFunctionLabelsIndex = spinner.getSelectedItemPosition();
 
-            if (alwaysUseDefaultFunctionLabelsIndex == 0) {
-                prefAlwaysUseDefaultFunctionLabels = true;
-            } else {
-                prefAlwaysUseDefaultFunctionLabels = false;
-            }
+            prefAlwaysUseDefaultFunctionLabels = alwaysUseDefaultFunctionLabelsIndex == 0;
             prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", prefAlwaysUseDefaultFunctionLabels).commit();  //reset the preference
 
             InputMethodManager imm =

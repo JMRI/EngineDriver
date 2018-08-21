@@ -622,18 +622,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         enableDisablePreference("left_slider_margin",enable);
         enableDisablePreference("prefHideSliderAndSpeedButtons",enable);
 
-        enable = true;
-        if (prefThrottleScreenTypeOriginal.equals("Simple")) {
-            enable = false;
-        }
+        enable = !prefThrottleScreenTypeOriginal.equals("Simple");
         enableDisablePreference("prefAlwaysUseDefaultFunctionLabels",enable);
         enableDisablePreference("prefNumberOfDefaultFunctionLabels",enable);
         enableDisablePreference("prefNumberOfDefaultFunctionLabelsForRoster",enable);
 
-        enable = true;
-        if (!prefThrottleScreenTypeOriginal.equals("Simple")) {
-            enable = false;
-        }
+        enable = prefThrottleScreenTypeOriginal.equals("Simple");
         enableDisablePreference("WebViewLocation",enable);
         enableDisablePreference("prefIncreaseWebViewSize",enable);
         enableDisablePreference("InitialThrotWebPage",enable);

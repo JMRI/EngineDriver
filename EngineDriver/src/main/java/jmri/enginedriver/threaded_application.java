@@ -2190,11 +2190,7 @@ public class threaded_application extends Application {
                         item = menu.findItem(R.id.gamepad_test_mnu3);
                 }
 
-                if (i <= gamepadCount) {
-                    result = true;
-                } else {
-                    result = false;
-                }
+                result = i <= gamepadCount;
 
                 if (item != null) {
                     if ((!whichGamePadMode.equals("None")) && (result)) {
