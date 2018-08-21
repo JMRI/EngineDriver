@@ -255,37 +255,37 @@ import java.util.Set;
     }
 
     private String formatConsist() {
-        String formatCon;
+        StringBuilder formatCon;
         if (con.size() > 0) {
-            formatCon = "";
+            formatCon = new StringBuilder();
             String sep = "";
             for (Map.Entry<String, ConLoco> l : con.entrySet()) {        // loop through locos in consist
                 if (l.getValue().isConfirmed()) {
-                    formatCon += sep + l.getValue().toString();
+                    formatCon.append(sep).append(l.getValue().toString());
                     sep = " +";
                 }
             }
         } else {
-            formatCon = "Not Set";
+            formatCon = new StringBuilder("Not Set");
         }
-        return formatCon;
+        return formatCon.toString();
     }
 
     public String formatConsistAddr() {
-        String formatCon;
+        StringBuilder formatCon;
         if (con.size() > 0) {
-            formatCon = "";
+            formatCon = new StringBuilder();
             String sep = "";
             for (Map.Entry<String, ConLoco> l : con.entrySet()) {        // loop through locos in consist
                 if (l.getValue().isConfirmed()) {
-                    formatCon += sep + l.getValue().getAddress().substring(1, l.getValue().getAddress().length());
+                    formatCon.append(sep).append(l.getValue().getAddress().substring(1, l.getValue().getAddress().length()));
                     sep = ", ";
                 }
             }
         } else {
-            formatCon = "Not Set";
+            formatCon = new StringBuilder("Not Set");
         }
-        return formatCon;
+        return formatCon.toString();
     }
 
 }

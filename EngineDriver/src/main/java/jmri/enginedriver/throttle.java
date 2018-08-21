@@ -4128,8 +4128,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
                 // put values in array for indexing in next step
                 // to do this
-                ArrayList<Integer> aList = new ArrayList<>();
-                aList.addAll(function_labels_temp.keySet());
+                ArrayList<Integer> aList = new ArrayList<>(function_labels_temp.keySet());
 
                 if (tv != null) {
                     for (int i = 0; i < tv.getChildCount(); i++) {
