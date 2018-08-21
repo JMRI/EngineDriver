@@ -24,10 +24,10 @@
     <item android:id="@+id/about_mnu" android:title="@string/about"></item>
     <item android:id="@+id/flashlight_button"
         android:title="@string/flashlightAction" android:visible="false"
-        app:showAsAction="ifRoom"></item>
+        android:showAsAction="ifRoom"></item>
     <item android:id="@+id/power_layout_button"
         android:title="@string/PowerButtonBar" android:visible="false"
-        app:showAsAction="ifRoom"></item>
+        android:showAsAction="ifRoom"></item>
     <item android:id="@+id/EmerStop" android:title="@string/EStop"  android:visible="false"
-        app:showAsAction="ifRoom"></item>
+        android:showAsAction="ifRoom"></item>
 </menu> 
