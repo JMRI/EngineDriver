@@ -30,7 +30,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 // for changing the screen brightness

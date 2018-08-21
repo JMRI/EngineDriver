@@ -20,7 +20,6 @@ package jmri.enginedriver;
 import java.util.HashMap;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;

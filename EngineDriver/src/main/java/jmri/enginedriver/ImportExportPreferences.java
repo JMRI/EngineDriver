@@ -23,7 +23,6 @@ package jmri.enginedriver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -148,7 +147,7 @@ public class ImportExportPreferences {
                         else if (v instanceof Long) prefEdit.putLong(key, (Long) v);
                         else if (v instanceof String) prefEdit.putString(key, ((String) v));
                     }
-                    prefEdit.commit();
+                    prefEdit.apply();
                     res = true;
 
                     res = true;
@@ -156,12 +155,12 @@ public class ImportExportPreferences {
                     // restore the remembered throttle name to avoid a duplicate throttle name if this is a differnt to device to where it was originally saved
                     String restoredDeviceId = sharedPreferences.getString("prefAndroidId", "").trim();
                     if ((!restoredDeviceId.equals(deviceId)) || (restoredDeviceId.equals(""))) {
-                        sharedPreferences.edit().putString("throttle_name_preference", currentThrottleNameValue).commit();
+                        sharedPreferences.edit().putString("throttle_name_preference", currentThrottleNameValue).apply();
                     }
-                    sharedPreferences.edit().putString("prefImportExport", "None").commit();  //reset the preference
-                    sharedPreferences.edit().putString("prefHostImportExport", "None").commit();  //reset the preference
-                    sharedPreferences.edit().putString("prefAutoImportExport", prefAutoImportExport).commit();  //reset the preference
-                    sharedPreferences.edit().putBoolean("prefImportExportLocoList", prefImportExportLocoList).commit();  //reset the preference
+                    sharedPreferences.edit().putString("prefImportExport", "None").apply();  //reset the preference
+                    sharedPreferences.edit().putString("prefHostImportExport", "None").apply();  //reset the preference
+                    sharedPreferences.edit().putString("prefAutoImportExport", prefAutoImportExport).apply();  //reset the preference
+                    sharedPreferences.edit().putBoolean("prefImportExportLocoList", prefImportExportLocoList).apply();  //reset the preference
 
                     String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
                     Toast.makeText(context, m, Toast.LENGTH_LONG).show();
@@ -272,11 +271,11 @@ public class ImportExportPreferences {
     }
 
     private boolean saveIntListDataToPreferences(ArrayList<Integer> list, String listName, SharedPreferences sharedPreferences) {
-        sharedPreferences.edit().putInt(listName +"_size", list.size()).commit();
+        sharedPreferences.edit().putInt(listName +"_size", list.size()).apply();
         int prefInt;
         for(int i=0 ; i<list.size() ; i++){
             prefInt=list.get(i);
-            sharedPreferences.edit().putInt(listName + "_" + i, prefInt).commit();
+            sharedPreferences.edit().putInt(listName + "_" + i, prefInt).apply();
         }
         return sharedPreferences.edit().commit();
     }

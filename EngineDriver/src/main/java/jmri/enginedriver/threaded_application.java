@@ -625,7 +625,7 @@ public class threaded_application extends Application {
 
                     //send whatever command string comes in obj to Withrottle Server
                     case message_type.WITHROTTLE_SEND:
-                        withrottle_send(String.format(msg.obj.toString()));
+                        withrottle_send(msg.obj.toString());
                         break;
 
                     //send Q to withrottle server
