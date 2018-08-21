@@ -4869,7 +4869,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
     // prompt for Steal? Address, if yes, send message to execute the steal
 //    public void promptForSteal(String addr, char whichThrottle) {
-    public void promptForSteal(String addr, int whichThrottle) {
+    public void promptForSteal(final String addr, final int whichThrottle) {
         if (stealPromptActive) return;
         stealPromptActive = true;
         final AlertDialog.Builder b = new AlertDialog.Builder(this);
