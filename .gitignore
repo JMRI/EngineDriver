@@ -15,7 +15,8 @@ local.properties
 
 # User-specific configurations
 .idea/
-*.iml
+/*/*.iml
+gradlew
 
 # OS-specific files
 .DS_Store
