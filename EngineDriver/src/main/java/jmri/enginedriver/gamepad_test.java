@@ -534,7 +534,7 @@ public class gamepad_test extends Activity implements OnGestureListener {
             Spinner spinner = (Spinner) findViewById(R.id.gamepad_test_mode);
             whichGamePadModeIndex = spinner.getSelectedItemPosition();
 
-            prefs.edit().putString("prefGamePadType", gamePadModesArray[whichGamePadModeIndex]).apply();  //reset the preference
+            prefs.edit().putString("prefGamePadType", gamePadModesArray[whichGamePadModeIndex]).commit();  //reset the preference
 
             if (oldWhichGamePadModeIndex != whichGamePadModeIndex) {
                 setGamepadKeys();

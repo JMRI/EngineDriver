@@ -545,7 +545,7 @@ public class select_loco extends Activity {
 
     private void filterRoster() {
         prefRosterFilter = filter_roster_text.getText().toString().trim();
-        prefs.edit().putString("prefRosterFilter", prefRosterFilter ).apply();
+        prefs.edit().putString("prefRosterFilter", prefRosterFilter ).commit();
         refresh_roster_list();
         //        onCreate(null);
     }
@@ -824,7 +824,7 @@ public class select_loco extends Activity {
                 rbRecent.setChecked(true);
             }
         }
-        prefs.edit().putString("prefSelectLocoMethod", whichMethod ).apply();
+        prefs.edit().putString("prefSelectLocoMethod", whichMethod ).commit();
     }
 
 
