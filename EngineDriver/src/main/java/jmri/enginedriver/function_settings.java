@@ -420,9 +420,9 @@ public class function_settings extends Activity {
         else
             Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();
 
-        prefs.edit().putString("prefNumberOfDefaultFunctionLabels", prefNumberOfDefaultFunctionLabels).apply();  //reset the preference
-        prefs.edit().putString("prefNumberOfDefaultFunctionLabelsForRoster", prefNumberOfDefaultFunctionLabelsForRoster).apply();  //reset the preference
-        prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", prefAlwaysUseDefaultFunctionLabels).apply();
+        prefs.edit().putString("prefNumberOfDefaultFunctionLabels", prefNumberOfDefaultFunctionLabels).commit();  //reset the preference
+        prefs.edit().putString("prefNumberOfDefaultFunctionLabelsForRoster", prefNumberOfDefaultFunctionLabelsForRoster).commit();  //reset the preference
+        prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", prefAlwaysUseDefaultFunctionLabels).commit();
     }
 
     @SuppressWarnings("deprecation")
@@ -433,20 +433,20 @@ public class function_settings extends Activity {
         try {
             newVal = Integer.parseInt(et.getText().toString().trim());
             if (newVal > maxVal) {
-                prefs.edit().putString(key, Integer.toString(maxVal)).apply();
+                prefs.edit().putString(key, Integer.toString(maxVal)).commit();
                 sVal = Integer.toString(maxVal);
                 et.setText(sVal);
                 isValid = false;
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(minVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
             } else if (newVal < minVal) {
-                prefs.edit().putString(key, Integer.toString(minVal)).apply();
+                prefs.edit().putString(key, Integer.toString(minVal)).commit();
                 sVal = Integer.toString(minVal);
                 et.setText(sVal);
                 isValid = false;
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(minVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
             }
         } catch (NumberFormatException e) {
-            prefs.edit().putString(key, defaultVal).apply();
+            prefs.edit().putString(key, defaultVal).commit();
             sVal = defaultVal;
             et.setText(sVal);
             isValid = false;
@@ -464,7 +464,7 @@ public class function_settings extends Activity {
             alwaysUseDefaultFunctionLabelsIndex = spinner.getSelectedItemPosition();
 
             prefAlwaysUseDefaultFunctionLabels = alwaysUseDefaultFunctionLabelsIndex == 0;
-            prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", prefAlwaysUseDefaultFunctionLabels).apply();  //reset the preference
+            prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", prefAlwaysUseDefaultFunctionLabels).commit();  //reset the preference
 
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
