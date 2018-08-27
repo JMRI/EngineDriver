@@ -18,6 +18,7 @@ local.properties
 /*/*.iml
 gradlew
 EngineDriver.iml
+/*/gradle/wrapper/
 
 # OS-specific files
 .DS_Store
