@@ -51,10 +51,10 @@
         <item>Sechs</item>
     </string-array>
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
-        <item>Original - Telefon oder Tablet (1-3 Fahrregler)</item>
-        <item>Einfach - Tablet empfohlen (1-6 Fahrregler)</item>
-        <item>Vertikal - Telefon oder Tablet (2 Fahrregler)</item>
-        <item >Big Buttons - Left (1 throttle)</item>
+        <item>Original &#8211; Telefon oder Tablet (1-3 Fahrregler)</item>
+        <item>Einfach &#8211; Tablet empfohlen (1-6 Fahrregler)</item>
+        <item>Vertikal &#8211; Telefon oder Tablet (2 Fahrregler)</item>
+        <item >Big Buttons &#8211; Left (1 throttle)</item>
     </string-array>
     <string-array name="DisplayClockEntries">
         <item>Keine</item>
@@ -153,5 +153,7 @@
         <item>Italienisch</item>
         <item>Portugiesisch</item>
         <item>Deutsch</item>
+        <item>Spanisch</item>
+        <item>Katalanisch</item>
     </string-array>
 </resources>

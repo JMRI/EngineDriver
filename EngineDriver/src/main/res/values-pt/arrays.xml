@@ -52,10 +52,10 @@
     </string-array>
 
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
-        <item >Original - telefone ou tablet (1-3 controladores)</item>
-        <item >Simples - Tablet Recomendado (1-6 controladores)</item>
-        <item >Vertical - telefone ou tablet (1-3 controladores)</item>
-        <item >Big Buttons - Left (1 throttle)</item>
+        <item >Original &#8211; telefone ou tablet (1-3 controladores)</item>
+        <item >Simples &#8211; Tablet Recomendado (1-6 controladores)</item>
+        <item >Vertical &#8211; telefone ou tablet (1-3 controladores)</item>
+        <item >Botões Grandes &#8211; Esquerda (1 acelerador)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">
@@ -170,6 +170,8 @@
         <item>Italiano</item>
         <item>Português</item>
         <item>Alemão</item>
+        <item>Espanhol</item>
+        <item>Catalão</item>
     </string-array>
 
 </resources>

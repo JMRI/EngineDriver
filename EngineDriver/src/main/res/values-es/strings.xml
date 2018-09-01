@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+      Copyright (C) 2018 Matthew Harris matthew.john.harris@gmail.com
+      This program is free software; you can redistribute it and/or modify it
+      under the terms of the GNU General Public License as published by the
+      Free Software Foundation;
+      either version 3 of the License, or (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+      for more details. You should have received a copy of the GNU General
+      Public License along with this program; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+      translations provided by Luis Zamora
+-->
+<resources>
+    <string name="exit">Salir</string>
+    <string name="settings">Funciones por defecto</string>
+    <string name="fb_label">Etiquetas de funciones</string>
+    <string name="fb_column_label">Etiqueta</string>
+    <string name="fb_column_function">Func#</string>
+    <string name="function_buttons">botones_de_funciones</string>
+
+    <string name="app_description">Engine Driver - Un controlador para tu teléfono Android. Esta aplicación permite conectar a  servidores WiThrottle como JMRI, MRC o Digitrax, y tripular tus locomotoras. Velocidad, dirección, y mas de 29 funciones DCC están soportadas para una o dos locomotoras.</string>
+    <string name="app_name_connect">Conectar al servidor - Engine Driver</string>
+    <string name="app_name_throttle">Controlador - Engine Driver</string>
+    <string name="app_name_throttle_short">Controlador</string>
+    <string name="app_name_power_control">Control de energía - Engine Driver</string>
+    <string name="app_name_reconnect_status">Estado de reconexión - Engine Driver</string>
+    <string name="app_name_routes">Rutas - Engine Driver</string>
+    <string name="app_name_turnouts">Desvíos - Engine Driver</string>
+    <string name="app_name_about">Acerca de - Engine Driver</string>
+    <string name="app_name_web">Web - Engine Driver</string>
+    <string name="app_name_functions">Parámetros de funciones por defecto - Engine Driver</string>
+    <string name="app_name_preferences">Preferencias - Engine Driver</string>
+    <string name="app_name_select_loco">Selecciona/Libera Locomotora - Engine Driver</string>
+    <string name="app_name_ConsistEdit">Modificar Tracción Múltiple - Engine Driver</string>
+    <string name="app_name_ConsistLightsEdit">Luces de Tracción Múltiple - Engine Driver</string>
+    <string name="app_name_gamepad_test">Prueba de gamepad - Engine Driver</string>
+    <string name="gamepad1_test">Prueba 1 de gamepad</string>
+    <string name="gamepad2_test">Prueba 2 de gamepad</string>
+    <string name="gamepad3_test">Prueba 3 de gamepad</string>
+    <string name="notification_title">Engine Driver está en ejecución</string>
+    <string name="notification_text">Presionar para reabrir Engine Driver</string>
+    <string name="host_ip">Nombre del Host o Dirección</string>
+    <string name="port">Puerto</string>
+    <string name="loco_address">Dirección de Locomotora</string>
+    <string name="connect_button">Conectar</string>
+    <string name="recent_connections">Conexiones recientes</string>
+    <string name="select_loco_heading">Adquirir Locomotora, Método - Controlador %1$s</string>
+    <string name="select_loco">Entra la Dirección de la Locomotora</string>
+    <string name="select_loco_address">Dirección</string>
+    <string name="acquire_button">Adquirir</string>
+    <string name="roster_list">Selecciona desde la Flota/Tracción Múltiple</string>
+    <string name="recent_engines">Selecciona desde Lomotoras Recientes</string>
+    <string name="direction">Adelante</string>
+    <string name="speed">Velocidad:</string>
+    <string name="discovered_services">Descubre Servidores</string>
+    <string name="save_settings">Guarda los Parámetros</string>
+    <string name="stop">Detener</string>
+    <string name="forward">Adelante</string>
+    <string name="reverse">Atrás</string>
+    <string name="none">Ninguna</string>
+    <string name="fb_helptext">Entra etiquetas y funciones en la lista de la derecha. Déjala en blanco  para esconder el botón. Estos se utilizan cuando las funciones de la Flota no están disponibles.</string>
+    <string name="copy_function_labels">Copiar Etiquetas desde la Flota</string>
+    <string name="fb_header">Modificar Funciones</string>
+    <string name="consist_help">Pulsar una locomotora para cambiar su dirección respecto a la de la Multi Tracción. Mantener pulsado para eliminar una locomotora de la Multi Tracción. Pulsar Atrás para terminar.</string>
+    <string name="about">Acerca de</string>
+    <string name="web">Web</string>
+    <string name="about_page_url">file:///android_asset/about_page-es.html</string>
+
+    <string name="mrc_settings">Parámetros MRC</string>
+    <string name="loco">Loco:</string>
+    <string name="loco_direction_left_extra">"\u00B7A\u00B7"</string>
+    <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>
+    <string name="locoPressToSelect">Seleccionar</string>
+    <string name="powerWillNotWorkTitle">¡No funcionará!</string>
+    <string name="powerWillNotWork">JMRI tiene el control de alimentación wiThrottle apagado.\nEliminará el Icono de Energía.\nSe mostrará de nuevo cuando se active en el JMRI.</string>
+    <string name="current_locos">Lomotoras Seleccionadas Actualmente</string>
+    <string name="release">Libera</string>
+    <string name="releaseThrottleNumber">Libera Controlador %1$s</string>
+    <string name="releaseThrottleLocos">Libera\n %1$s</string>
+    <string name="turnouts">Desvíos</string>
+    <string name="Desvíos">Control de Desvío</string>
+    <string name="turnouts_direct_entry_label">Entra Desvío#</string>
+    <string name="turnouts_location_label">Filtra por Localización</string>
+    <string name="turnouts_list_label">Desvíos (pulsa para cambiar)</string>
+    <string name="turnouts_turnout">Desvío</string>
+    <string name="location_all">TODAS LAS LOCALIZACIONES</string>
+    <string name="routes">Rutas</string>
+    <string name="routes_label">Control de Rutas</string>
+    <string name="routes_direct_entry_label">Entra el Nombre de la Ruta</string>
+    <string name="routes_location_label">Filtra por Localización</string>
+    <string name="routes_list_label">Ruta (pulsa para cambiar)</string>
+    <string name="consist_lead_label">Locomotora de cabeza</string>
+    <string name="consist_list_label">Multi Tracción Delantera</string>
+    <string name="throw_button">Desviada</string>
+    <string name="close_button">Directa</string>
+    <string name="toggle_button">Cambia</string>
+    <string name="power_control_label">Control de Energía del Circuito</string>
+    <string name="power_control_button">desconocido</string>
+    <string name="press_to_toggle">Pulsa para cambiar el Estado de Energía del circuito.</string>
+    <string name="power_control_not_allowed">Control de Energía no permitido. Modifícalo en Preferencias/Configuración en el servidor.</string>
+    <string name="reconnect_label">Intenta Reconectar</string>
+    <string name="reconnect_help">Intenta la Reconexión automáticamente. Espera para la Reconexión o presiona FlechaAtrás para Salir.</string>
+    <string name="reconnect_success">RECONECTADO. Continuamos funcionando.</string>
+    <string name="fs_edit_notice">ATENCIÓN: los cambios de los Parámetros por Defecto de las Funciones se perderán al salir - No se ha encontrado tarjeta SD.</string>
+    <string name="ca_recent_conn_notice">No están disponibles las Conexiones Recientes - No se ha encontrado tarjeta SD.</string>
+    <string name="sl_recent_engine_notice">Locomotoras Recientes no disponible - No se ha encontrado tarjeta SD.</string>
+    <string name="power">Energía</string>
+    <string name="throttle">Controlador</string>
+    <string name="on">Encendido</string>
+    <string name="off">Apagado</string>
+    <string name="set">Establece</string>
+    <string name="disabled">Deshabilitado</string>
+    <string name="volume_indicator">v</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="exit_text">¿Salir del Engine Driver?</string>
+    <string name="exit_title">Salir</string>
+    <string name="steal_text">Apropiarse dirección %1$s?</string>
+    <string name="steal_title">Apropiarse</string>
+    <string name="prefTitle">Ajustes</string>
+    <string name="prefSummary">Ajustes para el Engine Driver </string>
+    <string name="preferences">Ajustes</string>
+    <string name="prefSwipeUpDownTitle">Desplaza hacia Arriba-Abajo las Preferencias</string>
+    <string name="prefSwipeUpDownSummary">Opciones para deslizar el dedo Arriba-Abajo en la pantalla del Controlador.</string>
+    <string name="prefThrottleNameTitle">Nombre del Controlador</string>
+
+    <string name="prefThrottleNameSummary">Establece el nombre de este dispositivo (se muestra en la ventana del WiThrottle)</string>
+    <string name="prefThrottleOrientationTitle">Orientación de la pantalla</string>
+
+    <string name="prefThrottleOrientationSummary">Orientación de la pantalla (excepto Web)</string>
+    <string name="prefThrottlePageTitle">Preferencias de la Apariencia del Controlador</string>
+    <string name="prefThrottleTitle">Preferencias de Control del Controlador</string>
+    <string name="prefThrottleStatusTitle">Preferencias del Estado del Controlador</string>
+
+    <string name="prefSliderTitle">Preferencias del Deslizador de Velocidad y Botones</string>
+    <string name="prefSliderSummary">Opciones para el Deslizador de Velocidad y Botones de Velocidad</string>
+    <string name="prefDirectionTitle">Preferencias botón de Dirección</string>
+    <string name="prefDirectionSummary">Opciones para Botones de Dirección </string>
+    <string name="prefIncreaseSliderHeightTitle">Incrementa la Altura del Deslizador de Velocidad?</string>
+    <string name="prefIncreaseSliderHeightSummary">Utilitzar un botón deslizante mas alto o botones de velocidad para los controladores.</string>
+    <string name="prefHideSliderTitle">¿Esconde Deslizador de Velocidad?</string>
+    <string name="prefHideSliderSummary">No muestres el deslizador de velocidad, utiliza los botones de velocidad.</string>
+    <string name="prefHideSliderAndSpeedButtonsTitle">¿Esconde Deslizador y Botones de Velocidad?</string>
+    <string name="prefHideSliderAndSpeedButtonsSummary">No muestra ni el botón deslizante de la velocidad ni la velocidad.\nNota: Ignora las opciones \'Esconde Deslizador\', \'Altura Deslizador\' y \'Mostrar botones de Velocidad\'.</string>
+    <string name="prefDirChangeWhileMovingTitle">¿Cambiar dirección mientras circulas?</string>
+    <string name="prefDirChangeWhileMovingSummary">Permite cambio de dirección mientras circulas.</string>
+    <string name="prefStopOnDirectionChangeTitle">¿Detener al cambiar de dirección?</string>
+    <string name="prefStopOnDirectionChangeSummary">Detener si se cambia la dirección mientras se está moviendo el tren.</string>
+    <string name="prefSelLocoWhileMovingTitle">¿Permite seleccionar una locomotora mientras se está moviendo?</string>
+    <string name="prefSelLocoWhileMovingSummary">Habilita el botón de Locomotora mientras hay movimiento.</string>
+    <string name="prefShowAddressInsteadOfNameTitle">¿Muestra la Dirección de la Locomotora en vez del Nombre?</string>
+    <string name="prefShowAddressInsteadOfNameSummary">Muestra la Dirección DCC en lugar del Nombre de la Locomotora en el Controlador.</string>
+    <string name="prefIncreaseWebViewSizeTitle">¿Incrementa el tamaño de la vista Web?</string>
+    <string name="prefIncreaseWebViewSizeSummary">Incrementa el tamaño de la vista web un 60% para pantallas pequeñas.</string>
+    <string name="prefThrottleViewImmersiveModeTitle">¿Utiliza el Modo Inmersivo para la vista del Controlador?</string>
+    <string name="prefThrottleViewImmersiveModeSummary">Muestra el Controlador a pantalla completa. Desplaza hacia abajo para desactivarlos temporalmente y llegar al menú.</string>
+    <string name="prefSwipeUpOptionTitle">¿Desplaza hacia arriba en la vista del Controlador?</string>
+    <string name="prefSwipeUpOptionSummary">Qué debe ocurrir cuando desplaces hacia arriba la vista del Controlador.</string>
+    <string name="prefVolumeTitle">Preferencias del Volúmen</string>
+    <string name="prefVolumeSummary">Opciones de los botones del volúmen</string>
+    <string name="prefVolumeSpeedButtonsSpeedStepTitle">Cantidad a modificar la Velocidad al pulsar botón </string>
+    <string name="prefVolumeSpeedButtonsSpeedStepSummary">Cantidad  a modificar la velocidad con las teclas de Volúmen.</string>
+
+    <string name="prefGamePadTitle">Preferencias de Gamepad</string>
+    <string name="prefGamePadSummary">Escoge tipo de Gamepad y otras opciones</string>
+    <string name="prefGamePadTypeTitle">Tipo de Gamepad</string>
+    <string name="prefGamePadTypeSummary">Escoge la opción que mejor admita el Gamepad.</string>
+    <string name="prefGamePadStartButtonTitle">Acción del Botón de Inicio de Gamepad</string>
+    <string name="prefGamePadStartButtonSummary">Escoge la acción cuando presiones el botón Inicio.</string>
+    <string name="prefGamePadFeedbackVolumeTitle">% del Clic del Botón del Gamepad</string>
+    <string name="prefGamePadFeedbackVolumeSummary">Establece el porcentaje de volúmen para los clics del botón del Gamepad.</string>
+
+
+
+    <string name="prefGamePadSpeedButtonsRepeatTitle">Retardo de repetición del botón de velocidad</string>
+    <string name="prefGamePadSpeedButtonsRepeatSummary">Cuànto tiempo debe haber entre repetición en los botones de velocidad del Gamepad. Un valor pequeño la acción es más rápida.</string>
+
+    <string name="prefGamePadSpeedButtonsSpeedStepTitle">Incremento del botón de velocidad</string>
+    <string name="prefGamePadSpeedButtonsSpeedStepSummary">Cuàntos botones del Gamepad cambian la velocidad del controlador.</string>
+
+    <string name="prefGamePadButton1Title">Acción del botón del Gamepad</string>
+    <string name="prefGamePadButton2Title">Acción del botón del Gamepad</string>
+    <string name="prefGamePadButton3Title">Acción del botón del Gamepad</string>
+    <string name="prefGamePadButton4Title">Acción del botón del Gamepad</string>
+    <string name="prefGamePadButtonStartTitle">Acción del botón del Gamepad</string>
+    <string name="prefGamePadButtonReturnTitle">Acción del botón del Gamepad</string>
+    <string name="prefGamePadButtonUpTitle">Acción Arriba Gamepad DPAD</string>
+    <string name="prefGamePadButtonRightTitle">Acción Derecha Gamepad DPAD</string>
+    <string name="prefGamePadButtonDownTitle">Acción Abajo Gamepad DPAD</string>
+    <string name="prefGamePadButtonLeftTitle">Acción Izquierda Gamepad DPAD</string>
+    <string name="prefGamePadButtonSummary">Escoge un acción cuando presionas el botón.</string>
+
+
+
+
+
+
+
+
+
+
+
+    <string name="prefEsuMc2Title">Opciones de ESU MobileControl II</string>
+    <string name="prefEsuMc2Summary">Escoge opciones de ESU MobileControl II</string>
+    <string name="prefEsuMc2ButtonsCategoryTitle">Opciones del botón lateral del dispositivo</string>
+    <string name="prefEsuMc2ButtonTLTitle">Acción del botón superior izquierdo</string>
+    <string name="prefEsuMc2ButtonTLSummary">Escoge un acción cuando presiones el botón.</string>
+
+    <string name="prefEsuMc2ButtonBLTitle">Acción del botón inferior izquierdo</string>
+    <string name="prefEsuMc2ButtonBLSummary">Escoge una acción cuando presiones el botón.</string>
+
+    <string name="prefEsuMc2ButtonTRTitle">Acción del botón superior derecho</string>
+    <string name="prefEsuMc2ButtonTRSummary">Escoge una acción cuando presiones el botón.</string>
+
+    <string name="prefEsuMc2ButtonBRTitle">Acción del botón inferior derecho</string>
+    <string name="prefEsuMc2ButtonBRSummary">Escoge una acción cuando pulses el botón.</string>
+
+    <string name="prefEsuMc2ButtonsRepeatTitle">Retardo de repetición del botón</string>
+    <string name="prefEsuMc2ButtonsRepeatSummary">Cuànto tiempo debe haber entre repetición en los botones del dispositivo.\nUn valor más pequeño la acción es más rápida.</string>
+
+    <string name="prefEsuMc2StopButtonCategoryTitle">Opciones del botón de Parada</string>
+    <string name="prefEsuMc2StopButtonDelayTitle">Retardo de la pulsación-larga del botó de Parada</string>
+    <string name="prefEsuMc2StopButtonDelaySummary">Cómo de larga debe de ser la \'pulsación-larga\' del botón de Parada.\nUna \'pulsación-larga\' detiene todos los controladores activos; una \'pulsación-corta\' detiene el controlador actual. \nUn valor pequeño la acción es más rápida.</string>
+
+    <string name="prefEsuMc2ZeroTrimCategoryTitle">Opciones del Botón Regulador</string>
+    <string name="prefEsuMc2ZeroTrimTitle">Puesta a Cero del Botón Regulador</string>
+    <string name="prefEsuMc2ZeroTrimSummary">Establece los parámetros de puesta a cero del Botón Regulador.\nUn valor más pequeño está más cerca de la posición de parada final en sentido antihorario.\nRango permitido 0&#8211;255.</string>
+
+    <string name="toastEsuMc2NoLocoChange">Cambio de Locomotora no permitido: Mobile Control II  en modo de parada</string>
+    <string name="toastEsuMc2NoThrottleChange">Cambio de Controlador no permitido: Mobile Control II en modo de parada</string>
+    <string name="toastEsuMc2NoButtonPresses">Presionar el botón no está permitido: Mobile Control II en modo de parada</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsTitle">¿Utiliza las etiquetas de las funciones por defecto?</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Muestra las etiquetas de funciones predeterminadas en lugar de las etiquetas de las entradas de la flota.</string>
+    <string name="prefDecreaseLocoNumberHeightTitle">¿Disminuye la Altura del Número de Locomotora?</string>
+    <string name="prefDecreaseLocoNumberHeightSummary">Utiliza botones pequeños para el Número de locomotora, velocidad y botones de dirección.</string>
+    <string name="prefNumOfThrottles">Número de Controladores</string>
+    <string name="prefNumOfThrottlesSummary">Elige la cantidad de controladores que desea mostrar.</string>
+
+    <string name="prefThrottleScreenTypeTitle">Tipo de Pantalla del Controlador</string>
+    <string name="prefThrottleScreenTypeSummary">Qué tipo de pantalla utilizará el controlador.\n¡ATENCIÓN! Engine Driver se reiniciará inmediatamente!</string>
+
+    <string name="prefMaximumThrottleTitle">Porcentage Máximo del Controlador</string>
+
+    <string name="prefMaximumThrottleSummary">Valor Máximo Permitido en deslizador en %</string>
+    <string name="prefMaximumThrottleChangeTitle">Cambio Máximo del Controlador</string>
+
+    <string name="prefMaximumThrottleChangeSummary">Cambio Máximo Permitido en el controlador en %</string>
+    <string name="prefWebViewTitle">Preferencias de la vista Web</string>
+    <string name="prefWebViewSummary">Opciones para el aspecto de la Visualización Web</string>
+    <string name="prefInitialThrotWebPageTitle">Página Web inicial del Controlador</string>
+
+    <string name="prefInitialThrotWebPageSummary">Página Web Inicial de los Controladores (com \'/panel/\')</string>
+    <string name="prefWebViewLocationTitle">¿Vista Web del Controlador?</string>
+
+    <string name="prefWebViewLocationSummary">Incluye una visualización web al panel del Controlador</string>
+    <string name="prefSelectLocoTitle">Selecciona las Preferencias de la Locomotora</string>
+    <string name="prefSelectiveLeadSoundTitle">Sonido selectivo de la unidad de cabeza?</string>
+    <string name="prefSelectiveLeadSoundSummary">Activa funciones Bocina/Campana sólo en la Locomotora de Cabeza de la Multi Tracción del EngineDriver.(Tan solo/cualquier función con una \'etiqueta\' que incluya \'campana\', \'bozina\' o \'silbido\' como parte de la etiqueta.)</string>"
+    <string name="prefSelectiveLeadSoundF1Title">Siempre trata F1 como sonido</string>
+    <string name="prefSelectiveLeadSoundF1Summary">Para la opción de \'Sonido Selectivo de la Unidad Principal\'</string>
+    <string name="prefSelectiveLeadSoundF2Title">Siempre trata F2 como sonido</string>
+    <string name="prefSelectiveLeadSoundF2Summary">Para la opción de \'Sonido Selectivo de la Unidad Principal\'</string>
+    <string name="prefStopOnPhonecallTitle">¿Detiene si se recibe una llamada de Teléfono?</string>
+    <string name="prefStopOnPhonecallSummary">Detiene Locomotora(s) cuando responda o realice una llamada</string>
+    <string name="prefStopOnReleaseTitle">¿Detiene al Liberar?</string>
+    <string name="prefStopOnReleaseSummary">Para Locomotora(s) cuando libere desde el controlador</string>
+    <string name="prefSwipeThroughRoutesTitle">¿Deslizar por las Rutas?</string>
+    <string name="prefSwipeThroughRoutesSummary">Incluir pantalla de Rutas cuando me deslice entre las ventanas.</string>
+    <string name="prefSwipeThroughTurnoutsTitle">¿Deslizar por los Desvíos?</string>
+    <string name="prefSwipeThroughTurnoutsSummary">Incluir pantalla de Desvíos cuando me deslice entre las ventanas.</string>
+    <string name="prefDropOnAcquireTitle">¿Liberar Locomotora antes de adquirir?</string>
+    <string name="prefDropOnAcquireSummary">Liberar locomotora actual antes de adquirir una nueva.</string>
+    <string name="prefHideIfNoUserNameTitle">¿Oculta si no hay Nombre de Usuario?</string>
+    <string name="prefHideIfNoUserNameSummary">Omite Desvío/Ruta de la lista si el nombre de usuario està vacío.</string>
+
+
+    <string name="prefRosterRecentLocosTitle">¿Flota en Locomotoras Recientes?</string>
+    <string name="prefRosterRecentLocosSummary">¿Incluye selecciones de flota en lista de Recientes?</string>
+    <string name="prefMaximumRecentLocosTitle">Número máximo de Locomotoras Recientes</string>
+
+    <string name="prefMaximumRecentLocosSummary">Máximo de Locomotoras Recientes a mostrar en la lista</string>
+    <string name="prefDefaultAddressLengthTitle">Direcciones por defecto (cortas/largas)</string>
+
+    <string name="prefDefaultAddressLengthSummary">Longitud Predeterminada de la Dirección de la  Locomotora, (Auto se establecerá en función de # de dígitos).</string>
+    <string name="prefWebTitle">Preferencias Web</string>
+    <string name="prefDisplaySpeedUnitsTitle">Unidades de Velocidad</string>
+
+    <string name="prefDisplaySpeedUnitsSummary">¿Muestra la velocidad como porcentaje o por pasos de velocidad?</string>
+    <string name="prefWebOrientationTitle">Orientación de Pantalla Web</string>
+
+    <string name="prefWebOrientationSummary">Orientación de la pantalla Web</string>
+    <string name="prefInitialWebPageTitle">Página Web Inicial</string>
+
+    <string name="prefInitialWebPageSummary">Página Web Inicial (como \'/panel/\')</string>
+    <string name="prefConnectTitle">Preferencias de Conexión</string>
+    <string name="prefMaximumRecentConnectionsTitle">Máximo de Conexiones Recientes</string>
+
+    <string name="prefMaximumRecentConnectionsSummary">Máximo de Conexiones Recientes a mostrar en la lista</string>
+    <string name="prefTurnoutsTitle">Preferencias de Desvíos y Rutas</string>
+    <string name="prefHardwareSystemTitle">Sistema Hardware de Desvíos</string>
+
+    <string name="prefHardwareSystemSummary">Selecciona el hardware del sistema a utilizar para entrar comandos de desvíos</string>
+    <string name="prefHideSystemRouteNamesTitle">¿Ocultar Nombres de Ruta del Sistema?</string>
+    <string name="prefHideSystemRouteNamesSummary">Oculta nombres del sistema para Rutas, utilizado para ahorrar espacio en la lista de Rutas.</string>
+    <string name="prefDelimiterTitle">Delimitador de ubicación</string>
+
+    <string name="prefDelimiterSummary">Establece el caracter para marcar el final de  una Localización de un Desvío y nombres de Rutas</string>
+    <string name="prefScreenBrightnessDimTitle">Cambia % el brillo de la Pantalla</string>
+    <string name="prefScreenBrightnessDimSummary">Parámetros del brillo a utilizar cuando lo cambiamos en la pantalla (0%-99%). Deshabilita automáticamente Brillo-automático / Adaptar el Brillo si es posible. </string>
+
+    <string name="logViewer">Ver Log</string>
+    <string name="clearLocoList">Limpia la Lista</string>
+    <string name="ClearConnList">Limpiar Lista de Recientes</string>
+    <string name="prefEmerStopTitle">¿Muestra el Botón de Parada de Emergencia?</string>
+    <string name="prefEmerStopSummary">¿Muestra el botón de parada de emergencia de la locomotora en la barra superior?</string>
+    <string name="EStop">Estop</string>
+    <string name="PowerButtonBar">botón_energía</string>
+    <string name="prefPowerButtonBarTitle">¿Muestra el botón de energía del circuito?</string>
+    <string name="prefPowerButtonBarSummary">¿Muestra el botón de energía del circuito en la pantalla de Controlador, Desvíos y Rutas?</string>
+    <string name="prefSliderLeftMarginTitle">Margen del Deslizador de Velocidad del Controlador </string>
+    <string name="prefSliderLeftMarginSummary">Número de píxeles para compensar los márgenes de los controles deslizantes de la velocidad del controlador.</string>
+
+    <string name="PrefConnectToFirstServerTitle">¿Auto-Conecta al primer Servidor WiThrottle?</string>
+    <string name="PrefConnectToFirstServerSummary">¿Conecta automáticamente al primer Servidor WiThrottle descubierto?</string>
+    <string name="prefDisplayClockTitle">Pantalla de Reloj Rápido</string>
+    <string name="prefDisplayClockSummary">Establece el Formato para el Reloj Rápido en pantalla de Controlador y Web. </string>
+
+
+
+
+
+    <string name="prefDisplaySpeedArrowsTitle">¿Muestra los botones de Velocidad?</string>
+    <string name="prefDisplaySpeedArrowsSummary">¿Muestra los botones al lado de los deslizador de velocidad para cambiar la velocidad de la locomotora?</string>
+
+    <string name="prefSelectedLocoIndicatorTitle">Indicador de Locomotora Adicional Seleccionada</string>
+    <string name="prefSelectedLocoIndicatorSummary">Punto de referencia adicional del botón Selecciona Locomotora basado en el método de selección.\nRequiere Android Honeycomb o posterior.</string>
+
+    <string name="prefDisableVolumeKeysTitle">Deshabilita las Teclas de Volúmen</string>
+    <string name="prefDisableVolumeKeysSummary">Deshabilita las teclas físicas de Volúmen del Teléfono/Tablet para el control de velocidad. Nota: si se selecciona sobreescribe \'Indicador de Locomotora Adicional Seleccionada\' . </string>
+    <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Teclas de volúmen siguen el Toque</string>
+    <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">Las teclas de Volúmen para el control de velocidad deben seguir el último controlador tocado.</string>
+    <string name="prefSpeedButtonsRepeatTitle">Retraso de repetición del botón de velocidad</string>
+    <string name="prefSpeedButtonsRepeatSummary">Tiempo entre repeticiones en los botones de velocidad. Un valor pequeño la acción és más rápida. Excluye los botones del gamepad. (Ver la configuración del gamepad.)</string>
+
+    <string name="prefSpeedButtonsSpeedStepTitle">Cantidad a cambiar con el botón de velocidad</string>
+    <string name="prefSpeedButtonsSpeedStepSummary">Salto de velocidad con la flecha del controlador de velocidad</string>
+
+
+
+
+
+    <string name="server_address">Dirección del Servidor</string>
+    <string name="routes_route">Nombre del Sistema de Ruta</string>
+
+
+
+
+
+    <string name="throttle_name">Nombre del Controlador: %1$s</string>
+    <string name="prefConsistLightsLongClickTitle">Control de luces en Tracción Múltiple con clic largo.</string>
+    <string name="prefConsistLightsLongClickSummary">Cambia las luces de las locomotoras individualmente en una Tracción Múltiple con un clic largo en el botón de Selección de Locomotora.</string>
+    <string name="consistLights_help">Haga clic en una Locomotora para cambiar las luces de esa Locomotora \'Apagado\' o \'Sigue Botón de Función\'.\n\nHaga clic largo en una Locomotora para forzar el estado de la luz \'Apagado\', sin enviar el comando a la Locomotora. (p.e. si ED está confundido).\n\nPresiona la Flecha Atrás para terminar.</string>"
+    <string name="prefThrottleImportExportTitle">Importa/Exporta/Reinicia Preferencias</string>
+    <string name="prefThrottleImportExportSummary">Importa/Exporta/Reinicia Preferencias</string>
+    <string name="prefImportExportTitle">Importa, Exporta o Reinicia</string>
+    <string name="prefImportExportSummary">\'Importa\' o \'Exporta\' las preferencias del directorio \'engine_driver/\', o \'Reinicia\' para reiniciar.\nEsto ocurrirá INMEDIATAMENTE de realizar la selección.\n(Puedes trasnferir las preferencias a otro teléfono copiando el archivo.)</string>
+
+    <string name="prefImportExportLocoListTitle">Incluye la lista de locomotoras recientes</string>
+    <string name="prefImportExportLocoListSummary">Incluye la lista de locomotoras recientes en \'Importar\' y \'Exportar\'.</string>
+    <string name="prefAutoImportExportTitle">Importación/exportación específica de host automático</string>
+    <string name="prefAutoImportExportSummary">En cada conexión con un host, AUTOMÁTICAMENTE \'Importa\' las preferencias para ese host, y opcionalmente \'Exporta\' cuando desconecte. \n(Para restablecer constantemente a un estado conocido, establezca en \'Importación automática solo al conectar\' después de la primera vez, o después de un guardado manual (a continuación).)</string>
+
+    <string name="prefHostImportExportTitle">Importación/exportación específica de host manual</string>
+    <string name="prefHostImportExportSummary">\'Importa\' o \'Exporta\' tus preferencias para un host específico al directorio \'engine_driver/\'. El host debe estar en la lista de conexiones recientes.\nSucederá INMEDIATAMENTE después de seleccionar la opción.\n(Sólo disponible cuando se está conectado.)</string>
+
+    <string name="prefSwapForwardReverseButtonsTitle">Cambiar los botones de dirección</string>
+    <string name="prefSwapForwardReverseButtonsSummary">Intercambio permanente de los dos Botones de Dirección en todos los Controladores.</string>
+    <string name="prefSwapForwardReverseButtonsLongPressTitle">Pulsación larga intercambia Botones de Dirección</string>
+    <string name="prefSwapForwardReverseButtonsLongPressSummary">Intercambia temporalmente los dos Botones de Dirección presionando prolongadamente cualquier Botón de Dirección.</string>
+    <string name="prefGamepadSwapForwardReverseWithScreenButtonsTitle">Intercambiar los Botones de Dirección con los Botones de Pantalla</string>
+    <string name="prefGamepadSwapForwardReverseWithScreenButtonsSummary">Cambia temporalmente los dos Botones de Dirección del Gamepad si se cambian en la Pantalla de Botones de Dirección.</string>
+    <string name="prefGamepadTestEnforceTestingTitle">Forzar la Prueba del Gamepad</string>
+    <string name="prefGamepadTestEnforceTestingSummary">Prueba el gamepad cada vez que sea conectado.</string>
+    <string name="prefLeftDirectionButtonsTitle">Etiqueta Botón Dirección Izquierdo</string>
+    <string name="prefLeftDirectionButtonsSummary">Etiquetas para todos los botones de dirección IZQUIERDA. Introducir \'Adl\' o en blanco para el comportamiento normal.</string>
+    <string name="prefLeftDirectionButtonsDefaultValue">Adelante</string>
+    <string name="prefRightDirectionButtonsTitle">Etiqueta Botón Dirección Derecho</string>
+    <string name="prefRightDirectionButtonsSummary">Etiquetas para todos los botones de dirección DERECHA. Introducir \'Atr\' o en blanco para el comportamiento normal.</string>
+    <string name="prefRightDirectionButtonsDefaultValue">Atrás</string>
+    <string name="prefLeftDirectionButtonsShortTitle">Etiqueta corta Botón Dirección Izquierdo</string>
+    <string name="prefLeftDirectionButtonsShortSummary">Etiquetas cortas para todos los botones de dirección IZQUIERDA. Introducir \'Adl\' o en blanco paa el comportamiento normal.</string>
+    <string name="prefLeftDirectionButtonsShortDefaultValue">Adl</string>
+    <string name="prefRightDirectionButtonsShortTitle">Etiqueta corta Botón Dirección Derecho</string>
+    <string name="prefRightDirectionButtonsShortSummary">Etiquetas cortas para todos los botones de dirección DERECHA. Introducir \'Atr\' o en blanco para el comportamiento normal.</string>
+    <string name="prefRightDirectionButtonsShortDefaultValue">Atr</string>
+    <string name="prefThemeTitle">Tema/Estilo</string>
+
+    <string name="prefThemeSummary">Tema de la App. ¡ATENCIÓN! Engine Driver se reiniciará inmediatamente.\nRequiere Android Honeycomb o posterior.</string>
+
+    <string name="prefHideDemoServerTitle">Esconde la Demo del Servidor</string>
+    <string name="prefHideDemoServerSummary">Esconde la demo del Servidor\'jmri.mstevetodd.com\' en la lista de conexiones.</string>
+    <string name="prefDirectionButtonsTitle">Etiquetas de los Botones de Dirección</string>
+    <string name="prefDirectionButtonsSummary">Etiquetas para todos los botones de dirección.</string>
+
+
+    <string name="prefAccelerometerTitle">Preferencias del Acelerómetro</string>
+    <string name="prefAccelerometerSummary">Opciones para el movimiento del dispositivo en la Página del Controlador</string>
+    <string name="prefAccelerometerShakeTitle">Acción al Agitar</string>
+    <string name="prefAccelerometerShakeSummary">Opciones para cuando se agita el dispositivo.</string>
+
+    <string name="prefAccelerometerShakeThresholdTitle">Límite al agitar</string>
+    <string name="prefAccelerometerShakeThresholdSummary">Umbral al que se registrará al agitar. (1.5&#8211;3.5) Un valor más bajo responderá a una acción suave.\nRequiere el reinicio del Engine Driver tras cambiarlo para tener efecto.</string>
+
+    <string name="functionButton00DefultValue">Luces</string>
+    <string name="functionButton01DefultValue">Campana</string>
+    <string name="functionButton02DefultValue">Bocina</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="gamepadTestButtonLabelDpadUp">Arriba</string>
+    <string name="gamepadTestButtonLabelDpadDown">Abajo</string>
+    <string name="gamepadTestButtonLabelDpadLeft">Izquierda</string>
+    <string name="gamepadTestButtonLabelDpadRight">Derecha</string>
+    <string name="gamepadTestButtonLabelButtonX">C | X [iOS]</string>
+    <string name="gamepadTestButtonLabelButtonY">D | Y [Triángulo]</string>
+    <string name="gamepadTestButtonLabelButtonA">A [Cruce]</string>
+    <string name="gamepadTestButtonLabelButtonB">B [@]</string>
+    <string name="gamepadTestButtonLabelButtonStart">Iniciar | Enviar</string>
+    <string name="gamepadTestButtonLabelButtonEnter">Selecciona | Enviar</string>
+    <string name="gamepadTestOptionalLabel">Opcional (puede ser que no esté en el dispositivo)</string>
+    <string name="gamepadTestAllKeyCodesLabel">Todos los códigos:\s\s</string>
+    <string name="gamepadTestModeLabel">Tipo:\s\s</string>
+    <string name="gamepadTestKeycodeLabel">Tecla de código:\s\s</string>
+    <string name="gamepadTestFunctionLabel">Función:\s\s</string>
+    <string name="gamepadTestCompleteLabel">Prueba de estado:\s\s</string>
+    <string name="gamepadTestHelp">Desplácese hacia abajo para ver las instrucciones completas...\n\nPresionar TODOS Dpad Y los cuatro botones principales del gamepad NO FUNCIONARÁ.\n\nSi no puedes activar todos los botones, cambia el modo del gamepad (mira las instrucciones que vienen con tu gamepad) o prueba un tipo de gamepad diferente (arriba).\n\n\'ATRÁS \' o \'CANCELA\' saldrá de la prueba pero el gamepad NO FUNCIONARÁ.\n\'OMITE\', o presionando el botón \'Reducir Velocidad\' del gamepad tres veces, forzará el paso de la prueba, incluso si el gamepad no funciona correctamente.\n\'REINICIA\' hará que ED piense que todavía no se han utilizado gamepads.\nSi selecciona la prueba \'simple\', al presionar un solo botón \'Reducir velocidad\' se omitirá la prueba.\n\nUtiliza las opciones del menú \'Prueba de Gamepad n\' para regresar a esta página.</string>
+    <string name="gamepadTestHelpNonForced">Si no puedes activar todos los botones, cambia el modo del gamepad de juegos (mira las instrucciones que vienen con tu dispositivo) o prueba un tipo de gamepad diferente (arriba).\nEs posible que tengas que volver a probar el gamepad cuando lo utilices por primera vez en la pantalla del controlador.</string>
+    <string name="gamepadTestIncomplete">"Prueba Incompleta"</string>
+    <string name="gamepadTestComplete">"Prueba Completada"</string>
+    <string name="gamepadTestCompleteToast">"Prueba Gamepad completada satisfactoriamente" </string>
+    <string name="gamepadTestInvalidKeycode">"Código de Tecla no válido para este modo"</string>
+    <string name="gamepadTestReset">"Reinicia"</string>
+    <string name="gamepadTestCancel">"Cancela"</string>
+    <string name="gamepadTestCancelNonForced">"Cierra"</string>
+    <string name="gamepadTestSkip">"Omite"</string>
+
+
+    <string name="gamepadTestKeyCodesUpCode">"Ar"</string>
+    <string name="gamepadTestKeyCodesDownCode">"Ab"</string>
+    <string name="gamepadTestKeyCodesLeftCode">"Iz"</string>
+    <string name="gamepadTestKeyCodesRightCode">"Dr"</string>
+    <string name="prefGamepadTestNowTitle">¡Prueba de configuración del gamepad ahora!</string>
+    <string name="prefGamepadTestNowSummary">Permite confirmar que la configuración seleccionada funciona correctamente.\nLa página de prueba se iniciará INMEDIATAMENTE al seleccionarla.</string>
+    <string name="toastUnableToSetBrightness">No se ha podido establecer el brillo Automático/Adaptativo.</string>
+    <string name="toastAccelerometerNotFound">Acelerómetro no encontrado o deshabilitado</string>
+    <string name="toastLocoChangeNotAllowed">Cambio de locomotora no permitido:\'El cambio de dirección mientras hay movimiento\' está deshabilitado en las preferencias</string>
+    <string name="toastDirectionButtonsSwapped">Botones de dirección temporalmente cambiados. Para que el cambio sea permanente, realiza el cambio en las preferencias</string>
+    <string name="toastImmersiveModeDisabled">Modo inmersivo temporalmente deshabilitado. Para deshabilitarlo permanentemente realiza el cambio en las preferencias</string>
+    <string name="toastThrottleScreenUnlocked">Pantalla de Controlador Desbloqueada</string>
+    <string name="toastShakeWebViewHidden">Vista Web oculta temporalmente. Agita de nuevo para mostrar. Para esconder permanentemente cámbialo en las preferencias</string>
+    <string name="toastShakeWebViewUnavailable">La Vista Web debe estar habilitada en las preferencias primero</string>
+    <string name="toastShakeScreenLocked">Pantalla de Controlador Bloqueada - Agita de nuevo para desbloquearla</string>
+    <string name="toastShakeScreenDimmed">Pantalla del Controlador Atenuada - Agitalo de nuevo para restaurarlo</string>
+    <string name="toastSwipeUpScreenLocked">Pantalla del Controlador Bloqueada - Desliza hacia arriba para desbloquear</string>
+    <string name="toastSwipeUpScreenDimmed">Pantalla del Controlador Atenuada - Desliza hacia arriba para restaurar</string>
+    <string name="toastSwipeUpViewHidden">Vista Web temporalmente oculta. Para ocultarla permanentemente realiza el cambio en las preferencias</string>
+    <string name="toastThrottleAlertEstop">Atención: Engine %%1%% establecido a ESTOP</string>
+    <string name="toastPreferencesOutsideLimits">El Valor entrado está fuera de rango (%1$s-%2$s). Reiniciado a %3$s.</string>
+    <string name="toastPreferencesNotNumeric">El Valor entrado no es un valor numérico (%%1%%-%%2%%). Reiniciado a %%3%%.</string>
+    <string name="toastPreferencesResetSucceeded">¡Reinicia las Preferencias a valores por defecto!</string>
+    <string name="toastTurnoutInvalidNumber">Número de Desvío incorrecto</string>
+    <string name="toastTurnoutCommandTo">Comando enviado a desvío %%1%%</string>
+    <string name="toastTurnoutCommandToClose">Directa</string>
+    <string name="toastTurnoutCommandToThrow">Desviada</string>
+    <string name="toastTurnoutCommandToToggle">Cambia</string>
+    <string name="toastConnectEnterAddress">Entra o selecciona una dirección y un puerto</string>
+    <string name="toastConnectInvalidPort">Puerto incorrecto, reintentalo.</string>
+    <string name="toastConnectConnected">Conectado al Servidor: %%1%% Puerto: %%2%%</string>
+    <string name="toastConnectUnableToSavePref">No se pueden guardar las preferencias específicas del host. No se ha podido obtener el nombre del host.</string>
+    <string name="toastConnectUnableToLoadPref">No se pueden cargar las preferencias específicas del host. No se ha podido obtener el nombre del host.</string>
+    <string name="toastConnectErrorReadingRecentConnections">Error leyendo la lista de conexiones recientes:</string>
+    <string name="toastConnectErrorSavingRecentConnection">Error guardando la conexión reciente:</string>
+    <string name="toastRoutesCommandSent">"Comando enviado para establecer la ruta"</string>
+    <string name="toastImportExportExportSucceeded">La exportación de preferencias a \'engine_driver/%%1%%\' ha tenido éxito.</string>
+    <string name="toastImportExportImportSucceeded">La importación de preferencias desde \'engine_driver/%%1%%\' ha tenido éxito.</string>
+    <string name="toastImportExportExportFailed">!La exportación de preferencias a  \'engine_driver/%%1%%\' ha fallado¡</string>
+    <string name="toastImportExportImportFailed">!La importación de preferencias desde \'engine_driver/%%1%%\' ha fallado!</string>
+    <string name="toastImportExportServerImportFailed">Preferencias no importadas desde \'engine_driver/%%1%%\'.  Es posible que aún no haya guardado las preferencias para este host.</string>
+    <string name="toastImportExportCannotImport">No se ha podido importar las preferencias. No se ha conectado al host.</string>
+    <string name="toastImportExportCannotExport">No se ha podido exportar las preferencias. No se ha conectado al host.</string>
+    <string name="toastSelectLocoConfirmClear">Confirma que quieres borrar todas las Locomotoras Recientes presionando el botón \'Limpiar Lista\' DE NUEVO.</string>
+    <string name="prefTtsTitle">Respuesta de voz</string>
+    <string name="prefTtsSummary">Hablar eventos clave</string>
+    <string name="prefTtsWhenTitle">Respuestas de Voz</string>
+    <string name="prefTtsWhenSummary">Cuando hablar eventos y acciones utilizando Texto a Voz (TTS).</string>
+
+    <string name="prefTtsThrottleTitle">En el Cambio de Controlador</string>
+    <string name="prefTtsThrottleSummary">Cuando seleccionas un controlador diferente.</string>
+    <string name="prefTtsThrottleSpeedTitle">+ velocidad</string>
+    <string name="prefTtsThrottleSpeedSummary">Cuando selecciones un controlador diferente en el gamepad, también di la velocidad. Anula la opción del controlador solo.</string>
+    <string name="prefTtsThrottleLocoSpeedTitle">+ locomotora</string>
+    <string name="prefTtsThrottleLocoSpeedSummary">Cuando selecciones un controlador diferente en el gamepad, también di el número de la locomotora. Anula la opción del controlador solo.</string>
+    <string name="prefTtsGamepadTestTitle">En la prueba de Gamepad</string>
+    <string name="prefTtsGamepadTestSummary">Cuando la página de prueba del gamepad sea lanzada.</string>
+    <string name="prefTtsGamepadTestCompleteTitle">En la prueba de Gamepad completada</string>
+    <string name="prefTtsGamepadTestCompleteSummary">Cuando la página de prueba del gamepad finalice.</string>
+    <string name="TtsVolumeThrottle">Controlador</string>
+    <string name="TtsGamepadThrottle">Controlador</string>
+    <string name="TtsLoco">Locomotora</string>
+    <string name="TtsSpeed">Velocidad</string>
+    <string name="TtsGamepadTest">Prueba de Gamepad</string>
+    <string name="TtsGamepadTestComplete">Prueba completada</string>
+    <string name="TtsGamepadTestSkipped">Prueba omitida</string>
+    <string name="TtsGamepadTestFail">Prueba cancelada</string>
+    <string name="TtsGamepadTestReset">Reiniciar Gamepad</string>
+    <string name="TTS_Screen_Dimmed">Atenuada, desliza hacia arriba para restaurar</string>
+    <string name="TTS_Screen_Locked">Bloqueado, desliza hacia arriba para restaurar</string>
+    <string name="TTS_Screen_Unlocked">Desbloqueado</string>
+    <string name="TTS_Immersive_Mode_Disabled">Modo Inmersivo deshabilitado temporalmente</string>
+    <string name="TTS_Forward">Adelante</string>
+    <string name="TTS_Reverse">Atrás</string>
+    <string name="TTS_Speed_Zero">Cero</string>
+    <string name="TTS_Speed_Max">Máximo</string>
+    <string name="TTS_Speed_Stop">Para</string>
+    <string name="TTS_EStop">Parada de Emergencia</string>
+    <string name="TTS_Dir_Change_While_Moving_Disabled">Dirección no cambiada</string>
+    <string name="TTS_Function">Función</string>
+    <string name="toastTtsFailed">¡Disculpa! El Texto a Voz ha fallado...</string>
+    <string name="prefDefaultFunctionsTitle">Preferencias de Funciones por Defecto</string>
+    <string name="prefDefaultFunctionsSummary">Cuándo y cómo se muestran las etiquetas de funciones predeterminadas.</string>
+    <string name="fbResetFunctionLabels">Reinicia Todo</string>
+    <string name="prefNumberOfDefaultFunctionLabelsTitle">Número de Funciones por Defecto</string>
+    <string name="prefNumberOfDefaultFunctionLabelsSummary">Limitar las Etiquetas de Función que se muestran si no están disponibles en la flota JMRI.</string>
+
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Número de Funciones por Defecto para la Flota</string>
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limita las Etiquetas de Función que se muestran en las Entradas de la Flota del JMRI sin etiquetas de función.</string>
+
+    <string name="lightsTextOff">Apagado</string>
+    <string name="lightsTextFollow">Sigue Fn Btn</string>
+    <string name="lightsTextUnknown">Desconocido</string>
+    <string name="prefLocaleTitle">Localización</string>
+    <string name="prefLocaleSummary">Idioma a utilizar.\n¡ADVERTENCIA! El Engine Driver se reiniciará inmediatamente. Se reiniciarán las etiquetas de los botones de dirección.</string>
+    <string name="toastPreferencesLocaleChange">Engine Driver se reiniciará al seleccionar el Idioma.</string>
+    <string name="prefDirectionButtonLongPressDelayTitle">Retardo de la Presión Larga del Botón de Dirección</string>
+    <string name="prefDirectionButtonLongPressDelaySummary">Cuantos milisegundos constituye una pulsación larga para los botones de dirección.</string>
+
+    <string name="prefRosterFilterTitle">Filtro de la Flota</string>
+    <string name="prefRosterFilterSummary">Tan solo se incluyen las entradas de la flota que empiecen por ...</string>
+
+    <string name="FilterRosterList">Filtro</string>
+    <string name="FilterRosterListHint">Contiene...</string>
+
+    <string name="LocoSelectMethodAddress">Dirección DCC</string>
+    <string name="LocoSelectMethodRoster">JMRI Flota</string>
+    <string name="LocoSelectMethodRecent">Reciente</string>
+    <string name="LocoSelectMethodHelp">Ingrese arriba la Dirección DCC de su locomotora y haga clic en \'Adquirir\'.\n\nAlternativamente, seleccione una locomotora de la  \'Flota\' del JMRI o seleccione entre sus locomotoras usadas \'Recientes\' haciendo clic en uno de las opciones que aparecen arriba.</string>
+    <string name="flashlightAction">Luz Flash</string>
+    <string name="flashlightStateOn">La Luz Flash está Encendida</string>
+    <string name="flashlightStateOff">La Luz Flash está Apagada</string>
+    <string name="prefFlashlightSummary">¿Muestra las teclas de la linterna en las pantallas de Controlador, Desvíos y Rutas?</string>
+    <string name="prefFlashlightTitle">¿Muestar el botón de la luz flash?</string>
+    <string name="toastFlashlightFailed">¡Disculpa! Ha habido un error al cambiar a la linterna&#8230;</string>
+    <string name="prefConnectTimeoutMsTitle">Tiempo de espera de Conexión Inicial</string>
+    <string name="prefConnectTimeoutMsSummary">Establece el tiempo de espera de conexión inicial en milisegundos</string>
+    <string name="prefSocketTimeoutMsTitle">Tiempo de espera del Socket</string>
+    <string name="prefSocketTimeoutMsSummary">Establece el tiempo de espera en milisegundos para el socket </string>
+    <string name="toastThreadedAppNoLocalIp">No se ha encontrado Dirección IP.\nVerifica la conexión WIFI.</string>
+    <string name="toastThreadedAppErrorCreatingWiThrottle">Error creando el cliente zeroconf del withrottle: Excepción IO:\n%1$s</string>
+    <string name="toastThreadedAppWiThrottleNotSupported">Versión de WiThrottle %1$s no soportada.</string>
+    <string name="toastThreadedAppCantDeterminIp">No se ha podido determinar la dirección IP de %1$s</string>
+    <string name="toastThreadedAppCantConnect">No se ha podido conectar al host %1$s y al puerto %2$s desde %3$s - %4$s Verifica los parámetros de red del WiThrottle.</string>
+    <string name="toastThreadedAppErrorInputStream">Error al crear el flujo de entrada, Excepción IO: %1$s</string>
+    <string name="toastThreadedAppErrorStartingSocket">Error al iniciar el flujo del socket_WiT: %1$s</string>
+    <string name="toastThreadedAppErrorCreatingOutputStream">Error al crear el flujo de salida, Excepción IO: %1$s</string>
+    <string name="toastThreadedAppErrorSleepingThread">Error durmiendo el flujo de salida, Excepción Interrumpida: %1$s</string>
+    <string name="statusThreadedAppNoResponse">No ha habido respuesta desde el servidor %1$s:%2$s en %3$s segundos. Verifica que el servidor WiThrottle se está ejecutando.\n\nReintenta</string>
+    <string name="statusThreadedAppUnableToConnect">No se ha podido conectar al servidor a %1$s:%2$s desde %3$s.\n\nReintentando</string>
+    <string name="functionButtonLookForWhistle">SILBIDO</string>
+    <string name="functionButtonLookForHorn">BOZINA</string>
+    <string name="functionButtonLookForBell">CAMPANA</string>
+    <string name="functionButtonLookForHead">ADELANTE</string>
+    <string name="functionButtonLookForLight">LUZ</string>
+    <string name="functionButtonLookForRear">ATRÁS</string>
+    <string name="prefImportExportOverwite">El archivo existe. ¿Sobreescribir?</string>
+    <string name="prefImportExportErrorReadingList">Error leyendo la lista de conexiones recientes:</string>
+    <string name="prefImportExportErrorReadingFrom">¡Ha fallado la importación de \'engine_driver/%%1%%\'! No has guardado la preferencias para este host.</string>
+    <string name="prefImportExportErrorNotConnected">No cenectado a un host.</string>
+    <string name="logViewerTitle">Actividad en Visualizador de Log | Nombre de Controlador: %1$s</string>
+</resources>

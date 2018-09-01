@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title>Engine Driver un Controlador per Android</title>
+    <style type="text/css">
+        p {margin-top:0;padding-left:1em;}
+        h3 {margin-bottom:0;}
+        dl {padding-left: 2em;}
+        ul {margin-left:1em;margin-top:-1em;padding-left:0;}
+        ul li {position:relative;left:1em;padding-right:1em;}​
+    </style>
+</head>
+<body>
+<h1>Engine Driver un Controlador per Android</h1>
+<div style="float:left;padding-right:1em;">
+    <img src="file:///android_asset/engine_driver_icon.png" height="144" width="166" alt=""/>
+</div>
+<p><b>Els darrers canvis d'aquesta versió inclouen:</b></p>
+<ul>
+    <li> Nova opció de la pantalla de l'accelerador de "botó gran". (Només un accelerador sense control lliscant). </li>
+    <li> Opció de tractar sempre F1 i F2 com a so per a l'opció de sons selectius de plom </li>
+    <li> Nou tema colorit / colorit </li>
+    <li> projecte d'actualització a les eines de compilació Gradle </li>
+    <li> rebateu MinSDKVersion a 15 (de 7) </li>
+    <li> reemplaça la font de JmDNS amb el fitxer jar. </li>
+    <li> Mou a Gradle </li>
+    <li> Trnslacions espanyoles i catalanes de Luis Zamora. </li>
+</ul>
+<p><em><a
+        href="https://raw.githubusercontent.com/JMRI/EngineDriver/master/changelog-and-todo-list.txt"
+        target="_blank" title="View complete EngineDriver changelog">[vista completa del registre de canvis]</a></em></p>
+<p>Aquest programari gratuit permet connectar a un servidor <a
+        href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
+        target="_blank">WiThrottle del JMRI</a> executant-se en un PC,
+    al <a href="http://www.modelrectifier.com/category-s/332.htm" target="_blank">MRC Prodigy WiFi</a>,
+    o al <a href="http://www.digitrax.com/products/wireless/lnwi/" target="_blank">Digitrax LnWi</a>,
+    i controlar les teves locomotores i tot el model de ferrocarril. Velocitat, direcció, i fins a 29
+    funcions DCC están suportades per a una o sis locomotores o traccions múltiples. Pots controlar
+    l'energia del circuit, agulles i rutes, i mostrar panells i altres finestres del JMRI utilitzant
+    les vistes web. També pots crear i editar traccions múltiples (definides per programari).
+    You can also create and edit consists (software-defined).</p>
+<p>Per a mes detalls, visiti <a href="https://enginedriver.mstevetodd.com" target="_blank">[la pàgina del EngineDriver]</a>.
+    Per a captures de pantalla, clic <a href="https://enginedriver.mstevetodd.com/screenshots"
+                              target="_blank">[aquí]</a>.</p>
+<h3>Prerequisits (per a JMRI):</h3>
+<p>Verifica que el teu dispositiu Android pot connectar a la xarxa WIFI i obté una adreça IP.<br/>
+    Asegura't que estàs executant l\'última versió del <a href="http://jmri.org/" target="_blank">JMRI</a>
+    (2.8 funciona, 3.0+ funciona molt millor) en el teu PC, connectat al teu circuit de via.&nbsp;
+    Inicia el JMRI i verifica que pots controlar una locomotora que estigui en el circuit de via amb
+    un "Controlador".</p>
+<p>Inicia la funció <a
+        href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
+        target="_blank">WiThrottle</a> del JMRI, localitzada a la secció Eines, Controladors en el DecoderPro. Es molt recomenable que iniciïs el <a
+            href="http://jmri.sourceforge.net/help/en/html/web/index.shtml" target="_blank"
+            title="Learn more about JMRI Web Server">Servidor Web del JMRI</a>
+    (Eines, Iniciar Servidor Web JMRI).&nbsp;
+    Tots dos s'haurien d'afegir a Preferències, en iniciar el JMRI.</p>
+<h3>Prerequisits (per a MRC Wifi):</h3>
+<p>Connecta al mòdul MRC WiFi, i verifica que el dispositiu pot connectar a la xarxa i obté una adreça IP.</p>
+<h3>Prerequisits (per a Digitrax LnWi):</h3>
+<p>Connecta a LnWi, i verifica que el dispositiu pot connectar a la xarxa i obté una adreça IP.</p>
+<h3>Mode de precedir:</h3>
+<p>En el telèfon, inicia l'app Engine Driver i espera a que es mostri l'adreça del teu servidor en la
+    secció de "Servidors Trobats".</p>
+<p>Fes clic en Servidors Trobats, o pots entrar directament l'adreça IP i el port del tu servidor WiThrottle.
+    (Utilizant els valors mostrats en la finestra del WiThrottle.)<br/>Desitges "Auto Connectar al primer
+    Servidor de WiThrottle?" ho pots activar en les preferències. Està disponible en el servidor "demo"
+    al jmri.mstevetodd.com, port 44444 que el pots utilizar per a realitzar proves.</p>
+<p>A la pantalla del controlador, fes clic al botó "Seleccionar" per a cada locomotora. <br/>
+    A la pantalla següent, selecciona el mètode de selecció (entrada de l'adreça DCC, llista
+    JMRI o Locomotores Recents). Després de seleccionar una locomotora, et retornarà a la pantalla
+    del Controlador. <br/>
+    Repetiu utilitzant els botons addicionals "Selecciona" per adquirir més trens. <br/>
+    Nota: manteniu premut un element de la flota per veure detalls addicionals des de la flota.</p>
+<p>Controla la teva locomotora utilitzant el control lliscant (o control de volum) (o botons de
+    fletxa opcional) per a la velocitat, i els botons invertits, de parada i de reenviament per
+    controlar la direcció. <br/> Per alliberar totes les locomotores, només cal prémer el botó
+    Enrere i sortir de l\'aplicació. Això també atura les teves locomotores (es pot modificar a
+    les preferències). Podeu tornar a assignar el control del volum fent clic a l'indicador de
+    velocitat (la "v" petita mostra que es té el control).</p>
+<p>Per crear un multi tracció al vol, simplement selecciona una locomotora addicional en el mateix
+    controlador. Et demanarà la direcció de cada nova locomotora en relació amb la de la multi tracció
+    existent. La direcció i la velocitat serà enviada a totes per igual. El botó Allibera, alliberarà
+    totes les locomotores del controlador.</p>
+<p>Prém el botó del menú del teu telèfon per accedir a les pantalles d'Agulles, Rutes y Control
+    d'Energia, podràs realitzar ajustaments de nombroses preferències.</p>
+<p>Pots lliscar el dit de esquerra a dreta per saltar ràpidament cap enrere o cap endavant entre
+    les finestres de Controlador, Rutes i Agulles.</p>
+<h3>Operació ESU MobileControl II:</h3>
+<p>L'app Engine Driver és totalment compatible amb el dipositiu d'Android
+    <a href="http://www.esu.eu/en/products/digital-control/mobile-control-ii/">ESU MobileControl II</a>.</p>
+<p>A més de poder controlar la velocitat de controlador seleccionat amb el botó de control, també és possible
+    canviar la direcció a través de la posició a zero del interruptor. Fins a tres trens es poden controlar a
+    la vegada- el tren que s'està tripulant amb el botó de control il·lumina la petita "v" de l'indicador de
+    velocitat. Canvieu entre els trens tripulats fent clic a l\'indicador de velocitat adequat. També és
+    possible assignar un dels botons laterals del dispositiu per passar al tren tripulat següent -
+    de manera predeterminada, el botó de la part inferior dreta està assignat a aquesta funció.</p>
+<p>Quan s'assigna el control d'un tren, el LED verd està encès. Quan no hi ha trens assignats,
+    el LED verd parpelleja.</p>
+<p>A més, podeu utilitzar el botó Aturar per pausar el tren operat actualment o per aturar tots els trens
+    tripulats. Fer pressió curta del botó Aturar (per defecte, menys d'1/2 segons) atura l'operació del tren
+    controlat actualment. El LED vermell farà una intermitència ràpida per indicar-ho. Si es torna a pressionar
+    el botó Aturar, el tren operat actualment es reprendrà la marxa. Fer pressió llarga del botó Aturar (per
+    defecte, superior a 1/2 segon) atura tots els trens controlats. El LED vermell farà una intermitència lenta
+    per indicar-ho. Si pressiones de nou el botó Aturar, tots els trens controlats romandran aturats i es podrà
+    controlar de nou el tren seleccionat.</p>
+<p>Mentre que en mode d'aturada, els botons i la barra de canvi de velocitat de la pantalla estan desactivats
+    per als controladors aturats actualment. També es desactiva el canvi entre els controladors activats.</p>
+<p>És possible configurar els botons laterals del dispositiu per a realitzar diverses accions. L'assignació
+    predeterminada es la següent:</p>
+    <dl>
+        <dt>Adalt-esquerra</dt><dd>Incrementa velocitat</dd>
+        <dt>Abaix-esquerra</dt><dd>Disminueix velocitat</dd>
+        <dt>Adalt-dreta</dt><dd>Canvia la direcció</dd>
+        <dt>Abaix-dreta</dt><dd>Selecciona el següent controlador</dd>
+    </dl>
+<p>Aquestes asignacions poden ser modificades en les Opcions de Preferències de ESU MobileControl II</p>
+<h3>Configuració:</h3>
+<p>En les Preferències, hi ha una extensa llista d'opcions on podràs personalitzar les pantalles i
+    accions del EngineDriver per que puguis treballar millor amb el teu dispositiu, amb el teu circuit
+    i el teu estil personal. Aquestes inclouen controladors per al circuit, rellotge ràpid, opcions de
+    passos de velocitat, vistes web, tamany dels botons, botons addicionals, tamany del control lliscant
+    i el seu comportament, diferents números de controladors, atura al alliberar,  permet/bloca multi
+    traccions al vol, autoconnectar, i molt més.
+</p>
+<p>Si has introduït etiquetes de funció per a una entrada de la flota en el servidor, s'utilitzaran
+    aquestes etiquetes. Altrament, pots utilitzar l'opció de menú Funcions Predeterminades per a establir
+    les etiquetes predeterminades i els números de funció a mostrar. Treu els botons al esborrar les etiquetes.</p>
+<p>En el PC amb el JMRI, verifica les preferències del WiThrottle per a asegurar que permet o no les funcions
+    de control desitjades. Si has definit les teves agulles i rutes en un panell, asegura't d'especificar
+    "nom d'usuari" per a aquells que t'agradaria veure llistats en el controlador. També pots "filtrar" les
+    agulles que es mostren amb la opció del WiThrottle-&gt;Controls de Filtre en la finestra de WiThrottle.
+    Es molt recomenable habilitar "Utilitzar eStop".</p>
+<p>L'entrada de material a la flota i la definició de les rutes i les agulles en JMRI faran que el controlador
+    sigui més potent i més fàcil d'utilitzar (encara que no és necessari). EngineDriver mostrarà informació
+    addicional si s\'inicia el servidor web JMRI (com ara detalls de la llista i icones).</p>
+<h3>Desenvolupament:</h3>
+<p>Engine Driver es programari lliure, part del projecte
+    <a href="http://jmri.org" target="_blank">JMRI</a>. Està realitzat amb
+    <a href="https://developer.android.com/studio/" target="_blank">Android Studio</a>.
+    Pots buscar o clonar el codi font del desenvolupament actual (amb etiquetes per a versions anteriors)
+    <a href="https://github.com/JMRI/EngineDriver" target="_blank">[AQUÍ].</a>
+    Qualsevol ajuda és benvinguda.</p>
+<hr>
+<p><a href="https://enginedriver.mstevetodd.com" target="_blank">[Pàgina d'inici del EngineDriver]</a></p>
+</body>
+</html>
