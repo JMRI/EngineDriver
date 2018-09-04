@@ -142,10 +142,10 @@
     </string-array>
 
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
-        <item >Original - Phone or Tablet (1-3 throttles)</item>
-        <item >Simple - Tablet Recommended (1-6 throttles)</item>
-        <item >Vertical - Phone or Tablet (2 throttles)</item>
-        <item >Big Buttons - Left (1 throttle)</item>
+        <item >Original &#8211; Phone or Tablet (1-3 throttles)</item>
+        <item >Simple &#8211; Tablet Recommended (1-6 throttles)</item>
+        <item >Vertical &#8211; Phone or Tablet (2 throttles)</item>
+        <item >Big Buttons &#8211; Left (1 throttle)</item>
     </string-array>
     <string-array name="prefThrottleScreenTypeEntryValues">
         <item >Default</item>
@@ -719,6 +719,8 @@
         <item>it</item>
         <item>pt</item>
         <item>de</item>
+        <item>es</item>
+        <item>ca</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->
         <item>Use Phone\'s global setting</item>
@@ -726,6 +728,8 @@
         <item>Italian</item>
         <item>Portuguese</item>
         <item>German</item>
+        <item>Spanish</item>
+        <item>Catalan</item>
     </string-array>
 
 </resources>
