@@ -1,10 +1,12 @@
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
-  * Option to always treat F1 & F2 as sound for the Selective Lead Sounds option
-  * prevent crash reported to Play Store
-  * update project to Gradle build tools
-  * bump MinSDKVersion to 14 (from 7)
-  * replace JmDNS source with jar file
+ * New Colourful/Colorful theme
+ * Option to always treat F1 & F2 as sound for the Selective Lead Sounds option
+ * update project to Gradle build tools
+ * bump MinSDKVersion to 14 (from 7)
+ * replace JmDNS source with jar file
+ * prevent crashes reported to Play Store
+ * Spanish and Catalan translations by Luis Zamora
 **Version 2.21
  * remove turnout hardware list, WiThrottle Server changed to also handle numeric-only
  * changes to EngineDriver icon
@@ -422,7 +424,6 @@
  *   TODO: if user enters ":" into address input, jump to port input
  *   TODO: allow user to delete individual recents (long-press?)
  * threaded_application
- *   TODO: limit/throttle message traffic via queue to avoid overloading hardware, esp. after acquire/release
  *   TODO: remember consist details
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
@@ -440,7 +441,6 @@
  *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released" 
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
  *   TODO: add preference to disable other hardware buttons in throttle screen
- *   TODO: add graphics (slider, stop, directions, functions?)  add colors
  *   TODO: unset all states when loco not selected
  * select_loco:
  *   TODO: disconnect connections made by roster stuff
@@ -448,9 +448,8 @@
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
  *   TODO: allow user to delete individual recents (long-press?)
- * preferences:
- *   TODO: Reset should restart
- *   TODO: show error if invalid entry
+ * log_viewer:
+ *   TODO: option to save as file
  *
  * These require changes to WiThrottle
  *   resend turnout and routes when items are added or removed, by adding listeners to WiT
