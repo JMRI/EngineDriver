@@ -64,6 +64,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -136,7 +138,7 @@ public class select_loco extends Activity {
 
             //put roster entries into screen list
             if (mainapp.roster_entries != null) {
-                Set<String> rns = mainapp.roster_entries.keySet();  //copy to prevent concurrentmodification
+                ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy to prevent concurrentmodification
                 for (String rostername : rns) {
                     if ((prefRosterFilter.length() == 0) || (rostername.toUpperCase().contains(prefRosterFilter.toUpperCase()))) {
                         // put key and values into temp hashmap

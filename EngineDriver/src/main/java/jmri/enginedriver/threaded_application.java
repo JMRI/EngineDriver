@@ -1861,11 +1861,13 @@ public class threaded_application extends Application {
                 while (settings_reader.ready()) {
                     String line = settings_reader.readLine();
                     String temp[] = line.split(":");
-                    if (i <= numberOfDefaultFunctionLabels) {
-                        function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
-                    }
-                    if (i <= numberOfDefaultFunctionLabelsForRoster) {
-                        function_labels_default_for_roster.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
+                    if (temp.length == 2) {
+                        if (i <= numberOfDefaultFunctionLabels) {
+                            function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
+                        }
+                        if (i <= numberOfDefaultFunctionLabelsForRoster) {
+                            function_labels_default_for_roster.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
+                        }
                     }
                     i++;
                 }

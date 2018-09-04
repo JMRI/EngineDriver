@@ -121,7 +121,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         result = RESULT_OK;
 
-        if (mainapp.connectedHostName.equals("")) { // option is only available when there is no curent connection
+        if (mainapp.connectedHostName.equals("")) { // option is only available when there is no current connection
             getConnectionsList();
             preference = (ListPreference) findPreference("prefHostImportExport");
             preference.setEntries(prefHostImportExportEntriesFound);
@@ -259,6 +259,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 break;
             case "prefScreenBrightnessDim":
                 limitIntPrefValue(sharedPreferences, key, 1, 100, "5");
+                break;
+            case "prefConnectTimeoutMs":
+                limitIntPrefValue(sharedPreferences, key, 100, 99999, getResources().getString(R.string.prefConnectTimeoutMsDefaultValue));
+                break;
+            case "prefSocketTimeoutMs":
+                limitIntPrefValue(sharedPreferences, key, 100, 9999, getResources().getString(R.string.prefSocketTimeoutMsDefaultValue));
                 break;
             case "WebViewLocation":
                 mainapp.alert_activities(message_type.WEBVIEW_LOC, "");
