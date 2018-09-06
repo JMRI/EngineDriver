@@ -570,7 +570,7 @@
     <string name="lightsTextFollow">Segueix Fn Btn</string>
     <string name="lightsTextUnknown">Desconegut</string>
     <string name="prefLocaleTitle">Localització</string>
-    <string name="prefLocaleSummary">Idioma a utilitzar.\nADVERTÈNCIA! El Engina Driver es reiniciarà immediatament. Es reiniciaran les etiquetes dels botons de direcció.</string>
+    <string name="prefLocaleSummary">Idioma a utilitzar.\nADVERTÈNCIA! El Engine Driver es reiniciarà immediatament. Es reiniciaran les etiquetes dels botons de direcció.</string>
     <string name="toastPreferencesLocaleChange">Engine Driver es reinicarà al seleccionar l\'Idioma.</string>
     <string name="prefDirectionButtonLongPressDelayTitle">Retard de la Pressió Llarga del Botó de Direcció</string>
     <string name="prefDirectionButtonLongPressDelaySummary">Quants mil·lisegons constitueixen una pulsació llarga per als botons de direcció.</string>
