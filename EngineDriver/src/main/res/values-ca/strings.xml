@@ -27,7 +27,7 @@
     <string name="app_name_connect">Connectar al servidor - Engine Driver</string>
     <string name="app_name_throttle">Controlador - Engine Driver</string>
     <string name="app_name_throttle_short">Controlador</string>
-    <string name="app_name_power_control">Control d\'energia - Engine Driver</string>
+    <string name="app_name_power_control">Control de corrent - Engine Driver</string>
     <string name="app_name_reconnect_status">Estat de reconnexió - Engine  Driver</string>
     <string name="app_name_routes">Rutes - Engine Driver</string>
     <string name="app_name_turnouts">Agulles - Engine Driver</string>
@@ -46,12 +46,12 @@
     <string name="notification_text">Prémer per reobrir Engine Driver</string>
     <string name="host_ip">Nom del Host o Adreça</string>
     <string name="port">Port</string>
-    <string name="loco_address">Direcció de Locomotora</string>
+    <string name="loco_address">Adreça de Locomotora</string>
     <string name="connect_button">Connectar</string>
     <string name="recent_connections">Connexions recents</string>
     <string name="select_loco_heading">Adquirir Locomotora, Mètode - Controlador %1$s</string>
     <string name="select_loco">Entra l\'Adreça de la Locomotora</string>
-    <string name="select_loco_address">Direcció</string>
+    <string name="select_loco_address">Adreça</string>
     <string name="acquire_button">Adquirir</string>
     <string name="roster_list">Selecciona des de la Flota/Tracció Múltiple</string>
     <string name="recent_engines">Selecciona des de Lomotores Recents</string>
@@ -77,7 +77,7 @@
     <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>
     <string name="locoPressToSelect">Seleccionar</string>
     <string name="powerWillNotWorkTitle">No funcionarà!</string>
-    <string name="powerWillNotWork">JMRI té el control d\'alimentació wiThrottle apagat.\nEliminarà la Icona d\'Energia.\nEs mostrarà de nou quan s\'activi en el JMRI.</string>
+    <string name="powerWillNotWork">JMRI té el control d\'alimentació wiThrottle apagat.\nEliminarà la Icona de Corrent de Via.\nEs mostrarà de nou quan s\'activi en el JMRI.</string>
     <string name="current_locos">Lomotores Seleccionades Actualment</string>
     <string name="release">Allibera</string>
     <string name="releaseThrottleNumber">Allibera Controlador %1$s</string>
@@ -99,17 +99,17 @@
     <string name="throw_button">Desviada</string>
     <string name="close_button">Directe</string>
     <string name="toggle_button">Commuta</string>
-    <string name="power_control_label">Control d\'Energia del Circuit</string>
+    <string name="power_control_label">Control de Corrent de Via</string>
     <string name="power_control_button">desconegut</string>
-    <string name="press_to_toggle">Prèm per canviar l\'Estat de l\'Energia del circuit.</string>
-    <string name="power_control_not_allowed">Control d\'Energía no permés. Modifica\'l a Preferències/Configuració en el servidor.</string>
+    <string name="press_to_toggle">Prèm per canviar l\'Estat de la Via del circuit.</string>
+    <string name="power_control_not_allowed">Control de Corrent de Via no permés. Modifica\'l a Preferències/Configuració en el servidor.</string>
     <string name="reconnect_label">Intenta Reconnectar</string>
     <string name="reconnect_help">Intenta Reconnectar automàticament. Espera per a la Reconnexió o prem FletxaEnrere per a Sortir.</string>
     <string name="reconnect_success">RECONNECTAT. Continuem funcionant.</string>
     <string name="fs_edit_notice">ALERTA: els canvis dels Paràmetres per Defecte de les Funcions es perdràn al sortir - No s\'ha trobat targeta SD.</string>
     <string name="ca_recent_conn_notice">No estan disponibles les Connexions Recents - No s\'ha trobat targeta SD.</string>
     <string name="sl_recent_engine_notice">Locomotores Recents no disponible - No s\'ha trobat targeta SD.</string>
-    <string name="power">Energia</string>
+    <string name="power">Corrent de Via</string>
     <string name="throttle">Controlador</string>
     <string name="on">Encès</string>
     <string name="off">Apagat</string>
@@ -153,8 +153,8 @@
     <string name="prefStopOnDirectionChangeSummary">Atura si es canvia de direcció mentre es mou el tren.</string>
     <string name="prefSelLocoWhileMovingTitle">Permet seleccionar una locomotora mentre s\'està movent?</string>
     <string name="prefSelLocoWhileMovingSummary">Habilita el botó de Locomotora mentre hi ha moviment.</string>
-    <string name="prefShowAddressInsteadOfNameTitle">Mostra la Direcció de la Locomotora en comptes del Nom?</string>
-    <string name="prefShowAddressInsteadOfNameSummary">Mostra la Direcció DCC en comptes del Nom de la Locomotora en el Controlador.</string>
+    <string name="prefShowAddressInsteadOfNameTitle">Mostra l\'Adreça de la Locomotora en comptes del Nom?</string>
+    <string name="prefShowAddressInsteadOfNameSummary">Mostra l\'Adreça DCC en comptes del Nom de la Locomotora en el Controlador.</string>
     <string name="prefIncreaseWebViewSizeTitle">Augmenta el tamany de la vista Web?</string>
     <string name="prefIncreaseWebViewSizeSummary">Augmenta el tamany de la vista web un 60% per a pantalles petites.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Utilitza el Mode Immersiu per a la vista del Controlador?</string>
@@ -237,7 +237,7 @@
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Utilitza les etiquetes de les funcions per defecte?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Mostra les etiquetes de funció predeterminades en lloc de les etiquetes de les entrades de la flota.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Disminueix l\'Alçada del Número de Locomotora?</string>
-    <string name="prefDecreaseLocoNumberHeightSummary">Utilitza botons mes petits par al Número de locomotora, velocitat i botons de direcció.</string>
+    <string name="prefDecreaseLocoNumberHeightSummary">Utilitza botons mes petits per al Número de locomotora, velocitat i botons de direcció.</string>
     <string name="prefNumOfThrottles">Número de Controladors</string>
     <string name="prefNumOfThrottlesSummary">Trieu quants controladors voleu mostrar.</string>
 
@@ -311,7 +311,7 @@
 
     <string name="prefDelimiterSummary">Estableix el caràcter per a marcar el final d\'una Localització d\'una Agulla i nom de Rutes</string>
     <string name="prefScreenBrightnessDimTitle">Canvia % la brillantor de la pantalla</string>
-    <string name="prefScreenBrightnessDimSummary">Paràmetres de la brillantor a utilizar quan la canviem en la pantalla (0%-99%). Desabilita automàticament Brillantor-automàtic / Adaptar la Brillantor si es possible. </string>
+    <string name="prefScreenBrightnessDimSummary">Paràmetres de la brillantor a utilizar quan la canviem en la pantalla (0%-99%). Deshabilita automàticament Brillantor-automàtic / Adaptar la Brillantor si es possible. </string>
 
     <string name="logViewer">Veure Log</string>
     <string name="clearLocoList">Neteja la Llista</string>
@@ -319,9 +319,9 @@
     <string name="prefEmerStopTitle">Mostra el botó d\'Aturada d\'Emergència?</string>
     <string name="prefEmerStopSummary">Mostra el botó d\'aturada d\'emergència de la locomotora en la barra superior?</string>
     <string name="EStop">Estop</string>
-    <string name="PowerButtonBar">botó_energia</string>
-    <string name="prefPowerButtonBarTitle">Mostra el botó d\'energia del circuit?</string>
-    <string name="prefPowerButtonBarSummary">Mostra el botó d\'energía del circuit a la pantalla de Controlador, Agulles i Rutes?</string>
+    <string name="PowerButtonBar">botó de corrent</string>
+    <string name="prefPowerButtonBarTitle">Mostra el botó de corrent de via?</string>
+    <string name="prefPowerButtonBarSummary">Mostra el botó de corrent de via a la pantalla de Controlador, Agulles i Rutes?</string>
     <string name="prefSliderLeftMarginTitle">Marge del Lliscador de Velocitat del Controlador</string>
     <string name="prefSliderLeftMarginSummary">Número de píxels per a compensar els marges dels controls lliscants de la velocitat del controlador.</string>
 
@@ -495,28 +495,28 @@
     <string name="toastSwipeUpScreenLocked">Pantalla del Controlador Bloquejada - Llisca cap amunt per a desbloquejar</string>
     <string name="toastSwipeUpScreenDimmed">Pantalla del Controlador Aclarida - Llisca cap amunt per a restaurar</string>
     <string name="toastSwipeUpViewHidden">Vista web temporalment oculta. Per ocultar-la permanenment realitza el canvi en les preferències</string>
-    <string name="toastThrottleAlertEstop">Alerta: Engine %%1%% establert a ESTOP</string>
+    <string name="toastThrottleAlertEstop">Alerta: Engine %1$s establert a ESTOP</string>
     <string name="toastPreferencesOutsideLimits">El Valor entrat està fora dels límits (%1$s-%2$s). Reiniciat a %3$s.</string>
-    <string name="toastPreferencesNotNumeric">El Valor entrat no és un valor numèric (%%1%%-%%2%%). Reiniciat a %%3%%.</string>
+    <string name="toastPreferencesNotNumeric">El Valor entrat no és un valor numèric (%1$s-%2$s). Reiniciat a %3$s.</string>
     <string name="toastPreferencesResetSucceeded">¡Reinicia les Preferències a valors per defecte!</string>
     <string name="toastTurnoutInvalidNumber">Número d\'Agulla incorrecte</string>
-    <string name="toastTurnoutCommandTo">Comanda enviada a l\'agulla %%1%%</string>
+    <string name="toastTurnoutCommandTo">Comanda enviada a l\'agulla %1$s</string>
     <string name="toastTurnoutCommandToClose">Directe</string>
     <string name="toastTurnoutCommandToThrow">Desviada</string>
     <string name="toastTurnoutCommandToToggle">Commuta</string>
     <string name="toastConnectEnterAddress">Entra o selecciona una adreça i un port</string>
     <string name="toastConnectInvalidPort">Port incorrecte, reintenta-ho.</string>
-    <string name="toastConnectConnected">Connectat al Servidor: %%1%% Port: %%2%%</string>
+    <string name="toastConnectConnected">Connectat al Servidor: %1$s Port: %2$s</string>
     <string name="toastConnectUnableToSavePref">No es poden desar les preferències específiques del host. No s\'ha trobat el nom del host.</string>
     <string name="toastConnectUnableToLoadPref">No es poden carregar les preferències específiques del host. No s\'ha trobat en nom del host.</string>
     <string name="toastConnectErrorReadingRecentConnections">Error llegint la lista de connexions recents:</string>
     <string name="toastConnectErrorSavingRecentConnection">Error desant la connexió recent:</string>
     <string name="toastRoutesCommandSent">"Comanda enviada per establir la ruta"</string>
-    <string name="toastImportExportExportSucceeded">L\'exportació de preferències a \'engine_driver/%%1%%\' ha tingut èxit.</string>
-    <string name="toastImportExportImportSucceeded">L\'importació de preferències des de \'engine_driver/%%1%%\' ha tingut èxit.</string>
-    <string name="toastImportExportExportFailed">L\'exportació de preferències a  \'engine_driver/%%1%%\' ha fallat!</string>
-    <string name="toastImportExportImportFailed">L\'importació de preferències des de \'engine_driver/%%1%%\' ha fallat!</string>
-    <string name="toastImportExportServerImportFailed">Preferències no importades des de \'engine_driver/%%1%%\'.  Es possible que encara no hagis desat les preferències per a aquest host.</string>
+    <string name="toastImportExportExportSucceeded">L\'exportació de preferències a \'engine_driver/%1$s\' ha tingut èxit.</string>
+    <string name="toastImportExportImportSucceeded">L\'importació de preferències des de \'engine_driver/%1$s\' ha tingut èxit.</string>
+    <string name="toastImportExportExportFailed">L\'exportació de preferències a  \'engine_driver/%1$s\' ha fallat!</string>
+    <string name="toastImportExportImportFailed">L\'importació de preferències des de \'engine_driver/%1$s\' ha fallat!</string>
+    <string name="toastImportExportServerImportFailed">Preferències no importades des de \'engine_driver/%1$s\'.  Es possible que encara no hagis desat les preferències per a aquest host.</string>
     <string name="toastImportExportCannotImport">No s\'ha pogut importar les preferències. No s\'ha connectat al host.</string>
     <string name="toastImportExportCannotExport">No s\'ha pogut exportar les preferències. No s\'ha connectat al host.</string>
     <string name="toastSelectLocoConfirmClear">Confirma que vols eliminar totes les Locomotores Recents prement el botó \'Netejar Llista\' DE NOU.</string>
@@ -614,7 +614,7 @@
     <string name="functionButtonLookForRear">DARRERA</string>
     <string name="prefImportExportOverwite">L\'arxiu ja existeix. Sobreescriu?</string>
     <string name="prefImportExportErrorReadingList">Error llegint la llista de connexions recents:</string>
-    <string name="prefImportExportErrorReadingFrom">Ha fallat l\'importació de \'engine_driver/%%1%%\'! No has desat les preferències per aquest host.</string>
+    <string name="prefImportExportErrorReadingFrom">Ha fallat l\'importació de \'engine_driver/%1$s\'! No has desat les preferències per aquest host.</string>
     <string name="prefImportExportErrorNotConnected">No connectat a un host.</string>
     <string name="logViewerTitle">Activitat en Visualitzador de Log | Nom del Controlador: %1$s</string>
 </resources>
