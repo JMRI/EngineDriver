@@ -288,4 +288,10 @@ import java.util.Set;
         return formatCon.toString();
     }
 
+    public void setFunctionLabels(String address, String functionLabelsString) {
+        ConLoco l = con.get(address);
+        if (l != null)
+            l.setFunctionLabels(functionLabelsString);
+
+    }
 }
