@@ -17,6 +17,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import java.util.LinkedHashMap;
+
 //
 // EngineDriver Loco
 //
@@ -28,6 +30,7 @@ public class Loco {
     private String rosterName;                  //null if loco has no roster entry
     private boolean confirmed;                  //set after WiT responds that engine is assigned to throttle
     private boolean isFromRoster;                  //true if the entry was found in the roster (for the function button label check)
+    private LinkedHashMap<Integer, String> functionLabels;
 
     public Loco(String address) {
         if (address != null)
@@ -99,5 +102,57 @@ public class Loco {
     private String formatAddress() {
         return this.addr.substring(1) + "(" + this.addr.substring(0, 1) + ")";  //reformat from L2591 to 2591(L)
     }
+
+    public void setFunctionLabels(String functionLabelsString) {
+        String[] ta = splitByString(functionLabelsString, "]\\[");  //split into list of labels
+
+        //populate a temp label array from RF command string
+        functionLabels = new LinkedHashMap<>();
+        int i = 0;
+        for (String ts : ta) {
+            if (i > 0 && !"".equals(ts)) { //skip first chunk, which is length, and skip any blank entries
+                functionLabels.put(i - 1, ts); //index is hashmap key, value is label string
+            }  //end if i>0
+            i++;
+        }  //end for
+    }
+
+    static private String[] splitByString(String input, String divider) {
+
+        //bail on empty input string, return input as single element
+        if (input == null || input.length() == 0) return new String[]{input};
+
+        int size = 0;
+        String temp = input;
+
+        // count entries
+        while (temp.length() > 0) {
+            size++;
+            int index = temp.indexOf(divider);
+            if (index < 0) break;    // break not found
+            temp = temp.substring(index + divider.length());
+            if (temp.length() == 0) {  // found at end
+                size++;
+                break;
+            }
+        }
+
+        String[] result = new String[size];
+
+        // find entries
+        temp = input;
+        size = 0;
+        while (temp.length() > 0) {
+            int index = temp.indexOf(divider);
+            if (index < 0) break;    // done with all but last
+            result[size] = temp.substring(0, index);
+            temp = temp.substring(index + divider.length());
+            size++;
+        }
+        result[size] = temp;
+
+        return result;
+    }
+
 }
     
