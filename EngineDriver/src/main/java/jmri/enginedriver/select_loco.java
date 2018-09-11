@@ -369,6 +369,7 @@ public class select_loco extends Activity {
         } else {
             l.setDesc(mainapp.getRosterNameFromAddress(l.toString()));  //lookup rostername from address if not set
             l.setRosterName(null); //make sure rosterName is null
+            l.setFunctionLabelDefaults(mainapp, whichThrottle); //make sure rosterName is null
         }
         Consist consist = mainapp.consists[whichThrottle];
 

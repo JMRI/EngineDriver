@@ -103,8 +103,8 @@ public class Loco {
         return this.addr.substring(1) + "(" + this.addr.substring(0, 1) + ")";  //reformat from L2591 to 2591(L)
     }
 
-    public void setFunctionLabels(String functionLabelsString) {
-        String[] ta = splitByString(functionLabelsString, "]\\[");  //split into list of labels
+    public void setFunctionLabels(String functionLabelsString,threaded_application mainapp) {
+        String[] ta = mainapp.splitByString(functionLabelsString, "]\\[");  //split into list of labels
 
         //populate a temp label array from RF command string
         functionLabels = new LinkedHashMap<>();
@@ -117,41 +117,20 @@ public class Loco {
         }  //end for
     }
 
-    static private String[] splitByString(String input, String divider) {
-
-        //bail on empty input string, return input as single element
-        if (input == null || input.length() == 0) return new String[]{input};
-
-        int size = 0;
-        String temp = input;
-
-        // count entries
-        while (temp.length() > 0) {
-            size++;
-            int index = temp.indexOf(divider);
-            if (index < 0) break;    // break not found
-            temp = temp.substring(index + divider.length());
-            if (temp.length() == 0) {  // found at end
-                size++;
-                break;
-            }
+    public void setFunctionLabelDefaults(threaded_application mainapp, Integer whichThrottle) {
+        if (mainapp.function_labels != null) {
+            functionLabels = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
         }
+    }
 
-        String[] result = new String[size];
-
-        // find entries
-        temp = input;
-        size = 0;
-        while (temp.length() > 0) {
-            int index = temp.indexOf(divider);
-            if (index < 0) break;    // done with all but last
-            result[size] = temp.substring(0, index);
-            temp = temp.substring(index + divider.length());
-            size++;
+    public String getFunctionLabel(Integer functionNo) {
+        String functionLabel = "";
+        if (functionLabels != null) {
+            functionLabel = functionLabels.get(functionNo);
+            if (functionLabel == null)
+                functionLabel = "";
         }
-        result[size] = temp;
-
-        return result;
+        return functionLabel;
     }
 
 }
