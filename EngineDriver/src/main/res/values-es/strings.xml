@@ -95,7 +95,7 @@
     <string name="routes_location_label">Filtra por Localización</string>
     <string name="routes_list_label">Ruta (pulsa para cambiar)</string>
     <string name="consist_lead_label">Locomotora de cabeza</string>
-    <string name="consist_list_label">Multi Tracción Delantera</string>
+    <string name="consist_list_label">Sentido de las Locomotoras de la Multi Tracción</string>
     <string name="throw_button">Desviada</string>
     <string name="close_button">Directa</string>
     <string name="toggle_button">Cambia</string>
