@@ -13,7 +13,7 @@
       Public License along with this program; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-      translations provided by Luis Zamora
+      translations provided by Luis Zamora (eldelinux)
 -->
 <resources>
     <string name="exit">Sortir</string>
@@ -94,8 +94,8 @@
     <string name="routes_direct_entry_label">Entra el Nom de la Ruta</string>
     <string name="routes_location_label">Filtra per Localització</string>
     <string name="routes_list_label">Ruta (prèm per commutar)</string>
-    <string name="consist_lead_label">Locomotora del davant</string>
-    <string name="consist_list_label">Multi Tracció Davantera</string>
+    <string name="consist_lead_label">Locomotora davantera</string>
+    <string name="consist_list_label">Sentit de les Locomotores de la Multi Tracció</string>
     <string name="throw_button">Desviada</string>
     <string name="close_button">Directe</string>
     <string name="toggle_button">Commuta</string>
