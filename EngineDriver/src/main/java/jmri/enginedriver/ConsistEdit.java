@@ -60,6 +60,9 @@ public class ConsistEdit extends Activity implements OnGestureListener {
     public static final String LIGHT_TEXT_FOLLOW = "Follow Fn Btn";
     public static final String LIGHT_TEXT_UNKNOWN = "Unknown";
 
+    private String CONSIST_EDIT_LABEL_LEAD = "LEAD";
+    private String CONSIST_EDIT_LABEL_TRAIL = "TRAIL";
+
     static public final int RESULT_CON_EDIT = RESULT_FIRST_USER;
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -69,6 +72,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
     private ArrayList<ConLoco> consistObjList;
     private ArrayAdapter<ConLoco> consistObjListAdapter;
     private Spinner consistSpinner;
+    private Spinner consistTrailSpinner;
     private Consist consist;
     private int result;                     // set to RESULT_FIRST_USER when something is edited
 
@@ -86,6 +90,8 @@ public class ConsistEdit extends Activity implements OnGestureListener {
                 consistObjList.add(l);
                 if (l.getAddress().equals(consist.getLeadAddr()))
                     consistSpinner.setSelection(pos);
+                if (l.getAddress().equals(consist.getTrailAddr()))
+                    consistTrailSpinner.setSelection(pos);
                 pos++;
             }
         }
@@ -96,11 +102,14 @@ public class ConsistEdit extends Activity implements OnGestureListener {
             if (l.isConfirmed()) {
                 //put values into temp hashmap
                 HashMap<String, String> hm = new HashMap<>();
-                hm.put("lead_label", consist.getLeadAddr().equals(l.getAddress()) ? "LEAD" : "");
+                hm.put("lead_label", consist.getLeadAddr().equals(l.getAddress()) ? CONSIST_EDIT_LABEL_LEAD : "");
+                hm.put("trail_label", consist.getTrailAddr().equals(l.getAddress()) ? CONSIST_EDIT_LABEL_TRAIL : "");
                 hm.put("loco_addr", l.getAddress());
                 hm.put("loco_name", l.toString());
                 hm.put("loco_facing", l.isBackward() ? "Rear" : "Front");
 
+
+                // the following is ignored if the 'complex' prefConsistFollowRuleStyle is chosen in the preferences
                 if (consist.getLeadAddr().equals(l.getAddress())) { // first one is always 'follow'
                     hm.put("loco_light", LIGHT_TEXT_FOLLOW);
                 } else {
@@ -112,6 +121,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
                         hm.put("loco_light", LIGHT_TEXT_UNKNOWN);
                     }
                 }
+
                 consistList.add(hm);
             }
         }
@@ -182,6 +192,9 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         mainapp.consist_edit_msg_handler = new ConsistEditHandler();
         myGesture = new GestureDetector(this);
 
+        CONSIST_EDIT_LABEL_LEAD = getResources().getString(R.string.ConsistEditLabelLead);
+        CONSIST_EDIT_LABEL_TRAIL = getResources().getString(R.string.ConsistEditLabelTrail);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             whichThrottle = mainapp.throttleCharToInt(extras.getChar("whichThrottle"));
@@ -192,8 +205,8 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         //Set up a list adapter to allow adding the list of recent connections to the UI.
         consistList = new ArrayList<>();
         consistListAdapter = new SimpleAdapter(this, consistList, R.layout.consist_item,
-                new String[]{"loco_name", "loco_addr", "lead_label", "loco_facing"},
-                new int[]{R.id.con_loco_name, R.id.con_loco_addr_hidden, R.id.con_lead_label, R.id.con_loco_facing});
+                new String[]{"loco_name", "loco_addr", "lead_label", "trail_label", "loco_facing"},
+                new int[]{R.id.con_loco_name, R.id.con_loco_addr_hidden, R.id.con_lead_label, R.id.con_trail_label, R.id.con_loco_facing});
         ListView consistLV = (ListView) findViewById(R.id.consist_list);
         consistLV.setAdapter(consistListAdapter);
         consistLV.setOnItemClickListener(new OnItemClickListener() {
@@ -249,6 +262,22 @@ public class ConsistEdit extends Activity implements OnGestureListener {
                 String lAddr = l.getAddress();
                 if (!(consist.getLeadAddr().equals(lAddr))) {
                     consist.setLeadAddr(lAddr);
+                    refreshConsistLists();
+                }
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        consistTrailSpinner = (Spinner) findViewById(R.id.consist_trail);
+        consistTrailSpinner.setAdapter(consistObjListAdapter);
+        consistTrailSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ConLoco l = (ConLoco) parent.getSelectedItem();
+                String lAddr = l.getAddress();
+                if (!(consist.getTrailAddr().equals(lAddr))) {
+                    consist.setTrailAddr(lAddr);
                     refreshConsistLists();
                 }
             }

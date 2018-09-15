@@ -587,24 +587,121 @@
             android:summary="@string/prefStopOnDirectionChangeSummary"
             android:title="@string/prefStopOnDirectionChangeTitle">
         </CheckBoxPreference>
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefSelectiveLeadSoundDefaultValue"
-            android:key="SelectiveLeadSound"
-            android:summary="@string/prefSelectiveLeadSoundSummary"
-            android:title="@string/prefSelectiveLeadSoundTitle" >
-        </CheckBoxPreference>
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefSelectiveLeadSoundF1DefaultValue"
-            android:key="SelectiveLeadSoundF1"
-            android:summary="@string/prefSelectiveLeadSoundF1Summary"
-            android:title="@string/prefSelectiveLeadSoundF1Title" >
-        </CheckBoxPreference>
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefSelectiveLeadSoundF1DefaultValue"
-            android:key="SelectiveLeadSoundF2"
-            android:summary="@string/prefSelectiveLeadSoundF2Summary"
-            android:title="@string/prefSelectiveLeadSoundF2Title" >
-        </CheckBoxPreference>
+        <PreferenceScreen
+            android:key="consist_follow_preferences"
+            android:title="@string/prefConsistFollowTitle"
+            android:summary="@string/prefConsistFollowSummary"
+            android:persistent="false">
+
+            <ListPreference
+                android:defaultValue="@string/prefConsistFollowRuleStyleDefaultValue"
+                android:entries="@array/prefConsistFollowRuleStyleEntries"
+                android:entryValues="@array/prefConsistFollowRuleStyleEntryValues"
+                android:key="prefConsistFollowRuleStyle"
+                android:summary="@string/prefConsistFollowRuleStyleSummary"
+                android:title="@string/prefConsistFollowRuleStyleTitle" />
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefSelectiveLeadSoundDefaultValue"
+                android:key="SelectiveLeadSound"
+                android:summary="@string/prefSelectiveLeadSoundSummary"
+                android:title="@string/prefSelectiveLeadSoundTitle" >
+            </CheckBoxPreference>
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefSelectiveLeadSoundF1DefaultValue"
+                android:key="SelectiveLeadSoundF1"
+                android:summary="@string/prefSelectiveLeadSoundF1Summary"
+                android:title="@string/prefSelectiveLeadSoundF1Title" >
+            </CheckBoxPreference>
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefSelectiveLeadSoundF1DefaultValue"
+                android:key="SelectiveLeadSoundF2"
+                android:summary="@string/prefSelectiveLeadSoundF2Summary"
+                android:title="@string/prefSelectiveLeadSoundF2Title" >
+            </CheckBoxPreference>
+
+            <EditTextPreference
+                android:defaultValue="@string/prefConsistFollowString1DefaultValue"
+                android:dialogTitle="@string/prefConsistFollowString1Summary"
+                android:key="prefConsistFollowString1"
+                android:maxLength="20"
+                android:summary="@string/prefConsistFollowString1Summary"
+                android:title="@string/prefConsistFollowString1Title" />
+
+            <ListPreference
+                android:defaultValue="@string/prefConsistFollowAction1DefaultValue"
+                android:entries="@array/prefConsistFollowEntries"
+                android:entryValues="@array/prefConsistFollowEntryValues"
+                android:key="prefConsistFollowAction1"
+                android:summary="@string/prefConsistFollowAction1Summary"
+                android:title="@string/prefConsistFollowAction1Title" />
+
+            <EditTextPreference
+                android:defaultValue="@string/prefConsistFollowString2DefaultValue"
+                android:dialogTitle="@string/prefConsistFollowString2Summary"
+                android:key="prefConsistFollowString2"
+                android:maxLength="20"
+                android:summary="@string/prefConsistFollowString2Summary"
+                android:title="@string/prefConsistFollowString2Title" />
+
+            <ListPreference
+                android:defaultValue="@string/prefConsistFollowAction2DefaultValue"
+                android:entries="@array/prefConsistFollowEntries"
+                android:entryValues="@array/prefConsistFollowEntryValues"
+                android:key="prefConsistFollowAction2"
+                android:summary="@string/prefConsistFollowAction2Summary"
+                android:title="@string/prefConsistFollowAction2Title" />
+
+            <EditTextPreference
+                android:defaultValue="@string/prefConsistFollowStringOtherDefaultValue"
+                android:dialogTitle="@string/prefConsistFollowString3Summary"
+                android:key="prefConsistFollowString3"
+                android:maxLength="20"
+                android:summary="@string/prefConsistFollowString3Summary"
+                android:title="@string/prefConsistFollowString3Title" />
+
+            <ListPreference
+                android:defaultValue="@string/prefConsistFollowActionOtherDefaultValue"
+                android:entries="@array/prefConsistFollowEntries"
+                android:entryValues="@array/prefConsistFollowEntryValues"
+                android:key="prefConsistFollowAction3"
+                android:summary="@string/prefConsistFollowAction3Summary"
+                android:title="@string/prefConsistFollowAction3Title" />
+
+            <EditTextPreference
+                android:defaultValue="@string/prefConsistFollowStringOtherDefaultValue"
+                android:dialogTitle="@string/prefConsistFollowString4Summary"
+                android:key="prefConsistFollowString4"
+                android:maxLength="20"
+                android:summary="@string/prefConsistFollowString4Summary"
+                android:title="@string/prefConsistFollowString4Title" />
+
+            <ListPreference
+                android:defaultValue="@string/prefConsistFollowActionOtherDefaultValue"
+                android:entries="@array/prefConsistFollowEntries"
+                android:entryValues="@array/prefConsistFollowEntryValues"
+                android:key="prefConsistFollowAction4"
+                android:summary="@string/prefConsistFollowAction4Summary"
+                android:title="@string/prefConsistFollowAction4Title" />
+
+            <EditTextPreference
+                android:defaultValue="@string/prefConsistFollowStringOtherDefaultValue"
+                android:dialogTitle="@string/prefConsistFollowString5Summary"
+                android:key="prefConsistFollowString5"
+                android:maxLength="20"
+                android:summary="@string/prefConsistFollowString5Summary"
+                android:title="@string/prefConsistFollowString5Title" />
+
+            <ListPreference
+                android:defaultValue="@string/prefConsistFollowActionOtherDefaultValue"
+                android:entries="@array/prefConsistFollowEntries"
+                android:entryValues="@array/prefConsistFollowEntryValues"
+                android:key="prefConsistFollowAction5"
+                android:summary="@string/prefConsistFollowAction5Summary"
+                android:title="@string/prefConsistFollowAction5Title" />
+        </PreferenceScreen>
+
         <PreferenceScreen
             android:key="prefEsuMc2"
             android:title="@string/prefEsuMc2Title"

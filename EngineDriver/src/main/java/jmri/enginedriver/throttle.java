@@ -70,6 +70,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
@@ -218,6 +219,24 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private String FUNCTION_BUTTON_LOOK_FOR_HEAD = "HEAD";
     private String FUNCTION_BUTTON_LOOK_FOR_LIGHT = "LIGHT";
     private String FUNCTION_BUTTON_LOOK_FOR_REAR = "REAR";
+
+    private List<String> prefConsistFollowStrings;
+    private List<String> prefConsistFollowActions;
+    private List<Integer> prefConsistFollowHeadlights;
+
+    private String prefConsistFollowRuleStyle = "original";
+    private static String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
+    private static String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
+
+    private static String CONSIST_FUNCTION_ACTION_LEAD = "lead";
+    private static String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL = "lead and trail";
+    private static String CONSIST_FUNCTION_ACTION_ALL = "all";
+    private static String CONSIST_FUNCTION_ACTION_LEAD_EXACT = "lead exact";
+    private static String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL_EXACT = "lead and trail exact";
+    private static String CONSIST_FUNCTION_ACTION_ALL_EXACT = "all exact";
+
+    private static Integer CONSIST_FUNCTION_IS_HEADLIGHT = 1;
+    private static Integer CONSIST_FUNCTION_IS_NOT_HEADLIGHT = 0;
 
     // function number-to-button maps
     protected LinkedHashMap<Integer, Button>[] functionMaps;
@@ -1049,6 +1068,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+    protected void addConsistFollowRule(String consistFollowString,String consistFollowAction, Integer consistFollowHeadlight) {
+        if (consistFollowString.trim().length()>0) {
+            String[] prefConsistFollowStringstemp = threaded_application.splitByString(consistFollowString, ",");
+            for(int i = 0; i < prefConsistFollowStringstemp.length; i++) {
+                prefConsistFollowStrings.add(prefConsistFollowStringstemp[i].trim());
+                prefConsistFollowActions.add(consistFollowAction);
+                prefConsistFollowHeadlights.add(consistFollowHeadlight);
+            }
+        }
+    }
+
     // get all the preferences that should be read when the activity is created or resumes
     protected void getCommonPrefs(boolean isCreate) {
 
@@ -1068,6 +1098,31 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         FUNCTION_BUTTON_LOOK_FOR_LIGHT = getApplicationContext().getResources().getString(R.string.functionButtonLookForLight).trim();
         FUNCTION_BUTTON_LOOK_FOR_REAR = getApplicationContext().getResources().getString(R.string.functionButtonLookForRear).trim();
 
+        prefConsistFollowStrings = new ArrayList<>();
+        prefConsistFollowActions = new ArrayList<>();
+        prefConsistFollowHeadlights = new ArrayList<>();
+
+        prefConsistFollowRuleStyle = prefs.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
+
+        String prefConsistFollowStringtemp = prefs.getString("prefConsistFollowString1", getApplicationContext().getResources().getString(R.string.prefConsistFollowString1DefaultValue));
+        String prefConsistFollowActiontemp = prefs.getString("prefConsistFollowAction1", getApplicationContext().getResources().getString(R.string.prefConsistFollowString1DefaultValue));
+        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, CONSIST_FUNCTION_IS_HEADLIGHT );
+
+        prefConsistFollowStringtemp = prefs.getString("prefConsistFollowString2", getApplicationContext().getResources().getString(R.string.prefConsistFollowString2DefaultValue));
+        prefConsistFollowActiontemp = prefs.getString("prefConsistFollowAction2", getApplicationContext().getResources().getString(R.string.prefConsistFollowString2DefaultValue));
+        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, CONSIST_FUNCTION_IS_NOT_HEADLIGHT );
+
+        prefConsistFollowStringtemp = prefs.getString("prefConsistFollowString3", getApplicationContext().getResources().getString(R.string.prefConsistFollowStringOtherDefaultValue));
+        prefConsistFollowActiontemp = prefs.getString("prefConsistFollowAction3", getApplicationContext().getResources().getString(R.string.prefConsistFollowStringOtherDefaultValue));
+        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, CONSIST_FUNCTION_IS_NOT_HEADLIGHT);
+
+        prefConsistFollowStringtemp = prefs.getString("prefConsistFollowString4", getApplicationContext().getResources().getString(R.string.prefConsistFollowStringOtherDefaultValue));
+        prefConsistFollowActiontemp = prefs.getString("prefConsistFollowAction4", getApplicationContext().getResources().getString(R.string.prefConsistFollowStringOtherDefaultValue));
+        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, CONSIST_FUNCTION_IS_NOT_HEADLIGHT);
+
+        prefConsistFollowStringtemp = prefs.getString("prefConsistFollowString5", getApplicationContext().getResources().getString(R.string.prefConsistFollowStringOtherDefaultValue));
+        prefConsistFollowActiontemp = prefs.getString("prefConsistFollowAction5", getApplicationContext().getResources().getString(R.string.prefConsistFollowStringOtherDefaultValue));
+        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, CONSIST_FUNCTION_IS_NOT_HEADLIGHT);
 
         // increase height of throttle slider (if requested in preferences)
         pref_increase_slider_height_preference = prefs.getBoolean("increase_slider_height_preference", getResources().getBoolean(R.bool.prefIncreaseSliderHeightDefaultValue));
@@ -3148,6 +3203,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     boolean leadOnly;       // function only applies to the lead loco
     boolean trailOnly;      // function only applies to the trail loco (future)
     boolean followLeadFunction;       // function only applies to the locos that have been set to follow the function
+    String lab;
 
         protected function_button_touch_listener(int new_function, int new_whichThrottle) {
             this(new_function, new_whichThrottle, "");
@@ -3156,24 +3212,30 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         protected function_button_touch_listener(int new_function, int new_whichThrottle, String funcLabel) {
             function = new_function;    // store these values for this button
             whichThrottle = new_whichThrottle;
-            String lab = funcLabel.toUpperCase().trim();
+            lab = funcLabel.toUpperCase().trim();
             leadOnly = false;
             trailOnly = false;
             followLeadFunction = false;
 
-            boolean selectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
-            if (!lab.equals("")) {
-                leadOnly = (selectiveLeadSound &&
-                        (lab.contains(FUNCTION_BUTTON_LOOK_FOR_WHISTLE) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HORN) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_BELL))
-                        || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HEAD)
-                        || (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT) && !lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR)));
-                followLeadFunction = (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT));
-                trailOnly = lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR);
+            if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+                boolean selectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
+                if (!lab.equals("")) {
+                    leadOnly = (selectiveLeadSound &&
+                            (lab.contains(FUNCTION_BUTTON_LOOK_FOR_WHISTLE) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HORN) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_BELL))
+                            || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HEAD)
+                            || (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT) && !lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR)));
+                    followLeadFunction = (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT));
+                    trailOnly = lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR);
+                }
+                boolean selectiveLeadSoundF1 = prefs.getBoolean("SelectiveLeadSoundF1", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF1DefaultValue));
+                boolean selectiveLeadSoundF2 = prefs.getBoolean("SelectiveLeadSoundF2", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF2DefaultValue));
+                if ((selectiveLeadSound) && (new_function == 1) && (selectiveLeadSoundF1)) {
+                    leadOnly = true;
+                }
+                if ((selectiveLeadSound) && (new_function == 2) && (selectiveLeadSoundF2)) {
+                    leadOnly = true;
+                }
             }
-            boolean selectiveLeadSoundF1 = prefs.getBoolean("SelectiveLeadSoundF1", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF1DefaultValue));
-            boolean selectiveLeadSoundF2 = prefs.getBoolean("SelectiveLeadSoundF2", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF2DefaultValue));
-            if ((selectiveLeadSound) && (new_function == 1) && (selectiveLeadSoundF1)) {leadOnly = true;}
-            if ((selectiveLeadSound) && (new_function == 2) && (selectiveLeadSoundF2)) {leadOnly = true;}
         }
 
         @Override
@@ -3222,21 +3284,38 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             Consist con;
                             con = mainapp.consists[whichThrottle];
 
-                            String addr = "";
-                            if (leadOnly)
-                                addr = con.getLeadAddr();
-// ***future                else if (trailOnly)
-//                              addr = con.getTrailAddr();
+                            if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
 
-                            //mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + addr, this.function, 1);
-                            mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + addr, this.function);
+                                    String addr = "";
+                                if (leadOnly)
+                                    addr = con.getLeadAddr();
+    // ***future                else if (trailOnly)
+    //                              addr = con.getTrailAddr();
+
+                                //mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + addr, this.function, 1);
+                                mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + addr, this.function);
                             // set_function_request(whichThrottle, function, 1);
 
-                            if(followLeadFunction) {
+                                if (followLeadFunction) {
+                                    for (Consist.ConLoco l : con.getLocos()) {
+                                        if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
+                                            if (l.isLightOn() == LIGHT_FOLLOW) {
+                                                mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), this.function);
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), this.function);
+
+                                List<Integer> functionList = new ArrayList<>();
                                 for (Consist.ConLoco l : con.getLocos()) {
                                     if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
-                                        if (l.isLightOn() == LIGHT_FOLLOW) {
-                                            mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), this.function);
+                                        functionList = l.getMatchingFunctions(lab, l.getAddress().equals(con.getLeadAddr()), l.getAddress().equals(con.getTrailAddr()), prefConsistFollowStrings, prefConsistFollowActions, prefConsistFollowHeadlights);
+                                        if (functionList.size()>0) {
+                                            for (int i = 0; i < functionList.size(); i++) {
+                                                mainapp.toggleFunction(mainapp.throttleIntToString(i) + l.getAddress(), functionList.get(i));
+                                            }
                                         }
                                     }
                                 }
@@ -3260,12 +3339,34 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         Consist con = mainapp.consists[whichThrottle];
 
                         String addr = "";
-                        if (leadOnly)
-                            addr = con.getLeadAddr();
-// ***future            else if (trailOnly)
-//                          addr = con.getTrailAddr();
-                       mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, 0);
-                        // set_function_request(whichThrottle, function, 0);
+
+                        if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+
+                            if (leadOnly)
+                                addr = con.getLeadAddr();
+                            // ***future            else if (trailOnly)
+                            //                          addr = con.getTrailAddr();
+                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, 0);
+                            // set_function_request(whichThrottle, function, 0);
+                        } else {
+
+                            //mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), this.function);
+                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function, 0);
+
+                            List<Integer> functionList = new ArrayList<>();
+                            for (Consist.ConLoco l : con.getLocos()) {
+                                if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
+                                    functionList = l.getMatchingFunctions(lab, l.getAddress().equals(con.getLeadAddr()), l.getAddress().equals(con.getTrailAddr()), prefConsistFollowStrings, prefConsistFollowActions, prefConsistFollowHeadlights);
+                                    if (functionList.size()>0) {
+                                        for (int i = 0; i < functionList.size(); i++) {
+                                            //mainapp.toggleFunction(mainapp.throttleIntToString(i) + l.getAddress(), i);
+                                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), 0);
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
                     }
                     break;
             }

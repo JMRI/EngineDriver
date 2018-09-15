@@ -174,4 +174,17 @@
         <item>Catalão</item>
     </string-array>
 
+    <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
+        <item>Correspondência de texto simples (original)</item>
+        <item>Correspondência complexa de texto - sequências configuráveis ​​pelo usuário</item>
+    </string-array>
+    <string-array name="prefConsistFollowEntries">  <!-- display version -->
+        <item>Lead Loco - Partida Parcial</item>
+        <item>Lead + Trail Locos - Partida Parcial</item>
+        <item>Todos os Locos - Partida Parcial</item>
+        <item>Lead Loco - Correspondência Exata</item>
+        <item>Lead + Trail Locos - Correspondência Exata</item>
+        <item>Todos os Locos - Correspondência Exata</item>
+    </string-array>
+
 </resources>

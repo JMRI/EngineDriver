@@ -156,4 +156,17 @@
         <item>Español</item>
         <item>Catalán</item>
     </string-array>
+
+    <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
+        <item>Coincidencia simple de texto (original)</item>
+        <item>Concordancia de texto compleja: cadenas configurables por el usuario</item>
+    </string-array>
+    <string-array name="prefConsistFollowEntries">  <!-- display version -->
+        <item>Lead Loco - Partial Match</item>
+        <item>Lead + Trail Locos - Partial Match</item>
+        <item>Todos los Locos - Partial Match</item>
+        <item>Lead Loco - Exact Match</item>
+        <item>Lead + Trail Locos - Coincidencia exacta</item>
+        <item>Todos los Locos - Exact Match</item>
+    </string-array>
 </resources>

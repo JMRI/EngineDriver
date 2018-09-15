@@ -177,4 +177,17 @@
 
     </string-array>
 
+    <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
+        <item>Corrispondenza semplice del testo (originale)</item>
+        <item>Corrispondenza complessa del testo: stringhe configurabili dall'utente</item>
+    </string-array>
+    <string-array name="prefConsistFollowEntries">  <!-- display version -->
+        <item>Lead Loco - Partial Part</item>
+        <item>Lead + Trail Locos - Partial Part</item>
+        <item>Tutte le locomotive - Partial Part</item>
+        <item>Loco principale - Corrispondenza esatta</item>
+        <item>Lead + Trail Locos - Corrispondenza esatta</item>
+        <item>Tutte le locomotive - Corrispondenza esatta</item>
+    </string-array>
+
 </resources>

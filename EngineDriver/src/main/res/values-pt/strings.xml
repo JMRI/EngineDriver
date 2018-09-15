@@ -551,4 +551,33 @@
     <string name="functionButtonLookForHead">ANTERIOR</string>
     <string name="functionButtonLookForLight">LUZ</string>
     <string name="functionButtonLookForRear">POSTERIOR</string>
+
+    <string name="ConsistEditLabelLead">CONDUZIR</string>
+    <string name="ConsistEditLabelTrail">TRILHA</string>
+    <string name="prefConsistFollowRuleStyleTitle">Funções Consistem - Siga o Estilo da Regra</string>
+    <string name="prefConsistFollowRuleStyleSummary">Qual estilo de regras seguir em uma consistir quando os botões de função são pressionados.</string>
+    <string name="prefConsistFollowTitle">Consist Function Follow Preferences</string>
+    <string name="prefConsistFollowSummary">Opções de como as funções se comportarão em um Consist.</string>
+    <string name="prefConsistFollowString1DefaultValue">LUZ</string>
+    <string name="prefConsistFollowString2DefaultValue">AZUL, CHIFRE, SINO</string>
+    <string name="prefConsistFollowString1Title">Corda específica do farol 1</string>
+    <string name="prefConsistFollowString1Summary">Cadeia (s) separada (s) por vírgula para procurar nos rótulos de função das locos na composição para reconhecer a função \ 'Headlight \' (normalmente F0).</string>
+    <string name="prefConsistFollowAction1Title">Ação específica do farol 1</string>
+    <string name="prefConsistFollowAction1Summary">Quais locos no composto devem reagir às funções do farol encontradas.</string>
+    <string name="prefConsistFollowString2Title">String 2</string>
+    <string name="prefConsistFollowString2Summary">Cadeia (s) separada (s) por vírgulas para procurar nos rótulos de função das locos no consistir para reconhecer uma função semelhante.</string>
+    <string name="prefConsistFollowAction2Title">Ação para String 2</string>
+    <string name="prefConsistFollowAction2Summary">Quais locos no composto devem reagir às funções encontradas.</string>
+    <string name="prefConsistFollowString3Title">String 3</string>
+    <string name="prefConsistFollowString3Summary">Cadeia (s) separada (s) por vírgulas para procurar nos rótulos de função das locos no consistir para reconhecer uma função semelhante.</string>
+    <string name="prefConsistFollowAction3Title">Ação para String 3</string>
+    <string name="prefConsistFollowAction3Summary">Quais locos no composto devem reagir às funções encontradas.</string>
+    <string name="prefConsistFollowString4Title">String 4</string>
+    <string name="prefConsistFollowString4Summary">Cadeia (s) separada (s) por vírgulas para procurar nos rótulos de função das locos no consistir para reconhecer uma função semelhante.</string>
+    <string name="prefConsistFollowAction4Title">Ação para String 4</string>
+    <string name="prefConsistFollowAction4Summary">Quais locos no composto devem reagir às funções encontradas.</string>
+    <string name="prefConsistFollowString5Title">Cadeia 5</string>
+    <string name="prefConsistFollowString5Summary">Cadeia (s) separada (s) por vírgulas para procurar nos rótulos de função das locos no consistir para reconhecer uma função semelhante.</string>
+    <string name="prefConsistFollowAction5Title">Ação para a String 5</string>
+
 </resources>
