@@ -190,4 +190,11 @@
         <item>Tutte le locomotive - Corrispondenza esatta</item>
     </string-array>
 
+    <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
+        <item>Fare niente</item>
+        <item>Lead Loco - Stesso numero di funzione</item>
+        <item>Lead + Trail Locos - Stesso numero di funzione</item>
+        <item>Tutte le locomotive - stesso numero di funzione</item>
+    </string-array>
+
 </resources>

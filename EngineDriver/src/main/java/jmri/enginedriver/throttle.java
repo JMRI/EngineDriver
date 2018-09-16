@@ -223,17 +223,22 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private List<String> prefConsistFollowStrings;
     private List<String> prefConsistFollowActions;
     private List<Integer> prefConsistFollowHeadlights;
+    private String prefConsistFollowDefaultAction = "none";
 
     private String prefConsistFollowRuleStyle = "original";
     private static String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
     private static String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
 
+//    private static String CONSIST_FUNCTION_ACTION_NONE = "none";
     private static String CONSIST_FUNCTION_ACTION_LEAD = "lead";
     private static String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL = "lead and trail";
     private static String CONSIST_FUNCTION_ACTION_ALL = "all";
     private static String CONSIST_FUNCTION_ACTION_LEAD_EXACT = "lead exact";
     private static String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL_EXACT = "lead and trail exact";
     private static String CONSIST_FUNCTION_ACTION_ALL_EXACT = "all exact";
+//    private static String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD = "f lead";
+//    private static String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD_AND_TRAIL = "f lead and trail";
+//    private static String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_ALL = "f all";
 
     private static Integer CONSIST_FUNCTION_IS_HEADLIGHT = 1;
     private static Integer CONSIST_FUNCTION_IS_NOT_HEADLIGHT = 0;
@@ -1098,6 +1103,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         FUNCTION_BUTTON_LOOK_FOR_LIGHT = getApplicationContext().getResources().getString(R.string.functionButtonLookForLight).trim();
         FUNCTION_BUTTON_LOOK_FOR_REAR = getApplicationContext().getResources().getString(R.string.functionButtonLookForRear).trim();
 
+        prefConsistFollowDefaultAction = prefs.getString("prefConsistFollowDefaulAction", getApplicationContext().getResources().getString(R.string.prefConsistFollowDefaultActionDefaultValue));
         prefConsistFollowStrings = new ArrayList<>();
         prefConsistFollowActions = new ArrayList<>();
         prefConsistFollowHeadlights = new ArrayList<>();
@@ -3204,6 +3210,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     boolean trailOnly;      // function only applies to the trail loco (future)
     boolean followLeadFunction;       // function only applies to the locos that have been set to follow the function
     String lab;
+    Integer functionNumber = -1;
 
         protected function_button_touch_listener(int new_function, int new_whichThrottle) {
             this(new_function, new_whichThrottle, "");
@@ -3262,6 +3269,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             return (true);
         }
 
+
+        private void getFunctionNumber(Consist con) {
+            if (functionNumber==-1) { // find the function number for this if we don't aready have it
+                for (Consist.ConLoco l : con.getLocos()) {
+                    if (l.getAddress().equals(con.getLeadAddr())) {
+                        functionNumber=l.getFunctionNumberFromLabel(lab);
+                    }
+                }
+            }
+
+        }
+
         private void handleAction(int action) {
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
@@ -3308,10 +3327,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             } else {
                                 mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), this.function);
 
+                                getFunctionNumber(con);
+
                                 List<Integer> functionList = new ArrayList<>();
                                 for (Consist.ConLoco l : con.getLocos()) {
                                     if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
-                                        functionList = l.getMatchingFunctions(lab, l.getAddress().equals(con.getLeadAddr()), l.getAddress().equals(con.getTrailAddr()), prefConsistFollowStrings, prefConsistFollowActions, prefConsistFollowHeadlights);
+                                        functionList = l.getMatchingFunctions(functionNumber, lab, l.getAddress().equals(con.getLeadAddr()), l.getAddress().equals(con.getTrailAddr()), prefConsistFollowDefaultAction, prefConsistFollowStrings, prefConsistFollowActions, prefConsistFollowHeadlights);
                                         if (functionList.size()>0) {
                                             for (int i = 0; i < functionList.size(); i++) {
                                                 mainapp.toggleFunction(mainapp.throttleIntToString(i) + l.getAddress(), functionList.get(i));
@@ -3353,10 +3374,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             //mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), this.function);
                             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function, 0);
 
+                            getFunctionNumber(con);
+
                             List<Integer> functionList = new ArrayList<>();
                             for (Consist.ConLoco l : con.getLocos()) {
                                 if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
-                                    functionList = l.getMatchingFunctions(lab, l.getAddress().equals(con.getLeadAddr()), l.getAddress().equals(con.getTrailAddr()), prefConsistFollowStrings, prefConsistFollowActions, prefConsistFollowHeadlights);
+                                    functionList = l.getMatchingFunctions(functionNumber, lab, l.getAddress().equals(con.getLeadAddr()), l.getAddress().equals(con.getTrailAddr()), prefConsistFollowDefaultAction, prefConsistFollowStrings, prefConsistFollowActions, prefConsistFollowHeadlights);
                                     if (functionList.size()>0) {
                                         for (int i = 0; i < functionList.size(); i++) {
                                             //mainapp.toggleFunction(mainapp.throttleIntToString(i) + l.getAddress(), i);

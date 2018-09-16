@@ -758,4 +758,11 @@
         <item>All Locos - Exact Match</item>
     </string-array>
 
+    <string-array name="prefConsistFollowDefaultActionEntryValues">
+        <item>none</item>
+        <item>f lead</item>
+        <item>f lead and trail</item>
+        <item>f all</item>
+    </string-array>
+
 </resources>

@@ -169,4 +169,12 @@
         <item>Lead+Trail Locos - Exact Match</item>
         <item>All Locos - Exact Match</item>
     </string-array>
+
+    <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
+        <item>Nichts tun</item>
+        <item>Lead Loco - Gleiche Funktionsnummer</item>
+        <item>Lead + Trail Locos - Gleiche Funktionsnummer</item>
+        <item>Alle Loks - Gleiche Funktionsnummer</item>
+    </string-array>
+
 </resources>

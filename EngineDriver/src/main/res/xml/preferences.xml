@@ -621,6 +621,14 @@
                 android:title="@string/prefSelectiveLeadSoundF2Title" >
             </CheckBoxPreference>
 
+            <ListPreference
+                android:defaultValue="@string/prefConsistFollowDefaultActionDefaultValue"
+                android:entries="@array/prefConsistFollowEntries"
+                android:entryValues="@array/prefConsistFollowEntryValues"
+                android:key="prefConsistFollowDefaultAction"
+                android:summary="@string/prefConsistFollowDefaultActionSummary"
+                android:title="@string/prefConsistFollowDefaultActionTitle" />
+
             <EditTextPreference
                 android:defaultValue="@string/prefConsistFollowString1DefaultValue"
                 android:dialogTitle="@string/prefConsistFollowString1Summary"

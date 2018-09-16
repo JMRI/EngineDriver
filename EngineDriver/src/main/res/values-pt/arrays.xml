@@ -187,4 +187,10 @@
         <item>Todos os Locos - Correspondência Exata</item>
     </string-array>
 
+    <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
+        <item>Fazer nada</item>
+        <item>Lead Loco - número da mesma função</item>
+        <item>Lead + Trail Locos - O mesmo número de função</item>
+        <item>Todos os Locos - Número da Mesma Função</item>
+    </string-array>
 </resources>

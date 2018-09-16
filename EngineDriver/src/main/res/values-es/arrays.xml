@@ -169,4 +169,11 @@
         <item>Lead + Trail Locos - Coincidencia exacta</item>
         <item>Todos los Locos - Exact Match</item>
     </string-array>
+
+    <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
+        <item>Hacer nada</item>
+        <item>Lead Loco - Mismo número de función</item>
+        <item>Lead + Trail Locos - Mismo número de función</item>
+        <item>All Locos - Número de la misma función</item>
+    </string-array>
 </resources>

@@ -744,6 +744,11 @@
     <string name="prefConsistFollowAction2DefaultValue">lead</string>
     <string name="prefConsistFollowActionOtherDefaultValue">lead</string>
 
+    <string name="prefConsistFollowDefaultActionTitle">Default Action</string>
+    <string name="prefConsistFollowDefaultActionSummary">Which locos in the consist should react to the function buttons if none of the rules below are meet.</string>
+    <string name="prefConsistFollowDefaultActionDefaultValue">lead</string>
+
+
     <string name="prefConsistFollowString1Title">Headlight specific String 1</string>
     <string name="prefConsistFollowString1Summary">Comma separated string(s) to look for in the function labels of the locos in the consist to recognise the \'Headlight\' function (normally F0).</string>
     <string name="prefConsistFollowAction1Title">Headlight specific Action 1</string>

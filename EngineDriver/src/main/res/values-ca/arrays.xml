@@ -169,4 +169,11 @@
         <item>Lead + Trail Locos: coincidència exacta</item>
         <item>Tots els bojos - Match exacte</item>
     </string-array>
+
+    <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
+        <item>No fer res</item>
+        <item>Lead Loco: el mateix número de funció</item>
+        <item>Locals de plom + remolc - Igual número de funció</item>
+        <item>Tots els locos: el mateix número de funció</item>
+    </string-array>
 </resources>

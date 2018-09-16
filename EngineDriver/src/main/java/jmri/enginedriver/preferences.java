@@ -642,6 +642,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         enableDisablePreference("SelectiveLeadSoundF1", !enable);
         enableDisablePreference("SelectiveLeadSoundF2", !enable);
 
+        enableDisablePreference("prefConsistFollowDefaultAction", enable);
         enableDisablePreference("prefConsistFollowString1", enable);
         enableDisablePreference("prefConsistFollowAction1", enable);
         enableDisablePreference("prefConsistFollowString2", enable);
