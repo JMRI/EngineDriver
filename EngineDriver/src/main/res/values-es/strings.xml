@@ -617,4 +617,33 @@
     <string name="prefImportExportErrorReadingFrom">¡Ha fallado la importación de \'engine_driver/%1$s\'! No has guardado la preferencias para este host.</string>
     <string name="prefImportExportErrorNotConnected">No cenectado a un host.</string>
     <string name="logViewerTitle">Actividad en Visualizador de Log | Nombre de Controlador: %1$s</string>
+
+    <string name="ConsistEditLabelLead">FÜHREN</string>
+    <string name="ConsistEditLabelTrail">WEG</string>
+    <string name="prefConsistFollowRuleStyleTitle">Consist-Funktionen - Folgen Sie dem Regelstil</string>
+    <string name="prefConsistFollowRuleStyleSummary">Welcher Regelstil in einem Satz ist, wenn Funktionstasten gedrückt werden.</string>
+    <string name="prefConsistFollowTitle">Consist Function Folgen Sie den Einstellungen</string>
+    <string name="prefConsistFollowSummary">Optionen für die Funktionsweise von Funktionen in einem Consist.</string>
+    <string name="prefConsistFollowString1DefaultValue">LICHT</string>
+    <string name="prefConsistFollowString2DefaultValue">Whistle, Horn, Bell</string>
+    <string name="prefConsistFollowString1Title">Scheinwerferspezifische Zeichenfolge 1</string>
+    <string name="prefConsistFollowString1Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbeschriftungen der Loks im Verbund gesucht wird, um die \ 'Scheinwerfer \' - Funktion zu erkennen (normalerweise F0).</string>
+    <string name="prefConsistFollowAction1Title">Scheinwerferspezifische Aktion 1</string>
+    <string name="prefConsistFollowAction1Summary">Welche Loks im Verbund auf die gefundenen Scheinwerferfunktionen reagieren sollen.</string>
+    <string name="prefConsistFollowString2Title">Zeichenfolge 2</string>
+    <string name="prefConsistFollowString2Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbezeichnungen der Loks im Bestand gesucht werden soll, um eine ähnliche Funktion zu erkennen.</string>
+    <string name="prefConsistFollowAction2Title">Aktion für Zeichenfolge 2</string>
+    <string name="prefConsistFollowAction2Summary">Welche Loks im Verbund sollten auf die gefundenen Funktionen reagieren.</string>
+    <string name="prefConsistFollowString3Title">Zeichenfolge 3</string>
+    <string name="prefConsistFollowString3Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbezeichnungen der Loks im Bestand gesucht werden soll, um eine ähnliche Funktion zu erkennen.</string>
+    <string name="prefConsistFollowAction3Title">Aktion für Zeichenfolge 3</string>
+    <string name="prefConsistFollowAction3Summary">Welche Loks im Verbund sollten auf die gefundenen Funktionen reagieren.</string>
+    <string name="prefConsistFollowString4Title">Zeichenfolge 4</string>
+    <string name="prefConsistFollowString4Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbezeichnungen der Loks im Bestand gesucht werden soll, um eine ähnliche Funktion zu erkennen.</string>
+    <string name="prefConsistFollowAction4Title">Aktion für Zeichenfolge 4</string>
+    <string name="prefConsistFollowAction4Summary">Welche Loks im Verbund sollten auf die gefundenen Funktionen reagieren.</string>
+    <string name="prefConsistFollowString5Title">Zeichenfolge 5</string>
+    <string name="prefConsistFollowString5Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbezeichnungen der Loks im Bestand gesucht werden soll, um eine ähnliche Funktion zu erkennen.</string>
+    <string name="prefConsistFollowAction5Title">Aktion für String 5</string>
+
 </resources>

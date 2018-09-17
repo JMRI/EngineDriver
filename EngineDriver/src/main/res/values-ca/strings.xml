@@ -617,4 +617,31 @@
     <string name="prefImportExportErrorReadingFrom">Ha fallat l\'importació de \'engine_driver/%1$s\'! No has desat les preferències per aquest host.</string>
     <string name="prefImportExportErrorNotConnected">No connectat a un host.</string>
     <string name="logViewerTitle">Activitat en Visualitzador de Log | Nom del Controlador: %1$s</string>
+
+    <string name="ConsistEditLabelLead">DIRIGIR</string>
+    <string name="ConsistEditLabelTrail">RUTA</string>
+    <string name="prefConsistFollowRuleStyleTitle">Funcions consisteixen: segueix l'estil de regla</string>
+    <string name="prefConsistFollowRuleStyleSummary">Quin estil de regles a seguir consisteix quan es pressionen els botons de funció.</string>
+    <string name="prefConsistFollowString1DefaultValue">LLUM</string>
+    <string name="prefConsistFollowString2DefaultValue">WHISTLE, HORN, BELL</string>
+    <string name="prefConsistFollowTitle">Funció consistent Segueix les preferències</string>
+    <string name="prefConsistFollowSummary">Opcions de com es comportaran les funcions en un format.</string>
+    <string name="prefConsistFollowString1Title">Estrelles específiques del far del foc 1</string>
+    <string name="prefConsistFollowString1Summary">Les cadenes (s) separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer la funció \ 'Headlight \' (normalment F0).</string>
+    <string name="prefConsistFollowAction1Title">Acció específica de la llum davantera 1</string>
+    <string name="prefConsistFollowAction1Summary">Quins cajuns de la consistència han de reaccionar a les funcions de fars de llum trobats.</string>
+    <string name="prefConsistFollowString2Title">Cadena 2</string>
+    <string name="prefConsistFollowString2Summary">Les cadenes (s) separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer una funció similar.</string>
+    <string name="prefConsistFollowAction2Title">Acció per a la cadena 2</string>
+    <string name="prefConsistFollowAction2Summary">Quins cajuns del consisteixen han de reaccionar a les funcions trobades.</string>
+    <string name="prefConsistFollowString3Title">Cadena 3</string>
+    <string name="prefConsistFollowString3Summary">Les cadenes (s) separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer una funció similar.</string>
+    <string name="prefConsistFollowAction3Title">Acció per a la cadena 3</string>
+    <string name="prefConsistFollowAction3Summary">Quins cajuns del consisteixen han de reaccionar a les funcions trobades.</string>
+    <string name="prefConsistFollowString4Title">Cadena 4</string>
+    <string name="prefConsistFollowString4Summary">Les cadenes (s) separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer una funció similar.</string>
+    <string name="prefConsistFollowAction4Title">Acció per a la cadena 4</string>
+    <string name="prefConsistFollowAction4Summary">Quins cajuns del consisteixen han de reaccionar a les funcions trobades.</string>
+    <string name="prefConsistFollowString5Title">Cadena 5</string>
+    <string name="prefConsistFollowString5Summary">Les cadenes (s) separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer una funció similar.</string>
 </resources>

@@ -156,4 +156,25 @@
         <item>Spanisch</item>
         <item>Katalanisch</item>
     </string-array>
+
+    <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
+        <item>Simple text matching (original)</item>
+        <item>Complex text matching - user configurable strings</item>
+    </string-array>
+    <string-array name="prefConsistFollowEntries">  <!-- display version -->
+        <item>Lead Loco - Partial Match</item>
+        <item>Lead+Trail Locos - Partial Match</item>
+        <item>All Locos - Partial Match</item>
+        <item>Lead Loco - Exact Match</item>
+        <item>Lead+Trail Locos - Exact Match</item>
+        <item>All Locos - Exact Match</item>
+    </string-array>
+
+    <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
+        <item>Nichts tun</item>
+        <item>Lead Loco - Gleiche Funktionsnummer</item>
+        <item>Lead + Trail Locos - Gleiche Funktionsnummer</item>
+        <item>Alle Loks - Gleiche Funktionsnummer</item>
+    </string-array>
+
 </resources>

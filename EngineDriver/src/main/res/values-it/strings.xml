@@ -552,4 +552,33 @@
     <string name="functionButtonLookForHead">ANTERIORE</string>
     <string name="functionButtonLookForLight">LUCE</string>
     <string name="functionButtonLookForRear">POSTERIORE</string>
+
+    <string name="ConsistEditLabelLead">CONDURRE</string>
+    <string name="ConsistEditLabelTrail">TRAIL</string>
+    <string name="prefConsistFollowRuleStyleTitle">Funzioni consistenti - Segui lo stile delle regole</string>
+    <string name="prefConsistFollowRuleStyleSummary">Lo stile di regole da seguire consiste nei pulsanti di funzione premuti.</string>
+    <string name="prefConsistFollowTitle">Consiste alla funzione Segui le preferenze</string>
+    <string name="prefConsistFollowSummary">Opzioni per il modo in cui le funzioni si comporteranno in un Consist.</string>
+    <string name="prefConsistFollowString1DefaultValue">LEGGERO</string>
+    <string name="prefConsistFollowString2DefaultValue">FISCHIO, CORNO, BELL</string>
+    <string name="prefConsistFollowString1Title">Stringa specifica del faro 1</string>
+    <string name="prefConsistFollowString1Summary">Le stringhe separate da virgola da cercare nelle etichette delle funzioni delle locomotive consistono nel riconoscere la funzione \ 'Headlight \' (normalmente F0).</string>
+    <string name="prefConsistFollowAction1Title">Azione specifica del faro 1</string>
+    <string name="prefConsistFollowAction1Summary">Quali locomotive nel consistono dovrebbero reagire alle funzioni del faro trovate.</string>
+    <string name="prefConsistFollowString2Title">Stringa 2</string>
+    <string name="prefConsistFollowString2Summary">Le stringhe separate da virgola da cercare nelle etichette delle funzioni delle locomotive consistono nel riconoscere una funzione simile.</string>
+    <string name="prefConsistFollowAction2Title">Azione per Stringa 2</string>
+    <string name="prefConsistFollowAction2Summary">Quali locomotive nel consistono dovrebbero reagire alle funzioni trovate.</string>
+    <string name="prefConsistFollowString3Title">String 3</string>
+    <string name="prefConsistFollowString3Summary">Le stringhe separate da virgola da cercare nelle etichette delle funzioni delle locomotive consistono nel riconoscere una funzione simile.</string>
+    <string name="prefConsistFollowAction3Title">Azione per Stringa 3</string>
+    <string name="prefConsistFollowAction3Summary">Quali locomotive nel consistono dovrebbero reagire alle funzioni trovate.</string>
+    <string name="prefConsistFollowString4Title">Stringa 4</string>
+    <string name="prefConsistFollowString4Summary">Le stringhe separate da virgola da cercare nelle etichette delle funzioni delle locomotive consistono nel riconoscere una funzione simile.</string>
+    <string name="prefConsistFollowAction4Title">Azione per la stringa 4</string>
+    <string name="prefConsistFollowAction4Summary">Quali locomotive nel consistono dovrebbero reagire alle funzioni trovate.</string>
+    <string name="prefConsistFollowString5Title">Stringa 5</string>
+    <string name="prefConsistFollowString5Summary">Le stringhe separate da virgola da cercare nelle etichette delle funzioni delle locomotive consistono nel riconoscere una funzione simile.</string>
+    <string name="prefConsistFollowAction5Title">Azione per stringa 5</string>
+
 </resources>

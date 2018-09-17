@@ -85,6 +85,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private String prefThrottleScreenTypeOriginal = "Default";
     private String prefThemeOriginal = "Default";
+
+    private String prefConsistFollowRuleStyle = "original";
+    private static String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
+    private static String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
+
     /**
      * Called when the activity is first created.
      */
@@ -164,6 +169,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             // preference is still confused after a reload or reset
             sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
         }
+
+        prefConsistFollowRuleStyle = sharedPreferences.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
+        showHideConsistRuleStylePreferences();
+
     }
 
     @SuppressWarnings("deprecation")
@@ -373,6 +382,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 if (!prefTheme.equals(prefThemeOriginal)) {
                     forceRestartApp();
                 }
+                break;
+            case "prefConsistFollowRuleStyle":
+                prefConsistFollowRuleStyle = sharedPreferences.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
+                showHideConsistRuleStylePreferences();
                 break;
         }
     }
@@ -619,7 +632,31 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
-    private void showHideThrottleTypePreferences() {
+    private void showHideConsistRuleStylePreferences() {
+        boolean enable = true;
+        if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+            enable = false;
+        }
+
+        enableDisablePreference("SelectiveLeadSound", !enable);
+        enableDisablePreference("SelectiveLeadSoundF1", !enable);
+        enableDisablePreference("SelectiveLeadSoundF2", !enable);
+
+        enableDisablePreference("prefConsistFollowDefaultAction", enable);
+        enableDisablePreference("prefConsistFollowString1", enable);
+        enableDisablePreference("prefConsistFollowAction1", enable);
+        enableDisablePreference("prefConsistFollowString2", enable);
+        enableDisablePreference("prefConsistFollowAction2", enable);
+        enableDisablePreference("prefConsistFollowString3", enable);
+        enableDisablePreference("prefConsistFollowAction3", enable);
+        enableDisablePreference("prefConsistFollowString4", enable);
+        enableDisablePreference("prefConsistFollowAction4", enable);
+        enableDisablePreference("prefConsistFollowString5", enable);
+        enableDisablePreference("prefConsistFollowAction5", enable);
+
+    }
+
+        private void showHideThrottleTypePreferences() {
         boolean enable = true;
         if ((prefThrottleScreenTypeOriginal.equals("Simple")) || (prefThrottleScreenTypeOriginal.equals("Vertical"))) {
             enable = false;
@@ -633,7 +670,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         enableDisablePreference("prefNumberOfDefaultFunctionLabels",enable);
         enableDisablePreference("prefNumberOfDefaultFunctionLabelsForRoster",enable);
 
-        enable = prefThrottleScreenTypeOriginal.equals("Simple");
+        enable = prefThrottleScreenTypeOriginal.equals("Simple")
+                || prefThrottleScreenTypeOriginal.equals("Vertical")
+                || prefThrottleScreenTypeOriginal.equals("Big Left");
         enableDisablePreference("WebViewLocation",enable);
         enableDisablePreference("prefIncreaseWebViewSize",enable);
         enableDisablePreference("InitialThrotWebPage",enable);

@@ -17,7 +17,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 //
 // EngineDriver Loco
@@ -31,6 +33,20 @@ public class Loco {
     private boolean confirmed;                  //set after WiT responds that engine is assigned to throttle
     private boolean isFromRoster;                  //true if the entry was found in the roster (for the function button label check)
     private LinkedHashMap<Integer, String> functionLabels;
+
+    private static String CONSIST_FUNCTION_ACTION_NONE = "none";
+    private static String CONSIST_FUNCTION_ACTION_LEAD = "lead";
+    private static String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL = "lead and trail";
+    private static String CONSIST_FUNCTION_ACTION_ALL = "all";
+    private static String CONSIST_FUNCTION_ACTION_TRAIL = "trail";
+    private static String CONSIST_FUNCTION_ACTION_LEAD_EXACT = "lead exact";
+    private static String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL_EXACT = "lead and trail exact";
+    private static String CONSIST_FUNCTION_ACTION_ALL_EXACT = "all exact";
+    private static String CONSIST_FUNCTION_ACTION_TRAIL_EXACT = "trail exact";
+    private static String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD = "f lead";
+    private static String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD_AND_TRAIL = "f lead and trail";
+    private static String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_ALL = "f all";
+    private static String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_TRAIL = "f trail";
 
     public Loco(String address) {
         if (address != null)
@@ -122,7 +138,7 @@ public class Loco {
             functionLabels = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
         }
     }
-
+/**
     public String getFunctionLabel(Integer functionNo) {
         String functionLabel = "";
         if (functionLabels != null) {
@@ -131,6 +147,94 @@ public class Loco {
                 functionLabel = "";
         }
         return functionLabel;
+    }
+**/
+     public Integer getFunctionNumberFromLabel(String lab) {
+        Integer functionNumber = -1;
+         if (!lab.equals("")) {
+             for (int i = 0; i < functionLabels.size(); i++) {
+                 if (functionLabels != null) {
+                     if (functionLabels.get(i) != null) {
+                         if (functionLabels.get(i).equals(lab)) {
+                             functionNumber = i;
+                         }
+                     }
+                 }
+             }
+         }
+         return functionNumber;
+     }
+
+    public List<Integer> getMatchingFunctions(Integer functionNumber, String searchLabel, boolean isLead, boolean isTrail, String prefConsistFollowDefaultAction, List<String> prefConsistFollowStrings, List<String> prefConsistFollowActions, List<Integer> prefConsistFollowHeadlights) {
+        //List<String> functionList = new ArrayList<>();
+        List<Integer> functionList = new ArrayList<>();
+        Integer matchingRule = -1;
+
+        // work out if/which rule the activated function matches
+        for(int i = 0; i < prefConsistFollowStrings.size(); i++) {
+            if (searchLabel.toLowerCase().contains(prefConsistFollowStrings.get(i).toLowerCase())) {
+                matchingRule = i;
+                i = 999;
+            }
+        }
+        if (matchingRule>=0) {
+            // check if the loco matches the Action
+            String Rule = prefConsistFollowActions.get(matchingRule);
+            if ( ( ( Rule.equals(CONSIST_FUNCTION_ACTION_LEAD))
+                    && (isLead) )
+            || ( ( Rule.equals(CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL))
+                    && ((isLead) || (isTrail)) )
+            || ( Rule.equals(CONSIST_FUNCTION_ACTION_ALL))
+            || ( ( Rule.equals(CONSIST_FUNCTION_ACTION_TRAIL))
+                    && (isTrail) ) ) {
+                    // cycle through this locos function labels to find the partly matching string
+                for (int i = 0; i < functionLabels.size(); i++) {
+                    if (functionLabels != null) {
+                        if (functionLabels.get(i) != null) {
+                            if (functionLabels.get(i).toLowerCase().contains(prefConsistFollowStrings.get(matchingRule).toLowerCase())) {
+                                functionList.add(i);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // check the exact matcing rules
+            if ( ( ( Rule.equals(CONSIST_FUNCTION_ACTION_LEAD_EXACT))
+                    && (isLead) )
+            || ( ( Rule.equals(CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL_EXACT))
+                    && ((isLead) || (isTrail)) )
+            || ( Rule.equals(CONSIST_FUNCTION_ACTION_ALL_EXACT))
+            || ( ( Rule.equals(CONSIST_FUNCTION_ACTION_TRAIL_EXACT))
+                    && (isTrail) ) ) {
+                // cycle through this locos function labels to find the exactly matching string
+                for (int i = 0; i < functionLabels.size(); i++) {
+                    if (functionLabels != null) {
+                        if (functionLabels.get(i) != null) {
+                            if (functionLabels.get(i).toLowerCase().equals(prefConsistFollowStrings.get(matchingRule).toLowerCase())) {
+                                functionList.add(i);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // if no matching rull was found, is if the default rule applies
+            if (functionList.size()==0) {
+                if ( ( ( Rule.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD))
+                        && (isLead) )
+                || ( ( Rule.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD_AND_TRAIL))
+                        && ((isLead) || (isTrail)) )
+                || ( Rule.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_ALL))
+                || ( ( Rule.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_TRAIL))
+                        && (isTrail) ) ) {
+                    functionList.add(functionNumber);
+
+                }
+            }
+
+        }
+        return functionList;
     }
 
 }

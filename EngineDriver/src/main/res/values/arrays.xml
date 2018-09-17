@@ -732,4 +732,44 @@
         <item>Catalan</item>
     </string-array>
 
+    <string-array name="prefConsistFollowRuleStyleEntryValues">
+        <item>original</item>
+        <item>complex</item>
+    </string-array>
+    <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
+        <item>Simple text matching (original)</item>
+        <item>Complex text matching - user configurable strings</item>
+    </string-array>
+
+    <string-array name="prefConsistFollowEntryValues">
+        <item>lead</item>
+        <item>lead and trail</item>
+        <item>all</item>
+        <item>lead exact</item>
+        <item>lead and trail exact</item>
+        <item>all exact</item>
+    </string-array>
+    <string-array name="prefConsistFollowEntries">  <!-- display version -->
+        <item>Lead Loco - Partial Match</item>
+        <item>Lead+Trail Locos - Partial Match</item>
+        <item>All Locos - Partial Match</item>
+        <item>Lead Loco - Exact Match</item>
+        <item>Lead+Trail Locos - Exact Match</item>
+        <item>All Locos - Exact Match</item>
+    </string-array>
+
+    <string-array name="prefConsistFollowDefaultActionEntryValues">
+        <item>none</item>
+        <item>f lead</item>
+        <item>f lead and trail</item>
+        <item>f all</item>
+    </string-array>
+
+    <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
+        <item>Do Nothing</item>
+        <item>Lead Loco - Same Function number</item>
+        <item>Lead+Trail Locos - Same Function number</item>
+        <item>AAll Locos - Same Function number</item>
+    </string-array>
+
 </resources>
