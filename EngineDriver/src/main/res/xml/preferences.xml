@@ -623,8 +623,8 @@
 
             <ListPreference
                 android:defaultValue="@string/prefConsistFollowDefaultActionDefaultValue"
-                android:entries="@array/prefConsistFollowEntries"
-                android:entryValues="@array/prefConsistFollowEntryValues"
+                android:entries="@array/prefConsistFollowDefaultActionEntries"
+                android:entryValues="@array/prefConsistFollowDefaultActionEntryValues"
                 android:key="prefConsistFollowDefaultAction"
                 android:summary="@string/prefConsistFollowDefaultActionSummary"
                 android:title="@string/prefConsistFollowDefaultActionTitle" />

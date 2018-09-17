@@ -746,7 +746,7 @@
 
     <string name="prefConsistFollowDefaultActionTitle">Default Action</string>
     <string name="prefConsistFollowDefaultActionSummary">Which locos in the consist should react to the function buttons if none of the rules below are meet.</string>
-    <string name="prefConsistFollowDefaultActionDefaultValue">lead</string>
+    <string name="prefConsistFollowDefaultActionDefaultValue">none</string>
 
 
     <string name="prefConsistFollowString1Title">Headlight specific String 1</string>
