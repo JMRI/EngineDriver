@@ -737,7 +737,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                     } else if (com3 == 'F') {
                                         try {
                                             int function = Integer.valueOf(ls[1].substring(2));
-                                            set_function_state(whichThrottle, function);
+
+                                            String loco = ls[0].substring(3);
+                                            Consist con = mainapp.consists[whichThrottle];
+                                            if ( (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL))
+                                                    || (loco.equals(con.getLeadAddr())) ) { //if using the 'complex' follow function rules, only send it to the lead loco
+                                                set_function_state(whichThrottle, function);
+                                            }
                                         } catch (Exception ignored) {
                                         }
                                     } else if (com3 == 's') {
