@@ -369,6 +369,7 @@ public class select_loco extends Activity {
         } else {
             l.setDesc(mainapp.getRosterNameFromAddress(l.toString()));  //lookup rostername from address if not set
             l.setRosterName(null); //make sure rosterName is null
+            l.setFunctionLabelDefaults(mainapp, whichThrottle); //make sure rosterName is null
         }
         Consist consist = mainapp.consists[whichThrottle];
 
@@ -384,6 +385,7 @@ public class select_loco extends Activity {
         if (!consist.isActive()) {               // if this is the only loco in consist then just tell WiT and exit
             consist.add(l);
             consist.setLeadAddr(l.getAddress());
+            consist.setTrailAddr(l.getAddress());
 //            consist.setConfirmed(l.getAddress()); //this happens after response from WiTS
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, addr, whichThrottle);
             updateRecentEngines(bUpdateList);
@@ -400,6 +402,9 @@ public class select_loco extends Activity {
                 saveUpdateList = bUpdateList;
                 Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
                 consistEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
+
+                consist.setTrailAddr(l.getAddress());  // set the newly added loco as the trailing loco
+
                 navigatingAway = true;
                 startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

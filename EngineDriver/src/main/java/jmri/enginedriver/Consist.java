@@ -17,8 +17,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -64,11 +66,13 @@ import java.util.Set;
     private LinkedHashMap<String, ConLoco> con;            //locos assigned to this consist (i.e. this throttle)
     private String leadAddr;                            //address of lead loco
     //TODO: eliminate stored leadAddr and create on the fly?
+    private String trailAddr;                            //address of trail loco
 
 
     public Consist() {
         con = new LinkedHashMap<>();
         leadAddr = "";
+        trailAddr = "";
     }
 
     public Consist(Loco l) {
@@ -76,6 +80,7 @@ import java.util.Set;
 
         this.add(l);
         leadAddr = l.getAddress();
+        trailAddr = l.getAddress();
     }
 
     public Consist(Consist c) {
@@ -85,6 +90,7 @@ import java.util.Set;
             this.add(l);
         }
         leadAddr = c.leadAddr;
+        trailAddr = c.leadAddr;
     }
 
     //
@@ -92,6 +98,7 @@ import java.util.Set;
 
         con.clear();
         leadAddr = "";
+        trailAddr = "";
     }
 
     public void add(String addr) {
@@ -106,8 +113,10 @@ import java.util.Set;
     public void add(ConLoco l) {
         String addr = l.getAddress();
         if (!con.containsKey(addr)) {
-            if (isEmpty())
+            if (isEmpty()) {
                 leadAddr = addr;
+                trailAddr = addr;
+            }
             con.put(addr, new ConLoco(l));                        //this ctor makes copy as objects are immutable
 
         }
@@ -248,6 +257,16 @@ import java.util.Set;
         return leadAddr;
     }
 
+    public String getTrailAddr() {
+        return trailAddr;
+    }
+    public String setTrailAddr(String addr) {
+        if (con.containsKey(addr) && !trailAddr.equals(addr)) {
+            trailAddr = addr;
+        }
+        return trailAddr;
+    }
+
     //create string description of the consist
     @Override
     public String toString() {
@@ -287,5 +306,21 @@ import java.util.Set;
         }
         return formatCon.toString();
     }
+
+    public void setFunctionLabels(String address, String functionLabelsString,threaded_application mainapp) {
+        ConLoco l = con.get(address);
+        if (l != null)
+            l.setFunctionLabels(functionLabelsString, mainapp);
+
+    }
+/**
+    public String getFunctionLabel(String address, Integer functionNo) {
+        String functionLabel = "";
+        ConLoco l = con.get(address);
+        if (l != null)
+            functionLabel = l.getFunctionLabel(functionNo);
+        return functionLabel;
+    }
+**/
 
 }
