@@ -58,6 +58,7 @@ public class Loco {
         this.confirmed = false;
         this.rosterName = null;
         this.isFromRoster = false;
+        this.functionLabels = null;
     }
 
     public Loco(Loco l) {
@@ -66,6 +67,7 @@ public class Loco {
         this.rosterName = l.rosterName;
         this.confirmed = l.confirmed;
         this.isFromRoster = l.isFromRoster;
+        this.functionLabels = l.functionLabels;
     }
 
     public boolean isConfirmed() {
@@ -135,7 +137,7 @@ public class Loco {
 
     public void setFunctionLabelDefaults(threaded_application mainapp, Integer whichThrottle) {
         if (mainapp.function_labels != null) {
-            functionLabels = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
+            functionLabels = new LinkedHashMap<>(mainapp.function_labels_default);
         }
     }
 /**
@@ -151,9 +153,9 @@ public class Loco {
 **/
      public Integer getFunctionNumberFromLabel(String lab) {
         Integer functionNumber = -1;
-         if (!lab.equals("")) {
-             for (int i = 0; i < functionLabels.size(); i++) {
-                 if (functionLabels != null) {
+        if (!lab.equals("")) {
+             if (functionLabels != null) {
+                 for (int i = 0; i < functionLabels.size(); i++) {
                      if (functionLabels.get(i) != null) {
                          if (functionLabels.get(i).equals(lab)) {
                              functionNumber = i;
@@ -188,8 +190,8 @@ public class Loco {
             || ( ( Rule.equals(CONSIST_FUNCTION_ACTION_TRAIL))
                     && (isTrail) ) ) {
                     // cycle through this locos function labels to find the partly matching string
-                for (int i = 0; i < functionLabels.size(); i++) {
-                    if (functionLabels != null) {
+                if (functionLabels != null) {
+                    for (int i = 0; i < functionLabels.size(); i++) {
                         if (functionLabels.get(i) != null) {
                             if (functionLabels.get(i).toLowerCase().contains(prefConsistFollowStrings.get(matchingRule).toLowerCase())) {
                                 functionList.add(i);

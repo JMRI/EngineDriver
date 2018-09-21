@@ -3277,7 +3277,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
 
         private void getFunctionNumber(Consist con) {
-            if (functionNumber==-1) { // find the function number for this if we don't aready have it
+            if (functionNumber==-1) { // find the function number for this if we don't already have it
                 for (Consist.ConLoco l : con.getLocos()) {
                     if (l.getAddress().equals(con.getLeadAddr())) {
                         functionNumber=l.getFunctionNumberFromLabel(lab);
