@@ -656,7 +656,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     }
 
-        private void showHideThrottleTypePreferences() {
+    private void showHideThrottleTypePreferences() {
         boolean enable = true;
         if ((prefThrottleScreenTypeOriginal.equals("Simple")) || (prefThrottleScreenTypeOriginal.equals("Vertical"))) {
             enable = false;
@@ -670,13 +670,14 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         enableDisablePreference("prefNumberOfDefaultFunctionLabels",enable);
         enableDisablePreference("prefNumberOfDefaultFunctionLabelsForRoster",enable);
 
-        enable = prefThrottleScreenTypeOriginal.equals("Simple")
-                || prefThrottleScreenTypeOriginal.equals("Vertical")
-                || prefThrottleScreenTypeOriginal.equals("Big Left");
+//        enable = prefThrottleScreenTypeOriginal.equals("Simple")
+//                || prefThrottleScreenTypeOriginal.equals("Vertical")
+//                || prefThrottleScreenTypeOriginal.equals("Big Left");
+        enable = prefThrottleScreenTypeOriginal.equals("Default")
+                || prefThrottleScreenTypeOriginal.equals("Vertical");
         enableDisablePreference("WebViewLocation",enable);
         enableDisablePreference("prefIncreaseWebViewSize",enable);
         enableDisablePreference("InitialThrotWebPage",enable);
-
     }
 
     //Handle pressing of the back button to end this activity
