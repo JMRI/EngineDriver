@@ -953,6 +953,28 @@
         </CheckBoxPreference>
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/prefKidsSectionTitle" >
+        <PreferenceScreen
+            android:key="kids_preferences"
+            android:title="@string/prefKidsSectionTitle"
+            android:summary="@string/prefKidsSectionSummary"
+            android:persistent="false">
+            <ListPreference
+                android:defaultValue="@string/prefKidsTimerDefaultValue"
+                android:entries="@array/prefKidsTimerEntries"
+                android:entryValues="@array/prefKidsTimerEntryValues"
+                android:key="prefKidsTimer"
+                android:summary="@string/prefKidsTimerSummary"
+                android:title="@string/prefKidsTimerTitle" />
+            <Preference
+                android:selectable="false"
+                android:enabled="true"
+                android:key="kids_Help"
+                android:title="@string/prefKidsHelpTitle"
+                android:summary="@string/prefKidsHelpSummary" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/prefThrottleImportExportTitle" >
         <PreferenceScreen
             android:key="importExport_preferences"

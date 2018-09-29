@@ -15,7 +15,7 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string-array name="address_size">
         <item>Short</item>
         <item>Long</item>
@@ -142,8 +142,8 @@
     </string-array>
 
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
-        <item >Original &#8211; Phone or Tablet (1-3 throttles)</item>
-        <item >Simple &#8211; Tablet Recommended (1-6 throttles)</item>
+        <item tools:ignore="TypographyDashes">Original &#8211; Phone or Tablet (1-3 throttles)</item>
+        <item tools:ignore="TypographyDashes">Simple &#8211; Tablet Recommended (1-6 throttles)</item>
         <item >Vertical &#8211; Phone or Tablet (2 throttles)</item>
         <item >Big Buttons &#8211; Left (1 throttle)</item>
     </string-array>
@@ -770,6 +770,23 @@
         <item>Lead Loco - Same Function number</item>
         <item>Lead+Trail Locos - Same Function number</item>
         <item>All Locos - Same Function number</item>
+    </string-array>
+
+    <string-array name="prefKidsTimerEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+        <item>999</item>
+    </string-array>
+    <string-array name="prefKidsTimerEntries">  <!-- display version -->
+        <item>Disabled</item>
+        <item>1 minute</item>
+        <item>2 minutes</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>Run completed</item>
     </string-array>
 
 </resources>

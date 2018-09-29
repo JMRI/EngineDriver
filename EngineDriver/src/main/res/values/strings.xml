@@ -773,4 +773,18 @@
     <string name="prefConsistFollowString5Summary">Comma separated string(s) to look for in the function labels of the locos in the consist to recognise a similar function.</string>
     <string name="prefConsistFollowAction5Title">Action for String 5</string>
     <string name="prefConsistFollowAction5Summary">Which locos in the consist should react to the found functions.</string>
+
+    <string name="prefKidsSectionTitle">Children\'s Preferences</string>
+    <string name="prefKidsSectionSummary">Options for young children.</string>
+    <string name="prefKidsHelpTitle">Notes for the Timer:</string>
+    <string name="prefKidsHelpSummary">- select the loco first.\n- Timer will start with the first increase in speed.\n- You must come back to this preference to reset the time (or clear it) after the timeout.\n\nRecommendions:\n- Disable the volume keys.\n- Disable \'Swipe Through Turnouts\'.\n- Disable \'Swipe Through Routes\'.\n- Disable EStop.</string>
+    <string name="prefKidsTimerTitle">Time limited running</string>
+    <string name="prefKidsTimerSummary">Restrict the time that the loco will run. e.g. Each child will get an equal amount of time.</string>
+    <string name="prefKidsTimerDefaultValue">0</string>
+
+    <string name="app_name_throttle_kids_running">Throttle - %1$s sec. remaining</string>
+    <string name="app_name_throttle_kids_enabled">Throttle - Timer Ready</string>
+    <string name="app_name_throttle_kids_ended">Throttle - Timer Ended</string>
+
+
 </resources>
