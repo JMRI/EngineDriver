@@ -580,4 +580,15 @@
     <string name="prefConsistFollowString5Summary">Cadeia (s) separada (s) por vírgulas para procurar nos rótulos de função das locos no consistir para reconhecer uma função semelhante.</string>
     <string name="prefConsistFollowAction5Title">Ação para a String 5</string>
 
+    <string name="prefKidsSectionTitle">Preferências infantis</string>
+    <string name="prefKidsSectionSummary">Opções para crianças pequenas.</string>
+    <string name="prefKidsHelpTitle">Notas para o temporizador:</string>
+    <string name="prefKidsHelpSummary">- selecione a locomotiva primeiro. \n- O cronômetro iniciará com o primeiro aumento na velocidade. \n- Você deve voltar a essa preferência para redefinir a hora (ou apagá-la) após o tempo limite. \n \ nRecomendações: \n- Desabilite as teclas de volume. \n- Desativar "Swipe Through Turnouts". \n- Desabilitar "Swipe Through Routes". \n- Desativar o EStop.</string>
+    <string name="prefKidsTimerTitle">Corrida limitada no tempo</string>
+    <string name="prefKidsTimerSummary">Restringir o tempo que o loco será executado. por exemplo. Cada criança terá uma quantidade igual de tempo.</string>
+
+    <string name="app_name_throttle_kids_running">Acelerador - %1$s seg. remanescente</string>
+    <string name="app_name_throttle_kids_enabled">Acelerador - Temporizador Pronto</string>
+    <string name="app_name_throttle_kids_ended">Acelerador - temporizador terminado</string>
+
 </resources>

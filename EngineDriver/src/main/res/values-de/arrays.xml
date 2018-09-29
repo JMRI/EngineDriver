@@ -177,4 +177,13 @@
         <item>Alle Loks - Gleiche Funktionsnummer</item>
     </string-array>
 
+    <string-array name="prefKidsTimerEntries"> <!-- Version anzeigen -->
+        <item>Deaktiviert </item>
+        <item>1 Minute </item>
+        <item>2 Minuten </item>
+        <item>5 Minuten </item>
+        <item>10 Minuten </item>
+        <item>Ausführen abgeschlossen </item>
+    </string-array>
+
 </resources>
