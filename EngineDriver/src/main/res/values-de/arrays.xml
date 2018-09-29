@@ -17,7 +17,7 @@
       translations provided by Al Babinsky and Daniel Sieber
 -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string-array name="address_size_defaultsEntries">
         <item>Kurz</item>
         <item>Lang</item>
@@ -51,8 +51,8 @@
         <item>Sechs</item>
     </string-array>
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
-        <item>Original &#8211; Telefon oder Tablet (1-3 Fahrregler)</item>
-        <item>Einfach &#8211; Tablet empfohlen (1-6 Fahrregler)</item>
+        <item tools:ignore="TypographyDashes">Original &#8211; Telefon oder Tablet (1-3 Fahrregler)</item>
+        <item tools:ignore="TypographyDashes">Einfach &#8211; Tablet empfohlen (1-6 Fahrregler)</item>
         <item>Vertikal &#8211; Telefon oder Tablet (2 Fahrregler)</item>
         <item >Big Buttons &#8211; Left (1 throttle)</item>
     </string-array>
@@ -178,12 +178,12 @@
     </string-array>
 
     <string-array name="prefKidsTimerEntries"> <!-- Version anzeigen -->
-        <item>Deaktiviert </item>
-        <item>1 Minute </item>
-        <item>2 Minuten </item>
-        <item>5 Minuten </item>
-        <item>10 Minuten </item>
-        <item>Ausführen abgeschlossen </item>
+        <item>Deaktiviert</item>
+        <item>1 Minute</item>
+        <item>2 Minuten</item>
+        <item>5 Minuten</item>
+        <item>10 Minuten</item>
+        <item>Ausführen abgeschlossen</item>
     </string-array>
 
 </resources>
