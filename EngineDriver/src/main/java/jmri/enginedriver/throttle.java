@@ -1189,6 +1189,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         }
     }
+    protected void getKidsTimerPrefs() {
+        prefKidsTimer = prefs.getString("prefKidsTimer", getResources().getString(R.string.prefKidsTimerDefaultValue));
+        if ((!prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)) && (!prefKidsTimer.equals(PREF_KIDS_TIMER_ENDED))) {
+            prefKidsTime = Integer.parseInt(prefKidsTimer) * 60000;
+        } else {
+            prefKidsTime = 0;
+        }
+    }
 
     // get all the preferences that should be read when the activity is created or resumes
     protected void getCommonPrefs(boolean isCreate) {
@@ -1294,12 +1302,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (isCreate) {
             prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
         }
-        prefKidsTimer = prefs.getString("prefKidsTimer", getResources().getString(R.string.prefKidsTimerDefaultValue));
-        if ((!prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)) && (!prefKidsTimer.equals(PREF_KIDS_TIMER_ENDED))) {
-            prefKidsTime = Integer.parseInt(prefKidsTimer) * 60000;
-        } else {
-            prefKidsTime = 0;
-        }
+        getKidsTimerPrefs();
     }
 
     protected void getDirectionButtonPrefs() {
@@ -4787,6 +4790,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 }
                 // in case the preference has changed but the current screen does not support the number selected.
                 setThottleNumLimits();
+
+                getKidsTimerPrefs();
+                if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)){
+                    kidsTimerActions(KIDS_TIMER_DISABLED,0);
+                }
+
                 break;
             }
             case ACTIVITY_GAMEPAD_TEST: {
