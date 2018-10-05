@@ -2286,8 +2286,9 @@ public class threaded_application extends Application {
         if (!show) {
             for (int i = 0; i < menu.size(); i++) {
                 MenuItem item = menu.getItem(i);
-                if (item.getItemId() == R.id.preferences_mnu) {
-                    item.setVisible(true);
+                //if ((item.getItemId() == R.id.preferences_mnu) || (item.getItemId() == R.id.timer_mnu)) {
+                if (item.getItemId() == R.id.timer_mnu) {
+                        item.setVisible(true);
                 } else {
                     item.setVisible(false);
                 }
@@ -2298,9 +2299,10 @@ public class threaded_application extends Application {
             setRoutesMenuOption(menu);
             setTurnoutsMenuOption(menu);
             setGamepadTestMenuOption(menu,gamepadCount);
-            setMenuItemById(menu, R.id.about_mnu, true);
+            setMenuItemById(menu, R.id.preferences_mnu, true);
             setMenuItemById(menu, R.id.logviewer_menu, true);
             setMenuItemById(menu, R.id.exit_mnu, true);
+            setMenuItemById(menu, R.id.timer_mnu, false);
         }
     }
 

@@ -41,12 +41,14 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentActivity;
+import android.text.InputType;
 import android.text.format.Time;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.InputDevice;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -61,6 +63,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -449,6 +452,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private int prefKidsTime = 0;  // in milliseconds
     private int kidsTimerRunning = KIDS_TIMER_DISABLED;
     private MyCountDownTimer kidsTimer;
+    private String prefKidsTimerResetPassword = "9999";
+    private String prefKidsTimerRestartPassword = "0000";
+    private String passwordText = "";
+
 
     // For ESU MobileControlII
     private static final boolean IS_ESU_MCII = MobileControl2.isMobileControl2();
@@ -673,6 +680,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         public void onFinish() {  // When timer is finished
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_END, "", 0, 0);
             //finish();
+            //showTimerPasswordDialog();
         }
 
         @Override
@@ -1196,6 +1204,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         } else {
             prefKidsTime = 0;
         }
+        prefKidsTimerResetPassword = prefs.getString("prefKidsTimerResetPassword", getResources().getString(R.string.prefKidsTimerResetPasswordDefaultValue));
+        prefKidsTimerRestartPassword = prefs.getString("prefKidsTimerRestartPassword", getResources().getString(R.string.prefKidsTimerRestartPasswordDefaultValue));
     }
 
     // get all the preferences that should be read when the activity is created or resumes
@@ -4478,9 +4488,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.setWebMenuOption(TMenu);
             mainapp.setRoutesMenuOption(TMenu);
             mainapp.setTurnoutsMenuOption(TMenu);
-            mainapp.setGamepadTestMenuOption(TMenu,gamepadCount);
+            mainapp.setGamepadTestMenuOption(TMenu, gamepadCount);
             mainapp.setFlashlightButton(TMenu);
             mainapp.displayFlashlightMenuButton(TMenu);
+            mainapp.setKidsMenuOptions(TMenu, prefKidsTimer.equals(PREF_KIDS_TIMER_NONE), gamepadCount);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");
@@ -4742,6 +4753,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, TMenu);
+                break;
+
+            case R.id.timer_mnu:
+                showTimerPasswordDialog();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -5152,5 +5167,48 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (mainapp.maxThrottles > mainapp.maxThrottlesCurrentScreen) {   // Maximum number of throttles this screen supports
             mainapp.maxThrottles = mainapp.maxThrottlesCurrentScreen;
         }
+    }
+
+
+    private void showTimerPasswordDialog () {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(getApplicationContext().getResources().getString(R.string.timerDialogTitle));
+        alert.setMessage(getApplicationContext().getResources().getString(R.string.timerDialogMessage));
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setHint(getApplicationContext().getResources().getString(R.string.timerDialogHint));
+        alert.setView(input);
+
+        alert.setPositiveButton(getApplicationContext().getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                passwordText = input.getText().toString();
+                Log.d("", "Password Value : " + passwordText);
+
+                if (passwordText.equals(prefKidsTimerResetPassword)) { //reset
+                    kidsTimerActions(KIDS_TIMER_ENDED, 0);
+                    kidsTimerActions(KIDS_TIMER_DISABLED, 0);
+                    prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
+                    getKidsTimerPrefs();
+                }
+
+                if (passwordText.equals(prefKidsTimerRestartPassword)) { //reset
+                    kidsTimerActions(KIDS_TIMER_ENABLED, 0);
+                }
+
+                return;
+            }
+        });
+
+        alert.setNegativeButton(getApplicationContext().getResources().getString(R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+        alert.show();
+
     }
 }
