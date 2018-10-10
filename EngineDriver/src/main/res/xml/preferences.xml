@@ -793,6 +793,11 @@
                     android:title="@string/prefEsuMc2EndStopDirectionChangeTitle"
                     android:summary="@string/prefEsuMc2EndStopDirectionChangeSummary"
                     android:defaultValue="@bool/prefEsuMc2EndStopDirectionChangeDefaultValue" />
+                <CheckBoxPreference
+                    android:key="prefEsuMc2KnobButtonDisplay"
+                    android:title="@string/prefEsuMc2KnobButtonTitle"
+                    android:summary="@string/prefEsuMc2KnobButtonSummary"
+                    android:defaultValue="@bool/prefEsuMc2KnobButtonDefaultValue" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
