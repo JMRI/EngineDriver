@@ -19,7 +19,6 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,7 +27,6 @@ import android.content.SharedPreferences;
 import android.gesture.GestureOverlayView;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -43,12 +41,9 @@ import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
 import android.text.format.Time;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.InputDevice;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -75,9 +70,8 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import eu.esu.mobilecontrol2.sdk.StopButtonFragment;
@@ -88,36 +82,18 @@ import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import static android.view.InputDevice.getDevice;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
-import static android.view.KeyEvent.KEYCODE_0;
-import static android.view.KeyEvent.KEYCODE_5;
 import static android.view.KeyEvent.KEYCODE_A;
 import static android.view.KeyEvent.KEYCODE_BACK;
-import static android.view.KeyEvent.KEYCODE_BUTTON_A;
-import static android.view.KeyEvent.KEYCODE_BUTTON_B;
-import static android.view.KeyEvent.KEYCODE_BUTTON_L1;
-import static android.view.KeyEvent.KEYCODE_BUTTON_L2;
-import static android.view.KeyEvent.KEYCODE_BUTTON_R1;
-import static android.view.KeyEvent.KEYCODE_BUTTON_R2;
-import static android.view.KeyEvent.KEYCODE_BUTTON_X;
-import static android.view.KeyEvent.KEYCODE_BUTTON_Y;
 import static android.view.KeyEvent.KEYCODE_D;
-import static android.view.KeyEvent.KEYCODE_DEL;
-import static android.view.KeyEvent.KEYCODE_DPAD_DOWN;
-import static android.view.KeyEvent.KEYCODE_DPAD_LEFT;
-import static android.view.KeyEvent.KEYCODE_DPAD_RIGHT;
-import static android.view.KeyEvent.KEYCODE_DPAD_UP;
-import static android.view.KeyEvent.KEYCODE_ENTER;
 import static android.view.KeyEvent.KEYCODE_F;
 import static android.view.KeyEvent.KEYCODE_N;
 import static android.view.KeyEvent.KEYCODE_R;
-import static android.view.KeyEvent.KEYCODE_SPACE;
 import static android.view.KeyEvent.KEYCODE_T;
 import static android.view.KeyEvent.KEYCODE_V;
 import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
 import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
-import static android.view.KeyEvent.KEYCODE_Z;
 
 // for changing the screen brightness
 
@@ -4489,9 +4465,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.setRoutesMenuOption(TMenu);
             mainapp.setTurnoutsMenuOption(TMenu);
             mainapp.setGamepadTestMenuOption(TMenu, gamepadCount);
+            mainapp.setKidsMenuOptions(TMenu, prefKidsTimer.equals(PREF_KIDS_TIMER_NONE), gamepadCount);
             mainapp.setFlashlightButton(TMenu);
             mainapp.displayFlashlightMenuButton(TMenu);
-            mainapp.setKidsMenuOptions(TMenu, prefKidsTimer.equals(PREF_KIDS_TIMER_NONE), gamepadCount);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");
@@ -4751,13 +4727,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
 
+            case R.id.timer_mnu:
+                showTimerPasswordDialog();
+                break;
+
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, TMenu);
                 break;
 
-            case R.id.timer_mnu:
-                showTimerPasswordDialog();
-                break;
         }
         return super.onOptionsItemSelected(item);
     }
