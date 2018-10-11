@@ -266,12 +266,15 @@
     <string name="prefEsuMc2ZeroTrimDefaultValue">10</string>
     <string name="prefEsuMc2EndStopDirectionChangeTitle">Direction Change at end-stop</string>
     <string name="prefEsuMc2EndStopDirectionChangeSummary">Allow Loco direction to change when control knob at counter-clockwise end-stop position.</string>
+    <string name="prefEsuMc2KnobButtonTitle">Show disable Knob button</string>
+    <string name="prefEsuMc2KnobButtonSummary">Allow the control knob to be disabled by an action button on the throttle screen.</string>
     <!-- ESU MCII preferences -->
 
     <!-- ESU MCII Messages -->
     <string name="toastEsuMc2NoLocoChange">Loco change not allowed: Mobile Control II currently in stop mode</string>
     <string name="toastEsuMc2NoThrottleChange">Throttle change not allowed: Mobile Control II currently in stop mode</string>
     <string name="toastEsuMc2NoButtonPresses">Button presses not allowed: Mobile Control II currently in stop mode</string>
+    <string name="EsuMc2KnobAction">Enable/Disable Knob</string>
     <!-- ESU MCII Messages -->
 
     <string name="prefDefaultFunctionsTitle">Default Function Preferences</string>

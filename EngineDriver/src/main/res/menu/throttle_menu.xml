@@ -26,6 +26,9 @@
     <item android:id="@+id/settings_mnu" android:title="@string/settings"></item>
     <item android:id="@+id/about_mnu" android:title="@string/about"></item>
     <item android:id="@+id/logviewer_menu" android:title="@string/logViewer"></item>
+    <item android:id="@+id/EsuMc2Knob_button"
+        android:title="@string/EsuMc2KnobAction" android:visible="false"
+        android:showAsAction="ifRoom"></item>
     <item android:id="@+id/flashlight_button"
         android:title="@string/flashlightAction" android:visible="false"
         android:showAsAction="ifRoom"></item>
