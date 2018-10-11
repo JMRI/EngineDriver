@@ -450,6 +450,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private boolean esuButtonAutoDecrement = false;
     private boolean prefEsuMc2EndStopDirectionChange = true;
     private boolean prefEsuMc2StopButtonShortPress = true;
+    private boolean isEsuMc2KnobEnabled = true;
 
     // Create default ESU MCII ThrottleScale for each throttle
     private ThrottleScale[] esuThrottleScales
@@ -2726,7 +2727,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         public void onButtonDown() {
             Log.d("Engine_Driver", "ESU_MCII: Knob button down for throttle " + whichVolume);
             if (!isScreenLocked) {
-                if (prefEsuMc2EndStopDirectionChange) {
+                if (!isEsuMc2KnobEnabled) {
+                    Log.d("Engine_Driver", "ESU_MCII: Knob disabled - direction change ignored");
+                } else if (prefEsuMc2EndStopDirectionChange) {
                     Log.d("Engine_Driver", "ESU_MCII: Attempting to switch direction");
                     changeDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1));
                     speedUpdateAndNotify(whichVolume, 0, false);
@@ -2748,7 +2751,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         public void onPositionChanged(int knobPos) {
             int speed;
             if (!isScreenLocked) {
-                if (getConsist(whichVolume).isActive() && !isEsuMc2Stopped) {
+                if (!isEsuMc2KnobEnabled) {
+                    Log.d("Engine_Driver", "ESU_MCII: Disabled knob position moved for throttle " + whichVolume);
+                    Log.d("Engine_Driver", "ESU_MCII: Nothing updated");
+                } else if (getConsist(whichVolume).isActive() && !isEsuMc2Stopped) {
                     speed = esuThrottleScales[whichVolume].positionToStep(knobPos);
                     Log.d("Engine_Driver", "ESU_MCII: Knob position changed for throttle " + whichVolume);
                     Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
@@ -3032,6 +3038,52 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         bLSpds[whichThrottle].setEnabled(enabled);
         bRSpds[whichThrottle].setEnabled(enabled);
         sbs[whichThrottle].setEnabled(enabled);
+    }
+
+    /**
+     * Display the ESU MCII knob action button if configured
+     *
+     * @param menu the menu upon which the action should be shown
+     */
+    private void displayEsuMc2KnobMenuButton(Menu menu) {
+        MenuItem mi = menu.findItem(R.id.EsuMc2Knob_button);
+        if (mi == null) return;
+
+        if (prefs.getBoolean("prefEsuMc2KnobButtonDisplay", false)) {
+            mi.setVisible(true);
+        } else {
+            mi.setVisible(false);
+        }
+        setEsuMc2KnobButton(menu);
+
+    }
+    /**
+     * Set the state of the ESU MCII knob action button/menu entry
+     *
+     * @param menu the menu upon which the action is shown
+     */
+    public void setEsuMc2KnobButton(Menu menu) {
+        if (menu != null) {
+            if (isEsuMc2KnobEnabled) {
+                menu.findItem(R.id.EsuMc2Knob_button).setIcon(R.drawable.esumc2knob_on);
+            } else {
+                menu.findItem(R.id.EsuMc2Knob_button).setIcon(R.drawable.esumc2knob_off);
+            }
+        }
+    }
+    /**
+     * Toggle the state of the ESU MCII knob
+     *
+     * @param activity the requesting activity
+     * @param menu     the menu upon which the entry/button should be updated
+     */
+    public void toggleEsuMc2Knob(Activity activity, Menu menu) {
+        if (isEsuMc2KnobEnabled) {
+            isEsuMc2KnobEnabled = false;
+        } else {
+            isEsuMc2KnobEnabled = true;
+        }
+        setEsuMc2KnobButton(menu);
     }
 
 // Listeners for the Select Loco buttons
@@ -4355,6 +4407,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.setGamepadTestMenuOption(TMenu,gamepadCount);
             mainapp.setFlashlightButton(TMenu);
             mainapp.displayFlashlightMenuButton(TMenu);
+            displayEsuMc2KnobMenuButton(TMenu);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");
@@ -4452,6 +4505,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         TMenu = menu;
         mainapp.displayFlashlightMenuButton(menu);
         mainapp.setFlashlightButton(menu);
+        if (IS_ESU_MCII) {
+            displayEsuMc2KnobMenuButton(menu);
+        }
         return true;
     }
 
@@ -4616,6 +4672,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, TMenu);
+                break;
+
+            case R.id.EsuMc2Knob_button:
+                toggleEsuMc2Knob(this, TMenu);
                 break;
         }
         return super.onOptionsItemSelected(item);
