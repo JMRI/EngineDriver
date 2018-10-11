@@ -4734,7 +4734,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, TMenu);
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }
