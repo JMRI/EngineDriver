@@ -81,7 +81,7 @@ public class shakeDetector implements SensorEventListener {
             float gZ = z / SensorManager.GRAVITY_EARTH;
 
             // gForce will be close to 1 when there is no movement.
-            float gForce = FloatMath.sqrt(gX * gX + gY * gY + gZ * gZ);
+            float gForce = (float) Math.sqrt(gX * gX + gY * gY + gZ * gZ);
 
             if (gForce > prefFloatAccelerometerShakeThreshold) {
                 final long now = System.currentTimeMillis();
