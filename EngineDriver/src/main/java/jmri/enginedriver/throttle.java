@@ -19,6 +19,7 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -2372,8 +2373,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     }
                 }
             } else {
+                start_gamepad_test_activity(i);
                 if (gamePadDeviceIdsTested[i]==GAMEPAD_BAD){  // gamepad is known but failed the test last time
-                    start_gamepad_test_activity(i);
                 }
             }
         }
