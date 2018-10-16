@@ -56,6 +56,7 @@ interface message_type {
     int WITHROTTLE_SEND = 34;    // ta, pass complete message, used for delayed sends
     int SEND_HEARTBEAT_START = 35;    // ta, pass complete message, used for delayed sends
     int FORCE_FUNCTION = 36;     // ed(buttons) -> ta function, on = 0 off =1(sends Tfxy to WiT)
+    int TOAST_MESSAGE = 37;      //web_activity -> ta pass message text
     int KIDS_TIMER_ENABLE = 37;  //
     int KIDS_TIMER_START = 38;   //
     int KIDS_TIMER_END = 39;     //
