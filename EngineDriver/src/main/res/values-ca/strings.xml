@@ -644,4 +644,16 @@
     <string name="prefConsistFollowAction4Summary">Quins cajuns del consisteixen han de reaccionar a les funcions trobades.</string>
     <string name="prefConsistFollowString5Title">Cadena 5</string>
     <string name="prefConsistFollowString5Summary">Les cadenes (s) separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer una funció similar.</string>
+
+    <string name="prefKidsSectionTitle">Preferències dels nens</string>
+    <string name="prefKidsSectionSummary">Opcions per a nens petits.</string>
+    <string name="prefKidsHelpTitle">Notes per al temporitzador:</string>
+    <string name="prefKidsHelpSummary">- seleccioneu el boig primer. \n- El temporitzador començarà amb el primer augment de la velocitat. \n- Cal tornar a aquesta preferència per restablir l\'hora (o netejar-la) després del temps d\'espera. \n \nRecomissions: \n- Desactiva les tecles de volum. \n- Desactiva \'Passa el dit pels torns\'. \n- Desactiva \'Passa el pas per les rutes\'. \n- Desactiveu EStop.</string>
+    <string name="prefKidsTimerTitle">Durada limitada</string>
+    <string name="prefKidsTimerSummary">Restringiu el temps que el loco s\'executarà. per exemple. Cada nen tindrà una quantitat igual de temps.</string>
+
+    <string name="app_name_throttle_kids_running">Throttle - %1$s seg. romanent</string>
+    <string name="app_name_throttle_kids_enabled">Throttle - Temporitzador llest</string>
+    <string name="app_name_throttle_kids_ended">Throttle - El cronòmetre finalitza</string>
+
 </resources>

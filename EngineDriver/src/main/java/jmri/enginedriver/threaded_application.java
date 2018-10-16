@@ -692,6 +692,18 @@ public class threaded_application extends Application {
                         show_toast_message(msg.obj.toString(), Toast.LENGTH_LONG);
                         break;
 
+                    case message_type.KIDS_TIMER_ENABLE:
+                        sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_ENABLE, "", 0);
+                        break;
+                    case message_type.KIDS_TIMER_START:
+                        sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_START, "", 0);
+                        break;
+                    case message_type.KIDS_TIMER_END:
+                        sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_END, "", 0);
+                        break;
+                    case message_type.KIDS_TIMER_TICK:
+                        sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_TICK, "", msg.arg1);
+                        break;
                 }
             }
         }
@@ -2264,6 +2276,39 @@ public class threaded_application extends Application {
                     item.setVisible(false);
                 }
             }
+        }
+    }
+
+    public void setMenuItemById(Menu menu, int id, boolean show){
+        if (menu != null) {
+            MenuItem item = menu.findItem(id);
+            if (item != null) {
+                item.setVisible(show);
+            }
+        }
+    }
+
+    public void setKidsMenuOptions(Menu menu, boolean show, int gamepadCount) {
+        if (!show) {
+            for (int i = 0; i < menu.size(); i++) {
+                MenuItem item = menu.getItem(i);
+                //if ((item.getItemId() == R.id.preferences_mnu) || (item.getItemId() == R.id.timer_mnu)) {
+                if (item.getItemId() == R.id.timer_mnu) {
+                        item.setVisible(true);
+                } else {
+                    item.setVisible(false);
+                }
+            }
+        } else {
+            setPowerMenuOption(menu);
+            setWebMenuOption(menu);
+            setRoutesMenuOption(menu);
+            setTurnoutsMenuOption(menu);
+            setGamepadTestMenuOption(menu,gamepadCount);
+            setMenuItemById(menu, R.id.preferences_mnu, true);
+            setMenuItemById(menu, R.id.logviewer_menu, true);
+            setMenuItemById(menu, R.id.exit_mnu, true);
+            setMenuItemById(menu, R.id.timer_mnu, false);
         }
     }
 

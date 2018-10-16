@@ -193,4 +193,14 @@
         <item>Lead + Trail Locos - O mesmo número de função</item>
         <item>Todos os Locos - Número da Mesma Função</item>
     </string-array>
+
+    <string-array name="prefKidsTimerEntries"> <!-- versão de exibição -->
+        <item>Desativado</item>
+        <item>1 minuto</item>
+        <item>2 minutos</item>
+        <item>5 minutos</item>
+        <item>10 minutos</item>
+        <item>Executar concluído</item>
+    </string-array>
+
 </resources>
