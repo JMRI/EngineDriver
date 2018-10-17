@@ -176,4 +176,14 @@
         <item>Locals de plom + remolc - Igual número de funció</item>
         <item>Tots els locos: el mateix número de funció</item>
     </string-array>
+
+    <string-array name="prefKidsTimerEntries"> <!-- display version -->
+        <item>Desactivat</item>
+        <item>1 minut</item>
+        <item>2 minuts</item>
+        <item>5 minuts</item>
+        <item>10 minuts</item>
+        <item>Executar completat</item>
+    </string-array>
+
 </resources>

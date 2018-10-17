@@ -41,12 +41,14 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentActivity;
+import android.text.InputType;
 import android.text.format.Time;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.InputDevice;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -61,6 +63,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -73,8 +76,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import eu.esu.mobilecontrol2.sdk.StopButtonFragment;
@@ -438,6 +441,22 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     protected static final String THEME_DEFAULT = "Default";
 
+    private static final int KIDS_TIMER_DISABLED = 0;
+    private static final int KIDS_TIMER_STARTED = 1;
+    private static final int KIDS_TIMER_ENABLED = 2;
+    private static final int KIDS_TIMER_RUNNNING = 3;
+    private static final int KIDS_TIMER_ENDED = 999;
+    private static final String PREF_KIDS_TIMER_NONE = "0";
+    private static final String PREF_KIDS_TIMER_ENDED = "999";
+    private String prefKidsTimer = PREF_KIDS_TIMER_NONE;
+    private int prefKidsTime = 0;  // in milliseconds
+    private int kidsTimerRunning = KIDS_TIMER_DISABLED;
+    private MyCountDownTimer kidsTimer;
+    private String prefKidsTimerResetPassword = "9999";
+    private String prefKidsTimerRestartPassword = "0000";
+    private String passwordText = "";
+
+
     // For ESU MobileControlII
     private static final boolean IS_ESU_MCII = MobileControl2.isMobileControl2();
     private boolean isEsuMc2Stopped = false; // for tracking status of Stop button
@@ -650,6 +669,82 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+
+    private class MyCountDownTimer extends CountDownTimer {
+
+        public MyCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_START, "", 0, 0);
+        }
+
+        @Override
+        public void onFinish() {  // When timer is finished
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_END, "", 0, 0);
+            //finish();
+            //showTimerPasswordDialog();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {   // millisUntilFinished    The amount of time until finished.
+            int secondsLeft = (int) millisUntilFinished / 1000;
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_TICK, "", secondsLeft, 0);
+        }
+    }
+
+    private void kidsTimerActions(int action, int arg) {
+        switch (action) {
+            case KIDS_TIMER_DISABLED:
+                kidsTimerRunning = KIDS_TIMER_DISABLED;
+                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+                    enable_disable_buttons(throttleIndex, false);
+                }
+                setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
+                if (TMenu != null) {
+                    mainapp.setKidsMenuOptions(TMenu, true, 0);
+                }
+                break;
+            case KIDS_TIMER_ENABLED:
+                if (((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING))) {
+                    kidsTimerRunning = KIDS_TIMER_ENABLED;
+                    for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+                        enable_disable_buttons(throttleIndex, false);
+                        bSels[throttleIndex].setEnabled(false);
+                    }                    setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_enabled));
+                    if (TMenu != null) {
+                        mainapp.setKidsMenuOptions(TMenu, false, 0);
+                    }
+                }
+                break;
+            case KIDS_TIMER_STARTED:
+                if ((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING)) {
+                    kidsTimerRunning = KIDS_TIMER_RUNNNING;
+                    kidsTimer = new MyCountDownTimer(prefKidsTime, 1000);
+                    kidsTimer.start();
+                }
+                break;
+            case KIDS_TIMER_ENDED:
+                speedUpdateAndNotify(0);
+                kidsTimerRunning = KIDS_TIMER_ENDED;
+                kidsTimer.cancel();
+                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+                    enable_disable_buttons(throttleIndex, true);
+                    bSels[throttleIndex].setEnabled(false);
+                }
+                prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_ENDED).commit();  //reset the preference
+                setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_ended));
+                //if (TMenu != null) {
+                //    mainapp.setKidsMenuOptions(TMenu, true, gamepadCount);
+                //}
+                break;
+            case KIDS_TIMER_RUNNNING:
+                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+                    bSels[throttleIndex].setEnabled(false);
+                }
+                setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_running).replace("%1$s", Integer.toString(arg)));
+                break;
+        }
+    }
+
     // Handle messages from the communication thread TO this thread (responses from withrottle)
     @SuppressLint("HandlerLeak")
     private class throttle_handler extends Handler {
@@ -832,6 +927,19 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 case message_type.REQ_STEAL:
                     promptForSteal( msg.obj.toString(), msg.arg1);
                     break;
+                case message_type.KIDS_TIMER_ENABLE:
+                    kidsTimerActions(KIDS_TIMER_ENABLED,0);
+                    break;
+                case message_type.KIDS_TIMER_START:
+                    kidsTimerActions(KIDS_TIMER_STARTED,0);
+                    break;
+                case message_type.KIDS_TIMER_TICK:
+                    kidsTimerActions(KIDS_TIMER_RUNNNING,msg.arg1);
+                    break;
+                case message_type.KIDS_TIMER_END:
+                    kidsTimerActions(KIDS_TIMER_ENDED,0);
+                    break;
+
             }
         }
     }
@@ -1090,6 +1198,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         }
     }
+    protected void getKidsTimerPrefs() {
+        prefKidsTimer = prefs.getString("prefKidsTimer", getResources().getString(R.string.prefKidsTimerDefaultValue));
+        if ((!prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)) && (!prefKidsTimer.equals(PREF_KIDS_TIMER_ENDED))) {
+            prefKidsTime = Integer.parseInt(prefKidsTimer) * 60000;
+        } else {
+            prefKidsTime = 0;
+        }
+        prefKidsTimerResetPassword = prefs.getString("prefKidsTimerResetPassword", getResources().getString(R.string.prefKidsTimerResetPasswordDefaultValue));
+        prefKidsTimerRestartPassword = prefs.getString("prefKidsTimerRestartPassword", getResources().getString(R.string.prefKidsTimerRestartPasswordDefaultValue));
+    }
 
     // get all the preferences that should be read when the activity is created or resumes
     protected void getCommonPrefs(boolean isCreate) {
@@ -1191,6 +1309,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         mainapp.numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+
+        if (isCreate) {
+            prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
+        }
+        getKidsTimerPrefs();
     }
 
     protected void getDirectionButtonPrefs() {
@@ -1417,6 +1540,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 speedChangeAndNotify(whichThrottle, prefGamePadSpeedButtonsSpeedStep);
                 break;
         }
+
+        kidsTimerActions(KIDS_TIMER_STARTED,0);
     }
 
     // set speed slider and notify server for all throttles
@@ -2271,8 +2396,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     }
                 }
             } else {
+                start_gamepad_test_activity(i);
                 if (gamePadDeviceIdsTested[i]==GAMEPAD_BAD){  // gamepad is known but failed the test last time
-                    start_gamepad_test_activity(i);
                 }
             }
         }
@@ -4137,6 +4262,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         }
 
+        if (((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING))) {
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_ENABLE, "", 0, 0);
+        } else {
+            if (kidsTimerRunning == KIDS_TIMER_ENDED) {
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_END, "", 0, 0);
+            }
+            if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)){
+                kidsTimerActions(KIDS_TIMER_DISABLED,0);
+            }
+        }
+
         setupTts();
     }
 
@@ -4404,7 +4540,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.setWebMenuOption(TMenu);
             mainapp.setRoutesMenuOption(TMenu);
             mainapp.setTurnoutsMenuOption(TMenu);
-            mainapp.setGamepadTestMenuOption(TMenu,gamepadCount);
+            mainapp.setGamepadTestMenuOption(TMenu, gamepadCount);
+            mainapp.setKidsMenuOptions(TMenu, prefKidsTimer.equals(PREF_KIDS_TIMER_NONE), gamepadCount);
             mainapp.setFlashlightButton(TMenu);
             mainapp.displayFlashlightMenuButton(TMenu);
             displayEsuMc2KnobMenuButton(TMenu);
@@ -4670,6 +4807,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
 
+            case R.id.timer_mnu:
+                showTimerPasswordDialog();
+                break;
+
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, TMenu);
                 break;
@@ -4724,6 +4865,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 }
                 // in case the preference has changed but the current screen does not support the number selected.
                 setThottleNumLimits();
+
+                getKidsTimerPrefs();
+                if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)){
+                    kidsTimerActions(KIDS_TIMER_DISABLED,0);
+                }
+
                 break;
             }
             case ACTIVITY_GAMEPAD_TEST: {
@@ -5080,5 +5227,48 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (mainapp.maxThrottles > mainapp.maxThrottlesCurrentScreen) {   // Maximum number of throttles this screen supports
             mainapp.maxThrottles = mainapp.maxThrottlesCurrentScreen;
         }
+    }
+
+
+    private void showTimerPasswordDialog () {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(getApplicationContext().getResources().getString(R.string.timerDialogTitle));
+        alert.setMessage(getApplicationContext().getResources().getString(R.string.timerDialogMessage));
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setHint(getApplicationContext().getResources().getString(R.string.timerDialogHint));
+        alert.setView(input);
+
+        alert.setPositiveButton(getApplicationContext().getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                passwordText = input.getText().toString();
+                Log.d("", "Password Value : " + passwordText);
+
+                if (passwordText.equals(prefKidsTimerResetPassword)) { //reset
+                    kidsTimerActions(KIDS_TIMER_ENDED, 0);
+                    kidsTimerActions(KIDS_TIMER_DISABLED, 0);
+                    prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
+                    getKidsTimerPrefs();
+                }
+
+                if (passwordText.equals(prefKidsTimerRestartPassword)) { //reset
+                    kidsTimerActions(KIDS_TIMER_ENABLED, 0);
+                }
+
+                return;
+            }
+        });
+
+        alert.setNegativeButton(getApplicationContext().getResources().getString(R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+        alert.show();
+
     }
 }

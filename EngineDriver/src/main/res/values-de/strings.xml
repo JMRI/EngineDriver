@@ -622,4 +622,16 @@
     <string name="prefConsistFollowString5Title">Zeichenfolge 5</string>
     <string name="prefConsistFollowString5Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbezeichnungen der Loks im Bestand gesucht werden soll, um eine ähnliche Funktion zu erkennen.</string>
     <string name="prefConsistFollowAction5Title">Aktion für String 5</string>
+
+    <string name="prefKidsSectionTitle">Kinderpräferenzen</string>
+    <string name="prefKidsSectionSummary">Optionen für kleine Kinder.</string>
+    <string name="prefKidsHelpTitle">Hinweise für den Timer:</string>
+    <string name="prefKidsHelpSummary">- Wählen Sie zuerst die Lok. \n- Der Timer startet mit der ersten Geschwindigkeitssteigerung. \n- Sie müssen zu dieser Einstellung zurückkehren, um die Zeit nach dem Timeout zurückzusetzen (oder zu löschen). \n \nEmpfehlungen: \n- Deaktivieren Sie die Volume-Schlüssel. \n- Deaktivieren Sie \'Swipe Through Turnouts\'. \n- Deaktivieren Sie 'Swipe Through Routes'. \n- Deaktivieren Sie EStop.</string>
+    <string name="prefKidsTimerTitle">Zeitbegrenztes Laufen</string>
+    <string name="prefKidsTimerSummary">Beschränke die Zeit, die die Lok laufen wird. z.B. Jedes Kind bekommt die gleiche Zeit.</string>
+
+    <string name="app_name_throttle_kids_running">Throttle - %1$s sek. verbleibend</string>
+    <string name="app_name_throttle_kids_enabled">Gas - Timer bereit</string>
+    <string name="app_name_throttle_kids_ended">Gas - Timer beendet</string>
+
 </resources>
