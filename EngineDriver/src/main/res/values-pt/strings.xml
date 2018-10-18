@@ -561,7 +561,7 @@
     <string name="prefConsistFollowString1DefaultValue">LUZ</string>
     <string name="prefConsistFollowString2DefaultValue">AZUL, CHIFRE, SINO</string>
     <string name="prefConsistFollowString1Title">Corda específica do farol 1</string>
-    <string name="prefConsistFollowString1Summary">Cadeia (s) separada (s) por vírgula para procurar nos rótulos de função das locos na composição para reconhecer a função \ 'Headlight \' (normalmente F0).</string>
+    <string name="prefConsistFollowString1Summary">Cadeia (s) separada (s) por vírgula para procurar nos rótulos de função das locos na composição para reconhecer a função \'Headlight \' (normalmente F0).</string>
     <string name="prefConsistFollowAction1Title">Ação específica do farol 1</string>
     <string name="prefConsistFollowAction1Summary">Quais locos no composto devem reagir às funções do farol encontradas.</string>
     <string name="prefConsistFollowString2Title">String 2</string>
@@ -583,7 +583,7 @@
     <string name="prefKidsSectionTitle">Preferências infantis</string>
     <string name="prefKidsSectionSummary">Opções para crianças pequenas.</string>
     <string name="prefKidsHelpTitle">Notas para o temporizador:</string>
-    <string name="prefKidsHelpSummary">- selecione a locomotiva primeiro. \n- O cronômetro iniciará com o primeiro aumento na velocidade. \n- Você deve voltar a essa preferência para redefinir a hora (ou apagá-la) após o tempo limite. \n \ nRecomendações: \n- Desabilite as teclas de volume. \n- Desativar "Swipe Through Turnouts". \n- Desabilitar "Swipe Through Routes". \n- Desativar o EStop.</string>
+    <string name="prefKidsHelpSummary">- selecione a locomotiva primeiro. \n- O cronômetro iniciará com o primeiro aumento na velocidade. \n- Você deve voltar a essa preferência para redefinir a hora (ou apagá-la) após o tempo limite. \n \nRecomendações: \n- Desabilite as teclas de volume. \n- Desativar \"Swipe Through Turnouts\". \n- Desabilitar \"Swipe Through Routes\". \n- Desativar o EStop.</string>
     <string name="prefKidsTimerTitle">Corrida limitada no tempo</string>
     <string name="prefKidsTimerSummary">Restringir o tempo que o loco será executado. por exemplo. Cada criança terá uma quantidade igual de tempo.</string>
 
