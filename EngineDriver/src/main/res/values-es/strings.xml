@@ -590,7 +590,7 @@
     <string name="flashlightStateOff">La Luz Flash está Apagada</string>
     <string name="prefFlashlightSummary">¿Muestra las teclas de la linterna en las pantallas de Controlador, Desvíos y Rutas?</string>
     <string name="prefFlashlightTitle">¿Muestra el botón de la luz flash?</string>
-    <string name="toastFlashlightFailed">¡Disculpa! Ha habido un error al cambiar a la linterna&#8230;</string>
+    <string name="toastFlashlightOnFailed">¡Disculpa! Ha habido un error al cambiar a la linterna&#8230;</string>
     <string name="prefConnectTimeoutMsTitle">Tiempo de espera de Conexión Inicial</string>
     <string name="prefConnectTimeoutMsSummary">Establece el tiempo de espera de conexión inicial en milisegundos</string>
     <string name="prefSocketTimeoutMsTitle">Tiempo de espera del Socket</string>

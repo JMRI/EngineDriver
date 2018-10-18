@@ -576,7 +576,7 @@
     <string name="flashlightStateOff">Taschenlampe ist aus</string>
     <string name="prefFlashlightSummary">Zeige Knopf für Taschenlampe in Fahrregler-, Weichen- und Fahrstraßenanzeigen?</string>
     <string name="prefFlashlightTitle">Knopf für Taschenlampe anzeigen?</string>
-    <string name="toastFlashlightFailed">Entschuldigung! Es gab ein Problem beim Einschalten der Taschenlampe&#8230;</string>
+    <string name="toastFlashlightOnFailed">Entschuldigung! Es gab ein Problem beim Einschalten der Taschenlampe&#8230;</string>
     <string name="prefConnectTimeoutMsTitle">Erstes Verbindungstimeout</string>
     <string name="prefConnectTimeoutMsSummary">Lege die anfängliche Zeitüberschreitung beim Verbinden in Millisekunden fest</string>
     <string name="prefSocketTimeoutMsTitle">Socket-Zeitüberschreitung</string>

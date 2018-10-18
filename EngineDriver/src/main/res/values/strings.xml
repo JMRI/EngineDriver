@@ -726,7 +726,8 @@
     <string name="flashlightStateOff">Flashlight is Off</string>
     <string name="prefFlashlightSummary">Display flashlight button in Throttle, Turnout and Routes screens?</string>
     <string name="prefFlashlightTitle">Show flashlight button?</string>
-    <string name="toastFlashlightFailed">Sorry! There was a problem switching on the flashlight&#8230;</string>
+    <string name="toastFlashlightOnFailed">Sorry! There was a problem switching on the flashlight&#8230;</string>
+    <string name="toastFlashlightOffFailed">Sorry! There was a problem switching off the flashlight&#8230;</string>
 
     <string name="logViewerTitle">LogViewerActivity | Throttle Name: %1$s</string>
 
