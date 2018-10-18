@@ -1,5 +1,5 @@
 # Built application files
-/*/build/
+**/build/
 
 # Crashlytics configuations
 com_crashlytics_export_strings.xml
@@ -18,7 +18,8 @@ local.properties
 /*/*.iml
 gradlew
 EngineDriver.iml
-/*/gradle/wrapper/
+**/gradle/wrapper/
+**/gen
 
 # OS-specific files
 .DS_Store
