@@ -179,7 +179,7 @@
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>Corrispondenza semplice del testo (originale)</item>
-        <item>Corrispondenza complessa del testo: stringhe configurabili dall'utente</item>
+        <item>Corrispondenza complessa del testo: stringhe configurabili dall\'utente</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>Lead Loco - Partial Part</item>

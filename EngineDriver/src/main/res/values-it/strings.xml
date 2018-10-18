@@ -562,7 +562,7 @@
     <string name="prefConsistFollowString1DefaultValue">LEGGERO</string>
     <string name="prefConsistFollowString2DefaultValue">FISCHIO, CORNO, BELL</string>
     <string name="prefConsistFollowString1Title">Stringa specifica del faro 1</string>
-    <string name="prefConsistFollowString1Summary">Le stringhe separate da virgola da cercare nelle etichette delle funzioni delle locomotive consistono nel riconoscere la funzione \ 'Headlight \' (normalmente F0).</string>
+    <string name="prefConsistFollowString1Summary">Le stringhe separate da virgola da cercare nelle etichette delle funzioni delle locomotive consistono nel riconoscere la funzione \'Headlight \' (normalmente F0).</string>
     <string name="prefConsistFollowAction1Title">Azione specifica del faro 1</string>
     <string name="prefConsistFollowAction1Summary">Quali locomotive nel consistono dovrebbero reagire alle funzioni del faro trovate.</string>
     <string name="prefConsistFollowString2Title">Stringa 2</string>

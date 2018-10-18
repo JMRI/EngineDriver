@@ -159,7 +159,7 @@
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>Combinació de text simple (original)</item>
-        <item>Combinació de text complex: cadenes configurables per l'usuari</item>
+        <item>Combinació de text complex: cadenes configurables per l\'usuari</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>Lead Loco - Partial Match</item>

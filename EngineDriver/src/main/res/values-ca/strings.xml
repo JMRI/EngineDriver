@@ -627,7 +627,7 @@
     <string name="prefConsistFollowTitle">Funció consistent Segueix les preferències</string>
     <string name="prefConsistFollowSummary">Opcions de com es comportaran les funcions en un format.</string>
     <string name="prefConsistFollowString1Title">Estrelles específiques del far del foc 1</string>
-    <string name="prefConsistFollowString1Summary">Les cadenes (s) separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer la funció \ 'Headlight \' (normalment F0).</string>
+    <string name="prefConsistFollowString1Summary">Les cadenes (s) separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer la funció \'Headlight \' (normalment F0).</string>
     <string name="prefConsistFollowAction1Title">Acció específica de la llum davantera 1</string>
     <string name="prefConsistFollowAction1Summary">Quins cajuns de la consistència han de reaccionar a les funcions de fars de llum trobats.</string>
     <string name="prefConsistFollowString2Title">Cadena 2</string>

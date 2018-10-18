@@ -604,7 +604,7 @@
     <string name="prefConsistFollowString1DefaultValue">LICHT</string>
     <string name="prefConsistFollowString2DefaultValue">Whistle, Horn, Bell</string>
     <string name="prefConsistFollowString1Title">Scheinwerferspezifische Zeichenfolge 1</string>
-    <string name="prefConsistFollowString1Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbeschriftungen der Loks im Verbund gesucht wird, um die \ 'Scheinwerfer \' - Funktion zu erkennen (normalerweise F0).</string>
+    <string name="prefConsistFollowString1Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbeschriftungen der Loks im Verbund gesucht wird, um die \'Scheinwerfer \' - Funktion zu erkennen (normalerweise F0).</string>
     <string name="prefConsistFollowAction1Title">Scheinwerferspezifische Aktion 1</string>
     <string name="prefConsistFollowAction1Summary">Welche Loks im Verbund auf die gefundenen Scheinwerferfunktionen reagieren sollen.</string>
     <string name="prefConsistFollowString2Title">Zeichenfolge 2</string>
@@ -626,7 +626,7 @@
     <string name="prefKidsSectionTitle">Kinderpräferenzen</string>
     <string name="prefKidsSectionSummary">Optionen für kleine Kinder.</string>
     <string name="prefKidsHelpTitle">Hinweise für den Timer:</string>
-    <string name="prefKidsHelpSummary">- Wählen Sie zuerst die Lok. \n- Der Timer startet mit der ersten Geschwindigkeitssteigerung. \n- Sie müssen zu dieser Einstellung zurückkehren, um die Zeit nach dem Timeout zurückzusetzen (oder zu löschen). \n \nEmpfehlungen: \n- Deaktivieren Sie die Volume-Schlüssel. \n- Deaktivieren Sie \'Swipe Through Turnouts\'. \n- Deaktivieren Sie 'Swipe Through Routes'. \n- Deaktivieren Sie EStop.</string>
+    <string name="prefKidsHelpSummary">- Wählen Sie zuerst die Lok. \n- Der Timer startet mit der ersten Geschwindigkeitssteigerung. \n- Sie müssen zu dieser Einstellung zurückkehren, um die Zeit nach dem Timeout zurückzusetzen (oder zu löschen). \n \nEmpfehlungen: \n- Deaktivieren Sie die Volume-Schlüssel. \n- Deaktivieren Sie \'Swipe Through Turnouts\'. \n- Deaktivieren Sie \'Swipe Through Routes\'. \n- Deaktivieren Sie EStop.</string>
     <string name="prefKidsTimerTitle">Zeitbegrenztes Laufen</string>
     <string name="prefKidsTimerSummary">Beschränke die Zeit, die die Lok laufen wird. z.B. Jedes Kind bekommt die gleiche Zeit.</string>
 

@@ -627,7 +627,7 @@
     <string name="prefConsistFollowString1DefaultValue">LICHT</string>
     <string name="prefConsistFollowString2DefaultValue">Whistle, Horn, Bell</string>
     <string name="prefConsistFollowString1Title">Scheinwerferspezifische Zeichenfolge 1</string>
-    <string name="prefConsistFollowString1Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbeschriftungen der Loks im Verbund gesucht wird, um die \ 'Scheinwerfer \' - Funktion zu erkennen (normalerweise F0).</string>
+    <string name="prefConsistFollowString1Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbeschriftungen der Loks im Verbund gesucht wird, um die \'Scheinwerfer \' - Funktion zu erkennen (normalerweise F0).</string>
     <string name="prefConsistFollowAction1Title">Scheinwerferspezifische Aktion 1</string>
     <string name="prefConsistFollowAction1Summary">Welche Loks im Verbund auf die gefundenen Scheinwerferfunktionen reagieren sollen.</string>
     <string name="prefConsistFollowString2Title">Zeichenfolge 2</string>
@@ -649,7 +649,7 @@
     <string name="prefKidsSectionTitle">Preferencias de los niños</string>
     <string name="prefKidsSectionSummary">Opciones para niños pequeños.</string>
     <string name="prefKidsHelpTitle">Notas para el temporizador:</string>
-    <string name="prefKidsHelpSummary">- seleccione la locomotora primero. \n- El temporizador comenzará con el primer aumento de velocidad. \n- Debe volver a esta preferencia para restablecer el tiempo (o borrarlo) después del tiempo de espera. \n \ nRecomendaciones: \n- Deshabilite las teclas de volumen. \n- Deshabilite \'Deslizar por las salidas\'. \n- Deshabilite \ 'Deslizar las rutas\'. \n- Desactive EStop.</string>
+    <string name="prefKidsHelpSummary">- seleccione la locomotora primero. \n- El temporizador comenzará con el primer aumento de velocidad. \n- Debe volver a esta preferencia para restablecer el tiempo (o borrarlo) después del tiempo de espera. \n \ nRecomendaciones: \n- Deshabilite las teclas de volumen. \n- Deshabilite \'Deslizar por las salidas\'. \n- Deshabilite \'Deslizar las rutas\'. \n- Desactive EStop.</string>
     <string name="prefKidsTimerTitle">Tiempo limitado de ejecución</string>
     <string name="prefKidsTimerSummary">Restrinja el tiempo que la locomotora funcionará. p.ej. Cada niño tendrá la misma cantidad de tiempo.</string>
 
