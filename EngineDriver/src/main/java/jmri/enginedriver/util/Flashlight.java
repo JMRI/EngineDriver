@@ -82,7 +82,7 @@ public abstract class Flashlight {
      */
     @TargetApi(Build.VERSION_CODES.FROYO)
     private static class FroyoFlashlight extends Flashlight {
-        protected static Camera camera;
+        private static Camera camera;
 
         @Override
         protected void init() {
