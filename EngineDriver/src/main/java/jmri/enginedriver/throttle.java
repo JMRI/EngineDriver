@@ -2396,8 +2396,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     }
                 }
             } else {
-                start_gamepad_test_activity(i);
                 if (gamePadDeviceIdsTested[i]==GAMEPAD_BAD){  // gamepad is known but failed the test last time
+                    start_gamepad_test_activity(i);
                 }
             }
         }
