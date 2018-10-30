@@ -2526,7 +2526,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 int repeatCnt = 0;
                 int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), 0); // dummy eventKeyCode
 
-                if (whichGamePadIsEventFrom > -1) { // the event came for a gamepad
+                if ((whichGamePadIsEventFrom > -1) && (whichGamePadIsEventFrom < gamePadDeviceIdsTested.length)) { // the event came from a gamepad
                     if (gamePadDeviceIdsTested[getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)]!=GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
                         acceptEvent = false;
                     }
@@ -2610,7 +2610,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 int whichThrottle;
                 int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getKeyCode());
 
-                if (whichGamePadIsEventFrom > -1) { // the event came for a gamepad
+                if ((whichGamePadIsEventFrom > -1) && (whichGamePadIsEventFrom < gamePadDeviceIdsTested.length)) { // the event came from a gamepad
                     if (gamePadDeviceIdsTested[getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)]!=GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
                         acceptEvent = false;
                     }
