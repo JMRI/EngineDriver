@@ -31,6 +31,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -50,8 +51,10 @@ import java.util.Random;
 import android.content.Context;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
+import jmri.enginedriver.util.PermissionsHelper;
+import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
-public class preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+public class preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener,PermissionsHelper.PermissionsHelperGrantedCallback {
     static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
     static public final int RESULT_ESUMCII = RESULT_GAMEPAD + 1;
 
@@ -831,5 +834,35 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+
+    public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
+        if (!PermissionsHelper.getInstance().isPermissionGranted(preferences.this, requestCode)) {
+            PermissionsHelper.getInstance().requestNecessaryPermissions(preferences.this, requestCode);
+        } else {
+            // Go to the correct handler based on the request code.
+            // Only need to consider relevant request codes initiated by this Activity
+            switch (requestCode) {
+                case PermissionsHelper.STORE_PREFERENCES:
+                    Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
+//                    saveSharedPreferencesToFileImpl();
+                    break;
+                case PermissionsHelper.READ_PREFERENCES:
+                    Log.d("Engine_Driver", "Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
+//                    loadSharedPreferencesFromFileImpl();
+                    break;
+                default:
+                    // do nothing
+                    Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(preferences.this, requestCode, permissions, grantResults)) {
+            Log.d("Engine_Driver", "Unrecognised request - send up to super class");
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

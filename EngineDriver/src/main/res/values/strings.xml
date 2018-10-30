@@ -804,4 +804,19 @@
     <string name="timerDialogMessage">Password :</string>
     <string name="timerDialogHint">Restart or Reset Pwd</string>
 
+    <string name="permissionsReadRecentConnections">Engine Driver needs STORAGE permissions to read recent connections.</string>
+    <string name="permissionsStoreRecentConnections">Engine Driver needs STORAGE permissions to store recent connections.</string>
+    <string name="permissionsClearRecentConnections">Engine Driver needs STORAGE permissions to clear recent connections.</string>
+    <string name="permissionsReadPreferences">Engine Driver needs STORAGE permissions to read preferences.</string>
+    <string name="permissionsStorePreferences">Engine Driver needs STORAGE permissions to store preferences.</string>
+    <string name="permissionsClearPreferences">Engine Driver needs STORAGE permissions to clear preferences.</string>
+    <string name="permissionsReadPhoneState">Engine Driver needs PHONE permissions to pause operations when on a call.</string>
+    <string name="permissionsReadFunctionSettings">Engine Driver needs STORAGE permissions to read function settings.</string>
+    <string name="permissionsStoreFunctionSettings">Engine Driver needs STORAGE permissions to store function settings.</string>
+    <string name="permissionsConnectToServer">Engine Driver needs STORAGE permissions to store recent connections and PHONE permissions to pause operations when on a call.</string>
+    <string name="permissionsGotoAppSettings">Please enable these permissions from the app settings.</string>
+    <string name="permissionsAppSettingsButton">App settings</string>
+    <string name="permissionsRetryButton">Retry</string>
+    <string name="permissionsRequestTitle">Permissions Required</string>
+    <string name="permissionsRetryTitle">Permissions Declined</string>
 </resources>

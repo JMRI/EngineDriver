@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import android.support.annotation.NonNull;
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -65,7 +66,10 @@ import android.widget.AdapterView;
 
 import android.content.Context;
 
-public class connection_activity extends Activity {
+import jmri.enginedriver.util.PermissionsHelper;
+import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
+
+public class connection_activity extends Activity implements PermissionsHelper.PermissionsHelperGrantedCallback {
     private ArrayList<HashMap<String, String>> connections_list;
     private ArrayList<HashMap<String, String>> discovery_list;
     private SimpleAdapter connection_list_adapter;
@@ -123,8 +127,12 @@ public class connection_activity extends Activity {
         }
     }
 
-    //Request connection to the WiThrottle server.
     private void connect() {
+        navigateToHandler(PermissionsHelper.CONNECT_TO_SERVER);
+    }
+
+    //Request connection to the WiThrottle server.
+    private void connectImpl() {
         //	  sendMsgErr(0, message_type.CONNECT, connected_hostip, connected_port, "ERROR in ca.connect: comm thread not started.");
         Log.d("Engine_Driver", "in connection_activity.connect()");
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CONNECT, connected_hostip, connected_port);
@@ -580,9 +588,13 @@ public class connection_activity extends Activity {
         }
     }
 
+    private void clearConnectionsList(){
+        navigateToHandler(PermissionsHelper.CLEAR_CONNECTION_LIST);
+    }
+
     //Jeffrey M added 7/3/2013
     //Clears recent connection list.
-    private void clearConnectionsList() {
+    private void clearConnectionsListImpl() {
         //if no SD Card present then nothing to do
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             Toast.makeText(getApplicationContext(), "Error no recent connections exist", Toast.LENGTH_SHORT).show();
@@ -598,7 +610,11 @@ public class connection_activity extends Activity {
         }
     }
 
-    private void getConnectionsList() {
+    private void getConnectionsList(){
+        navigateToHandler(PermissionsHelper.READ_CONNECTION_LIST);
+    }
+
+    private void getConnectionsListImpl() {
         boolean foundDemoHost = false;
         connections_list.clear();
         String errMsg;
@@ -694,9 +710,11 @@ public class connection_activity extends Activity {
 	}
 	 */
 
-    private boolean saveSharedPreferencesToFile() {
-        boolean res = false;
+    private void saveSharedPreferencesToFile(){
+        navigateToHandler(PermissionsHelper.STORE_PREFERENCES);
+    }
 
+    private void saveSharedPreferencesToFileImpl() {
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -709,20 +727,20 @@ public class connection_activity extends Activity {
                     File engine_driver_dir = new File(path, "engine_driver");
                     engine_driver_dir.mkdir();            // create directory if it doesn't exist
 
-                    res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+                    importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                 }
             } else {
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG).show();
             }
-        } else { // preference is NOT to save the preferences for the host
-            res = true;
         }
-        return res;
+    }
+
+    private void loadSharedPreferencesFromFile(){
+        navigateToHandler(PermissionsHelper.READ_PREFERENCES);
     }
 
    @SuppressWarnings({ "unchecked" })
-   private boolean loadSharedPreferencesFromFile() {
-       boolean res = false;
+   private void loadSharedPreferencesFromFileImpl() {
        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
        String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
 
@@ -733,19 +751,57 @@ public class connection_activity extends Activity {
                || (prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
            if (mainapp.connectedHostName != null) {
                String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
-               res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
-               res = true;
+               importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
            } else {
                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG).show();
            }
-       } else { // preference is NOT to load the preferences for the host
-           res = true;
        }
-       return res;
    }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+
+    public void navigateToHandler(@RequestCodes int requestCode) {
+        if (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) {
+                PermissionsHelper.getInstance().requestNecessaryPermissions(connection_activity.this, requestCode);
+        } else {
+            // Go to the correct handler based on the request code.
+            // Only need to consider relevant request codes initiated by this Activity
+            switch (requestCode) {
+                case PermissionsHelper.CLEAR_CONNECTION_LIST:
+                    Log.d("Engine_Driver", "Got permission for CLEAR_CONNECTION_LIST - navigate to clearConnectionsListImpl()");
+                    clearConnectionsListImpl();
+                    break;
+                case PermissionsHelper.READ_CONNECTION_LIST:
+                    Log.d("Engine_Driver", "Got permission for READ_CONNECTION_LIST - navigate to getConnectionsListImpl()");
+                    getConnectionsListImpl();
+                    break;
+                case PermissionsHelper.STORE_PREFERENCES:
+                    Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
+                    saveSharedPreferencesToFileImpl();
+                    break;
+                case PermissionsHelper.READ_PREFERENCES:
+                    Log.d("Engine_Driver", "Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
+                    loadSharedPreferencesFromFileImpl();
+                    break;
+                case PermissionsHelper.CONNECT_TO_SERVER:
+                    Log.d("Engine_Driver", "Got permission for READ_PHONE_STATE - navigate to connectImpl()");
+                    connectImpl();
+                    break;
+                default:
+                    // do nothing
+                    Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(connection_activity.this, requestCode, permissions, grantResults)) {
+            Log.d("Engine_Driver", "Unrecognised request - send up to super class");
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }
