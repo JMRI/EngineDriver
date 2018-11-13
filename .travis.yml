@@ -7,6 +7,7 @@ android:
     - platform-tools
     - tools
     - build-tools-27.0.3
+    - android-19
     - android-22
     - android-24
     - android-27
