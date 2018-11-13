@@ -16,9 +16,7 @@ local.properties
 # User-specific configurations
 .idea/
 /*/*.iml
-gradlew
 EngineDriver.iml
-/*/gradle/wrapper/
 
 # OS-specific files
 .DS_Store
