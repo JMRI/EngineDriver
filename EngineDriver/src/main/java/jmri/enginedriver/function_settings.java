@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -45,7 +46,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class function_settings extends Activity {
+import jmri.enginedriver.util.PermissionsHelper;
+import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
+
+public class function_settings extends Activity implements PermissionsHelper.PermissionsHelperGrantedCallback {
 
     private threaded_application mainapp;
     private boolean orientationChange = false;
@@ -217,6 +221,10 @@ public class function_settings extends Activity {
     //function_labels_default was loaded from settings file by TA
     //(and updated by saveSettings() when required) so just copy it
     void initSettings() {
+        navigateToHandler(PermissionsHelper.READ_FUNCTION_SETTINGS);
+    }
+
+    private void initSettingsImpl() {
         mainapp.set_default_function_labels(true);
 
         aLbl.clear();
@@ -388,8 +396,12 @@ public class function_settings extends Activity {
         return (super.onKeyDown(key, event));
     }
 
-    //save function and labels to file
     void saveSettings() {
+        saveSettingsImpl();
+    }
+
+    //save function and labels to file
+    void saveSettingsImpl() {
         //SD Card required to save settings
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
             return;
@@ -484,4 +496,33 @@ public class function_settings extends Activity {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
+
+    public void navigateToHandler(@RequestCodes int requestCode) {
+        if (!PermissionsHelper.getInstance().isPermissionGranted(function_settings.this, requestCode)) {
+            PermissionsHelper.getInstance().requestNecessaryPermissions(function_settings.this, requestCode);
+        } else {
+            switch (requestCode) {
+                case PermissionsHelper.STORE_FUNCTION_SETTINGS:
+                    Log.d("Engine_Driver", "Got permission for STORE_FUNCTION_SETTINGS - navigate to saveSettingsImpl()");
+                    saveSettingsImpl();
+                    break;
+                case PermissionsHelper.READ_FUNCTION_SETTINGS:
+                    Log.d("Engine_Driver", "Got permission for READ_FUNCTION_SETTINGS - navigate to initSettingsImpl()");
+                    initSettingsImpl();
+                    break;
+                default:
+                    // do nothing
+                    Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(function_settings.this, requestCode, permissions, grantResults)) {
+            Log.d("Engine_Driver", "Unrecognised request - send up to super class");
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
 }

@@ -590,7 +590,7 @@
     <string name="flashlightStateOff">La Llum Flash està Apagada</string>
     <string name="prefFlashlightSummary">Mostra les tecles de la llanterna a les pantalles de Controlador, Agulles i Rutes?</string>
     <string name="prefFlashlightTitle">Mostra el botó de la llum flash?</string>
-    <string name="toastFlashlightFailed">Disculpa! Hi ha hagut un problema en commutar la llanterna&#8230;</string>
+    <string name="toastFlashlightOnFailed">Disculpa! Hi ha hagut un problema en commutar la llanterna&#8230;</string>
     <string name="prefConnectTimeoutMsTitle">Temps d\'espera per Connexió Inicial</string>
     <string name="prefConnectTimeoutMsSummary">Estableix el temps d\'espera de connexió inicial en mil·lisegons</string>
     <string name="prefSocketTimeoutMsTitle">Temps d\'espera del Socket</string>
