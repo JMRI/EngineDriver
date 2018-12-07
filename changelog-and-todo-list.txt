@@ -1,4 +1,7 @@
 **Version 2.22
+ * Change target API to 26
+ * gamepad fns behave same as screen fns
+**Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
  * New Colourful/Colorful theme
  * Option to always treat F1 & F2 as sound for the Selective Lead Sounds option
