@@ -82,15 +82,15 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
     private boolean prefGamepadTestEnforceTestingSimple = true;
 
-    private boolean[] gamepadButtonsChecked = {false,false,false,false,false,false,false,false,false,false};
+    private boolean[] gamepadButtonsChecked = {false,false,false,false,false,false,false,false,false,false,false,false,false,false};
 
     // Gamepad Button preferences
     private String[] prefGamePadButtons = {"Next Throttle","Stop", "Function 00/Light", "Function 01/Bell", "Function 02/Horn",
-            "Increase Speed", "Reverse", "Decrease Speed", "Forward", "All Stop"};
+            "Increase Speed", "Reverse", "Decrease Speed", "Forward", "All Stop","Select", "Left Shoulder","Right Shoulder","Left Trigger","Right Trigger"};
 
     //                              none     NextThr  Speed+    Speed-      Fwd         Rev       All Stop    F2         F1          F0        Stop
-    private int[] gamePadKeys =     {0,        0,   KEYCODE_W, KEYCODE_X,   KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
-    private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
+    private int[] gamePadKeys =     {0,        0,   KEYCODE_W, KEYCODE_X,   KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0,0,0,0};
+    private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0,0,0,0};
 
     private ToneGenerator tg;
 
@@ -104,6 +104,10 @@ public class gamepad_test extends Activity implements OnGestureListener {
     private Button bButtonB;
     private Button bButtonStart;
     private Button bButtonEnter;
+    private Button bButtonLeftShoulder;
+    private Button bButtonRightShoulder;
+    private Button bButtonLeftTrigger;
+    private Button bButtonRightTrigger;
     private TextView tvGamepadMode;
     private TextView tvGamepadKeyCode;
     private TextView tvGamepadKeyFunction;
@@ -165,6 +169,12 @@ public class gamepad_test extends Activity implements OnGestureListener {
         prefGamePadButtons[7] = prefs.getString("prefGamePadButtonDown", getApplicationContext().getResources().getString(R.string.prefGamePadButtonDownDefaultValue));
         prefGamePadButtons[8] = prefs.getString("prefGamePadButtonLeft", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftDefaultValue));
 
+        //extra buttons
+        prefGamePadButtons[10] = prefs.getString("prefGamePadButtonLeftShoulder", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftTriggerDefaultValue));
+        prefGamePadButtons[11] = prefs.getString("prefGamePadButtonRightShoulder", getApplicationContext().getResources().getString(R.string.prefGamePadButtonRightShoulderDefaultValue));
+        prefGamePadButtons[12] = prefs.getString("prefGamePadButtonLeftTrigger", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftTriggerDefaultValue));
+        prefGamePadButtons[13] = prefs.getString("prefGamePadButtonRightTrigger", getApplicationContext().getResources().getString(R.string.prefGamePadButtonRightTriggerDefaultValue));
+
         bDpadUp.setSelected(false);
         bDpadDown.setSelected(false);
         bDpadLeft.setSelected(false);
@@ -175,6 +185,10 @@ public class gamepad_test extends Activity implements OnGestureListener {
         bButtonB.setSelected(false);
         bButtonStart.setSelected(false);
         bButtonEnter.setSelected(false);
+        bButtonLeftShoulder.setSelected(false);
+        bButtonRightShoulder.setSelected(false);
+        bButtonLeftTrigger.setSelected(false);
+        bButtonRightTrigger.setSelected(false);
 
         // make sure the Softkeyboard is hidden
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
@@ -203,13 +217,17 @@ public class gamepad_test extends Activity implements OnGestureListener {
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1B);
                 bGamePadKeysUp = bGamePadKeys;
                 break;
+            case "FlydigiWee2":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadFlydigiWee2);
+                bGamePadKeysUp = bGamePadKeys;
+                break;
             default: // "iCade" or iCade-rotate
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCade);
                 bGamePadKeysUp = this.getResources().getIntArray(R.array.prefGamePadiCade_UpCodes);
                 break;
         }
         // now grab the keycodes and put them into the arrays that will actually be used.
-        for (int i = 0; i<=10; i++ ) {
+        for (int i = 0; i<=14; i++ ) {
             gamePadKeys[i] = bGamePadKeys[i];
             gamePadKeys_Up[i] = bGamePadKeysUp[i];
         }
@@ -268,6 +286,10 @@ public class gamepad_test extends Activity implements OnGestureListener {
         setButtonOff(bButtonB);
         setButtonOff(bButtonStart);
         setButtonOff(bButtonEnter);
+        setButtonOff(bButtonLeftShoulder);
+        setButtonOff(bButtonRightShoulder);
+        setButtonOff(bButtonLeftTrigger);
+        setButtonOff(bButtonRightTrigger);
 
     }
 
@@ -384,6 +406,8 @@ public class gamepad_test extends Activity implements OnGestureListener {
                 float xAxis = 0;
                 xAxis = event.getAxisValue(MotionEvent.AXIS_X);
                 float yAxis = event.getAxisValue(MotionEvent.AXIS_Y);
+                float xAxis2 = event.getAxisValue(MotionEvent.AXIS_Z);
+                float yAxis2 = event.getAxisValue(MotionEvent.AXIS_RZ);
 
                 if ((xAxis!=0) || (yAxis!=0)) {
                     action = ACTION_DOWN;
@@ -418,6 +442,35 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
                 } else if (xAxis == 1) { // DPAD Right Button
                     setButtonOn(bDpadRight, prefGamePadButtons[6],"DPad Right");
+                    setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesRightCode), action);
+                    GamepadFeedbackSound(false);
+                    isTestComplete(6);
+                    return (true); // stop processing this key
+                }
+
+                if (yAxis2 == -1) { // DPAD2 Up Button
+                    setButtonOn(bDpadUp, prefGamePadButtons[5],"DPad2 Up");
+                    setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesUpCode), action);
+                    GamepadFeedbackSound(false);
+                    isTestComplete(5);
+                    return (true); // stop processing this key
+
+                } else if (yAxis2 == 1) { // DPAD2 Down Button
+                    setButtonOn(bDpadDown, prefGamePadButtons[7],"DPad2 Down");
+                    setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesDownCode), action);
+                    GamepadFeedbackSound(false);
+                    isTestComplete(7);
+                    return (true); // stop processing this key
+
+                } else if (xAxis2 == -1) { // DPAD2 Left Button
+                    setButtonOn(bDpadLeft, prefGamePadButtons[8],"DPad2 Left");
+                    setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesLeftCode), action);
+                    GamepadFeedbackSound(false);
+                    isTestComplete(8);
+                    return (true); // stop processing this key
+
+                } else if (xAxis2 == 1) { // DPAD2 Right Button
+                    setButtonOn(bDpadRight, prefGamePadButtons[6],"DPad2 Right");
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesRightCode), action);
                     GamepadFeedbackSound(false);
                     isTestComplete(6);
@@ -506,6 +559,30 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
                     } else if (keyCode == gamePadKeys[6]) { // start button
                         setButtonOn(bButtonStart, prefGamePadButtons[0], String.valueOf(keyCode));
+                        GamepadFeedbackSound(false);
+                        isTestComplete(0);
+                        return (true); // stop processing this key
+
+                    } else if (keyCode == gamePadKeys[11]) { // Left Shoulder button
+                        setButtonOn(bButtonLeftShoulder, prefGamePadButtons[10], String.valueOf(keyCode));
+                        GamepadFeedbackSound(false);
+                        isTestComplete(0);
+                        return (true); // stop processing this key
+
+                    } else if (keyCode == gamePadKeys[12]) { // Right Shoulder button
+                        setButtonOn(bButtonRightShoulder, prefGamePadButtons[11], String.valueOf(keyCode));
+                        GamepadFeedbackSound(false);
+                        isTestComplete(0);
+                        return (true); // stop processing this key
+
+                    } else if (keyCode == gamePadKeys[13]) { // Left Trigger button
+                        setButtonOn(bButtonLeftTrigger, prefGamePadButtons[12], String.valueOf(keyCode));
+                        GamepadFeedbackSound(false);
+                        isTestComplete(0);
+                        return (true); // stop processing this key
+
+                    } else if (keyCode == gamePadKeys[14]) { // Right Trigger button
+                        setButtonOn(bButtonRightTrigger, prefGamePadButtons[13], String.valueOf(keyCode));
                         GamepadFeedbackSound(false);
                         isTestComplete(0);
                         return (true); // stop processing this key
@@ -634,6 +711,19 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
         bButtonEnter = (Button) findViewById(R.id.gamepad_test_button_enter);
         bButtonEnter.setClickable(false);
+
+        bButtonLeftShoulder = (Button) findViewById(R.id.gamepad_test_button_left_shoulder);
+        bButtonLeftShoulder.setClickable(false);
+
+        bButtonRightShoulder = (Button) findViewById(R.id.gamepad_test_button_right_shoulder);
+        bButtonRightShoulder.setClickable(false);
+
+        bButtonLeftTrigger = (Button) findViewById(R.id.gamepad_test_button_left_trigger);
+        bButtonLeftTrigger.setClickable(false);
+
+        bButtonRightTrigger = (Button) findViewById(R.id.gamepad_test_button_right_trigger);
+        bButtonRightTrigger.setClickable(false);
+
 
         //tvGamepadMode =(TextView) findViewById(R.id.gamepad_test_mode);
 

@@ -25,6 +25,10 @@
     <color name="holoBlue">#ff33b5e5</color>
     <color name="divider">#ffc1c1c1</color>
 
+    <color name="primary_text">#ffffffff</color>
+    <color name="secondary_text">#ffffffff</color>
+    <color name="tertiary_text">#ffffffff</color>
+
     <!-- Black Theme -->
 
     <color name="buttonFill_black">#ffd6d6d6</color>

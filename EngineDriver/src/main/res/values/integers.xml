@@ -73,6 +73,7 @@
     <integer name="KeyCode_Button_X"> 99</integer>
     <integer name="KeyCode_Button_Y"> 100</integer>
     <integer name="KeyCode_Button_Start"> 108</integer>
+    <integer name="KeyCode_Button_Select"> 109</integer>
     <integer name="KeyCode_Mute"> 164</integer>
 
     <integer name="KeyCode_Button_L1"> 102</integer>
