@@ -13,7 +13,7 @@
       Public License along with this program; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="exit">Exit</string>
     <string name="settings">Function Defaults</string>
     <string name="fb_label">Function Label</string>
@@ -232,6 +232,10 @@
     <string name="prefGamePadButtonRightDefaultValue">Reverse</string>
     <string name="prefGamePadButtonDownDefaultValue">Decrease Speed</string>
     <string name="prefGamePadButtonLeftDefaultValue">Forward</string>
+    <string name="prefGamePadButtonLeftShoulderDefaultValue">Function 03</string>
+    <string name="prefGamePadButtonRightShoulderDefaultValue">Function 04</string>
+    <string name="prefGamePadButtonLeftTriggerDefaultValue">Function 05</string>
+    <string name="prefGamePadButtonRightTriggerDefaultValue">Function 06</string>
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
@@ -572,6 +576,10 @@
     <string name="gamepadTestButtonLabelButtonB">B [@]</string>
     <string name="gamepadTestButtonLabelButtonStart">Start | Enter</string>
     <string name="gamepadTestButtonLabelButtonEnter">Select | Enter</string>
+    <string name="gamepadTestButtonLabelButtonLeftShoulder">Left Shoulder</string>
+    <string name="gamepadTestButtonLabelButtonRightShoulder">Right Shoulder</string>
+    <string name="gamepadTestButtonLabelButtonLeftTrigger">Left Trigger</string>
+    <string name="gamepadTestButtonLabelButtonRightTrigger">Right Trigger</string>
 
     <string name="gamepadTestOptionalLabel">Optional (may not be on the device)</string>
     <string name="gamepadTestAllKeyCodesLabel">All codes:\s\s</string>

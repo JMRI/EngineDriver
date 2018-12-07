@@ -184,6 +184,7 @@
               <item >VRBoxiC-rotate</item>
       -->
         <item>MagicseeR1B</item>
+        <item>FlydigiWee2</item>
     </string-array>
 
     <string-array name="prefGamePadTypeEntries">  <!-- display version -->
@@ -205,6 +206,7 @@
         <item >VRBOX/iOS- C Mode - DPAD rotated</item>
 -->
         <item>MagicseeR1 Android-Game B</item>
+        <item >Flydigi Wee 2</item>
     </string-array>
 
     <string-array name="prefSwipeUpOptionsEntryValues">
@@ -316,6 +318,10 @@
         <item>@integer/KeyCode_J</item> //key down   'N' down
         <item>@integer/KeyCode_H</item> //key down   'R' down
         <item>@integer/KeyCode_U</item> //key down   'T' down
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
     </integer-array>
     <integer-array name="prefGamePadiCade_UpCodes">
         <item>0</item> //not used
@@ -329,6 +335,10 @@
         <item>@integer/KeyCode_N</item>
         <item>@integer/KeyCode_R</item>
         <item>@integer/KeyCode_F</item>
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
     </integer-array>
     <integer-array name="prefGamePadiCadePlusDpad">
         <item>0</item> //not used
@@ -342,6 +352,10 @@
         <item>@integer/KeyCode_J</item>
         <item>@integer/KeyCode_H</item>
         <item>@integer/KeyCode_U</item>
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
     </integer-array>
     <integer-array name="prefGamePadiCadePlusDpad_UpCodes">
         <item>0</item> //not used
@@ -355,6 +369,10 @@
         <item>@integer/KeyCode_N</item>
         <item>@integer/KeyCode_R</item>
         <item>@integer/KeyCode_F</item>
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
     </integer-array>
     <integer-array name="prefGamePadMTK">
         <item>0</item> //not used
@@ -368,6 +386,10 @@
         <item>@integer/KeyCode_4</item> //gamepadY = KEYCODE_N;
         <item>@integer/KeyCode_1</item> //gamepadA = KEYCODE_R;
         <item>@integer/KeyCode_2</item> //gamepadB = KEYCODE_F;
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
     </integer-array>
     <integer-array name="prefGamePadGame">
         <item>0</item> //not used
@@ -381,6 +403,10 @@
         <item>@integer/KeyCode_Button_X</item> //gamepadY
         <item>@integer/KeyCode_Volume_Up</item> //gamepadA
         <item>@integer/KeyCode_Enter</item> //gamepadB
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
     </integer-array>
 <!--
     <integer-array name="prefGamePadVRBoxA">
@@ -395,6 +421,10 @@
         <item>@integer/KeyCode_Play_Pause</item> //gamepadA, gamepadEnter
         <item>@integer/KeyCode_Volume_Down</item> //gamepadD
         <item>@integer/KeyCode_Volume_Up</item> //gamepadC
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
     </integer-array>
     <integer-array name="prefGamePadVRBoxC">
         <item>0</item> //not used
@@ -408,6 +438,10 @@
         <item>@integer/KeyCode_Button_B</item> //gamepadB, gamepadEscape
         <item>@integer/KeyCode_Volume_Down</item> //gamepadD
         <item>@integer/KeyCode_Enter</item> //gamepadC
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
     </integer-array>
     <integer-array name="prefGamePadVRBoxiC">
         <item>0</item> //not used
@@ -421,6 +455,10 @@
         <item>@integer/KeyCode_H</item> //gamepadB
         <item>@integer/KeyCode_J</item> //gamepadD
         <item>@integer/KeyCode_Y</item> //gamepadC
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
     </integer-array>
     <integer-array name="prefGamePadVRBoxiC_UpCodes">
         <item>0</item> //not used
@@ -434,6 +472,10 @@
         <item>@integer/KeyCode_R</item>
         <item>@integer/KeyCode_N</item>
         <item>@integer/KeyCode_T</item>
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
     </integer-array>
 -->
     <integer-array name="prefGamePadMagicseeR1B">
@@ -448,7 +490,48 @@
         <item>@integer/KeyCode_Button_B</item> //gamepadD
         <item>@integer/KeyCode_Button_R2</item> //gamepadA
         <item>@integer/KeyCode_Button_A</item> //gamepadB
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
     </integer-array>
+
+    <integer-array name="prefGamePadFlydigiWee2">
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Button_Select</item> //Select
+        <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
+        <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadDown = KEYCODE_DPAD_DOWN;
+        <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadLeft = KEYCODE_DPAD_LEFT;
+        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadRight = KEYCODE_DPAD_RIGHT;
+        <item>@integer/KeyCode_Button_Start</item> //gamepadStart
+        <item>@integer/KeyCode_Button_X</item> //gamepadX
+        <item>@integer/KeyCode_Button_Y</item> //gamepadY
+        <item>@integer/KeyCode_Button_A</item> //gamepadA
+        <item>@integer/KeyCode_Button_B</item> //gamepadB
+        <item>@integer/KeyCode_Button_L1</item> //Left Shoulder
+        <item>@integer/KeyCode_Button_R1</item> //Left Trigger
+        <item>@integer/KeyCode_Button_L2</item> //Right Shoulder
+        <item>@integer/KeyCode_Button_R2</item> //Right Trigger
+    </integer-array>
+
+    <string-array name="prefGamePadFlydigiWee2Labels">
+        <item> </item> //not used
+        <item>Button Select action</item>
+        <item>Button DPAD Up action</item>
+        <item>Button DPAD Down action</item>
+        <item>Button DPAD Left action</item>
+        <item>Button DPAD Right action</item>
+        <item>Button Start action</item>
+        <item>Button X action</item>
+        <item>Button Y action</item>
+        <item>Button A action</item>
+        <item>Button B action</item>
+        <item>Left Shoulder</item>
+        <item>Right Shoulder</item>
+        <item>Left Trigger</item>
+        <item>Right Trigger</item>
+    </string-array>
+
 
     <string-array name="prefGamePadMocuteLabels">
         <item> </item> //not used
@@ -462,6 +545,10 @@
         <item>Button Y [Triangle] action</item>
         <item>Button A [Cross] action</item>
         <item>Button B [@] action</item>
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
     </string-array>
 
 <!--
@@ -477,6 +564,10 @@
         <item>Gamepad Button A action</item>
         <item>Button not usable</item> // Gamepad Button B action
         <item>Gamepad Button D action</item>
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
     </string-array>
 -->
 
@@ -492,6 +583,10 @@
         <item>Button D action</item>
         <item>Button A action</item>
         <item>Button B action</item>
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
     </string-array>
 
     <string-array name="prefGamePadNoneLabels">
@@ -506,6 +601,10 @@
         <item>Button not available</item>
         <item>Button not available</item>
         <item>Button not available</item>
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
     </string-array>
 
     <string-array name="prefGamePadPrefButtonReferences">
@@ -520,6 +619,10 @@
         <item>prefGamePadButton3</item>
         <item>prefGamePadButton2</item>
         <item>prefGamePadButton4</item>
+        <item>prefGamePadButtonLeftShoulder</item> //not used
+        <item>prefGamePadButtonRightShoulder</item> //not used
+        <item>prefGamePadButtonLeftTrigger</item> //not used
+        <item>prefGamePadButtonRightTrigger</item> //not used
     </string-array>
 
     <string-array name="prefEsuMc2KeyEntries">  <!-- display version -->
