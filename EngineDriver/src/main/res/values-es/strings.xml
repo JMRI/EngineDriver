@@ -36,8 +36,8 @@
     <string name="app_name_functions">Parámetros de funciones por defecto - Engine Driver</string>
     <string name="app_name_preferences">Preferencias - Engine Driver</string>
     <string name="app_name_select_loco">Selecciona/Libera Locomotora - Engine Driver</string>
-    <string name="app_name_ConsistEdit">Modificar Tracción Múltiple - Engine Driver</string>
-    <string name="app_name_ConsistLightsEdit">Luces de Tracción Múltiple - Engine Driver</string>
+    <string name="app_name_ConsistEdit">Modificar Tracción Múltiple (TM)- Engine Driver</string>
+    <string name="app_name_ConsistLightsEdit">Luces de Tracción Múltiple (TM) - Engine Driver</string>
     <string name="app_name_gamepad_test">Prueba de gamepad - Engine Driver</string>
     <string name="gamepad1_test">Prueba 1 de gamepad</string>
     <string name="gamepad2_test">Prueba 2 de gamepad</string>
@@ -53,7 +53,7 @@
     <string name="select_loco">Entra la Dirección de la Locomotora</string>
     <string name="select_loco_address">Dirección</string>
     <string name="acquire_button">Adquirir</string>
-    <string name="roster_list">Selecciona desde la Flota/Tracción Múltiple</string>
+    <string name="roster_list">Selecciona desde la Flota/TM</string>
     <string name="recent_engines">Selecciona desde Lomotoras Recientes</string>
     <string name="direction">Adelante</string>
     <string name="speed">Velocidad:</string>
@@ -66,7 +66,7 @@
     <string name="fb_helptext">Entra etiquetas y funciones en la lista de la derecha. Déjala en blanco  para esconder el botón. Estos se utilizan cuando las funciones de la Flota no están disponibles.</string>
     <string name="copy_function_labels">Copiar Etiquetas desde la Flota</string>
     <string name="fb_header">Modificar Funciones</string>
-    <string name="consist_help">Pulsar una locomotora para cambiar su dirección respecto a la de la Multi Tracción. Mantener pulsado para eliminar una locomotora de la Multi Tracción. Pulsar Atrás para terminar.</string>
+    <string name="consist_help">Pulsar una locomotora para cambiar su dirección respecto a la de la TM. Mantener pulsado para eliminar una locomotora de la TM. Pulsar Atrás para terminar.</string>
     <string name="about">Acerca de</string>
     <string name="web">Web</string>
     <string name="about_page_url">file:///android_asset/about_page-es.html</string>
@@ -95,7 +95,7 @@
     <string name="routes_location_label">Filtra por Localización</string>
     <string name="routes_list_label">Ruta (pulsa para cambiar)</string>
     <string name="consist_lead_label">Locomotora de cabeza</string>
-    <string name="consist_list_label">Sentido de las Locomotoras de la Multi Tracción</string>
+    <string name="consist_list_label">Sentido de las Locomotoras de la TM</string>
     <string name="throw_button">Desviada</string>
     <string name="close_button">Directa</string>
     <string name="toggle_button">Cambia</string>
@@ -260,7 +260,7 @@
     <string name="prefWebViewLocationSummary">Incluye una visualización web al panel del Controlador</string>
     <string name="prefSelectLocoTitle">Selecciona las Preferencias de la Locomotora</string>
     <string name="prefSelectiveLeadSoundTitle">¿Sonido selectivo de la unidad de cabeza?</string>
-    <string name="prefSelectiveLeadSoundSummary">Activa funciones Bocina/Campana sólo en la Locomotora de Cabeza de la Multi Tracción del EngineDriver.(Tan solo cualquier función con una \'etiqueta\' que incluya \'campana\', \'bozina\' o \'silbido\' como parte de la etiqueta.)</string>"
+    <string name="prefSelectiveLeadSoundSummary">Activa funciones Bocina/Campana sólo en la Locomotora de cabeza de la TM del EngineDriver.(Tan solo cualquier función con una \'etiqueta\' que incluya \'campana\', \'bozina\' o \'silbido\' como parte de la etiqueta.)</string>"
     <string name="prefSelectiveLeadSoundF1Title">Siempre trata F1 como sonido</string>
     <string name="prefSelectiveLeadSoundF1Summary">Para la opción de \'Sonido Selectivo de la Unidad Principal\'</string>
     <string name="prefSelectiveLeadSoundF2Title">Siempre trata F2 como sonido</string>
@@ -362,8 +362,8 @@
 
 
     <string name="throttle_name">Nombre del Controlador: %1$s</string>
-    <string name="prefConsistLightsLongClickTitle">Control de luces en Tracción Múltiple con clic largo.</string>
-    <string name="prefConsistLightsLongClickSummary">Cambia las luces de las locomotoras individualmente en una Tracción Múltiple con un clic largo en el botón de Selección de Locomotora.</string>
+    <string name="prefConsistLightsLongClickTitle">Control de luces en TM con clic largo.</string>
+    <string name="prefConsistLightsLongClickSummary">Cambia las luces de las locomotoras individualmente en una TM con un clic largo en el botón de Selección de Locomotora.</string>
     <string name="consistLights_help">Haga clic en una Locomotora para cambiar las luces de esa Locomotora \'Apagado\' o \'Sigue Botón de Función\'.\n\nHaga clic largo en una Locomotora para forzar el estado de la luz \'Apagado\', sin enviar el comando a la Locomotora. (p.e. si ED está confundido).\n\nPresiona la Flecha Atrás para terminar.</string>"
     <string name="prefThrottleImportExportTitle">Importa/Exporta/Reinicia Preferencias</string>
     <string name="prefThrottleImportExportSummary">Importa/Exporta/Reinicia Preferencias</string>
@@ -618,32 +618,31 @@
     <string name="prefImportExportErrorNotConnected">No cenectado a un host.</string>
     <string name="logViewerTitle">Actividad en Visualizador de Log | Nombre de Controlador: %1$s</string>
 
-    <string name="ConsistEditLabelLead">FÜHREN</string>
-    <string name="ConsistEditLabelTrail">WEG</string>
-    <string name="prefConsistFollowRuleStyleTitle">Consist-Funktionen - Folgen Sie dem Regelstil</string>
-    <string name="prefConsistFollowRuleStyleSummary">Welcher Regelstil in einem Satz ist, wenn Funktionstasten gedrückt werden.</string>
-    <string name="prefConsistFollowTitle">Consist Function Folgen Sie den Einstellungen</string>
-    <string name="prefConsistFollowSummary">Optionen für die Funktionsweise von Funktionen in einem Consist.</string>
-    <string name="prefConsistFollowString1DefaultValue">LICHT</string>
-    <string name="prefConsistFollowString2DefaultValue">Whistle, Horn, Bell</string>
-    <string name="prefConsistFollowString1Title">Scheinwerferspezifische Zeichenfolge 1</string>
-    <string name="prefConsistFollowString1Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbeschriftungen der Loks im Verbund gesucht wird, um die \ 'Scheinwerfer \' - Funktion zu erkennen (normalerweise F0).</string>
-    <string name="prefConsistFollowAction1Title">Scheinwerferspezifische Aktion 1</string>
-    <string name="prefConsistFollowAction1Summary">Welche Loks im Verbund auf die gefundenen Scheinwerferfunktionen reagieren sollen.</string>
-    <string name="prefConsistFollowString2Title">Zeichenfolge 2</string>
-    <string name="prefConsistFollowString2Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbezeichnungen der Loks im Bestand gesucht werden soll, um eine ähnliche Funktion zu erkennen.</string>
-    <string name="prefConsistFollowAction2Title">Aktion für Zeichenfolge 2</string>
-    <string name="prefConsistFollowAction2Summary">Welche Loks im Verbund sollten auf die gefundenen Funktionen reagieren.</string>
-    <string name="prefConsistFollowString3Title">Zeichenfolge 3</string>
-    <string name="prefConsistFollowString3Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbezeichnungen der Loks im Bestand gesucht werden soll, um eine ähnliche Funktion zu erkennen.</string>
-    <string name="prefConsistFollowAction3Title">Aktion für Zeichenfolge 3</string>
-    <string name="prefConsistFollowAction3Summary">Welche Loks im Verbund sollten auf die gefundenen Funktionen reagieren.</string>
-    <string name="prefConsistFollowString4Title">Zeichenfolge 4</string>
-    <string name="prefConsistFollowString4Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbezeichnungen der Loks im Bestand gesucht werden soll, um eine ähnliche Funktion zu erkennen.</string>
-    <string name="prefConsistFollowAction4Title">Aktion für Zeichenfolge 4</string>
-    <string name="prefConsistFollowAction4Summary">Welche Loks im Verbund sollten auf die gefundenen Funktionen reagieren.</string>
-    <string name="prefConsistFollowString5Title">Zeichenfolge 5</string>
-    <string name="prefConsistFollowString5Summary">Durch Komma getrennte Zeichenketten, nach denen in den Funktionsbezeichnungen der Loks im Bestand gesucht werden soll, um eine ähnliche Funktion zu erkennen.</string>
-    <string name="prefConsistFollowAction5Title">Aktion für String 5</string>
-
+    <string name="ConsistEditLabelLead">DIRIGIR</string>
+    <string name="ConsistEditLabelTrail">RUTA</string>
+    <string name="prefConsistFollowRuleStyleTitle">Funciones en TM: sigue el estilo de regla</string>
+    <string name="prefConsistFollowRuleStyleSummary">Qué estilo de reglas a seguir en TM cuando se presionan los botones de función.</string>
+    <string name="prefConsistFollowString1DefaultValue">LUZ</string>
+    <string name="prefConsistFollowString2DefaultValue">SILBATO, BOZINA, CAMPANA</string>
+    <string name="prefConsistFollowTitle">Función de TM sigue las preferencias</string>
+    <string name="prefConsistFollowSummary">Opciones de como se comportaran las funciones en MT.</string>
+    <string name="prefConsistFollowString1Title">Estrellas específicas del foco de fuego 1</string>
+    <string name="prefConsistFollowString1Summary">Les cadenes (s) separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer la funció \ 'Headlight \' (normalment F0).</string>
+    <string name="prefConsistFollowAction1Title">Acción específica de la luz delantera 1</string>
+    <string name="prefConsistFollowAction1Summary">Qué locomotoras en TM han de reaccionar a las funciones encontradas.</string>
+    <string name="prefConsistFollowString2Title">Cadena 2</string>
+    <string name="prefConsistFollowString2Summary">Las cadenas (s) separadas por comas a buscar en las etiquetas de función de las locomotoras en MT a reconocer una funció similar.</string>
+    <string name="prefConsistFollowAction2Title">Acción para la cadena 2</string>
+    <string name="prefConsistFollowAction2Summary">Qué locomotoras en TM han de reaccionar a las funciones encontradas.</string>
+    <string name="prefConsistFollowString3Title">Cadena 3</string>
+    <string name="prefConsistFollowString3Summary">Las cadenas (s) separadas por comas a buscar en las etiquetas de función de las locomotoras en MT a reconocer una funció similar.</string>
+    <string name="prefConsistFollowAction3Title">Acción para la cadena 3</string>
+    <string name="prefConsistFollowAction3Summary">Qué locomotoras en TM han de reaccionar a las funciones encontradas.</string>
+    <string name="prefConsistFollowString4Title">Cadena 4</string>
+    <string name="prefConsistFollowString4Summary">Las cadenas (s) separadas por comas a buscar en las etiquetas de función de las locomotoras en MT a reconocer una funció similar.</string>
+    <string name="prefConsistFollowAction4Title">Acción para la cadena 4</string>
+    <string name="prefConsistFollowAction4Summary">Qué locomotoras en TM han de reaccionar a las funciones encontradas.</string>
+    <string name="prefConsistFollowString5Title">Cadena 5</string>
+    <string name="prefConsistFollowString5Summary">Las cadenas (s) separadas por comas a buscar en las etiquetas de función de las locomotoras en MT a reconocer una funció similar.</string>
+    <string name="prefConsistFollowAction5Title">Acción para la cadena 5</string>
 </resources>

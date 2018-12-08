@@ -158,22 +158,22 @@
     </string-array>
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
-        <item>Coincidencia simple de texto (original)</item>
-        <item>Concordancia de texto compleja: cadenas configurables por el usuario</item>
+        <item>Coincidencia de texto simple (original)</item>
+        <item>Coincidencia de texto compleja: cadenas configurables por el usuario</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
-        <item>Lead Loco - Partial Match</item>
-        <item>Lead + Trail Locos - Partial Match</item>
-        <item>Todos los Locos - Partial Match</item>
-        <item>Lead Loco - Exact Match</item>
-        <item>Lead + Trail Locos - Coincidencia exacta</item>
-        <item>Todos los Locos - Exact Match</item>
+        <item>Locomotora de Cabeza - Coincidencia Parcial</item>
+        <item>Locomotora de Cabeza+Cola - Coincidencia Parcial</item>
+        <item>Todas las Locomotoras - Coincidencia Parcial</item>
+        <item>Locomotora de Cabeza - Coincidencia Exacta</item>
+        <item>Locomotora de Cabeza+Cola - Coincidencia Exacta</item>
+        <item>Todas las Locomotoras - Coincidencia Exacta</item>
     </string-array>
 
     <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
-        <item>Hacer nada</item>
-        <item>Lead Loco - Mismo número de función</item>
-        <item>Lead + Trail Locos - Mismo número de función</item>
-        <item>All Locos - Número de la misma función</item>
+        <item>No hacer nada</item>
+        <item>Locomotora de Cabeza - Mismo número de función</item>
+        <item>Locomotora de Cabeza+Cola - Mismo número de función</item>
+        <item>Todas las Locomotoras - Mismo número de función</item>
     </string-array>
 </resources>
