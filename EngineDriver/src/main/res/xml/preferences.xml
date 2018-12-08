@@ -492,6 +492,34 @@
                 android:key="prefGamePadButtonLeft"
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButtonLeftTitle" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonLeftShoulderDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonLeftShoulder"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonLeftTitle" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonRightShoulderDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonRightShoulder"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonLeftTitle" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonLeftTriggerDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonLeftTrigger"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonLeftTitle" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonRightTriggerDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonRightTrigger"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonLeftTitle" />
             <!--    Gamepad button preferences   -->
             <CheckBoxPreference
                 android:defaultValue="@bool/prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue"
@@ -793,6 +821,11 @@
                     android:title="@string/prefEsuMc2EndStopDirectionChangeTitle"
                     android:summary="@string/prefEsuMc2EndStopDirectionChangeSummary"
                     android:defaultValue="@bool/prefEsuMc2EndStopDirectionChangeDefaultValue" />
+                <CheckBoxPreference
+                    android:key="prefEsuMc2KnobButtonDisplay"
+                    android:title="@string/prefEsuMc2KnobButtonTitle"
+                    android:summary="@string/prefEsuMc2KnobButtonSummary"
+                    android:defaultValue="@bool/prefEsuMc2KnobButtonDefaultValue" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
@@ -951,6 +984,47 @@
             android:summary="@string/prefSwipeThroughRoutesSummary"
             android:title="@string/prefSwipeThroughRoutesTitle" >
         </CheckBoxPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/prefKidsSectionTitle" >
+        <PreferenceScreen
+            android:key="kids_preferences"
+            android:title="@string/prefKidsSectionTitle"
+            android:summary="@string/prefKidsSectionSummary"
+            android:persistent="false">
+            <ListPreference
+                android:defaultValue="@string/prefKidsTimerDefaultValue"
+                android:entries="@array/prefKidsTimerEntries"
+                android:entryValues="@array/prefKidsTimerEntryValues"
+                android:key="prefKidsTimer"
+                android:summary="@string/prefKidsTimerSummary"
+                android:title="@string/prefKidsTimerTitle" />
+            <EditTextPreference
+                android:defaultValue="@string/prefKidsTimerRestartPasswordDefaultValue"
+                android:dialogTitle="@string/prefKidsTimerRestartPasswordTitle"
+                android:key="prefKidsTimerRestartPassword"
+                android:summary="@string/prefKidsTimerRestartPasswordSummary"
+                android:title="@string/prefKidsTimerRestartPasswordTitle"
+                android:inputType="text"
+                android:maxLines="1">
+            </EditTextPreference>
+            <EditTextPreference
+                android:defaultValue="@string/prefKidsTimerResetPasswordDefaultValue"
+                android:dialogTitle="@string/prefKidsTimerResetPasswordTitle"
+                android:key="prefKidsTimerResetPassword"
+                android:summary="@string/prefKidsTimerResetPasswordSummary"
+                android:title="@string/prefKidsTimerResetPasswordTitle"
+                android:inputType="text"
+                android:maxLines="1">
+            </EditTextPreference>
+
+            <Preference
+                android:selectable="false"
+                android:enabled="true"
+                android:key="kids_Help"
+                android:title="@string/prefKidsHelpTitle"
+                android:summary="@string/prefKidsHelpSummary" />
+        </PreferenceScreen>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/prefThrottleImportExportTitle" >

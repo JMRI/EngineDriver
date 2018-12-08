@@ -158,8 +158,8 @@
     </string-array>
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
-        <item>Coincidència de text simple (original)</item>
-        <item>Coincidència de text complex: cadenes configurables per l'usuari</item>
+        <item>Combinació de text simple (original)</item>
+        <item>Combinació de text complex: cadenes configurables per l\'usuari</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>Locomotora Capdavantera - Coincidència Parcial</item>
@@ -176,4 +176,14 @@
         <item>Locomotora Capdavantera+Cua - El mateix número de funció</item>
         <item>Totes les Locomotores - El mateix número de funció</item>
     </string-array>
+
+    <string-array name="prefKidsTimerEntries"> <!-- display version -->
+        <item>Desactivat</item>
+        <item>1 minut</item>
+        <item>2 minuts</item>
+        <item>5 minuts</item>
+        <item>10 minuts</item>
+        <item>Executar completat</item>
+    </string-array>
+
 </resources>

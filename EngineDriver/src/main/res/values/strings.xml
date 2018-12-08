@@ -13,7 +13,7 @@
       Public License along with this program; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="exit">Exit</string>
     <string name="settings">Function Defaults</string>
     <string name="fb_label">Function Label</string>
@@ -126,6 +126,7 @@
     <string name="volume_indicator">v</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="ok">"Ok"</string>
     <string name="cancel">"Cancel"</string>
     <string name="exit_text">Exit Engine Driver?</string>
     <string name="exit_title">Exit</string>
@@ -231,6 +232,10 @@
     <string name="prefGamePadButtonRightDefaultValue">Reverse</string>
     <string name="prefGamePadButtonDownDefaultValue">Decrease Speed</string>
     <string name="prefGamePadButtonLeftDefaultValue">Forward</string>
+    <string name="prefGamePadButtonLeftShoulderDefaultValue">Function 03</string>
+    <string name="prefGamePadButtonRightShoulderDefaultValue">Function 04</string>
+    <string name="prefGamePadButtonLeftTriggerDefaultValue">Function 05</string>
+    <string name="prefGamePadButtonRightTriggerDefaultValue">Function 06</string>
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
@@ -265,12 +270,15 @@
     <string name="prefEsuMc2ZeroTrimDefaultValue">10</string>
     <string name="prefEsuMc2EndStopDirectionChangeTitle">Direction Change at end-stop</string>
     <string name="prefEsuMc2EndStopDirectionChangeSummary">Allow Loco direction to change when control knob at counter-clockwise end-stop position.</string>
+    <string name="prefEsuMc2KnobButtonTitle">Show disable Knob button</string>
+    <string name="prefEsuMc2KnobButtonSummary">Allow the control knob to be disabled by an action button on the throttle screen.</string>
     <!-- ESU MCII preferences -->
 
     <!-- ESU MCII Messages -->
     <string name="toastEsuMc2NoLocoChange">Loco change not allowed: Mobile Control II currently in stop mode</string>
     <string name="toastEsuMc2NoThrottleChange">Throttle change not allowed: Mobile Control II currently in stop mode</string>
     <string name="toastEsuMc2NoButtonPresses">Button presses not allowed: Mobile Control II currently in stop mode</string>
+    <string name="EsuMc2KnobAction">Enable/Disable Knob</string>
     <!-- ESU MCII Messages -->
 
     <string name="prefDefaultFunctionsTitle">Default Function Preferences</string>
@@ -568,6 +576,10 @@
     <string name="gamepadTestButtonLabelButtonB">B [@]</string>
     <string name="gamepadTestButtonLabelButtonStart">Start | Enter</string>
     <string name="gamepadTestButtonLabelButtonEnter">Select | Enter</string>
+    <string name="gamepadTestButtonLabelButtonLeftShoulder">Left Shoulder</string>
+    <string name="gamepadTestButtonLabelButtonRightShoulder">Right Shoulder</string>
+    <string name="gamepadTestButtonLabelButtonLeftTrigger">Left Trigger</string>
+    <string name="gamepadTestButtonLabelButtonRightTrigger">Right Trigger</string>
 
     <string name="gamepadTestOptionalLabel">Optional (may not be on the device)</string>
     <string name="gamepadTestAllKeyCodesLabel">All codes:\s\s</string>
@@ -722,7 +734,8 @@
     <string name="flashlightStateOff">Flashlight is Off</string>
     <string name="prefFlashlightSummary">Display flashlight button in Throttle, Turnout and Routes screens?</string>
     <string name="prefFlashlightTitle">Show flashlight button?</string>
-    <string name="toastFlashlightFailed">Sorry! There was a problem switching on the flashlight&#8230;</string>
+    <string name="toastFlashlightOnFailed">Sorry! There was a problem switching on the flashlight&#8230;</string>
+    <string name="toastFlashlightOffFailed">Sorry! There was a problem switching off the flashlight&#8230;</string>
 
     <string name="logViewerTitle">LogViewerActivity | Throttle Name: %1$s</string>
 
@@ -773,4 +786,45 @@
     <string name="prefConsistFollowString5Summary">Comma separated string(s) to look for in the function labels of the locos in the consist to recognise a similar function.</string>
     <string name="prefConsistFollowAction5Title">Action for String 5</string>
     <string name="prefConsistFollowAction5Summary">Which locos in the consist should react to the found functions.</string>
+
+    <string name="prefKidsSectionTitle">Children\'s Preferences</string>
+    <string name="prefKidsSectionSummary">Options for young children.</string>
+    <string name="prefKidsHelpTitle">Notes for the Timer:</string>
+    <string name="prefKidsHelpSummary">- select the loco first.\n- Timer will start with the first increase in speed.\n- You must come back to this preference to reset the time (or clear it) after the timeout.\n\nRecommendions:\n- Disable the volume keys.\n- Disable \'Swipe Through Turnouts\'.\n- Disable \'Swipe Through Routes\'.\n- Disable EStop.</string>
+    <string name="prefKidsTimerTitle">Time limited running</string>
+    <string name="prefKidsTimerSummary">Restrict the time that the loco will run. e.g. Each child will get an equal amount of time.</string>
+    <string name="prefKidsTimerDefaultValue">0</string>
+
+    <string name="prefKidsTimerRestartPasswordTitle">Restart Password</string>
+    <string name="prefKidsTimerRestartPasswordSummary">Password to restart the timer with the current settings.</string>
+    <string name="prefKidsTimerRestartPasswordDefaultValue">0000</string>
+
+    <string name="prefKidsTimerResetPasswordTitle">Reset/Disable Password</string>
+    <string name="prefKidsTimerResetPasswordSummary">Password to reset/disable the timer settings.</string>
+    <string name="prefKidsTimerResetPasswordDefaultValue">9999</string>
+
+    <string name="app_name_throttle_kids_running">Throttle - %1$s sec. remaining</string>
+    <string name="app_name_throttle_kids_enabled">Throttle - Timer Ready</string>
+    <string name="app_name_throttle_kids_ended">Throttle - Timer Ended</string>
+
+    <string name="kidsTimer">Timer</string>
+    <string name="timerDialogTitle">Timer Password</string>
+    <string name="timerDialogMessage">Password :</string>
+    <string name="timerDialogHint">Restart or Reset Pwd</string>
+
+    <string name="permissionsReadRecentConnections">Engine Driver needs STORAGE permissions to read recent connections.</string>
+    <string name="permissionsStoreRecentConnections">Engine Driver needs STORAGE permissions to store recent connections.</string>
+    <string name="permissionsClearRecentConnections">Engine Driver needs STORAGE permissions to clear recent connections.</string>
+    <string name="permissionsReadPreferences">Engine Driver needs STORAGE permissions to read preferences.</string>
+    <string name="permissionsStorePreferences">Engine Driver needs STORAGE permissions to store preferences.</string>
+    <string name="permissionsClearPreferences">Engine Driver needs STORAGE permissions to clear preferences.</string>
+    <string name="permissionsReadPhoneState">Engine Driver needs PHONE permissions to pause operations when on a call.</string>
+    <string name="permissionsReadFunctionSettings">Engine Driver needs STORAGE permissions to read function settings.</string>
+    <string name="permissionsStoreFunctionSettings">Engine Driver needs STORAGE permissions to store function settings.</string>
+    <string name="permissionsConnectToServer">Engine Driver needs STORAGE permissions to store recent connections and PHONE permissions to pause operations when on a call.</string>
+    <string name="permissionsGotoAppSettings">Please enable these permissions from the app settings.</string>
+    <string name="permissionsAppSettingsButton">App settings</string>
+    <string name="permissionsRetryButton">Retry</string>
+    <string name="permissionsRequestTitle">Permissions Required</string>
+    <string name="permissionsRetryTitle">Permissions Declined</string>
 </resources>

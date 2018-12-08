@@ -179,7 +179,7 @@
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>Corrispondenza semplice del testo (originale)</item>
-        <item>Corrispondenza complessa del testo: stringhe configurabili dall'utente</item>
+        <item>Corrispondenza complessa del testo: stringhe configurabili dall\'utente</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>Lead Loco - Partial Part</item>
@@ -195,6 +195,15 @@
         <item>Lead Loco - Stesso numero di funzione</item>
         <item>Lead + Trail Locos - Stesso numero di funzione</item>
         <item>Tutte le locomotive - stesso numero di funzione</item>
+    </string-array>
+
+    <string-array name = "prefKidsTimerEntries"> <!-- visualizza versione -->
+        <item>Disabilitato</item>
+        <item>1 minuto</item>
+        <item>2 minuti</item>
+        <item>5 minuti</item>
+        <item>10 minuti</item>
+        <item>Esegui completato </item>
     </string-array>
 
 </resources>

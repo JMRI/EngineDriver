@@ -63,6 +63,7 @@
 
     <bool name="prefEsuMc2EndStopDirectionChangeDefaultValue">true</bool>
     <bool name="prefEsuMc2StopButtonShortPressDefaultValue">true</bool>
+    <bool name="prefEsuMc2KnobButtonDefaultValue">false</bool>
 
     <bool name="prefFlashlightButtonDefaultValue">false</bool>
 </resources>

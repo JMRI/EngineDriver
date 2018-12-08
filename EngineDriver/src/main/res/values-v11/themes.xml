@@ -10,7 +10,7 @@
       WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
       or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
       for more details. You should have received a copy of the GNU General
-      Public License along with thjis program; if not, write to the Free Software
+      Public License along with this program; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
 <resources>
@@ -25,6 +25,12 @@
         <item name="android:listViewStyle">@style/EDListView</item>
         <item name="android:expandableListViewStyle">@style/EDListView</item>
         <item name="android:listSeparatorTextViewStyle">@style/small_heading_style</item>
+
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:actionMenuTextColor">@color/primary_text</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColorHint">@color/tertiary_text</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style</item>
@@ -56,7 +62,13 @@
         <item name="android:titleTextStyle">@style/app_title_black</item>
         <item name="android:dialogTheme">@style/dialogStyle_black</item>
         <item name="android:alertDialogTheme">@style/dialogStyle_black</item>
+
         <item name="android:itemBackground">#ff000000</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:actionMenuTextColor">@color/primary_text</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColorHint">@color/tertiary_text</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style_black</item>
@@ -91,7 +103,13 @@
         <item name="android:titleTextStyle">@style/app_title_black</item>
         <item name="android:dialogTheme">@style/dialogStyle_black</item>
         <item name="android:alertDialogTheme">@style/dialogStyle_black</item>
+
         <item name="android:itemBackground">#ff000000</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:actionMenuTextColor">@color/primary_text</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColorHint">@color/tertiary_text</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
@@ -126,7 +144,13 @@
         <item name="android:titleTextStyle">@style/app_title_black</item>
         <item name="android:dialogTheme">@style/dialogStyle_black</item>
         <item name="android:alertDialogTheme">@style/dialogStyle_black</item>
+
         <item name="android:itemBackground">#ff000000</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:actionMenuTextColor">@color/primary_text</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColorHint">@color/tertiary_text</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>

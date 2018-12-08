@@ -562,7 +562,7 @@
     <string name="prefConsistFollowString1DefaultValue">LEGGERO</string>
     <string name="prefConsistFollowString2DefaultValue">FISCHIO, CORNO, BELL</string>
     <string name="prefConsistFollowString1Title">Stringa specifica del faro 1</string>
-    <string name="prefConsistFollowString1Summary">Le stringhe separate da virgola da cercare nelle etichette delle funzioni delle locomotive consistono nel riconoscere la funzione \ 'Headlight \' (normalmente F0).</string>
+    <string name="prefConsistFollowString1Summary">Le stringhe separate da virgola da cercare nelle etichette delle funzioni delle locomotive consistono nel riconoscere la funzione \'Headlight \' (normalmente F0).</string>
     <string name="prefConsistFollowAction1Title">Azione specifica del faro 1</string>
     <string name="prefConsistFollowAction1Summary">Quali locomotive nel consistono dovrebbero reagire alle funzioni del faro trovate.</string>
     <string name="prefConsistFollowString2Title">Stringa 2</string>
@@ -580,5 +580,16 @@
     <string name="prefConsistFollowString5Title">Stringa 5</string>
     <string name="prefConsistFollowString5Summary">Le stringhe separate da virgola da cercare nelle etichette delle funzioni delle locomotive consistono nel riconoscere una funzione simile.</string>
     <string name="prefConsistFollowAction5Title">Azione per stringa 5</string>
+
+    <string name="prefKidsSectionTitle">Preferenze dei bambini</string>
+    <string name="prefKidsSectionSummary">Opzioni per bambini piccoli.</string>
+    <string name="prefKidsHelpTitle">Note per il timer:</string>
+    <string name="prefKidsHelpSummary">-seleziona prima la loco. \n- Il timer inizierà con il primo aumento della velocità. \n- Devi tornare a questa preferenza per reimpostare l\'ora (o cancellarla) dopo il timeout. \n \ nRaccomandazioni: \ n- Disabilita i tasti del volume. \n- Disabilita \'Scorri attraverso gli scambi\'. \n- Disabilita \'Scorri i percorsi\'. \n- Disabilita EStop.</string>
+    <string name="prefKidsTimerTitle">Tempo limitato in esecuzione</string>
+    <string name="prefKidsTimerSummary">Limita il tempo di esecuzione della locomotiva. per esempio. Ogni bambino riceverà una quantità uguale di tempo.</string>
+
+    <string name="app_name_throttle_kids_running">Throttle: %1$s sec. residuo</string>
+    <string name="app_name_throttle_kids_enabled">Acceleratore - Timer pronto</string>
+    <string name="app_name_throttle_kids_ended">Throttle - Timer Ended</string>
 
 </resources>

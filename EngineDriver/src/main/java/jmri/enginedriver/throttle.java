@@ -41,12 +41,14 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentActivity;
+import android.text.InputType;
 import android.text.format.Time;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.InputDevice;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -61,6 +63,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -73,8 +76,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import eu.esu.mobilecontrol2.sdk.StopButtonFragment;
@@ -225,6 +228,24 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private List<Integer> prefConsistFollowHeadlights;
     private String prefConsistFollowDefaultAction = "none";
 
+    private static int FUNCTION_IS_LEAD_ONLY = 1;
+    private static int FUNCTION_IS_TRAIL_ONLY = 2;
+    private static int FUNCTION_IS_LEAD_AND_FOLLOW = 3;
+    private static int FUNCTION_IS_LEAD_AND_TRAIL = 4;
+    private static int FUNCTION_IS_FOLLOW = 5;
+
+    private static int FUNCTION_ACTION_ON = 1;
+    private static int FUNCTION_ACTION_OFF = 2;
+    private static int FUNCTION_ACTION_TOGGLE = 3;
+
+    private boolean prefSelectiveLeadSound = false;
+    private boolean prefSelectiveLeadSoundF1 = false;
+    private boolean prefSelectiveLeadSoundF2 = false;
+
+    private static int BUTTON_PRESS_MESSAGE_TOGGLE = -1;
+    private static int BUTTON_PRESS_MESSAGE_UP = 0;
+    private static int BUTTON_PRESS_MESSAGE_DOWN = 1;
+
     private String prefConsistFollowRuleStyle = "original";
     private static String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
     private static String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
@@ -331,11 +352,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     // Gamepad Button preferences
     private String[] prefGamePadButtons = {"Next Throttle","Stop", "Function 00/Light", "Function 01/Bell", "Function 02/Horn",
-                                            "Increase Speed", "Reverse", "Decrease Speed", "Forward", "All Stop"};
+                                            "Increase Speed", "Reverse", "Decrease Speed", "Forward", "All Stop","Select", "Left Shoulder","Right Shoulder","Left Trigger","Right Trigger"};
 
     //                              none     NextThr  Speed+    Speed-      Fwd         Rev       All Stop    F2         F1          F0        Stop
-    private int[] gamePadKeys =     {0,        0,   KEYCODE_W, KEYCODE_X,   KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
-    private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F};
+    private int[] gamePadKeys =     {0,        0,   KEYCODE_W, KEYCODE_X,   KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0,0,0,0};
+    private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0,0,0,0};
 
     // For TTS
     private int MY_TTS_DATA_CHECK_CODE = 1234;
@@ -438,6 +459,22 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     protected static final String THEME_DEFAULT = "Default";
 
+    private static final int KIDS_TIMER_DISABLED = 0;
+    private static final int KIDS_TIMER_STARTED = 1;
+    private static final int KIDS_TIMER_ENABLED = 2;
+    private static final int KIDS_TIMER_RUNNNING = 3;
+    private static final int KIDS_TIMER_ENDED = 999;
+    private static final String PREF_KIDS_TIMER_NONE = "0";
+    private static final String PREF_KIDS_TIMER_ENDED = "999";
+    private String prefKidsTimer = PREF_KIDS_TIMER_NONE;
+    private int prefKidsTime = 0;  // in milliseconds
+    private int kidsTimerRunning = KIDS_TIMER_DISABLED;
+    private MyCountDownTimer kidsTimer;
+    private String prefKidsTimerResetPassword = "9999";
+    private String prefKidsTimerRestartPassword = "0000";
+    private String passwordText = "";
+
+
     // For ESU MobileControlII
     private static final boolean IS_ESU_MCII = MobileControl2.isMobileControl2();
     private boolean isEsuMc2Stopped = false; // for tracking status of Stop button
@@ -450,6 +487,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private boolean esuButtonAutoDecrement = false;
     private boolean prefEsuMc2EndStopDirectionChange = true;
     private boolean prefEsuMc2StopButtonShortPress = true;
+    private boolean isEsuMc2KnobEnabled = true;
 
     // Create default ESU MCII ThrottleScale for each throttle
     private ThrottleScale[] esuThrottleScales
@@ -649,6 +687,82 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+
+    private class MyCountDownTimer extends CountDownTimer {
+
+        public MyCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_START, "", 0, 0);
+        }
+
+        @Override
+        public void onFinish() {  // When timer is finished
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_END, "", 0, 0);
+            //finish();
+            //showTimerPasswordDialog();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {   // millisUntilFinished    The amount of time until finished.
+            int secondsLeft = (int) millisUntilFinished / 1000;
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_TICK, "", secondsLeft, 0);
+        }
+    }
+
+    private void kidsTimerActions(int action, int arg) {
+        switch (action) {
+            case KIDS_TIMER_DISABLED:
+                kidsTimerRunning = KIDS_TIMER_DISABLED;
+                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+                    enable_disable_buttons(throttleIndex, false);
+                }
+                setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
+                if (TMenu != null) {
+                    mainapp.setKidsMenuOptions(TMenu, true, 0);
+                }
+                break;
+            case KIDS_TIMER_ENABLED:
+                if (((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING))) {
+                    kidsTimerRunning = KIDS_TIMER_ENABLED;
+                    for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+                        enable_disable_buttons(throttleIndex, false);
+                        bSels[throttleIndex].setEnabled(false);
+                    }                    setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_enabled));
+                    if (TMenu != null) {
+                        mainapp.setKidsMenuOptions(TMenu, false, 0);
+                    }
+                }
+                break;
+            case KIDS_TIMER_STARTED:
+                if ((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING)) {
+                    kidsTimerRunning = KIDS_TIMER_RUNNNING;
+                    kidsTimer = new MyCountDownTimer(prefKidsTime, 1000);
+                    kidsTimer.start();
+                }
+                break;
+            case KIDS_TIMER_ENDED:
+                speedUpdateAndNotify(0);
+                kidsTimerRunning = KIDS_TIMER_ENDED;
+                kidsTimer.cancel();
+                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+                    enable_disable_buttons(throttleIndex, true);
+                    bSels[throttleIndex].setEnabled(false);
+                }
+                prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_ENDED).commit();  //reset the preference
+                setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_ended));
+                //if (TMenu != null) {
+                //    mainapp.setKidsMenuOptions(TMenu, true, gamepadCount);
+                //}
+                break;
+            case KIDS_TIMER_RUNNNING:
+                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+                    bSels[throttleIndex].setEnabled(false);
+                }
+                setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_running).replace("%1$s", Integer.toString(arg)));
+                break;
+        }
+    }
+
     // Handle messages from the communication thread TO this thread (responses from withrottle)
     @SuppressLint("HandlerLeak")
     private class throttle_handler extends Handler {
@@ -737,7 +851,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                     } else if (com3 == 'F') {
                                         try {
                                             int function = Integer.valueOf(ls[1].substring(2));
-                                            set_function_state(whichThrottle, function);
+
+                                            String loco = ls[0].substring(3);
+                                            Consist con = mainapp.consists[whichThrottle];
+                                            if ( (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL))
+                                                    || (loco.equals(con.getLeadAddr())) ) { //if using the 'complex' follow function rules, only send it to the lead loco
+                                                set_function_state(whichThrottle, function);
+                                            }
                                         } catch (Exception ignored) {
                                         }
                                     } else if (com3 == 's') {
@@ -825,6 +945,19 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 case message_type.REQ_STEAL:
                     promptForSteal( msg.obj.toString(), msg.arg1);
                     break;
+                case message_type.KIDS_TIMER_ENABLE:
+                    kidsTimerActions(KIDS_TIMER_ENABLED,0);
+                    break;
+                case message_type.KIDS_TIMER_START:
+                    kidsTimerActions(KIDS_TIMER_STARTED,0);
+                    break;
+                case message_type.KIDS_TIMER_TICK:
+                    kidsTimerActions(KIDS_TIMER_RUNNNING,msg.arg1);
+                    break;
+                case message_type.KIDS_TIMER_END:
+                    kidsTimerActions(KIDS_TIMER_ENDED,0);
+                    break;
+
             }
         }
     }
@@ -1083,6 +1216,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         }
     }
+    protected void getKidsTimerPrefs() {
+        prefKidsTimer = prefs.getString("prefKidsTimer", getResources().getString(R.string.prefKidsTimerDefaultValue));
+        if ((!prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)) && (!prefKidsTimer.equals(PREF_KIDS_TIMER_ENDED))) {
+            prefKidsTime = Integer.parseInt(prefKidsTimer) * 60000;
+        } else {
+            prefKidsTime = 0;
+        }
+        prefKidsTimerResetPassword = prefs.getString("prefKidsTimerResetPassword", getResources().getString(R.string.prefKidsTimerResetPasswordDefaultValue));
+        prefKidsTimerRestartPassword = prefs.getString("prefKidsTimerRestartPassword", getResources().getString(R.string.prefKidsTimerRestartPasswordDefaultValue));
+    }
 
     // get all the preferences that should be read when the activity is created or resumes
     protected void getCommonPrefs(boolean isCreate) {
@@ -1184,6 +1327,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         mainapp.numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+
+        prefSelectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
+        prefSelectiveLeadSoundF1 = prefs.getBoolean("SelectiveLeadSoundF1", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF1DefaultValue));
+        prefSelectiveLeadSoundF2 = prefs.getBoolean("SelectiveLeadSoundF2", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF2DefaultValue));
+
+
+        if (isCreate) {
+            prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
+        }
+        getKidsTimerPrefs();
     }
 
     protected void getDirectionButtonPrefs() {
@@ -1410,6 +1563,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 speedChangeAndNotify(whichThrottle, prefGamePadSpeedButtonsSpeedStep);
                 break;
         }
+
+        kidsTimerActions(KIDS_TIMER_STARTED,0);
     }
 
     // set speed slider and notify server for all throttles
@@ -2085,6 +2240,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefGamePadButtons[7] = prefs.getString("prefGamePadButtonDown", getApplicationContext().getResources().getString(R.string.prefGamePadButtonDownDefaultValue));
         prefGamePadButtons[8] = prefs.getString("prefGamePadButtonLeft", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftDefaultValue));
 
+        //extra buttons
+        prefGamePadButtons[10] = prefs.getString("prefGamePadButtonLeftShoulder", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftTriggerDefaultValue));
+        prefGamePadButtons[11] = prefs.getString("prefGamePadButtonRightShoulder", getApplicationContext().getResources().getString(R.string.prefGamePadButtonRightShoulderDefaultValue));
+        prefGamePadButtons[12] = prefs.getString("prefGamePadButtonLeftTrigger", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftTriggerDefaultValue));
+        prefGamePadButtons[13] = prefs.getString("prefGamePadButtonRightTrigger", getApplicationContext().getResources().getString(R.string.prefGamePadButtonRightTriggerDefaultValue));
+
         if (!whichGamePadMode.equals(WHICH_GAMEPAD_MODE_NONE)) {
             // make sure the Softkeyboard is hidden
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
@@ -2131,13 +2292,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1B);
                 bGamePadKeysUp = bGamePadKeys;
                 break;
+            case "FlydigiWee2":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadFlydigiWee2);
+                bGamePadKeysUp = bGamePadKeys;
+                break;
+
             default: // "iCade" or iCade-rotate
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCade);
                 bGamePadKeysUp = this.getResources().getIntArray(R.array.prefGamePadiCade_UpCodes);
                 break;
         }
         // now grab the keycodes and put them into the arrays that will actually be used.
-        for (int i = 0; i<=10; i++ ) {
+        for (int i = 0; i<=14; i++ ) {
             gamePadKeys[i] = bGamePadKeys[i];
             gamePadKeys_Up[i] = bGamePadKeysUp[i];
         }
@@ -2358,12 +2524,31 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         } else if ((prefGamePadButtons[buttonNo].length()>=11) && (prefGamePadButtons[buttonNo].substring(0,9).equals(GAMEPAD_FUNCTION_PREFIX))) { // one of the Function Buttons
             int fKey = Integer.parseInt(prefGamePadButtons[buttonNo].substring(9,11));
             if (isActive && (repeatCnt == 0)) {
+                String lab = mainapp.function_labels[whichThrottle].get(fKey);
+                if (lab != null) {
+                    lab = lab.toUpperCase().trim();
+                } else {
+                    lab = mainapp.function_labels_default.get(fKey).toUpperCase().trim();
+                }
+
+                boolean leadOnly = false;
+                boolean trailOnly = false;
+                boolean followLeadFunction = false;
+
+                int result = isFunctionLeadTrailFollow(whichThrottle, fKey, lab);
+                if ((result == FUNCTION_IS_LEAD_ONLY) || (result==FUNCTION_IS_LEAD_AND_FOLLOW) || (result==FUNCTION_IS_LEAD_AND_TRAIL)) {leadOnly = true;}
+                if ((result == FUNCTION_IS_TRAIL_ONLY) || (result==FUNCTION_IS_LEAD_AND_TRAIL)) {trailOnly = true;}
+                if ((result == FUNCTION_IS_FOLLOW) || (result==FUNCTION_IS_LEAD_AND_FOLLOW)) {followLeadFunction = true;}
+
                 if (action==ACTION_DOWN) {
                     GamepadFeedbackSound(false);
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle), fKey, 1);
+//                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle), fKey, 1);
+                    sendFunctionToConsistLocos(whichThrottle,fKey, lab, BUTTON_PRESS_MESSAGE_DOWN, leadOnly, trailOnly, followLeadFunction);
                 } else {
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle), fKey, 0);
+//                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle), fKey, 0);
+                    sendFunctionToConsistLocos(whichThrottle,fKey, lab, BUTTON_PRESS_MESSAGE_UP, leadOnly, trailOnly, followLeadFunction);
                 }
+
             }
 
         }
@@ -2394,7 +2579,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 int repeatCnt = 0;
                 int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), 0); // dummy eventKeyCode
 
-                if (whichGamePadIsEventFrom > -1) { // the event came for a gamepad
+                if ((whichGamePadIsEventFrom > -1) && (whichGamePadIsEventFrom < gamePadDeviceIdsTested.length)) { // the event came from a gamepad
                     if (gamePadDeviceIdsTested[getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)]!=GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
                         acceptEvent = false;
                     }
@@ -2406,6 +2591,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     float xAxis;
                     xAxis = event.getAxisValue(MotionEvent.AXIS_X);
                     float yAxis = event.getAxisValue(MotionEvent.AXIS_Y);
+                    float xAxis2 = event.getAxisValue(MotionEvent.AXIS_Z);
+                    float yAxis2 = event.getAxisValue(MotionEvent.AXIS_RZ);
 
                     if ((xAxis != 0) || (yAxis != 0)) {
                         action = ACTION_DOWN;
@@ -2447,6 +2634,23 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         performButtonAction(6, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
                         return (true); // stop processing this key
                     }
+
+                    if (yAxis2 == -1) { // DPAD2 Up Button
+                        performButtonAction(5, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
+
+                    } else if (yAxis2 == 1) { // DPAD2 Down Button
+                        performButtonAction(7, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
+
+                    } else if (xAxis2 == -1) { // DPAD2 Left Button
+                        performButtonAction(8, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
+
+                    } else if (xAxis2 == 1) { // DPAD2 Right Button
+                        performButtonAction(6, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
+                    }
                 } else { // event is from a gamepad that has not finished testing. Ignore it
                     return (true); // stop processing this key
                 }
@@ -2478,7 +2682,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 int whichThrottle;
                 int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getKeyCode());
 
-                if (whichGamePadIsEventFrom > -1) { // the event came for a gamepad
+                if ((whichGamePadIsEventFrom > -1) && (whichGamePadIsEventFrom < gamePadDeviceIdsTested.length)) { // the event came from a gamepad
                     if (gamePadDeviceIdsTested[getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)]!=GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
                         acceptEvent = false;
                     }
@@ -2544,6 +2748,22 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
                     } else if (keyCode == gamePadKeys[6]) { // start button
                         performButtonAction(0, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
+
+                    } else if (keyCode == gamePadKeys[11]) { // Left Shoulder button
+                        performButtonAction(10, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
+
+                    } else if (keyCode == gamePadKeys[12]) { // Left Shoulder button
+                        performButtonAction(11, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
+
+                    } else if (keyCode == gamePadKeys[13]) { // Left Shoulder button
+                        performButtonAction(12, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        return (true); // stop processing this key
+
+                    } else if (keyCode == gamePadKeys[14]) { // Left Shoulder button
+                        performButtonAction(13, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
                         return (true); // stop processing this key
 
                     } else if (keyCode == gamePadKeys[1]) { // Return button
@@ -2720,7 +2940,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         public void onButtonDown() {
             Log.d("Engine_Driver", "ESU_MCII: Knob button down for throttle " + whichVolume);
             if (!isScreenLocked) {
-                if (prefEsuMc2EndStopDirectionChange) {
+                if (!isEsuMc2KnobEnabled) {
+                    Log.d("Engine_Driver", "ESU_MCII: Knob disabled - direction change ignored");
+                } else if (prefEsuMc2EndStopDirectionChange) {
                     Log.d("Engine_Driver", "ESU_MCII: Attempting to switch direction");
                     changeDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1));
                     speedUpdateAndNotify(whichVolume, 0, false);
@@ -2742,7 +2964,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         public void onPositionChanged(int knobPos) {
             int speed;
             if (!isScreenLocked) {
-                if (getConsist(whichVolume).isActive() && !isEsuMc2Stopped) {
+                if (!isEsuMc2KnobEnabled) {
+                    Log.d("Engine_Driver", "ESU_MCII: Disabled knob position moved for throttle " + whichVolume);
+                    Log.d("Engine_Driver", "ESU_MCII: Nothing updated");
+                } else if (getConsist(whichVolume).isActive() && !isEsuMc2Stopped) {
                     speed = esuThrottleScales[whichVolume].positionToStep(knobPos);
                     Log.d("Engine_Driver", "ESU_MCII: Knob position changed for throttle " + whichVolume);
                     Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
@@ -3028,6 +3253,52 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         sbs[whichThrottle].setEnabled(enabled);
     }
 
+    /**
+     * Display the ESU MCII knob action button if configured
+     *
+     * @param menu the menu upon which the action should be shown
+     */
+    private void displayEsuMc2KnobMenuButton(Menu menu) {
+        MenuItem mi = menu.findItem(R.id.EsuMc2Knob_button);
+        if (mi == null) return;
+
+        if (prefs.getBoolean("prefEsuMc2KnobButtonDisplay", false)) {
+            mi.setVisible(true);
+        } else {
+            mi.setVisible(false);
+        }
+        setEsuMc2KnobButton(menu);
+
+    }
+    /**
+     * Set the state of the ESU MCII knob action button/menu entry
+     *
+     * @param menu the menu upon which the action is shown
+     */
+    public void setEsuMc2KnobButton(Menu menu) {
+        if (menu != null) {
+            if (isEsuMc2KnobEnabled) {
+                menu.findItem(R.id.EsuMc2Knob_button).setIcon(R.drawable.esumc2knob_on);
+            } else {
+                menu.findItem(R.id.EsuMc2Knob_button).setIcon(R.drawable.esumc2knob_off);
+            }
+        }
+    }
+    /**
+     * Toggle the state of the ESU MCII knob
+     *
+     * @param activity the requesting activity
+     * @param menu     the menu upon which the entry/button should be updated
+     */
+    public void toggleEsuMc2Knob(Activity activity, Menu menu) {
+        if (isEsuMc2KnobEnabled) {
+            isEsuMc2KnobEnabled = false;
+        } else {
+            isEsuMc2KnobEnabled = true;
+        }
+        setEsuMc2KnobButton(menu);
+    }
+
 // Listeners for the Select Loco buttons
     protected class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
     int whichThrottle;
@@ -3203,6 +3474,114 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     }
 
+    private int isFunctionLeadTrailFollow(int whichThrottle, int fKey, String lab) {
+        //String lab = mainapp.function_labels[whichThrottle].get(fKey).toUpperCase().trim();
+        boolean lead = false;
+        boolean trail = false;
+        boolean followLeadFunction = false;
+
+        if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+//            boolean selectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
+            if (!lab.equals("")) {
+                lead = (prefSelectiveLeadSound &&
+                        (lab.contains(FUNCTION_BUTTON_LOOK_FOR_WHISTLE) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HORN) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_BELL))
+                        || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HEAD)
+                        || (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT) && !lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR)));
+                followLeadFunction = (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT));
+                trail = lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR);
+            }
+//            boolean selectiveLeadSoundF1 = prefs.getBoolean("SelectiveLeadSoundF1", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF1DefaultValue));
+//            boolean selectiveLeadSoundF2 = prefs.getBoolean("SelectiveLeadSoundF2", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF2DefaultValue));
+            if ((prefSelectiveLeadSound) && (fKey == 1) && (prefSelectiveLeadSoundF1)) {
+                lead = true;
+            }
+            if ((prefSelectiveLeadSound) && (fKey == 2) && (prefSelectiveLeadSoundF2)) {
+                lead = true;
+            }
+        }
+
+        if ((lead) && (followLeadFunction)) { return FUNCTION_IS_LEAD_AND_FOLLOW;}
+        if ((lead) && (trail)) { return FUNCTION_IS_LEAD_AND_TRAIL;}
+        if (lead) { return FUNCTION_IS_LEAD_ONLY;}
+        if (trail) {return FUNCTION_IS_TRAIL_ONLY;}
+        if (followLeadFunction) {return FUNCTION_IS_FOLLOW;}
+        return 0;
+
+    }
+
+    private void sendFunctionToConsistLocos(int whichThrottle,int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean trailOnly, boolean followLeadFunction) {
+        Consist con;
+        con = mainapp.consists[whichThrottle];
+
+        if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+
+            String addr = "";
+            if (leadOnly)
+                addr = con.getLeadAddr();
+            // ***future                else if (trailOnly)
+            //                              addr = con.getTrailAddr();
+
+            //mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + addr, this.function, 1);
+            if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
+                mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + addr, function);
+            } else {
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, buttonPressMessageType);
+            }
+            // set_function_request(whichThrottle, function, 1);
+
+            if (followLeadFunction) {
+                for (Consist.ConLoco l : con.getLocos()) {
+                    if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
+                        if (l.isLightOn() == LIGHT_FOLLOW) {
+                            if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
+                                mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), function);
+                            } else {
+                                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), function, buttonPressMessageType);
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
+                mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function);
+            } else {
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function, buttonPressMessageType);
+            }
+
+            function = getFunctionNumber(con,function,lab);
+
+            List<Integer> functionList = new ArrayList<>();
+            for (Consist.ConLoco l : con.getLocos()) {
+                if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
+                    functionList = l.getMatchingFunctions(function, lab, l.getAddress().equals(con.getLeadAddr()), l.getAddress().equals(con.getTrailAddr()), prefConsistFollowDefaultAction, prefConsistFollowStrings, prefConsistFollowActions, prefConsistFollowHeadlights);
+                    if (functionList.size()>0) {
+                        for (int i = 0; i < functionList.size(); i++) {
+                            if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
+                                mainapp.toggleFunction(mainapp.throttleIntToString(i) + l.getAddress(), functionList.get(i));
+                            } else {
+                                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), function, buttonPressMessageType);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private int getFunctionNumber(Consist con,int functionNumber, String lab) {
+        int result = functionNumber;
+        if (functionNumber==-1) { // find the function number for this if we don't already have it
+            for (Consist.ConLoco l : con.getLocos()) {
+                if (l.getAddress().equals(con.getLeadAddr())) {
+                    result = l.getFunctionNumberFromLabel(lab);
+                }
+            }
+        }
+        return result;
+    }
+
+
     protected class function_button_touch_listener implements View.OnTouchListener {
     int function;
     int whichThrottle;
@@ -3224,25 +3603,30 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             trailOnly = false;
             followLeadFunction = false;
 
-            if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
-                boolean selectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
-                if (!lab.equals("")) {
-                    leadOnly = (selectiveLeadSound &&
-                            (lab.contains(FUNCTION_BUTTON_LOOK_FOR_WHISTLE) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HORN) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_BELL))
-                            || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HEAD)
-                            || (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT) && !lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR)));
-                    followLeadFunction = (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT));
-                    trailOnly = lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR);
-                }
-                boolean selectiveLeadSoundF1 = prefs.getBoolean("SelectiveLeadSoundF1", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF1DefaultValue));
-                boolean selectiveLeadSoundF2 = prefs.getBoolean("SelectiveLeadSoundF2", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF2DefaultValue));
-                if ((selectiveLeadSound) && (new_function == 1) && (selectiveLeadSoundF1)) {
-                    leadOnly = true;
-                }
-                if ((selectiveLeadSound) && (new_function == 2) && (selectiveLeadSoundF2)) {
-                    leadOnly = true;
-                }
-            }
+            int result = isFunctionLeadTrailFollow(whichThrottle, function, lab);
+            if ((result == FUNCTION_IS_LEAD_ONLY) || (result == FUNCTION_IS_LEAD_AND_FOLLOW) || (result == FUNCTION_IS_LEAD_AND_TRAIL)) {leadOnly = true;}
+            if (result == FUNCTION_IS_TRAIL_ONLY) {trailOnly = true;}
+            if ((result == FUNCTION_IS_FOLLOW) || (result == FUNCTION_IS_LEAD_AND_FOLLOW)) {followLeadFunction = true;}
+
+//            if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+//                boolean selectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
+//                if (!lab.equals("")) {
+//                    leadOnly = (selectiveLeadSound &&
+//                            (lab.contains(FUNCTION_BUTTON_LOOK_FOR_WHISTLE) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HORN) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_BELL))
+//                            || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HEAD)
+//                            || (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT) && !lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR)));
+//                    followLeadFunction = (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT));
+//                    trailOnly = lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR);
+//                }
+//                boolean selectiveLeadSoundF1 = prefs.getBoolean("SelectiveLeadSoundF1", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF1DefaultValue));
+//                boolean selectiveLeadSoundF2 = prefs.getBoolean("SelectiveLeadSoundF2", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF2DefaultValue));
+//                if ((selectiveLeadSound) && (new_function == 1) && (selectiveLeadSoundF1)) {
+//                    leadOnly = true;
+//                }
+//                if ((selectiveLeadSound) && (new_function == 2) && (selectiveLeadSoundF2)) {
+//                    leadOnly = true;
+//                }
+//            }
         }
 
         @Override
@@ -3270,16 +3654,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
 
-        private void getFunctionNumber(Consist con) {
-            if (functionNumber==-1) { // find the function number for this if we don't aready have it
-                for (Consist.ConLoco l : con.getLocos()) {
-                    if (l.getAddress().equals(con.getLeadAddr())) {
-                        functionNumber=l.getFunctionNumberFromLabel(lab);
-                    }
-                }
-            }
-
-        }
+//        private void getFunctionNumber(Consist con) {
+//            if (functionNumber==-1) { // find the function number for this if we don't already have it
+//                for (Consist.ConLoco l : con.getLocos()) {
+//                    if (l.getAddress().equals(con.getLeadAddr())) {
+//                        functionNumber=l.getFunctionNumberFromLabel(lab);
+//                    }
+//                }
+//            }
+//
+//        }
 
         private void handleAction(int action) {
             switch (action) {
@@ -3300,48 +3684,50 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             break;
 
                         default: { // handle the function buttons
-                            Consist con;
-                            con = mainapp.consists[whichThrottle];
+                            sendFunctionToConsistLocos( whichThrottle, function,  lab, BUTTON_PRESS_MESSAGE_TOGGLE, leadOnly, trailOnly,followLeadFunction);
 
-                            if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
-
-                                    String addr = "";
-                                if (leadOnly)
-                                    addr = con.getLeadAddr();
-    // ***future                else if (trailOnly)
-    //                              addr = con.getTrailAddr();
-
-                                //mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + addr, this.function, 1);
-                                mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + addr, this.function);
-                            // set_function_request(whichThrottle, function, 1);
-
-                                if (followLeadFunction) {
-                                    for (Consist.ConLoco l : con.getLocos()) {
-                                        if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
-                                            if (l.isLightOn() == LIGHT_FOLLOW) {
-                                                mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), this.function);
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-                                mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), this.function);
-
-                                getFunctionNumber(con);
-
-                                List<Integer> functionList = new ArrayList<>();
-                                for (Consist.ConLoco l : con.getLocos()) {
-                                    if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
-                                        functionList = l.getMatchingFunctions(functionNumber, lab, l.getAddress().equals(con.getLeadAddr()), l.getAddress().equals(con.getTrailAddr()), prefConsistFollowDefaultAction, prefConsistFollowStrings, prefConsistFollowActions, prefConsistFollowHeadlights);
-                                        if (functionList.size()>0) {
-                                            for (int i = 0; i < functionList.size(); i++) {
-                                                mainapp.toggleFunction(mainapp.throttleIntToString(i) + l.getAddress(), functionList.get(i));
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
+//                            Consist con;
+//                            con = mainapp.consists[whichThrottle];
+//
+//                            if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+//
+//                                    String addr = "";
+//                                if (leadOnly)
+//                                    addr = con.getLeadAddr();
+//    // ***future                else if (trailOnly)
+//    //                              addr = con.getTrailAddr();
+//
+//                                //mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, whichThrottle + addr, this.function, 1);
+//                                mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + addr, this.function);
+//                            // set_function_request(whichThrottle, function, 1);
+//
+//                                if (followLeadFunction) {
+//                                    for (Consist.ConLoco l : con.getLocos()) {
+//                                        if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
+//                                            if (l.isLightOn() == LIGHT_FOLLOW) {
+//                                                mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), this.function);
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            } else {
+//                                mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), this.function);
+//
+//                                getFunctionNumber(con);
+//
+//                                List<Integer> functionList = new ArrayList<>();
+//                                for (Consist.ConLoco l : con.getLocos()) {
+//                                    if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
+//                                        functionList = l.getMatchingFunctions(functionNumber, lab, l.getAddress().equals(con.getLeadAddr()), l.getAddress().equals(con.getTrailAddr()), prefConsistFollowDefaultAction, prefConsistFollowStrings, prefConsistFollowActions, prefConsistFollowHeadlights);
+//                                        if (functionList.size()>0) {
+//                                            for (int i = 0; i < functionList.size(); i++) {
+//                                                mainapp.toggleFunction(mainapp.throttleIntToString(i) + l.getAddress(), functionList.get(i));
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//
                             break;
                         }
                     }
@@ -3374,7 +3760,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             //mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), this.function);
                             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function, 0);
 
-                            getFunctionNumber(con);
+                            functionNumber = getFunctionNumber(con,functionNumber,lab);
 
                             List<Integer> functionList = new ArrayList<>();
                             for (Consist.ConLoco l : con.getLocos()) {
@@ -4079,6 +4465,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         }
 
+        if (((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING))) {
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_ENABLE, "", 0, 0);
+        } else {
+            if (kidsTimerRunning == KIDS_TIMER_ENDED) {
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_END, "", 0, 0);
+            }
+            if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)){
+                kidsTimerActions(KIDS_TIMER_DISABLED,0);
+            }
+        }
+
         setupTts();
     }
 
@@ -4346,9 +4743,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.setWebMenuOption(TMenu);
             mainapp.setRoutesMenuOption(TMenu);
             mainapp.setTurnoutsMenuOption(TMenu);
-            mainapp.setGamepadTestMenuOption(TMenu,gamepadCount);
+            mainapp.setGamepadTestMenuOption(TMenu, gamepadCount);
+            mainapp.setKidsMenuOptions(TMenu, prefKidsTimer.equals(PREF_KIDS_TIMER_NONE), gamepadCount);
             mainapp.setFlashlightButton(TMenu);
             mainapp.displayFlashlightMenuButton(TMenu);
+            displayEsuMc2KnobMenuButton(TMenu);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");
@@ -4446,6 +4845,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         TMenu = menu;
         mainapp.displayFlashlightMenuButton(menu);
         mainapp.setFlashlightButton(menu);
+        if (IS_ESU_MCII) {
+            displayEsuMc2KnobMenuButton(menu);
+        }
         return true;
     }
 
@@ -4608,8 +5010,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
 
+            case R.id.timer_mnu:
+                showTimerPasswordDialog();
+                break;
+
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, TMenu);
+                break;
+
+            case R.id.EsuMc2Knob_button:
+                toggleEsuMc2Knob(this, TMenu);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -4658,6 +5068,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 }
                 // in case the preference has changed but the current screen does not support the number selected.
                 setThottleNumLimits();
+
+                getKidsTimerPrefs();
+                if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)){
+                    kidsTimerActions(KIDS_TIMER_DISABLED,0);
+                }
+
                 break;
             }
             case ACTIVITY_GAMEPAD_TEST: {
@@ -5014,5 +5430,48 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (mainapp.maxThrottles > mainapp.maxThrottlesCurrentScreen) {   // Maximum number of throttles this screen supports
             mainapp.maxThrottles = mainapp.maxThrottlesCurrentScreen;
         }
+    }
+
+
+    private void showTimerPasswordDialog () {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(getApplicationContext().getResources().getString(R.string.timerDialogTitle));
+        alert.setMessage(getApplicationContext().getResources().getString(R.string.timerDialogMessage));
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setHint(getApplicationContext().getResources().getString(R.string.timerDialogHint));
+        alert.setView(input);
+
+        alert.setPositiveButton(getApplicationContext().getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                passwordText = input.getText().toString();
+                Log.d("", "Password Value : " + passwordText);
+
+                if (passwordText.equals(prefKidsTimerResetPassword)) { //reset
+                    kidsTimerActions(KIDS_TIMER_ENDED, 0);
+                    kidsTimerActions(KIDS_TIMER_DISABLED, 0);
+                    prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
+                    getKidsTimerPrefs();
+                }
+
+                if (passwordText.equals(prefKidsTimerRestartPassword)) { //reset
+                    kidsTimerActions(KIDS_TIMER_ENABLED, 0);
+                }
+
+                return;
+            }
+        });
+
+        alert.setNegativeButton(getApplicationContext().getResources().getString(R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+        alert.show();
+
     }
 }

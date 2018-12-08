@@ -220,6 +220,42 @@
                                     android:text="@string/gamepadTestButtonLabelButtonEnter"
                                     android:textSize="12sp" />
                             </TableRow>
+                            <TableRow android:gravity="center_horizontal">
+
+                                <Button
+                                    android:id="@+id/gamepad_test_button_left_shoulder"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="100dip"
+                                    android:layout_height="25dip"
+                                    android:text="@string/gamepadTestButtonLabelButtonLeftShoulder"
+                                    android:textSize="12sp" />
+
+                                <Button
+                                    android:id="@+id/gamepad_test_button_right_shoulder"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="100dip"
+                                    android:layout_height="25dip"
+                                    android:text="@string/gamepadTestButtonLabelButtonRightShoulder"
+                                    android:textSize="12sp" />
+                            </TableRow>
+                            <TableRow android:gravity="center_horizontal">
+
+                                <Button
+                                    android:id="@+id/gamepad_test_button_left_trigger"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="100dip"
+                                    android:layout_height="25dip"
+                                    android:text="@string/gamepadTestButtonLabelButtonLeftTrigger"
+                                    android:textSize="12sp" />
+
+                                <Button
+                                    android:id="@+id/gamepad_test_button_right_trigger"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="100dip"
+                                    android:layout_height="25dip"
+                                    android:text="@string/gamepadTestButtonLabelButtonRightTrigger"
+                                    android:textSize="12sp" />
+                            </TableRow>
                         </TableLayout>
 
                         <LinearLayout

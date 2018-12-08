@@ -32,9 +32,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.hardware.Camera;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -51,7 +49,6 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Surface;
 import android.view.ViewGroup;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
@@ -97,6 +94,7 @@ import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketHandler;
 import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
+import jmri.enginedriver.util.Flashlight;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 
@@ -173,7 +171,7 @@ public class threaded_application extends Application {
     public volatile Handler reconnect_status_msg_handler;
 
     // for handling control of camera flash
-    public static Camera camera;
+    public static Flashlight flashlight;
     private boolean flashState = false;
 
     //these constants are used for onFling
@@ -686,6 +684,24 @@ public class threaded_application extends Application {
                             alert_activities(message_type.WIT_CON_RECONNECT, msg.obj.toString());
                         }
                         break;
+
+                    //send whatever message string comes in obj as a long toast message
+                    case message_type.TOAST_MESSAGE:
+                        show_toast_message(msg.obj.toString(), Toast.LENGTH_LONG);
+                        break;
+
+                    case message_type.KIDS_TIMER_ENABLE:
+                        sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_ENABLE, "", 0);
+                        break;
+                    case message_type.KIDS_TIMER_START:
+                        sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_START, "", 0);
+                        break;
+                    case message_type.KIDS_TIMER_END:
+                        sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_END, "", 0);
+                        break;
+                    case message_type.KIDS_TIMER_TICK:
+                        sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_TICK, "", msg.arg1);
+                        break;
                 }
             }
         }
@@ -702,7 +718,8 @@ public class threaded_application extends Application {
             doFinish = false;                   //ok for activities to run if restarted after this
 
             // make sure flashlight is switched off at shutdown
-            setFlashlightOff();
+            flashlight.setFlashlightOff();
+            flashlight.teardown();
             flashState = false;
         }
 
@@ -776,7 +793,7 @@ public class threaded_application extends Application {
         }
 
         //display error msg using Toast()
-        private void show_toast_message(final String msg_txt, int length) {
+        public void show_toast_message(final String msg_txt, int length) {
             Log.d("Engine_Driver", "TA toast message: " + msg_txt);
             //need to do Toast() on the main thread so create a handler
             Handler h = new Handler(Looper.getMainLooper());
@@ -1804,6 +1821,7 @@ public class threaded_application extends Application {
          startActivity(caIntent);
          */
 
+        flashlight = Flashlight.newInstance(this.getApplicationContext());
 
         androidVersion = android.os.Build.VERSION.SDK_INT;
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -2261,6 +2279,39 @@ public class threaded_application extends Application {
         }
     }
 
+    public void setMenuItemById(Menu menu, int id, boolean show){
+        if (menu != null) {
+            MenuItem item = menu.findItem(id);
+            if (item != null) {
+                item.setVisible(show);
+            }
+        }
+    }
+
+    public void setKidsMenuOptions(Menu menu, boolean show, int gamepadCount) {
+        if (!show) {
+            for (int i = 0; i < menu.size(); i++) {
+                MenuItem item = menu.getItem(i);
+                //if ((item.getItemId() == R.id.preferences_mnu) || (item.getItemId() == R.id.timer_mnu)) {
+                if (item.getItemId() == R.id.timer_mnu) {
+                        item.setVisible(true);
+                } else {
+                    item.setVisible(false);
+                }
+            }
+        } else {
+            setPowerMenuOption(menu);
+            setWebMenuOption(menu);
+            setRoutesMenuOption(menu);
+            setTurnoutsMenuOption(menu);
+            setGamepadTestMenuOption(menu,gamepadCount);
+            setMenuItemById(menu, R.id.preferences_mnu, true);
+            setMenuItemById(menu, R.id.logviewer_menu, true);
+            setMenuItemById(menu, R.id.exit_mnu, true);
+            setMenuItemById(menu, R.id.timer_mnu, false);
+        }
+    }
+
     public void forceFunction(String throttleAndAddr, int functionNumber, boolean state) {
         int onOff = 0;
         if (state) onOff = 1;
@@ -2641,7 +2692,7 @@ public class threaded_application extends Application {
      * @return true if a flashlight is available; false if not
      */
     public boolean isFlashlightAvailable() {
-        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        return flashlight.isFlashlightAvailable();
     }
 
     /**
@@ -2652,71 +2703,12 @@ public class threaded_application extends Application {
      */
     public void toggleFlashlight(Activity activity, Menu menu) {
         if (flashState) {
-            setFlashlightOff();
+            flashlight.setFlashlightOff();
             flashState = false;
         } else {
-            flashState = setFlashlightOn(activity);
+            flashState = flashlight.setFlashlightOn(activity);
         }
         setFlashlightButton(menu);
-    }
-
-    /**
-     * Switch on the flashlight.
-     * <p>
-     * On certain devices, we need to ensure that the orientation of the camera preview
-     * matches that of the activity, otherwise 'bad things happen'
-     *
-     * @param activity the requesting activity
-     * @return true if flashlight successfully switch on; false if unsuccessful
-     */
-    private boolean setFlashlightOn(Activity activity) {
-        try {
-            camera = Camera.open();
-            Camera.Parameters parameters = camera.getParameters();
-            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-            camera.setParameters(parameters);
-            camera.setDisplayOrientation(getDisplayOrientation(activity));
-            camera.startPreview();
-            Log.d("Engine_Driver", "Flashlight switched on");
-            return true;
-        } catch (Exception ex) {
-            Log.e("Engine_Driver", "Error switching on flashlight: " + ex.getMessage());
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastFlashlightFailed), Toast.LENGTH_LONG).show();
-            return false;
-        }
-    }
-
-    /**
-     * Switch off the flashlight
-     */
-    private void setFlashlightOff() {
-        if (camera != null) {
-            camera.stopPreview();
-            camera.release();
-            camera = null;
-            Log.d("Engine_Driver", "Flashlight switched off");
-        }
-    }
-
-    /**
-     * Retrieves the screen orientation for the specified activity
-     *
-     * @param activity the required activity
-     * @return screen orientation as integer number of degrees
-     */
-    private int getDisplayOrientation(Activity activity) {
-        switch (activity.getWindowManager().getDefaultDisplay().getRotation()) {
-            case Surface.ROTATION_0:
-                return 0;
-            case Surface.ROTATION_90:
-                return 90;
-            case Surface.ROTATION_180:
-                return 180;
-            case Surface.ROTATION_270:
-                return 270;
-            default:
-                return 90;
-        }
     }
 
     public int Numeralise(String value) {

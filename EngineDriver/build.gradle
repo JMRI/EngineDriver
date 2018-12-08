@@ -1,13 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 26
+    buildToolsVersion '28.0.2'
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "jmri.enginedriver"
+        // cannot be higher than 16 to retain compatibility with ESU MobileControl II
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 26
     }
 
     buildTypes {
@@ -39,13 +41,13 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:support-v4:19.1.0'
+    implementation 'com.android.support:support-v4:26.1.0'
 //    implementation 'com.android.support:appcompat-v7:19.1.0'
     implementation files('libs/autobahn-0.5.0.jar')
-    implementation files('libs/esu-mobilecontrol2.jar')
     implementation files('libs/jackson-core-asl-1.9.7.jar')
     implementation files('libs/jackson-mapper-asl-1.9.7.jar')
     implementation files('libs/java-json.jar')
     implementation files('libs/jmdns-3.5.4.jar')
     implementation files('libs/slf4j-api-1.7.25.jar')
+    implementation 'eu.esu.mobilecontrol2:mobilecontrol2-sdk:1.1.2'
 }
