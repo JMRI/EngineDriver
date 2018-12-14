@@ -102,6 +102,8 @@ import jmri.jmrit.roster.RosterLoader;
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
 @SuppressLint("NewApi")
 public class threaded_application extends Application {
+    public final String INTRO_VERSION = "1";  // set this to a different string to force the intro to run on next startup.
+
     public comm_thread commThread;
     String host_ip = null; //The IP address of the WiThrottle server.
     volatile int port = 0; //The TCP port that the WiThrottle server is running on
@@ -1799,6 +1801,16 @@ public class threaded_application extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d("Engine_Driver", "TA.onCreate()");
+
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
+        if (!prefs.getString("prefRunIntro", "0").equals(INTRO_VERSION)) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("prefRunIntro", INTRO_VERSION);
+            editor.apply();
+            Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
+            startActivity(intent);
+        }
 
         //When starting ED after it has been killed in the bkg, the OS restarts any activities that were running.
         //Since we aren't connected at this point, we want all those activities to finish() so we do 2 things:

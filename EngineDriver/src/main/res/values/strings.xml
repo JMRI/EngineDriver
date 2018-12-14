@@ -22,6 +22,7 @@
     <string name="function_buttons">function_buttons</string>
     <string name="app_name">Engine Driver</string>
     <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI, MRC or DigiTrax WiThrottle server, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one to six locomotives. </string>
+    <string name="app_name_intro">Introduction - Engine Driver</string>
     <string name="app_name_connect">Connect to Server - Engine Driver</string>
     <string name="app_name_throttle">Throttle - Engine Driver</string>
     <string name="app_name_throttle_short">Throttle</string>
@@ -827,4 +828,5 @@
     <string name="permissionsRetryButton">Retry</string>
     <string name="permissionsRequestTitle">Permissions Required</string>
     <string name="permissionsRetryTitle">Permissions Declined</string>
+
 </resources>
