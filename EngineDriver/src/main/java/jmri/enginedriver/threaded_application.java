@@ -1805,19 +1805,19 @@ public class threaded_application extends Application {
         super.onCreate();
         Log.d("Engine_Driver", "TA.onCreate()");
 
-        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-
-        if (!prefs.getString("prefRunIntro", "0").equals(INTRO_VERSION)) {
-//            SharedPreferences.Editor editor = prefs.edit();
-//            editor.putString("prefRunIntro", INTRO_VERSION);
-//            editor.apply();
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
-                startActivity(intent);
-            } else {
-                prefs.edit().putString("prefRunIntro", INTRO_VERSION).commit();
-            }
-        }
+//        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+//
+//        if (!prefs.getString("prefRunIntro", "0").equals(INTRO_VERSION)) {
+////            SharedPreferences.Editor editor = prefs.edit();
+////            editor.putString("prefRunIntro", INTRO_VERSION);
+////            editor.apply();
+//            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
+//                startActivity(intent);
+//            } else {
+//                prefs.edit().putString("prefRunIntro", INTRO_VERSION).commit();
+//            }
+//        }
 
         //When starting ED after it has been killed in the bkg, the OS restarts any activities that were running.
         //Since we aren't connected at this point, we want all those activities to finish() so we do 2 things:

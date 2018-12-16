@@ -20,6 +20,7 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -328,6 +329,16 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
         //check for "default" throttle name and make it more unique
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
+        if (!prefs.getString("prefRunIntro", "0").equals(mainapp.INTRO_VERSION)) {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
+                startActivity(intent);
+            } else {
+                prefs.edit().putString("prefRunIntro", mainapp.INTRO_VERSION).commit();
+            }
+        }
+
         String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
         String s = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", defaultName));
 //        String s = prefs.getString("throttle_name_preference", defaultName);
