@@ -66,17 +66,18 @@ public class intro_throttle_name extends Fragment {
     }
 
 
-    @Nullable
-    @Override
-    public void onResume() {
-        super.onResume();
-        currentValue = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
-        v.setText(currentValue);
-    }
+//    @Nullable
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        currentValue = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
+//        v.setText(currentValue);
+//    }
 
     @Nullable
     @Override
     public void onDestroyView() {
+        prefs.edit().putString("throttle_name_preference", v.getText().toString()).commit();
         super.onDestroyView();
     }
 }
