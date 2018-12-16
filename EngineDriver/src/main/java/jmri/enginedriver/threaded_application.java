@@ -43,6 +43,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -84,6 +85,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
@@ -92,6 +94,7 @@ import javax.jmdns.ServiceListener;
 
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketHandler;
+import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.enginedriver.util.Flashlight;
@@ -102,7 +105,7 @@ import jmri.jmrit.roster.RosterLoader;
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
 @SuppressLint("NewApi")
 public class threaded_application extends Application {
-    public final String INTRO_VERSION = "1";  // set this to a different string to force the intro to run on next startup.
+    public final String INTRO_VERSION = "2";  // set this to a different string to force the intro to run on next startup.
 
     public comm_thread commThread;
     String host_ip = null; //The IP address of the WiThrottle server.
@@ -1805,11 +1808,15 @@ public class threaded_application extends Application {
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         if (!prefs.getString("prefRunIntro", "0").equals(INTRO_VERSION)) {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("prefRunIntro", INTRO_VERSION);
-            editor.apply();
-            Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
-            startActivity(intent);
+//            SharedPreferences.Editor editor = prefs.edit();
+//            editor.putString("prefRunIntro", INTRO_VERSION);
+//            editor.apply();
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
+                startActivity(intent);
+            } else {
+                prefs.edit().putString("prefRunIntro", INTRO_VERSION).commit();
+            }
         }
 
         //When starting ED after it has been killed in the bkg, the OS restarts any activities that were running.
@@ -2765,6 +2772,30 @@ public class threaded_application extends Application {
     public String throttleIntToString(int whichThrottle) {
         return Integer.toString(whichThrottle);
     }
+
+    public String fixThrottleName(String currentValue) {
+        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
+
+        String newValue = currentValue;
+        //if name is blank or the default name, make it unique
+        if (currentValue.equals("") || currentValue.equals(defaultName)) {
+            String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+            if (deviceId != null && deviceId.length() >= 4) {
+                deviceId = deviceId.substring(deviceId.length() - 4);
+            } else {
+                Random rand = new Random();
+                deviceId = String.valueOf(rand.nextInt(9999));  //use random string
+                if (MobileControl2.isMobileControl2()) {
+                    // Change default name for ESU MCII
+                    defaultName = getApplicationContext().getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
+                }
+            }
+            newValue = defaultName + " " + deviceId;
+       }
+        prefs.edit().putString("throttle_name_preference", newValue).commit();  //save new name to prefs
+        return newValue;
+    }
+
 }
 
 

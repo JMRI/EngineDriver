@@ -24,6 +24,7 @@
     <string name="function_buttons">botones_de_funciones</string>
 
     <string name="app_description">Engine Driver - Un controlador para tu teléfono Android. Esta aplicación permite conectar a  servidores WiThrottle como JMRI, MRC o Digitrax, y tripular tus locomotoras. Velocidad, dirección, y mas de 29 funciones DCC están soportadas para una o dos locomotoras.</string>
+    <string name="app_name_intro">Introducción - Engine Driver</string>
     <string name="app_name_connect">Conectar al servidor - Engine Driver</string>
     <string name="app_name_throttle">Controlador - Engine Driver</string>
     <string name="app_name_throttle_short">Controlador</string>
@@ -83,7 +84,7 @@
     <string name="releaseThrottleNumber">Libera Controlador %1$s</string>
     <string name="releaseThrottleLocos">Libera\n %1$s</string>
     <string name="turnouts">Desvíos</string>
-    <string name="Desvíos">Control de Desvío</string>
+    <string name="turnouts_label">Control de Desvío</string>
     <string name="turnouts_direct_entry_label">Entra Desvío#</string>
     <string name="turnouts_location_label">Filtra por Localización</string>
     <string name="turnouts_list_label">Desvíos (pulsa para cambiar)</string>
@@ -524,13 +525,14 @@
     <string name="prefTtsSummary">Hablar eventos clave</string>
     <string name="prefTtsWhenTitle">Respuestas de Voz</string>
     <string name="prefTtsWhenSummary">Cuando hablar eventos y acciones utilizando Texto a Voz (TTS).</string>
-
+<!--
     <string name="prefTtsThrottleTitle">En el Cambio de Controlador</string>
     <string name="prefTtsThrottleSummary">Cuando seleccionas un controlador diferente.</string>
     <string name="prefTtsThrottleSpeedTitle">+ velocidad</string>
     <string name="prefTtsThrottleSpeedSummary">Cuando selecciones un controlador diferente en el gamepad, también di la velocidad. Anula la opción del controlador solo.</string>
     <string name="prefTtsThrottleLocoSpeedTitle">+ locomotora</string>
     <string name="prefTtsThrottleLocoSpeedSummary">Cuando selecciones un controlador diferente en el gamepad, también di el número de la locomotora. Anula la opción del controlador solo.</string>
+-->
     <string name="prefTtsGamepadTestTitle">En la prueba de Gamepad</string>
     <string name="prefTtsGamepadTestSummary">Cuando la página de prueba del gamepad sea lanzada.</string>
     <string name="prefTtsGamepadTestCompleteTitle">En la prueba de Gamepad completada</string>
@@ -544,6 +546,7 @@
     <string name="TtsGamepadTestSkipped">Prueba omitida</string>
     <string name="TtsGamepadTestFail">Prueba cancelada</string>
     <string name="TtsGamepadTestReset">Reiniciar Gamepad</string>
+<!--
     <string name="TTS_Screen_Dimmed">Atenuada, desliza hacia arriba para restaurar</string>
     <string name="TTS_Screen_Locked">Bloqueado, desliza hacia arriba para restaurar</string>
     <string name="TTS_Screen_Unlocked">Desbloqueado</string>
@@ -556,6 +559,7 @@
     <string name="TTS_EStop">Parada de Emergencia</string>
     <string name="TTS_Dir_Change_While_Moving_Disabled">Dirección no cambiada</string>
     <string name="TTS_Function">Función</string>
+-->
     <string name="toastTtsFailed">¡Disculpa! El Texto a Voz ha fallado...</string>
     <string name="prefDefaultFunctionsTitle">Preferencias de Funciones por Defecto</string>
     <string name="prefDefaultFunctionsSummary">Cuándo y cómo se muestran las etiquetas de funciones predeterminadas.</string>
@@ -571,7 +575,9 @@
     <string name="lightsTextUnknown">Desconocido</string>
     <string name="prefLocaleTitle">Localización</string>
     <string name="prefLocaleSummary">Idioma a utilizar.\n¡ADVERTENCIA! El Engine Driver se reiniciará inmediatamente. Se reiniciarán las etiquetas de los botones de dirección.</string>
+<!--
     <string name="toastPreferencesLocaleChange">Engine Driver se reiniciará al seleccionar el Idioma.</string>
+-->
     <string name="prefDirectionButtonLongPressDelayTitle">Retardo de la Presión Larga del Botón de Dirección</string>
     <string name="prefDirectionButtonLongPressDelaySummary">Cuántos milisegundos constituye una pulsación larga para los botones de dirección.</string>
 
@@ -598,7 +604,9 @@
     <string name="toastThreadedAppNoLocalIp">No se ha encontrado Dirección IP.\nVerifica la conexión WIFI.</string>
     <string name="toastThreadedAppErrorCreatingWiThrottle">Error creando el cliente zeroconf del withrottle: Excepción IO:\n%1$s</string>
     <string name="toastThreadedAppWiThrottleNotSupported">Versión de WiThrottle %1$s no soportada.</string>
+<!--
     <string name="toastThreadedAppCantDeterminIp">No se ha podido determinar la dirección IP de %1$s</string>
+-->
     <string name="toastThreadedAppCantConnect">No se ha podido conectar al host %1$s y al puerto %2$s desde %3$s - %4$s Verifica los parámetros de red del WiThrottle.</string>
     <string name="toastThreadedAppErrorInputStream">Error al crear el flujo de entrada, Excepción IO: %1$s</string>
     <string name="toastThreadedAppErrorStartingSocket">Error al iniciar el flujo del socket_WiT: %1$s</string>
@@ -656,5 +664,30 @@
     <string name="app_name_throttle_kids_running">Acelerador - %1$s seg. restante</string>
     <string name="app_name_throttle_kids_enabled">Acelerador - Temporizador listo</string>
     <string name="app_name_throttle_kids_ended">Throttle - Timer End</string>
+
+    <string name="permissionsReadRecentConnections">Engine Driver necesita permisos de ALMACENAMIENTO para leer conexiones recientes.</string>
+    <string name="permissionsStoreRecentConnections">Engine Driver necesita permisos de ALMACENAMIENTO para almacenar conexiones recientes.</string>
+    <string name="permissionsClearRecentConnections">Engine Driver necesita permisos de ALMACENAMIENTO para borrar conexiones recientes.</string>
+    <string name="permissionsReadPreferences">Engine Driver necesita permisos de ALMACENAMIENTO para leer las preferencias.</string>
+    <string name="permissionsStorePreferences">Engine Driver necesita permisos de ALMACENAMIENTO para almacenar preferencias.</string>
+    <string name="permissionsClearPreferences">Engine Driver necesita permisos de ALMACENAMIENTO para borrar preferencias.</string>
+    <string name="permissionsReadPhoneState">Engine Driver necesita permisos de TELÉFONO para pausar las operaciones durante una llamada.</string>
+    <string name="permissionsReadFunctionSettings">Engine Driver necesita permisos de ALMACENAMIENTO para leer la configuración de la función.</string>
+    <string name="permissionsStoreFunctionSettings">Engine Driver necesita permisos de ALMACENAMIENTO para almacenar configuraciones de funciones.</string>
+    <string name="permissionsConnectToServer">Engine Driver necesita permisos de ALMACENAMIENTO para almacenar conexiones recientes y permisos de TELÉFONO para pausar las operaciones durante una llamada.</string>
+    <string name="permissionsGotoAppSettings">Por favor habilite estos permisos desde la configuración de la aplicación.</string>
+    <string name="permissionsAppSettingsButton">Ajustes de Aplicacion</string>
+    <string name="permissionsRetryButton">Procesar de nuevo</string>
+    <string name="permissionsRequestTitle">Permisos requeridos</string>
+    <string name="permissionsRetryTitle">Permisos rechazados</string>
+
+    <string name="introWelcomeTitle">Bienvenido a\nEngine Driver</string>
+    <string name="introWelcomeSummary">Esta aplicación puede conectarse a un servidor JMRI, MRC o DigiTrax WiThrottle para controlar sus locos y dispositivos DCC. Las siguientes páginas lo guiarán a través de la configuración inicial.</string>
+
+    <string name="introThemeSummary">Elige los colores y la apariencia de toda la aplicación.</string>
+    <string name="introThrottleTypeSummary">Elija el diseño de la pantalla principal del acelerador. Dependiendo del tipo elegido, estará limitado en el número de aceleradores individuales (1 a 6) en la pantalla.</string>
+
+    <string name="introFinishTitle">Listo para usar</string>
+    <string name="introFinishSummary">Puede realizar cambios adicionales en el aspecto y el comportamiento de la aplicación desde el menú de preferencias. En la siguiente pantalla, seleccione su servidor WiThrottle o ingrese la dirección IP y el puerto.</string>
 
 </resources>

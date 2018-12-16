@@ -29,6 +29,9 @@
     <color name="secondary_text">#ffffffff</color>
     <color name="tertiary_text">#ffffffff</color>
 
+    <color name="intro_background">#a56f00</color>
+    <color name="intro_buttonbar_background">#ffac00</color>
+
     <!-- Black Theme -->
 
     <color name="buttonFill_black">#ffd6d6d6</color>

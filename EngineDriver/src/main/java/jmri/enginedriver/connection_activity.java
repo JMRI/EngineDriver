@@ -327,23 +327,22 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
 
         //check for "default" throttle name and make it more unique
-        //TODO: move this and similar code in preferences.java into single routine
-
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-        String s = prefs.getString("throttle_name_preference", defaultName);
-        if (s.trim().equals("") || s.equals(defaultName)) {
-            String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-            if (deviceId != null && deviceId.length() >= 4) {
-                deviceId = deviceId.substring(deviceId.length() - 4);
-            } else {
-                Random rand = new Random();
-                deviceId = String.valueOf(rand.nextInt(9999));  //use random string
-            }
-            s = defaultName + " " + deviceId;
-            prefs.edit().putString("throttle_name_preference", s).commit();  //save new name to prefs
-
-        }
+        String s = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", defaultName));
+//        String s = prefs.getString("throttle_name_preference", defaultName);
+//        if (s.trim().equals("") || s.equals(defaultName)) {
+//            String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+//            if (deviceId != null && deviceId.length() >= 4) {
+//                deviceId = deviceId.substring(deviceId.length() - 4);
+//            } else {
+//                Random rand = new Random();
+//                deviceId = String.valueOf(rand.nextInt(9999));  //use random string
+//            }
+//            s = defaultName + " " + deviceId;
+//            prefs.edit().putString("throttle_name_preference", s).commit();  //save new name to prefs
+//
+//        }
 
         mainapp.applyTheme(this);
         setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect)); // needed in case the langauge was changed from the default
@@ -618,62 +617,66 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         boolean foundDemoHost = false;
         connections_list.clear();
         String errMsg;
-        if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-            //alert user that recent connections list requires SD Card
-            TextView v = (TextView) findViewById(R.id.recent_connections_heading);
-            v.setText(getString(R.string.ca_recent_conn_notice));
-        } else {
-            try {
-                File sdcard_path = Environment.getExternalStorageDirectory();
-                File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
 
-                if (connections_list_file.exists()) {
-                    BufferedReader list_reader = new BufferedReader(new FileReader(connections_list_file));
-                    while (list_reader.ready()) {
-                        String line = list_reader.readLine();
-                        String ip_address;
-                        String host_name;
-                        String port_str;
-                        Integer port = 0;
-                        List<String> parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
-                        if (parts.size() > 1) {  //skip if not split
-                            if (parts.size() == 2) {  //old style, use part 1 for ip and host
-                                host_name = parts.get(0);
-                                ip_address = parts.get(0);
-                                port_str = parts.get(1);
-                            } else {                          //new style, get all 3 parts
-                                host_name = parts.get(0);
-                                ip_address = parts.get(1);
-                                port_str = parts.get(2);
-                            }
-                            try {  //attempt to convert port to integer
-                                port = Integer.decode(port_str);
-                            } catch (Exception ignored) {
-                            }
-                            if (port > 0) {  //skip if port not converted to integer
+        if (prefs.getString("prefRunIntro", "0").equals(mainapp.INTRO_VERSION)) { // if the intro hasn't run yet, the permissions may not have been granted yet, so don't red the SD card,
 
-                                if ((!prefHideDemoServer)
-                                        || ((prefHideDemoServer)  && !((host_name.equals(demo_host)) && (port.toString().equals(demo_port))))) {
-                                    HashMap<String, String> hm = new HashMap<>();
-                                    hm.put("ip_address", ip_address);
-                                    hm.put("host_name", host_name);
-                                    hm.put("port", port.toString());
-                                    if (!connections_list.contains(hm)) {    // suppress dups
-                                        connections_list.add(hm);
-                                    }
+            if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+                //alert user that recent connections list requires SD Card
+                TextView v = (TextView) findViewById(R.id.recent_connections_heading);
+                v.setText(getString(R.string.ca_recent_conn_notice));
+            } else {
+                try {
+                    File sdcard_path = Environment.getExternalStorageDirectory();
+                    File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
+
+                    if (connections_list_file.exists()) {
+                        BufferedReader list_reader = new BufferedReader(new FileReader(connections_list_file));
+                        while (list_reader.ready()) {
+                            String line = list_reader.readLine();
+                            String ip_address;
+                            String host_name;
+                            String port_str;
+                            Integer port = 0;
+                            List<String> parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
+                            if (parts.size() > 1) {  //skip if not split
+                                if (parts.size() == 2) {  //old style, use part 1 for ip and host
+                                    host_name = parts.get(0);
+                                    ip_address = parts.get(0);
+                                    port_str = parts.get(1);
+                                } else {                          //new style, get all 3 parts
+                                    host_name = parts.get(0);
+                                    ip_address = parts.get(1);
+                                    port_str = parts.get(2);
                                 }
-                                if (host_name.equals(demo_host) && port.toString().equals(demo_port)) {
-                                    foundDemoHost = true;
+                                try {  //attempt to convert port to integer
+                                    port = Integer.decode(port_str);
+                                } catch (Exception ignored) {
+                                }
+                                if (port > 0) {  //skip if port not converted to integer
+
+                                    if ((!prefHideDemoServer)
+                                            || ((prefHideDemoServer) && !((host_name.equals(demo_host)) && (port.toString().equals(demo_port))))) {
+                                        HashMap<String, String> hm = new HashMap<>();
+                                        hm.put("ip_address", ip_address);
+                                        hm.put("host_name", host_name);
+                                        hm.put("port", port.toString());
+                                        if (!connections_list.contains(hm)) {    // suppress dups
+                                            connections_list.add(hm);
+                                        }
+                                    }
+                                    if (host_name.equals(demo_host) && port.toString().equals(demo_port)) {
+                                        foundDemoHost = true;
+                                    }
                                 }
                             }
                         }
+                        list_reader.close();
                     }
-                    list_reader.close();
+                } catch (IOException except) {
+                    errMsg = except.getMessage();
+                    Log.e("connection_activity", "Error reading recent connections list: " + errMsg);
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + errMsg, Toast.LENGTH_SHORT).show();
                 }
-            } catch (IOException except) {
-                errMsg = except.getMessage();
-                Log.e("connection_activity", "Error reading recent connections list: " + errMsg);
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + errMsg, Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -764,35 +767,43 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     }
 
     public void navigateToHandler(@RequestCodes int requestCode) {
-        if (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) {
-                PermissionsHelper.getInstance().requestNecessaryPermissions(connection_activity.this, requestCode);
+        if ((requestCode == PermissionsHelper.READ_CONNECTION_LIST) &&
+                (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) &&
+                !(prefs.getString("prefRunIntro", "0").equals(mainapp.INTRO_VERSION))) {
+            // if the intro hasn't run yet and we don't have the permission yet, skip the read because the intro will ask for the permission
+            loadSharedPreferencesFromFileImpl();
         } else {
-            // Go to the correct handler based on the request code.
-            // Only need to consider relevant request codes initiated by this Activity
-            switch (requestCode) {
-                case PermissionsHelper.CLEAR_CONNECTION_LIST:
-                    Log.d("Engine_Driver", "Got permission for CLEAR_CONNECTION_LIST - navigate to clearConnectionsListImpl()");
-                    clearConnectionsListImpl();
-                    break;
-                case PermissionsHelper.READ_CONNECTION_LIST:
-                    Log.d("Engine_Driver", "Got permission for READ_CONNECTION_LIST - navigate to getConnectionsListImpl()");
-                    getConnectionsListImpl();
-                    break;
-                case PermissionsHelper.STORE_PREFERENCES:
-                    Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
-                    saveSharedPreferencesToFileImpl();
-                    break;
-                case PermissionsHelper.READ_PREFERENCES:
-                    Log.d("Engine_Driver", "Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
-                    loadSharedPreferencesFromFileImpl();
-                    break;
-                case PermissionsHelper.CONNECT_TO_SERVER:
-                    Log.d("Engine_Driver", "Got permission for READ_PHONE_STATE - navigate to connectImpl()");
-                    connectImpl();
-                    break;
-                default:
-                    // do nothing
-                    Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
+
+            if (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) {
+                    PermissionsHelper.getInstance().requestNecessaryPermissions(connection_activity.this, requestCode);
+            } else {
+                // Go to the correct handler based on the request code.
+                // Only need to consider relevant request codes initiated by this Activity
+                switch (requestCode) {
+                    case PermissionsHelper.CLEAR_CONNECTION_LIST:
+                        Log.d("Engine_Driver", "Got permission for CLEAR_CONNECTION_LIST - navigate to clearConnectionsListImpl()");
+                        clearConnectionsListImpl();
+                        break;
+                    case PermissionsHelper.READ_CONNECTION_LIST:
+                        Log.d("Engine_Driver", "Got permission for READ_CONNECTION_LIST - navigate to getConnectionsListImpl()");
+                        getConnectionsListImpl();
+                        break;
+                    case PermissionsHelper.STORE_PREFERENCES:
+                        Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
+                        saveSharedPreferencesToFileImpl();
+                        break;
+                    case PermissionsHelper.READ_PREFERENCES:
+                        Log.d("Engine_Driver", "Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
+                        loadSharedPreferencesFromFileImpl();
+                        break;
+                    case PermissionsHelper.CONNECT_TO_SERVER:
+                        Log.d("Engine_Driver", "Got permission for READ_PHONE_STATE - navigate to connectImpl()");
+                        connectImpl();
+                        break;
+                    default:
+                        // do nothing
+                        Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
+                }
             }
         }
     }
