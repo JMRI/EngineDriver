@@ -35,7 +35,7 @@
         android:summary="@string/prefLocaleSummary"
         android:title="@string/prefLocaleTitle" />
 
-    <PreferenceCategory android:title="@string/prefThrottleStatusTitle" >
+    <PreferenceCategory android:title="@string/prefThrottleStatusTitle">
         <CheckBoxPreference
             android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"
             android:key="show_emergency_stop_menu_preference"

@@ -172,7 +172,6 @@
 
             <Spinner
                 android:id="@+id/intro_throttle_type_value"
-                style="?attr/edit_label_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"

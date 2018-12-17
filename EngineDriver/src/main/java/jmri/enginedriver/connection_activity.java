@@ -331,12 +331,12 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         if (!prefs.getString("prefRunIntro", "0").equals(mainapp.INTRO_VERSION)) {
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
                 startActivity(intent);
-            } else {
-                prefs.edit().putString("prefRunIntro", mainapp.INTRO_VERSION).commit();
-            }
+//            } else {
+//                prefs.edit().putString("prefRunIntro", main10app.INTRO_VERSION).commit();
+//            }
         }
 
         String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);

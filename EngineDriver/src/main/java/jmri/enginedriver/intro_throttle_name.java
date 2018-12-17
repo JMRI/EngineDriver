@@ -22,30 +22,9 @@ public class intro_throttle_name extends Fragment {
 
     SharedPreferences prefs;
     String currentValue = "";
-//    String defaultName = "";
-    TextView v;
+    TextView throttleNameView;
 
     private threaded_application mainapp; //pointer back to application
-
-//    private String fixThrottleName(String currentValue) {
-//        threaded_application mainapp;
-//        defaultName = String.valueOf(R.string.prefThrottleNameDefaultValue);
-//        mainapp = (threaded_application) this.getActivity().getApplication();
-//
-//        String newValue = currentValue;
-//        //if name is blank or the default name, make it unique
-//        if (currentValue.equals("") || currentValue.equals(defaultName)) {
-//            Random rand = new Random();
-//            String deviceId = String.valueOf(rand.nextInt(9999));  //use random string
-//            if (MobileControl2.isMobileControl2()) {
-//                // Change default name for ESU MCII
-//                defaultName = this.getActivity().getApplicationContext().getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
-//            }
-//            newValue = defaultName + " " + deviceId;
-//        }
-//        prefs.edit().putString("throttle_name_preference", newValue).commit();  //save new name to prefs
-//        return newValue;
-//    }
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -55,8 +34,18 @@ public class intro_throttle_name extends Fragment {
         prefs = this.getActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
         currentValue = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
 
-        v = (TextView) getView().findViewById(R.id.intro_throttle_name_value);
-        v.setText(currentValue);
+        throttleNameView = (TextView) getView().findViewById(R.id.intro_throttle_name_value);
+        throttleNameView.setText(currentValue);
+
+        throttleNameView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    currentValue = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
+                    throttleNameView.setText(currentValue);
+                }
+            }
+        });
     }
 
     @Nullable
@@ -71,13 +60,13 @@ public class intro_throttle_name extends Fragment {
 //    public void onResume() {
 //        super.onResume();
 //        currentValue = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
-//        v.setText(currentValue);
+//        throttleNameView.setText(currentValue);
 //    }
 
     @Nullable
     @Override
     public void onDestroyView() {
-        prefs.edit().putString("throttle_name_preference", v.getText().toString()).commit();
+        prefs.edit().putString("throttle_name_preference", throttleNameView.getText().toString()).commit();
         super.onDestroyView();
     }
 }
