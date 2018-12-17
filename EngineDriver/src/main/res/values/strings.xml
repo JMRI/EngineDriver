@@ -829,4 +829,13 @@
     <string name="permissionsRequestTitle">Permissions Required</string>
     <string name="permissionsRetryTitle">Permissions Declined</string>
 
+    <string name="introWelcomeTitle">Welcome to \nEngine Driver</string>
+    <string name="introWelcomeSummary">This app can connect to a JMRI, MRC or DigiTrax WiThrottle server to control your DCC locos and devices. The following pages will guide you through initial setup.</string>
+
+    <string name="introThemeSummary">Choose the colors and appearance of the whole app.</string>
+    <string name="introThrottleTypeSummary">Choose the layout of the main throttle screen. Depending on the chosen type, you will be limited on the number of individual throttles (1 to 6) on the screen.</string>
+
+    <string name="introFinishTitle">Ready to use</string>
+    <string name="introFinishSummary">You can make additional changes to the appearance and behaviour of the app from the preferences menu. On the next screen select your WiThrottle server or enter the ip address and port.</string>
+
 </resources>

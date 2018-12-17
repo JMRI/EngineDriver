@@ -22,6 +22,7 @@
     <string name="function_buttons">botões_função</string>
 
     <string name="app_description">Engine Driver - Controlador para o seu fone Android. Este aplicativo pode conectaro ao JMRI, MRC ou servidor Digitrax WiThrottle, e controlar seus desvios e locomotivas. Velocidade, direção, e até 29 funcções DCC são suportadas para uma ou duas locomotivas.</string>
+    <string name="app_name_intro">Introdução - Engine Driver</string>
     <string name="app_name_connect">Conexão ao Servidor -Engine Driver</string>
     <string name="app_name_throttle">Controlador - Engine Driver</string>
     <string name="app_name_throttle_short">Controlador  </string>
@@ -590,5 +591,30 @@
     <string name="app_name_throttle_kids_running">Acelerador - %1$s seg. remanescente</string>
     <string name="app_name_throttle_kids_enabled">Acelerador - Temporizador Pronto</string>
     <string name="app_name_throttle_kids_ended">Acelerador - temporizador terminado</string>
+
+    <string name="permissionsReadRecentConnections">Engine Driver precisa de permissões STORAGE para ler conexões recentes.</string>
+    <string name="permissionsStoreRecentConnections">Engine Driver precisa de permissões STORAGE para armazenar conexões recentes.</string>
+    <string name="permissionsClearRecentConnections">Engine Driver precisa de permissões STORAGE para limpar conexões recentes.</string>
+    <string name="permissionsReadPreferences">Engine Driver precisa de permissões STORAGE para ler preferências.</string>
+    <string name="permissionsStorePreferences">Engine Driver precisa de permissões STORAGE para armazenar preferências.</string>
+    <string name="permissionsClearPreferences">Engine Driver precisa de permissões STORAGE para limpar preferências.</string>
+    <string name="permissionsReadPhoneState">Engine Driver precisa de permissões PHONE para pausar as operações quando estiver em uma chamada.</string>
+    <string name="permissionsReadFunctionSettings">Engine Driver precisa de permissões STORAGE para ler as configurações das funções.</string>
+    <string name="permissionsStoreFunctionSettings">Engine Driver precisa de permissões STORAGE para armazenar configurações de função.</string>
+    <string name="permissionsConnectToServer">Engine Driver precisa de permissões STORAGE para armazenar conexões recentes e permissões PHONE para pausar operações quando em uma chamada.</string>
+    <string name="permissionsGotoAppSettings">Por favor ative estas permissões nas configurações do aplicativo.</string>
+    <string name="permissionsAppSettingsButton">Configurações do aplicativo</string>
+    <string name="permissionsRetryButton">Tente novamente</string>
+    <string name="permissionsRequestTitle">Permissões necessárias</string>
+    <string name="permissionsRetryTitle">Permissões recusadas</string>
+
+    <string name="introWelcomeTitle">Welcome to \nEngine Driver</string>
+    <string name="introWelcomeSummary">Este aplicativo pode se conectar a um servidor JMRI, MRC ou DigiTrax WiThrottle para controlar suas locomotivas e dispositivos DCC. As páginas a seguir guiarão você pela configuração inicial.</string>
+
+    <string name="introThemeSummary">Escolha as cores e aparência de todo o aplicativo.</string>
+    <string name="introThrottleTypeSummary">Escolha o layout da tela principal do acelerador. Dependendo do tipo escolhido, você será limitado no número de aceleradores individuais (1 a 6) na tela.</string>
+
+    <string name="introFinishTitle">Pronto para usar</string>
+    <string name="introFinishSummary">Você pode fazer alterações adicionais na aparência e no comportamento do aplicativo no menu de preferências. Na próxima tela selecione seu servidor WiThrottle ou digite o endereço IP e porta.</string>
 
 </resources>

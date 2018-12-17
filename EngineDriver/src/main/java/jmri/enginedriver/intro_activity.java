@@ -15,15 +15,21 @@ import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
 
+import jmri.enginedriver.util.PermissionsHelper;
+
 public class intro_activity extends AppIntro2 {
     private SharedPreferences prefs;
     private String prefTheme  = "";
     private String prefThrottleType  = "";
 
+    private threaded_application mainapp;    //pointer back to application
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("Engine_Driver", "intro.onCreate()");
+
+        mainapp = (threaded_application) this.getApplication();
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
@@ -31,20 +37,36 @@ public class intro_activity extends AppIntro2 {
 
         // Note here that we DO NOT use setContentView();
 
-        SliderPage sliderPage1 = new SliderPage();
-        sliderPage1.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
-        sliderPage1.setDescription(getApplicationContext().getResources().getString(R.string.permissionsReadPreferences));
-        sliderPage1.setImageDrawable(R.drawable.icon_xl);
-        //sliderPage.setBgColor(backgroundColor);
-        addSlide(AppIntroFragment.newInstance(sliderPage1));
-        askForPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        SliderPage sliderPage0 = new SliderPage();
+        sliderPage0.setTitle(getApplicationContext().getResources().getString(R.string.introWelcomeTitle));
+        sliderPage0.setDescription(getApplicationContext().getResources().getString(R.string.introWelcomeSummary));
+        sliderPage0.setImageDrawable(R.drawable.icon_xl);
+        sliderPage0.setBgColor(getResources().getColor(R.color.intro_background));
+        addSlide(AppIntroFragment.newInstance(sliderPage0));
 
-        SliderPage sliderPage2= new SliderPage();
-        sliderPage2.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
-        sliderPage2.setDescription(getApplicationContext().getResources().getString(R.string.permissionsReadPhoneState));
-        sliderPage2.setImageDrawable(R.drawable.icon_xl);
-        addSlide(AppIntroFragment.newInstance(sliderPage2));
-        askForPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 2);
+        int slideNumber = 1;
+        if ( (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_CONNECTION_LIST)) ||
+                (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.STORE_CONNECTION_LIST)) ) {
+            SliderPage sliderPage1 = new SliderPage();
+            sliderPage1.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
+            sliderPage1.setDescription(getApplicationContext().getResources().getString(R.string.permissionsReadPreferences));
+            sliderPage1.setImageDrawable(R.drawable.icon_xl);
+            sliderPage1.setBgColor(getResources().getColor(R.color.intro_background));
+            addSlide(AppIntroFragment.newInstance(sliderPage1));
+            slideNumber = slideNumber + 1;
+            askForPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, slideNumber);
+        }
+
+        if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_PHONE_STATE)) {
+            SliderPage sliderPage2 = new SliderPage();
+            sliderPage2.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
+            sliderPage2.setDescription(getApplicationContext().getResources().getString(R.string.permissionsReadPhoneState));
+            sliderPage2.setImageDrawable(R.drawable.icon_xl);
+            sliderPage2.setBgColor(getResources().getColor(R.color.intro_background));
+            addSlide(AppIntroFragment.newInstance(sliderPage2));
+            slideNumber = slideNumber + 1;
+            askForPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, slideNumber);
+        }
 
         Fragment fragment0 = new intro_throttle_name();
         addSlide(fragment0);
@@ -53,9 +75,18 @@ public class intro_activity extends AppIntro2 {
         Fragment fragment2 = new intro_throttle_type();
         addSlide(fragment2);
 
+        SliderPage sliderPage99 = new SliderPage();
+        sliderPage99.setTitle(getApplicationContext().getResources().getString(R.string.introFinishTitle));
+        sliderPage99.setDescription(getApplicationContext().getResources().getString(R.string.introFinishSummary));
+        sliderPage99.setImageDrawable(R.drawable.icon_xl);
+        sliderPage99.setBgColor(getResources().getColor(R.color.intro_background));
+        addSlide(AppIntroFragment.newInstance(sliderPage99));
+
+
         // OPTIONAL METHODS
         // Override bar/separator color.
-        setBarColor(Color.parseColor("#3F51B5"));
+//        setBarColor(Color.parseColor("#3F51B5"));
+        setBarColor(getResources().getColor(R.color.intro_buttonbar_background));
 //        setSeparatorColor(Color.parseColor("#2196F3"));
 
         // Hide Skip/Done button.
@@ -78,7 +109,10 @@ public class intro_activity extends AppIntro2 {
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-        // Do something when users tap on Done button.
+
+        prefs.edit().putString("prefRunIntro", mainapp.INTRO_VERSION).commit();
+
+
         if ( ( prefTheme != prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)))
         || ( prefTheme != prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) ) {
             // the theme has changed so need to restart the app.

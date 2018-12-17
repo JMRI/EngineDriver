@@ -426,8 +426,8 @@
   <!-- Ultra Theme. Uses the base colours from the High Contrast Theme.  Mostly the buttons are different -->
 
   <style name="small_heading_style_ultra" parent="@android:style/Widget.TextView">
-    <item name="android:textColor">#b4b4b4</item>
-    <item name="android:background">#1e1e1e</item>
+    <item name="android:textColor">#ffffff</item>
+    <item name="android:background">#5b5b5b</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:shadowColor">#00000000</item>

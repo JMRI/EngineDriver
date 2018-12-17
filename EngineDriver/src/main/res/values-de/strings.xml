@@ -24,6 +24,7 @@
     <string name="function_buttons">Funktionstasten</string>
 
     <string name="app_description">Engine Driver - Fahrpult für ihr Android Telefon. Diese Anwendung kann eine Verbindung mit einem JMRI, MRC oder Digitrax WiThrottle Server erstellen und ermöglicht damit die Steuerung von Lokomotiven. Geschwindigkeit, Fahrrichtung und bis zu 29 DCC Funktionen werden für eine oder zwei Lokomotiven unterstützt.</string>
+    <string name="app_name_intro">Einführung - Engine Driver</string>
     <string name="app_name_connect">Verbinden mit Server - Engine Driver</string>
     <string name="app_name_throttle">Fahrregler - Engine Driver</string>
     <string name="app_name_throttle_short">Fahrregler</string>
@@ -274,8 +275,10 @@
     <string name="prefDropOnAcquireSummary">Aktuelle Lok Freigeben vor der Übernahme einer neuen Lok.</string>
     <string name="prefHideIfNoUserNameTitle">Ausblenden falls kein Benutzername existiert?</string>
     <string name="prefHideIfNoUserNameSummary">Weiche/Fahrstraße aus Liste weglassen wenn der Benutzername leer ist.</string>
+<!--
     <string name="prefHideRecentLocosTitle">Verberge die Liste Letzte Loks?</string>
     <string name="prefHideRecentLocosSummary">Mehr Platz lassen für Loks aus dem Lokverzeichnis.</string>
+-->
     <string name="prefRosterRecentLocosTitle">Auswahl aus kürzlich verwendeten Loks</string>
     <string name="prefRosterRecentLocosSummary">Lokverzeichnisauswahlen in kürzlich verwendeten Loks einbeziehen?</string>
     <string name="prefMaximumRecentLocosTitle">Maximum kürzlich verwendeter Loks</string>
@@ -509,12 +512,14 @@
     <string name="prefTtsWhenTitle">Sprachausgabe</string>
     <string name="prefTtsWhenSummary">Zum Ankündigen von Schlüsselereignissen und Aktionen Text to Speech (TTS) verwenden.</string>
     <string name="prefTtsWhenDefaultValue">Keine</string>
+<!--
     <string name="prefTtsThrottleTitle">Beim Fahrreglerwechsel</string>
     <string name="prefTtsThrottleSummary">Wenn ein anderer Fahrregler gewählt wird.</string>
     <string name="prefTtsThrottleSpeedTitle">+ Geschwindigkeit</string>
     <string name="prefTtsThrottleSpeedSummary">Wenn ein anderer Fahrregler auf dem Gamepad gewählt wird, dann wird auch die Geschwindigkeit angesagt. Übergeht die Optionen einzelner Fahrregler.</string>
     <string name="prefTtsThrottleLocoSpeedTitle">+ Lok</string>
     <string name="prefTtsThrottleLocoSpeedSummary">Wenn ein anderer Fahrregler auf dem Gamepad gewählt wird, dann werden auch die Loknummern angesagt. Übergeht die Optionen einzelner Fahrregler.</string>
+-->
     <string name="prefTtsGamepadTestTitle">Beim Gamepad-Test</string>
     <string name="prefTtsGamepadTestSummary">Wenn die Gamepad-Testseite gestartet wird.</string>
     <string name="prefTtsGamepadTestCompleteTitle">Wenn der Gamepad-Test fertig ist.</string>
@@ -557,7 +562,9 @@
     <string name="lightsTextUnknown">Unbekannt</string>
     <string name="prefLocaleTitle">Lokalisierung</string>
     <string name="prefLocaleSummary">Zu benützende Sprache.\nWARNUNG! Engine Driver wird sofort neu starten. Die Bezeichnungen der Richtungsknöpfe werden zurückgesetzt.</string>
+<!--
     <string name="toastPreferencesLocaleChange">Engine Driver startete neu mit gewählter Sprache.</string>
+-->
     <string name="prefDirectionButtonLongPressDelayTitle">Verzögerung für langes Drücken der Richtungsknöpfe</string>
     <string name="prefDirectionButtonLongPressDelaySummary">Wieviele Millisekunden machen ein langes Drücken der Richtungsknöpfe aus.</string>
 
@@ -633,5 +640,30 @@
     <string name="app_name_throttle_kids_running">Throttle - %1$s sek. verbleibend</string>
     <string name="app_name_throttle_kids_enabled">Gas - Timer bereit</string>
     <string name="app_name_throttle_kids_ended">Gas - Timer beendet</string>
+
+    <string name="permissionsReadRecentConnections">Engine Driver benötigt STORAGE-Berechtigungen zum Lesen der letzten Verbindungen.</string>
+    <string name="permissionsStoreRecentConnections">Engine Driver benötigt STORAGE-Berechtigungen zum Speichern der letzten Verbindungen.</string>
+    <string name="permissionsClearRecentConnections">Engine Driver benötigt STORAGE-Berechtigungen, um die letzten Verbindungen zu löschen.</string>
+    <string name="permissionsReadPreferences">Engine Driver benötigt STORAGE-Berechtigungen zum Lesen der Einstellungen.</string>
+    <string name="permissionsStorePreferences">Engine Driver benötigt STORAGE-Berechtigungen zum Speichern von Einstellungen.</string>
+    <string name="permissionsClearPreferences">Engine Driver benötigt STORAGE-Berechtigungen, um die Einstellungen zu löschen.</string>
+    <string name="permissionsReadPhoneState">Engine Driver benötigt PHONE-Berechtigungen, um Vorgänge während eines Anrufs anzuhalten.</string>
+    <string name="permissionsReadFunctionSettings">Engine Driver benötigt STORAGE-Berechtigungen zum Lesen der Funktionseinstellungen.</string>
+    <string name="permissionsStoreFunctionSettings">Engine Driver benötigt SPEICHER-Berechtigungen zum Speichern von Funktionseinstellungen.</string>
+    <string name="permissionsConnectToServer">Engine Driver benötigt STORAGE-Berechtigungen zum Speichern der letzten Verbindungen und PHONE-Berechtigungen, um Vorgänge während eines Anrufs anzuhalten.</string>
+    <string name="permissionsGotoAppSettings">Bitte aktivieren Sie diese Berechtigungen in den App-Einstellungen.</string>
+    <string name="permissionsAppSettingsButton">App Einstellungen</string>
+    <string name="permissionsRetryButton">Wiederholen</string>
+    <string name="permissionsRequestTitle">Erforderliche Berechtigungen</string>
+    <string name="permissionsRetryTitle">Berechtigungen abgelehnt</string>
+
+    <string name="introWelcomeTitle">Willkommen bei\nEngine Driver</string>
+    <string name="introWelcomeSummary">Diese App kann eine Verbindung zu einem JMRI-, MRC- oder DigiTrax-WiThrottle-Server herstellen, um Ihre DCC-Loks und -Geräte zu steuern. Die folgenden Seiten führen Sie durch die Ersteinrichtung.</string>
+
+    <string name="introThemeSummary">Wählen Sie die Farben und das Erscheinungsbild der gesamten App.</string>
+    <string name="introThrottleTypeSummary">Wählen Sie das Layout der Hauptgasanzeige. Je nach gewähltem Typ ist die Anzahl der einzelnen Drosseln (1 bis 6) auf dem Bildschirm begrenzt.</string>
+
+    <string name="introFinishTitle">Einsatzbereit</string>
+    <string name="introFinishSummary">Sie können zusätzliche Änderungen am Erscheinungsbild und Verhalten der App über das Einstellungsmenü vornehmen. Wählen Sie im nächsten Bildschirm Ihren WiThrottle-Server aus oder geben Sie die IP-Adresse und den Port ein.</string>
 
 </resources>

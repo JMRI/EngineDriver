@@ -240,23 +240,25 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         switch (key) {
             case "throttle_name_preference": {
                 String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-                String currentValue = sharedPreferences.getString(key, defaultName).trim();
-                //if new name is blank or the default name, make it unique
-                if (currentValue.equals("") || currentValue.equals(defaultName)) {
-                    String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-                    if (deviceId != null && deviceId.length() >= 4) {
-                        deviceId = deviceId.substring(deviceId.length() - 4);
-                    } else {
-                        Random rand = new Random();
-                        deviceId = String.valueOf(rand.nextInt(9999));  //use random string
-                    }
-                    if (MobileControl2.isMobileControl2()) {
-                        // Change default name for ESU MCII
-                        defaultName = getApplicationContext().getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
-                    }
-                    String uniqueDefaultName = defaultName + " " + deviceId;
-                    sharedPreferences.edit().putString(key, uniqueDefaultName).commit();  //save new name to prefs
-                }
+                String currentValue = mainapp.fixThrottleName(sharedPreferences.getString(key, defaultName).trim());
+
+//                String currentValue = sharedPreferences.getString(key, defaultName).trim();
+//                //if new name is blank or the default name, make it unique
+//                if (currentValue.equals("") || currentValue.equals(defaultName)) {
+//                    String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+//                    if (deviceId != null && deviceId.length() >= 4) {
+//                        deviceId = deviceId.substring(deviceId.length() - 4);
+//                    } else {
+//                        Random rand = new Random();
+//                        deviceId = String.valueOf(rand.nextInt(9999));  //use random string
+//                    }
+//                    if (MobileControl2.isMobileControl2()) {
+//                        // Change default name for ESU MCII
+//                        defaultName = getApplicationContext().getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
+//                    }
+//                    String uniqueDefaultName = defaultName + " " + deviceId;
+//                    sharedPreferences.edit().putString(key, uniqueDefaultName).commit();  //save new name to prefs
+//                }
                 break;
             }
             case "maximum_throttle_preference":
