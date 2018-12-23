@@ -372,7 +372,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 sharedPreferences.edit().putString("prefRightDirectionButtons", "").commit();
                 sharedPreferences.edit().putString("prefLeftDirectionButtonsShort", "").commit();
                 sharedPreferences.edit().putString("prefRightDirectionButtonsShort", "").commit();
-                forceRestartApp();
+                forceRestartApp(true);
                 break;
             case "prefDirectionButtonLongPressDelay":
                 // limit check new value
@@ -385,7 +385,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             case "prefTheme":
                 String prefTheme = sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
                 if (!prefTheme.equals(prefThemeOriginal)) {
-                    forceRestartApp();
+                    forceRestartApp(true);
                 }
                 break;
             case "prefConsistFollowRuleStyle":
@@ -395,12 +395,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
-    void forceRestartApp() {
+    void forceRestartApp(boolean returnToPreferencesPage) {
         // Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesLocaleChange), Toast.LENGTH_LONG).show(); // app dies before this shows
 
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
+        if (returnToPreferencesPage) sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
 
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -509,7 +509,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         Toast.makeText(getApplicationContext(), m, Toast.LENGTH_LONG).show();
         Log.d("Engine_Driver", m);
 
-        forceRestartApp();
+        forceRestartApp(false);
     }
 
     private void fixAndReloadImportExportPreference(SharedPreferences sharedPreferences){
@@ -637,7 +637,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             SharedPreferences.Editor prefEdit = sharedPreferences.edit();
             prefEdit.commit();
             reload();
-            forceRestartApp();
+            forceRestartApp(true);
         }
     }
 

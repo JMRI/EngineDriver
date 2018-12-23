@@ -844,4 +844,9 @@
     <string name="introFinishTitle">Ready to use</string>
     <string name="introFinishSummary">You can make additional changes to the appearance and behaviour of the app from the preferences menu. On the next screen select your WiThrottle server or enter the ip address and port.</string>
 
+    <string name="introButtonsTitle">Speed Sliders and Buttons</string>
+    <string name="introButtonsSummary">Choose how you want to control your locos.</string>
+    <string name="introButtonsSlider">Slider Only\n(not possible with \'Big Buttons\')</string>
+    <string name="introButtonsSliderAndButtons">Slider + Buttons\n(not possible with \'Big Buttons\'.)</string>
+    <string name="introButtonsNoSlider">Speed Buttons Only</string>
 </resources>

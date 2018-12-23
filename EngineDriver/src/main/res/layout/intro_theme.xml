@@ -229,12 +229,12 @@
 
             <RadioGroup
                 android:id="@+id/intro_throttle_type_radio_group"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <RadioButton
                     android:id="@+id/intro_theme_default_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:drawableLeft="@drawable/intro_theme_default"
@@ -245,7 +245,7 @@
 
                 <RadioButton
                     android:id="@+id/intro_theme_black_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:drawableLeft="@drawable/intro_theme_black"
@@ -256,7 +256,7 @@
 
                 <RadioButton
                     android:id="@+id/intro_theme_outline_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:drawableLeft="@drawable/intro_theme_outline"
@@ -267,7 +267,7 @@
 
                 <RadioButton
                     android:id="@+id/intro_theme_ultra_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:drawableLeft="@drawable/intro_theme_ultra"
@@ -278,7 +278,7 @@
 
                 <RadioButton
                     android:id="@+id/intro_theme_colorful_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:drawableLeft="@drawable/intro_theme_colorful"
