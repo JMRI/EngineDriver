@@ -44,7 +44,7 @@ public class intro_activity extends AppIntro2 {
         SliderPage sliderPage0 = new SliderPage();
         sliderPage0.setTitle(getApplicationContext().getResources().getString(R.string.introWelcomeTitle));
         sliderPage0.setDescription(getApplicationContext().getResources().getString(R.string.introWelcomeSummary));
-        sliderPage0.setImageDrawable(R.drawable.icon_xl);
+        sliderPage0.setImageDrawable(R.drawable.ed_to_loco);
         sliderPage0.setBgColor(getResources().getColor(R.color.intro_background));
         addSlide(AppIntroFragment.newInstance(sliderPage0));
 
