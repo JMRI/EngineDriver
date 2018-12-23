@@ -331,29 +331,13 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         if (!prefs.getString("prefRunIntro", "0").equals(mainapp.INTRO_VERSION)) {
-//            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
-                startActivity(intent);
-//            } else {
-//                prefs.edit().putString("prefRunIntro", main10app.INTRO_VERSION).commit();
-//            }
+            Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
+            startActivity(intent);
         }
 
         String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
         String s = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", defaultName));
-//        String s = prefs.getString("throttle_name_preference", defaultName);
-//        if (s.trim().equals("") || s.equals(defaultName)) {
-//            String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-//            if (deviceId != null && deviceId.length() >= 4) {
-//                deviceId = deviceId.substring(deviceId.length() - 4);
-//            } else {
-//                Random rand = new Random();
-//                deviceId = String.valueOf(rand.nextInt(9999));  //use random string
-//            }
-//            s = defaultName + " " + deviceId;
-//            prefs.edit().putString("throttle_name_preference", s).commit();  //save new name to prefs
-//
-//        }
+
 
         mainapp.applyTheme(this);
         setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect)); // needed in case the langauge was changed from the default

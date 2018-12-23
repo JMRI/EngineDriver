@@ -451,6 +451,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     @SuppressWarnings({ "unchecked" })
     private boolean loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId) {
+        Log.d("Engine_Driver", "Loading saved preferences from file");
         boolean res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
 
         if (!res) {
@@ -461,6 +462,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     private boolean saveSharedPreferencesToFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, boolean confirmDialog) {
+        Log.d("Engine_Driver", "Saving preferences to file");
         sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
         boolean res = false;
         if (!exportedPreferencesFileName.equals(".ed")) {
@@ -483,6 +485,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     public void reload() {
         // restart the activity so all the preferences show correctly based on what was imported
+        Log.d("Engine_Driver", "Forcing app reload");
         if (Build.VERSION.SDK_INT >= 11) {
             recreate();
         } else {
@@ -497,6 +500,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     private void resetPreferences(SharedPreferences sharedPreferences){
+        Log.d("Engine_Driver", "Resetting preferences");
         SharedPreferences.Editor prefEdit = sharedPreferences.edit();
         prefEdit.clear();
         prefEdit.commit();

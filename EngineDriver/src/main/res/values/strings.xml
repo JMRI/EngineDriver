@@ -583,11 +583,12 @@
     <string name="gamepadTestButtonLabelButtonRightTrigger">Right Trigger</string>
 
     <string name="gamepadTestOptionalLabel">Optional (may not be on the device)</string>
-    <string name="gamepadTestAllKeyCodesLabel">All codes:\s\s</string>
-    <string name="gamepadTestModeLabel">Type:\s\s</string>
-    <string name="gamepadTestKeycodeLabel">Key code:\s\s</string>
-    <string name="gamepadTestFunctionLabel">Function:\s\s</string>
-    <string name="gamepadTestCompleteLabel">Test status:\s\s</string>
+    <string name="gamepadTestAllKeyCodesLabel">All codes:</string>
+    <string name="gamepadTestModeLabel">Type:</string>
+    <string name="gamepadTestKeycodeLabel">Key code:</string>
+    <string name="gamepadTestFunctionLabel">Function:</string>
+    <string name="gamepadTestCompleteLabel">Test status:</string>
+    <string name="gamepadTestDeviceName">BT:</string>
     <string name="gamepadTestHelp">Scroll down to see the full instructions…\n\nPress ALL Dpad AND four primary buttons or the gamepad WILL NOT WORK.\n\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your gamepad) or try a different gamepad Type (above).\n\n\'BACK\' or \'CANCEL\' will exit the test but the gamepad WILL NOT WORK.\n\'SKIP\', or pressing the \'Decrease Speed\' gamepad button three times, will force the test to pass, even if the gamepad does not work properly.\n\'RESET\' will make ED think no gamepads have been used yet.\nIf \'simple\' test is selected, a single \'Decrease Speed\' button press will skip the test.\n\nUse the \'Gamepad Test n\' menu options to get back to this page.</string>
     <string name="gamepadTestHelpNonForced">If you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your device) or try a different gamepad Type (above).\nYou may be required to re-test the gamepad when you first use it from the throttle screen.</string>
     <string name="gamepadTestIncomplete">"Test Incomplete"</string>
@@ -822,9 +823,13 @@
     <string name="permissionsReadPhoneState">Engine Driver needs PHONE permissions to pause operations when on a call.</string>
     <string name="permissionsReadFunctionSettings">Engine Driver needs STORAGE permissions to read function settings.</string>
     <string name="permissionsStoreFunctionSettings">Engine Driver needs STORAGE permissions to store function settings.</string>
+    <string name="permissionsWriteSettings">Engine Driver needs WRITE SETTINGS permissions to change screen brightness.</string>
+    <string name="permissionsWriteSettingsAdditional">- Click the button below.\n- Grant the permission.\n- Click \'Back\' to return here.</string>
+    <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\'t need Engine Driver to alter the brightness.</string>
     <string name="permissionsConnectToServer">Engine Driver needs STORAGE permissions to store recent connections and PHONE permissions to pause operations when on a call.</string>
     <string name="permissionsGotoAppSettings">Please enable these permissions from the app settings.</string>
     <string name="permissionsAppSettingsButton">App settings</string>
+    <string name="permissionsSystemSettingsButton">System settings</string>
     <string name="permissionsRetryButton">Retry</string>
     <string name="permissionsRequestTitle">Permissions Required</string>
     <string name="permissionsRetryTitle">Permissions Declined</string>
@@ -833,7 +838,8 @@
     <string name="introWelcomeSummary">This app can connect to a JMRI, MRC or DigiTrax WiThrottle server to control your DCC locos and devices. The following pages will guide you through initial setup.</string>
 
     <string name="introThemeSummary">Choose the colors and appearance of the whole app.</string>
-    <string name="introThrottleTypeSummary">Choose the layout of the main throttle screen. Depending on the chosen type, you will be limited on the number of individual throttles (1 to 6) on the screen.</string>
+    <string name="introThrottleTypeSummary">Choose the layout of the main throttle screen.</string>
+    <string name="introThrottleTypeSummary2">Depending on the chosen type, you will be limited on the number of individual throttles (1 to 6) on the screen.</string>
 
     <string name="introFinishTitle">Ready to use</string>
     <string name="introFinishSummary">You can make additional changes to the appearance and behaviour of the app from the preferences menu. On the next screen select your WiThrottle server or enter the ip address and port.</string>

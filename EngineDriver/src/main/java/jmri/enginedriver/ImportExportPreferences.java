@@ -50,6 +50,7 @@ public class ImportExportPreferences {
     private ArrayList<Integer> address_size_list; // Look at address_type.java
 
     private boolean writeExportFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName){
+        Log.d("Engine_Driver", "ImportExportPreferences: Writing export file");
         boolean res = false;
         ObjectOutputStream output = null;
 
@@ -87,6 +88,7 @@ public class ImportExportPreferences {
     }
 
     public boolean saveSharedPreferencesToFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
+        Log.d("Engine_Driver", "ImportExportPreferences: Saving preferences to file");
         boolean res = false;
 
         boolean prefImportExportLocoList = sharedPreferences.getBoolean("prefImportExportLocoList", context.getResources().getBoolean(R.bool.prefImportExportLocoListDefaultValue));
@@ -109,6 +111,7 @@ public class ImportExportPreferences {
 
     @SuppressWarnings({ "unchecked" })
     public boolean loadSharedPreferencesFromFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId) {
+        Log.d("Engine_Driver", "ImportExportPreferences: Loading saved preferences from file");
         currentlyImporting = true;
         boolean res = false;
         boolean srcExists = false;
@@ -132,11 +135,14 @@ public class ImportExportPreferences {
                     input = new ObjectInputStream(new FileInputStream(src));
                     SharedPreferences.Editor prefEdit = sharedPreferences.edit();
                     prefEdit.clear();
+//                    sharedPreferences.edit().clear().commit();
 
                     Map<String, ?> entries = (Map<String, ?>) input.readObject();
                     for (Map.Entry<String, ?> entry : entries.entrySet()) {
                         Object v = entry.getValue();
                         String key = entry.getKey();
+
+//                        Log.d("Engine_Driver", "Key Start: " + key);
 
                         if (v instanceof Boolean)
                             prefEdit.putBoolean(key, (Boolean) v);
@@ -144,27 +150,34 @@ public class ImportExportPreferences {
                             prefEdit.putFloat(key, (Float) v);
                         else if (v instanceof Integer)
                             prefEdit.putInt(key, (Integer) v);
-                        else if (v instanceof Long) prefEdit.putLong(key, (Long) v);
-                        else if (v instanceof String) prefEdit.putString(key, ((String) v));
+                        else if (v instanceof Long)
+                            prefEdit.putLong(key, (Long) v);
+                        else if (v instanceof String)
+                            prefEdit.putString(key, ((String) v));
+
+//                        Log.d("Engine_Driver", "Key End: " + key);
                     }
-                    prefEdit.commit();
                     res = true;
 
-                    res = true;
+//                    prefEdit.commit();
 
                     // restore the remembered throttle name to avoid a duplicate throttle name if this is a differnt to device to where it was originally saved
                     String restoredDeviceId = sharedPreferences.getString("prefAndroidId", "").trim();
                     if ((!restoredDeviceId.equals(deviceId)) || (restoredDeviceId.equals(""))) {
-                        sharedPreferences.edit().putString("throttle_name_preference", currentThrottleNameValue).commit();
+                        prefEdit.putString("throttle_name_preference", currentThrottleNameValue);
                     }
-                    sharedPreferences.edit().putString("prefImportExport", "None").commit();  //reset the preference
-                    sharedPreferences.edit().putString("prefHostImportExport", "None").commit();  //reset the preference
-                    sharedPreferences.edit().putString("prefAutoImportExport", prefAutoImportExport).commit();  //reset the preference
-                    sharedPreferences.edit().putBoolean("prefImportExportLocoList", prefImportExportLocoList).commit();  //reset the preference
+                    prefEdit.putString("prefImportExport", "None");  //reset the preference
+                    prefEdit.putString("prefHostImportExport", "None");  //reset the preference
+                    prefEdit.putString("prefAutoImportExport", prefAutoImportExport);  //reset the preference
+                    prefEdit.putBoolean("prefImportExportLocoList", prefImportExportLocoList);  //reset the preference
+                    prefEdit.putString("prefRunIntro", threaded_application.INTRO_VERSION);  //don't re-run the intro
 
                     String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
+
+                    prefEdit.commit();
                     Toast.makeText(context, m, Toast.LENGTH_LONG).show();
                     Log.d("Engine_Driver", m);
+
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -208,6 +221,7 @@ public class ImportExportPreferences {
 
     // simliar, but different, code exists in select_loco.java. if you modify one, make sure you modify the other
     private void getRecentLocosListFromFile() {
+        Log.d("Engine_Driver", "ImportExportPreferences: Loading recent locos list from file");
         try {
             // Populate the List with the recent engines saved in a file. This
             // will be stored in /sdcard/engine_driver/recent_engine_list.txt
@@ -245,6 +259,7 @@ public class ImportExportPreferences {
     }
 
     private void writeRecentLocosListToFile(SharedPreferences sharedPreferences) {
+        Log.d("Engine_Driver", "ImportExportPreferences: Writing recent locos list to file");
 
         // write it out from the saved preferences to the file
         File sdcard_path = Environment.getExternalStorageDirectory();
