@@ -42,6 +42,11 @@
         <item name="ed_list_button_style">@style/list_button_style</item>
     </style>
 
+    <style name="app_intro" parent="@style/Theme.AppCompat">
+        <item name="ed_normal_button_style">@style/normal_button_style_colorful</item>
+        <item name="edit_label_style">@style/edit_label_style_black</item>
+    </style>
+
     <style name="app_theme" parent="@android:style/Theme">
         <item name="android:windowBackground">@drawable/app_background</item>
         <item name="android:windowTitleStyle">@style/app_title</item>

@@ -433,11 +433,11 @@
     <string name="gamepadTestButtonLabelButtonStart">Start | Eingabe</string>
     <string name="gamepadTestButtonLabelButtonEnter">Wahl | Eingabe</string>
     <string name="gamepadTestOptionalLabel">Optional (kann auch nicht auf dem Gerät sein)</string>
-    <string name="gamepadTestAllKeyCodesLabel">Alle Codes:\s\s</string>
-    <string name="gamepadTestModeLabel">Typ:\s\s</string>
-    <string name="gamepadTestKeycodeLabel">Tastencode:\s\s</string>
-    <string name="gamepadTestFunctionLabel">Funktion:\s\s</string>
-    <string name="gamepadTestCompleteLabel">Test Status:\s\s</string>
+    <string name="gamepadTestAllKeyCodesLabel">Alle Codes:</string>
+    <string name="gamepadTestModeLabel">Typ:</string>
+    <string name="gamepadTestKeycodeLabel">Tastencode:</string>
+    <string name="gamepadTestFunctionLabel">Funktion:</string>
+    <string name="gamepadTestCompleteLabel">Test Status:</string>
     <string name="gamepadTestHelp">Nach unten rollen um eine vollständige Anleitung zu sehen…\n\nDrücke ALLE Dpad UND vier primäre Knöpfe oder das Gamepad WIRD NICHT FUNKTIONIEREN.\n\nWenn nicht alle Knöpfe aktiviert werden können, dann wechsle den Gamepad Modus (siehe Anleitung zu deinem Gamepad) oder versuche ein anderer Gamepad Typ (oben).\n\n\'ZURÜCK\' oder \'ABBRECHEN\' wird den Test beenden, aber das Gamepad WIRD NICHT FUNKTIONIEREN.\n\'ÜBERSPRINGEN\', oder dreimaliges Drücken des Gamepad Knopfes \'Geschwindigkeit verringern\' erzwingt einen guten Test, selbst wenn das Gamepad nicht einwandfrei funktioniert.\n\'ZURÜCKSETZEN\' läßt ED annehmen, daß bisher keine Gamepads benutzt wurden.\nWenn für den Test \'einfach\' gewählt wurde, wird einmaliges Drücken des Knopfes \'Geschwindigkeit verringern\' den Test überspringen.\n\nVerwende die \'Gamepad Test n\' Menüoptionen, um zu dieser Seite zurück zu kommen.</string>
     <string name="gamepadTestHelpNonForced">Wenn nicht alle Knöpfe aktiviert werden können, dann wechsle den Gamepad Modus (siehe Anleitung zu deinem Gamepad) oder versuche ein anderer Gamepad Typ (oben).\nMöglicherweise musst du das Gamepad erneut testen, sobald du es erstmals im Fahrregler Bildschirm benützt.</string>
     <string name="gamepadTestIncomplete">"Test unvollständig"</string>

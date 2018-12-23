@@ -19,9 +19,6 @@
         <item name="android:windowBackground">@drawable/app_splash</item>
     </style>
 
-    <style name="app_intro" parent="@style/Theme.AppCompat">
-    </style>
-
     <style name="app_theme" parent="@android:style/Theme.Holo">
         <item name="android:windowBackground">@drawable/app_background</item>
         <item name="android:windowTitleStyle">@style/app_title</item>

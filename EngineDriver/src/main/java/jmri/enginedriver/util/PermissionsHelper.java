@@ -22,6 +22,8 @@ import java.lang.annotation.RetentionPolicy;
 
 import jmri.enginedriver.R;
 
+import static android.support.v4.content.ContextCompat.startActivity;
+
 public class PermissionsHelper {
 
     /**
@@ -38,7 +40,8 @@ public class PermissionsHelper {
             STORE_PREFERENCES,
             READ_FUNCTION_SETTINGS,
             STORE_FUNCTION_SETTINGS,
-            CONNECT_TO_SERVER})
+            CONNECT_TO_SERVER,
+            WRITE_SETTINGS})
     public @interface RequestCodes {}
 
     /**
@@ -53,6 +56,7 @@ public class PermissionsHelper {
     public static final int READ_FUNCTION_SETTINGS = 38;
     public static final int STORE_FUNCTION_SETTINGS = 39;
     public static final int CONNECT_TO_SERVER = 40;
+    public static final int WRITE_SETTINGS = 41;
 
     private boolean isDialogOpen = false;
     private static PermissionsHelper instance = null;
@@ -137,6 +141,8 @@ public class PermissionsHelper {
                 return context.getResources().getString(R.string.permissionsReadFunctionSettings);
             case CONNECT_TO_SERVER:
                 return context.getResources().getString(R.string.permissionsConnectToServer);
+            case WRITE_SETTINGS:
+                return context.getResources().getString(R.string.permissionsWriteSettings);
             default:
                 return "Unknown permission request: " + requestCode;
         }
@@ -182,6 +188,18 @@ public class PermissionsHelper {
                                     Manifest.permission.READ_PHONE_STATE},
                             requestCode);
                     break;
+                case WRITE_SETTINGS:
+                    Log.d("Engine_Driver", "Requesting WRITE_SETTINGS permissions");
+                    if (android.os.Build.VERSION.SDK_INT < 23) {
+                        activity.requestPermissions(new String[]{
+                                        Manifest.permission.WRITE_SETTINGS},
+                                requestCode);
+                    } else {
+                        if (!Settings.System.canWrite(activity)) {
+                            showAppSettingsDialog(activity, requestCode);
+                        }
+                    }
+                    break;
             }
         } else {
             Log.d("Engine_Driver", "Permissions dialog is opened - don't ask yet...");
@@ -196,14 +214,24 @@ public class PermissionsHelper {
      * @param requestCode the permissions request code
      */
     private void showAppSettingsDialog(final Context context, @RequestCodes final int requestCode) {
+        String postiveButtonLabel;
+        if (requestCode != WRITE_SETTINGS) {
+            postiveButtonLabel = context.getResources().getString(R.string.permissionsAppSettingsButton);
+        } else {
+            postiveButtonLabel = context.getResources().getString(R.string.permissionsSystemSettingsButton);
+        }
         isDialogOpen = true;
         new AlertDialog.Builder(context)
                 .setTitle(context.getResources().getString(R.string.permissionsRequestTitle))
                 .setMessage(getMessage(context, requestCode))
-                .setPositiveButton(context.getResources().getString(R.string.permissionsAppSettingsButton), new DialogInterface.OnClickListener() {
+                .setPositiveButton(postiveButtonLabel, new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent();
-                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        if (requestCode != WRITE_SETTINGS) {
+                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        } else {
+                            intent.setAction(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                        }
                         Uri uri = Uri.fromParts("package", context.getApplicationContext().getPackageName(), null);
                         intent.setData(uri);
                         context.startActivity(intent);
@@ -268,6 +296,14 @@ public class PermissionsHelper {
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
+            case WRITE_SETTINGS:
+                boolean result;
+                if (android.os.Build.VERSION.SDK_INT < 23) {
+                    result = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
+                } else {
+                    result = Settings.System.canWrite(context);
+                }
+                return result;
             default:
                 return false;
         }
@@ -300,6 +336,8 @@ public class PermissionsHelper {
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE) &&
                         ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
                         ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_PHONE_STATE);
+            case WRITE_SETTINGS:
+                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_SETTINGS);
             default:
                 return false;
         }

@@ -84,6 +84,7 @@ import eu.esu.mobilecontrol2.sdk.StopButtonFragment;
 import eu.esu.mobilecontrol2.sdk.ThrottleFragment;
 import eu.esu.mobilecontrol2.sdk.ThrottleScale;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+import jmri.enginedriver.util.PermissionsHelper;
 
 import static android.view.InputDevice.getDevice;
 import static android.view.KeyEvent.ACTION_DOWN;
@@ -1008,9 +1009,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
                 setScreenBrightnessMode(SCREEN_BRIGHTNESS_MODE_MANUAL);
 
-                if (Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessValue)) {
+                if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.WRITE_SETTINGS)) {
+                    PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, PermissionsHelper.WRITE_SETTINGS);
+                }
+                try {
+                    Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessValue);
                     Log.d("Engine_Driver", "screen brightness successfully changed to " + brightnessValue);
-                } else {
+                } catch (Exception e) {
                     Log.e("Engine_Driver", "screen brightness was NOT changed to " + brightnessValue);
                 }
             } else {
@@ -1055,7 +1060,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         if (mainapp.androidVersion >= mainapp.minScreenDimNewMethodVersion) {
             if(brightnessModeValue >= 0 && brightnessModeValue <= 1){
-                if (!Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, brightnessModeValue)) {
+                if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.WRITE_SETTINGS)) {
+                    PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, PermissionsHelper.WRITE_SETTINGS);
+                }
+                try {
+                    Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, brightnessModeValue);
+                } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastUnableToSetBrightness), Toast.LENGTH_SHORT).show();
                 }
             }

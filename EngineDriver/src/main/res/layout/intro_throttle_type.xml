@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/intro_background"
@@ -11,7 +9,7 @@
     android:paddingLeft="16dp"
     android:paddingTop="4dp"
     android:paddingRight="16dp"
-    android:paddingBottom="4dp">
+    android:paddingBottom="80dp">
 
     <LinearLayout
         android:id="@+id/intro_throttle_type_title0"
@@ -29,168 +27,84 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/line0"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/sample0"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/intro_throttle_type_default_image"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                app:srcCompat="@drawable/intro_throttle_type_default" />
-
-            <TextView
-                android:id="@+id/intro_throttle_type_default_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingBottom="5dp"
-                android:text="@string/prefThrottleScreenTypeDefault"
-                android:textSize="10sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/sample1"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/intro_throttle_type_simple_image"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                app:srcCompat="@drawable/intro_throttle_type_simple" />
-
-            <TextView
-                android:id="@+id/intro_throttle_type_simple_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingBottom="5dp"
-                android:text="@string/prefThrottleScreenTypeDefault"
-                android:textSize="10sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/sample2"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/intro_throttle_type_vertical_image"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                app:srcCompat="@drawable/intro_throttle_type_vertical" />
-
-            <TextView
-                android:id="@+id/intro_throttle_type_vertical_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingBottom="5dp"
-                android:text="@string/prefThrottleScreenTypeDefault"
-                android:textSize="10sp" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/line1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/sample3"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/intro_throttle_type_big_left_image"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                app:srcCompat="@drawable/intro_throttle_type_big_left" />
-
-            <TextView
-                android:id="@+id/intro_throttle_type_big_left_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingBottom="5dp"
-                android:text="@string/prefThemeDefaultValue"
-                android:textSize="10sp" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lineX"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/question"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/intro_throttle_type_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/intro_throttle_type_summary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:text="@string/prefThemeTitle"
-                android:textSize="18sp"
-                android:visibility="gone" />
+                android:text="@string/introThrottleTypeSummary"
+                android:textColor="@color/solidWhite"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/intro_throttle_type_summary2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/introThrottleTypeSummary2"
+                android:textColor="@color/solidWhite"
+                android:textSize="12sp" />
 
-            <Spinner
-                android:id="@+id/intro_throttle_type_value"
+
+            <RadioGroup
+                android:id="@+id/intro_throttle_type_radio_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_margin="0dp"
-                android:background="@color/solidBlack"
-                android:entries="@array/prefThrottleScreenTypeEntries"
-                android:entryValues="@array/prefThrottleScreenTypeEntryValues"
-                android:padding="0dp" />
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/intro_throttle_type_default_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:drawableLeft="@drawable/intro_throttle_type_default"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/intro_throttle_type_simple_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:drawableLeft="@drawable/intro_throttle_type_simple"
+                    android:padding="5dp"
+                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/intro_throttle_type_vertical_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:drawableLeft="@drawable/intro_throttle_type_vertical"
+                    android:padding="5dp"
+                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/intro_throttle_type_big_left_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:drawableLeft="@drawable/intro_throttle_type_big_left"
+                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:textSize="18sp" />
+
+            </RadioGroup>
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/intro_throttle_type_summary"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="10dp"
-            android:paddingBottom="60dp"
-            android:text="@string/introThrottleTypeSummary"
-            android:textColor="@color/solidWhite"
-            android:textSize="18sp" />
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

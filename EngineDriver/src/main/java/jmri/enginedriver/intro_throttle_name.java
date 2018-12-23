@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +30,14 @@ public class intro_throttle_name extends Fragment {
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        Log.d("Engine_Driver", "intro_throttle_name");
+
         super.onActivityCreated(savedInstanceState);
         mainapp = (threaded_application) this.getActivity().getApplication();
         prefs = this.getActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
         currentValue = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
 
-        throttleNameView = (TextView) getView().findViewById(R.id.intro_throttle_name_value);
+        throttleNameView = getView().findViewById(R.id.intro_throttle_name_value);
         throttleNameView.setText(currentValue);
 
         throttleNameView.setOnFocusChangeListener(new View.OnFocusChangeListener() {

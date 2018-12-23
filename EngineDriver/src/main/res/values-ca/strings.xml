@@ -460,11 +460,11 @@
     <string name="gamepadTestButtonLabelButtonStart">Iniciar | Envia</string>
     <string name="gamepadTestButtonLabelButtonEnter">Selecciona | Envia</string>
     <string name="gamepadTestOptionalLabel">Opcional (pot ser que no estigui al dispositiu)</string>
-    <string name="gamepadTestAllKeyCodesLabel">Tots els codis:\s\s</string>
-    <string name="gamepadTestModeLabel">Tipus:\s\s</string>
-    <string name="gamepadTestKeycodeLabel">Tecla de codi:\s\s</string>
-    <string name="gamepadTestFunctionLabel">Funció:\s\s</string>
-    <string name="gamepadTestCompleteLabel">Prova d\'estat:\s\s</string>
+    <string name="gamepadTestAllKeyCodesLabel">Tots els codis:</string>
+    <string name="gamepadTestModeLabel">Tipus:</string>
+    <string name="gamepadTestKeycodeLabel">Tecla de codi:</string>
+    <string name="gamepadTestFunctionLabel">Funció:</string>
+    <string name="gamepadTestCompleteLabel">Prova d\'estat:</string>
     <string name="gamepadTestHelp">Desplaceu-vos cap avall per veure les instruccions completes...\n\nPrémer TOTS Dpad I els quatre botons principals del gamepad NO FUNCIONARÀ.\n\nSi no pots activar tots els botons, canvia el mode del gamepad (mira les instruccions que venen amb el teu gamepad) o prova un altre tipus de gamepad (amunt).\n\n\'ENRERE \' o \'CANCEL·LA\' sortirà de la prova però el gamepad NO FUNCIONARÀ.\n\'OMET\', o prement el botó \'Reduir Velocitat\' del gamepad tres vegades, forçarà el pas de la prova, encara que el gamepad no funcioni correctament.\n\'REINICIA\' farà que ED pensi que encara no s\'han utilitzat gamepads.\nSi selecciona la prova \'simple\', al prèmer un sol botó \'Reduir velocitat\' s\'ometrà la prova.\n\nUtilitza les opcions del menú \'Prova de Gamepad n\' per a tornar a aquesta pàgina.</string>
     <string name="gamepadTestHelpNonForced">Si no pots activar tots els botons, canvia el mode del gamepad (mira les instruccions que venen amb el teu dispositiu) o prova un tipus de gamepad diferent (adalt).\nÉs possible que hagiss de tornar a provar el gamepad quan l\'utilitzis per primera vegada en la pantalla del controlador.</string>
     <string name="gamepadTestIncomplete">"Prova Incompleta"</string>

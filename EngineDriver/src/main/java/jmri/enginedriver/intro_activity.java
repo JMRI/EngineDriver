@@ -27,7 +27,7 @@ public class intro_activity extends AppIntro2 {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("Engine_Driver", "intro.onCreate()");
+        Log.d("Engine_Driver", "intro_activity.onCreate()");
 
         mainapp = (threaded_application) this.getApplication();
 
@@ -44,7 +44,7 @@ public class intro_activity extends AppIntro2 {
         sliderPage0.setBgColor(getResources().getColor(R.color.intro_background));
         addSlide(AppIntroFragment.newInstance(sliderPage0));
 
-        int slideNumber = 1;
+        int slideNumber = 1;  // how many preceding slides
         if ( (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_CONNECTION_LIST)) ||
                 (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.STORE_CONNECTION_LIST)) ) {
             SliderPage sliderPage1 = new SliderPage();
@@ -66,6 +66,11 @@ public class intro_activity extends AppIntro2 {
             addSlide(AppIntroFragment.newInstance(sliderPage2));
             slideNumber = slideNumber + 1;
             askForPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, slideNumber);
+        }
+
+        if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.WRITE_SETTINGS)) {
+            Fragment fragment3 = new intro_write_settings();
+            addSlide(fragment3);
         }
 
         Fragment fragment0 = new intro_throttle_name();
@@ -110,11 +115,16 @@ public class intro_activity extends AppIntro2 {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
 
+//        if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.WRITE_SETTINGS)) {
+//            PermissionsHelper.getInstance().requestNecessaryPermissions(intro_activity.this, PermissionsHelper.WRITE_SETTINGS);
+//        }
+
         prefs.edit().putString("prefRunIntro", mainapp.INTRO_VERSION).commit();
 
 
         if ( ( prefTheme != prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)))
         || ( prefTheme != prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) ) {
+
             // the theme has changed so need to restart the app.
             Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
