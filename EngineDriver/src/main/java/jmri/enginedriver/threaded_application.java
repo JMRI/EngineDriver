@@ -105,7 +105,7 @@ import jmri.jmrit.roster.RosterLoader;
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
 @SuppressLint("NewApi")
 public class threaded_application extends Application {
-    public static String INTRO_VERSION = "3";  // set this to a different string to force the intro to run on next startup.
+    public static String INTRO_VERSION = "4";  // set this to a different string to force the intro to run on next startup.
 
     public comm_thread commThread;
     String host_ip = null; //The IP address of the WiThrottle server.

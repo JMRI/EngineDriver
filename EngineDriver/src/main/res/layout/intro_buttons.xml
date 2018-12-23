@@ -12,16 +12,16 @@
     android:paddingBottom="80dp">
 
     <LinearLayout
-        android:id="@+id/intro_throttle_type_title0"
+        android:id="@+id/intro_butttons_title0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/intro_throttle_type_title"
+            android:id="@+id/intro_buttons_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/prefThrottleScreenTypeTitle"
+            android:text="@string/introButtonsTitle"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -37,72 +37,54 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/intro_throttle_type_summary"
+                android:id="@+id/intro_buttons_summary"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:text="@string/introThrottleTypeSummary"
+                android:text="@string/introButtonsSummary"
                 android:textColor="@color/solidWhite"
                 android:textSize="18sp" />
-            <TextView
-                android:id="@+id/intro_throttle_type_summary2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text="@string/introThrottleTypeSummary2"
-                android:textColor="@color/solidWhite"
-                android:textSize="12sp" />
-
 
             <RadioGroup
-                android:id="@+id/intro_throttle_type_radio_group"
-                android:layout_width="match_parent"
+                android:id="@+id/intro_buttons_radio_group"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <RadioButton
-                    android:id="@+id/intro_throttle_type_default_name"
-                    android:layout_width="match_parent"
+                    android:id="@+id/intro_buttons_slider_name"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:drawableLeft="@drawable/intro_throttle_type_default"
+                    android:drawableLeft="@drawable/intro_buttons_slider"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:text="@string/introButtonsSlider"
                     android:textSize="18sp" />
 
                 <RadioButton
-                    android:id="@+id/intro_throttle_type_simple_name"
-                    android:layout_width="match_parent"
+                    android:id="@+id/intro_buttons_slider_and_buttons_name"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:drawableLeft="@drawable/intro_throttle_type_simple"
+                    android:drawableLeft="@drawable/intro_buttons_slider_and_speed"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:text="@string/introButtonsSliderAndButtons"
                     android:textSize="18sp" />
 
+
                 <RadioButton
-                    android:id="@+id/intro_throttle_type_vertical_name"
-                    android:layout_width="match_parent"
+                    android:id="@+id/intro_buttons_no_slider_name"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:drawableLeft="@drawable/intro_throttle_type_vertical"
+                    android:drawableLeft="@drawable/intro_buttons_no_slider"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:text="@string/introButtonsNoSlider"
                     android:textSize="18sp" />
 
-                <RadioButton
-                    android:id="@+id/intro_throttle_type_big_left_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:drawableLeft="@drawable/intro_throttle_type_big_left"
-                    android:gravity="center"
-                    android:text="@string/prefThrottleScreenTypeDefault"
-                    android:textSize="18sp" />
 
             </RadioGroup>
 

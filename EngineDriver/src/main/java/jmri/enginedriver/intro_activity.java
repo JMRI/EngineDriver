@@ -21,6 +21,8 @@ public class intro_activity extends AppIntro2 {
     private SharedPreferences prefs;
     private String prefTheme  = "";
     private String prefThrottleType  = "";
+    private String originalPrefTheme  = "";
+    private String originalPrefThrottleType  = "";
 
     private threaded_application mainapp;    //pointer back to application
 
@@ -34,13 +36,15 @@ public class intro_activity extends AppIntro2 {
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
         prefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        originalPrefTheme = prefTheme;
+        originalPrefThrottleType = prefThrottleType;
 
         // Note here that we DO NOT use setContentView();
 
         SliderPage sliderPage0 = new SliderPage();
         sliderPage0.setTitle(getApplicationContext().getResources().getString(R.string.introWelcomeTitle));
         sliderPage0.setDescription(getApplicationContext().getResources().getString(R.string.introWelcomeSummary));
-        sliderPage0.setImageDrawable(R.drawable.icon_xl);
+        sliderPage0.setImageDrawable(R.drawable.ed_to_loco);
         sliderPage0.setBgColor(getResources().getColor(R.color.intro_background));
         addSlide(AppIntroFragment.newInstance(sliderPage0));
 
@@ -79,6 +83,8 @@ public class intro_activity extends AppIntro2 {
         addSlide(fragment1);
         Fragment fragment2 = new intro_throttle_type();
         addSlide(fragment2);
+        Fragment fragment3 = new intro_buttons();
+        addSlide(fragment3);
 
         SliderPage sliderPage99 = new SliderPage();
         sliderPage99.setTitle(getApplicationContext().getResources().getString(R.string.introFinishTitle));
@@ -122,8 +128,7 @@ public class intro_activity extends AppIntro2 {
         prefs.edit().putString("prefRunIntro", mainapp.INTRO_VERSION).commit();
 
 
-        if ( ( prefTheme != prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)))
-        || ( prefTheme != prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) ) {
+        if ( (!prefTheme.equals(originalPrefTheme)) || (!prefTheme.equals(originalPrefThrottleType)) ) {
 
             // the theme has changed so need to restart the app.
             Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
