@@ -34,10 +34,8 @@ public class intro_activity extends AppIntro2 {
         mainapp = (threaded_application) this.getApplication();
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
-        prefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-        originalPrefTheme = prefTheme;
-        originalPrefThrottleType = prefThrottleType;
+        originalPrefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        originalPrefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         // Note here that we DO NOT use setContentView();
 
@@ -121,12 +119,11 @@ public class intro_activity extends AppIntro2 {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
 
-//        if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.WRITE_SETTINGS)) {
-//            PermissionsHelper.getInstance().requestNecessaryPermissions(intro_activity.this, PermissionsHelper.WRITE_SETTINGS);
-//        }
 
         prefs.edit().putString("prefRunIntro", mainapp.INTRO_VERSION).commit();
 
+        prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        prefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         if ( (!prefTheme.equals(originalPrefTheme)) || (!prefTheme.equals(originalPrefThrottleType)) ) {
 

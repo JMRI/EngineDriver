@@ -25,6 +25,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -1778,20 +1780,45 @@ public class threaded_application extends Application {
      * to return to when reopening.
      */
     void addNotification(Intent notificationIntent) {
-        NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.icon)
-                        .setContentTitle(this.getString(R.string.notification_title))
-                        .setContentText(this.getString(R.string.notification_text))
-                        .setOngoing(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String CHANNEL_ID = "ed_channel_01";// The id of the channel.
+            CharSequence name = this.getString(R.string.notification_title);// The user-visible name of the channel.
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
-        builder.setContentIntent(contentIntent);
+            PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
+                    PendingIntent.FLAG_CANCEL_CURRENT);
 
-        // Add as notification
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(ED_NOTIFICATION_ID, builder.build());
+            Notification notification =
+                    new Notification.Builder(this)
+                            .setSmallIcon(R.drawable.icon)
+                            .setContentTitle(this.getString(R.string.notification_title))
+                            .setContentText(this.getString(R.string.notification_text))
+                            .setContentIntent(contentIntent)
+                            .setOngoing(true)
+                            .setChannelId(CHANNEL_ID)
+                            .build();
+
+            // Add as notification
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.createNotificationChannel(mChannel);
+            manager.notify(ED_NOTIFICATION_ID, notification);
+        } else {
+            NotificationCompat.Builder builder =
+                    new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.drawable.icon)
+                            .setContentTitle(this.getString(R.string.notification_title))
+                            .setContentText(this.getString(R.string.notification_text))
+                            .setOngoing(true);
+
+            PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
+                    PendingIntent.FLAG_CANCEL_CURRENT);
+            builder.setContentIntent(contentIntent);
+
+            // Add as notification
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.notify(ED_NOTIFICATION_ID, builder.build());
+        }
     }
 
     // Remove notification
