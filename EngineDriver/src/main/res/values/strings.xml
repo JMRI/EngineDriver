@@ -837,15 +837,21 @@
     <string name="introWelcomeTitle">Welcome to \nEngine Driver</string>
     <string name="introWelcomeSummary">This app can connect to a JMRI, MRC or DigiTrax WiThrottle server to control your DCC locos and devices. The following pages will guide you through initial setup.</string>
 
+    <string name="introThrottleNameSummary">Set a name for this device</string>
+    <string name="introThrottleNameSummary1">The name you choose will appear in the WiThrottle window in JMRI. It can help when resolving problems with multiple devices.  It must be unique.</string>
+
     <string name="introThemeSummary">Choose the colors and appearance of the whole app.</string>
     <string name="introThrottleTypeSummary">Choose the layout of the main throttle screen.</string>
     <string name="introThrottleTypeSummary2">Depending on the chosen type, you will be limited on the number of individual throttles (1 to 6) on the screen.</string>
 
     <string name="introFinishTitle">Ready to use</string>
-    <string name="introFinishSummary">You can make additional changes to the appearance and behaviour of the app from the preferences menu. On the next screen select your WiThrottle server or enter the ip address and port.</string>
+    <string name="introFinishSummary">Next, start the WiThrottle server in JMRI.</string>
+    <string name="introFinishSummary1">Then, complete this introduction and select your WiThrottle server if \'discovered\', or manually enter the ip address and port.</string>
+    <string name="introFinishSummary2">(These are shown in the WiThrottle window in JMRI.)\n\nFor detailed instructions, see the \'About\' page from the menu or visit the Engine Driver Home page at \n\'https://enginedriver.mstevetodd.com\'.</string>
+    <string name="introFinishSummary3">You can make additional changes to the appearance and behaviour of the app from the \'Preferences\' menu.</string>
 
     <string name="introButtonsTitle">Speed Sliders and Buttons</string>
-    <string name="introButtonsSummary">Choose how you want to control your locos.</string>
+    <string name="introButtonsSummary">Choose how to control the speed of your trains.</string>
     <string name="introButtonsSlider">Slider Only\n(not possible with \'Big Buttons\')</string>
     <string name="introButtonsSliderAndButtons">Slider + Buttons\n(not possible with \'Big Buttons\'.)</string>
     <string name="introButtonsNoSlider">Speed Buttons Only</string>

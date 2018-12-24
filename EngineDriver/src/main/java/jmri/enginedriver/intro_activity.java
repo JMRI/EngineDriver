@@ -1,13 +1,31 @@
+/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
+
+*/
+
 package jmri.enginedriver;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 //import com.github.paolorotolo.appintro.AppIntro;
@@ -42,7 +60,7 @@ public class intro_activity extends AppIntro2 {
         SliderPage sliderPage0 = new SliderPage();
         sliderPage0.setTitle(getApplicationContext().getResources().getString(R.string.introWelcomeTitle));
         sliderPage0.setDescription(getApplicationContext().getResources().getString(R.string.introWelcomeSummary));
-        sliderPage0.setImageDrawable(R.drawable.ed_to_loco);
+        sliderPage0.setImageDrawable(R.drawable.intro_welcome);
         sliderPage0.setBgColor(getResources().getColor(R.color.intro_background));
         addSlide(AppIntroFragment.newInstance(sliderPage0));
 
@@ -84,12 +102,15 @@ public class intro_activity extends AppIntro2 {
         Fragment fragment3 = new intro_buttons();
         addSlide(fragment3);
 
-        SliderPage sliderPage99 = new SliderPage();
-        sliderPage99.setTitle(getApplicationContext().getResources().getString(R.string.introFinishTitle));
-        sliderPage99.setDescription(getApplicationContext().getResources().getString(R.string.introFinishSummary));
-        sliderPage99.setImageDrawable(R.drawable.icon_xl);
-        sliderPage99.setBgColor(getResources().getColor(R.color.intro_background));
-        addSlide(AppIntroFragment.newInstance(sliderPage99));
+        Fragment fragment99 = new intro_finish();
+        addSlide(fragment99);
+
+//        SliderPage sliderPage99 = new SliderPage();
+//        sliderPage99.setTitle(getApplicationContext().getResources().getString(R.string.introFinishTitle));
+//        sliderPage99.setDescription(getApplicationContext().getResources().getString(R.string.introFinishSummary));
+//        sliderPage99.setImageDrawable(R.drawable.icon_xl);
+//        sliderPage99.setBgColor(getResources().getColor(R.color.intro_background));
+//        addSlide(AppIntroFragment.newInstance(sliderPage99));
 
 
         // OPTIONAL METHODS
