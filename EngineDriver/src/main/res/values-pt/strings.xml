@@ -611,10 +611,25 @@
     <string name="introWelcomeTitle">Welcome to \nEngine Driver</string>
     <string name="introWelcomeSummary">Este aplicativo pode se conectar a um servidor JMRI, MRC ou DigiTrax WiThrottle para controlar suas locomotivas e dispositivos DCC. As páginas a seguir guiarão você pela configuração inicial.</string>
 
-    <string name="introThemeSummary">Escolha as cores e aparência de todo o aplicativo.</string>
-    <string name="introThrottleTypeSummary">Escolha o layout da tela principal do acelerador. Dependendo do tipo escolhido, você será limitado no número de aceleradores individuais (1 a 6) na tela.</string>
+    <string name="introThrottleNameSummary">Definir um nome para este dispositivo</string>
+    <string name="introThrottleNameSummary1">O nome escolhido aparecerá na janela do WiThrottle em JMRI. Pode ajudar na resolução de problemas com vários dispositivos. Deve ser único.</string>
+
+    <string name="introThemeSummary">Escolha as cores e a aparência do aplicativo inteiro.</string>
+    <string name="introThrottleTypeSummary">Escolha o layout da tela principal do acelerador.</string>
+    <string name="introThrottleTypeSummary2">Dependendo do tipo escolhido, você será limitado no número de aceleradores individuais (1 a 6) na tela.</string>
 
     <string name="introFinishTitle">Pronto para usar</string>
-    <string name="introFinishSummary">Você pode fazer alterações adicionais na aparência e no comportamento do aplicativo no menu de preferências. Na próxima tela selecione seu servidor WiThrottle ou digite o endereço IP e porta.</string>
+    <string name="introFinishSummary">Em seguida, inicie o servidor WiThrottle no JMRI.</string>
+    <string name="introFinishSummary1">Em seguida, conclua esta introdução e selecione seu servidor WiThrottle se \'descoberto \' ou insira manualmente o endereço IP e a porta.</string>
+    <string name="introFinishSummary2">(Estes são mostrados na janela do WiThrottle em JMRI.) \n\nPara obter instruções detalhadas, consulte a página \'Sobre \' no menu ou visite a página inicial do Engine Driver em \n\'https://enginedriver.mstevetodd.com\'.</string>
+    <string name="introFinishSummary3">Você pode fazer alterações adicionais na aparência e no comportamento do aplicativo no menu \'Preferências\'.</string>
+
+    <string name="introButtonsTitle">Sliders e botões de velocidade</string>
+    <string name="introButtonsSummary"> Escolha como controlar a velocidade de seus trens.</string>
+    <string name="introButtonsSlider">Slider Only\n(não é possível com \'Botões Grandes\')</string>
+    <string name="introButtonsSliderAndButtons">Slider and Buttons \n(não é possível com \'Botões Grandes\'.)</string>
+    <string name="introButtonsNoSlider">Botões de velocidade apenas</string>
+
+    <string name="introbackButtonPress">Por favor, reinicie o aplicativo Driver do Motor para concluir a Introdução.</string>
 
 </resources>

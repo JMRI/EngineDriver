@@ -658,12 +658,27 @@
     <string name="permissionsRetryTitle">Berechtigungen abgelehnt</string>
 
     <string name="introWelcomeTitle">Willkommen bei\nEngine Driver</string>
-    <string name="introWelcomeSummary">Diese App kann eine Verbindung zu einem JMRI-, MRC- oder DigiTrax-WiThrottle-Server herstellen, um Ihre DCC-Loks und -Geräte zu steuern. Die folgenden Seiten führen Sie durch die Ersteinrichtung.</string>
+    <string name="introWelcomeSummary">Diese App kann eine Verbindung zu einem JMRI, MRC oder DigiTrax-WiThrottle-Server herstellen, um Ihre DCC-Loks und -Geräte zu steuern. Die folgenden Seiten führen Sie durch die Ersteinrichtung.</string>
+
+    <string name="introThrottleNameSummary">Legen Sie einen Namen für dieses Gerät fest</string>
+    <string name="introThrottleNameSummary1">Der von Ihnen gewählte Name wird im WiThrottle-Fenster in JMRI angezeigt. Dies kann beim Lösen von Problemen mit mehreren Geräten hilfreich sein. Es muss eindeutig sein.</string>
 
     <string name="introThemeSummary">Wählen Sie die Farben und das Erscheinungsbild der gesamten App.</string>
-    <string name="introThrottleTypeSummary">Wählen Sie das Layout der Hauptgasanzeige. Je nach gewähltem Typ ist die Anzahl der einzelnen Drosseln (1 bis 6) auf dem Bildschirm begrenzt.</string>
+    <string name="introThrottleTypeSummary">Wählen Sie das Layout der Hauptgasanzeige.</string>
+    <string name="introThrottleTypeSummary2">Je nach gewähltem Typ ist die Anzahl der einzelnen Drosseln (1 bis 6) auf dem Bildschirm begrenzt.</string>
 
     <string name="introFinishTitle">Einsatzbereit</string>
-    <string name="introFinishSummary">Sie können zusätzliche Änderungen am Erscheinungsbild und Verhalten der App über das Einstellungsmenü vornehmen. Wählen Sie im nächsten Bildschirm Ihren WiThrottle-Server aus oder geben Sie die IP-Adresse und den Port ein.</string>
+    <string name="introFinishSummary">Starten Sie anschließend den WiThrottle-Server in JMRI.</string>
+    <string name="introFinishSummary1">Vervollständigen Sie dann diese Einführung und wählen Sie Ihren WiThrottle-Server aus, wenn \'erkannt\', oder geben Sie die IP-Adresse und den Port manuell ein.</string>
+    <string name="introFinishSummary2">(Diese werden im WiThrottle-Fenster in JMRI angezeigt.)\n\nWeitere Informationen finden Sie auf der Seite \'About\' des Menüs oder auf der Engine Driver-Homepage unter \n\'https://enginedriver.mstevetodd.com\'.</string>
+    <string name="introFinishSummary3">Sie können zusätzliche Änderungen an der Darstellung und dem Verhalten der App über das Menü \'Einstellungen\' vornehmen.</string>
+
+    <string name="introButtonsTitle">Geschwindigkeitsregler und Tasten</string>
+    <string name="introButtonsSummary">Wählen Sie, wie Sie die Geschwindigkeit Ihrer Züge kontrollieren können.</string>
+    <string name="introButtonsSlider">Nur Schieberegler\n(nicht möglich mit \'Big Buttons\')</string>
+    <string name="introButtonsSliderAndButtons">Schieberegler und Tasten\n(nicht möglich mit \'Big Buttons\'.)</string>
+    <string name="introButtonsNoSlider">Nur Speed-Tasten</string>
+
+    <string name="introbackButtonPress">Starten Sie die Engine Driver app erneut, um die Einführung abzuschließen.</string>
 
 </resources>

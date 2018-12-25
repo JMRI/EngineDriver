@@ -683,10 +683,25 @@
     <string name="introWelcomeTitle">Benvingut a\nEngine Driver</string>
     <string name="introWelcomeSummary">Aquesta aplicació es pot connectar a un servidor JMRI, MRC o DigiTrax WiThrottle per controlar els vostres dispositius i dispositius DCC. Les següents pàgines us guiaran a través de la configuració inicial.</string>
 
+    <string name="introThrottleNameSummary">Establiu un nom per a aquest dispositiu</string>
+    <string name="introThrottleNameSummary1">El nom que trieu apareixerà a la finestra de Wi-triturador de JMRI. Pot ajudar-se en resoldre problemes amb diversos dispositius. Ha de ser únic.</string>
+
     <string name="introThemeSummary">Trieu els colors i l\'aparença de tota l\'aplicació.</string>
-    <string name="introThrottleTypeSummary">Trieu el disseny de la pantalla principal de l\'acelerador. Depenent del tipus escollit, se us limitarà el nombre de reguladors individuals (1 a 6) a la pantalla.</string>
+    <string name="introThrottleTypeSummary">Trieu el disseny de la pantalla principal de l\'acelerador.</string>
+    <string name="introThrottleTypeSummary2">Depenent del tipus escollit, se us limitarà el nombre de reguladors individuals (1 a 6) a la pantalla.</string>
 
     <string name="introFinishTitle">Llest per usar</string>
-    <string name="introFinishSummary">Podeu fer canvis addicionals a l\'aparença i al comportament de l\'aplicació des del menú de preferències. A la pantalla següent seleccioneu el vostre servidor WiThrottle o introduïu l\'adreça IP i el port.</string>
+    <string name="introFinishSummary">A continuació, inicieu el servidor WiThrottle a JMRI.</string>
+    <string name="introFinishSummary1">A continuació, completeu aquesta introducció i seleccioneu el vostre servidor WiThrottle si \'descobert \', o introduïu manualment l\'adreça IP i el port.</string>
+    <string name="introFinishSummary2">(Es mostren a la finestra WiThrottle de JMRI).\n\nPer obtenir instruccions detallades, consulteu la pàgina \'Quant a\' del menú o visiteu la pàgina d\'inici Engine Driver a\n\'https://enginedriver.mstevetodd.com\'.</string>
+    <string name="introFinishSummary3">Podeu fer canvis addicionals a l\'aparença i al comportament de l\'aplicació des del menú \'Preferències\'.</string>
+
+    <string name="introButtonsTitle">Controls deslizants i botons de velocitat</string>
+    <string name="introButtonsSummary">Trieu com controlar la velocitat dels vostres trens.</string>
+    <string name="introButtonsSlider">Només el control lliscant\n(no és possible amb \'Botões Grandes\')</string>
+    <string name="introButtonsSliderAndButtons">Control deslizable i botons\n(no és possible amb \'Botões Grandes\'.)</string>
+    <string name="introButtonsNoSlider">Només botons de velocitat</string>
+
+    <string name="introbackButtonPress">Torneu a iniciar l\'aplicació Driver del motor per completar la introducció.</string>
 
 </resources>
