@@ -1,8 +1,27 @@
+/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
+
+*/
+
 package jmri.enginedriver;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,13 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Random;
 
-import eu.esu.mobilecontrol2.sdk.MobileControl2;
-
-/**
- * Created by andrew on 11/17/16.
- */
 
 public class intro_throttle_name extends Fragment {
 
@@ -57,14 +70,6 @@ public class intro_throttle_name extends Fragment {
         return inflater.inflate(R.layout.intro_throttle_name, container, false);
     }
 
-
-//    @Nullable
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        currentValue = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
-//        throttleNameView.setText(currentValue);
-//    }
 
     @Nullable
     @Override

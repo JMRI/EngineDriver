@@ -1,14 +1,34 @@
+/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
+
+*/
+
 package jmri.enginedriver;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.widget.Toast;
 
 //import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2;
@@ -34,17 +54,15 @@ public class intro_activity extends AppIntro2 {
         mainapp = (threaded_application) this.getApplication();
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
-        prefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-        originalPrefTheme = prefTheme;
-        originalPrefThrottleType = prefThrottleType;
+        originalPrefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        originalPrefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         // Note here that we DO NOT use setContentView();
 
         SliderPage sliderPage0 = new SliderPage();
         sliderPage0.setTitle(getApplicationContext().getResources().getString(R.string.introWelcomeTitle));
         sliderPage0.setDescription(getApplicationContext().getResources().getString(R.string.introWelcomeSummary));
-        sliderPage0.setImageDrawable(R.drawable.ed_to_loco);
+        sliderPage0.setImageDrawable(R.drawable.intro_welcome);
         sliderPage0.setBgColor(getResources().getColor(R.color.intro_background));
         addSlide(AppIntroFragment.newInstance(sliderPage0));
 
@@ -86,12 +104,15 @@ public class intro_activity extends AppIntro2 {
         Fragment fragment3 = new intro_buttons();
         addSlide(fragment3);
 
-        SliderPage sliderPage99 = new SliderPage();
-        sliderPage99.setTitle(getApplicationContext().getResources().getString(R.string.introFinishTitle));
-        sliderPage99.setDescription(getApplicationContext().getResources().getString(R.string.introFinishSummary));
-        sliderPage99.setImageDrawable(R.drawable.icon_xl);
-        sliderPage99.setBgColor(getResources().getColor(R.color.intro_background));
-        addSlide(AppIntroFragment.newInstance(sliderPage99));
+        Fragment fragment99 = new intro_finish();
+        addSlide(fragment99);
+
+//        SliderPage sliderPage99 = new SliderPage();
+//        sliderPage99.setTitle(getApplicationContext().getResources().getString(R.string.introFinishTitle));
+//        sliderPage99.setDescription(getApplicationContext().getResources().getString(R.string.introFinishSummary));
+//        sliderPage99.setImageDrawable(R.drawable.icon_xl);
+//        sliderPage99.setBgColor(getResources().getColor(R.color.intro_background));
+//        addSlide(AppIntroFragment.newInstance(sliderPage99));
 
 
         // OPTIONAL METHODS
@@ -121,12 +142,11 @@ public class intro_activity extends AppIntro2 {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
 
-//        if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.WRITE_SETTINGS)) {
-//            PermissionsHelper.getInstance().requestNecessaryPermissions(intro_activity.this, PermissionsHelper.WRITE_SETTINGS);
-//        }
 
         prefs.edit().putString("prefRunIntro", mainapp.INTRO_VERSION).commit();
 
+        prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        prefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         if ( (!prefTheme.equals(originalPrefTheme)) || (!prefTheme.equals(originalPrefThrottleType)) ) {
 
@@ -146,6 +166,33 @@ public class intro_activity extends AppIntro2 {
     public void onSlideChanged(@Nullable Fragment oldFragment, @Nullable Fragment newFragment) {
         super.onSlideChanged(oldFragment, newFragment);
         // Do something when the slide changes.
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!this.isFinishing()) {       //only invoke setContentIntentNotification when going into background
+            mainapp.addNotification(this.getIntent());
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mainapp.removeNotification();
+        if (this.isFinishing()) {        //if finishing, expedite it
+            return;
+        }
+    }
+
+        // Prevent the use of the back button
+    @Override
+    public boolean onKeyDown(int key, KeyEvent event) {
+        if (key == KeyEvent.KEYCODE_BACK) {
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.introbackButtonPress), Toast.LENGTH_LONG).show();
+//            return true;
+        }
+        return (super.onKeyDown(key, event));
     }
 }
 

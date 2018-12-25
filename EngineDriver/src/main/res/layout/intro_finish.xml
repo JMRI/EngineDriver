@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/intro_background"
+    android:gravity="top|center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="4dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="4dp">
+
+    <LinearLayout
+        android:id="@+id/intro_throttle_name_title0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/intro_finish_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/introFinishTitle"
+            android:textColor="@color/solidWhite"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="80dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/intro_finish_summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="@string/introFinishSummary"
+                android:textColor="@color/solidWhite"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="200dp"
+                android:layout_height="167dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/intro_finish" />
+
+            <TextView
+                android:id="@+id/intro_finish_summary1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="@string/introFinishSummary1"
+                android:textColor="@color/solidWhite"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/intro_finish_summary2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/introFinishSummary2"
+                android:textColor="@color/solidWhite"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/intro_finish_summary3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="@string/introFinishSummary3"
+                android:textColor="@color/solidWhite"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
