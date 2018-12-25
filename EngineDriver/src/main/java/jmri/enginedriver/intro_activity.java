@@ -27,6 +27,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.widget.Toast;
 
 //import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2;
@@ -164,6 +166,33 @@ public class intro_activity extends AppIntro2 {
     public void onSlideChanged(@Nullable Fragment oldFragment, @Nullable Fragment newFragment) {
         super.onSlideChanged(oldFragment, newFragment);
         // Do something when the slide changes.
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!this.isFinishing()) {       //only invoke setContentIntentNotification when going into background
+            mainapp.addNotification(this.getIntent());
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mainapp.removeNotification();
+        if (this.isFinishing()) {        //if finishing, expedite it
+            return;
+        }
+    }
+
+        // Prevent the use of the back button
+    @Override
+    public boolean onKeyDown(int key, KeyEvent event) {
+        if (key == KeyEvent.KEYCODE_BACK) {
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.introbackButtonPress), Toast.LENGTH_LONG).show();
+//            return true;
+        }
+        return (super.onKeyDown(key, event));
     }
 }
 

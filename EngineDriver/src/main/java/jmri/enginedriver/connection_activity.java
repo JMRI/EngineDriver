@@ -102,6 +102,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
     private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY = "Connect Only";
 
+    private boolean runIntro = false;
 
         static {
         try {
@@ -332,6 +333,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
         if (!prefs.getString("prefRunIntro", "0").equals(mainapp.INTRO_VERSION)) {
             Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
+            runIntro = true;
             startActivity(intent);
         }
 
@@ -422,9 +424,10 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     @Override
     public void onPause() {
         super.onPause();
-        if (!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
+        if (!this.isFinishing() && !navigatingAway && !runIntro) {        //only invoke setContentIntentNotification when going into background
             mainapp.addNotification(this.getIntent());
         }
+        runIntro = false;
     }
 
     @Override

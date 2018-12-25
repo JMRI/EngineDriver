@@ -1818,6 +1818,9 @@ public class threaded_application extends Application {
             // Add as notification
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             manager.notify(ED_NOTIFICATION_ID, builder.build());
+
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.notification_title), Toast.LENGTH_LONG).show();
+
         }
     }
 

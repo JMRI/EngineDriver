@@ -855,4 +855,6 @@
     <string name="introButtonsSlider">Slider Only\n(not possible with \'Big Buttons\')</string>
     <string name="introButtonsSliderAndButtons">Slider + Buttons\n(not possible with \'Big Buttons\'.)</string>
     <string name="introButtonsNoSlider">Speed Buttons Only</string>
+
+    <string name="introbackButtonPress">Please re-start the Engine Driver app to complete the Introduction.</string>
 </resources>
