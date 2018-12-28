@@ -20,6 +20,7 @@
     <string name="settings">Padrão das Funções</string>
     <string name="fb_label">Rótulo Função</string>
     <string name="function_buttons">botões_função</string>
+    <string name="introMenu">Introdução</string>
 
     <string name="app_description">Engine Driver - Controlador para o seu fone Android. Este aplicativo pode conectaro ao JMRI, MRC ou servidor Digitrax WiThrottle, e controlar seus desvios e locomotivas. Velocidade, direção, e até 29 funcções DCC são suportadas para uma ou duas locomotivas.</string>
     <string name="app_name_intro">Introdução - Engine Driver</string>
