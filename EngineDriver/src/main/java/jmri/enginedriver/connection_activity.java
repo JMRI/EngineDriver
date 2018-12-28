@@ -497,6 +497,12 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, CMenu);
                 break;
+            case R.id.intro_mnu:
+                in = new Intent().setClass(this, intro_activity.class);
+                navigatingAway = true;
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

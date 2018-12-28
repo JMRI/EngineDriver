@@ -22,6 +22,7 @@
     <string name="fb_column_label">Bezeichn.</string>
     <string name="fb_column_function">F-Nr.</string>
     <string name="function_buttons">Funktionstasten</string>
+    <string name="introMenu">Einführung</string>
 
     <string name="app_description">Engine Driver - Fahrpult für ihr Android Telefon. Diese Anwendung kann eine Verbindung mit einem JMRI, MRC oder Digitrax WiThrottle Server erstellen und ermöglicht damit die Steuerung von Lokomotiven. Geschwindigkeit, Fahrrichtung und bis zu 29 DCC Funktionen werden für eine oder zwei Lokomotiven unterstützt.</string>
     <string name="app_name_intro">Einführung - Engine Driver</string>

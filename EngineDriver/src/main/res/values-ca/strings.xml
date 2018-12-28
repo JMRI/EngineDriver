@@ -22,6 +22,7 @@
     <string name="fb_column_label">Etiqueta</string>
     <string name="fb_column_function">Func#</string>
     <string name="function_buttons">botons_de_funcions</string>
+    <string name="introMenu">Introducció</string>
 
     <string name="app_description">Engine Driver - Un controlador per al teu telèfon Android. Aquesta aplicació permet connectar a servidors Withrottle com el JMRI, MRC o Digitrax, i tripular les teves locomotores. La velocitat, la direcció, i més de 29 funcions DCC estan suportades per a una o dues locomotores.</string>
     <string name="app_name_intro">Introducció - Engine Driver</string>

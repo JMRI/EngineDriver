@@ -38,6 +38,7 @@ import com.github.paolorotolo.appintro.model.SliderPage;
 import jmri.enginedriver.util.PermissionsHelper;
 
 public class intro_activity extends AppIntro2 {
+    private boolean introComplete = false;
     private SharedPreferences prefs;
     private String prefTheme  = "";
     private String prefThrottleType  = "";
@@ -142,7 +143,7 @@ public class intro_activity extends AppIntro2 {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
 
-
+        introComplete = true;
         prefs.edit().putString("prefRunIntro", mainapp.INTRO_VERSION).commit();
 
         prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
@@ -185,14 +186,13 @@ public class intro_activity extends AppIntro2 {
         }
     }
 
-        // Prevent the use of the back button
+
     @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-        if (key == KeyEvent.KEYCODE_BACK) {
+    public void onDestroy() {
+        if (!introComplete) {
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.introbackButtonPress), Toast.LENGTH_LONG).show();
-//            return true;
         }
-        return (super.onKeyDown(key, event));
+        super.onDestroy();
     }
 }
 
