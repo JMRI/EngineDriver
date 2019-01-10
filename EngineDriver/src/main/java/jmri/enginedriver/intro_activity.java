@@ -92,8 +92,19 @@ public class intro_activity extends AppIntro2 {
         }
 
         if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.WRITE_SETTINGS)) {
-            Fragment fragment3 = new intro_write_settings();
-            addSlide(fragment3);
+            if (android.os.Build.VERSION.SDK_INT >= 23) {
+                Fragment fragment3 = new intro_write_settings();
+                addSlide(fragment3);
+//            } else {
+//                SliderPage sliderPage3 = new SliderPage();
+//                sliderPage3.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
+//                sliderPage3.setDescription(getApplicationContext().getResources().getString(R.string.permissionsWriteSettings));
+//                sliderPage3.setImageDrawable(R.drawable.icon_xl);
+//                sliderPage3.setBgColor(getResources().getColor(R.color.intro_background));
+//                addSlide(AppIntroFragment.newInstance(sliderPage3));
+//                slideNumber = slideNumber + 1;
+//                askForPermissions(new String[]{Manifest.permission.WRITE_SETTINGS}, slideNumber);
+            }
         }
 
         Fragment fragment0 = new intro_throttle_name();
@@ -181,9 +192,9 @@ public class intro_activity extends AppIntro2 {
     public void onResume() {
         super.onResume();
         mainapp.removeNotification();
-        if (this.isFinishing()) {        //if finishing, expedite it
-            return;
-        }
+//        if (this.isFinishing()) {        //if finishing, expedite it
+//            return;
+//        }
     }
 
 
