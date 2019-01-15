@@ -667,6 +667,8 @@
     <string name="toastConnectUnableToLoadPref">Unable to load host specific preferences. Can\'t get host name.</string>
     <string name="toastConnectErrorReadingRecentConnections">Error reading recent connections list:</string>
     <string name="toastConnectErrorSavingRecentConnection">Error saving recent connection:</string>
+    <string name="toastConnectRemoveDemoHostError">The demo Server can only be removed by modifying the preferences.</string>
+    <string name="toastConnectRemoved">Sever removed from List.</string>
 
     <!--    Toast messages for the Routes Activity -->
     <string name="toastRoutesCommandSent">"Command sent to Set route "</string>
