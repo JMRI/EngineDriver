@@ -90,6 +90,9 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
     private static final String demo_host = "jmri.mstevetodd.com";
     private static final String demo_port = "44444";
+    private static final String DUMMY_HOST = "999";
+    private static final String DUMMY_ADDRESS = "999";
+    private static final int DUMMY_PORT = 999;
 
     private boolean prefHideDemoServer = false;
 
@@ -365,6 +368,32 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         ListView conn_list = (ListView) findViewById(R.id.connections_list);
         conn_list.setAdapter(connection_list_adapter);
         conn_list.setOnItemClickListener(new connect_item(server_list_type.RECENT_CONNECTION));
+        conn_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            //When an entry is long-clicked, remove it from the consist
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id) {
+                ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
+                TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
+                //connected_hostip = hip.getText().toString();
+                TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
+                //connected_hostname = hnv.getText().toString();
+                TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
+                //connected_port = Integer.valueOf(hpv.getText().toString());
+                //Log.d("Engine_Driver", "connection.longClick " + connected_hostip );
+                if ( !(hnv.getText().toString().equals(demo_host)) || !(hpv.getText().toString().equals(demo_port))) {
+                    getConnectionsListImpl(hip.getText().toString(), hpv.getText().toString());
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
+                    connected_hostip = DUMMY_ADDRESS;
+                    connected_hostname = DUMMY_HOST;
+                    connected_port = DUMMY_PORT;
+                    new saveConnectionsList().execute();
+                } else {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoveDemoHostError), Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
+
 
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -553,8 +582,10 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                 File connections_list_file = new File(path, "engine_driver/connections_list.txt");
                 PrintWriter list_output = new PrintWriter(connections_list_file);
 
-                //Write selected connection to file, then write all others (skipping selected if found)
-                list_output.format("%s:%s:%d\n", connected_hostname, connected_hostip, connected_port);
+                if (!(connected_hostip.equals(DUMMY_ADDRESS)) || (connected_port != DUMMY_PORT)) {  // will have been called from the remove connection longClick so ignore the current connection values
+                    //Write selected connection to file, then write all others (skipping selected if found)
+                    list_output.format("%s:%s:%d\n", connected_hostname, connected_hostip, connected_port);
+                }
 
                 SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
                 String smrc = prefs.getString("maximum_recent_connections_preference", ""); //retrieve pref for max recents to show
@@ -617,7 +648,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         navigateToHandler(PermissionsHelper.READ_CONNECTION_LIST);
     }
 
-    private void getConnectionsListImpl() {
+    private void getConnectionsListImpl(String addressToRemove, String portToRemove) {
         boolean foundDemoHost = false;
         connections_list.clear();
         String errMsg;
@@ -656,20 +687,22 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                                     port = Integer.decode(port_str);
                                 } catch (Exception ignored) {
                                 }
-                                if (port > 0) {  //skip if port not converted to integer
+                                if ( !(ip_address.equals(addressToRemove)) || !(port.toString().equals(portToRemove)) ) {
+                                    if (port > 0) {  //skip if port not converted to integer
 
-                                    if ((!prefHideDemoServer)
-                                            || ((prefHideDemoServer) && !((host_name.equals(demo_host)) && (port.toString().equals(demo_port))))) {
-                                        HashMap<String, String> hm = new HashMap<>();
-                                        hm.put("ip_address", ip_address);
-                                        hm.put("host_name", host_name);
-                                        hm.put("port", port.toString());
-                                        if (!connections_list.contains(hm)) {    // suppress dups
-                                            connections_list.add(hm);
+                                        if ((!prefHideDemoServer)
+                                                || ((prefHideDemoServer) && !((host_name.equals(demo_host)) && (port.toString().equals(demo_port))))) {
+                                            HashMap<String, String> hm = new HashMap<>();
+                                            hm.put("ip_address", ip_address);
+                                            hm.put("host_name", host_name);
+                                            hm.put("port", port.toString());
+                                            if (!connections_list.contains(hm)) {    // suppress dups
+                                                connections_list.add(hm);
+                                            }
                                         }
-                                    }
-                                    if (host_name.equals(demo_host) && port.toString().equals(demo_port)) {
-                                        foundDemoHost = true;
+                                        if (host_name.equals(demo_host) && port.toString().equals(demo_port)) {
+                                            foundDemoHost = true;
+                                        }
                                     }
                                 }
                             }
@@ -790,7 +823,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                         break;
                     case PermissionsHelper.READ_CONNECTION_LIST:
                         Log.d("Engine_Driver", "Got permission for READ_CONNECTION_LIST - navigate to getConnectionsListImpl()");
-                        getConnectionsListImpl();
+                        getConnectionsListImpl("", "");
                         break;
                     case PermissionsHelper.STORE_PREFERENCES:
                         Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");

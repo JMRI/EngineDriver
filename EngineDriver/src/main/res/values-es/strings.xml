@@ -513,6 +513,9 @@
     <string name="toastConnectUnableToLoadPref">No se pueden cargar las preferencias específicas del host. No se ha podido obtener el nombre del host.</string>
     <string name="toastConnectErrorReadingRecentConnections">Error leyendo la lista de conexiones recientes:</string>
     <string name="toastConnectErrorSavingRecentConnection">Error guardando la conexión reciente:</string>
+    <string name="toastConnectRemoveDemoHostError">El servidor de demostración solo se puede eliminar modificando las preferencias.</string>
+    <string name="toastConnectRemoved">Sever eliminado de la lista.</string>
+
     <string name="toastRoutesCommandSent">"Comando enviado para establecer la ruta"</string>
     <string name="toastImportExportExportSucceeded">La exportación de preferencias a \'engine_driver/%1$s\' ha tenido éxito.</string>
     <string name="toastImportExportImportSucceeded">La importación de preferencias desde \'engine_driver/%1$s\' ha tenido éxito.</string>

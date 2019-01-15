@@ -428,7 +428,6 @@
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: if user enters ":" into address input, jump to port input
- *   TODO: allow user to delete individual recents (long-press?)
  * threaded_application
  *   TODO: remember consist details
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
