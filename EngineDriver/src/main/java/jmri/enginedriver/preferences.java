@@ -205,6 +205,14 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     protected void onResume() {
         super.onResume();
+
+        Log.d("Engine_Driver", "preferences.onResume() called");
+        try {
+            dismissDialog(PROGRESS_BAR_TYPE);
+        } catch (Exception e) {
+            Log.d("Engine_Driver", "preferences.onResume() no dialog to kill");
+        }
+
         mainapp.removeNotification();
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
@@ -887,6 +895,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     //Handle messages from the communication thread back to the UI thread.
     @SuppressLint("HandlerLeak")
     private class preferences_handler extends Handler {
+
+        @SuppressLint("ApplySharedPref")
         @SuppressWarnings("unchecked")
         public void handleMessage(Message msg) {
             SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
