@@ -471,6 +471,10 @@
     <string name="prefImportExportErrorReadingFrom">Import from \'engine_driver/%1$s\' failed! You may not have saved the preferences for this host yet.</string>
     <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
 
+    <string name="prefImportUrlTitle">URL to Import from</string>
+    <string name="prefImportUrlSummary">URL to \'Import\' a set of preferences from.\nIf \'http://\' is omitted the file is assumed to be on the currently connected server.</string>
+    <string name="prefImportUrlDefaultValue">/prefs/engine_driver/preferences.ed</string>
+
     <string name="prefSwapForwardReverseButtonsTitle">Swap Direction Buttons</string>
     <string name="prefSwapForwardReverseButtonsSummary">Permanently swap the two Direction Buttons for all throttles.</string>
 
@@ -650,6 +654,8 @@
     <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%1$s-%2$s). Reset to %3$s.</string>
     <string name="toastPreferencesNotNumeric">Value entered is not numeric (%1$s-%2$s). Reset to %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferences Reset to defaults!</string>
+    <string name="toastPreferencesImportFromURLFailed">Preferences Import from URL failed! Check the address is correct. (%1$s)</string>
+    <string name="toastPreferencesImportFromURLSuccess">Preferences Import from URL Succeeded. (%1$s)</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver restarted with chosen Language.</string> -->
 
     <!--    Toast messages for the Turnout Activity -->

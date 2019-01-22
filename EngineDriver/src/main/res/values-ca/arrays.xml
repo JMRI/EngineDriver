@@ -51,8 +51,8 @@
         <item>Sis</item>
     </string-array>
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
-        <item>Original &#8211; Telèfon o Tablet (1-3 controladors)</item>
-        <item>Simple &#8211; Tablet Recomenat (1-6 controladors)</item>
+        <item>Original &#8211; Telèfon o Tablet (1&#8211;3 controladors)</item>
+        <item>Simple &#8211; Tablet Recomenat (1&#8211;6 controladors)</item>
         <item>Vertical &#8211; Telèfon o Tableta (2 controladors)</item>
         <item>Botons grans &#8211; Esquerra (1 controlador)</item>
     </string-array>
@@ -61,11 +61,13 @@
         <item>Format de 12 Hr</item>
         <item>Format de 24 Hr</item>
     </string-array>
+    <!--
     <string-array name="DisplayClockValuesEntries">
         <item >0</item>
         <item >1</item>
         <item >2</item>
     </string-array>
+    -->
     <string-array name="prefGamePadKeyEntries">
         <item>Atura-ho tot</item>
         <item>Atura</item>
@@ -105,7 +107,7 @@
         <item>Funció 27</item>
         <item>Funció 28</item>
     </string-array>
-    <string-array name="prefAutoImportExportOptionsDisplayEntries">
+    <string-array name="prefAutoImportExportEntries">
         <item>Cap</item>
         <item>Auto importar/exportar al connectar/desconnectar</item>
         <item>Auto importar tant sols al connectar</item>
@@ -145,6 +147,7 @@
         <item>Cap</item>
         <item>Exportar</item>
         <item>Importar</item>
+        <item>Import from URL</item>
         <item>Reiniciar</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->
