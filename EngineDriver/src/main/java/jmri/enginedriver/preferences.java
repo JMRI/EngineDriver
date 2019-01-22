@@ -17,15 +17,21 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.media.ToneGenerator;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -39,12 +45,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -82,6 +95,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final String IMPORT_EXPORT_OPTION_EXPORT = "Export";
     private static final String IMPORT_EXPORT_OPTION_IMPORT ="Import";
     private static final String IMPORT_EXPORT_OPTION_RESET = "Reset";
+    private static final String IMPORT_EXPORT_OPTION_IMPORT_URL = "URL";
 
     private static String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
     private static String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
@@ -93,12 +107,18 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
     private static String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
 
+    private ProgressDialog pDialog;
+    public static final int PROGRESS_BAR_TYPE = 0;
+    private static final String EXTERNAL_URL_PREFERENCES_IMPORT = "external_url_preferences_import.ed";
+    private static final String ENGINE_DRIVER_DIR = "engine_driver";
+
     /**
      * Called when the activity is first created.
      */
 
     private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
 
+    @SuppressLint("ApplySharedPref")
     @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -168,7 +188,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         sharedPreferences.edit().putBoolean("prefForcedRestart", false).commit();
 
-        if (!sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)).equals("None")) {
+        if (!sharedPreferences.getString("prefImportExport", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)).equals("None")) {
             // preference is still confused after a reload or reset
             sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
         }
@@ -176,12 +196,23 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         prefConsistFollowRuleStyle = sharedPreferences.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
         showHideConsistRuleStylePreferences();
 
+        //put pointer to this activity's message handler in main app's shared variable (If needed)
+        mainapp.preferences_msg_handler = new preferences_handler();
+
     }
 
     @SuppressWarnings("deprecation")
     @Override
     protected void onResume() {
         super.onResume();
+
+        Log.d("Engine_Driver", "preferences.onResume() called");
+        try {
+            dismissDialog(PROGRESS_BAR_TYPE);
+        } catch (Exception e) {
+            Log.d("Engine_Driver", "preferences.onResume() no dialog to kill");
+        }
+
         mainapp.removeNotification();
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
@@ -234,6 +265,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("ApplySharedPref")
     @SuppressWarnings("deprecation")
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         threaded_application mainapp = (threaded_application) this.getApplication();
@@ -241,24 +273,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             case "throttle_name_preference": {
                 String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
                 String currentValue = mainapp.fixThrottleName(sharedPreferences.getString(key, defaultName).trim());
-
-//                String currentValue = sharedPreferences.getString(key, defaultName).trim();
-//                //if new name is blank or the default name, make it unique
-//                if (currentValue.equals("") || currentValue.equals(defaultName)) {
-//                    String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-//                    if (deviceId != null && deviceId.length() >= 4) {
-//                        deviceId = deviceId.substring(deviceId.length() - 4);
-//                    } else {
-//                        Random rand = new Random();
-//                        deviceId = String.valueOf(rand.nextInt(9999));  //use random string
-//                    }
-//                    if (MobileControl2.isMobileControl2()) {
-//                        // Change default name for ESU MCII
-//                        defaultName = getApplicationContext().getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
-//                    }
-//                    String uniqueDefaultName = defaultName + " " + deviceId;
-//                    sharedPreferences.edit().putString(key, uniqueDefaultName).commit();  //save new name to prefs
-//                }
                 break;
             }
             case "maximum_throttle_preference":
@@ -330,6 +344,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         loadSharedPreferencesFromFile(sharedPreferences,exportedPreferencesFileName, deviceId);
                     } else if (currentValue.equals(IMPORT_EXPORT_OPTION_RESET)) {
                         resetPreferences(sharedPreferences);
+                    } else if (currentValue.equals(IMPORT_EXPORT_OPTION_IMPORT_URL)) {
+                        new importFromURL().execute(sharedPreferences.getString("prefImportUrl", getApplicationContext().getResources().getString(R.string.prefImportUrlDefaultValue)));
                     }
                 }
                 break;
@@ -451,7 +467,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     @SuppressWarnings({ "unchecked" })
     private boolean loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId) {
-        Log.d("Engine_Driver", "Loading saved preferences from file");
+        Log.d("Engine_Driver", "Loading saved preferences from file: " + exportedPreferencesFileName);
         boolean res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
 
         if (!res) {
@@ -467,10 +483,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         boolean res = false;
         if (!exportedPreferencesFileName.equals(".ed")) {
             File path = Environment.getExternalStorageDirectory();
-            File engine_driver_dir = new File(path, "engine_driver");
+            File engine_driver_dir = new File(path, ENGINE_DRIVER_DIR);
             engine_driver_dir.mkdir();            // create directory if it doesn't exist
 
-            File dst = new File(path, "engine_driver/"+exportedPreferencesFileName);
+            File dst = new File(path, ENGINE_DRIVER_DIR+"/"+exportedPreferencesFileName);
 
             if ((dst.exists()) && (confirmDialog)) {
                 overwiteFileDialog(sharedPreferences, dst);
@@ -748,7 +764,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             }
         } catch (IOException except) {
             errMsg = except.getMessage();
-            Log.e("connection_activity", "Error reading recent connections list: " + errMsg);
+            Log.e("Engine_Driver", "preferences: Error reading recent connections list: " + errMsg);
             Toast.makeText(getApplicationContext(), R.string.prefImportExportErrorReadingList + " " + errMsg, Toast.LENGTH_SHORT).show();
         }
 
@@ -873,5 +889,161 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             Log.d("Engine_Driver", "Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+
+    //Handle messages from the communication thread back to the UI thread.
+    @SuppressLint("HandlerLeak")
+    private class preferences_handler extends Handler {
+
+        @SuppressLint("ApplySharedPref")
+        @SuppressWarnings("unchecked")
+        public void handleMessage(Message msg) {
+            SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+            switch (msg.what) {
+                case message_type.IMPORT_URL_SUCCESS:
+                    Log.d("Engine_Driver", "Message: Import preferences from URL: File Found");
+                    sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
+                    sharedPreferences.edit().putString("prefHostImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportFromURLSuccess, sharedPreferences.getString("prefImportUrl", getApplicationContext().getResources().getString(R.string.prefImportUrlDefaultValue))), Toast.LENGTH_LONG).show();
+                    loadSharedPreferencesFromFile(sharedPreferences, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId);
+                    break;
+                case message_type.IMPORT_URL_FAIL:
+                    Log.d("Engine_Driver", "Message: Import preferences from URL: File not Found");
+                    sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
+                    sharedPreferences.edit().putString("prefHostImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportFromURLFailed, sharedPreferences.getString("prefImportUrl", getApplicationContext().getResources().getString(R.string.prefImportUrlDefaultValue))), Toast.LENGTH_LONG).show();
+                    reload();
+                    break;
+
+            }
+        }
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case PROGRESS_BAR_TYPE: // we set this to 0
+                pDialog = new ProgressDialog(this);
+                pDialog.setMessage("Downloading file. Please wait...");
+                pDialog.setIndeterminate(false);
+                pDialog.setMax(100);
+                pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                pDialog.setCancelable(true);
+                pDialog.show();
+                return pDialog;
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Background Async Task to download file
+     * */
+    class importFromURL extends AsyncTask<String, String, String> {
+
+        //Before starting background thread Show Progress Bar Dialog
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showDialog(PROGRESS_BAR_TYPE);
+        }
+
+        // Importing file in background thread
+        @Override
+        protected String doInBackground(String... f_url) {
+            Log.d("Engine_Driver", "Import preferences from URL: start");
+            int count;
+            String n_url = f_url[0];
+            SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
+            if ( (mainapp.connectedHostip != null) ) {
+                if ( !(f_url[0].toLowerCase().contains("http://")) && !(f_url[0].toLowerCase().contains("ftp://")) )  {
+                    n_url = "http://" + mainapp.connectedHostip + ":12080";
+                    if (!(f_url[0].substring(0,1).equals("/"))) {
+                        n_url = n_url + "/";
+                    }
+                    n_url = n_url + f_url[0];
+                } else {
+                    // not a valid url and not currently connected
+                    Log.d("Engine_Driver", "Import preferences from URL: Not a valid url and not currently connected");
+                    dismissDialog(PROGRESS_BAR_TYPE);
+                    mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L,message_type.IMPORT_URL_FAIL);
+                    return null;
+                }
+            }
+
+            try {
+                URL url = new URL(n_url);
+                URLConnection conection = url.openConnection();
+                conection.connect();
+
+                // to help show a 0-100% progress bar
+                int lengthOfFile = conection.getContentLength();
+
+                // download the file
+                InputStream input = new BufferedInputStream(url.openStream(),
+                        8192);
+
+                File Directory = new File(ENGINE_DRIVER_DIR); // in case the folder does not already exist
+
+
+                // Output stream
+                FileOutputStream output = new FileOutputStream(Environment
+                        .getExternalStorageDirectory().toString()
+                        + "/" + ENGINE_DRIVER_DIR + "/" + EXTERNAL_URL_PREFERENCES_IMPORT);
+
+                byte data[] = new byte[1024];
+
+                long total = 0;
+
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    // publishing the progress....
+                    // After this onProgressUpdate will be called
+                    publishProgress("" + (int) ((total * 100) / lengthOfFile));
+
+                    // writing data to file
+                    output.write(data, 0, count);
+                }
+
+                // flushing output
+                output.flush();
+
+                // closing streams
+                output.close();
+                input.close();
+
+                dismissDialog(PROGRESS_BAR_TYPE);
+                mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L, message_type.IMPORT_URL_SUCCESS);
+
+            } catch (Exception e) {
+                Log.e("Engine_Driver", "Import preferences from URL Failed: " + e.getMessage());
+                dismissDialog(PROGRESS_BAR_TYPE);
+                mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L, message_type.IMPORT_URL_FAIL);
+            }
+
+            Log.d("Engine_Driver", "Import preferences from URL: End");
+            return null;
+        }
+
+        /**
+         * Updating progress bar
+         * */
+        protected void onProgressUpdate(String... progress) {
+            // setting progress percentage
+            pDialog.setProgress(Integer.parseInt(progress[0]));
+        }
+
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        @Override
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog after the file was downloaded
+            dismissDialog(PROGRESS_BAR_TYPE);
+
+        }
+
     }
 }

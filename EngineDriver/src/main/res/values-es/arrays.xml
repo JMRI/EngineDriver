@@ -51,8 +51,8 @@
         <item>Seis</item>
     </string-array>
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
-        <item>Original &#8211; Teléfono o Tablet (1-3 controladores)</item>
-        <item>Simple &#8211; Tablet Recomendado (1-6 controladores)</item>
+        <item>Original &#8211; Teléfono o Tablet (1&#8211;3 controladores)</item>
+        <item>Simple &#8211; Tablet Recomendado (1&#8211;6 controladores)</item>
         <item>Vertical &#8211; Teléfono o Tableta (2 controladores)</item>
         <item>Botones grandes &#8211; Izquierdo (1 controlador)</item>
     </string-array>
@@ -61,11 +61,13 @@
         <item>Formato de 12 Hr</item>
         <item>Formato de 24 Hr</item>
     </string-array>
+    <!--
     <string-array name="DisplayClockValuesEntries">
         <item >0</item>
         <item >1</item>
         <item >2</item>
     </string-array>
+    -->
     <string-array name="prefGamePadKeyEntries">
         <item>Detiene todo</item>
         <item>Detiene</item>
@@ -105,7 +107,7 @@
         <item>Función 27</item>
         <item>Función 28</item>
     </string-array>
-    <string-array name="prefAutoImportExportOptionsDisplayEntries">
+    <string-array name="prefAutoImportExportEntries">
         <item>Ninguno</item>
         <item>Auto importar/exportar al conectar/desconectar</item>
         <item>Auto importar sólo al conectar</item>
@@ -145,6 +147,7 @@
         <item>Ninguno</item>
         <item>Exportar</item>
         <item>Importar</item>
+        <item>Import from URL</item>
         <item>Reiniciar</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->

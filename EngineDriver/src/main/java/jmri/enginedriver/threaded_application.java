@@ -176,6 +176,7 @@ public class threaded_application extends Application {
     public volatile Handler consist_lights_edit_msg_handler;
     public volatile Handler power_control_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
+    public volatile Handler preferences_msg_handler;
 
     // for handling control of camera flash
     public static Flashlight flashlight;
@@ -202,6 +203,8 @@ public class threaded_application extends Application {
     public int maxThrottlesCurrentScreen = 6;   // maximum number of throttles the current screen supports
 
     public String connectedHostName = "";
+    public String connectedHostip = "";
+    public int connectedPort = 0;
 
     public String languageCountry = "en";
 

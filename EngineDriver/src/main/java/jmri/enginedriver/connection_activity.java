@@ -295,6 +295,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                     //use asynctask to save the updated connections list to the connections_list.txt file
                     new saveConnectionsList().execute();
                     mainapp.connectedHostName = connected_hostname;
+                    mainapp.connectedHostip = connected_hostip;
+                    mainapp.connectedPort = connected_port;
                     loadSharedPreferencesFromFile();
 
                     start_throttle_activity();

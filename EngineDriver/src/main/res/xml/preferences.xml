@@ -1040,6 +1040,14 @@
                 android:key="prefImportExport"
                 android:summary="@string/prefImportExportSummary"
                 android:title="@string/prefImportExportTitle" />
+            <EditTextPreference
+                android:defaultValue="@string/prefImportUrlDefaultValue"
+                android:dialogTitle="@string/prefImportUrlTitle"
+                android:key="prefImportUrl"
+                android:summary="@string/prefImportUrlSummary"
+                android:title="@string/prefImportUrlTitle"
+                android:inputType="text"
+                android:maxLines="1"/>
             <CheckBoxPreference
                 android:defaultValue="@bool/prefImportExportLocoListDefaultValue"
                 android:key="prefImportExportLocoList"
