@@ -37,7 +37,6 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
@@ -107,7 +106,7 @@ import jmri.jmrit.roster.RosterLoader;
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
 @SuppressLint("NewApi")
 public class threaded_application extends Application {
-    public static String INTRO_VERSION = "5";  // set this to a different string to force the intro to run on next startup.
+    public static String INTRO_VERSION = "6";  // set this to a different string to force the intro to run on next startup.
 
     public comm_thread commThread;
     String host_ip = null; //The IP address of the WiThrottle server.
@@ -279,35 +278,34 @@ public class threaded_application extends Application {
         /**
          * retrieve some wifi details, stored as client_ssid, client_address and client_address_inet4
          */
-        void getWifiInfo() {
-            int intaddr;
-            client_address_inet4 = null;
-            client_address = null;
-            //Set up to find a WiThrottle service via ZeroConf
-            try {
-                WifiManager wifi = (WifiManager) threaded_application.this.getSystemService(Context.WIFI_SERVICE);
-                WifiInfo wifiinfo = wifi.getConnectionInfo();
-                intaddr = wifiinfo.getIpAddress();
-                if (intaddr != 0) {
-                    byte[] byteaddr = new byte[]{(byte) (intaddr & 0xff), (byte) (intaddr >> 8 & 0xff), (byte) (intaddr >> 16 & 0xff),
-                            (byte) (intaddr >> 24 & 0xff)};
-                    client_address_inet4 = (Inet4Address) Inet4Address.getByAddress(byteaddr);
-                    client_address = client_address_inet4.toString().substring(1);      //strip off leading /
-                }
-                //store the wifi ssid for later, removing any enclosing quotes
-                client_ssid = wifiinfo.getSSID();
-                if (client_ssid != null && client_ssid.startsWith("\"") && client_ssid.endsWith("\"")) {
-                    client_ssid = client_ssid.substring(1, client_ssid.length() - 1);
-                }
-            } catch (Exception except) {
-                Log.e("Engine_Driver", "getWifiInfo - error getting IP addr: " + except.getMessage());
-            }
-        }
+//        void getWifiInfo() {
+//            int intaddr;
+//            client_address_inet4 = null;
+//            client_address = null;
+//            try {
+//                WifiManager wifi = (WifiManager) threaded_application.this.getSystemService(Context.WIFI_SERVICE);
+//                WifiInfo wifiinfo = wifi.getConnectionInfo();
+//                intaddr = wifiinfo.getIpAddress();
+//                if (intaddr != 0) {
+//                    byte[] byteaddr = new byte[]{(byte) (intaddr & 0xff), (byte) (intaddr >> 8 & 0xff), (byte) (intaddr >> 16 & 0xff),
+//                            (byte) (intaddr >> 24 & 0xff)};
+//                    client_address_inet4 = (Inet4Address) Inet4Address.getByAddress(byteaddr);
+//                    client_address = client_address_inet4.toString().substring(1);      //strip off leading /
+//                }
+//
+////                client_ssid = wifiinfo.getSSID();
+////                if (client_ssid != null && client_ssid.startsWith("\"") && client_ssid.endsWith("\"")) {
+////                    client_ssid = client_ssid.substring(1, client_ssid.length() - 1);
+////                }
+//            } catch (Exception except) {
+//                Log.e("Engine_Driver", "getWifiInfo - error getting IP addr: " + except.getMessage());
+//            }
+//        }
 
         void start_jmdns() {
             //Set up to find a WiThrottle service via ZeroConf
             try {
-                getWifiInfo();
+//                getWifiInfo();
                 if (client_address != null) {
                     WifiManager wifi = (WifiManager) threaded_application.this.getSystemService(Context.WIFI_SERVICE);
 
@@ -424,7 +422,7 @@ public class threaded_application extends Application {
 
                     //Start or Stop the WiThrottle listener and required jmdns stuff
                     case message_type.SET_LISTENER:
-                        getWifiInfo();
+//                        getWifiInfo();
                         if (isDtx()) {
                             addDtxToDiscoveredList();
                         } else {
@@ -1426,7 +1424,7 @@ public class threaded_application extends Application {
                 //reconnect socket if needed
                 if (!socketGood || inboundTimeout) {
                     String status = null;
-                    getWifiInfo();                  //update address in case network connection was lost
+//                    getWifiInfo();                  //update address in case network connection was lost
                     if (client_address == null) {
 //                        status = "Not connected to a network.  Check WiFi settings.\n\nRetrying";
                         status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNotConnected);
@@ -1462,7 +1460,7 @@ public class threaded_application extends Application {
 
                         // if we get here without an exception then the socket is ok
                         if (reconInProg) {
-                            getWifiInfo();          //update address in case network connection has changed
+//                            getWifiInfo();          //update address in case network connection has changed
                             String status = "Connected to WiThrottle Server at " + host_ip + ":" + port;
                             sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT, status);
                             Log.d("Engine_Driver", "WiT reconnection successful.");

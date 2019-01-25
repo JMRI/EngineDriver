@@ -41,7 +41,8 @@ public class PermissionsHelper {
             READ_FUNCTION_SETTINGS,
             STORE_FUNCTION_SETTINGS,
             CONNECT_TO_SERVER,
-            WRITE_SETTINGS})
+            WRITE_SETTINGS,
+            ACCESS_COARSE_LOCATION})
     public @interface RequestCodes {}
 
     /**
@@ -57,6 +58,7 @@ public class PermissionsHelper {
     public static final int STORE_FUNCTION_SETTINGS = 39;
     public static final int CONNECT_TO_SERVER = 40;
     public static final int WRITE_SETTINGS = 41;
+    public static final int ACCESS_COARSE_LOCATION = 42;
 
     private boolean isDialogOpen = false;
     private static PermissionsHelper instance = null;
@@ -143,6 +145,8 @@ public class PermissionsHelper {
                 return context.getResources().getString(R.string.permissionsConnectToServer);
             case WRITE_SETTINGS:
                 return context.getResources().getString(R.string.permissionsWriteSettings);
+            case ACCESS_COARSE_LOCATION:
+                return context.getResources().getString(R.string.permissionsACCESS_COARSE_LOCATION);
             default:
                 return "Unknown permission request: " + requestCode;
         }
@@ -178,6 +182,12 @@ public class PermissionsHelper {
                     Log.d("Engine_Driver", "Requesting PHONE permissions");
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.READ_PHONE_STATE},
+                            requestCode);
+                    break;
+                case ACCESS_COARSE_LOCATION:
+                    Log.d("Engine_Driver", "Requesting ACCESS_COARSE_LOCATION permissions");
+                    activity.requestPermissions(new String[]{
+                                    Manifest.permission.ACCESS_COARSE_LOCATION},
                             requestCode);
                     break;
                 case CONNECT_TO_SERVER:
@@ -296,6 +306,8 @@ public class PermissionsHelper {
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
+            case ACCESS_COARSE_LOCATION :
+                return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED;
             case WRITE_SETTINGS:
                 boolean result;
                 if (android.os.Build.VERSION.SDK_INT < 23) {
