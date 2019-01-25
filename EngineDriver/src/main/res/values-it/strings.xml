@@ -485,11 +485,19 @@
     <string name="toastSwipeUpViewHidden">Vista Web temporaneamente nascosta.  Per nascondere permanentemente, alterare le preferenze.</string>
     <string name="toastThrottleAlertEstop">Avviso: Locomotiva %1$s é impostata in stato di ESTOP</string>
 
+    <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Il valore inserito è fuori dai limiti  (%1$s-%2$s). Ristabilito %3$s.</string>
     <string name="toastPreferencesNotNumeric">Il valore inserito non è un numero.(%1$s-%2$s). Ristabilito %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferenze resettate a valori default!</string>
+    <string name="toastPreferencesImportFromURLFailed">Preferenze Import from URL failed! Controlla che l\'indirizzo sia corretto. (%1$s)</string>
+    <string name="toastPreferencesImportFromURLSucceeded">Preferenze Importa dall\'URL riuscito. (%1$s)</string>
+    <string name="toastPreferencesImportSucceeded">Preferenze Importa da file Riuscito.</string>
+    <string name="toastPreferencesThemeChangeSucceeded">Cambiamento del tema riuscito.</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">Modifica del tipo di pagina acceleratore. Riuscito.</string>
+    <string name="toastPreferencesLocaleChangeSucceeded">Cambio locale (lingua) riuscito.</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver riavviato con la lingua scelta.</string> -->
 
+    <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Nomero dello scambio non valido.</string>
     <string name="toastTurnoutCommandTo">Comando inviato allo scambio %1$s</string>
     <string name="toastTurnoutCommandToClose">Corretto Tracciato</string>

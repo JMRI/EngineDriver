@@ -105,6 +105,14 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
     private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY = "Connect Only";
 
+    private static final int FORCED_RESTART_REASON_NONE = 0;
+    private static final int FORCED_RESTART_REASON_RESET = 1;
+    private static final int FORCED_RESTART_REASON_IMPORT = 2;
+    private static final int FORCED_RESTART_REASON_IMPORT_URL = 3;
+    private static final int FORCED_RESTART_REASON_THEME = 4;
+    private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
+    private static final int FORCED_RESTART_REASON_LOCALE = 6;
+
     private boolean runIntro = false;
 
         static {
@@ -315,6 +323,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     /**
      * Called when the activity is first created.
      */
+    @SuppressLint("ApplySharedPref")
     @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -411,13 +420,44 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         threaded_application.min_fling_distance = (int) (threaded_application.SWIPE_MIN_DISTANCE * dm.densityDpi / 160.0f);
         threaded_application.min_fling_velocity = (int) (threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f);
 
-        if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restrat from the preferences reload the preferences
+        if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
             prefs.edit().putBoolean("prefForcedRestart", false).commit();
 
-            Intent in = new Intent().setClass(this, preferences.class);
-            navigatingAway = true;
-            startActivityForResult(in, 0);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason",FORCED_RESTART_REASON_NONE);
+            Log.d("Engine_Driver","connection: Forced Restart Reason: " + prefForcedRestartReason);
+            switch (prefForcedRestartReason) {
+                case FORCED_RESTART_REASON_IMPORT: {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportSucceeded), Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                case FORCED_RESTART_REASON_IMPORT_URL: {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportFromURLSucceeded), Toast.LENGTH_LONG).show();
+                    break;
+                }
+                case FORCED_RESTART_REASON_RESET: {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesResetSucceeded), Toast.LENGTH_LONG).show();
+                    break;
+                }
+                case FORCED_RESTART_REASON_THEME: {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesThemeChangeSucceeded), Toast.LENGTH_LONG).show();
+                    break;
+                }
+                case FORCED_RESTART_REASON_THROTTLE_PAGE: {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesThrottleChangeSucceeded), Toast.LENGTH_LONG).show();
+                    break;
+                }
+                case FORCED_RESTART_REASON_LOCALE: {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesLocaleChangeSucceeded), Toast.LENGTH_LONG).show();
+                    break;
+                }
+            }
+
+            if ((prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_URL) && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET) ) {  // reload the preferences page
+                Intent in = new Intent().setClass(this, preferences.class);
+                navigatingAway = true;
+                startActivityForResult(in, 0);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            }
         }
     }
 
