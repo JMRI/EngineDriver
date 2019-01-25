@@ -840,6 +840,7 @@
     <string name="permissionsWriteSettings">Engine Driver needs WRITE SETTINGS permissions to change screen brightness.</string>
     <string name="permissionsWriteSettingsAdditional">- Click the button below.\n- Grant the permission.\n- Click \'Back\' to return here.</string>
     <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\'t need Engine Driver to alter the brightness.</string>
+    <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver needs ACCESS_COARSE_LOCATION permissions to retrieve current wifi SSID.</string>
     <string name="permissionsConnectToServer">Engine Driver needs STORAGE permissions to store recent connections and PHONE permissions to pause operations when on a call.</string>
     <string name="permissionsGotoAppSettings">Please enable these permissions from the app settings.</string>
     <string name="permissionsAppSettingsButton">App settings</string>
@@ -847,6 +848,7 @@
     <string name="permissionsRetryButton">Retry</string>
     <string name="permissionsRequestTitle">Permissions Required</string>
     <string name="permissionsRetryTitle">Permissions Declined</string>
+
 
     <!-- Introduction / Setup Wizard -->
 
