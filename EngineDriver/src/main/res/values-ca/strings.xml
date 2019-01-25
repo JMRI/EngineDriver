@@ -486,21 +486,31 @@
     <string name="prefGamepadTestNowSummary">Permet confirmar que la configuració seleccionada funciona correctament.\nLa pàgina de prova s\'iniciarà IMMEDIATAMENT en seleccionar-la.</string>
     <string name="toastUnableToSetBrightness">No es pot establir el brillo Atomàtic/Adaptable.</string>
     <string name="toastAccelerometerNotFound">Acceleròmetre no trobat o deshabilitat</string>
-    <string name="toastLocoChangeNotAllowed">Canvi de la locomotora no permès:\'El canvi de direcció mentre hi ha moviment\' està deshabilitat en les preferències</string>
+    <string name="toastLocoChangeNotAllowed">Canvi de la locomotora no perms:\'El canvi de direcció mentre hi ha moviment\' està deshabilitat en les preferències</string>
     <string name="toastDirectionButtonsSwapped">Botons de direcció canviats temporalment. Per fer el canvi permanent, fes el canvi en les preferències</string>
     <string name="toastImmersiveModeDisabled">Mode immersiu temporalment deshabilitat. Per a deshabilitar-lo permanentement realitza el canvi en les preferències</string>
     <string name="toastThrottleScreenUnlocked">Pantalla del Controlador Desbloquejada</string>
     <string name="toastShakeWebViewHidden">Vista Web oculta temporalment. Sacseja de nou per mostrar. Per amagar permanentment canvia-ho a les preferències</string>
-    <string name="toastShakeWebViewUnavailable">La Vista web ha d\'estar habilitada en les preferències primer</string>
+    <string name="toastShakeWebViewUnavailable">La Vista web ha d\'estar habilitada en les preferències primer</string>è
     <string name="toastShakeScreenLocked">Pantalla de Controlador Bloquejada - Sacseja de nou per a desbloquejar-la</string>
     <string name="toastShakeScreenDimmed">Pantalla del Controlador Atenua - Sacseja de nou per restaurar-ho</string>
     <string name="toastSwipeUpScreenLocked">Pantalla del Controlador Bloquejada - Llisca cap amunt per a desbloquejar</string>
     <string name="toastSwipeUpScreenDimmed">Pantalla del Controlador Aclarida - Llisca cap amunt per a restaurar</string>
     <string name="toastSwipeUpViewHidden">Vista web temporalment oculta. Per ocultar-la permanenment realitza el canvi en les preferències</string>
     <string name="toastThrottleAlertEstop">Alerta: Engine %1$s establert a ESTOP</string>
+
+    <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">El Valor entrat està fora dels límits (%1$s-%2$s). Reiniciat a %3$s.</string>
     <string name="toastPreferencesNotNumeric">El Valor entrat no és un valor numèric (%1$s-%2$s). Reiniciat a %3$s.</string>
     <string name="toastPreferencesResetSucceeded">¡Reinicia les Preferències a valors per defecte!</string>
+    <string name="toastPreferencesImportFromURLFailed">Ha fallat la importació de les preferències de la URL. Comproveu que l\'adreça sigui correcta. (%1$s)</string>
+    <string name="toastPreferencesImportFromURLSucceeded">S\'ha superat la preferència d\'importació de la URL. (%1$s)</string>
+    <string name="toastPreferencesImportSucceeded">Preferències Importar des del fitxer S\'ha superat.</string>
+    <string name="toastPreferencesThemeChangeSucceeded">S\'ha produït un canvi de tema.</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">S\'ha produït un canvi de tipus de modificació de la pàgina de successos.</string>
+    <string name="toastPreferencesLocaleChangeSucceeded">S\'ha produït un canvi en el local (idioma).</string>
+
+    <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Número d\'Agulla incorrecte</string>
     <string name="toastTurnoutCommandTo">Comanda enviada a l\'agulla %1$s</string>
     <string name="toastTurnoutCommandToClose">Directe</string>

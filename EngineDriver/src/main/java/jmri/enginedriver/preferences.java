@@ -112,6 +112,14 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final String EXTERNAL_URL_PREFERENCES_IMPORT = "external_url_preferences_import.ed";
     private static final String ENGINE_DRIVER_DIR = "engine_driver";
 
+    private static final int FORCED_RESTART_REASON_NONE = 0;
+    private static final int FORCED_RESTART_REASON_RESET = 1;
+    private static final int FORCED_RESTART_REASON_IMPORT = 2;
+    private static final int FORCED_RESTART_REASON_IMPORT_URL = 3;
+    private static final int FORCED_RESTART_REASON_THEME = 4;
+    private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
+    private static final int FORCED_RESTART_REASON_LOCALE = 6;
+
     /**
      * Called when the activity is first created.
      */
@@ -187,6 +195,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         showHideThrottleTypePreferences();
 
         sharedPreferences.edit().putBoolean("prefForcedRestart", false).commit();
+        sharedPreferences.edit().putInt("prefForcedRestartReason", FORCED_RESTART_REASON_NONE).commit();
 
         if (!sharedPreferences.getString("prefImportExport", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)).equals("None")) {
             // preference is still confused after a reload or reset
@@ -269,154 +278,163 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     @SuppressWarnings("deprecation")
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         threaded_application mainapp = (threaded_application) this.getApplication();
-        switch (key) {
-            case "throttle_name_preference": {
-                String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-                String currentValue = mainapp.fixThrottleName(sharedPreferences.getString(key, defaultName).trim());
-                break;
-            }
-            case "maximum_throttle_preference":
-                //limit new value to 1-100 (%)
-                limitIntPrefValue(sharedPreferences, key, 1, 100, "100");
-                break;
-            case "maximum_throttle_change_preference":
-                limitIntPrefValue(sharedPreferences, key, 1, 100, "25");
-                break;
-            case "speed_arrows_throttle_speed_step":
-                limitIntPrefValue(sharedPreferences, key, 1, 99, "4");
-                break;
-            case "prefScreenBrightnessDim":
-                limitIntPrefValue(sharedPreferences, key, 1, 100, "5");
-                break;
-            case "prefConnectTimeoutMs":
-                limitIntPrefValue(sharedPreferences, key, 100, 99999, getResources().getString(R.string.prefConnectTimeoutMsDefaultValue));
-                break;
-            case "prefSocketTimeoutMs":
-                limitIntPrefValue(sharedPreferences, key, 100, 9999, getResources().getString(R.string.prefSocketTimeoutMsDefaultValue));
-                break;
-            case "WebViewLocation":
-                mainapp.alert_activities(message_type.WEBVIEW_LOC, "");
-                break;
-            case "ThrottleOrientation":
-                //if mode was fixed (Port or Land) won't get callback so need explicit call here
-                mainapp.setActivityOrientation(this);
-                break;
-            case "InitialWebPage":
-                mainapp.alert_activities(message_type.INITIAL_WEBPAGE, "");
-                break;
-            case "InitialThrotWebPage":
-                mainapp.alert_activities(message_type.INITIAL_WEBPAGE, "");
-                break;
-            case "ClockDisplayTypePreference":
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY);
-                break;
-            case "prefGamePadFeedbackVolume":
-                //limit check new value
-                limitIntPrefValue(sharedPreferences, key, ToneGenerator.MIN_VOLUME, ToneGenerator.MAX_VOLUME,
-                       getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue));
-                result = RESULT_GAMEPAD;
-                break;
-            case "prefGamePadType":
-                setGamePadPrefLabels(sharedPreferences);
-            case "prefGamePadStartButton":
-                result = RESULT_GAMEPAD;
-                break;
-            case "prefEsuMc2ZeroTrim":
-                // limit check new value
-                limitIntPrefValue(sharedPreferences, key, 0, 255, "10");
-                result = RESULT_ESUMCII;
-                break;
-            case "prefEsuMc2ButtonsRepeatDelay":
-                // limit check new value
-                limitIntPrefValue(sharedPreferences, key, 0, 9999, "500");
-                break;
-            case "prefEsuMc2StopButtonDelay":
-                // limit check new value
-                limitIntPrefValue(sharedPreferences, key, 0, 9999, "500");
-                break;
-            case "prefImportExport":
-                if (!importExportPreferences.currentlyImporting) {
-                    exportedPreferencesFileName =  "exported_preferences.ed";
-                    String currentValue = sharedPreferences.getString(key, "");
-                    if (currentValue.equals(IMPORT_EXPORT_OPTION_EXPORT)) {
-                        saveSharedPreferencesToFile(sharedPreferences,exportedPreferencesFileName ,true);
-                    } else if (currentValue.equals(IMPORT_EXPORT_OPTION_IMPORT)) {
-                        loadSharedPreferencesFromFile(sharedPreferences,exportedPreferencesFileName, deviceId);
-                    } else if (currentValue.equals(IMPORT_EXPORT_OPTION_RESET)) {
-                        resetPreferences(sharedPreferences);
-                    } else if (currentValue.equals(IMPORT_EXPORT_OPTION_IMPORT_URL)) {
-                        new importFromURL().execute(sharedPreferences.getString("prefImportUrl", getApplicationContext().getResources().getString(R.string.prefImportUrlDefaultValue)));
-                    }
+
+        boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
+
+        if (!prefForcedRestart) {  // don't do anything if the preference have been loaded and we are about to reload the app.
+            switch (key) {
+                case "throttle_name_preference": {
+                    String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
+                    String currentValue = mainapp.fixThrottleName(sharedPreferences.getString(key, defaultName).trim());
+                    break;
                 }
-                break;
-            case "prefHostImportExport":
-                if (!importExportPreferences.currentlyImporting) {
-                    String currentValue = sharedPreferences.getString(key, "");
-                    if (!currentValue.equals(IMPORT_EXPORT_OPTION_NONE)) {
-                        String action = currentValue.substring(0,IMPORT_PREFIX.length());
-                        exportedPreferencesFileName = currentValue.substring(IMPORT_PREFIX.length(),currentValue.length());
-                        if (action.equals(EXPORT_PREFIX)) {
-                            saveSharedPreferencesToFile(sharedPreferences,exportedPreferencesFileName, true);
-                        } else if (action.equals(IMPORT_PREFIX)) {
-                            loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName, deviceId);
+                case "maximum_throttle_preference":
+                    //limit new value to 1-100 (%)
+                    limitIntPrefValue(sharedPreferences, key, 1, 100, "100");
+                    break;
+                case "maximum_throttle_change_preference":
+                    limitIntPrefValue(sharedPreferences, key, 1, 100, "25");
+                    break;
+                case "speed_arrows_throttle_speed_step":
+                    limitIntPrefValue(sharedPreferences, key, 1, 99, "4");
+                    break;
+                case "prefScreenBrightnessDim":
+                    limitIntPrefValue(sharedPreferences, key, 1, 100, "5");
+                    break;
+                case "prefConnectTimeoutMs":
+                    limitIntPrefValue(sharedPreferences, key, 100, 99999, getResources().getString(R.string.prefConnectTimeoutMsDefaultValue));
+                    break;
+                case "prefSocketTimeoutMs":
+                    limitIntPrefValue(sharedPreferences, key, 100, 9999, getResources().getString(R.string.prefSocketTimeoutMsDefaultValue));
+                    break;
+                case "WebViewLocation":
+                    mainapp.alert_activities(message_type.WEBVIEW_LOC, "");
+                    break;
+                case "ThrottleOrientation":
+                    //if mode was fixed (Port or Land) won't get callback so need explicit call here
+                    mainapp.setActivityOrientation(this);
+                    break;
+                case "InitialWebPage":
+                    mainapp.alert_activities(message_type.INITIAL_WEBPAGE, "");
+                    break;
+                case "InitialThrotWebPage":
+                    mainapp.alert_activities(message_type.INITIAL_WEBPAGE, "");
+                    break;
+                case "ClockDisplayTypePreference":
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY);
+                    break;
+                case "prefGamePadFeedbackVolume":
+                    //limit check new value
+                    limitIntPrefValue(sharedPreferences, key, ToneGenerator.MIN_VOLUME, ToneGenerator.MAX_VOLUME,
+                            getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue));
+                    result = RESULT_GAMEPAD;
+                    break;
+                case "prefGamePadType":
+                    setGamePadPrefLabels(sharedPreferences);
+                case "prefGamePadStartButton":
+                    result = RESULT_GAMEPAD;
+                    break;
+                case "prefEsuMc2ZeroTrim":
+                    // limit check new value
+                    limitIntPrefValue(sharedPreferences, key, 0, 255, "10");
+                    result = RESULT_ESUMCII;
+                    break;
+                case "prefEsuMc2ButtonsRepeatDelay":
+                    // limit check new value
+                    limitIntPrefValue(sharedPreferences, key, 0, 9999, "500");
+                    break;
+                case "prefEsuMc2StopButtonDelay":
+                    // limit check new value
+                    limitIntPrefValue(sharedPreferences, key, 0, 9999, "500");
+                    break;
+                case "prefImportExport":
+                    if (!importExportPreferences.currentlyImporting) {
+                        exportedPreferencesFileName = "exported_preferences.ed";
+                        String currentValue = sharedPreferences.getString(key, "");
+                        if (currentValue.equals(IMPORT_EXPORT_OPTION_EXPORT)) {
+                            saveSharedPreferencesToFile(sharedPreferences, exportedPreferencesFileName, true);
+                        } else if (currentValue.equals(IMPORT_EXPORT_OPTION_IMPORT)) {
+                            loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT);
+                        } else if (currentValue.equals(IMPORT_EXPORT_OPTION_RESET)) {
+                            resetPreferences(sharedPreferences);
+                        } else if (currentValue.equals(IMPORT_EXPORT_OPTION_IMPORT_URL)) {
+                            navigateToHandler(PermissionsHelper.STORE_PREFERENCES);
+                            navigateToHandler(PermissionsHelper.READ_PREFERENCES);
+                            new importFromURL().execute(sharedPreferences.getString("prefImportUrl", getApplicationContext().getResources().getString(R.string.prefImportUrlDefaultValue)));
                         }
                     }
-                }
-                break;
-            case "prefGamepadTestNow":
-                start_gamepad_test_activity();
-                break;
-            case "prefAccelerometerShakeThreshold":
-                limitFloatPrefValue(sharedPreferences, key, 1.2F, 3.0F, "2.0"); // limit check new value
-                break;
-            case "prefTtsWhen":
-                String currentValue = sharedPreferences.getString("prefTtsWhen", "");
-                boolean enable = true;
-                if (currentValue.equals("None")) {
-                    enable = false;
-                }
-                enableDisablePreference("prefTtsGamepadTest", enable);
-                enableDisablePreference("prefTtsGamepadTestComplete",enable);
-                break;
-            case "prefNumberOfDefaultFunctionLabels":
-                // limit check new value
-                limitIntPrefValue(sharedPreferences, key, 0, 29, "29");
-                mainapp.set_default_function_labels(false);
-                break;
-            case "prefLocale":
-                sharedPreferences.edit().putString("prefLeftDirectionButtons", "").commit();
-                sharedPreferences.edit().putString("prefRightDirectionButtons", "").commit();
-                sharedPreferences.edit().putString("prefLeftDirectionButtonsShort", "").commit();
-                sharedPreferences.edit().putString("prefRightDirectionButtonsShort", "").commit();
-                forceRestartApp(true);
-                break;
-            case "prefDirectionButtonLongPressDelay":
-                // limit check new value
-                limitIntPrefValue(sharedPreferences, key, 500, 9999, "1000");
-                break;
-            case "prefThrottleScreenType":
-            case "NumThrottle":
-                limitNumThrottles(sharedPreferences);
-                break;
-            case "prefTheme":
-                String prefTheme = sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
-                if (!prefTheme.equals(prefThemeOriginal)) {
-                    forceRestartApp(true);
-                }
-                break;
-            case "prefConsistFollowRuleStyle":
-                prefConsistFollowRuleStyle = sharedPreferences.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
-                showHideConsistRuleStylePreferences();
-                break;
+                    break;
+                case "prefHostImportExport":
+                    if (!importExportPreferences.currentlyImporting) {
+                        String currentValue = sharedPreferences.getString(key, "");
+                        if (!currentValue.equals(IMPORT_EXPORT_OPTION_NONE)) {
+                            String action = currentValue.substring(0, IMPORT_PREFIX.length());
+                            exportedPreferencesFileName = currentValue.substring(IMPORT_PREFIX.length(), currentValue.length());
+                            if (action.equals(EXPORT_PREFIX)) {
+                                saveSharedPreferencesToFile(sharedPreferences, exportedPreferencesFileName, true);
+                            } else if (action.equals(IMPORT_PREFIX)) {
+                                loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT);
+                            }
+                        }
+                    }
+                    break;
+                case "prefGamepadTestNow":
+                    start_gamepad_test_activity();
+                    break;
+                case "prefAccelerometerShakeThreshold":
+                    limitFloatPrefValue(sharedPreferences, key, 1.2F, 3.0F, "2.0"); // limit check new value
+                    break;
+                case "prefTtsWhen":
+                    String currentValue = sharedPreferences.getString("prefTtsWhen", "");
+                    boolean enable = true;
+                    if (currentValue.equals("None")) {
+                        enable = false;
+                    }
+                    enableDisablePreference("prefTtsGamepadTest", enable);
+                    enableDisablePreference("prefTtsGamepadTestComplete", enable);
+                    break;
+                case "prefNumberOfDefaultFunctionLabels":
+                    // limit check new value
+                    limitIntPrefValue(sharedPreferences, key, 0, 29, "29");
+                    mainapp.set_default_function_labels(false);
+                    break;
+                case "prefLocale":
+                    sharedPreferences.edit().putString("prefLeftDirectionButtons", "").commit();
+                    sharedPreferences.edit().putString("prefRightDirectionButtons", "").commit();
+                    sharedPreferences.edit().putString("prefLeftDirectionButtonsShort", "").commit();
+                    sharedPreferences.edit().putString("prefRightDirectionButtonsShort", "").commit();
+                    forceRestartApp(FORCED_RESTART_REASON_LOCALE);
+                    break;
+                case "prefDirectionButtonLongPressDelay":
+                    // limit check new value
+                    limitIntPrefValue(sharedPreferences, key, 500, 9999, "1000");
+                    break;
+                case "prefThrottleScreenType":
+                case "NumThrottle":
+                    limitNumThrottles(sharedPreferences);
+                    break;
+                case "prefTheme":
+                    String prefTheme = sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+                    if (!prefTheme.equals(prefThemeOriginal)) {
+                        forceRestartApp(FORCED_RESTART_REASON_THEME);
+                    }
+                    break;
+                case "prefConsistFollowRuleStyle":
+                    prefConsistFollowRuleStyle = sharedPreferences.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
+                    showHideConsistRuleStylePreferences();
+                    break;
+            }
         }
     }
 
-    void forceRestartApp(boolean returnToPreferencesPage) {
-        // Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesLocaleChange), Toast.LENGTH_LONG).show(); // app dies before this shows
+    @SuppressLint("ApplySharedPref")
+    void forceRestartApp(int forcedRestartReason) {
+        Log.d("Engine_Driver", "Preferences.forceRestartApp() ");
 
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        if (returnToPreferencesPage) sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
+        sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
+        sharedPreferences.edit().putInt("prefForcedRestartReason", forcedRestartReason).commit();
 
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -434,6 +452,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         Runtime.getRuntime().exit(0); // really force the kill
     }
 
+    @SuppressLint("ApplySharedPref")
     void start_gamepad_test_activity() {
         SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
@@ -449,7 +468,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {
-                Log.d("Engine_Driver", ex.getMessage());
+                Log.d("Engine_Driver", "Preferences: " + ex.getMessage());
             }
 
         }
@@ -466,19 +485,21 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     @SuppressWarnings({ "unchecked" })
-    private boolean loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId) {
-        Log.d("Engine_Driver", "Loading saved preferences from file: " + exportedPreferencesFileName);
+    private boolean loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
+        Log.d("Engine_Driver", "Preferences: Loading saved preferences from file: " + exportedPreferencesFileName);
         boolean res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
 
         if (!res) {
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom,exportedPreferencesFileName), Toast.LENGTH_LONG).show();
         }
-        fixAndReloadImportExportPreference(sharedPreferences);
+//        fixAndReloadImportExportPreference(sharedPreferences);
+        forceRestartApp(forceRestartReason);
         return res;
     }
 
+    @SuppressLint("ApplySharedPref")
     private boolean saveSharedPreferencesToFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, boolean confirmDialog) {
-        Log.d("Engine_Driver", "Saving preferences to file");
+        Log.d("Engine_Driver", "Preferences: Saving preferences to file");
         sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
         boolean res = false;
         if (!exportedPreferencesFileName.equals(".ed")) {
@@ -501,7 +522,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     public void reload() {
         // restart the activity so all the preferences show correctly based on what was imported
-        Log.d("Engine_Driver", "Forcing app reload");
+        Log.d("Engine_Driver", "Preferences: Forcing app reload");
         if (Build.VERSION.SDK_INT >= 11) {
             recreate();
         } else {
@@ -516,19 +537,21 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     private void resetPreferences(SharedPreferences sharedPreferences){
-        Log.d("Engine_Driver", "Resetting preferences");
+        Log.d("Engine_Driver", "Preferences: Resetting preferences");
         SharedPreferences.Editor prefEdit = sharedPreferences.edit();
         prefEdit.clear();
         prefEdit.commit();
+        Log.d("Engine_Driver", "Preferences: Reset succeeded");
         reload();
-        String m = getApplicationContext().getResources().getString(R.string.toastPreferencesResetSucceeded);
-        Toast.makeText(getApplicationContext(), m, Toast.LENGTH_LONG).show();
-        Log.d("Engine_Driver", m);
+//        String m = getApplicationContext().getResources().getString(R.string.toastPreferencesResetSucceeded);
+//        Toast.makeText(getApplicationContext(), m, Toast.LENGTH_LONG).show();
 
-        forceRestartApp(false);
+        forceRestartApp(FORCED_RESTART_REASON_RESET);
     }
 
+    @SuppressLint("ApplySharedPref")
     private void fixAndReloadImportExportPreference(SharedPreferences sharedPreferences){
+        Log.d("Engine_Driver", "Preferences: Fix and Loading saved preferences.");
         sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
         sharedPreferences.edit().putString("prefHostImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
         reload();
@@ -562,6 +585,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         return overwiteFile;
     }
 
+    @SuppressLint("ApplySharedPref")
     static void putObject(SharedPreferences sharedPreferences, final String key, final Object val) {
         if (val instanceof Boolean)
             sharedPreferences.edit().putBoolean(key, (Boolean) val).commit();
@@ -576,6 +600,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     }
 
+    @SuppressLint("ApplySharedPref")
     @SuppressWarnings("deprecation")
     private boolean limitIntPrefValue(SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
         boolean isValid = true;
@@ -602,6 +627,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         return isValid;
     }
 
+    @SuppressLint("ApplySharedPref")
     @SuppressWarnings("deprecation")
     private boolean limitFloatPrefValue(SharedPreferences sharedPreferences, String key, Float minVal, Float maxVal, String defaultVal) {
         boolean isValid = true;
@@ -628,6 +654,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         return isValid;
     }
 
+    @SuppressLint("ApplySharedPref")
     private void limitNumThrottles(SharedPreferences sharedPreferences) {
         int numThrottles = mainapp.Numeralise(sharedPreferences.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
         String prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
@@ -653,7 +680,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             SharedPreferences.Editor prefEdit = sharedPreferences.edit();
             prefEdit.commit();
             reload();
-            forceRestartApp(true);
+            forceRestartApp(FORCED_RESTART_REASON_THROTTLE_PAGE);
         }
     }
 
@@ -869,16 +896,16 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             // Only need to consider relevant request codes initiated by this Activity
             switch (requestCode) {
                 case PermissionsHelper.STORE_PREFERENCES:
-                    Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
+                    Log.d("Engine_Driver", "Preferences: Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
 //                    saveSharedPreferencesToFileImpl();
                     break;
                 case PermissionsHelper.READ_PREFERENCES:
-                    Log.d("Engine_Driver", "Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
+                    Log.d("Engine_Driver", "Preferences: Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
 //                    loadSharedPreferencesFromFileImpl();
                     break;
                 default:
                     // do nothing
-                    Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
+                    Log.d("Engine_Driver", "Preferences: Unrecognised permissions request code: " + requestCode);
             }
         }
     }
@@ -886,13 +913,14 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(preferences.this, requestCode, permissions, grantResults)) {
-            Log.d("Engine_Driver", "Unrecognised request - send up to super class");
+            Log.d("Engine_Driver", "Preferences: Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
 
     //Handle messages from the communication thread back to the UI thread.
+    // currently only for the download from a URL
     @SuppressLint("HandlerLeak")
     private class preferences_handler extends Handler {
 
@@ -902,14 +930,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
             switch (msg.what) {
                 case message_type.IMPORT_URL_SUCCESS:
-                    Log.d("Engine_Driver", "Message: Import preferences from URL: File Found");
-                    sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
-                    sharedPreferences.edit().putString("prefHostImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportFromURLSuccess, sharedPreferences.getString("prefImportUrl", getApplicationContext().getResources().getString(R.string.prefImportUrlDefaultValue))), Toast.LENGTH_LONG).show();
-                    loadSharedPreferencesFromFile(sharedPreferences, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId);
+                    Log.d("Engine_Driver", "Preferences: Message: Import preferences from URL: File Found");
+                    loadSharedPreferencesFromFile(sharedPreferences, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId, FORCED_RESTART_REASON_IMPORT_URL);
                     break;
                 case message_type.IMPORT_URL_FAIL:
-                    Log.d("Engine_Driver", "Message: Import preferences from URL: File not Found");
+                    Log.d("Engine_Driver", "Preferences: Message: Import preferences from URL: File not Found");
                     sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
                     sharedPreferences.edit().putString("prefHostImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportFromURLFailed, sharedPreferences.getString("prefImportUrl", getApplicationContext().getResources().getString(R.string.prefImportUrlDefaultValue))), Toast.LENGTH_LONG).show();
@@ -921,7 +946,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     @Override
-    protected Dialog onCreateDialog(int id) {
+    protected Dialog onCreateDialog(int id) { // dialog for the progress bar
         switch (id) {
             case PROGRESS_BAR_TYPE: // we set this to 0
                 pDialog = new ProgressDialog(this);
@@ -937,10 +962,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
-    /**
-     * Background Async Task to download file
-     * */
-    class importFromURL extends AsyncTask<String, String, String> {
+    class importFromURL extends AsyncTask<String, String, String> {   // Background Async Task to download file
 
         //Before starting background thread Show Progress Bar Dialog
         @Override
@@ -952,21 +974,20 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         // Importing file in background thread
         @Override
         protected String doInBackground(String... f_url) {
-            Log.d("Engine_Driver", "Import preferences from URL: start");
+            Log.d("Engine_Driver", "Preferences: Import preferences from URL: start");
             int count;
             String n_url = f_url[0];
-            SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
             if ( (mainapp.connectedHostip != null) ) {
                 if ( !(f_url[0].toLowerCase().contains("http://")) && !(f_url[0].toLowerCase().contains("ftp://")) )  {
-                    n_url = "http://" + mainapp.connectedHostip + ":12080";
+                    n_url = "http://" + mainapp.connectedHostip + ":" + mainapp.web_server_port;
                     if (!(f_url[0].substring(0,1).equals("/"))) {
                         n_url = n_url + "/";
                     }
                     n_url = n_url + f_url[0];
                 } else {
                     // not a valid url and not currently connected
-                    Log.d("Engine_Driver", "Import preferences from URL: Not a valid url and not currently connected");
+                    Log.d("Engine_Driver", "Preferences: Import preferences from URL: Not a valid url and not currently connected");
                     dismissDialog(PROGRESS_BAR_TYPE);
                     mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L,message_type.IMPORT_URL_FAIL);
                     return null;
@@ -1023,21 +1044,15 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L, message_type.IMPORT_URL_FAIL);
             }
 
-            Log.d("Engine_Driver", "Import preferences from URL: End");
+            Log.d("Engine_Driver", "Preferences: Import preferences from URL: End");
             return null;
         }
 
-        /**
-         * Updating progress bar
-         * */
-        protected void onProgressUpdate(String... progress) {
+        protected void onProgressUpdate(String... progress) {  //update progress bar
             // setting progress percentage
             pDialog.setProgress(Integer.parseInt(progress[0]));
         }
 
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
         @Override
         protected void onPostExecute(String file_url) {
             // dismiss the dialog after the file was downloaded

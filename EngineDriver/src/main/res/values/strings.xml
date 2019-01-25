@@ -655,7 +655,11 @@
     <string name="toastPreferencesNotNumeric">Value entered is not numeric (%1$s-%2$s). Reset to %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferences Reset to defaults!</string>
     <string name="toastPreferencesImportFromURLFailed">Preferences Import from URL failed! Check the address is correct. (%1$s)</string>
-    <string name="toastPreferencesImportFromURLSuccess">Preferences Import from URL Succeeded. (%1$s)</string>
+    <string name="toastPreferencesImportFromURLSucceeded">Preferences Import from URL Succeeded. (%1$s)</string>
+    <string name="toastPreferencesImportSucceeded">Preferences Import from file Succeeded.</string>
+    <string name="toastPreferencesThemeChangeSucceeded">Theme Change Succeeded.</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">Throttle Page type change Succeeded.</string>
+    <string name="toastPreferencesLocaleChangeSucceeded">Locale (Language) change Succeeded.</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver restarted with chosen Language.</string> -->
 
     <!--    Toast messages for the Turnout Activity -->

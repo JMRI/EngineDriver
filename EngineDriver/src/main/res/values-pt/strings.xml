@@ -484,11 +484,19 @@
     <string name="toastSwipeUpViewHidden">Vista Web temporariamente escondida. Para esconder permanentemente alterar as preferências</string>
     <string name="toastThrottleAlertEstop">Alerta: Locomotiva %1$s está Configurada em estado de ESTOP</string>
 
+    <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">O valor inserido está fora dos limites  (%1$s-%2$s). Reiniciado para %3$s.</string>
     <string name="toastPreferencesNotNumeric">O valor inserido não é um número.(%1$s-%2$s). Reiniciado para %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferências Reiniciadas a valores Padrão!</string>
+    <string name="toastPreferencesImportFromURLFailed">Preferências Importar do URL falhou! Verifique o endereço está correto. (%1$s)</string>
+    <string name="toastPreferencesImportFromURLSucceeded">Preferências Importar do URL Sucesso. (%1$s)</string>
+    <string name="toastPreferencesImportSucceeded">Preferências Importar do arquivo Bem-sucedido.</string>
+    <string name="toastPreferencesThemeChangeSucceeded">Mudança de tema é bem-sucedida.</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">Alteração do tipo de página do acelerador é bem-sucedida.</string>
+    <string name="toastPreferencesLocaleChangeSucceeded">Mudança de idioma (idioma) é bem-sucedida.</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver reiniciado com o idioma escolhido.</string> -->
 
+    <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Numero de desvio inválido.</string>
     <string name="toastTurnoutCommandTo">Comando enviado para o desvio %1$s</string>
     <string name="toastTurnoutCommandToClose">Reto</string>

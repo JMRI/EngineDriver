@@ -147,8 +147,8 @@
         <item>Keine</item>
         <item>Export</item>
         <item>Import</item>
+        <item>Importieren von URL</item>
         <item>Zurücksetzen</item>
-        <item>Import from URL</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->
         <item>Benutze globale Einstellungen des Telefons</item>

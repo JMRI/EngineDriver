@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
@@ -48,6 +49,14 @@ public class ImportExportPreferences {
 
     private ArrayList<Integer> engine_address_list;
     private ArrayList<Integer> address_size_list; // Look at address_type.java
+
+    private static final int FORCED_RESTART_REASON_NONE = 0;
+//    private static final int FORCED_RESTART_REASON_RESET = 1;
+//    private static final int FORCED_RESTART_REASON_LOAD = 2;
+//    private static final int FORCED_RESTART_REASON_LOAD_URL = 3;
+//    private static final int FORCED_RESTART_REASON_THEME = 4;
+//    private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
+//    private static final int FORCED_RESTART_REASON_LOCALE = 6;
 
     private boolean writeExportFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName){
         Log.d("Engine_Driver", "ImportExportPreferences: Writing export file");
@@ -109,18 +118,24 @@ public class ImportExportPreferences {
         return res;
     }
 
+    @SuppressLint("ApplySharedPref")
     @SuppressWarnings({ "unchecked" })
     public boolean loadSharedPreferencesFromFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId) {
         Log.d("Engine_Driver", "ImportExportPreferences: Loading saved preferences from file");
         currentlyImporting = true;
         boolean res = false;
         boolean srcExists = false;
+        SharedPreferences.Editor prefEdit = sharedPreferences.edit();
 
         if (!exportedPreferencesFileName.equals(".ed")) {
+
             // save a few values so that we can reset them. i.e. efffectively don't import them
             String currentThrottleNameValue = sharedPreferences.getString("throttle_name_preference", context.getResources().getString(R.string.prefThrottleNameDefaultValue)).trim();
             String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
+            boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
+            int prefForcedRestartReason = sharedPreferences.getInt("prefForcedRestartReason", FORCED_RESTART_REASON_NONE);
             boolean prefImportExportLocoList = sharedPreferences.getBoolean("prefImportExportLocoList", context.getResources().getBoolean(R.bool.prefImportExportLocoListDefaultValue));
+
 
             File path = Environment.getExternalStorageDirectory();
             File engine_driver_dir = new File(path, "engine_driver");
@@ -133,33 +148,40 @@ public class ImportExportPreferences {
                 ObjectInputStream input = null;
                 try {
                     input = new ObjectInputStream(new FileInputStream(src));
-                    SharedPreferences.Editor prefEdit = sharedPreferences.edit();
                     prefEdit.clear();
-//                    sharedPreferences.edit().clear().commit();
 
+
+                    int i = 0;
                     Map<String, ?> entries = (Map<String, ?>) input.readObject();
+                    Log.d("Engine_Driver", "loadSharedPreferencesFromFile: Key Count:" + entries.size());
                     for (Map.Entry<String, ?> entry : entries.entrySet()) {
                         Object v = entry.getValue();
                         String key = entry.getKey();
 
-//                        Log.d("Engine_Driver", "Key Start: " + key);
+//                        Log.d("Engine_Driver", "ImportExportPreferences: loadSharedPreferencesFromFile: Key Start: " + key);
 
-                        if (v instanceof Boolean)
+                        if (v instanceof Boolean) {
+//                            Log.d("Engine_Driver", "ImportExportPreferences: loadSharedPreferencesFromFile: Key End: " + key + " - boolean - " + v);
                             prefEdit.putBoolean(key, (Boolean) v);
-                        else if (v instanceof Float)
+                        } else if (v instanceof Float) {
+//                            Log.d("Engine_Driver", "ImportExportPreferences: loadSharedPreferencesFromFile: Key End: " + key + " - Float - " + v);
                             prefEdit.putFloat(key, (Float) v);
-                        else if (v instanceof Integer)
+                        } else if (v instanceof Integer) {
+//                            Log.d("Engine_Driver", "ImportExportPreferences: loadSharedPreferencesFromFile: Key End: " + key + " - Integer - " + v);
                             prefEdit.putInt(key, (Integer) v);
-                        else if (v instanceof Long)
+                        } else if (v instanceof Long) {
+//                            Log.d("Engine_Driver", "ImportExportPreferences: loadSharedPreferencesFromFile: Key End: " + key + " - Long - " + v);
                             prefEdit.putLong(key, (Long) v);
-                        else if (v instanceof String)
+                        } else if (v instanceof String) {
+//                            Log.d("Engine_Driver", "ImportExportPreferences: loadSharedPreferencesFromFile: Key End: " + key + " - String - " + v);
                             prefEdit.putString(key, ((String) v));
+                        }
 
-//                        Log.d("Engine_Driver", "Key End: " + key);
+                        Log.d("Engine_Driver", "ImportExportPreferences: loadSharedPreferencesFromFile: Key " + i +" End: " + key + " - " + v);
+                        i++;
                     }
                     res = true;
 
-//                    prefEdit.commit();
 
                     // restore the remembered throttle name to avoid a duplicate throttle name if this is a differnt to device to where it was originally saved
                     String restoredDeviceId = sharedPreferences.getString("prefAndroidId", "").trim();
@@ -171,20 +193,23 @@ public class ImportExportPreferences {
                     prefEdit.putString("prefAutoImportExport", prefAutoImportExport);  //reset the preference
                     prefEdit.putBoolean("prefImportExportLocoList", prefImportExportLocoList);  //reset the preference
                     prefEdit.putString("prefRunIntro", threaded_application.INTRO_VERSION);  //don't re-run the intro
+                    prefEdit.putBoolean("prefForcedRestart", true);
+                    prefEdit.putInt("prefForcedRestartReason", prefForcedRestartReason);
 
                     String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
 
-                    prefEdit.commit();
+                    Log.d("Engine_Driver", "ImportExportPreferences: " + m);
                     Toast.makeText(context, m, Toast.LENGTH_LONG).show();
-                    Log.d("Engine_Driver", m);
-
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
+                    Log.e("Engine_Driver", "ImportExportPreferences: loadSharedPreferencesFromFile: " + e);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Log.e("Engine_Driver", "ImportExportPreferences: loadSharedPreferencesFromFile: " + e);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
+                    Log.e("Engine_Driver", "ImportExportPreferences: loadSharedPreferencesFromFile: " + e);
                 } finally {
                     try {
                         if (input != null) {
@@ -192,6 +217,7 @@ public class ImportExportPreferences {
                         }
                     } catch (IOException ex) {
                         ex.printStackTrace();
+                        Log.e("Engine_Driver", "ImportExportPreferences: loadSharedPreferencesFromFile: " + ex);
                     }
                 }
                 currentlyImporting = false;
@@ -216,6 +242,7 @@ public class ImportExportPreferences {
             Toast.makeText(context, context.getResources().getString(R.string.toastImportExportCannotImport), Toast.LENGTH_LONG).show();
         }
 
+        prefEdit.commit();
         return res;
     }
 
@@ -253,7 +280,7 @@ public class ImportExportPreferences {
             }
 
         } catch (IOException except) {
-            Log.e("Engine_Driver", "select_loco - Error reading recent loco file. "
+            Log.e("Engine_Driver", "ImportExportPreferences: select_loco - Error reading recent loco file. "
                     + except.getMessage());
         }
     }
