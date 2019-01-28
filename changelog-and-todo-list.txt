@@ -6,6 +6,8 @@
  * Introduction and Initial Setup Screens (wizard)
  * Recent Connections list - allow user to delete individual entries with long-press
  * Option to import preferences from a URL
+ * Add location permission prompt
+ * Add wifi details to About screen for debugging
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
  * New Colourful/Colorful theme

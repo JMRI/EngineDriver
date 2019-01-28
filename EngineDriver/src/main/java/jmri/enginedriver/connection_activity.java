@@ -19,10 +19,13 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -341,7 +344,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         throttle_simple.initStatics();
         web_activity.initStatics();
 
-
         //check for "default" throttle name and make it more unique
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
@@ -468,6 +470,11 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         if (this.isFinishing()) {        //if finishing, expedite it
             return;
         }
+        if (this.runIntro) {        //if going to run the intro, expedite it
+            return;
+        }
+
+        getWifiInfo();
 
         navigatingAway = false;
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
@@ -529,6 +536,37 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         //sets the tile to include throttle name.
         //String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
         setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));// + "    |    Throttle Name: " + prefs.getString("throttle_name_preference", defaultName));
+    }
+    /**
+     * retrieve some wifi details, stored in mainapp as client_ssid, client_address and client_address_inet4
+     */
+    void getWifiInfo() {
+        int intaddr;
+        mainapp.client_address_inet4 = null;
+        mainapp.client_address = null;
+        //Set up to find a WiThrottle service via ZeroConf
+        try {
+            WifiManager wifi = (WifiManager) connection_activity.this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            WifiInfo wifiinfo = wifi.getConnectionInfo();
+            intaddr = wifiinfo.getIpAddress();
+            if (intaddr != 0) {
+                byte[] byteaddr = new byte[]{(byte) (intaddr & 0xff), (byte) (intaddr >> 8 & 0xff), (byte) (intaddr >> 16 & 0xff),
+                        (byte) (intaddr >> 24 & 0xff)};
+                mainapp.client_address_inet4 = (Inet4Address) Inet4Address.getByAddress(byteaddr);
+                mainapp.client_address = mainapp.client_address_inet4.toString().substring(1);      //strip off leading /
+            }
+            //we must have location permissions to get SSID.
+            PermissionsHelper phi = PermissionsHelper.getInstance();
+            if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION)) {
+                phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION);
+            }
+            mainapp.client_ssid = wifiinfo.getSSID();
+            if (mainapp.client_ssid != null && mainapp.client_ssid.startsWith("\"") && mainapp.client_ssid.endsWith("\"")) {
+                mainapp.client_ssid = mainapp.client_ssid.substring(1, mainapp.client_ssid.length() - 1);
+            }
+        } catch (Exception except) {
+            Log.e("Engine_Driver", "getWifiInfo - error getting IP addr: " + except.getMessage());
+        }
     }
 
     @Override
