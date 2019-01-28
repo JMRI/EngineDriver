@@ -13,15 +13,18 @@
       Public License along with this program; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="exit">Exit</string>
     <string name="settings">Function Defaults</string>
     <string name="fb_label">Function Label</string>
     <string name="fb_column_label">Label</string>
     <string name="fb_column_function">Funct#</string>
     <string name="function_buttons">function_buttons</string>
+    <string name="introMenu">Intro/Setup Wizard</string>
+
     <string name="app_name">Engine Driver</string>
     <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI, MRC or DigiTrax WiThrottle server, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one to six locomotives. </string>
+    <string name="app_name_intro">Introduction - Engine Driver</string>
     <string name="app_name_connect">Connect to Server - Engine Driver</string>
     <string name="app_name_throttle">Throttle - Engine Driver</string>
     <string name="app_name_throttle_short">Throttle</string>
@@ -232,6 +235,10 @@
     <string name="prefGamePadButtonRightDefaultValue">Reverse</string>
     <string name="prefGamePadButtonDownDefaultValue">Decrease Speed</string>
     <string name="prefGamePadButtonLeftDefaultValue">Forward</string>
+    <string name="prefGamePadButtonLeftShoulderDefaultValue">Function 03</string>
+    <string name="prefGamePadButtonRightShoulderDefaultValue">Function 04</string>
+    <string name="prefGamePadButtonLeftTriggerDefaultValue">Function 05</string>
+    <string name="prefGamePadButtonRightTriggerDefaultValue">Function 06</string>
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
@@ -464,6 +471,10 @@
     <string name="prefImportExportErrorReadingFrom">Import from \'engine_driver/%1$s\' failed! You may not have saved the preferences for this host yet.</string>
     <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
 
+    <string name="prefImportUrlTitle">URL to Import from</string>
+    <string name="prefImportUrlSummary">URL to \'Import\' a set of preferences from.\nIf \'http://\' is omitted the file is assumed to be on the currently connected server.</string>
+    <string name="prefImportUrlDefaultValue">/prefs/engine_driver/preferences.ed</string>
+
     <string name="prefSwapForwardReverseButtonsTitle">Swap Direction Buttons</string>
     <string name="prefSwapForwardReverseButtonsSummary">Permanently swap the two Direction Buttons for all throttles.</string>
 
@@ -572,13 +583,18 @@
     <string name="gamepadTestButtonLabelButtonB">B [@]</string>
     <string name="gamepadTestButtonLabelButtonStart">Start | Enter</string>
     <string name="gamepadTestButtonLabelButtonEnter">Select | Enter</string>
+    <string name="gamepadTestButtonLabelButtonLeftShoulder">Left Shoulder</string>
+    <string name="gamepadTestButtonLabelButtonRightShoulder">Right Shoulder</string>
+    <string name="gamepadTestButtonLabelButtonLeftTrigger">Left Trigger</string>
+    <string name="gamepadTestButtonLabelButtonRightTrigger">Right Trigger</string>
 
     <string name="gamepadTestOptionalLabel">Optional (may not be on the device)</string>
-    <string name="gamepadTestAllKeyCodesLabel">All codes:\s\s</string>
-    <string name="gamepadTestModeLabel">Type:\s\s</string>
-    <string name="gamepadTestKeycodeLabel">Key code:\s\s</string>
-    <string name="gamepadTestFunctionLabel">Function:\s\s</string>
-    <string name="gamepadTestCompleteLabel">Test status:\s\s</string>
+    <string name="gamepadTestAllKeyCodesLabel">All codes:</string>
+    <string name="gamepadTestModeLabel">Type:</string>
+    <string name="gamepadTestKeycodeLabel">Key code:</string>
+    <string name="gamepadTestFunctionLabel">Function:</string>
+    <string name="gamepadTestCompleteLabel">Test status:</string>
+    <string name="gamepadTestDeviceName">BT:</string>
     <string name="gamepadTestHelp">Scroll down to see the full instructions…\n\nPress ALL Dpad AND four primary buttons or the gamepad WILL NOT WORK.\n\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your gamepad) or try a different gamepad Type (above).\n\n\'BACK\' or \'CANCEL\' will exit the test but the gamepad WILL NOT WORK.\n\'SKIP\', or pressing the \'Decrease Speed\' gamepad button three times, will force the test to pass, even if the gamepad does not work properly.\n\'RESET\' will make ED think no gamepads have been used yet.\nIf \'simple\' test is selected, a single \'Decrease Speed\' button press will skip the test.\n\nUse the \'Gamepad Test n\' menu options to get back to this page.</string>
     <string name="gamepadTestHelpNonForced">If you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your device) or try a different gamepad Type (above).\nYou may be required to re-test the gamepad when you first use it from the throttle screen.</string>
     <string name="gamepadTestIncomplete">"Test Incomplete"</string>
@@ -638,6 +654,12 @@
     <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%1$s-%2$s). Reset to %3$s.</string>
     <string name="toastPreferencesNotNumeric">Value entered is not numeric (%1$s-%2$s). Reset to %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferences Reset to defaults!</string>
+    <string name="toastPreferencesImportFromURLFailed">Preferences Import from URL failed! Check the address is correct. (%1$s)</string>
+    <string name="toastPreferencesImportFromURLSucceeded">Preferences Import from URL Succeeded. (%1$s)</string>
+    <string name="toastPreferencesImportSucceeded">Preferences Import from file Succeeded.</string>
+    <string name="toastPreferencesThemeChangeSucceeded">Theme Change Succeeded.</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">Throttle Page type change Succeeded.</string>
+    <string name="toastPreferencesLocaleChangeSucceeded">Locale (Language) change Succeeded.</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver restarted with chosen Language.</string> -->
 
     <!--    Toast messages for the Turnout Activity -->
@@ -655,6 +677,8 @@
     <string name="toastConnectUnableToLoadPref">Unable to load host specific preferences. Can\'t get host name.</string>
     <string name="toastConnectErrorReadingRecentConnections">Error reading recent connections list:</string>
     <string name="toastConnectErrorSavingRecentConnection">Error saving recent connection:</string>
+    <string name="toastConnectRemoveDemoHostError">The demo Server can only be removed by modifying the preferences.</string>
+    <string name="toastConnectRemoved">Sever removed from List.</string>
 
     <!--    Toast messages for the Routes Activity -->
     <string name="toastRoutesCommandSent">"Command sent to Set route "</string>
@@ -726,7 +750,8 @@
     <string name="flashlightStateOff">Flashlight is Off</string>
     <string name="prefFlashlightSummary">Display flashlight button in Throttle, Turnout and Routes screens?</string>
     <string name="prefFlashlightTitle">Show flashlight button?</string>
-    <string name="toastFlashlightFailed">Sorry! There was a problem switching on the flashlight&#8230;</string>
+    <string name="toastFlashlightOnFailed">Sorry! There was a problem switching on the flashlight&#8230;</string>
+    <string name="toastFlashlightOffFailed">Sorry! There was a problem switching off the flashlight&#8230;</string>
 
     <string name="logViewerTitle">LogViewerActivity | Throttle Name: %1$s</string>
 
@@ -803,4 +828,51 @@
     <string name="timerDialogMessage">Password :</string>
     <string name="timerDialogHint">Restart or Reset Pwd</string>
 
+    <string name="permissionsReadRecentConnections">Engine Driver needs STORAGE permissions to read recent connections.</string>
+    <string name="permissionsStoreRecentConnections">Engine Driver needs STORAGE permissions to store recent connections.</string>
+    <string name="permissionsClearRecentConnections">Engine Driver needs STORAGE permissions to clear recent connections.</string>
+    <string name="permissionsReadPreferences">Engine Driver needs STORAGE permissions to read preferences.</string>
+    <string name="permissionsStorePreferences">Engine Driver needs STORAGE permissions to store preferences.</string>
+    <string name="permissionsClearPreferences">Engine Driver needs STORAGE permissions to clear preferences.</string>
+    <string name="permissionsReadPhoneState">Engine Driver needs PHONE permissions to pause operations when on a call.</string>
+    <string name="permissionsReadFunctionSettings">Engine Driver needs STORAGE permissions to read function settings.</string>
+    <string name="permissionsStoreFunctionSettings">Engine Driver needs STORAGE permissions to store function settings.</string>
+    <string name="permissionsWriteSettings">Engine Driver needs WRITE SETTINGS permissions to change screen brightness.</string>
+    <string name="permissionsWriteSettingsAdditional">- Click the button below.\n- Grant the permission.\n- Click \'Back\' to return here.</string>
+    <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\'t need Engine Driver to alter the brightness.</string>
+    <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver needs ACCESS_COARSE_LOCATION permissions to retrieve current wifi SSID.</string>
+    <string name="permissionsConnectToServer">Engine Driver needs STORAGE permissions to store recent connections and PHONE permissions to pause operations when on a call.</string>
+    <string name="permissionsGotoAppSettings">Please enable these permissions from the app settings.</string>
+    <string name="permissionsAppSettingsButton">App settings</string>
+    <string name="permissionsSystemSettingsButton">System settings</string>
+    <string name="permissionsRetryButton">Retry</string>
+    <string name="permissionsRequestTitle">Permissions Required</string>
+    <string name="permissionsRetryTitle">Permissions Declined</string>
+
+
+    <!-- Introduction / Setup Wizard -->
+
+    <string name="introWelcomeTitle">Welcome to \nEngine Driver</string>
+    <string name="introWelcomeSummary">This app can connect to a JMRI, MRC or DigiTrax WiThrottle server to control your DCC locos and devices. The following pages will guide you through initial setup.</string>
+
+    <string name="introThrottleNameSummary">Set a name for this device</string>
+    <string name="introThrottleNameSummary1">The name you choose will appear in the WiThrottle window in JMRI. It can help when resolving problems with multiple devices.  It must be unique.</string>
+
+    <string name="introThemeSummary">Choose the colors and appearance of the whole app.</string>
+    <string name="introThrottleTypeSummary">Choose the layout of the main throttle screen.</string>
+    <string name="introThrottleTypeSummary2">Depending on the chosen type, you will be limited on the number of individual throttles (1 to 6) on the screen.</string>
+
+    <string name="introFinishTitle">Ready to use</string>
+    <string name="introFinishSummary">Next, start the WiThrottle server in JMRI.</string>
+    <string name="introFinishSummary1">Then, complete this introduction and select your WiThrottle server if \'discovered\', or manually enter the ip address and port.</string>
+    <string name="introFinishSummary2">(These are shown in the WiThrottle window in JMRI.)\n\nFor detailed instructions, see the \'About\' page from the menu or visit the Engine Driver Home page at \n\'https://enginedriver.mstevetodd.com\'.</string>
+    <string name="introFinishSummary3">You can make additional changes to the appearance and behaviour of the app from the \'Preferences\' menu.</string>
+
+    <string name="introButtonsTitle">Speed Sliders and Buttons</string>
+    <string name="introButtonsSummary">Choose how to control the speed of your trains.</string>
+    <string name="introButtonsSlider">Slider Only\n(not possible with \'Big Buttons\')</string>
+    <string name="introButtonsSliderAndButtons">Slider + Buttons\n(not possible with \'Big Buttons\'.)</string>
+    <string name="introButtonsNoSlider">Speed Buttons Only</string>
+
+    <string name="introbackButtonPress">Please re-start the Engine Driver app to complete the Introduction.</string>
 </resources>

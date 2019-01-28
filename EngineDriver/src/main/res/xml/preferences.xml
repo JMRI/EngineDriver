@@ -35,7 +35,7 @@
         android:summary="@string/prefLocaleSummary"
         android:title="@string/prefLocaleTitle" />
 
-    <PreferenceCategory android:title="@string/prefThrottleStatusTitle" >
+    <PreferenceCategory android:title="@string/prefThrottleStatusTitle">
         <CheckBoxPreference
             android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"
             android:key="show_emergency_stop_menu_preference"
@@ -490,6 +490,34 @@
                 android:entries="@array/prefGamePadKeyEntries"
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonLeft"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonLeftTitle" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonLeftShoulderDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonLeftShoulder"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonLeftTitle" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonRightShoulderDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonRightShoulder"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonLeftTitle" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonLeftTriggerDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonLeftTrigger"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonLeftTitle" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonRightTriggerDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonRightTrigger"
                 android:summary="@string/prefGamePadButtonSummary"
                 android:title="@string/prefGamePadButtonLeftTitle" />
             <!--    Gamepad button preferences   -->
@@ -1012,6 +1040,14 @@
                 android:key="prefImportExport"
                 android:summary="@string/prefImportExportSummary"
                 android:title="@string/prefImportExportTitle" />
+            <EditTextPreference
+                android:defaultValue="@string/prefImportUrlDefaultValue"
+                android:dialogTitle="@string/prefImportUrlTitle"
+                android:key="prefImportUrl"
+                android:summary="@string/prefImportUrlSummary"
+                android:title="@string/prefImportUrlTitle"
+                android:inputType="text"
+                android:maxLines="1"/>
             <CheckBoxPreference
                 android:defaultValue="@bool/prefImportExportLocoListDefaultValue"
                 android:key="prefImportExportLocoList"

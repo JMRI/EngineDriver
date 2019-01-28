@@ -70,8 +70,13 @@ public class about_page extends Activity {
                 s += "\nWiThrottle: v" + mainapp.withrottle_version;
                 s += String.format("    Heartbeat: %d secs", mainapp.heartbeatInterval);
             }
-            s += String.format("\nSSID: %s", mainapp.client_ssid);
+            s += String.format("\nHost: %s", mainapp.host_ip);
         }
+        s += String.format("\nSSID: %s ", mainapp.client_ssid);
+        if (mainapp.client_address_inet4 != null) {
+            s += String.format("IP: %s", mainapp.client_address_inet4.toString().replaceAll("/",""));
+        }
+
         // show info
         v.setText(s);
 

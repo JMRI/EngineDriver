@@ -19,15 +19,20 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import android.support.annotation.NonNull;
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -65,7 +70,10 @@ import android.widget.AdapterView;
 
 import android.content.Context;
 
-public class connection_activity extends Activity {
+import jmri.enginedriver.util.PermissionsHelper;
+import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
+
+public class connection_activity extends Activity implements PermissionsHelper.PermissionsHelperGrantedCallback {
     private ArrayList<HashMap<String, String>> connections_list;
     private ArrayList<HashMap<String, String>> discovery_list;
     private SimpleAdapter connection_list_adapter;
@@ -85,6 +93,9 @@ public class connection_activity extends Activity {
 
     private static final String demo_host = "jmri.mstevetodd.com";
     private static final String demo_port = "44444";
+    private static final String DUMMY_HOST = "999";
+    private static final String DUMMY_ADDRESS = "999";
+    private static final int DUMMY_PORT = 999;
 
     private boolean prefHideDemoServer = false;
 
@@ -97,6 +108,15 @@ public class connection_activity extends Activity {
     private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
     private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY = "Connect Only";
 
+    private static final int FORCED_RESTART_REASON_NONE = 0;
+    private static final int FORCED_RESTART_REASON_RESET = 1;
+    private static final int FORCED_RESTART_REASON_IMPORT = 2;
+    private static final int FORCED_RESTART_REASON_IMPORT_URL = 3;
+    private static final int FORCED_RESTART_REASON_THEME = 4;
+    private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
+    private static final int FORCED_RESTART_REASON_LOCALE = 6;
+
+    private boolean runIntro = false;
 
         static {
         try {
@@ -123,8 +143,12 @@ public class connection_activity extends Activity {
         }
     }
 
-    //Request connection to the WiThrottle server.
     private void connect() {
+        navigateToHandler(PermissionsHelper.CONNECT_TO_SERVER);
+    }
+
+    //Request connection to the WiThrottle server.
+    private void connectImpl() {
         //	  sendMsgErr(0, message_type.CONNECT, connected_hostip, connected_port, "ERROR in ca.connect: comm thread not started.");
         Log.d("Engine_Driver", "in connection_activity.connect()");
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CONNECT, connected_hostip, connected_port);
@@ -282,6 +306,8 @@ public class connection_activity extends Activity {
                     //use asynctask to save the updated connections list to the connections_list.txt file
                     new saveConnectionsList().execute();
                     mainapp.connectedHostName = connected_hostname;
+                    mainapp.connectedHostip = connected_hostip;
+                    mainapp.connectedPort = connected_port;
                     loadSharedPreferencesFromFile();
 
                     start_throttle_activity();
@@ -300,6 +326,7 @@ public class connection_activity extends Activity {
     /**
      * Called when the activity is first created.
      */
+    @SuppressLint("ApplySharedPref")
     @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -317,25 +344,18 @@ public class connection_activity extends Activity {
         throttle_simple.initStatics();
         web_activity.initStatics();
 
-
         //check for "default" throttle name and make it more unique
-        //TODO: move this and similar code in preferences.java into single routine
-
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-        String s = prefs.getString("throttle_name_preference", defaultName);
-        if (s.trim().equals("") || s.equals(defaultName)) {
-            String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-            if (deviceId != null && deviceId.length() >= 4) {
-                deviceId = deviceId.substring(deviceId.length() - 4);
-            } else {
-                Random rand = new Random();
-                deviceId = String.valueOf(rand.nextInt(9999));  //use random string
-            }
-            s = defaultName + " " + deviceId;
-            prefs.edit().putString("throttle_name_preference", s).commit();  //save new name to prefs
 
+        if (!prefs.getString("prefRunIntro", "0").equals(mainapp.INTRO_VERSION)) {
+            Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
+            runIntro = true;
+            startActivity(intent);
         }
+
+        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
+        String s = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", defaultName));
+
 
         mainapp.applyTheme(this);
         setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect)); // needed in case the langauge was changed from the default
@@ -361,6 +381,32 @@ public class connection_activity extends Activity {
         ListView conn_list = (ListView) findViewById(R.id.connections_list);
         conn_list.setAdapter(connection_list_adapter);
         conn_list.setOnItemClickListener(new connect_item(server_list_type.RECENT_CONNECTION));
+        conn_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            //When an entry is long-clicked, remove it from the consist
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id) {
+                ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
+                TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
+                //connected_hostip = hip.getText().toString();
+                TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
+                //connected_hostname = hnv.getText().toString();
+                TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
+                //connected_port = Integer.valueOf(hpv.getText().toString());
+                //Log.d("Engine_Driver", "connection.longClick " + connected_hostip );
+                if ( !(hnv.getText().toString().equals(demo_host)) || !(hpv.getText().toString().equals(demo_port))) {
+                    getConnectionsListImpl(hip.getText().toString(), hpv.getText().toString());
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
+                    connected_hostip = DUMMY_ADDRESS;
+                    connected_hostname = DUMMY_HOST;
+                    connected_port = DUMMY_PORT;
+                    new saveConnectionsList().execute();
+                } else {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoveDemoHostError), Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
+
 
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -376,13 +422,44 @@ public class connection_activity extends Activity {
         threaded_application.min_fling_distance = (int) (threaded_application.SWIPE_MIN_DISTANCE * dm.densityDpi / 160.0f);
         threaded_application.min_fling_velocity = (int) (threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f);
 
-        if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restrat from the preferences reload the preferences
+        if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
             prefs.edit().putBoolean("prefForcedRestart", false).commit();
 
-            Intent in = new Intent().setClass(this, preferences.class);
-            navigatingAway = true;
-            startActivityForResult(in, 0);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason",FORCED_RESTART_REASON_NONE);
+            Log.d("Engine_Driver","connection: Forced Restart Reason: " + prefForcedRestartReason);
+            switch (prefForcedRestartReason) {
+                case FORCED_RESTART_REASON_IMPORT: {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportSucceeded), Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                case FORCED_RESTART_REASON_IMPORT_URL: {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportFromURLSucceeded), Toast.LENGTH_LONG).show();
+                    break;
+                }
+                case FORCED_RESTART_REASON_RESET: {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesResetSucceeded), Toast.LENGTH_LONG).show();
+                    break;
+                }
+                case FORCED_RESTART_REASON_THEME: {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesThemeChangeSucceeded), Toast.LENGTH_LONG).show();
+                    break;
+                }
+                case FORCED_RESTART_REASON_THROTTLE_PAGE: {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesThrottleChangeSucceeded), Toast.LENGTH_LONG).show();
+                    break;
+                }
+                case FORCED_RESTART_REASON_LOCALE: {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesLocaleChangeSucceeded), Toast.LENGTH_LONG).show();
+                    break;
+                }
+            }
+
+            if ((prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_URL) && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET) ) {  // reload the preferences page
+                Intent in = new Intent().setClass(this, preferences.class);
+                navigatingAway = true;
+                startActivityForResult(in, 0);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            }
         }
     }
 
@@ -393,6 +470,11 @@ public class connection_activity extends Activity {
         if (this.isFinishing()) {        //if finishing, expedite it
             return;
         }
+        if (this.runIntro) {        //if going to run the intro, expedite it
+            return;
+        }
+
+        getWifiInfo();
 
         navigatingAway = false;
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
@@ -420,9 +502,10 @@ public class connection_activity extends Activity {
     @Override
     public void onPause() {
         super.onPause();
-        if (!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
+        if (!this.isFinishing() && !navigatingAway && !runIntro) {        //only invoke setContentIntentNotification when going into background
             mainapp.addNotification(this.getIntent());
         }
+        runIntro = false;
     }
 
     @Override
@@ -453,6 +536,37 @@ public class connection_activity extends Activity {
         //sets the tile to include throttle name.
         //String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
         setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));// + "    |    Throttle Name: " + prefs.getString("throttle_name_preference", defaultName));
+    }
+    /**
+     * retrieve some wifi details, stored in mainapp as client_ssid, client_address and client_address_inet4
+     */
+    void getWifiInfo() {
+        int intaddr;
+        mainapp.client_address_inet4 = null;
+        mainapp.client_address = null;
+        //Set up to find a WiThrottle service via ZeroConf
+        try {
+            WifiManager wifi = (WifiManager) connection_activity.this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            WifiInfo wifiinfo = wifi.getConnectionInfo();
+            intaddr = wifiinfo.getIpAddress();
+            if (intaddr != 0) {
+                byte[] byteaddr = new byte[]{(byte) (intaddr & 0xff), (byte) (intaddr >> 8 & 0xff), (byte) (intaddr >> 16 & 0xff),
+                        (byte) (intaddr >> 24 & 0xff)};
+                mainapp.client_address_inet4 = (Inet4Address) Inet4Address.getByAddress(byteaddr);
+                mainapp.client_address = mainapp.client_address_inet4.toString().substring(1);      //strip off leading /
+            }
+            //we must have location permissions to get SSID.
+            PermissionsHelper phi = PermissionsHelper.getInstance();
+            if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION)) {
+                phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION);
+            }
+            mainapp.client_ssid = wifiinfo.getSSID();
+            if (mainapp.client_ssid != null && mainapp.client_ssid.startsWith("\"") && mainapp.client_ssid.endsWith("\"")) {
+                mainapp.client_ssid = mainapp.client_ssid.substring(1, mainapp.client_ssid.length() - 1);
+            }
+        } catch (Exception except) {
+            Log.e("Engine_Driver", "getWifiInfo - error getting IP addr: " + except.getMessage());
+        }
     }
 
     @Override
@@ -491,6 +605,12 @@ public class connection_activity extends Activity {
                 break;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, CMenu);
+                break;
+            case R.id.intro_mnu:
+                in = new Intent().setClass(this, intro_activity.class);
+                navigatingAway = true;
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -542,8 +662,10 @@ public class connection_activity extends Activity {
                 File connections_list_file = new File(path, "engine_driver/connections_list.txt");
                 PrintWriter list_output = new PrintWriter(connections_list_file);
 
-                //Write selected connection to file, then write all others (skipping selected if found)
-                list_output.format("%s:%s:%d\n", connected_hostname, connected_hostip, connected_port);
+                if (!(connected_hostip.equals(DUMMY_ADDRESS)) || (connected_port != DUMMY_PORT)) {  // will have been called from the remove connection longClick so ignore the current connection values
+                    //Write selected connection to file, then write all others (skipping selected if found)
+                    list_output.format("%s:%s:%d\n", connected_hostname, connected_hostip, connected_port);
+                }
 
                 SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
                 String smrc = prefs.getString("maximum_recent_connections_preference", ""); //retrieve pref for max recents to show
@@ -580,9 +702,13 @@ public class connection_activity extends Activity {
         }
     }
 
+    private void clearConnectionsList(){
+        navigateToHandler(PermissionsHelper.CLEAR_CONNECTION_LIST);
+    }
+
     //Jeffrey M added 7/3/2013
     //Clears recent connection list.
-    private void clearConnectionsList() {
+    private void clearConnectionsListImpl() {
         //if no SD Card present then nothing to do
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             Toast.makeText(getApplicationContext(), "Error no recent connections exist", Toast.LENGTH_SHORT).show();
@@ -598,66 +724,76 @@ public class connection_activity extends Activity {
         }
     }
 
-    private void getConnectionsList() {
+    private void getConnectionsList(){
+        navigateToHandler(PermissionsHelper.READ_CONNECTION_LIST);
+    }
+
+    private void getConnectionsListImpl(String addressToRemove, String portToRemove) {
         boolean foundDemoHost = false;
         connections_list.clear();
         String errMsg;
-        if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-            //alert user that recent connections list requires SD Card
-            TextView v = (TextView) findViewById(R.id.recent_connections_heading);
-            v.setText(getString(R.string.ca_recent_conn_notice));
-        } else {
-            try {
-                File sdcard_path = Environment.getExternalStorageDirectory();
-                File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
 
-                if (connections_list_file.exists()) {
-                    BufferedReader list_reader = new BufferedReader(new FileReader(connections_list_file));
-                    while (list_reader.ready()) {
-                        String line = list_reader.readLine();
-                        String ip_address;
-                        String host_name;
-                        String port_str;
-                        Integer port = 0;
-                        List<String> parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
-                        if (parts.size() > 1) {  //skip if not split
-                            if (parts.size() == 2) {  //old style, use part 1 for ip and host
-                                host_name = parts.get(0);
-                                ip_address = parts.get(0);
-                                port_str = parts.get(1);
-                            } else {                          //new style, get all 3 parts
-                                host_name = parts.get(0);
-                                ip_address = parts.get(1);
-                                port_str = parts.get(2);
-                            }
-                            try {  //attempt to convert port to integer
-                                port = Integer.decode(port_str);
-                            } catch (Exception ignored) {
-                            }
-                            if (port > 0) {  //skip if port not converted to integer
+        if (prefs.getString("prefRunIntro", "0").equals(mainapp.INTRO_VERSION)) { // if the intro hasn't run yet, the permissions may not have been granted yet, so don't red the SD card,
 
-                                if ((!prefHideDemoServer)
-                                        || ((prefHideDemoServer)  && !((host_name.equals(demo_host)) && (port.toString().equals(demo_port))))) {
-                                    HashMap<String, String> hm = new HashMap<>();
-                                    hm.put("ip_address", ip_address);
-                                    hm.put("host_name", host_name);
-                                    hm.put("port", port.toString());
-                                    if (!connections_list.contains(hm)) {    // suppress dups
-                                        connections_list.add(hm);
-                                    }
+            if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+                //alert user that recent connections list requires SD Card
+                TextView v = (TextView) findViewById(R.id.recent_connections_heading);
+                v.setText(getString(R.string.ca_recent_conn_notice));
+            } else {
+                try {
+                    File sdcard_path = Environment.getExternalStorageDirectory();
+                    File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
+
+                    if (connections_list_file.exists()) {
+                        BufferedReader list_reader = new BufferedReader(new FileReader(connections_list_file));
+                        while (list_reader.ready()) {
+                            String line = list_reader.readLine();
+                            String ip_address;
+                            String host_name;
+                            String port_str;
+                            Integer port = 0;
+                            List<String> parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
+                            if (parts.size() > 1) {  //skip if not split
+                                if (parts.size() == 2) {  //old style, use part 1 for ip and host
+                                    host_name = parts.get(0);
+                                    ip_address = parts.get(0);
+                                    port_str = parts.get(1);
+                                } else {                          //new style, get all 3 parts
+                                    host_name = parts.get(0);
+                                    ip_address = parts.get(1);
+                                    port_str = parts.get(2);
                                 }
-                                if (host_name.equals(demo_host) && port.toString().equals(demo_port)) {
-                                    foundDemoHost = true;
+                                try {  //attempt to convert port to integer
+                                    port = Integer.decode(port_str);
+                                } catch (Exception ignored) {
+                                }
+                                if ( !(ip_address.equals(addressToRemove)) || !(port.toString().equals(portToRemove)) ) {
+                                    if (port > 0) {  //skip if port not converted to integer
+
+                                        if ((!prefHideDemoServer)
+                                                || ((prefHideDemoServer) && !((host_name.equals(demo_host)) && (port.toString().equals(demo_port))))) {
+                                            HashMap<String, String> hm = new HashMap<>();
+                                            hm.put("ip_address", ip_address);
+                                            hm.put("host_name", host_name);
+                                            hm.put("port", port.toString());
+                                            if (!connections_list.contains(hm)) {    // suppress dups
+                                                connections_list.add(hm);
+                                            }
+                                        }
+                                        if (host_name.equals(demo_host) && port.toString().equals(demo_port)) {
+                                            foundDemoHost = true;
+                                        }
+                                    }
                                 }
                             }
                         }
+                        list_reader.close();
                     }
-                    list_reader.close();
+                } catch (IOException except) {
+                    errMsg = except.getMessage();
+                    Log.e("connection_activity", "Error reading recent connections list: " + errMsg);
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + errMsg, Toast.LENGTH_SHORT).show();
                 }
-            } catch (IOException except) {
-                errMsg = except.getMessage();
-                Log.e("connection_activity", "Error reading recent connections list: " + errMsg);
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + errMsg, Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -694,9 +830,11 @@ public class connection_activity extends Activity {
 	}
 	 */
 
-    private boolean saveSharedPreferencesToFile() {
-        boolean res = false;
+    private void saveSharedPreferencesToFile(){
+        navigateToHandler(PermissionsHelper.STORE_PREFERENCES);
+    }
 
+    private void saveSharedPreferencesToFileImpl() {
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -709,20 +847,20 @@ public class connection_activity extends Activity {
                     File engine_driver_dir = new File(path, "engine_driver");
                     engine_driver_dir.mkdir();            // create directory if it doesn't exist
 
-                    res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+                    importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                 }
             } else {
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG).show();
             }
-        } else { // preference is NOT to save the preferences for the host
-            res = true;
         }
-        return res;
+    }
+
+    private void loadSharedPreferencesFromFile(){
+        navigateToHandler(PermissionsHelper.READ_PREFERENCES);
     }
 
    @SuppressWarnings({ "unchecked" })
-   private boolean loadSharedPreferencesFromFile() {
-       boolean res = false;
+   private void loadSharedPreferencesFromFileImpl() {
        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
        String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
 
@@ -733,19 +871,65 @@ public class connection_activity extends Activity {
                || (prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
            if (mainapp.connectedHostName != null) {
                String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
-               res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
-               res = true;
+               importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
            } else {
                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG).show();
            }
-       } else { // preference is NOT to load the preferences for the host
-           res = true;
        }
-       return res;
    }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+
+    public void navigateToHandler(@RequestCodes int requestCode) {
+        if ((requestCode == PermissionsHelper.READ_CONNECTION_LIST) &&
+                (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) &&
+                !(prefs.getString("prefRunIntro", "0").equals(mainapp.INTRO_VERSION))) {
+            // if the intro hasn't run yet and we don't have the permission yet, skip the read because the intro will ask for the permission
+            loadSharedPreferencesFromFileImpl();
+        } else {
+
+            if (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) {
+                    PermissionsHelper.getInstance().requestNecessaryPermissions(connection_activity.this, requestCode);
+            } else {
+                // Go to the correct handler based on the request code.
+                // Only need to consider relevant request codes initiated by this Activity
+                switch (requestCode) {
+                    case PermissionsHelper.CLEAR_CONNECTION_LIST:
+                        Log.d("Engine_Driver", "Got permission for CLEAR_CONNECTION_LIST - navigate to clearConnectionsListImpl()");
+                        clearConnectionsListImpl();
+                        break;
+                    case PermissionsHelper.READ_CONNECTION_LIST:
+                        Log.d("Engine_Driver", "Got permission for READ_CONNECTION_LIST - navigate to getConnectionsListImpl()");
+                        getConnectionsListImpl("", "");
+                        break;
+                    case PermissionsHelper.STORE_PREFERENCES:
+                        Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
+                        saveSharedPreferencesToFileImpl();
+                        break;
+                    case PermissionsHelper.READ_PREFERENCES:
+                        Log.d("Engine_Driver", "Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
+                        loadSharedPreferencesFromFileImpl();
+                        break;
+                    case PermissionsHelper.CONNECT_TO_SERVER:
+                        Log.d("Engine_Driver", "Got permission for READ_PHONE_STATE - navigate to connectImpl()");
+                        connectImpl();
+                        break;
+                    default:
+                        // do nothing
+                        Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(connection_activity.this, requestCode, permissions, grantResults)) {
+            Log.d("Engine_Driver", "Unrecognised request - send up to super class");
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

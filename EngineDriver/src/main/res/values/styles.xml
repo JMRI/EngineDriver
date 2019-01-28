@@ -90,7 +90,7 @@
       <item name="android:shadowDy">1</item>
       <item name="android:shadowRadius">1</item>
     </style>
-    <style name="edit_label_style">
+    <style name="edit_label_style" parent="@android:style/Theme">
       <item name="android:textSize">18sp</item>
       <item name="android:singleLine">true</item>
       <item name="android:ellipsize">none</item>

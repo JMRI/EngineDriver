@@ -25,6 +25,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -32,12 +34,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.hardware.Camera;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
@@ -45,13 +44,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Surface;
 import android.view.ViewGroup;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
@@ -87,6 +86,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
@@ -95,8 +95,10 @@ import javax.jmdns.ServiceListener;
 
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketHandler;
+import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
+import jmri.enginedriver.util.Flashlight;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 
@@ -104,11 +106,13 @@ import jmri.jmrit.roster.RosterLoader;
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
 @SuppressLint("NewApi")
 public class threaded_application extends Application {
+    public static String INTRO_VERSION = "6";  // set this to a different string to force the intro to run on next startup.
+
     public comm_thread commThread;
     String host_ip = null; //The IP address of the WiThrottle server.
     volatile int port = 0; //The TCP port that the WiThrottle server is running on
     Double withrottle_version = 0.0; //version of withrottle server
-    private int web_server_port = 0; //default port for jmri web server
+    public int web_server_port = 0; //default port for jmri web server
     private String serverType = "JMRI"; //currently, only JMRI or MRC
     private volatile boolean doFinish = false;  // when true, tells any Activities that are being created/resumed to finish()
     //shared variables returned from the withrottle server, stored here for easy access by other activities
@@ -171,9 +175,10 @@ public class threaded_application extends Application {
     public volatile Handler consist_lights_edit_msg_handler;
     public volatile Handler power_control_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
+    public volatile Handler preferences_msg_handler;
 
     // for handling control of camera flash
-    public static Camera camera;
+    public static Flashlight flashlight;
     private boolean flashState = false;
 
     //these constants are used for onFling
@@ -197,6 +202,8 @@ public class threaded_application extends Application {
     public int maxThrottlesCurrentScreen = 6;   // maximum number of throttles the current screen supports
 
     public String connectedHostName = "";
+    public String connectedHostip = "";
+    public int connectedPort = 0;
 
     public String languageCountry = "en";
 
@@ -271,35 +278,34 @@ public class threaded_application extends Application {
         /**
          * retrieve some wifi details, stored as client_ssid, client_address and client_address_inet4
          */
-        void getWifiInfo() {
-            int intaddr;
-            client_address_inet4 = null;
-            client_address = null;
-            //Set up to find a WiThrottle service via ZeroConf
-            try {
-                WifiManager wifi = (WifiManager) threaded_application.this.getSystemService(Context.WIFI_SERVICE);
-                WifiInfo wifiinfo = wifi.getConnectionInfo();
-                intaddr = wifiinfo.getIpAddress();
-                if (intaddr != 0) {
-                    byte[] byteaddr = new byte[]{(byte) (intaddr & 0xff), (byte) (intaddr >> 8 & 0xff), (byte) (intaddr >> 16 & 0xff),
-                            (byte) (intaddr >> 24 & 0xff)};
-                    client_address_inet4 = (Inet4Address) Inet4Address.getByAddress(byteaddr);
-                    client_address = client_address_inet4.toString().substring(1);      //strip off leading /
-                }
-                //store the wifi ssid for later, removing any enclosing quotes
-                client_ssid = wifiinfo.getSSID();
-                if (client_ssid != null && client_ssid.startsWith("\"") && client_ssid.endsWith("\"")) {
-                    client_ssid = client_ssid.substring(1, client_ssid.length() - 1);
-                }
-            } catch (Exception except) {
-                Log.e("Engine_Driver", "getWifiInfo - error getting IP addr: " + except.getMessage());
-            }
-        }
+//        void getWifiInfo() {
+//            int intaddr;
+//            client_address_inet4 = null;
+//            client_address = null;
+//            try {
+//                WifiManager wifi = (WifiManager) threaded_application.this.getSystemService(Context.WIFI_SERVICE);
+//                WifiInfo wifiinfo = wifi.getConnectionInfo();
+//                intaddr = wifiinfo.getIpAddress();
+//                if (intaddr != 0) {
+//                    byte[] byteaddr = new byte[]{(byte) (intaddr & 0xff), (byte) (intaddr >> 8 & 0xff), (byte) (intaddr >> 16 & 0xff),
+//                            (byte) (intaddr >> 24 & 0xff)};
+//                    client_address_inet4 = (Inet4Address) Inet4Address.getByAddress(byteaddr);
+//                    client_address = client_address_inet4.toString().substring(1);      //strip off leading /
+//                }
+//
+////                client_ssid = wifiinfo.getSSID();
+////                if (client_ssid != null && client_ssid.startsWith("\"") && client_ssid.endsWith("\"")) {
+////                    client_ssid = client_ssid.substring(1, client_ssid.length() - 1);
+////                }
+//            } catch (Exception except) {
+//                Log.e("Engine_Driver", "getWifiInfo - error getting IP addr: " + except.getMessage());
+//            }
+//        }
 
         void start_jmdns() {
             //Set up to find a WiThrottle service via ZeroConf
             try {
-                getWifiInfo();
+//                getWifiInfo();
                 if (client_address != null) {
                     WifiManager wifi = (WifiManager) threaded_application.this.getSystemService(Context.WIFI_SERVICE);
 
@@ -416,7 +422,7 @@ public class threaded_application extends Application {
 
                     //Start or Stop the WiThrottle listener and required jmdns stuff
                     case message_type.SET_LISTENER:
-                        getWifiInfo();
+//                        getWifiInfo();
                         if (isDtx()) {
                             addDtxToDiscoveredList();
                         } else {
@@ -720,7 +726,8 @@ public class threaded_application extends Application {
             doFinish = false;                   //ok for activities to run if restarted after this
 
             // make sure flashlight is switched off at shutdown
-            setFlashlightOff();
+            flashlight.setFlashlightOff();
+            flashlight.teardown();
             flashState = false;
         }
 
@@ -1417,7 +1424,7 @@ public class threaded_application extends Application {
                 //reconnect socket if needed
                 if (!socketGood || inboundTimeout) {
                     String status = null;
-                    getWifiInfo();                  //update address in case network connection was lost
+//                    getWifiInfo();                  //update address in case network connection was lost
                     if (client_address == null) {
 //                        status = "Not connected to a network.  Check WiFi settings.\n\nRetrying";
                         status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNotConnected);
@@ -1453,7 +1460,7 @@ public class threaded_application extends Application {
 
                         // if we get here without an exception then the socket is ok
                         if (reconInProg) {
-                            getWifiInfo();          //update address in case network connection has changed
+//                            getWifiInfo();          //update address in case network connection has changed
                             String status = "Connected to WiThrottle Server at " + host_ip + ":" + port;
                             sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT, status);
                             Log.d("Engine_Driver", "WiT reconnection successful.");
@@ -1774,20 +1781,48 @@ public class threaded_application extends Application {
      * to return to when reopening.
      */
     void addNotification(Intent notificationIntent) {
-        NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.icon)
-                        .setContentTitle(this.getString(R.string.notification_title))
-                        .setContentText(this.getString(R.string.notification_text))
-                        .setOngoing(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String CHANNEL_ID = "ed_channel_01";// The id of the channel.
+            CharSequence name = this.getString(R.string.notification_title);// The user-visible name of the channel.
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
-        builder.setContentIntent(contentIntent);
+            PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
+                    PendingIntent.FLAG_CANCEL_CURRENT);
 
-        // Add as notification
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(ED_NOTIFICATION_ID, builder.build());
+            Notification notification =
+                    new Notification.Builder(this)
+                            .setSmallIcon(R.drawable.icon)
+                            .setContentTitle(this.getString(R.string.notification_title))
+                            .setContentText(this.getString(R.string.notification_text))
+                            .setContentIntent(contentIntent)
+                            .setOngoing(true)
+                            .setChannelId(CHANNEL_ID)
+                            .build();
+
+            // Add as notification
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.createNotificationChannel(mChannel);
+            manager.notify(ED_NOTIFICATION_ID, notification);
+        } else {
+            NotificationCompat.Builder builder =
+                    new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.drawable.icon)
+                            .setContentTitle(this.getString(R.string.notification_title))
+                            .setContentText(this.getString(R.string.notification_text))
+                            .setOngoing(true);
+
+            PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
+                    PendingIntent.FLAG_CANCEL_CURRENT);
+            builder.setContentIntent(contentIntent);
+
+            // Add as notification
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.notify(ED_NOTIFICATION_ID, builder.build());
+
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.notification_title), Toast.LENGTH_LONG).show();
+
+        }
     }
 
     // Remove notification
@@ -1822,6 +1857,7 @@ public class threaded_application extends Application {
          startActivity(caIntent);
          */
 
+        flashlight = Flashlight.newInstance(this.getApplicationContext());
 
         androidVersion = android.os.Build.VERSION.SDK_INT;
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -2692,7 +2728,7 @@ public class threaded_application extends Application {
      * @return true if a flashlight is available; false if not
      */
     public boolean isFlashlightAvailable() {
-        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        return flashlight.isFlashlightAvailable();
     }
 
     /**
@@ -2703,71 +2739,12 @@ public class threaded_application extends Application {
      */
     public void toggleFlashlight(Activity activity, Menu menu) {
         if (flashState) {
-            setFlashlightOff();
+            flashlight.setFlashlightOff();
             flashState = false;
         } else {
-            flashState = setFlashlightOn(activity);
+            flashState = flashlight.setFlashlightOn(activity);
         }
         setFlashlightButton(menu);
-    }
-
-    /**
-     * Switch on the flashlight.
-     * <p>
-     * On certain devices, we need to ensure that the orientation of the camera preview
-     * matches that of the activity, otherwise 'bad things happen'
-     *
-     * @param activity the requesting activity
-     * @return true if flashlight successfully switch on; false if unsuccessful
-     */
-    private boolean setFlashlightOn(Activity activity) {
-        try {
-            camera = Camera.open();
-            Camera.Parameters parameters = camera.getParameters();
-            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-            camera.setParameters(parameters);
-            camera.setDisplayOrientation(getDisplayOrientation(activity));
-            camera.startPreview();
-            Log.d("Engine_Driver", "Flashlight switched on");
-            return true;
-        } catch (Exception ex) {
-            Log.e("Engine_Driver", "Error switching on flashlight: " + ex.getMessage());
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastFlashlightFailed), Toast.LENGTH_LONG).show();
-            return false;
-        }
-    }
-
-    /**
-     * Switch off the flashlight
-     */
-    private void setFlashlightOff() {
-        if (camera != null) {
-            camera.stopPreview();
-            camera.release();
-            camera = null;
-            Log.d("Engine_Driver", "Flashlight switched off");
-        }
-    }
-
-    /**
-     * Retrieves the screen orientation for the specified activity
-     *
-     * @param activity the required activity
-     * @return screen orientation as integer number of degrees
-     */
-    private int getDisplayOrientation(Activity activity) {
-        switch (activity.getWindowManager().getDefaultDisplay().getRotation()) {
-            case Surface.ROTATION_0:
-                return 0;
-            case Surface.ROTATION_90:
-                return 90;
-            case Surface.ROTATION_180:
-                return 180;
-            case Surface.ROTATION_270:
-                return 270;
-            default:
-                return 90;
-        }
     }
 
     public int Numeralise(String value) {
@@ -2812,6 +2789,30 @@ public class threaded_application extends Application {
     public String throttleIntToString(int whichThrottle) {
         return Integer.toString(whichThrottle);
     }
+
+    public String fixThrottleName(String currentValue) {
+        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
+
+        String newValue = currentValue;
+        //if name is blank or the default name, make it unique
+        if (currentValue.equals("") || currentValue.equals(defaultName)) {
+            String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+            if (deviceId != null && deviceId.length() >= 4) {
+                deviceId = deviceId.substring(deviceId.length() - 4);
+            } else {
+                Random rand = new Random();
+                deviceId = String.valueOf(rand.nextInt(9999));  //use random string
+                if (MobileControl2.isMobileControl2()) {
+                    // Change default name for ESU MCII
+                    defaultName = getApplicationContext().getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
+                }
+            }
+            newValue = defaultName + " " + deviceId;
+       }
+        prefs.edit().putString("throttle_name_preference", newValue).commit();  //save new name to prefs
+        return newValue;
+    }
+
 }
 
 

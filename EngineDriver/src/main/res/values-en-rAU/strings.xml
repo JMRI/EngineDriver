@@ -41,4 +41,6 @@
     <string name="toastTurnoutInvalidNumber">Invalid point number.</string>
     <string name="toastTurnoutCommandTo">Command sent to %1$s point</string>
 
+    <string name="introThemeSummary">Choose the colours and appearance of the whole app.</string>
+
 </resources>

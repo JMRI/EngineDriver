@@ -22,8 +22,10 @@
     <string name="fb_column_label">Bezeichn.</string>
     <string name="fb_column_function">F-Nr.</string>
     <string name="function_buttons">Funktionstasten</string>
+    <string name="introMenu">Einführung</string>
 
     <string name="app_description">Engine Driver - Fahrpult für ihr Android Telefon. Diese Anwendung kann eine Verbindung mit einem JMRI, MRC oder Digitrax WiThrottle Server erstellen und ermöglicht damit die Steuerung von Lokomotiven. Geschwindigkeit, Fahrrichtung und bis zu 29 DCC Funktionen werden für eine oder zwei Lokomotiven unterstützt.</string>
+    <string name="app_name_intro">Einführung - Engine Driver</string>
     <string name="app_name_connect">Verbinden mit Server - Engine Driver</string>
     <string name="app_name_throttle">Fahrregler - Engine Driver</string>
     <string name="app_name_throttle_short">Fahrregler</string>
@@ -274,8 +276,10 @@
     <string name="prefDropOnAcquireSummary">Aktuelle Lok Freigeben vor der Übernahme einer neuen Lok.</string>
     <string name="prefHideIfNoUserNameTitle">Ausblenden falls kein Benutzername existiert?</string>
     <string name="prefHideIfNoUserNameSummary">Weiche/Fahrstraße aus Liste weglassen wenn der Benutzername leer ist.</string>
+<!--
     <string name="prefHideRecentLocosTitle">Verberge die Liste Letzte Loks?</string>
     <string name="prefHideRecentLocosSummary">Mehr Platz lassen für Loks aus dem Lokverzeichnis.</string>
+-->
     <string name="prefRosterRecentLocosTitle">Auswahl aus kürzlich verwendeten Loks</string>
     <string name="prefRosterRecentLocosSummary">Lokverzeichnisauswahlen in kürzlich verwendeten Loks einbeziehen?</string>
     <string name="prefMaximumRecentLocosTitle">Maximum kürzlich verwendeter Loks</string>
@@ -430,11 +434,11 @@
     <string name="gamepadTestButtonLabelButtonStart">Start | Eingabe</string>
     <string name="gamepadTestButtonLabelButtonEnter">Wahl | Eingabe</string>
     <string name="gamepadTestOptionalLabel">Optional (kann auch nicht auf dem Gerät sein)</string>
-    <string name="gamepadTestAllKeyCodesLabel">Alle Codes:\s\s</string>
-    <string name="gamepadTestModeLabel">Typ:\s\s</string>
-    <string name="gamepadTestKeycodeLabel">Tastencode:\s\s</string>
-    <string name="gamepadTestFunctionLabel">Funktion:\s\s</string>
-    <string name="gamepadTestCompleteLabel">Test Status:\s\s</string>
+    <string name="gamepadTestAllKeyCodesLabel">Alle Codes:</string>
+    <string name="gamepadTestModeLabel">Typ:</string>
+    <string name="gamepadTestKeycodeLabel">Tastencode:</string>
+    <string name="gamepadTestFunctionLabel">Funktion:</string>
+    <string name="gamepadTestCompleteLabel">Test Status:</string>
     <string name="gamepadTestHelp">Nach unten rollen um eine vollständige Anleitung zu sehen…\n\nDrücke ALLE Dpad UND vier primäre Knöpfe oder das Gamepad WIRD NICHT FUNKTIONIEREN.\n\nWenn nicht alle Knöpfe aktiviert werden können, dann wechsle den Gamepad Modus (siehe Anleitung zu deinem Gamepad) oder versuche ein anderer Gamepad Typ (oben).\n\n\'ZURÜCK\' oder \'ABBRECHEN\' wird den Test beenden, aber das Gamepad WIRD NICHT FUNKTIONIEREN.\n\'ÜBERSPRINGEN\', oder dreimaliges Drücken des Gamepad Knopfes \'Geschwindigkeit verringern\' erzwingt einen guten Test, selbst wenn das Gamepad nicht einwandfrei funktioniert.\n\'ZURÜCKSETZEN\' läßt ED annehmen, daß bisher keine Gamepads benutzt wurden.\nWenn für den Test \'einfach\' gewählt wurde, wird einmaliges Drücken des Knopfes \'Geschwindigkeit verringern\' den Test überspringen.\n\nVerwende die \'Gamepad Test n\' Menüoptionen, um zu dieser Seite zurück zu kommen.</string>
     <string name="gamepadTestHelpNonForced">Wenn nicht alle Knöpfe aktiviert werden können, dann wechsle den Gamepad Modus (siehe Anleitung zu deinem Gamepad) oder versuche ein anderer Gamepad Typ (oben).\nMöglicherweise musst du das Gamepad erneut testen, sobald du es erstmals im Fahrregler Bildschirm benützt.</string>
     <string name="gamepadTestIncomplete">"Test unvollständig"</string>
@@ -480,9 +484,19 @@
     <string name="toastSwipeUpScreenDimmed">Fahrregler Bildschirm gedimmt - Wische nach oben zum Wiederherstellen.</string>
     <string name="toastSwipeUpViewHidden">Web Ansicht temporär ausgeblendet. Um sie permanent auszublenden, ändere die Voreinstellungen.</string>
     <string name="toastThrottleAlertEstop">Warnung: Lok %1$s hat NOT-STOP</string>
+
+    <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Eingegebener Wert liegt außerhalb der Grenzen (%1$s-%2$s). Zurücksetzen auf %3$s.</string>
     <string name="toastPreferencesNotNumeric">Eingegebener Wert ist nicht numerisch (%1$s-%2$s). Zurücksetzen auf %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Voreinstellungen werden auf Standardwerte zurückgesetzt!</string>
+    <string name="toastPreferencesImportFromURLFailed">Präferenzen Import von URL fehlgeschlagen! Überprüfen Sie, ob die Adresse korrekt ist. (%1$s)</string>
+    <string name="toastPreferencesImportFromURLSucceeded">Importieren von Voreinstellungen erfolgreich. (%1$s)</string>
+    <string name="toastPreferencesImportSucceeded">Voreinstellungen Import aus Datei erfolgreich.</string>
+    <string name="toastPreferencesThemeChangeSucceeded">Theme-Wechsel erfolgreich.</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">Änderung der Drosselseite erfolgreich.</string>
+    <string name="toastPreferencesLocaleChangeSucceeded">Gebietsschema (Sprache) Änderung erfolgreich.</string>
+
+    <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Ungültige Weichennummer.</string>
     <string name="toastTurnoutCommandTo">Befehl geschickt an Weiche %1$s</string>
     <string name="toastTurnoutCommandToClose">Geradeaus</string>
@@ -495,6 +509,9 @@
     <string name="toastConnectUnableToLoadPref">Host spezifische Voreinstellungen können nicht geladen werden. Erhalte keinen Hostnamen.</string>
     <string name="toastConnectErrorReadingRecentConnections">Fehler beim Lesen der Liste Letzte Verbindungen:</string>
     <string name="toastConnectErrorSavingRecentConnection">Fehler beim Speichern der letzten Verbindung:</string>
+    <string name="toastConnectRemoveDemoHostError">Der Demo-Server kann nur durch Ändern der Einstellungen entfernt werden.</string>
+    <string name="toastConnectRemoved">Sever wurde aus der Liste entfernt.</string>
+
     <string name="toastRoutesCommandSent">"Befehl geschickt zum Stellen der Fahrstraße "</string>
     <string name="toastImportExportExportSucceeded">Voreinstellungen exportieren zu \'engine_driver/%1$s\' war erfolgreich.</string>
     <string name="toastImportExportImportSucceeded">Voreinstellungen importieren von \'engine_driver/%1$s\' war erfolgreich.</string>
@@ -509,12 +526,14 @@
     <string name="prefTtsWhenTitle">Sprachausgabe</string>
     <string name="prefTtsWhenSummary">Zum Ankündigen von Schlüsselereignissen und Aktionen Text to Speech (TTS) verwenden.</string>
     <string name="prefTtsWhenDefaultValue">Keine</string>
+<!--
     <string name="prefTtsThrottleTitle">Beim Fahrreglerwechsel</string>
     <string name="prefTtsThrottleSummary">Wenn ein anderer Fahrregler gewählt wird.</string>
     <string name="prefTtsThrottleSpeedTitle">+ Geschwindigkeit</string>
     <string name="prefTtsThrottleSpeedSummary">Wenn ein anderer Fahrregler auf dem Gamepad gewählt wird, dann wird auch die Geschwindigkeit angesagt. Übergeht die Optionen einzelner Fahrregler.</string>
     <string name="prefTtsThrottleLocoSpeedTitle">+ Lok</string>
     <string name="prefTtsThrottleLocoSpeedSummary">Wenn ein anderer Fahrregler auf dem Gamepad gewählt wird, dann werden auch die Loknummern angesagt. Übergeht die Optionen einzelner Fahrregler.</string>
+-->
     <string name="prefTtsGamepadTestTitle">Beim Gamepad-Test</string>
     <string name="prefTtsGamepadTestSummary">Wenn die Gamepad-Testseite gestartet wird.</string>
     <string name="prefTtsGamepadTestCompleteTitle">Wenn der Gamepad-Test fertig ist.</string>
@@ -557,7 +576,9 @@
     <string name="lightsTextUnknown">Unbekannt</string>
     <string name="prefLocaleTitle">Lokalisierung</string>
     <string name="prefLocaleSummary">Zu benützende Sprache.\nWARNUNG! Engine Driver wird sofort neu starten. Die Bezeichnungen der Richtungsknöpfe werden zurückgesetzt.</string>
+<!--
     <string name="toastPreferencesLocaleChange">Engine Driver startete neu mit gewählter Sprache.</string>
+-->
     <string name="prefDirectionButtonLongPressDelayTitle">Verzögerung für langes Drücken der Richtungsknöpfe</string>
     <string name="prefDirectionButtonLongPressDelaySummary">Wieviele Millisekunden machen ein langes Drücken der Richtungsknöpfe aus.</string>
 
@@ -576,7 +597,7 @@
     <string name="flashlightStateOff">Taschenlampe ist aus</string>
     <string name="prefFlashlightSummary">Zeige Knopf für Taschenlampe in Fahrregler-, Weichen- und Fahrstraßenanzeigen?</string>
     <string name="prefFlashlightTitle">Knopf für Taschenlampe anzeigen?</string>
-    <string name="toastFlashlightFailed">Entschuldigung! Es gab ein Problem beim Einschalten der Taschenlampe&#8230;</string>
+    <string name="toastFlashlightOnFailed">Entschuldigung! Es gab ein Problem beim Einschalten der Taschenlampe&#8230;</string>
     <string name="prefConnectTimeoutMsTitle">Erstes Verbindungstimeout</string>
     <string name="prefConnectTimeoutMsSummary">Lege die anfängliche Zeitüberschreitung beim Verbinden in Millisekunden fest</string>
     <string name="prefSocketTimeoutMsTitle">Socket-Zeitüberschreitung</string>
@@ -633,5 +654,45 @@
     <string name="app_name_throttle_kids_running">Throttle - %1$s sek. verbleibend</string>
     <string name="app_name_throttle_kids_enabled">Gas - Timer bereit</string>
     <string name="app_name_throttle_kids_ended">Gas - Timer beendet</string>
+
+    <string name="permissionsReadRecentConnections">Engine Driver benötigt STORAGE-Berechtigungen zum Lesen der letzten Verbindungen.</string>
+    <string name="permissionsStoreRecentConnections">Engine Driver benötigt STORAGE-Berechtigungen zum Speichern der letzten Verbindungen.</string>
+    <string name="permissionsClearRecentConnections">Engine Driver benötigt STORAGE-Berechtigungen, um die letzten Verbindungen zu löschen.</string>
+    <string name="permissionsReadPreferences">Engine Driver benötigt STORAGE-Berechtigungen zum Lesen der Einstellungen.</string>
+    <string name="permissionsStorePreferences">Engine Driver benötigt STORAGE-Berechtigungen zum Speichern von Einstellungen.</string>
+    <string name="permissionsClearPreferences">Engine Driver benötigt STORAGE-Berechtigungen, um die Einstellungen zu löschen.</string>
+    <string name="permissionsReadPhoneState">Engine Driver benötigt PHONE-Berechtigungen, um Vorgänge während eines Anrufs anzuhalten.</string>
+    <string name="permissionsReadFunctionSettings">Engine Driver benötigt STORAGE-Berechtigungen zum Lesen der Funktionseinstellungen.</string>
+    <string name="permissionsStoreFunctionSettings">Engine Driver benötigt SPEICHER-Berechtigungen zum Speichern von Funktionseinstellungen.</string>
+    <string name="permissionsConnectToServer">Engine Driver benötigt STORAGE-Berechtigungen zum Speichern der letzten Verbindungen und PHONE-Berechtigungen, um Vorgänge während eines Anrufs anzuhalten.</string>
+    <string name="permissionsGotoAppSettings">Bitte aktivieren Sie diese Berechtigungen in den App-Einstellungen.</string>
+    <string name="permissionsAppSettingsButton">App Einstellungen</string>
+    <string name="permissionsRetryButton">Wiederholen</string>
+    <string name="permissionsRequestTitle">Erforderliche Berechtigungen</string>
+    <string name="permissionsRetryTitle">Berechtigungen abgelehnt</string>
+
+    <string name="introWelcomeTitle">Willkommen bei\nEngine Driver</string>
+    <string name="introWelcomeSummary">Diese App kann eine Verbindung zu einem JMRI, MRC oder DigiTrax-WiThrottle-Server herstellen, um Ihre DCC-Loks und -Geräte zu steuern. Die folgenden Seiten führen Sie durch die Ersteinrichtung.</string>
+
+    <string name="introThrottleNameSummary">Legen Sie einen Namen für dieses Gerät fest</string>
+    <string name="introThrottleNameSummary1">Der von Ihnen gewählte Name wird im WiThrottle-Fenster in JMRI angezeigt. Dies kann beim Lösen von Problemen mit mehreren Geräten hilfreich sein. Es muss eindeutig sein.</string>
+
+    <string name="introThemeSummary">Wählen Sie die Farben und das Erscheinungsbild der gesamten App.</string>
+    <string name="introThrottleTypeSummary">Wählen Sie das Layout der Hauptgasanzeige.</string>
+    <string name="introThrottleTypeSummary2">Je nach gewähltem Typ ist die Anzahl der einzelnen Drosseln (1 bis 6) auf dem Bildschirm begrenzt.</string>
+
+    <string name="introFinishTitle">Einsatzbereit</string>
+    <string name="introFinishSummary">Starten Sie anschließend den WiThrottle-Server in JMRI.</string>
+    <string name="introFinishSummary1">Vervollständigen Sie dann diese Einführung und wählen Sie Ihren WiThrottle-Server aus, wenn \'erkannt\', oder geben Sie die IP-Adresse und den Port manuell ein.</string>
+    <string name="introFinishSummary2">(Diese werden im WiThrottle-Fenster in JMRI angezeigt.)\n\nWeitere Informationen finden Sie auf der Seite \'About\' des Menüs oder auf der Engine Driver-Homepage unter \n\'https://enginedriver.mstevetodd.com\'.</string>
+    <string name="introFinishSummary3">Sie können zusätzliche Änderungen an der Darstellung und dem Verhalten der App über das Menü \'Einstellungen\' vornehmen.</string>
+
+    <string name="introButtonsTitle">Geschwindigkeitsregler und Tasten</string>
+    <string name="introButtonsSummary">Wählen Sie, wie Sie die Geschwindigkeit Ihrer Züge kontrollieren können.</string>
+    <string name="introButtonsSlider">Nur Schieberegler\n(nicht möglich mit \'Big Buttons\')</string>
+    <string name="introButtonsSliderAndButtons">Schieberegler und Tasten\n(nicht möglich mit \'Big Buttons\'.)</string>
+    <string name="introButtonsNoSlider">Nur Speed-Tasten</string>
+
+    <string name="introbackButtonPress">Starten Sie die Engine Driver app erneut, um die Einführung abzuschließen.</string>
 
 </resources>

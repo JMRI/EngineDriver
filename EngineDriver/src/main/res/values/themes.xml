@@ -22,6 +22,12 @@
         <item name="android:expandableListViewStyle">@style/EDListView</item>
         <item name="android:listSeparatorTextViewStyle">@style/small_heading_style</item>
 
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:actionMenuTextColor">@color/primary_text</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColorHint">@color/tertiary_text</item>
+
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style</item>
 
@@ -36,12 +42,23 @@
         <item name="ed_list_button_style">@style/list_button_style</item>
     </style>
 
+    <style name="app_intro" parent="@style/Theme.AppCompat">
+        <item name="ed_normal_button_style">@style/normal_button_style_colorful</item>
+        <item name="edit_label_style">@style/edit_label_style_black</item>
+    </style>
+
     <style name="app_theme" parent="@android:style/Theme">
         <item name="android:windowBackground">@drawable/app_background</item>
         <item name="android:windowTitleStyle">@style/app_title</item>
         <item name="android:listViewStyle">@style/EDListView</item>
         <item name="android:expandableListViewStyle">@style/EDListView</item>
         <item name="android:listSeparatorTextViewStyle">@style/small_heading_style</item>
+
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:actionMenuTextColor">@color/primary_text</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColorHint">@color/tertiary_text</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style</item>

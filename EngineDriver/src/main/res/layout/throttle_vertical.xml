@@ -223,7 +223,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:baselineAligned="false"
-                    android:layoutDirection="rtl"
                     android:orientation="horizontal"
                     android:weightSum="1.0">
 

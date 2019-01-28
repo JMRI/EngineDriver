@@ -61,11 +61,13 @@
         <item>12 Std. Format</item>
         <item>24 Std. Format</item>
     </string-array>
+    <!--
     <string-array name="DisplayClockValuesEntries">
         <item >0</item>
         <item >1</item>
         <item >2</item>
     </string-array>
+    -->
     <string-array name="prefGamePadKeyEntries">
         <item>Halte alle</item>
         <item>Halt</item>
@@ -105,7 +107,7 @@
         <item>Funktion 27</item>
         <item>Funktion 28</item>
     </string-array>
-    <string-array name="prefAutoImportExportOptionsDisplayEntries">
+    <string-array name="prefAutoImportExportEntries">
         <item>Keine</item>
         <item>Auto Import/Export beim Verbinden/Trennen</item>
         <item>Auto Import nur beim Verbinden</item>
@@ -145,6 +147,7 @@
         <item>Keine</item>
         <item>Export</item>
         <item>Import</item>
+        <item>Importieren von URL</item>
         <item>Zurücksetzen</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->

@@ -21,8 +21,10 @@
     <string name="settings">Funzioni Standard</string>
     <string name="fb_label">Etichetta Funzione</string>
     <string name="function_buttons">Default Funzioni</string>
+    <string name="introMenu">Introduzione</string>
 
     <string name="app_description">Engine Driver - Controllo per il tuo telefono Android. Questa app può connettersi a JMRI, MRC o server Digitrax WiThrottle, e controllare gli scambi e le locomotive. Velocità, direzione, e fino a 29 funzioni DCC sono supportatte per una o due locomotive.</string>
+    <string name="app_name_intro">Introduzione - Engine Driver</string>
     <string name="app_name_connect">Connessione al Server - Engine Driver</string>
     <string name="app_name_throttle">Controllo - Engine Driver</string>
     <string name="app_name_throttle_short">Controllo  </string>
@@ -483,11 +485,19 @@
     <string name="toastSwipeUpViewHidden">Vista Web temporaneamente nascosta.  Per nascondere permanentemente, alterare le preferenze.</string>
     <string name="toastThrottleAlertEstop">Avviso: Locomotiva %1$s é impostata in stato di ESTOP</string>
 
+    <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Il valore inserito è fuori dai limiti  (%1$s-%2$s). Ristabilito %3$s.</string>
     <string name="toastPreferencesNotNumeric">Il valore inserito non è un numero.(%1$s-%2$s). Ristabilito %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferenze resettate a valori default!</string>
+    <string name="toastPreferencesImportFromURLFailed">Preferenze Import from URL failed! Controlla che l\'indirizzo sia corretto. (%1$s)</string>
+    <string name="toastPreferencesImportFromURLSucceeded">Preferenze Importa dall\'URL riuscito. (%1$s)</string>
+    <string name="toastPreferencesImportSucceeded">Preferenze Importa da file Riuscito.</string>
+    <string name="toastPreferencesThemeChangeSucceeded">Cambiamento del tema riuscito.</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">Modifica del tipo di pagina acceleratore. Riuscito.</string>
+    <string name="toastPreferencesLocaleChangeSucceeded">Cambio locale (lingua) riuscito.</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver riavviato con la lingua scelta.</string> -->
 
+    <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Nomero dello scambio non valido.</string>
     <string name="toastTurnoutCommandTo">Comando inviato allo scambio %1$s</string>
     <string name="toastTurnoutCommandToClose">Corretto Tracciato</string>
@@ -500,6 +510,9 @@
     <string name="toastConnectUnableToLoadPref">Impossibile caricare preferenze specifiche dell\'host. Nome host non disponibile.</string>
     <string name="toastConnectErrorReadingRecentConnections">Errore di lettura lista connessioni recenti:</string>
     <string name="toastConnectErrorSavingRecentConnection">Errore salvando connessioni recenti:</string>
+    <string name="toastConnectRemoveDemoHostError">Il server demo può essere rimosso solo modificando le preferenze.</string>
+    <string name="toastConnectRemoved">Sever rimosso dalla lista.</string>
+
     <string name="toastRoutesCommandSent">"Comando inviato per selezionare la Rotta"</string>
     <string name="toastImportExportExportSucceeded">Esportazione preferenze in \'engine_driver/%1$s\' realizzata com successo.</string>
     <string name="toastImportExportImportSucceeded">Importazione preferenze da \'engine_driver/%1$s\' realizzata com successo.</string>
@@ -591,5 +604,45 @@
     <string name="app_name_throttle_kids_running">Throttle: %1$s sec. residuo</string>
     <string name="app_name_throttle_kids_enabled">Acceleratore - Timer pronto</string>
     <string name="app_name_throttle_kids_ended">Throttle - Timer Ended</string>
+
+    <string name="permissionsReadRecentConnections">Engine Driver ha bisogno delle autorizzazioni di STORAGE per leggere le connessioni recenti.</string>
+    <string name="permissionsStoreRecentConnections">Engine Driver ha bisogno delle autorizzazioni STORAGE per memorizzare le connessioni recenti.</string>
+    <string name="permissionsClearRecentConnections">Engine Driver ha bisogno delle autorizzazioni di STORAGE per cancellare le connessioni recenti.</string>
+    <string name="permissionsReadPreferences">Engine Driver ha bisogno di autorizzazioni di STORAGE per leggere le preferenze.</string>
+    <string name="permissionsStorePreferences">Engine Driver ha bisogno di autorizzazioni STORAGE per memorizzare le preferenze.</string>
+    <string name="permissionsClearPreferences">Engine Driver necessita dei permessi di STORAGE per cancellare le preferenze.</string>
+    <string name="permissionsReadPhoneState">Engine Driver ha bisogno delle autorizzazioni PHONE per mettere in pausa le operazioni durante una chiamata.</string>
+    <string name="permissionsReadFunctionSettings">Engine Driver ha bisogno delle autorizzazioni di STORAGE per leggere le impostazioni della funzione.</string>
+    <string name="permissionsStoreFunctionSettings">Engine Driver ha bisogno delle autorizzazioni di STORAGE per memorizzare le impostazioni delle funzioni.</string>
+    <string name="permissionsConnectToServer">Engine Driver ha bisogno delle autorizzazioni di STORAGE per memorizzare le connessioni recenti e le autorizzazioni PHONE per mettere in pausa le operazioni durante una chiamata.</string>
+    <string name="permissionsGotoAppSettings">Si prega di abilitare queste autorizzazioni dalle impostazioni dell\'app.</string>
+    <string name="permissionsAppSettingsButton">Impostazioni dell\'app</string>
+    <string name="permissionsRetryButton">Riprova</string>
+    <string name="permissionsRequestTitle">Autorizzazioni richieste</string>
+    <string name="permissionsRetryTitle">Autorizzazioni rifiutate</string>
+
+    <string name="introWelcomeTitle">Benvenuto in\nEngine Driver</string>
+    <string name="introWelcomeSummary">Questa app può connettersi a un server WiThrottle JMRI, MRC o DigiTrax per controllare i tuoi locomotori e dispositivi DCC. Le pagine seguenti ti guideranno attraverso la configurazione iniziale.</string>
+
+    <string name="introThrottleNameSummary">Imposta un nome per questo dispositivo</string>
+    <string name="introThrottleNameSummary1">Il nome scelto verrà visualizzato nella finestra WiThrottle in JMRI. Può essere d\'aiuto quando si risolvono problemi con più dispositivi. Deve essere unico.</string>
+
+    <string name="introThemeSummary">Scegli i colori e l\'aspetto dell\'intera app.</string>
+    <string name="introThrottleTypeSummary">Scegli il layout della schermata principale del motore.</string>
+    <string name="introThrottleTypeSummary2">A seconda del tipo scelto, sarai limitato al numero di singoli acceleratori (da 1 a 6) sullo schermo.</string>
+
+    <string name="introFinishTitle">Pronto all\'uso</string>
+    <string name="introFinishSummary">Successivamente, avvia il server WiThrottle in JMRI.</string>
+    <string name="introFinishSummary1">Quindi, completa questa introduzione e seleziona il tuo server WiThrottle se \'scoperto\', o inserisci manualmente l\'indirizzo IP e la porta.</string>
+    <string name="introFinishSummary2">((Questi sono mostrati nella finestra di WiThrottle in JMRI.)\n\nPer istruzioni dettagliate, vedere la pagina \'Informazioni\' dal menu o visitare la pagina iniziale di Engine Driver all\'indirizzo \n\'https://enginedriver.mstevetodd.com\'.</string>
+    <string name="introFinishSummary3">Puoi apportare ulteriori modifiche all\'aspetto e al comportamento dell\'app dal menu \'Preferenze\'.</string>
+
+    <string name="introButtonsTitle">Cursori e pulsanti di velocità</string>
+    <string name="introButtonsSummary">Scegli come controllare la velocità dei tuoi treni.</string>
+    <string name="introButtonsSlider">Solo slider\n(non possibile con \'Grandi pulsanti\')</string>
+    <string name="introButtonsSliderAndButtons">Slider e pulsanti\n(non possibile con \'Grandi pulsanti\'.)</string>
+    <string name="introButtonsNoSlider">Solo i pulsanti di velocità</string>
+
+    <string name="introbackButtonPress">Please Riavvia l\'app Engine Driver per completare l\'introduzione.</string>
 
 </resources>

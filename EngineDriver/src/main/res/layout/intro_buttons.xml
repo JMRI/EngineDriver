@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/intro_background"
+    android:baselineAligned="false"
+    android:gravity="top|center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="4dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="80dp">
+
+    <LinearLayout
+        android:id="@+id/intro_butttons_title0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/intro_buttons_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/introButtonsTitle"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/intro_buttons_summary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/introButtonsSummary"
+                android:textColor="@color/solidWhite"
+                android:textSize="18sp" />
+
+            <RadioGroup
+                android:id="@+id/intro_buttons_radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/intro_buttons_slider_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:drawableLeft="@drawable/intro_buttons_slider"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/introButtonsSlider"
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded" />
+
+                <RadioButton
+                    android:id="@+id/intro_buttons_slider_and_buttons_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:drawableLeft="@drawable/intro_buttons_slider_and_speed"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/introButtonsSliderAndButtons"
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded" />
+
+
+                <RadioButton
+                    android:id="@+id/intro_buttons_no_slider_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:drawableLeft="@drawable/intro_buttons_no_slider"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/introButtonsNoSlider"
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded" />
+
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/intro_background"
+    android:gravity="top|center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="4dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="4dp">
+
+    <LinearLayout
+        android:id="@+id/intro_throttle_name_title0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/intro_throttle_name_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/prefThrottleNameTitle"
+            android:textColor="@color/solidWhite"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/line0"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:id="@+id/intro_throttle_name_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/introThrottleNameSummary"
+            android:textColor="@color/solidWhite"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/intro_throttle_name_value"
+            style="?attr/edit_label_style"
+            android:layout_width="600sp"
+            android:layout_height="wrap_content"
+            android:background="@color/solidBlack"
+            android:maxLength="255"
+            android:singleLine="true"
+            android:text="@string/prefThrottleNameDefaultValue"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/intro_throttle_name_summary1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:text="@string/introThrottleNameSummary1"
+            android:textColor="@color/solidWhite"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/intro_withrottle_window" />
+
+</LinearLayout>

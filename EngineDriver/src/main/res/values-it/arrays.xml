@@ -53,9 +53,9 @@
     </string-array>
 
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
-        <item >Originale &#8211; Telefono o tablet (1-3 controllori)</item>
-        <item >Semplice &#8211; Consigliato Tablet (1-6 controllori)</item>
-        <item >Verticale &#8211; Telefono o tablet (1-3 controllori)</item>
+        <item >Originale &#8211; Telefono o tablet (1&#8211;3 controllori)</item>
+        <item >Semplice &#8211; Consigliato Tablet (1&#8211;6 controllori)</item>
+        <item >Verticale &#8211; Telefono o tablet (2 controllori)</item>
         <item >Grandi pulsanti &#8211; Sinistra (1 acceleratore)</item>
     </string-array>
 
@@ -64,11 +64,13 @@
         <item>Formato 12 ore</item>
         <item>Formato 24 ore</item>
     </string-array>
+    <!--
     <string-array name="DisplayClockValuesEntries">
         <item >0</item>
         <item >1</item>
         <item >2</item>
     </string-array>
+    -->
     <string-array name="prefGamePadKeyEntries">
         <item>Ferma Tutto</item>
         <item>Stop</item>
@@ -113,6 +115,7 @@
         <item>Niente</item>
         <item>Esportare</item>
         <item>Importare</item>
+        <item>Importa dall\'URL</item>
         <item>Reiniziare</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">
