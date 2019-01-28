@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/intro_background"
@@ -55,35 +56,38 @@
                     android:id="@+id/intro_buttons_slider_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
+                    android:checked="false"
                     android:drawableLeft="@drawable/intro_buttons_slider"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/introButtonsSlider"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded" />
 
                 <RadioButton
                     android:id="@+id/intro_buttons_slider_and_buttons_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
+                    android:checked="false"
                     android:drawableLeft="@drawable/intro_buttons_slider_and_speed"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/introButtonsSliderAndButtons"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded" />
 
 
                 <RadioButton
                     android:id="@+id/intro_buttons_no_slider_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
+                    android:checked="false"
                     android:drawableLeft="@drawable/intro_buttons_no_slider"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/introButtonsNoSlider"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded" />
 
 
             </RadioGroup>
