@@ -20,6 +20,7 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 package jmri.enginedriver;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -74,6 +75,7 @@ public class intro_throttle_type extends Fragment {
 
         radioGroup.setOnCheckedChangeListener(new
             RadioGroup.OnCheckedChangeListener() {
+            @SuppressLint("ApplySharedPref")
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int Choice = 0;

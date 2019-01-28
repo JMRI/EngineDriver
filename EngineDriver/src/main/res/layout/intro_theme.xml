@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/intro_background"
@@ -57,56 +58,59 @@
                     android:id="@+id/intro_theme_default_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:checked="true"
+                    android:checked="false"
                     android:drawableLeft="@drawable/intro_theme_default"
+                    android:enabled="true"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/prefThemeDefaultValue"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded" />
 
                 <RadioButton
                     android:id="@+id/intro_theme_black_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:checked="true"
+                    android:checked="false"
                     android:drawableLeft="@drawable/intro_theme_black"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/prefThemeDefaultValue"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded" />
 
                 <RadioButton
                     android:id="@+id/intro_theme_outline_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:checked="true"
+                    android:checked="false"
                     android:drawableLeft="@drawable/intro_theme_outline"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/prefThemeDefaultValue"
-                    android:textSize="18sp" />
+                    tools:ignore="RtlHardcoded" />
 
                 <RadioButton
                     android:id="@+id/intro_theme_ultra_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:checked="true"
+                    android:checked="false"
                     android:drawableLeft="@drawable/intro_theme_ultra"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/prefThemeDefaultValue"
-                    android:textSize="18sp" />
+                    tools:ignore="RtlHardcoded" />
 
                 <RadioButton
                     android:id="@+id/intro_theme_colorful_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:checked="true"
+                    android:checked="false"
                     android:drawableLeft="@drawable/intro_theme_colorful"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/prefThemeDefaultValue"
-                    android:textSize="18sp" />
+                    tools:ignore="RtlHardcoded" />
 
             </RadioGroup>
 
