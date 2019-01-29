@@ -52,16 +52,8 @@
                 android:layout_width="200dp"
                 android:layout_height="167dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/intro_finish" />
-
-            <TextView
-                android:id="@+id/intro_finish_summary1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:text="@string/introFinishSummary1"
-                android:textColor="@color/solidWhite"
-                android:textSize="18sp" />
+                android:contentDescription="@string/app_name"
+                app:srcCompat="@drawable/icon_xl" />
 
             <TextView
                 android:id="@+id/intro_finish_summary2"
@@ -69,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/introFinishSummary2"
                 android:textColor="@color/solidWhite"
-                android:textSize="12sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/intro_finish_summary3"

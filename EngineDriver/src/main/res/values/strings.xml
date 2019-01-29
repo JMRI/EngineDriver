@@ -863,9 +863,9 @@
     <string name="introThrottleTypeSummary2">Depending on the chosen type, you will be limited on the number of individual throttles (1 to 6) on the screen.</string>
 
     <string name="introFinishTitle">Ready to use</string>
-    <string name="introFinishSummary">Next, start the WiThrottle server in JMRI.</string>
-    <string name="introFinishSummary1">Then, complete this introduction and select your WiThrottle server if \'discovered\', or manually enter the ip address and port.</string>
-    <string name="introFinishSummary2">(These are shown in the WiThrottle window in JMRI.)\n\nFor detailed instructions, see the \'About\' page from the menu or visit the Engine Driver Home page at \n\'https://enginedriver.mstevetodd.com\'.</string>
+    <string name="introFinishSummary">Engine Driver is now ready to connect.</string>
+<!--    <string name="introFinishSummary1">Then, complete this introduction and select your WiThrottle server if \'discovered\', or manually enter the ip address and port.</string> -->
+    <string name="introFinishSummary2">For detailed instructions, see the \'About\' page from the menu or visit the Engine Driver Home page at \n\'https://enginedriver.mstevetodd.com\'.</string>
     <string name="introFinishSummary3">You can make additional changes to the appearance and behaviour of the app from the \'Preferences\' menu.</string>
 
     <string name="introButtonsTitle">Speed Sliders and Buttons</string>
