@@ -20,6 +20,7 @@ package jmri.enginedriver;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -76,6 +77,7 @@ public class about_page extends Activity {
         if (mainapp.client_address_inet4 != null) {
             s += String.format("IP: %s", mainapp.client_address_inet4.toString().replaceAll("/",""));
         }
+        s += String.format("\nOS: %s, SDK: %s ", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
 
         // show info
         v.setText(s);
