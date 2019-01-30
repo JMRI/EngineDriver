@@ -9,6 +9,7 @@
  * Add location permission prompt
  * Add wifi & OS details to About screen for debugging
  * change default for DirChangeWhileMoving and selLocoWhileMoving to false
+ * add some edits to Turnout# input
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
  * New Colourful/Colorful theme
