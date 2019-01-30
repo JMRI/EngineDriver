@@ -26,8 +26,9 @@
             android:layout_weight="0.25"
             android:hint="@string/turnouts_turnout"
             android:inputType="textCapCharacters"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWZ1234567890"
             android:imeOptions="actionDone"
-            android:maxLength="60"
+            android:maxLength="7"
             android:singleLine="true" />
         <Button
             android:id="@+id/turnout_throw"
