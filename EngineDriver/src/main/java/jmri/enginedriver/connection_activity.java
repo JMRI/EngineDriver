@@ -116,7 +116,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
     private static final int FORCED_RESTART_REASON_LOCALE = 6;
 
-    private boolean runIntro = false;
+//    private boolean runIntro = false;
 
         static {
         try {
@@ -349,7 +349,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
         if (!prefs.getString("prefRunIntro", "0").equals(mainapp.INTRO_VERSION)) {
             Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
-            runIntro = true;
+//            runIntro = true;
+//            mainapp.introIsRunning = true;
             startActivity(intent);
         }
 
@@ -470,7 +471,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         if (this.isFinishing()) {        //if finishing, expedite it
             return;
         }
-        if (this.runIntro) {        //if going to run the intro, expedite it
+//        if (this.runIntro) {        //if going to run the intro, expedite it
+        if (mainapp.introIsRunning) {        //if going to run the intro, expedite it
             return;
         }
 
@@ -502,10 +504,11 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     @Override
     public void onPause() {
         super.onPause();
-        if (!this.isFinishing() && !navigatingAway && !runIntro) {        //only invoke setContentIntentNotification when going into background
+//        if (!this.isFinishing() && !navigatingAway && !runIntro) {        //only invoke setContentIntentNotification when going into background
+        if (!this.isFinishing() && !navigatingAway && !mainapp.introIsRunning) {        //only invoke setContentIntentNotification when going into background
             mainapp.addNotification(this.getIntent());
         }
-        runIntro = false;
+//        runIntro = false;
     }
 
     @Override

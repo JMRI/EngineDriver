@@ -54,6 +54,8 @@ public class intro_activity extends AppIntro2 {
 
         mainapp = (threaded_application) this.getApplication();
 
+        mainapp.introIsRunning = true;
+
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         originalPrefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
         originalPrefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
@@ -182,6 +184,7 @@ public class intro_activity extends AppIntro2 {
             Runtime.getRuntime().exit(0); // really force the kill
 
         }
+        mainapp.introIsRunning = false;
         this.finish();
     }
 
@@ -194,7 +197,7 @@ public class intro_activity extends AppIntro2 {
     @Override
     public void onPause() {
         super.onPause();
-        if (!this.isFinishing()) {       //only invoke setContentIntentNotification when going into background
+        if (!this.isFinishing() && !mainapp.introIsRunning) {       //only invoke setContentIntentNotification when going into background
             mainapp.addNotification(this.getIntent());
         }
     }
@@ -211,6 +214,7 @@ public class intro_activity extends AppIntro2 {
 
     @Override
     public void onDestroy() {
+        mainapp.introIsRunning = false;
         if (!introComplete) {
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.introbackButtonPress), Toast.LENGTH_LONG).show();
         }
