@@ -364,8 +364,6 @@ public class routes extends Activity implements OnGestureListener {
         button_listener click_listener = new button_listener('2');
         b.setOnClickListener(click_listener);
 
-        //((EditText) findViewById(R.id.route_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
-
         locationList = new ArrayList<>();
         locationSpinner = (Spinner) findViewById(R.id.routes_location);
         locationListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, locationList);

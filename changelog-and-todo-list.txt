@@ -7,7 +7,9 @@
  * Recent Connections list - allow user to delete individual entries with long-press
  * Option to import preferences from a URL
  * Add location permission prompt
- * Add wifi details to About screen for debugging
+ * Add wifi & OS details to About screen for debugging
+ * change default for DirChangeWhileMoving and selLocoWhileMoving to false
+ * add some edits to Turnout# input
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
  * New Colourful/Colorful theme
@@ -461,7 +463,6 @@
  *   TODO: add close button and roster image to details dialog
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
- *   TODO: allow user to delete individual recents (long-press?)
  * log_viewer:
  *   TODO: option to save as file
  *
