@@ -706,9 +706,9 @@
     <string name="introThrottleTypeSummary2">Según el tipo elegido, estará limitado en el número de aceleradores individuales (1 a 6) en la pantalla.</string>
 
     <string name="introFinishTitle">Listo para usar</string>
-    <string name="introFinishSummary">A continuación, inicie el servidor WiThrottle en JMRI.</string>
-    <string name="introFinishSummary1">Luego, complete esta introducción y seleccione su servidor WiThrottle si está "descubierto", o ingrese manualmente la dirección IP y el puerto.</string>
-    <string name="introFinishSummary2">(Estos se muestran en la ventana de WiThrottle en JMRI).\n\nPara obtener instrucciones detalladas, consulte la página \'Acerca de\' del menú o visite la página de inicio Engine Driver en \n\'https://enginedriver.mstevetodd.com\'.</string>
+    <string name="introFinishSummary">Engine Driver ahora está listo para conectarse.</string>
+<!--    <string name="introFinishSummary1">Luego, complete esta introducción y seleccione su servidor WiThrottle si está "descubierto", o ingrese manualmente la dirección IP y el puerto.</string> -->
+    <string name="introFinishSummary2">Para obtener instrucciones detalladas, consulte la página \'Acerca de\' del menú o visite la página de inicio Engine Driver en \n\'https://enginedriver.mstevetodd.com\'.</string>
     <string name="introFinishSummary3">Puede realizar cambios adicionales en el aspecto y el comportamiento de la aplicación desde el menú \'Preferencias\'.</string>
 
     <string name="introButtonsTitle">Deslizadores de velocidad y botones</string>
