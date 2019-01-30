@@ -68,10 +68,12 @@ public class intro_throttle_type extends Fragment {
 
         RadioGroup radioGroup = getView().findViewById(R.id.intro_throttle_type_radio_group);
 
+        radioGroup.clearCheck();
         if (nameEntryValues[0].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_default_name); }
         else if (nameEntryValues[1].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_simple_name); }
         else if (nameEntryValues[2].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_vertical_name); }
         else if (nameEntryValues[3].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_big_left_name); }
+        radioGroup.jumpDrawablesToCurrentState();
 
         radioGroup.setOnCheckedChangeListener(new
             RadioGroup.OnCheckedChangeListener() {
