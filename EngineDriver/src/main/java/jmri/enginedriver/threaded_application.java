@@ -208,6 +208,7 @@ public class threaded_application extends Application {
     public String languageCountry = "en";
 
     public boolean appIsFinishing = false;
+    public boolean introIsRunning = false;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -2790,6 +2791,7 @@ public class threaded_application extends Application {
         return Integer.toString(whichThrottle);
     }
 
+    @SuppressLint("ApplySharedPref")
     public String fixThrottleName(String currentValue) {
         String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
 
