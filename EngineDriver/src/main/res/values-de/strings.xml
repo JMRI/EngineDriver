@@ -682,9 +682,9 @@
     <string name="introThrottleTypeSummary2">Je nach gewähltem Typ ist die Anzahl der einzelnen Drosseln (1 bis 6) auf dem Bildschirm begrenzt.</string>
 
     <string name="introFinishTitle">Einsatzbereit</string>
-    <string name="introFinishSummary">Starten Sie anschließend den WiThrottle-Server in JMRI.</string>
-    <string name="introFinishSummary1">Vervollständigen Sie dann diese Einführung und wählen Sie Ihren WiThrottle-Server aus, wenn \'erkannt\', oder geben Sie die IP-Adresse und den Port manuell ein.</string>
-    <string name="introFinishSummary2">(Diese werden im WiThrottle-Fenster in JMRI angezeigt.)\n\nWeitere Informationen finden Sie auf der Seite \'About\' des Menüs oder auf der Engine Driver-Homepage unter \n\'https://enginedriver.mstevetodd.com\'.</string>
+    <string name="introFinishSummary">Engine Driver kann jetzt verbunden werden.</string>
+<!--    <string name="introFinishSummary1">Vervollständigen Sie dann diese Einführung und wählen Sie Ihren WiThrottle-Server aus, wenn \'erkannt\', oder geben Sie die IP-Adresse und den Port manuell ein.</string> -->
+    <string name="introFinishSummary2">Weitere Informationen finden Sie auf der Seite \'About\' des Menüs oder auf der Engine Driver-Homepage unter \n\'https://enginedriver.mstevetodd.com\'.</string>
     <string name="introFinishSummary3">Sie können zusätzliche Änderungen an der Darstellung und dem Verhalten der App über das Menü \'Einstellungen\' vornehmen.</string>
 
     <string name="introButtonsTitle">Geschwindigkeitsregler und Tasten</string>
