@@ -20,6 +20,7 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 package jmri.enginedriver;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -66,15 +67,17 @@ public class intro_buttons extends Fragment {
 
         RadioGroup radioGroup = getView().findViewById(R.id.intro_buttons_radio_group);
 
+        radioGroup.clearCheck();
         if (!prefDisplaySpeedButtons && !prefHideSlider) {radioGroup.check(R.id.intro_buttons_slider_name); }
         else if (prefDisplaySpeedButtons && !prefHideSlider) {radioGroup.check(R.id.intro_buttons_slider_and_buttons_name); }
         else {radioGroup.check(R.id.intro_buttons_no_slider_name); }
+        radioGroup.jumpDrawablesToCurrentState();
 
         radioGroup.setOnCheckedChangeListener(new
             RadioGroup.OnCheckedChangeListener() {
+            @SuppressLint("ApplySharedPref")
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                int Choice = 0;
                 if (checkedId == R.id.intro_buttons_slider_name) { displaySpeedButtons = false; hideSlider = false; }
                 else if (checkedId == R.id.intro_buttons_slider_and_buttons_name) {  displaySpeedButtons = true; hideSlider = false;  }
                 else if (checkedId == R.id.intro_buttons_no_slider_name) {  displaySpeedButtons = true; hideSlider = true;  }
