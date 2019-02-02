@@ -2641,7 +2641,7 @@ public class threaded_application extends Application {
             else if (to.equals("Portrait") && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } catch (Exception e) {
-            Log.e("Engine_Driver", "setActivityOrientation: Unable to change Orientation " + e.getMessage());
+            Log.e("Engine_Driver", "setActivityOrientation: Unable to change Orientation: " + e.getMessage());
         }
         return true;
     }
