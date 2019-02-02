@@ -17,7 +17,6 @@ local.properties
 .idea/
 /*/*.iml
 EngineDriver.iml
-**/gradle/wrapper/
 **/gen
 
 # OS-specific files

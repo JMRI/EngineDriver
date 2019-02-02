@@ -1137,9 +1137,11 @@ public class threaded_application extends Application {
             for (String ts : ta) {
                 if (i > 0) { //skip first chunk, just message id
                     String[] tv = splitByString(ts, "}|{");  //split these into 3 parts, key and value
-                    to_system_names[i - 1] = tv[0];
-                    to_user_names[i - 1] = tv[1];
-                    to_states[i - 1] = tv[2];
+                    if (tv.length == 3) { //make sure split worked
+                        to_system_names[i - 1] = tv[0];
+                        to_user_names[i - 1] = tv[1];
+                        to_states[i - 1] = tv[2];
+                    }
                 }  //end if i>0
                 i++;
             }  //end for
