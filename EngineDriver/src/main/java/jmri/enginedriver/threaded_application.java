@@ -2632,13 +2632,17 @@ public class threaded_application extends Application {
                     activity.getApplicationContext().getResources().getString(R.string.prefWebOrientationDefaultValue));
         }
 
-        int co = activity.getRequestedOrientation();
-        if (to.equals("Landscape") && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        else if (to.equals("Auto-Rotate") && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-        else if (to.equals("Portrait") && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        try {
+            int co = activity.getRequestedOrientation();
+            if (to.equals("Landscape") && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            else if (to.equals("Auto-Rotate") && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+            else if (to.equals("Portrait") && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } catch (Exception e) {
+            Log.e("Engine_Driver", "setActivityOrientation: Unable to change Orientation " + e.getMessage());
+        }
         return true;
     }
 
