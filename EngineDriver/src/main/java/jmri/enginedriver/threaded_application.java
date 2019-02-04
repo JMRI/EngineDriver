@@ -162,6 +162,7 @@ public class threaded_application extends Application {
     String client_address; //address string of the client address
     Inet4Address client_address_inet4; //inet4 value of the client address
     String client_ssid;    //string of the connected SSID
+    String client_type; //network type, usually WIFI or MOBILE
     //For communication to the comm_thread.
     public comm_handler comm_msg_handler = null;
     //For communication to each of the activities (set and unset by the activity)
@@ -275,33 +276,6 @@ public class threaded_application extends Application {
 
             }
         }
-
-        /**
-         * retrieve some wifi details, stored as client_ssid, client_address and client_address_inet4
-         */
-//        void getWifiInfo() {
-//            int intaddr;
-//            client_address_inet4 = null;
-//            client_address = null;
-//            try {
-//                WifiManager wifi = (WifiManager) threaded_application.this.getSystemService(Context.WIFI_SERVICE);
-//                WifiInfo wifiinfo = wifi.getConnectionInfo();
-//                intaddr = wifiinfo.getIpAddress();
-//                if (intaddr != 0) {
-//                    byte[] byteaddr = new byte[]{(byte) (intaddr & 0xff), (byte) (intaddr >> 8 & 0xff), (byte) (intaddr >> 16 & 0xff),
-//                            (byte) (intaddr >> 24 & 0xff)};
-//                    client_address_inet4 = (Inet4Address) Inet4Address.getByAddress(byteaddr);
-//                    client_address = client_address_inet4.toString().substring(1);      //strip off leading /
-//                }
-//
-////                client_ssid = wifiinfo.getSSID();
-////                if (client_ssid != null && client_ssid.startsWith("\"") && client_ssid.endsWith("\"")) {
-////                    client_ssid = client_ssid.substring(1, client_ssid.length() - 1);
-////                }
-//            } catch (Exception except) {
-//                Log.e("Engine_Driver", "getWifiInfo - error getting IP addr: " + except.getMessage());
-//            }
-//        }
 
         void start_jmdns() {
             //Set up to find a WiThrottle service via ZeroConf
@@ -431,6 +405,10 @@ public class threaded_application extends Application {
                             if (msg.arg1 == 0) {
                                 end_jmdns();
                             } else {
+                                //show message if using mobile data
+                                if (!client_type.equals("WIFI")) {
+                                    show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppNotWIFI, client_type), Toast.LENGTH_LONG);
+                                }
                                 if (jmdns == null) {   //start jmdns if not started
                                     start_jmdns();
                                     if (jmdns != null) {  //don't bother if jmdns didn't start
@@ -1312,13 +1290,11 @@ public class threaded_application extends Application {
                         clientSocket.setSoTimeout(socketTimeoutMs);
                     } catch (Exception except) {
                         if (!firstConnect) {
-//                            show_toast_message("Can't connect to host " + host_ip + " and port " + port +
-//                                    " from " + client_address +
-//                                    " - " + except.getMessage() + "\nCheck WiThrottle and network settings.", Toast.LENGTH_LONG);
-//                            if (host_ip != null) {
                             show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantConnect,
-                                    host_ip, Integer.toString(port), client_address, except.getMessage()), Toast.LENGTH_SHORT);
-//                            }
+                                    host_ip, Integer.toString(port), client_address, except.getMessage()), Toast.LENGTH_LONG);
+                        }
+                        if (!client_type.equals("WIFI")) { //show additional message if using mobile data
+                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppNotWIFI, client_type), Toast.LENGTH_LONG);
                         }
                         socketOk = false;
                     }
