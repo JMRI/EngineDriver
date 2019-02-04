@@ -218,7 +218,7 @@
     <item name="android:singleLine">false</item>
     <item name="android:maxLines">2</item>
     <item name="android:ellipsize">end</item>
-    <item name="android:layout_gravity"></item> <!-- this is deliberately empty.-->
+    <item name="android:layout_gravity" /> <!-- this is deliberately empty.-->
     <item name="android:layout_width">60dp</item>
     <item name="android:layout_height">48dp</item>
     <item name="android:padding">2dp</item>
@@ -369,7 +369,7 @@
     <item name="android:singleLine">false</item>
     <item name="android:maxLines">2</item>
     <item name="android:ellipsize">end</item>
-    <item name="android:layout_gravity"></item>  <!-- this is deliberately empty.-->
+    <item name="android:layout_gravity" />  <!-- this is deliberately empty.-->
     <item name="android:layout_width">60dp</item>
     <item name="android:layout_height">48dp</item>
     <item name="android:padding">2dp</item>
@@ -514,7 +514,7 @@
     <item name="android:singleLine">false</item>
     <item name="android:maxLines">2</item>
     <item name="android:ellipsize">end</item>
-    <item name="android:layout_gravity"></item>  <!-- this is deliberately empty.-->
+    <item name="android:layout_gravity" />  <!-- this is deliberately empty.-->
     <item name="android:layout_width">60dp</item>
     <item name="android:layout_height">48dp</item>
     <item name="android:padding">1dp</item>
@@ -682,7 +682,7 @@
     <item name="android:singleLine">false</item>
     <item name="android:maxLines">2</item>
     <item name="android:ellipsize">end</item>
-    <item name="android:layout_gravity"></item>  <!-- this is deliberately empty.-->
+    <item name="android:layout_gravity" />  <!-- this is deliberately empty.-->
     <item name="android:layout_width">60dp</item>
     <item name="android:layout_height">48dp</item>
     <item name="android:padding">1dp</item>

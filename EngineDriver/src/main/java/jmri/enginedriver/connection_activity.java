@@ -70,6 +70,7 @@ import android.widget.AdapterView;
 
 import android.content.Context;
 
+import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
@@ -655,6 +656,12 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                 break;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, CMenu);
+                break;
+            case R.id.logviewer_menu:
+                Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
+                navigatingAway = true;
+                startActivity(logviewer);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.intro_mnu:
                 in = new Intent().setClass(this, intro_activity.class);
