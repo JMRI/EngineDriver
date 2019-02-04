@@ -11,6 +11,9 @@
  * change default for DirChangeWhileMoving and selLocoWhileMoving to false
  * add some edits to Turnout# input
  * avoid some crashes reported to Play Store
+ * show warnings when not using wifi network
+ * update jmdns from 3.5.4 to 3.5.5 to keep up with JMRI
+ * begin adding automated testing infrastructure, resumed tracking gradle*
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
  * New Colourful/Colorful theme
