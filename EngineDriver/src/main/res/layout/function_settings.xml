@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
-    android:weightSum="1.0" >
+    android:weightSum="1.0"
+    android:baselineAligned="false">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -126,12 +127,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight=".05" >
-    </LinearLayout>
-
     <ScrollView
         android:id="@+id/ScrollView01"
         android:layout_width="0dp"
@@ -148,11 +143,11 @@
 
                 <TextView
                     android:layout_weight=".5"
-                    android:text="@string/fb_column_label"></TextView>
+                    android:text="@string/fb_column_label" />
 
                 <TextView
                     android:layout_weight=".5"
-                    android:text="@string/fb_column_function"></TextView>
+                    android:text="@string/fb_column_function" />
             </TableRow>
 
             <TableRow>
