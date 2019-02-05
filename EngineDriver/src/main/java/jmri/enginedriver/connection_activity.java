@@ -590,30 +590,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                     mainapp.client_type = "other";
                     break;
             }
-            Log.i("Engine_Driver", "network type=" + nInfo.getType() + " " + mainapp.client_type);
+            Log.d("Engine_Driver", "network type=" + nInfo.getType() + " " + mainapp.client_type);
 
-//            List<WifiConfiguration> networks = wifi.getConfiguredNetworks();
-//            for (WifiConfiguration config : networks) { //search for current connection in known network list
-//                Log.i("Engine_Driver", "config.ssid=" + config.SSID + " config.status=" + config.status);
-//                if (config.SSID != null && config.SSID.equals("\"" + mainapp.client_ssid + "\"")) { //config.SSID is wrapped in quotes
-//                    switch (config.status) {
-//                        case WifiConfiguration.Status.CURRENT:
-//                            mainapp.client_ssid_status = "current";
-//                            break;
-//                        case WifiConfiguration.Status.DISABLED:
-//                            mainapp.client_ssid_status = "disabled";
-//                            break;
-//                        case WifiConfiguration.Status.ENABLED:
-//                            mainapp.client_ssid_status = "enabled";
-//                            break;
-//                        default:
-//                            mainapp.client_ssid_status = "undefined";
-//                            break;
-//                    }
-//                    Log.i("Engine_Driver", "config.ssid=" + config.SSID + " mainapp.client_ssid_status=" + mainapp.client_ssid_status);
-//                    break;
-//                }
-//            }
         } catch (Exception except) {
             Log.e("Engine_Driver", "getWifiInfo - error getting IP addr: " + except.getMessage());
         }

@@ -19,6 +19,7 @@
  * avoid some crashes reported to Play Store
  * remove some lint warnings
  * rearrange some menus
+ * remove redundant tags from log view to improve readability
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
  * New Colourful/Colorful theme

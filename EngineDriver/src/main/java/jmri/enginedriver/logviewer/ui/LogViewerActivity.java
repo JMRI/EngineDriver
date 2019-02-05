@@ -38,9 +38,8 @@ public class LogViewerActivity extends ListActivity{
 	{
 		SharedPreferences prefs  = getSharedPreferences("jmri.enginedriver_preferences", 0);
 		String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-//		setTitle("LogViewerActivity" + "    |    Throttle Name: " +
-//				prefs.getString("throttle_name_preference", defaultName));
-		setTitle(getApplicationContext().getResources().getString(R.string.logViewerTitle).replace("%1$s",defaultName));
+		setTitle(getApplicationContext().getResources().getString(R.string.logViewerTitle,
+                prefs.getString("throttle_name_preference", defaultName)));
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -112,30 +111,6 @@ public class LogViewerActivity extends ListActivity{
 		builder.show();
 	}
 
-	private int getLogColor(String type) {
-
-		/*  some of these colors do not show up well
-  		if(type.equals("D"))
-		{
-			color = Color.rgb(0, 0, 200);
-		}
-		else if(type.equals("W"))
-		{
-			color = Color.rgb(128, 0, 0);
-		}
-		else if(type.equals("E"))
-		{
-			color = Color.rgb(255, 0, 0);;
-		}
-		else if(type.equals("I"))
-		{
-			color = Color.rgb(0, 128, 0);;
-		}
-		 */		
-
-		return Color.WHITE;
-	}
-
 	private class LogStringAdaptor extends ArrayAdapter<String>{
 		private List<String> objects = null;
 
@@ -174,11 +149,17 @@ public class LogViewerActivity extends ListActivity{
 			if(null != data)
 			{
 				TextView textview = (TextView)view.findViewById(R.id.txtLogString);
-				String type = data.substring(0, 1);
-				//				String line = data.substring(2);
-				//				textview.setText(line);
-				textview.setText(data);
-				textview.setTextColor(getLogColor(type));
+                String msg = data;
+				int msgStart = data.indexOf("Engine_Driver: "); //post-marshmallow format
+				if (msgStart > 0) {
+                    msg = data.substring(msgStart + 15);
+                } else {
+                    msgStart = data.indexOf("): "); //pre-marshmallow format
+                    if (msgStart > 0) {
+                        msg = data.substring(msgStart + 3);
+                    }
+				}
+				textview.setText(msg);
 				return view;
 			}
 			return null;
