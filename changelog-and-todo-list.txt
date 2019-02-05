@@ -14,6 +14,7 @@
  * update jmdns from 3.5.4 to 3.5.5 to keep up with JMRI
  * begin adding automated testing infrastructure, resumed tracking gradle*
  * add View Log to Connect screen
+ * delete settings files on Reset Preferences
  * avoid some crashes reported to Play Store
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
