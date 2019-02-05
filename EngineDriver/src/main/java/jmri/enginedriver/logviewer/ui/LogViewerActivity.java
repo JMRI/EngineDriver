@@ -28,225 +28,218 @@ import android.widget.TextView;
 
 //import jmri.enginedriver.logviewer.R;
 
-public class LogViewerActivity extends ListActivity{
-	private LogStringAdaptor adaptor = null;
-	private LogReaderTask logReaderTask = null;
-	private threaded_application mainapp;  // hold pointer to mainapp
+public class LogViewerActivity extends ListActivity {
+    private LogStringAdaptor adaptor = null;
+    private LogReaderTask logReaderTask = null;
+    private threaded_application mainapp;  // hold pointer to mainapp
 
 
-	public void setTitleToIncludeThrotName()
-	{
-		SharedPreferences prefs  = getSharedPreferences("jmri.enginedriver_preferences", 0);
-		String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-		setTitle(getApplicationContext().getResources().getString(R.string.logViewerTitle,
+    public void setTitleToIncludeThrotName() {
+        SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
+        setTitle(getApplicationContext().getResources().getString(R.string.logViewerTitle,
                 prefs.getString("throttle_name_preference", defaultName)));
-	}
+    }
 
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		mainapp=(threaded_application)getApplication();
-		if(mainapp.isForcingFinish()) {		// expedite
-			return;
-		}
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mainapp = (threaded_application) getApplication();
+        if (mainapp.isForcingFinish()) {        // expedite
+            return;
+        }
 
-		mainapp.applyTheme(this);
-		setContentView(R.layout.log_main);
+        mainapp.applyTheme(this);
+        setContentView(R.layout.log_main);
 
-		setTitleToIncludeThrotName();
+        setTitleToIncludeThrotName();
 
-		ArrayList<String> logarray = new ArrayList<>();
-		adaptor = new LogStringAdaptor(this, R.id.txtLogString, logarray);
+        ArrayList<String> logarray = new ArrayList<>();
+        adaptor = new LogStringAdaptor(this, R.id.txtLogString, logarray);
 
-		setListAdapter(adaptor);
+        setListAdapter(adaptor);
 
-		logReaderTask = new LogReaderTask();
+        logReaderTask = new LogReaderTask();
 
-		logReaderTask.execute();
-	}
+        logReaderTask.execute();
+    }
 
-	@Override
-	public void onResume() {
-		super.onResume();
-		if(mainapp.isForcingFinish()) {		//expedite
-			this.finish();
-		}
-	}
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mainapp.isForcingFinish()) {        //expedite
+            this.finish();
+        }
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu){
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.logviewer_menu, menu);
-		mainapp.displayEStop(menu);
-		return true;
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logviewer_menu, menu);
+        mainapp.displayEStop(menu);
+        return true;
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle all of the possible menu actions.
-		switch (item.getItemId()) {
-		case R.id.EmerStop:
-			mainapp.sendEStopMsg();
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle all of the possible menu actions.
+        switch (item.getItemId()) {
+            case R.id.EmerStop:
+                mainapp.sendEStopMsg();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
-	@Override
-	protected void onDestroy() {
-		logReaderTask.stopTask();
+    @Override
+    protected void onDestroy() {
+        logReaderTask.stopTask();
 
-		super.onDestroy();
-	}
+        super.onDestroy();
+    }
 
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
 
-		final AlertDialog.Builder builder = new AlertDialog.Builder(LogViewerActivity.this);
-		String text = ((TextView)v).getText().toString();
+        final AlertDialog.Builder builder = new AlertDialog.Builder(LogViewerActivity.this);
+        String text = ((TextView) v).getText().toString();
 
-		builder.setMessage(text);
+        builder.setMessage(text);
 
-		builder.show();
-	}
+        builder.show();
+    }
 
-	private class LogStringAdaptor extends ArrayAdapter<String>{
-		private List<String> objects = null;
+    private class LogStringAdaptor extends ArrayAdapter<String> {
+        private List<String> objects = null;
 
-		public LogStringAdaptor(Context context, int textviewid, List<String> objects) {
-			super(context, textviewid, objects);
+        public LogStringAdaptor(Context context, int textviewid, List<String> objects) {
+            super(context, textviewid, objects);
 
-			this.objects = objects;
-		}
+            this.objects = objects;
+        }
 
-		@Override
-		public int getCount() {
-			return ((null != objects) ? objects.size() : 0);
-		}
+        @Override
+        public int getCount() {
+            return ((null != objects) ? objects.size() : 0);
+        }
 
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
 
-		@Override
-		public String getItem(int position) {
-			return ((null != objects) ? objects.get(position) : null);
-		}
+        @Override
+        public String getItem(int position) {
+            return ((null != objects) ? objects.get(position) : null);
+        }
 
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View view = convertView;
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = convertView;
 
-			if(null == view)
-			{
-				LayoutInflater vi = (LayoutInflater)LogViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				view = vi.inflate(R.layout.logitem, null);
-			}
+            if (null == view) {
+                LayoutInflater vi = (LayoutInflater) LogViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = vi.inflate(R.layout.logitem, null);
+            }
 
-			String data = objects.get(position);
+            String data = objects.get(position);
 
-			if(null != data)
-			{
-				TextView textview = (TextView)view.findViewById(R.id.txtLogString);
+            if (null != data) {
+                TextView textview = (TextView) view.findViewById(R.id.txtLogString);
                 String msg = data;
-				int msgStart = data.indexOf("Engine_Driver: "); //post-marshmallow format
-				if (msgStart > 0) {
+                int msgStart = data.indexOf("Engine_Driver: "); //post-marshmallow format
+                if (msgStart > 0) {
                     msg = data.substring(msgStart + 15);
                 } else {
                     msgStart = data.indexOf("): "); //pre-marshmallow format
                     if (msgStart > 0) {
                         msg = data.substring(msgStart + 3);
                     }
-				}
-				textview.setText(msg);
-				return view;
-			}
-			return null;
+                }
+                textview.setText(msg);
+                return view;
+            }
+            return null;
 
-		}
-	}
+        }
+    }
 
-	private class LogReaderTask extends AsyncTask<Void, String, Void>
-	{
-		private final String[] LOGCAT_CMD = new String[] { "logcat", "Engine_Driver:D", "*:S" };
-		//		private final int BUFFER_SIZE = 1024;
+    private class LogReaderTask extends AsyncTask<Void, String, Void> {
+        private final String[] LOGCAT_CMD = new String[]{"logcat", "Engine_Driver:D", "*:S"};
+        //		private final int BUFFER_SIZE = 1024;
 
-		private boolean isRunning = true;
-		private Process logprocess = null;
-		private BufferedReader reader = null;
-		private String line = "";
-		//		private String lastLine = "";
+        private boolean isRunning = true;
+        private Process logprocess = null;
+        private BufferedReader reader = null;
+        private String line = "";
+        //		private String lastLine = "";
 
-		@Override
-		protected Void doInBackground(Void... params) {
-			try {
-				logprocess = Runtime.getRuntime().exec(LOGCAT_CMD);
-			} catch (IOException e) {
-				e.printStackTrace();
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                logprocess = Runtime.getRuntime().exec(LOGCAT_CMD);
+            } catch (IOException e) {
+                e.printStackTrace();
 
-				isRunning = false;
-			}
+                isRunning = false;
+            }
 
-			try {
-				//				reader = new BufferedReader(new InputStreamReader(
-				//						logprocess.getInputStream()),BUFFER_SIZE);
-				reader = new BufferedReader(new InputStreamReader(
-						logprocess.getInputStream()));
-			}
-			catch(IllegalArgumentException e){
-				e.printStackTrace();
+            try {
+                //				reader = new BufferedReader(new InputStreamReader(
+                //						logprocess.getInputStream()),BUFFER_SIZE);
+                reader = new BufferedReader(new InputStreamReader(
+                        logprocess.getInputStream()));
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
 
-				isRunning = false;
-			}
+                isRunning = false;
+            }
 
-			line = "";
-			//			lastLine = new String;
+            line = "";
+            //			lastLine = new String;
 
-			try {
-				while(isRunning)
-				{
-					line = reader.readLine();
-					publishProgress(line);
-				}
-			} 
-			catch (IOException e) {
-				e.printStackTrace();
+            try {
+                while (isRunning) {
+                    line = reader.readLine();
+                    publishProgress(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
 
-				isRunning = false;
-			}
+                isRunning = false;
+            }
 
-			return null;
-		}
+            return null;
+        }
 
-		@Override
-		protected void onCancelled() {
-			super.onCancelled();
-		}
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
 
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-		}
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
 
-		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
-		}
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
 
-		@Override
-		protected void onProgressUpdate(String... values) {
-			super.onProgressUpdate(values);
-			//			if ((values[0] != null) && !values[0].equals(lastLine)) {
-			if ((values[0] != null)) {
-				adaptor.add(values[0]);
-			}
-			//			lastLine = values[0];
-		}
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            //			if ((values[0] != null) && !values[0].equals(lastLine)) {
+            if ((values[0] != null)) {
+                adaptor.add(values[0]);
+            }
+            //			lastLine = values[0];
+        }
 
-		public void stopTask(){
-			isRunning = false;
-			if (logprocess != null)	logprocess.destroy();
-		}
-	}
+        public void stopTask() {
+            isRunning = false;
+            if (logprocess != null) logprocess.destroy();
+        }
+    }
 }
