@@ -15,16 +15,13 @@
 -->
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/throttle_mnu" android:enabled="false" android:title=""></item>
-    <item android:id="@+id/turnouts_mnu" android:enabled="false" android:title=""></item>
-    <item android:id="@+id/routes_mnu" android:enabled="false" android:title=""></item>
-    <item android:id="@+id/web_mnu" android:enabled="false" android:title=""></item>
-    <item android:id="@+id/exit_mnu" android:title="@string/exit"></item>
-    <item android:id="@+id/preferences_mnu" android:title="@string/preferences"></item>
-    <item android:id="@+id/intro_mnu" android:title="@string/introMenu"></item>
-    <item android:id="@+id/about_mnu" android:title="@string/about"></item>
-    <item android:id="@+id/ClearconnList" android:title="@string/ClearConnList"></item>
+    <item android:id="@+id/exit_mnu" android:title="@string/exit" />
+    <item android:id="@+id/preferences_mnu" android:title="@string/preferences" />
+    <item android:id="@+id/intro_mnu" android:title="@string/introMenu" />
+    <item android:id="@+id/ClearconnList" android:title="@string/ClearConnList" />
+    <item android:id="@+id/logviewer_menu" android:title="@string/logViewer" />
+    <item android:id="@+id/about_mnu" android:title="@string/about" />
     <item android:id="@+id/flashlight_button"
         android:title="@string/flashlightAction" android:visible="false"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom" />
 </menu>

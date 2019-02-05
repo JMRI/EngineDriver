@@ -32,57 +32,6 @@
         <item>Auto</item>
     </string-array>
 
-    <!--<string-array name="hardware_system_namesEntries">  &lt;!&ndash; display version &ndash;&gt;-->
-        <!--<item>CTI Acela</item>-->
-        <!--<item>C/MRI Serial</item>-->
-        <!--<item>SRCP</item>-->
-        <!--<item>EasyDCC</item>-->
-        <!--<item>RFID</item>-->
-        <!--<item>Protrak Grapevine</item>-->
-        <!--<item>Internal</item>-->
-        <!--<item>Maple Systems</item>-->
-        <!--<item>Loconet</item>-->
-        <!--<item>MERG CBUS</item>-->
-        <!--<item>NCE</item>-->
-        <!--<item>Oak Tree Systems</item>-->
-        <!--<item>Powerline transmission</item>-->
-        <!--<item>QSI</item>-->
-        <!--<item>Raspberry Pi</item>-->
-        <!--<item>RPS system</item>-->
-        <!--<item>SPROG</item>-->
-        <!--<item>Lionel TMCC</item>-->
-        <!--<item>ESU ECoS</item>-->
-        <!--<item>Vactronics SECSI</item>-->
-        <!--<item>Wangrow</item>-->
-        <!--<item>XpressNet</item>-->
-        <!--<item>Zimo MX-1</item>-->
-    <!--</string-array>-->
-    <!--<string-array name="hardware_system_namesEntryValues">-->
-        <!--<item>A</item>-->
-        <!--<item>C</item>-->
-        <!--<item>D</item>-->
-        <!--<item>E</item>-->
-        <!--<item>F</item>-->
-        <!--<item>G</item>-->
-        <!--<item>I</item>-->
-        <!--<item>K</item>-->
-        <!--<item>L</item>-->
-        <!--<item>M</item>-->
-        <!--<item>N</item>-->
-        <!--<item>O</item>-->
-        <!--<item>P</item>-->
-        <!--<item>Q</item>-->
-        <!--<item>PI</item>-->
-        <!--<item>R</item>-->
-        <!--<item>S</item>-->
-        <!--<item>T</item>-->
-        <!--<item>U</item>-->
-        <!--<item>V</item>-->
-        <!--<item>W</item>-->
-        <!--<item>X</item>-->
-        <!--<item>Z</item>-->
-    <!--</string-array>-->
-
     <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
         <item>Percentage</item>
         <item>Auto speed steps</item>

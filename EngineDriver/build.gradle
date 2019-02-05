@@ -48,7 +48,7 @@ dependencies {
     implementation files('libs/jackson-core-asl-1.9.7.jar')
     implementation files('libs/jackson-mapper-asl-1.9.7.jar')
     implementation files('libs/java-json.jar')
-    implementation files('libs/jmdns-3.5.4.jar')
+    implementation files('libs/jmdns-3.5.5.jar')
     implementation files('libs/slf4j-api-1.7.25.jar')
     implementation 'eu.esu.mobilecontrol2:mobilecontrol2-sdk:1.1.2'
     implementation 'com.github.apl-devs:appintro:v4.2.3'

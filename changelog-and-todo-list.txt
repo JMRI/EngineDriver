@@ -10,6 +10,12 @@
  * Add wifi & OS details to About screen for debugging
  * change default for DirChangeWhileMoving and selLocoWhileMoving to false
  * add some edits to Turnout# input
+ * show warnings when not using wifi network
+ * update jmdns from 3.5.4 to 3.5.5 to keep up with JMRI
+ * begin adding automated testing infrastructure, resumed tracking gradle*
+ * add View Log to Connect screen
+ * delete settings files on Reset Preferences
+ * avoid some crashes reported to Play Store
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
  * New Colourful/Colorful theme
@@ -433,7 +439,6 @@
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
- *   TODO: add View Log to this menu
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: if user enters ":" into address input, jump to port input
