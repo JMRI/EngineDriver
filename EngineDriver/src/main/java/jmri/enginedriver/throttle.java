@@ -1923,7 +1923,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
         boolean newEnabledState = false;
-        if (whichThrottle >= mainapp.consists.length) { // avoid index crash
+        // avoid index and null crashes
+        if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
+                || bFwds[whichThrottle] == null) {
             return;
         }
         if (!forceDisable) { // avoid index crash, but may simply push to next line

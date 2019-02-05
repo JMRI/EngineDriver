@@ -754,7 +754,7 @@
     <string name="toastFlashlightOnFailed">Sorry! There was a problem switching on the flashlight&#8230;</string>
     <string name="toastFlashlightOffFailed">Sorry! There was a problem switching off the flashlight&#8230;</string>
 
-    <string name="logViewerTitle">LogViewerActivity | Throttle Name: %1$s</string>
+    <string name="logViewerTitle">LogViewerActivity | %1$s</string>
 
     <!-- Consist Follow Function Preferences etc. -->
     <string name="ConsistEditLabelLead">LEAD</string>

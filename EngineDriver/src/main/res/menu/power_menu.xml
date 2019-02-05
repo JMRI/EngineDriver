@@ -3,5 +3,5 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
         <item android:id="@+id/EmerStop" android:title="@string/EStop"
             android:visible="false"
-            android:showAsAction="ifRoom"></item>
+            app:showAsAction="ifRoom" />
 </menu>
