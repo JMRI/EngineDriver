@@ -286,8 +286,12 @@ public class PermissionsHelper {
      * @param requestCode the permissions request code
      * @return true if permissions granted; false if not
      */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+//    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public boolean isPermissionGranted(final Context context, @RequestCodes final int requestCode) {
+        //sdk 15 doesn't support some of the codes below, always return success
+        if (android.os.Build.VERSION.SDK_INT < 16) {
+            return true;
+        }
         // Determine which permissions to check based on request code
         // All possible request codes should be considered
         switch (requestCode) {
@@ -328,7 +332,7 @@ public class PermissionsHelper {
      * @param requestCode the permissions request code
      * @return true if rationale to be shown; false if not
      */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+//    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private boolean showPermissionRationale(final Activity activity, @RequestCodes final int requestCode) {
         // Determine which permission rationales to check based on request code
         // All possible request codes should be considered
@@ -348,6 +352,8 @@ public class PermissionsHelper {
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE) &&
                         ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
                         ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_PHONE_STATE);
+            case ACCESS_COARSE_LOCATION:
+                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_COARSE_LOCATION);
             case WRITE_SETTINGS:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_SETTINGS);
             default:
