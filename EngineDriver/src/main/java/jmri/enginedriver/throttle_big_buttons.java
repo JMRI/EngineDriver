@@ -277,16 +277,16 @@ public class throttle_big_buttons extends throttle {
 
     }
 
-    @Override
-    void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
-        super.enable_disable_buttons(whichThrottle, forceDisable);
-
-        boolean newEnabledState = false;
-        if (!forceDisable) {
-            newEnabledState = mainapp.consists[whichThrottle].isActive();      // set false if lead loco is not assigned
-        }
-
-    } // end of enable_disable_buttons
+//    @Override
+//    void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
+//        super.enable_disable_buttons(whichThrottle, forceDisable);
+//
+//        boolean newEnabledState = false;
+//        if (!forceDisable) {
+//            newEnabledState = mainapp.consists[whichThrottle].isActive();      // set false if lead loco is not assigned
+//        }
+//
+//    } // end of enable_disable_buttons
     // helper function to enable/disable all children for a group
     @Override
     void enable_disable_buttons_for_view(ViewGroup vg, boolean newEnabledState) {
