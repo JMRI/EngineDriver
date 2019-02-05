@@ -52,14 +52,11 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import android.content.Context;
 
@@ -536,17 +533,33 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
-    private void resetPreferences(SharedPreferences sharedPreferences){
+    private void resetPreferences(SharedPreferences sharedPreferences) {
         Log.d("Engine_Driver", "Preferences: Resetting preferences");
         SharedPreferences.Editor prefEdit = sharedPreferences.edit();
         prefEdit.clear();
         prefEdit.commit();
         Log.d("Engine_Driver", "Preferences: Reset succeeded");
+        delete_settings_file("function_settings.txt");
+        delete_settings_file("connections_list.txt");
+        delete_settings_file("recent_engine_list.txt");
+
         reload();
-//        String m = getApplicationContext().getResources().getString(R.string.toastPreferencesResetSucceeded);
-//        Toast.makeText(getApplicationContext(), m, Toast.LENGTH_LONG).show();
 
         forceRestartApp(FORCED_RESTART_REASON_RESET);
+    }
+
+    private void delete_settings_file(String file_name) {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            File sdcard_path = Environment.getExternalStorageDirectory();
+            File settings_file = new File(sdcard_path, "engine_driver/" + file_name);
+            if (settings_file.exists()) {
+                if (settings_file.delete()) {
+                    Log.d("Engine_Driver", file_name + " deleted");
+                } else {
+                    Log.e("Engine_Driver", file_name + " NOT deleted");
+                }
+            }
+        }
     }
 
     @SuppressLint("ApplySharedPref")
