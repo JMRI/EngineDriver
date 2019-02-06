@@ -262,7 +262,7 @@
     <string name="prefWebViewLocationSummary">Incluye una visualización web al panel del Controlador</string>
     <string name="prefSelectLocoTitle">Selecciona las Preferencias de la Locomotora</string>
     <string name="prefSelectiveLeadSoundTitle">¿Sonido selectivo de la unidad de cabeza?</string>
-    <string name="prefSelectiveLeadSoundSummary">Activa funciones Bocina/Campana sólo en la Locomotora de Cabeza de la Multi Tracción del EngineDriver.(Tan solo cualquier función con una \'etiqueta\' que incluya \'campana\', \'bozina\' o \'silbido\' como parte de la etiqueta.)</string>"
+    <string name="prefSelectiveLeadSoundSummary">Activa funciones Bocina/Campana sólo en la Locomotora de Cabeza de la Multi Tracción del EngineDriver.(Tan solo cualquier función con una \'etiqueta\' que incluya \'campana\', \'bozina\' o \'silbido\' como parte de la etiqueta.)</string>
     <string name="prefSelectiveLeadSoundF1Title">Siempre trata F1 como sonido</string>
     <string name="prefSelectiveLeadSoundF1Summary">Para la opción de \'Sonido Selectivo de la Unidad Principal\'</string>
     <string name="prefSelectiveLeadSoundF2Title">Siempre trata F2 como sonido</string>
@@ -366,7 +366,7 @@
     <string name="throttle_name">Nombre del Controlador: %1$s</string>
     <string name="prefConsistLightsLongClickTitle">Control de luces en Tracción Múltiple con clic largo.</string>
     <string name="prefConsistLightsLongClickSummary">Cambia las luces de las locomotoras individualmente en una Tracción Múltiple con un clic largo en el botón de Selección de Locomotora.</string>
-    <string name="consistLights_help">Haga clic en una Locomotora para cambiar las luces de esa Locomotora \'Apagado\' o \'Sigue Botón de Función\'.\n\nHaga clic largo en una Locomotora para forzar el estado de la luz \'Apagado\', sin enviar el comando a la Locomotora. (p.e. si ED está confundido).\n\nPresiona la Flecha Atrás para terminar.</string>"
+    <string name="consistLights_help">Haga clic en una Locomotora para cambiar las luces de esa Locomotora \'Apagado\' o \'Sigue Botón de Función\'.\n\nHaga clic largo en una Locomotora para forzar el estado de la luz \'Apagado\', sin enviar el comando a la Locomotora. (p.e. si ED está confundido).\n\nPresiona la Flecha Atrás para terminar.</string>
     <string name="prefThrottleImportExportTitle">Importa/Exporta/Reinicia Preferencias</string>
     <string name="prefThrottleImportExportSummary">Importa/Exporta/Reinicia Preferencias</string>
     <string name="prefImportExportTitle">Importa, Exporta o Reinicia</string>
@@ -466,7 +466,7 @@
     <string name="gamepadTestKeycodeLabel">Tecla de código:\s\s</string>
     <string name="gamepadTestFunctionLabel">Función:\s\s</string>
     <string name="gamepadTestCompleteLabel">Prueba de estado:\s\s</string>
-    <string name="gamepadTestHelp">Desplácese hacia abajo para ver las instrucciones completas...\n\nPresionar TODOS Dpad Y los cuatro botones principales del gamepad NO FUNCIONARÁ.\n\nSi no puedes activar todos los botones, cambia el modo del gamepad (mira las instrucciones que vienen con tu gamepad) o prueba un tipo de gamepad diferente (arriba).\n\n\'ATRÁS \' o \'CANCELA\' saldrá de la prueba pero el gamepad NO FUNCIONARÁ.\n\'OMITE\', o presionando el botón \'Reducir Velocidad\' del gamepad tres veces, forzará el paso de la prueba, incluso si el gamepad no funciona correctamente.\n\'REINICIA\' hará que ED piense que todavía no se han utilizado gamepads.\nSi selecciona la prueba \'simple\', al presionar un solo botón \'Reducir velocidad\' se omitirá la prueba.\n\nUtiliza las opciones del menú \'Prueba de Gamepad n\' para regresar a esta página.</string>
+    <string name="gamepadTestHelp">Desplácese hacia abajo para ver las instrucciones completas&#8230;\n\nPresionar TODOS Dpad Y los cuatro botones principales del gamepad NO FUNCIONARÁ.\n\nSi no puedes activar todos los botones, cambia el modo del gamepad (mira las instrucciones que vienen con tu gamepad) o prueba un tipo de gamepad diferente (arriba).\n\n\'ATRÁS \' o \'CANCELA\' saldrá de la prueba pero el gamepad NO FUNCIONARÁ.\n\'OMITE\', o presionando el botón \'Reducir Velocidad\' del gamepad tres veces, forzará el paso de la prueba, incluso si el gamepad no funciona correctamente.\n\'REINICIA\' hará que ED piense que todavía no se han utilizado gamepads.\nSi selecciona la prueba \'simple\', al presionar un solo botón \'Reducir velocidad\' se omitirá la prueba.\n\nUtiliza las opciones del menú \'Prueba de Gamepad n\' para regresar a esta página.</string>
     <string name="gamepadTestHelpNonForced">Si no puedes activar todos los botones, cambia el modo del gamepad de juegos (mira las instrucciones que vienen con tu dispositivo) o prueba un tipo de gamepad diferente (arriba).\nEs posible que tengas que volver a probar el gamepad cuando lo utilices por primera vez en la pantalla del controlador.</string>
     <string name="gamepadTestIncomplete">"Prueba Incompleta"</string>
     <string name="gamepadTestComplete">"Prueba Completada"</string>
@@ -574,7 +574,7 @@
     <string name="TTS_Dir_Change_While_Moving_Disabled">Dirección no cambiada</string>
     <string name="TTS_Function">Función</string>
 -->
-    <string name="toastTtsFailed">¡Disculpa! El Texto a Voz ha fallado...</string>
+    <string name="toastTtsFailed">¡Disculpa! El Texto a Voz ha fallado&#8230;</string>
     <string name="prefDefaultFunctionsTitle">Preferencias de Funciones por Defecto</string>
     <string name="prefDefaultFunctionsSummary">Cuándo y cómo se muestran las etiquetas de funciones predeterminadas.</string>
     <string name="fbResetFunctionLabels">Reinicia Todo</string>
@@ -596,10 +596,10 @@
     <string name="prefDirectionButtonLongPressDelaySummary">Cuántos milisegundos constituye una pulsación larga para los botones de dirección.</string>
 
     <string name="prefRosterFilterTitle">Filtro de la Flota</string>
-    <string name="prefRosterFilterSummary">Tan solo se incluyen las entradas de la flota que empiecen por ...</string>
+    <string name="prefRosterFilterSummary">Tan solo se incluyen las entradas de la flota que empiecen por &#8230;</string>
 
     <string name="FilterRosterList">Filtro</string>
-    <string name="FilterRosterListHint">Contiene...</string>
+    <string name="FilterRosterListHint">Contiene&#8230;</string>
 
     <string name="LocoSelectMethodAddress">Dirección DCC</string>
     <string name="LocoSelectMethodRoster">JMRI Flota</string>

@@ -561,7 +561,7 @@
     <string name="TTS_Dir_Change_While_Moving_Disabled">Richtung nicht gewechselt</string>
     <string name="TTS_Function">Funktion</string>
 -->
-    <string name="toastTtsFailed">Entschuldigung! Text To Speech funktionierte nicht...</string>
+    <string name="toastTtsFailed">Entschuldigung! Text To Speech funktionierte nicht&#8230;</string>
     <string name="prefDefaultFunctionsTitle">Voreinstellungen Standardfunktionen</string>
     <string name="prefDefaultFunctionsSummary">Wann und wie die Bezeichnungen für Standardfunktonen angezeigt werden.</string>
     <string name="fbResetFunctionLabels">Alles zurücksetzen</string>
@@ -583,10 +583,10 @@
     <string name="prefDirectionButtonLongPressDelaySummary">Wieviele Millisekunden machen ein langes Drücken der Richtungsknöpfe aus.</string>
 
     <string name="prefRosterFilterTitle">Lokverzeichnis filtern</string>
-    <string name="prefRosterFilterSummary">Nur Lokverzeichniseinträge einbeziehen, die beginnen mit...</string>
+    <string name="prefRosterFilterSummary">Nur Lokverzeichniseinträge einbeziehen, die beginnen mit&#8230;</string>
 
     <string name="FilterRosterList">Filter</string>
-    <string name="FilterRosterListHint">Enthält...</string>
+    <string name="FilterRosterListHint">Enthält&#8230;</string>
 
     <string name="LocoSelectMethodAddress">DCC Adresse</string>
     <string name="LocoSelectMethodRoster">JMRI Lokverzeichnis</string>
