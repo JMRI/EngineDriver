@@ -20,6 +20,7 @@
  * remove some lint warnings
  * rearrange some menus
  * remove redundant tags from log view to improve readability
+ * merge -vll resources into default
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
  * New Colourful/Colorful theme
