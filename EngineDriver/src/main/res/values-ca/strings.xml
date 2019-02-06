@@ -466,7 +466,7 @@
     <string name="gamepadTestKeycodeLabel">Tecla de codi:</string>
     <string name="gamepadTestFunctionLabel">Funció:</string>
     <string name="gamepadTestCompleteLabel">Prova d\'estat:</string>
-    <string name="gamepadTestHelp">Desplaceu-vos cap avall per veure les instruccions completes...\n\nPrémer TOTS Dpad I els quatre botons principals del gamepad NO FUNCIONARÀ.\n\nSi no pots activar tots els botons, canvia el mode del gamepad (mira les instruccions que venen amb el teu gamepad) o prova un altre tipus de gamepad (amunt).\n\n\'ENRERE \' o \'CANCEL·LA\' sortirà de la prova però el gamepad NO FUNCIONARÀ.\n\'OMET\', o prement el botó \'Reduir Velocitat\' del gamepad tres vegades, forçarà el pas de la prova, encara que el gamepad no funcioni correctament.\n\'REINICIA\' farà que ED pensi que encara no s\'han utilitzat gamepads.\nSi selecciona la prova \'simple\', al prèmer un sol botó \'Reduir velocitat\' s\'ometrà la prova.\n\nUtilitza les opcions del menú \'Prova de Gamepad n\' per a tornar a aquesta pàgina.</string>
+    <string name="gamepadTestHelp">Desplaceu-vos cap avall per veure les instruccions completes&#8230;\n\nPrémer TOTS Dpad I els quatre botons principals del gamepad NO FUNCIONARÀ.\n\nSi no pots activar tots els botons, canvia el mode del gamepad (mira les instruccions que venen amb el teu gamepad) o prova un altre tipus de gamepad (amunt).\n\n\'ENRERE \' o \'CANCEL·LA\' sortirà de la prova però el gamepad NO FUNCIONARÀ.\n\'OMET\', o prement el botó \'Reduir Velocitat\' del gamepad tres vegades, forçarà el pas de la prova, encara que el gamepad no funcioni correctament.\n\'REINICIA\' farà que ED pensi que encara no s\'han utilitzat gamepads.\nSi selecciona la prova \'simple\', al prèmer un sol botó \'Reduir velocitat\' s\'ometrà la prova.\n\nUtilitza les opcions del menú \'Prova de Gamepad n\' per a tornar a aquesta pàgina.</string>
     <string name="gamepadTestHelpNonForced">Si no pots activar tots els botons, canvia el mode del gamepad (mira les instruccions que venen amb el teu dispositiu) o prova un tipus de gamepad diferent (adalt).\nÉs possible que hagiss de tornar a provar el gamepad quan l\'utilitzis per primera vegada en la pantalla del controlador.</string>
     <string name="gamepadTestIncomplete">"Prova Incompleta"</string>
     <string name="gamepadTestComplete">"Prova Completada"</string>
@@ -491,7 +491,7 @@
     <string name="toastImmersiveModeDisabled">Mode immersiu temporalment deshabilitat. Per a deshabilitar-lo permanentement realitza el canvi en les preferències</string>
     <string name="toastThrottleScreenUnlocked">Pantalla del Controlador Desbloquejada</string>
     <string name="toastShakeWebViewHidden">Vista Web oculta temporalment. Sacseja de nou per mostrar. Per amagar permanentment canvia-ho a les preferències</string>
-    <string name="toastShakeWebViewUnavailable">La Vista web ha d\'estar habilitada en les preferències primer</string>è
+    <string name="toastShakeWebViewUnavailable">La Vista web ha d\'estar habilitada en les preferències primer</string>
     <string name="toastShakeScreenLocked">Pantalla de Controlador Bloquejada - Sacseja de nou per a desbloquejar-la</string>
     <string name="toastShakeScreenDimmed">Pantalla del Controlador Atenua - Sacseja de nou per restaurar-ho</string>
     <string name="toastSwipeUpScreenLocked">Pantalla del Controlador Bloquejada - Llisca cap amunt per a desbloquejar</string>
@@ -574,7 +574,7 @@
     <string name="TTS_Dir_Change_While_Moving_Disabled">Direcció no canviada</string>
     <string name="TTS_Function">Funció</string>
 -->
-    <string name="toastTtsFailed">Disculpa! El Text a Veu ha fallat...</string>
+    <string name="toastTtsFailed">Disculpa! El Text a Veu ha fallat&#8230;</string>
     <string name="prefDefaultFunctionsTitle">Preferències de Funcions per Defecte</string>
     <string name="prefDefaultFunctionsSummary">Quan i com es mostren les etiquetes de funció predeterminades.</string>
     <string name="fbResetFunctionLabels">Reinicia-ho Tot</string>
@@ -596,10 +596,10 @@
     <string name="prefDirectionButtonLongPressDelaySummary">Quants mil·lisegons constitueixen una pulsació llarga per als botons de direcció.</string>
 
     <string name="prefRosterFilterTitle">Filtre de la Flota</string>
-    <string name="prefRosterFilterSummary">Només s\'inclouen les entrades de la flota que comencin amb ...</string>
+    <string name="prefRosterFilterSummary">Només s\'inclouen les entrades de la flota que comencin amb &#8230;</string>
 
     <string name="FilterRosterList">Filtre</string>
-    <string name="FilterRosterListHint">Conté...</string>
+    <string name="FilterRosterListHint">Conté&#8230;</string>
 
     <string name="LocoSelectMethodAddress">Adreça DCC</string>
     <string name="LocoSelectMethodRoster">JMRI Flota</string>
