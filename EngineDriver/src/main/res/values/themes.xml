@@ -14,7 +14,14 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
 <resources>
+
+    <style name="app_splash" parent="android:Theme.Translucent">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@drawable/app_splash</item>
+    </style>
+
     <!-- prior to v11 the splash screen needs to be the same as the normal theme -->
+    <!--
     <style name="app_splash" parent="android:Theme.Translucent">
         <item name="android:windowBackground">@drawable/app_background</item>
         <item name="android:windowTitleStyle">@style/app_title</item>
@@ -41,12 +48,47 @@
         <item name="ed_fn_button_style">@style/fn_button_style</item>
         <item name="ed_list_button_style">@style/list_button_style</item>
     </style>
+-->
 
     <style name="app_intro" parent="@style/Theme.AppCompat">
         <item name="ed_normal_button_style">@style/normal_button_style_colorful</item>
         <item name="edit_label_style">@style/edit_label_style_black</item>
     </style>
 
+    <style name="app_theme" parent="@android:style/Theme.Holo">
+        <item name="android:windowBackground">@drawable/app_background</item>
+        <item name="android:windowTitleStyle">@style/app_title</item>
+        <item name="android:listViewStyle">@style/EDListView</item>
+        <item name="android:expandableListViewStyle">@style/EDListView</item>
+        <item name="android:listSeparatorTextViewStyle">@style/small_heading_style</item>
+
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:actionMenuTextColor">@color/primary_text</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColorHint">@color/tertiary_text</item>
+
+        <item name="ed_loco_label_style">@style/loco_label_style</item>
+        <item name="floating_text_style">@style/floating_text_style</item>
+        <item name="edit_label_style">@style/edit_label_style</item>
+        <item name="edit_func_style">@style/edit_func_style</item>
+        <item name="list_item_style">@style/list_item_style</item>
+        <item name="list_id_style">@style/list_id_style</item>
+        <item name="EDListView">@style/EDListView</item>
+
+        <item name="ed_fn_scrollview_style">@style/fn_scrollview_style</item>
+
+        <item name="ed_large_button_style">@style/large_button_style</item>
+        <item name="ed_normal_button_style">@style/normal_button_style</item>
+        <item name="ed_normal_button2_style">@style/normal_button2_style</item>
+        <item name="ed_loco_select_button_style">@style/loco_select_button_style</item>
+        <item name="ed_small_button_style">@style/small_button_style</item>
+        <item name="ed_stop_button_style">@style/stop_button_style</item>
+        <item name="ed_fn_button_style">@style/fn_button_style</item>
+        <item name="ed_list_button_style">@style/list_button_style</item>
+    </style>
+
+    <!--
     <style name="app_theme" parent="@android:style/Theme">
         <item name="android:windowBackground">@drawable/app_background</item>
         <item name="android:windowTitleStyle">@style/app_title</item>
@@ -74,5 +116,177 @@
         <item name="ed_fn_button_style">@style/fn_button_style</item>
         <item name="ed_list_button_style">@style/list_button_style</item>
     </style>
+    -->
+
+    <style name="app_theme_black" parent="@android:style/Theme.Holo">
+        <item name="android:windowBackground">@color/solidBlack</item>
+        <item name="android:windowTitleStyle">@style/app_title_black</item>
+        <item name="android:listViewStyle">@style/EDListView_black</item>
+        <item name="android:expandableListViewStyle">@style/EDListView_black</item>
+        <item name="android:listSeparatorTextViewStyle">@style/small_heading_style_black</item>
+        <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
+        <item name="android:titleTextStyle">@style/app_title_black</item>
+        <item name="android:dialogTheme">@style/dialogStyle_black</item>
+        <item name="android:alertDialogTheme">@style/dialogStyle_black</item>
+
+        <item name="android:itemBackground">#ff000000</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:actionMenuTextColor">@color/primary_text</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColorHint">@color/tertiary_text</item>
+
+        <item name="ed_loco_label_style">@style/loco_label_style</item>
+        <item name="floating_text_style">@style/floating_text_style_black</item>
+        <item name="edit_label_style">@style/edit_label_style_black</item>
+        <item name="edit_func_style">@style/edit_func_style_black</item>
+        <item name="list_item_style">@style/list_item_style_black</item>
+        <item name="list_id_style">@style/list_id_style_black</item>
+        <item name="EDListView">@style/EDListView_black</item>
+
+        <item name="ed_fn_scrollview_style">@style/fn_scrollview_style_black</item>
+
+        <item name="ed_large_button_style">@style/large_button_style_black</item>
+        <item name="ed_normal_button_style">@style/normal_button_style_black</item>
+        <item name="ed_normal_button2_style">@style/normal_button2_style_black</item>
+        <item name="ed_loco_select_button_style">@style/loco_select_button_style_black</item>
+        <item name="ed_small_button_style">@style/small_button_style_black</item>
+        <item name="ed_stop_button_style">@style/stop_button_style_black</item>
+        <item name="ed_fn_button_style">@style/fn_button_style_black</item>
+        <item name="ed_list_button_style">@style/list_button_style_black</item>
+
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="app_theme_outline" parent="@android:style/Theme.Holo">
+        <item name="android:windowBackground">@color/solidBlack</item>
+        <item name="android:windowTitleStyle">@style/app_title_black</item>
+        <item name="android:listViewStyle">@style/EDListView_black</item>
+        <item name="android:expandableListViewStyle">@style/EDListView_black</item>
+        <item name="android:listSeparatorTextViewStyle">@style/small_heading_style_black</item>
+        <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
+        <item name="android:titleTextStyle">@style/app_title_black</item>
+        <item name="android:dialogTheme">@style/dialogStyle_black</item>
+        <item name="android:alertDialogTheme">@style/dialogStyle_black</item>
+
+        <item name="android:itemBackground">#ff000000</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:actionMenuTextColor">@color/primary_text</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColorHint">@color/tertiary_text</item>
+
+        <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
+        <item name="floating_text_style">@style/floating_text_style_outline</item>
+        <item name="edit_label_style">@style/edit_label_style_outline</item>
+        <item name="edit_func_style">@style/edit_func_style_black</item>
+        <item name="list_item_style">@style/list_item_style_outline</item>
+        <item name="list_id_style">@style/list_id_style_outline</item>
+        <item name="EDListView">@style/EDListView_black</item>
+
+        <item name="ed_fn_scrollview_style">@style/fn_scrollview_style_black</item>
+
+        <item name="ed_large_button_style">@style/large_button_style_outline</item>
+        <item name="ed_normal_button_style">@style/normal_button_style_outline</item>
+        <item name="ed_normal_button2_style">@style/normal_button2_style_outline</item>
+        <item name="ed_loco_select_button_style">@style/loco_select_button_style_outline</item>
+        <item name="ed_small_button_style">@style/small_button_style_outline</item>
+        <item name="ed_stop_button_style">@style/stop_button_style_outline</item>
+        <item name="ed_fn_button_style">@style/fn_button_style_outline</item>
+        <item name="ed_list_button_style">@style/list_button_style_outline</item>
+
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="app_theme_ultra" parent="@android:style/Theme.Holo">
+        <item name="android:windowBackground">@color/solidBlack</item>
+        <item name="android:windowTitleStyle">@style/app_title_black</item>
+        <item name="android:listViewStyle">@style/EDListView_black</item>
+        <item name="android:expandableListViewStyle">@style/EDListView_black</item>
+        <item name="android:listSeparatorTextViewStyle">@style/small_heading_style_ultra</item>
+        <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
+        <item name="android:titleTextStyle">@style/app_title_black</item>
+        <item name="android:dialogTheme">@style/dialogStyle_black</item>
+        <item name="android:alertDialogTheme">@style/dialogStyle_black</item>
+
+        <item name="android:itemBackground">#ff000000</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:actionMenuTextColor">@color/primary_text</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColorHint">@color/tertiary_text</item>
+
+        <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
+        <item name="floating_text_style">@style/floating_text_style_outline</item>
+        <item name="edit_label_style">@style/edit_label_style_outline</item>
+        <item name="edit_func_style">@style/edit_func_style_black</item>
+        <item name="list_item_style">@style/list_item_style_outline</item>
+        <item name="list_id_style">@style/list_id_style_outline</item>
+        <item name="EDListView">@style/EDListView_black</item>
+
+        <item name="ed_fn_scrollview_style">@style/fn_scrollview_style_ultra</item>
+
+        <item name="ed_large_button_style">@style/large_button_style_ultra</item>
+        <item name="ed_normal_button_style">@style/normal_button_style_ultra</item>
+        <item name="ed_normal_button2_style">@style/normal_button2_style_ultra</item>
+        <item name="ed_loco_select_button_style">@style/loco_select_button_style_ultra</item>
+        <item name="ed_small_button_style">@style/small_button_style_ultra</item>
+        <item name="ed_stop_button_style">@style/stop_button_style_ultra</item>
+        <item name="ed_fn_button_style">@style/fn_button_style_ultra</item>
+        <item name="ed_list_button_style">@style/list_button_style_ultra</item>
+
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="app_theme_colorful" parent="@android:style/Theme.Holo.Light">
+        <item name="android:windowTitleBackgroundStyle">@style/windowTitleBackground_colorful</item>
+
+        <item name="android:windowBackground">@color/windowBackground_colorful</item>
+        <item name="android:windowTitleStyle">@style/app_title_colorful</item>
+        <item name="android:listViewStyle">@style/EDListView_colorful</item>
+        <item name="android:expandableListViewStyle">@style/EDListView_colorful</item>
+        <item name="android:listSeparatorTextViewStyle">@style/small_heading_style_colorful</item>
+        <item name="android:actionBarStyle">@style/actionBarStyle_colorful</item>
+        <item name="android:titleTextStyle">@style/app_title_colorful</item>
+        <item name="android:dialogTheme">@style/dialogStyle_colorful</item>
+        <item name="android:alertDialogTheme">@style/alertDialogStyle_colorful</item>
+        <item name="android:itemBackground">@color/transparent</item>
+
+        <!--        <item name="android:textColor">@color/solidBlack</item> -->
+        <item name="android:textColorPrimary">@color/primary_text_color_selector_colorful</item>
+        <item name="android:textColorSecondary">@color/secondary_text_color_selector_colorful</item>
+        <item name="android:textColorTertiary">@color/tertiary_colorful</item>
+        <item name="android:textColorHint">@color/hint_colorful</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/primaryDisabled_colorful</item>
+
+        <item name="android:background">@color/windowBackground_colorful</item>
+        <item name="android:actionMenuTextColor">@color/primary_colorful</item>
+
+        <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
+        <item name="floating_text_style">@style/floating_text_style_colorful</item>
+        <item name="edit_label_style">@style/edit_label_style_colorful</item>
+        <item name="edit_func_style">@style/edit_func_style_colorful</item>
+        <item name="list_item_style">@style/list_item_style_colorful</item>
+        <item name="list_id_style">@style/list_id_style_colorful</item>
+        <item name="EDListView">@style/EDListView_colorful</item>
+
+        <item name="ed_fn_scrollview_style">@style/fn_scrollview_style_colorful</item>
+
+        <item name="ed_large_button_style">@style/large_button_style_colorful</item>
+        <item name="ed_normal_button_style">@style/normal_button_style_colorful</item>
+        <item name="ed_normal_button2_style">@style/normal_button2_style_colorful</item>
+        <item name="ed_loco_select_button_style">@style/loco_select_button_style_colorful</item>
+        <item name="ed_small_button_style">@style/small_button_style_colorful</item>
+        <item name="ed_stop_button_style">@style/stop_button_style_colorful</item>
+        <item name="ed_fn_button_style">@style/fn_button_style_colorful</item>
+        <item name="ed_list_button_style">@style/list_button_style_colorful</item>
+
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
 </resources>
     

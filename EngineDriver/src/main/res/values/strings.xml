@@ -462,7 +462,7 @@
     <string name="prefAutoImportExportSummary">On every connection to a host, AUTOMATICALLY \'Import\' preferences for that host, and optionally \'Export\' them on disconnect. \n(To constantly reset back to a known state, set to \'Auto import on connect only\' after the first time, or after a manual save (below).)</string>
     <string name="prefAutoImportExportDefaultValue">None</string>
 
-    <string name="prefHostImportExportTitle">Manual host specific import/export</string>
+    <string name="prefHostImportExportTitle">Manual host specific import/expFort</string>
     <string name="prefHostImportExportSummary">\'Import\' or \'Export\' your preferences for a specific host to the \'engine_driver/\' folder. The host must be in your recent connection list.\nWill occur IMMEDIATELY on selecting the option.\n(Only available when not currently connected.)</string>
     <string name="prefHostImportExportDefaultValue">None</string>
 
