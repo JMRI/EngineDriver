@@ -239,7 +239,7 @@
                         android:layout_weight="0.7"
                         android:maxHeight="80dp"
                         android:paddingLeft="8dp"
-                        android:paddingRight="8dp"></SeekBar>
+                        android:paddingRight="8dp" />
 
                     <Button
                         android:id="@+id/right_speed_button_0"
@@ -266,7 +266,7 @@
                         android:paddingRight="6dp"
                         android:stretchColumns="0,1,2,3">
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -285,7 +285,7 @@
                                 android:text="@string/functionButton03DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -304,7 +304,7 @@
                                 android:text="@string/functionButton07DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -323,7 +323,7 @@
                                 android:text="@string/functionButton11DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -342,7 +342,7 @@
                                 android:text="@string/functionButton15DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -361,7 +361,7 @@
                                 android:text="@string/functionButton19DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -380,7 +380,7 @@
                                 android:text="@string/functionButton23DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -399,7 +399,7 @@
                                 android:text="@string/functionButton27DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -618,7 +618,7 @@
                         android:layout_weight="0.7"
                         android:maxHeight="80dp"
                         android:paddingLeft="8dp"
-                        android:paddingRight="8dp"></SeekBar>
+                        android:paddingRight="8dp" />
 
                     <Button
                         android:id="@+id/right_speed_button_1"
@@ -645,7 +645,7 @@
                         android:paddingRight="6dp"
                         android:stretchColumns="0,1,2,3">
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -664,7 +664,7 @@
                                 android:text="@string/functionButton03DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -683,7 +683,7 @@
                                 android:text="@string/functionButton07DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -702,7 +702,7 @@
                                 android:text="@string/functionButton11DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -721,7 +721,7 @@
                                 android:text="@string/functionButton15DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -740,8 +740,7 @@
                                 android:text="@string/functionButton19DefultValue" />
                         </TableRow>
 
-                        <TableRow>
-
+                        <TableRow android:baselineAligned="false">
                             <Button
                                 style="?attr/ed_fn_button_style"
                                 android:text="@string/functionButton20DefultValue" />
@@ -759,7 +758,7 @@
                                 android:text="@string/functionButton23DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -778,7 +777,7 @@
                                 android:text="@string/functionButton27DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -804,7 +803,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="2dp"
                     android:background="#888888"
-                    android:orientation="vertical"></LinearLayout>
+                    android:orientation="vertical" />
             </LinearLayout>
 
             <LinearLayout
@@ -1006,7 +1005,7 @@
                         android:layout_weight="0.7"
                         android:maxHeight="80dp"
                         android:paddingLeft="8dp"
-                        android:paddingRight="8dp"></SeekBar>
+                        android:paddingRight="8dp" />
 
                     <Button
                         android:id="@+id/right_speed_button_2"
@@ -1033,7 +1032,7 @@
                         android:paddingRight="6dp"
                         android:stretchColumns="0,1,2,3">
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -1052,7 +1051,7 @@
                                 android:text="@string/functionButton03DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -1071,7 +1070,7 @@
                                 android:text="@string/functionButton07DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -1090,7 +1089,7 @@
                                 android:text="@string/functionButton11DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -1109,7 +1108,7 @@
                                 android:text="@string/functionButton15DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -1128,7 +1127,7 @@
                                 android:text="@string/functionButton19DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
@@ -1147,7 +1146,7 @@
                                 android:text="@string/functionButton23DefultValue" />
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow android:baselineAligned="false">
 
                             <Button
                                 style="?attr/ed_fn_button_style"
