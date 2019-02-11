@@ -4675,13 +4675,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                 String bt = function_labels_temp.get(func);
                                 fbtl = new function_button_touch_listener(func, whichThrottle, bt);
                                 b.setOnTouchListener(fbtl);
-                                if ((mainapp.getCurrentTheme().equals(THEME_DEFAULT))) {
-                                    bt = bt + "        ";  // pad with spaces, and limit to 7 characters
-                                    b.setText(bt.substring(0, 7));
-                                } else {
+//                                if ((mainapp.getCurrentTheme().equals(THEME_DEFAULT))) {
+//                                    bt = bt + "        ";  // pad with spaces, and limit to 7 characters
+//                                    b.setText(bt.substring(0, 7));
+//                                } else {
                                     bt = bt + "                      ";  // pad with spaces, and limit to 20 characters
                                     b.setText(bt.trim());
-                                }
+//                                }
                                 b.setVisibility(View.VISIBLE);
                                 b.setEnabled(false); // start out with everything disabled
                             } else {
