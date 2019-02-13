@@ -4645,16 +4645,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 // note: we make a copy of function_labels_x because TA might change it
                 // while we are using it (causing issues during button update below)
                 function_labels_temp = mainapp.function_labels_default;
-                if (!prefAlwaysUseDefaultFunctionLabels) {
+                if (!prefAlwaysUseDefaultFunctionLabels) { //avoid npe
                     if (mainapp.function_labels != null
                             && mainapp.function_labels[whichThrottle] != null
                             && mainapp.function_labels[whichThrottle].size() > 0) {
                         function_labels_temp = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
                     } else {
-                        if (mainapp.consists[whichThrottle]!=null && !mainapp.consists[whichThrottle].isLeadFromRoster()) {
-                            function_labels_temp = mainapp.function_labels_default;
-                        } else {
-                            function_labels_temp = mainapp.function_labels_default_for_roster;
+                        if (mainapp.consists != null) {  //avoid npe maybe
+                            if (mainapp.consists[whichThrottle] != null && !mainapp.consists[whichThrottle].isLeadFromRoster()) {
+                                function_labels_temp = mainapp.function_labels_default;
+                            } else {
+                                function_labels_temp = mainapp.function_labels_default_for_roster;
+                            }
                         }
                     }
                 }
