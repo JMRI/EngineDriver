@@ -19,6 +19,7 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/throttle_screen_wrapper"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -65,7 +66,8 @@
                             style="?attr/ed_loco_select_button_style"
                             android:layout_width="fill_parent"
                             android:layout_alignParentRight="true"
-                            android:text="@string/none" />
+                            android:text="@string/none"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/loco_label_0"
@@ -75,7 +77,8 @@
                             android:paddingLeft="6dp"
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
-                            android:text="@string/loco" />
+                            android:text="@string/loco"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -94,7 +97,8 @@
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
                             android:text="@string/label_percent"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/speed_value_label_0"
@@ -104,7 +108,8 @@
                             android:layout_alignParentRight="true"
                             android:enabled="false"
                             android:text="126"
-                            android:textSize="36sp" />
+                            android:textSize="36sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/volume_indicator_0"
@@ -118,7 +123,8 @@
                             android:paddingLeft="2dp"
                             android:paddingRight="0dp"
                             android:text="@string/volume_indicator"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/gamepad_indicator_0"
@@ -132,7 +138,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="0dp"
                             android:text=""
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -171,7 +178,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -211,7 +219,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
                     </TableRow>
                 </TableLayout>
@@ -442,7 +451,8 @@
                             style="?attr/ed_loco_select_button_style"
                             android:layout_width="fill_parent"
                             android:layout_alignParentRight="true"
-                            android:text="@string/none" />
+                            android:text="@string/none"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/loco_label_1"
@@ -452,7 +462,8 @@
                             android:paddingLeft="6dp"
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
-                            android:text="@string/loco" />
+                            android:text="@string/loco"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -471,7 +482,8 @@
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
                             android:text="@string/label_percent"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/speed_value_label_1"
@@ -481,7 +493,8 @@
                             android:layout_alignParentRight="true"
                             android:enabled="false"
                             android:text="0"
-                            android:textSize="36dp" />
+                            android:textSize="36dp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/volume_indicator_1"
@@ -495,7 +508,8 @@
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
                             android:text=""
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/gamepad_indicator_1"
@@ -509,7 +523,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="0dp"
                             android:text=""
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -547,7 +562,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -587,7 +603,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
 
                     </TableRow>
@@ -831,7 +848,8 @@
                             style="?attr/ed_loco_select_button_style"
                             android:layout_width="fill_parent"
                             android:layout_alignParentRight="true"
-                            android:text="@string/none" />
+                            android:text="@string/none"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/loco_label_2"
@@ -841,7 +859,8 @@
                             android:paddingLeft="6dp"
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
-                            android:text="@string/loco" />
+                            android:text="@string/loco"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -860,7 +879,8 @@
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
                             android:text="@string/label_percent"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/speed_value_label_2"
@@ -870,7 +890,8 @@
                             android:layout_alignParentRight="true"
                             android:enabled="false"
                             android:text="0"
-                            android:textSize="36sp" />
+                            android:textSize="36sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/volume_indicator_2"
@@ -884,7 +905,8 @@
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
                             android:text=""
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/gamepad_indicator_2"
@@ -898,7 +920,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="0dp"
                             android:text=""
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -936,7 +959,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -976,7 +1000,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
 
                     </TableRow>

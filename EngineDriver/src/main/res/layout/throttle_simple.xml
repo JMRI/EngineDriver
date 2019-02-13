@@ -20,6 +20,7 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/throttle_screen_wrapper"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -86,7 +87,8 @@
                             android:shadowDx="1"
                             android:shadowDy="1"
                             android:shadowRadius="1"
-                            android:textColor="#666666" />
+                            android:textColor="#666666"
+                            tools:ignore="RtlHardcoded" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -105,7 +107,8 @@
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
                             android:text="@string/label_percent"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/speed_value_label_0"
@@ -115,7 +118,8 @@
                             android:layout_alignParentRight="true"
                             android:enabled="false"
                             android:text="126"
-                            android:textSize="36sp" />
+                            android:textSize="36sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/volume_indicator_0"
@@ -129,7 +133,8 @@
                             android:paddingLeft="2dp"
                             android:paddingRight="0dp"
                             android:text="@string/volume_indicator"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/gamepad_indicator_0"
@@ -143,7 +148,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="0dp"
                             android:text=""
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -181,7 +187,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -208,7 +215,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
                     </TableRow>
                 </TableLayout>
@@ -237,7 +245,7 @@
                         android:minHeight="9999dp"
                         android:maxHeight="9999dp"
                         android:paddingLeft="30dp"
-                        android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
+                        android:paddingRight="30dp" />
 
                     <Button
                         android:id="@+id/left_speed_button_0"
@@ -305,7 +313,8 @@
                             android:shadowDx="1"
                             android:shadowDy="1"
                             android:shadowRadius="1"
-                            android:textColor="#666666" />
+                            android:textColor="#666666"
+                            tools:ignore="RtlHardcoded" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -324,7 +333,8 @@
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
                             android:text="@string/label_percent"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/speed_value_label_1"
@@ -334,7 +344,8 @@
                             android:layout_alignParentRight="true"
                             android:enabled="false"
                             android:text="126"
-                            android:textSize="36sp" />
+                            android:textSize="36sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/volume_indicator_1"
@@ -348,7 +359,8 @@
                             android:paddingLeft="2dp"
                             android:paddingRight="0dp"
                             android:text="@string/volume_indicator"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/gamepad_indicator_1"
@@ -362,7 +374,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="0dp"
                             android:text=""
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RelativeOverlap,RtlHardcoded" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -400,7 +413,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -427,7 +441,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
                     </TableRow>
                 </TableLayout>
@@ -456,7 +471,7 @@
                         android:minHeight="9999dp"
                         android:maxHeight="9999dp"
                         android:paddingLeft="30dp"
-                        android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
+                        android:paddingRight="30dp" />
 
                     <Button
                         android:id="@+id/left_speed_button_1"
@@ -524,7 +539,8 @@
                             android:shadowDx="1"
                             android:shadowDy="1"
                             android:shadowRadius="1"
-                            android:textColor="#666666" />
+                            android:textColor="#666666"
+                            tools:ignore="RtlHardcoded" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -543,7 +559,8 @@
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
                             android:text="@string/label_percent"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/speed_value_label_2"
@@ -553,7 +570,8 @@
                             android:layout_alignParentRight="true"
                             android:enabled="false"
                             android:text="126"
-                            android:textSize="36sp" />
+                            android:textSize="36sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/volume_indicator_2"
@@ -567,7 +585,8 @@
                             android:paddingLeft="2dp"
                             android:paddingRight="0dp"
                             android:text="@string/volume_indicator"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/gamepad_indicator_2"
@@ -581,7 +600,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="0dp"
                             android:text=""
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RtlHardcoded" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -619,7 +639,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -646,7 +667,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
                     </TableRow>
                 </TableLayout>
@@ -675,7 +697,7 @@
                         android:minHeight="9999dp"
                         android:maxHeight="9999dp"
                         android:paddingLeft="30dp"
-                        android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
+                        android:paddingRight="30dp" />
 
                     <Button
                         android:id="@+id/left_speed_button_2"
@@ -743,7 +765,8 @@
                             android:shadowDx="1"
                             android:shadowDy="1"
                             android:shadowRadius="1"
-                            android:textColor="#666666" />
+                            android:textColor="#666666"
+                            tools:ignore="RtlHardcoded" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -762,7 +785,8 @@
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
                             android:text="@string/label_percent"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/speed_value_label_3"
@@ -772,7 +796,8 @@
                             android:layout_alignParentRight="true"
                             android:enabled="false"
                             android:text="126"
-                            android:textSize="36sp" />
+                            android:textSize="36sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/volume_indicator_3"
@@ -786,7 +811,8 @@
                             android:paddingLeft="2dp"
                             android:paddingRight="0dp"
                             android:text="@string/volume_indicator"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/gamepad_indicator_3"
@@ -800,7 +826,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="0dp"
                             android:text=""
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RtlHardcoded" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -838,7 +865,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -865,7 +893,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
                     </TableRow>
                 </TableLayout>
@@ -894,7 +923,7 @@
                         android:minHeight="9999dp"
                         android:maxHeight="9999dp"
                         android:paddingLeft="30dp"
-                        android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
+                        android:paddingRight="30dp" />
 
                     <Button
                         android:id="@+id/left_speed_button_3"
@@ -962,7 +991,8 @@
                             android:shadowDx="1"
                             android:shadowDy="1"
                             android:shadowRadius="1"
-                            android:textColor="#666666" />
+                            android:textColor="#666666"
+                            tools:ignore="RtlHardcoded" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -981,7 +1011,8 @@
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
                             android:text="@string/label_percent"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/speed_value_label_4"
@@ -991,7 +1022,8 @@
                             android:layout_alignParentRight="true"
                             android:enabled="false"
                             android:text="126"
-                            android:textSize="36sp" />
+                            android:textSize="36sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/volume_indicator_4"
@@ -1005,7 +1037,8 @@
                             android:paddingLeft="2dp"
                             android:paddingRight="0dp"
                             android:text="@string/volume_indicator"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/gamepad_indicator_4"
@@ -1019,7 +1052,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="0dp"
                             android:text=""
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RtlHardcoded" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -1057,7 +1091,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -1084,7 +1119,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
                     </TableRow>
                 </TableLayout>
@@ -1113,7 +1149,7 @@
                         android:minHeight="9999dp"
                         android:maxHeight="9999dp"
                         android:paddingLeft="30dp"
-                        android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
+                        android:paddingRight="30dp" />
 
                     <Button
                         android:id="@+id/left_speed_button_4"
@@ -1181,7 +1217,8 @@
                             android:shadowDx="1"
                             android:shadowDy="1"
                             android:shadowRadius="1"
-                            android:textColor="#666666" />
+                            android:textColor="#666666"
+                            tools:ignore="RtlHardcoded" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -1200,7 +1237,8 @@
                             android:paddingRight="0dp"
                             android:paddingTop="2dp"
                             android:text="@string/label_percent"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/speed_value_label_5"
@@ -1210,7 +1248,8 @@
                             android:layout_alignParentRight="true"
                             android:enabled="false"
                             android:text="126"
-                            android:textSize="36sp" />
+                            android:textSize="36sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/volume_indicator_5"
@@ -1224,7 +1263,8 @@
                             android:paddingLeft="2dp"
                             android:paddingRight="0dp"
                             android:text="@string/volume_indicator"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RtlHardcoded" />
 
                         <TextView
                             android:id="@+id/gamepad_indicator_5"
@@ -1238,7 +1278,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="0dp"
                             android:text=""
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:ignore="RtlHardcoded" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -1276,7 +1317,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -1303,7 +1345,8 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="6dp"
                                 android:paddingTop="2dp"
-                                android:text="@string/none" />
+                                android:text="@string/none"
+                                tools:ignore="RtlHardcoded" />
                         </RelativeLayout>
                     </TableRow>
                 </TableLayout>
@@ -1332,7 +1375,7 @@
                         android:minHeight="9999dp"
                         android:maxHeight="9999dp"
                         android:paddingLeft="30dp"
-                        android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
+                        android:paddingRight="30dp" />
 
                     <Button
                         android:id="@+id/left_speed_button_5"
