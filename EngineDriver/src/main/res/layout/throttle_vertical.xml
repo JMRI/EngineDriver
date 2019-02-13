@@ -48,7 +48,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
                 android:orientation="vertical"
-                android:paddingRight="3dp">
+                android:paddingRight="3dp"
+                tools:ignore="RtlHardcoded,RtlSymmetry">
 
                 <LinearLayout
                     android:id="@+id/loco_upper_0"
@@ -108,7 +109,8 @@
                                 android:paddingRight="0dp"
                                 android:paddingTop="2dp"
                                 android:text="@string/label_percent"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                tools:ignore="RelativeOverlap" />
 
                             <TextView
                                 android:id="@+id/speed_value_label_0"
@@ -132,7 +134,8 @@
                                 android:paddingLeft="2dp"
                                 android:paddingRight="0dp"
                                 android:text="@string/volume_indicator"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                tools:ignore="RelativeOverlap" />
 
                             <TextView
                                 android:id="@+id/gamepad_indicator_0"
@@ -146,7 +149,8 @@
                                 android:paddingLeft="10dp"
                                 android:paddingRight="0dp"
                                 android:text=""
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                tools:ignore="RelativeOverlap" />
                         </RelativeLayout>
                     </LinearLayout>
 
@@ -250,7 +254,7 @@
                             android:minHeight="9999dp"
                             android:maxHeight="9999dp"
                             android:paddingLeft="30dp"
-                            android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
+                            android:paddingRight="30dp" />
 
                         <Button
                             android:id="@+id/left_speed_button_0"
@@ -502,7 +506,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
                 android:orientation="vertical"
-                android:paddingLeft="3dp">
+                android:paddingLeft="3dp"
+                tools:ignore="RtlHardcoded,RtlSymmetry">
 
                 <LinearLayout
                     android:id="@+id/loco_upper_1"
@@ -562,7 +567,8 @@
                                 android:paddingRight="0dp"
                                 android:paddingTop="2dp"
                                 android:text="@string/label_percent"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                tools:ignore="RelativeOverlap" />
 
                             <TextView
                                 android:id="@+id/speed_value_label_1"
@@ -586,7 +592,8 @@
                                 android:paddingLeft="2dp"
                                 android:paddingRight="0dp"
                                 android:text="@string/volume_indicator"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                tools:ignore="RelativeOverlap" />
 
                             <TextView
                                 android:id="@+id/gamepad_indicator_1"
@@ -600,7 +607,8 @@
                                 android:paddingLeft="10dp"
                                 android:paddingRight="0dp"
                                 android:text=""
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                tools:ignore="RelativeOverlap" />
                         </RelativeLayout>
                     </LinearLayout>
 
@@ -945,7 +953,7 @@
                             android:minHeight="9999dp"
                             android:maxHeight="9999dp"
                             android:paddingLeft="30dp"
-                            android:paddingRight="30dp"></jmri.enginedriver.VerticalSeekBar>
+                            android:paddingRight="30dp" />
 
                         <Button
                             android:id="@+id/left_speed_button_1"

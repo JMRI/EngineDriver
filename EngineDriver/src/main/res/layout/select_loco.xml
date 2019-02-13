@@ -139,7 +139,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/loco_address"
             android:layout_below="@+id/select_loco_label"
-            android:layout_toRightOf="@id/loco_address" />
+            android:layout_toRightOf="@id/loco_address"
+            tools:ignore="RtlHardcoded" />
 
         <Button
             android:id="@+id/acquire"
@@ -150,7 +151,8 @@
             android:layout_below="@id/select_loco_label"
             android:layout_toRightOf="@id/address_length"
             android:state_enabled="false"
-            android:text="@string/acquire_button" />
+            android:text="@string/acquire_button"
+            tools:ignore="RtlHardcoded" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -186,7 +188,8 @@
             android:layout_width="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/filter_roster_text"
-            android:text="@string/roster_list" />
+            android:text="@string/roster_list"
+            tools:ignore="RtlHardcoded" />
 
         <EditText
             android:id="@+id/filter_roster_text"
@@ -256,7 +259,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignTop="@+id/clear_Loco_List_button"
             android:layout_toLeftOf="@+id/clear_Loco_List_button"
-            android:text="@string/recent_engines" />
+            android:text="@string/recent_engines"
+            tools:ignore="RtlHardcoded" />
 
         <Button
             android:id="@+id/clear_Loco_List_button"
