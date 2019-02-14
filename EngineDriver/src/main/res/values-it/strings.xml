@@ -427,9 +427,9 @@
     <string name="prefAccelerometerShakeTitle">Azione Scuotiento</string>
     <string name="prefAccelerometerShakeSummary">Opzioni per scuotimento del dispositivo.</string>
 
-    <string name="functionButton00DefultValue">Luce</string>
-    <string name="functionButton01DefultValue">Campana</string>
-    <string name="functionButton02DefultValue">Fischio</string>
+    <string name="functionButton00DefaultValue">Luce</string>
+    <string name="functionButton01DefaultValue">Campana</string>
+    <string name="functionButton02DefaultValue">Fischio</string>
 
     <string name="prefAccelerometerShakeThresholdTitle">Livello scuotimento</string>
     <string name="prefAccelerometerShakeThresholdSummary">Livello al quale lo scuotimento sará registrato.(1.5&#8211;3.5) Valori minori risponderanno ad una azione più lieve.\nRichiede il riavvio di Engine Driver per avere effetto.</string>

@@ -418,9 +418,9 @@
     <string name="prefAccelerometerShakeThresholdTitle">Límite al agitar</string>
     <string name="prefAccelerometerShakeThresholdSummary">Umbral al que se registrará al agitar. (1.5&#8211;3.5) Un valor más bajo responderá a una acción suave.\nRequiere el reinicio del Engine Driver tras cambiarlo para tener efecto.</string>
 
-    <string name="functionButton00DefultValue">Luces</string>
-    <string name="functionButton01DefultValue">Campana</string>
-    <string name="functionButton02DefultValue">Bocina</string>
+    <string name="functionButton00DefaultValue">Luces</string>
+    <string name="functionButton01DefaultValue">Campana</string>
+    <string name="functionButton02DefaultValue">Bocina</string>
 
 
 

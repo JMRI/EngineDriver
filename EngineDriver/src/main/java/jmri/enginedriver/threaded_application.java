@@ -1909,11 +1909,11 @@ public class threaded_application extends Application {
                 settings_reader.close();
             } else {          //hard-code some buttons and default the rest
                 if (numberOfDefaultFunctionLabels >= 0)
-                    function_labels_default.put(0, getApplicationContext().getResources().getString(R.string.functionButton00DefultValue));
+                    function_labels_default.put(0, getApplicationContext().getResources().getString(R.string.functionButton00DefaultValue));
                 if (numberOfDefaultFunctionLabels >= 1)
-                    function_labels_default.put(1, getApplicationContext().getResources().getString(R.string.functionButton01DefultValue));
+                    function_labels_default.put(1, getApplicationContext().getResources().getString(R.string.functionButton01DefaultValue));
                 if (numberOfDefaultFunctionLabels >= 2)
-                    function_labels_default.put(2, getApplicationContext().getResources().getString(R.string.functionButton02DefultValue));
+                    function_labels_default.put(2, getApplicationContext().getResources().getString(R.string.functionButton02DefaultValue));
                 if (numberOfDefaultFunctionLabels >= 3) {
                     for (int k = 3; k <= numberOfDefaultFunctionLabels; k++) {
                         function_labels_default.put(k, Integer.toString(k));        //String.format("%d",k));

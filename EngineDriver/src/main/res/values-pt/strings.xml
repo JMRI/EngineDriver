@@ -432,9 +432,9 @@
     <string name="prefLocaleTitle">Localização</string>
     <string name="prefLocaleSummary">Idioma para usar. ATENÇÃO! Engine Driver irá reiniciar imediatamente. As etiquetas dos botões de direção serão redefinidas.</string>
 
-    <string name="functionButton00DefultValue">Luz</string>
-    <string name="functionButton01DefultValue">Sino</string>
-    <string name="functionButton02DefultValue">Buzina</string>
+    <string name="functionButton00DefaultValue">Luz</string>
+    <string name="functionButton01DefaultValue">Sino</string>
+    <string name="functionButton02DefaultValue">Buzina</string>
 
     <string name="gamepadTestButtonLabelDpadUp">Cima</string>
     <string name="gamepadTestButtonLabelDpadDown">Baixo</string>

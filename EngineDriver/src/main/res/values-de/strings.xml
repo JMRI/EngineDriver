@@ -417,9 +417,9 @@
     <string name="prefAccelerometerShakeThresholdTitle">Schütteln Schwellwert</string>
     <string name="prefAccelerometerShakeThresholdSummary">Schwellwert bei dem Schütteln erkannt wird. (1.5&#8211;3.5) Kleiner Wert reagiert auf eine leichte Bewegung.\n Erfordert Neustart von Engine Driver nach Änderung um wirksam zu werden.</string>
 
-    <string name="functionButton00DefultValue">Licht</string>
-    <string name="functionButton01DefultValue">Glocke</string>
-    <string name="functionButton02DefultValue">Horn</string>
+    <string name="functionButton00DefaultValue">Licht</string>
+    <string name="functionButton01DefaultValue">Glocke</string>
+    <string name="functionButton02DefaultValue">Horn</string>
 
 
 
