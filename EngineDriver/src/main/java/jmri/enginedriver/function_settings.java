@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -49,6 +50,7 @@ import android.widget.Toast;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
+@SuppressLint("ApplySharedPref")
 public class function_settings extends Activity implements PermissionsHelper.PermissionsHelperGrantedCallback {
 
     private threaded_application mainapp;
@@ -66,7 +68,6 @@ public class function_settings extends Activity implements PermissionsHelper.Per
     private String prefNumberOfDefaultFunctionLabelsForRoster = "4";
     private String originalPrefNumberOfDefaultFunctionLabelsForRoster = "4";
     private boolean prefAlwaysUseDefaultFunctionLabels = false;
-    private int alwaysUseDefaultFunctionLabelsIndex = 1;
     private Spinner spinner;
 
     SharedPreferences prefs;
@@ -108,7 +109,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        Button b = (Button) findViewById(R.id.fb_copy_labels_from_roster);
+        Button b = findViewById(R.id.fb_copy_labels_from_roster);
         if (mainapp.function_labels[0] == null || mainapp.function_labels[0].size() == 0) {
             b.setEnabled(false);  //disable button if no roster
         } else {
@@ -118,12 +119,12 @@ public class function_settings extends Activity implements PermissionsHelper.Per
             b.setEnabled(true);
         }
 
-        Button bReset = (Button) findViewById(R.id.fb_reset_function_labels);
+        Button bReset = findViewById(R.id.fb_reset_function_labels);
         reset_button_listener reset_click_listener = new reset_button_listener();
         bReset.setOnClickListener(reset_click_listener);
         bReset.setEnabled(true);
 
-        et = (EditText) findViewById(R.id.fb_number_of_default_function_labels);
+        et = findViewById(R.id.fb_number_of_default_function_labels);
         et.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
             }
@@ -133,7 +134,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
             }
         });
 
-        etForRoster = (EditText) findViewById(R.id.fb_number_of_default_function_labels_for_roster);
+        etForRoster = findViewById(R.id.fb_number_of_default_function_labels_for_roster);
         etForRoster.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
             }
@@ -143,7 +144,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
             }
         });
 
-        spinner = (Spinner) findViewById(R.id.fb_always_use_default_function_labels);
+        spinner = findViewById(R.id.fb_always_use_default_function_labels);
         spinner.setOnItemSelectedListener(new spinner_listener());
 
         mainapp.set_default_function_labels(true);
@@ -151,7 +152,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
 
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             //warn user that saving Default Function Settings requires SD Card
-            TextView v = (TextView) findViewById(R.id.fs_heading);
+            TextView v = findViewById(R.id.fs_heading);
             v.setText(getString(R.string.fs_edit_notice));
         }
 
@@ -238,7 +239,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
 
     //take data from arrays and update the editing view
     void move_settings_to_view() {
-        ViewGroup t = (ViewGroup) findViewById(R.id.label_func_table); //table
+        ViewGroup t = findViewById(R.id.label_func_table); //table
         //loop thru input rows, skipping first (headings)
         int ndx = 0;
         for (int i = 1; i < t.getChildCount(); i++) {
@@ -272,7 +273,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
 
     //Save the valid function labels in the settings array
     void move_view_to_settings() {
-        ViewGroup t = (ViewGroup) findViewById(R.id.label_func_table); //table
+        ViewGroup t = findViewById(R.id.label_func_table); //table
         ViewGroup r;  //row
         //loop thru each row, Skipping the first one (the headings)  format is "label:function#"
         int ndx = 0;
@@ -347,14 +348,14 @@ public class function_settings extends Activity implements PermissionsHelper.Per
 
     public class reset_button_listener implements View.OnClickListener {
         public void onClick(View v) {
-            SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+//            SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
             String label = "";
             int func = 0;
 
             for (int i = 0; i <= 28; i++) {
-                if (i==0) label = getResources().getString(R.string.functionButton00DefultValue);
-                if (i==1) label = getResources().getString(R.string.functionButton01DefultValue);
-                if (i==2) label = getResources().getString(R.string.functionButton02DefultValue);
+                if (i==0) label = getResources().getString(R.string.functionButton00DefaultValue);
+                if (i==1) label = getResources().getString(R.string.functionButton01DefaultValue);
+                if (i==2) label = getResources().getString(R.string.functionButton02DefaultValue);
                 if(i>=3) {
                     label = ""+i;
                 }
@@ -449,13 +450,13 @@ public class function_settings extends Activity implements PermissionsHelper.Per
                 sVal = Integer.toString(maxVal);
                 et.setText(sVal);
                 isValid = false;
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(minVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
             } else if (newVal < minVal) {
                 prefs.edit().putString(key, Integer.toString(minVal)).commit();
                 sVal = Integer.toString(minVal);
                 et.setText(sVal);
                 isValid = false;
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(minVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
             }
         } catch (NumberFormatException e) {
             prefs.edit().putString(key, defaultVal).commit();
@@ -473,7 +474,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            alwaysUseDefaultFunctionLabelsIndex = spinner.getSelectedItemPosition();
+            int alwaysUseDefaultFunctionLabelsIndex = spinner.getSelectedItemPosition();
 
             prefAlwaysUseDefaultFunctionLabels = alwaysUseDefaultFunctionLabelsIndex == 0;
             prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", prefAlwaysUseDefaultFunctionLabels).commit();  //reset the preference

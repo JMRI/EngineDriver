@@ -535,41 +535,41 @@
     <string name="prefLocaleSummary">Language to use. WARNING! Engine Driver will restart immediately. Direction Button labels will be reset.</string>
     <string name="prefLocaleDefaultValue">Default</string>
 
-    <string name="functionButton00DefultValue">Light</string>
-    <string name="functionButton01DefultValue">Bell</string>
-    <string name="functionButton02DefultValue">Horn</string>
-    <string name="functionButton03DefultValue">3</string>
-    <string name="functionButton04DefultValue">4</string>
-    <string name="functionButton05DefultValue">5</string>
-    <string name="functionButton06DefultValue">6</string>
-    <string name="functionButton07DefultValue">7</string>
-    <string name="functionButton08DefultValue">8</string>
-    <string name="functionButton09DefultValue">9</string>
+    <string name="functionButton00DefaultValue">Light</string>
+    <string name="functionButton01DefaultValue">Bell</string>
+    <string name="functionButton02DefaultValue">Horn</string>
+    <string name="functionButton03DefaultValue">3</string>
+    <string name="functionButton04DefaultValue">4</string>
+    <string name="functionButton05DefaultValue">5</string>
+    <string name="functionButton06DefaultValue">6</string>
+    <string name="functionButton07DefaultValue">7</string>
+    <string name="functionButton08DefaultValue">8</string>
+    <string name="functionButton09DefaultValue">9</string>
 
-    <string name="functionButton10DefultValue">10</string>
-    <string name="functionButton11DefultValue">11</string>
-    <string name="functionButton12DefultValue">12</string>
-    <string name="functionButton13DefultValue">13</string>
-    <string name="functionButton14DefultValue">14</string>
-    <string name="functionButton15DefultValue">15</string>
-    <string name="functionButton16DefultValue">16</string>
-    <string name="functionButton17DefultValue">17</string>
-    <string name="functionButton18DefultValue">18</string>
-    <string name="functionButton19DefultValue">19</string>
+    <string name="functionButton10DefaultValue">10</string>
+    <string name="functionButton11DefaultValue">11</string>
+    <string name="functionButton12DefaultValue">12</string>
+    <string name="functionButton13DefaultValue">13</string>
+    <string name="functionButton14DefaultValue">14</string>
+    <string name="functionButton15DefaultValue">15</string>
+    <string name="functionButton16DefaultValue">16</string>
+    <string name="functionButton17DefaultValue">17</string>
+    <string name="functionButton18DefaultValue">18</string>
+    <string name="functionButton19DefaultValue">19</string>
 
-    <string name="functionButton20DefultValue">20</string>
-    <string name="functionButton21DefultValue">21</string>
-    <string name="functionButton22DefultValue">22</string>
-    <string name="functionButton23DefultValue">23</string>
-    <string name="functionButton24DefultValue">24</string>
-    <string name="functionButton25DefultValue">25</string>
-    <string name="functionButton26DefultValue">26</string>
-    <string name="functionButton27DefultValue">27</string>
-    <string name="functionButton28DefultValue">28</string>
-    <string name="functionButton29DefultValue">29</string>
+    <string name="functionButton20DefaultValue">20</string>
+    <string name="functionButton21DefaultValue">21</string>
+    <string name="functionButton22DefaultValue">22</string>
+    <string name="functionButton23DefaultValue">23</string>
+    <string name="functionButton24DefaultValue">24</string>
+    <string name="functionButton25DefaultValue">25</string>
+    <string name="functionButton26DefaultValue">26</string>
+    <string name="functionButton27DefaultValue">27</string>
+    <string name="functionButton28DefaultValue">28</string>
+    <string name="functionButton29DefaultValue">29</string>
 
-    <string name="functionButton30DefultValue">30</string>
-    <string name="functionButton31DefultValue">31</string>
+    <string name="functionButton30DefaultValue">30</string>
+    <string name="functionButton31DefaultValue">31</string>
 
 
     <!--    Gamepad test page -->

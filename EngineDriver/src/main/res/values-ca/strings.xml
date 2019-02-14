@@ -418,9 +418,9 @@
     <string name="prefAccelerometerShakeThresholdTitle">Llindar de sacseig</string>
     <string name="prefAccelerometerShakeThresholdSummary">Llindar al qual es registrarà el sacseig. (1.5&#8211;3.5) Un valor més baix respondrà a una acció suau.\nRequereix el reinici del Engine Driver després de canviar-ho per tenir efecte.</string>
 
-    <string name="functionButton00DefultValue">Llums</string>
-    <string name="functionButton01DefultValue">Campana</string>
-    <string name="functionButton02DefultValue">Xiulet</string>
+    <string name="functionButton00DefaultValue">Llums</string>
+    <string name="functionButton01DefaultValue">Campana</string>
+    <string name="functionButton02DefaultValue">Xiulet</string>
 
 
 
