@@ -74,12 +74,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private String deviceId = "";
 
-    private boolean currentlyImporting = false;
     private String exportedPreferencesFileName =  "exported_preferences.ed";
     private boolean overwiteFile = false;
 
-    private ArrayList<Integer> engine_address_list;
-    private ArrayList<Integer> address_size_list; // Look at address_type.java
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
 
     private static final String DEMO_HOST = "jmri.mstevetodd.com";

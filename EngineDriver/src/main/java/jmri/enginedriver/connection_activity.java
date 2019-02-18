@@ -90,8 +90,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private int connected_port;
     private boolean navigatingAway = false;        // flag for onPause: set to true when another activity is selected, false if going into background
 
-    private String deviceId = "";
-
     private static final String demo_host = "jmri.mstevetodd.com";
     private static final String demo_port = "44444";
     private static final String DUMMY_HOST = "999";
@@ -102,8 +100,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
     private static Method overridePendingTransition;
 
-    private ArrayList<Integer> engine_address_list;
-    private ArrayList<Integer> address_size_list; // Look at address_type.java
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
 
     private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
@@ -212,10 +208,10 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
     private class button_listener implements View.OnClickListener {
         public void onClick(View v) {
-            EditText entry = (EditText) findViewById(R.id.host_ip);
+            EditText entry = findViewById(R.id.host_ip);
             connected_hostip = entry.getText().toString();
             if (connected_hostip.trim().length() > 0) {
-                entry = (EditText) findViewById(R.id.port);
+                entry = findViewById(R.id.port);
                 try {
                     connected_port = Integer.valueOf(entry.getText().toString());
                 } catch (Exception except) {
@@ -348,16 +344,10 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         //check for "default" throttle name and make it more unique
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        if (!prefs.getString("prefRunIntro", "0").equals(mainapp.INTRO_VERSION)) {
+        if (!prefs.getString("prefRunIntro", "0").equals(threaded_application.INTRO_VERSION)) {
             Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
-//            runIntro = true;
-//            mainapp.introIsRunning = true;
             startActivity(intent);
         }
-
-        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-        String s = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", defaultName));
-
 
         mainapp.applyTheme(this);
         setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect)); // needed in case the langauge was changed from the default
@@ -371,7 +361,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         discovery_list_adapter = new SimpleAdapter(this, discovery_list, R.layout.connections_list_item,
                 new String[]{"ip_address", "host_name", "port"},
                 new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
-        ListView discover_list = (ListView) findViewById(R.id.discovery_list);
+        ListView discover_list = findViewById(R.id.discovery_list);
         discover_list.setAdapter(discovery_list_adapter);
         discover_list.setOnItemClickListener(new connect_item(server_list_type.DISCOVERED_SERVER));
 
@@ -380,7 +370,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         connection_list_adapter = new SimpleAdapter(this, connections_list, R.layout.connections_list_item,
                 new String[]{"ip_address", "host_name", "port"},
                 new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
-        ListView conn_list = (ListView) findViewById(R.id.connections_list);
+        ListView conn_list = findViewById(R.id.connections_list);
         conn_list.setAdapter(connection_list_adapter);
         conn_list.setOnItemClickListener(new connect_item(server_list_type.RECENT_CONNECTION));
         conn_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -414,7 +404,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         //Set the button callback.
-        Button button = (Button) findViewById(R.id.connect);
+        Button button = findViewById(R.id.connect);
         button_listener click_listener = new button_listener();
         button.setOnClickListener(click_listener);
 
@@ -533,7 +523,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
     private void set_labels() {
         SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        TextView v = (TextView) findViewById(R.id.ca_footer);
+        TextView v = findViewById(R.id.ca_footer);
         String s = prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
         v.setText(getString(R.string.throttle_name, s));
 
@@ -572,7 +562,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             //determine if currently using mobile connection or wifi
             ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo nInfo = cm.getActiveNetworkInfo();
-            boolean isWiFi = nInfo.getType() == ConnectivityManager.TYPE_WIFI;
             switch (nInfo.getType()) {
                 case ConnectivityManager.TYPE_WIFI:
                     mainapp.client_type = "WIFI";
@@ -768,11 +757,11 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         connections_list.clear();
         String errMsg;
 
-        if (prefs.getString("prefRunIntro", "0").equals(mainapp.INTRO_VERSION)) { // if the intro hasn't run yet, the permissions may not have been granted yet, so don't red the SD card,
+        if (prefs.getString("prefRunIntro", "0").equals(threaded_application.INTRO_VERSION)) { // if the intro hasn't run yet, the permissions may not have been granted yet, so don't red the SD card,
 
             if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
                 //alert user that recent connections list requires SD Card
-                TextView v = (TextView) findViewById(R.id.recent_connections_heading);
+                TextView v = findViewById(R.id.recent_connections_heading);
                 v.setText(getString(R.string.ca_recent_conn_notice));
             } else {
                 try {
@@ -805,8 +794,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                                 if (!(ip_address.equals(addressToRemove)) || !(port.toString().equals(portToRemove))) {
                                     if (port > 0) {  //skip if port not converted to integer
 
-                                        if ((!prefHideDemoServer)
-                                                || ((prefHideDemoServer) && !((host_name.equals(demo_host)) && (port.toString().equals(demo_port))))) {
+                                        if (!prefHideDemoServer || !(host_name.equals(demo_host) && port.toString().equals(demo_port))) {
                                             HashMap<String, String> hm = new HashMap<>();
                                             hm.put("ip_address", ip_address);
                                             hm.put("host_name", host_name);
@@ -899,7 +887,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
 
-        deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+        String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
         sharedPreferences.edit().putString("prefAndroidId", deviceId).commit();
 
         if ((prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT))
@@ -921,7 +909,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     public void navigateToHandler(@RequestCodes int requestCode) {
         if ((requestCode == PermissionsHelper.READ_CONNECTION_LIST) &&
                 (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) &&
-                !(prefs.getString("prefRunIntro", "0").equals(mainapp.INTRO_VERSION))) {
+                !(prefs.getString("prefRunIntro", "0").equals(threaded_application.INTRO_VERSION))) {
             // if the intro hasn't run yet and we don't have the permission yet, skip the read because the intro will ask for the permission
             loadSharedPreferencesFromFileImpl();
         } else {
