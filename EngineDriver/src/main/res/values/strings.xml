@@ -64,7 +64,7 @@
     <string name="forward">Forward</string>
     <string name="reverse">Reverse</string>
     <string name="none">None</string>
-    <string name="fb_helptext">Enter labels and function#s in list. Leave label blank to hide button. Used when roster functions are not available.</string>
+    <string name="fb_helptext">Enter labels and function#s, in the order you\'d like them displayed. Leave label blank to hide button. Used when roster functions are not available.</string>
     <string name="copy_function_labels">Copy Labels from Roster</string>
     <string name="fb_header">Edit Functions</string>
 
@@ -129,7 +129,7 @@
     <string name="volume_indicator">v</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="ok">"Ok"</string>
+    <string name="ok">"OK"</string>
     <string name="cancel">"Cancel"</string>
     <string name="exit_text">Exit Engine Driver?</string>
     <string name="exit_title">Exit</string>
@@ -337,7 +337,7 @@
 
     <string name="prefRosterFilterTitle">Filter Roster</string>
     <string name="prefRosterFilterSummary">Only show roster entries containing…</string>
-    <string name="prefRosterFilterDefaultValue"></string>
+    <string name="prefRosterFilterDefaultValue" />
     <string name="FilterRosterList">Filter</string>
     <string name="FilterRosterListHint">Contains…</string>
     <string name="rosterEmpty">Unable to find any enties in the JMRI roster.  Use either the \'DCC Address\' or \'Recent\' option instead.</string>
