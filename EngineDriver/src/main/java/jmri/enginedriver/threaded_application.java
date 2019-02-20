@@ -142,8 +142,6 @@ public class threaded_application extends Application {
     //minimum Android version for some features
     public final int minWebSocketVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
     public final int minImmersiveModeVersion = android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
-    public final int minToolbarButtonVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
-    public final int minGamepadVersion = Build.VERSION_CODES.KITKAT;
     public final int minThemeVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
     public final int minScreenDimNewMethodVersion = Build.VERSION_CODES.KITKAT;
     public final int minActivatedButtonsVersion = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
@@ -161,8 +159,8 @@ public class threaded_application extends Application {
 
     String client_address; //address string of the client address
     Inet4Address client_address_inet4; //inet4 value of the client address
-    String client_ssid;    //string of the connected SSID
-    String client_type; //network type, usually WIFI or MOBILE
+    String client_ssid = "UNKNOWN";    //string of the connected SSID
+    String client_type = "UNKNOWN"; //network type, usually WIFI or MOBILE
     //For communication to the comm_thread.
     public comm_handler comm_msg_handler = null;
     //For communication to each of the activities (set and unset by the activity)
@@ -725,8 +723,8 @@ public class threaded_application extends Application {
              input addr is formatted "L37<;>CSX37" or "S96" (if no roster name)
              msgTxt will be formatted M0+L1012<;>EACL1012 or M1+S96<;>S96 */
         private void acquireLoco(String addr, int whichThrottle, long interval) {
-            String rosterName = "";
-            String address = "";
+            String rosterName;
+            String address;
             String[] as = splitByString(addr, "<;>");
             if (as.length > 1) {
                 address = as[0];
@@ -769,7 +767,6 @@ public class threaded_application extends Application {
             for (ConLoco l : c.getLocos()) { // reacquire each confirmed loco in the consist
                 if (l.isConfirmed()) {
                     String addr = l.getAddress();
-                    String desc = l.getDesc();
                     String roster_name = l.getRosterName();
                     if (roster_name != null)  // add roster selection info if present
                         addr += "<;>" + roster_name;
@@ -1402,25 +1399,21 @@ public class threaded_application extends Application {
                 boolean reconInProg = false;
                 //reconnect socket if needed
                 if (!socketGood || inboundTimeout) {
-                    String status = null;
+                    String status;
 //                    getWifiInfo();                  //update address in case network connection was lost
                     if (client_address == null) {
-//                        status = "Not connected to a network.  Check WiFi settings.\n\nRetrying";
                         status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNotConnected);
                         Log.d("Engine_Driver", "WiT send reconnection attempt.");
                     } else if (inboundTimeout) {
-//                        status = "No response from server " + host_ip + ":" + port + " for " + heart.sGetInboundInterval() + " seconds.  " +
-//                                "Check that the WiThrottle server is running.\n\nRetrying";
                         status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse, host_ip, Integer.toString(port), heart.sGetInboundInterval());
                         Log.d("Engine_Driver", "WiT receive reconnection attempt.");
                     } else {
-//                        status = "Unable to connect to server at " + host_ip + ":" + port + " from " + client_address + ".\n\nRetrying";
                         status = getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect, host_ip, Integer.toString(port), client_address);
                         Log.d("Engine_Driver", "WiT send reconnection attempt.");
                     }
                     socketGood = false;
-                    if (status != null)
-                        sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY, status);
+
+                    sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY, status);
 
                     //perform the reconnection sequence
                     this.disconnect(false);             //clean up socket but do not shut down the receiver
@@ -1581,10 +1574,6 @@ public class threaded_application extends Application {
                 comm_msg_handler.removeCallbacks(outboundHeartbeatTimer);           //remove any pending requests
                 comm_msg_handler.removeCallbacks(inboundHeartbeatTimer);
                 heartbeatIntervalSetpoint = 0;
-            }
-
-            public void sendHeartbeat() {
-                comm_msg_handler.post(outboundHeartbeatTimer);
             }
 
             //outboundHeartbeatTimer()
