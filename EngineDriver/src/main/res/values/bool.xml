@@ -66,4 +66,7 @@
     <bool name="prefEsuMc2KnobButtonDefaultValue">false</bool>
 
     <bool name="prefFlashlightButtonDefaultValue">false</bool>
+
+    <bool name="prefImportAutoUrlDefaultValue">true</bool>
+
 </resources>

@@ -475,6 +475,11 @@
     <string name="prefImportUrlSummary">URL to \'Import\' a set of preferences from.\nIf \'http://\' is omitted the file is assumed to be on the currently connected server.</string>
     <string name="prefImportUrlDefaultValue">/prefs/engine_driver/preferences.ed</string>
 
+    <string name="prefImportAutoUrlTitle">Auto Import from Server</string>
+    <string name="prefImportAutoUrlSummary">Automatically import the preferences from each server on connection, if available.</string>
+
+    <string name="importAutoUrlDialog">New Preferences file has been found on this server.\nDo you want to import it?\n\nWarning! All your preferences will be overwitten.</string>
+
     <string name="prefSwapForwardReverseButtonsTitle">Swap Direction Buttons</string>
     <string name="prefSwapForwardReverseButtonsSummary">Permanently swap the two Direction Buttons for all throttles.</string>
 
@@ -650,6 +655,7 @@
     <string name="toastSwipeUpScreenDimmed">Throttle Screen Dimmed - Swipe up to restore</string>
     <string name="toastSwipeUpViewHidden">Web View temporarily hidden. To hide permanently change in preferences</string>
     <string name="toastThrottleAlertEstop">Alert: Engine %1$s is set to ESTOP</string>
+    <string name="toastThrottleAutoImportURLSucceeded">Automatic preferences import from JMRI Web server succeeded.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%1$s-%2$s). Reset to %3$s.</string>

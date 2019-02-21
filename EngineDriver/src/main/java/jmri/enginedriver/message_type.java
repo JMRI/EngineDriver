@@ -63,4 +63,5 @@ interface message_type {
     int KIDS_TIMER_TICK = 41;    //
     int IMPORT_URL_SUCCESS = 42;    //
     int IMPORT_URL_FAIL = 43;    //
+    int AUTO_IMPORT_URL_AVAILABLE = 44;    //
 }

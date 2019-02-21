@@ -42,7 +42,10 @@ public class PermissionsHelper {
             STORE_FUNCTION_SETTINGS,
             CONNECT_TO_SERVER,
             WRITE_SETTINGS,
-            ACCESS_COARSE_LOCATION})
+            ACCESS_COARSE_LOCATION,
+            STORE_AUTO_URL_PREFERENCES,
+            READ_AUTO_URL_PREFERENCES
+    })
     public @interface RequestCodes {}
 
     /**
@@ -59,6 +62,8 @@ public class PermissionsHelper {
     public static final int CONNECT_TO_SERVER = 40;
     public static final int WRITE_SETTINGS = 41;
     public static final int ACCESS_COARSE_LOCATION = 42;
+    public static final int STORE_AUTO_URL_PREFERENCES = 43;
+    public static final int READ_AUTO_URL_PREFERENCES = 44;
 
     private boolean isDialogOpen = false;
     private static PermissionsHelper instance = null;
@@ -134,6 +139,8 @@ public class PermissionsHelper {
             case READ_PREFERENCES:
                 return context.getResources().getString(R.string.permissionsReadPreferences);
             case STORE_PREFERENCES:
+            case STORE_AUTO_URL_PREFERENCES:
+            case READ_AUTO_URL_PREFERENCES:
                 return context.getResources().getString(R.string.permissionsStorePreferences);
             case READ_PHONE_STATE:
                 return context.getResources().getString(R.string.permissionsReadPhoneState);
@@ -172,6 +179,8 @@ public class PermissionsHelper {
                 case STORE_PREFERENCES:
                 case STORE_FUNCTION_SETTINGS:
                 case READ_FUNCTION_SETTINGS:
+                case STORE_AUTO_URL_PREFERENCES:
+                case READ_AUTO_URL_PREFERENCES:
                     Log.d("Engine_Driver", "Requesting STORAGE permissions");
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -302,6 +311,8 @@ public class PermissionsHelper {
             case STORE_PREFERENCES:
             case STORE_FUNCTION_SETTINGS:
             case READ_FUNCTION_SETTINGS:
+            case STORE_AUTO_URL_PREFERENCES:
+            case READ_AUTO_URL_PREFERENCES:
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
             case READ_PHONE_STATE:
@@ -344,6 +355,8 @@ public class PermissionsHelper {
             case STORE_PREFERENCES:
             case STORE_FUNCTION_SETTINGS:
             case READ_FUNCTION_SETTINGS:
+            case STORE_AUTO_URL_PREFERENCES:
+            case READ_AUTO_URL_PREFERENCES:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE) &&
                         ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
             case READ_PHONE_STATE:

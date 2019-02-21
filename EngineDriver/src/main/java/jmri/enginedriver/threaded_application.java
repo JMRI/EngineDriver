@@ -196,7 +196,7 @@ public class threaded_application extends Application {
     //Used to tell set_Labels in Throttle not to update padding for throttle sliders after onCreate.
     public boolean firstCreate = true;
 
-    public int numThrottles = 0;
+    public int numThrottles = 1;
     public int maxThrottles = 6;   // maximum number of throttles the system supports
     public int maxThrottlesCurrentScreen = 6;   // maximum number of throttles the current screen supports
 
@@ -388,7 +388,10 @@ public class threaded_application extends Application {
             /***future PowerLock
              private PowerManager.WakeLock wl = null;
              */
+            @SuppressLint("DefaultLocale")
             public void handleMessage(Message msg) {
+//                Log.d("Engine_Driver", "comm_handler: message: " +msg.what);
+
                 switch (msg.what) {
                     // note: if the Thottle is sent in arg1, it is always expected to be a int
                     // if it is sent in arg0, it will be a string
@@ -687,6 +690,10 @@ public class threaded_application extends Application {
                     case message_type.KIDS_TIMER_TICK:
                         sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_TICK, "", msg.arg1);
                         break;
+                    case message_type.AUTO_IMPORT_URL_AVAILABLE:
+                        Log.d("Engine_Driver", "comm_handler: message: AUTO_IMPORT_URL_AVAILABLE " +msg.what);
+                        sendMsg(throttle_msg_handler, message_type.AUTO_IMPORT_URL_AVAILABLE,"", 0);
+                        break;
                 }
             }
         }
@@ -767,6 +774,7 @@ public class threaded_application extends Application {
             for (ConLoco l : c.getLocos()) { // reacquire each confirmed loco in the consist
                 if (l.isConfirmed()) {
                     String addr = l.getAddress();
+//                    String desc = l.getDesc();
                     String roster_name = l.getRosterName();
                     if (roster_name != null)  // add roster selection info if present
                         addr += "<;>" + roster_name;
@@ -1652,7 +1660,9 @@ public class threaded_application extends Application {
             private final String sClockMemoryName = "IMCURRENTTIME";
             private WebSocketConnection mConnection = new WebSocketConnection();
             private int displayClockHrs = 0;
+            @SuppressLint("SimpleDateFormat")
             private final SimpleDateFormat sdf12 = new SimpleDateFormat("h:mm a");
+            @SuppressLint("SimpleDateFormat")
             private final SimpleDateFormat sdf24 = new SimpleDateFormat("HH:mm");
 
             @Override
@@ -2734,7 +2744,7 @@ public class threaded_application extends Application {
             case "Six":
                 return 6;
         }
-        return 0;
+        return 1; // default to 1 in case of problems
     }
 
     public int throttleCharToInt(char cWhichThrottle) {

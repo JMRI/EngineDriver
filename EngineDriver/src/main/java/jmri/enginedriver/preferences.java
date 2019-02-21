@@ -113,6 +113,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final int FORCED_RESTART_REASON_THEME = 4;
     private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
     private static final int FORCED_RESTART_REASON_LOCALE = 6;
+//    private static final int FORCED_RESTART_REASON_AUTO_IMPORT_URL = 7;    // not used in preferences.  Used in throttle.java
 
     /**
      * Called when the activity is first created.
