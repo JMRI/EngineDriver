@@ -159,8 +159,8 @@ public class threaded_application extends Application {
 
     String client_address; //address string of the client address
     Inet4Address client_address_inet4; //inet4 value of the client address
-    String client_ssid;    //string of the connected SSID
-    String client_type; //network type, usually WIFI or MOBILE
+    String client_ssid = "UNKNOWN";    //string of the connected SSID
+    String client_type = "UNKNOWN"; //network type, usually WIFI or MOBILE
     //For communication to the comm_thread.
     public comm_handler comm_msg_handler = null;
     //For communication to each of the activities (set and unset by the activity)
@@ -388,8 +388,9 @@ public class threaded_application extends Application {
             /***future PowerLock
              private PowerManager.WakeLock wl = null;
              */
+            @SuppressLint("DefaultLocale")
             public void handleMessage(Message msg) {
-                Log.d("Engine_Driver", "comm_handler: message: " +msg.what);
+//                Log.d("Engine_Driver", "comm_handler: message: " +msg.what);
 
                 switch (msg.what) {
                     // note: if the Thottle is sent in arg1, it is always expected to be a int
@@ -1659,7 +1660,9 @@ public class threaded_application extends Application {
             private final String sClockMemoryName = "IMCURRENTTIME";
             private WebSocketConnection mConnection = new WebSocketConnection();
             private int displayClockHrs = 0;
+            @SuppressLint("SimpleDateFormat")
             private final SimpleDateFormat sdf12 = new SimpleDateFormat("h:mm a");
+            @SuppressLint("SimpleDateFormat")
             private final SimpleDateFormat sdf24 = new SimpleDateFormat("HH:mm");
 
             @Override
