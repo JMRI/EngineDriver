@@ -32,9 +32,11 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -69,9 +71,16 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -89,36 +98,36 @@ import jmri.enginedriver.util.PermissionsHelper;
 import static android.view.InputDevice.getDevice;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
-import static android.view.KeyEvent.KEYCODE_0;
-import static android.view.KeyEvent.KEYCODE_5;
+//import static android.view.KeyEvent.KEYCODE_0;
+//import static android.view.KeyEvent.KEYCODE_5;
 import static android.view.KeyEvent.KEYCODE_A;
 import static android.view.KeyEvent.KEYCODE_BACK;
-import static android.view.KeyEvent.KEYCODE_BUTTON_A;
-import static android.view.KeyEvent.KEYCODE_BUTTON_B;
-import static android.view.KeyEvent.KEYCODE_BUTTON_L1;
-import static android.view.KeyEvent.KEYCODE_BUTTON_L2;
-import static android.view.KeyEvent.KEYCODE_BUTTON_R1;
-import static android.view.KeyEvent.KEYCODE_BUTTON_R2;
-import static android.view.KeyEvent.KEYCODE_BUTTON_X;
-import static android.view.KeyEvent.KEYCODE_BUTTON_Y;
+//import static android.view.KeyEvent.KEYCODE_BUTTON_A;
+//import static android.view.KeyEvent.KEYCODE_BUTTON_B;
+//import static android.view.KeyEvent.KEYCODE_BUTTON_L1;
+//import static android.view.KeyEvent.KEYCODE_BUTTON_L2;
+//import static android.view.KeyEvent.KEYCODE_BUTTON_R1;
+//import static android.view.KeyEvent.KEYCODE_BUTTON_R2;
+//import static android.view.KeyEvent.KEYCODE_BUTTON_X;
+//import static android.view.KeyEvent.KEYCODE_BUTTON_Y;
 import static android.view.KeyEvent.KEYCODE_D;
-import static android.view.KeyEvent.KEYCODE_DEL;
-import static android.view.KeyEvent.KEYCODE_DPAD_DOWN;
-import static android.view.KeyEvent.KEYCODE_DPAD_LEFT;
-import static android.view.KeyEvent.KEYCODE_DPAD_RIGHT;
-import static android.view.KeyEvent.KEYCODE_DPAD_UP;
-import static android.view.KeyEvent.KEYCODE_ENTER;
+//import static android.view.KeyEvent.KEYCODE_DEL;
+//import static android.view.KeyEvent.KEYCODE_DPAD_DOWN;
+//import static android.view.KeyEvent.KEYCODE_DPAD_LEFT;
+//import static android.view.KeyEvent.KEYCODE_DPAD_RIGHT;
+//import static android.view.KeyEvent.KEYCODE_DPAD_UP;
+//import static android.view.KeyEvent.KEYCODE_ENTER;
 import static android.view.KeyEvent.KEYCODE_F;
 import static android.view.KeyEvent.KEYCODE_N;
 import static android.view.KeyEvent.KEYCODE_R;
-import static android.view.KeyEvent.KEYCODE_SPACE;
+//import static android.view.KeyEvent.KEYCODE_SPACE;
 import static android.view.KeyEvent.KEYCODE_T;
 import static android.view.KeyEvent.KEYCODE_V;
 import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
 import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
-import static android.view.KeyEvent.KEYCODE_Z;
+//import static android.view.KeyEvent.KEYCODE_Z;
 
 // for changing the screen brightness
 
@@ -498,6 +507,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             new ThrottleScale(10, 127),
             new ThrottleScale(10, 127),
             new ThrottleScale(10, 127)};
+
+    public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
+    private static final int FORCED_RESTART_REASON_AUTO_IMPORT_URL = 7;
+    private static final String EXTERNAL_PREFERENCES_IMPORT_FILENAME = "auto_preferences.ed";
+    private static final String ENGINE_DRIVER_DIR = "engine_driver";
 
     private enum EsuMc2Led {
         RED (MobileControl2.LED_RED),
@@ -957,6 +971,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     break;
                 case message_type.KIDS_TIMER_END:
                     kidsTimerActions(KIDS_TIMER_ENDED,0);
+                    break;
+                case message_type.AUTO_IMPORT_URL_AVAILABLE:
+                    Log.d("Engine_Driver", "throttle handleMessage AUTO_IMPORT_URL_AVAILABLE " + response_str );
+                    autoImportUrlAskToImport();
                     break;
 
             }
@@ -1702,7 +1720,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     private String getConsistAddressString(int whichThrottle) {
-        String result = "";
+        String result;
         if (!prefShowAddressInsteadOfName) {
             result = mainapp.consists[whichThrottle].toString();
         } else {
@@ -1733,7 +1751,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     // indicate direction using the button pressed state
     void showDirectionIndication(int whichThrottle, int direction) {
 
-        boolean setLeftDirectionButtonEnabled = true;
+        boolean setLeftDirectionButtonEnabled;
         if (direction == 0) {  //0=reverse 1=forward
             setLeftDirectionButtonEnabled = directionButtonsAreCurrentlyReversed(whichThrottle);
         } else {
@@ -4016,34 +4034,34 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         for (int i=0; i < mainapp.maxThrottles; i++) {
             // set listener for select loco buttons
-            Button bSel = (Button) findViewById(R.id.button_select_loco_0);
-            TextView tvLeft = (TextView) findViewById(R.id.loco_left_direction_indicaton_0);
-            TextView tvRight = (TextView) findViewById(R.id.loco_right_direction_indicaton_0);
+            Button bSel = findViewById(R.id.button_select_loco_0);
+            TextView tvLeft = findViewById(R.id.loco_left_direction_indicaton_0);
+            TextView tvRight = findViewById(R.id.loco_right_direction_indicaton_0);
             switch (i) {
                 case 1:
-                    bSel = (Button) findViewById(R.id.button_select_loco_1);
-                    tvLeft = (TextView) findViewById(R.id.loco_left_direction_indicaton_1);
-                    tvRight = (TextView) findViewById(R.id.loco_right_direction_indicaton_1);
+                    bSel = findViewById(R.id.button_select_loco_1);
+                    tvLeft = findViewById(R.id.loco_left_direction_indicaton_1);
+                    tvRight = findViewById(R.id.loco_right_direction_indicaton_1);
                     break;
                 case 2:
-                    bSel = (Button) findViewById(R.id.button_select_loco_2);
-                    tvLeft = (TextView) findViewById(R.id.loco_left_direction_indicaton_2);
-                    tvRight = (TextView) findViewById(R.id.loco_right_direction_indicaton_2);
+                    bSel = findViewById(R.id.button_select_loco_2);
+                    tvLeft = findViewById(R.id.loco_left_direction_indicaton_2);
+                    tvRight = findViewById(R.id.loco_right_direction_indicaton_2);
                     break;
                 case 3:
-                    bSel = (Button) findViewById(R.id.button_select_loco_3);
-                    tvLeft = (TextView) findViewById(R.id.loco_left_direction_indicaton_3);
-                    tvRight = (TextView) findViewById(R.id.loco_right_direction_indicaton_3);
+                    bSel = findViewById(R.id.button_select_loco_3);
+                    tvLeft = findViewById(R.id.loco_left_direction_indicaton_3);
+                    tvRight = findViewById(R.id.loco_right_direction_indicaton_3);
                     break;
                 case 4:
-                    bSel = (Button) findViewById(R.id.button_select_loco_4);
-                    tvLeft = (TextView) findViewById(R.id.loco_left_direction_indicaton_4);
-                    tvRight = (TextView) findViewById(R.id.loco_right_direction_indicaton_4);
+                    bSel = findViewById(R.id.button_select_loco_4);
+                    tvLeft = findViewById(R.id.loco_left_direction_indicaton_4);
+                    tvRight = findViewById(R.id.loco_right_direction_indicaton_4);
                     break;
                 case 5:
-                    bSel = (Button) findViewById(R.id.button_select_loco_5);
-                    tvLeft = (TextView) findViewById(R.id.loco_left_direction_indicaton_5);
-                    tvRight = (TextView) findViewById(R.id.loco_right_direction_indicaton_5);
+                    bSel = findViewById(R.id.button_select_loco_5);
+                    tvLeft = findViewById(R.id.loco_left_direction_indicaton_5);
+                    tvRight = findViewById(R.id.loco_right_direction_indicaton_5);
                     break;
             }
             bSels[i] = bSel;
@@ -4058,28 +4076,28 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             // Arrow Keys
             try {
 
-                Button bRight = (Button) findViewById(R.id.right_speed_button_0);
-                Button bLeft = (Button) findViewById(R.id.left_speed_button_0);
+                Button bRight = findViewById(R.id.right_speed_button_0);
+                Button bLeft = findViewById(R.id.left_speed_button_0);
                 switch (i) {
                     case 1:
-                        bRight = (Button) findViewById(R.id.right_speed_button_1);
-                        bLeft = (Button) findViewById(R.id.left_speed_button_1);
+                        bRight = findViewById(R.id.right_speed_button_1);
+                        bLeft = findViewById(R.id.left_speed_button_1);
                         break;
                     case 2:
-                        bRight = (Button) findViewById(R.id.right_speed_button_2);
-                        bLeft = (Button) findViewById(R.id.left_speed_button_2);
+                        bRight = findViewById(R.id.right_speed_button_2);
+                        bLeft = findViewById(R.id.left_speed_button_2);
                         break;
                     case 3:
-                        bRight = (Button) findViewById(R.id.right_speed_button_3);
-                        bLeft = (Button) findViewById(R.id.left_speed_button_3);
+                        bRight = findViewById(R.id.right_speed_button_3);
+                        bLeft = findViewById(R.id.left_speed_button_3);
                         break;
                     case 4:
-                        bRight = (Button) findViewById(R.id.right_speed_button_4);
-                        bLeft = (Button) findViewById(R.id.left_speed_button_4);
+                        bRight = findViewById(R.id.right_speed_button_4);
+                        bLeft = findViewById(R.id.left_speed_button_4);
                         break;
                     case 5:
-                        bRight = (Button) findViewById(R.id.right_speed_button_5);
-                        bLeft = (Button) findViewById(R.id.left_speed_button_5);
+                        bRight = findViewById(R.id.right_speed_button_5);
+                        bLeft = findViewById(R.id.left_speed_button_5);
                         break;
                 }
                 bRSpds[i] = bRight;
@@ -4102,39 +4120,39 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
             // set listeners for 3 direction buttons for each throttle
             //----------------------------------------
-            Button bFwd = (Button) findViewById(R.id.button_fwd_0);
-            Button bStop = (Button) findViewById(R.id.button_stop_0);
-            Button bRev = (Button) findViewById(R.id.button_rev_0);
+            Button bFwd = findViewById(R.id.button_fwd_0);
+            Button bStop = findViewById(R.id.button_stop_0);
+            Button bRev = findViewById(R.id.button_rev_0);
             View v = findViewById(R.id.speed_cell_0);
             switch (i) {
                 case 1:
-                    bFwd = (Button) findViewById(R.id.button_fwd_1);
-                    bStop = (Button) findViewById(R.id.button_stop_1);
-                    bRev = (Button) findViewById(R.id.button_rev_1);
+                    bFwd = findViewById(R.id.button_fwd_1);
+                    bStop = findViewById(R.id.button_stop_1);
+                    bRev = findViewById(R.id.button_rev_1);
                     v = findViewById(R.id.speed_cell_1);
                     break;
                 case 2:
-                    bFwd = (Button) findViewById(R.id.button_fwd_2);
-                    bStop = (Button) findViewById(R.id.button_stop_2);
-                    bRev = (Button) findViewById(R.id.button_rev_2);
+                    bFwd = findViewById(R.id.button_fwd_2);
+                    bStop = findViewById(R.id.button_stop_2);
+                    bRev = findViewById(R.id.button_rev_2);
                     v = findViewById(R.id.speed_cell_2);
                     break;
                 case 3:
-                    bFwd = (Button) findViewById(R.id.button_fwd_3);
-                    bStop = (Button) findViewById(R.id.button_stop_3);
-                    bRev = (Button) findViewById(R.id.button_rev_3);
+                    bFwd = findViewById(R.id.button_fwd_3);
+                    bStop = findViewById(R.id.button_stop_3);
+                    bRev = findViewById(R.id.button_rev_3);
                     v = findViewById(R.id.speed_cell_3);
                     break;
                 case 4:
-                    bFwd = (Button) findViewById(R.id.button_fwd_4);
-                    bStop = (Button) findViewById(R.id.button_stop_4);
-                    bRev = (Button) findViewById(R.id.button_rev_4);
+                    bFwd = findViewById(R.id.button_fwd_4);
+                    bStop = findViewById(R.id.button_stop_4);
+                    bRev = findViewById(R.id.button_rev_4);
                     v = findViewById(R.id.speed_cell_4);
                     break;
                 case 5:
-                    bFwd = (Button) findViewById(R.id.button_fwd_5);
-                    bStop = (Button) findViewById(R.id.button_stop_5);
-                    bRev = (Button) findViewById(R.id.button_rev_5);
+                    bFwd = findViewById(R.id.button_fwd_5);
+                    bStop = findViewById(R.id.button_stop_5);
+                    bRev = findViewById(R.id.button_rev_5);
                     v = findViewById(R.id.speed_cell_5);
                     break;
             }
@@ -4155,22 +4173,22 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             v.setOnTouchListener(fbtl);
 
             // set up listeners for all throttles
-            SeekBar s = (SeekBar) findViewById(R.id.speed_0);
+            SeekBar s = findViewById(R.id.speed_0);
             switch (i) {
                 case 1:
-                    s = (SeekBar) findViewById(R.id.speed_1);
+                    s = findViewById(R.id.speed_1);
                     break;
                 case 2:
-                    s = (SeekBar) findViewById(R.id.speed_2);
+                    s = findViewById(R.id.speed_2);
                     break;
                 case 3:
-                    s = (SeekBar) findViewById(R.id.speed_3);
+                    s = findViewById(R.id.speed_3);
                     break;
                 case 4:
-                    s = (SeekBar) findViewById(R.id.speed_4);
+                    s = findViewById(R.id.speed_4);
                     break;
                 case 5:
-                    s = (SeekBar) findViewById(R.id.speed_5);
+                    s = findViewById(R.id.speed_5);
                     break;
             }
             throttle_listener thl;
@@ -4184,69 +4202,69 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
             switch (i) {
                 case 0:
-                    lls[i] = (LinearLayout) findViewById(R.id.throttle_0);
+                    lls[i] = findViewById(R.id.throttle_0);
 //                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_0_setspeed);
-                    llLocoIds[i] = (LinearLayout) findViewById(R.id.loco_buttons_group_0);
-                    llLocoDirs[i] = (LinearLayout) findViewById(R.id.dir_buttons_table_0);
-                    tvVols[i] = (TextView) findViewById(R.id.volume_indicator_0); // volume indicators
-                    tvGamePads[i] = (TextView) findViewById(R.id.gamepad_indicator_0); // gamepad indicators
-                    tvSpdLabs[i] = (TextView) findViewById(R.id.speed_label_0); // set_default_function_labels();
-                    tvSpdVals[i] = (TextView) findViewById(R.id.speed_value_label_0);
+                    llLocoIds[i] = findViewById(R.id.loco_buttons_group_0);
+                    llLocoDirs[i] = findViewById(R.id.dir_buttons_table_0);
+                    tvVols[i] = findViewById(R.id.volume_indicator_0); // volume indicators
+                    tvGamePads[i] = findViewById(R.id.gamepad_indicator_0); // gamepad indicators
+                    tvSpdLabs[i] = findViewById(R.id.speed_label_0); // set_default_function_labels();
+                    tvSpdVals[i] = findViewById(R.id.speed_value_label_0);
 //**//                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_0);
                     break;
                 case 1:
-                    lls[i] = (LinearLayout) findViewById(R.id.throttle_1);
+                    lls[i] = findViewById(R.id.throttle_1);
 //                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_1_setspeed);
-                    llLocoIds[i] = (LinearLayout) findViewById(R.id.loco_buttons_group_1);
-                    llLocoDirs[i] = (LinearLayout) findViewById(R.id.dir_buttons_table_1);
-                    tvVols[i] = (TextView) findViewById(R.id.volume_indicator_1); // volume indicators
-                    tvGamePads[i] = (TextView) findViewById(R.id.gamepad_indicator_1); // gamepad indicators
-                    tvSpdLabs[i] = (TextView) findViewById(R.id.speed_label_1); // set_default_function_labels();
-                    tvSpdVals[i] = (TextView) findViewById(R.id.speed_value_label_1);
+                    llLocoIds[i] = findViewById(R.id.loco_buttons_group_1);
+                    llLocoDirs[i] = findViewById(R.id.dir_buttons_table_1);
+                    tvVols[i] = findViewById(R.id.volume_indicator_1); // volume indicators
+                    tvGamePads[i] = findViewById(R.id.gamepad_indicator_1); // gamepad indicators
+                    tvSpdLabs[i] = findViewById(R.id.speed_label_1); // set_default_function_labels();
+                    tvSpdVals[i] = findViewById(R.id.speed_value_label_1);
 //**//                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_1);
                     break;
                 case 2:
-                    lls[i] = (LinearLayout) findViewById(R.id.throttle_2);
+                    lls[i] = findViewById(R.id.throttle_2);
 //                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_2_setspeed);
-                    llLocoIds[i] = (LinearLayout) findViewById(R.id.loco_buttons_group_2);
-                    llLocoDirs[i] = (LinearLayout) findViewById(R.id.dir_buttons_table_2);
-                    tvVols[i] = (TextView) findViewById(R.id.volume_indicator_2); // volume indicators
-                    tvGamePads[i] = (TextView) findViewById(R.id.gamepad_indicator_2); // gamepad indicators
-                    tvSpdLabs[i] = (TextView) findViewById(R.id.speed_label_2); // set_default_function_labels();
-                    tvSpdVals[i] = (TextView) findViewById(R.id.speed_value_label_2);
+                    llLocoIds[i] = findViewById(R.id.loco_buttons_group_2);
+                    llLocoDirs[i] = findViewById(R.id.dir_buttons_table_2);
+                    tvVols[i] = findViewById(R.id.volume_indicator_2); // volume indicators
+                    tvGamePads[i] = findViewById(R.id.gamepad_indicator_2); // gamepad indicators
+                    tvSpdLabs[i] = findViewById(R.id.speed_label_2); // set_default_function_labels();
+                    tvSpdVals[i] = findViewById(R.id.speed_value_label_2);
 //**//                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_2);
                     break;
                 case 3:
-                    lls[i] = (LinearLayout) findViewById(R.id.throttle_3);
+                    lls[i] = findViewById(R.id.throttle_3);
 //                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_3_setspeed);
-                    llLocoIds[i] = (LinearLayout) findViewById(R.id.loco_buttons_group_3);
-                    llLocoDirs[i] = (LinearLayout) findViewById(R.id.dir_buttons_table_3);
-                    tvVols[i] = (TextView) findViewById(R.id.volume_indicator_3); // volume indicators
-                    tvGamePads[i] = (TextView) findViewById(R.id.gamepad_indicator_3); // gamepad indicators
-                    tvSpdLabs[i] = (TextView) findViewById(R.id.speed_label_3); // set_default_function_labels();
-                    tvSpdVals[i] = (TextView) findViewById(R.id.speed_value_label_3);
+                    llLocoIds[i] = findViewById(R.id.loco_buttons_group_3);
+                    llLocoDirs[i] = findViewById(R.id.dir_buttons_table_3);
+                    tvVols[i] = findViewById(R.id.volume_indicator_3); // volume indicators
+                    tvGamePads[i] = findViewById(R.id.gamepad_indicator_3); // gamepad indicators
+                    tvSpdLabs[i] = findViewById(R.id.speed_label_3); // set_default_function_labels();
+                    tvSpdVals[i] = findViewById(R.id.speed_value_label_3);
 //**//                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_3);
                     break;
                 case 4:
-                    lls[i] = (LinearLayout) findViewById(R.id.throttle_4);
+                    lls[i] = findViewById(R.id.throttle_4);
 //                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_4_setspeed);
-                    llLocoIds[i] = (LinearLayout) findViewById(R.id.loco_buttons_group_4);
-                    llLocoDirs[i] = (LinearLayout) findViewById(R.id.dir_buttons_table_4);
-                    tvVols[i] = (TextView) findViewById(R.id.volume_indicator_4); // volume indicators
-                    tvGamePads[i] = (TextView) findViewById(R.id.gamepad_indicator_4); // gamepad indicators
-                    tvSpdLabs[i] = (TextView) findViewById(R.id.speed_label_4); // set_default_function_labels();
-                    tvSpdVals[i] = (TextView) findViewById(R.id.speed_value_label_4);
+                    llLocoIds[i] = findViewById(R.id.loco_buttons_group_4);
+                    llLocoDirs[i] = findViewById(R.id.dir_buttons_table_4);
+                    tvVols[i] = findViewById(R.id.volume_indicator_4); // volume indicators
+                    tvGamePads[i] = findViewById(R.id.gamepad_indicator_4); // gamepad indicators
+                    tvSpdLabs[i] = findViewById(R.id.speed_label_4); // set_default_function_labels();
+                    tvSpdVals[i] = findViewById(R.id.speed_value_label_4);
 //**//                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_4);
                     break;
                 case 5:
-                    lls[i] = (LinearLayout) findViewById(R.id.throttle_5);
+                    lls[i] = findViewById(R.id.throttle_5);
 //                    llSetSpds[i] = (LinearLayout) findViewById(R.id.throttle_5_setspeed);
-                    llLocoIds[i] = (LinearLayout) findViewById(R.id.loco_buttons_group_5);
-                    llLocoDirs[i] = (LinearLayout) findViewById(R.id.dir_buttons_table_5);
-                    tvVols[i] = (TextView) findViewById(R.id.volume_indicator_5); // volume indicators
-                    tvGamePads[i] = (TextView) findViewById(R.id.gamepad_indicator_5); // gamepad indicators
-                    tvSpdLabs[i] = (TextView) findViewById(R.id.speed_label_5); // set_default_function_labels();
-                    tvSpdVals[i] = (TextView) findViewById(R.id.speed_value_label_5);
+                    llLocoIds[i] = findViewById(R.id.loco_buttons_group_5);
+                    llLocoDirs[i] = findViewById(R.id.dir_buttons_table_5);
+                    tvVols[i] = findViewById(R.id.volume_indicator_5); // volume indicators
+                    tvGamePads[i] = findViewById(R.id.gamepad_indicator_5); // gamepad indicators
+                    tvSpdLabs[i] = findViewById(R.id.speed_label_5); // set_default_function_labels();
+                    tvSpdVals[i] = findViewById(R.id.speed_value_label_5);
 //**//                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_5);
                     break;
             }
@@ -4269,7 +4287,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         setActiveThrottle(0); // set the throttle the volume keys control depending on the preference to the default 0
 
-        webView = (WebView) findViewById(R.id.throttle_webview);
+        webView = findViewById(R.id.throttle_webview);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
         webView.getSettings().setDatabasePath(databasePath);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -4356,6 +4374,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         setupSensor(); // setup the support for shake actions.
 
         setupTts();
+
+        if (prefs.getBoolean("prefImportAutoUrl", getApplicationContext().getResources().getBoolean(R.bool.prefImportAutoUrlDefaultValue))) {
+            autoImportFromURL();
+        }
 
     } // end of onCreate()
 
@@ -4770,8 +4792,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     @SuppressWarnings("deprecation")
     @Override
     public boolean onKeyUp(int key, KeyEvent event) {
-        int repeatCnt = event.getRepeatCount();
-        int action = event.getAction();
+//        int repeatCnt = event.getRepeatCount();
+//        int action = event.getAction();
 
         // Handle pressing of the back button
         if (key == KeyEvent.KEYCODE_BACK) {
@@ -4792,7 +4814,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
         int repeatCnt = event.getRepeatCount();
-        int action = event.getAction();
+//        int action = event.getAction();
 
         // Handle pressing of the back button
         if (key == KEYCODE_BACK) {
@@ -5460,6 +5482,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         alert.setView(input);
 
         alert.setPositiveButton(getApplicationContext().getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @SuppressLint("ApplySharedPref")
             public void onClick(DialogInterface dialog, int whichButton) {
                 passwordText = input.getText().toString();
                 Log.d("", "Password Value : " + passwordText);
@@ -5475,17 +5498,192 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     kidsTimerActions(KIDS_TIMER_ENABLED, 0);
                 }
 
-                return;
+//                return;
             }
         });
 
         alert.setNegativeButton(getApplicationContext().getResources().getString(R.string.cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        return;
+//                        return;
                     }
                 });
         alert.show();
 
     }
+
+    @SuppressLint("SwitchIntDef")
+    public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
+        if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, requestCode)) {
+            PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, requestCode);
+        } else {
+            // Go to the correct handler based on the request code.
+            // Only need to consider relevant request codes initiated by this Activity
+            switch (requestCode) {
+                case PermissionsHelper.READ_AUTO_URL_PREFERENCES:
+                    Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
+                    autoImportUrlAskToImportImpl();
+                    break;
+                case PermissionsHelper.STORE_AUTO_URL_PREFERENCES:
+                    Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
+                    autoImportFromURLImpl();
+                    break;
+                default:
+                    // do nothing
+                    Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
+            }
+        }
+    }
+
+
+    private void autoImportFromURL() {
+        navigateToHandler(PermissionsHelper.STORE_AUTO_URL_PREFERENCES);
+    }
+
+    public void autoImportFromURLImpl() {
+        new autoImportFromURL().execute();
+    }
+
+    public class autoImportFromURL extends AsyncTask<String, String, String> {   // Background Async Task to download file
+
+        // Importing file in background thread
+        @Override
+        protected String doInBackground(String... f_url) {
+            Log.d("Engine_Driver", "throttle: Import preferences from URL: start");
+            int count;
+            String n_url;
+
+            if ( (mainapp.connectedHostip != null) ) {
+                n_url = "http://" + mainapp.connectedHostip + ":" + mainapp.web_server_port
+                        + "/prefs/" + ENGINE_DRIVER_DIR + "/" + EXTERNAL_PREFERENCES_IMPORT_FILENAME;
+            } else {
+                // not currently connected
+                return null;
+            }
+
+            try {
+                String urlPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + "_auto.ed";
+                String urlPreferencesFilePath = Environment
+                        .getExternalStorageDirectory().toString()
+                        + "/" + ENGINE_DRIVER_DIR + "/" + urlPreferencesFileName;
+
+                URL url = new URL(n_url);
+
+                URLConnection connection = url.openConnection();
+                connection.connect();
+
+                Date urlDate = new Date(connection.getLastModified());
+
+                //                need to compare the dates here
+                File localFile = new File(urlPreferencesFilePath);
+                Date localDate;
+                if (localFile.exists()) {
+                    long timestamp = localFile.lastModified();
+                    localDate = new Date(timestamp);
+//                    Log.d("Engine_Driver", "throttle: Import preferences from URL: Local file is date " + localDate.toString());
+
+                    if (localDate.compareTo(urlDate)>=0) {
+                        Log.d("Engine_Driver", "throttle: Import preferences from URL: Local file is up-to-date");
+                        return null;
+//                    } else {
+//                        Log.d("Engine_Driver", "throttle: Import preferences from URL: Local file is newer. Date " + localDate.toString());
+                    }
+                }
+
+                // download the file
+                InputStream input = new BufferedInputStream(url.openStream(),
+                        8192);
+
+                File Directory = new File(ENGINE_DRIVER_DIR); // in case the folder does not already exist
+
+                // Output stream
+                FileOutputStream output = new FileOutputStream(urlPreferencesFilePath);
+
+                byte data[] = new byte[1024];
+
+//                long total = 0;
+
+                while ((count = input.read(data)) != -1) {
+//                    total += count;
+                    // writing data to file
+                    output.write(data, 0, count);
+                }
+
+                // flushing output
+                output.flush();
+
+                // closing streams
+                output.close();
+                input.close();
+
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.AUTO_IMPORT_URL_AVAILABLE, "", 0);
+
+            } catch (Exception e) {
+                Log.e("Engine_Driver", "throttle: Import preferences from URL Failed: " + e.getMessage());
+            }
+
+            Log.d("Engine_Driver", "throttle: Import preferences from URL: End");
+            return null;
+        }
+
+    }
+
+
+    private void autoImportUrlAskToImport() {
+        navigateToHandler(PermissionsHelper.READ_AUTO_URL_PREFERENCES);
+    }
+
+    private void autoImportUrlAskToImportImpl() {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            //@Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+                        String urlPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + "_auto.ed";
+                        loadSharedPreferencesFromFile(prefs, urlPreferencesFileName, deviceId, FORCED_RESTART_REASON_AUTO_IMPORT_URL);
+
+                        break;
+
+//                    case DialogInterface.BUTTON_NEGATIVE:
+//                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder ab = new AlertDialog.Builder(throttle.this);
+        ab.setMessage(R.string.importAutoUrlDialog)
+                .setPositiveButton(R.string.yes, dialogClickListener)
+                .setNegativeButton(R.string.no, dialogClickListener);
+        ab.show();
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private void loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
+        Log.d("Engine_Driver", "Preferences: Loading saved preferences from file: " + exportedPreferencesFileName);
+        boolean res = importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
+
+        if (!res) {
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom,exportedPreferencesFileName), Toast.LENGTH_LONG).show();
+        }
+        forceRestartApp(forceRestartReason);
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public void forceRestartApp(int forcedRestartReason) {
+        Log.d("Engine_Driver", "throttle.forceRestartApp() ");
+
+        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
+        sharedPreferences.edit().putBoolean("prefForcedRestart", false).commit();
+        sharedPreferences.edit().putInt("prefForcedRestartReason", forcedRestartReason).commit();
+
+        Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+        Runtime.getRuntime().exit(0); // really force the kill
+    }
+
 }

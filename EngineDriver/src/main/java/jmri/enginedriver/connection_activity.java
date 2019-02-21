@@ -112,8 +112,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private static final int FORCED_RESTART_REASON_THEME = 4;
     private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
     private static final int FORCED_RESTART_REASON_LOCALE = 6;
+    private static final int FORCED_RESTART_REASON_AUTO_IMPORT_URL = 7;
 
-//    private boolean runIntro = false;
 
     static {
         try {
@@ -305,6 +305,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                     mainapp.connectedHostName = connected_hostname;
                     mainapp.connectedHostip = connected_hostip;
                     mainapp.connectedPort = connected_port;
+
                     loadSharedPreferencesFromFile();
 
                     start_throttle_activity();
@@ -316,6 +317,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                     mainapp.connectedHostName = "";
                     shutdown();
                     break;
+
             }
         }
     }
@@ -441,6 +443,10 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                     break;
                 }
                 case FORCED_RESTART_REASON_LOCALE: {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesLocaleChangeSucceeded), Toast.LENGTH_LONG).show();
+                    break;
+                }
+                case FORCED_RESTART_REASON_AUTO_IMPORT_URL: {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesLocaleChangeSucceeded), Toast.LENGTH_LONG).show();
                     break;
                 }

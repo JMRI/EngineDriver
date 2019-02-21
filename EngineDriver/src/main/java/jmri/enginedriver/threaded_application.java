@@ -159,8 +159,8 @@ public class threaded_application extends Application {
 
     String client_address; //address string of the client address
     Inet4Address client_address_inet4; //inet4 value of the client address
-    String client_ssid = "UNKNOWN";    //string of the connected SSID
-    String client_type = "UNKNOWN"; //network type, usually WIFI or MOBILE
+    String client_ssid;    //string of the connected SSID
+    String client_type; //network type, usually WIFI or MOBILE
     //For communication to the comm_thread.
     public comm_handler comm_msg_handler = null;
     //For communication to each of the activities (set and unset by the activity)
@@ -196,7 +196,7 @@ public class threaded_application extends Application {
     //Used to tell set_Labels in Throttle not to update padding for throttle sliders after onCreate.
     public boolean firstCreate = true;
 
-    public int numThrottles = 0;
+    public int numThrottles = 1;
     public int maxThrottles = 6;   // maximum number of throttles the system supports
     public int maxThrottlesCurrentScreen = 6;   // maximum number of throttles the current screen supports
 
@@ -389,6 +389,8 @@ public class threaded_application extends Application {
              private PowerManager.WakeLock wl = null;
              */
             public void handleMessage(Message msg) {
+                Log.d("Engine_Driver", "comm_handler: message: " +msg.what);
+
                 switch (msg.what) {
                     // note: if the Thottle is sent in arg1, it is always expected to be a int
                     // if it is sent in arg0, it will be a string
@@ -687,6 +689,10 @@ public class threaded_application extends Application {
                     case message_type.KIDS_TIMER_TICK:
                         sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_TICK, "", msg.arg1);
                         break;
+                    case message_type.AUTO_IMPORT_URL_AVAILABLE:
+                        Log.d("Engine_Driver", "comm_handler: message: AUTO_IMPORT_URL_AVAILABLE " +msg.what);
+                        sendMsg(throttle_msg_handler, message_type.AUTO_IMPORT_URL_AVAILABLE,"", 0);
+                        break;
                 }
             }
         }
@@ -767,6 +773,7 @@ public class threaded_application extends Application {
             for (ConLoco l : c.getLocos()) { // reacquire each confirmed loco in the consist
                 if (l.isConfirmed()) {
                     String addr = l.getAddress();
+//                    String desc = l.getDesc();
                     String roster_name = l.getRosterName();
                     if (roster_name != null)  // add roster selection info if present
                         addr += "<;>" + roster_name;
@@ -2734,7 +2741,7 @@ public class threaded_application extends Application {
             case "Six":
                 return 6;
         }
-        return 0;
+        return 1; // default to 1 in case of problems
     }
 
     public int throttleCharToInt(char cWhichThrottle) {

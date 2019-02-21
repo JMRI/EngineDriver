@@ -10,7 +10,7 @@
         android:key="throttle_name_preference"
         android:maxLines="1"
         android:summary="@string/prefThrottleNameSummary"
-        android:title="@string/prefThrottleNameTitle"></EditTextPreference>
+        android:title="@string/prefThrottleNameTitle" />
     <ListPreference
         android:defaultValue="@string/prefThrottleOrientationDefaultValue"
         android:entries="@array/OrientationEntries"
@@ -1048,6 +1048,12 @@
                 android:title="@string/prefImportUrlTitle"
                 android:inputType="text"
                 android:maxLines="1"/>
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefImportAutoUrlDefaultValue"
+                android:key="prefImportAutoUrl"
+                android:summary="@string/prefImportAutoUrlSummary"
+                android:title="@string/prefImportAutoUrlTitle" >
+            </CheckBoxPreference>
             <CheckBoxPreference
                 android:defaultValue="@bool/prefImportExportLocoListDefaultValue"
                 android:key="prefImportExportLocoList"
