@@ -1,11 +1,12 @@
 **Version 2.23
- * ESU MC2 support via Gradle dependency
+ * ESU MC2 support Gradle dependency
  * Change target API to 26
  * gamepad fns behave same as screen fns
  * Support for the Flydigi Wee 2 gamepad controller
  * Introduction and Initial Setup Screens (wizard)
  * Recent Connections list - allow user to delete individual entries with long-press
  * Option to import preferences from a URL
+ * Option to automatically import preferences from the JMRI Server on connect
  * Add location permission prompt
  * Add wifi & OS details to About screen for debugging
  * change default for DirChangeWhileMoving and selLocoWhileMoving to false
@@ -15,14 +16,15 @@
  * begin adding automated testing infrastructure, resumed tracking gradle*
  * add View Log to Connect screen
  * delete settings files on Reset Preferences
+ * fix alignment of multi-word functions
  * add permissions bypass for SDK15
  * avoid some crashes reported to Play Store
  * remove some lint warnings
  * rearrange some menus
  * remove redundant tags from log view to improve readability
  * merge -vll resources into default
- * fix alignment of multi-word functions
- * fix pref error message, some linting and spelling
+ * fix pref error message
+ * prioritize eStop button
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
  * New Colourful/Colorful theme
