@@ -775,7 +775,7 @@
 
     <string name="prefConsistFollowString1DefaultValue">LIGHT</string>
     <string name="prefConsistFollowString2DefaultValue">WHISTLE,HORN,BELL</string>
-    <string name="prefConsistFollowStringOtherDefaultValue"></string>
+    <string name="prefConsistFollowStringOtherDefaultValue" />
     <string name="prefConsistFollowAction1DefaultValue">lead</string>
     <string name="prefConsistFollowAction2DefaultValue">lead</string>
     <string name="prefConsistFollowActionOtherDefaultValue">lead</string>
@@ -882,4 +882,16 @@
     <string name="introButtonsNoSlider">Speed Buttons Only</string>
 
     <string name="introbackButtonPress">Please re-start the Engine Driver app to complete the Introduction.</string>
+    <string name="edit_consist_throttle_1">Edit Consist Throttle 1</string>
+    <string name="edit_consist_throttle_2">Edit Consist Throttle 2</string>
+    <string name="edit_consist_throttle_3">Edit Consist Throttle 3</string>
+    <string name="edit_consist_throttle_4">Edit Consist Throttle 4</string>
+    <string name="edit_consist_throttle_5">Edit Consist Throttle 5</string>
+    <string name="edit_consist_throttle_6">Edit Consist Throttle 6</string>
+    <string name="edit_consist_lights_throttle_1">Edit Consist Lights Throttle 1</string>
+    <string name="edit_consist_lights_throttle_2">Edit Consist Lights Throttle 2</string>
+    <string name="edit_consist_lights_throttle_3">Edit Consist Lights Throttle 3</string>
+    <string name="edit_consist_lights_throttle_4">Edit Consist Lights Throttle 4</string>
+    <string name="edit_consist_lights_throttle_5">Edit Consist Lights Throttle 5</string>
+    <string name="edit_consist_lights_throttle_6">Edit Consist Lights Throttle 6</string>
 </resources>
