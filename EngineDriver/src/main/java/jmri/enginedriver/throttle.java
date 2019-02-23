@@ -5644,7 +5644,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-                        String urlPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + "_auto.ed";
+                        String urlPreferencesFileName = "auto_" + mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                         loadSharedPreferencesFromFile(prefs, urlPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_AUTO);
 
                         break;
