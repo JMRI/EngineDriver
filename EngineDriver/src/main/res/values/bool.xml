@@ -67,6 +67,6 @@
 
     <bool name="prefFlashlightButtonDefaultValue">false</bool>
 
-    <bool name="prefImportAutoUrlDefaultValue">true</bool>
+    <bool name="prefImportServerAutoDefaultValue">true</bool>
 
 </resources>

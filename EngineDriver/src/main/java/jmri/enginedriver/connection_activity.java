@@ -108,11 +108,11 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private static final int FORCED_RESTART_REASON_NONE = 0;
     private static final int FORCED_RESTART_REASON_RESET = 1;
     private static final int FORCED_RESTART_REASON_IMPORT = 2;
-    private static final int FORCED_RESTART_REASON_IMPORT_URL = 3;
+    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL = 3;
     private static final int FORCED_RESTART_REASON_THEME = 4;
     private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
     private static final int FORCED_RESTART_REASON_LOCALE = 6;
-    private static final int FORCED_RESTART_REASON_AUTO_IMPORT_URL = 7;
+    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
 
 
     static {
@@ -426,8 +426,9 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportSucceeded), Toast.LENGTH_SHORT).show();
                     break;
                 }
-                case FORCED_RESTART_REASON_IMPORT_URL: {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportFromURLSucceeded), Toast.LENGTH_LONG).show();
+                case FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL: {
+                    Toast.makeText(getApplicationContext(),
+                            getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualSucceeded, prefs.getString("prefPreferencesImportFileName","") ), Toast.LENGTH_LONG).show();
                     break;
                 }
                 case FORCED_RESTART_REASON_RESET: {
@@ -446,13 +447,17 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesLocaleChangeSucceeded), Toast.LENGTH_LONG).show();
                     break;
                 }
-                case FORCED_RESTART_REASON_AUTO_IMPORT_URL: {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesLocaleChangeSucceeded), Toast.LENGTH_LONG).show();
+                case FORCED_RESTART_REASON_IMPORT_SERVER_AUTO: {
+                    Toast.makeText(getApplicationContext(),
+                            getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded, prefs.getString("prefPreferencesImportFileName","") ),
+                            Toast.LENGTH_LONG).show();
                     break;
                 }
             }
 
-            if ((prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_URL) && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET)) {  // reload the preferences page
+            if ((prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_AUTO)
+                    && (prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL)
+                    && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET)) {  // reload the preferences page
                 Intent in = new Intent().setClass(this, preferences.class);
                 navigatingAway = true;
                 startActivityForResult(in, 0);
@@ -912,6 +917,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
+    @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
         if ((requestCode == PermissionsHelper.READ_CONNECTION_LIST) &&
                 (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) &&

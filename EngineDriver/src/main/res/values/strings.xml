@@ -471,12 +471,12 @@
     <string name="prefImportExportErrorReadingFrom">Import from \'engine_driver/%1$s\' failed! You may not have saved the preferences for this host yet.</string>
     <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
 
-    <string name="prefImportUrlTitle">URL to Import from</string>
-    <string name="prefImportUrlSummary">URL to \'Import\' a set of preferences from.\nIf \'http://\' is omitted the file is assumed to be on the currently connected server.</string>
-    <string name="prefImportUrlDefaultValue">/prefs/engine_driver/preferences.ed</string>
+    <string name="prefImportServerManualTitle">Import from current Server (Manually)</string>
+    <string name="prefImportServerManualSummary">Server file to \'Import\' a set of preferences from the currently connected server.\nThe file must be in the \'/engine_driver/\' of the server and the Web Server must be running.\nWarning: Import will start immediately on saving this preference.</string>
+    <string name="prefImportServerManualDefaultValue">preferences.ed</string>
 
-    <string name="prefImportAutoUrlTitle">Auto Import from Server</string>
-    <string name="prefImportAutoUrlSummary">Automatically import the preferences from each server on connection, if available.</string>
+    <string name="prefImportServerAutoTitle">Auto import from all Servers</string>
+    <string name="prefImportServerAutoSummary">Automatically import the preferences from servers on connection.\n(If the file \'/engine_driver/auto_preferences.ed\' is on the server and if it is more recent that the last time checked.)</string>
 
     <string name="importAutoUrlDialog">New Preferences file has been found on this server.\nDo you want to import it?\n\nWarning! All your preferences will be overwitten.</string>
 
@@ -655,14 +655,14 @@
     <string name="toastSwipeUpScreenDimmed">Throttle Screen Dimmed - Swipe up to restore</string>
     <string name="toastSwipeUpViewHidden">Web View temporarily hidden. To hide permanently change in preferences</string>
     <string name="toastThrottleAlertEstop">Alert: Engine %1$s is set to ESTOP</string>
-    <string name="toastThrottleAutoImportURLSucceeded">Automatic preferences import from JMRI Web server succeeded.</string>
+    <string name="toastThrottleImportServerAutoSucceeded">Automatic preferences import from JMRI Web server succeeded.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%1$s-%2$s). Reset to %3$s.</string>
     <string name="toastPreferencesNotNumeric">Value entered is not numeric (%1$s-%2$s). Reset to %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferences Reset to defaults!</string>
-    <string name="toastPreferencesImportFromURLFailed">Preferences Import from URL failed! Check the address is correct. (%1$s)</string>
-    <string name="toastPreferencesImportFromURLSucceeded">Preferences Import from URL Succeeded. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualFailed">Preferences Import from Server failed! Check the file is correct. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Preferences Import from Server Succeeded. (%1$s)</string>
     <string name="toastPreferencesImportSucceeded">Preferences Import from file Succeeded.</string>
     <string name="toastPreferencesThemeChangeSucceeded">Theme Change Succeeded.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Throttle Page type change Succeeded.</string>
@@ -686,6 +686,7 @@
     <string name="toastConnectErrorSavingRecentConnection">Error saving recent connection:</string>
     <string name="toastConnectRemoveDemoHostError">The demo Server can only be removed by modifying the preferences.</string>
     <string name="toastConnectRemoved">Sever removed from List.</string>
+    <string name="toastPreferencesImportServerAutoSucceeded">Auto Preferences Import from Server Succeeded. (%1$s)</string>
 
     <!--    Toast messages for the Routes Activity -->
     <string name="toastRoutesCommandSent">"Command sent to Set route "</string>

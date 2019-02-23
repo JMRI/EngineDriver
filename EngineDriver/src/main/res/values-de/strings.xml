@@ -15,7 +15,7 @@
 
       translations provided by Al Babinsky and Daniel Sieber
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="exit">Beenden</string>
     <string name="settings">Funktionsvorgaben</string>
     <string name="fb_label">Funktionsbezeichnung</string>
@@ -377,7 +377,7 @@
     <string name="prefAutoImportExportSummary">AUTOMATISCHER \'Import\'  der Voreinstellungen für diesen Host und optionaler \'Export\' zu diesem beim Trennen der Verbindung bei jedem Verbindungsaufbau mit einem Host. \n(Um ständig auf einen bekannten Zustand zurückzusetzen, setze \'Auto Import nur bei Verbindungsaufbau\' nach dem ersten Mal oder nach einem manuellen Speichern (unten).)</string>
     <string name="prefAutoImportExportDefaultValue">Keine</string>
     <string name="prefHostImportExportTitle">Manueller Host spezifischer Import/Export</string>
-    <string name="prefHostImportExportSummary">\'Import\' oder \'Export\' deiner Voreinstellungen von/zu einem spezifischen Host in das \'engine_driver/\' Verzeichnis. Der Host muß in deiner Liste Letzte Verbindungen sein.\nWird SOFORT nach Auswahl der Option ausgeführt.\n(Nur verfügbar wenn momentan nicht verbunden.)</string>
+    <string name="prefHostImportExportSummary" tools:ignore="Typos">\'Import\' oder \'Export\' deiner Voreinstellungen von/zu einem spezifischen Host in das \'engine_driver/\' Verzeichnis. Der Host muß in deiner Liste Letzte Verbindungen sein.\nWird SOFORT nach Auswahl der Option ausgeführt.\n(Nur verfügbar wenn momentan nicht verbunden.)</string>
     <string name="prefHostImportExportDefaultValue">Keine</string>
     <string name="prefSwapForwardReverseButtonsTitle">Vertausche Richtungsknöpfe</string>
     <string name="prefSwapForwardReverseButtonsSummary">Vertausche die beiden Richtungsknöpfe permanent für alle Fahrregler.</string>
@@ -477,7 +477,7 @@
     <string name="toastImmersiveModeDisabled">Immersiver Modus der Anzeige temporär ausgeschaltet. Um ihn permanent auszuschalten, ändere die Voreinstellungen.</string>
     <string name="toastThrottleScreenUnlocked">Fahrregler Bildschirm nicht blockiert.</string>
     <string name="toastShakeWebViewHidden">Web Ansicht temporär ausgeblendet. Schüttle nochmals zum Anzeigen. Um sie permanent auszublenden, ändere die Voreinstellungen.</string>
-    <string name="toastShakeWebViewUnavailable">Web Anzeige muß zuerst in den Voreinstellungen ermöglicht werden.</string>
+    <string name="toastShakeWebViewUnavailable" tools:ignore="Typos">Web Anzeige muß zuerst in den Voreinstellungen ermöglicht werden.</string>
     <string name="toastShakeScreenLocked">Fahrregler Bildschirm blockiert - Schüttle nochmals zum Freigeben.</string>
     <string name="toastShakeScreenDimmed">Fahrregler Bildschirm gedimmt - Schüttle nochmals zum Wiederherstellen.</string>
     <string name="toastSwipeUpScreenLocked">Fahrregler Bildschirm blockiert - Wische nach oben um Blockierung aufzuheben.</string>
@@ -489,8 +489,8 @@
     <string name="toastPreferencesOutsideLimits">Eingegebener Wert liegt außerhalb der Grenzen (%1$s-%2$s). Zurücksetzen auf %3$s.</string>
     <string name="toastPreferencesNotNumeric">Eingegebener Wert ist nicht numerisch (%1$s-%2$s). Zurücksetzen auf %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Voreinstellungen werden auf Standardwerte zurückgesetzt!</string>
-    <string name="toastPreferencesImportFromURLFailed">Präferenzen Import von URL fehlgeschlagen! Überprüfen Sie, ob die Adresse korrekt ist. (%1$s)</string>
-    <string name="toastPreferencesImportFromURLSucceeded">Importieren von Voreinstellungen erfolgreich. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualFailed">Präferenzen Import von URL fehlgeschlagen! Überprüfen Sie, ob die Adresse korrekt ist. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Importieren von Voreinstellungen erfolgreich. (%1$s)</string>
     <string name="toastPreferencesImportSucceeded">Voreinstellungen Import aus Datei erfolgreich.</string>
     <string name="toastPreferencesThemeChangeSucceeded">Theme-Wechsel erfolgreich.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Änderung der Drosselseite erfolgreich.</string>

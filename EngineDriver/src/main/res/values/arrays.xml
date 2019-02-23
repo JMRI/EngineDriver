@@ -660,7 +660,6 @@
         <item>None</item>
         <item>Export</item>
         <item>Import</item>
-        <item>Import from URL</item>
         <item>Reset</item>
     </string-array>
 
@@ -668,7 +667,6 @@
         <item>None</item>
         <item>Export</item>
         <item>Import</item>
-        <item>URL</item>
         <item>Reset</item>
     </string-array>
 

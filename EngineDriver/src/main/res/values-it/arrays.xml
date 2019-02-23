@@ -115,7 +115,6 @@
         <item>Niente</item>
         <item>Esportare</item>
         <item>Importare</item>
-        <item>Importa dall\'URL</item>
         <item>Reiniziare</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">

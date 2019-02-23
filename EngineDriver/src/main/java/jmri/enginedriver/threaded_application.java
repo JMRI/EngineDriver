@@ -690,9 +690,9 @@ public class threaded_application extends Application {
                     case message_type.KIDS_TIMER_TICK:
                         sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_TICK, "", msg.arg1);
                         break;
-                    case message_type.AUTO_IMPORT_URL_AVAILABLE:
+                    case message_type.IMPORT_SERVER_AUTO_AVAILABLE:
                         Log.d("Engine_Driver", "comm_handler: message: AUTO_IMPORT_URL_AVAILABLE " +msg.what);
-                        sendMsg(throttle_msg_handler, message_type.AUTO_IMPORT_URL_AVAILABLE,"", 0);
+                        sendMsg(throttle_msg_handler, message_type.IMPORT_SERVER_AUTO_AVAILABLE,"", 0);
                         break;
                 }
             }
@@ -2386,19 +2386,19 @@ public class threaded_application extends Application {
         if (menu != null) {
             if ((power_state == null) || (power_state.equals("2"))) {
                 menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_yellow);
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                     menu.findItem(R.id.power_layout_button).setTitle("Layout Power is UnKnown");
-                }
+//                }
             } else if (power_state.equals("1")) {
                 menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_green);
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                     menu.findItem(R.id.power_layout_button).setTitle("Layout Power is ON");
-                }
+//                }
             } else {
                 menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_red);
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                     menu.findItem(R.id.power_layout_button).setTitle("Layout Power is Off");
-                }
+//                }
             }
         }
     }
@@ -2675,14 +2675,14 @@ public class threaded_application extends Application {
         if (menu != null) {
             if (flashState) {
                 menu.findItem(R.id.flashlight_button).setIcon(R.drawable.flashlight_on);
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                     menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOn);
-                }
+//                }
             } else {
                 menu.findItem(R.id.flashlight_button).setIcon(R.drawable.flashlight_off);
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                     menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
-                }
+//                }
             }
         }
     }

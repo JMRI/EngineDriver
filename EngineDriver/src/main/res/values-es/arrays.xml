@@ -147,7 +147,6 @@
         <item>Ninguno</item>
         <item>Exportar</item>
         <item>Importar</item>
-        <item>Importar desde URL</item>
         <item>Reiniciar</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->

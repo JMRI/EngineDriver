@@ -38,6 +38,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -50,6 +51,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -74,7 +76,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private String deviceId = "";
 
-    private String exportedPreferencesFileName =  "exported_preferences.ed";
+    private String exportedPreferencesFileName = "exported_preferences.ed";
     private boolean overwiteFile = false;
 
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
@@ -87,7 +89,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private static final String IMPORT_EXPORT_OPTION_NONE = "None";
     private static final String IMPORT_EXPORT_OPTION_EXPORT = "Export";
-    private static final String IMPORT_EXPORT_OPTION_IMPORT ="Import";
+    private static final String IMPORT_EXPORT_OPTION_IMPORT = "Import";
     private static final String IMPORT_EXPORT_OPTION_RESET = "Reset";
     private static final String IMPORT_EXPORT_OPTION_IMPORT_URL = "URL";
 
@@ -105,16 +107,18 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     public static final int PROGRESS_BAR_TYPE = 0;
     private static final String EXTERNAL_URL_PREFERENCES_IMPORT = "external_url_preferences_import.ed";
     private static final String ENGINE_DRIVER_DIR = "engine_driver";
+    private static final String SERVER_ENGINE_DRIVER_DIR = "prefs/engine_driver";
 
     private static final int FORCED_RESTART_REASON_NONE = 0;
     private static final int FORCED_RESTART_REASON_RESET = 1;
     private static final int FORCED_RESTART_REASON_IMPORT = 2;
-    private static final int FORCED_RESTART_REASON_IMPORT_URL = 3;
+    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL = 3;
     private static final int FORCED_RESTART_REASON_THEME = 4;
     private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
     private static final int FORCED_RESTART_REASON_LOCALE = 6;
-//    private static final int FORCED_RESTART_REASON_AUTO_IMPORT_URL = 7;    // not used in preferences.  Used in throttle.java
+//    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;    // not used in preferences.  Used in throttle.java
 
+    SharedPreferences sharedPreferences;
     /**
      * Called when the activity is first created.
      */
@@ -127,7 +131,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     public void onCreate(Bundle savedInstanceState) {
         ListPreference preference;
 
-        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         mainapp = (threaded_application) getApplication();
         mainapp.applyTheme(this);
@@ -202,6 +206,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         //put pointer to this activity's message handler in main app's shared variable (If needed)
         mainapp.preferences_msg_handler = new preferences_handler();
+
+        if ((mainapp.connectedHostip == null) || (mainapp.web_server_port == 0)) {
+            enableDisablePreference("prefImportServerManual", false);
+        }
 
     }
 
@@ -352,11 +360,13 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                             loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT);
                         } else if (currentValue.equals(IMPORT_EXPORT_OPTION_RESET)) {
                             resetPreferences(sharedPreferences);
-                        } else if (currentValue.equals(IMPORT_EXPORT_OPTION_IMPORT_URL)) {
-                            navigateToHandler(PermissionsHelper.STORE_PREFERENCES);
-                            navigateToHandler(PermissionsHelper.READ_PREFERENCES);
-                            new importFromURL().execute(sharedPreferences.getString("prefImportUrl", getApplicationContext().getResources().getString(R.string.prefImportUrlDefaultValue)));
                         }
+                    }
+                    break;
+                case "prefImportServerManual":
+                    String val = sharedPreferences.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue));
+                    if (val.equals(val.trim())) {
+                        new importFromURL().execute(sharedPreferences.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue)));
                     }
                     break;
                 case "prefHostImportExport":
@@ -426,7 +436,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     void forceRestartApp(int forcedRestartReason) {
         Log.d("Engine_Driver", "Preferences.forceRestartApp() ");
 
-        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+//        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
         sharedPreferences.edit().putInt("prefForcedRestartReason", forcedRestartReason).commit();
@@ -479,13 +489,13 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings({"unchecked"})
     private boolean loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
         Log.d("Engine_Driver", "Preferences: Loading saved preferences from file: " + exportedPreferencesFileName);
         boolean res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
 
         if (!res) {
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom,exportedPreferencesFileName), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
         }
 //        fixAndReloadImportExportPreference(sharedPreferences);
         forceRestartApp(forceRestartReason);
@@ -502,7 +512,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             File engine_driver_dir = new File(path, ENGINE_DRIVER_DIR);
             engine_driver_dir.mkdir();            // create directory if it doesn't exist
 
-            File dst = new File(path, ENGINE_DRIVER_DIR+"/"+exportedPreferencesFileName);
+            File dst = new File(path, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
 
             if ((dst.exists()) && (confirmDialog)) {
                 overwiteFileDialog(sharedPreferences, dst);
@@ -518,19 +528,20 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     public void reload() {
         // restart the activity so all the preferences show correctly based on what was imported
         Log.d("Engine_Driver", "Preferences: Forcing app reload");
-        if (Build.VERSION.SDK_INT >= 11) {
-            recreate();
-        } else {
-            Intent intent = getIntent();
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            finish();
-            overridePendingTransition(0, 0);
+//        if (Build.VERSION.SDK_INT >= 11) {
+//            recreate();
+//        } else {
+        Intent intent = getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
 
-            startActivity(intent);
-            overridePendingTransition(0, 0);
-        }
+        startActivity(intent);
+        overridePendingTransition(0, 0);
+//        }
     }
 
+    @SuppressLint("ApplySharedPref")
     private void resetPreferences(SharedPreferences sharedPreferences) {
         Log.d("Engine_Driver", "Preferences: Resetting preferences");
         SharedPreferences.Editor prefEdit = sharedPreferences.edit();
@@ -540,10 +551,29 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         delete_settings_file("function_settings.txt");
         delete_settings_file("connections_list.txt");
         delete_settings_file("recent_engine_list.txt");
+        delete_auto_import_settings_files();
 
         reload();
 
         forceRestartApp(FORCED_RESTART_REASON_RESET);
+    }
+
+    private void delete_auto_import_settings_files() {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            File sdcard_path = Environment.getExternalStorageDirectory();
+            File dir = new File(sdcard_path, ENGINE_DRIVER_DIR); // in case the folder does not already exist
+            File[] edFiles = dir.listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File folder, String name) {
+                    return name.toLowerCase().startsWith("auto_");
+                }
+            });
+            if (edFiles.length > 0){
+                for (int i=0; i<edFiles.length; i++) {
+                    delete_settings_file(edFiles[i].getName());
+                }
+            }
+        }
     }
 
     private void delete_settings_file(String file_name) {
@@ -561,7 +591,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     @SuppressLint("ApplySharedPref")
-    private void fixAndReloadImportExportPreference(SharedPreferences sharedPreferences){
+    private void fixAndReloadImportExportPreference(SharedPreferences sharedPreferences) {
         Log.d("Engine_Driver", "Preferences: Fix and Loading saved preferences.");
         sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
         sharedPreferences.edit().putString("prefHostImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
@@ -575,7 +605,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             //@Override
             public void onClick(DialogInterface dialog, int which) {
                 boolean res = false;
-                switch (which){
+                switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                         overwiteFile = true;
@@ -607,7 +637,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         else if (val instanceof Long)
             sharedPreferences.edit().putLong(key, (Long) val).commit();
         else if (val instanceof String)
-            sharedPreferences.edit().putString(key, ((String)val)).commit();
+            sharedPreferences.edit().putString(key, ((String) val)).commit();
 
     }
 
@@ -669,21 +699,21 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private void limitNumThrottles(SharedPreferences sharedPreferences) {
         int numThrottles = mainapp.Numeralise(sharedPreferences.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
         String prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-        if (prefThrottleScreenType.equals("Default") && (numThrottles>3)) {
+        if (prefThrottleScreenType.equals("Default") && (numThrottles > 3)) {
             sharedPreferences.edit().putString("NumThrottle", "Three").commit();
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles,"Three"), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, "Three"), Toast.LENGTH_SHORT).show();
             reload();
         }
 
-        if (prefThrottleScreenType.equals("Vertical") && (numThrottles!=2)) {
+        if (prefThrottleScreenType.equals("Vertical") && (numThrottles != 2)) {
             sharedPreferences.edit().putString("NumThrottle", "Two").commit();
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles,"Two"), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, "Two"), Toast.LENGTH_SHORT).show();
             reload();
         }
 
-        if (prefThrottleScreenType.equals("Big Left") && (numThrottles!=1)) {
+        if (prefThrottleScreenType.equals("Big Left") && (numThrottles != 1)) {
             sharedPreferences.edit().putString("NumThrottle", "One").commit();
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles,"One"), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, "One"), Toast.LENGTH_SHORT).show();
             reload();
         }
 
@@ -724,23 +754,23 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         if ((prefThrottleScreenTypeOriginal.equals("Simple")) || (prefThrottleScreenTypeOriginal.equals("Vertical"))) {
             enable = false;
         }
-        enableDisablePreference("increase_slider_height_preference",enable);
-        enableDisablePreference("left_slider_margin",enable);
-        enableDisablePreference("prefHideSliderAndSpeedButtons",enable);
+        enableDisablePreference("increase_slider_height_preference", enable);
+        enableDisablePreference("left_slider_margin", enable);
+        enableDisablePreference("prefHideSliderAndSpeedButtons", enable);
 
         enable = !prefThrottleScreenTypeOriginal.equals("Simple");
-        enableDisablePreference("prefAlwaysUseDefaultFunctionLabels",enable);
-        enableDisablePreference("prefNumberOfDefaultFunctionLabels",enable);
-        enableDisablePreference("prefNumberOfDefaultFunctionLabelsForRoster",enable);
+        enableDisablePreference("prefAlwaysUseDefaultFunctionLabels", enable);
+        enableDisablePreference("prefNumberOfDefaultFunctionLabels", enable);
+        enableDisablePreference("prefNumberOfDefaultFunctionLabelsForRoster", enable);
 
 //        enable = prefThrottleScreenTypeOriginal.equals("Simple")
 //                || prefThrottleScreenTypeOriginal.equals("Vertical")
 //                || prefThrottleScreenTypeOriginal.equals("Big Left");
         enable = prefThrottleScreenTypeOriginal.equals("Default")
                 || prefThrottleScreenTypeOriginal.equals("Vertical");
-        enableDisablePreference("WebViewLocation",enable);
-        enableDisablePreference("prefIncreaseWebViewSize",enable);
-        enableDisablePreference("InitialThrotWebPage",enable);
+        enableDisablePreference("WebViewLocation", enable);
+        enableDisablePreference("prefIncreaseWebViewSize", enable);
+        enableDisablePreference("InitialThrotWebPage", enable);
     }
 
     //Handle pressing of the back button to end this activity
@@ -795,7 +825,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                             prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, EXPORT_PREFIX + host_name_filename);
                             prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, IMPORT_PREFIX + host_name_filename);
                             prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, EXPORT_PREFIX + host_name_filename);
-                         }
+                        }
                     }
                 }
                 list_reader.close();
@@ -808,23 +838,23 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         if (!foundDemoHost) {
             prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, IMPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
-            prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, EXPORT_PREFIX+ DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+            prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, EXPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
             prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, IMPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
-            prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, EXPORT_PREFIX+ DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+            prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, EXPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
         }
 
     }
 
     private static String[] add(String[] stringArray, String newValue) {
-        String[] tempArray = new String[ stringArray.length + 1 ];
+        String[] tempArray = new String[stringArray.length + 1];
         System.arraycopy(stringArray, 0, tempArray, 0, stringArray.length);
         tempArray[stringArray.length] = newValue;
         return tempArray;
     }
 
     public static boolean isAlreadyInArray(String[] arr, String targetValue) {
-        for(String s: arr){
-            if(s.equals(targetValue))
+        for (String s : arr) {
+            if (s.equals(targetValue))
                 return true;
         }
         return false;
@@ -868,7 +898,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMocuteLabels);
                 break;
         }
-        for (int i=1; i<gamePadPrefLabels.length; i++) {  // skip the first one
+        for (int i = 1; i < gamePadPrefLabels.length; i++) {  // skip the first one
             boolean thisEnabled = true;
             Preference thisPref = getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]);
             thisPref.setTitle(gamePadPrefLabels[i]);
@@ -885,11 +915,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         Preference thisPref;
 
-        enableDisablePreference("prefGamePadFeedbackVolume",thisEnabled);
-        enableDisablePreference("prefGamePadSpeedArrowsThrottleRepeatDelay",thisEnabled);
-        enableDisablePreference("prefGamepadSwapForwardReverseWithScreenButtons",thisEnabled);
-        enableDisablePreference("prefGamepadTestEnforceTesting",thisEnabled);
-        enableDisablePreference("prefGamepadTestNow",thisEnabled);
+        enableDisablePreference("prefGamePadFeedbackVolume", thisEnabled);
+        enableDisablePreference("prefGamePadSpeedArrowsThrottleRepeatDelay", thisEnabled);
+        enableDisablePreference("prefGamepadSwapForwardReverseWithScreenButtons", thisEnabled);
+        enableDisablePreference("prefGamepadTestEnforceTesting", thisEnabled);
+        enableDisablePreference("prefGamepadTestNow", thisEnabled);
 
     }
 
@@ -899,6 +929,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
+    @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
         if (!PermissionsHelper.getInstance().isPermissionGranted(preferences.this, requestCode)) {
             PermissionsHelper.getInstance().requestNecessaryPermissions(preferences.this, requestCode);
@@ -938,17 +969,17 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         @SuppressLint("ApplySharedPref")
         @SuppressWarnings("unchecked")
         public void handleMessage(Message msg) {
-            SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+//            SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
             switch (msg.what) {
-                case message_type.IMPORT_URL_SUCCESS:
+                case message_type.IMPORT_SERVER_MANUAL_SUCCESS:
                     Log.d("Engine_Driver", "Preferences: Message: Import preferences from URL: File Found");
-                    loadSharedPreferencesFromFile(sharedPreferences, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId, FORCED_RESTART_REASON_IMPORT_URL);
+                    loadSharedPreferencesFromFile(sharedPreferences, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL);
                     break;
-                case message_type.IMPORT_URL_FAIL:
+                case message_type.IMPORT_SERVER_MANUAL_FAIL:
                     Log.d("Engine_Driver", "Preferences: Message: Import preferences from URL: File not Found");
                     sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
                     sharedPreferences.edit().putString("prefHostImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportFromURLFailed, sharedPreferences.getString("prefImportUrl", getApplicationContext().getResources().getString(R.string.prefImportUrlDefaultValue))), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualFailed, sharedPreferences.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue))), Toast.LENGTH_LONG).show();
                     reload();
                     break;
 
@@ -983,26 +1014,18 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
 
         // Importing file in background thread
+        @SuppressLint("ApplySharedPref")
         @Override
         protected String doInBackground(String... f_url) {
-            Log.d("Engine_Driver", "Preferences: Import preferences from URL: start");
+            Log.d("Engine_Driver", "Preferences: Import preferences from Server: start");
             int count;
-            String n_url = f_url[0];
+            String n_url = f_url[0].trim();
 
-            if ( (mainapp.connectedHostip != null) ) {
-                if ( !(f_url[0].toLowerCase().contains("http://")) && !(f_url[0].toLowerCase().contains("ftp://")) )  {
-                    n_url = "http://" + mainapp.connectedHostip + ":" + mainapp.web_server_port;
-                    if (!(f_url[0].substring(0,1).equals("/"))) {
-                        n_url = n_url + "/";
-                    }
-                    n_url = n_url + f_url[0];
-                } else {
-                    // not a valid url and not currently connected
-                    Log.d("Engine_Driver", "Preferences: Import preferences from URL: Not a valid url and not currently connected");
-                    dismissDialog(PROGRESS_BAR_TYPE);
-                    mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L,message_type.IMPORT_URL_FAIL);
-                    return null;
-                }
+            if ((mainapp.connectedHostip != null)) {
+                n_url = "http://" + mainapp.connectedHostip + ":" + mainapp.web_server_port + "/" + SERVER_ENGINE_DRIVER_DIR + "/" + f_url[0];
+            } else {
+                Log.d("Engine_Driver", "Preferences: Import preferences from Server: Not currently connected");
+                return null;
             }
 
             try {
@@ -1047,15 +1070,16 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 input.close();
 
                 dismissDialog(PROGRESS_BAR_TYPE);
-                mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L, message_type.IMPORT_URL_SUCCESS);
+                sharedPreferences.edit().putString("prefPreferencesImportFileName", n_url).commit();
+                mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_SUCCESS);
 
             } catch (Exception e) {
-                Log.e("Engine_Driver", "Import preferences from URL Failed: " + e.getMessage());
+                Log.e("Engine_Driver", "Import preferences from Server Failed: " + e.getMessage());
                 dismissDialog(PROGRESS_BAR_TYPE);
-                mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L, message_type.IMPORT_URL_FAIL);
+                mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_FAIL);
             }
 
-            Log.d("Engine_Driver", "Preferences: Import preferences from URL: End");
+            Log.d("Engine_Driver", "Preferences: Import preferences from Server: End");
             return null;
         }
 
@@ -1072,4 +1096,5 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
 
     }
+
 }

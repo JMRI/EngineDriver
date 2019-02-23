@@ -509,7 +509,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             new ThrottleScale(10, 127)};
 
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
-    private static final int FORCED_RESTART_REASON_AUTO_IMPORT_URL = 7;
+    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
     private static final String EXTERNAL_PREFERENCES_IMPORT_FILENAME = "auto_preferences.ed";
     private static final String ENGINE_DRIVER_DIR = "engine_driver";
 
@@ -724,6 +724,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+    @SuppressLint("ApplySharedPref")
     private void kidsTimerActions(int action, int arg) {
         switch (action) {
             case KIDS_TIMER_DISABLED:
@@ -972,7 +973,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 case message_type.KIDS_TIMER_END:
                     kidsTimerActions(KIDS_TIMER_ENDED,0);
                     break;
-                case message_type.AUTO_IMPORT_URL_AVAILABLE:
+                case message_type.IMPORT_SERVER_AUTO_AVAILABLE:
                     Log.d("Engine_Driver", "throttle handleMessage AUTO_IMPORT_URL_AVAILABLE " + response_str );
                     autoImportUrlAskToImport();
                     break;
@@ -4375,7 +4376,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         setupTts();
 
-        if (prefs.getBoolean("prefImportAutoUrl", getApplicationContext().getResources().getBoolean(R.bool.prefImportAutoUrlDefaultValue))) {
+        if (prefs.getBoolean("prefImportServerAuto", getApplicationContext().getResources().getBoolean(R.bool.prefImportServerAutoDefaultValue))) {
             autoImportFromURL();
         }
 
@@ -5520,11 +5521,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             // Go to the correct handler based on the request code.
             // Only need to consider relevant request codes initiated by this Activity
             switch (requestCode) {
-                case PermissionsHelper.READ_AUTO_URL_PREFERENCES:
+                case PermissionsHelper.READ_SERVER_AUTO_PREFERENCES:
                     Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
                     autoImportUrlAskToImportImpl();
                     break;
-                case PermissionsHelper.STORE_AUTO_URL_PREFERENCES:
+                case PermissionsHelper.STORE_SERVER_AUTO_PREFERENCES:
                     Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
                     autoImportFromURLImpl();
                     break;
@@ -5537,7 +5538,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
 
     private void autoImportFromURL() {
-        navigateToHandler(PermissionsHelper.STORE_AUTO_URL_PREFERENCES);
+        navigateToHandler(PermissionsHelper.STORE_SERVER_AUTO_PREFERENCES);
     }
 
     public void autoImportFromURLImpl() {
@@ -5547,6 +5548,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     public class autoImportFromURL extends AsyncTask<String, String, String> {   // Background Async Task to download file
 
         // Importing file in background thread
+        @SuppressLint("ApplySharedPref")
         @Override
         protected String doInBackground(String... f_url) {
             Log.d("Engine_Driver", "throttle: Import preferences from URL: start");
@@ -5561,17 +5563,28 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 return null;
             }
 
+            String urlPreferencesFileName;
+            String urlPreferencesFilePath;
+            URLConnection connection;
+            URL url;
+
             try {
-                String urlPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + "_auto.ed";
-                String urlPreferencesFilePath = Environment
+                urlPreferencesFileName = "auto_" + mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+                urlPreferencesFilePath = Environment
                         .getExternalStorageDirectory().toString()
                         + "/" + ENGINE_DRIVER_DIR + "/" + urlPreferencesFileName;
 
-                URL url = new URL(n_url);
+                url = new URL(n_url);
 
-                URLConnection connection = url.openConnection();
+                connection = url.openConnection();
                 connection.connect();
 
+            } catch (Exception e) {
+                Log.d("Engine_Driver", "throttle: Auto import preferences from Server Failed: " + e.getMessage());
+                return null;
+            }
+
+            try {
                 Date urlDate = new Date(connection.getLastModified());
 
                 //                need to compare the dates here
@@ -5580,10 +5593,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 if (localFile.exists()) {
                     long timestamp = localFile.lastModified();
                     localDate = new Date(timestamp);
-//                    Log.d("Engine_Driver", "throttle: Import preferences from URL: Local file is date " + localDate.toString());
 
                     if (localDate.compareTo(urlDate)>=0) {
-                        Log.d("Engine_Driver", "throttle: Import preferences from URL: Local file is up-to-date");
+                        Log.d("Engine_Driver", "throttle: Auto Import preferences from Server: Local file is up-to-date");
                         return null;
 //                    } else {
 //                        Log.d("Engine_Driver", "throttle: Import preferences from URL: Local file is newer. Date " + localDate.toString());
@@ -5591,38 +5603,30 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 }
 
                 // download the file
-                InputStream input = new BufferedInputStream(url.openStream(),
-                        8192);
+                InputStream input = new BufferedInputStream(url.openStream(),8192);
 
                 File Directory = new File(ENGINE_DRIVER_DIR); // in case the folder does not already exist
 
-                // Output stream
                 FileOutputStream output = new FileOutputStream(urlPreferencesFilePath);
 
                 byte data[] = new byte[1024];
 
-//                long total = 0;
-
                 while ((count = input.read(data)) != -1) {
-//                    total += count;
-                    // writing data to file
                     output.write(data, 0, count);
                 }
 
-                // flushing output
                 output.flush();
-
-                // closing streams
                 output.close();
                 input.close();
 
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.AUTO_IMPORT_URL_AVAILABLE, "", 0);
+                prefs.edit().putString("prefPreferencesImportFileName", urlPreferencesFilePath).commit();
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.IMPORT_SERVER_AUTO_AVAILABLE, "", 0);
 
             } catch (Exception e) {
-                Log.e("Engine_Driver", "throttle: Import preferences from URL Failed: " + e.getMessage());
+                Log.e("Engine_Driver", "throttle: Auto import preferences from Server Failed: " + e.getMessage());
             }
 
-            Log.d("Engine_Driver", "throttle: Import preferences from URL: End");
+            Log.d("Engine_Driver", "throttle: Auto Import preferences from Server: End");
             return null;
         }
 
@@ -5630,7 +5634,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
 
     private void autoImportUrlAskToImport() {
-        navigateToHandler(PermissionsHelper.READ_AUTO_URL_PREFERENCES);
+        navigateToHandler(PermissionsHelper.READ_SERVER_AUTO_PREFERENCES);
     }
 
     private void autoImportUrlAskToImportImpl() {
@@ -5641,7 +5645,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     case DialogInterface.BUTTON_POSITIVE:
                         String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
                         String urlPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + "_auto.ed";
-                        loadSharedPreferencesFromFile(prefs, urlPreferencesFileName, deviceId, FORCED_RESTART_REASON_AUTO_IMPORT_URL);
+                        loadSharedPreferencesFromFile(prefs, urlPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_AUTO);
 
                         break;
 
