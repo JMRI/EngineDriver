@@ -867,26 +867,34 @@
     <item name="android:background">@color/transparent</item>
   </style>
 
-  <style name="alertDialogStyle_colorful" parent="@android:style/Theme.Dialog" tools:targetApi="honeycomb">
+  <!--  <style name="alertDialogStyle_colorful" parent="Theme.AppCompat.Light.Dialog.Alert"> -->
+  <style name="alertDialogStyle_colorful" parent="@android:style/Theme.Holo.Light.Dialog">
     <item name="android:windowBackground">@color/transparent</item>
     <item name="android:background">@color/transparent</item>
-    <item name="android:textSize">18sp</item>
-    <item name="android:textColorAlertDialogListItem">@color/primary_colorful</item>
-    <item name="android:textColorPrimary">@color/solidWhite</item>
-    <item name="android:textColor">@color/solidWhite</item>
-  </style>
-
-  <style name="dialogStyle_colorful" parent="@android:style/Theme.Dialog" tools:targetApi="honeycomb">
-    <item name="android:fullBright">@color/windowBackground_colorful</item>
-    <item name="android:fullDark">@color/windowBackground_colorful</item>
-    <item name="android:background">@color/windowBackground_colorful</item>
+    <item name="android:panelColorBackground">@color/windowBackground_colorful</item>
     <item name="android:textSize">18sp</item>
     <item name="android:textColorAlertDialogListItem">@color/primary_colorful</item>
     <item name="android:textColorPrimary">@color/primary_colorful</item>
     <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:windowTitleStyle">@style/dialogTitle_colorful</item>
+    <item name="android:buttonBarStyle">@style/dialogButtonBar_colorful</item>
   </style>
 
-  <style name="actionBarStyle_colorful" parent="@android:style/Widget.Holo.Light.ActionBar" tools:targetApi="honeycomb">
+  <style name="dialogStyle_colorful" parent="@android:style/Theme.Holo.Light.Dialog">
+    <item name="android:windowBackground">@color/transparent</item>
+    <item name="android:background">@color/transparent</item>
+    <item name="android:panelColorBackground">@color/windowBackground_colorful</item>
+    <item name="android:fullBright">@color/windowBackground_colorful</item>
+    <item name="android:fullDark">@color/windowBackground_colorful</item>
+    <item name="android:textSize">18sp</item>
+    <item name="android:textColorAlertDialogListItem">@color/primary_colorful</item>
+    <item name="android:textColorPrimary">@color/primary_colorful</item>
+    <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:windowTitleStyle">@style/dialogTitle_colorful</item>
+    <item name="android:buttonBarStyle">@style/dialogButtonBar_colorful</item>
+  </style>
+
+  <style name="actionBarStyle_colorful" parent="@android:style/Widget.Holo.Light.ActionBar">
     <item name="android:background">@color/windowBackground_colorful</item>
     <item name="android:icon">@drawable/ic_launcher</item>
     <item name="android:panelColorBackground">@color/windowBackground_colorful</item>
@@ -896,6 +904,20 @@
   <style name="windowTitleBackground_colorful">
     <item name="android:background">@color/windowBackground_colorful</item>
     <item name="android:textColor">@color/primary_colorful</item>
+  </style>
+
+  <style name="dialogTitle_colorful">
+    <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:textAppearance">@style/dialogTitleText_colorful</item>
+  </style>
+
+  <style name="dialogTitleText_colorful">
+    <item name="android:textSize">18sp</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textColor">@color/primary_colorful</item>
+  </style>
+  <style name="dialogButtonBar_colorful">
+    <item name="android:background">@color/buttonFillGradiantDark_colorful</item>
   </style>
 
 </resources>
