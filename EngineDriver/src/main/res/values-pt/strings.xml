@@ -15,7 +15,7 @@
 
       translations provided by Roberto Falorni
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="exit">Saída</string>
     <string name="settings">Padrão das Funções</string>
     <string name="fb_label">Rótulo Função</string>
@@ -165,7 +165,7 @@
     <string name="prefSelLocoWhileMovingTitle">Permitir seleção de locomotiva em movimento?</string>
     <string name="prefSelLocoWhileMovingSummary">Abilita o botão Locomotiva em movimento.</string>
     <string name="prefShowAddressInsteadOfNameTitle">Mostrar Endereço Locomotiva ao invés do Nome?</string>
-    <string name="prefShowAddressInsteadOfNameSummary">Mostrar o Endereço DCC da locomotiva ao invés do Nome Locomotiva na pagina do Controlador</string>
+    <string name="prefShowAddressInsteadOfNameSummary" tools:ignore="Typos">Mostrar o Endereço DCC da locomotiva ao invés do Nome Locomotiva na pagina do Controlador</string>
     <string name="prefIncreaseWebViewSizeTitle">Aumentar tamanho tela Web?</string>
     <string name="prefIncreaseWebViewSizeSummary">Aumentar tamanho tela Web de 60% para pequenas telas.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Usar Modo Imersivo para o Controlador?</string>
@@ -239,7 +239,7 @@
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Usar etiquestas funções padrão?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Visualizar as etiquetas padrão das funções no lugar das etiquetas das entradas da lista de locomotivas.</string>
 
-    <string name="prefDecreaseLocoNumberHeightTitle">Diminuir altura numero Locomotiva?</string>
+    <string name="prefDecreaseLocoNumberHeightTitle" tools:ignore="Typos">Diminuir altura numero Locomotiva?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Utilizar botões menores para o Número da locomotiva, velocidade e botões de direção.</string>
     <string name="prefNumOfThrottles">Número de Controladores</string>
     <string name="prefNumOfThrottlesSummary">Escolha quantos Controladores quer visualizar na tela.</string>
@@ -488,8 +488,8 @@
     <string name="toastPreferencesOutsideLimits">O valor inserido está fora dos limites  (%1$s-%2$s). Reiniciado para %3$s.</string>
     <string name="toastPreferencesNotNumeric">O valor inserido não é um número.(%1$s-%2$s). Reiniciado para %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferências Reiniciadas a valores Padrão!</string>
-    <string name="toastPreferencesImportFromURLFailed">Preferências Importar do URL falhou! Verifique o endereço está correto. (%1$s)</string>
-    <string name="toastPreferencesImportFromURLSucceeded">Preferências Importar do URL Sucesso. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualFailed">Preferências Importar do URL falhou! Verifique o endereço está correto. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Preferências Importar do URL Sucesso. (%1$s)</string>
     <string name="toastPreferencesImportSucceeded">Preferências Importar do arquivo Bem-sucedido.</string>
     <string name="toastPreferencesThemeChangeSucceeded">Mudança de tema é bem-sucedida.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Alteração do tipo de página do acelerador é bem-sucedida.</string>
@@ -497,7 +497,7 @@
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver reiniciado com o idioma escolhido.</string> -->
 
     <!--    Toast messages for the Turnout Activity -->
-    <string name="toastTurnoutInvalidNumber">Numero de desvio inválido.</string>
+    <string name="toastTurnoutInvalidNumber" tools:ignore="Typos">Numero de desvio inválido.</string>
     <string name="toastTurnoutCommandTo">Comando enviado para o desvio %1$s</string>
     <string name="toastTurnoutCommandToClose">Reto</string>
     <string name="toastTurnoutCommandToThrow">Desviado</string>

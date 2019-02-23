@@ -113,7 +113,6 @@
         <item>Nada</item>
         <item>Exportar</item>
         <item>Importar</item>
-        <item>Import from URL</item>
         <item>Reiniciar</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">

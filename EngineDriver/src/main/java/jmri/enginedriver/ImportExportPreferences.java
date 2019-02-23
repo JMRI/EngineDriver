@@ -51,12 +51,6 @@ public class ImportExportPreferences {
     private ArrayList<Integer> address_size_list; // Look at address_type.java
 
     private static final int FORCED_RESTART_REASON_NONE = 0;
-//    private static final int FORCED_RESTART_REASON_RESET = 1;
-//    private static final int FORCED_RESTART_REASON_LOAD = 2;
-//    private static final int FORCED_RESTART_REASON_LOAD_URL = 3;
-//    private static final int FORCED_RESTART_REASON_THEME = 4;
-//    private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
-//    private static final int FORCED_RESTART_REASON_LOCALE = 6;
 
     private boolean writeExportFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName){
         Log.d("Engine_Driver", "ImportExportPreferences: Writing export file");
@@ -135,6 +129,7 @@ public class ImportExportPreferences {
             boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
             int prefForcedRestartReason = sharedPreferences.getInt("prefForcedRestartReason", FORCED_RESTART_REASON_NONE);
             boolean prefImportExportLocoList = sharedPreferences.getBoolean("prefImportExportLocoList", context.getResources().getBoolean(R.bool.prefImportExportLocoListDefaultValue));
+            String prefPreferencesImportFileName = sharedPreferences.getString("prefPreferencesImportFileName", "");
 
 
             File path = Environment.getExternalStorageDirectory();
@@ -195,6 +190,7 @@ public class ImportExportPreferences {
                     prefEdit.putString("prefRunIntro", threaded_application.INTRO_VERSION);  //don't re-run the intro
                     prefEdit.putBoolean("prefForcedRestart", true);
                     prefEdit.putInt("prefForcedRestartReason", prefForcedRestartReason);
+                    prefEdit.putString("prefPreferencesImportFileName", prefPreferencesImportFileName);  //reset the preference
 
                     String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
 
@@ -312,6 +308,7 @@ public class ImportExportPreferences {
         }
     }
 
+    @SuppressLint("ApplySharedPref")
     private boolean saveIntListDataToPreferences(ArrayList<Integer> list, String listName, SharedPreferences sharedPreferences) {
         sharedPreferences.edit().putInt(listName +"_size", list.size()).commit();
         int prefInt;

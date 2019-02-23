@@ -197,16 +197,6 @@
     <string name="prefGamePadButtonLeftTitle">Acció Esquerra Gamepad DPAD</string>
     <string name="prefGamePadButtonSummary">Tria una acció quan prems el botó.</string>
 
-
-
-
-
-
-
-
-
-
-
     <string name="prefEsuMc2Title">Opcions de ESU MobileControl II</string>
     <string name="prefEsuMc2Summary">Escull opcions de ESU MobileControl II</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Opcions del botó lateral del dispositiu</string>
@@ -332,10 +322,6 @@
     <string name="prefDisplayClockTitle">Pantalla de Rellotge Ràpid</string>
     <string name="prefDisplayClockSummary">Estableix el Format del Rellotge Ràpid en la pantalla de Controlador i Web.</string>
 
-
-
-
-
     <string name="prefDisplaySpeedArrowsTitle">Mostra els botons de Velocitat?</string>
     <string name="prefDisplaySpeedArrowsSummary">Mostra els botons al costat dels controls lliscants de velocitat per canviar la velocitat de la locomotora?</string>
 
@@ -352,16 +338,8 @@
     <string name="prefSpeedButtonsSpeedStepTitle">Quantitat a canviar amb el botó de velocitat</string>
     <string name="prefSpeedButtonsSpeedStepSummary">Salt de velociatat amb la fletxa del controlador de velocitat</string>
 
-
-
-
-
     <string name="server_address">Adreça del Servidor</string>
     <string name="routes_route">Nom del Sistema de Ruta</string>
-
-
-
-
 
     <string name="throttle_name">Nom del Controlador: %1$s</string>
     <string name="prefConsistLightsLongClickTitle">Control de llums en Tracció Múltiple amb clic llarg.</string>
@@ -422,34 +400,6 @@
     <string name="functionButton01DefaultValue">Campana</string>
     <string name="functionButton02DefaultValue">Xiulet</string>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <string name="gamepadTestButtonLabelDpadUp">Amunt</string>
     <string name="gamepadTestButtonLabelDpadDown">Avall</string>
     <string name="gamepadTestButtonLabelDpadLeft">Esquerra</string>
@@ -503,8 +453,8 @@
     <string name="toastPreferencesOutsideLimits">El Valor entrat està fora dels límits (%1$s-%2$s). Reiniciat a %3$s.</string>
     <string name="toastPreferencesNotNumeric">El Valor entrat no és un valor numèric (%1$s-%2$s). Reiniciat a %3$s.</string>
     <string name="toastPreferencesResetSucceeded">¡Reinicia les Preferències a valors per defecte!</string>
-    <string name="toastPreferencesImportFromURLFailed">Ha fallat la importació de les preferències de la URL. Comproveu que l\'adreça sigui correcta. (%1$s)</string>
-    <string name="toastPreferencesImportFromURLSucceeded">S\'ha superat la preferència d\'importació de la URL. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualFailed">Ha fallat la importació de les preferències de la URL. Comproveu que l\'adreça sigui correcta. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">S\'ha superat la preferència d\'importació de la URL. (%1$s)</string>
     <string name="toastPreferencesImportSucceeded">Preferències Importar des del fitxer S\'ha superat.</string>
     <string name="toastPreferencesThemeChangeSucceeded">S\'ha produït un canvi de tema.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">S\'ha produït un canvi de tipus de modificació de la pàgina de successos.</string>

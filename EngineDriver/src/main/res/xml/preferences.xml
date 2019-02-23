@@ -1040,19 +1040,29 @@
                 android:key="prefImportExport"
                 android:summary="@string/prefImportExportSummary"
                 android:title="@string/prefImportExportTitle" />
+            <!--
             <EditTextPreference
-                android:defaultValue="@string/prefImportUrlDefaultValue"
-                android:dialogTitle="@string/prefImportUrlTitle"
-                android:key="prefImportUrl"
-                android:summary="@string/prefImportUrlSummary"
-                android:title="@string/prefImportUrlTitle"
+                android:defaultValue="@string/prefImportServerManualDefaultValue"
+                android:dialogTitle="@string/prefImportServerManualTitle"
+                android:key="prefImportServerManual"
+                android:summary="@string/prefImportServerManualSummary"
+                android:title="@string/prefImportServerManualTitle"
+                android:inputType="text"
+                android:maxLines="1"/>
+                -->
+            <jmri.enginedriver.importServerManualEditTextPreference
+                android:defaultValue="@string/prefImportServerManualDefaultValue"
+                android:dialogTitle="@string/prefImportServerManualTitle"
+                android:key="prefImportServerManual"
+                android:summary="@string/prefImportServerManualSummary"
+                android:title="@string/prefImportServerManualTitle"
                 android:inputType="text"
                 android:maxLines="1"/>
             <CheckBoxPreference
-                android:defaultValue="@bool/prefImportAutoUrlDefaultValue"
-                android:key="prefImportAutoUrl"
-                android:summary="@string/prefImportAutoUrlSummary"
-                android:title="@string/prefImportAutoUrlTitle" >
+                android:defaultValue="@bool/prefImportServerAutoDefaultValue"
+                android:key="prefImportServerAuto"
+                android:summary="@string/prefImportServerAutoSummary"
+                android:title="@string/prefImportServerAutoTitle" >
             </CheckBoxPreference>
             <CheckBoxPreference
                 android:defaultValue="@bool/prefImportExportLocoListDefaultValue"
