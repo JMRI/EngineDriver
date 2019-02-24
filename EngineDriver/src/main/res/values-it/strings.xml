@@ -490,13 +490,14 @@
     <string name="toastSwipeUpScreenDimmed">Schermo Controllore Scurito - Scorrere per ripristinare</string>
     <string name="toastSwipeUpViewHidden">Vista Web temporaneamente nascosta.  Per nascondere permanentemente, alterare le preferenze.</string>
     <string name="toastThrottleAlertEstop">Avviso: Locomotiva %1$s é impostata in stato di ESTOP</string>
+    <string name="toastThrottleImportServerAutoSucceeded">Importazione automatica delle preferenze dal server Web JMRI riuscita.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Il valore inserito è fuori dai limiti  (%1$s-%2$s). Ristabilito %3$s.</string>
     <string name="toastPreferencesNotNumeric">Il valore inserito non è un numero.(%1$s-%2$s). Ristabilito %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferenze resettate a valori default!</string>
-    <string name="toastPreferencesImportServerManualFailed">Preferenze Import from URL failed! Controlla che l\'indirizzo sia corretto. (%1$s)</string>
-    <string name="toastPreferencesImportServerManualSucceeded">Preferenze Importa dall\'URL riuscito. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualFailed">Impossibile importare le preferenze dal server! Controlla che il file sia corretto. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Importazione delle preferenze dal server riuscito. (%1$s)</string> -->
     <string name="toastPreferencesImportSucceeded">Preferenze Importa da file Riuscito.</string>
     <string name="toastPreferencesThemeChangeSucceeded">Cambiamento del tema riuscito.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Modifica del tipo di pagina acceleratore. Riuscito.</string>

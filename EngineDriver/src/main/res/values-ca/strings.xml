@@ -454,13 +454,14 @@
     <string name="toastSwipeUpScreenDimmed">Pantalla del Controlador Aclarida - Llisca cap amunt per a restaurar</string>
     <string name="toastSwipeUpViewHidden">Vista web temporalment oculta. Per ocultar-la permanenment realitza el canvi en les preferències</string>
     <string name="toastThrottleAlertEstop">Alerta: Engine %1$s establert a ESTOP</string>
+    <string name="toastThrottleImportServerAutoSucceeded">La importació de preferències automàtiques del servidor web JMRI ha tingut èxit.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">El Valor entrat està fora dels límits (%1$s-%2$s). Reiniciat a %3$s.</string>
     <string name="toastPreferencesNotNumeric">El Valor entrat no és un valor numèric (%1$s-%2$s). Reiniciat a %3$s.</string>
     <string name="toastPreferencesResetSucceeded">¡Reinicia les Preferències a valors per defecte!</string>
-    <string name="toastPreferencesImportServerManualFailed">Ha fallat la importació de les preferències de la URL. Comproveu que l\'adreça sigui correcta. (%1$s)</string>
-    <string name="toastPreferencesImportServerManualSucceeded">S\'ha superat la preferència d\'importació de la URL. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualFailed">La importació del servidor ha fallat. Comproveu que el fitxer és correcte. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Preferències de la importació des del servidor. (%1$s)</string>
     <string name="toastPreferencesImportSucceeded">Preferències Importar des del fitxer S\'ha superat.</string>
     <string name="toastPreferencesThemeChangeSucceeded">S\'ha produït un canvi de tema.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">S\'ha produït un canvi de tipus de modificació de la pàgina de successos.</string>

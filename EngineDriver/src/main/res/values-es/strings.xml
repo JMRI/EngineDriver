@@ -504,13 +504,14 @@
     <string name="toastSwipeUpScreenDimmed">Pantalla del Controlador Atenuada - Desliza hacia arriba para restaurar</string>
     <string name="toastSwipeUpViewHidden">Vista Web temporalmente oculta. Para ocultarla permanentemente realiza el cambio en las preferencias</string>
     <string name="toastThrottleAlertEstop">Atención: Engine %1$s establecido a ESTOP</string>
+    <string name="toastThrottleImportServerAutoSucceeded">La importación automática de preferencias desde el servidor web JMRI se realizó correctamente.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">El Valor entrado está fuera de rango (%1$s-%2$s). Reiniciado a %3$s.</string>
     <string name="toastPreferencesNotNumeric">El Valor entrado no es un valor numérico (%1$s-%2$s). Reiniciado a %3$s.</string>
     <string name="toastPreferencesResetSucceeded">¡Reinicia las Preferencias a valores por defecto!</string>
-    <string name="toastPreferencesImportServerManualFailed">Preferencias Falló la importación desde la URL! Compruebe que la dirección es correcta. (%1$s)</string>
-    <string name="toastPreferencesImportServerManualSucceeded">PreferePreferencias Importación de URL exitosa. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualFailed">¡Falló la importación de preferencias desde el servidor! Compruebe que el archivo es correcto. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Preferencias Importación desde servidor exitoso. (%1$s)</string>
     <string name="toastPreferencesImportSucceeded">Preferencias Importar desde archivo exitoso.</string>
     <string name="toastPreferencesThemeChangeSucceeded">Cambio de tema tenido éxito.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Cambio del tipo de página del acelerador.</string>
