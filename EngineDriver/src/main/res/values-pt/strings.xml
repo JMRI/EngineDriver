@@ -377,6 +377,12 @@
     <string name="prefAutoImportExportTitle">Importar/Exportar específico para Auto host</string>
     <string name="prefAutoImportExportSummary">Para cada conexão a um host, \'Importar\' AUTOMATICAMENTE as preferências para aquele host, e opcionalmente \'Exportar\' ao desconectar. \n(Para voltar constantemente a um estado conhecido, usar \'Auto Importação somente ao conectar\' após a primeira vez, ou após um salvamento manual (abaixo).)</string>
 
+    <string name = "prefImportServerManualTitle">Importar desde el servidor actual (manualmente)</string>
+    <string name = "prefImportServerManualSummary">Archivo de servidor para \'Importar\' \'un conjunto de preferencias del servidor conectado actualmente.\nEl archivo debe estar en el \'/ engine_driver/\'del servidor y el servidor web debe estar ejecutándose . \n Advertencia: la importación comenzará inmediatamente al guardar esta preferencia.</string>
+
+    <string name = "prefImportServerAutoTitle">Importación automática desde todos los servidores</string>
+    <string name = "prefImportServerAutoSummary">Importa automáticamente las preferencias de los servidores en conexión. \n (Si el archivo \'/engine_driver/auto_preferences.ed\' está en el servidor y si es más reciente que la última vez que se verificó.)</string>
+
     <string name="prefHostImportExportTitle">Importar/Exportar específico para host Manual</string>
     <string name="prefHostImportExportSummary">\'Importar\' ou \'Exportar\' suas preferências para um host específico para a pasta \'engine_driver/\'. P host deve estar em sua lista de conexões recentes.\nOcorrerá IMEDIATAMENTE após a seleção da opção.\n(Somente disponível quando não atualmente conectado.)</string>
 
