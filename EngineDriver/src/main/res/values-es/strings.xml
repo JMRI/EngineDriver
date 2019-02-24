@@ -15,7 +15,7 @@
 
       translations provided by Luis Zamora (eldelinux)
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="exit">Salir</string>
     <string name="settings">Funciones por defecto</string>
     <string name="fb_label">Etiquetas de funciones</string>
@@ -311,7 +311,7 @@
     <string name="prefHideSystemRouteNamesSummary">Oculta nombres del sistema para Rutas, utilizado para ahorrar espacio en la lista de Rutas.</string>
     <string name="prefDelimiterTitle">Delimitador de ubicación</string>
 
-    <string name="prefDelimiterSummary">Establece el caracter para marcar el final de  una Localización de un Desvío y nombres de Rutas</string>
+    <string name="prefDelimiterSummary" tools:ignore="Typos">Establece el caracter para marcar el final de  una Localización de un Desvío y nombres de Rutas</string>
     <string name="prefScreenBrightnessDimTitle">Cambia % el brillo de la Pantalla</string>
     <string name="prefScreenBrightnessDimSummary">Parámetros del brillo a utilizar cuando lo cambiamos en la pantalla (0%-99%). Deshabilita automáticamente Brillo-automático/Adaptar el Brillo si es posible. </string>
 
@@ -376,6 +376,12 @@
     <string name="prefImportExportLocoListSummary">Incluye la lista de locomotoras recientes en \'Importar\' y \'Exportar\'.</string>
     <string name="prefAutoImportExportTitle">Importación/exportación específica de host automático</string>
     <string name="prefAutoImportExportSummary">En cada conexión con un host, AUTOMÁTICAMENTE \'Importa\' las preferencias para ese host, y opcionalmente \'Exporta\' cuando desconecte. \n(Para restablecer constantemente a un estado conocido, establezca en \'Importación automática solo al conectar\' después de la primera vez, o después de un guardado manual (a continuación).)</string>
+
+    <string name = "prefImportServerManualTitle">Importar desde el servidor actual (manualmente)</string>
+    <string name = "prefImportServerManualSummary">Archivo de servidor para \'Importar\' \'un conjunto de preferencias del servidor conectado actualmente.\nEl archivo debe estar en el \'/engine_driver/\'del servidor y el servidor web debe estar ejecutándose.\nAdvertencia: la importación comenzará inmediatamente al guardar esta preferencia.</string>
+
+    <string name = "prefImportServerAutoTitle">Importación automática desde todos los servidores</string>
+    <string name = "prefImportServerAutoSummary">Importa automáticamente las preferencias de los servidores en conexión.\n(Si el archivo \'/engine_driver/auto_preferences.ed\' está en el servidor y si es más reciente que la última vez que se verificó.)</string>
 
     <string name="prefHostImportExportTitle">Importación/exportación específica de host manual</string>
     <string name="prefHostImportExportSummary">\'Importa\' o \'Exporta\' tus preferencias para un host específico al directorio \'engine_driver/\'. El host debe estar en la lista de conexiones recientes.\nSucederá INMEDIATAMENTE después de seleccionar la opción.\n(Sólo disponible cuando se está conectado.)</string>
@@ -498,13 +504,14 @@
     <string name="toastSwipeUpScreenDimmed">Pantalla del Controlador Atenuada - Desliza hacia arriba para restaurar</string>
     <string name="toastSwipeUpViewHidden">Vista Web temporalmente oculta. Para ocultarla permanentemente realiza el cambio en las preferencias</string>
     <string name="toastThrottleAlertEstop">Atención: Engine %1$s establecido a ESTOP</string>
+    <string name="toastThrottleImportServerAutoSucceeded">La importación automática de preferencias desde el servidor web JMRI se realizó correctamente.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">El Valor entrado está fuera de rango (%1$s-%2$s). Reiniciado a %3$s.</string>
     <string name="toastPreferencesNotNumeric">El Valor entrado no es un valor numérico (%1$s-%2$s). Reiniciado a %3$s.</string>
     <string name="toastPreferencesResetSucceeded">¡Reinicia las Preferencias a valores por defecto!</string>
-    <string name="toastPreferencesImportServerManualFailed">Preferencias Falló la importación desde la URL! Compruebe que la dirección es correcta. (%1$s)</string>
-    <string name="toastPreferencesImportServerManualSucceeded">PreferePreferencias Importación de URL exitosa. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualFailed">¡Falló la importación de preferencias desde el servidor! Compruebe que el archivo es correcto. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Preferencias Importación desde servidor exitoso. (%1$s)</string>
     <string name="toastPreferencesImportSucceeded">Preferencias Importar desde archivo exitoso.</string>
     <string name="toastPreferencesThemeChangeSucceeded">Cambio de tema tenido éxito.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Cambio del tipo de página del acelerador.</string>

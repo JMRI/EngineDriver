@@ -375,7 +375,13 @@
     <string name="prefImportExportLocoListSummary">Einbeziehen der Loks in der Liste kürzlich verwendeter Loks beim \'Import\' oder \'Export\'.</string>
     <string name="prefAutoImportExportTitle">Auto Host spezifischer Import/Export</string>
     <string name="prefAutoImportExportSummary">AUTOMATISCHER \'Import\'  der Voreinstellungen für diesen Host und optionaler \'Export\' zu diesem beim Trennen der Verbindung bei jedem Verbindungsaufbau mit einem Host. \n(Um ständig auf einen bekannten Zustand zurückzusetzen, setze \'Auto Import nur bei Verbindungsaufbau\' nach dem ersten Mal oder nach einem manuellen Speichern (unten).)</string>
-    <string name="prefAutoImportExportDefaultValue">Keine</string>
+
+    <string name = "prefImportServerManualTitle">Import vom aktuellen Server (manuell)</string>
+    <string name = "prefImportServerManualSummary">Serverdatei für \'Import\' eine Reihe von Einstellungen vom aktuell verbundenen Server.\nDie Datei muss sich im \'/engine_driver/\' des Servers befinden und der Webserver muss ausgeführt werden.\nWarnung: Der Import wird sofort beim Speichern dieser Einstellung gestartet.</string>
+
+    <string name = "prefImportServerAutoTitle">Automatischer Import von allen Servern</string>
+    <string name = "prefImportServerAutoSummary">Importieren Sie automatisch die Einstellungen von den Servern, die mit der Verbindung verbunden sind. \ n (Wenn sich die Datei \'/engine_driver/auto_preferences.ed\' auf dem Server befindet und das aktuelle Mal das letzte Mal überprüft wurde</string>
+
     <string name="prefHostImportExportTitle">Manueller Host spezifischer Import/Export</string>
     <string name="prefHostImportExportSummary" tools:ignore="Typos">\'Import\' oder \'Export\' deiner Voreinstellungen von/zu einem spezifischen Host in das \'engine_driver/\' Verzeichnis. Der Host muß in deiner Liste Letzte Verbindungen sein.\nWird SOFORT nach Auswahl der Option ausgeführt.\n(Nur verfügbar wenn momentan nicht verbunden.)</string>
     <string name="prefHostImportExportDefaultValue">Keine</string>
@@ -484,13 +490,14 @@
     <string name="toastSwipeUpScreenDimmed">Fahrregler Bildschirm gedimmt - Wische nach oben zum Wiederherstellen.</string>
     <string name="toastSwipeUpViewHidden">Web Ansicht temporär ausgeblendet. Um sie permanent auszublenden, ändere die Voreinstellungen.</string>
     <string name="toastThrottleAlertEstop">Warnung: Lok %1$s hat NOT-STOP</string>
+    <string name="toastThrottleImportServerAutoSucceeded">Automatischer Import von Voreinstellungen vom JMRI-Webserver erfolgreich.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Eingegebener Wert liegt außerhalb der Grenzen (%1$s-%2$s). Zurücksetzen auf %3$s.</string>
     <string name="toastPreferencesNotNumeric">Eingegebener Wert ist nicht numerisch (%1$s-%2$s). Zurücksetzen auf %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Voreinstellungen werden auf Standardwerte zurückgesetzt!</string>
-    <string name="toastPreferencesImportServerManualFailed">Präferenzen Import von URL fehlgeschlagen! Überprüfen Sie, ob die Adresse korrekt ist. (%1$s)</string>
-    <string name="toastPreferencesImportServerManualSucceeded">Importieren von Voreinstellungen erfolgreich. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualFailed">Präferenzen Import vom Server fehlgeschlagen! Überprüfen Sie, ob die Adresse korrekt ist. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Import der Voreinstellungen vom Server erfolgreich. (%1$s)</string>
     <string name="toastPreferencesImportSucceeded">Voreinstellungen Import aus Datei erfolgreich.</string>
     <string name="toastPreferencesThemeChangeSucceeded">Theme-Wechsel erfolgreich.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Änderung der Drosselseite erfolgreich.</string>

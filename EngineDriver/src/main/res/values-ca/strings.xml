@@ -355,6 +355,12 @@
     <string name="prefAutoImportExportTitle">Importació/exportació específica de host automàtic</string>
     <string name="prefAutoImportExportSummary">En cada connexió amb un host, AUTOMÀTICAMENT \'Importa\' les preferències per aquest host, i opcionalment \'Exporta\' quan desconecti. \n(Per a restablir constantment a un estat conegut, estableix en \'Importació automàtica tan sols al connectar\' després de la primera vegada, o després de desar-ho manualment (a continuació).)</string>
 
+    <string name = "prefImportServerManualTitle">Importa des del servidor actual (manualment)</string>
+    <string name = "prefImportServerManualSummary">Fitxer del servidor a \'Importar\' un conjunt de preferències del servidor actualment connectat.\nEl fitxer ha d\'estar al \'/engine_driver/\' del servidor i el servidor web ha d\'estar executat.\nObjectiu: la importació començarà immediatament a desar aquesta preferència.</string>
+
+    <string name = "prefImportServerAutoTitle">Importació automàtica de tots els servidors</string>
+    <string name = "prefImportServerAutoSummary">Importa automàticament les preferències dels servidors a la connexió.\n(Si el fitxer \'/engine_driver/auto_preferences.ed\' està al servidor i si és més recent que s\'hagi verificat l\'última vegada.)</string>
+
     <string name="prefHostImportExportTitle">Importació/exportació específica de host manual</string>
     <string name="prefHostImportExportSummary">\'Importa\' o \'Exporta\' les teves preferències per a un host específic al directori \'engine_driver/\'. El host ha d\'estar en la llista de connexions recents.\nSucceirà IMMEDIATAMENT després de seleccionar l\'opció.\n(Tan sols disponible quan s\'està connectat.)</string>
 
@@ -448,13 +454,14 @@
     <string name="toastSwipeUpScreenDimmed">Pantalla del Controlador Aclarida - Llisca cap amunt per a restaurar</string>
     <string name="toastSwipeUpViewHidden">Vista web temporalment oculta. Per ocultar-la permanenment realitza el canvi en les preferències</string>
     <string name="toastThrottleAlertEstop">Alerta: Engine %1$s establert a ESTOP</string>
+    <string name="toastThrottleImportServerAutoSucceeded">La importació de preferències automàtiques del servidor web JMRI ha tingut èxit.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">El Valor entrat està fora dels límits (%1$s-%2$s). Reiniciat a %3$s.</string>
     <string name="toastPreferencesNotNumeric">El Valor entrat no és un valor numèric (%1$s-%2$s). Reiniciat a %3$s.</string>
     <string name="toastPreferencesResetSucceeded">¡Reinicia les Preferències a valors per defecte!</string>
-    <string name="toastPreferencesImportServerManualFailed">Ha fallat la importació de les preferències de la URL. Comproveu que l\'adreça sigui correcta. (%1$s)</string>
-    <string name="toastPreferencesImportServerManualSucceeded">S\'ha superat la preferència d\'importació de la URL. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualFailed">La importació del servidor ha fallat. Comproveu que el fitxer és correcte. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Preferències de la importació des del servidor. (%1$s)</string>
     <string name="toastPreferencesImportSucceeded">Preferències Importar des del fitxer S\'ha superat.</string>
     <string name="toastPreferencesThemeChangeSucceeded">S\'ha produït un canvi de tema.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">S\'ha produït un canvi de tipus de modificació de la pàgina de successos.</string>

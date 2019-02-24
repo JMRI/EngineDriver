@@ -287,7 +287,7 @@
 
     <string name="prefRosterFilterTitle">Filtro dell\'Elenco</string>
     <string name="prefRosterFilterSummary">Includere solo voci di elenco che iniziano con…</string>
-    <string name="prefRosterFilterDefaultValue"></string>
+    <string name="prefRosterFilterDefaultValue" />
     <string name="FilterRosterList">Filtro</string>
     <string name="FilterRosterListHint">Contiene…</string>
     <string name="LocoSelectMethodHelp">Inserisci sopra  l\'indirizzo DCC della tua locomotiva  e fai clic su \'Acquisisci\'.\n\nAlterntivamente, seleziona una loco \'dall\'Elenco\' JMRI  o selezionala fra quelle usate \'Recentemente\' facendo clic su uno dei pulsanti.</string>
@@ -377,6 +377,12 @@
     <string name="prefImportExportLocoListSummary">Include le locomotive nella lista locomotive recenti in \'Importare\' e \'Esportare\'.</string>
     <string name="prefAutoImportExportTitle">Importare/Esportare specifico per Auto host</string>
     <string name="prefAutoImportExportSummary">Per ogni connessione a um host, \'Importare\' AUTOMATICAMENTE le preferenze per quell\'host, e opzionalmente \'Esportare\' alla disconnessione. \n(Per tornare continuamente a uno stato noto, usaer \'Auto Importazione solo alla connessione\' dopo la prima volta, o dopo un salvataggio manuale (giù).)</string>
+
+    <string name = "prefImportServerManualTitle">Importa dal server corrente (manualmente) </string>
+    <string name = "prefImportServerManualSummary">File del server per \'Importare\' una serie di preferenze dal server attualmente collegato.\nIl file deve essere in \'/engine_driver/\' del server e il server Web deve essere in esecuzione.\nAttenzione: l\'importazione inizierà immediatamente salvando questa preferenza.</string>
+
+    <string name = "prefImportServerAutoTitle">Importazione automatica da tutti i server</string>
+    <string name = "prefImportServerAutoSummary">Importa automaticamente le preferenze dai server alla connessione.\n(Se il file \'/engine_driver/auto_preferences.ed\' è sul server e se è più recente che l\'ultima volta è stato controllato).</string>
 
     <string name="prefHostImportExportTitle">Importare/Esportare specifico per host Manuale</string>
     <string name="prefHostImportExportSummary">\'Importare\' o \'Esportare\' le tue preferenze per un host specifico nella cartella \'engine_driver/\'. L\'host deve essere nella tua lista di connessioni recenti.\nAvverrà IMMEDIATAMENTE dopo la selezione dell\'opzione.\n(Disponibile solo quando non attualmente connesso.)</string>
@@ -484,13 +490,14 @@
     <string name="toastSwipeUpScreenDimmed">Schermo Controllore Scurito - Scorrere per ripristinare</string>
     <string name="toastSwipeUpViewHidden">Vista Web temporaneamente nascosta.  Per nascondere permanentemente, alterare le preferenze.</string>
     <string name="toastThrottleAlertEstop">Avviso: Locomotiva %1$s é impostata in stato di ESTOP</string>
+    <string name="toastThrottleImportServerAutoSucceeded">Importazione automatica delle preferenze dal server Web JMRI riuscita.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Il valore inserito è fuori dai limiti  (%1$s-%2$s). Ristabilito %3$s.</string>
     <string name="toastPreferencesNotNumeric">Il valore inserito non è un numero.(%1$s-%2$s). Ristabilito %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferenze resettate a valori default!</string>
-    <string name="toastPreferencesImportServerManualFailed">Preferenze Import from URL failed! Controlla che l\'indirizzo sia corretto. (%1$s)</string>
-    <string name="toastPreferencesImportServerManualSucceeded">Preferenze Importa dall\'URL riuscito. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualFailed">Impossibile importare le preferenze dal server! Controlla che il file sia corretto. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Importazione delle preferenze dal server riuscito. (%1$s)</string> -->
     <string name="toastPreferencesImportSucceeded">Preferenze Importa da file Riuscito.</string>
     <string name="toastPreferencesThemeChangeSucceeded">Cambiamento del tema riuscito.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Modifica del tipo di pagina acceleratore. Riuscito.</string>
