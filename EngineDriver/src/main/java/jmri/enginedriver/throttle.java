@@ -1257,6 +1257,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     // get all the preferences that should be read when the activity is created or resumes
+    @SuppressLint("ApplySharedPref")
     protected void getCommonPrefs(boolean isCreate) {
 
         if (isCreate) {  //only do onCreate
@@ -2006,7 +2007,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     private void clearVolumeAndGamepadAdditionalIndicators() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
                 if ((prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_NONE)) || (prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_GAMEPAD))) {
                     bSels[throttleIndex].setActivated(false);
@@ -2015,7 +2016,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     bSels[throttleIndex].setHovered(false);
                 }
             }
-        }
+//        }
     }
 
     @SuppressLint("NewApi")
@@ -2600,7 +2601,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
         //Log.d("Engine_Driver", "dgme " + event.getAction());
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
             if (!whichGamePadMode.equals(WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
                 boolean acceptEvent = true; // default to assuming that we will respond to the event
@@ -2685,7 +2686,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 } else { // event is from a gamepad that has not finished testing. Ignore it
                     return (true); // stop processing this key
                 }
-            }
+//            }
         }
         return super.dispatchGenericMotionEvent(event);
     }
@@ -3987,7 +3988,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         screenBrightnessModeOriginal = getScreenBrightnessMode();
 
         // myGesture = new GestureDetector(this);
-        GestureOverlayView ov = (GestureOverlayView) findViewById(R.id.throttle_overlay);
+        GestureOverlayView ov = findViewById(R.id.throttle_overlay);
         ov.addOnGestureListener(this);
         ov.setGestureVisible(false);
 
@@ -5640,13 +5641,20 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private void autoImportUrlAskToImportImpl() {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             //@Override
+            @SuppressLint("ApplySharedPref")
             public void onClick(DialogInterface dialog, int which) {
+
+                String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+                String urlPreferencesFileName = "auto_" + mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
-                        String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-                        String urlPreferencesFileName = "auto_" + mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+                        prefs.edit().putString("prefPreferencesImportAll", "Yes").commit();
                         loadSharedPreferencesFromFile(prefs, urlPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_AUTO);
 
+                        break;
+                    case DialogInterface.BUTTON_NEUTRAL:
+                        prefs.edit().putString("prefPreferencesImportAll", "No").commit();
+                        loadSharedPreferencesFromFile(prefs, urlPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_AUTO);
                         break;
 
 //                    case DialogInterface.BUTTON_NEGATIVE:
@@ -5656,9 +5664,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         };
 
         AlertDialog.Builder ab = new AlertDialog.Builder(throttle.this);
-        ab.setMessage(R.string.importAutoUrlDialog)
-                .setPositiveButton(R.string.yes, dialogClickListener)
-                .setNegativeButton(R.string.no, dialogClickListener);
+        ab.setMessage(R.string.importServerAutoDialog)
+                .setPositiveButton(R.string.importServerAutoDialogPositiveButton, dialogClickListener)
+                .setNegativeButton(R.string.no, dialogClickListener)
+                .setNeutralButton(R.string.importServerAutoDialogNeutralButton, dialogClickListener);
         ab.show();
     }
 
