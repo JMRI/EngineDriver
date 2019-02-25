@@ -383,6 +383,10 @@
     <string name = "prefImportServerAutoTitle">Importación automática desde todos los servidores</string>
     <string name = "prefImportServerAutoSummary">Importa automáticamente las preferencias de los servidores en conexión.\n(Si el archivo \'/engine_driver/auto_preferences.ed\' está en el servidor y si es más reciente que la última vez que se verificó.)</string>
 
+    <string name = "importServerAutoDialog">New Preferences file se ha encontrado en este servidor.\n¿Quieres importarlo?\n\nWarning!\n\'Completo\' - todas las preferencias serán modificadas.\n\n\'Parcial\' - Todas las preferencias, excepto el tema y algunas líneas de puntero, se sobrescribirá.</string>
+    <string name = "importServerAutoDialogPositiveButton">Completo</string>
+    <string name = "importServerAutoDialogNeutralButton">Parcial</string>
+
     <string name="prefHostImportExportTitle">Importación/exportación específica de host manual</string>
     <string name="prefHostImportExportSummary">\'Importa\' o \'Exporta\' tus preferencias para un host específico al directorio \'engine_driver/\'. El host debe estar en la lista de conexiones recientes.\nSucederá INMEDIATAMENTE después de seleccionar la opción.\n(Sólo disponible cuando se está conectado.)</string>
 

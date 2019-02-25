@@ -361,6 +361,10 @@
     <string name = "prefImportServerAutoTitle">Importació automàtica de tots els servidors</string>
     <string name = "prefImportServerAutoSummary">Importa automàticament les preferències dels servidors a la connexió.\n(Si el fitxer \'/engine_driver/auto_preferences.ed\' està al servidor i si és més recent que s\'hagi verificat l\'última vegada.)</string>
 
+    <string name = "importServerAutoDialog">S\'ha trobat un nou fitxer de preferències en aquest servidor.\nVols importar-lo?\n\nAdvertència!\n\'Complet\' - Totes les vostres preferències seran sobreescriure.\n\n\'Parcial\' - totes les preferències, excepte el tema i algunes preferències de tipus de pàgina de rúgies, seran sobreescriuen.</string>
+    <string name = "importServerAutoDialogPositiveButton">Complet</string>
+    <string name = "importServerAutoDialogNeutralButton">Parcial</string>
+
     <string name="prefHostImportExportTitle">Importació/exportació específica de host manual</string>
     <string name="prefHostImportExportSummary">\'Importa\' o \'Exporta\' les teves preferències per a un host específic al directori \'engine_driver/\'. El host ha d\'estar en la llista de connexions recents.\nSucceirà IMMEDIATAMENT després de seleccionar l\'opció.\n(Tan sols disponible quan s\'està connectat.)</string>
 
