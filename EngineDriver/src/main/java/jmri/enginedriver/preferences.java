@@ -125,6 +125,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
 
+    private static final String PREF_IMPORT_ALL_FULL = "Yes";
+    private static final String PREF_IMPORT_ALL_PARTIAL = "No";
+    private static final String PREF_IMPORT_ALL_RESET = "-";
+
     @SuppressLint("ApplySharedPref")
     @SuppressWarnings("deprecation")
     @Override
@@ -195,6 +199,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         sharedPreferences.edit().putBoolean("prefForcedRestart", false).commit();
         sharedPreferences.edit().putInt("prefForcedRestartReason", FORCED_RESTART_REASON_NONE).commit();
+        sharedPreferences.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
 
         if (!sharedPreferences.getString("prefImportExport", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)).equals("None")) {
             // preference is still confused after a reload or reset
@@ -363,10 +368,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         }
                     }
                     break;
-                case "prefImportServerManual":
+                case "prefPreferencesImportAll":
                     String val = sharedPreferences.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue));
-                    if (val.equals(val.trim())) {
-                        new importFromURL().execute(sharedPreferences.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue)));
+                    val = val.trim();
+                    if (!(sharedPreferences.getString("prefPreferencesImportAll", "").equals(PREF_IMPORT_ALL_RESET))) {
+                        new importFromURL().execute(val);
                     }
                     break;
                 case "prefHostImportExport":
@@ -972,11 +978,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 //            SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
             switch (msg.what) {
                 case message_type.IMPORT_SERVER_MANUAL_SUCCESS:
-                    Log.d("Engine_Driver", "Preferences: Message: Import preferences from URL: File Found");
+                    Log.d("Engine_Driver", "Preferences: Message: Import preferences from Server: File Found");
                     loadSharedPreferencesFromFile(sharedPreferences, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL);
                     break;
                 case message_type.IMPORT_SERVER_MANUAL_FAIL:
-                    Log.d("Engine_Driver", "Preferences: Message: Import preferences from URL: File not Found");
+                    Log.d("Engine_Driver", "Preferences: Message: Import preferences from Server: File not Found");
                     sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
                     sharedPreferences.edit().putString("prefHostImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualFailed, sharedPreferences.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue))), Toast.LENGTH_LONG).show();
@@ -1076,6 +1082,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             } catch (Exception e) {
                 Log.e("Engine_Driver", "Import preferences from Server Failed: " + e.getMessage());
                 dismissDialog(PROGRESS_BAR_TYPE);
+                sharedPreferences.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
                 mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_FAIL);
             }
 
