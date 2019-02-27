@@ -52,6 +52,10 @@ public class ImportExportPreferences {
 
     private static final int FORCED_RESTART_REASON_NONE = 0;
 
+    private static final String PREF_IMPORT_ALL_FULL = "Yes";
+    private static final String PREF_IMPORT_ALL_PARTIAL = "No";
+    private static final String PREF_IMPORT_ALL_RESET = "-";
+
     private boolean writeExportFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName){
         Log.d("Engine_Driver", "ImportExportPreferences: Writing export file");
         boolean res = false;
@@ -131,12 +135,12 @@ public class ImportExportPreferences {
             boolean prefImportExportLocoList = sharedPreferences.getBoolean("prefImportExportLocoList", context.getResources().getBoolean(R.bool.prefImportExportLocoListDefaultValue));
             String prefPreferencesImportFileName = sharedPreferences.getString("prefPreferencesImportFileName", "");
 
-            String prefPreferencesImportAll = sharedPreferences.getString("prefPreferencesImportAll", "Yes");
+            String prefPreferencesImportAll = sharedPreferences.getString("prefPreferencesImportAll", PREF_IMPORT_ALL_FULL);
             String prefTheme = "";
             String prefThrottleScreenType = "";
             boolean prefDisplaySpeedButtons = false;
             boolean prefHideSlider = false;
-            if (prefPreferencesImportAll.equals("No")) { // save some additional prefereneces for restoration
+            if (prefPreferencesImportAll.equals(PREF_IMPORT_ALL_PARTIAL)) { // save some additional prefereneces for restoration
                 prefTheme = sharedPreferences.getString("prefTheme", "");
                 prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", "");
                 prefDisplaySpeedButtons = sharedPreferences.getBoolean("prefDisplaySpeedButtons", false);
@@ -204,13 +208,13 @@ public class ImportExportPreferences {
                     prefEdit.putInt("prefForcedRestartReason", prefForcedRestartReason);
                     prefEdit.putString("prefPreferencesImportFileName", prefPreferencesImportFileName);  //reset the preference
 
-                    if (prefPreferencesImportAll.equals("No")) { // save some additional prefereneces for restoration
+                    if (prefPreferencesImportAll.equals(PREF_IMPORT_ALL_PARTIAL)) { // save some additional preferences for restoration
                         prefEdit.putString("prefTheme", prefTheme);
                         prefEdit.putString("prefThrottleScreenType", prefThrottleScreenType);
                         prefEdit.putBoolean("prefDisplaySpeedButtons", prefDisplaySpeedButtons);
                         prefEdit.putBoolean("prefHideSlider", prefHideSlider);
                     }
-                    prefEdit.putString("prefPreferencesImportAll", "Yes"); // reset the preference
+                    prefEdit.putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET); // reset the preference
 
                     String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
 

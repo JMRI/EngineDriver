@@ -512,6 +512,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
     private static final String EXTERNAL_PREFERENCES_IMPORT_FILENAME = "auto_preferences.ed";
     private static final String ENGINE_DRIVER_DIR = "engine_driver";
+    private static final String PREF_IMPORT_ALL_FULL = "Yes";
+    private static final String PREF_IMPORT_ALL_PARTIAL = "No";
+    private static final String PREF_IMPORT_ALL_RESET = "-";
 
     private enum EsuMc2Led {
         RED (MobileControl2.LED_RED),
@@ -5552,7 +5555,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         @SuppressLint("ApplySharedPref")
         @Override
         protected String doInBackground(String... f_url) {
-            Log.d("Engine_Driver", "throttle: Import preferences from URL: start");
+            Log.d("Engine_Driver", "throttle: Import preferences from Server: start");
             int count;
             String n_url;
 
@@ -5599,7 +5602,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         Log.d("Engine_Driver", "throttle: Auto Import preferences from Server: Local file is up-to-date");
                         return null;
 //                    } else {
-//                        Log.d("Engine_Driver", "throttle: Import preferences from URL: Local file is newer. Date " + localDate.toString());
+//                        Log.d("Engine_Driver", "throttle: Import preferences from Server: Local file is newer. Date " + localDate.toString());
                     }
                 }
 
@@ -5648,17 +5651,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 String urlPreferencesFileName = "auto_" + mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
-                        prefs.edit().putString("prefPreferencesImportAll", "Yes").commit();
+                        prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_FULL).commit();
                         loadSharedPreferencesFromFile(prefs, urlPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_AUTO);
 
                         break;
                     case DialogInterface.BUTTON_NEUTRAL:
-                        prefs.edit().putString("prefPreferencesImportAll", "No").commit();
+                        prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_PARTIAL).commit();
                         loadSharedPreferencesFromFile(prefs, urlPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_AUTO);
                         break;
 
-//                    case DialogInterface.BUTTON_NEGATIVE:
-//                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
+                        break;
                 }
             }
         };
