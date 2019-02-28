@@ -53,11 +53,9 @@ public class importServerManualEditTextPreference extends EditTextPreference {
         switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
                     prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_FULL).commit();
-//                    super.setText(super.getText()+" ");
                     break;
                 case DialogInterface.BUTTON_NEUTRAL:
                     prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_PARTIAL).commit();
-//                    super.setText(super.getText()+" ");
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:
                     prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
