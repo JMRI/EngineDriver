@@ -15,7 +15,7 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
 
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
   <style name="large_button_style" parent="@android:style/Widget.Button">
       <item name="android:textColor">@color/btn_text_states</item>
       <item name="android:textSize">24sp</item>
@@ -219,19 +219,65 @@
     <item name="android:shadowRadius">0</item>
   </style>
 
-  <style name="actionBarStyle_black" parent="@android:style/Widget.ActionBar" tools:targetApi="honeycomb">
+  <style name="actionBarStyle_black" parent="@android:style/Widget.ActionBar">
     <item name="android:background">#00000000</item>
     <item name="android:icon">@drawable/ic_launcher_outline</item>
   </style>
 
-  <style name="dialogStyle_black" parent="@android:style/Theme.Dialog" tools:targetApi="honeycomb">
-    <item name="android:windowBackground">@color/solidBlack</item>
+  <style name="dialogStyle_black" parent="@android:style/Theme.Holo.Dialog">
+    <item name="android:windowBackground">@color/transparent</item>
+    <item name="android:background">@color/transparent</item>
     <item name="android:textSize">18sp</item>
-    <item name="android:background">@color/solidBlack</item>
+    <item name="android:panelColorBackground">@color/solidBlack</item>
     <item name="android:textColorAlertDialogListItem">@color/solidWhite</item>
     <item name="android:editTextColor">@color/solidWhite</item>
     <item name="android:textColorPrimary">@color/solidWhite</item>
+    <item name="android:textColor">@color/solidWhite</item>
+    <item name="android:windowTitleStyle">@style/dialogTitle_black</item>
+    <item name="android:buttonBarStyle">@style/dialogButtonBar_black</item>
   </style>
+
+  <style name="alertDialogStyle_black" parent="@android:style/Theme.Holo.Dialog">
+    <item name="android:windowBackground">@color/transparent</item>
+    <item name="android:background">@color/transparent</item>
+    <item name="android:panelColorBackground">@color/solidBlack</item>
+    <item name="android:fullBright">@color/solidBlack</item>
+    <item name="android:fullDark">@color/solidBlack</item>
+    <item name="android:textSize">18sp</item>
+    <item name="android:textColorAlertDialogListItem">@color/solidWhite</item>
+    <item name="android:textColorPrimary">@color/solidWhite</item>
+    <item name="android:textColor">@color/solidWhite</item>
+    <item name="android:windowTitleStyle">@style/dialogTitle_black</item>
+<!--    <item name="android:buttonBarStyle">@style/dialogButtonBar_black</item> -->
+  </style>
+<!--
+  <style name="actionBarStyle_black" parent="@android:style/Widget.Holo.Light.ActionBar">
+    <item name="android:background">@color/solidBlack</item>
+    <item name="android:icon">@drawable/ic_launcher</item>
+    <item name="android:panelColorBackground">@color/solidBlack</item>
+    <item name="android:colorBackground">@color/solidBlack</item>
+  </style>
+-->
+  <style name="windowTitleBackground_black">
+    <item name="android:background">@color/solidBlack</item>
+    <item name="android:textColor">@color/solidWhite</item>
+  </style>
+
+  <style name="dialogTitle_black">
+    <item name="android:textColor">@color/solidWhite</item>
+    <item name="android:textAppearance">@style/dialogTitleText_black</item>
+  </style>
+
+  <style name="dialogTitleText_black">
+    <item name="android:textSize">18sp</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textColor">@color/solidWhite</item>
+  </style>
+
+  <style name="dialogButtonBar_black">
+    <item name="android:background">@color/buttonDisabledFill_black</item>
+  </style>
+
 
   <style name="large_button_style_black" parent="@android:style/Widget.Button">
     <item name="android:textColor">@color/btn_text_states</item>
