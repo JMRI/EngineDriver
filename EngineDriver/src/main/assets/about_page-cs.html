@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title>Engine Driver Ovladač pro Android</title>
+    <style type="text/css">
+        p {margin-top:0;padding-left:1em;}
+        h3 {margin-bottom:0;}
+        dl {padding-left: 2em;}
+        ul {margin-left:1em;margin-top:-1em;padding-left:0;}
+        ul li {position:relative;left:1em;padding-right:1em;}​
+    </style>
+</head>
+<body>
+<h1>Engine Driver Ovladač pro Android</h1>
+<div style="float:left;padding-right:1em;">
+    <img src="file:///android_asset/engine_driver_icon.png" height="144" width="166" alt=""/>
+</div>
+<p><b>Poslední změny pro tuto verzi obsahují:</b></p>
+<ul>
+    <li>Úvodní a počáteční nastavení obrazovky (Průvodce)</li>
+    <li>Volba pro pro import předvoleb z URL</li>
+    <li>Volba pro automatický import předvoleb ze serveru JMRI při připojení</li>
+    <li>změna některých výchozích hodnot</li>
+    <li>zobrazení varování, pokud nepoužíváte síť WiFi</li>
+    <li>Seznam nedávných připojení – umožňuje uživateli vymazat jednotlivé položky dlouhým stiskem tlačítka</li>
+    <li>vymazání souborů nastavení při resetu Předvoleb</li>
+    <li>Vylepšení zobrazení protokolů</li>
+    <li>funkce Gamepad se chovají stejně jako funkce obrazovky</li>
+    <li>Podpora herního ovladače Flydigi Wee 2</li>
+    <li>zvýšení priority tlačítka EStop</li>
+    <li>oprava některých hlášených chyb a upozornění na použitelnost</li>
+</ul>
+<p><em><a
+        href="https://raw.githubusercontent.com/JMRI/EngineDriver/master/changelog-and-todo-list.txt"
+        target="_blank" title="View complete EngineDriver changelog">[zobrazit úplný seznam změn]</a></em></p>
+<p>Tato zdarma poskytovaná aplikace se může připojit na <a
+        href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
+        target="_blank">JMRI WiThrottle</a> server běžící na počítači,  
+    na <a href="http://www.modelrectifier.com/category-s/332.htm" target="_blank">MRC Prodigy WiFi</a>,
+    nebo na a <a href="http://www.digitrax.com/products/wireless/lnwi/" target="_blank">Digitrax LnWi</a>,
+    a řídit vaše lokomotivy a celé kolejiště.
+    Rychlost, směr a až 29 DCC funkcí je podporováno pro jednu až šest lokomotiv nebo souprav.
+    Můžete ovládat napájení kolejiště, výhybky a cesty, zobrazovat panely a další JMRI okna s použitím
+    zobrazení webu.
+    Můžete také vytvářet a upravovat soupravy (softwarově definované).</p>
+<p>Pro další podrobnosti navštivte <a href="https://enginedriver.mstevetodd.com" target="_blank">[stránku&nbsp;EngineDriver]</a>.
+    Pro screenshots, klikněte <a href="https://enginedriver.mstevetodd.com/screenshots"
+                              target="_blank">[zde]</a>.</p>
+<h3>Předpoklady (pro JMRI):</h3>
+<p>Ověřte, že vaše Android zařízení se může připojit na vaši síť prostřednictvím WiFi a získat IP adresu.<br/>
+    Ujistěte se, že používáte poslední verzi <a href="http://jmri.org/" target="_blank">JMRI</a>
+    (2.8 funguje, 3.0+ je mnohem lepší) na vašem počítači, a ten je připojen ke kolejišti.&nbsp; 
+    Spusťte JMRI a ověřte že můžete použít dodávanou aplikaci "Ovladač" pro řízení lokomotiv na 
+    vašem kolejišti.</p>
+<p>Spusťte <a
+        href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
+        target="_blank">WiThrottle</a> funkci JMRI, umístěnou v DecoderPro v menu Nástroje,
+    Ovladače.&nbsp; Dále se doporučuje abyste spustili <a
+            href="http://jmri.sourceforge.net/help/en/html/web/index.shtml" target="_blank"
+            title="Learn more about JMRI Web Server">JMRI Web Server</a>
+    funkci (Nástroje, Start JMRI Web Server).&nbsp;
+    Obě tyto položky by měly být přidány také do Předvolby, Startování.</p>
+<h3>Předpoklady (pro MRC Wifi):</h3>
+<p>Připojte modul MRC WiFi a ověřte že se vaše zařízení může připojit na tuto síť a získat IP adresu.</p>
+<h3>Předpoklady (pro Digitrax LnWi):</h3>
+<p>Připojte LnWi a ověřte že se vaše zařízení může připojit na tuto síť a získat IP adresu.</p>
+<h3>Provoz:</h3>
+<p>Ve vašem telefonu spusťte aplikaci Engine Driver a počkejte až se zobrazí adresa vašeho serveru v 
+    "Nalezené servery".</p>
+<p>Klikněte na nalezenou adresu nebo můžete zadat adresu a port vačeho WiThrottle serveu přímo.
+    (Použijte hodnoty zobrazené v okně WiThrottle.)<br/>
+    Pokud chcete tak můžete v předvolbách povolit nastavení "Automatické připojení se k prvnímu WiThrottle serveru?".
+    K dispozici je také "demo" server na adrese jmri.mstevetodd.com, port 44444, ke kterému se 
+    můžete připojit pro testování.</p>
+<p>Na obrazovce ovladače klikněte na tlačítko lokomotivy "Vybrat" pro každou lokomotivu.<br/>
+    Na další obrazovce zvolte způsob výběru 
+    On the next
+    screen, choose method of selection (DCC adresa, JMRI evidence nebo Nedávné). 
+    Po výběru lokomotivy se vrátíte na obrazovku ovladače.<br/>
+    Pro získání dalších vlaků toto opakujte s použitím dalších tlačítek "Vybrat".<br/>
+    Poznámka: stisknutím a podržením položky evidence se zobrazí další podrobnosti z evidence.</p>
+<p>Ovládejte pomocí posuvníku (nebo ovladače hlasitosti) (nebo volitelně tlačítky se šipkami) 
+    rychlost vaší lokomotivy. Pomocí tlačítek Zpět, Zastavit a Vpřed ovládejte směr.<br/>
+    Pro propuštění všech lokomotiv stačí stisknout tlačítko telefonu Zpět a ukončit aplikaci. 
+    Toto také zastaví vaše lokomotivy (může být přenastaveno v předvolbách).
+    Mužete také opětovně přiřadit ovládání hlasitosti klikem na indikátor rychlosti (malé "v" se zobrazí 
+    u toho kdo je řízen).</p>
+<p>Chcete-li vytvořit soupravu (přípřež/postrk) "za běhu", 
+    jednoduše vyberte další lokomotivu pro ten samý ovladač. Budete požádnáni o určení směru 
+    každé lokomotivy oshledem za zařazení v dané soupravě.
+    Směr a rychlost bude odesílána všem lokomotivám v soupravě.
+    Propustit provede propuštění všech lokomotiv daného ovladače.</p>
+<p>Stiskem tlačítka telefonu Nabídka se dostanete do obrazovek pro Výhybky, Cesty a Řízení napájení, a také 
+    k nastavení řady předvoleb.</p>
+<p>Také můžete rychle "přehazovat" vlevo nebo vpravo pro rychlé přeskočení vzad a vpřed mezi stránkou Ovladače, 
+    Cesty a Výhybky.</p>
+<h3>Provoz ESU MobileControl II:</h3>
+<p>Aplikace Engine Driver plně podporuje ovladač Android 
+    <a href="http://www.esu.eu/en/products/digital-control/mobile-control-ii/">ESU MobileControl II</a>.</p>
+<p>Tak jako je možné řídit rychlost vybraným ovladačem otočným kolečkem,
+    stejně tak je možné přepínat směr pomocí nulové polohy na koncové pozici.</p>
+<p>Až tři vlaky mohou být řízeny současně – vlak který je řízen ovládacím kolečkem je zvýrazněn
+    malým "v" na ukazateli rychlosti. Přepínání mezi ovládanými vlaky se provádí klikem na příslušný 
+    ukazatel rychlosti. Je také možné přiřadit jedno postranní tlačítko zařízení pro přepínání 
+    mezi ovládanými vlaky – ve výchozím nastavení má tuto funkci pravé dolní tlačítko.</p>
+<p>Pokud je přiřazen k řízení vlak, potom zelená LED svítí. Pokud není přiřazen žádný vlak, 
+    tak zelená LED bliká.</p>
+<p>Mimo to můžete také pomocí tlačítka Stop zastavit právě řízený vlak nebo zastavit všechny řízené vlaky.
+    Krátký stist tlačítka Stop (výchozí nastavení je méně než 1/2 vteřiny) zastaví jízdu 
+    právě řízeného vlaku. Na znamení této akce se červená LED rychle rozbliká.
+    Při stisku tlačítka Stop na jednu vteřinu se právě řízený vlak vrátí na původně 
+    nastavenou rychlost. Dlouhý stisk tlačítka Stop (výchozí nastavení je déle než 1/2 vteřiny) 
+    zastaví jízdu všech řízených vlaků. Na znamení této akce se červená LED rozbliká pomalu.
+    Při stisku tlačítka Stop na jednu vteřinu zůstanou všechny řízené vlaky stát a 
+    je možné znovu ovládat všechny právě vybrané vlaky.</p>
+<p>V režimu Stop jsou tlačítka změny rychlosti a posuvníky zakázány pro aktuálně zastavené 
+    ovladače. Přepínání mezi řízenými ovladači je také zakázané.</p>
+<p>Je také možné nastavit postranní tlačítka zařízení na provádění různých akcí.
+    Výchozí nastavení je následující:</p>
+    <dl>
+        <dt>Horní levé</dt><dd>Zvýšení rychlosti</dd>
+        <dt>Dolní levé</dt><dd>Snížení rychlosti</dd>
+        <dt>Horní pravé</dt><dd>Změna směru</dd>
+        <dt>Dolní pravé</dt><dd>Vybrat další ovladač</dd>
+    </dl>
+<p>Toto přiřazení lze změnit v Předvolby na stránce volby ESU MobileControl II.</p>
+<h3>Konfigurace:</h3>
+<p>V Předvolbách jsou rozsáhlé možnosti nastavení obrazovek a akcí Engine Driver tak,
+    aby nejlépe vyhovovali vašemu zařízení, rozložení a vašem osobnímu stylu.
+    Mezi ně patří uspořádání ovladače, zobrazení modelových hodin, volby rychlostních kroků,
+    zobrazení webu, rozměry tlačítek, dodatečná tlačítka, rozměry posuvníku a jeho chování,
+    počet zobrazených ovladačů, zastavení při propuštění, povolení/zákaz sestavení souprava za běhu,
+    automatické připojení, a mnoho dalšího.</p>
+<p>Pokud jste v evidenci na serveru zadali štítky funkcí, tak budou použity.
+    Pokud ne, tak můžete použít volbu nabídky Výchozí nastavení funkcí pro nastavení na výchozí hodnoty 
+    štítků funkcí a čísla funkcí pro zobrazení. Tlačítka lze odstranit pomocí vymazání jeho štítku.</p>
+<p>Na straně počítače JMRI zkontrolujte vaše předvolby WiThrottle a ujistěte se že dovolují nebo zakazují
+    použití požadovaných vlastností.
+    Pokud jste v panelu definovali výhybky a cesty tak se ujistěte, že jste zadali "uživatelský název" 
+    pro tato zařízení takový, který chcete vidět v seznamu ve vašem ovladači.
+    Můžete také "filtrovat" zobrazení výhybek použitím WiThrottle-&gt;Filtr volba řízení 
+    v okně WiThrottle. Také se doporučuje povolit "Použít EStop".</p>
+<p>Zadání záznamů evidence a definice cest a výhybek v JMRI zvýší schopnosti vašeho 
+    ovladače Engine Driver a učiní ho snáze použitelným (i když to není bezpodmínečně nutné).
+    Pokud je spuštěn JMRI Web Server bude Engine Driver zobrazovat více informací (jako např. 
+    podrobnosti evidence a obrázky ikon).</p>
+<h3>Vývoj:</h3>
+<p>Engine Driver je svobodný a open source software, součást projektu
+    <a href="http://jmri.org" target="_blank">JMRI</a>. Je naprogramován v 
+    <a href="https://developer.android.com/studio/" target="_blank">Android Studio</a>.
+    Můžete procházet nebo klonovat aktuální vývojový zdrojový kód (se značkami pro dřívější verze)
+    <a href="https://github.com/JMRI/EngineDriver" target="_blank">[ZDE].</a> Vážíme si příspěvků vývojářů.</p>
+<hr>
+<p><a href="https://enginedriver.mstevetodd.com" target="_blank">[Domovská stránka pro EngineDriver]</a></p>
+</body>
+</html>

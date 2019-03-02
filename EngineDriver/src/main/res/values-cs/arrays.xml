@@ -13,33 +13,35 @@
       for more details. You should have received a copy of the GNU General
       Public License along with this program; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+      translations provided by Petr Šídlo
 -->
 
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string-array name="address_size">
-        <item>Short</item>
-        <item>Long</item>
+        <item>Krátká</item>
+        <item>Dlouhá</item>
     </string-array>
 
     <string-array name="address_size_defaultsEntries">  <!-- display version -->
-        <item>Short</item>
-        <item>Long</item>
-        <item>Auto</item>
+        <item>Krátká</item>
+        <item>Dlouhá</item>
+        <item>Automaticky</item>
     </string-array>
     <string-array name="address_size_defaultsEntryValues">
-        <item>Short</item>
-        <item>Long</item>
-        <item>Auto</item>
+        <item>Krátká</item>
+        <item>Dlouhá</item>
+        <item>Automaticky</item>
     </string-array>
 
     <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
-        <item>Percentage</item>
-        <item>Auto speed steps</item>
-        <item>8 steps</item>
-        <item>10 steps</item>
-        <item>14 steps</item>
-        <item>28 steps</item>
-        <item>128 steps</item>
+        <item>Percenta</item>
+        <item>Automaticky rychlostní kroky</item>
+        <item>8 kroků</item>
+        <item>10 kroků</item>
+        <item>14 kroků</item>
+        <item>28 kroků</item>
+        <item>128 kroků</item>
     </string-array>
     <string-array name="DisplaySpeedUnitEntryValues">
         <item>100</item>
@@ -52,55 +54,55 @@
     </string-array>
 
     <string-array name="WebViewLocationEntries">  <!-- display version -->
-        <item>Bottom</item>
-        <item>none</item>
+        <item>Dolů</item>
+        <item>nic</item>
     </string-array>
     <string-array name="WebViewLocationEntryValues">
-        <item>Bottom</item>
-        <item>none</item>
+        <item>Dolů</item>
+        <item>nic</item>
     </string-array>
 
     <string-array name="OrientationEntries">  <!-- display version -->
-        <item>Portrait</item>
-        <item>Landscape</item>
-        <item>Auto-Rotate</item>
-        <item>Auto-Web</item>
+        <item>Na výšku</item>
+        <item>Na šířku</item>
+        <item>Automaticky rotovat</item>
+        <item>Automaticky web</item>
     </string-array>
     <string-array name="OrientationEntryValues">
-        <item>Portrait</item>
-        <item>Landscape</item>
-        <item>Auto-Rotate</item>
-        <item>Auto-Web</item>
+        <item>Na výšku</item>
+        <item>Na šířku</item>
+        <item>Automaticky rotovat</item>
+        <item>Automaticky web</item>
     </string-array>
 
     <string-array name="NumOfThrottlesEntries">  <!-- display version -->
-        <item >One</item>
-        <item >Two</item>
-        <item >Three</item>
-        <item >Four</item>
-        <item >Five</item>
-        <item >Six</item>
+        <item >Jeden</item>
+        <item >Dva</item>
+        <item >Tři</item>
+        <item >Čtyři</item>
+        <item >Pět</item>
+        <item >Šest</item>
     </string-array>
     <string-array name="NumOfThrottlesEntryValues">
-        <item >One</item>
-        <item >Two</item>
-        <item >Three</item>
-        <item >Four</item>
-        <item >Five</item>
-        <item >Six</item>
+        <item >Jeden</item>
+        <item >Dva</item>
+        <item >Tři</item>
+        <item >Čtyři</item>
+        <item >Pět</item>
+        <item >Šest</item>
     </string-array>
 
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
-        <item tools:ignore="TypographyDashes">Original &#8211; Phone or Tablet (1-3 throttles)</item>
-        <item tools:ignore="TypographyDashes">Simple &#8211; Tablet Recommended (1-6 throttles)</item>
-        <item >Vertical &#8211; Phone or Tablet (2 throttles)</item>
-        <item >Big Buttons &#8211; Left (1 throttle)</item>
+        <item tools:ignore="TypographyDashes">Původní &#8211; Telefon nebo Tablet (1-3 ovladače)</item>
+        <item tools:ignore="TypographyDashes">Jednoduchý &#8211; Tablet doporučeno (1-6 ovladače)</item>
+        <item >Svisle &#8211; Telefon nebo Tablet (2 ovladače)</item>
+        <item >Velká tlačítka &#8211; Vlevo (1 ovladač)</item>
     </string-array>
     <string-array name="prefThrottleScreenTypeEntryValues">
-        <item >Default</item>
-        <item >Simple</item>
-        <item >Vertical</item>
-        <item >Big Left</item>
+        <item >Výchozí</item>
+        <item >Jednoduchý</item>
+        <item >Svislý</item>
+        <item >Velká vlevo</item>
     </string-array>
 
     <string-array name="DisplayClockEntryValues">
@@ -109,21 +111,21 @@
         <item >2</item>
     </string-array>
     <string-array name="DisplayClockEntries">  <!-- display version -->
-        <item >None</item>
-        <item >12 Hr format</item>
-        <item >24 hr format</item>
+        <item >Nic</item>
+        <item >12 hodinový formát</item>
+        <item >24 hodinový formát</item>
     </string-array>
 
     <string-array name="prefGamePadTypeEntryValues">
-        <item >None</item>
+        <item >Nic</item>
         <!-- <item >iCade</item> -->
-            <item >iCade-rotate</item>
+            <item >iCade-rotace</item>
         <!--     <item >iCade+DPAD</item> -->
-            <item >iCade+DPAD-rotate</item>
+            <item >iCade+DPAD-rotace</item>
         <!--    <item >MTK</item> -->
-           <item >MTK-rotate</item>
+           <item >MTK-rotace</item>
         <!--   <item >Game</item> -->
-          <item >Game-rotate</item>
+          <item >Game-rotace</item>
       <!--
               <item >VRBoxA</item>
               <item >VRBoxA-rotate</item>
@@ -137,7 +139,7 @@
     </string-array>
 
     <string-array name="prefGamePadTypeEntries">  <!-- display version -->
-        <item >None</item>
+        <item >Nic</item>
         <item >Mocute iCade</item>
         <!-- <item >Mocute/iOS- iCade Mode - DPAD rotated</item> -->
         <item >Mocute iCade+DPAD</item>
@@ -159,99 +161,99 @@
     </string-array>
 
     <string-array name="prefSwipeUpOptionsEntryValues">
-        <item >None</item>
-        <item >Hide Web View</item>
-        <item >Lock and Dim Screen</item>
-        <item >Dim Screen</item>
-        <item >Immersive Mode</item>
+        <item >Nic</item>
+        <item >Skrýt Web Pohled</item>
+        <item >Zamknout a Ztlumit obrazovku</item>
+        <item >Ztlumit obrazovku</item>
+        <item >Působivý režim</item>
     </string-array>
 
     <string-array name="prefSwipeUpOptionsEntries">  <!-- display version -->
-        <item >None</item>
-        <item >Hide Web View\n(requires \'Throttle Web View\' preference)</item>
-        <item >Lock and Dim Screen</item>
-        <item >Dim Screen</item>
-        <item >Immersive Mode temporarily enable-disable</item>
+        <item >Nic</item>
+        <item >Skrýt Web Pohled\n(vyžaduje \'Ovladačový Web Pohled\' předvolby)</item>
+        <item >Zamknout a Ztlumit obrazovku</item>
+        <item >Ztlumit obrazovku</item>
+        <item >Působivý režim dočasně povolit-zakázat</item>
     </string-array>
 
     <string-array name="prefGamePadKeyEntries">
-        <item >All Stop</item>
-        <item >Stop</item>
-        <item >Forward</item>
-        <item >Reverse</item>
-        <item >Forward/Reverse Toggle</item>
-        <item >Increase Speed</item>
-        <item >Decrease Speed</item>
-        <item >Next Throttle</item>
-        <item >Function 00/Light</item>
-        <item >Function 01/Bell</item>
-        <item >Function 02/Horn</item>
-        <item >Function 03</item>
-        <item >Function 04</item>
-        <item >Function 05</item>
-        <item >Function 06</item>
-        <item >Function 07</item>
-        <item >Function 08</item>
-        <item >Function 09</item>
-        <item >Function 10</item>
-        <item >Function 11</item>
-        <item >Function 12</item>
-        <item >Function 13</item>
-        <item >Function 14</item>
-        <item >Function 15</item>
-        <item >Function 16</item>
-        <item >Function 17</item>
-        <item >Function 18</item>
-        <item >Function 19</item>
-        <item >Function 20</item>
-        <item >Function 21</item>
-        <item >Function 22</item>
-        <item >Function 23</item>
-        <item >Function 24</item>
-        <item >Function 25</item>
-        <item >Function 26</item>
-        <item >Function 27</item>
-        <item >Function 28</item>
+        <item >Vše Zastavit</item>
+        <item >Zastavit</item>
+        <item >Vpřed</item>
+        <item >Vzad</item>
+        <item >Přepnout Vpřed/Vzad</item>
+        <item >Zvýšit rychlost</item>
+        <item >Snížit rychlost</item>
+        <item >Další ovladač</item>
+        <item >Funkce 00/Světla</item>
+        <item >Funkce 01/Zvon</item>
+        <item >Funkce 02/Houkačka</item>
+        <item >Funkce 03</item>
+        <item >Funkce 04</item>
+        <item >Funkce 05</item>
+        <item >Funkce 06</item>
+        <item >Funkce 07</item>
+        <item >Funkce 08</item>
+        <item >Funkce 09</item>
+        <item >Funkce 10</item>
+        <item >Funkce 11</item>
+        <item >Funkce 12</item>
+        <item >Funkce 13</item>
+        <item >Funkce 14</item>
+        <item >Funkce 15</item>
+        <item >Funkce 16</item>
+        <item >Funkce 17</item>
+        <item >Funkce 18</item>
+        <item >Funkce 19</item>
+        <item >Funkce 20</item>
+        <item >Funkce 21</item>
+        <item >Funkce 22</item>
+        <item >Funkce 23</item>
+        <item >Funkce 24</item>
+        <item >Funkce 25</item>
+        <item >Funkce 26</item>
+        <item >Funkce 27</item>
+        <item >Funkce 28</item>
     </string-array>
 
     <string-array name="prefGamePadKeyEntryValues">  <!-- display version -->
-        <item >All Stop</item>
-        <item >Stop</item>
-        <item >Forward</item>
-        <item >Reverse</item>
-        <item >Forward/Reverse Toggle</item>
-        <item >Increase Speed</item>
-        <item >Decrease Speed</item>
-        <item >Next Throttle</item>
-        <item >Function 00/Light</item>
-        <item >Function 01/Bell</item>
-        <item >Function 02/Horn</item>
-        <item >Function 03</item>
-        <item >Function 04</item>
-        <item >Function 05</item>
-        <item >Function 06</item>
-        <item >Function 07</item>
-        <item >Function 08</item>
-        <item >Function 09</item>
-        <item >Function 10</item>
-        <item >Function 11</item>
-        <item >Function 12</item>
-        <item >Function 13</item>
-        <item >Function 14</item>
-        <item >Function 15</item>
-        <item >Function 16</item>
-        <item >Function 17</item>
-        <item >Function 18</item>
-        <item >Function 19</item>
-        <item >Function 20</item>
-        <item >Function 21</item>
-        <item >Function 22</item>
-        <item >Function 23</item>
-        <item >Function 24</item>
-        <item >Function 25</item>
-        <item >Function 26</item>
-        <item >Function 27</item>
-        <item >Function 28</item>
+        <item >Vše Zastavit</item>
+        <item >Zastavit</item>
+        <item >Vpřed</item>
+        <item >Vzad</item>
+        <item >Přepnout Vpřed/Vzad</item>
+        <item >Zvýšit rychlost</item>
+        <item >Snížit rychlost</item>
+        <item >Další ovladač</item>
+        <item >Funkce 00/Světla</item>
+        <item >Funkce 01/Zvon</item>
+        <item >Funkce 02/Houkačka</item>
+        <item >Funkce 03</item>
+        <item >Funkce 04</item>
+        <item >Funkce 05</item>
+        <item >Funkce 06</item>
+        <item >Funkce 07</item>
+        <item >Funkce 08</item>
+        <item >Funkce 09</item>
+        <item >Funkce 10</item>
+        <item >Funkce 11</item>
+        <item >Funkce 12</item>
+        <item >Funkce 13</item>
+        <item >Funkce 14</item>
+        <item >Funkce 15</item>
+        <item >Funkce 16</item>
+        <item >Funkce 17</item>
+        <item >Funkce 18</item>
+        <item >Funkce 19</item>
+        <item >Funkce 20</item>
+        <item >Funkce 21</item>
+        <item >Funkce 22</item>
+        <item >Funkce 23</item>
+        <item >Funkce 24</item>
+        <item >Funkce 25</item>
+        <item >Funkce 26</item>
+        <item >Funkce 27</item>
+        <item >Funkce 28</item>
     </string-array>
     <!--- TODO: workout how to use the KEYCODES from android.view.KeyEvent rather having the declare them as integers -->
 
@@ -370,10 +372,6 @@
         <item>@integer/KeyCode_Play_Pause</item> //gamepadA, gamepadEnter
         <item>@integer/KeyCode_Volume_Down</item> //gamepadD
         <item>@integer/KeyCode_Volume_Up</item> //gamepadC
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
     </integer-array>
     <integer-array name="prefGamePadVRBoxC">
         <item>0</item> //not used
@@ -387,10 +385,6 @@
         <item>@integer/KeyCode_Button_B</item> //gamepadB, gamepadEscape
         <item>@integer/KeyCode_Volume_Down</item> //gamepadD
         <item>@integer/KeyCode_Enter</item> //gamepadC
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
     </integer-array>
     <integer-array name="prefGamePadVRBoxiC">
         <item>0</item> //not used
@@ -404,10 +398,6 @@
         <item>@integer/KeyCode_H</item> //gamepadB
         <item>@integer/KeyCode_J</item> //gamepadD
         <item>@integer/KeyCode_Y</item> //gamepadC
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
     </integer-array>
     <integer-array name="prefGamePadVRBoxiC_UpCodes">
         <item>0</item> //not used
@@ -421,10 +411,6 @@
         <item>@integer/KeyCode_R</item>
         <item>@integer/KeyCode_N</item>
         <item>@integer/KeyCode_T</item>
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
     </integer-array>
 -->
     <integer-array name="prefGamePadMagicseeR1B">
@@ -481,7 +467,6 @@
         <item>Right Trigger</item>
     </string-array>
 
-
     <string-array name="prefGamePadMocuteLabels">
         <item> </item> //not used
         <item>Button Select (if present) action</item>
@@ -494,10 +479,6 @@
         <item>Button Y [Triangle] action</item>
         <item>Button A [Cross] action</item>
         <item>Button B [@] action</item>
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
     </string-array>
 
 <!--
@@ -513,10 +494,6 @@
         <item>Gamepad Button A action</item>
         <item>Button not usable</item> // Gamepad Button B action
         <item>Gamepad Button D action</item>
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
     </string-array>
 -->
 
@@ -575,198 +552,198 @@
     </string-array>
 
     <string-array name="prefEsuMc2KeyEntries">  <!-- display version -->
-        <item>(no function)</item>
-        <item>All Stop</item>
-        <item>Stop</item>
-        <item>Forward</item>
-        <item>Reverse</item>
-        <item>Forward/Reverse Toggle</item>
-        <item>Increase Speed</item>
-        <item>Decrease Speed</item>
-        <item>Next Throttle</item>
-        <item>Function 00/Light</item>
-        <item>Function 01/Bell</item>
-        <item>Function 02/Horn</item>
-        <item>Function 03</item>
-        <item>Function 04</item>
-        <item>Function 05</item>
-        <item>Function 06</item>
-        <item>Function 07</item>
-        <item>Function 08</item>
-        <item>Function 09</item>
-        <item>Function 10</item>
-        <item>Function 11</item>
-        <item>Function 12</item>
-        <item>Function 13</item>
-        <item>Function 14</item>
-        <item>Function 15</item>
-        <item>Function 16</item>
-        <item>Function 17</item>
-        <item>Function 18</item>
-        <item>Function 19</item>
-        <item>Function 20</item>
-        <item>Function 21</item>
-        <item>Function 22</item>
-        <item>Function 23</item>
-        <item>Function 24</item>
-        <item>Function 25</item>
-        <item>Function 26</item>
-        <item>Function 27</item>
-        <item>Function 28</item>
+        <item>(bez funkce)</item>
+        <item >Vše Zastavit</item>
+        <item >Zastavit</item>
+        <item >Vpřed</item>
+        <item >Vzad</item>
+        <item >Přepnout Vpřed/Vzad</item>
+        <item >Zvýšit rychlost</item>
+        <item >Snížit rychlost</item>
+        <item >Další ovladač</item>
+        <item>Funkce 00/Světla</item>
+        <item>Funkce 01/Zvon</item>
+        <item>Funkce 02/Houkačka</item>
+        <item>Funkce 03</item>
+        <item>Funkce 04</item>
+        <item>Funkce 05</item>
+        <item>Funkce 06</item>
+        <item>Funkce 07</item>
+        <item>Funkce 08</item>
+        <item>Funkce 09</item>
+        <item>Funkce 10</item>
+        <item>Funkce 11</item>
+        <item>Funkce 12</item>
+        <item>Funkce 13</item>
+        <item>Funkce 14</item>
+        <item>Funkce 15</item>
+        <item>Funkce 16</item>
+        <item>Funkce 17</item>
+        <item>Funkce 18</item>
+        <item>Funkce 19</item>
+        <item>Funkce 20</item>
+        <item>Funkce 21</item>
+        <item>Funkce 22</item>
+        <item>Funkce 23</item>
+        <item>Funkce 24</item>
+        <item>Funkce 25</item>
+        <item>Funkce 26</item>
+        <item>Funkce 27</item>
+        <item>Funkce 28</item>
     </string-array>
 
     <string-array name="prefEsuMc2KeyEntryValues">
-        <item>(no function)</item>
-        <item>All Stop</item>
-        <item>Stop</item>
-        <item>Forward</item>
-        <item>Reverse</item>
-        <item>Forward/Reverse Toggle</item>
-        <item>Increase Speed</item>
-        <item>Decrease Speed</item>
-        <item>Next Throttle</item>
-        <item>Function 00/Light</item>
-        <item>Function 01/Bell</item>
-        <item>Function 02/Horn</item>
-        <item>Function 03</item>
-        <item>Function 04</item>
-        <item>Function 05</item>
-        <item>Function 06</item>
-        <item>Function 07</item>
-        <item>Function 08</item>
-        <item>Function 09</item>
-        <item>Function 10</item>
-        <item>Function 11</item>
-        <item>Function 12</item>
-        <item>Function 13</item>
-        <item>Function 14</item>
-        <item>Function 15</item>
-        <item>Function 16</item>
-        <item>Function 17</item>
-        <item>Function 18</item>
-        <item>Function 19</item>
-        <item>Function 20</item>
-        <item>Function 21</item>
-        <item>Function 22</item>
-        <item>Function 23</item>
-        <item>Function 24</item>
-        <item>Function 25</item>
-        <item>Function 26</item>
-        <item>Function 27</item>
-        <item>Function 28</item>
+        <item>(bez funkce)</item>
+        <item >Vše Zastavit</item>
+        <item >Zastavit</item>
+        <item >Vpřed</item>
+        <item >Vzad</item>
+        <item >Přepnout Vpřed/Vzad</item>
+        <item >Zvýšit rychlost</item>
+        <item >Snížit rychlost</item>
+        <item >Další ovladač</item>
+        <item>Funkce 00/Světla</item>
+        <item>Funkce 01/Zvon</item>
+        <item>Funkce 02/Houkačka</item>
+        <item>Funkce 03</item>
+        <item>Funkce 04</item>
+        <item>Funkce 05</item>
+        <item>Funkce 06</item>
+        <item>Funkce 07</item>
+        <item>Funkce 08</item>
+        <item>Funkce 09</item>
+        <item>Funkce 10</item>
+        <item>Funkce 11</item>
+        <item>Funkce 12</item>
+        <item>Funkce 13</item>
+        <item>Funkce 14</item>
+        <item>Funkce 15</item>
+        <item>Funkce 16</item>
+        <item>Funkce 17</item>
+        <item>Funkce 18</item>
+        <item>Funkce 19</item>
+        <item>Funkce 20</item>
+        <item>Funkce 21</item>
+        <item>Funkce 22</item>
+        <item>Funkce 23</item>
+        <item>Funkce 24</item>
+        <item>Funkce 25</item>
+        <item>Funkce 26</item>
+        <item>Funkce 27</item>
+        <item>Funkce 28</item>
     </string-array>
 
     <string-array name="prefImportExportEntries">  <!-- display version -->
-        <item>None</item>
-        <item>Export</item>
-        <item>Import</item>
+        <item>Nic</item>
+        <item>Exportovat</item>
+        <item>Importovat</item>
         <item>Reset</item>
     </string-array>
 
     <string-array name="prefImportExportEntryValues">
-        <item>None</item>
-        <item>Export</item>
-        <item>Import</item>
+        <item>Nic</item>
+        <item>Exportovat</item>
+        <item>Importovat</item>
         <item>Reset</item>
     </string-array>
 
     <string-array name="prefAutoImportExportEntries">  <!-- display version -->
-        <item>None</item>
-        <item>Auto import/export on connect/disconnect</item>
-        <item>Auto import on connect only</item>
+        <item>Nic</item>
+        <item>Automaticky importovat/exportovat při připojení/odpojení</item>
+        <item>Automaticky importovat pouze při připojení</item>
      </string-array>
     <string-array name="prefAutoImportExportEntryValues">
-        <item>None</item>
-        <item>Connect Disconnect</item>
-        <item>Connect Only</item>
+        <item>Nic</item>
+        <item>Připojit Odpojit</item>
+        <item>Pouze Připojit</item>
     </string-array>
 
     <string-array name="prefHostImportExportEntries">   <!-- this is dynamically built so does not follow the norms -->
-        <item>None</item>
+        <item>Nic</item>
     </string-array>
     <string-array name="prefHostImportExportEntryValues">   <!-- this is dynamically built so does not follow the norms -->
-        <item>None</item>
+        <item>Nic</item>
     </string-array>
 
     <string-array name="prefThemeEntryValues">
-        <item>Default</item>
-        <item>Black</item>
-        <item>Outline</item>
+        <item>Výchozí</item>
+        <item>Černý</item>
+        <item>Obrysy</item>
         <item>Ultra</item>
-        <item>Colorful</item>
+        <item>Plnobarevné</item>
     </string-array>
     <string-array name="prefThemeEntries">  <!-- display version -->
-        <item>Default Theme</item>
-        <item>High Contrast Theme</item>
-        <item>High Contrast Outline Theme</item>
-        <item>Dark Theme</item>
-        <item>Colorful Theme</item>
+        <item>Výchozí téma</item>
+        <item>Vysoký kontrast téma</item>
+        <item>Obrysy vysoký kontrast téma</item>
+        <item>Tmavé téma</item>
+        <item>Plnobarevné téma</item>
     </string-array>
 
     <string-array name="prefSelectedLocoIndicatorEntryValues">
-        <item>None</item>
-        <item>Both</item>
+        <item>Nic</item>
+        <item>Obojí</item>
         <item>Gamepad</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">  <!-- display version -->
-        <item>None (Use \'v\',\'1\' only)</item>
-        <item>Both Volume and Gamepad 1</item>
-        <item>Gamepad 1 only</item>
+        <item>Nic (Použijte \'v\',\'1\' pouze)</item>
+        <item>Obojí Hlasitost a Gamepad 1</item>
+        <item>Gamepad 1 pouze</item>
     </string-array>
 
     <string-array name="prefAccelerometerShakeEntryValues">
-        <item>None</item>
+        <item>Nic</item>
         <item>Web</item>
-        <item>LockDim</item>
-        <item>Dim</item>
-        <item>NextV</item>
-        <item>AllStop</item>
+        <item>ZámekZtlumení</item>
+        <item>Ztlumení</item>
+        <item>DalšíV</item>
+        <item>VšeZastavit</item>
     </string-array>
     <string-array name="prefAccelerometerShakeEntries">  <!-- display version -->
-        <item>None</item>
-        <item>Hide Web View\n(requires \'Throttle Web View\' preference)</item>
-        <item>Lock and Dim Screen</item>
-        <item>Dim Screen</item>
-        <item>Next Throttle -for volume buttons</item>
-        <item>All Stop</item>
+        <item>Nic</item>
+        <item>Skrýt Web Pohled\n(vyžaduje \'Ovladačový Web Pohled\' předvolby)</item>
+        <item>Zamknout a Ztlumit obrazovku</item>
+        <item>Ztlumit obrazovku</item>
+        <item>Další ovladač - pro tlačítka hlasitost</item>
+        <item>Vše zastavit</item>
     </string-array>
 
     <string-array name="prefTtsWhenEntryValues">
-        <item>None</item>
-        <item>Key</item>
+        <item>Nic</item>
+        <item>Klávesa</item>
     </string-array>
     <string-array name="prefTtsWhenEntries">  <!-- display version -->
-        <item>None</item>
-        <item>Key events only</item>
+        <item>Nic</item>
+        <item>Pouze událost klávesy</item>
     </string-array>
 
     <string-array name="prefTtsThrottleResponseEntryValues">
-        <item>None</item>
-        <item>Throttle</item>
-        <item>Loco</item>
-        <item>Speed</item>
-        <item>LocoSpeed</item>
+        <item>Nic</item>
+        <item>Ovladač</item>
+        <item>Lokomotiva</item>
+        <item>Rychlost</item>
+        <item>Lokmotiva Rychlost</item>
     </string-array>
 
     <string-array name="prefTtsThrottleResponseEntries">  <!-- display version -->
-        <item>None</item>
-        <item>Throttle</item>
-        <item>Throttle + Loco</item>
-        <item>Throttle + Speed</item>
-        <item>Throttle + Loco + Speed</item>
+        <item>Nic</item>
+        <item>Ovladač</item>
+        <item>Ovladač + Lokomotiva</item>
+        <item>Ovladač + Rychlost</item>
+        <item>Ovladač + Lokomotiva + Rychlost</item>
     </string-array>
 
     <string-array name="prefYesNoEntryValues">
-        <item>Yes</item>
-        <item>No</item>
+        <item>Ano</item>
+        <item>Ne</item>
     </string-array>
     <string-array name="prefYesNoEntries">  <!-- display version -->
-        <item>Yes</item>
-        <item>No</item>
+        <item>Ano</item>
+        <item>Ne</item>
     </string-array>
 
     <string-array name="prefLocaleEntryValues">
-        <item>Default</item>
+        <item>Výchozí</item>
         <item>en_US</item>
         <item>it</item>
         <item>pt</item>
@@ -776,54 +753,54 @@
         <item>cs</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->
-        <item>Use Phone\'s global setting</item>
-        <item>English (US) - Engine Driver\'s default </item>
-        <item>Italian</item>
-        <item>Portuguese</item>
-        <item>German</item>
-        <item>Spanish</item>
-        <item>Catalan</item>
-        <item>Czech</item>
+        <item>Použít nastavení telefonu</item>
+        <item>Anglicky (US) - Engine Driver výchozí</item>
+        <item>Italsky</item>
+        <item>Portugalsky</item>
+        <item>Německy</item>
+        <item>Španělsky</item>
+        <item>Katalánksy</item>
+        <item>Česky</item>
     </string-array>
 
     <string-array name="prefConsistFollowRuleStyleEntryValues">
-        <item>original</item>
-        <item>complex</item>
+        <item>původní</item>
+        <item>komplexní</item>
     </string-array>
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
-        <item>Simple text matching (original)</item>
-        <item>Complex text matching - user configurable strings</item>
+        <item>Jednoduché přizpůsobení textu (původní)</item>
+        <item>Komplexní přizpůsobení textu - uživcatelsky nastavitelné řetězce</item>
     </string-array>
 
     <string-array name="prefConsistFollowEntryValues">
-        <item>lead</item>
-        <item>lead and trail</item>
-        <item>all</item>
-        <item>lead exact</item>
-        <item>lead and trail exact</item>
-        <item>all exact</item>
+        <item>přípřež</item>
+        <item>přípřež a postrk</item>
+        <item>vše</item>
+        <item>přípřež přesně</item>
+        <item>přípřež a postrk přesně</item>
+        <item>vše přesně</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
-        <item>Lead Loco - Partial Match</item>
-        <item>Lead+Trail Locos - Partial Match</item>
-        <item>All Locos - Partial Match</item>
-        <item>Lead Loco - Exact Match</item>
-        <item>Lead+Trail Locos - Exact Match</item>
-        <item>All Locos - Exact Match</item>
+        <item>Přípřež lokomotiva - Částečná shoda</item>
+        <item>Přípřež+Postrk lokomotiva - Částečná shoda</item>
+        <item>Všechny lokomotivy - Částečná shoda</item>
+        <item>Přípřež lokomotiva - Přesná shoda</item>
+        <item>Přípřež+Postrk lokomotiva - Přesná shoda</item>
+        <item>Všechny lokomotivy - Přesná shoda</item>
     </string-array>
 
     <string-array name="prefConsistFollowDefaultActionEntryValues">
-        <item>none</item>
-        <item>f lead</item>
-        <item>f lead and trail</item>
-        <item>f all</item>
+        <item>nic</item>
+        <item>f přípřež</item>
+        <item>f přípřež a postrk</item>
+        <item>f všechny</item>
     </string-array>
 
     <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
-        <item>Do Nothing</item>
-        <item>Lead Loco - Same Function number</item>
-        <item>Lead+Trail Locos - Same Function number</item>
-        <item>All Locos - Same Function number</item>
+        <item>Nedělat nic</item>
+        <item>Přípřež lokomotiva - Stejné číslo funkce</item>
+        <item>Přípřež+Postrk lokomotiva - Stejné číslo funkce</item>
+        <item>Všechny lokomotivy - Stejné číslo funkce</item>
     </string-array>
 
     <string-array name="prefKidsTimerEntryValues">
@@ -835,12 +812,12 @@
         <item>999</item>
     </string-array>
     <string-array name="prefKidsTimerEntries">  <!-- display version -->
-        <item>Disabled</item>
-        <item>1 minute</item>
-        <item>2 minutes</item>
-        <item>5 minutes</item>
-        <item>10 minutes</item>
-        <item>Run completed</item>
+        <item>Zakázáno</item>
+        <item>1 minuta</item>
+        <item>2 minuty</item>
+        <item>5 minut</item>
+        <item>10 minut</item>
+        <item>Běh dokončen</item>
     </string-array>
 
 </resources>
