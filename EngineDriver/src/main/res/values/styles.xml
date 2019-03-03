@@ -248,16 +248,8 @@
     <item name="android:textColorPrimary">@color/solidWhite</item>
     <item name="android:textColor">@color/solidWhite</item>
     <item name="android:windowTitleStyle">@style/dialogTitle_black</item>
-<!--    <item name="android:buttonBarStyle">@style/dialogButtonBar_black</item> -->
   </style>
-<!--
-  <style name="actionBarStyle_black" parent="@android:style/Widget.Holo.Light.ActionBar">
-    <item name="android:background">@color/solidBlack</item>
-    <item name="android:icon">@drawable/ic_launcher</item>
-    <item name="android:panelColorBackground">@color/solidBlack</item>
-    <item name="android:colorBackground">@color/solidBlack</item>
-  </style>
--->
+
   <style name="windowTitleBackground_black">
     <item name="android:background">@color/solidBlack</item>
     <item name="android:textColor">@color/solidWhite</item>

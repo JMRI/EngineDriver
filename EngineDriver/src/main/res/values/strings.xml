@@ -22,7 +22,7 @@
     <string name="function_buttons">function_buttons</string>
     <string name="introMenu">Intro/Setup Wizard</string>
 
-    <string name="app_name">Engine Driver</string>
+    <string name="app_name">Engine Driver</string>  <!-- DO NOT TRANSLATE -->
     <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI, MRC or DigiTrax WiThrottle server, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one to six locomotives. </string>
     <string name="app_name_intro">Introduction - Engine Driver</string>
     <string name="app_name_connect">Connect to Server - Engine Driver</string>
@@ -71,11 +71,11 @@
     <string name="fbResetFunctionLabels">Reset All</string>
     <string name="prefNumberOfDefaultFunctionLabelsTitle">Number of Default Functions</string>
     <string name="prefNumberOfDefaultFunctionLabelsSummary">Limit the Function Labels shown if not available from the JMRI roster.</string>
-    <string name="prefNumberOfDefaultFunctionLabelsDefaultValue">29</string>
+    <string name="prefNumberOfDefaultFunctionLabelsDefaultValue">29</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Number of Default Functions for Roster</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limit the Function Labels shown for JMRI Roster Entries with no function Labels.</string>
-    <string name="prefNumberOfDefaultFunctionLabelsForRosterDefaultValue">4</string>
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterDefaultValue">4</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="consist_help">Click an engine to change its direction with respect to the top of the consist.  Long press an engine to remove it from the consist.  Press Back Arrow when done.</string>
     <string name="about">About</string>
@@ -146,10 +146,10 @@
     <string name="prefSwipeUpDownTitle">Swipe Up-Down Preferences</string>
     <string name="prefSwipeUpDownSummary">Options for swipe Up-Down on the Throttle Screen.</string>
     <string name="prefThrottleNameTitle">Throttle Name</string>
-    <string name="prefThrottleNameDefaultValue">Engine Driver</string>
+    <string name="prefThrottleNameDefaultValue">Engine Driver</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefThrottleNameSummary">Set a name for this device (shown on WiThrottle screen)</string>
     <string name="prefThrottleOrientationTitle">Screen orientation</string>
-    <string name="prefThrottleOrientationDefaultValue">Portrait</string>
+    <string name="prefThrottleOrientationDefaultValue">Portrait</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefThrottleOrientationSummary">Screen orientation (except Web)</string>
     <string name="prefThrottlePageTitle">Throttle Page Appearance Preferences</string>
     <string name="prefThrottleTitle">Throttle Control Preferences</string>
@@ -191,7 +191,7 @@
 
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Speed button change amount</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">How much Volume buttons jump throttle speed.</string>
-    <string name="prefVolumeSpeedButtonsSpeedStepDefaultValue">1</string>
+    <string name="prefVolumeSpeedButtonsSpeedStepDefaultValue">1</string>  <!-- DO NOT TRANSLATE -->
 
     <!--     Gamepad preferences  -->
     <string name="prefGamePadTitle">Gamepad Preferences</string>
@@ -203,15 +203,15 @@
 
     <string name="prefGamePadFeedbackVolumeTitle">Gamepad Button Click Volume %</string>
     <string name="prefGamePadFeedbackVolumeSummary">Set the volume percent for gamepad button clicks.</string>
-    <string name="prefGamePadFeedbackVolumeDefaultValue">100</string>
+    <string name="prefGamePadFeedbackVolumeDefaultValue">100</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefGamePadSpeedButtonsRepeatTitle">Speed button repeat delay</string>
     <string name="prefGamePadSpeedButtonsRepeatSummary">How long between repeats on Gamepad speed buttons.  Smaller is faster.</string>
-    <string name="prefGamePadSpeedButtonsRepeatDefaultValue">300</string>
+    <string name="prefGamePadSpeedButtonsRepeatDefaultValue">300</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefGamePadSpeedButtonsSpeedStepTitle">Speed button change amount</string>
     <string name="prefGamePadSpeedButtonsSpeedStepSummary">How much Gamepad buttons jump throttle speed.</string>
-    <string name="prefGamePadSpeedButtonsSpeedStepDefaultValue">4</string>
+    <string name="prefGamePadSpeedButtonsSpeedStepDefaultValue">4</string>  <!-- DO NOT TRANSLATE -->
 
     <!--    Gamepad button preferences   -->
     <string name="prefGamePadButton1Title">Gamepad button action</string> <!-- X     -->
@@ -225,52 +225,52 @@
     <string name="prefGamePadButtonDownTitle">Gamepad DPAD Down action</string>
     <string name="prefGamePadButtonLeftTitle">Gamepad DPAD Left action</string>
     <string name="prefGamePadButtonSummary">Choose the action when you press the button.</string>
-    <string name="prefGamePadButton1DefaultValue">Stop</string>
-    <string name="prefGamePadButton2DefaultValue">Function 00/Light</string>
-    <string name="prefGamePadButton3DefaultValue">Function 01/Bell</string>
-    <string name="prefGamePadButton4DefaultValue">Function 02/Horn</string>
-    <string name="prefGamePadButtonStartDefaultValue">Next Throttle</string>
-    <string name="prefGamePadButtonReturnDefaultValue">All Stop</string>
-    <string name="prefGamePadButtonUpDefaultValue">Increase Speed</string>
-    <string name="prefGamePadButtonRightDefaultValue">Reverse</string>
-    <string name="prefGamePadButtonDownDefaultValue">Decrease Speed</string>
-    <string name="prefGamePadButtonLeftDefaultValue">Forward</string>
-    <string name="prefGamePadButtonLeftShoulderDefaultValue">Function 03</string>
-    <string name="prefGamePadButtonRightShoulderDefaultValue">Function 04</string>
-    <string name="prefGamePadButtonLeftTriggerDefaultValue">Function 05</string>
-    <string name="prefGamePadButtonRightTriggerDefaultValue">Function 06</string>
+    <string name="prefGamePadButton1DefaultValue">Stop</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButton2DefaultValue">Function 00/Light</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButton3DefaultValue">Function 01/Bell</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButton4DefaultValue">Function 02/Horn</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButtonStartDefaultValue">Next Throttle</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButtonReturnDefaultValue">All Stop</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButtonUpDefaultValue">Increase Speed</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButtonRightDefaultValue">Reverse</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButtonDownDefaultValue">Decrease Speed</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButtonLeftDefaultValue">Forward</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButtonLeftShoulderDefaultValue">Function 03</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButtonRightShoulderDefaultValue">Function 04</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButtonLeftTriggerDefaultValue">Function 05</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButtonRightTriggerDefaultValue">Function 06</string>  <!-- DO NOT TRANSLATE -->
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
-    <string name="prefEsuMc2ThrottleNameDefaultValue">ESU MobileControl II</string>
+    <string name="prefEsuMc2ThrottleNameDefaultValue">ESU MobileControl II</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefEsuMc2Title">ESU MobileControl II Options</string>
     <string name="prefEsuMc2Summary">Choose ESU MobileControl II options</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Device side button options</string>
     <string name="prefEsuMc2ButtonTLTitle">Top-left button action</string>
     <string name="prefEsuMc2ButtonTLSummary">Choose the action when you press the button.</string>
-    <string name="prefEsuMc2ButtonTLDefaultValue">Increase Speed</string>
+    <string name="prefEsuMc2ButtonTLDefaultValue">Increase Speed</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefEsuMc2ButtonBLTitle">Bottom-left button action</string>
     <string name="prefEsuMc2ButtonBLSummary">Choose the action when you press the button.</string>
-    <string name="prefEsuMc2ButtonBLDefaultValue">Decrease Speed</string>
+    <string name="prefEsuMc2ButtonBLDefaultValue">Decrease Speed</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefEsuMc2ButtonTRTitle">Top-right button action</string>
     <string name="prefEsuMc2ButtonTRSummary">Choose the action when you press the button.</string>
-    <string name="prefEsuMc2ButtonTRDefaultValue">Forward/Reverse Toggle</string>
+    <string name="prefEsuMc2ButtonTRDefaultValue">Forward/Reverse Toggle</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefEsuMc2ButtonBRTitle">Bottom-right button action</string>
     <string name="prefEsuMc2ButtonBRSummary">Choose the action when you press the button.</string>
-    <string name="prefEsuMc2ButtonBRDefaultValue">Next Throttle</string>
+    <string name="prefEsuMc2ButtonBRDefaultValue">Next Throttle</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefEsuMc2ButtonsRepeatTitle">Button repeat delay</string>
     <string name="prefEsuMc2ButtonsRepeatSummary">How long between repeats on device side buttons.\nSmaller is faster.</string>
-    <string name="prefEsuMc2ButtonsRepeatDefaultValue">300</string>
+    <string name="prefEsuMc2ButtonsRepeatDefaultValue">300</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefEsuMc2StopButtonCategoryTitle">Device Stop button options</string>
     <string name="prefEsuMc2StopButtonDelayTitle">Stop Button long-press delay</string>
     <string name="prefEsuMc2StopButtonDelaySummary">How long for a \'long-press\' of the Stop button.\nA \'long-press\' stops all active throttles; a \'short-press\' pauses the current throttle.\nSmaller is faster.</string>
-    <string name="prefEsuMc2StopButtonDelayDefaultValue">500</string>
+    <string name="prefEsuMc2StopButtonDelayDefaultValue">500</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefEsuMc2StopButtonShortPressTitle">Enable Short Press</string>
     <string name="prefEsuMc2StopButtonShortPressSummary">A \'short-press\' pauses the currently controlled locomotive/consist.\nWill revert to original speed when operations resume.</string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Control Knob options</string>
     <string name="prefEsuMc2ZeroTrimTitle">Control Knob Zero Trim</string>
     <string name="prefEsuMc2ZeroTrimSummary">Set the Control Knob zero trim setting.\nSmaller is closer to counter-clockwise end-stop position.\nPermitted range 0&#8211;255.</string>
-    <string name="prefEsuMc2ZeroTrimDefaultValue">10</string>
+    <string name="prefEsuMc2ZeroTrimDefaultValue">10</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefEsuMc2EndStopDirectionChangeTitle">Direction Change at end-stop</string>
     <string name="prefEsuMc2EndStopDirectionChangeSummary">Allow Loco direction to change when control knob at counter-clockwise end-stop position.</string>
     <string name="prefEsuMc2KnobButtonTitle">Show disable Knob button</string>
@@ -300,18 +300,18 @@
     <string name="prefThrottleScreenTypeDefault">Default</string>
 
     <string name="prefMaximumThrottleTitle">Maximum Throttle Percentage</string>
-    <string name="prefMaximumThrottleDefaultValue">100</string>
+    <string name="prefMaximumThrottleDefaultValue">100</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value in %</string>
     <string name="prefMaximumThrottleChangeTitle">Maximum Throttle Change</string>
-    <string name="prefMaximumThrottleChangeDefaultValue">25</string>
+    <string name="prefMaximumThrottleChangeDefaultValue">25</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefMaximumThrottleChangeSummary">Maximum Allowed throttle change in %</string>
     <string name="prefWebViewTitle">Web View Preferences</string>
     <string name="prefWebViewSummary">Options for Web View appearance</string>
     <string name="prefInitialThrotWebPageTitle">Initial Throttle Web Page</string>
-    <string name="prefInitialThrotWebPageDefaultValue">/</string>
+    <string name="prefInitialThrotWebPageDefaultValue">/</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefInitialThrotWebPageSummary">Initial Throttle Web Page (such as \'/panel/\')</string>
     <string name="prefWebViewLocationTitle">Throttle Web View?</string>
-    <string name="prefWebViewLocationDefaultValue">none</string>
+    <string name="prefWebViewLocationDefaultValue">none</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefWebViewLocationSummary">Include web view on Throttle pane</string>
     <string name="prefSelectLocoTitle">Select Loco Preferences</string>
     <string name="prefSelectiveLeadSoundTitle">Selective Lead Unit Sound?</string>
@@ -349,45 +349,45 @@
     <string name="LocoSelectMethodHelp">Enter the DCC Address of your loco above and click \'Acquire\'.\n\nAlternately, select a loco from the JMRI \'Roster\' or select from \'Recent\' locos by clicking one of the radio buttons above.</string>
 
     <string name="prefMaximumRecentLocosTitle">Maximum Recent Locos</string>
-    <string name="prefMaximumRecentLocosDefaultValue">10</string>
+    <string name="prefMaximumRecentLocosDefaultValue">10</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefMaximumRecentLocosSummary">Maximum Recent Locos to show in list</string>
     <string name="prefDefaultAddressLengthTitle">Default Address Length</string>
-    <string name="prefDefaultAddressLengthDefaultValue">Auto</string>
+    <string name="prefDefaultAddressLengthDefaultValue">Auto</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefDefaultAddressLengthSummary">Default Loco Address Length, (Auto will set based on # of digits).</string>
     <string name="prefWebTitle">Web Preferences</string>
     <string name="prefDisplaySpeedUnitsTitle">Speed Units</string>
-    <string name="prefDisplaySpeedUnitsDefaultValue">100</string>
+    <string name="prefDisplaySpeedUnitsDefaultValue">100</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefDisplaySpeedUnitsSummary">Display speed as percentage or by speed steps?</string>
     <string name="prefWebOrientationTitle">Web Screen Orientation</string>
-    <string name="prefWebOrientationDefaultValue">Auto-Rotate</string>
+    <string name="prefWebOrientationDefaultValue">Auto-Rotate</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefWebOrientationSummary">Web screen orientation</string>
     <string name="prefInitialWebPageTitle">Initial Web Page</string>
-    <string name="prefInitialWebPageDefaultValue">/</string>
+    <string name="prefInitialWebPageDefaultValue">/</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefInitialWebPageSummary">Initial Web Page (such as \'/panel\')</string>
     <string name="prefConnectTitle">Connect Preferences</string>
     <string name="prefMaximumRecentConnectionsTitle">Maximum Recent Connections</string>
-    <string name="prefMaximumRecentConnectionsDefaultValue">10</string>
+    <string name="prefMaximumRecentConnectionsDefaultValue">10</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefMaximumRecentConnectionsSummary">Maximum Recent Connections to show in list</string>
     <string name="prefConnectTimeoutMsTitle">Initial Connection Timeout</string>
     <string name="prefConnectTimeoutMsSummary">Set initial connection timeout in milliseconds</string>
-    <string name="prefConnectTimeoutMsDefaultValue">3000</string>
+    <string name="prefConnectTimeoutMsDefaultValue">3000</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefSocketTimeoutMsTitle">Socket Timeout</string>
     <string name="prefSocketTimeoutMsSummary">Set socket read timeout in milliseconds</string>
-    <string name="prefSocketTimeoutMsDefaultValue">500</string>
+    <string name="prefSocketTimeoutMsDefaultValue">500</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefTurnoutsTitle">Turnouts and Routes Preferences</string>
     <string name="prefHardwareSystemTitle">Turnout Hardware System</string>
-    <string name="prefHardwareSystemDefaultValue">L</string>
+    <string name="prefHardwareSystemDefaultValue">L</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefHardwareSystemSummary">Select hardware system to use for direct entry turnout commands</string>
     <string name="prefHideSystemRouteNamesTitle">Hide Sys Route Names?</string>
     <string name="prefHideSystemRouteNamesSummary">Hide system names for Routes, used to save space on Route list.</string>
     <string name="prefDelimiterTitle">Location Delimiter</string>
-    <string name="prefDelimiterDefaultValue">:</string>
+    <string name="prefDelimiterDefaultValue">:</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefDelimiterSummary">Set the character that marks the end of the Location portion of Turnout and Route names</string>
 
     <string name="prefScreenBrightnessDimTitle">Screen Dimming % Value</string>
     <string name="prefScreenBrightnessDimSummary">Brightness setting to use when dimming the screen (0%-99%). Disables Auto or Adaptive Brightness if set.</string>
-    <string name="prefScreenBrightnessDimDefaultValue">"5"</string>
+    <string name="prefScreenBrightnessDimDefaultValue">"5"</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="logViewer">View Log</string>
     <string name="clearLocoList">Clear List</string>
@@ -400,12 +400,12 @@
     <string name="prefPowerButtonBarSummary">Display layout power button in Throttle, Turnout and Routes screens?</string>
     <string name="prefSliderLeftMarginTitle">Throttle Speed Slider Margin</string>
     <string name="prefSliderLeftMarginSummary">Number of pixels to offset margins of throttle speed sliders.</string>
-    <string name="prefSliderLeftMarginDefaultValue">8</string>
+    <string name="prefSliderLeftMarginDefaultValue">8</string>  <!-- DO NOT TRANSLATE -->
     <string name="PrefConnectToFirstServerTitle">Auto-Connect to First WiThrottle Server?</string>
     <string name="PrefConnectToFirstServerSummary">Connect automatically to first WiThrottle Server discovered?</string>
     <string name="prefDisplayClockTitle">Fast Clock Display</string>
     <string name="prefDisplayClockSummary">Set Format for Fast Clock Display in Throttle and Web screens.</string>
-    <string name="prefDisplayClockDefaultValue">0</string>
+    <string name="prefDisplayClockDefaultValue">0</string>  <!-- DO NOT TRANSLATE -->
     <string name="LeftButton">&lt;&lt;</string>
     <string name="RightButton">&gt;&gt;</string>
     <string name="DownButton">--</string>
@@ -415,7 +415,7 @@
 
     <string name="prefSelectedLocoIndicatorTitle">Additional Selected Loco Indicator</string>
     <string name="prefSelectedLocoIndicatorSummary">Additional highlight of the Loco Select button based on the selection method.</string>
-    <string name="prefSelectedLocoIndicatorDefaultValue">None</string>
+    <string name="prefSelectedLocoIndicatorDefaultValue">None</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefDisableVolumeKeysTitle">Disable Volume keys</string>
     <string name="prefDisableVolumeKeysSummary">Disables the hardware Volume keys on the phone/tablet that would otherwise control speed. Note: If selected overrides \'Additional Selected Loco Indicator\'. </string>
@@ -425,15 +425,15 @@
 
     <string name="prefSpeedButtonsRepeatTitle">Speed button repeat delay</string>
     <string name="prefSpeedButtonsRepeatSummary">How long between repeats on speed buttons.  Smaller is faster. Excludes gamepad buttons. (See separate gamepad setting.)</string>
-    <string name="prefSpeedButtonsRepeatDefaultValue">100</string>
+    <string name="prefSpeedButtonsRepeatDefaultValue">100</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSpeedButtonsSpeedStepTitle">Speed button change amount</string>
     <string name="prefSpeedButtonsSpeedStepSummary">How much Speed arrows jump throttle speed.</string>
-    <string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>
+    <string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefGamePadTypeDefaultValue">None</string>
-    <string name="prefSwipeUpOptionDefaultValue">None</string>
-    <string name="prefGamePadStartButtonDefaultValue">Next Throttle</string>
+    <string name="prefGamePadTypeDefaultValue">None</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefSwipeUpOptionDefaultValue">None</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadStartButtonDefaultValue">Next Throttle</string>  <!-- DO NOT TRANSLATE -->
     <string name="NumThrottleDefaulValue">Two</string>
     <string name="server_address">Server address</string>
     <string name="routes_route">Route System Name</string>
@@ -453,18 +453,18 @@
 
     <string name="prefImportExportTitle">Import, Export or Reset</string>
     <string name="prefImportExportSummary">\'Import\' or \'Export\' preferences to the \'engine_driver/\' folder, or \'Reset\' them. \nWill occur IMMEDIATELY on selecting the option.\nWARNING! With \'Reset\' and \'Import\', Engine Driver will restart!\n(You can transfer the preferences to a different phone by copying the file.)</string>
-    <string name="prefImportExportDefaultValue">None</string>
+    <string name="prefImportExportDefaultValue">None</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefImportExportLocoListTitle">Include recent loco list</string>
     <string name="prefImportExportLocoListSummary">Include the locos in the recent loco list in \'Imports\' and \'Exports\'.</string>
 
     <string name="prefAutoImportExportTitle">Auto host specific import/export</string>
     <string name="prefAutoImportExportSummary">On every connection to a host, AUTOMATICALLY \'Import\' preferences for that host, and optionally \'Export\' them on disconnect. \n(To constantly reset back to a known state, set to \'Auto import on connect only\' after the first time, or after a manual save (below).)</string>
-    <string name="prefAutoImportExportDefaultValue">None</string>
+    <string name="prefAutoImportExportDefaultValue">None</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefHostImportExportTitle">Manual host specific import/export</string>
     <string name="prefHostImportExportSummary">\'Import\' or \'Export\' your preferences for a specific host to the \'engine_driver/\' folder. The host must be in your recent connection list.\nWill occur IMMEDIATELY on selecting the option.\n(Only available when not currently connected.)</string>
-    <string name="prefHostImportExportDefaultValue">None</string>
+    <string name="prefHostImportExportDefaultValue">None</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefImportExportOverwite">File already exists. Overwite?</string>
     <string name="prefImportExportErrorReadingList">Error reading recent connections list:</string>
@@ -473,7 +473,7 @@
 
     <string name="prefImportServerManualTitle">Import from current Server (Manually)</string>
     <string name="prefImportServerManualSummary">Server file to \'Import\' a set of preferences from the currently connected server.\nThe file must be in the \'/engine_driver/\' of the server and the Web Server must be running.\nWarning: Import will start immediately on saving this preference.</string>
-    <string name="prefImportServerManualDefaultValue">preferences.ed</string>
+    <string name="prefImportServerManualDefaultValue">preferences.ed</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefImportServerAutoTitle">Auto import from all Servers</string>
     <string name="prefImportServerAutoSummary">Automatically import the preferences from servers on connection.\n(If the file \'/engine_driver/auto_preferences.ed\' is on the server and if it is more recent that the last time checked.)</string>
@@ -515,7 +515,7 @@
 
     <string name="prefThemeTitle">Theme/Style</string>
     <string name="prefThemeSummary">App theme. WARNING! Engine Driver will restart immediately!</string>
-    <string name="prefThemeDefaultValue">Default</string>
+    <string name="prefThemeDefaultValue">Default</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefHideDemoServerTitle">Hide Demo Server</string>
     <string name="prefHideDemoServerSummary">Hide the demo server \'jmri.mstevetodd.com\' in the connection list.</string>
@@ -526,57 +526,57 @@
 
     <string name="prefDirectionButtonLongPressDelayTitle">Direction Button Long Press Delay</string>
     <string name="prefDirectionButtonLongPressDelaySummary">How many milliseconds constitutes a long press for the direction buttons.</string>
-    <string name="prefDirectionButtonLongPressDelayDefaultValue">1500</string>
+    <string name="prefDirectionButtonLongPressDelayDefaultValue">1500</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefAccelerometerTitle">Accelerometer Preferences</string>
     <string name="prefAccelerometerSummary">Options for device motion on the Throttle Page</string>
     <string name="prefAccelerometerShakeTitle">Shake Action</string>
     <string name="prefAccelerometerShakeSummary">Options for when you shake the device.</string>
-    <string name="prefAccelerometerShakeDefaultValue">None</string>
+    <string name="prefAccelerometerShakeDefaultValue">None</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefAccelerometerShakeThresholdTitle">Shake Threshold</string>
     <string name="prefAccelerometerShakeThresholdSummary">Threshold at which the shake will register. (1.5&#8211;3.5) Lower value will respond to a gentle action.\nRequires restart of engine Driver after changing to take effect.</string>
-    <string name="prefAccelerometerShakeThresholdDefaultValue">2.0</string>
+    <string name="prefAccelerometerShakeThresholdDefaultValue">2.0</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefLocaleTitle">Localisation</string>
     <string name="prefLocaleSummary">Language to use. WARNING! Engine Driver will restart immediately. Direction Button labels will be reset.</string>
-    <string name="prefLocaleDefaultValue">Default</string>
+    <string name="prefLocaleDefaultValue">Default</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="functionButton00DefaultValue">Light</string>
     <string name="functionButton01DefaultValue">Bell</string>
     <string name="functionButton02DefaultValue">Horn</string>
-    <string name="functionButton03DefaultValue">3</string>
-    <string name="functionButton04DefaultValue">4</string>
-    <string name="functionButton05DefaultValue">5</string>
-    <string name="functionButton06DefaultValue">6</string>
-    <string name="functionButton07DefaultValue">7</string>
-    <string name="functionButton08DefaultValue">8</string>
-    <string name="functionButton09DefaultValue">9</string>
+    <string name="functionButton03DefaultValue">3</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton04DefaultValue">4</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton05DefaultValue">5</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton06DefaultValue">6</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton07DefaultValue">7</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton08DefaultValue">8</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton09DefaultValue">9</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="functionButton10DefaultValue">10</string>
-    <string name="functionButton11DefaultValue">11</string>
-    <string name="functionButton12DefaultValue">12</string>
-    <string name="functionButton13DefaultValue">13</string>
-    <string name="functionButton14DefaultValue">14</string>
-    <string name="functionButton15DefaultValue">15</string>
-    <string name="functionButton16DefaultValue">16</string>
-    <string name="functionButton17DefaultValue">17</string>
-    <string name="functionButton18DefaultValue">18</string>
-    <string name="functionButton19DefaultValue">19</string>
+    <string name="functionButton10DefaultValue">10</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton11DefaultValue">11</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton12DefaultValue">12</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton13DefaultValue">13</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton14DefaultValue">14</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton15DefaultValue">15</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton16DefaultValue">16</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton17DefaultValue">17</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton18DefaultValue">18</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton19DefaultValue">19</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="functionButton20DefaultValue">20</string>
-    <string name="functionButton21DefaultValue">21</string>
-    <string name="functionButton22DefaultValue">22</string>
-    <string name="functionButton23DefaultValue">23</string>
-    <string name="functionButton24DefaultValue">24</string>
-    <string name="functionButton25DefaultValue">25</string>
-    <string name="functionButton26DefaultValue">26</string>
-    <string name="functionButton27DefaultValue">27</string>
-    <string name="functionButton28DefaultValue">28</string>
-    <string name="functionButton29DefaultValue">29</string>
+    <string name="functionButton20DefaultValue">20</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton21DefaultValue">21</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton22DefaultValue">22</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton23DefaultValue">23</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton24DefaultValue">24</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton25DefaultValue">25</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton26DefaultValue">26</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton27DefaultValue">27</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton28DefaultValue">28</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton29DefaultValue">29</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="functionButton30DefaultValue">30</string>
-    <string name="functionButton31DefaultValue">31</string>
+    <string name="functionButton30DefaultValue">30</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton31DefaultValue">31</string>  <!-- DO NOT TRANSLATE -->
 
 
     <!--    Gamepad test page -->
@@ -711,11 +711,11 @@
 
     <string name="prefTtsWhenTitle">Voice Response</string>
     <string name="prefTtsWhenSummary">When to speak key events and actions using Text to Speech (TTS).</string>
-    <string name="prefTtsWhenDefaultValue">None</string>
+    <string name="prefTtsWhenDefaultValue">None</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefTtsThrottleResponseTitle">On Gamepad Throttle change</string>
     <string name="prefTtsThrottleResponseSummary">When you select a different throttle on the gamepad.</string>
-    <string name="prefTtsThrottleResponseDefaultValue">Throttle</string>
+    <string name="prefTtsThrottleResponseDefaultValue">Throttle</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefTtsGamepadTestTitle">On Gamepad Test</string>
     <string name="prefTtsGamepadTestSummary">When the gamepad test page is launched. </string>
@@ -771,7 +771,7 @@
 
     <string name="prefConsistFollowRuleStyleTitle">Consist Functions - Follow Rule Style</string>
     <string name="prefConsistFollowRuleStyleSummary">Which style of rules to follow in a consist when function buttons are pressed.</string>
-    <string name="prefConsistFollowRuleStyleDefaultValue">original</string>
+    <string name="prefConsistFollowRuleStyleDefaultValue">original</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefConsistFollowTitle">Consist Function Follow Preferences</string>
     <string name="prefConsistFollowSummary">Options for how functions will behave in a Consist.</string>
@@ -785,7 +785,7 @@
 
     <string name="prefConsistFollowDefaultActionTitle">Default Action</string>
     <string name="prefConsistFollowDefaultActionSummary">Which locos in the consist should react to the function buttons if none of the rules below are meet.</string>
-    <string name="prefConsistFollowDefaultActionDefaultValue">none</string>
+    <string name="prefConsistFollowDefaultActionDefaultValue">none</string>  <!-- DO NOT TRANSLATE -->
 
 
     <string name="prefConsistFollowString1Title">Headlight specific String 1</string>
@@ -819,15 +819,15 @@
     <string name="prefKidsHelpSummary">- select the loco first.\n- Timer will start with the first increase in speed.\n- You must come back to this preference to reset the time (or clear it) after the timeout.\n\nRecommendions:\n- Disable the volume keys.\n- Disable \'Swipe Through Turnouts\'.\n- Disable \'Swipe Through Routes\'.\n- Disable EStop.</string>
     <string name="prefKidsTimerTitle">Time limited running</string>
     <string name="prefKidsTimerSummary">Restrict the time that the loco will run. e.g. Each child will get an equal amount of time.</string>
-    <string name="prefKidsTimerDefaultValue">0</string>
+    <string name="prefKidsTimerDefaultValue">0</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefKidsTimerRestartPasswordTitle">Restart Password</string>
     <string name="prefKidsTimerRestartPasswordSummary">Password to restart the timer with the current settings.</string>
-    <string name="prefKidsTimerRestartPasswordDefaultValue">0000</string>
+    <string name="prefKidsTimerRestartPasswordDefaultValue">0000</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefKidsTimerResetPasswordTitle">Reset/Disable Password</string>
     <string name="prefKidsTimerResetPasswordSummary">Password to reset/disable the timer settings.</string>
-    <string name="prefKidsTimerResetPasswordDefaultValue">9999</string>
+    <string name="prefKidsTimerResetPasswordDefaultValue">9999</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="app_name_throttle_kids_running">Throttle - %1$s sec. remaining</string>
     <string name="app_name_throttle_kids_enabled">Throttle - Timer Ready</string>
