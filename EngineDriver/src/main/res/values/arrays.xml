@@ -174,7 +174,7 @@
         <item >Immersive Mode temporarily enable-disable</item>
     </string-array>
 
-    <string-array name="prefGamePadKeyEntries">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefGamePadKeyEntries">  <!-- display version -->
         <item >All Stop</item>
         <item >Stop</item>
         <item >Forward</item>
@@ -214,7 +214,7 @@
         <item >Function 28</item>
     </string-array>
 
-    <string-array name="prefGamePadKeyEntryValues">  <!-- display version -->
+    <string-array name="prefGamePadKeyEntryValues">  <!-- DO NOT TRANSLATE -->
         <item >All Stop</item>
         <item >Stop</item>
         <item >Forward</item>
@@ -773,6 +773,7 @@
         <item>de</item>
         <item>es</item>
         <item>ca</item>
+        <item>cs</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->
         <item>Use Phone\'s global setting</item>
@@ -782,6 +783,7 @@
         <item>German</item>
         <item>Spanish</item>
         <item>Catalan</item>
+        <item>Czech</item>
     </string-array>
 
     <string-array name="prefConsistFollowRuleStyleEntryValues">  <!-- DO NOT TRANSLATE -->
