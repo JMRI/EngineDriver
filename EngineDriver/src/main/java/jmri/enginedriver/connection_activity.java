@@ -113,6 +113,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
     private static final int FORCED_RESTART_REASON_LOCALE = 6;
     private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
+    private static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
 
 
     static {
@@ -422,6 +423,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", FORCED_RESTART_REASON_NONE);
             Log.d("Engine_Driver", "connection: Forced Restart Reason: " + prefForcedRestartReason);
             switch (prefForcedRestartReason) {
+                case FORCED_RESTART_REASON_AUTO_IMPORT:
                 case FORCED_RESTART_REASON_IMPORT: {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportSucceeded), Toast.LENGTH_SHORT).show();
                     break;
@@ -457,7 +459,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
             if ((prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_AUTO)
                     && (prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL)
-                    && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET)) {  // reload the preferences page
+                    && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET)
+                    && (prefForcedRestartReason != FORCED_RESTART_REASON_AUTO_IMPORT)) {  // reload the preferences page
                 Intent in = new Intent().setClass(this, preferences.class);
                 navigatingAway = true;
                 startActivityForResult(in, 0);
@@ -893,6 +896,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         navigateToHandler(PermissionsHelper.READ_PREFERENCES);
     }
 
+    @SuppressLint("ApplySharedPref")
     @SuppressWarnings({"unchecked"})
     private void loadSharedPreferencesFromFileImpl() {
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -900,6 +904,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
         String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
         sharedPreferences.edit().putString("prefAndroidId", deviceId).commit();
+        sharedPreferences.edit().putInt("prefForcedRestartReason", FORCED_RESTART_REASON_AUTO_IMPORT).commit();
+
 
         if ((prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT))
                 || (prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
