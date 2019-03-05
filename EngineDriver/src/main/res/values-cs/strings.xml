@@ -23,7 +23,8 @@
     <string name="fb_column_function">Fn#</string>
     <string name="function_buttons">Funkce tlačítko</string>
     <string name="introMenu">Úvodní/Nastavení Průvodce</string>
-    <string name="app_name">Engine Driver</string>
+
+
     <string name="app_description">Engine Driver – Ovladač pro váš telefon Android. Tato aplikace se může připojit k JMRI, MRC nabo DigiTrax WiThrottle serveru a může řídit vaše lokomotivy. Rychlost, směr a až 29 DCC funkcí je podporováno pro jednu až šest lokomotiv.</string>
     <string name="app_name_intro">Úvod – Engine Driver</string>
     <string name="app_name_connect">Připojet se na server – Engine Driver</string>
@@ -72,12 +73,12 @@
     <string name="fbResetFunctionLabels">Vše Resetovat</string>
     <string name="prefNumberOfDefaultFunctionLabelsTitle">Výchozí počet funkcí</string>
     <string name="prefNumberOfDefaultFunctionLabelsSummary">Omezení štítků funkcí, pokud nejsou k dispozici z evidence JMRI.</string>
-    <string name="prefNumberOfDefaultFunctionLabelsDefaultValue">29</string>
 
+    
     <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Výchozí počet funkcí pro evidenci</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Omezení štítků funkcí zobrazené ze záznamů evidence JMRI bez štítku funkce.</string>
-    <string name="prefNumberOfDefaultFunctionLabelsForRosterDefaultValue">4</string>
-
+    
+    
     <string name="consist_help">Klikněte na lokomotivu pro změnu směru s ohledem na maximální rychlost soupravy. Dlouhým stiskem na lokomotivě vyjmete tuto ze soupravy. Pokud máte hotovo tak stiskněte tlačítko Zpět.</string>
     <string name="about">O aplikaci</string>
     <string name="web">Web</string>
@@ -147,10 +148,10 @@
     <string name="prefSwipeUpDownTitle">Přetáhněte prstem předvolby</string>
     <string name="prefSwipeUpDownSummary">Volby pro tažení prstem na obrazovce ovladače.</string>
     <string name="prefThrottleNameTitle">Název ovladače</string>
-    <string name="prefThrottleNameDefaultValue">Engine Driver</string>
+    
     <string name="prefThrottleNameSummary">Zadejte název pro toto zařízení (bude zobrazeno v okně WiThrottle)</string>
     <string name="prefThrottleOrientationTitle">Orientace obrazovky</string>
-    <string name="prefThrottleOrientationDefaultValue">Na výšku</string>
+    
     <string name="prefThrottleOrientationSummary">Orientace obrazovky (s výjimkou Webu)</string>
     <string name="prefThrottlePageTitle">Převolby Vzhled stránky ovladače</string>
     <string name="prefThrottleTitle">Předvlby řízení ovladače</string>
@@ -192,8 +193,8 @@
 
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Tlačítko rychlosti velikost změny</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">Jak moc tlačítko hlasitosti posune rychlost ovladače.</string>
-    <string name="prefVolumeSpeedButtonsSpeedStepDefaultValue">1</string>
 
+    
     <!--     Gamepad preferences  -->
     <string name="prefGamePadTitle">Předvolby Gamepad</string>
     <string name="prefGamePadSummary">Zvolte typ Gamepad a ostatní volby</string>
@@ -204,16 +205,16 @@
 
     <string name="prefGamePadFeedbackVolumeTitle">Gamepad klik na tlačítko hlasitost %</string>
     <string name="prefGamePadFeedbackVolumeSummary">Nastavete procento hlasitost při kliku na tlačítko Gamepad.</string>
-    <string name="prefGamePadFeedbackVolumeDefaultValue">100</string>
 
+    
     <string name="prefGamePadSpeedButtonsRepeatTitle">Zpoždění opakování tlačítka rychlosti</string>
     <string name="prefGamePadSpeedButtonsRepeatSummary">Jak dlouho bude mezi opakováním tlačítka rychlosti na Gamepad. Menší je rychlejší.</string>
-    <string name="prefGamePadSpeedButtonsRepeatDefaultValue">300</string>
-
+    
+    
     <string name="prefGamePadSpeedButtonsSpeedStepTitle">Velikost změny tlačítka rychlosti</string>
     <string name="prefGamePadSpeedButtonsSpeedStepSummary">Jak moc poskočí rychlost ovladače na tlačítko Gamepad.</string>
-    <string name="prefGamePadSpeedButtonsSpeedStepDefaultValue">4</string>
-
+    
+    
     <!--    Gamepad button preferences   -->
     <string name="prefGamePadButton1Title">Gamepad akce tlačítka</string> <!-- X     -->
     <string name="prefGamePadButton2Title">Gamepad akce tlačítka</string> <!-- A     -->
@@ -226,48 +227,40 @@
     <string name="prefGamePadButtonDownTitle">Gamepad DPAD Dolů akce</string>
     <string name="prefGamePadButtonLeftTitle">Gamepad DPAD Vlavo akce</string>
     <string name="prefGamePadButtonSummary">Vyberte akci která nastane při stisku tlačítka.</string>
-    <string name="prefGamePadButton1DefaultValue">Zastavit</string>
-    <string name="prefGamePadButton2DefaultValue">Funkce 00/Světla</string>
-    <string name="prefGamePadButton3DefaultValue">Funkce 01/Zvon</string>
-    <string name="prefGamePadButton4DefaultValue">Funkce 02/Houkačka</string>
-    <string name="prefGamePadButtonStartDefaultValue">Další ovladač</string>
-    <string name="prefGamePadButtonReturnDefaultValue">Všechno zastavit</string>
-    <string name="prefGamePadButtonUpDefaultValue">Zvýšit rychlost</string>
-    <string name="prefGamePadButtonRightDefaultValue">Zpět</string>
-    <string name="prefGamePadButtonDownDefaultValue">Snížit rychlost</string>
-    <string name="prefGamePadButtonLeftDefaultValue">Vpřed</string>
+    
+
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
-    <string name="prefEsuMc2ThrottleNameDefaultValue">ESU MobileControl II</string>
+    
     <string name="prefEsuMc2Title">ESU MobileControl II Volby</string>
     <string name="prefEsuMc2Summary">Zvolte ESU MobileControl II volby</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Volby postranní tlačítka zařízení</string>
     <string name="prefEsuMc2ButtonTLTitle">Akce horní-levé tlačítko</string>
     <string name="prefEsuMc2ButtonTLSummary">Zvolte akci pro stisk tlačítka.</string>
-    <string name="prefEsuMc2ButtonTLDefaultValue">Zvýšit rychlost</string>
+    
     <string name="prefEsuMc2ButtonBLTitle">Akce dolní-levé tlačítko</string>
     <string name="prefEsuMc2ButtonBLSummary">Zvolte akci pro stisk tlačítka.</string>
-    <string name="prefEsuMc2ButtonBLDefaultValue">Snížit rychlost</string>
+    
     <string name="prefEsuMc2ButtonTRTitle">Akce horní-pravé tlačítko</string>
     <string name="prefEsuMc2ButtonTRSummary">Zvolte akci pro stisk tlačítka.</string>
-    <string name="prefEsuMc2ButtonTRDefaultValue">Přepínač vpřed/vzad</string>
+    
     <string name="prefEsuMc2ButtonBRTitle">Akce dolní-pravé tlačítko</string>
     <string name="prefEsuMc2ButtonBRSummary">Zvolte akci pro stisk tlačítka.</string>
-    <string name="prefEsuMc2ButtonBRDefaultValue">Další ovladač</string>
+    
     <string name="prefEsuMc2ButtonsRepeatTitle">Zpoždění opakování tlačítka</string>
     <string name="prefEsuMc2ButtonsRepeatSummary">Jak dlouho mezi opakováním postranních tlačítek\nMenší je rychleji.</string>
-    <string name="prefEsuMc2ButtonsRepeatDefaultValue">300</string>
+    
     <string name="prefEsuMc2StopButtonCategoryTitle">Volby tlačítka Stop zařízení</string>
     <string name="prefEsuMc2StopButtonDelayTitle">Tlačítko Stop zpoždění dlouhého stisku</string>
     <string name="prefEsuMc2StopButtonDelaySummary">Jak dlouho pro \'dlouhý stisk\' tlačítka Stop.\n\'dlouhý stisk\' zastaví všechny aktivní ovladače; \'krátký stisk\' pozastaví aktuální ovladač.\nMenší je rychleji.</string>
-    <string name="prefEsuMc2StopButtonDelayDefaultValue">500</string>
+    
     <string name="prefEsuMc2StopButtonShortPressTitle">Povolit krátký stisk</string>
     <string name="prefEsuMc2StopButtonShortPressSummary">\'krátký stisk\' pozastaví aktuálně řízenou lokomotivu/soupravu.\nPo obnovení provozu se vrátí na původní rychlost.</string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Volby řídícího kolečka</string>
     <string name="prefEsuMc2ZeroTrimTitle">Řídící kolečko nastavení nuly</string>
     <string name="prefEsuMc2ZeroTrimSummary">Nastavení řídícího kolečka nastavení nuly.\nMenší je blíže koncové poloze proti směru hodinových ručiček.\nDovolené meze 0 &#8211; 255.</string>
-    <string name="prefEsuMc2ZeroTrimDefaultValue">10</string>
+    
     <string name="prefEsuMc2EndStopDirectionChangeTitle">Změna směru na koncové pozici</string>
     <string name="prefEsuMc2EndStopDirectionChangeSummary">Povolit změnu směru lokomotivy když je řídící kolečko na koncové pozici proti směru hodinových ručiček.</string>
     <string name="prefEsuMc2KnobButtonTitle">Zobrazit vypínací tlačítko kolečka</string>
@@ -297,18 +290,18 @@
     <string name="prefThrottleScreenTypeDefault">Výchozí</string>
 
     <string name="prefMaximumThrottleTitle">Maximum ovladače procento</string>
-    <string name="prefMaximumThrottleDefaultValue">100</string>
+    
     <string name="prefMaximumThrottleSummary">Dovolené maximum posuvníku ovladače, hodnota v %</string>
     <string name="prefMaximumThrottleChangeTitle">Maximální změna ovladače</string>
-    <string name="prefMaximumThrottleChangeDefaultValue">25</string>
+    
     <string name="prefMaximumThrottleChangeSummary">Dovolená maximální změna ovladače v %</string>
     <string name="prefWebViewTitle">Předvolby zobrazení Webu</string>
     <string name="prefWebViewSummary">Volvy pro vzhled zobrazení Webu</string>
     <string name="prefInitialThrotWebPageTitle">Výchozí Webová stránka ovladače</string>
-    <string name="prefInitialThrotWebPageDefaultValue">/</string>
+    
     <string name="prefInitialThrotWebPageSummary">Výchozí Webová stránka ovladače (např. jako \'/panel/\')</string>
     <string name="prefWebViewLocationTitle">Zobrazení Web ovladače?</string>
-    <string name="prefWebViewLocationDefaultValue">nic</string>
+    
     <string name="prefWebViewLocationSummary">Zahrnout zobrazení Webu na panelu ovladače</string>
     <string name="prefSelectLocoTitle">Předvolby výběr lokomotivy</string>
     <string name="prefSelectiveLeadSoundTitle">Výběrový zvuk vedoucí lokomotivy?</string>
@@ -334,7 +327,7 @@
 
     <string name="prefRosterFilterTitle">Filtr Evidence</string>
     <string name="prefRosterFilterSummary">Zobrazit pouze záznamy evidence obsahující…</string>
-    <string name="prefRosterFilterDefaultValue"></string>
+
     <string name="FilterRosterList">Filtr</string>
     <string name="FilterRosterListHint">Obsahuje…</string>
     <string name="rosterEmpty">Nemohu najít žádné záznamy v evidenci JMRI. Místo toho použijte volbu \'DCC adresa\' nebo \'Nedávné\'.</string>
@@ -346,47 +339,47 @@
     <string name="LocoSelectMethodHelp">Zadejte DCC adresa vaší lokomotivy výše a klikněte \'Získat\'.\nPřípadně vyberte lokomotivu z \'Evidence\' JMRI nebo vyberte z \'Nedávné\' lokomotivy klikem na radio tlačítko výše.</string>
 
     <string name="prefMaximumRecentLocosTitle">Maximální počet Nedávných lokomotiv</string>
-    <string name="prefMaximumRecentLocosDefaultValue">10</string>
+    
     <string name="prefMaximumRecentLocosSummary">Maximální počet Nedávných lokomotiv zobrazených v seznamu</string>
     <string name="prefDefaultAddressLengthTitle">Výchozí délka adresy</string>
-    <string name="prefDefaultAddressLengthDefaultValue">Automaticky</string>
+    
     <string name="prefDefaultAddressLengthSummary">Výchozí délka adresy lokomotivy (Automaticky bude nastavena na základě počtu číslic).</string>
     <string name="prefWebTitle">Předvolby Webu</string>
     <string name="prefDisplaySpeedUnitsTitle">Jednotky rychlosti</string>
-    <string name="prefDisplaySpeedUnitsDefaultValue">100</string>
+    
     <string name="prefDisplaySpeedUnitsSummary">Zobrazit rychlost jako procenta nebo jako rychlostní kroky?</string>
     <string name="prefWebOrientationTitle">Orientace obrazovky Webu</string>
-    <string name="prefWebOrientationDefaultValue">Automaticky rotovat</string>
+    
     <string name="prefWebOrientationSummary">Orientace obrazovky webu</string>
     <string name="prefInitialWebPageTitle">Výchozí webová stránka</string>
-    <string name="prefInitialWebPageDefaultValue">/</string>
+    
     <string name="prefInitialWebPageSummary">Výchozí vebová stránka (např. jako \'/panel\')</string>
     <string name="prefConnectTitle">Předvolby připojení</string>
     <string name="prefMaximumRecentConnectionsTitle">Maximální počet Nedávných připojení</string>
-    <string name="prefMaximumRecentConnectionsDefaultValue">10</string>
+    
     <string name="prefMaximumRecentConnectionsSummary">Maximální počet Nedávných připojení zobrazených v seznamu</string>
     <string name="prefConnectTimeoutMsTitle">Výchozí Timeout připojení</string>
     <string name="prefConnectTimeoutMsSummary">Nastavit výchozí Timeout připojení v milisekundách</string>
-    <string name="prefConnectTimeoutMsDefaultValue">3000</string>
+    
     <string name="prefSocketTimeoutMsTitle">Timeout Socket</string>
     <string name="prefSocketTimeoutMsSummary">Nastavit Timeout pro čtení socket v milisekundách</string>
-    <string name="prefSocketTimeoutMsDefaultValue">500</string>
-
+    
+    
     <string name="prefTurnoutsTitle">Předvolby Výhybky a Cesty</string>
     <string name="prefHardwareSystemTitle">Výhybky systém připojení</string>
-    <string name="prefHardwareSystemDefaultValue">L</string>
+    
     <string name="prefHardwareSystemSummary">Vyberte systém připojení (předpona) pro použití přímého zadávání povelů výhybek</string>
     <string name="prefHideSystemRouteNamesTitle">Skrýt systémové názvy Cest?</string>
     <string name="prefHideSystemRouteNamesSummary">Skryje systémové názvy pro Cesty, použijte pro úsporu místa v seznamu Cest.</string>
     <string name="prefDelimiterTitle">Oddělovač umístění</string>
-    <string name="prefDelimiterDefaultValue">:</string>
+    
     <string name="prefDelimiterSummary">Nastavete znak který označuje konec v umístění části názvů výhybek a cest.</string>
 
     <string name="prefScreenBrightnessDimTitle">Stmívání obrazovky hodnota v %</string>
     <string name="prefScreenBrightnessDimSummary">Nastavení jasu pro použití stmívání obrazovky (0 % &#8211; 99 %). Zakáže automatický nebo adaptivní jas pokud je nastaven.</string>
-    <string name="prefScreenBrightnessDimDefaultValue">"5"</string>
-
-    <string name="logViewer">Zobrazit Log</string>
+    
+    
+    <string name="logViewer">Zobrazit protokol</string>
     <string name="clearLocoList">Vymazat seznam</string>
     <string name="ClearConnList">Vymazat poslední seznam</string>
     <string name="prefEmerStopTitle">Zobrazit tlačítko nouzového zastavení?</string>
@@ -397,23 +390,23 @@
     <string name="prefPowerButtonBarSummary">Zobrazit tlačítk napájení v obrazovce ovladače, výhybek a cest?</string>
     <string name="prefSliderLeftMarginTitle">Okraj posuvníku rychlosti ovladače</string>
     <string name="prefSliderLeftMarginSummary">Počet pixelů k odsazení okraje posuvníku rychlosti ovladače.</string>
-    <string name="prefSliderLeftMarginDefaultValue">8</string>
+
     <string name="PrefConnectToFirstServerTitle">Automatické připojení se k prvnímu WiThrottle serveru?</string>
     <string name="PrefConnectToFirstServerSummary">Připojovat se automaticky k prvnímu nalezenému WiThrottle serveru?</string>
     <string name="prefDisplayClockTitle">Zobrazit modelové hodiny</string>
     <string name="prefDisplayClockSummary">Nastacvit formát pro zobrazení modelových hodin v ovladači a obrazevce Webu.</string>
-    <string name="prefDisplayClockDefaultValue">0</string>
+    
     <string name="LeftButton">&lt;&lt;</string>
     <string name="RightButton">&gt;&gt;</string>
     <string name="DownButton">--</string>
     <string name="UpButton">++</string>
-    <string name="prefDisplaySpeedArrowsTitle">Zobrazit tlačitka rychlosti?</string>
+    <string name="prefDisplaySpeedArrowsTitle">Zobrazit tlačítka rychlosti?</string>
     <string name="prefDisplaySpeedArrowsSummary">Zobrazit tlačítka rychlosti vedle posuvníků rychlosti lokomotivy?</string>
 
     <string name="prefSelectedLocoIndicatorTitle">Doplňkový vybraný indikátor lokomotivy</string>
     <string name="prefSelectedLocoIndicatorSummary">Doplňkové zvýraznění tlačítko výběru lokomotivy na základě metody výběru.</string>
-    <string name="prefSelectedLocoIndicatorDefaultValue">Nic</string>
-
+    
+    
     <string name="prefDisableVolumeKeysTitle">Zakázat klávesy hlasitost</string>
     <string name="prefDisableVolumeKeysSummary">Zakáže hardwarové klávesy hlasitost na telefonu/tabletu které jinak mohou řídit rychlost. Poznámka: Pokud je vybráno přepíše \'Doplňkový vybraný indikátor lokomotivy\'.</string>
 
@@ -422,16 +415,12 @@
 
     <string name="prefSpeedButtonsRepeatTitle">Zpoždění opakování tlačítka rychlosti</string>
     <string name="prefSpeedButtonsRepeatSummary">Jak dlouho bude mezi opakováním tlačítka rychlosti. Menší je rychlejší. Nezahrnuje tlačítka Gamepad. (Viz samostatné nastavení Gamepad.)</string>
-    <string name="prefSpeedButtonsRepeatDefaultValue">100</string>
-
+    
+    
     <string name="prefSpeedButtonsSpeedStepTitle">Velikost změny tlačítka rychlosti</string>
     <string name="prefSpeedButtonsSpeedStepSummary">Jak moc poskočí rychlost ovladače na tlačítko šipka.</string>
-    <string name="prefSpeedButtonsSpeedStepDefaultValue">4</string>
+    
 
-    <string name="prefGamePadTypeDefaultValue">Nic</string>
-    <string name="prefSwipeUpOptionDefaultValue">Nic</string>
-    <string name="prefGamePadStartButtonDefaultValue">Další ovladač</string>
-    <string name="NumThrottleDefaulValue">Dva</string>
     <string name="server_address">Adresa serveru</string>
     <string name="routes_route">Systémový název cesty</string>
     <string name="label_percent">%</string>
@@ -450,24 +439,35 @@
 
     <string name="prefImportExportTitle">Import, Export nebo Reset</string>
     <string name="prefImportExportSummary">Předvolby \'Import\' nebo \'Export\' do složky \'engine_driver/\' nebo \'Reset\'.\nObjeví se bezprostředně při výběru volby.\nVarování! S \'Reset\' a \'Import\' se bude Engine Driver restartovat!\n(Můžete přenést předvolby na jiný telefon kopírováním souboru.)</string>
-    <string name="prefImportExportDefaultValue">Nic</string>
-
+    
+    
     <string name="prefImportExportLocoListTitle">Zahrnout seznam Nedávné lokomotivy</string>
     <string name="prefImportExportLocoListSummary">Zahrne lokomotivy ze seznamu Nedávné lokomotivy v \'Importu\' a \'Exportu\'.</string>
 
     <string name="prefAutoImportExportTitle">Automatická import/export na určitý host</string>
     <string name="prefAutoImportExportSummary">Při každém připojení na host automaticky \'Importuje\' předvolby pro tohoto host a volitelně je \'Exportuje\' při odpojení.\n(Pro stálé zpětné nastavení do známého stavu nastavte \'Automatický import pouze při připojení\' po prvním připojení nebo po ručním uložení (níže).)</string>
-    <string name="prefAutoImportExportDefaultValue">Nic</string>
-
+    
+    
     <string name="prefHostImportExportTitle">Ruční import/export na určitý host</string>
     <string name="prefHostImportExportSummary">\'Import\' nebo \'Export\' vašich předvoleb pro určitého hosta do složky \'engine_driver/\'. Host musí být v seznamu Nedávných připojení.\nObjeví se bezprostředně při výběru volby.\n(Je k dispozici pouze když nejste aktuálně připojen.)</string>
-    <string name="prefHostImportExportDefaultValue">Nic</string>
-
+    
+    
     <string name="prefImportExportOverwite">Soubor již existuije. Přepsat?</string>
     <string name="prefImportExportErrorReadingList">Chyba při čtení seznamu Nedávných připojení:</string>
     <string name="prefImportExportErrorReadingFrom">Import z \'engine_driver/%1$s\' selhal! Zřejmě jste ještě neuložili předvolby pro tento host.</string>
     <string name="prefImportExportErrorNotConnected">Není připojení na tento host.</string>
 
+    <string name="prefImportServerManualTitle">Import z aktuálního Serveru (Ručně)</string>
+    <string name="prefImportServerManualSummary">Soubor Serveru pro \'Import\' nastaví předvolby z aktuálně připojeného serveru.\nSoubor musí být v adresáři \'/engine_driver/\' serveru a Web Server musí být spuštěn.\nVarování: Import se spustí okamžitě při ukládání těchto předvoleb.</string>
+
+    
+    <string name="prefImportServerAutoTitle">Automaticky importovat ze všech serverů</string>
+    <string name="prefImportServerAutoSummary">Automaticky importuje předvolby ze všech připojených serverů.\nPokud je soubor \'/engine_driver/auto_preferences.ed\' na serveru a pokud je novější než poslední kontrola.)</string>
+
+    <string name="importServerAutoDialog">Nový soubor předvoleb byl nalezen na tomto serveru.\nChcete ho importovat?\n\nVarování!\n\'Úplný\' - Všechny předvolby budou přepsány.\n\n\'Částečný\' - Všechny předvolby s výjimkou Téma a některé předvolby Stránky typu ovladače budou přepsány.</string>
+    <string name="importServerAutoDialogPositiveButton">Úplný</string>
+    <string name="importServerAutoDialogNeutralButton">Částečný</string>
+    
     <string name="prefSwapForwardReverseButtonsTitle">Tlačítka změny směru</string>
     <string name="prefSwapForwardReverseButtonsSummary">Trvalá výměna dvou tlačítek směru pro všechny ovladače.</string>
 
@@ -485,85 +485,48 @@
 
     <string name="prefLeftDirectionButtonsTitle">Štítek levého tlačítka směru</string>
     <string name="prefLeftDirectionButtonsSummary">Štítky pro všechna levá tlačítka směru. Zadejte \'Vpřed\' nebo nechte prázdné pro normální chování.</string>
-    <string name="prefLeftDirectionButtonsDefaultValue">Vpřed</string>
-
+    
+    
     <string name="prefRightDirectionButtonsTitle">Štítek pravého tlačítka směru</string>
     <string name="prefRightDirectionButtonsSummary">Štítky pro všechna pravá tlačítka směru. Zadejte \'Zpět\' nebo nechte prázdné pro normální chování.</string>
-    <string name="prefRightDirectionButtonsDefaultValue">Zpět</string>
-
+    
+    
     <string name="prefLeftDirectionButtonsShortTitle">Štítek zkratka levého tlačítka směru</string>
     <string name="prefLeftDirectionButtonsShortSummary">Štítky zkratka pro všechna levá tlačítka směru. Zadejte \'P\' nebo nechte prázdné pro normální chování.</string>
-    <string name="prefLeftDirectionButtonsShortDefaultValue">P</string>
-
+    
+    
     <string name="prefRightDirectionButtonsShortTitle">Štítek zkratka pravého tlačítka směru</string>
     <string name="prefRightDirectionButtonsShortSummary">Štítky zkratka pro všechna pravá tlačítka směru. Zadejte \'Z\' nebo nechte prázdné pro normální chování.</string>
-    <string name="prefRightDirectionButtonsShortDefaultValue">Z</string>
-
+    
+    
     <string name="prefThemeTitle">Téma/Styl</string>
     <string name="prefThemeSummary">Téma aplikace. Varování! Engine Driver se ihned restartuje!</string>
-    <string name="prefThemeDefaultValue">Výchozí</string>
-
+    
+    
     <string name="prefHideDemoServerTitle">Skrýt Demo Server</string>
     <string name="prefHideDemoServerSummary">Skryje Demo Server \'jmri.mstevetodd.com\' v seznamu připojení.</string>
 
     <string name="prefDirectionButtonsTitle">Štítka tlačítka směru</string>
     <string name="prefDirectionButtonsSummary">Štítky pro všechna tlačítka směru.</string>
-    <string name="prefDirectionButtonsDefaultValue">Vpřed</string>
-
+    
+    
     <string name="prefDirectionButtonLongPressDelayTitle">Směrová tlačítka zpoždení dlouhého stisknutí</string>
     <string name="prefDirectionButtonLongPressDelaySummary">Kolik milisekund představuje dlouhé stisknutí směrového tlačítka.</string>
-    <string name="prefDirectionButtonLongPressDelayDefaultValue">1500</string>
-
+    
+    
     <string name="prefAccelerometerTitle">Předvolby akcelerometru</string>
     <string name="prefAccelerometerSummary">Volby pro pohyb zařízení na stránce ovladače</string>
     <string name="prefAccelerometerShakeTitle">Akce třepání</string>
     <string name="prefAccelerometerShakeSummary">Volby pro třepání zařízením.</string>
-    <string name="prefAccelerometerShakeDefaultValue">Nic</string>
-
+    
+    
     <string name="prefAccelerometerShakeThresholdTitle">Práh třepání</string>
     <string name="prefAccelerometerShakeThresholdSummary">Práh při kterém se bude třepání registrovat. (1.5&#8211;3.5) Nižší hodnota bude reagovat na jemnější akci.\nVyžaduje restart Engine Driver po změně, aby se změny projevily.</string>
-    <string name="prefAccelerometerShakeThresholdDefaultValue">2.0</string>
-
+    
+    
     <string name="prefLocaleTitle">Lokalizace</string>
     <string name="prefLocaleSummary">Jazyk který chcete používat. Varování! Engine Driver se okamžite restartuje. Štítky tlačítek směru budou resetovány.</string>
-    <string name="prefLocaleDefaultValue">Výchozí</string>
-
-    <string name="functionButton00DefultValue">Světla</string>
-    <string name="functionButton01DefultValue">Zvon</string>
-    <string name="functionButton02DefultValue">Houkačka</string>
-    <string name="functionButton03DefultValue">3</string>
-    <string name="functionButton04DefultValue">4</string>
-    <string name="functionButton05DefultValue">5</string>
-    <string name="functionButton06DefultValue">6</string>
-    <string name="functionButton07DefultValue">7</string>
-    <string name="functionButton08DefultValue">8</string>
-    <string name="functionButton09DefultValue">9</string>
-
-    <string name="functionButton10DefultValue">10</string>
-    <string name="functionButton11DefultValue">11</string>
-    <string name="functionButton12DefultValue">12</string>
-    <string name="functionButton13DefultValue">13</string>
-    <string name="functionButton14DefultValue">14</string>
-    <string name="functionButton15DefultValue">15</string>
-    <string name="functionButton16DefultValue">16</string>
-    <string name="functionButton17DefultValue">17</string>
-    <string name="functionButton18DefultValue">18</string>
-    <string name="functionButton19DefultValue">19</string>
-
-    <string name="functionButton20DefultValue">20</string>
-    <string name="functionButton21DefultValue">21</string>
-    <string name="functionButton22DefultValue">22</string>
-    <string name="functionButton23DefultValue">23</string>
-    <string name="functionButton24DefultValue">24</string>
-    <string name="functionButton25DefultValue">25</string>
-    <string name="functionButton26DefultValue">26</string>
-    <string name="functionButton27DefultValue">27</string>
-    <string name="functionButton28DefultValue">28</string>
-    <string name="functionButton29DefultValue">29</string>
-
-    <string name="functionButton30DefultValue">30</string>
-    <string name="functionButton31DefultValue">31</string>
-
+    
 
     <!--    Gamepad test page -->
     <string name="gamepadTestButtonLabelDpadUp">Nahoru</string>
@@ -576,6 +539,10 @@
     <string name="gamepadTestButtonLabelButtonB">B [@]</string>
     <string name="gamepadTestButtonLabelButtonStart">Start | Enter</string>
     <string name="gamepadTestButtonLabelButtonEnter">Select | Enter</string>
+    <string name="gamepadTestButtonLabelButtonLeftShoulder">Levé rameno</string>
+    <string name="gamepadTestButtonLabelButtonRightShoulder">Pravé rameno</string>
+    <string name="gamepadTestButtonLabelButtonLeftTrigger">Levý spouštěč</string>
+    <string name="gamepadTestButtonLabelButtonRightTrigger">Pravý spouštěč</string>
 
     <string name="gamepadTestOptionalLabel">Volitelné (nemusí být na všech zařízeních)</string>
     <string name="gamepadTestAllKeyCodesLabel">Všechny kódy:\s\s</string>
@@ -583,6 +550,7 @@
     <string name="gamepadTestKeycodeLabel">Kód klávesy:\s\s</string>
     <string name="gamepadTestFunctionLabel">Funkce:\s\s</string>
     <string name="gamepadTestCompleteLabel">Stav testu:\s\s</string>
+    <string name="gamepadTestDeviceName">BT:</string>
     <string name="gamepadTestHelp">Srolujte dolů abyste viděli úplné pokyny…\n\nStiskněte VŠECHNY Dpad A čtyři primární tlačítka nebo Gamepad NEBUDE PRACOVAT.\n\nPokud nemůžete aktivovat všechny tlačítka, změňte režim Gamepad (přečtěte si pokyny k vašemu Gamepad) nebo zkuste jiný typ Gamepad (výše uvedené).\n\n\'ZPĚT\' nebo \'ZRUŠIT\' ukončí test ale Gamepad NEBUDE PRACOVAT.\n\'PŘESKOČIT\' nebo třikrát stisk tlačítka Gamepad \'Snížit rychlost\' vynutí přeskočení testu, i když Gamepad nepracuje správně.\n\'RESET\' přinutí EngineDriver se domnívat že žádný Gamepad dosud nebyl použit.\nJestliže je vybrán \'jednoduchý\' test tak jeden stisk tlačítka \'Snížit rychlost\' přeskočí test.\nPoužijte \'Test Gamepad\' volbu nabídky pro návrat na tuto stránku.</string>
     <string name="gamepadTestHelpNonForced">Pokud nemůžete aktivovat všechny tlačítka změňte režim Gamepad (přečtěte si pokyny k vašemu Gamepad) nebo zkuste jiný typ Gamepad (výše uvedené).\nZ obrazovky ovladače můžete být požádán o opakování testu Gamepad pokud ho použijete poprvé.</string>
     <string name="gamepadTestIncomplete">"Test nedokončen"</string>
@@ -642,6 +610,12 @@
     <string name="toastPreferencesOutsideLimits">Zadaná hodnota je mimo meze (%1$s – %2$s). Nastavím na %3$s.</string>
     <string name="toastPreferencesNotNumeric">Zadaná hodnota není číslo (%1$s – %2$s). Nastavím na %3$.</string>
     <string name="toastPreferencesResetSucceeded">Předvolby Nastavení na výchozí hodnoty!</string>
+    <string name="toastPreferencesImportServerManualFailed">Import předvoleb se serveru selhal! Zkontrolujte, že je soubor správný. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Import předvoleb ze serveru se zdařil. (%1$s)</string>
+    <string name="toastPreferencesImportSucceeded">Import předvoleb ze souboru se zdařil.</string>
+    <string name="toastPreferencesThemeChangeSucceeded">Změna tématu se zdařila.</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">Změna typu stránky ovladače se zdařila.</string>
+    <string name="toastPreferencesLocaleChangeSucceeded">Změna místního nastavení (Jazyka) se zdařila.</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver restarted with chosen Language.</string> -->
 
     <!--    Toast messages for the Turnout Activity -->
@@ -681,12 +655,12 @@
 
     <string name="prefTtsWhenTitle">Hlasová odpověď</string>
     <string name="prefTtsWhenSummary">Když řeč klávesa události a akce použitím Text na řeč (TTS).</string>
-    <string name="prefTtsWhenDefaultValue">Nic</string>
 
+    
     <string name="prefTtsThrottleResponseTitle">Gamepad změna ovladače</string>
     <string name="prefTtsThrottleResponseSummary">Když vyberete na Gamepad jiný ovladač.</string>
-    <string name="prefTtsThrottleResponseDefaultValue">Ovladač</string>
-
+    
+    
     <string name="prefTtsGamepadTestTitle">Test Gamepad</string>
     <string name="prefTtsGamepadTestSummary">Když je spuštěna testovací stránka Gamepad.</string>
 
@@ -732,7 +706,7 @@
     <string name="prefFlashlightTitle">Zobrazit tlačítko svítilny?</string>
     <string name="toastFlashlightFailed">Je mi líto! Při zapnutí svítilny došlo k problému&#8230;</string>
 
-    <string name="logViewerTitle">Zobrazovač Logu aktivity | Ovladač název: %1$s</string>
+    <string name="logViewerTitle">Prohlížeč protokolu aktivity | Ovladač název: %1$s</string>
 
     <!-- Consist Follow Function Preferences etc. -->
     <string name="ConsistEditLabelLead">PŘÍPŘEŽ</string>
@@ -740,22 +714,16 @@
 
     <string name="prefConsistFollowRuleStyleTitle">Funkce soupravy – následování pravidel stylu</string>
     <string name="prefConsistFollowRuleStyleSummary">Který styl pravidel bude následován v soupravě pokud je stisknuté tlačítko.</string>
-    <string name="prefConsistFollowRuleStyleDefaultValue">původní</string>
 
+    
     <string name="prefConsistFollowTitle">Funkce soupravy Následování předvoleb</string>
     <string name="prefConsistFollowSummary">Volby pro to jak se budou chovat funkce v soupravě.</string>
 
-    <string name="prefConsistFollowString1DefaultValue">SVĚTLA</string>
-    <string name="prefConsistFollowString2DefaultValue">PÍŠŤALA, HOUKAČKA, ZVON</string>
-    <string name="prefConsistFollowStringOtherDefaultValue"></string>
-    <string name="prefConsistFollowAction1DefaultValue">přípřež</string>
-    <string name="prefConsistFollowAction2DefaultValue">přípřež</string>
-    <string name="prefConsistFollowActionOtherDefaultValue">přípřež</string>
 
     <string name="prefConsistFollowDefaultActionTitle">Výchozí akce</string>
     <string name="prefConsistFollowDefaultActionSummary">Která z lokomotiv by měla reagovat na tlačítko funkce pokud žádné z níže uvedených pravidel není splněno.</string>
-    <string name="prefConsistFollowDefaultActionDefaultValue">žádná</string>
-
+    
+    
 
     <string name="prefConsistFollowString1Title">Světlomety konkrétní řetězec 1</string>
     <string name="prefConsistFollowString1Summary">Čárkou oddělený řetězec(ce) pro vyhledání mezi štítky funkcí lokomotiv v soupravě, které obsahují funkci \'Světla\' (obvykle F0).</string>
@@ -788,16 +756,16 @@
     <string name="prefKidsHelpSummary">– nejdříve vyberte lokomotivu.\n– Časovač bude spuštěn při prvním zvýšení rychlosti.\n– Musíte se vrátit do této předvolby pro obnovení času (nebo jeho vymazání) po uplynutí časového limitu.\n\nDoporučení:\n– Zakázat klávesy hlasitosti.\n– Zakázat \'Přetáhnout přes výhybky\'.\n– Zakázat \'Přetáhnout přes cesty\'.\n– Zakázat EStop.</string>
     <string name="prefKidsTimerTitle">Časově omezený provoz</string>
     <string name="prefKidsTimerSummary">Omezte dobu, po kterou poběží lokomotiva, např. každé dítě dostane stejné množství času.</string>
-    <string name="prefKidsTimerDefaultValue">0</string>
-
+    
+    
     <string name="prefKidsTimerRestartPasswordTitle">Heslo pro obnovu</string>
     <string name="prefKidsTimerRestartPasswordSummary">Heslo, které obnoví časovač se současnými nastaveními.</string>
-    <string name="prefKidsTimerRestartPasswordDefaultValue">0000</string>
-
+    
+    
     <string name="prefKidsTimerResetPasswordTitle">Heslo pro obnovu/zákaz</string>
     <string name="prefKidsTimerResetPasswordSummary">Heslo pro obnovu/zákaz nastavení časovače.</string>
-    <string name="prefKidsTimerResetPasswordDefaultValue">9999</string>
-
+    
+    
     <string name="app_name_throttle_kids_running">Ovladač – %1$s zbývá vteřin</string>
     <string name="app_name_throttle_kids_enabled">Ovladač – Časovač připraven</string>
     <string name="app_name_throttle_kids_ended">Ovladač – Časovač skončil</string>

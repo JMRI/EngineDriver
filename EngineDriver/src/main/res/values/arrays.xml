@@ -174,7 +174,7 @@
         <item >Immersive Mode temporarily enable-disable</item>
     </string-array>
 
-    <string-array name="prefGamePadKeyEntries">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefGamePadKeyEntries">  <!-- display version -->
         <item >All Stop</item>
         <item >Stop</item>
         <item >Forward</item>
@@ -214,7 +214,7 @@
         <item >Function 28</item>
     </string-array>
 
-    <string-array name="prefGamePadKeyEntryValues">  <!-- display version -->
+    <string-array name="prefGamePadKeyEntryValues">  <!-- DO NOT TRANSLATE -->
         <item >All Stop</item>
         <item >Stop</item>
         <item >Forward</item>
