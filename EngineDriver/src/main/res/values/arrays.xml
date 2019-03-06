@@ -26,7 +26,7 @@
         <item>Long</item>
         <item>Auto</item>
     </string-array>
-    <string-array name="address_size_defaultsEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="address_size_defaultsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Short</item>
         <item>Long</item>
         <item>Auto</item>
@@ -41,7 +41,7 @@
         <item>28 steps</item>
         <item>128 steps</item>
     </string-array>
-    <string-array name="DisplaySpeedUnitEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="DisplaySpeedUnitEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>100</item>
         <item>-1</item>
         <item>8</item>
@@ -55,7 +55,7 @@
         <item>Bottom</item>
         <item>none</item>
     </string-array>
-    <string-array name="WebViewLocationEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="WebViewLocationEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Bottom</item>
         <item>none</item>
     </string-array>
@@ -66,7 +66,7 @@
         <item>Auto-Rotate</item>
         <item>Auto-Web</item>
     </string-array>
-    <string-array name="OrientationEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="OrientationEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Portrait</item>
         <item>Landscape</item>
         <item>Auto-Rotate</item>
@@ -81,7 +81,7 @@
         <item >Five</item>
         <item >Six</item>
     </string-array>
-    <string-array name="NumOfThrottlesEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="NumOfThrottlesEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >One</item>
         <item >Two</item>
         <item >Three</item>
@@ -96,14 +96,14 @@
         <item >Vertical &#8211; Phone or Tablet (2 throttles)</item>
         <item >Big Buttons &#8211; Left (1 throttle)</item>
     </string-array>
-    <string-array name="prefThrottleScreenTypeEntryValues">
+    <string-array name="prefThrottleScreenTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >Default</item>
         <item >Simple</item>
         <item >Vertical</item>
         <item >Big Left</item>
     </string-array>
 
-    <string-array name="DisplayClockEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="DisplayClockEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >0</item>
         <item >1</item>
         <item >2</item>
@@ -114,7 +114,7 @@
         <item >24 hr format</item>
     </string-array>
 
-    <string-array name="prefGamePadTypeEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefGamePadTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >None</item>
         <!-- <item >iCade</item> -->
             <item >iCade-rotate</item>
@@ -158,7 +158,7 @@
         <item >Flydigi Wee 2</item>
     </string-array>
 
-    <string-array name="prefSwipeUpOptionsEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefSwipeUpOptionsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >None</item>
         <item >Hide Web View</item>
         <item >Lock and Dim Screen</item>
@@ -214,7 +214,7 @@
         <item >Function 28</item>
     </string-array>
 
-    <string-array name="prefGamePadKeyEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefGamePadKeyEntryValues">  <!-- display version -->
         <item >All Stop</item>
         <item >Stop</item>
         <item >Forward</item>
@@ -255,7 +255,7 @@
     </string-array>
     <!--- TODO: workout how to use the KEYCODES from android.view.KeyEvent rather having the declare them as integers -->
 
-    <integer-array name="prefGamePadiCade">  <!-- DO NOT TRANSLATE -->
+    <integer-array name="prefGamePadiCade" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>0</item> //not used
         <item>@integer/KeyCode_W</item> //key down   'E' up  <!-- DPAD butons [0-3] use the down codes.  the other buttons us the up codes -->
@@ -272,7 +272,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadiCade_UpCodes">  <!-- DO NOT TRANSLATE -->
+    <integer-array name="prefGamePadiCade_UpCodes" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>0</item> //not used
         <item>@integer/KeyCode_E</item>
@@ -289,7 +289,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadiCadePlusDpad">  <!-- DO NOT TRANSLATE -->
+    <integer-array name="prefGamePadiCadePlusDpad" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>0</item> //not used
         <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
@@ -306,7 +306,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadiCadePlusDpad_UpCodes">  <!-- DO NOT TRANSLATE -->
+    <integer-array name="prefGamePadiCadePlusDpad_UpCodes" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>0</item> //not used
         <item>@integer/KeyCode_E</item>
@@ -323,7 +323,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadMTK">  <!-- DO NOT TRANSLATE -->
+    <integer-array name="prefGamePadMTK" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>@integer/KeyCode_5</item> //gamepadSelect
         <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
@@ -340,7 +340,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadGame">  <!-- DO NOT TRANSLATE -->
+    <integer-array name="prefGamePadGame" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>0</item> //not used
         <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
@@ -358,7 +358,7 @@
         <item>0</item> //not used
     </integer-array>
 <!--
-    <integer-array name="prefGamePadVRBoxA">
+    <integer-array name="prefGamePadVRBoxA" translatable="false">
         <item>0</item> //not used
         <item>0</item> //not used
         <item>@integer/KeyCode_Fast_Forward</item> //gamepadDpadUp
@@ -375,7 +375,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadVRBoxC">
+    <integer-array name="prefGamePadVRBoxC" translatable="false">
         <item>0</item> //not used
         <item>0</item> //not used
         <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp
@@ -392,7 +392,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadVRBoxiC">
+    <integer-array name="prefGamePadVRBoxiC" translatable="false">
         <item>0</item> //not used
         <item>@integer/KeyCode_O</item> //gamepadEscape
         <item>@integer/KeyCode_W</item> //gamepadDpadUp
@@ -409,7 +409,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadVRBoxiC_UpCodes">
+    <integer-array name="prefGamePadVRBoxiC_UpCodes" translatable="false">
         <item>0</item> //not used
         <item>@integer/KeyCode_G</item>
         <item>@integer/KeyCode_E</item>
@@ -427,7 +427,7 @@
         <item>0</item> //not used
     </integer-array>
 -->
-    <integer-array name="prefGamePadMagicseeR1B">  <!-- DO NOT TRANSLATE -->
+    <integer-array name="prefGamePadMagicseeR1B" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>@integer/KeyCode_Button_R1</item> // Return button - upper front button
         <item>0</item> //not used gamepadDpadUp
@@ -445,7 +445,7 @@
         <item>0</item> //not used
     </integer-array>
 
-    <integer-array name="prefGamePadFlydigiWee2">  <!-- DO NOT TRANSLATE -->
+    <integer-array name="prefGamePadFlydigiWee2" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>@integer/KeyCode_Button_Select</item> //Select
         <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
@@ -556,7 +556,7 @@
         <item> </item> //not used
     </string-array>
 
-    <string-array name="prefGamePadPrefButtonReferences">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefGamePadPrefButtonReferences" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item> </item> //not used
         <item>prefGamePadButtonReturn</item>
         <item>prefGamePadButtonUp</item>
@@ -615,7 +615,7 @@
         <item>Function 28</item>
     </string-array>
 
-    <string-array name="prefEsuMc2KeyEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefEsuMc2KeyEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>(no function)</item>
         <item>All Stop</item>
         <item>Stop</item>
@@ -663,7 +663,7 @@
         <item>Reset</item>
     </string-array>
 
-    <string-array name="prefImportExportEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefImportExportEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Export</item>
         <item>Import</item>
@@ -675,7 +675,7 @@
         <item>Auto import/export on connect/disconnect</item>
         <item>Auto import on connect only</item>
      </string-array>
-    <string-array name="prefAutoImportExportEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefAutoImportExportEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Connect Disconnect</item>
         <item>Connect Only</item>
@@ -688,7 +688,7 @@
         <item>None</item>
     </string-array>
 
-    <string-array name="prefThemeEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefThemeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Default</item>
         <item>Black</item>
         <item>Outline</item>
@@ -703,7 +703,7 @@
         <item>Colorful Theme</item>
     </string-array>
 
-    <string-array name="prefSelectedLocoIndicatorEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefSelectedLocoIndicatorEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Both</item>
         <item>Gamepad</item>
@@ -714,7 +714,7 @@
         <item>Gamepad 1 only</item>
     </string-array>
 
-    <string-array name="prefAccelerometerShakeEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefAccelerometerShakeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Web</item>
         <item>LockDim</item>
@@ -731,7 +731,7 @@
         <item>All Stop</item>
     </string-array>
 
-    <string-array name="prefTtsWhenEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefTtsWhenEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Key</item>
     </string-array>
@@ -740,7 +740,7 @@
         <item>Key events only</item>
     </string-array>
 
-    <string-array name="prefTtsThrottleResponseEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefTtsThrottleResponseEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Throttle</item>
         <item>Loco</item>
@@ -756,7 +756,7 @@
         <item>Throttle + Loco + Speed</item>
     </string-array>
 
-    <string-array name="prefYesNoEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefYesNoEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Yes</item>
         <item>No</item>
     </string-array>
@@ -765,7 +765,7 @@
         <item>No</item>
     </string-array>
 
-    <string-array name="prefLocaleEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefLocaleEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Default</item>
         <item>en_US</item>
         <item>it</item>
@@ -786,7 +786,7 @@
         <item>Czech</item>
     </string-array>
 
-    <string-array name="prefConsistFollowRuleStyleEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefConsistFollowRuleStyleEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>original</item>
         <item>complex</item>
     </string-array>
@@ -795,7 +795,7 @@
         <item>Complex text matching - user configurable strings</item>
     </string-array>
 
-    <string-array name="prefConsistFollowEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefConsistFollowEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>lead</item>
         <item>lead and trail</item>
         <item>all</item>
@@ -812,7 +812,7 @@
         <item>All Locos - Exact Match</item>
     </string-array>
 
-    <string-array name="prefConsistFollowDefaultActionEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefConsistFollowDefaultActionEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>none</item>
         <item>f lead</item>
         <item>f lead and trail</item>
@@ -826,7 +826,7 @@
         <item>All Locos - Same Function number</item>
     </string-array>
 
-    <string-array name="prefKidsTimerEntryValues">  <!-- DO NOT TRANSLATE -->
+    <string-array name="prefKidsTimerEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item>
         <item>1</item>
         <item>2</item>

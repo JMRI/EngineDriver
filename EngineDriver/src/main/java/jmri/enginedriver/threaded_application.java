@@ -1770,7 +1770,7 @@ public class threaded_application extends Application {
 
             Notification notification =
                     new Notification.Builder(this)
-                            .setSmallIcon(R.drawable.icon)
+                            .setSmallIcon(R.drawable.icon_notification)
                             .setContentTitle(this.getString(R.string.notification_title))
                             .setContentText(this.getString(R.string.notification_text))
                             .setContentIntent(contentIntent)
