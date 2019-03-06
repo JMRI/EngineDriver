@@ -152,66 +152,6 @@
     </string-array>
 
     
-    <!--- TODO: workout how to use the KEYCODES from android.view.KeyEvent rather having the declare them as integers -->
-
-        
-<!--
-    <integer-array name="prefGamePadVRBoxA">
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>@integer/KeyCode_Fast_Forward</item> //gamepadDpadUp
-        <item>@integer/KeyCode_Rewind</item> //gamepadDpadDown
-        <item>@integer/KeyCode_Previous</item> //gamepadDpadLeft
-        <item>@integer/KeyCode_Next</item> //gamepadDpadRight
-        <item>@integer/KeyCode_Button_X</item> //none
-        <item>@integer/KeyCode_Mute</item> //gamepadEscape
-        <item>@integer/KeyCode_Play_Pause</item> //gamepadA, gamepadEnter
-        <item>@integer/KeyCode_Volume_Down</item> //gamepadD
-        <item>@integer/KeyCode_Volume_Up</item> //gamepadC
-    </integer-array>
-    <integer-array name="prefGamePadVRBoxC">
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp
-        <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown
-        <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft
-        <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadRight
-        <item>@integer/KeyCode_Button_X</item> //none
-        <item>@integer/KeyCode_Button_Y</item> //gamepadA, gamepadEnter
-        <item>@integer/KeyCode_Button_B</item> //gamepadB, gamepadEscape
-        <item>@integer/KeyCode_Volume_Down</item> //gamepadD
-        <item>@integer/KeyCode_Enter</item> //gamepadC
-    </integer-array>
-    <integer-array name="prefGamePadVRBoxiC">
-        <item>0</item> //not used
-        <item>@integer/KeyCode_O</item> //gamepadEscape
-        <item>@integer/KeyCode_W</item> //gamepadDpadUp
-        <item>@integer/KeyCode_X</item> //gamepadDpadDown
-        <item>@integer/KeyCode_A</item> //gamepadDpadLeft
-        <item>@integer/KeyCode_D</item> //gamepadDpadRight
-        <item>@integer/KeyCode_L</item> //gamepadEnter
-        <item>@integer/KeyCode_U</item> //gamepadA
-        <item>@integer/KeyCode_H</item> //gamepadB
-        <item>@integer/KeyCode_J</item> //gamepadD
-        <item>@integer/KeyCode_Y</item> //gamepadC
-    </integer-array>
-    <integer-array name="prefGamePadVRBoxiC_UpCodes">
-        <item>0</item> //not used
-        <item>@integer/KeyCode_G</item>
-        <item>@integer/KeyCode_E</item>
-        <item>@integer/KeyCode_Z</item>
-        <item>@integer/KeyCode_Q</item>
-        <item>@integer/KeyCode_C</item>
-        <item>@integer/KeyCode_V</item>
-        <item>@integer/KeyCode_F</item>
-        <item>@integer/KeyCode_R</item>
-        <item>@integer/KeyCode_N</item>
-        <item>@integer/KeyCode_T</item>
-    </integer-array>
--->
-
-
-
     <string-array name="prefGamePadFlydigiWee2Labels">
         <item> </item> //not used
         <item>Tlačítko Select akce</item>
@@ -242,6 +182,10 @@
         <item>Tlačítko Y [Triangle] akce</item>
         <item>Tlačítko A [Cross] akce</item>
         <item>Tlačítko B [@] akce</item>
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
     </string-array>
 
 <!--

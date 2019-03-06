@@ -157,6 +157,7 @@
         <item>Alemany</item>
         <item>Espanyol</item>
         <item>Català</item>
+        <item>Czech</item>
     </string-array>
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->

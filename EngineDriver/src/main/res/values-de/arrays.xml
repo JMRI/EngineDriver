@@ -157,6 +157,7 @@
         <item>Deutsch</item>
         <item>Spanisch</item>
         <item>Katalanisch</item>
+        <item>Czech</item>
     </string-array>
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
