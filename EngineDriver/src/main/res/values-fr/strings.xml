@@ -527,7 +527,7 @@
     <string name="toastSwipeUpScreenLocked">Ecran verrouillé - Faire glisser vers le haut pour deverrouiller.</string>
     <string name="toastSwipeUpScreenDimmed">Luminosité réduite. Faire glisser vers le haut pour augmenter.</string>
     <string name="toastSwipeUpViewHidden">Vue Web cachée. Pour la cacher définitivement, modifier les préférences.</string>
-    <string name="toastThrottleAlertEstop">Alerte: Locomotive %%1%% en arret URGENCE</string>
+    <string name="toastThrottleAlertEstop">Alerte: Locomotive %1$s en arret URGENCE</string>
     <string name="toastPreferencesOutsideLimits">Valeur entrée hors limites (%1$s-%2$s). Reset à %3$s.</string>
     <string name="toastPreferencesNotNumeric">Valeur entrée non numérique (%%1%%-%%2%%). Reset à %%3%%.</string>
     <string name="toastPreferencesResetSucceeded">Préférences remises aux valeurs par défaut</string>
@@ -692,7 +692,7 @@
     <string name="functionButtonLookForRear">ARRIÈRE</string>
     <string name="prefImportExportOverwite">Le fichier existe déjà. Ecraser?</string>
     <string name="prefImportExportErrorReadingList">Erreur lors de la lecture de la liste connexions récentes:</string>
-    <string name="prefImportExportErrorReadingFrom">l importation de \'engine_driver/%%1%%\' a échoué! Vous n avez peut-être pas encore enregistré les préférences pour cet hôte.</string>
+    <string name="prefImportExportErrorReadingFrom">l importation de \'engine_driver/%1$s\' a échoué! Vous n avez peut-être pas encore enregistré les préférences pour cet hôte.</string>
     <string name="prefImportExportErrorNotConnected">Non connecté à un hôte.</string>
 
     <string name="ConsistEditLabelLead">TETE</string>

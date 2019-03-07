@@ -82,7 +82,13 @@
     <string name="consist_help">Klikněte na lokomotivu pro změnu směru s ohledem na maximální rychlost soupravy. Dlouhým stiskem na lokomotivě vyjmete tuto ze soupravy. Pokud máte hotovo tak stiskněte tlačítko Zpět.</string>
     <string name="about">O aplikaci</string>
     <string name="web">Web</string>
-    <string name="about_page_url">file:///android_asset/about_page.html</string>
+
+    <string name="about_page_url">file:///android_asset/about_page-cs.html</string>
+    <string name="blank_page_url">file:///android_asset/blank_page-cs.html</string>
+<!--
+    <string name="feature_not_available_page_url">file:///android_asset/feature_not_available-cs.html</string>
+    <string name="web_not_available_page_url">file:///android_asset/web_not_available-cs.html</string>
+-->
     <string name="mrc_settings">MRC nastavení</string>
     <string name="loco">Lokomotiva:</string>
     <string name="loco_direction_left_extra">"\u00B7F\u00B7"</string>

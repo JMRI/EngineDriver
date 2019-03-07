@@ -283,7 +283,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected static final String WEB_VIEW_LOCATION_NONE = "none";
     protected static final String WEB_VIEW_LOCATION_BOTTOM = "Bottom";
     protected static final String WEB_VIEW_LOCATION_TOP = "Top";
-    private static final String noUrl = "file:///android_asset/blank_page.html";
+    private String noUrl = "file:///android_asset/blank_page.html";
     private static final float initialScale = 1.5f;
     protected WebView webView = null;
     protected String webViewLocation = WEB_VIEW_LOCATION_NONE;
@@ -4307,6 +4307,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         // open all links inside the current view (don't start external web
         // browser)
+        noUrl = getApplicationContext().getResources().getString(R.string.blank_page_url);
+
         WebViewClient EDWebClient = new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -4430,6 +4432,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         applySpeedRelatedOptions();  // update all throttles
 
         set_labels(); // handle labels and update view
+
+        noUrl = getApplicationContext().getResources().getString(R.string.about_page_url);
 
         if (webView != null) {
             if (!callHiddenWebViewOnResume()) {
@@ -5681,7 +5685,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         boolean res = importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
 
         if (!res) {
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom,exportedPreferencesFileName), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
         }
         forceRestartApp(forceRestartReason);
     }
