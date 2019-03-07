@@ -17,39 +17,33 @@
 </div>
 <p><b>Les dernières modifications de cette versions sont:</b></p>
 <ul>
-    <li>Introduction and Initial Setup Screens (wizard)</li>
-    <li>Option to import preferences from a URL</li>
-    <li>Option to automatically import preferences from the JMRI Server on connect</li>
-    <li>change some default values</li>
-    <li>show warning when not using wifi network</li>
-    <li>Recent Connections list - allow user to delete individual entries with long-press</li>
-    <li>delete settings files on Reset Preferences</li>
-    <li>Log View improvements</li>
-    <li>gamepad functions behave same as screen functions</li>
-    <li>Support for the Flydigi Wee 2 gamepad controller</li>
-    <li>prioritize eStop button</li>
-    <li>fix some reported bugs and lint warnings</li>
-    <li>Czech translation by Petr Šídlo</li>
-    <li>French translation by Alain Carasso</li>
+    <li>Écrans Introduction et configuration initiale (assistant)</li>
+    <li>Possibilité d'importer des préférences depuis une URL</li>
+    <li>Option pour importer automatiquement les préférences du serveur JMRI lors de la connexion</li>
+    <li>changer certaines valeurs par défaut</li>
+    <li>afficher un avertissement lorsque vous n'utilisez pas le réseau wifi</li>
+    <li>Liste des connexions récentes - permet à l’utilisateur de supprimer des entrées individuelles avec un appui long</li>
+    <li>supprimer les fichiers de paramètres sur Réinitialiser les préférences</li>
+    <li>Journal Voir les améliorations</li>
+    <li>les fonctions du gamepad se comportent comme les fonctions de l'écran</li>
+    <li>Prise en charge du contrôleur de manette de jeu Flydigi Wee 2</li>
+    <li>donner la priorité au bouton eStop</li>
+    <li>correction de quelques bugs signalés et avertissements de peluches</li>
+    <li>Traduction tchèque par Petr Šídlo</li>
+    <li>Traduction française par Alain Carasso</li>
 </ul>
 <p><em><a
         href="https://raw.githubusercontent.com/JMRI/EngineDriver/master/changelog-and-todo-list.txt"
         target="_blank" title="View complete EngineDriver changelog">[voir la log de modif complète]</a></em></p>
-<p>Cette application gratuite se connecte à un
-    serveur cortées, avec entre 1 et 6 locomotives par UM (unité multiple).
-    Vous pouvez controler l alimentation, les aiguilles, les itinéraires,
-    et afficher les panels et autres fenêtres JMRI via les vues Web.
-    Vous pouvez aussi créer et editer des UM localement depuis cette application.
-    This free application can connect to a <a
-        href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
-        target="_blank">JMRI WiThrottle</a> server running on a computer,
-    to an <a href="http://www.modelrectifier.com/category-s/332.htm" target="_blank">MRC Prodigy WiFi</a>,
-    or to a <a href="http://www.digitrax.com/products/wireless/lnwi/" target="_blank">Digitrax LnWi</a>,
-    and in turn control your locomotives and your entire model railroad.
-    Speed, direction, and up to 29 DCC functions are supported for one to six locos or consists.
-    You can control layout power, turnouts and routes, and display panels and other JMRI windows
-    using the web views.
-    You can also create and edit consists (software-defined).</p>
+<p>Cette application gratuite se connecte à un serveur
+    <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
+            target="_blank">WiThrottle JMRI</a> tournant sur un ordinateur,
+    à une station <a href="http://www.modelrectifier.com/category-s/332.htm" target="_blank">MRC Prodigy WiFI</a>,
+    ou à un <a href="http://www.digitrax.com/products/wireless/lnwi/" target="_blank">Digitrax LnWi</a>,.
+    En retour elle contrôle vos locomotives et l'ensemble de votre réseau. Vitesse, direction et jusqu a
+    29 fonctions DCC sont supportées, avec entre 1 et 6 locomotives ou UM (unité multiple).
+    Vous pouvez controler l alimentation, les aiguilles, les itinéraires, et afficher les panels et
+    autres fenêtres JMRI via les vues Web. Vous pouvez aussi créer et editer des UM localement depuis cette application.</p>
 <p>Pour plus de détails, visitez la page web <a href="https://enginedriver.mstevetodd.com" target="_blank">[EngineDriver&nbsp;site]</a>.
     Pour des copies écrans click <a href="https://enginedriver.mstevetodd.com/screenshots"
                               target="_blank">[here]</a>.</p>
@@ -65,7 +59,7 @@
             href="http://jmri.sourceforge.net/help/en/html/web/index.shtml" target="_blank"
             title="Learn more about JMRI Web Server">Web serveur JMRI</a>
     Web serveur JMRI (menu Outils, Démarrer Web serveur JMRI).&nbsp;
-    Ces 2 options peuvent être ajoutées aux Préférences de démarrage.</p>
+    Ces 2 options peuvent être ajoutées à Préférences, Démarrage.</p>
 <h3>Prérequis (pour MRC WiFi):</h3>
 <p>Brancher le module WiFi MRC, et vérifier que votre terminal se connecte sur son réseau WiFi et obtient une adresse IP.</p>
 <h3>Prérequis (pourLnWi Digitrax):</h3>
@@ -81,80 +75,63 @@
     Après avoir choisi une locomotive, vous serez ramené dans l écran Régulateur.<br/>
     Répétez cela pour ajouter d autres locomotives si besoin.<br/>
     Note: si vous gardez appuier votre doigt sur une locomotive, vous afficherez des précisions suppélmentaires sur celle-ci.</p>
-<p>Operate your loco using the slider (or volume control) (or optional arrow buttons) for speed,
-    and the reverse, stop and forward buttons to control direction. <br/>
-    To release all locos, just press the Back button and exit the app. This will also stop your
-    locos (can be overridden in preferences).
-    You can reassign the volume control by clicking on the speed indicator (the small "v" shows
-    which has control).</p>
-<p>To create a consist "on-the-fly", simply select additional locos for the same throttle. You will
-    be prompted for the direction of each new loco relative to the existing consist.
-    Direction and speed will be sent for all.
-    Release will release all for that throttle.</p>
-<p>Press your phone's Menu button to access screens for Turnout, Route and Power control, as well as
-    adjust settings and set numerous preferences.</p>
-<p>You can also "fling" left or right to jump quickly back and forth between the Throttle, Routes
-    and Turnouts pages.</p>
-<h3>ESU MobileControl II operation:</h3>
-<p>The Engine Driver app fully supports the
-    <a href="http://www.esu.eu/en/products/digital-control/mobile-control-ii/">ESU MobileControl II</a>
-    Android throttle.</p>
-<p>As well as being able to control speed of the selected throttle with the control knob, it's
-    also possible to switch direction via the zero-position end-stop switch.</p>
-<p>Up to three trains can be controlled at once - the train being operated by the control knob
-    is highlighted by the small "v" in the speed indicator. Switch between operated trains by
-    clicking the appropriate speed indicator. It is also possible to assign one of the device side
-    buttons to switch to the next operated train - by default, the bottom-right button is assigned
-    to this function.</p>
-<p>When assigned to control a train, the Green LED is lit. When no trains are assigned, the Green
-    LED flashes.</p>
-<p>In addition, you can use the Stop button to pause the currently operated train, or to stop
-    all controlled trains. A short press of the Stop button (default, less than 1/2 second) pauses
-    operation of the currently controlled train. The Red LED will flash quickly to denote this.
-    On a second press of the Stop button, the currently operated train will resume at the previous
-    set speed. A long press of the Stop button (default, greater than 1/2 second) will stop all
-    controlled trains. The Red LED will flash slowly to denote this. On a second press of the Stop
-    button, all controlled trains will remain stationary and it will be possible to again control
-    the currently selected train.</p>
-<p>Whilst in stop mode, the on-screen speed change buttons and bar are disabled for currently
-    stopped throttles. Switching between controlled throttles is also disabled.</p>
-<p>It is possible to configure the device side buttons to perform various actions. The default
-    assignment is as follows:</p>
+<p>Controlez votre locomotive via le curseur (ou les boutons de volume, ou les fleches de vitesse) pour la vitesse, les touches
+    Sens de marche, Arret pour controler la direction.<br/>Pour libérer toutes les locos, appuyer sur retour arrière et quitter
+    l application. cela arretera aussi toutes les locos (cela peut être désactivé dans les préférences). Vous pouvez réassigner
+    les touches Volume (un petit "v" indique qui controle).</p>
+<p>Pour créer une UM à la volée, choisir simplement les autres locomotive depuis le même régulateur. Il faudra précisez le sens
+    de chaque nouvelle loco de l UM. Vitesse et sens seront alors communiqués à toutes les locos de l UM. La libération sera
+    elle aussi appliquée à l ensemble des locos de l UM.</p>
+<p>Appuyer sur la touche Menu vous permettra d acceder à l écran Aiguilles, Itinérares et Controle de l alimentation, mais aussi
+    au paramétrage et aux nombreuses préférences.</p>
+<p>Vous pouvez aussi basculer rpidement entre les différents écrans Régulateur, Itinéraires et Aiguilles.</p>
+<h3>Opération avec ESU MobileControl II:</h3>
+<p>Engine Driver supporte la commande mobile Android
+    <a href="http://www.esu.eu/en/products/digital-control/mobile-control-ii/">ESU MobileControl II</a>.</p>
+<p>Tout comme il est possible de controler la vitesse du régulateur via le potentiomètre, il est aussi possible de changer de
+    sens grace au switch de fin de course.</p>
+<p>Jusqu à 3 locomotives peuvent être controlées en meme temps, le train "sous controle" etant indiqué par un petit "v" dans
+    la fenetre indiquant la vitesse. La bascule entre locomotives se fait en cliquant sur l indicateur de vitesse approprié.
+    Il est aussi possible de programmer l une des touches latérales pour basculer sur la locomotive suivante -par défaut la
+    touche en bas à droite est dédiée à cette fonction.</p>
+<p>La LED verte allumée indique qu un train est controlé. Si aucun train n est controlé, cette LED verte clignote.</p>
+<p>La touche STOP vous permet darrêter le train actuel, ou tous les trains. Un appui court (par défaut, moins d 1/2 seconde)
+    arrete le train commandé et la LED rouge va clignoter rapidement. Un second appui va redémarrer ce train à sa vitesse
+    précédente. Un appui long (par défaut, plus d 1/2 seconde) va arrêter tous les trains et la LED rouge va clignoter lentement.
+    Un second appui laissera tous les trains arrêtés mais permet de controler à nouveau le train sélectionné.</p>
+<p>Si en mode STOP, les touches à l écran sont inactives pour le régulateur arrêté. La bascule entre régulateurs est aussi impossible.</p>
+<p>Il est possible de configurer les touches du terminal pour différentes actions. Le paramétrage par défaut est le suivant:</p>
     <dl>
-        <dt>Top-left</dt><dd>Increase speed</dd>
-        <dt>Bottom-left</dt><dd>Decrease speed</dd>
-        <dt>Top-right</dt><dd>Toggle direction</dd>
-        <dt>Bottom-right</dt><dd>Select next throttle</dd>
+        <dt>Haut-Gauche</dt><dd>Augmenter vitesse</dd>
+        <dt>Bas-Gauche</dt><dd>Réduire vitesse</dd>
+        <dt>Haut-Droite</dt><dd>Changer de sens</dd>
+        <dt>Bas-droite</dt><dd>Passer au régulateur suivant</dd>
     </dl>
-<p>These assignments can be modified via the ESU MobileControl II Options page in Preferences.</p>
+<p>Ces assignations peuvent être modifiées via les options disponibles dans les préférences "ESU MobileControl II".</p>
 <h3>Configuration:</h3>
-<p>Under Preferences, there is an extensive list of options where you can customize the screens
-    and actions of EngineDriver to work best with your device, your layout and your personal style.
-    These include throttle layouts, fast clock display, speed step options, web views, button size,
-    additional buttons, slider size and behavior, number of throttles to display,
-    stop on release, allow/disallow on-the-fly consisting, autoconnect, and many more.
+<p>Dans Préférences, existe ungrand nombre d options permettant de personnaliser les écarns et actions EngineDriver pour
+    optimiser votre terminal en fonction de votre réseau et de votre usage. Cela inclu le design du régulateur, de l horloge rapide,
+    les pas de vitesses, vues Web, taille des touches et comportement, nombre de régulateurs à afficher, arêt sur libération, UM à
+    la volée ou pas, connexion automatique, etc....
 </p>
-<p>If you have entered function labels for a roster entry in the server, these labels will be used.
-    If not, you can use the Function Defaults menu option to set default labels and function numbers
-    to display. Remove buttons by blanking out the labels.</p>
-<p>On the JMRI computer side, check your WiThrottle preferences to insure you allow or disallow the
-    control features desired.
-    If you've defined your turnouts and routes in a panel, make sure to specify "user names" for
-    those you'd like to see listed on your throttle.
-    You can also "filter" the turnouts shown using the WiThrottle-&gt;Filter Controls option in the
-    WiThrottle window. Enabling "Use eStop" is also recommended.</p>
-<p>Entering roster entries, and defining routes and turnouts in JMRI will all make your Engine
-    Driver throttle more powerful and easier to use (though not required).
-    EngineDriver will show additional info if the JMRI Web Server is started (such as roster details
-    and icon images).</p>
-<h3>Development:</h3>
-<p>Engine Driver is free and open source software, part of the
-    <a href="http://jmri.org" target="_blank">JMRI</a> project. It is built in
+<p>Si vous avez défini des libellés de fonction pour une entrée en bibliothèque, ceux-ci seront repris. Sino, vous pouvez utiliser
+    le menu "Fonctions par défaut" pour définir des libellés et n° de fonctions par défaut à afficher. Pour supprimer l affichage
+    de ces touches, il faut remplacer ceux-ci par des espaces.</p>
+<p>Sur le PC, vérifiez vos préférences WiThrottle pour confirmer/infirmer les fonctions de contrôle désirées. Si vos aiguilles
+    et itinéraires sont définis dans un "panel", assurez vous que vous avez spécifié "User name" pour ceux que vous voulez controler
+    depuis votre régulateur vous pouvez aussi filtrer les aiguilles en utilisant l option WiThrottle-&gt;Filter Controls dans la
+    fenêtre WThrottle. Autorisez "Utiliser eStop" est aussi recommandé.</p>
+<p>Utiliser les entrées de la bibliothèque, et définir Aiguilles et Itinéraires dans JMRI fera de votre régulateur Engine Driver
+    un outil plus puissant, plus facile à utiliser, meme si cela n est pas obligatoire. EngineDriver affichera plus d informations
+    si le Web serveur JMRI est démarré, notamment le détail des locomotives et les icones.</p>
+<h3>Développement:</h3>
+<p>Engine Driver est un logiciel libre Open Source, composant du projet
+    <a href="http://jmri.org" target="_blank">JMRI</a>. Il est construit avec
     <a href="https://developer.android.com/studio/" target="_blank">Android Studio</a>.
-    You can browse or clone the current development source code (with tags for earlier releases)
-    <a href="https://github.com/JMRI/EngineDriver" target="_blank">[HERE].</a> Pull Requests
-    appreciated.</p>
+    Vous pouvez regarder et cloner le code actuel (avec des tags pour les versions précédentes)
+    <a href="https://github.com/JMRI/EngineDriver" target="_blank">[HERE].</a>
+    Les améliorations de code (Pull Requests) sont appréciées.</p>
 <hr>
-<p><a href="https://enginedriver.mstevetodd.com" target="_blank">[Homepage for EngineDriver]</a></p>
+<p><a href="https://enginedriver.mstevetodd.com" target="_blank">[Page d accueil EngineDriver]</a></p>
 </body>
 </html>
