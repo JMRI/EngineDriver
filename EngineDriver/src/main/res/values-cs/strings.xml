@@ -376,7 +376,7 @@
     <string name="prefDelimiterSummary">Nastavete znak který označuje konec v umístění části názvů výhybek a cest.</string>
 
     <string name="prefScreenBrightnessDimTitle">Stmívání obrazovky hodnota v %</string>
-    <string name="prefScreenBrightnessDimSummary">Nastavení jasu pro použití stmívání obrazovky (0 % &#8211; 99 %). Zakáže automatický nebo adaptivní jas pokud je nastaven.</string>
+    <string name="prefScreenBrightnessDimSummary">Nastavení jasu pro použití stmívání obrazovky (0%-99%). Zakáže automatický nebo adaptivní jas pokud je nastaven.</string>
     
     
     <string name="logViewer">Zobrazit protokol</string>
@@ -704,7 +704,8 @@
     <string name="flashlightStateOff">Svítilna Vypnuta</string>
     <string name="prefFlashlightSummary">Zobrazit tlačítko svítilny na obrazovce Ovladače, Výhybek a Cest?</string>
     <string name="prefFlashlightTitle">Zobrazit tlačítko svítilny?</string>
-    <string name="toastFlashlightFailed">Je mi líto! Při zapnutí svítilny došlo k problému&#8230;</string>
+    <string name="toastFlashlightOnFailed">Je mi líto! Při zapnutí svítilny došlo k problému&#8230;</string>
+    <string name="toastFlashlightOffFailed">Je mi líto! Při zapnutí svítilny došlo k problému&#8230;</string>
 
     <string name="logViewerTitle">Prohlížeč protokolu aktivity | Ovladač název: %1$s</string>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-    <title>Engine Driver Throttle for Android</title>
+    <title>Engine Driver pour Android</title>
     <style type="text/css">
         p {margin-top:0;padding-left:1em;}
         h3 {margin-bottom:0;}
@@ -11,11 +11,11 @@
     </style>
 </head>
 <body>
-<h1>Engine Driver Throttle for Android</h1>
+<h1>Engine Driver pour Android</h1>
 <div style="float:left;padding-right:1em;">
     <img src="file:///android_asset/engine_driver_icon.png" height="144" width="166" alt=""/>
 </div>
-<p><b>Latest changes for this version include:</b></p>
+<p><b>Les dernières modifications de cette versions sont:</b></p>
 <ul>
     <li>Introduction and Initial Setup Screens (wizard)</li>
     <li>Option to import preferences from a URL</li>
@@ -34,9 +34,13 @@
 </ul>
 <p><em><a
         href="https://raw.githubusercontent.com/JMRI/EngineDriver/master/changelog-and-todo-list.txt"
-        target="_blank" title="View complete EngineDriver changelog">[view complete
-    changelog]</a></em></p>
-<p>This free application can connect to a <a
+        target="_blank" title="View complete EngineDriver changelog">[voir la log de modif complète]</a></em></p>
+<p>Cette application gratuite se connecte à un
+    serveur cortées, avec entre 1 et 6 locomotives par UM (unité multiple).
+    Vous pouvez controler l alimentation, les aiguilles, les itinéraires,
+    et afficher les panels et autres fenêtres JMRI via les vues Web.
+    Vous pouvez aussi créer et editer des UM localement depuis cette application.
+    This free application can connect to a <a
         href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
         target="_blank">JMRI WiThrottle</a> server running on a computer,
     to an <a href="http://www.modelrectifier.com/category-s/332.htm" target="_blank">MRC Prodigy WiFi</a>,
@@ -46,39 +50,37 @@
     You can control layout power, turnouts and routes, and display panels and other JMRI windows
     using the web views.
     You can also create and edit consists (software-defined).</p>
-<p>For more details, visit <a href="https://enginedriver.mstevetodd.com" target="_blank">[EngineDriver&nbsp;site]</a>.
-    For screenshots, click <a href="https://enginedriver.mstevetodd.com/screenshots"
+<p>Pour plus de détails, visitez la page web <a href="https://enginedriver.mstevetodd.com" target="_blank">[EngineDriver&nbsp;site]</a>.
+    Pour des copies écrans click <a href="https://enginedriver.mstevetodd.com/screenshots"
                               target="_blank">[here]</a>.</p>
-<h3>Prerequisites (for JMRI):</h3>
-<p>Verify your Android device can connect to your network via WiFi and obtain an IP address.<br/>Make
-    sure you are running one of the latest versions of <a href="http://jmri.org/" target="_blank">JMRI</a>
-    (2.8 works, 3.0+ works much better) on your PC, connected to your layout.&nbsp; Start up JMRI
-    and verify you can use the included "Throttle" app to control a loco on your layout.</p>
-<p>Start the <a
+<h3>Prérequis (pour JMRI):</h3>
+<p>Vérifiez que votre terminal Android se connecte sur votre réseau via WiFi et obtient une adresse IP.<br/>
+    Assurez vous que vous utilisez une version récente JMRI (2.8 minimum, versions supérieures à 3.0 de
+    préférences) sur votre PC, connecté sur votre réseau ferroviaire.&nbsp;Démarrez JMRI et vérifiez
+    que vous pouvez utilisez le régulateur (Throttle) intégré à EngineDriver pour piloter une locomotive.</p>
+<p>Démarrez le serveur  <a
         href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
-        target="_blank">WiThrottle</a> function of JMRI, located in DecoderPro under Tools,
-    Throttles.&nbsp; It is also highly recommended that you start the <a
+        target="_blank">WiThrottle</a> dans JMRI (menu outils, régulateurs). Il est recommandé de démarrer aussi le
+    Start the<a
             href="http://jmri.sourceforge.net/help/en/html/web/index.shtml" target="_blank"
-            title="Learn more about JMRI Web Server">JMRI Web Server</a>
-    function (Tools, Start JMRI Web Server).&nbsp;
-    Both of these should be added to Preferences, Start Up as well.</p>
-<h3>Prerequisites (for MRC Wifi):</h3>
-<p>Connect the MRC WiFi module, and verify your device can connect to its network and obtain an IP address.</p>
-<h3>Prerequisites (for Digitrax LnWi):</h3>
-<p>Connect the LnWi, and verify your device can connect to its network and obtain an IP address.</p>
-<h3>Operation:</h3>
-<p>On your phone, start the Engine Driver app and wait for your server's address to show up in
-    "Discovered Services".</p>
-<p>Click on the discovered address, or you can enter the address and port of your WiThrottle server
-    directly. (Using the values shown on the WiThrottle window.)<br/>
-    There is an "Auto-Connect to First WiThrottle Server?" preference you can enable if desired.
-    There is also a "demo" server at jmri.mstevetodd.com, port 44444 that you can connect to for
-    testing.</p>
-<p>On the throttle screen, click on the "Select" loco button for each loco.<br/>On the next
-    screen, choose method of selection (DCC Address entry, JMRI Roster or Recent Locos. After
-    selecting a loco, you will be returned to the Throttle screen.<br/>
-    Repeat using additional "Select" buttons to acquire more trains.<br/>
-    Note: press and hold a roster item to see additional details from the roster.</p>
+            title="Learn more about JMRI Web Server">Web serveur JMRI</a>
+    Web serveur JMRI (menu Outils, Démarrer Web serveur JMRI).&nbsp;
+    Ces 2 options peuvent être ajoutées aux Préférences de démarrage.</p>
+<h3>Prérequis (pour MRC WiFi):</h3>
+<p>Brancher le module WiFi MRC, et vérifier que votre terminal se connecte sur son réseau WiFi et obtient une adresse IP.</p>
+<h3>Prérequis (pourLnWi Digitrax):</h3>
+<p>Brancher le LnWi, et vérifeier que votre terminal se connecte sur son réseau LnWi et obtiend une adresse IP.</p>
+<h3>Opérations:</h3>
+<p>Sur votre téléphone, démarrer l application Engine Driver et attendre de voir apparaitre l adresse de votre serveur dans les "Services Découverts".</p>
+<p>Clicker sur l adresse correspondant à votre réseau, ou bien entrer adresse IP et n° de port de votre serveur WiThrottle
+    directement (à partir des informations affichées dans la fenetre du serveur WiThrottle).<br/>Il y a une préférence
+    "Auto-connect sur le premier WiThrottle serveur?" que vous pouvez activer. Il existe aussi un serveur de démo sur
+    jmri.mstevetodd.com, port 44444 que vous pouvez utiliser pour tester.</p>
+<p>Sur l écran du régulateur, cliquer sur la touche loco "Selection" pour chaque locomotive à controler.<br/>
+    Sur l ecran suivant, choisir la méthode de selection (adresse DCC, bibliothèque JMRI ou loco récentes).
+    Après avoir choisi une locomotive, vous serez ramené dans l écran Régulateur.<br/>
+    Répétez cela pour ajouter d autres locomotives si besoin.<br/>
+    Note: si vous gardez appuier votre doigt sur une locomotive, vous afficherez des précisions suppélmentaires sur celle-ci.</p>
 <p>Operate your loco using the slider (or volume control) (or optional arrow buttons) for speed,
     and the reverse, stop and forward buttons to control direction. <br/>
     To release all locos, just press the Back button and exit the app. This will also stop your

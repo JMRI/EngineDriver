@@ -773,6 +773,7 @@
         <item>de</item>
         <item>es</item>
         <item>ca</item>
+        <item>fr</item>
         <item>cs</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->
@@ -783,6 +784,7 @@
         <item>German</item>
         <item>Spanish</item>
         <item>Catalan</item>
+        <item>French</item>
         <item>Czech</item>
     </string-array>
 
