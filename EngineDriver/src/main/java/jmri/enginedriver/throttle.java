@@ -1067,13 +1067,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             Returns
                 The setting's current value, or 'def' if it is not defined or not a valid integer.
         */
-        int brightnessValue = Settings.System.getInt(
+//        int brightnessValue = Settings.System.getInt(
+//                mContext.getContentResolver(),
+//                Settings.System.SCREEN_BRIGHTNESS,
+//                0
+//        );
+//        return brightnessValue;
+
+        return Settings.System.getInt(
                 mContext.getContentResolver(),
                 Settings.System.SCREEN_BRIGHTNESS,
-                0
-        );
-
-        return brightnessValue;
+                0);
     }
 
     public void setScreenBrightnessMode(int brightnessModeValue){
@@ -1527,9 +1531,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (speed < 0) {
             speed = 0;
         }
-        int scaleSpeed = (int) Math.round(speed * speedScale) -1;
-
-        return scaleSpeed;
+//        int scaleSpeed = (int) Math.round(speed * speedScale) -1;
+//        return scaleSpeed;
+        return (int) Math.round(speed * speedScale) -1;
     }
 
 
@@ -1635,6 +1639,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     // set the displayed numeric speed value
+    @SuppressLint("SetTextI18n")
     protected void setDisplayedSpeed(int whichThrottle, int speed) {
         TextView speed_label;
         double speedScale = getDisplayUnitScale(whichThrottle);
@@ -3943,7 +3948,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    @SuppressLint({"Recycle", "SetJavaScriptEnabled"})
+    @SuppressLint({"Recycle", "SetJavaScriptEnabled","ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
