@@ -233,7 +233,7 @@
     <string name="prefEsuMc2StopButtonCategoryTitle">Options de la touche Stop</string>
     <string name="prefEsuMc2StopButtonDelayTitle">Délai pression longue sur touche Stop</string>
     <string name="prefEsuMc2StopButtonDelaySummary">Durée d appui  \'long\' sur la touche Stop.
-        \nUn \'appui long\' arrête tous les régulateurs actifs; un \'appui court\' arrête le régulateur utilisé. \nPlus c est petit, plus c est rapide.</string>"
+        \nUn \'appui long\' arrête tous les régulateurs actifs; un \'appui court\' arrête le régulateur utilisé. \nPlus c est petit, plus c est rapide.</string>
 
     <string name="prefEsuMc2StopButtonShortPressTitle">Autorise l appui court</string>
     <string name="prefEsuMc2StopButtonShortPressSummary">Un \'appui court\' stoppe la locomotive ou l UM controlée. \n Qui reprendra sa vitesse initiale lors de la reprise des opérations. </string>

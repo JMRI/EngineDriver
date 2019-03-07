@@ -360,7 +360,7 @@
     <string name="prefSpeedButtonsSpeedStepTitle">Quantità incremento pulsante velocità</string>
     <string name="prefSpeedButtonsSpeedStepSummary">Quanto la freccia di velocità altera la velocità del controllore.</string>
 
-    <string name="NumThrottleDefaulValue">Due</string>
+<!--    <string name="NumThrottleDefaulValue">Due</string> -->
     <string name="server_address">Indirizzo Server</string>
     <string name="routes_route">Nome di Sistema della Rotta</string>
 
