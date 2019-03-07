@@ -43,7 +43,7 @@ public class web_activity extends Activity {
     private SharedPreferences prefs;
 
     private WebView webView;
-    private static final String noUrl = "file:///android_asset/blank_page.html";
+    private String noUrl = "file:///android_asset/blank_page.html";
     private static final float initialScale = 1.5f;
     private static float scale = initialScale;        // used to restore web zoom level
     private static boolean clearHistory = false;        // flags webViewClient to clear history when page load finishes
@@ -141,7 +141,7 @@ public class web_activity extends Activity {
         mainapp.applyTheme(this);
         setTitle(getApplicationContext().getResources().getString(R.string.app_name_web)); // needed in case the langauge was changed from the default
 
-        webView = (WebView) findViewById(R.id.webview);
+        webView = findViewById(R.id.webview);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
         webView.getSettings().setDatabasePath(databasePath);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -176,6 +176,8 @@ public class web_activity extends Activity {
                 }
             }
         };
+
+        noUrl = getApplicationContext().getResources().getString(R.string.blank_page_url);
 
         webView.setWebViewClient(EDWebClient);
         if (currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null)

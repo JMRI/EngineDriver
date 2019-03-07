@@ -378,7 +378,7 @@
     <string name="prefAutoImportExportTitle">Importare/Esportare specifico per Auto host</string>
     <string name="prefAutoImportExportSummary">Per ogni connessione a um host, \'Importare\' AUTOMATICAMENTE le preferenze per quell\'host, e opzionalmente \'Esportare\' alla disconnessione. \n(Per tornare continuamente a uno stato noto, usaer \'Auto Importazione solo alla connessione\' dopo la prima volta, o dopo un salvataggio manuale (giù).)</string>
 
-    <string name = "prefImportServerManualTitle">Importa dal server corrente (manualmente) </string>
+    <string name = "prefImportServerManualTitle">Importa dal server corrente (manualmente)</string>
     <string name = "prefImportServerManualSummary">File del server per \'Importare\' una serie di preferenze dal server attualmente collegato.\nIl file deve essere in \'/engine_driver/\' del server e il server Web deve essere in esecuzione.\nAttenzione: l\'importazione inizierà immediatamente salvando questa preferenza.</string>
 
     <string name = "prefImportServerAutoTitle">Importazione automatica da tutti i server</string>

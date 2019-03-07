@@ -82,7 +82,13 @@
     <string name="consist_help">Klikněte na lokomotivu pro změnu směru s ohledem na maximální rychlost soupravy. Dlouhým stiskem na lokomotivě vyjmete tuto ze soupravy. Pokud máte hotovo tak stiskněte tlačítko Zpět.</string>
     <string name="about">O aplikaci</string>
     <string name="web">Web</string>
-    <string name="about_page_url">file:///android_asset/about_page.html</string>
+
+    <string name="about_page_url">file:///android_asset/about_page-cs.html</string>
+    <string name="blank_page_url">file:///android_asset/blank_page-cs.html</string>
+<!--
+    <string name="feature_not_available_page_url">file:///android_asset/feature_not_available-cs.html</string>
+    <string name="web_not_available_page_url">file:///android_asset/web_not_available-cs.html</string>
+-->
     <string name="mrc_settings">MRC nastavení</string>
     <string name="loco">Lokomotiva:</string>
     <string name="loco_direction_left_extra">"\u00B7F\u00B7"</string>
@@ -376,7 +382,7 @@
     <string name="prefDelimiterSummary">Nastavete znak který označuje konec v umístění části názvů výhybek a cest.</string>
 
     <string name="prefScreenBrightnessDimTitle">Stmívání obrazovky hodnota v %</string>
-    <string name="prefScreenBrightnessDimSummary">Nastavení jasu pro použití stmívání obrazovky (0 % &#8211; 99 %). Zakáže automatický nebo adaptivní jas pokud je nastaven.</string>
+    <string name="prefScreenBrightnessDimSummary">Nastavení jasu pro použití stmívání obrazovky (0%-99%). Zakáže automatický nebo adaptivní jas pokud je nastaven.</string>
     
     
     <string name="logViewer">Zobrazit protokol</string>
@@ -704,7 +710,8 @@
     <string name="flashlightStateOff">Svítilna Vypnuta</string>
     <string name="prefFlashlightSummary">Zobrazit tlačítko svítilny na obrazovce Ovladače, Výhybek a Cest?</string>
     <string name="prefFlashlightTitle">Zobrazit tlačítko svítilny?</string>
-    <string name="toastFlashlightFailed">Je mi líto! Při zapnutí svítilny došlo k problému&#8230;</string>
+    <string name="toastFlashlightOnFailed">Je mi líto! Při zapnutí svítilny došlo k problému&#8230;</string>
+    <string name="toastFlashlightOffFailed">Je mi líto! Při zapnutí svítilny došlo k problému&#8230;</string>
 
     <string name="logViewerTitle">Prohlížeč protokolu aktivity | Ovladač název: %1$s</string>
 

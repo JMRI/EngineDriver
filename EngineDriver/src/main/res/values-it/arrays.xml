@@ -176,7 +176,8 @@
         <item>Tedesco</item>
         <item>Spagnolo</item>
         <item>Catalano</item>
-        <item>Czech</item>
+        <item>Francese</item>
+        <item>Ceco</item>
     </string-array>
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
