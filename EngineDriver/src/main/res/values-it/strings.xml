@@ -378,15 +378,15 @@
     <string name="prefAutoImportExportTitle">Importare/Esportare specifico per Auto host</string>
     <string name="prefAutoImportExportSummary">Per ogni connessione a um host, \'Importare\' AUTOMATICAMENTE le preferenze per quell\'host, e opzionalmente \'Esportare\' alla disconnessione. \n(Per tornare continuamente a uno stato noto, usaer \'Auto Importazione solo alla connessione\' dopo la prima volta, o dopo un salvataggio manuale (giù).)</string>
 
-    <string name = "prefImportServerManualTitle">Importa dal server corrente (manualmente)</string>
-    <string name = "prefImportServerManualSummary">File del server per \'Importare\' una serie di preferenze dal server attualmente collegato.\nIl file deve essere in \'/engine_driver/\' del server e il server Web deve essere in esecuzione.\nAttenzione: l\'importazione inizierà immediatamente salvando questa preferenza.</string>
+    <string name="prefImportServerManualTitle">Importa dal server corrente (manualmente)</string>
+    <string name="prefImportServerManualSummary">File del server per \'Importare\' una serie di preferenze dal server attualmente collegato.\nIl file deve essere in \'/engine_driver/\' del server e il server Web deve essere in esecuzione.\nAttenzione: l\'importazione inizierà immediatamente salvando questa preferenza.</string>
 
-    <string name = "prefImportServerAutoTitle">Importazione automatica da tutti i server</string>
-    <string name = "prefImportServerAutoSummary">Importa automaticamente le preferenze dai server alla connessione.\n(Se il file \'/engine_driver/auto_preferences.ed\' è sul server e se è più recente che l\'ultima volta è stato controllato).</string>
+    <string name="prefImportServerAutoTitle">Importazione automatica da tutti i server</string>
+    <string name="prefImportServerAutoSummary">Importa automaticamente le preferenze dai server alla connessione.\n(Se il file \'/engine_driver/auto_preferences.ed\' è sul server e se è più recente che l\'ultima volta è stato controllato).</string>
 
-    <string name = "importServerAutoDialog">Il nuovo file delle preferenze è stato trovato su questo server.\nVuoi importarlo?\n\nWarning!\n\'Pieno\' - Tutte le tue preferenze saranno sovrascritte.\n\n\'Parziale\' - Tutte le preferenze, eccetto Tema e alcune preferenze per Tipo di pagina Throttle, saranno sovrascritte.</string>
-    <string name = "importServerAutoDialogPositiveButton">Pieno</string>
-    <string name = "importServerAutoDialogNeutralButton">Parziale</string>
+    <string name="importServerAutoDialog">Il nuovo file delle preferenze è stato trovato su questo server.\nVuoi importarlo?\n\nWarning!\n\'Pieno\' - Tutte le tue preferenze saranno sovrascritte.\n\n\'Parziale\' - Tutte le preferenze, eccetto Tema e alcune preferenze per Tipo di pagina Throttle, saranno sovrascritte.</string>
+    <string name="importServerAutoDialogPositiveButton">Pieno</string>
+    <string name="importServerAutoDialogNeutralButton">Parziale</string>
 
     <string name="prefHostImportExportTitle">Importare/Esportare specifico per host Manuale</string>
     <string name="prefHostImportExportSummary">\'Importare\' o \'Esportare\' le tue preferenze per un host specifico nella cartella \'engine_driver/\'. L\'host deve essere nella tua lista di connessioni recenti.\nAvverrà IMMEDIATAMENTE dopo la selezione dell\'opzione.\n(Disponibile solo quando non attualmente connesso.)</string>
