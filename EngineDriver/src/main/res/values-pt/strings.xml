@@ -375,7 +375,7 @@
     <string name="prefImportExportLocoListTitle">Incluir lista de locomotivas recentes</string>
     <string name="prefImportExportLocoListSummary">Inclui as locomotivas na lista locomotivas recentes em \'Importar\' e \'Exportar\'.</string>
     <string name="prefAutoImportExportTitle">Importar/Exportar específico para Auto host</string>
-    <string name="prefAutoImportExportSummary">Para cada conexão a um host, \'Importar\' AUTOMATICAMENTE as preferências para aquele host, e opcionalmente \'Exportar\' ao desconectar. \n(Para voltar constantemente a um estado conhecido, usar \'Auto Importação somente ao conectar\' após a primeira vez, ou após um salvamento manual (abaixo).)</string>
+    <string name="prefAutoImportExportSummary">Para cada conexão a um host, \'Importar\' AUTOMATICAMENTE as preferências para aquele host, e opcionalmente \'Exportar\' ao desconectar.  (Para voltar constantemente a um estado conhecido, usar \'Auto Importação somente ao conectar\' após a primeira vez, ou após um salvamento manual (abaixo).)</string>
 
     <string name="prefImportServerManualTitle">Importar desde el servidor actual (manualmente)</string>
     <string name="prefImportServerManualSummary">Archivo de servidor para \'Importar\' \'un conjunto de preferencias del servidor conectado actualmente.\nEl archivo debe estar en el \'/ engine_driver/\'del servidor y el servidor web debe estar ejecutándose . \n Advertencia: la importación comenzará inmediatamente al guardar esta preferencia.</string>
@@ -462,8 +462,13 @@
     <string name="gamepadTestKeycodeLabel">Código tecla:\s\s</string>
     <string name="gamepadTestFunctionLabel">Função:\s\s</string>
     <string name="gamepadTestCompleteLabel">Status teste:\s\s</string>
-    <string name="gamepadTestHelp">Rolar para baixo para ler as instruções completas&#8230;\n\bApertar TODOS Dpad E os quatros botões principais do gamepad NÃO FUNCIONARÁ.\n\Se não conseguir ativar todos os botões, mude o modo do gamepad (vide instruções do seu gamepad) ou tente outro tipo de gamepad (acima).\n\n\'VOLTAR\' ou \'Cancelar\' sairá do teste mas o gamepad NÃO FUNCIONARÁ.\n\'SALTAR\', ou premer o botão do gamepad \'Diminuir Velocidade\' três vezes, forçará o teste a passar, mesmo que o gamepad não funcione corretamente.\n\'RESET\' dirá ao ED que nenhum gamepad foi usado ainda.\nSe um teste \'SIMPLES\' foi selecionado, um unico aperto do botão \'Diminuir Velocidade\' saltará o teste.\n\nUse a opção \'Teste Gamepad\' no menu para voltar a esta página.</string>
-    <string name="gamepadTestHelpNonForced">\Se não conseguir ativar todos os botões, mude o modo do gamepad (vide instruções do seu gamepad) ou tente outro tipo de gamepad (acima).\n Poderá ser necessário testar de novo o gamepad quando será usado pela primeira vez a partir da tela do controlador.</string>
+    <string name="gamepadTestHelp" tools:ignore="Typos">Rolar para baixo para ler as instruções completas&#8230;
+        \n\bApertar TODOS Dpad E os quatros botões principais do gamepad NÃO FUNCIONARÁ.\n\Se não conseguir ativar todos os botões, mude o modo do gamepad (vide instruções do seu gamepad) ou tente outro tipo de gamepad (acima).
+        \n\n\'VOLTAR\' ou \'Cancelar\' sairá do teste mas o gamepad NÃO FUNCIONARÁ.
+        \n\'SALTAR\', ou premer o botão do gamepad \'Diminuir Velocidade\' três vezes, forçará o teste a passar, mesmo que o gamepad não funcione corretamente.
+        \n\'RESET\' dirá ao ED que nenhum gamepad foi usado ainda.\nSe um teste \'SIMPLES\' foi selecionado, um unico aperto do botão \'Diminuir Velocidade\' saltará o teste.\n\nUse a opção \'Teste Gamepad\' no menu para voltar a esta página.</string>
+    <string name="gamepadTestHelpNonForced">\Se não conseguir ativar todos os botões, mude o modo do gamepad (vide instruções do seu gamepad) ou tente outro tipo de gamepad (acima).
+        \n Poderá ser necessário testar de novo o gamepad quando será usado pela primeira vez a partir da tela do controlador.</string>
     <string name="gamepadTestIncomplete">"Teste Incompleto"</string>
     <string name="gamepadTestComplete">"Teste Completo"</string>
     <string name="gamepadTestCompleteToast">"Gamepad testado completamente com sucesso"</string>
@@ -515,7 +520,7 @@
     <string name="toastTurnoutCommandToToggle">Alternar</string>
     <string name="toastConnectEnterAddress">Inserir ou selecionar um endereço e uma porta</string>
     <string name="toastConnectInvalidPort">Número Porta inválido, tentar de novo.</string>
-    <string name="toastConnectConnected">Conectado ao Servidor: %1$s Porta : %2$s</string>
+    <string name="toastConnectConnected">Conectado ao Servidor: %1$s Porta: %2$s</string>
     <string name="toastConnectUnableToSavePref">Impossível salvar preferências específicas do host. Nome do host não disponível.</string>
     <string name="toastConnectUnableToLoadPref">Impossível carregar preferências específicas do host. Nome do host não disponível.</string>
     <string name="toastConnectErrorReadingRecentConnections">Erro de leitura da lista de conexões recentes:</string>

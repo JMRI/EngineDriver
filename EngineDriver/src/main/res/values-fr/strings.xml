@@ -537,7 +537,7 @@
     <string name="toastTurnoutCommandToToggle">Inversion</string>
     <string name="toastConnectEnterAddress">Entrer ou selectionner une adresse et un n° de port</string>
     <string name="toastConnectInvalidPort">N° de port invalide, recommencer.</string>
-    <string name="toastConnectConnected">Connecté au serveur: %%1%% Port : %%2%%</string>
+    <string name="toastConnectConnected">Connecté au serveur: %1$s Port: %2$s</string>
     <string name="toastConnectUnableToSavePref">Impossible de sauvegarder les préférences spécifiques à ce serveur. Ne trouve pas son nom de hote.</string>
     <string name="toastConnectUnableToLoadPref">Impossible de charger les préférences spécifiques à ce serveur. Ne trouve pas son nom de hote.</string>
     <string name="toastConnectErrorReadingRecentConnections">Erreur en lecture de la liste de connexions récentes</string>

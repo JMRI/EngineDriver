@@ -56,6 +56,8 @@
         <item >Simples &#8211; Tablet Recomendado (1&#8211;6 controladores)</item>
         <item >Vertical &#8211; telefone ou tablet (1&#8211;3 controladores)</item>
         <item >Botões Grandes &#8211; Esquerda (1 acelerador)</item>
+        <item >Vertical Esquerda &#8211; telefone ou tablet (1 acelerador)</item>
+        <item >Vertical Direita &#8211; telefone ou tablet (1 acelerador)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">

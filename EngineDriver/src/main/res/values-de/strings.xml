@@ -516,7 +516,7 @@
     <string name="toastTurnoutCommandToToggle">Umlegen</string>
     <string name="toastConnectEnterAddress">Adresse und Port eingeben oder auswählen</string>
     <string name="toastConnectInvalidPort">Ungültige Portnummer, Neueingabe.</string>
-    <string name="toastConnectConnected">Verbunden mit Server: %1$s Port : %2$s</string>
+    <string name="toastConnectConnected">Verbunden mit Server: %1$s Port: %2$s</string>
     <string name="toastConnectUnableToSavePref">Host spezifische Voreinstellungen können nicht gesichert werden. Erhalte keinen Hostnamen.</string>
     <string name="toastConnectUnableToLoadPref">Host spezifische Voreinstellungen können nicht geladen werden. Erhalte keinen Hostnamen.</string>
     <string name="toastConnectErrorReadingRecentConnections">Fehler beim Lesen der Liste Letzte Verbindungen:</string>

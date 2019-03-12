@@ -687,7 +687,7 @@
     <!--    Toast messages for the Connection Activity -->
     <string name="toastConnectEnterAddress">Enter or select an address and port</string>
     <string name="toastConnectInvalidPort">Invalid port#, retry.</string>
-    <string name="toastConnectConnected">Connected to Server: %1$s  Port : %2$s</string>
+    <string name="toastConnectConnected">Connected to Server: %1$s  Port: %2$s</string>
     <string name="toastConnectUnableToSavePref">Unable to save host specific preferences. Can\'t get host name.</string>
     <string name="toastConnectUnableToLoadPref">Unable to load host specific preferences. Can\'t get host name.</string>
     <string name="toastConnectErrorReadingRecentConnections">Error reading recent connections list:</string>

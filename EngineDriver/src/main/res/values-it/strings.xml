@@ -516,7 +516,7 @@
     <string name="toastTurnoutCommandToToggle">Alternare</string>
     <string name="toastConnectEnterAddress">Inserire o selezionare un indirizzo e una porta</string>
     <string name="toastConnectInvalidPort">Numero Porta non valido. Riprovare.</string>
-    <string name="toastConnectConnected">Connesso al Server: %1$s Porta : %2$s</string>
+    <string name="toastConnectConnected">Connesso al Server: %1$s Porta: %2$s</string>
     <string name="toastConnectUnableToSavePref">Impossibile salvare preferenze specifiche dell\'host. Nome host non disponibile.</string>
     <string name="toastConnectUnableToLoadPref">Impossibile caricare preferenze specifiche dell\'host. Nome host non disponibile.</string>
     <string name="toastConnectErrorReadingRecentConnections">Errore di lettura lista connessioni recenti:</string>
