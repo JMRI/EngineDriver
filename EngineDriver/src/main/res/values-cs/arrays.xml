@@ -70,6 +70,8 @@
         <item tools:ignore="TypographyDashes">Jednoduchý &#8211; Tablet doporučeno (1-6 ovladače)</item>
         <item >Svisle &#8211; Telefon nebo Tablet (2 ovladače)</item>
         <item >Velká tlačítka &#8211; Vlevo (1 ovladač)</item>
+        <item >Svisle Vlevo &#8211; Telefon nebo Tablet (1 ovladač)</item>
+        <item >Svisle Vpravo &#8211; Telefon nebo Tablet (1 ovladač)</item>
     </string-array>
     
     

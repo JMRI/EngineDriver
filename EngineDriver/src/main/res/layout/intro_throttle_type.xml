@@ -105,6 +105,25 @@
                     android:textSize="18sp"
                     tools:ignore="RtlHardcoded" />
 
+                <RadioButton
+                    android:id="@+id/intro_throttle_type_vertical_left_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/intro_throttle_type_vertical_left"
+                    android:gravity="center"
+                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded" />
+
+                <RadioButton
+                    android:id="@+id/intro_throttle_type_vertical_right_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/intro_throttle_type_vertical_right"
+                    android:gravity="center"
+                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded" />
             </RadioGroup>
 
         </LinearLayout>

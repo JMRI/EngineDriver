@@ -78,9 +78,7 @@
     <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>
     <string name="locoPressToSelect">Sélection</string>
     <string name="powerWillNotWorkTitle">Ne fonctionnera pas!</string>
-    <string name="powerWillNotWork">JMRI a coupé l alimentation wiThrottle.
-        \nEffacement icone alimentation.
-        \nAffichage Icone alimentation quand JMRI sera actif.</string>
+    <string name="powerWillNotWork">JMRI a coupé l alimentation wiThrottle.\nEffacement icone alimentation.\nAffichage Icone alimentation quand JMRI sera actif.</string>
     <string name="current_locos">Locomotive sélectionnée</string>
     <string name="release">Déselection</string>
     <string name="releaseThrottleNumber">Déselection Commande %1$s</string>
@@ -152,8 +150,7 @@
     <string name="prefHideSliderTitle">Cacher le curseur ?</string>
     <string name="prefHideSliderSummary">Ne pas afficher de curseur, utiliser des touches à la place</string>
     <string name="prefHideSliderAndSpeedButtonsTitle">Cacher Curseur ET touches de vitesse?</string>
-    <string name="prefHideSliderAndSpeedButtonsSummary">Ne pas afficher le curseur ni les touches de vitesse
-        \nNote: Ignorer les options \'Cacher curseur\', \'Hauteur curseur\' et  \'Afficher touches de vitesse\'.</string>
+    <string name="prefHideSliderAndSpeedButtonsSummary">Ne pas afficher le curseur ni les touches de vitesse\nNote: Ignorer les options \'Cacher curseur\', \'Hauteur curseur\' et  \'Afficher touches de vitesse\'.</string>
     <string name="prefDirChangeWhileMovingTitle">Changement de sens en marche ?</string>
     <string name="prefDirChangeWhileMovingSummary">Autoriser les changements de sens en marche</string>
     <string name="prefStopOnDirectionChangeTitle">Arrêt si changement de sens ?</string>
@@ -232,16 +229,13 @@
 
     <string name="prefEsuMc2StopButtonCategoryTitle">Options de la touche Stop</string>
     <string name="prefEsuMc2StopButtonDelayTitle">Délai pression longue sur touche Stop</string>
-    <string name="prefEsuMc2StopButtonDelaySummary">Durée d appui  \'long\' sur la touche Stop.
-        \nUn \'appui long\' arrête tous les régulateurs actifs; un \'appui court\' arrête le régulateur utilisé. \nPlus c est petit, plus c est rapide.</string>"
+    <string name="prefEsuMc2StopButtonDelaySummary">Durée d appui  \'long\' sur la touche Stop.\nUn \'appui long\' arrête tous les régulateurs actifs; un \'appui court\' arrête le régulateur utilisé. \nPlus c est petit, plus c est rapide.</string>
 
     <string name="prefEsuMc2StopButtonShortPressTitle">Autorise l appui court</string>
     <string name="prefEsuMc2StopButtonShortPressSummary">Un \'appui court\' stoppe la locomotive ou l UM controlée. \n Qui reprendra sa vitesse initiale lors de la reprise des opérations. </string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Options du bouton rotatif</string>
     <string name="prefEsuMc2ZeroTrimTitle">Réglage de trim à zero</string>
-    <string name="prefEsuMc2ZeroTrimSummary">Définition du trim du bouton rotatif.
-        \nUne petit valeur se rapproche du sens inverse des aiguilles d une montre.
-        \nIntervalle 0&#8211;255.</string>
+    <string name="prefEsuMc2ZeroTrimSummary">Définition du trim du bouton rotatif.\nUne petit valeur se rapproche du sens inverse des aiguilles d une montre.\nIntervalle 0&#8211;255.</string>
 
     <string name="prefEsuMc2EndStopDirectionChangeTitle">Changement de sens en buttée</string>
     <string name="prefEsuMc2EndStopDirectionChangeSummary">Autorise le changement de sens en buttée du bouton rotatif</string>
@@ -543,7 +537,7 @@
     <string name="toastTurnoutCommandToToggle">Inversion</string>
     <string name="toastConnectEnterAddress">Entrer ou selectionner une adresse et un n° de port</string>
     <string name="toastConnectInvalidPort">N° de port invalide, recommencer.</string>
-    <string name="toastConnectConnected">Connecté au serveur: %%1%% Port : %%2%%</string>
+    <string name="toastConnectConnected">Connecté au serveur: %1$s Port: %2$s</string>
     <string name="toastConnectUnableToSavePref">Impossible de sauvegarder les préférences spécifiques à ce serveur. Ne trouve pas son nom de hote.</string>
     <string name="toastConnectUnableToLoadPref">Impossible de charger les préférences spécifiques à ce serveur. Ne trouve pas son nom de hote.</string>
     <string name="toastConnectErrorReadingRecentConnections">Erreur en lecture de la liste de connexions récentes</string>
@@ -567,7 +561,7 @@
 
     <string name="prefTtsThrottleResponseTitle">Sur Gamepad changement de régulateur</string>
     <string name="prefTtsThrottleResponseSummary">Quand vous choisissez un régulateur différent depuis le gamepad</string>
-    <string name="prefTtsThrottleResponseDefaultValue">régulateur</string>
+<!--    <string name="prefTtsThrottleResponseDefaultValue">régulateur</string> -->
     <!--
     <string name="prefTtsThrottleTitle">Changement de régulateur</string>
     <string name="prefTtsThrottleSummary">Lorsque vous changez de régulateur</string>

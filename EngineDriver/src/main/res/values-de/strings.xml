@@ -132,7 +132,7 @@
 
     <string name="prefThrottleNameSummary">Wähle einen Namen für dieses Gerät (angezeigt auf WiThrottle Bildschirm)</string>
     <string name="prefThrottleOrientationTitle">Orientierung des Bildschirms</string>
-    <string name="prefThrottleOrientationDefaultValue">Hochformat</string>
+<!--    <string name="prefThrottleOrientationDefaultValue">Hochformat</string> -->
     <string name="prefThrottleOrientationSummary">Bildschirmorientierung (außer Web)</string>
     <string name="prefThrottlePageTitle">Voreinstellungen der Fahrreglerdarstellung</string>
     <string name="prefThrottleTitle">Voreinstellungen des Fahrreglers</string>
@@ -193,6 +193,7 @@
     <string name="prefGamePadButtonDownTitle">Aktion für Gamepad DPAD Unten</string>
     <string name="prefGamePadButtonLeftTitle">Aktion für Gamepad DPAD Links</string>
     <string name="prefGamePadButtonSummary">Wähle die Aktion beim Drücken des Knopfes</string>
+<!--
     <string name="prefGamePadButton1DefaultValue">Stop</string>
     <string name="prefGamePadButton2DefaultValue">Funktion 00/Licht</string>
     <string name="prefGamePadButton3DefaultValue">Funktion 01/Glocke</string>
@@ -203,22 +204,22 @@
     <string name="prefGamePadButtonRightDefaultValue">Umkehren</string>
     <string name="prefGamePadButtonDownDefaultValue">Verringere Geschwindigkeit</string>
     <string name="prefGamePadButtonLeftDefaultValue">Vorwärts</string>
-
+-->
     <string name="prefEsuMc2Title">ESU MobileControl II Optionen</string>
     <string name="prefEsuMc2Summary">Wähle ESU MobileControl II Optionen</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Optionen für seitliche Knöpfe</string>
     <string name="prefEsuMc2ButtonTLTitle">Aktion für Knopf Oben-Links </string>
     <string name="prefEsuMc2ButtonTLSummary">Wähle die Aktion für das Drücken des Knopfes.</string>
-    <string name="prefEsuMc2ButtonTLDefaultValue">Geschwindigkeit erhöhen</string>
+<!--    <string name="prefEsuMc2ButtonTLDefaultValue">Geschwindigkeit erhöhen</string> -->
     <string name="prefEsuMc2ButtonBLTitle">Aktion für Knopf Unten-Links</string>
     <string name="prefEsuMc2ButtonBLSummary">Wähle die Aktion für das Drücken des Knopfes.</string>
-    <string name="prefEsuMc2ButtonBLDefaultValue"> Geschwindigkeit mindern</string>
+<!--    <string name="prefEsuMc2ButtonBLDefaultValue"> Geschwindigkeit mindern</string> -->
     <string name="prefEsuMc2ButtonTRTitle">Aktion für Knopf Oben-Rechts</string>
     <string name="prefEsuMc2ButtonTRSummary">Wähle die Aktion für das Drücken des Knopfes.</string>
-    <string name="prefEsuMc2ButtonTRDefaultValue">Vorwärts/Rückwärts umschalten</string>
+<!--    <string name="prefEsuMc2ButtonTRDefaultValue">Vorwärts/Rückwärts umschalten</string> -->
     <string name="prefEsuMc2ButtonBRTitle">Aktion für Knopf Unten-Rechts</string>
     <string name="prefEsuMc2ButtonBRSummary">Wähle die Aktion für das Drücken des Knopfes.</string>
-    <string name="prefEsuMc2ButtonBRDefaultValue">Nächster Fahrregler</string>
+<!--    <string name="prefEsuMc2ButtonBRDefaultValue">Nächster Fahrregler</string> -->
     <string name="prefEsuMc2ButtonsRepeatTitle">Knopf Wiederholungsverzögerung</string>
     <string name="prefEsuMc2ButtonsRepeatSummary">Wie lange zwischen Wiederholungen der seitlichen Knöpfe.\n Kleiner ist schneller.</string>
 
@@ -255,7 +256,7 @@
 
     <string name="prefInitialThrotWebPageSummary">Anfängliche Fahrregler Web  Seite (Typ \'/panel/\')</string>
     <string name="prefWebViewLocationTitle">Fahrregler Web Ansicht?</string>
-    <string name="prefWebViewLocationDefaultValue">keine</string>
+<!--    <string name="prefWebViewLocationDefaultValue">keine</string> -->
     <string name="prefWebViewLocationSummary">Web Ansicht im Fahrreglerfeld beifügen</string>
     <string name="prefSelectLocoTitle">Wähle Lok Voreinstellungen</string>
     <string name="prefSelectiveLeadSoundTitle">Selektiver Sound der führenden Einheit?</string>
@@ -293,7 +294,7 @@
 
     <string name="prefDisplaySpeedUnitsSummary">Geschwindigkeitsanzeige in Prozent oder Stufen?</string>
     <string name="prefWebOrientationTitle">Web Bildschirmorientierung</string>
-    <string name="prefWebOrientationDefaultValue">Auto-Drehen</string>
+<!--    <string name="prefWebOrientationDefaultValue">Auto-Drehen</string> -->
     <string name="prefWebOrientationSummary">Web Bildschirmorientierung</string>
     <string name="prefInitialWebPageTitle">Web Startseite</string>
 
@@ -340,7 +341,7 @@
 
     <string name="prefSelectedLocoIndicatorTitle">Zusätzlicher Indikator für gewählte Lok</string>
     <string name="prefSelectedLocoIndicatorSummary">Zusätzliches Hervorheben des Knopfes für Lokauswahl basierend auf der Auswahlmethode.\nBenötigt Android Honeycomb oder neuer.</string>
-    <string name="prefSelectedLocoIndicatorDefaultValue">Keine</string>
+<!--    <string name="prefSelectedLocoIndicatorDefaultValue">Keine</string> -->
     <string name="prefDisableVolumeKeysTitle">Lautstärketasten ausschalten</string>
     <string name="prefDisableVolumeKeysSummary">Schaltet die Lautstärketasten des Telefons/Tablets aus, welche sonst Geschwindigkeit steuern. Hinweis: Wenn gewählt wird \'Zusätzlicher Indikator für gewählte Lok\' ignoriert.</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Lautstärketasten folgen Berührung</string>
@@ -351,10 +352,10 @@
     <string name="prefSpeedButtonsSpeedStepTitle">Veränderung durch Geschwindigkeitsknöpfe</string>
     <string name="prefSpeedButtonsSpeedStepSummary">Wie viel die Geschwindigkeitspfeile die Geschwindigkeit des Fahrregler verändern.</string>
 
-    <string name="prefGamePadTypeDefaultValue">Keine</string>
-    <string name="prefSwipeUpOptionDefaultValue">Keine</string>
-    <string name="prefGamePadStartButtonDefaultValue">Nächster Fahrregler</string>
-    <string name="NumThrottleDefaulValue">Zwei</string>
+<!--    <string name="prefGamePadTypeDefaultValue">Keine</string> -->
+<!--    <string name="prefSwipeUpOptionDefaultValue">Keine</string> -->
+<!--    <string name="prefGamePadStartButtonDefaultValue">Nächster Fahrregler</string> -->
+<!--    <string name="NumThrottleDefaulValue">Zwei</string> -->
     <string name="server_address">Serveradresse</string>
     <string name="routes_route">Fahrstraßenname</string>
 
@@ -370,7 +371,7 @@
     <string name="prefThrottleImportExportSummary">Voreinstellungen für Import/Export/Zurücksetzen</string>
     <string name="prefImportExportTitle">Import, Export, oder Zurücksetzen</string>
     <string name="prefImportExportSummary">\'Import\' oder \'Export\' der Voreinstellungen im \'engine_driver/\' Verzeichnis oder setze sie zurück.\nWird SOFORT nach Wahl der Option ausgeführt.\n(Voreinstellungen können mit Kopieren der Datei auf ein anderes Telefon übertragen werden.)</string>
-    <string name="prefImportExportDefaultValue">Keine</string>
+<!--    <string name="prefImportExportDefaultValue">Keine</string> -->
     <string name="prefImportExportLocoListTitle">Einbeziehen der Liste kürzlich verwendeter Loks</string>
     <string name="prefImportExportLocoListSummary">Einbeziehen der Loks in der Liste kürzlich verwendeter Loks beim \'Import\' oder \'Export\'.</string>
     <string name="prefAutoImportExportTitle">Auto Host spezifischer Import/Export</string>
@@ -515,7 +516,7 @@
     <string name="toastTurnoutCommandToToggle">Umlegen</string>
     <string name="toastConnectEnterAddress">Adresse und Port eingeben oder auswählen</string>
     <string name="toastConnectInvalidPort">Ungültige Portnummer, Neueingabe.</string>
-    <string name="toastConnectConnected">Verbunden mit Server: %1$s Port : %2$s</string>
+    <string name="toastConnectConnected">Verbunden mit Server: %1$s Port: %2$s</string>
     <string name="toastConnectUnableToSavePref">Host spezifische Voreinstellungen können nicht gesichert werden. Erhalte keinen Hostnamen.</string>
     <string name="toastConnectUnableToLoadPref">Host spezifische Voreinstellungen können nicht geladen werden. Erhalte keinen Hostnamen.</string>
     <string name="toastConnectErrorReadingRecentConnections">Fehler beim Lesen der Liste Letzte Verbindungen:</string>
@@ -660,7 +661,7 @@
     <string name="prefKidsHelpTitle">Hinweise für den Timer:</string>
     <string name="prefKidsHelpSummary">- Wählen Sie zuerst die Lok. \n- Der Timer startet mit der ersten Geschwindigkeitssteigerung. \n- Sie müssen zu dieser Einstellung zurückkehren, um die Zeit nach dem Timeout zurückzusetzen (oder zu löschen). \n \nEmpfehlungen: \n- Deaktivieren Sie die Volume-Schlüssel. \n- Deaktivieren Sie \'Swipe Through Turnouts\'. \n- Deaktivieren Sie \'Swipe Through Routes\'. \n- Deaktivieren Sie EStop.</string>
     <string name="prefKidsTimerTitle">Zeitbegrenztes Laufen</string>
-    <string name="prefKidsTimerSummary">Beschränke die Zeit, die die Lok laufen wird. z.B. Jedes Kind bekommt die gleiche Zeit.</string>
+    <string name="prefKidsTimerSummary" tools:ignore="Typos">Beschränke die Zeit, die die Lok laufen wird. z.B. Jedes Kind bekommt die gleiche Zeit.</string>
 
     <string name="app_name_throttle_kids_running">Throttle - %1$s sek. verbleibend</string>
     <string name="app_name_throttle_kids_enabled">Gas - Timer bereit</string>

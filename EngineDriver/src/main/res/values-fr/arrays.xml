@@ -61,6 +61,8 @@
         <item>Vertical &#8211; Téléphone ou Tablette (1&#8211;12 régulateurs)</item>
         <item>Big Buttons - Gauche (1 régulateur)</item>
 <!--        <item>Big Buttons - Droite (1 régulateur)</item> -->
+        <item>Vertical Gauche &#8211; Téléphone ou Tablette (1 régulateur)</item>
+        <item>Vertical Droite &#8211; Téléphone ou Tablette (1 régulateur)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">
