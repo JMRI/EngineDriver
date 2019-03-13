@@ -36,9 +36,9 @@ import java.util.LinkedHashMap;
 
 // used for supporting Keyboard and Gamepad input;
 
-public class throttle_vertical extends throttle {
+public class throttle_vertical_left extends throttle {
 
-    protected static final int MAX_SCREEN_THROTTLES = 2;
+    protected static final int MAX_SCREEN_THROTTLES = 1;
 
     private LinearLayout[] lThrottles;
     private LinearLayout[] lUppers;
@@ -58,7 +58,17 @@ public class throttle_vertical extends throttle {
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
 
-        super.layoutViewId = R.layout.throttle_vertical;
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
+            case "Vertical Right":
+                super.layoutViewId = R.layout.throttle_vertical_right;
+                break;
+            case "Vertical Left":
+            default:
+                super.layoutViewId = R.layout.throttle_vertical_left;
+                break;
+        }
+
         super.onCreate(savedInstanceState);
 
         if (mainapp.appIsFinishing) { return;}
@@ -66,10 +76,10 @@ public class throttle_vertical extends throttle {
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             switch (throttleIndex) {
                 case 0:
-                    fbs[throttleIndex] = (ViewGroup) findViewById(R.id.function_buttons_table_0);
+                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
                     break;
                 case 1:
-                    fbs[throttleIndex] = (ViewGroup) findViewById(R.id.function_buttons_table_1);
+                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_1);
                     break;
             }
 
@@ -86,20 +96,20 @@ public class throttle_vertical extends throttle {
             switch (throttleIndex) {
                 default:
                 case 0:
-                    lThrottles[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_0);
-                    lUppers[throttleIndex] = (LinearLayout) findViewById(R.id.loco_upper_0);
-                    lLowers[throttleIndex] = (LinearLayout) findViewById(R.id.loco_lower_0);
-                    lSpeeds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_0_SetSpeed);
-                    vsbSpeeds[throttleIndex] = (VerticalSeekBar) findViewById(R.id.speed_0);
-                    svFnBtns[throttleIndex] = (ScrollView) findViewById(R.id.function_buttons_scroller_0);
+                    lThrottles[throttleIndex] = findViewById(R.id.throttle_0);
+                    lUppers[throttleIndex] = findViewById(R.id.loco_upper_0);
+                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
+                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
+                    vsbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
+                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
                     break;
                 case 1:
-                    lThrottles[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_1);
-                    lUppers[throttleIndex] = (LinearLayout) findViewById(R.id.loco_upper_1);
-                    lLowers[throttleIndex] = (LinearLayout) findViewById(R.id.loco_lower_1);
-                    lSpeeds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_1_SetSpeed);
-                    vsbSpeeds[throttleIndex] = (VerticalSeekBar) findViewById(R.id.speed_1);
-                    svFnBtns[throttleIndex] = (ScrollView) findViewById(R.id.function_buttons_scroller_1);
+                    lThrottles[throttleIndex] = findViewById(R.id.throttle_1);
+                    lUppers[throttleIndex] = findViewById(R.id.loco_upper_1);
+                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_1);
+                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
+                    vsbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
+                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_1);
                     break;
             }
         }
@@ -133,72 +143,6 @@ public class throttle_vertical extends throttle {
         super.prefLeftDirectionButtons = prefs.getString("prefLeftDirectionButtonsShort", getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsShortDefaultValue)).trim();
         super.prefRightDirectionButtons = prefs.getString("prefRightDirectionButtonsShort", getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsShortDefaultValue)).trim();
     }
-
-    // helper function to set up function buttons for each throttle
-    // loop through all function buttons and
-    // set label and dcc functions (based on settings) or hide if no label
-//    @Override
-//    void set_function_labels_and_listeners_for_view(int whichThrottle) {
-//        // Log.d("Engine_Driver","starting set_function_labels_and_listeners_for_view");
-//
-//        ViewGroup tv; // group
-//        ViewGroup r; // row
-//        function_button_touch_listener fbtl;
-//        Button b; // button
-//        int k = 0; // button count
-//        LinkedHashMap<Integer, String> function_labels_temp;
-//        LinkedHashMap<Integer, Button> functionButtonMap = new LinkedHashMap<>();
-//
-//        tv = fbs[whichThrottle];
-//
-//        // note: we make a copy of function_labels_x because TA might change it
-//        // while we are using it (causing issues during button update below)
-//        function_labels_temp = mainapp.function_labels_default;
-//        if (!prefAlwaysUseDefaultFunctionLabels) {
-//            if (mainapp.function_labels[whichThrottle] != null && mainapp.function_labels[whichThrottle].size() > 0) {
-//                function_labels_temp = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
-//            } else {
-//                function_labels_temp = mainapp.function_labels_default;
-//            }
-//        }
-//
-//        // put values in array for indexing in next step
-//        // to do this
-//        ArrayList<Integer> aList = new ArrayList<>();
-//        aList.addAll(function_labels_temp.keySet());
-//
-//        if (tv != null) {
-//            for (int i = 0; i < tv.getChildCount(); i++) {
-//                r = (ViewGroup) tv.getChildAt(i);
-//                for (int j = 0; j < r.getChildCount(); j++) {
-//                    b = (Button) r.getChildAt(j);
-//                    if (k < function_labels_temp.size()) {
-//                        Integer func = aList.get(k);
-//                        functionButtonMap.put(func, b); // save function to button
-//                        // mapping
-//                        String bt = function_labels_temp.get(func);
-//                        fbtl = new function_button_touch_listener(func, whichThrottle, bt);
-//                        b.setOnTouchListener(fbtl);
-//                        if ((mainapp.getCurrentTheme().equals(THEME_DEFAULT))) {
-//                            bt = bt + "        ";  // pad with spaces, and limit to 7 characters
-//                            b.setText(bt.substring(0, 7));
-//                        } else {
-//                            bt = bt + "                      ";  // pad with spaces, and limit to 20 characters
-//                            b.setText(bt.trim());
-//                        }
-//                        b.setVisibility(View.VISIBLE);
-//                        b.setEnabled(false); // start out with everything disabled
-//                    } else {
-//                        b.setVisibility(View.GONE);
-//                    }
-//                    k++;
-//                }
-//            }
-//        }
-//
-//        // update the function-to-button map for the current throttle
-//        functionMaps[whichThrottle] = functionButtonMap;
-//    }
 
 
     protected void set_labels() {
@@ -267,18 +211,18 @@ public class throttle_vertical extends throttle {
         // Get the screen's density scale
         final float denScale = dm.density;
 
-        int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
-        int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.numThrottles;
+//        int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
+//        int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.numThrottles;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.FILL_PARENT;
-            lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
+//            lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
             lThrottles[throttleIndex].requestLayout();
 
-            lSpeeds[throttleIndex].getLayoutParams().width = throttleWidth - svFnBtns[throttleIndex].getWidth();
+//            lSpeeds[throttleIndex].getLayoutParams().width = throttleWidth - svFnBtns[throttleIndex].getWidth();
             lSpeeds[throttleIndex].requestLayout();
         }
 
-        int screenHeight = vThrotScrWrap.getHeight(); // get the Hight of usable area
+        int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area
         int keepHeight = screenHeight;  // default height
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
@@ -354,16 +298,6 @@ public class throttle_vertical extends throttle {
 
     }
 
-//    @Override
-//    void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
-//        super.enable_disable_buttons(whichThrottle, forceDisable);
-//
-//        boolean newEnabledState = false;
-//        if (!forceDisable) {
-//            newEnabledState = mainapp.consists[whichThrottle].isActive();      // set false if lead loco is not assigned
-//        }
-//
-//    } // end of enable_disable_buttons
     // helper function to enable/disable all children for a group
     @Override
     void enable_disable_buttons_for_view(ViewGroup vg, boolean newEnabledState) {
