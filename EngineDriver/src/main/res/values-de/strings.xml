@@ -375,17 +375,17 @@
     <string name="prefImportExportLocoListTitle">Einbeziehen der Liste kürzlich verwendeter Loks</string>
     <string name="prefImportExportLocoListSummary">Einbeziehen der Loks in der Liste kürzlich verwendeter Loks beim \'Import\' oder \'Export\'.</string>
     <string name="prefAutoImportExportTitle">Auto Host spezifischer Import/Export</string>
-    <string name="prefAutoImportExportSummary">AUTOMATISCHER \'Import\'  der Voreinstellungen für diesen Host und optionaler \'Export\' zu diesem beim Trennen der Verbindung bei jedem Verbindungsaufbau mit einem Host. \n(Um ständig auf einen bekannten Zustand zurückzusetzen, setze \'Auto Import nur bei Verbindungsaufbau\' nach dem ersten Mal oder nach einem manuellen Speichern (unten).)</string>
+    <string name="prefAutoImportExportSummary">AUTOMATISCHER \'Import\' der Voreinstellungen für diesen Host und optionaler \'Export\' zu diesem beim Trennen der Verbindung bei jedem Verbindungsaufbau mit einem Host. \n(Um ständig auf einen bekannten Zustand zurückzusetzen, setze \'Auto Import nur bei Verbindungsaufbau\' nach dem ersten Mal oder nach einem manuellen Speichern (unten).)</string>
 
-    <string name = "prefImportServerManualTitle">Import vom aktuellen Server (manuell)</string>
-    <string name = "prefImportServerManualSummary">Serverdatei für \'Import\' eine Reihe von Einstellungen vom aktuell verbundenen Server.\nDie Datei muss sich im \'/engine_driver/\' des Servers befinden und der Webserver muss ausgeführt werden.\nWarnung: Der Import wird sofort beim Speichern dieser Einstellung gestartet.</string>
+    <string name="prefImportServerManualTitle">Import vom aktuellen Server (manuell)</string>
+    <string name="prefImportServerManualSummary">Serverdatei für \'Import\' eine Reihe von Einstellungen vom aktuell verbundenen Server.\nDie Datei muss sich im \'/engine_driver/\' des Servers befinden und der Webserver muss ausgeführt werden.\nWarnung: Der Import wird sofort beim Speichern dieser Einstellung gestartet.</string>
 
-    <string name = "prefImportServerAutoTitle">Automatischer Import von allen Servern</string>
-    <string name = "prefImportServerAutoSummary">Importieren Sie automatisch die Einstellungen von den Servern, die mit der Verbindung verbunden sind.\n(Wenn sich die Datei \'/engine_driver/auto_preferences.ed\' auf dem Server befindet und das aktuelle Mal das letzte Mal überprüft wurde</string>
+    <string name="prefImportServerAutoTitle">Automatischer Import von allen Servern</string>
+    <string name="prefImportServerAutoSummary">Importieren Sie automatisch die Einstellungen von den Servern, die mit der Verbindung verbunden sind.\n(Wenn sich die Datei \'/engine_driver/auto_preferences.ed\' auf dem Server befindet und das aktuelle Mal das letzte Mal überprüft wurde</string>
 
-    <string name = "importServerAutoDialog">Auf diesem Server wurde eine neue Voreinstellungsdatei gefunden.\nMöchten Sie sie importieren?\n\nWarnung!\n\'Voll\' - Alle Ihre Voreinstellungen werden übersteuert.\n\n\'Partial\' - Alle Voreinstellungen außer "Theme" und einige "Throttle Page Type" -Einstellungen werden überschrieben.</string>
-    <string name = "importServerAutoDialogPositiveButton">Vollständig</string>
-    <string name = "importServerAutoDialogNeutralButton">Teilweise</string>
+    <string name="importServerAutoDialog">Auf diesem Server wurde eine neue Voreinstellungsdatei gefunden.\nMöchten Sie sie importieren?\n\nWarnung!\n\'Voll\' - Alle Ihre Voreinstellungen werden übersteuert.\n\n\'Partial\' - Alle Voreinstellungen außer "Theme" und einige "Throttle Page Type" -Einstellungen werden überschrieben.</string>
+    <string name="importServerAutoDialogPositiveButton">Vollständig</string>
+    <string name="importServerAutoDialogNeutralButton">Teilweise</string>
 
     <string name="prefHostImportExportTitle">Manueller Host spezifischer Import/Export</string>
     <string name="prefHostImportExportSummary" tools:ignore="Typos">\'Import\' oder \'Export\' deiner Voreinstellungen von/zu einem spezifischen Host in das \'engine_driver/\' Verzeichnis. Der Host muß in deiner Liste Letzte Verbindungen sein.\nWird SOFORT nach Auswahl der Option ausgeführt.\n(Nur verfügbar wenn momentan nicht verbunden.)</string>
