@@ -523,7 +523,7 @@
     <string name="toastSwipeUpViewHidden">Vue Web cachée. Pour la cacher définitivement, modifier les préférences.</string>
     <string name="toastThrottleAlertEstop">Alerte: Locomotive %1$s en arret URGENCE</string>
     <string name="toastPreferencesOutsideLimits">Valeur entrée hors limites (%1$s-%2$s). Reset à %3$s.</string>
-    <string name="toastPreferencesNotNumeric">Valeur entrée non numérique (%%1%%-%%2%%). Reset à %%3%%.</string>
+    <string name="toastPreferencesNotNumeric">Valeur entrée non numérique (%1$s-%2$s). Reset à %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Préférences remises aux valeurs par défaut</string>
 
 

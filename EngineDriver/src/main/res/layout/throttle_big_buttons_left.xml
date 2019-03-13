@@ -40,11 +40,12 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="horizontal"
-            android:weightSum="1.0">
+            android:weightSum="1.0"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:id="@+id/throttle_0"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
                 android:orientation="vertical"
@@ -123,7 +124,8 @@
                                 android:layout_alignParentTop="true"
                                 android:enabled="false"
                                 android:text="126"
-                                android:textSize="36sp" />
+                                android:textSize="36sp"
+                                tools:ignore="HardcodedText" />
 
                             <TextView
                                 android:id="@+id/volume_indicator_0"
@@ -231,63 +233,11 @@
                 <LinearLayout
                     android:id="@+id/loco_lower_0"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
                     android:baselineAligned="false"
                     android:layoutDirection="rtl"
                     android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:id="@+id/throttle_0_SetSpeed"
-                        android:layout_width="80dp"
-                        android:layout_height="fill_parent"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight=".6"
-                        android:orientation="vertical">
-
-                        <Button
-                            android:id="@+id/right_speed_button_0"
-                            style="?attr/ed_normal_button2_style"
-                            android:layout_width="match_parent"
-                            android:layout_height="80dp"
-                            android:layout_marginBottom="7dp"
-                            android:layout_marginTop="14dp"
-                            android:layout_weight=".4"
-                            android:text="@string/UpButton"
-                            android:textSize="30sp" />
-
-                        <jmri.enginedriver.VerticalSeekBar
-                            android:id="@+id/speed_0"
-                            android:layout_width="fill_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="0"
-                            android:maxHeight="9999dp"
-                            android:minHeight="9999dp"
-                            android:paddingLeft="30dp"
-                            android:paddingRight="30dp" />
-
-                        <Button
-                            android:id="@+id/left_speed_button_0"
-                            style="?attr/ed_normal_button2_style"
-                            android:layout_width="match_parent"
-                            android:layout_height="80dp"
-                            android:layout_marginBottom="30dp"
-                            android:layout_marginTop="7dp"
-                            android:layout_weight=".4"
-                            android:padding="0dp"
-                            android:text="@string/DownButton"
-                            android:textSize="30sp" />
-
-                        <Button
-                            android:id="@+id/button_stop_0"
-                            style="?attr/ed_stop_button_style"
-                            android:layout_width="match_parent"
-                            android:layout_height="80dp"
-                            android:layout_weight=".2"
-                            android:enabled="false"
-                            android:paddingTop="20dp"
-                            android:text="@string/stop" />
-                    </LinearLayout>
 
                     <ScrollView
                         android:id="@+id/function_buttons_scroller_0"
@@ -539,6 +489,58 @@
                             </TableRow>
                         </TableLayout>
                     </ScrollView>
+
+                    <LinearLayout
+                        android:id="@+id/throttle_0_SetSpeed"
+                        android:layout_width="80dp"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight=".6"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/right_speed_button_0"
+                            style="?attr/ed_normal_button2_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:layout_marginBottom="7dp"
+                            android:layout_marginTop="14dp"
+                            android:layout_weight=".4"
+                            android:text="@string/UpButton"
+                            android:textSize="30sp" />
+
+                        <jmri.enginedriver.VerticalSeekBar
+                            android:id="@+id/speed_0"
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0"
+                            android:maxHeight="9999dp"
+                            android:minHeight="9999dp"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="30dp" />
+
+                        <Button
+                            android:id="@+id/left_speed_button_0"
+                            style="?attr/ed_normal_button2_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:layout_marginBottom="30dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_weight=".4"
+                            android:padding="0dp"
+                            android:text="@string/DownButton"
+                            android:textSize="30sp" />
+
+                        <Button
+                            android:id="@+id/button_stop_0"
+                            style="?attr/ed_stop_button_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:layout_weight=".2"
+                            android:enabled="false"
+                            android:paddingTop="20dp"
+                            android:text="@string/stop" />
+                    </LinearLayout>
 
 
                 </LinearLayout>

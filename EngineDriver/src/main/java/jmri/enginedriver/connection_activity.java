@@ -169,6 +169,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                 throttle = new Intent().setClass(this, throttle_vertical_left_or_right.class);
                 break;
             case "Big Left":
+            case "Big Right":
                 throttle = new Intent().setClass(this, throttle_big_buttons.class);
                 break;
             case "Default":

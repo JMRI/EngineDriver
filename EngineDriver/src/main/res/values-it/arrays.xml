@@ -57,6 +57,7 @@
         <item >Semplice &#8211; Consigliato Tablet (1&#8211;6 controllori)</item>
         <item >Verticale &#8211; Telefono o tablet (2 controllori)</item>
         <item >Grandi pulsanti &#8211; Sinistra (1 acceleratore)</item>
+        <item >Grandi pulsanti &#8211; Destra (1 acceleratore)</item>
         <item >Verticale Sinistra &#8211; Telefono o tablet (1 acceleratore)</item>
         <item >Verticale Destra &#8211; Telefono o tablet (1 acceleratore)</item>
     </string-array>

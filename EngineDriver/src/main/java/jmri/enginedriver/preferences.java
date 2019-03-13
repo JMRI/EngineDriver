@@ -717,7 +717,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             reload();
         }
 
-        if (prefThrottleScreenType.equals("Big Left") && (numThrottles != 1)) {
+        if ( ((prefThrottleScreenType.equals("Vertical Left")) || (prefThrottleScreenType.equals("Vertical Right"))
+                || (prefThrottleScreenType.equals("Big Left")) || (prefThrottleScreenType.equals("Big Right")) )
+                && (numThrottles != 1)) {
             sharedPreferences.edit().putString("NumThrottle", "One").commit();
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, "One"), Toast.LENGTH_SHORT).show();
             reload();

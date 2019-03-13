@@ -613,8 +613,8 @@
     <string name="toastThrottleAlertEstop">Upozornění: Lokomotiva %1$s je nastavena na ESTOP</string>
 
     <!--    Toast messages for the Preferences page-->
-    <string name="toastPreferencesOutsideLimits">Zadaná hodnota je mimo meze (%1$s – %2$s). Nastavím na %3$s.</string>
-    <string name="toastPreferencesNotNumeric">Zadaná hodnota není číslo (%1$s – %2$s). Nastavím na %3$.</string>
+    <string name="toastPreferencesOutsideLimits">Zadaná hodnota je mimo meze (%1$s-%2$s). Nastavím na %3$s.</string>
+    <string name="toastPreferencesNotNumeric">Zadaná hodnota není číslo (%1$s-%2$s). Nastavím na %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Předvolby Nastavení na výchozí hodnoty!</string>
     <string name="toastPreferencesImportServerManualFailed">Import předvoleb se serveru selhal! Zkontrolujte, že je soubor správný. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Import předvoleb ze serveru se zdařil. (%1$s)</string>
