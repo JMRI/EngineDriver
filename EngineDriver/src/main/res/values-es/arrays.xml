@@ -55,6 +55,7 @@
         <item>Simple &#8211; Tablet Recomendado (1&#8211;6 controladores)</item>
         <item>Vertical &#8211; Teléfono o Tableta (2 controladores)</item>
         <item>Botones grandes &#8211; Izquierdo (1 controlador)</item>
+        <item>Botones grandes &#8211; Derecha (1 controlador)</item>
         <item >Vertical Izquierdo &#8211; Teléfono o Tableta (1 controlador)</item>
         <item >Vertical Derecha &#8211; Teléfono o Tableta (1 controlador)</item>
     </string-array>

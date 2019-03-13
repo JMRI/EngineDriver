@@ -58,7 +58,18 @@ public class throttle_big_buttons extends throttle {
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
 
-        super.layoutViewId = R.layout.throttle_big_buttons_left;
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
+            case "Big Right":
+                super.layoutViewId = R.layout.throttle_big_buttons_right;
+                break;
+            case "Big Left":
+            default:
+                super.layoutViewId = R.layout.throttle_big_buttons_left;
+                break;
+        }
+
+//        super.layoutViewId = R.layout.throttle_big_buttons_left;
         super.onCreate(savedInstanceState);
 
         if (mainapp.appIsFinishing) { return;}
@@ -66,7 +77,7 @@ public class throttle_big_buttons extends throttle {
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
             switch (throttleIndex) {
                 case 0:
-                    fbs[throttleIndex] = (ViewGroup) findViewById(R.id.function_buttons_table_0);
+                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
                     break;
             }
 
@@ -83,12 +94,12 @@ public class throttle_big_buttons extends throttle {
             switch (throttleIndex) {
                 default:
                 case 0:
-                    lThrottles[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_0);
-                    lUppers[throttleIndex] = (LinearLayout) findViewById(R.id.loco_upper_0);
-                    lLowers[throttleIndex] = (LinearLayout) findViewById(R.id.loco_lower_0);
-                    lSpeeds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_0_SetSpeed);
-                    vsbSpeeds[throttleIndex] = (VerticalSeekBar) findViewById(R.id.speed_0);
-                    svFnBtns[throttleIndex] = (ScrollView) findViewById(R.id.function_buttons_scroller_0);
+                    lThrottles[throttleIndex] = findViewById(R.id.throttle_0);
+                    lUppers[throttleIndex] = findViewById(R.id.loco_upper_0);
+                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
+                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
+                    vsbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
+                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
                     break;
             }
         }
@@ -231,7 +242,7 @@ public class throttle_big_buttons extends throttle {
 
         int speedButtonHeight = (int) (50 * denScale);
 //        if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
-            speedButtonHeight = (int) ((screenHeight - (200 * denScale)) / 2);
+//            speedButtonHeight = (int) ((screenHeight - (200 * denScale)) / 2);
 //        }
 
 //        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {

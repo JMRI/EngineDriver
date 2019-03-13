@@ -95,14 +95,16 @@
         <item tools:ignore="TypographyDashes">Simple &#8211; Tablet Recommended (1-6 throttles)</item>
         <item >Vertical &#8211; Phone or Tablet (2 throttles)</item>
         <item >Big Buttons &#8211; Left (1 throttle)</item>
-        <item >Vertical Left &#8211; Phone or Tablet (1 throttles)</item>
-        <item >Vertical Right &#8211; Phone or Tablet (1 throttles)</item>
+        <item >Big Buttons &#8211; Right (1 throttle)</item>
+        <item >Vertical Left &#8211; (1 throttle)</item>
+        <item >Vertical Right &#8211; (1 throttle)</item>
     </string-array>
     <string-array name="prefThrottleScreenTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >Default</item>
         <item >Simple</item>
         <item >Vertical</item>
         <item >Big Left</item>
+        <item >Big Right</item>
         <item >Vertical Left</item>
         <item >Vertical Right</item>
     </string-array>

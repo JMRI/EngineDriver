@@ -121,7 +121,8 @@
                                 android:layout_alignParentRight="true"
                                 android:enabled="false"
                                 android:text="126"
-                                android:textSize="36sp" />
+                                android:textSize="36sp"
+                                tools:ignore="HardcodedText" />
 
                             <TextView
                                 android:id="@+id/volume_indicator_0"
@@ -231,6 +232,227 @@
                     android:orientation="horizontal"
                     android:weightSum="10">
 
+                    <ScrollView
+                        android:id="@+id/function_buttons_scroller_0"
+                        style="?attr/ed_fn_scrollview_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="4.0"
+                        android:padding="10dp">
+
+                        <TableLayout
+                            android:id="@+id/function_buttons_table_0"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="0dp"
+                            android:shrinkColumns="*"
+                            android:stretchColumns="*">
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:layout_width="match_parent"
+                                    android:layout_weight="5"
+                                    android:text="@string/functionButton00DefaultValue" />
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:layout_width="match_parent"
+                                    android:layout_weight="5"
+                                    android:text="@string/functionButton01DefaultValue" />
+                            </TableRow>
+
+                            <TableRow
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton02DefaultValue" />
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton03DefaultValue" />
+                            </TableRow>
+
+                            <TableRow
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton04DefaultValue" />
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton05DefaultValue" />
+                            </TableRow>
+
+                            <TableRow
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:layout_weight="5"
+                                    android:text="@string/functionButton06DefaultValue" />
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:layout_weight="5"
+                                    android:text="@string/functionButton07DefaultValue" />
+                            </TableRow>
+
+                            <TableRow
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:layout_weight="5"
+                                    android:text="@string/functionButton08DefaultValue" />
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:layout_weight="5"
+                                    android:text="@string/functionButton09DefaultValue" />
+                            </TableRow>
+
+                            <TableRow
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton10DefaultValue" />
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton11DefaultValue" />
+                            </TableRow>
+
+                            <TableRow
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton12DefaultValue" />
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton13DefaultValue" />
+                            </TableRow>
+
+                            <TableRow
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton14DefaultValue" />
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton15DefaultValue" />
+                            </TableRow>
+
+                            <TableRow
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton16DefaultValue" />
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton17DefaultValue" />
+                            </TableRow>
+
+                            <TableRow
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton18DefaultValue" />
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton19DefaultValue" />
+                            </TableRow>
+
+                            <TableRow
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton20DefaultValue" />
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton21DefaultValue" />
+                            </TableRow>
+
+                            <TableRow
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton22DefaultValue" />
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton23DefaultValue" />
+                            </TableRow>
+
+                            <TableRow
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton24DefaultValue" />
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton25DefaultValue" />
+                            </TableRow>
+
+                            <TableRow
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton26DefaultValue" />
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:text="@string/functionButton27DefaultValue" />
+                            </TableRow>
+
+                            <TableRow
+                                android:baselineAligned="false"
+                                android:weightSum="10">
+
+                                <Button
+                                    style="?attr/ed_fn_button_style"
+                                    android:layout_weight="@integer/KeyCode_5"
+                                    android:text="@string/functionButton28DefaultValue" />
+                            </TableRow>
+
+                        </TableLayout>
+                    </ScrollView>
+
                     <LinearLayout
                         android:id="@+id/throttle_0_SetSpeed"
                         android:layout_width="match_parent"
@@ -278,199 +500,6 @@
                             android:enabled="false"
                             android:text="@string/stop" />
                     </LinearLayout>
-
-                    <ScrollView
-                        android:id="@+id/function_buttons_scroller_0"
-                        style="?attr/ed_fn_scrollview_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="4.0"
-                        android:padding="10dp">
-
-                        <TableLayout
-                            android:id="@+id/function_buttons_table_0"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:paddingRight="0dp"
-                            android:shrinkColumns="*"
-                            android:stretchColumns="*">
-
-                            <TableRow
-                                android:layout_width="match_parent"
-                                android:weightSum="10"
-                                android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:layout_width="match_parent"
-                                    android:layout_weight="5"
-                                    android:text="@string/functionButton00DefaultValue" />
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:layout_width="match_parent"
-                                    android:layout_weight="5"
-                                    android:text="@string/functionButton01DefaultValue" />
-                            </TableRow>
-
-                            <TableRow android:weightSum="10" android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton02DefaultValue" />
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton03DefaultValue" />
-                            </TableRow>
-
-                            <TableRow android:weightSum="10" android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton04DefaultValue" />
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton05DefaultValue" />
-                            </TableRow>
-
-                            <TableRow android:weightSum="10" android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:layout_weight="5"
-                                    android:text="@string/functionButton06DefaultValue" />
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:layout_weight="5"
-                                    android:text="@string/functionButton07DefaultValue" />
-                            </TableRow>
-
-                            <TableRow android:weightSum="10" android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:layout_weight="5"
-                                    android:text="@string/functionButton08DefaultValue" />
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:layout_weight="5"
-                                    android:text="@string/functionButton09DefaultValue" />
-                            </TableRow>
-
-                            <TableRow android:weightSum="10" android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton10DefaultValue" />
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton11DefaultValue" />
-                            </TableRow>
-
-                            <TableRow android:weightSum="10" android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton12DefaultValue" />
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton13DefaultValue" />
-                            </TableRow>
-
-                            <TableRow android:weightSum="10" android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton14DefaultValue" />
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton15DefaultValue" />
-                            </TableRow>
-
-                            <TableRow android:weightSum="10" android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton16DefaultValue" />
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton17DefaultValue" />
-                            </TableRow>
-
-                            <TableRow android:weightSum="10" android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton18DefaultValue" />
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton19DefaultValue" />
-                            </TableRow>
-
-                            <TableRow android:weightSum="10" android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton20DefaultValue" />
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton21DefaultValue" />
-                            </TableRow>
-
-                            <TableRow android:weightSum="10" android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton22DefaultValue" />
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton23DefaultValue" />
-                            </TableRow>
-
-                            <TableRow android:weightSum="10" android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton24DefaultValue" />
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton25DefaultValue" />
-                            </TableRow>
-
-                            <TableRow android:weightSum="10" android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton26DefaultValue" />
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:text="@string/functionButton27DefaultValue" />
-                            </TableRow>
-
-                            <TableRow android:weightSum="10" android:baselineAligned="false">
-
-                                <Button
-                                    style="?attr/ed_fn_button_style"
-                                    android:layout_weight="@integer/KeyCode_5"
-                                    android:text="@string/functionButton28DefaultValue" />
-                            </TableRow>
-
-                        </TableLayout>
-                    </ScrollView>
 
 
                 </LinearLayout>
