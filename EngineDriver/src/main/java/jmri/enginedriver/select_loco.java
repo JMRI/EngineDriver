@@ -212,6 +212,21 @@ public class select_loco extends Activity {
         } // if roster_entries not null
     }
 
+//    private void findLocoInRoster(String addr_str) {
+//            if ((mainapp.roster_entries != null) && (mainapp.roster_entries.size() > 0)) {
+//                for (String rostername : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
+//                    if (mainapp.roster_entries.get(rostername).equals(addr_str)) { //looking for value = input parm
+////                        return rostername;  //if found, return the roster name (key)
+//                    }
+//                }
+//            }
+//            if (mainapp.getConsistNameFromAddress(addr_str) != null) { //check for a JMRI consist for this address
+////                return mainapp.getConsistNameFromAddress(addr_str);
+//            }
+//
+//    }
+
+
     // lookup and set values of various text labels
     protected void set_labels() {
 
@@ -684,15 +699,15 @@ public class select_loco extends Activity {
         }
 
         // Set the button callbacks.
-        Button button = (Button) findViewById(R.id.acquire);
+        Button button = findViewById(R.id.acquire);
         button_listener click_listener = new button_listener();
         button.setOnClickListener(click_listener);
 
         //Jeffrey added 7/3/2013
-        button = (Button) findViewById(R.id.clear_Loco_List_button);
+        button = findViewById(R.id.clear_Loco_List_button);
         button.setOnClickListener(new clear_Loco_List_button());
 
-        filter_roster_text = (EditText) findViewById(R.id.filter_roster_text);
+        filter_roster_text = findViewById(R.id.filter_roster_text);
         filter_roster_text.setText(prefRosterFilter);
         filter_roster_text.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -721,10 +736,10 @@ public class select_loco extends Activity {
             whichThrottle = mainapp.throttleCharToInt(sWhichThrottle.charAt(0));
         }
 
-        button = (Button) findViewById(R.id.Sl_release);
+        button = findViewById(R.id.Sl_release);
         button.setOnClickListener(new release_button_listener(whichThrottle));
 
-        EditText la = (EditText) findViewById(R.id.loco_address);
+        EditText la = findViewById(R.id.loco_address);
         la.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 updateAddressEntry();
@@ -749,22 +764,22 @@ public class select_loco extends Activity {
             }
         });
 
-        rbAddress=(RadioButton)findViewById(R.id.select_loco_method_address_button);
-        rbRoster=(RadioButton)findViewById(R.id.select_loco_method_roster_button);
-        rbRecent =(RadioButton)findViewById(R.id.select_loco_method_recent_button);
+        rbAddress= findViewById(R.id.select_loco_method_address_button);
+        rbRoster= findViewById(R.id.select_loco_method_roster_button);
+        rbRecent = findViewById(R.id.select_loco_method_recent_button);
 
         prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", WHICH_METHOD_FIRST);
 
-        rlAddress = (RelativeLayout) findViewById(R.id.enter_loco_group);
-        rlAddressHelp = (RelativeLayout) findViewById(R.id.enter_loco_group_help);
-        rlRosterHeader = (RelativeLayout) findViewById(R.id.roster_list_header_group);
-        rlRosterEmpty = (RelativeLayout) findViewById(R.id.roster_list_empty_group);
-        llRoster = (LinearLayout) findViewById(R.id.roster_list_group);
-        rlRecentHeader = (RelativeLayout) findViewById(R.id.engine_list_header_group);
-        llRecent = (LinearLayout) findViewById(R.id.engine_list_wrapper);
+        rlAddress = findViewById(R.id.enter_loco_group);
+        rlAddressHelp = findViewById(R.id.enter_loco_group_help);
+        rlRosterHeader = findViewById(R.id.roster_list_header_group);
+        rlRosterEmpty = findViewById(R.id.roster_list_empty_group);
+        llRoster = findViewById(R.id.roster_list_group);
+        rlRecentHeader = findViewById(R.id.engine_list_header_group);
+        llRecent = findViewById(R.id.engine_list_wrapper);
         showMethod(prefSelectLocoMethod);
 
-        RadioGroup rgLocoSelect = (RadioGroup) findViewById(R.id.select_loco_method_address_button_radio_group);
+        RadioGroup rgLocoSelect = findViewById(R.id.select_loco_method_address_button_radio_group);
         rgLocoSelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
 
@@ -786,6 +801,7 @@ public class select_loco extends Activity {
         set_labels();
     }
 
+    @SuppressLint("ApplySharedPref")
     private void showMethod(String whichMethod) {
         switch (whichMethod) {
             default:
