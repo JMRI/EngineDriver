@@ -56,8 +56,8 @@
         <item>Vertical &#8211; Telèfon o Tableta (2 controladors)</item>
         <item>Botons grans &#8211; Esquerra (1 controlador)</item>
         <item>Botons grans &#8211; Dreta (1 controlador)</item>
-        <item>Vertical Esquerra &#8211; Telèfon o Tableta (1 controlador)</item>
-        <item>Vertical Dreta &#8211; Telèfon o Tableta (1 controlador)</item>
+        <item>Vertical &#8211; Esquerra (1 controlador)</item>
+        <item>Vertical &#8211; Dreta (1 controlador)</item>
     </string-array>
     <string-array name="DisplayClockEntries">
         <item>Cap</item>

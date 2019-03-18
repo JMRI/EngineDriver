@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 744.09448819 1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="ED x 6 - adaptive.svg"
+   inkscape:export-filename="C:\Users\akers\Google Drive\Engine Driver\ED Icons\ED x 6 - 32.png"
+   inkscape:export-xdpi="5.6008849"
+   inkscape:export-ydpi="5.6008849">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;"
+       inkscape:isstock="true">
+      <path
+         id="path5058"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lstart"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path5055"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt"
+         transform="scale(0.8) translate(12.5,0)" />
+    </marker>
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter5595">
+      <feFlood
+         flood-opacity="0.698039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood5585" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite5587" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="14"
+         result="blur"
+         id="feGaussianBlur5589" />
+      <feOffset
+         dx="7"
+         dy="7"
+         result="offset"
+         id="feOffset5591" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite5593" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter5607">
+      <feFlood
+         flood-opacity="0.411765"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood5597" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite5599" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="14"
+         result="blur"
+         id="feGaussianBlur5601" />
+      <feOffset
+         dx="7"
+         dy="7"
+         result="offset"
+         id="feOffset5603" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite5605" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="560.31975"
+     inkscape:cy="554.40765"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="2000"
+     inkscape:window-height="1059"
+     inkscape:window-x="1991"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:snap-to-guides="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:snap-nodes="false"
+     inkscape:snap-others="false">
+    <sodipodi:guide
+       position="610.94026,339.05771"
+       orientation="0,1"
+       id="guide4306"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="525.87501,366.00001"
+       orientation="1,0"
+       id="guide4310"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="296.25,425.25"
+       orientation="0,1"
+       id="guide4314"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="318.64,409.06251"
+       orientation="0,1"
+       id="guide4316"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="297.5,365"
+       orientation="0,1"
+       id="guide4318"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="118.75,834.50002"
+       orientation="1,0"
+       id="guide4734"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="633.00001,843.00002"
+       orientation="1,0"
+       id="guide4736"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="115.83293,286.59922"
+       orientation="0,1"
+       id="guide4738"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="347.89654,801.152"
+       orientation="0,1"
+       id="guide5168"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="633.00001,339.05771"
+       orientation="0,1"
+       id="guide5224"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="499.50001,521.00001"
+       orientation="1,0"
+       id="guide4299"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="312.18749,531.06444"
+       orientation="1,0"
+       id="guide4372"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="339.37499,507"
+       orientation="0,1"
+       id="guide4382"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="314.125,434"
+       orientation="0,1"
+       id="guide4307"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="223.97607,426.91572"
+       orientation="1,0"
+       id="guide4309"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="267.81669,421.61242"
+       orientation="0,1"
+       id="guide4311"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="295.30547,395.27269"
+       orientation="0,1"
+       id="guide4313"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="298.23486,525.10985"
+       orientation="1,0"
+       id="guide200"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="615.51434,388.63251"
+       orientation="0.71858611,0.695438"
+       id="guide4773"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:0.08262863;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 262.18271,306.4483 -16.60357,52.65001 -16.16552,-3.21356 15.8166,-54.47776 -23.73745,-6.23511 -15.58046,57.59744 -25.16718,-2.49854 14.13436,-60.99117 -35.00447,-5.92861 -13.85694,64.33306 -10.4724,-0.53769 12.55903,-65.31066 -23.45257,-2.00006 0.0238,7.12291 13.57694,1.20023 -11.87255,67.29466 26.03338,1.38961 14.88136,-64.22854 17.26339,2.57327 -14.27382,61.89522 42.35566,4.23115 15.12892,-56.35241 6.8719,1.79897 -15.90666,54.9965 33.01092,6.61616 16.2939,-51.8348 23.83402,7.33457 -18.49895,49.20308 29.54958,8.90887 19.50458,-46.43554 6.23462,2.50819 -19.56823,45.74 19.11848,6.95456 20.56378,-43.48927 15.82848,7.76046 -21.33973,40.94204 17.76091,7.97002 21.39018,-39.63936 20.94221,11.8639 -23.29607,35.65316 27.15142,13.06894 22.26253,-32.1491 17.25656,11.64359 -22.21673,29.36106 16.89173,8.34659 21.44008,-25.52486 7.54898,5.69676 -16.73838,21.34235 7.07294,4.40237 21.35892,-27.11912 -20.58898,-15.57947 -22.44323,26.73569 -2.04834,-1.01646 21.55923,-28.40422 -31.54342,-21.25474 -22.71582,33.30427 -12.26234,-5.96445 23.0813,-35.10953 -36.31567,-20.68965 -21.74945,40.47801 -2.24861,-1.01256 21.16842,-40.7364 -31.42815,-15.34557 -21.0232,44.32987 -3.25303,-1.15031 19.57087,-45.6052 -22.31044,-8.8253 -19.8173,47.09347 -13.24972,-3.94474 18.41221,-49.15642 z"
+       id="path4185-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001"
+       transform="rotate(1.8158691,278.34017,399.7874)"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png" />
+    <path
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.07781854;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="m 452.93856,426.7695 5.19783,0.10338 0.077,-0.10161 z"
+       id="path6369"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png" />
+    <a
+       id="a4201">
+      <g
+         id="g4205" />
+    </a>
+    <path
+       id="path4259"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#c68400;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:7.76399994;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="m 312.20697,509.02288 -13.97684,8.86972 0.0263,40.63802 -80.85893,-0.37562 -0.0801,-88.33322 80.83974,-0.0958 -1.1e-4,-1.1e-4 0.0245,47.96254 9.64315,-6.54111 c 1.30372,-1.02859 2.73534,-1.42667 4.12222,-1.33816 l -0.004,-48.68814 -6.76477,-5.97183 -121.68989,-0.019 0.0172,7.29714 c 15.88722,4.7477 16.13109,9.72418 19.14913,21.68027 l -0.002,179.09467 16.149,0.0246 17.45481,-20.14266 27.10094,-0.0253 21.95481,-24.66772 203.4007,-0.076 6.79291,9.15953 8.1e-4,25.53052 c 0,0 4.91095,-6.00723 15.48257,-5.59135 10.57161,0.41591 19.69028,9.25026 21.36591,15.6032 1.67566,6.35291 0.31711,12.61794 0.31711,12.61794 21.24279,-0.0446 9.41638,0.0255 30.65912,-0.0439 l -66.373,-82.04123 c 0.11891,-25.4864 0.0126,-19.05676 -0.0143,-44.54338 l 19.33221,-0.0724 -0.38073,-19.45729 11.31462,-0.0326 c 0.52667,-4.62273 1.7438,-8.95853 8.61488,-12.65978 l -0.0161,-5.90258 -44.06993,-0.003 -0.11511,30.35117 -20.21973,0.17788 0.0551,-45.09039 20.21,-29.3064 0.0697,-17.25791 -1.8e-4,4.7e-4 -69.48971,0.60927 0.11674,16.51372 18.75554,29.61715 -0.14593,44.87571 -58.75709,-0.11666 -0.073,-28.18989 c -0.16732,-11.34467 -5.99116,-21.83625 -12.93712,-21.81693 h -7.1525 c -5.908,-0.0193 -13.31592,9.61147 -13.33807,21.60959 l 0.0544,28.43125 -36.68801,0.0742 z"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccccccccccccccccczzcccccccccccccccccccccccccccc"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4873"
+       width="500.3154"
+       height="500.3154"
+       x="125.81414"
+       y="258.55554"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5917"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;line-height:0.01%;font-family:Arial;-inkscape-font-specification:'Arial Bold Condensed';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.90750494,0,0,0.75162254,32.698565,113.53837)"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png"><flowRegion
+         id="flowRegion5919"><rect
+           id="rect5921"
+           width="112"
+           height="100"
+           x="206"
+           y="593.36218"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:70px;font-family:Arial;-inkscape-font-specification:'Arial Bold Condensed';fill:#000000" /></flowRegion><flowPara
+         id="flowPara5923"
+         style="font-size:70px;line-height:1.25;letter-spacing:5.94000006px;fill:#000000">ED</flowPara></flowRoot>    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:0.41176471;fill-rule:nonzero;stroke:none;stroke-width:4.73400021;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:36.40000153;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect6145"
+       width="514.20447"
+       height="514.64642"
+       x="118.73483"
+       y="251.18542"
+       ry="0"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001" />
+    <path
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffac00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.09091763;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="m 221.22984,473.74829 73.08187,0 0,27.33267 c 0.0687,3.30737 1.48792,7.62702 6.37829,5.12878 l 10.23078,-6.84112 c 2.72369,-0.0451 4.35363,-0.80886 4.98357,-3.76017 l 0.125,26.77219 c 0.005,-1.46426 -2.70964,-4.74101 -6.26758,-2.14276 l -13.23619,8.42794 c -1.23796,0.78238 -2.22591,1.68976 -2.21387,4.22215 l 0,21.52685 -73.08187,0 z"
+       id="rect4399"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccccccc"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001" />
+    <path
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#007800;fill-opacity:1;fill-rule:nonzero;stroke:#00b800;stroke-width:0.5465625;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="m 278.43181,483.36766 c -0.37026,-0.003 -0.75847,0.11905 -0.97116,0.53191 -1.22046,2.36089 -3.64346,7.09044 -3.64346,7.09044 -3.06591,-1.50582 -5.64707,-1.92157 -9.27237,-1.92157 -3.71673,0 -6.50711,0.51419 -9.64294,2.09249 l -3.84153,-7.16233 c -0.40146,-0.72217 -1.26005,-0.50398 -1.4759,-0.40731 -0.21584,0.0967 -0.94255,0.69138 -0.62136,1.41203 l 3.75048,7.32843 c -6.58366,3.93182 -11.18461,11.04784 -11.84084,19.31304 l 47.3394,0 c -0.65621,-8.37118 -5.35811,-15.54249 -12.07084,-19.44082 l 3.62587,-7.15594 c 0.31999,-0.66429 -0.1751,-1.30082 -0.46642,-1.46793 -0.14564,-0.0836 -0.49867,-0.20981 -0.86893,-0.21244 z m -22.19459,13.71288 c 1.95819,0 3.53964,1.63551 3.53964,3.65625 -0.01,2.01109 -1.58147,3.65783 -3.53964,3.65783 -1.94888,0 -3.52365,-1.64674 -3.52365,-3.65783 0,-2.02074 1.57479,-3.65624 3.52365,-3.65625 z m 16.46826,0 c 1.9396,0 3.52045,1.63551 3.52045,3.65625 0,2.01109 -1.58085,3.65783 -3.52045,3.65783 -1.95819,0 -3.53325,-1.64674 -3.53325,-3.65783 0,-2.02074 1.57506,-3.65624 3.53325,-3.65625 z"
+       id="path4231"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png" />
+    <path
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#007800;fill-opacity:1;fill-rule:nonzero;stroke:#00b800;stroke-width:0.5465625;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="m 315.55046,501.66987 c -1.02453,-0.0223 -2.12686,0.27562 -3.23135,1.00224 -2.95722,1.94545 -13.12868,8.80525 -19.54093,13.30097 -3.30599,2.31789 -2.20068,5.86662 -1.33632,7.32525 0.86437,1.45865 4.20376,3.49941 7.16671,1.45902 0,0 13.12792,-8.8968 19.58999,-13.49163 4.75771,-3.38291 1.79155,-9.4996 -2.6481,-9.59585 z"
+       id="path4225"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png" />
+    <path
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#007800;fill-opacity:1;fill-rule:nonzero;stroke:#00b800;stroke-width:0.5465625;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="m 231.44308,514.78775 c -2.92608,0 -5.28869,2.449 -5.28869,5.47177 l 0,23.68016 0.017,0 c 0.17749,2.85543 2.46933,5.11313 5.27168,5.11313 2.80235,0 5.08856,-2.2577 5.26604,-5.11313 l 0.0151,0 0,-23.68016 c 0,-3.02276 -2.36583,-5.47177 -5.28114,-5.47177 z"
+       id="path4223"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png" />
+    <path
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#007800;fill-opacity:1;fill-rule:nonzero;stroke:#00b800;stroke-width:0.5465625;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="m 240.87285,515.45781 0,38.89341 47.33955,0 0,-38.89341 -47.33955,0 z"
+       id="path6359"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png" />
+    <circle
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#c68600;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:6.87931442;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="path4319"
+       cx="303.875"
+       cy="657.23718"
+       r="26.692343"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001" />
+    <circle
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#c68600;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:6.87931442;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="path4319-2"
+       cx="377.875"
+       cy="657.23718"
+       r="26.692343"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001" />
+    <circle
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#c68600;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:6.87931442;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="path4319-6"
+       cx="449.875"
+       cy="657.23718"
+       r="26.692343"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001" />
+    <circle
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#c68600;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.791991;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="path4319-6-1"
+       cx="509.92801"
+       cy="670.75995"
+       r="14.713257"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001" />
+    <circle
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#c68600;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.791991;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="path4319-6-1-5"
+       cx="245.42801"
+       cy="670.75995"
+       r="14.713257"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.10097394;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4320"
+       width="157.80211"
+       height="8.3886871"
+       x="290.69662"
+       y="661.0675"
+       ry="4.1943436"
+       inkscape:export-xdpi="89.610001"
+       inkscape:export-ydpi="89.610001"
+       inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable\ic_launcher_foreground.png" />
+  </g>
+</svg>

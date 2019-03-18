@@ -389,7 +389,7 @@
 
     <string name="prefHostImportExportTitle">Manueller Host spezifischer Import/Export</string>
     <string name="prefHostImportExportSummary" tools:ignore="Typos">\'Import\' oder \'Export\' deiner Voreinstellungen von/zu einem spezifischen Host in das \'engine_driver/\' Verzeichnis. Der Host muß in deiner Liste Letzte Verbindungen sein.\nWird SOFORT nach Auswahl der Option ausgeführt.\n(Nur verfügbar wenn momentan nicht verbunden.)</string>
-    <string name="prefHostImportExportDefaultValue">Keine</string>
+<!--    <string name="prefHostImportExportDefaultValue">Keine</string> -->
     <string name="prefSwapForwardReverseButtonsTitle">Vertausche Richtungsknöpfe</string>
     <string name="prefSwapForwardReverseButtonsSummary">Vertausche die beiden Richtungsknöpfe permanent für alle Fahrregler.</string>
     <string name="prefSwapForwardReverseButtonsLongPressTitle">Langes Drücken zum Vertauschen der Richtungsknöpfe</string>
@@ -413,7 +413,7 @@
     <string name="prefThemeTitle">Motiv/Stil</string>
 
     <string name="prefThemeSummary">App Motiv. WARNUNG! Engine Driver wird sofort neu starten.\'Benötigt Android Honeycomb oder neuer.</string>
-    <string name="prefThemeDefaultValue">Standard</string>
+<!--    <string name="prefThemeDefaultValue">Standard</string> -->
     <string name="prefHideDemoServerTitle">Demo Server ausblenden</string>
     <string name="prefHideDemoServerSummary">Verberge den Demo Server \'jmri.mstevetodd.com\' in der Liste der Verbindungen.</string>
     <string name="prefDirectionButtonsTitle">Bezeichnungen der Richtungsknöpfe</string>
@@ -424,7 +424,7 @@
     <string name="prefAccelerometerSummary">Optionen für Gerätebewegung auf der Seite Fahrregler</string>
     <string name="prefAccelerometerShakeTitle">Aktion beim Schütteln</string>
     <string name="prefAccelerometerShakeSummary">Optionen für das Schütteln des Gerätes</string>
-    <string name="prefAccelerometerShakeDefaultValue">Keine</string>
+<!--    <string name="prefAccelerometerShakeDefaultValue">Keine</string>  -->
     <string name="prefAccelerometerShakeThresholdTitle">Schütteln Schwellwert</string>
     <string name="prefAccelerometerShakeThresholdSummary">Schwellwert bei dem Schütteln erkannt wird. (1.5&#8211;3.5) Kleiner Wert reagiert auf eine leichte Bewegung.\n Erfordert Neustart von Engine Driver nach Änderung um wirksam zu werden.</string>
 
@@ -537,15 +537,15 @@
     <string name="prefTtsSummary">Schlüsselereignisse ansagen</string>
     <string name="prefTtsWhenTitle">Sprachausgabe</string>
     <string name="prefTtsWhenSummary">Zum Ankündigen von Schlüsselereignissen und Aktionen Text to Speech (TTS) verwenden.</string>
-    <string name="prefTtsWhenDefaultValue">Keine</string>
-<!--
-    <string name="prefTtsThrottleTitle">Beim Fahrreglerwechsel</string>
-    <string name="prefTtsThrottleSummary">Wenn ein anderer Fahrregler gewählt wird.</string>
-    <string name="prefTtsThrottleSpeedTitle">+ Geschwindigkeit</string>
-    <string name="prefTtsThrottleSpeedSummary">Wenn ein anderer Fahrregler auf dem Gamepad gewählt wird, dann wird auch die Geschwindigkeit angesagt. Übergeht die Optionen einzelner Fahrregler.</string>
-    <string name="prefTtsThrottleLocoSpeedTitle">+ Lok</string>
-    <string name="prefTtsThrottleLocoSpeedSummary">Wenn ein anderer Fahrregler auf dem Gamepad gewählt wird, dann werden auch die Loknummern angesagt. Übergeht die Optionen einzelner Fahrregler.</string>
--->
+    <!--
+        <string name="prefTtsWhenDefaultValue">Keine</string>
+        <string name="prefTtsThrottleTitle">Beim Fahrreglerwechsel</string>
+        <string name="prefTtsThrottleSummary">Wenn ein anderer Fahrregler gewählt wird.</string>
+        <string name="prefTtsThrottleSpeedTitle">+ Geschwindigkeit</string>
+        <string name="prefTtsThrottleSpeedSummary">Wenn ein anderer Fahrregler auf dem Gamepad gewählt wird, dann wird auch die Geschwindigkeit angesagt. Übergeht die Optionen einzelner Fahrregler.</string>
+        <string name="prefTtsThrottleLocoSpeedTitle">+ Lok</string>
+        <string name="prefTtsThrottleLocoSpeedSummary">Wenn ein anderer Fahrregler auf dem Gamepad gewählt wird, dann werden auch die Loknummern angesagt. Übergeht die Optionen einzelner Fahrregler.</string>
+    -->
     <string name="prefTtsGamepadTestTitle">Beim Gamepad-Test</string>
     <string name="prefTtsGamepadTestSummary">Wenn die Gamepad-Testseite gestartet wird.</string>
     <string name="prefTtsGamepadTestCompleteTitle">Wenn der Gamepad-Test fertig ist.</string>

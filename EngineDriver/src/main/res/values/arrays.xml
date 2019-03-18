@@ -96,8 +96,8 @@
         <item >Vertical &#8211; Phone or Tablet (2 throttles)</item>
         <item >Big Buttons &#8211; Left (1 throttle)</item>
         <item >Big Buttons &#8211; Right (1 throttle)</item>
-        <item >Vertical Left &#8211; (1 throttle)</item>
-        <item >Vertical Right &#8211; (1 throttle)</item>
+        <item >Vertical &#8211; Left (1 throttle)</item>
+        <item >Vertical &#8211; Right (1 throttle)</item>
     </string-array>
     <string-array name="prefThrottleScreenTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >Default</item>

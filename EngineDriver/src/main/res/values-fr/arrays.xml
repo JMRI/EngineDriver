@@ -59,10 +59,10 @@
         <item>Original &#8211; Téléphone ou Tablette (1&#8211;3 régulateurs)</item>
         <item>Simple &#8211; Tablette (1&#8211;6 régulateurs)</item>
         <item>Vertical &#8211; Téléphone ou Tablette (1&#8211;12 régulateurs)</item>
-        <item>Big Buttons - Gauche (1 régulateur)</item>
-        <item>Big Buttons - Droite (1 régulateur)</item>
-        <item>Vertical Gauche &#8211; Téléphone ou Tablette (1 régulateur)</item>
-        <item>Vertical Droite &#8211; Téléphone ou Tablette (1 régulateur)</item>
+        <item>Big Buttons &#8211;  Gauche (1 régulateur)</item>
+        <item>Big Buttons &#8211;  Droite (1 régulateur)</item>
+        <item>Vertical &#8211; Gauche (1 régulateur)</item>
+        <item>Vertical &#8211; Droite (1 régulateur)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">
