@@ -24,7 +24,12 @@
  * remove redundant tags from log view to improve readability
  * merge -vll resources into default
  * fix pref error message
- * prioritize eStop button
+ * prioritize eStop button position
+ * fix some reported bugs and lint warnings
+ * Czech translation by Petr Šídlo
+ * French translation by Alain Carasso
+ * Two additional throttle page types
+ * begin work on Adaptive icons
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
  * New Colourful/Colorful theme
