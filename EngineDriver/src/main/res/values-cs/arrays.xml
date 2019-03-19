@@ -31,7 +31,7 @@
 
     
     <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
-        <item>Percenta</item>
+        <item>Procenta</item>
         <item>Automaticky rychlostní kroky</item>
         <item>8 kroků</item>
         <item>10 kroků</item>

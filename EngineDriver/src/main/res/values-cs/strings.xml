@@ -17,7 +17,7 @@
 -->
 <resources>
     <string name="exit">Konec</string>
-    <string name="settings">Funkce výchozí</string>
+    <string name="settings">Nastavení funkcí</string>
     <string name="fb_label">Funkce štítek</string>
     <string name="fb_column_label">Štítek</string>
     <string name="fb_column_function">Fn#</string>
@@ -151,7 +151,7 @@
     <string name="prefTitle">Předvolby</string>
     <string name="prefSummary">Předvolby pro Engine Driver</string>
     <string name="preferences">Předvolby</string>
-    <string name="prefSwipeUpDownTitle">Přetáhněte prstem předvolby</string>
+    <string name="prefSwipeUpDownTitle">Předvolby přetážení prstem</string>
     <string name="prefSwipeUpDownSummary">Volby pro tažení prstem na obrazovce ovladače.</string>
     <string name="prefThrottleNameTitle">Název ovladače</string>
 
@@ -175,7 +175,7 @@
     <string name="prefHideSliderTitle">Skrýt posuvník rychlosti?</string>
     <string name="prefHideSliderSummary">Nezobrazovat posuvník rychlosti, místo toho použít tlačítka rychlosti.</string>
 
-    <string name="prefHideSliderAndSpeedButtonsTitle">Skrýt posivník i tlačítka rychlosti?</string>
+    <string name="prefHideSliderAndSpeedButtonsTitle">Skrýt posuvník i tlačítka rychlosti?</string>
     <string name="prefHideSliderAndSpeedButtonsSummary">Nezobrazovat posuvník rychlosti ani tlačítka rychlosti.\nPoznámka: Přepíše volby \'Skrýt posuvník\', \'Výška posuvníku\' a \'Zobrazit tlačítka rychlosti\'.</string>
 
     <string name="prefDirChangeWhileMovingTitle">Změna směru během jízdy?</string>
@@ -302,7 +302,7 @@
 
     <string name="prefMaximumThrottleChangeSummary">Dovolená maximální změna ovladače v %</string>
     <string name="prefWebViewTitle">Předvolby zobrazení Webu</string>
-    <string name="prefWebViewSummary">Volvy pro vzhled zobrazení Webu</string>
+    <string name="prefWebViewSummary">Volby pro vzhled zobrazení Webu</string>
     <string name="prefInitialThrotWebPageTitle">Výchozí Webová stránka ovladače</string>
 
     <string name="prefInitialThrotWebPageSummary">Výchozí Webová stránka ovladače (např. jako \'/panel/\')</string>
@@ -450,7 +450,7 @@
     <string name="prefImportExportLocoListTitle">Zahrnout seznam Nedávné lokomotivy</string>
     <string name="prefImportExportLocoListSummary">Zahrne lokomotivy ze seznamu Nedávné lokomotivy v \'Importu\' a \'Exportu\'.</string>
 
-    <string name="prefAutoImportExportTitle">Automatická import/export na určitý host</string>
+    <string name="prefAutoImportExportTitle">Automatický import/export na určitý host</string>
     <string name="prefAutoImportExportSummary">Při každém připojení na host automaticky \'Importuje\' předvolby pro tohoto host a volitelně je \'Exportuje\' při odpojení.\n(Pro stálé zpětné nastavení do známého stavu nastavte \'Automatický import pouze při připojení\' po prvním připojení nebo po ručním uložení (níže).)</string>
 
 
@@ -527,7 +527,7 @@
 
 
     <string name="prefAccelerometerShakeThresholdTitle">Práh třepání</string>
-    <string name="prefAccelerometerShakeThresholdSummary">Práh při kterém se bude třepání registrovat. (1.5&#8211;3.5) Nižší hodnota bude reagovat na jemnější akci.\nVyžaduje restart Engine Driver po změně, aby se změny projevily.</string>
+    <string name="prefAccelerometerShakeThresholdSummary">Práh při kterém se bude třepání registrovat. (1,5&#8211;3,5) Nižší hodnota bude reagovat na jemnější akci.\nVyžaduje restart Engine Driver po změně, aby se změny projevily.</string>
 
 
     <string name="prefLocaleTitle">Lokalizace</string>
@@ -822,7 +822,7 @@
     <string name="introFinishSummary2">Podrobné pokyny naleznete na stránce \'O aplikaci\' v nabídce nebo navštivte domovskou stránku Engine Driver na \n\'https://enginedriver.mstevetodd.com\'.</string>
     <string name="introFinishSummary3">Další změny vzhledu a chování aplikace můžete provést v nabídce \'Předvolby\'.</string>
 
-    <string name="introButtonsTitle">Posuvníky rachlosti a tlačítka</string>
+    <string name="introButtonsTitle">Posuvníky rychlosti a tlačítka</string>
     <string name="introButtonsSummary">Zvolte jak řídit rychlost vašich vlaků.</string>
     <string name="introButtonsSlider">Pouze posuvník\n(není možné s \'Velká tlačítka\')</string>
     <string name="introButtonsSliderAndButtons">Posuvník + Tlačítka\n(není možné s \'Velká tlačítka\'.)</string>
