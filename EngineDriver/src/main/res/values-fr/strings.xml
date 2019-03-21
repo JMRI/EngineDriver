@@ -289,9 +289,10 @@
     <string name="prefHideIfNoUserNameTitle">Cacher si nom utilisateur absent ?</string>
     <string name="prefHideIfNoUserNameSummary">Ne pas inclure aiguille/itinéraire dans liste si nom d utilisateur absent.</string>
 
-
     <string name="prefRosterRecentLocosTitle">Bibliothèque dans les loco récentes?</string>
     <string name="prefRosterRecentLocosSummary">inclure la biblio selectionnée dans les loco récentes?</string>
+    <string name="prefRosterRecentLocoNamesTitle">Noms de répertoire dans les locos récentes?</string>
+    <string name="prefRosterRecentLocoNamesSummary">Inclure les noms de locomotive de la liste dans la liste Récent si une adresse correspondante est trouvée?</string>
     <string name="prefMaximumRecentLocosTitle">Nombre maxi de loco récentes</string>
 
     <string name="prefMaximumRecentLocosSummary">Nombre maxi de loco récentes affiché dans la liste</string>

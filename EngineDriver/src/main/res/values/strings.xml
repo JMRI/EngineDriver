@@ -338,8 +338,11 @@
     <string name="prefDropOnAcquireSummary">Drop current loco before acquiring new loco.</string>
     <string name="prefHideIfNoUserNameTitle">Hide If No User Name?</string>
     <string name="prefHideIfNoUserNameSummary">Omit Turnout/Route from list if the user name is empty.</string>
+
     <string name="prefRosterRecentLocosTitle">Roster in Recent Locos?</string>
     <string name="prefRosterRecentLocosSummary">Include roster selections in Recent list?</string>
+    <string name="prefRosterRecentLocoNamesTitle">Roster Names in Recent Locos?</string>
+    <string name="prefRosterRecentLocoNamesSummary">Include Loco names from the roster in Recent list if a matching address is found?</string>
 
     <string name="prefRosterFilterTitle">Filter Roster</string>
     <string name="prefRosterFilterSummary">Only show roster entries containing…</string>

@@ -863,6 +863,13 @@
             android:summary="@string/prefRosterRecentLocosSummary"
             android:title="@string/prefRosterRecentLocosTitle" >
         </CheckBoxPreference>
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefRosterRecentLocoNamesDefaultValue"
+            android:key="prefRosterRecentLocoNames"
+            android:summary="@string/prefRosterRecentLocoNamesSummary"
+            android:title="@string/prefRosterRecentLocoNamesTitle" />
         <EditTextPreference
             android:defaultValue="@string/prefMaximumRecentLocosDefaultValue"
             android:dialogTitle="@string/prefMaximumRecentLocosTitle"

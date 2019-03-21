@@ -281,8 +281,11 @@
     <string name="prefDropOnAcquireSummary">Libera Locomotiva prima di Acquisire un\'altra.</string>
     <string name="prefHideIfNoUserNameTitle">Nascondere se non esiste Nome Utente?</string>
     <string name="prefHideIfNoUserNameSummary">Omette lo Scambio se il nome utente é vuoto.</string>
+
     <string name="prefRosterRecentLocosTitle">Elenco in Locomotive Recenti?</string>
     <string name="prefRosterRecentLocosSummary">Includere selezioni Elenco in Locomotive Recenti?</string>
+    <string name="prefRosterRecentLocoNamesTitle">Nomi di elenco in luoghi recenti?</string>
+    <string name="prefRosterRecentLocoNamesSummary">Includi nomi di locazioni dal roster nell\'elenco Recenti se viene trovato un indirizzo corrispondente?</string>
     <string name="prefMaximumRecentLocosTitle">Massimo Locomotive Recenti</string>
 
     <string name="prefRosterFilterTitle">Filtro dell\'Elenco</string>
