@@ -283,6 +283,8 @@
 -->
     <string name="prefRosterRecentLocosTitle">Auswahl aus kürzlich verwendeten Loks</string>
     <string name="prefRosterRecentLocosSummary">Lokverzeichnisauswahlen in kürzlich verwendeten Loks einbeziehen?</string>
+    <string name="prefRosterRecentLocoNamesTitle">Dienstnamen in letzten Locos?</string>
+    <string name="prefRosterRecentLocoNamesSummary">Loknamen aus der Liste in die Liste "Letzte" einschließen, wenn eine übereinstimmende Adresse gefunden wird?</string>
     <string name="prefMaximumRecentLocosTitle">Maximum kürzlich verwendeter Loks</string>
 
     <string name="prefMaximumRecentLocosSummary">Maximum kürzlich verwendeter Loks zum Anzeigen in Liste</string>

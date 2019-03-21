@@ -328,8 +328,11 @@
     <string name="prefDropOnAcquireSummary">Propusti současnou lokomotivu před získáním nové lokomotivy.</string>
     <string name="prefHideIfNoUserNameTitle">Skrýt pokud není uživatelský název?</string>
     <string name="prefHideIfNoUserNameSummary">Vynechat Výhybku/Trasu ze seznamu pokud má prázdný uživatelský název.</string>
+
     <string name="prefRosterRecentLocosTitle">Evidence v Nedávných lokomotivách?</string>
     <string name="prefRosterRecentLocosSummary">Zahrnout výběr evidence v seznamu Nedávných?</string>
+    <string name="prefRosterRecentLocoNamesTitle">Soupis jmen v posledních lokomotivách?</string>
+    <string name="prefRosterRecentLocoNamesSummary">Je-li nalezena odpovídající adresa, přidejte do seznamu Nedávno seznam jmen Loco.</string>
 
     <string name="prefRosterFilterTitle">Filtr Evidence</string>
     <string name="prefRosterFilterSummary">Zobrazit pouze záznamy evidence obsahující…</string>

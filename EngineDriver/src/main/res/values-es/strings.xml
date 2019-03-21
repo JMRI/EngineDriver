@@ -280,9 +280,10 @@
     <string name="prefHideIfNoUserNameTitle">¿Oculta si no hay Nombre de Usuario?</string>
     <string name="prefHideIfNoUserNameSummary">Omite Desvío/Ruta de la lista si el nombre de usuario està vacío.</string>
 
-
     <string name="prefRosterRecentLocosTitle">¿Flota en Locomotoras Recientes?</string>
     <string name="prefRosterRecentLocosSummary">¿Incluye selecciones de flota en lista de Recientes?</string>
+    <string name="prefRosterRecentLocoNamesTitle">Lista de nombres en Locos recientes?</string>
+    <string name="prefRosterRecentLocoNamesSummary">¿Incluir los nombres de Loco de la lista en la lista Recientes si se encuentra una dirección coincidente?</string>
     <string name="prefMaximumRecentLocosTitle">Número máximo de Locomotoras Recientes</string>
 
     <string name="prefMaximumRecentLocosSummary">Máximo de Locomotoras Recientes a mostrar en la lista</string>

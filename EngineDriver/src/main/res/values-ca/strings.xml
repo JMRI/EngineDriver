@@ -270,9 +270,10 @@
     <string name="prefHideIfNoUserNameTitle">Amaga si no hi ha Nom d\'Usuari?</string>
     <string name="prefHideIfNoUserNameSummary">Omet Agulla/Ruta de la llista si el nom d\'usuari està buit.</string>
 
-
     <string name="prefRosterRecentLocosTitle">Flota en Locomotores Recents?</string>
     <string name="prefRosterRecentLocosSummary">Inclou seleccions de flota en la llista de Recents?</string>
+    <string name="prefRosterRecentLocoNamesTitle">Noms de la llista en llocs recents?</string>
+    <string name="prefRosterRecentLocoNamesSummary">Inclou noms de locomotora a la llista a la llista recent si es troba una adreça coincident?</string>
     <string name="prefMaximumRecentLocosTitle">Número Màxim de Locomotores Recents</string>
 
     <string name="prefMaximumRecentLocosSummary">Màxim de Locomotores Recents a mostrar en la llista</string>
