@@ -759,7 +759,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private void showHideThrottleTypePreferences() {
         boolean enable = true;
-        if ((prefThrottleScreenTypeOriginal.equals("Simple")) || (prefThrottleScreenTypeOriginal.equals("Vertical"))) {
+        if ((prefThrottleScreenTypeOriginal.equals("Simple")) || (prefThrottleScreenTypeOriginal.equals("Vertical"))
+                || (prefThrottleScreenTypeOriginal.equals("Vertical Left"))  || (prefThrottleScreenTypeOriginal.equals("Vertical Right"))) {
             enable = false;
         }
         enableDisablePreference("increase_slider_height_preference", enable);
@@ -775,7 +776,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 //                || prefThrottleScreenTypeOriginal.equals("Vertical")
 //                || prefThrottleScreenTypeOriginal.equals("Big Left");
         enable = prefThrottleScreenTypeOriginal.equals("Default")
-                || prefThrottleScreenTypeOriginal.equals("Vertical");
+                || prefThrottleScreenTypeOriginal.equals("Vertical")
+                || prefThrottleScreenTypeOriginal.equals("Vertical Left")
+                || prefThrottleScreenTypeOriginal.equals("Vertical Right");
         enableDisablePreference("WebViewLocation", enable);
         enableDisablePreference("prefIncreaseWebViewSize", enable);
         enableDisablePreference("InitialThrotWebPage", enable);
