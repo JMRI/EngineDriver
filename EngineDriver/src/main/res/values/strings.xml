@@ -146,6 +146,10 @@
     <string name="lightsTextFollow">Follow Fn Btn</string>
     <string name="lightsTextUnknown">Unknown</string>
 
+<!--    <string name="logviewerReset">Reset</string> -->
+    <string name="logviewerClose">Close</string>
+    <string name="logviewerSave">Start recording to file</string>
+
     <string name="prefTitle">Preferences</string>
     <string name="prefSummary">Preferences for Engine Driver</string>
     <string name="preferences">Preferences</string>
@@ -714,6 +718,9 @@
     <!--    Toast messages for the Select Loco Activity -->
     <string name="toastSelectLocoConfirmClear">Confirm that you want remove all the Recent Locomotives by pressing the \'Clear List\' button AGAIN.</string>
     <string name="toastNumThrottles">Chosen Throttle Screen Type does not support that many throttles. Reducing to %1$s.</string>
+
+    <!--    Toast messages for the Log Viewer Activity -->
+    <string name="toastSaveLogFile">Logging Started in file %1$s. Logging will continue until you exit the Engine Driver app.</string>
 
     <string name="prefTtsTitle">Voice Response Preferences</string>
     <string name="prefTtsSummary">Options to speak key events</string>
