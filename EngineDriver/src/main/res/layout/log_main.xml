@@ -3,10 +3,50 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-    <ListView
-        android:id="@android:id/list"
+
+    <LinearLayout
+        android:id="@+id/logviewer_screen"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:weightSum="10">
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            android:transcriptMode="alwaysScroll" />
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp">
+
+            <TableRow android:gravity="center_horizontal">
+
+<!--                <Button
+                    android:id="@+id/logviewer_button_reset"
+                    style="?attr/ed_normal_button_style"
+                    android:text="@string/logviewerReset" />
+-->
+                <Button
+                    android:id="@+id/logviewer_button_close"
+                    style="?attr/ed_normal_button_style"
+                    android:text="@string/logviewerClose" />
+
+                <Button
+                    android:id="@+id/logviewer_button_save"
+                    style="?attr/ed_normal_button_style"
+                    android:text="@string/logviewerSave" />
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
 </LinearLayout>

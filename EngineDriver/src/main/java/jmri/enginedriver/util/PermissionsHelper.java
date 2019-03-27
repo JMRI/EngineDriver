@@ -40,6 +40,7 @@ public class PermissionsHelper {
             STORE_PREFERENCES,
             READ_FUNCTION_SETTINGS,
             STORE_FUNCTION_SETTINGS,
+            STORE_LOG_FILES,
             CONNECT_TO_SERVER,
             WRITE_SETTINGS,
             ACCESS_COARSE_LOCATION,
@@ -64,6 +65,7 @@ public class PermissionsHelper {
     public static final int ACCESS_COARSE_LOCATION = 42;
     public static final int STORE_SERVER_AUTO_PREFERENCES = 43;
     public static final int READ_SERVER_AUTO_PREFERENCES = 44;
+    public static final int STORE_LOG_FILES = 45;
 
     private boolean isDialogOpen = false;
     private static PermissionsHelper instance = null;
@@ -141,6 +143,7 @@ public class PermissionsHelper {
             case STORE_PREFERENCES:
             case STORE_SERVER_AUTO_PREFERENCES:
             case READ_SERVER_AUTO_PREFERENCES:
+            case STORE_LOG_FILES:
                 return context.getResources().getString(R.string.permissionsStorePreferences);
             case READ_PHONE_STATE:
                 return context.getResources().getString(R.string.permissionsReadPhoneState);
@@ -178,6 +181,7 @@ public class PermissionsHelper {
                 case READ_PREFERENCES:
                 case STORE_PREFERENCES:
                 case STORE_FUNCTION_SETTINGS:
+                case STORE_LOG_FILES:
                 case READ_FUNCTION_SETTINGS:
                 case STORE_SERVER_AUTO_PREFERENCES:
                 case READ_SERVER_AUTO_PREFERENCES:
@@ -310,6 +314,7 @@ public class PermissionsHelper {
             case READ_PREFERENCES:
             case STORE_PREFERENCES:
             case STORE_FUNCTION_SETTINGS:
+            case STORE_LOG_FILES:
             case READ_FUNCTION_SETTINGS:
             case STORE_SERVER_AUTO_PREFERENCES:
             case READ_SERVER_AUTO_PREFERENCES:
@@ -354,6 +359,7 @@ public class PermissionsHelper {
             case READ_PREFERENCES:
             case STORE_PREFERENCES:
             case STORE_FUNCTION_SETTINGS:
+            case STORE_LOG_FILES:
             case READ_FUNCTION_SETTINGS:
             case STORE_SERVER_AUTO_PREFERENCES:
             case READ_SERVER_AUTO_PREFERENCES:
