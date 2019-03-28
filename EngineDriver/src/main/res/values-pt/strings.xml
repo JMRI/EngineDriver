@@ -133,6 +133,9 @@
     <string name="lightsTextFollow">Bt Função Seguinte</string>
     <string name="lightsTextUnknown">Desconhecido</string>
 
+    <string name="logviewerClose">echar</string>
+    <string name="logviewerSave">Comece a gravar para arquivo</string>
+
     <string name="prefTitle">Preferências</string>
     <string name="prefSummary">Preferências para Engine Driver</string>
     <string name="preferences">Preferências</string>
@@ -540,6 +543,10 @@
     <string name="toastImportExportCannotImport">Impossível importar preferências. Não conectado ao host.</string>
     <string name="toastImportExportCannotExport">Impossível exportar preferências específicas do host. Não conectado ao host.</string>
     <string name="toastSelectLocoConfirmClear">Confirmar que deseja remover todas as Locomotivas Recentes apertando o botão \' Limpar Lista\' DE NOVO.</string>
+
+    <!--    Toast messages for the Log Viewer Activity -->
+    <string name="toastSaveLogFile">Logging Iniciado no arquivo %1$s. O registro continuará até que você saia do aplicativo Engine Driver.</string>
+
     <string name="prefTtsTitle">Resposta Vocal</string>
     <string name="prefTtsSummary">Falar Eventos Chaves</string>
     <string name="prefTtsWhenTitle">Resposta Vocal</string>

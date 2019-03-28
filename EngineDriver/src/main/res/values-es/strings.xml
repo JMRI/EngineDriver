@@ -547,6 +547,10 @@
     <string name="toastImportExportCannotImport">No se ha podido importar las preferencias. No se ha conectado al host.</string>
     <string name="toastImportExportCannotExport">No se ha podido exportar las preferencias. No se ha conectado al host.</string>
     <string name="toastSelectLocoConfirmClear">Confirma que quieres borrar todas las Locomotoras Recientes presionando el botón \'Limpiar Lista\' DE NUEVO.</string>
+
+    <!--    Toast messages for the Log Viewer Activity -->
+    <string name="toastSaveLogFile">Inicio de sesión en el archivo %1$s. El registro continuará hasta que salga de la aplicación Motor Driver.</string>
+
     <string name="prefTtsTitle">Respuesta de voz</string>
     <string name="prefTtsSummary">Hablar eventos clave</string>
     <string name="prefTtsWhenTitle">Respuestas de Voz</string>
@@ -599,6 +603,10 @@
     <string name="lightsTextOff">Apagado</string>
     <string name="lightsTextFollow">Sigue Fn Btn</string>
     <string name="lightsTextUnknown">Desconocido</string>
+
+    <string name="logviewerClose">Cierra</string>
+    <string name="logviewerSave">Empezar a grabar en archivo</string>
+
     <string name="prefLocaleTitle">Localización</string>
     <string name="prefLocaleSummary">Idioma a utilizar.\n¡ADVERTENCIA! El Engine Driver se reiniciará inmediatamente. Se reiniciarán las etiquetas de los botones de dirección.</string>
 <!--

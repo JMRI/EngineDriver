@@ -497,6 +497,10 @@
     <string name="toastImportExportCannotImport">No s\'ha pogut importar les preferències. No s\'ha connectat al host.</string>
     <string name="toastImportExportCannotExport">No s\'ha pogut exportar les preferències. No s\'ha connectat al host.</string>
     <string name="toastSelectLocoConfirmClear">Confirma que vols eliminar totes les Locomotores Recents prement el botó \'Netejar Llista\' DE NOU.</string>
+
+    <!--    Toast messages for the Log Viewer Activity -->
+    <string name="toastSaveLogFile">Inici de sessió Iniciat al fitxer %1$s. El registre continuarà fins que surti de l’aplicació Motor Driver.</string>
+
     <string name="prefTtsTitle">Resposta de veu</string>
     <string name="prefTtsSummary">Parleu esdeveniments clau</string>
     <string name="prefTtsWhenTitle">Respostes de Veu</string>
@@ -549,6 +553,10 @@
     <string name="lightsTextOff">Apagat</string>
     <string name="lightsTextFollow">Segueix Fn Btn</string>
     <string name="lightsTextUnknown">Desconegut</string>
+
+    <string name="logviewerClose">Tanca</string>
+    <string name="logviewerSave">Comenceu la gravació al fitxer</string>
+
     <string name="prefLocaleTitle">Localització</string>
     <string name="prefLocaleSummary">Idioma a utilitzar.\nADVERTÈNCIA! El Engine Driver es reiniciarà immediatament. Es reiniciaran les etiquetes dels botons de direcció.</string>
 <!--

@@ -659,6 +659,9 @@
     <string name="toastSelectLocoConfirmClear">Potvrďte, že chcete odstranit celý seznam Nedávné lokomotivy OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>
     <string name="toastNumThrottles">Zvolený typ obrazovky nepodporuje tolik ovladačů. Omezuji na %1$s.</string>
 
+    <!--    Toast messages for the Log Viewer Activity -->
+    <string name="toastSaveLogFile">Protokolování Zahájeno v souboru %1$s. Protokolování bude pokračovat až do ukončení aplikace Engine Driver.</string>
+
     <string name="prefTtsTitle">Předvolby Hlasová odpověď</string>
     <string name="prefTtsSummary">Volby pro řeč klávesa události</string>
 
@@ -711,6 +714,10 @@
     <string name="flashlightAction">Svítilna</string>
     <string name="flashlightStateOn">Svítilna Zapnuta</string>
     <string name="flashlightStateOff">Svítilna Vypnuta</string>
+
+    <string name="logviewerClose">Zavřít</string>
+    <string name="logviewerSave">Spusťte nahrávání do souboru</string>
+
     <string name="prefFlashlightSummary">Zobrazit tlačítko svítilny na obrazovce Ovladače, Výhybek a Tras?</string>
     <string name="prefFlashlightTitle">Zobrazit tlačítko svítilny?</string>
     <string name="toastFlashlightOnFailed">Je mi líto! Při zapnutí svítilny došlo k problému&#8230;</string>
