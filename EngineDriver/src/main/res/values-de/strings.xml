@@ -535,6 +535,10 @@
     <string name="toastImportExportCannotImport">Kann Voreinstellungen nicht importieren. Mit keinem Host verbunden.</string>
     <string name="toastImportExportCannotExport">Kann Host spezifische Voreinstellungen nicht exportieren. Mit keinem Host verbunden.</string>
     <string name="toastSelectLocoConfirmClear">Bestätige das Entfernen aller Einträge in der Liste kürzlich verwendeter Loks durch ERNEUTES Drücken des Knopfs \'Lösche Liste\'.  </string>
+
+    <!--    Toast messages for the Log Viewer Activity -->
+    <string name="toastSaveLogFile">Protokollierung in Datei %1$s gestartet. Die Protokollierung wird fortgesetzt, bis Sie die App "Engine Driver" beenden.</string>
+
     <string name="prefTtsTitle">Sprachausgabe</string>
     <string name="prefTtsSummary">Schlüsselereignisse ansagen</string>
     <string name="prefTtsWhenTitle">Sprachausgabe</string>
@@ -588,6 +592,10 @@
     <string name="lightsTextOff">Aus</string>
     <string name="lightsTextFollow">Folge F Knopf</string>
     <string name="lightsTextUnknown">Unbekannt</string>
+
+    <string name="logviewerClose">Schließen</string>
+    <string name="logviewerSave">Starten Sie die Aufnahme in eine Datei</string>
+
     <string name="prefLocaleTitle">Lokalisierung</string>
     <string name="prefLocaleSummary">Zu benützende Sprache.\nWARNUNG! Engine Driver wird sofort neu starten. Die Bezeichnungen der Richtungsknöpfe werden zurückgesetzt.</string>
 <!--

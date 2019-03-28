@@ -555,6 +555,10 @@
     <string name="toastImportExportCannotExport">Export des préférences impossible. Aucune connexion sur un serveur.</string>
     <string name="toastSelectLocoConfirmClear">Confirmer que vous désirez supprimer toutes les locos récentes en appuyant A NOUVEAU sur la touche \'Clear List\'</string>
     <string name="toastNumThrottles">L affichage choisi ne supporte pas autant de régulateurs. Reduction à %1$s.</string>
+
+    <!--    Toast messages for the Log Viewer Activity -->
+    <string name="toastSaveLogFile">Enregistrement Démarré dans le fichier %1$s. La journalisation se poursuivra jusqu\'à ce que vous quittiez l\'application Engine Driver.</string>
+
     <string name="prefTtsTitle">Réponse vocale</string>
     <string name="prefTtsSummary">Annonce évènements clé</string>
     <string name="prefTtsWhenTitle">Réponse vocale</string>
@@ -611,6 +615,10 @@
     <string name="lightsTextOff">Off</string>
     <string name="lightsTextFollow">Sigle Fn Btn</string>
     <string name="lightsTextUnknown">Inconnu</string>
+
+    <string name="logviewerClose">Fermer</string>
+    <string name="logviewerSave">Commencer l\'enregistrement sur fichier</string>
+
     <string name="prefLocaleTitle">Localisation</string>
     <string name="prefLocaleSummary">Langue à utiliser.\nATTENTION! Engine Driver va redémarrer immédiatement. Les touches de directions seront réinitialisées.</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver redémarré avec la langue choisie.</string> -->

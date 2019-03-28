@@ -134,6 +134,9 @@
     <string name="lightsTextFollow">Puls. Funz. Succ.</string>
     <string name="lightsTextUnknown">Sconosciuto</string>
 
+    <string name="logviewerClose">Chiudere</string>
+    <string name="logviewerSave">Inizia la registrazione su file</string>
+
     <string name="prefTitle">Preferenze</string>
     <string name="prefSummary">Preferenze per Engine Driver</string>
     <string name="preferences">Preferenze</string>
@@ -536,6 +539,10 @@
     <string name="toastImportExportCannotImport">Impossibile importare le preferenze. Non connesso all\'host.</string>
     <string name="toastImportExportCannotExport">Impossibili esportare preferenze specifiche dell\'host. Non connesso all\'host.</string>
     <string name="toastSelectLocoConfirmClear">Confermare che desideri rimuovere tutte le Locomotive Recenti premendo NUOVAMENTE il pulsante \'Pulire Lista\'.</string>
+
+    <!--    Toast messages for the Log Viewer Activity -->
+    <string name="toastSaveLogFile">Registrazione avviata nel file %1$s. La registrazione continuerà fino all\'uscita dall\'app Engine Driver.</string>
+
     <string name="prefTtsTitle">Risposta Vocale</string>
     <string name="prefTtsSummary">Parla Eventi Chiave</string>
     <string name="prefTtsWhenTitle">Risposta Vocale</string>
