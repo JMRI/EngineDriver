@@ -162,11 +162,11 @@ public class turnouts extends Activity implements OnGestureListener {
     }
 
     private int updateTurnoutEntry() {
-        Button butTog = (Button) findViewById(R.id.turnout_toggle);
-        Button butClose = (Button) findViewById(R.id.turnout_close);
-        Button butThrow = (Button) findViewById(R.id.turnout_throw);
-        EditText trn = (EditText) findViewById(R.id.turnout_entry);
-        TextView trnPrefix = (TextView) findViewById(R.id.turnout_prefix);
+        Button butTog = findViewById(R.id.turnout_toggle);
+        Button butClose = findViewById(R.id.turnout_close);
+        Button butThrow = findViewById(R.id.turnout_throw);
+        EditText trn = findViewById(R.id.turnout_entry);
+        TextView trnPrefix = findViewById(R.id.turnout_prefix);
         String turnout = trn.getText().toString().trim();
         int txtLen = turnout.length();
         if (mainapp.isTurnoutControlAllowed()) {
@@ -259,7 +259,7 @@ public class turnouts extends Activity implements OnGestureListener {
         }
 
         public void onClick(View v) {
-            EditText entryv = (EditText) findViewById(R.id.turnout_entry);
+            EditText entryv = findViewById(R.id.turnout_entry);
             String entrytext = entryv.getText().toString().trim();
             if (entrytext.length() > 0) {
                 //if text starts with a digit, check number and prefix with hardware_system and "T"
@@ -348,13 +348,13 @@ public class turnouts extends Activity implements OnGestureListener {
             public View getView(int position, View convertView, ViewGroup parent) {
                 View row = super.getView(position, convertView, parent);
                 if (row != null) {
-                    Button b = (Button) row.findViewById(R.id.to_current_state_desc);
+                    Button b = row.findViewById(R.id.to_current_state_desc);
                     b.setOnClickListener(new turnout_state_button_listener());
                 }
                 return row;
             }
         };
-        ListView turnouts_lv = (ListView) findViewById(R.id.turnouts_list);
+        ListView turnouts_lv = findViewById(R.id.turnouts_list);
         turnouts_lv.setAdapter(turnouts_list_adapter);
 
         OnTouchListener gestureListener = new ListView.OnTouchListener() {
@@ -364,7 +364,7 @@ public class turnouts extends Activity implements OnGestureListener {
         };
         turnouts_lv.setOnTouchListener(gestureListener);
 
-        EditText trn = (EditText) findViewById(R.id.turnout_entry);
+        EditText trn = findViewById(R.id.turnout_entry);
         trn.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 updateTurnoutEntry();
@@ -392,20 +392,20 @@ public class turnouts extends Activity implements OnGestureListener {
         });
 
         //Set the button callbacks, storing the command to pass for each
-        Button b = (Button) findViewById(R.id.turnout_toggle);
+        Button b = findViewById(R.id.turnout_toggle);
         button_listener click_listener = new button_listener('2');
         b.setOnClickListener(click_listener);
 
-        b = (Button) findViewById(R.id.turnout_close);
+        b = findViewById(R.id.turnout_close);
         click_listener = new button_listener('C');
         b.setOnClickListener(click_listener);
 
-        b = (Button) findViewById(R.id.turnout_throw);
+        b = findViewById(R.id.turnout_throw);
         click_listener = new button_listener('T');
         b.setOnClickListener(click_listener);
 
         locationList = new ArrayList<>();
-        locationSpinner = (Spinner) findViewById(R.id.turnouts_location);
+        locationSpinner = findViewById(R.id.turnouts_location);
         locationListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, locationList);
         locationListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationSpinner.setAdapter(locationListAdapter);
@@ -429,11 +429,11 @@ public class turnouts extends Activity implements OnGestureListener {
         super.onPause();
 
         //save scroll position for later restore
-        ListView lv = (ListView) findViewById(R.id.turnouts_list);
+        ListView lv = findViewById(R.id.turnouts_list);
         mainapp.turnouts_list_position = (lv == null ? 0 : lv.getFirstVisiblePosition());
 
         //make sure the soft keyboard is closed
-        EditText trn = (EditText) findViewById(R.id.turnout_entry);
+        EditText trn = findViewById(R.id.turnout_entry);
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null && trn != null) {
             imm.hideSoftInputFromWindow(trn.getWindowToken(), 0);
@@ -465,7 +465,7 @@ public class turnouts extends Activity implements OnGestureListener {
         navigatingAway = false;
 
         //restore view to last known scroll position
-        ListView lv = (ListView) findViewById(R.id.turnouts_list);
+        ListView lv = findViewById(R.id.turnouts_list);
         lv.setSelectionFromTop(mainapp.turnouts_list_position, 0);
 
 //      setTitleToIncludeThrotName();
@@ -598,6 +598,7 @@ public class turnouts extends Activity implements OnGestureListener {
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
                 navigatingAway = true;
+                mainapp.webMenuSelected = true;
                 startActivity(in);
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
