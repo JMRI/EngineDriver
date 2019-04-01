@@ -442,7 +442,6 @@
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  * web
- *   TODO: diagnose why Web menu option doesn't work when Auto-Web enabled
  *   TODO: can we preserve current state of web? currently it "refreshes" on every load
  *   TODO: allow user to specify initial zoom-level of each web view
  * routes

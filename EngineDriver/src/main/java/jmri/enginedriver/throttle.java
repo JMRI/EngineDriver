@@ -4926,6 +4926,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
                 navigatingAway = true;
+                mainapp.webMenuSelected = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;

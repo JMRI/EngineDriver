@@ -209,6 +209,8 @@ public class threaded_application extends Application {
     public boolean appIsFinishing = false;
     public boolean introIsRunning = false;
 
+    public boolean webMenuSelected = false;  // used as an override for the auto-web code when the web menu is selected.
+
     class comm_thread extends Thread {
         JmDNS jmdns = null;
         volatile boolean endingJmdns = false;
@@ -2599,7 +2601,7 @@ public class threaded_application extends Application {
         String to;
         to = prefs.getString("ThrottleOrientation",
                 activity.getApplicationContext().getResources().getString(R.string.prefThrottleOrientationDefaultValue));
-        if (to.equals("Auto-Web")) {
+        if ((to.equals("Auto-Web")) && (!webMenuSelected)) {
             int orient = activity.getResources().getConfiguration().orientation;
             if ((webPref && orient == Configuration.ORIENTATION_PORTRAIT)
                     || (!webPref && orient == Configuration.ORIENTATION_LANDSCAPE))
@@ -2608,12 +2610,13 @@ public class threaded_application extends Application {
             to = prefs.getString("WebOrientation",
                     activity.getApplicationContext().getResources().getString(R.string.prefWebOrientationDefaultValue));
         }
+        webMenuSelected= false;
 
         try {
             int co = activity.getRequestedOrientation();
             if (to.equals("Landscape") && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            else if (to.equals("Auto-Rotate") && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))
+            else if ( (to.equals("Auto-Rotate")) || (to.equals("Auto-Web"))  && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             else if (to.equals("Portrait") && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -2642,8 +2645,8 @@ public class threaded_application extends Application {
         alert.show();
 
         // find positiveButton and negativeButton
-        Button positiveButton = (Button) alert.findViewById(android.R.id.button1);
-        Button negativeButton = (Button) alert.findViewById(android.R.id.button2);
+        Button positiveButton = alert.findViewById(android.R.id.button1);
+        Button negativeButton = alert.findViewById(android.R.id.button2);
         // then get their parent ViewGroup
         ViewGroup buttonPanelContainer = (ViewGroup) positiveButton.getParent();
         int positiveButtonIndex = buttonPanelContainer.indexOfChild(positiveButton);
