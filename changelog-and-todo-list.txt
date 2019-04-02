@@ -30,6 +30,7 @@
  * French translation by Alain Carasso
  * Two additional throttle page types
  * begin work on Adaptive icons
+ * option to save log to file
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
  * New Colourful/Colorful theme
