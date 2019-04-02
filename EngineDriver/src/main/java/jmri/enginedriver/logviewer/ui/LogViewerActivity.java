@@ -116,8 +116,9 @@ public class LogViewerActivity extends ListActivity {
 
     @Override
     protected void onDestroy() {
-        logReaderTask.stopTask();
-
+        if (logReaderTask != null ) {
+            logReaderTask.stopTask();
+        }
         super.onDestroy();
     }
 
