@@ -3976,7 +3976,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         mainapp.applyTheme(this);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle)); // needed in case the langauge was changed from the default
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle)); // needed in case the language was changed from the default
 
 //        setContentView(R.layout.throttle);
         setContentView(layoutViewId);
@@ -4406,6 +4406,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (!mainapp.setActivityOrientation(this)) // set screen orientation based on prefs
         {
             Intent in = new Intent().setClass(this, web_activity.class); // if autoWeb and landscape, switch to Web activity
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
             navigatingAway = true;
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -4925,6 +4926,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 break;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
                 navigatingAway = true;
                 mainapp.webMenuSelected = true;
                 startActivity(in);

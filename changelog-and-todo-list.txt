@@ -443,7 +443,6 @@
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  * web
- *   TODO: can we preserve current state of web? currently it "refreshes" on every load
  *   TODO: allow user to specify initial zoom-level of each web view
  * routes
  *   TODO: use PRT titles for Active/inactive
@@ -483,7 +482,6 @@
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
  * log_viewer:
- *   TODO: option to save as file
  *
  * These require changes to WiThrottle
  *   resend turnout and routes when items are added or removed, by adding listeners to WiT

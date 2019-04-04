@@ -396,6 +396,7 @@ public class routes extends Activity implements OnGestureListener {
 
         if (!mainapp.setActivityOrientation(this)) { //set screen orientation based on prefs
             Intent in = new Intent().setClass(this, web_activity.class);      // if autoWeb and landscape, switch to Web activity
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
             navigatingAway = true;
             startActivity(in);
             this.finish();
