@@ -32,10 +32,15 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.CookieSyncManager;
+import android.webkit.WebBackForwardList;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebSettings;
+import android.widget.Button;
+
+import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
 public class web_activity extends Activity {
 
@@ -53,6 +58,9 @@ public class web_activity extends Activity {
     private Menu WMenu;
     private boolean navigatingAway = false;        // flag for onPause: set to true when another activity is selected, false if going into background
     private boolean webInited = false;
+
+    WebBackForwardList backForwardList;
+    Button closeButton;
 
     @SuppressLint("HandlerLeak")
     class web_handler extends Handler {
@@ -136,15 +144,16 @@ public class web_activity extends Activity {
         if (mainapp.isForcingFinish()) {        // expedite
             return;
         }
-        setContentView(R.layout.web_activity);
-
         mainapp.applyTheme(this);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_web)); // needed in case the langauge was changed from the default
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_web)); // needed in case the language was changed from the default
+
+        setContentView(R.layout.web_activity);
 
         webView = findViewById(R.id.webview);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
         webView.getSettings().setDatabasePath(databasePath);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDisplayZoomControls(false);
         webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
         webView.getSettings().setUseWideViewPort(true);        // Enable greater zoom-out
         webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
@@ -183,12 +192,19 @@ public class web_activity extends Activity {
         if (currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null)
             load_webview();            // reload if no saved state or no page had loaded when state was saved
 
+        //Set the buttons
+        closeButton = findViewById(R.id.webview_button_close);
+        web_activity.close_button_listener close_click_listener = new web_activity.close_button_listener();
+        closeButton.setOnClickListener(close_click_listener);
+
+
         //put pointer to this activity's handler in main app's shared variable
         mainapp.web_msg_handler = new web_handler();
     }
 
     @Override
     public void onStart() {
+        Log.d("Engine_Driver","web_activity.onStart()");
         super.onStart();
     }
 
@@ -197,17 +213,23 @@ public class web_activity extends Activity {
         Log.d("Engine_Driver", "web_activity.onResume() called");
         super.onResume();
         mainapp.removeNotification();
+
+        if (mainapp.webMenuSelected) {
+            closeButton.setVisibility(View.VISIBLE);
+        } else {
+            closeButton.setVisibility(View.GONE);
+        }
+
         if (mainapp.isForcingFinish()) {    //expedite
             this.finish();
             return;
         }
         if (!mainapp.setActivityOrientation(this, true))    //set screen orientation based on prefs
         {
-            navigatingAway = true;
-            this.finish();                                // if autoweb and portrait, switch to throttle screen
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            restartThrottleActivity();
             return;
         }
+
         navigatingAway = false;
         currentTime = "";
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CURRENT_TIME);    // request time update
@@ -219,13 +241,13 @@ public class web_activity extends Activity {
 // in which case call load_webview here just creates extra work since url will still be null
 // causing load_webview to load the page again 
 //	  load_webview();
-
+        String x;
         if (webView != null) {
             if (!callHiddenWebViewOnResume())
                 webView.resumeTimers();
-            if (noUrl.equals(webView.getUrl()) && webView.canGoBack()) {    //unload static url loaded by onPause
-                webView.goBack();
-            }
+//            if (noUrl.equals(webView.getUrl()) && webView.canGoBack()) {    //unload static url loaded by onPause
+//                webView.goBack();
+//            }
         }
         CookieSyncManager.getInstance().startSync();
     }
@@ -246,13 +268,13 @@ public class web_activity extends Activity {
             if (!callHiddenWebViewOnPause())
                 webView.pauseTimers();
             String url = webView.getUrl();
-            if (url != null && !noUrl.equals(url)) {    // if any url has been loaded
-                webView.loadUrl(noUrl);                // load a static url to stop any javascript
-            }
+//            if (url != null && !noUrl.equals(url)) {    // if any url has been loaded
+//                webView.loadUrl(noUrl);                // load a static url to stop any javascript
+//            }
         }
         CookieSyncManager.getInstance().stopSync();
 
-        if (!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
+        if (!this.isFinishing() && !navigatingAway ) {        //only invoke setContentIntentNotification when going into background
             mainapp.addNotification(this.getIntent());
         }
     }
@@ -270,6 +292,44 @@ public class web_activity extends Activity {
         }
         mainapp.web_msg_handler = null;
         super.onDestroy();
+    }
+
+    private void restartThrottleActivity() {
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        Intent in;
+        switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
+            case "Simple":
+                in = new Intent(this, throttle_simple.class);
+                break;
+            case "Vertical":
+                in = new Intent(this, throttle_vertical.class);
+                break;
+            case "Vertical Left":
+            case "Vertical Right":
+                in = new Intent(this, throttle_vertical_left_or_right.class);
+                break;
+            case "Big Left":
+            case "Big Right":
+                in = new Intent(this, throttle_big_buttons.class);
+                break;
+            case "Default":
+            default:
+                in = new Intent(this, throttle_big_buttons.class);
+                break;
+        }
+
+        mainapp.webMenuSelected = false;
+        navigatingAway = true;
+        in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
+        startActivity(in);// if autoweb and portrait, switch to throttle screen
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+
+    }
+
+    public class close_button_listener implements View.OnClickListener {
+        public void onClick(View v) {
+            restartThrottleActivity();
+        }
     }
 
     private boolean callHiddenWebViewOnPause() {
@@ -304,8 +364,7 @@ public class web_activity extends Activity {
                 return true;
             }
 
-            mainapp.web_msg_handler = null; //clear out pointer to this activity
-            this.finish();  //end this activity
+            restartThrottleActivity();
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
         return (super.onKeyDown(key, event));
@@ -329,22 +388,22 @@ public class web_activity extends Activity {
         Intent in;
         switch (item.getItemId()) {
             case R.id.throttle_mnu:
-                navigatingAway = true;
-                this.finish();
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                restartThrottleActivity();
                 break;
             case R.id.turnouts_mnu:
                 in = new Intent().setClass(this, turnouts.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 navigatingAway = true;
                 startActivity(in);
-                this.finish();
+//                this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.routes_mnu:
                 in = new Intent().setClass(this, routes.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 navigatingAway = true;
                 startActivity(in);
-                this.finish();
+//                this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.exit_mnu:
@@ -352,12 +411,14 @@ public class web_activity extends Activity {
                 break;
             case R.id.power_control_mnu:
                 in = new Intent().setClass(this, power_control.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.preferences_mnu:
                 in = new Intent().setClass(this, preferences.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -367,6 +428,7 @@ public class web_activity extends Activity {
                 break;
             case R.id.about_mnu:
                 in = new Intent().setClass(this, about_page.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

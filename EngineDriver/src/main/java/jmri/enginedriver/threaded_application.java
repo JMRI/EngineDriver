@@ -2565,16 +2565,22 @@ public class threaded_application extends Application {
      */
     public void applyTheme(Activity activity) {
         String prefTheme = getCurrentTheme();
-        if (prefTheme.equals("Black")) {
-            activity.setTheme(R.style.app_theme_black);
-        } else if (prefTheme.equals("Outline")) {
-            activity.setTheme(R.style.app_theme_outline);
-        } else if (prefTheme.equals("Ultra")) {
-            activity.setTheme(R.style.app_theme_ultra);
-        } else if (prefTheme.equals("Colorful")) {
-            activity.setTheme(R.style.app_theme_colorful);
-        } else {
-            activity.setTheme(R.style.app_theme);
+        switch (prefTheme) {
+            case "Black":
+                activity.setTheme(R.style.app_theme_black);
+                break;
+            case "Outline":
+                activity.setTheme(R.style.app_theme_outline);
+                break;
+            case "Ultra":
+                activity.setTheme(R.style.app_theme_ultra);
+                break;
+            case "Colorful":
+                activity.setTheme(R.style.app_theme_colorful);
+                break;
+            default:
+                activity.setTheme(R.style.app_theme);
+                break;
         }
     }
 
@@ -2610,7 +2616,7 @@ public class threaded_application extends Application {
             to = prefs.getString("WebOrientation",
                     activity.getApplicationContext().getResources().getString(R.string.prefWebOrientationDefaultValue));
         }
-        webMenuSelected= false;
+//        webMenuSelected= false;
 
         try {
             int co = activity.getRequestedOrientation();
