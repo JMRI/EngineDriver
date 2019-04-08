@@ -31,6 +31,7 @@
  * Two additional throttle page types
  * begin work on Adaptive icons
  * option to save log to file
+ * Web View and Auto-Web remember page and position on page
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
  * New Colourful/Colorful theme
