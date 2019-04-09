@@ -868,7 +868,9 @@
         <item>prefLeftDirectionButtonsShort</item>
         <item>prefRightDirectionButtonsShort</item>
         <item>prefDecreaseLocoNumberHeight</item>
+        <item>WebViewLocation</item>
         <item>prefIncreaseWebViewSize</item>
+        <item>InitialThrotWebPage</item>
         <item>prefThrottleViewImmersiveMode</item>
         <item>SwipeUpOption</item>
         <item>prefScreenBrightnessDim</item>
@@ -885,6 +887,8 @@
         <item>prefTtsThrottleResponse</item>
         <item>prefTtsGamepadTest</item>
         <item>prefTtsGamepadTestComplete</item>
+        <item>prefGamePadType</item>
+        <item>prefGamepadTestNow</item>
         <item>prefGamePadSpeedButtonsSpeedStep</item>
         <item>prefGamePadFeedbackVolume</item>
         <item>prefGamePadSpeedArrowsThrottleRepeatDelay</item>
@@ -907,6 +911,7 @@
         <item>prefGamepadTestEnforceTestingSimple</item>
         <item>prefSelectedLocoIndicator</item>
         <item>maximum_throttle_preference</item>
+        <item>maximum_throttle_change_preference</item>
         <item>speed_arrows_throttle_repeat_delay</item>
         <item>DirChangeWhileMovingPreference</item>
         <item>prefStopOnDirectionChange</item>
@@ -967,11 +972,13 @@
         <item>prefCategoryEsiMc2ControlKnob</item>
 
         <item>throttle_direction_preference</item>
+        <item>throttle_webview_preference</item>
         <item>swipe_up_down_preferences</item>
         <item>throttle_accelerometer_preference</item>
         <item>default_function_preferences</item>
         <item>volume_preferences</item>
         <item>prefTts</item>
+        <item>gamepad_preferences</item>
         <item>consist_follow_preferences</item>
         <item>prefEsuMc2</item>
         <item>kids_preferences</item>
