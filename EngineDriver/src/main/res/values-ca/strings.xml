@@ -343,6 +343,10 @@
     <string name="routes_route">Nom del Sistema de Ruta</string>
 
     <string name="throttle_name">Nom del Controlador: %1$s</string>
+
+    <string name="prefShowAdvancedPreferencesTitle">Mostra Preferències avançades?</string>
+    <string name="prefShowAdvancedPreferencesSummary">Mostra o oculta les preferències addicionals.</string>
+
     <string name="prefConsistLightsLongClickTitle">Control de llums en Tracció Múltiple amb clic llarg.</string>
     <string name="prefConsistLightsLongClickSummary">Canvieu les llums de les locomotores individualmet en una Tracció Múltiple amb un clic llarg al botó Selecciona Locomotora.</string>
     <string name="consistLights_help">Fes clic en una Locomotora per a canviar les llums de la Locomotora \'Apagat \' o \'Sigueix Botó de Funció\'.\n\nFes clic llarg en una Locomotora per a forçar l\'estat de la llum \'Apagat\', sense enviar la comanda a la Locomotora. (p.e. si ED està confós).\n\nPrém la Fletxa Enrere per a acabar.</string>

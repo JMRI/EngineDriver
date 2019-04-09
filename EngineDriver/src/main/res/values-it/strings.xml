@@ -371,6 +371,10 @@
     <string name="routes_route">Nome di Sistema della Rotta</string>
 
     <string name="throttle_name">Nome Controllore: %1$s</string>
+
+    <string name="prefShowAdvancedPreferencesTitle">Mostra Preferenze avanzate?</string>
+    <string name="prefShowAdvancedPreferencesSummary">Mostrare o nascondere le preferenze aggiuntive.</string>
+
     <string name="prefConsistLightsLongClickTitle">Controlla Luci Convoglio con clic lungo</string>
     <string name="prefConsistLightsLongClickSummary">Cambia le Luci di ogni locomotiva del Convoglio con un clic lungo sul pulsante di Selezione Locomotiva.</string>
     <string name="consistLights_help">Cliccare in una Locomotiva per accendere le luci della Locomotiva \'Spento\' o \'Seguire tasto Funzione\'.\n\nClic lungo sulla Locomotiva per forzare lo status delle Luci \'Spento\', senza inviare i comando alla  Locomotiva. (Caso ED si confonda.)\n\nPremere Freccia Indietro  quando pronto.</string>

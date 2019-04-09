@@ -353,18 +353,14 @@
     <string name="prefSpeedButtonsSpeedStepTitle">Cantidad a cambiar con el botón de velocidad</string>
     <string name="prefSpeedButtonsSpeedStepSummary">Salto de velocidad con la flecha del controlador de velocidad</string>
 
-
-
-
-
     <string name="server_address">Dirección del Servidor</string>
     <string name="routes_route">Nombre del Sistema de Ruta</string>
 
-
-
-
-
     <string name="throttle_name">Nombre del Controlador: %1$s</string>
+
+    <string name="prefShowAdvancedPreferencesTitle">Mostrar Preferencias avanzadas?</string>
+    <string name="prefShowAdvancedPreferencesSummary">Mostrar u ocultar las preferencias adicionales.</string>
+
     <string name="prefConsistLightsLongClickTitle">Control de luces en Tracción Múltiple con clic largo.</string>
     <string name="prefConsistLightsLongClickSummary">Cambia las luces de las locomotoras individualmente en una Tracción Múltiple con un clic largo en el botón de Selección de Locomotora.</string>
     <string name="consistLights_help">Haga clic en una Locomotora para cambiar las luces de esa Locomotora \'Apagado\' o \'Sigue Botón de Función\'.\n\nHaga clic largo en una Locomotora para forzar el estado de la luz \'Apagado\', sin enviar el comando a la Locomotora. (p.e. si ED está confundido).\n\nPresiona la Flecha Atrás para terminar.</string>
