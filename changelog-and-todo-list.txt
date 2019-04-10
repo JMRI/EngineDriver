@@ -476,6 +476,7 @@
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
  *   TODO: add preference to disable other hardware buttons in throttle screen
  *   TODO: unset all states when loco not selected
+ *   TODO: option to show the turnout view instead of the webview
  * select_loco:
  *   TODO: check length of text to avoid overlapping images, slide images to right
  *   TODO: disconnect connections made by roster stuff
