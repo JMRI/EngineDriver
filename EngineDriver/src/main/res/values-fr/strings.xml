@@ -362,18 +362,14 @@
     <string name="prefSpeedButtonsSpeedStepTitle">Incréments de vitesse</string>
     <string name="prefSpeedButtonsSpeedStepSummary">Nombre de pas de vitesse appliqué aà chaque incrément de vitesse</string>
 
-
-
-
-
     <string name="server_address">Adresse serveur</string>
     <string name="routes_route">Nom systeme de l itinéraire</string>
 
-
-
-
-
     <string name="throttle_name">Nom du régulateur: %1$s</string>
+
+    <string name="prefShowAdvancedPreferencesTitle">Afficher les préférences avancées?</string>
+    <string name="prefShowAdvancedPreferencesSummary">Afficher ou masquer les préférences supplémentaires.</string>
+
     <string name="prefConsistLightsLongClickTitle">Commande Eclairage UM sur click long</string>
     <string name="prefConsistLightsLongClickSummary">Change les eclairages d une loco individuelle dans une UM par click long sur la loco selectionnée.</string>
     <string name="consistLights_help">Click sur la loco pour inverser l eclairage de cette loco \'Off\' ou \'par rapport à la touche Fonction\'.

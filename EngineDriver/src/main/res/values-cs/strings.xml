@@ -439,6 +439,9 @@
     <string name="label_128step">128</string>
     <string name="throttle_name">Název ovladače: %1$s</string>
 
+    <string name="prefShowAdvancedPreferencesTitle">Ukázat na Další předvolby?</string>
+    <string name="prefShowAdvancedPreferencesSummary">Zobrazit nebo skrýt další předvolby.</string>
+
     <string name="prefConsistLightsLongClickTitle">Řízení světel soupravy na dlouhé kliknutí</string>
     <string name="prefConsistLightsLongClickSummary">Změna světel jedné lokomotivy v soupravě pomocí dlouhého kliku na tlačítku výběru lokomotivy.</string>
     <string name="consistLights_help">Klikem na lokomotivu přepnete světla pro tuto lokomotivu na \'Vypnuto\' nebo \'Následovat tlačítko Fn\'.\n\nDlouhý klik na lokomotivu vynutí stav světla \'Vypnuto\' bez zaslání příkazu lokomotivě. (tj. pokud je EngineDriver zmaten).\n\nStiskněte Šipka zpět pokud je hotovo.</string>

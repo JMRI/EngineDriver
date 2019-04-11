@@ -370,6 +370,10 @@
     <string name="routes_route">Nome de Sistema da Rota</string>
 
     <string name="throttle_name">Nome Controlador: %1$s</string>
+
+    <string name="prefShowAdvancedPreferencesTitle">Mostrar Preferências avançadas?</string>
+    <string name="prefShowAdvancedPreferencesSummary">Mostrar ou ocultar as preferências adicionais.</string>
+
     <string name="prefConsistLightsLongClickTitle">Controla luzes Comboio com clic longo</string>
     <string name="prefConsistLightsLongClickSummary">Muda as Luzes de cada Locomotiva em um Comboio com um clic longo no botão de Seleção da Locomotiva.</string>
     <string name="consistLights_help">Clicar em uma Locomotiva para ligar as luzes da Locomotiva \'Desliga\' ou \'Seguir botão Função\'.\n\nClic longo na Locomotiva para forçar o status da Luz \'Desliga\', sem enviar o comando à Locomotiva. (Caso ED seja confuso.)\n\nPressionar Seta Voltar quando pronto.</string>

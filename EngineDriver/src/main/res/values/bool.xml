@@ -70,4 +70,6 @@
 
     <bool name="prefImportServerAutoDefaultValue">true</bool>
 
+    <bool name="prefShowAdvancedPreferencesDefaultValue">false</bool>
+
 </resources>

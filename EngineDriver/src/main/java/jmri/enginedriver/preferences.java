@@ -36,6 +36,7 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceGroup;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
@@ -117,6 +118,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
     private static final int FORCED_RESTART_REASON_LOCALE = 6;
 //    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;    // not used in preferences.  Used in throttle.java
+//    private static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
 
     SharedPreferences sharedPreferences;
     /**
@@ -128,6 +130,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final String PREF_IMPORT_ALL_FULL = "Yes";
     private static final String PREF_IMPORT_ALL_PARTIAL = "No";
     private static final String PREF_IMPORT_ALL_RESET = "-";
+
+    private String[] advancedPreferences;
 
     @SuppressLint("ApplySharedPref")
     @SuppressWarnings("deprecation")
@@ -216,6 +220,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             enableDisablePreference("prefImportServerManual", false);
         }
 
+        advancedPreferences = getResources().getStringArray(R.array.advancedPreferences);
+        hideAdvancedPreferences();
     }
 
     @SuppressWarnings("deprecation")
@@ -433,6 +439,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 case "prefConsistFollowRuleStyle":
                     prefConsistFollowRuleStyle = sharedPreferences.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
                     showHideConsistRuleStylePreferences();
+                    break;
+                case "prefShowAdvancedPreferences":
+                    reload();
                     break;
             }
         }
@@ -784,6 +793,44 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         enableDisablePreference("InitialThrotWebPage", enable);
     }
 
+
+    private void removePreference(Preference preference) {
+        PreferenceGroup parent = getParent(getPreferenceScreen(), preference);
+        if (parent != null)
+            parent.removePreference(preference);
+        else //Doesn't have a parent
+            getPreferenceScreen().removePreference(preference);
+
+    }
+
+    private void hideAdvancedPreferences() {
+        if (!sharedPreferences.getBoolean("prefShowAdvancedPreferences", getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue) ) ) {
+            for (String advancedPreference1 : advancedPreferences) {
+                Log.d("Engine_Driver", "Preferences: Remove advanced preference: " + advancedPreference1);
+
+                Preference advancedPreference = getPreferenceScreen().findPreference(advancedPreference1);
+                removePreference(advancedPreference);
+            }
+        }
+    }
+
+    private PreferenceGroup getParent(PreferenceGroup groupToSearchIn, Preference preference) {
+        for (int i = 0; i < groupToSearchIn.getPreferenceCount(); ++i) {
+            Preference child = groupToSearchIn.getPreference(i);
+
+            if (child == preference)
+                return groupToSearchIn;
+
+            if (child instanceof PreferenceGroup) {
+                PreferenceGroup childGroup = (PreferenceGroup)child;
+                PreferenceGroup result = getParent(childGroup, preference);
+                if (result != null)
+                    return result;
+            }
+        }
+
+        return null;
+    }
     //Handle pressing of the back button to end this activity
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {

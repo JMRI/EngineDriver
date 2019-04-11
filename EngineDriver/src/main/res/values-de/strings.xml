@@ -361,11 +361,11 @@
     <string name="server_address">Serveradresse</string>
     <string name="routes_route">Fahrstraßenname</string>
 
-
-
-
-
     <string name="throttle_name">Fahrreglername: %1$s</string>
+
+    <string name="prefShowAdvancedPreferencesTitle">Zeigen Sie Erweiterte Einstellungen?</string>
+    <string name="prefShowAdvancedPreferencesSummary">Zeigen oder die zusätzlichen Einstellungen ausblenden.</string>
+
     <string name="prefConsistLightsLongClickTitle">Steuere die Lichter eines Lokverbunds mit langem Klick</string>
     <string name="prefConsistLightsLongClickSummary">Ändere die Lichter einzelner Loks in einem Verbund mit einem langen Klick auf den Lokwahl-Knopf.</string>
     <string name="consistLights_help">Klicke auf eine Lok, um deren Lichter zwischen \'Aus\' und \'Folge Funktionsknopf\' umzuschalten.\n\nErzwinge Lichtstatus \'Aus\' mit langem Klick, ohne den Befehl an die Lok zusenden.(z.B. wenn ED verwirrt ist).\n\nDrücke Zurück-Pfeil wenn fertig.</string>
