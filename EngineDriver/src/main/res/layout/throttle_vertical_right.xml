@@ -235,9 +235,9 @@
                     <ScrollView
                         android:id="@+id/function_buttons_scroller_0"
                         style="?attr/ed_fn_scrollview_style"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="fill_parent"
-                        android:layout_weight="4.0"
+                        android:layout_weight="6"
                         android:padding="10dp">
 
                         <TableLayout
@@ -256,13 +256,13 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="0dp"
                                     android:layout_weight="5"
                                     android:text="@string/functionButton00DefaultValue" />
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="0dp"
                                     android:layout_weight="5"
                                     android:text="@string/functionButton01DefaultValue" />
                             </TableRow>
@@ -273,10 +273,14 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton02DefaultValue" />
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton03DefaultValue" />
                             </TableRow>
 
@@ -286,10 +290,14 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton04DefaultValue" />
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton05DefaultValue" />
                             </TableRow>
 
@@ -299,11 +307,13 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
                                     android:layout_weight="5"
                                     android:text="@string/functionButton06DefaultValue" />
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
                                     android:layout_weight="5"
                                     android:text="@string/functionButton07DefaultValue" />
                             </TableRow>
@@ -314,11 +324,13 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
                                     android:layout_weight="5"
                                     android:text="@string/functionButton08DefaultValue" />
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
                                     android:layout_weight="5"
                                     android:text="@string/functionButton09DefaultValue" />
                             </TableRow>
@@ -329,10 +341,14 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton10DefaultValue" />
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton11DefaultValue" />
                             </TableRow>
 
@@ -342,10 +358,14 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton12DefaultValue" />
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton13DefaultValue" />
                             </TableRow>
 
@@ -355,10 +375,14 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton14DefaultValue" />
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton15DefaultValue" />
                             </TableRow>
 
@@ -368,10 +392,14 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton16DefaultValue" />
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton17DefaultValue" />
                             </TableRow>
 
@@ -381,10 +409,14 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton18DefaultValue" />
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton19DefaultValue" />
                             </TableRow>
 
@@ -394,10 +426,14 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton20DefaultValue" />
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton21DefaultValue" />
                             </TableRow>
 
@@ -407,10 +443,14 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton22DefaultValue" />
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton23DefaultValue" />
                             </TableRow>
 
@@ -420,10 +460,14 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton24DefaultValue" />
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton25DefaultValue" />
                             </TableRow>
 
@@ -433,10 +477,14 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton26DefaultValue" />
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton27DefaultValue" />
                             </TableRow>
 
@@ -446,7 +494,8 @@
 
                                 <Button
                                     style="?attr/ed_fn_button_style"
-                                    android:layout_weight="@integer/KeyCode_5"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="5"
                                     android:text="@string/functionButton28DefaultValue" />
                             </TableRow>
 
@@ -455,9 +504,9 @@
 
                     <LinearLayout
                         android:id="@+id/throttle_0_SetSpeed"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="fill_parent"
-                        android:layout_weight="6.0"
+                        android:layout_weight="4"
                         android:orientation="vertical"
                         android:paddingTop="5dp"
                         android:paddingRight="10dp"
