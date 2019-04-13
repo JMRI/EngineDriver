@@ -70,10 +70,10 @@
         <item name="android:alertDialogTheme">@style/dialogStyle_black</item>
 
         <item name="android:itemBackground">#ff000000</item>
-        <item name="android:textColor">@color/primary_text</item>
-        <item name="android:actionMenuTextColor">@color/primary_text</item>
-        <item name="android:textColorPrimary">@color/primary_text</item>
-        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColor">@color/primary_text_color_selector_black</item>
+        <item name="android:actionMenuTextColor">@color/primary_text_color_selector_black</item>
+        <item name="android:textColorPrimary">@color/primary_text_color_selector_black</item>
+        <item name="android:textColorSecondary">@color/secondary_text_color_selector_black</item>
         <item name="android:textColorHint">@color/tertiary_text</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style</item>
@@ -111,10 +111,10 @@
         <item name="android:alertDialogTheme">@style/dialogStyle_black</item>
 
         <item name="android:itemBackground">#ff000000</item>
-        <item name="android:textColor">@color/primary_text</item>
-        <item name="android:actionMenuTextColor">@color/primary_text</item>
-        <item name="android:textColorPrimary">@color/primary_text</item>
-        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColor">@color/primary_text_color_selector_black</item>
+        <item name="android:actionMenuTextColor">@color/primary_text_color_selector_black</item>
+        <item name="android:textColorPrimary">@color/primary_text_color_selector_black</item>
+        <item name="android:textColorSecondary">@color/secondary_text_color_selector_black</item>
         <item name="android:textColorHint">@color/tertiary_text</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
@@ -152,10 +152,10 @@
         <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
 
         <item name="android:itemBackground">#ff000000</item>
-        <item name="android:textColor">@color/primary_text</item>
-        <item name="android:actionMenuTextColor">@color/primary_text</item>
-        <item name="android:textColorPrimary">@color/primary_text</item>
-        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColor">@color/primary_text_color_selector_black</item>
+        <item name="android:actionMenuTextColor">@color/primary_text_color_selector_black</item>
+        <item name="android:textColorPrimary">@color/primary_text_color_selector_black</item>
+        <item name="android:textColorSecondary">@color/secondary_text_color_selector_black</item>
         <item name="android:textColorHint">@color/tertiary_text</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>

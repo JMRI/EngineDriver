@@ -33,6 +33,12 @@
     <color name="intro_buttonbar_background">#ffac00</color>
 
     <!-- Black Theme -->
+    <color name="primary_black">@color/solidWhite</color>
+    <color name="secondary_black">#AFAEAE</color>
+<!--    <color name="tertiary_black">#747474</color>
+    <color name="hint_black">#747474</color> -->
+    <color name="primaryDisabled_black">#4B4B4B</color>
+    <color name="secondaryDisabled_black">#4B4B4B</color>
 
     <color name="buttonFill_black">#ffd6d6d6</color>
     <color name="buttonStroke_black">#ffd6d6d6</color>
