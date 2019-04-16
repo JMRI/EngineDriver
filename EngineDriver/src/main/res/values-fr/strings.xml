@@ -748,6 +748,10 @@
     <string name="prefImportServerAutoTitle">Import automatique depuis tous les serveurs.</string>
     <string name="prefImportServerAutoSummary">Import automatique des préférences depuis tous les serveurs dès la connexion.\n(Si le fichier \'/engine_driver/auto_preference.ed\' est sur le serveur et si il est plus récent que lors du dernier contrôle).</string>
 
+    <string name="importServerAutoDialog">Nouveau fichier Préférences a été trouvé sur ce serveur \nVoulez-vous importer.\n\nAttention \n\'Plein\' - !Tous vos préférences seront overwitten\n\n\'partiels\' - Toutes les préférences, à l\'exception Thème et certaines préférences gaz type de page, sera overwitten.</string>
+    <string name="importServerAutoDialogPositiveButton">Plein</string>
+    <string name="importServerAutoDialogNeutralButton">Partiel</string>
+
     <string name="toastThrottleImportServerAutoSucceeded">Import automatique des préférences depuis le Web Serveur JMRI réussi</string>
     <string name="toastPreferencesImportServerManualFailed">import des préférences depuis le serveur EN ECHEC! vérifier si le fichier est correct. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Import des préférences depuis serveur REUSSI (%1$s)</string>
