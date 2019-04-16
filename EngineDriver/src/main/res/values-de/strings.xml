@@ -240,10 +240,8 @@
     <string name="prefDecreaseLocoNumberHeightSummary">Verwende kleinere Knöpfe für Loknummer, Geschwindigkeit und Fahrrichtung.</string>
     <string name="prefNumOfThrottles">Anzahl der Fahrregler</string>
     <string name="prefNumOfThrottlesSummary">Wähle wieviele Fahrregler angezeigt werden sollen.</string>
-    <string name="prefNumOfThrottlesDefault">Zwei</string>
     <string name="prefThrottleScreenTypeTitle">Fahrregler Anzeigetyp</string>
     <string name="prefThrottleScreenTypeSummary">Welchen Typ Anzeige für Fahrregler verwenden.\nWARNUNG! Engine Driver wird sofort neu starten!</string>
-    <string name="prefThrottleScreenTypeDefault">Standard</string>
     <string name="prefMaximumThrottleTitle">Maximale Fahrregler Prozente</string>
 
     <string name="prefMaximumThrottleSummary">Maximal erlaubter Wert für Geschwindigkeitsschieber in %</string>
@@ -716,5 +714,34 @@
     <string name="introButtonsNoSlider">Nur Speed-Tasten</string>
 
     <string name="introbackButtonPress">Starten Sie die Engine Driver app erneut, um die Einführung abzuschließen.</string>
+    <string name="consist_trail_label">Leitlokomotive</string>
+    <string name="prefGamepadTestEnforceTestingSimpleTitle">Verwenden einfacher Test</string>
+    <string name="prefGamepadTestEnforceTestingSimpleSummary">Nur testen, dass Sie die Geschwindigkeit reduzieren.</string>
+    <string name="gamepadTestButtonLabelButtonLeftShoulder">Linke Schulter</string>
+    <string name="gamepadTestButtonLabelButtonRightShoulder">Rechte Schulter</string>
+    <string name="gamepadTestButtonLabelButtonLeftTrigger">Linker Trigger</string>
+    <string name="gamepadTestButtonLabelButtonRightTrigger">rechte Schalter</string>
+    <string name="toastNumThrottles">Gewählter Gasbildschirmtyp nicht unterstützt, dass viele drosselt. Die Reduzierung auf% 1 $ s.</string>
+    <string name="prefTtsThrottleResponseTitle">Auf Gamepad Gaswechsel</string>
+    <string name="prefTtsThrottleResponseSummary">Wenn Sie wählen Sie eine andere Drossel auf dem Gamepad.</string>
+    <string name="toastFlashlightOffFailed">Es tut uns leid! Es gab ein Problem mit der Taschenlampe Ausschalten&#8230;</string>
+    <string name="cancel">Stornieren</string>
+    <string name="prefEsuMc2StopButtonShortPressSummary">A \\ ‚Kurz drücken \\‘ pausiert die aktuell gesteuerten Lok / bestehen. \\ Nwird zur ursprünglichen Geschwindigkeit zurück, wenn Betrieb wieder aufnehmen.</string>
+    <string name="prefEsuMc2EndStopDirectionChangeTitle">Richtungswechsel bei Endanschlag</string>
+    <string name="prefEsuMc2EndStopDirectionChangeSummary">Zulassen Lok Richtung, wenn am Steuerknopf gegen den Uhrzeigersinn Endstopp-Position zu ändern.</string>
+    <string name="prefEsuMc2KnobButtonTitle">Zeigen Sie disable Knob-Taste</string>
+    <string name="prefEsuMc2KnobButtonSummary">Lassen Sie den Steuerknopf werden, indem eine Aktionstaste auf dem Bildschirm Drossel deaktiviert.</string>
+    <string name="EsuMc2KnobAction">Aktivieren / Deaktivieren Knob</string>
+    <string name="rosterEmpty">Kann keine enties im JMRI Roster finden. Verwenden Sie entweder die ‚DCC-Adresse‘ oder ‚Neue‘ Option statt.</string>
+    <string name="gamepadTestDeviceName">BT:</string>
+    <string name="toastThreadedAppNotWIFI">Mit Netzwerk %1$s, nicht WIFI.\\nÜberprüfen Ihrer WLAN-Einstellungen.\\n</string>
+    <string name="statusThreadedAppNotConnected">Nicht mit einem Netzwerk verbunden. Überprüfen Sie WLAN-Einstellungen.\\n\\nNeuer Versuch</string>
+    <string name="prefConsistFollowDefaultActionTitle">Standardaktion</string>
+    <string name="prefConsistFollowDefaultActionSummary">Welche locos im bestehen sollte auf die Funktionstasten reagieren, wenn keine der folgenden Regeln treffen sind.</string>
+    <string name="prefConsistFollowAction5Summary">Welche Loks im Verbund sollten auf die gefundenen Funktionen reagieren.</string>
+    <string name="prefKidsTimerRestartPasswordTitle">Neustart Passwort</string>
+    <string name="prefKidsTimerRestartPasswordSummary">Kennwort die Timer mit den aktuellen Einstellungen neu zu starten.</string>
+    <string name="prefKidsTimerResetPasswordTitle">Reset / Passwort deaktivieren</string>
+    <string name="prefKidsTimerResetPasswordSummary">Passwort zurücksetzen / deaktivieren Sie die Timer-Einstellungen.</string>
 
 </resources>

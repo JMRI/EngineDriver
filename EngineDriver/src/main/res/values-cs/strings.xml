@@ -84,7 +84,6 @@
     <string name="web">Web</string>
 
     <string name="about_page_url">file:///android_asset/about_page-cs.html</string>
-    <string name="blank_page_url">file:///android_asset/blank_page-cs.html</string>
     <!--
         <string name="feature_not_available_page_url">file:///android_asset/feature_not_available-cs.html</string>
         <string name="web_not_available_page_url">file:///android_asset/web_not_available-cs.html</string>
@@ -289,11 +288,9 @@
     <string name="prefDecreaseLocoNumberHeightSummary">Použít menší tlačítko pro lokomotivu číslo, tlačítka rychlosti a směru.</string>
     <string name="prefNumOfThrottles">Počet ovladačů</string>
     <string name="prefNumOfThrottlesSummary">Zvolte jak mnoho ovladačů chcete zobrazit.</string>
-    <string name="prefNumOfThrottlesDefault">Dva</string>
 
     <string name="prefThrottleScreenTypeTitle">Typ obrazovky ovladače</string>
     <string name="prefThrottleScreenTypeSummary">Jaký typ obrazovky ovladače použít.\nVarování! Engine Driver bude okamžitě restartován!</string>
-    <string name="prefThrottleScreenTypeDefault">Výchozí</string>
 
     <string name="prefMaximumThrottleTitle">Maximum ovladače procento</string>
 
@@ -471,7 +468,6 @@
 
     <string name="prefImportServerManualTitle">Import z aktuálního Serveru (Ručně)</string>
     <string name="prefImportServerManualSummary">Soubor Serveru pro \'Import\' nastaví předvolby z aktuálně připojeného serveru.\nSoubor musí být v adresáři \'/engine_driver/\' serveru a Web Server musí být spuštěn.\nVarování: Import se spustí okamžitě při ukládání těchto předvoleb.</string>
-
 
     <string name="prefImportServerAutoTitle">Automaticky importovat ze všech serverů</string>
     <string name="prefImportServerAutoSummary">Automaticky importuje předvolby ze všech připojených serverů.\nPokud je soubor \'/engine_driver/auto_preferences.ed\' na serveru a pokud je novější než poslední kontrola.)</string>
@@ -854,4 +850,10 @@
     <string name="edit_consist_lights_throttle_4">Upravit světla soupravy ovladače 4</string>
     <string name="edit_consist_lights_throttle_5">Upravit světla soupravy ovladače 5</string>
     <string name="edit_consist_lights_throttle_6">Upravit světla soupravy ovladače 6</string>
+    <string name="functionButton00DefaultValue">Světla</string>
+    <string name="functionButton01DefaultValue">Zvon</string>
+    <string name="functionButton02DefaultValue">Houkačka</string>
+    <string name="blank_page_url">file:///android_asset/blank_page-cs.html</string>
+    <string name="toastThreadedAppNotWIFI">Pomocí %1$s síť, ne WIFI.\\nZkontrolujte nastavení Wi-Fi.\\n</string>
+    <string name="toastThrottleImportServerAutoSucceeded">Automatické preference importovat z JMRI webového serveru to podařilo.</string>
 </resources>

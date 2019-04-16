@@ -246,7 +246,6 @@
     <string name="prefDecreaseLocoNumberHeightSummary">Usare pulsanti minori per Numero locomotiva, velocità e pulsanti di direzione.</string>
     <string name="prefNumOfThrottles">Numero di Controllori</string>
     <string name="prefNumOfThrottlesSummary">Scegli quanti Controllori visualizzare sullo schermo.</string>
-    <string name="prefNumOfThrottlesDefault">Due</string>
 
     <string name="prefThrottleScreenTypeTitle">Tipo di schermo del controllore</string>
     <string name="prefThrottleScreenTypeSummary">Quale tipo di schermo del controllore usare.\nATTENZIONE! Engine Driver si riavvierà immediatamente.</string>
@@ -511,7 +510,7 @@
     <string name="toastPreferencesNotNumeric">Il valore inserito non è un numero.(%1$s-%2$s). Ristabilito %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferenze resettate a valori default!</string>
     <string name="toastPreferencesImportServerManualFailed">Impossibile importare le preferenze dal server! Controlla che il file sia corretto. (%1$s)</string>
-    <string name="toastPreferencesImportServerManualSucceeded">Importazione delle preferenze dal server riuscito. (%1$s)</string> -->
+    <string name="toastPreferencesImportServerManualSucceeded">Importazione delle preferenze dal server riuscito. (%1$s)</string>
     <string name="toastPreferencesImportSucceeded">Preferenze Importa da file Riuscito.</string>
     <string name="toastPreferencesThemeChangeSucceeded">Cambiamento del tema riuscito.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Modifica del tipo di pagina acceleratore. Riuscito.</string>
@@ -669,5 +668,12 @@
     <string name="introButtonsNoSlider">Solo i pulsanti di velocità</string>
 
     <string name="introbackButtonPress">Please Riavvia l\'app Engine Driver per completare l\'introduzione.</string>
+    <string name="consist_trail_label">Locomotiva di piombo</string>
+    <string name="fb_column_label">Etichetta</string>
+    <string name="fb_column_function">funz #</string>
+    <string name="rosterEmpty">Impossibile trovare nessuna enties nel roster JMRI. Utilizzare il \'DCC Indirizzo\' o opzione \'recente\', invece.</string>
+    <string name="gamepadTestDeviceName">BT:</string>
+    <string name="prefConsistFollowDefaultActionTitle">Azione predefinita</string>
+    <string name="prefConsistFollowDefaultActionSummary">Quale locos nella consistere dovrebbero reagire ai tasti funzione, se nessuna delle regole di sotto sono si incontrano.</string>
 
 </resources>

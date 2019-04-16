@@ -223,9 +223,9 @@
     <string name="prefEsuMc2ZeroTrimTitle">Posada a Zero del Botó Regulador</string>
     <string name="prefEsuMc2ZeroTrimSummary">Estableix els paràmetres de posada a zero del Botó Regulador.\nUn valor més petit és més proper a la posició de parada final en el sentit antihorari.\nRang permès 0&#8211;255.</string>
 
-    <string name="toastEsuMc2NoLocoChange">Canvi de Locomotora no permès: Mobile Control II en mode d\'aturada</string>
-    <string name="toastEsuMc2NoThrottleChange">Canvi de Controlador no permès: Mobile Control II en mode d\'aturada</string>
-    <string name="toastEsuMc2NoButtonPresses">Prémer el botó no està permès: Mobile Control II en mode d\'aturada</string>
+    <string name="toastEsuMc2NoLocoChange">Canvi de Locomotora no permès: Mobile Control II en mode d\\\'aturada</string>
+    <string name="toastEsuMc2NoThrottleChange">Canvi de Controlador no permès: Mobile Control II en mode d\\\'aturada</string>
+    <string name="toastEsuMc2NoButtonPresses">Prémer el botó no està permès: Mobile Control II en mode d\\\'aturada</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Utilitza les etiquetes de les funcions per defecte?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Mostra les etiquetes de funció predeterminades en lloc de les etiquetes de les entrades de la flota.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Disminueix l\'Alçada del Número de Locomotora?</string>
@@ -691,5 +691,37 @@
     <string name="introButtonsNoSlider">Només botons de velocitat</string>
 
     <string name="introbackButtonPress">Torneu a iniciar l\'aplicació Driver del motor per completar la introducció.</string>
+    <string name="consist_trail_label">locomotora plom</string>
+    <string name="prefGamepadTestEnforceTestingSimpleTitle">Prova d\'ús senzill</string>
+    <string name="prefGamepadTestEnforceTestingSimpleSummary">Única prova que pot reduir la velocitat.</string>
+    <string name="gamepadTestButtonLabelButtonLeftShoulder">espatlla esquerra</string>
+    <string name="gamepadTestButtonLabelButtonRightShoulder">espatlla dreta</string>
+    <string name="gamepadTestButtonLabelButtonLeftTrigger">gallet esquerre</string>
+    <string name="gamepadTestButtonLabelButtonRightTrigger">gallet dret</string>
+    <string name="toastNumThrottles">Elegit Tipus de pantalla de l\'accelerador no admet que molts acceleradors. La reducció de% 1 $ s.</string>
+    <string name="prefTtsThrottleResponseTitle">En canvi Gamepad de l\'accelerador</string>
+    <string name="prefTtsThrottleResponseSummary">Quan es selecciona una acceleració diferent en el gamepad.</string>
+    <string name="toastFlashlightOffFailed">Ho sento! Hi va haver un problema d\\\'apagar la llanterna&#8230;</string>
+    <string name="cancel">Cancel · lar</string>
+    <string name="prefEsuMc2StopButtonShortPressTitle">habilitar puls.corta</string>
+    <string name="prefEsuMc2StopButtonShortPressSummary">Un \\\'a curt pressioni\\\'s \\\'atura la locomotora actualment controlada / consten. \\nEs tornar a la velocitat original quan es reprenguin les operacions.</string>
+    <string name="prefEsuMc2EndStopDirectionChangeTitle">Canviar direcció al límit final</string>
+    <string name="prefEsuMc2EndStopDirectionChangeSummary">Permetre direcció Boig a canviar quan la perilla de control en la posició-topall final en sentit antihorari.</string>
+    <string name="prefEsuMc2KnobButtonTitle">Mostra el botó de comandament desactivar</string>
+    <string name="prefEsuMc2KnobButtonSummary">Permetre que la perilla de control a ser desactivat per un botó d\'acció a la pantalla de l\'accelerador.</string>
+    <string name="EsuMc2KnobAction">Activar / Desactivar la perilla</string>
+    <string name="rosterEmpty">No s\'ha pogut trobar cap enties a la llista JMRI. Utilitza el \'Direcció DCC\' o l\'opció \'recents\' al seu lloc.</string>
+    <string name="gamepadTestDeviceName">BT:</string>
+    <string name="toastThreadedAppCantDetermineIp">No es pot determinar l\\\'adreça IP de %1$s</string>
+    <string name="toastThreadedAppNotWIFI">L\\\'ús de la xarxa %1$s, no Wi-Fi.\\nComprovi la configuració de Wi-Fi.\\n</string>
+    <string name="statusThreadedAppNotConnected">No està connectat a una xarxa. Comproveu la configuració de Wi-Fi. \\n\\nReintentant</string>
+    <string name="prefConsistFollowDefaultActionTitle">acció per defecte</string>
+    <string name="prefConsistFollowDefaultActionSummary">Què bojos a la consistirà ha de reaccionar als botons de funció si cap de les regles de sota són es troben.</string>
+    <string name="prefConsistFollowAction5Title">Acció per a la cadena 5</string>
+    <string name="prefConsistFollowAction5Summary">Quins cajuns del consisteixen han de reaccionar a les funcions trobades.</string>
+    <string name="prefKidsTimerRestartPasswordTitle">reiniciar contrasenya</string>
+    <string name="prefKidsTimerRestartPasswordSummary">Contrasenya per reiniciar el temporitzador amb la configuració actual.</string>
+    <string name="prefKidsTimerResetPasswordTitle">Reset / Desactivar contrasenya</string>
+    <string name="prefKidsTimerResetPasswordSummary">Contrasenya per restablir / desactivar la configuració del temporitzador.</string>
 
 </resources>
