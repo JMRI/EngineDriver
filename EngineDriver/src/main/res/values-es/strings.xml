@@ -734,5 +734,12 @@
     <string name="introButtonsNoSlider">Botones de velocidad solamente</string>
 
     <string name="introbackButtonPress">Reinicie la aplicación del controlador del motor para completar la introducción.</string>
+    <string name="consist_trail_label">Locomotora plomo</string>
+    <string name="cancel">Cancelar</string>
+    <string name="rosterEmpty">No se pudo encontrar ningún enties en la lista JMRI. Use el \'Dirección DCC\' o la opción \'recientes\' en su lugar.</string>
+    <string name="toastThreadedAppNotWIFI">El uso de la red %1$s, no WIFI. \\nCompruebe la configuración de Wi-Fi.\\n</string>
+    <string name="statusThreadedAppNotConnected">No está conectado a una red. Compruebe la configuración de Wi-Fi. \\n\\nReintentando</string>
+    <string name="prefConsistFollowDefaultActionTitle">Acción por defecto</string>
+    <string name="prefConsistFollowDefaultActionSummary">¿Qué locos en la consistirá debe reaccionar a los botones de función si ninguna de las reglas de abajo son se encuentran.</string>
 
 </resources>

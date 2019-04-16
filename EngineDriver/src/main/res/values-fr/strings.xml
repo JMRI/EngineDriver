@@ -742,15 +742,16 @@
     <string name="timerDialogMessage">Mot de passe</string>
     <string name="timerDialogHint">Redémarre ou Réinitialise le mot de passe</string>
 
-
-
     <string name="prefImportServerManualTitle">Import manuel du serveur courant</string>
     <string name="prefImportServerManualSummary">Fichier des préférence du serveur à \'Importer\' depuis le serveur connecté.\nLe fichier doit se trouver dans le répertoire \'/engine_driver/\' du serveur et le Web serveur doit être en service.\nATTENTION: cette importation démarre immédiatement si vous sauvez cette préférence.</string>
 
     <string name="prefImportServerAutoTitle">Import automatique depuis tous les serveurs.</string>
     <string name="prefImportServerAutoSummary">Import automatique des préférences depuis tous les serveurs dès la connexion.\n(Si le fichier \'/engine_driver/auto_preference.ed\' est sur le serveur et si il est plus récent que lors du dernier contrôle).</string>
+
     <string name="toastThrottleImportServerAutoSucceeded">Import automatique des préférences depuis le Web Serveur JMRI réussi</string>
     <string name="toastPreferencesImportServerManualFailed">import des préférences depuis le serveur EN ECHEC! vérifier si le fichier est correct. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Import des préférences depuis serveur REUSSI (%1$s)</string>
+    <string name="introMenu">Intro / Assistant d\'installation</string>
+    <string name="rosterEmpty">Impossible de trouver un enties dans la liste JMRI. Utilisez l\'option « Adresse DCC » ou « récente » à la place.</string>
 
-    </resources>
+</resources>
