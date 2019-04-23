@@ -33,6 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.support.annotation.NonNull;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -115,6 +117,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
     private static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
 
+    EditText host_ip;
+    EditText port;
 
     static {
         try {
@@ -411,6 +415,16 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        host_ip = findViewById(R.id.host_ip);
+        port = findViewById(R.id.port);
+        host_ip.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                checkIP();
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        });
+
         //Set the button callback.
         Button button = findViewById(R.id.connect);
         button_listener click_listener = new button_listener();
@@ -673,6 +687,15 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             return true;
         }
         return (super.onKeyDown(key, event));
+    }
+
+
+    private void checkIP() {
+        String tempIP = host_ip.getText().toString().trim();
+        if (tempIP.contains(":")) { //If a colon has been entered in the host field, remove and jump to the port field
+            host_ip.setText(tempIP.replace(":", ""));
+            port.requestFocus();
+        }
     }
 
     /***

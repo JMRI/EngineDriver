@@ -435,10 +435,48 @@ public class select_loco extends Activity {
         if (requestCode == throttle.ACTIVITY_CONSIST) {                          // edit consist
             if (newEngine) {
                 updateRecentEngines(saveUpdateList);
+                updateRecentConsists(saveUpdateList);
             }
             result = RESULT_LOCO_EDIT;                 //tell Throttle to update loco directions
         }
         end_this_activity();
+    }
+
+    void updateRecentConsists(boolean bUpdateList) {
+        //if not updating list or no SD Card present then nothing else to do
+        if (!bUpdateList || !android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
+            return;
+        // Save the engine list to the recent_engine_list.txt file
+        File sdcard_path = Environment.getExternalStorageDirectory();
+        File connections_list_file = new File(sdcard_path,
+                "engine_driver/recent_consist_list.txt");
+        PrintWriter list_output;
+        String smrl = prefs.getString("maximum_recent_locos_preference", ""); //retrieve pref for max recent locos to show
+        try {
+            int mrl = 10; //default to 10 if pref is blank or invalid
+            try {
+                mrl = Integer.parseInt(smrl);
+            } catch (NumberFormatException ignored) {
+            }
+            list_output = new PrintWriter(connections_list_file);
+            if (mrl > 0) {
+                // Add this engine to the head of recent engines list.
+                mrl--;
+                list_output.format("%d:%d\n", engine_address, address_size);
+                for (int i = 0; i < engine_address_list.size() && mrl > 0; i++) {
+                    if (engine_address != engine_address_list.get(i) || address_size != address_size_list.get(i)) {
+                        list_output.format("%d:%d\n", engine_address_list.get(i), address_size_list.get(i));
+                        mrl--;
+                    }
+                }
+            }
+            list_output.flush();
+            list_output.close();
+        } catch (IOException except) {
+            Log.e("Engine_Driver",
+                    "select_loco - Error creating a PrintWriter, IOException: "
+                            + except.getMessage());
+        }
     }
 
     void updateRecentEngines(boolean bUpdateList) {
