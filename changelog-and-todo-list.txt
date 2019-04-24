@@ -32,6 +32,8 @@
  * begin work on Adaptive icons
  * option to save log to file
  * Web View and Auto-Web remember page and position on page
+ * Option to show/hide advanced preferences. Advanced preferences are hidden by default
+ * Entering colon (":") into the host field changes focus to the port field
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
  * New Colourful/Colorful theme

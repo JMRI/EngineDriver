@@ -2015,16 +2015,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     private void clearVolumeAndGamepadAdditionalIndicators() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
-                if ((prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_NONE)) || (prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_GAMEPAD))) {
-                    bSels[throttleIndex].setActivated(false);
-                }
-                if ((prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_NONE)) || (prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_VOLUME))) {
-                    bSels[throttleIndex].setHovered(false);
+                if (throttleIndex < bSels.length) {
+                    if ((prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_NONE))
+                            || (prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_GAMEPAD))) {
+                        bSels[throttleIndex].setActivated(false);
+                    }
+                    if ((prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_NONE))
+                            || (prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_VOLUME))) {
+                        bSels[throttleIndex].setHovered(false);
+                    }
                 }
             }
-//        }
     }
 
     @SuppressLint("NewApi")
