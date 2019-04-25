@@ -608,7 +608,7 @@
     <string name="functionButtonLookForHead">DAVANT</string>
     <string name="functionButtonLookForLight">LLUM</string>
     <string name="functionButtonLookForRear">DARRERA</string>
-    <string name="prefImportExportOverwite">L\'arxiu ja existeix. Sobreescriu?</string>
+    <string name="prefImportExportOverwite">L\'arxiu \'%1$s\' ja existeix. Sobreescriu?</string>
     <string name="prefImportExportErrorReadingList">Error llegint la llista de connexions recents:</string>
     <string name="prefImportExportErrorReadingFrom">Ha fallat l\'importació de \'engine_driver/%1$s\'! No has desat les preferències per aquest host.</string>
     <string name="prefImportExportErrorNotConnected">No connectat a un host.</string>
@@ -698,7 +698,7 @@
     <string name="gamepadTestButtonLabelButtonRightShoulder">espatlla dreta</string>
     <string name="gamepadTestButtonLabelButtonLeftTrigger">gallet esquerre</string>
     <string name="gamepadTestButtonLabelButtonRightTrigger">gallet dret</string>
-    <string name="toastNumThrottles">Elegit Tipus de pantalla de l\'accelerador no admet que molts acceleradors. La reducció de% 1 $ s.</string>
+    <string name="toastNumThrottles">Elegit Tipus de pantalla de l\'accelerador no admet que molts acceleradors. La reducció de %1$s.</string>
     <string name="prefTtsThrottleResponseTitle">En canvi Gamepad de l\'accelerador</string>
     <string name="prefTtsThrottleResponseSummary">Quan es selecciona una acceleració diferent en el gamepad.</string>
     <string name="toastFlashlightOffFailed">Ho sento! Hi va haver un problema d\\\'apagar la llanterna&#8230;</string>

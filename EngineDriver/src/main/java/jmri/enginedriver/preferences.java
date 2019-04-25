@@ -530,7 +530,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             File dst = new File(path, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
 
             if ((dst.exists()) && (confirmDialog)) {
-                overwiteFileDialog(sharedPreferences, dst);
+                overwiteFileDialog(sharedPreferences, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
             } else {
                 res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
             }
@@ -613,7 +613,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         reload();
     }
 
-    public boolean overwiteFileDialog(final SharedPreferences sharedPreferences, File dst) {
+    public boolean overwiteFileDialog(final SharedPreferences sharedPreferences, String fileNameAndPath) {
         boolean res = false;
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -634,7 +634,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             }
         };
         AlertDialog.Builder ab = new AlertDialog.Builder(preferences.this);
-        ab.setMessage(R.string.prefImportExportOverwite)
+        ab.setMessage(getApplicationContext().getResources().getString(R.string.prefImportExportOverwite).replace("%1$s",fileNameAndPath))
                 .setPositiveButton(R.string.yes, dialogClickListener)
                 .setNegativeButton(R.string.cancel, dialogClickListener);
         ab.show();

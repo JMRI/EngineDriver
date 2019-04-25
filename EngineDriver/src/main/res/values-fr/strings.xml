@@ -528,7 +528,7 @@
     <string name="toastPreferencesThrottleChangeSucceeded">Changement affichage régulateur réussi</string>
     <string name="toastPreferencesLocaleChangeSucceeded">Changement de langue locale réussi</string>
     <string name="toastTurnoutInvalidNumber">N° aiguille invalide</string>
-    <string name="toastTurnoutCommandTo">Commande envoyée à aiguille %%1%%</string>
+    <string name="toastTurnoutCommandTo">Commande envoyée à aiguille %1$s</string>
     <string name="toastTurnoutCommandToClose">Direct</string>
     <string name="toastTurnoutCommandToThrow">Dévié</string>
     <string name="toastTurnoutCommandToToggle">Inversion</string>
@@ -542,11 +542,11 @@
     <string name="toastConnectRemoveDemoHostError">La suppression du serveur de démo ne peut se faire qu\'en modifiant les préférences</string>
     <string name="toastConnectRemoved">Serveur supprimé de la liste.</string>
     <string name="toastRoutesCommandSent">"Commande envoyée pour définir itinéraire "</string>
-    <string name="toastImportExportExportSucceeded">Exportation des préférences d \'engine_driver/%%1%%\' avec succès.</string>
-    <string name="toastImportExportImportSucceeded">Importation des préférences d \'engine_driver/%%1%%\' avec succès.</string>
-    <string name="toastImportExportExportFailed">Exportation des préférences d \'engine_driver/%%1%%\' en ERREUR.</string>
-    <string name="toastImportExportImportFailed">Importation des préférences d \'engine_driver/%%1%%\' en ERREUR.</string>
-    <string name="toastImportExportServerImportFailed">Les préférences ne sont pas importées depuis \'engine_driver/%%1%%\'. Vous n\'avez pas encore sauvegardés les préférences de ce serveur.</string>
+    <string name="toastImportExportExportSucceeded">Exportation des préférences d \'engine_driver/%1$s\' avec succès.</string>
+    <string name="toastImportExportImportSucceeded">Importation des préférences d \'engine_driver/%1$s\' avec succès.</string>
+    <string name="toastImportExportExportFailed">Exportation des préférences d \'engine_driver/%1$s\' en ERREUR.</string>
+    <string name="toastImportExportImportFailed">Importation des préférences d \'engine_driver/%1$s\' en ERREUR.</string>
+    <string name="toastImportExportServerImportFailed">Les préférences ne sont pas importées depuis \'engine_driver/%1$s\'. Vous n\'avez pas encore sauvegardés les préférences de ce serveur.</string>
     <string name="toastImportExportCannotImport">Import des préférences impossible. Aucune connexion sur un serveur.</string>
     <string name="toastImportExportCannotExport">Export des préférences impossible. Aucune connexion sur un serveur.</string>
     <string name="toastSelectLocoConfirmClear">Confirmer que vous désirez supprimer toutes les locos récentes en appuyant A NOUVEAU sur la touche \'Clear List\'</string>
@@ -689,7 +689,7 @@
     <string name="functionButtonLookForHead">FRONT</string>
     <string name="functionButtonLookForLight">LUMIÈRE</string>
     <string name="functionButtonLookForRear">ARRIÈRE</string>
-    <string name="prefImportExportOverwite">Le fichier existe déjà. Ecraser?</string>
+    <string name="prefImportExportOverwite">Le fichier \'%1$s\' existe déjà. Ecraser?</string>
     <string name="prefImportExportErrorReadingList">Erreur lors de la lecture de la liste connexions récentes:</string>
     <string name="prefImportExportErrorReadingFrom">l importation de \'engine_driver/%1$s\' a échoué! Vous n avez peut-être pas encore enregistré les préférences pour cet hôte.</string>
     <string name="prefImportExportErrorNotConnected">Non connecté à un hôte.</string>
