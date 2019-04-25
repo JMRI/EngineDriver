@@ -530,7 +530,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             File dst = new File(path, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
 
             if ((dst.exists()) && (confirmDialog)) {
-                overwiteFileDialog(sharedPreferences, "/" + ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
+                overwiteFileDialog(sharedPreferences, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
             } else {
                 res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
             }
