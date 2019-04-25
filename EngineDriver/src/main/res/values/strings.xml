@@ -482,7 +482,7 @@
     <string name="prefHostImportExportSummary">\'Import\' or \'Export\' your preferences for a specific host to the \'engine_driver/\' folder. The host must be in your recent connection list.\nWill occur IMMEDIATELY on selecting the option.\n(Only available when not currently connected.)</string>
     <string name="prefHostImportExportDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefImportExportOverwite">File already exists. Overwite?</string>
+    <string name="prefImportExportOverwite">File \'%1$s\' already exists. Overwite?</string>
     <string name="prefImportExportErrorReadingList">Error reading recent connections list:</string>
     <string name="prefImportExportErrorReadingFrom">Import from \'engine_driver/%1$s\' failed! You may not have saved the preferences for this host yet.</string>
     <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>

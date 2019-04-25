@@ -399,7 +399,7 @@
     <string name="prefHostImportExportTitle">Importar/Exportar específico para host Manual</string>
     <string name="prefHostImportExportSummary">\'Importar\' ou \'Exportar\' suas preferências para um host específico para a pasta \'engine_driver/\'. P host deve estar em sua lista de conexões recentes.\nOcorrerá IMEDIATAMENTE após a seleção da opção.\n(Somente disponível quando não atualmente conectado.)</string>
 
-    <string name="prefImportExportOverwite">Arquivo já presente. Sobregravar?</string>
+    <string name="prefImportExportOverwite">Arquivo \'%1$s\' já presente. Sobregravar?</string>
     <string name="prefImportExportErrorReadingList">Erro leitura lista conexões recentes:</string>
     <string name="prefImportExportErrorReadingFrom">Importação de \'engine_driver/%1$s\' falhou! Pode não ter salvo ainda as preferências para este host.</string>
     <string name="prefImportExportErrorNotConnected">Host não conectado.</string>

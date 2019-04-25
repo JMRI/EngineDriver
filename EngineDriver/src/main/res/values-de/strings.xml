@@ -629,7 +629,7 @@
     <string name="functionButtonLookForHead">VORNE</string>
     <string name="functionButtonLookForLight">LICHT</string>
     <string name="functionButtonLookForRear">HINTEN</string>
-    <string name="prefImportExportOverwite">Datei existiert schon. Überschreiben?</string>
+    <string name="prefImportExportOverwite">Datei \'%1$s\' existiert schon. Überschreiben?</string>
     <string name="prefImportExportErrorReadingList">Fehler beim Lesen der Liste Letzte Verbindungen:</string>
     <string name="prefImportExportErrorReadingFrom">Import von \'engine_driver/%1$s\' fehlgeschlagen! Möglicherweise hast du die Voreinstellungen für diesen Host bisher nicht gespeichert.</string>
     <string name="prefImportExportErrorNotConnected">Mit keinem Host verbunden.</string>
@@ -721,7 +721,7 @@
     <string name="gamepadTestButtonLabelButtonRightShoulder">Rechte Schulter</string>
     <string name="gamepadTestButtonLabelButtonLeftTrigger">Linker Trigger</string>
     <string name="gamepadTestButtonLabelButtonRightTrigger">rechte Schalter</string>
-    <string name="toastNumThrottles">Gewählter Gasbildschirmtyp nicht unterstützt, dass viele drosselt. Die Reduzierung auf% 1 $ s.</string>
+    <string name="toastNumThrottles">Gewählter Gasbildschirmtyp nicht unterstützt, dass viele drosselt. Die Reduzierung auf %1$s.</string>
     <string name="prefTtsThrottleResponseTitle">Auf Gamepad Gaswechsel</string>
     <string name="prefTtsThrottleResponseSummary">Wenn Sie wählen Sie eine andere Drossel auf dem Gamepad.</string>
     <string name="toastFlashlightOffFailed">Es tut uns leid! Es gab ein Problem mit der Taschenlampe Ausschalten&#8230;</string>

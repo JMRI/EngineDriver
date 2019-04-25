@@ -650,7 +650,7 @@
     <string name="functionButtonLookForHead">ADELANTE</string>
     <string name="functionButtonLookForLight">LUZ</string>
     <string name="functionButtonLookForRear">ATRÁS</string>
-    <string name="prefImportExportOverwite">El archivo existe. ¿Sobreescribir?</string>
+    <string name="prefImportExportOverwite">El archivo \'%1$s\' existe. ¿Sobreescribir?</string>
     <string name="prefImportExportErrorReadingList">Error leyendo la lista de conexiones recientes:</string>
     <string name="prefImportExportErrorReadingFrom">¡Ha fallado la importación de \'engine_driver/%1$s\'! No has guardado la preferencias para este host.</string>
     <string name="prefImportExportErrorNotConnected">No cenectado a un host.</string>
