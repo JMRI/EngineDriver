@@ -162,28 +162,28 @@
         <item>Concordancia de texto compleja: cadenas configurables por el usuario</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
-        <item>Lead Loco - Partial Match</item>
-        <item>Lead + Trail Locos - Partial Match</item>
-        <item>Todos los Locos - Partial Match</item>
-        <item>Lead Loco - Exact Match</item>
-        <item>Lead + Trail Locos - Coincidencia exacta</item>
-        <item>Todos los Locos - Exact Match</item>
+        <item>Locomotora Delantera - Coincidencia Parcial</item>
+        <item>Lead + Trail Locomotora - Coincidencia Parcial</item>
+        <item>Todas las Locomotoras - Coincidencia Parcial</item>
+        <item>Locomotora Delantera - Coincidencia Exacta</item>
+        <item>Lead + Trail Locomotora - Coincidencia Exacta</item>
+        <item>Todas las Locomotoras - Coincidencia Exacta</item>
     </string-array>
 
     <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
-        <item>Hacer nada</item>
-        <item>Lead Loco - Mismo número de función</item>
+        <item>No hacer nada</item>
+        <item>Locomotora Delantera - Mismo número de función</item>
         <item>Lead + Trail Locos - Mismo número de función</item>
-        <item>All Locos - Número de la misma función</item>
+        <item>Todas las Locomotoras - Número de la misma función</item>
     </string-array>
 
     <string-array name="prefKidsTimerEntries"> <!-- mostrar versión -->
-        <item>desactivado</item>
+        <item>Desactivado</item>
         <item>1 minuto</item>
         <item>2 minutos</item>
         <item>5 minutos</item>
         <item>10 minutos</item>
-        <item>Ejecutar completado</item>
+        <item>Ejecución finalizada</item>
     </string-array>
 
 </resources>
