@@ -68,6 +68,7 @@
     <string name="fb_helptext">Entra etiquetes i funcions a la llista de la dreta. Deixa-la en blanc  per amagar el botó. Aquests s\'utilitzen quan les funcions de la Flota no estan disponibles.</string>
     <string name="copy_function_labels">Copiar Etiquetes des de la Flota</string>
     <string name="fb_header">Modificar Funcions</string>
+
     <string name="consist_help">Prèmer una locomotora per a canviar la direcció vers la de la Multi Tracció. Mantenir premut per eliminar una locomotora de la Multi Tracció. Prèmer Enrere par a finalitzar.</string>
     <string name="about">Quant a</string>
     <string name="web">Web</string>
@@ -96,17 +97,18 @@
     <string name="routes_direct_entry_label">Entra el Nom de la Ruta</string>
     <string name="routes_location_label">Filtra per Localització</string>
     <string name="routes_list_label">Ruta (prèm per commutar)</string>
-    <string name="consist_lead_label">Locomotora davantera</string>
+    <string name="consist_lead_label">Locomotora Davantera</string>
+    <string name="consist_trail_label">Locomotora del Darrera</string>
     <string name="consist_list_label">Sentit de les Locomotores de la Multi Tracció</string>
     <string name="throw_button">Desviada</string>
     <string name="close_button">Directe</string>
     <string name="toggle_button">Commuta</string>
     <string name="power_control_label">Control de Corrent de Via</string>
     <string name="power_control_button">desconegut</string>
-    <string name="press_to_toggle">Prèm per canviar l\'Estat de la Via del circuit.</string>
+    <string name="press_to_toggle">Prèm per canviar l\'estat de la Corrent de Via.</string>
     <string name="power_control_not_allowed">Control de Corrent de Via no permés. Modifica\'l a Preferències/Configuració en el servidor.</string>
     <string name="reconnect_label">Intenta Reconnectar</string>
-    <string name="reconnect_help">Intenta Reconnectar automàticament. Espera per a la Reconnexió o prem FletxaEnrere per a Sortir.</string>
+    <string name="reconnect_help">Intenta Reconnectar automàticament. Espera per a la Reconnexió o prem Fletxa/Enrere per a Sortir.</string>
     <string name="reconnect_success">RECONNECTAT. Continuem funcionant.</string>
     <string name="fs_edit_notice">ALERTA: els canvis dels Paràmetres per Defecte de les Funcions es perdràn al sortir - No s\'ha trobat targeta SD.</string>
     <string name="ca_recent_conn_notice">No estan disponibles les Connexions Recents - No s\'ha trobat targeta SD.</string>
@@ -177,8 +179,6 @@
     <string name="prefGamePadFeedbackVolumeTitle">% del Clic del Botó del Gamepad </string>
     <string name="prefGamePadFeedbackVolumeSummary">Estableix el percentatge de volum per als clics del botó del Gamepad.</string>
 
-
-
     <string name="prefGamePadSpeedButtonsRepeatTitle">Retard de repetició del botó de velocitat</string>
     <string name="prefGamePadSpeedButtonsRepeatSummary">Quant de temps hi ha d\'haver entre repetició en els botons de velocitat del Gamepad. Un valor petit l\'acció és més ràpida.</string>
 
@@ -196,16 +196,6 @@
     <string name="prefGamePadButtonDownTitle">Acció Avall Gamepad DPAD</string>
     <string name="prefGamePadButtonLeftTitle">Acció Esquerra Gamepad DPAD</string>
     <string name="prefGamePadButtonSummary">Tria una acció quan prems el botó.</string>
-
-
-
-
-
-
-
-
-
-
 
     <string name="prefEsuMc2Title">Opcions de ESU MobileControl II</string>
     <string name="prefEsuMc2Summary">Escull opcions de ESU MobileControl II</string>
@@ -280,7 +270,6 @@
     <string name="prefHideIfNoUserNameTitle">Amaga si no hi ha Nom d\'Usuari?</string>
     <string name="prefHideIfNoUserNameSummary">Omet Agulla/Ruta de la llista si el nom d\'usuari està buit.</string>
 
-
     <string name="prefRosterRecentLocosTitle">Flota en Locomotores Recents?</string>
     <string name="prefRosterRecentLocosSummary">Inclou seleccions de flota en la llista de Recents?</string>
     <string name="prefMaximumRecentLocosTitle">Número Màxim de Locomotores Recents</string>
@@ -332,10 +321,6 @@
     <string name="prefDisplayClockTitle">Pantalla de Rellotge Ràpid</string>
     <string name="prefDisplayClockSummary">Estableix el Format del Rellotge Ràpid en la pantalla de Controlador i Web.</string>
 
-
-
-
-
     <string name="prefDisplaySpeedArrowsTitle">Mostra els botons de Velocitat?</string>
     <string name="prefDisplaySpeedArrowsSummary">Mostra els botons al costat dels controls lliscants de velocitat per canviar la velocitat de la locomotora?</string>
 
@@ -352,16 +337,8 @@
     <string name="prefSpeedButtonsSpeedStepTitle">Quantitat a canviar amb el botó de velocitat</string>
     <string name="prefSpeedButtonsSpeedStepSummary">Salt de velociatat amb la fletxa del controlador de velocitat</string>
 
-
-
-
-
     <string name="server_address">Adreça del Servidor</string>
     <string name="routes_route">Nom del Sistema de Ruta</string>
-
-
-
-
 
     <string name="throttle_name">Nom del Controlador: %1$s</string>
     <string name="prefConsistLightsLongClickTitle">Control de llums en Tracció Múltiple amb clic llarg.</string>
@@ -422,34 +399,6 @@
     <string name="functionButton01DefultValue">Campana</string>
     <string name="functionButton02DefultValue">Xiulet</string>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <string name="gamepadTestButtonLabelDpadUp">Amunt</string>
     <string name="gamepadTestButtonLabelDpadDown">Avall</string>
     <string name="gamepadTestButtonLabelDpadLeft">Esquerra</string>
@@ -460,6 +409,7 @@
     <string name="gamepadTestButtonLabelButtonB">B [@]</string>
     <string name="gamepadTestButtonLabelButtonStart">Iniciar | Envia</string>
     <string name="gamepadTestButtonLabelButtonEnter">Selecciona | Envia</string>
+
     <string name="gamepadTestOptionalLabel">Opcional (pot ser que no estigui al dispositiu)</string>
     <string name="gamepadTestAllKeyCodesLabel">Tots els codis:</string>
     <string name="gamepadTestModeLabel">Tipus:</string>
@@ -477,13 +427,14 @@
     <string name="gamepadTestCancelNonForced">"Tanca"</string>
     <string name="gamepadTestSkip">"Omet"</string>
 
-
     <string name="gamepadTestKeyCodesUpCode">"Am"</string>
     <string name="gamepadTestKeyCodesDownCode">"Av"</string>
     <string name="gamepadTestKeyCodesLeftCode">"Es"</string>
     <string name="gamepadTestKeyCodesRightCode">"Dr"</string>
+
     <string name="prefGamepadTestNowTitle">Prova de configuració del gamepad ara!</string>
     <string name="prefGamepadTestNowSummary">Permet confirmar que la configuració seleccionada funciona correctament.\nLa pàgina de prova s\'iniciarà IMMEDIATAMENT en seleccionar-la.</string>
+
     <string name="toastUnableToSetBrightness">No es pot establir el brillo Atomàtic/Adaptable.</string>
     <string name="toastAccelerometerNotFound">Acceleròmetre no trobat o deshabilitat</string>
     <string name="toastLocoChangeNotAllowed">Canvi de la locomotora no permès:\'El canvi de direcció mentre hi ha moviment\' està deshabilitat en les preferències</string>
@@ -522,10 +473,17 @@
     <string name="toastImportExportCannotImport">No s\'ha pogut importar les preferències. No s\'ha connectat al host.</string>
     <string name="toastImportExportCannotExport">No s\'ha pogut exportar les preferències. No s\'ha connectat al host.</string>
     <string name="toastSelectLocoConfirmClear">Confirma que vols eliminar totes les Locomotores Recents prement el botó \'Netejar Llista\' DE NOU.</string>
+
     <string name="prefTtsTitle">Resposta de veu</string>
     <string name="prefTtsSummary">Parleu esdeveniments clau</string>
     <string name="prefTtsWhenTitle">Respostes de Veu</string>
     <string name="prefTtsWhenSummary">Quan parlar events i accions utilitzant Text a Veu (TTS).</string>
+    <string name="prefTtsWhenDefaultValue">None</string>
+
+    <string name="prefTtsThrottleResponseTitle">Canvia el Regulador en el Gamepad</string>
+    <string name="prefTtsThrottleResponseSummary">Quan selecciones un regulador diferent en el gamepad.</string>
+    <string name="prefTtsThrottleResponseDefaultValue">Controlador</string>
+
 <!--
     <string name="prefTtsThrottleTitle">En el Canvi de Controlador</string>
     <string name="prefTtsThrottleSummary">Quan selecciones un controlador diferent.</string>
@@ -627,43 +585,54 @@
     <string name="prefImportExportErrorNotConnected">No connectat a un host.</string>
     <string name="logViewerTitle">Activitat en Visualitzador de Log | Nom del Controlador: %1$s</string>
 
-    <string name="ConsistEditLabelLead">DIRIGIR</string>
-    <string name="ConsistEditLabelTrail">RUTA</string>
-    <string name="prefConsistFollowRuleStyleTitle">Funcions consisteixen: segueix l\'estil de regla</string>
-    <string name="prefConsistFollowRuleStyleSummary">Quin estil de regles a seguir consisteix quan es pressionen els botons de funció.</string>
+    <!-- Consist Follow Function Preferences etc. -->
+    <string name="ConsistEditLabelLead">DAVANTERA</string>
+    <string name="ConsistEditLabelTrail">DEL DARRERA</string>
+
+    <string name="prefConsistFollowRuleStyleTitle">Funcions de tracció múltiple: segueix l\'estil de regla</string>
+    <string name="prefConsistFollowRuleStyleSummary">Quin estil de regles a seguir de tracció múltiple quan es pressionen els botons de funció.</string>
+    <string name="prefConsistFollowRuleStyleDefaultValue">original</string>
+
+    <string name="prefConsistFollowTitle">Preferències de Funcions en tracció múltiple</string>
+    <string name="prefConsistFollowSummary">Opcions de com es comportaran les funcions en una tracció múltiple.</string>
+
     <string name="prefConsistFollowString1DefaultValue">LLUM</string>
-    <string name="prefConsistFollowString2DefaultValue">WHISTLE, HORN, BELL</string>
-    <string name="prefConsistFollowTitle">Funció consistent Segueix les preferències</string>
-    <string name="prefConsistFollowSummary">Opcions de com es comportaran les funcions en un format.</string>
+    <string name="prefConsistFollowString2DefaultValue">XIULET, BOTZINA, CAMPANA</string>
+
     <string name="prefConsistFollowString1Title">Estrelles específiques del far del foc 1</string>
-    <string name="prefConsistFollowString1Summary">Les cadenes (s) separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer la funció \'Headlight \' (normalment F0).</string>
+    <string name="prefConsistFollowString1Summary">Les cadenes separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer la funció \'Headlight \' (normalment F0).</string>
     <string name="prefConsistFollowAction1Title">Acció específica de la llum davantera 1</string>
     <string name="prefConsistFollowAction1Summary">Quins cajuns de la consistència han de reaccionar a les funcions de fars de llum trobats.</string>
     <string name="prefConsistFollowString2Title">Cadena 2</string>
-    <string name="prefConsistFollowString2Summary">Les cadenes (s) separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer una funció similar.</string>
+    <string name="prefConsistFollowString2Summary">Les cadenes separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer una funció similar.</string>
     <string name="prefConsistFollowAction2Title">Acció per a la cadena 2</string>
     <string name="prefConsistFollowAction2Summary">Quins cajuns del consisteixen han de reaccionar a les funcions trobades.</string>
     <string name="prefConsistFollowString3Title">Cadena 3</string>
-    <string name="prefConsistFollowString3Summary">Les cadenes (s) separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer una funció similar.</string>
+    <string name="prefConsistFollowString3Summary">Les cadenes separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer una funció similar.</string>
     <string name="prefConsistFollowAction3Title">Acció per a la cadena 3</string>
     <string name="prefConsistFollowAction3Summary">Quins cajuns del consisteixen han de reaccionar a les funcions trobades.</string>
     <string name="prefConsistFollowString4Title">Cadena 4</string>
-    <string name="prefConsistFollowString4Summary">Les cadenes (s) separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer una funció similar.</string>
+    <string name="prefConsistFollowString4Summary">Les cadenes separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer una funció similar.</string>
     <string name="prefConsistFollowAction4Title">Acció per a la cadena 4</string>
     <string name="prefConsistFollowAction4Summary">Quins cajuns del consisteixen han de reaccionar a les funcions trobades.</string>
     <string name="prefConsistFollowString5Title">Cadena 5</string>
-    <string name="prefConsistFollowString5Summary">Les cadenes (s) separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer una funció similar.</string>
+    <string name="prefConsistFollowString5Summary">Les cadenes separades per comes a buscar a les etiquetes de funció dels locos en consisteixen a reconèixer una funció similar.</string>
 
-    <string name="prefKidsSectionTitle">Preferències dels nens</string>
-    <string name="prefKidsSectionSummary">Opcions per a nens petits.</string>
+    <string name="prefKidsSectionTitle">Preferències de la mainada</string>
+    <string name="prefKidsSectionSummary">Opcions per als mes menuts.</string>
     <string name="prefKidsHelpTitle">Notes per al temporitzador:</string>
-    <string name="prefKidsHelpSummary">- seleccioneu el boig primer. \n- El temporitzador començarà amb el primer augment de la velocitat. \n- Cal tornar a aquesta preferència per restablir l\'hora (o netejar-la) després del temps d\'espera. \n \nRecomissions: \n- Desactiva les tecles de volum. \n- Desactiva \'Passa el dit pels torns\'. \n- Desactiva \'Passa el pas per les rutes\'. \n- Desactiveu EStop.</string>
+    <string name="prefKidsHelpSummary">- Seleccioneu primer la locomotora. \n- El temporitzador començarà amb el primer augment de la velocitat. \n- Cal tornar a aquesta preferència per restablir l\'hora (o netejar-la) després del temps d\'espera. \n \nRecomanacions: \n- Desactiva les tecles de volum. \n- Desactiva \'Passa el dit pels torns\'. \n- Desactiva \'Passa el pas per les rutes\'. \n- Desactiveu EStop.</string>
     <string name="prefKidsTimerTitle">Durada limitada</string>
-    <string name="prefKidsTimerSummary">Restringiu el temps que el loco s\'executarà. per exemple. Cada nen tindrà una quantitat igual de temps.</string>
+    <string name="prefKidsTimerSummary">Restringiu el temps que la locomotora s\'executarà. Per exemple, cada nen tindrà una quantitat igual de temps.</string>
 
-    <string name="app_name_throttle_kids_running">Throttle - %1$s seg. romanent</string>
-    <string name="app_name_throttle_kids_enabled">Throttle - Temporitzador llest</string>
-    <string name="app_name_throttle_kids_ended">Throttle - El cronòmetre finalitza</string>
+    <string name="app_name_throttle_kids_running">Controlador - %1$s seg. restant</string>
+    <string name="app_name_throttle_kids_enabled">Controlador - Temporitzador preparat</string>
+    <string name="app_name_throttle_kids_ended">Controlador - Temporitzador finalitzat</string>
+
+    <string name="kidsTimer">Temporitzador</string>
+    <string name="timerDialogTitle">Contrasenya del Temporitzador</string>
+    <string name="timerDialogMessage">Contrasenya :</string>
+    <string name="timerDialogHint">Reinicia o Reseteja la Contrasenya</string>
 
     <string name="permissionsReadRecentConnections">Engine Driver necessita permisos D\'EMMAGATZEMATGE per llegir connexions recents.</string>
     <string name="permissionsStoreRecentConnections">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar connexions recents.</string>
@@ -674,35 +643,39 @@
     <string name="permissionsReadPhoneState">Engine Driver necessita els permisos del TELÈFON per aturar les operacions en una trucada.</string>
     <string name="permissionsReadFunctionSettings">Engine Driver necessita permisos D\'EMMAGATZEMATGE per llegir la configuració de la funció.</string>
     <string name="permissionsStoreFunctionSettings">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar la configuració de la funció.</string>
+    <string name="permissionsWriteSettings">Engine Driver necessita permisos D\'ESRIPTURA per canviar la brillantor de la pantalla.</string>
+    <string name="permissionsWriteSettingsAdditional">- Fes clic en el botó per concedir els permisos.\n- Fes clic \'Enrera\' per torna aquí.</string>
+    <string name="permissionsWriteSettingsAdditional2">Ignora-ho si no necessites que el Engine Driver modifiqui la brillantor de la pantalla del teu dispositiu.</string>
     <string name="permissionsConnectToServer">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar les connexions recents i els permisos del TELÈFON per aturar les operacions en una trucada.</string>
     <string name="permissionsGotoAppSettings">Permet aquests permisos de la configuració de l\'aplicació.</string>
     <string name="permissionsAppSettingsButton">Configuració de l\'aplicació</string>
     <string name="permissionsRetryButton">Torneu a provar</string>
-    <string name="permissionsRequestTitle">Permisos necessaris</string>
-    <string name="permissionsRetryTitle">Permisos rebuig</string>
+    <string name="permissionsRequestTitle">Permisos Necessaris</string>
+    <string name="permissionsRetryTitle">Permisos Rebutjats</string>
+
+    <!-- Introduction / Setup Wizard -->
 
     <string name="introWelcomeTitle">Benvingut a\nEngine Driver</string>
-    <string name="introWelcomeSummary">Aquesta aplicació es pot connectar a un servidor JMRI, MRC o DigiTrax WiThrottle per controlar els vostres dispositius i dispositius DCC. Les següents pàgines us guiaran a través de la configuració inicial.</string>
+    <string name="introWelcomeSummary">Aquesta aplicació es pot connectar a un servidor JMRI, MRC o DigiTrax WiThrottle per controlar les vostres locomotores i dispositius DCC. Les següents pàgines us guiaran a través de la configuració inicial.</string>
 
-    <string name="introThrottleNameSummary">Establiu un nom per a aquest dispositiu</string>
-    <string name="introThrottleNameSummary1">El nom que trieu apareixerà a la finestra de Wi-triturador de JMRI. Pot ajudar-se en resoldre problemes amb diversos dispositius. Ha de ser únic.</string>
+    <string name="introThrottleNameSummary">Establiu un nom per a aquest controlador</string>
+    <string name="introThrottleNameSummary1">El nom que trieu apareixerà a la finestra de WiThrottle del JMRI. Pot ajudar-vos a resoldre problemes amb diversos dispositius. Ha de ser únic.</string>
 
     <string name="introThemeSummary">Trieu els colors i l\'aparença de tota l\'aplicació.</string>
-    <string name="introThrottleTypeSummary">Trieu el disseny de la pantalla principal de l\'acelerador.</string>
+    <string name="introThrottleTypeSummary">Trieu el disseny de la pantalla principal del controlador.</string>
     <string name="introThrottleTypeSummary2">Depenent del tipus escollit, se us limitarà el nombre de reguladors individuals (1 a 6) a la pantalla.</string>
 
     <string name="introFinishTitle">Llest per usar</string>
-    <string name="introFinishSummary">A continuació, inicieu el servidor WiThrottle a JMRI.</string>
-    <string name="introFinishSummary1">A continuació, completeu aquesta introducció i seleccioneu el vostre servidor WiThrottle si \'descobert \', o introduïu manualment l\'adreça IP i el port.</string>
-    <string name="introFinishSummary2">(Es mostren a la finestra WiThrottle de JMRI).\n\nPer obtenir instruccions detallades, consulteu la pàgina \'Quant a\' del menú o visiteu la pàgina d\'inici Engine Driver a\n\'https://enginedriver.mstevetodd.com\'.</string>
-    <string name="introFinishSummary3">Podeu fer canvis addicionals a l\'aparença i al comportament de l\'aplicació des del menú \'Preferències\'.</string>
+    <string name="introFinishSummary">A continuació, inicieu el servidor WiThrottle al JMRI.</string>
+    <string name="introFinishSummary1">A continuació, completeu aquesta acció i seleccioneu el vostre servidor WiThrottle si és \'descobert \', o introduïu manualment l\'adreça IP i el port.</string>
+    <string name="introFinishSummary2">(Es mostren a la finestra WiThrottle del JMRI).\n\nPer obtenir instruccions detallades, consulteu la pàgina \'Quant a\' del menú o visiteu la pàgina d\'inici Engine Driver a\n\'https://enginedriver.mstevetodd.com\'.</string>
+    <string name="introFinishSummary3">Podeu fer canvis addicionals de l\'aparença i del comportament de l\'aplicació en el menú \'Preferències\'.</string>
 
-    <string name="introButtonsTitle">Controls deslizants i botons de velocitat</string>
+    <string name="introButtonsTitle">Controls lliscants i botons de velocitat</string>
     <string name="introButtonsSummary">Trieu com controlar la velocitat dels vostres trens.</string>
-    <string name="introButtonsSlider">Només el control lliscant\n(no és possible amb \'Botões Grandes\')</string>
-    <string name="introButtonsSliderAndButtons">Control deslizable i botons\n(no és possible amb \'Botões Grandes\'.)</string>
+    <string name="introButtonsSlider">Només el control lliscant\n(no és possible amb \'Botons Grans\')</string>
+    <string name="introButtonsSliderAndButtons">Control lliscant i botons\n(no és possible amb \'Botns Grans\'.)</string>
     <string name="introButtonsNoSlider">Només botons de velocitat</string>
 
-    <string name="introbackButtonPress">Torneu a iniciar l\'aplicació Driver del motor per completar la introducció.</string>
-
+    <string name="introbackButtonPress">Torneu a iniciar l\'aplicació Engine Driver per completar el procés d\'inici.</string>
 </resources>
