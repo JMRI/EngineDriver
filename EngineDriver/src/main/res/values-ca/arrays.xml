@@ -162,19 +162,19 @@
         <item>Combinació de text complex: cadenes configurables per l\'usuari</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
-        <item>Locomotora Capdavantera - Coincidència Parcial</item>
-        <item>Lead + Trail Locomotora - Coincidència Parcial</item>
-        <item>Totes les Locomotores - Coincidència Parcial</item>
-        <item>Locomotora Capdavantera - Coincidència Exacta</item>
-        <item>Lead + Trail Locomotora: Coincidència Exacta</item>
-        <item>Totes les Locomotores - Coincidència Exacta</item>
+        <item>Lead Loco - Partial Match</item>
+        <item>Lead + Trail Locos - Partial Match</item>
+        <item>Tots els bojos - Partit parcial</item>
+        <item>Lead Loco - Match exacte</item>
+        <item>Lead + Trail Locos: coincidència exacta</item>
+        <item>Tots els bojos - Match exacte</item>
     </string-array>
 
     <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
         <item>No fer res</item>
-        <item>Locomotora Capdavantera - El mateix número de funció</item>
-        <item>Lead + Trail Locomotora - El mateix número de funció</item>
-        <item>Totes les Locomotores - El mateix número de funció</item>
+        <item>Lead Loco: el mateix número de funció</item>
+        <item>Locals de plom + remolc - Igual número de funció</item>
+        <item>Tots els locos: el mateix número de funció</item>
     </string-array>
 
     <string-array name="prefKidsTimerEntries"> <!-- display version -->
@@ -183,7 +183,7 @@
         <item>2 minuts</item>
         <item>5 minuts</item>
         <item>10 minuts</item>
-        <item>Execució finalitzada</item>
+        <item>Executar completat</item>
     </string-array>
 
 </resources>
