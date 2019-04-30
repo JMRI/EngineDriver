@@ -15,7 +15,7 @@
 
       translations provided by Roberto Falorni
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="exit">Saída</string>
     <string name="settings">Padrão das Funções</string>
     <string name="fb_label">Rótulo Função</string>
@@ -133,6 +133,9 @@
     <string name="lightsTextFollow">Bt Função Seguinte</string>
     <string name="lightsTextUnknown">Desconhecido</string>
 
+    <string name="logviewerClose">echar</string>
+    <string name="logviewerSave">Comece a gravar para arquivo</string>
+
     <string name="prefTitle">Preferências</string>
     <string name="prefSummary">Preferências para Engine Driver</string>
     <string name="preferences">Preferências</string>
@@ -165,7 +168,7 @@
     <string name="prefSelLocoWhileMovingTitle">Permitir seleção de locomotiva em movimento?</string>
     <string name="prefSelLocoWhileMovingSummary">Abilita o botão Locomotiva em movimento.</string>
     <string name="prefShowAddressInsteadOfNameTitle">Mostrar Endereço Locomotiva ao invés do Nome?</string>
-    <string name="prefShowAddressInsteadOfNameSummary">Mostrar o Endereço DCC da locomotiva ao invés do Nome Locomotiva na pagina do Controlador</string>
+    <string name="prefShowAddressInsteadOfNameSummary" tools:ignore="Typos">Mostrar o Endereço DCC da locomotiva ao invés do Nome Locomotiva na pagina do Controlador</string>
     <string name="prefIncreaseWebViewSizeTitle">Aumentar tamanho tela Web?</string>
     <string name="prefIncreaseWebViewSizeSummary">Aumentar tamanho tela Web de 60% para pequenas telas.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Usar Modo Imersivo para o Controlador?</string>
@@ -239,11 +242,10 @@
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Usar etiquestas funções padrão?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Visualizar as etiquetas padrão das funções no lugar das etiquetas das entradas da lista de locomotivas.</string>
 
-    <string name="prefDecreaseLocoNumberHeightTitle">Diminuir altura numero Locomotiva?</string>
+    <string name="prefDecreaseLocoNumberHeightTitle" tools:ignore="Typos">Diminuir altura numero Locomotiva?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Utilizar botões menores para o Número da locomotiva, velocidade e botões de direção.</string>
     <string name="prefNumOfThrottles">Número de Controladores</string>
     <string name="prefNumOfThrottlesSummary">Escolha quantos Controladores quer visualizar na tela.</string>
-    <string name="prefNumOfThrottlesDefault">Dois</string>
 
     <string name="prefThrottleScreenTypeTitle">Tipo de tela do controlador</string>
     <string name="prefThrottleScreenTypeSummary">Que tipo de tela de controlador usar.\nATENÇÃO! Engine Driver irá reiniciar imediatamente.</string>
@@ -281,13 +283,16 @@
     <string name="prefDropOnAcquireSummary">Liberta Locomotiva atual antes de Adquirir outra.</string>
     <string name="prefHideIfNoUserNameTitle">Esconder se não tiver Nome de Usuário?</string>
     <string name="prefHideIfNoUserNameSummary">Omitir Desvio da lista se o nome do usuário é vazio.</string>
+
     <string name="prefRosterRecentLocosTitle">Lista em Locmotivas Recentes?</string>
     <string name="prefRosterRecentLocosSummary">Incluir seleções da Lista in Locomotivas Recentes?</string>
+    <string name="prefRosterRecentLocoNamesTitle">Nomes de lista em locais recentes?</string>
+    <string name="prefRosterRecentLocoNamesSummary">Incluir nomes Loco da lista na lista Recente se um endereço correspondente for encontrado?</string>
     <string name="prefMaximumRecentLocosTitle">Máximo Locomotivas Recentes</string>
 
     <string name="prefRosterFilterTitle">Filtro da Lista</string>
     <string name="prefRosterFilterSummary">Incluir apenas entradas de lista que iniciem com…</string>
-    <string name="prefRosterFilterDefaultValue"></string>
+    <string name="prefRosterFilterDefaultValue" />
     <string name="FilterRosterList">Filtro</string>
     <string name="FilterRosterListHint">Contém…</string>
     <string name="LocoSelectMethodHelp">Digite o endereço DCC da sua locomotiva acima e clique em \'Acquire\'.\n\nAlternadamente, selecione uma locomotiva da \'Lista\' JMRI ou selecione uma locmotivas usadas \'Recentemente\', clicando em um dos botões acima.</string>
@@ -364,6 +369,10 @@
     <string name="routes_route">Nome de Sistema da Rota</string>
 
     <string name="throttle_name">Nome Controlador: %1$s</string>
+
+    <string name="prefShowAdvancedPreferencesTitle">Mostrar Preferências avançadas?</string>
+    <string name="prefShowAdvancedPreferencesSummary">Mostrar ou ocultar as preferências adicionais.</string>
+
     <string name="prefConsistLightsLongClickTitle">Controla luzes Comboio com clic longo</string>
     <string name="prefConsistLightsLongClickSummary">Muda as Luzes de cada Locomotiva em um Comboio com um clic longo no botão de Seleção da Locomotiva.</string>
     <string name="consistLights_help">Clicar em uma Locomotiva para ligar as luzes da Locomotiva \'Desliga\' ou \'Seguir botão Função\'.\n\nClic longo na Locomotiva para forçar o status da Luz \'Desliga\', sem enviar o comando à Locomotiva. (Caso ED seja confuso.)\n\nPressionar Seta Voltar quando pronto.</string>
@@ -375,12 +384,22 @@
     <string name="prefImportExportLocoListTitle">Incluir lista de locomotivas recentes</string>
     <string name="prefImportExportLocoListSummary">Inclui as locomotivas na lista locomotivas recentes em \'Importar\' e \'Exportar\'.</string>
     <string name="prefAutoImportExportTitle">Importar/Exportar específico para Auto host</string>
-    <string name="prefAutoImportExportSummary">Para cada conexão a um host, \'Importar\' AUTOMATICAMENTE as preferências para aquele host, e opcionalmente \'Exportar\' ao desconectar. \n(Para voltar constantemente a um estado conhecido, usar \'Auto Importação somente ao conectar\' após a primeira vez, ou após um salvamento manual (abaixo).)</string>
+    <string name="prefAutoImportExportSummary">Para cada conexão a um host, \'Importar\' AUTOMATICAMENTE as preferências para aquele host, e opcionalmente \'Exportar\' ao desconectar.  (Para voltar constantemente a um estado conhecido, usar \'Auto Importação somente ao conectar\' após a primeira vez, ou após um salvamento manual (abaixo).)</string>
+
+    <string name="prefImportServerManualTitle">Importar desde el servidor actual (manualmente)</string>
+    <string name="prefImportServerManualSummary">Archivo de servidor para \'Importar\' \'un conjunto de preferencias del servidor conectado actualmente.\nEl archivo debe estar en el \'/engine_driver/\'del servidor y el servidor web debe estar ejecutándose. \nAdvertencia: la importación comenzará inmediatamente al guardar esta preferencia.</string>
+
+    <string name="prefImportServerAutoTitle">Importación automática desde todos los servidores</string>
+    <string name="prefImportServerAutoSummary">Importa automáticamente las preferencias de los servidores en conexión. \n(Si el archivo \'/engine_driver/auto_preferences.ed\' está en el servidor y si es más reciente que la última vez que se verificó.)</string>
+
+    <string name="importServerAutoDialog">O arquivo New Preferences foi encontrado neste servidor.\nVocê deseja importá-lo?\n\nAviso!\n\'Completo\' - Todas as suas preferências serão sobrescritas.\n\n\'Parcial\' - Todas as preferências, exceto as preferências Tema e Tipo de página do acelerador, serão sobrescritas.</string>
+    <string name="importServerAutoDialogPositiveButton">Completo</string>
+    <string name="importServerAutoDialogNeutralButton">Parcial</string>
 
     <string name="prefHostImportExportTitle">Importar/Exportar específico para host Manual</string>
     <string name="prefHostImportExportSummary">\'Importar\' ou \'Exportar\' suas preferências para um host específico para a pasta \'engine_driver/\'. P host deve estar em sua lista de conexões recentes.\nOcorrerá IMEDIATAMENTE após a seleção da opção.\n(Somente disponível quando não atualmente conectado.)</string>
 
-    <string name="prefImportExportOverwite">Arquivo já presente. Sobregravar?</string>
+    <string name="prefImportExportOverwite">Arquivo \'%1$s\' já presente. Sobregravar?</string>
     <string name="prefImportExportErrorReadingList">Erro leitura lista conexões recentes:</string>
     <string name="prefImportExportErrorReadingFrom">Importação de \'engine_driver/%1$s\' falhou! Pode não ter salvo ainda as preferências para este host.</string>
     <string name="prefImportExportErrorNotConnected">Host não conectado.</string>
@@ -432,9 +451,9 @@
     <string name="prefLocaleTitle">Localização</string>
     <string name="prefLocaleSummary">Idioma para usar. ATENÇÃO! Engine Driver irá reiniciar imediatamente. As etiquetas dos botões de direção serão redefinidas.</string>
 
-    <string name="functionButton00DefultValue">Luz</string>
-    <string name="functionButton01DefultValue">Sino</string>
-    <string name="functionButton02DefultValue">Buzina</string>
+    <string name="functionButton00DefaultValue">Luz</string>
+    <string name="functionButton01DefaultValue">Sino</string>
+    <string name="functionButton02DefaultValue">Buzina</string>
 
     <string name="gamepadTestButtonLabelDpadUp">Cima</string>
     <string name="gamepadTestButtonLabelDpadDown">Baixo</string>
@@ -452,8 +471,13 @@
     <string name="gamepadTestKeycodeLabel">Código tecla:\s\s</string>
     <string name="gamepadTestFunctionLabel">Função:\s\s</string>
     <string name="gamepadTestCompleteLabel">Status teste:\s\s</string>
-    <string name="gamepadTestHelp">Rolar para baixo para ler as instruções completas&#8230;\n\bApertar TODOS Dpad E os quatros botões principais do gamepad NÃO FUNCIONARÁ.\n\Se não conseguir ativar todos os botões, mude o modo do gamepad (vide instruções do seu gamepad) ou tente outro tipo de gamepad (acima).\n\n\'VOLTAR\' ou \'Cancelar\' sairá do teste mas o gamepad NÃO FUNCIONARÁ.\n\'SALTAR\', ou premer o botão do gamepad \'Diminuir Velocidade\' três vezes, forçará o teste a passar, mesmo que o gamepad não funcione corretamente.\n\'RESET\' dirá ao ED que nenhum gamepad foi usado ainda.\nSe um teste \'SIMPLES\' foi selecionado, um unico aperto do botão \'Diminuir Velocidade\' saltará o teste.\n\nUse a opção \'Teste Gamepad\' no menu para voltar a esta página.</string>
-    <string name="gamepadTestHelpNonForced">\Se não conseguir ativar todos os botões, mude o modo do gamepad (vide instruções do seu gamepad) ou tente outro tipo de gamepad (acima).\n Poderá ser necessário testar de novo o gamepad quando será usado pela primeira vez a partir da tela do controlador.</string>
+    <string name="gamepadTestHelp" tools:ignore="Typos">Rolar para baixo para ler as instruções completas&#8230;
+        \n\bApertar TODOS Dpad E os quatros botões principais do gamepad NÃO FUNCIONARÁ.\n\Se não conseguir ativar todos os botões, mude o modo do gamepad (vide instruções do seu gamepad) ou tente outro tipo de gamepad (acima).
+        \n\n\'VOLTAR\' ou \'Cancelar\' sairá do teste mas o gamepad NÃO FUNCIONARÁ.
+        \n\'SALTAR\', ou premer o botão do gamepad \'Diminuir Velocidade\' três vezes, forçará o teste a passar, mesmo que o gamepad não funcione corretamente.
+        \n\'RESET\' dirá ao ED que nenhum gamepad foi usado ainda.\nSe um teste \'SIMPLES\' foi selecionado, um unico aperto do botão \'Diminuir Velocidade\' saltará o teste.\n\nUse a opção \'Teste Gamepad\' no menu para voltar a esta página.</string>
+    <string name="gamepadTestHelpNonForced">\Se não conseguir ativar todos os botões, mude o modo do gamepad (vide instruções do seu gamepad) ou tente outro tipo de gamepad (acima).
+        \n Poderá ser necessário testar de novo o gamepad quando será usado pela primeira vez a partir da tela do controlador.</string>
     <string name="gamepadTestIncomplete">"Teste Incompleto"</string>
     <string name="gamepadTestComplete">"Teste Completo"</string>
     <string name="gamepadTestCompleteToast">"Gamepad testado completamente com sucesso"</string>
@@ -483,24 +507,36 @@
     <string name="toastSwipeUpScreenDimmed">Tela Controlador Esmaecida - Deslizar para reativar</string>
     <string name="toastSwipeUpViewHidden">Vista Web temporariamente escondida. Para esconder permanentemente alterar as preferências</string>
     <string name="toastThrottleAlertEstop">Alerta: Locomotiva %1$s está Configurada em estado de ESTOP</string>
+    <string name="toastThrottleImportServerAutoSucceeded">A importação automática de preferências do servidor da Web do JMRI foi bem-sucedida.</string>
 
+    <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">O valor inserido está fora dos limites  (%1$s-%2$s). Reiniciado para %3$s.</string>
     <string name="toastPreferencesNotNumeric">O valor inserido não é um número.(%1$s-%2$s). Reiniciado para %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferências Reiniciadas a valores Padrão!</string>
+    <string name="toastPreferencesImportServerManualFailed">Preferências de importação do servidor falhou! Verifique se o arquivo está correto. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Preferências Importar do servidor bem-sucedido. (%1$s)</string>
+    <string name="toastPreferencesImportSucceeded">Preferências Importar do arquivo Bem-sucedido.</string>
+    <string name="toastPreferencesThemeChangeSucceeded">Mudança de tema é bem-sucedida.</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">Alteração do tipo de página do acelerador é bem-sucedida.</string>
+    <string name="toastPreferencesLocaleChangeSucceeded">Mudança de idioma (idioma) é bem-sucedida.</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver reiniciado com o idioma escolhido.</string> -->
 
-    <string name="toastTurnoutInvalidNumber">Numero de desvio inválido.</string>
+    <!--    Toast messages for the Turnout Activity -->
+    <string name="toastTurnoutInvalidNumber" tools:ignore="Typos">Numero de desvio inválido.</string>
     <string name="toastTurnoutCommandTo">Comando enviado para o desvio %1$s</string>
     <string name="toastTurnoutCommandToClose">Reto</string>
     <string name="toastTurnoutCommandToThrow">Desviado</string>
     <string name="toastTurnoutCommandToToggle">Alternar</string>
     <string name="toastConnectEnterAddress">Inserir ou selecionar um endereço e uma porta</string>
     <string name="toastConnectInvalidPort">Número Porta inválido, tentar de novo.</string>
-    <string name="toastConnectConnected">Conectado ao Servidor: %1$s Porta : %2$s</string>
+    <string name="toastConnectConnected">Conectado ao Servidor: %1$s Porta: %2$s</string>
     <string name="toastConnectUnableToSavePref">Impossível salvar preferências específicas do host. Nome do host não disponível.</string>
     <string name="toastConnectUnableToLoadPref">Impossível carregar preferências específicas do host. Nome do host não disponível.</string>
     <string name="toastConnectErrorReadingRecentConnections">Erro de leitura da lista de conexões recentes:</string>
     <string name="toastConnectErrorSavingRecentConnection">Erro salvando conexões recentes:</string>
+    <string name="toastConnectRemoveDemoHostError">O servidor de demonstração só pode ser removido modificando as preferências.</string>
+    <string name="toastConnectRemoved">Sever removido da lista.</string>
+
     <string name="toastRoutesCommandSent">"Comando enviado para escolher Rota"</string>
     <string name="toastImportExportExportSucceeded">Exportação preferências para \'engine_driver/%1$s\' realizada com sucesso.</string>
     <string name="toastImportExportImportSucceeded">Importação preferências de \'engine_driver/%1$s\' realizada com sucesso.</string>
@@ -510,6 +546,10 @@
     <string name="toastImportExportCannotImport">Impossível importar preferências. Não conectado ao host.</string>
     <string name="toastImportExportCannotExport">Impossível exportar preferências específicas do host. Não conectado ao host.</string>
     <string name="toastSelectLocoConfirmClear">Confirmar que deseja remover todas as Locomotivas Recentes apertando o botão \' Limpar Lista\' DE NOVO.</string>
+
+    <!--    Toast messages for the Log Viewer Activity -->
+    <string name="toastSaveLogFile">Logging Iniciado no arquivo %1$s. O registro continuará até que você saia do aplicativo Engine Driver.</string>
+
     <string name="prefTtsTitle">Resposta Vocal</string>
     <string name="prefTtsSummary">Falar Eventos Chaves</string>
     <string name="prefTtsWhenTitle">Resposta Vocal</string>
@@ -620,8 +660,8 @@
     <string name="introThrottleTypeSummary2">Dependendo do tipo escolhido, você será limitado no número de aceleradores individuais (1 a 6) na tela.</string>
 
     <string name="introFinishTitle">Pronto para usar</string>
-    <string name="introFinishSummary">Em seguida, inicie o servidor WiThrottle no JMRI.</string>
-    <string name="introFinishSummary1">Em seguida, conclua esta introdução e selecione seu servidor WiThrottle se \'descoberto \' ou insira manualmente o endereço IP e a porta.</string>
+    <string name="introFinishSummary">O Engine Driver agora está pronto para se conectar.</string>
+<!--    <string name="introFinishSummary1">Em seguida, conclua esta introdução e selecione seu servidor WiThrottle se \'descoberto \' ou insira manualmente o endereço IP e a porta.</string> -->
     <string name="introFinishSummary2">(Estes são mostrados na janela do WiThrottle em JMRI.) \n\nPara obter instruções detalhadas, consulte a página \'Sobre \' no menu ou visite a página inicial do Engine Driver em \n\'https://enginedriver.mstevetodd.com\'.</string>
     <string name="introFinishSummary3">Você pode fazer alterações adicionais na aparência e no comportamento do aplicativo no menu \'Preferências\'.</string>
 
@@ -632,5 +672,12 @@
     <string name="introButtonsNoSlider">Botões de velocidade apenas</string>
 
     <string name="introbackButtonPress">Por favor, reinicie o aplicativo Driver do Motor para concluir a Introdução.</string>
+    <string name="consist_trail_label">Locomotiva chumbo</string>
+    <string name="fb_column_label">Rótulo</string>
+    <string name="fb_column_function">Esta função #</string>
+    <string name="rosterEmpty">Não foi possível localizar nenhum enties no seu registo de JMRI. Use o \'Endereço DCC\' ou opção \'recente\' em seu lugar.</string>
+    <string name="gamepadTestDeviceName">BT:</string>
+    <string name="prefConsistFollowDefaultActionTitle">Ação padrão</string>
+    <string name="prefConsistFollowDefaultActionSummary">Que locos na consistem deve reagir aos botões de função se nenhuma das regras abaixo são se encontram.</string>
 
 </resources>

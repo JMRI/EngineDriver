@@ -54,6 +54,8 @@ public class intro_activity extends AppIntro2 {
 
         mainapp = (threaded_application) this.getApplication();
 
+        mainapp.introIsRunning = true;
+
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         originalPrefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
         originalPrefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
@@ -91,9 +93,31 @@ public class intro_activity extends AppIntro2 {
             askForPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, slideNumber);
         }
 
+        if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION )) {
+            SliderPage sliderPage3 = new SliderPage();
+            sliderPage3.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
+            sliderPage3.setDescription(getApplicationContext().getResources().getString(R.string.permissionsACCESS_COARSE_LOCATION));
+            sliderPage3.setImageDrawable(R.drawable.icon_xl);
+            sliderPage3.setBgColor(getResources().getColor(R.color.intro_background));
+            addSlide(AppIntroFragment.newInstance(sliderPage3));
+            slideNumber = slideNumber + 1;
+            askForPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, slideNumber);
+        }
+
         if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.WRITE_SETTINGS)) {
-            Fragment fragment3 = new intro_write_settings();
-            addSlide(fragment3);
+            if (android.os.Build.VERSION.SDK_INT >= 23) {
+                Fragment fragment3 = new intro_write_settings();
+                addSlide(fragment3);
+//            } else {
+//                SliderPage sliderPage3 = new SliderPage();
+//                sliderPage3.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
+//                sliderPage3.setDescription(getApplicationContext().getResources().getString(R.string.permissionsWriteSettings));
+//                sliderPage3.setImageDrawable(R.drawable.icon_xl);
+//                sliderPage3.setBgColor(getResources().getColor(R.color.intro_background));
+//                addSlide(AppIntroFragment.newInstance(sliderPage3));
+//                slideNumber = slideNumber + 1;
+//                askForPermissions(new String[]{Manifest.permission.WRITE_SETTINGS}, slideNumber);
+            }
         }
 
         Fragment fragment0 = new intro_throttle_name();
@@ -160,6 +184,7 @@ public class intro_activity extends AppIntro2 {
             Runtime.getRuntime().exit(0); // really force the kill
 
         }
+        mainapp.introIsRunning = false;
         this.finish();
     }
 
@@ -172,7 +197,7 @@ public class intro_activity extends AppIntro2 {
     @Override
     public void onPause() {
         super.onPause();
-        if (!this.isFinishing()) {       //only invoke setContentIntentNotification when going into background
+        if (!this.isFinishing() && !mainapp.introIsRunning) {       //only invoke setContentIntentNotification when going into background
             mainapp.addNotification(this.getIntent());
         }
     }
@@ -181,14 +206,15 @@ public class intro_activity extends AppIntro2 {
     public void onResume() {
         super.onResume();
         mainapp.removeNotification();
-        if (this.isFinishing()) {        //if finishing, expedite it
-            return;
-        }
+//        if (this.isFinishing()) {        //if finishing, expedite it
+//            return;
+//        }
     }
 
 
     @Override
     public void onDestroy() {
+        mainapp.introIsRunning = false;
         if (!introComplete) {
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.introbackButtonPress), Toast.LENGTH_LONG).show();
         }

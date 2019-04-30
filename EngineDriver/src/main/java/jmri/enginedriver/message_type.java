@@ -61,4 +61,7 @@ interface message_type {
     int KIDS_TIMER_START = 39;   //
     int KIDS_TIMER_END = 40;     //
     int KIDS_TIMER_TICK = 41;    //
+    int IMPORT_SERVER_MANUAL_SUCCESS = 42;    //
+    int IMPORT_SERVER_MANUAL_FAIL = 43;    //
+    int IMPORT_SERVER_AUTO_AVAILABLE = 44;    //
 }

@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+      Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+      This program is free software; you can redistribute it and/or modify it 
+      under the terms of the GNU General Public License as published by the 
+      Free Software Foundation;
+      either version 3 of the License, or (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+      for more details. You should have received a copy of the GNU General
+      Public License along with this program; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+      translations provided by Petr Šídlo
+-->
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="address_size">
+        <item>Krátká</item>
+        <item>Dlouhá</item>
+    </string-array>
+
+    <string-array name="address_size_defaultsEntries">  <!-- display version -->
+        <item>Krátká</item>
+        <item>Dlouhá</item>
+        <item>Automaticky</item>
+    </string-array>
+
+    
+    <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
+        <item>Procenta</item>
+        <item>Automaticky rychlostní kroky</item>
+        <item>8 kroků</item>
+        <item>10 kroků</item>
+        <item>14 kroků</item>
+        <item>28 kroků</item>
+        <item>128 kroků</item>
+    </string-array>
+    
+    
+    <string-array name="WebViewLocationEntries">  <!-- display version -->
+        <item>Dolů</item>
+        <item>nic</item>
+    </string-array>
+    
+    
+    <string-array name="OrientationEntries">  <!-- display version -->
+        <item>Na výšku</item>
+        <item>Na šířku</item>
+        <item>Automaticky rotovat</item>
+        <item>Automaticky web</item>
+    </string-array>
+    
+    
+    <string-array name="NumOfThrottlesEntries">  <!-- display version -->
+        <item >Jeden</item>
+        <item >Dva</item>
+        <item >Tři</item>
+        <item >Čtyři</item>
+        <item >Pět</item>
+        <item >Šest</item>
+    </string-array>
+    
+    
+    <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
+        <item tools:ignore="TypographyDashes">Původní &#8211; Telefon nebo Tablet (1-3 ovladače)</item>
+        <item tools:ignore="TypographyDashes">Jednoduchý &#8211; Tablet doporučeno (1-6 ovladače)</item>
+        <item >Svisle &#8211; Telefon nebo Tablet (2 ovladače)</item>
+        <item >Velká tlačítka &#8211; Vlevo (1 ovladač)</item>
+        <item >Velká tlačítka &#8211; Vpravo (1 ovladač)</item>
+        <item >Svisle &#8211; Vlevo (1 ovladač)</item>
+        <item >Svisle &#8211; Vpravo (1 ovladač)</item>
+    </string-array>
+    
+    
+    <string-array name="DisplayClockEntries">  <!-- display version -->
+        <item >Nic</item>
+        <item >12 hodinový formát</item>
+        <item >24 hodinový formát</item>
+    </string-array>
+
+
+    <string-array name="prefGamePadTypeEntries">  <!-- display version -->
+        <item >Nic</item>
+        <item >Mocute iCade</item>
+        <!-- <item >Mocute/iOS- iCade Mode - DPAD rotated</item> -->
+        <item >Mocute iCade+DPAD</item>
+        <!-- <item >Mocute/iOS- iCade+DPAD Mode - DPAD rotated</item> -->
+        <item >Mocute MTK</item>
+        <!-- <item >Mocute/Android- MTK Mode - DPAD rotated</item> -->
+        <item >Mocute Android-Game</item>
+        <!-- <item >Mocute/Android- Game Mode - DPAD rotated</item> -->
+<!--
+        <item >VRBOX/Android- A Mode</item>
+        <item >VRBOX/Android- A Mode - DPAD rotated</item>
+        <item >VRBOX/Android- C Mode</item>
+        <item >VRBOX/Android- C Mode - DPAD rotated</item>
+        <item >VRBOX/iOS- C Mode</item>
+        <item >VRBOX/iOS- C Mode - DPAD rotated</item>
+-->
+        <item>MagicseeR1 Android-Game B</item>
+        <item >Flydigi Wee 2</item>
+    </string-array>
+
+    
+    <string-array name="prefSwipeUpOptionsEntries">  <!-- display version -->
+        <item >Nic</item>
+        <item >Skrýt Web Pohled\n(vyžaduje \'Ovladačový Web Pohled\' předvolby)</item>
+        <item >Zamknout a Ztlumit obrazovku</item>
+        <item >Ztlumit obrazovku</item>
+        <item >Působivý režim dočasně povolit-zakázat</item>
+    </string-array>
+
+    <string-array name="prefGamePadKeyEntries">  <!-- display version -->
+        <item >Vše Zastavit</item>
+        <item >Zastavit</item>
+        <item >Vpřed</item>
+        <item >Vzad</item>
+        <item >Přepnout Vpřed/Vzad</item>
+        <item >Zvýšit rychlost</item>
+        <item >Snížit rychlost</item>
+        <item >Další ovladač</item>
+        <item >Funkce 00/Světla</item>
+        <item >Funkce 01/Zvon</item>
+        <item >Funkce 02/Houkačka</item>
+        <item >Funkce 03</item>
+        <item >Funkce 04</item>
+        <item >Funkce 05</item>
+        <item >Funkce 06</item>
+        <item >Funkce 07</item>
+        <item >Funkce 08</item>
+        <item >Funkce 09</item>
+        <item >Funkce 10</item>
+        <item >Funkce 11</item>
+        <item >Funkce 12</item>
+        <item >Funkce 13</item>
+        <item >Funkce 14</item>
+        <item >Funkce 15</item>
+        <item >Funkce 16</item>
+        <item >Funkce 17</item>
+        <item >Funkce 18</item>
+        <item >Funkce 19</item>
+        <item >Funkce 20</item>
+        <item >Funkce 21</item>
+        <item >Funkce 22</item>
+        <item >Funkce 23</item>
+        <item >Funkce 24</item>
+        <item >Funkce 25</item>
+        <item >Funkce 26</item>
+        <item >Funkce 27</item>
+        <item >Funkce 28</item>
+    </string-array>
+
+    
+    <string-array name="prefGamePadFlydigiWee2Labels">
+        <item> </item> //not used
+        <item>Tlačítko Select akce</item>
+        <item>Tlačítko DPAD Up akce</item>
+        <item>Tlačítko DPAD Down akce</item>
+        <item>Tlačítko DPAD Left akce</item>
+        <item>Tlačítko DPAD Right akce</item>
+        <item>Tlačítko Start akce</item>
+        <item>Tlačítko X akce</item>
+        <item>Tlačítko Y akce</item>
+        <item>Tlačítko A akce</item>
+        <item>Tlačítko B akce</item>
+        <item>Levé rameno</item>
+        <item>Pravé rameno</item>
+        <item>Levý spouštěč</item>
+        <item>Pravý spouštěč</item>
+    </string-array>
+
+    <string-array name="prefGamePadMocuteLabels">
+        <item> </item> //not used
+        <item>Tlačítko Select (if present) akce</item>
+        <item>Tlačítko DPAD Up akce</item>
+        <item>Tlačítko DPAD Down akce</item>
+        <item>Tlačítko DPAD Left akce</item>
+        <item>Tlačítko DPAD Right akce</item>
+        <item>Tlačítko Start akce</item>
+        <item>Tlačítko X [iOS] akce</item>
+        <item>Tlačítko Y [Triangle] akce</item>
+        <item>Tlačítko A [Cross] akce</item>
+        <item>Tlačítko B [@] akce</item>
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+    </string-array>
+
+<!--
+    <string-array name="prefGamePadVRBoxLabels">
+        <item> </item> //not used
+        <item>Gamepad Button Esc (Front Upper)</item>
+        <item>Gamepad Button DPAD Up action</item>
+        <item>Gamepad Button DPAD Down action</item>
+        <item>Gamepad Button DPAD Left action</item>
+        <item>Gamepad Button DPAD Right action</item>
+        <item>Gamepad Button Enter (Front Lower)</item>
+        <item>Gamepad Button C action</item>
+        <item>Gamepad Button A action</item>
+        <item>Button not usable</item> // Gamepad Button B action
+        <item>Gamepad Button D action</item>
+    </string-array>
+-->
+
+    <string-array name="prefGamePadMagicseeR1Labels">
+        <item> </item> //not used
+        <item>Tlačítko OK (Přední horní)</item>
+        <item>Tlačítko DPAD Up akce</item>
+        <item>Tlačítko DPAD Down akce</item>
+        <item>Tlačítko DPAD Left akce</item>
+        <item>Tlačítko DPAD Right akce</item>
+        <item>Tlačítko Return (Přední dolní)</item>
+        <item>Tlačítko C akce</item>
+        <item>Tlačítko D akce</item>
+        <item>Tlačítko A akce</item>
+        <item>Tlačítko B akce</item>
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+    </string-array>
+
+    <string-array name="prefGamePadNoneLabels">
+        <item> </item> //not used
+        <item>Tlačítko není k dispozici</item>
+        <item>Tlačítko není k dispozici</item>
+        <item>Tlačítko není k dispozici</item>
+        <item>Tlačítko není k dispozici</item>
+        <item>Tlačítko není k dispozici</item>
+        <item>Tlačítko není k dispozici</item>
+        <item>Tlačítko není k dispozici</item>
+        <item>Tlačítko není k dispozici</item>
+        <item>Tlačítko není k dispozici</item>
+        <item>Tlačítko není k dispozici</item>
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+    </string-array>
+
+
+    <string-array name="prefEsuMc2KeyEntries">  <!-- display version -->
+        <item>(bez funkce)</item>
+        <item >Vše Zastavit</item>
+        <item >Zastavit</item>
+        <item >Vpřed</item>
+        <item >Vzad</item>
+        <item >Přepnout Vpřed/Vzad</item>
+        <item >Zvýšit rychlost</item>
+        <item >Snížit rychlost</item>
+        <item >Další ovladač</item>
+        <item>Funkce 00/Světla</item>
+        <item>Funkce 01/Zvon</item>
+        <item>Funkce 02/Houkačka</item>
+        <item>Funkce 03</item>
+        <item>Funkce 04</item>
+        <item>Funkce 05</item>
+        <item>Funkce 06</item>
+        <item>Funkce 07</item>
+        <item>Funkce 08</item>
+        <item>Funkce 09</item>
+        <item>Funkce 10</item>
+        <item>Funkce 11</item>
+        <item>Funkce 12</item>
+        <item>Funkce 13</item>
+        <item>Funkce 14</item>
+        <item>Funkce 15</item>
+        <item>Funkce 16</item>
+        <item>Funkce 17</item>
+        <item>Funkce 18</item>
+        <item>Funkce 19</item>
+        <item>Funkce 20</item>
+        <item>Funkce 21</item>
+        <item>Funkce 22</item>
+        <item>Funkce 23</item>
+        <item>Funkce 24</item>
+        <item>Funkce 25</item>
+        <item>Funkce 26</item>
+        <item>Funkce 27</item>
+        <item>Funkce 28</item>
+    </string-array>
+
+
+    <string-array name="prefImportExportEntries">  <!-- display version -->
+        <item>Nic</item>
+        <item>Exportovat</item>
+        <item>Importovat</item>
+        <item>Reset</item>
+    </string-array>
+
+    
+    <string-array name="prefAutoImportExportEntries">  <!-- display version -->
+        <item>Nic</item>
+        <item>Automaticky importovat/exportovat při připojení/odpojení</item>
+        <item>Automaticky importovat pouze při připojení</item>
+     </string-array>
+    
+     
+    <string-array name="prefHostImportExportEntries">   <!-- this is dynamically built so does not follow the norms -->
+        <item>Nic</item>
+    </string-array>
+
+    
+    <string-array name="prefThemeEntries">  <!-- display version -->
+        <item>Výchozí téma</item>
+        <item>Vysoký kontrast téma</item>
+        <item>Obrysy vysoký kontrast téma</item>
+        <item>Tmavé téma</item>
+        <item>Plnobarevné téma</item>
+    </string-array>
+
+
+    <string-array name="prefSelectedLocoIndicatorEntries">  <!-- display version -->
+        <item>Nic (Použijte \'v\',\'1\' pouze)</item>
+        <item>Obojí Hlasitost a Gamepad 1</item>
+        <item>Gamepad 1 pouze</item>
+    </string-array>
+
+
+    <string-array name="prefAccelerometerShakeEntries">  <!-- display version -->
+        <item>Nic</item>
+        <item>Skrýt Web Pohled\n(vyžaduje \'Ovladačový Web Pohled\' předvolby)</item>
+        <item>Zamknout a Ztlumit obrazovku</item>
+        <item>Ztlumit obrazovku</item>
+        <item>Další ovladač - pro tlačítka hlasitost</item>
+        <item>Vše zastavit</item>
+    </string-array>
+
+
+    <string-array name="prefTtsWhenEntries">  <!-- display version -->
+        <item>Nic</item>
+        <item>Pouze událost klávesy</item>
+    </string-array>
+
+
+    
+    <string-array name="prefTtsThrottleResponseEntries">  <!-- display version -->
+        <item>Nic</item>
+        <item>Ovladač</item>
+        <item>Ovladač + Lokomotiva</item>
+        <item>Ovladač + Rychlost</item>
+        <item>Ovladač + Lokomotiva + Rychlost</item>
+    </string-array>
+
+
+    <string-array name="prefYesNoEntries">  <!-- display version -->
+        <item>Ano</item>
+        <item>Ne</item>
+    </string-array>
+
+
+    <string-array name="prefLocaleEntries">  <!-- display version -->
+        <item>Použít nastavení telefonu</item>
+        <item>Anglicky (US) - Engine Driver výchozí</item>
+        <item>Italsky</item>
+        <item>Portugalsky</item>
+        <item>Německy</item>
+        <item>Španělsky</item>
+        <item>Katalánksy</item>
+        <item>Francouzsky</item>
+        <item>Česky</item>
+    </string-array>
+
+
+    <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
+        <item>Jednoduché přizpůsobení textu (původní)</item>
+        <item>Komplexní přizpůsobení textu - uživcatelsky nastavitelné řetězce</item>
+    </string-array>
+
+
+    <string-array name="prefConsistFollowEntries">  <!-- display version -->
+        <item>Přípřež lokomotiva - Částečná shoda</item>
+        <item>Přípřež+Postrk lokomotiva - Částečná shoda</item>
+        <item>Všechny lokomotivy - Částečná shoda</item>
+        <item>Přípřež lokomotiva - Přesná shoda</item>
+        <item>Přípřež+Postrk lokomotiva - Přesná shoda</item>
+        <item>Všechny lokomotivy - Přesná shoda</item>
+    </string-array>
+
+
+    <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
+        <item>Nedělat nic</item>
+        <item>Přípřež lokomotiva - Stejné číslo funkce</item>
+        <item>Přípřež+Postrk lokomotiva - Stejné číslo funkce</item>
+        <item>Všechny lokomotivy - Stejné číslo funkce</item>
+    </string-array>
+
+    
+    <string-array name="prefKidsTimerEntries">  <!-- display version -->
+        <item>Zakázáno</item>
+        <item>1 minuta</item>
+        <item>2 minuty</item>
+        <item>5 minut</item>
+        <item>10 minut</item>
+        <item>Běh dokončen</item>
+    </string-array>
+
+</resources>

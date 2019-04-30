@@ -40,8 +40,13 @@ public class PermissionsHelper {
             STORE_PREFERENCES,
             READ_FUNCTION_SETTINGS,
             STORE_FUNCTION_SETTINGS,
+            STORE_LOG_FILES,
             CONNECT_TO_SERVER,
-            WRITE_SETTINGS})
+            WRITE_SETTINGS,
+            ACCESS_COARSE_LOCATION,
+            STORE_SERVER_AUTO_PREFERENCES,
+            READ_SERVER_AUTO_PREFERENCES
+    })
     public @interface RequestCodes {}
 
     /**
@@ -57,6 +62,10 @@ public class PermissionsHelper {
     public static final int STORE_FUNCTION_SETTINGS = 39;
     public static final int CONNECT_TO_SERVER = 40;
     public static final int WRITE_SETTINGS = 41;
+    public static final int ACCESS_COARSE_LOCATION = 42;
+    public static final int STORE_SERVER_AUTO_PREFERENCES = 43;
+    public static final int READ_SERVER_AUTO_PREFERENCES = 44;
+    public static final int STORE_LOG_FILES = 45;
 
     private boolean isDialogOpen = false;
     private static PermissionsHelper instance = null;
@@ -132,6 +141,9 @@ public class PermissionsHelper {
             case READ_PREFERENCES:
                 return context.getResources().getString(R.string.permissionsReadPreferences);
             case STORE_PREFERENCES:
+            case STORE_SERVER_AUTO_PREFERENCES:
+            case READ_SERVER_AUTO_PREFERENCES:
+            case STORE_LOG_FILES:
                 return context.getResources().getString(R.string.permissionsStorePreferences);
             case READ_PHONE_STATE:
                 return context.getResources().getString(R.string.permissionsReadPhoneState);
@@ -143,6 +155,8 @@ public class PermissionsHelper {
                 return context.getResources().getString(R.string.permissionsConnectToServer);
             case WRITE_SETTINGS:
                 return context.getResources().getString(R.string.permissionsWriteSettings);
+            case ACCESS_COARSE_LOCATION:
+                return context.getResources().getString(R.string.permissionsACCESS_COARSE_LOCATION);
             default:
                 return "Unknown permission request: " + requestCode;
         }
@@ -167,7 +181,10 @@ public class PermissionsHelper {
                 case READ_PREFERENCES:
                 case STORE_PREFERENCES:
                 case STORE_FUNCTION_SETTINGS:
+                case STORE_LOG_FILES:
                 case READ_FUNCTION_SETTINGS:
+                case STORE_SERVER_AUTO_PREFERENCES:
+                case READ_SERVER_AUTO_PREFERENCES:
                     Log.d("Engine_Driver", "Requesting STORAGE permissions");
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -178,6 +195,12 @@ public class PermissionsHelper {
                     Log.d("Engine_Driver", "Requesting PHONE permissions");
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.READ_PHONE_STATE},
+                            requestCode);
+                    break;
+                case ACCESS_COARSE_LOCATION:
+                    Log.d("Engine_Driver", "Requesting ACCESS_COARSE_LOCATION permissions");
+                    activity.requestPermissions(new String[]{
+                                    Manifest.permission.ACCESS_COARSE_LOCATION},
                             requestCode);
                     break;
                 case CONNECT_TO_SERVER:
@@ -276,8 +299,12 @@ public class PermissionsHelper {
      * @param requestCode the permissions request code
      * @return true if permissions granted; false if not
      */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+//    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public boolean isPermissionGranted(final Context context, @RequestCodes final int requestCode) {
+        //sdk 15 doesn't support some of the codes below, always return success
+        if (android.os.Build.VERSION.SDK_INT < 16) {
+            return true;
+        }
         // Determine which permissions to check based on request code
         // All possible request codes should be considered
         switch (requestCode) {
@@ -287,7 +314,10 @@ public class PermissionsHelper {
             case READ_PREFERENCES:
             case STORE_PREFERENCES:
             case STORE_FUNCTION_SETTINGS:
+            case STORE_LOG_FILES:
             case READ_FUNCTION_SETTINGS:
+            case STORE_SERVER_AUTO_PREFERENCES:
+            case READ_SERVER_AUTO_PREFERENCES:
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
             case READ_PHONE_STATE:
@@ -296,6 +326,8 @@ public class PermissionsHelper {
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
+            case ACCESS_COARSE_LOCATION :
+                return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED;
             case WRITE_SETTINGS:
                 boolean result;
                 if (android.os.Build.VERSION.SDK_INT < 23) {
@@ -316,7 +348,7 @@ public class PermissionsHelper {
      * @param requestCode the permissions request code
      * @return true if rationale to be shown; false if not
      */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+//    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private boolean showPermissionRationale(final Activity activity, @RequestCodes final int requestCode) {
         // Determine which permission rationales to check based on request code
         // All possible request codes should be considered
@@ -327,7 +359,10 @@ public class PermissionsHelper {
             case READ_PREFERENCES:
             case STORE_PREFERENCES:
             case STORE_FUNCTION_SETTINGS:
+            case STORE_LOG_FILES:
             case READ_FUNCTION_SETTINGS:
+            case STORE_SERVER_AUTO_PREFERENCES:
+            case READ_SERVER_AUTO_PREFERENCES:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE) &&
                         ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
             case READ_PHONE_STATE:
@@ -336,6 +371,8 @@ public class PermissionsHelper {
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE) &&
                         ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
                         ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_PHONE_STATE);
+            case ACCESS_COARSE_LOCATION:
+                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_COARSE_LOCATION);
             case WRITE_SETTINGS:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_SETTINGS);
             default:

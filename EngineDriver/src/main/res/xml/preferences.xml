@@ -10,7 +10,7 @@
         android:key="throttle_name_preference"
         android:maxLines="1"
         android:summary="@string/prefThrottleNameSummary"
-        android:title="@string/prefThrottleNameTitle"></EditTextPreference>
+        android:title="@string/prefThrottleNameTitle" />
     <ListPreference
         android:defaultValue="@string/prefThrottleOrientationDefaultValue"
         android:entries="@array/OrientationEntries"
@@ -27,6 +27,12 @@
         android:summary="@string/prefThemeSummary"
         android:title="@string/prefThemeTitle" />
 
+    <CheckBoxPreference
+        android:defaultValue="@bool/prefShowAdvancedPreferencesDefaultValue"
+        android:key="prefShowAdvancedPreferences"
+        android:summary="@string/prefShowAdvancedPreferencesSummary"
+        android:title="@string/prefShowAdvancedPreferencesTitle" />
+
     <ListPreference
         android:defaultValue="@string/prefLocaleDefaultValue"
         android:entries="@array/prefLocaleEntries"
@@ -35,7 +41,9 @@
         android:summary="@string/prefLocaleSummary"
         android:title="@string/prefLocaleTitle" />
 
-    <PreferenceCategory android:title="@string/prefThrottleStatusTitle">
+    <PreferenceCategory
+        android:key="prefCategoryThrottleStatusRow"
+        android:title="@string/prefThrottleStatusTitle">
         <CheckBoxPreference
             android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"
             android:key="show_emergency_stop_menu_preference"
@@ -60,7 +68,9 @@
             android:title="@string/prefDisplayClockTitle" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/prefThrottlePageTitle" >
+    <PreferenceCategory
+        android:key="prefCategoryThrottleAppearance"
+        android:title="@string/prefThrottlePageTitle" >
         <ListPreference
             android:defaultValue="@string/prefThrottleScreenTypeDefault"
             android:entries="@array/prefThrottleScreenTypeEntries"
@@ -551,7 +561,9 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/prefThrottleTitle" >
+    <PreferenceCategory
+        android:key="prefCategoryThrottleControl"
+        android:title="@string/prefThrottleTitle" >
         <ListPreference
             android:defaultValue="@string/prefDisplaySpeedUnitsDefaultValue"
             android:entries="@array/DisplaySpeedUnitsEntries"
@@ -744,7 +756,9 @@
             android:summary="@string/prefEsuMc2Summary"
             android:persistent="false"
             android:shouldDisableView="true">
-            <PreferenceCategory android:title="@string/prefEsuMc2StopButtonCategoryTitle">
+            <PreferenceCategory
+                android:key="prefCategoryEsuMc2StopButton"
+                android:title="@string/prefEsuMc2StopButtonCategoryTitle">
                 <EditTextPreference
                     android:key="prefEsuMc2StopButtonDelay"
                     android:title="@string/prefEsuMc2StopButtonDelayTitle"
@@ -762,7 +776,9 @@
                     android:defaultValue="@bool/prefEsuMc2StopButtonShortPressDefaultValue" />
             </PreferenceCategory>
             <!-- Button preferences -->
-            <PreferenceCategory android:title="@string/prefEsuMc2ButtonsCategoryTitle">
+            <PreferenceCategory
+                android:key="prefCategoryEsuMc2SideButton"
+                android:title="@string/prefEsuMc2ButtonsCategoryTitle">
                 <ListPreference
                     android:key="prefEsuMc2ButtonTL"
                     android:title="@string/prefEsuMc2ButtonTLTitle"
@@ -805,7 +821,9 @@
                     android:inputType="number" />
             </PreferenceCategory>
             <!-- knob zero position trim setting -->
-            <PreferenceCategory android:title="@string/prefEsuMc2ZeroTrimCategoryTitle">
+            <PreferenceCategory
+                android:key="prefCategoryEsiMc2ControlKnob"
+                android:title="@string/prefEsuMc2ZeroTrimCategoryTitle">
                 <EditTextPreference
                     android:key="prefEsuMc2ZeroTrim"
                     android:title="@string/prefEsuMc2ZeroTrimTitle"
@@ -829,7 +847,9 @@
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/prefSelectLocoTitle" >
+    <PreferenceCategory
+        android:key="prefCategorySelectLoco"
+        android:title="@string/prefSelectLocoTitle" >
         <CheckBoxPreference
             android:defaultValue="@bool/prefStopOnReleaseDefaultValue"
             android:key="stop_on_release_preference"
@@ -863,6 +883,13 @@
             android:summary="@string/prefRosterRecentLocosSummary"
             android:title="@string/prefRosterRecentLocosTitle" >
         </CheckBoxPreference>
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefRosterRecentLocoNamesDefaultValue"
+            android:key="prefRosterRecentLocoNames"
+            android:summary="@string/prefRosterRecentLocoNamesSummary"
+            android:title="@string/prefRosterRecentLocoNamesTitle" />
         <EditTextPreference
             android:defaultValue="@string/prefMaximumRecentLocosDefaultValue"
             android:dialogTitle="@string/prefMaximumRecentLocosTitle"
@@ -887,7 +914,9 @@
             android:title="@string/prefRosterFilterTitle" >
         </EditTextPreference>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/prefConnectTitle" >
+    <PreferenceCategory
+        android:key="prefCategoryConnect"
+        android:title="@string/prefConnectTitle" >
         <EditTextPreference
             android:defaultValue="@string/prefMaximumRecentConnectionsDefaultValue"
             android:dialogTitle="@string/prefMaximumRecentConnectionsTitle"
@@ -925,7 +954,9 @@
             android:title="@string/prefSocketTimeoutMsTitle" >
         </EditTextPreference>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/prefWebTitle" >
+    <PreferenceCategory
+        android:key="prefCategoryWeb"
+        android:title="@string/prefWebTitle" >
         <ListPreference
             android:defaultValue="@string/prefWebOrientationDefaultValue"
             android:entries="@array/OrientationEntries"
@@ -942,7 +973,9 @@
             android:inputType="text"
             android:maxLines="1"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/prefTurnoutsTitle" >
+    <PreferenceCategory
+        android:key="prefCategoryTurnouts"
+        android:title="@string/prefTurnoutsTitle" >
         <!--<ListPreference-->
             <!--android:defaultValue="@string/prefHardwareSystemDefaultValue"-->
             <!--android:entries="@array/hardware_system_namesEntries"-->
@@ -986,7 +1019,9 @@
         </CheckBoxPreference>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/prefKidsSectionTitle" >
+    <PreferenceCategory
+        android:key="prefCategoryChildren"
+        android:title="@string/prefKidsSectionTitle" >
         <PreferenceScreen
             android:key="kids_preferences"
             android:title="@string/prefKidsSectionTitle"
@@ -1027,7 +1062,9 @@
         </PreferenceScreen>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/prefThrottleImportExportTitle" >
+    <PreferenceCategory
+        android:key="prefCategoryImportExport"
+        android:title="@string/prefThrottleImportExportTitle" >
         <PreferenceScreen
             android:key="importExport_preferences"
             android:title="@string/prefThrottleImportExportTitle"
@@ -1040,6 +1077,30 @@
                 android:key="prefImportExport"
                 android:summary="@string/prefImportExportSummary"
                 android:title="@string/prefImportExportTitle" />
+            <!--
+            <EditTextPreference
+                android:defaultValue="@string/prefImportServerManualDefaultValue"
+                android:dialogTitle="@string/prefImportServerManualTitle"
+                android:key="prefImportServerManual"
+                android:summary="@string/prefImportServerManualSummary"
+                android:title="@string/prefImportServerManualTitle"
+                android:inputType="text"
+                android:maxLines="1"/>
+                -->
+            <jmri.enginedriver.importServerManualEditTextPreference
+                android:defaultValue="@string/prefImportServerManualDefaultValue"
+                android:dialogTitle="@string/prefImportServerManualTitle"
+                android:key="prefImportServerManual"
+                android:summary="@string/prefImportServerManualSummary"
+                android:title="@string/prefImportServerManualTitle"
+                android:inputType="text"
+                android:maxLines="1"/>
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefImportServerAutoDefaultValue"
+                android:key="prefImportServerAuto"
+                android:summary="@string/prefImportServerAutoSummary"
+                android:title="@string/prefImportServerAutoTitle" >
+            </CheckBoxPreference>
             <CheckBoxPreference
                 android:defaultValue="@bool/prefImportExportLocoListDefaultValue"
                 android:key="prefImportExportLocoList"

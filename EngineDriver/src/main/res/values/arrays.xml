@@ -26,62 +26,11 @@
         <item>Long</item>
         <item>Auto</item>
     </string-array>
-    <string-array name="address_size_defaultsEntryValues">
+    <string-array name="address_size_defaultsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Short</item>
         <item>Long</item>
         <item>Auto</item>
     </string-array>
-
-    <!--<string-array name="hardware_system_namesEntries">  &lt;!&ndash; display version &ndash;&gt;-->
-        <!--<item>CTI Acela</item>-->
-        <!--<item>C/MRI Serial</item>-->
-        <!--<item>SRCP</item>-->
-        <!--<item>EasyDCC</item>-->
-        <!--<item>RFID</item>-->
-        <!--<item>Protrak Grapevine</item>-->
-        <!--<item>Internal</item>-->
-        <!--<item>Maple Systems</item>-->
-        <!--<item>Loconet</item>-->
-        <!--<item>MERG CBUS</item>-->
-        <!--<item>NCE</item>-->
-        <!--<item>Oak Tree Systems</item>-->
-        <!--<item>Powerline transmission</item>-->
-        <!--<item>QSI</item>-->
-        <!--<item>Raspberry Pi</item>-->
-        <!--<item>RPS system</item>-->
-        <!--<item>SPROG</item>-->
-        <!--<item>Lionel TMCC</item>-->
-        <!--<item>ESU ECoS</item>-->
-        <!--<item>Vactronics SECSI</item>-->
-        <!--<item>Wangrow</item>-->
-        <!--<item>XpressNet</item>-->
-        <!--<item>Zimo MX-1</item>-->
-    <!--</string-array>-->
-    <!--<string-array name="hardware_system_namesEntryValues">-->
-        <!--<item>A</item>-->
-        <!--<item>C</item>-->
-        <!--<item>D</item>-->
-        <!--<item>E</item>-->
-        <!--<item>F</item>-->
-        <!--<item>G</item>-->
-        <!--<item>I</item>-->
-        <!--<item>K</item>-->
-        <!--<item>L</item>-->
-        <!--<item>M</item>-->
-        <!--<item>N</item>-->
-        <!--<item>O</item>-->
-        <!--<item>P</item>-->
-        <!--<item>Q</item>-->
-        <!--<item>PI</item>-->
-        <!--<item>R</item>-->
-        <!--<item>S</item>-->
-        <!--<item>T</item>-->
-        <!--<item>U</item>-->
-        <!--<item>V</item>-->
-        <!--<item>W</item>-->
-        <!--<item>X</item>-->
-        <!--<item>Z</item>-->
-    <!--</string-array>-->
 
     <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
         <item>Percentage</item>
@@ -92,7 +41,7 @@
         <item>28 steps</item>
         <item>128 steps</item>
     </string-array>
-    <string-array name="DisplaySpeedUnitEntryValues">
+    <string-array name="DisplaySpeedUnitEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>100</item>
         <item>-1</item>
         <item>8</item>
@@ -106,7 +55,7 @@
         <item>Bottom</item>
         <item>none</item>
     </string-array>
-    <string-array name="WebViewLocationEntryValues">
+    <string-array name="WebViewLocationEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Bottom</item>
         <item>none</item>
     </string-array>
@@ -117,7 +66,7 @@
         <item>Auto-Rotate</item>
         <item>Auto-Web</item>
     </string-array>
-    <string-array name="OrientationEntryValues">
+    <string-array name="OrientationEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Portrait</item>
         <item>Landscape</item>
         <item>Auto-Rotate</item>
@@ -132,7 +81,7 @@
         <item >Five</item>
         <item >Six</item>
     </string-array>
-    <string-array name="NumOfThrottlesEntryValues">
+    <string-array name="NumOfThrottlesEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >One</item>
         <item >Two</item>
         <item >Three</item>
@@ -146,15 +95,21 @@
         <item tools:ignore="TypographyDashes">Simple &#8211; Tablet Recommended (1-6 throttles)</item>
         <item >Vertical &#8211; Phone or Tablet (2 throttles)</item>
         <item >Big Buttons &#8211; Left (1 throttle)</item>
+        <item >Big Buttons &#8211; Right (1 throttle)</item>
+        <item >Vertical &#8211; Left (1 throttle)</item>
+        <item >Vertical &#8211; Right (1 throttle)</item>
     </string-array>
-    <string-array name="prefThrottleScreenTypeEntryValues">
+    <string-array name="prefThrottleScreenTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >Default</item>
         <item >Simple</item>
         <item >Vertical</item>
         <item >Big Left</item>
+        <item >Big Right</item>
+        <item >Vertical Left</item>
+        <item >Vertical Right</item>
     </string-array>
 
-    <string-array name="DisplayClockEntryValues">
+    <string-array name="DisplayClockEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >0</item>
         <item >1</item>
         <item >2</item>
@@ -165,7 +120,7 @@
         <item >24 hr format</item>
     </string-array>
 
-    <string-array name="prefGamePadTypeEntryValues">
+    <string-array name="prefGamePadTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >None</item>
         <!-- <item >iCade</item> -->
             <item >iCade-rotate</item>
@@ -209,7 +164,7 @@
         <item >Flydigi Wee 2</item>
     </string-array>
 
-    <string-array name="prefSwipeUpOptionsEntryValues">
+    <string-array name="prefSwipeUpOptionsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >None</item>
         <item >Hide Web View</item>
         <item >Lock and Dim Screen</item>
@@ -225,7 +180,7 @@
         <item >Immersive Mode temporarily enable-disable</item>
     </string-array>
 
-    <string-array name="prefGamePadKeyEntries">
+    <string-array name="prefGamePadKeyEntries">  <!-- display version -->
         <item >All Stop</item>
         <item >Stop</item>
         <item >Forward</item>
@@ -306,7 +261,7 @@
     </string-array>
     <!--- TODO: workout how to use the KEYCODES from android.view.KeyEvent rather having the declare them as integers -->
 
-    <integer-array name="prefGamePadiCade">
+    <integer-array name="prefGamePadiCade" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>0</item> //not used
         <item>@integer/KeyCode_W</item> //key down   'E' up  <!-- DPAD butons [0-3] use the down codes.  the other buttons us the up codes -->
@@ -323,7 +278,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadiCade_UpCodes">
+    <integer-array name="prefGamePadiCade_UpCodes" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>0</item> //not used
         <item>@integer/KeyCode_E</item>
@@ -340,7 +295,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadiCadePlusDpad">
+    <integer-array name="prefGamePadiCadePlusDpad" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>0</item> //not used
         <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
@@ -357,7 +312,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadiCadePlusDpad_UpCodes">
+    <integer-array name="prefGamePadiCadePlusDpad_UpCodes" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>0</item> //not used
         <item>@integer/KeyCode_E</item>
@@ -374,7 +329,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadMTK">
+    <integer-array name="prefGamePadMTK" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>@integer/KeyCode_5</item> //gamepadSelect
         <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
@@ -391,7 +346,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadGame">
+    <integer-array name="prefGamePadGame" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>0</item> //not used
         <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
@@ -409,7 +364,7 @@
         <item>0</item> //not used
     </integer-array>
 <!--
-    <integer-array name="prefGamePadVRBoxA">
+    <integer-array name="prefGamePadVRBoxA" translatable="false">
         <item>0</item> //not used
         <item>0</item> //not used
         <item>@integer/KeyCode_Fast_Forward</item> //gamepadDpadUp
@@ -426,7 +381,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadVRBoxC">
+    <integer-array name="prefGamePadVRBoxC" translatable="false">
         <item>0</item> //not used
         <item>0</item> //not used
         <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp
@@ -443,7 +398,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadVRBoxiC">
+    <integer-array name="prefGamePadVRBoxiC" translatable="false">
         <item>0</item> //not used
         <item>@integer/KeyCode_O</item> //gamepadEscape
         <item>@integer/KeyCode_W</item> //gamepadDpadUp
@@ -460,7 +415,7 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
-    <integer-array name="prefGamePadVRBoxiC_UpCodes">
+    <integer-array name="prefGamePadVRBoxiC_UpCodes" translatable="false">
         <item>0</item> //not used
         <item>@integer/KeyCode_G</item>
         <item>@integer/KeyCode_E</item>
@@ -478,7 +433,7 @@
         <item>0</item> //not used
     </integer-array>
 -->
-    <integer-array name="prefGamePadMagicseeR1B">
+    <integer-array name="prefGamePadMagicseeR1B" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>@integer/KeyCode_Button_R1</item> // Return button - upper front button
         <item>0</item> //not used gamepadDpadUp
@@ -496,7 +451,7 @@
         <item>0</item> //not used
     </integer-array>
 
-    <integer-array name="prefGamePadFlydigiWee2">
+    <integer-array name="prefGamePadFlydigiWee2" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>@integer/KeyCode_Button_Select</item> //Select
         <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadUp = KEYCODE_DPAD_UP;
@@ -607,7 +562,7 @@
         <item> </item> //not used
     </string-array>
 
-    <string-array name="prefGamePadPrefButtonReferences">
+    <string-array name="prefGamePadPrefButtonReferences" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item> </item> //not used
         <item>prefGamePadButtonReturn</item>
         <item>prefGamePadButtonUp</item>
@@ -666,7 +621,7 @@
         <item>Function 28</item>
     </string-array>
 
-    <string-array name="prefEsuMc2KeyEntryValues">
+    <string-array name="prefEsuMc2KeyEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>(no function)</item>
         <item>All Stop</item>
         <item>Stop</item>
@@ -714,7 +669,7 @@
         <item>Reset</item>
     </string-array>
 
-    <string-array name="prefImportExportEntryValues">
+    <string-array name="prefImportExportEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Export</item>
         <item>Import</item>
@@ -726,7 +681,7 @@
         <item>Auto import/export on connect/disconnect</item>
         <item>Auto import on connect only</item>
      </string-array>
-    <string-array name="prefAutoImportExportEntryValues">
+    <string-array name="prefAutoImportExportEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Connect Disconnect</item>
         <item>Connect Only</item>
@@ -739,7 +694,7 @@
         <item>None</item>
     </string-array>
 
-    <string-array name="prefThemeEntryValues">
+    <string-array name="prefThemeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Default</item>
         <item>Black</item>
         <item>Outline</item>
@@ -754,7 +709,7 @@
         <item>Colorful Theme</item>
     </string-array>
 
-    <string-array name="prefSelectedLocoIndicatorEntryValues">
+    <string-array name="prefSelectedLocoIndicatorEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Both</item>
         <item>Gamepad</item>
@@ -765,7 +720,7 @@
         <item>Gamepad 1 only</item>
     </string-array>
 
-    <string-array name="prefAccelerometerShakeEntryValues">
+    <string-array name="prefAccelerometerShakeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Web</item>
         <item>LockDim</item>
@@ -782,7 +737,7 @@
         <item>All Stop</item>
     </string-array>
 
-    <string-array name="prefTtsWhenEntryValues">
+    <string-array name="prefTtsWhenEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Key</item>
     </string-array>
@@ -791,7 +746,7 @@
         <item>Key events only</item>
     </string-array>
 
-    <string-array name="prefTtsThrottleResponseEntryValues">
+    <string-array name="prefTtsThrottleResponseEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Throttle</item>
         <item>Loco</item>
@@ -807,7 +762,7 @@
         <item>Throttle + Loco + Speed</item>
     </string-array>
 
-    <string-array name="prefYesNoEntryValues">
+    <string-array name="prefYesNoEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Yes</item>
         <item>No</item>
     </string-array>
@@ -816,7 +771,7 @@
         <item>No</item>
     </string-array>
 
-    <string-array name="prefLocaleEntryValues">
+    <string-array name="prefLocaleEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Default</item>
         <item>en_US</item>
         <item>it</item>
@@ -824,6 +779,8 @@
         <item>de</item>
         <item>es</item>
         <item>ca</item>
+        <item>fr</item>
+        <item>cs</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->
         <item>Use Phone\'s global setting</item>
@@ -833,9 +790,11 @@
         <item>German</item>
         <item>Spanish</item>
         <item>Catalan</item>
+        <item>French</item>
+        <item>Czech</item>
     </string-array>
 
-    <string-array name="prefConsistFollowRuleStyleEntryValues">
+    <string-array name="prefConsistFollowRuleStyleEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>original</item>
         <item>complex</item>
     </string-array>
@@ -844,7 +803,7 @@
         <item>Complex text matching - user configurable strings</item>
     </string-array>
 
-    <string-array name="prefConsistFollowEntryValues">
+    <string-array name="prefConsistFollowEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>lead</item>
         <item>lead and trail</item>
         <item>all</item>
@@ -861,7 +820,7 @@
         <item>All Locos - Exact Match</item>
     </string-array>
 
-    <string-array name="prefConsistFollowDefaultActionEntryValues">
+    <string-array name="prefConsistFollowDefaultActionEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>none</item>
         <item>f lead</item>
         <item>f lead and trail</item>
@@ -875,7 +834,7 @@
         <item>All Locos - Same Function number</item>
     </string-array>
 
-    <string-array name="prefKidsTimerEntryValues">
+    <string-array name="prefKidsTimerEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item>
         <item>1</item>
         <item>2</item>
@@ -890,6 +849,143 @@
         <item>5 minutes</item>
         <item>10 minutes</item>
         <item>Run completed</item>
+    </string-array>
+
+    <string-array name="advancedPreferences" translatable="false">
+        <item>prefLocale</item>
+        <item>show_emergency_stop_menu_preference</item>
+        <item>prefFlashlightButtonDisplay</item>
+        <item>ClockDisplayTypePreference</item>
+        <item>increase_slider_height_preference</item>
+        <item>left_slider_margin</item>
+        <item>hide_slider_preference</item>
+        <item>prefHideSliderAndSpeedButtons</item>
+        <item>prefSwapForwardReverseButtons</item>
+        <item>prefSwapForwardReverseButtonsLongPress</item>
+        <item>prefDirectionButtonLongPressDelay</item>
+        <item>prefLeftDirectionButtons</item>
+        <item>prefRightDirectionButtons</item>
+        <item>prefLeftDirectionButtonsShort</item>
+        <item>prefRightDirectionButtonsShort</item>
+        <item>prefDecreaseLocoNumberHeight</item>
+        <item>WebViewLocation</item>
+        <item>prefIncreaseWebViewSize</item>
+        <item>InitialThrotWebPage</item>
+        <item>prefThrottleViewImmersiveMode</item>
+        <item>SwipeUpOption</item>
+        <item>prefScreenBrightnessDim</item>
+        <item>prefAccelerometerShake</item>
+        <item>prefAccelerometerShakeThreshold</item>
+        <item>prefShowAddressInsteadOfName</item>
+        <item>prefAlwaysUseDefaultFunctionLabels</item>
+        <item>prefNumberOfDefaultFunctionLabels</item>
+        <item>prefNumberOfDefaultFunctionLabelsForRoster</item>
+        <item>prefVolumeSpeedButtonsSpeedStep</item>
+        <item>prefDisableVolumeKeys</item>
+        <item>prefVolumeKeysFollowLastTouchedThrottle</item>
+        <item>prefTtsWhen</item>
+        <item>prefTtsThrottleResponse</item>
+        <item>prefTtsGamepadTest</item>
+        <item>prefTtsGamepadTestComplete</item>
+        <item>prefGamePadType</item>
+        <item>prefGamepadTestNow</item>
+        <item>prefGamePadSpeedButtonsSpeedStep</item>
+        <item>prefGamePadFeedbackVolume</item>
+        <item>prefGamePadSpeedArrowsThrottleRepeatDelay</item>
+        <item>prefGamePadButton1</item>
+        <item>prefGamePadButton3</item>
+        <item>prefGamePadButton2</item>
+        <item>prefGamePadButton4</item>
+        <item>prefGamePadButtonStart</item>
+        <item>prefGamePadButtonReturn</item>
+        <item>prefGamePadButtonUp</item>
+        <item>prefGamePadButtonRight</item>
+        <item>prefGamePadButtonDown</item>
+        <item>prefGamePadButtonLeft</item>
+        <item>prefGamePadButtonLeftShoulder</item>
+        <item>prefGamePadButtonRightShoulder</item>
+        <item>prefGamePadButtonLeftTrigger</item>
+        <item>prefGamePadButtonRightTrigger</item>
+        <item>prefGamepadSwapForwardReverseWithScreenButtons</item>
+        <item>prefGamepadTestEnforceTesting</item>
+        <item>prefGamepadTestEnforceTestingSimple</item>
+        <item>prefSelectedLocoIndicator</item>
+        <item>maximum_throttle_preference</item>
+        <item>maximum_throttle_change_preference</item>
+        <item>speed_arrows_throttle_repeat_delay</item>
+        <item>DirChangeWhileMovingPreference</item>
+        <item>prefStopOnDirectionChange</item>
+        <item>prefConsistFollowRuleStyle</item>
+        <item>SelectiveLeadSound</item>
+        <item>SelectiveLeadSoundF1</item>
+        <item>SelectiveLeadSoundF2</item>
+        <item>prefConsistFollowDefaultAction</item>
+        <item>prefConsistFollowString1</item>
+        <item>prefConsistFollowAction1</item>
+        <item>prefConsistFollowString2</item>
+        <item>prefConsistFollowAction2</item>
+        <item>prefConsistFollowString3</item>
+        <item>prefConsistFollowAction3</item>
+        <item>prefConsistFollowString4</item>
+        <item>prefConsistFollowAction4</item>
+        <item>prefConsistFollowString5</item>
+        <item>prefConsistFollowAction5</item>
+        <item>prefEsuMc2StopButtonDelay</item>
+        <item>prefEsuMc2StopButtonShortPress</item>
+        <item>prefEsuMc2ButtonTL</item>
+        <item>prefEsuMc2ButtonBL</item>
+        <item>prefEsuMc2ButtonTR</item>
+        <item>prefEsuMc2ButtonBR</item>
+        <item>prefEsuMc2ButtonsRepeatDelay</item>
+        <item>prefEsuMc2ZeroTrim</item>
+        <item>prefEsuMc2EndStopDirectionChange</item>
+        <item>prefEsuMc2KnobButtonDisplay</item>
+        <item>stop_on_release_preference</item>
+        <item>drop_on_acquire_preference</item>
+        <item>SelLocoWhileMovingPreference</item>
+        <item>default_address_length</item>
+        <item>roster_recent_locos_preference</item>
+        <item>prefRosterRecentLocoNames</item>
+        <item>maximum_recent_locos_preference</item>
+        <item>ConsistLightsLongClickPreference</item>
+        <item>prefRosterFilter</item>
+        <item>maximum_recent_connections_preference</item>
+        <item>prefHideDemoServer</item>
+        <item>prefConnectTimeoutMs</item>
+        <item>prefSocketTimeoutMs</item>
+        <item>WebOrientation</item>
+        <item>InitialWebPage</item>
+        <item>hide_system_route_names_preference</item>
+        <item>DelimiterPreference</item>
+        <item>HideIfNoUserNamePreference</item>
+        <item>prefKidsTimer</item>
+        <item>prefKidsTimerRestartPassword</item>
+        <item>prefKidsTimerResetPassword</item>
+        <item>kids_Help</item>
+        <item>prefImportServerManual</item>
+        <item>prefImportServerAuto</item>
+        <item>prefImportExportLocoList</item>
+        <item>prefAutoImportExport</item>
+        <item>prefHostImportExport</item>
+
+        <item>prefCategoryEsuMc2StopButton</item>
+        <item>prefCategoryEsiMc2ControlKnob</item>
+
+        <item>throttle_direction_preference</item>
+        <item>throttle_webview_preference</item>
+        <item>swipe_up_down_preferences</item>
+        <item>throttle_accelerometer_preference</item>
+        <item>default_function_preferences</item>
+        <item>volume_preferences</item>
+        <item>prefTts</item>
+        <item>gamepad_preferences</item>
+        <item>consist_follow_preferences</item>
+        <item>prefEsuMc2</item>
+        <item>kids_preferences</item>
+
+        <item>prefCategorySelectLoco</item>
+        <item>prefCategoryWeb</item>
+        <item>prefCategoryChildren</item>
     </string-array>
 
 </resources>

@@ -55,17 +55,22 @@
         <item tools:ignore="TypographyDashes">Einfach &#8211; Tablet empfohlen (1-6 Fahrregler)</item>
         <item>Vertikal &#8211; Telefon oder Tablet (2 Fahrregler)</item>
         <item >Big Buttons &#8211; Left (1 throttle)</item>
+        <item >Big Buttons &#8211; Rechts (1 throttle)</item>
+        <item>Vertikal &#8211; Left (1 throttle)</item>
+        <item>Vertikal &#8211; Rechts (1 throttle)</item>
     </string-array>
     <string-array name="DisplayClockEntries">
         <item>Keine</item>
         <item>12 Std. Format</item>
         <item>24 Std. Format</item>
     </string-array>
+    <!--
     <string-array name="DisplayClockValuesEntries">
         <item >0</item>
         <item >1</item>
         <item >2</item>
     </string-array>
+    -->
     <string-array name="prefGamePadKeyEntries">
         <item>Halte alle</item>
         <item>Halt</item>
@@ -105,7 +110,7 @@
         <item>Funktion 27</item>
         <item>Funktion 28</item>
     </string-array>
-    <string-array name="prefAutoImportExportOptionsDisplayEntries">
+    <string-array name="prefAutoImportExportEntries">
         <item>Keine</item>
         <item>Auto Import/Export beim Verbinden/Trennen</item>
         <item>Auto Import nur beim Verbinden</item>
@@ -155,6 +160,8 @@
         <item>Deutsch</item>
         <item>Spanisch</item>
         <item>Katalanisch</item>
+        <item>Französisch</item>
+        <item>Tschechische</item>
     </string-array>
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->

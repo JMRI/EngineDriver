@@ -24,6 +24,7 @@
     <bool name="prefStopOnReleaseDefaultValue">true</bool>
     <bool name="prefDropOnAcquireDefaultValue">false</bool>
     <bool name="prefRosterRecentLocosDefaultValue">true</bool>
+    <bool name="prefRosterRecentLocoNamesDefaultValue">true</bool>
     <bool name="prefHideSystemRouteNamesDefaultValue">false</bool>
     <bool name="prefHideIfNoUserNameDefaultValue">true</bool>
     <bool name="prefShowEmergencyStopButtonDefaultValue">false</bool>
@@ -34,9 +35,9 @@
     <bool name="prefHideSliderAndSpeedButtonsDefaultValue">false</bool>
     <bool name="prefSwipeThroughTurnoutsDefaultValue">true</bool>
     <bool name="prefSwipeThroughRoutesDefaultValue">true</bool>
-    <bool name="prefDirChangeWhileMovingDefaultValue">true</bool>
+    <bool name="prefDirChangeWhileMovingDefaultValue">false</bool>
     <bool name="prefStopOnDirectionChangeDefaultValue">false</bool>
-    <bool name="prefSelLocoWhileMovingDefaultValue">true</bool>
+    <bool name="prefSelLocoWhileMovingDefaultValue">false</bool>
     <bool name="prefDecreaseLocoNumberHeightDefaultValue">false</bool>
     <bool name="prefShowAddressInsteadOfNameDefaultValue">false</bool>
     <bool name="prefIncreaseWebViewSizeDefaultValue">false</bool>
@@ -66,4 +67,9 @@
     <bool name="prefEsuMc2KnobButtonDefaultValue">false</bool>
 
     <bool name="prefFlashlightButtonDefaultValue">false</bool>
+
+    <bool name="prefImportServerAutoDefaultValue">true</bool>
+
+    <bool name="prefShowAdvancedPreferencesDefaultValue">false</bool>
+
 </resources>

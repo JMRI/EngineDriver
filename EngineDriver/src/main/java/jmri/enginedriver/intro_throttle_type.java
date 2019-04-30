@@ -20,6 +20,7 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 package jmri.enginedriver;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -63,17 +64,29 @@ public class intro_throttle_type extends Fragment {
         v.setText(nameEntries[2]);
         v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_big_left_name);
         v.setText(nameEntries[3]);
+        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_big_right_name);
+        v.setText(nameEntries[4]);
+        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_vertical_left_name);
+        v.setText(nameEntries[5]);
+        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_vertical_right_name);
+        v.setText(nameEntries[6]);
 
 
         RadioGroup radioGroup = getView().findViewById(R.id.intro_throttle_type_radio_group);
 
+        radioGroup.clearCheck();
         if (nameEntryValues[0].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_default_name); }
         else if (nameEntryValues[1].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_simple_name); }
         else if (nameEntryValues[2].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_vertical_name); }
         else if (nameEntryValues[3].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_big_left_name); }
+        else if (nameEntryValues[4].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_big_right_name); }
+        else if (nameEntryValues[5].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_vertical_left_name); }
+        else if (nameEntryValues[6].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_vertical_right_name); }
+        radioGroup.jumpDrawablesToCurrentState();
 
         radioGroup.setOnCheckedChangeListener(new
             RadioGroup.OnCheckedChangeListener() {
+            @SuppressLint("ApplySharedPref")
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int Choice = 0;
@@ -81,6 +94,9 @@ public class intro_throttle_type extends Fragment {
                 else if (checkedId == R.id.intro_throttle_type_simple_name) { Choice = 1; }
                 else if (checkedId == R.id.intro_throttle_type_vertical_name) { Choice = 2; }
                 else if (checkedId == R.id.intro_throttle_type_big_left_name) { Choice = 3; }
+                else if (checkedId == R.id.intro_throttle_type_big_right_name) { Choice = 4; }
+                else if (checkedId == R.id.intro_throttle_type_vertical_left_name) { Choice = 5; }
+                else if (checkedId == R.id.intro_throttle_type_vertical_right_name) { Choice = 6; }
                 prefs.edit().putString("prefThrottleScreenType", nameEntryValues[Choice]).commit();
          }
         });

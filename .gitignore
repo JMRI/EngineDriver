@@ -1,5 +1,6 @@
 # Built application files
 **/build/
+**/release/
 
 # Crashlytics configuations
 com_crashlytics_export_strings.xml
@@ -16,9 +17,7 @@ local.properties
 # User-specific configurations
 .idea/
 /*/*.iml
-gradlew
 EngineDriver.iml
-**/gradle/wrapper/
 **/gen
 
 # OS-specific files

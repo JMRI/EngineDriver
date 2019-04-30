@@ -166,8 +166,8 @@ public class routes extends Activity implements OnGestureListener {
     }
 
     private int updateRouteEntry() {
-        Button butSet = (Button) findViewById(R.id.route_toggle);
-        EditText rte = (EditText) findViewById(R.id.route_entry);
+        Button butSet = findViewById(R.id.route_toggle);
+        EditText rte = findViewById(R.id.route_entry);
         String route = rte.getText().toString().trim();
         int txtLen = route.length();
         if (mainapp.rt_state_names != null) {
@@ -245,7 +245,7 @@ public class routes extends Activity implements OnGestureListener {
         }
 
         public void onClick(View v) {
-            EditText entryv = (EditText) findViewById(R.id.route_entry);
+            EditText entryv = findViewById(R.id.route_entry);
             String entrytext = entryv.getText().toString().trim();
             if (entrytext.length() > 0) {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, whichCommand + entrytext);
@@ -315,14 +315,14 @@ public class routes extends Activity implements OnGestureListener {
             public View getView(int position, View convertView, ViewGroup parent) {
                 View row = super.getView(position, convertView, parent);
                 if (row != null) {
-                    Button b = (Button) row.findViewById(R.id.rt_current_state_desc);
+                    Button b = row.findViewById(R.id.rt_current_state_desc);
                     b.setOnClickListener(new route_state_button_listener());
                 }
                 return row;
             }
 
         };
-        ListView routes_lv = (ListView) findViewById(R.id.routes_list);
+        ListView routes_lv = findViewById(R.id.routes_list);
         routes_lv.setAdapter(routes_list_adapter);
 
         OnTouchListener gestureListener = new ListView.OnTouchListener() {
@@ -332,7 +332,7 @@ public class routes extends Activity implements OnGestureListener {
         };
         routes_lv.setOnTouchListener(gestureListener);
 
-        EditText rte = (EditText) findViewById(R.id.route_entry);
+        EditText rte = findViewById(R.id.route_entry);
         rte.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 updateRouteEntry();
@@ -360,14 +360,12 @@ public class routes extends Activity implements OnGestureListener {
         });
 
         //Set the button callbacks, storing the command to pass for each
-        Button b = (Button) findViewById(R.id.route_toggle);
+        Button b = findViewById(R.id.route_toggle);
         button_listener click_listener = new button_listener('2');
         b.setOnClickListener(click_listener);
 
-        //((EditText) findViewById(R.id.route_entry)).setRawInputType(InputType.TYPE_CLASS_NUMBER);
-
         locationList = new ArrayList<>();
-        locationSpinner = (Spinner) findViewById(R.id.routes_location);
+        locationSpinner = findViewById(R.id.routes_location);
         locationListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, locationList);
         locationListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationSpinner.setAdapter(locationListAdapter);
@@ -398,6 +396,7 @@ public class routes extends Activity implements OnGestureListener {
 
         if (!mainapp.setActivityOrientation(this)) { //set screen orientation based on prefs
             Intent in = new Intent().setClass(this, web_activity.class);      // if autoWeb and landscape, switch to Web activity
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
             navigatingAway = true;
             startActivity(in);
             this.finish();
@@ -408,7 +407,7 @@ public class routes extends Activity implements OnGestureListener {
         navigatingAway = false;
 
         //restore view to last known scroll position
-        ListView lv = (ListView) findViewById(R.id.routes_list);
+        ListView lv = findViewById(R.id.routes_list);
         lv.setSelectionFromTop(mainapp.routes_list_position, 0);
 
 //      setTitleToIncludeThrotName();
@@ -438,11 +437,11 @@ public class routes extends Activity implements OnGestureListener {
         //Log.d("Engine_Driver","routes.onPause()");
         super.onPause();
         //save scroll position for later restore
-        ListView lv = (ListView) findViewById(R.id.routes_list);
+        ListView lv = findViewById(R.id.routes_list);
         mainapp.routes_list_position = (lv == null ? 0 : lv.getFirstVisiblePosition());
 
         //make sure the soft keyboard is closed
-        EditText rte = (EditText) findViewById(R.id.route_entry);
+        EditText rte = findViewById(R.id.route_entry);
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null && rte != null) {
             imm.hideSoftInputFromWindow(rte.getWindowToken(), 0);
@@ -555,6 +554,7 @@ public class routes extends Activity implements OnGestureListener {
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
                 navigatingAway = true;
+                mainapp.webMenuSelected = true;
                 startActivity(in);
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

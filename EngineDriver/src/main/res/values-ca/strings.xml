@@ -223,9 +223,9 @@
     <string name="prefEsuMc2ZeroTrimTitle">Posada a Zero del Botó Regulador</string>
     <string name="prefEsuMc2ZeroTrimSummary">Estableix els paràmetres de posada a zero del Botó Regulador.\nUn valor més petit és més proper a la posició de parada final en el sentit antihorari.\nRang permès 0&#8211;255.</string>
 
-    <string name="toastEsuMc2NoLocoChange">Canvi de Locomotora no permès: Mobile Control II en mode d\'aturada</string>
-    <string name="toastEsuMc2NoThrottleChange">Canvi de Controlador no permès: Mobile Control II en mode d\'aturada</string>
-    <string name="toastEsuMc2NoButtonPresses">Prémer el botó no està permès: Mobile Control II en mode d\'aturada</string>
+    <string name="toastEsuMc2NoLocoChange">Canvi de Locomotora no permès: Mobile Control II en mode d\\\'aturada</string>
+    <string name="toastEsuMc2NoThrottleChange">Canvi de Controlador no permès: Mobile Control II en mode d\\\'aturada</string>
+    <string name="toastEsuMc2NoButtonPresses">Prémer el botó no està permès: Mobile Control II en mode d\\\'aturada</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Utilitza les etiquetes de les funcions per defecte?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Mostra les etiquetes de funció predeterminades en lloc de les etiquetes de les entrades de la flota.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Disminueix l\'Alçada del Número de Locomotora?</string>
@@ -272,6 +272,8 @@
 
     <string name="prefRosterRecentLocosTitle">Flota en Locomotores Recents?</string>
     <string name="prefRosterRecentLocosSummary">Inclou seleccions de flota en la llista de Recents?</string>
+    <string name="prefRosterRecentLocoNamesTitle">Noms de la llista en llocs recents?</string>
+    <string name="prefRosterRecentLocoNamesSummary">Inclou noms de locomotora a la llista a la llista recent si es troba una adreça coincident?</string>
     <string name="prefMaximumRecentLocosTitle">Número Màxim de Locomotores Recents</string>
 
     <string name="prefMaximumRecentLocosSummary">Màxim de Locomotores Recents a mostrar en la llista</string>
@@ -341,6 +343,10 @@
     <string name="routes_route">Nom del Sistema de Ruta</string>
 
     <string name="throttle_name">Nom del Controlador: %1$s</string>
+
+    <string name="prefShowAdvancedPreferencesTitle">Mostra Preferències avançades?</string>
+    <string name="prefShowAdvancedPreferencesSummary">Mostra o oculta les preferències addicionals.</string>
+
     <string name="prefConsistLightsLongClickTitle">Control de llums en Tracció Múltiple amb clic llarg.</string>
     <string name="prefConsistLightsLongClickSummary">Canvieu les llums de les locomotores individualmet en una Tracció Múltiple amb un clic llarg al botó Selecciona Locomotora.</string>
     <string name="consistLights_help">Fes clic en una Locomotora per a canviar les llums de la Locomotora \'Apagat \' o \'Sigueix Botó de Funció\'.\n\nFes clic llarg en una Locomotora per a forçar l\'estat de la llum \'Apagat\', sense enviar la comanda a la Locomotora. (p.e. si ED està confós).\n\nPrém la Fletxa Enrere per a acabar.</string>
@@ -353,6 +359,16 @@
     <string name="prefImportExportLocoListSummary">Inclou la llista de locomotores recents en \'Importar\' i \'Exportar\'.</string>
     <string name="prefAutoImportExportTitle">Importació/exportació específica de host automàtic</string>
     <string name="prefAutoImportExportSummary">En cada connexió amb un host, AUTOMÀTICAMENT \'Importa\' les preferències per aquest host, i opcionalment \'Exporta\' quan desconecti. \n(Per a restablir constantment a un estat conegut, estableix en \'Importació automàtica tan sols al connectar\' després de la primera vegada, o després de desar-ho manualment (a continuació).)</string>
+
+    <string name="prefImportServerManualTitle">Importa des del servidor actual (manualment)</string>
+    <string name="prefImportServerManualSummary">Fitxer del servidor a \'Importar\' un conjunt de preferències del servidor actualment connectat.\nEl fitxer ha d\'estar al \'/engine_driver/\' del servidor i el servidor web ha d\'estar executat.\nObjectiu: la importació començarà immediatament a desar aquesta preferència.</string>
+
+    <string name="prefImportServerAutoTitle">Importació automàtica de tots els servidors</string>
+    <string name="prefImportServerAutoSummary">Importa automàticament les preferències dels servidors a la connexió.\n(Si el fitxer \'/engine_driver/auto_preferences.ed\' està al servidor i si és més recent que s\'hagi verificat l\'última vegada.)</string>
+
+    <string name="importServerAutoDialog">S\'ha trobat un nou fitxer de preferències en aquest servidor.\nVols importar-lo?\n\nAdvertència!\n\'Complet\' - Totes les vostres preferències seran sobreescriure.\n\n\'Parcial\' - totes les preferències, excepte el tema i algunes preferències de tipus de pàgina de rúgies, seran sobreescriuen.</string>
+    <string name="importServerAutoDialogPositiveButton">Complet</string>
+    <string name="importServerAutoDialogNeutralButton">Parcial</string>
 
     <string name="prefHostImportExportTitle">Importació/exportació específica de host manual</string>
     <string name="prefHostImportExportSummary">\'Importa\' o \'Exporta\' les teves preferències per a un host específic al directori \'engine_driver/\'. El host ha d\'estar en la llista de connexions recents.\nSucceirà IMMEDIATAMENT després de seleccionar l\'opció.\n(Tan sols disponible quan s\'està connectat.)</string>
@@ -395,9 +411,9 @@
     <string name="prefAccelerometerShakeThresholdTitle">Llindar de sacseig</string>
     <string name="prefAccelerometerShakeThresholdSummary">Llindar al qual es registrarà el sacseig. (1.5&#8211;3.5) Un valor més baix respondrà a una acció suau.\nRequereix el reinici del Engine Driver després de canviar-ho per tenir efecte.</string>
 
-    <string name="functionButton00DefultValue">Llums</string>
-    <string name="functionButton01DefultValue">Campana</string>
-    <string name="functionButton02DefultValue">Xiulet</string>
+    <string name="functionButton00DefaultValue">Llums</string>
+    <string name="functionButton01DefaultValue">Campana</string>
+    <string name="functionButton02DefaultValue">Xiulet</string>
 
     <string name="gamepadTestButtonLabelDpadUp">Amunt</string>
     <string name="gamepadTestButtonLabelDpadDown">Avall</string>
@@ -416,7 +432,7 @@
     <string name="gamepadTestKeycodeLabel">Tecla de codi:</string>
     <string name="gamepadTestFunctionLabel">Funció:</string>
     <string name="gamepadTestCompleteLabel">Prova d\'estat:</string>
-    <string name="gamepadTestHelp">Desplaceu-vos cap avall per veure les instruccions completes...\n\nPrémer TOTS Dpad I els quatre botons principals del gamepad NO FUNCIONARÀ.\n\nSi no pots activar tots els botons, canvia el mode del gamepad (mira les instruccions que venen amb el teu gamepad) o prova un altre tipus de gamepad (amunt).\n\n\'ENRERE \' o \'CANCEL·LA\' sortirà de la prova però el gamepad NO FUNCIONARÀ.\n\'OMET\', o prement el botó \'Reduir Velocitat\' del gamepad tres vegades, forçarà el pas de la prova, encara que el gamepad no funcioni correctament.\n\'REINICIA\' farà que ED pensi que encara no s\'han utilitzat gamepads.\nSi selecciona la prova \'simple\', al prèmer un sol botó \'Reduir velocitat\' s\'ometrà la prova.\n\nUtilitza les opcions del menú \'Prova de Gamepad n\' per a tornar a aquesta pàgina.</string>
+    <string name="gamepadTestHelp">Desplaceu-vos cap avall per veure les instruccions completes&#8230;\n\nPrémer TOTS Dpad I els quatre botons principals del gamepad NO FUNCIONARÀ.\n\nSi no pots activar tots els botons, canvia el mode del gamepad (mira les instruccions que venen amb el teu gamepad) o prova un altre tipus de gamepad (amunt).\n\n\'ENRERE \' o \'CANCEL·LA\' sortirà de la prova però el gamepad NO FUNCIONARÀ.\n\'OMET\', o prement el botó \'Reduir Velocitat\' del gamepad tres vegades, forçarà el pas de la prova, encara que el gamepad no funcioni correctament.\n\'REINICIA\' farà que ED pensi que encara no s\'han utilitzat gamepads.\nSi selecciona la prova \'simple\', al prèmer un sol botó \'Reduir velocitat\' s\'ometrà la prova.\n\nUtilitza les opcions del menú \'Prova de Gamepad n\' per a tornar a aquesta pàgina.</string>
     <string name="gamepadTestHelpNonForced">Si no pots activar tots els botons, canvia el mode del gamepad (mira les instruccions que venen amb el teu dispositiu) o prova un tipus de gamepad diferent (adalt).\nÉs possible que hagiss de tornar a provar el gamepad quan l\'utilitzis per primera vegada en la pantalla del controlador.</string>
     <string name="gamepadTestIncomplete">"Prova Incompleta"</string>
     <string name="gamepadTestComplete">"Prova Completada"</string>
@@ -437,7 +453,7 @@
 
     <string name="toastUnableToSetBrightness">No es pot establir el brillo Atomàtic/Adaptable.</string>
     <string name="toastAccelerometerNotFound">Acceleròmetre no trobat o deshabilitat</string>
-    <string name="toastLocoChangeNotAllowed">Canvi de la locomotora no permès:\'El canvi de direcció mentre hi ha moviment\' està deshabilitat en les preferències</string>
+    <string name="toastLocoChangeNotAllowed">Canvi de la locomotora no perms:\'El canvi de direcció mentre hi ha moviment\' està deshabilitat en les preferències</string>
     <string name="toastDirectionButtonsSwapped">Botons de direcció canviats temporalment. Per fer el canvi permanent, fes el canvi en les preferències</string>
     <string name="toastImmersiveModeDisabled">Mode immersiu temporalment deshabilitat. Per a deshabilitar-lo permanentement realitza el canvi en les preferències</string>
     <string name="toastThrottleScreenUnlocked">Pantalla del Controlador Desbloquejada</string>
@@ -449,9 +465,20 @@
     <string name="toastSwipeUpScreenDimmed">Pantalla del Controlador Aclarida - Llisca cap amunt per a restaurar</string>
     <string name="toastSwipeUpViewHidden">Vista web temporalment oculta. Per ocultar-la permanenment realitza el canvi en les preferències</string>
     <string name="toastThrottleAlertEstop">Alerta: Engine %1$s establert a ESTOP</string>
+    <string name="toastThrottleImportServerAutoSucceeded">La importació de preferències automàtiques del servidor web JMRI ha tingut èxit.</string>
+
+    <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">El Valor entrat està fora dels límits (%1$s-%2$s). Reiniciat a %3$s.</string>
     <string name="toastPreferencesNotNumeric">El Valor entrat no és un valor numèric (%1$s-%2$s). Reiniciat a %3$s.</string>
     <string name="toastPreferencesResetSucceeded">¡Reinicia les Preferències a valors per defecte!</string>
+    <string name="toastPreferencesImportServerManualFailed">La importació del servidor ha fallat. Comproveu que el fitxer és correcte. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Preferències de la importació des del servidor. (%1$s)</string>
+    <string name="toastPreferencesImportSucceeded">Preferències Importar des del fitxer S\'ha superat.</string>
+    <string name="toastPreferencesThemeChangeSucceeded">S\'ha produït un canvi de tema.</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">S\'ha produït un canvi de tipus de modificació de la pàgina de successos.</string>
+    <string name="toastPreferencesLocaleChangeSucceeded">S\'ha produït un canvi en el local (idioma).</string>
+
+    <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Número d\'Agulla incorrecte</string>
     <string name="toastTurnoutCommandTo">Comanda enviada a l\'agulla %1$s</string>
     <string name="toastTurnoutCommandToClose">Directe</string>
@@ -464,6 +491,9 @@
     <string name="toastConnectUnableToLoadPref">No es poden carregar les preferències específiques del host. No s\'ha trobat en nom del host.</string>
     <string name="toastConnectErrorReadingRecentConnections">Error llegint la lista de connexions recents:</string>
     <string name="toastConnectErrorSavingRecentConnection">Error desant la connexió recent:</string>
+    <string name="toastConnectRemoveDemoHostError">El servidor de demostració només es pot eliminar mitjançant la modificació de les preferències.</string>
+    <string name="toastConnectRemoved">Sever esborrat de la llista.</string>
+
     <string name="toastRoutesCommandSent">"Comanda enviada per establir la ruta"</string>
     <string name="toastImportExportExportSucceeded">L\'exportació de preferències a \'engine_driver/%1$s\' ha tingut èxit.</string>
     <string name="toastImportExportImportSucceeded">L\'importació de preferències des de \'engine_driver/%1$s\' ha tingut èxit.</string>
@@ -473,6 +503,9 @@
     <string name="toastImportExportCannotImport">No s\'ha pogut importar les preferències. No s\'ha connectat al host.</string>
     <string name="toastImportExportCannotExport">No s\'ha pogut exportar les preferències. No s\'ha connectat al host.</string>
     <string name="toastSelectLocoConfirmClear">Confirma que vols eliminar totes les Locomotores Recents prement el botó \'Netejar Llista\' DE NOU.</string>
+
+    <!--    Toast messages for the Log Viewer Activity -->
+    <string name="toastSaveLogFile">Inici de sessió Iniciat al fitxer %1$s. El registre continuarà fins que surti de l’aplicació Motor Driver.</string>
 
     <string name="prefTtsTitle">Resposta de veu</string>
     <string name="prefTtsSummary">Parleu esdeveniments clau</string>
@@ -519,7 +552,7 @@
     <string name="TTS_Dir_Change_While_Moving_Disabled">Direcció no canviada</string>
     <string name="TTS_Function">Funció</string>
 -->
-    <string name="toastTtsFailed">Disculpa! El Text a Veu ha fallat...</string>
+    <string name="toastTtsFailed">Disculpa! El Text a Veu ha fallat&#8230;</string>
     <string name="prefDefaultFunctionsTitle">Preferències de Funcions per Defecte</string>
     <string name="prefDefaultFunctionsSummary">Quan i com es mostren les etiquetes de funció predeterminades.</string>
     <string name="fbResetFunctionLabels">Reinicia-ho Tot</string>
@@ -532,6 +565,10 @@
     <string name="lightsTextOff">Apagat</string>
     <string name="lightsTextFollow">Segueix Fn Btn</string>
     <string name="lightsTextUnknown">Desconegut</string>
+
+    <string name="logviewerClose">Tanca</string>
+    <string name="logviewerSave">Comenceu la gravació al fitxer</string>
+
     <string name="prefLocaleTitle">Localització</string>
     <string name="prefLocaleSummary">Idioma a utilitzar.\nADVERTÈNCIA! El Engine Driver es reiniciarà immediatament. Es reiniciaran les etiquetes dels botons de direcció.</string>
 <!--
@@ -541,10 +578,10 @@
     <string name="prefDirectionButtonLongPressDelaySummary">Quants mil·lisegons constitueixen una pulsació llarga per als botons de direcció.</string>
 
     <string name="prefRosterFilterTitle">Filtre de la Flota</string>
-    <string name="prefRosterFilterSummary">Només s\'inclouen les entrades de la flota que comencin amb ...</string>
+    <string name="prefRosterFilterSummary">Només s\'inclouen les entrades de la flota que comencin amb &#8230;</string>
 
     <string name="FilterRosterList">Filtre</string>
-    <string name="FilterRosterListHint">Conté...</string>
+    <string name="FilterRosterListHint">Conté&#8230;</string>
 
     <string name="LocoSelectMethodAddress">Adreça DCC</string>
     <string name="LocoSelectMethodRoster">JMRI Flota</string>
@@ -579,7 +616,7 @@
     <string name="functionButtonLookForHead">DAVANT</string>
     <string name="functionButtonLookForLight">LLUM</string>
     <string name="functionButtonLookForRear">DARRERA</string>
-    <string name="prefImportExportOverwite">L\'arxiu ja existeix. Sobreescriu?</string>
+    <string name="prefImportExportOverwite">L\'arxiu \'%1$s\' ja existeix. Sobreescriu?</string>
     <string name="prefImportExportErrorReadingList">Error llegint la llista de connexions recents:</string>
     <string name="prefImportExportErrorReadingFrom">Ha fallat l\'importació de \'engine_driver/%1$s\'! No has desat les preferències per aquest host.</string>
     <string name="prefImportExportErrorNotConnected">No connectat a un host.</string>
@@ -666,6 +703,7 @@
     <string name="introThrottleTypeSummary2">Depenent del tipus escollit, se us limitarà el nombre de reguladors individuals (1 a 6) a la pantalla.</string>
 
     <string name="introFinishTitle">Llest per usar</string>
+
     <string name="introFinishSummary">A continuació, inicieu el servidor WiThrottle al JMRI.</string>
     <string name="introFinishSummary1">A continuació, completeu aquesta acció i seleccioneu el vostre servidor WiThrottle si és \'descobert \', o introduïu manualment l\'adreça IP i el port.</string>
     <string name="introFinishSummary2">(Es mostren a la finestra WiThrottle del JMRI).\n\nPer obtenir instruccions detallades, consulteu la pàgina \'Quant a\' del menú o visiteu la pàgina d\'inici Engine Driver a\n\'https://enginedriver.mstevetodd.com\'.</string>

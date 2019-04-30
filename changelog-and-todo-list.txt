@@ -1,6 +1,40 @@
-**Version 2.22
+**Version 2.24
+ * Option to show/hide advanced preferences. Advanced preferences are hidden by default
+ * Entering colon (":") into the host field changes focus to the port field
+**Version 2.23
+ * ESU MC2 support Gradle dependency
  * Change target API to 26
  * gamepad fns behave same as screen fns
+ * Support for the Flydigi Wee 2 gamepad controller
+ * Introduction and Initial Setup Screens (wizard)
+ * Recent Connections list - allow user to delete individual entries with long-press
+ * Option to import preferences from a URL
+ * Option to automatically import preferences from the JMRI Server on connect
+ * Add location permission prompt
+ * Add wifi & OS details to About screen for debugging
+ * change default for DirChangeWhileMoving and selLocoWhileMoving to false
+ * add some edits to Turnout# input
+ * show warnings when not using wifi network
+ * update jmdns from 3.5.4 to 3.5.5 to keep up with JMRI
+ * begin adding automated testing infrastructure, resumed tracking gradle*
+ * add View Log to Connect screen
+ * delete settings files on Reset Preferences
+ * fix alignment of multi-word functions
+ * add permissions bypass for SDK15
+ * avoid some crashes reported to Play Store
+ * remove some lint warnings
+ * rearrange some menus
+ * remove redundant tags from log view to improve readability
+ * merge -vll resources into default
+ * fix pref error message
+ * prioritize eStop button position
+ * fix some reported bugs and lint warnings
+ * Czech translation by Petr Šídlo
+ * French translation by Alain Carasso
+ * Two additional throttle page types
+ * begin work on Adaptive icons
+ * option to save log to file
+ * Web View and Auto-Web remember page and position on page
 **Version 2.22
  * New 'Big Button' throttle screen option. (Only one throttle with no slider.)
  * New Colourful/Colorful theme
@@ -413,8 +447,6 @@
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  * web
- *   TODO: diagnose why Web menu option doesn't work when Auto-Web enabled
- *   TODO: can we preserve current state of web? currently it "refreshes" on every load
  *   TODO: allow user to specify initial zoom-level of each web view
  * routes
  *   TODO: use PRT titles for Active/inactive
@@ -424,11 +456,9 @@
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
- *   TODO: add View Log to this menu
+ *   TODO: option to play sound and/or vibrate when phone disconnects.
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
- *   TODO: if user enters ":" into address input, jump to port input
- *   TODO: allow user to delete individual recents (long-press?)
  * threaded_application
  *   TODO: remember consist details
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
@@ -449,15 +479,14 @@
  *   TODO: advise user if layout power is off (need to check behavior to see if this should be warning or error)
  *   TODO: add preference to disable other hardware buttons in throttle screen
  *   TODO: unset all states when loco not selected
+ *   TODO: option to show the turnout view instead of the webview
  * select_loco:
  *   TODO: check length of text to avoid overlapping images, slide images to right
  *   TODO: disconnect connections made by roster stuff
  *   TODO: add close button and roster image to details dialog
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
- *   TODO: allow user to delete individual recents (long-press?)
  * log_viewer:
- *   TODO: option to save as file
  *
  * These require changes to WiThrottle
  *   resend turnout and routes when items are added or removed, by adding listeners to WiT

@@ -37,7 +37,6 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
@@ -107,13 +106,13 @@ import jmri.jmrit.roster.RosterLoader;
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
 @SuppressLint("NewApi")
 public class threaded_application extends Application {
-    public static String INTRO_VERSION = "5";  // set this to a different string to force the intro to run on next startup.
+    public static String INTRO_VERSION = "6";  // set this to a different string to force the intro to run on next startup.
 
     public comm_thread commThread;
     String host_ip = null; //The IP address of the WiThrottle server.
     volatile int port = 0; //The TCP port that the WiThrottle server is running on
     Double withrottle_version = 0.0; //version of withrottle server
-    private int web_server_port = 0; //default port for jmri web server
+    public int web_server_port = 0; //default port for jmri web server
     private String serverType = "JMRI"; //currently, only JMRI or MRC
     private volatile boolean doFinish = false;  // when true, tells any Activities that are being created/resumed to finish()
     //shared variables returned from the withrottle server, stored here for easy access by other activities
@@ -143,8 +142,6 @@ public class threaded_application extends Application {
     //minimum Android version for some features
     public final int minWebSocketVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
     public final int minImmersiveModeVersion = android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
-    public final int minToolbarButtonVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
-    public final int minGamepadVersion = Build.VERSION_CODES.KITKAT;
     public final int minThemeVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
     public final int minScreenDimNewMethodVersion = Build.VERSION_CODES.KITKAT;
     public final int minActivatedButtonsVersion = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
@@ -162,7 +159,8 @@ public class threaded_application extends Application {
 
     String client_address; //address string of the client address
     Inet4Address client_address_inet4; //inet4 value of the client address
-    String client_ssid;    //string of the connected SSID
+    String client_ssid = "UNKNOWN";    //string of the connected SSID
+    String client_type = "UNKNOWN"; //network type, usually WIFI or MOBILE
     //For communication to the comm_thread.
     public comm_handler comm_msg_handler = null;
     //For communication to each of the activities (set and unset by the activity)
@@ -176,6 +174,7 @@ public class threaded_application extends Application {
     public volatile Handler consist_lights_edit_msg_handler;
     public volatile Handler power_control_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
+    public volatile Handler preferences_msg_handler;
 
     // for handling control of camera flash
     public static Flashlight flashlight;
@@ -197,15 +196,20 @@ public class threaded_application extends Application {
     //Used to tell set_Labels in Throttle not to update padding for throttle sliders after onCreate.
     public boolean firstCreate = true;
 
-    public int numThrottles = 0;
+    public int numThrottles = 1;
     public int maxThrottles = 6;   // maximum number of throttles the system supports
     public int maxThrottlesCurrentScreen = 6;   // maximum number of throttles the current screen supports
 
     public String connectedHostName = "";
+    public String connectedHostip = "";
+    public int connectedPort = 0;
 
     public String languageCountry = "en";
 
     public boolean appIsFinishing = false;
+    public boolean introIsRunning = false;
+
+    public boolean webMenuSelected = false;  // used as an override for the auto-web code when the web menu is selected.
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -273,38 +277,10 @@ public class threaded_application extends Application {
             }
         }
 
-        /**
-         * retrieve some wifi details, stored as client_ssid, client_address and client_address_inet4
-         */
-        void getWifiInfo() {
-            int intaddr;
-            client_address_inet4 = null;
-            client_address = null;
-            //Set up to find a WiThrottle service via ZeroConf
-            try {
-                WifiManager wifi = (WifiManager) threaded_application.this.getSystemService(Context.WIFI_SERVICE);
-                WifiInfo wifiinfo = wifi.getConnectionInfo();
-                intaddr = wifiinfo.getIpAddress();
-                if (intaddr != 0) {
-                    byte[] byteaddr = new byte[]{(byte) (intaddr & 0xff), (byte) (intaddr >> 8 & 0xff), (byte) (intaddr >> 16 & 0xff),
-                            (byte) (intaddr >> 24 & 0xff)};
-                    client_address_inet4 = (Inet4Address) Inet4Address.getByAddress(byteaddr);
-                    client_address = client_address_inet4.toString().substring(1);      //strip off leading /
-                }
-                //store the wifi ssid for later, removing any enclosing quotes
-                client_ssid = wifiinfo.getSSID();
-                if (client_ssid != null && client_ssid.startsWith("\"") && client_ssid.endsWith("\"")) {
-                    client_ssid = client_ssid.substring(1, client_ssid.length() - 1);
-                }
-            } catch (Exception except) {
-                Log.e("Engine_Driver", "getWifiInfo - error getting IP addr: " + except.getMessage());
-            }
-        }
-
         void start_jmdns() {
             //Set up to find a WiThrottle service via ZeroConf
             try {
-                getWifiInfo();
+//                getWifiInfo();
                 if (client_address != null) {
                     WifiManager wifi = (WifiManager) threaded_application.this.getSystemService(Context.WIFI_SERVICE);
 
@@ -414,14 +390,17 @@ public class threaded_application extends Application {
             /***future PowerLock
              private PowerManager.WakeLock wl = null;
              */
+            @SuppressLint("DefaultLocale")
             public void handleMessage(Message msg) {
+//                Log.d("Engine_Driver", "comm_handler: message: " +msg.what);
+
                 switch (msg.what) {
                     // note: if the Thottle is sent in arg1, it is always expected to be a int
                     // if it is sent in arg0, it will be a string
 
                     //Start or Stop the WiThrottle listener and required jmdns stuff
                     case message_type.SET_LISTENER:
-                        getWifiInfo();
+//                        getWifiInfo();
                         if (isDtx()) {
                             addDtxToDiscoveredList();
                         } else {
@@ -429,6 +408,10 @@ public class threaded_application extends Application {
                             if (msg.arg1 == 0) {
                                 end_jmdns();
                             } else {
+                                //show message if using mobile data
+                                if (!client_type.equals("WIFI")) {
+                                    show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppNotWIFI, client_type), Toast.LENGTH_LONG);
+                                }
                                 if (jmdns == null) {   //start jmdns if not started
                                     start_jmdns();
                                     if (jmdns != null) {  //don't bother if jmdns didn't start
@@ -709,6 +692,10 @@ public class threaded_application extends Application {
                     case message_type.KIDS_TIMER_TICK:
                         sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_TICK, "", msg.arg1);
                         break;
+                    case message_type.IMPORT_SERVER_AUTO_AVAILABLE:
+                        Log.d("Engine_Driver", "comm_handler: message: AUTO_IMPORT_URL_AVAILABLE " +msg.what);
+                        sendMsg(throttle_msg_handler, message_type.IMPORT_SERVER_AUTO_AVAILABLE,"", 0);
+                        break;
                 }
             }
         }
@@ -745,8 +732,8 @@ public class threaded_application extends Application {
              input addr is formatted "L37<;>CSX37" or "S96" (if no roster name)
              msgTxt will be formatted M0+L1012<;>EACL1012 or M1+S96<;>S96 */
         private void acquireLoco(String addr, int whichThrottle, long interval) {
-            String rosterName = "";
-            String address = "";
+            String rosterName;
+            String address;
             String[] as = splitByString(addr, "<;>");
             if (as.length > 1) {
                 address = as[0];
@@ -789,7 +776,7 @@ public class threaded_application extends Application {
             for (ConLoco l : c.getLocos()) { // reacquire each confirmed loco in the consist
                 if (l.isConfirmed()) {
                     String addr = l.getAddress();
-                    String desc = l.getDesc();
+//                    String desc = l.getDesc();
                     String roster_name = l.getRosterName();
                     if (roster_name != null)  // add roster selection info if present
                         addr += "<;>" + roster_name;
@@ -1135,9 +1122,11 @@ public class threaded_application extends Application {
             for (String ts : ta) {
                 if (i > 0) { //skip first chunk, just message id
                     String[] tv = splitByString(ts, "}|{");  //split these into 3 parts, key and value
-                    to_system_names[i - 1] = tv[0];
-                    to_user_names[i - 1] = tv[1];
-                    to_states[i - 1] = tv[2];
+                    if (tv.length == 3) { //make sure split worked
+                        to_system_names[i - 1] = tv[0];
+                        to_user_names[i - 1] = tv[1];
+                        to_states[i - 1] = tv[2];
+                    }
                 }  //end if i>0
                 i++;
             }  //end for
@@ -1308,13 +1297,11 @@ public class threaded_application extends Application {
                         clientSocket.setSoTimeout(socketTimeoutMs);
                     } catch (Exception except) {
                         if (!firstConnect) {
-//                            show_toast_message("Can't connect to host " + host_ip + " and port " + port +
-//                                    " from " + client_address +
-//                                    " - " + except.getMessage() + "\nCheck WiThrottle and network settings.", Toast.LENGTH_LONG);
-//                            if (host_ip != null) {
                             show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantConnect,
-                                    host_ip, Integer.toString(port), client_address, except.getMessage()), Toast.LENGTH_SHORT);
-//                            }
+                                    host_ip, Integer.toString(port), client_address, except.getMessage()), Toast.LENGTH_LONG);
+                        }
+                        if (!client_type.equals("WIFI")) { //show additional message if using mobile data
+                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppNotWIFI, client_type), Toast.LENGTH_LONG);
                         }
                         socketOk = false;
                     }
@@ -1422,25 +1409,21 @@ public class threaded_application extends Application {
                 boolean reconInProg = false;
                 //reconnect socket if needed
                 if (!socketGood || inboundTimeout) {
-                    String status = null;
-                    getWifiInfo();                  //update address in case network connection was lost
+                    String status;
+//                    getWifiInfo();                  //update address in case network connection was lost
                     if (client_address == null) {
-//                        status = "Not connected to a network.  Check WiFi settings.\n\nRetrying";
                         status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNotConnected);
                         Log.d("Engine_Driver", "WiT send reconnection attempt.");
                     } else if (inboundTimeout) {
-//                        status = "No response from server " + host_ip + ":" + port + " for " + heart.sGetInboundInterval() + " seconds.  " +
-//                                "Check that the WiThrottle server is running.\n\nRetrying";
                         status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse, host_ip, Integer.toString(port), heart.sGetInboundInterval());
                         Log.d("Engine_Driver", "WiT receive reconnection attempt.");
                     } else {
-//                        status = "Unable to connect to server at " + host_ip + ":" + port + " from " + client_address + ".\n\nRetrying";
                         status = getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect, host_ip, Integer.toString(port), client_address);
                         Log.d("Engine_Driver", "WiT send reconnection attempt.");
                     }
                     socketGood = false;
-                    if (status != null)
-                        sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY, status);
+
+                    sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY, status);
 
                     //perform the reconnection sequence
                     this.disconnect(false);             //clean up socket but do not shut down the receiver
@@ -1459,7 +1442,7 @@ public class threaded_application extends Application {
 
                         // if we get here without an exception then the socket is ok
                         if (reconInProg) {
-                            getWifiInfo();          //update address in case network connection has changed
+//                            getWifiInfo();          //update address in case network connection has changed
                             String status = "Connected to WiThrottle Server at " + host_ip + ":" + port;
                             sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT, status);
                             Log.d("Engine_Driver", "WiT reconnection successful.");
@@ -1603,10 +1586,6 @@ public class threaded_application extends Application {
                 heartbeatIntervalSetpoint = 0;
             }
 
-            public void sendHeartbeat() {
-                comm_msg_handler.post(outboundHeartbeatTimer);
-            }
-
             //outboundHeartbeatTimer()
             //sends a periodic message to WiT
             private Runnable outboundHeartbeatTimer = new Runnable() {
@@ -1683,7 +1662,9 @@ public class threaded_application extends Application {
             private final String sClockMemoryName = "IMCURRENTTIME";
             private WebSocketConnection mConnection = new WebSocketConnection();
             private int displayClockHrs = 0;
+            @SuppressLint("SimpleDateFormat")
             private final SimpleDateFormat sdf12 = new SimpleDateFormat("h:mm a");
+            @SuppressLint("SimpleDateFormat")
             private final SimpleDateFormat sdf24 = new SimpleDateFormat("HH:mm");
 
             @Override
@@ -1791,7 +1772,7 @@ public class threaded_application extends Application {
 
             Notification notification =
                     new Notification.Builder(this)
-                            .setSmallIcon(R.drawable.icon)
+                            .setSmallIcon(R.drawable.icon_notification)
                             .setContentTitle(this.getString(R.string.notification_title))
                             .setContentText(this.getString(R.string.notification_text))
                             .setContentIntent(contentIntent)
@@ -1929,11 +1910,11 @@ public class threaded_application extends Application {
                 settings_reader.close();
             } else {          //hard-code some buttons and default the rest
                 if (numberOfDefaultFunctionLabels >= 0)
-                    function_labels_default.put(0, getApplicationContext().getResources().getString(R.string.functionButton00DefultValue));
+                    function_labels_default.put(0, getApplicationContext().getResources().getString(R.string.functionButton00DefaultValue));
                 if (numberOfDefaultFunctionLabels >= 1)
-                    function_labels_default.put(1, getApplicationContext().getResources().getString(R.string.functionButton01DefultValue));
+                    function_labels_default.put(1, getApplicationContext().getResources().getString(R.string.functionButton01DefaultValue));
                 if (numberOfDefaultFunctionLabels >= 2)
-                    function_labels_default.put(2, getApplicationContext().getResources().getString(R.string.functionButton02DefultValue));
+                    function_labels_default.put(2, getApplicationContext().getResources().getString(R.string.functionButton02DefaultValue));
                 if (numberOfDefaultFunctionLabels >= 3) {
                     for (int k = 3; k <= numberOfDefaultFunctionLabels; k++) {
                         function_labels_default.put(k, Integer.toString(k));        //String.format("%d",k));
@@ -2407,19 +2388,19 @@ public class threaded_application extends Application {
         if (menu != null) {
             if ((power_state == null) || (power_state.equals("2"))) {
                 menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_yellow);
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                     menu.findItem(R.id.power_layout_button).setTitle("Layout Power is UnKnown");
-                }
+//                }
             } else if (power_state.equals("1")) {
                 menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_green);
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                     menu.findItem(R.id.power_layout_button).setTitle("Layout Power is ON");
-                }
+//                }
             } else {
                 menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_red);
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                     menu.findItem(R.id.power_layout_button).setTitle("Layout Power is Off");
-                }
+//                }
             }
         }
     }
@@ -2584,16 +2565,22 @@ public class threaded_application extends Application {
      */
     public void applyTheme(Activity activity) {
         String prefTheme = getCurrentTheme();
-        if (prefTheme.equals("Black")) {
-            activity.setTheme(R.style.app_theme_black);
-        } else if (prefTheme.equals("Outline")) {
-            activity.setTheme(R.style.app_theme_outline);
-        } else if (prefTheme.equals("Ultra")) {
-            activity.setTheme(R.style.app_theme_ultra);
-        } else if (prefTheme.equals("Colorful")) {
-            activity.setTheme(R.style.app_theme_colorful);
-        } else {
-            activity.setTheme(R.style.app_theme);
+        switch (prefTheme) {
+            case "Black":
+                activity.setTheme(R.style.app_theme_black);
+                break;
+            case "Outline":
+                activity.setTheme(R.style.app_theme_outline);
+                break;
+            case "Ultra":
+                activity.setTheme(R.style.app_theme_ultra);
+                break;
+            case "Colorful":
+                activity.setTheme(R.style.app_theme_colorful);
+                break;
+            default:
+                activity.setTheme(R.style.app_theme);
+                break;
         }
     }
 
@@ -2620,7 +2607,7 @@ public class threaded_application extends Application {
         String to;
         to = prefs.getString("ThrottleOrientation",
                 activity.getApplicationContext().getResources().getString(R.string.prefThrottleOrientationDefaultValue));
-        if (to.equals("Auto-Web")) {
+        if ((to.equals("Auto-Web")) && (!webMenuSelected)) {
             int orient = activity.getResources().getConfiguration().orientation;
             if ((webPref && orient == Configuration.ORIENTATION_PORTRAIT)
                     || (!webPref && orient == Configuration.ORIENTATION_LANDSCAPE))
@@ -2629,14 +2616,19 @@ public class threaded_application extends Application {
             to = prefs.getString("WebOrientation",
                     activity.getApplicationContext().getResources().getString(R.string.prefWebOrientationDefaultValue));
         }
+//        webMenuSelected= false;
 
-        int co = activity.getRequestedOrientation();
-        if (to.equals("Landscape") && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        else if (to.equals("Auto-Rotate") && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-        else if (to.equals("Portrait") && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        try {
+            int co = activity.getRequestedOrientation();
+            if (to.equals("Landscape") && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            else if ( (to.equals("Auto-Rotate")) || (to.equals("Auto-Web"))  && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+            else if (to.equals("Portrait") && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } catch (Exception e) {
+            Log.e("Engine_Driver", "setActivityOrientation: Unable to change Orientation: " + e.getMessage());
+        }
         return true;
     }
 
@@ -2659,8 +2651,8 @@ public class threaded_application extends Application {
         alert.show();
 
         // find positiveButton and negativeButton
-        Button positiveButton = (Button) alert.findViewById(android.R.id.button1);
-        Button negativeButton = (Button) alert.findViewById(android.R.id.button2);
+        Button positiveButton = alert.findViewById(android.R.id.button1);
+        Button negativeButton = alert.findViewById(android.R.id.button2);
         // then get their parent ViewGroup
         ViewGroup buttonPanelContainer = (ViewGroup) positiveButton.getParent();
         int positiveButtonIndex = buttonPanelContainer.indexOfChild(positiveButton);
@@ -2692,14 +2684,14 @@ public class threaded_application extends Application {
         if (menu != null) {
             if (flashState) {
                 menu.findItem(R.id.flashlight_button).setIcon(R.drawable.flashlight_on);
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                     menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOn);
-                }
+//                }
             } else {
                 menu.findItem(R.id.flashlight_button).setIcon(R.drawable.flashlight_off);
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                     menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
-                }
+//                }
             }
         }
     }
@@ -2761,7 +2753,7 @@ public class threaded_application extends Application {
             case "Six":
                 return 6;
         }
-        return 0;
+        return 1; // default to 1 in case of problems
     }
 
     public int throttleCharToInt(char cWhichThrottle) {
@@ -2789,6 +2781,7 @@ public class threaded_application extends Application {
         return Integer.toString(whichThrottle);
     }
 
+    @SuppressLint("ApplySharedPref")
     public String fixThrottleName(String currentValue) {
         String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
 

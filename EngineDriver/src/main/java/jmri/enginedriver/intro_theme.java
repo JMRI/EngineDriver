@@ -20,6 +20,7 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 package jmri.enginedriver;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -77,14 +78,17 @@ public class intro_theme extends Fragment {
 
         RadioGroup radioGroup = getView().findViewById(R.id.intro_throttle_type_radio_group);
 
+        radioGroup.clearCheck();
         if (nameEntryValues[0].equals(currentValue)) {radioGroup.check(R.id.intro_theme_default_name); }
         else if (nameEntryValues[1].equals(currentValue)) {radioGroup.check(R.id.intro_theme_black_name); }
         else if (nameEntryValues[2].equals(currentValue)) {radioGroup.check(R.id.intro_theme_outline_name); }
         else if (nameEntryValues[3].equals(currentValue)) {radioGroup.check(R.id.intro_theme_ultra_name); }
         else if (nameEntryValues[4].equals(currentValue)) {radioGroup.check(R.id.intro_theme_colorful_name); }
+        radioGroup.jumpDrawablesToCurrentState();
 
         radioGroup.setOnCheckedChangeListener(new
         RadioGroup.OnCheckedChangeListener() {
+          @SuppressLint("ApplySharedPref")
           @Override
           public void onCheckedChanged(RadioGroup group, int checkedId) {
               int Choice = 0;

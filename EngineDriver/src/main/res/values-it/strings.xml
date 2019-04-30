@@ -134,6 +134,9 @@
     <string name="lightsTextFollow">Puls. Funz. Succ.</string>
     <string name="lightsTextUnknown">Sconosciuto</string>
 
+    <string name="logviewerClose">Chiudere</string>
+    <string name="logviewerSave">Inizia la registrazione su file</string>
+
     <string name="prefTitle">Preferenze</string>
     <string name="prefSummary">Preferenze per Engine Driver</string>
     <string name="preferences">Preferenze</string>
@@ -243,7 +246,6 @@
     <string name="prefDecreaseLocoNumberHeightSummary">Usare pulsanti minori per Numero locomotiva, velocità e pulsanti di direzione.</string>
     <string name="prefNumOfThrottles">Numero di Controllori</string>
     <string name="prefNumOfThrottlesSummary">Scegli quanti Controllori visualizzare sullo schermo.</string>
-    <string name="prefNumOfThrottlesDefault">Due</string>
 
     <string name="prefThrottleScreenTypeTitle">Tipo di schermo del controllore</string>
     <string name="prefThrottleScreenTypeSummary">Quale tipo di schermo del controllore usare.\nATTENZIONE! Engine Driver si riavvierà immediatamente.</string>
@@ -281,13 +283,16 @@
     <string name="prefDropOnAcquireSummary">Libera Locomotiva prima di Acquisire un\'altra.</string>
     <string name="prefHideIfNoUserNameTitle">Nascondere se non esiste Nome Utente?</string>
     <string name="prefHideIfNoUserNameSummary">Omette lo Scambio se il nome utente é vuoto.</string>
+
     <string name="prefRosterRecentLocosTitle">Elenco in Locomotive Recenti?</string>
     <string name="prefRosterRecentLocosSummary">Includere selezioni Elenco in Locomotive Recenti?</string>
+    <string name="prefRosterRecentLocoNamesTitle">Nomi di elenco in luoghi recenti?</string>
+    <string name="prefRosterRecentLocoNamesSummary">Includi nomi di locazioni dal roster nell\'elenco Recenti se viene trovato un indirizzo corrispondente?</string>
     <string name="prefMaximumRecentLocosTitle">Massimo Locomotive Recenti</string>
 
     <string name="prefRosterFilterTitle">Filtro dell\'Elenco</string>
     <string name="prefRosterFilterSummary">Includere solo voci di elenco che iniziano con…</string>
-    <string name="prefRosterFilterDefaultValue"></string>
+    <string name="prefRosterFilterDefaultValue" />
     <string name="FilterRosterList">Filtro</string>
     <string name="FilterRosterListHint">Contiene…</string>
     <string name="LocoSelectMethodHelp">Inserisci sopra  l\'indirizzo DCC della tua locomotiva  e fai clic su \'Acquisisci\'.\n\nAlterntivamente, seleziona una loco \'dall\'Elenco\' JMRI  o selezionala fra quelle usate \'Recentemente\' facendo clic su uno dei pulsanti.</string>
@@ -360,11 +365,15 @@
     <string name="prefSpeedButtonsSpeedStepTitle">Quantità incremento pulsante velocità</string>
     <string name="prefSpeedButtonsSpeedStepSummary">Quanto la freccia di velocità altera la velocità del controllore.</string>
 
-    <string name="NumThrottleDefaulValue">Due</string>
+<!--    <string name="NumThrottleDefaulValue">Due</string> -->
     <string name="server_address">Indirizzo Server</string>
     <string name="routes_route">Nome di Sistema della Rotta</string>
 
     <string name="throttle_name">Nome Controllore: %1$s</string>
+
+    <string name="prefShowAdvancedPreferencesTitle">Mostra Preferenze avanzate?</string>
+    <string name="prefShowAdvancedPreferencesSummary">Mostrare o nascondere le preferenze aggiuntive.</string>
+
     <string name="prefConsistLightsLongClickTitle">Controlla Luci Convoglio con clic lungo</string>
     <string name="prefConsistLightsLongClickSummary">Cambia le Luci di ogni locomotiva del Convoglio con un clic lungo sul pulsante di Selezione Locomotiva.</string>
     <string name="consistLights_help">Cliccare in una Locomotiva per accendere le luci della Locomotiva \'Spento\' o \'Seguire tasto Funzione\'.\n\nClic lungo sulla Locomotiva per forzare lo status delle Luci \'Spento\', senza inviare i comando alla  Locomotiva. (Caso ED si confonda.)\n\nPremere Freccia Indietro  quando pronto.</string>
@@ -378,10 +387,20 @@
     <string name="prefAutoImportExportTitle">Importare/Esportare specifico per Auto host</string>
     <string name="prefAutoImportExportSummary">Per ogni connessione a um host, \'Importare\' AUTOMATICAMENTE le preferenze per quell\'host, e opzionalmente \'Esportare\' alla disconnessione. \n(Per tornare continuamente a uno stato noto, usaer \'Auto Importazione solo alla connessione\' dopo la prima volta, o dopo un salvataggio manuale (giù).)</string>
 
+    <string name="prefImportServerManualTitle">Importa dal server corrente (manualmente)</string>
+    <string name="prefImportServerManualSummary">File del server per \'Importare\' una serie di preferenze dal server attualmente collegato.\nIl file deve essere in \'/engine_driver/\' del server e il server Web deve essere in esecuzione.\nAttenzione: l\'importazione inizierà immediatamente salvando questa preferenza.</string>
+
+    <string name="prefImportServerAutoTitle">Importazione automatica da tutti i server</string>
+    <string name="prefImportServerAutoSummary">Importa automaticamente le preferenze dai server alla connessione.\n(Se il file \'/engine_driver/auto_preferences.ed\' è sul server e se è più recente che l\'ultima volta è stato controllato).</string>
+
+    <string name="importServerAutoDialog">Il nuovo file delle preferenze è stato trovato su questo server.\nVuoi importarlo?\n\nWarning!\n\'Pieno\' - Tutte le tue preferenze saranno sovrascritte.\n\n\'Parziale\' - Tutte le preferenze, eccetto Tema e alcune preferenze per Tipo di pagina Throttle, saranno sovrascritte.</string>
+    <string name="importServerAutoDialogPositiveButton">Pieno</string>
+    <string name="importServerAutoDialogNeutralButton">Parziale</string>
+
     <string name="prefHostImportExportTitle">Importare/Esportare specifico per host Manuale</string>
     <string name="prefHostImportExportSummary">\'Importare\' o \'Esportare\' le tue preferenze per un host specifico nella cartella \'engine_driver/\'. L\'host deve essere nella tua lista di connessioni recenti.\nAvverrà IMMEDIATAMENTE dopo la selezione dell\'opzione.\n(Disponibile solo quando non attualmente connesso.)</string>
 
-    <string name="prefImportExportOverwite">File giá presente. Sovrascrivere?</string>
+    <string name="prefImportExportOverwite">File \'%1$s\' giá presente. Sovrascrivere?</string>
     <string name="prefImportExportErrorReadingList">Errore lettura lista connessioni recenti:</string>
     <string name="prefImportExportErrorReadingFrom">Importazione da \'engine_driver/%1$s\' fallita! Puoi non aver ancora salvato le preferenze per questo host.</string>
     <string name="prefImportExportErrorNotConnected">Host non connesso.</string>
@@ -427,9 +446,9 @@
     <string name="prefAccelerometerShakeTitle">Azione Scuotiento</string>
     <string name="prefAccelerometerShakeSummary">Opzioni per scuotimento del dispositivo.</string>
 
-    <string name="functionButton00DefultValue">Luce</string>
-    <string name="functionButton01DefultValue">Campana</string>
-    <string name="functionButton02DefultValue">Fischio</string>
+    <string name="functionButton00DefaultValue">Luce</string>
+    <string name="functionButton01DefaultValue">Campana</string>
+    <string name="functionButton02DefaultValue">Fischio</string>
 
     <string name="prefAccelerometerShakeThresholdTitle">Livello scuotimento</string>
     <string name="prefAccelerometerShakeThresholdSummary">Livello al quale lo scuotimento sará registrato.(1.5&#8211;3.5) Valori minori risponderanno ad una azione più lieve.\nRichiede il riavvio di Engine Driver per avere effetto.</string>
@@ -484,12 +503,21 @@
     <string name="toastSwipeUpScreenDimmed">Schermo Controllore Scurito - Scorrere per ripristinare</string>
     <string name="toastSwipeUpViewHidden">Vista Web temporaneamente nascosta.  Per nascondere permanentemente, alterare le preferenze.</string>
     <string name="toastThrottleAlertEstop">Avviso: Locomotiva %1$s é impostata in stato di ESTOP</string>
+    <string name="toastThrottleImportServerAutoSucceeded">Importazione automatica delle preferenze dal server Web JMRI riuscita.</string>
 
+    <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Il valore inserito è fuori dai limiti  (%1$s-%2$s). Ristabilito %3$s.</string>
     <string name="toastPreferencesNotNumeric">Il valore inserito non è un numero.(%1$s-%2$s). Ristabilito %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferenze resettate a valori default!</string>
+    <string name="toastPreferencesImportServerManualFailed">Impossibile importare le preferenze dal server! Controlla che il file sia corretto. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Importazione delle preferenze dal server riuscito. (%1$s)</string>
+    <string name="toastPreferencesImportSucceeded">Preferenze Importa da file Riuscito.</string>
+    <string name="toastPreferencesThemeChangeSucceeded">Cambiamento del tema riuscito.</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">Modifica del tipo di pagina acceleratore. Riuscito.</string>
+    <string name="toastPreferencesLocaleChangeSucceeded">Cambio locale (lingua) riuscito.</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver riavviato con la lingua scelta.</string> -->
 
+    <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Nomero dello scambio non valido.</string>
     <string name="toastTurnoutCommandTo">Comando inviato allo scambio %1$s</string>
     <string name="toastTurnoutCommandToClose">Corretto Tracciato</string>
@@ -497,11 +525,14 @@
     <string name="toastTurnoutCommandToToggle">Alternare</string>
     <string name="toastConnectEnterAddress">Inserire o selezionare un indirizzo e una porta</string>
     <string name="toastConnectInvalidPort">Numero Porta non valido. Riprovare.</string>
-    <string name="toastConnectConnected">Connesso al Server: %1$s Porta : %2$s</string>
+    <string name="toastConnectConnected">Connesso al Server: %1$s Porta: %2$s</string>
     <string name="toastConnectUnableToSavePref">Impossibile salvare preferenze specifiche dell\'host. Nome host non disponibile.</string>
     <string name="toastConnectUnableToLoadPref">Impossibile caricare preferenze specifiche dell\'host. Nome host non disponibile.</string>
     <string name="toastConnectErrorReadingRecentConnections">Errore di lettura lista connessioni recenti:</string>
     <string name="toastConnectErrorSavingRecentConnection">Errore salvando connessioni recenti:</string>
+    <string name="toastConnectRemoveDemoHostError">Il server demo può essere rimosso solo modificando le preferenze.</string>
+    <string name="toastConnectRemoved">Sever rimosso dalla lista.</string>
+
     <string name="toastRoutesCommandSent">"Comando inviato per selezionare la Rotta"</string>
     <string name="toastImportExportExportSucceeded">Esportazione preferenze in \'engine_driver/%1$s\' realizzata com successo.</string>
     <string name="toastImportExportImportSucceeded">Importazione preferenze da \'engine_driver/%1$s\' realizzata com successo.</string>
@@ -511,6 +542,10 @@
     <string name="toastImportExportCannotImport">Impossibile importare le preferenze. Non connesso all\'host.</string>
     <string name="toastImportExportCannotExport">Impossibili esportare preferenze specifiche dell\'host. Non connesso all\'host.</string>
     <string name="toastSelectLocoConfirmClear">Confermare che desideri rimuovere tutte le Locomotive Recenti premendo NUOVAMENTE il pulsante \'Pulire Lista\'.</string>
+
+    <!--    Toast messages for the Log Viewer Activity -->
+    <string name="toastSaveLogFile">Registrazione avviata nel file %1$s. La registrazione continuerà fino all\'uscita dall\'app Engine Driver.</string>
+
     <string name="prefTtsTitle">Risposta Vocale</string>
     <string name="prefTtsSummary">Parla Eventi Chiave</string>
     <string name="prefTtsWhenTitle">Risposta Vocale</string>
@@ -621,9 +656,9 @@
     <string name="introThrottleTypeSummary2">A seconda del tipo scelto, sarai limitato al numero di singoli acceleratori (da 1 a 6) sullo schermo.</string>
 
     <string name="introFinishTitle">Pronto all\'uso</string>
-    <string name="introFinishSummary">Successivamente, avvia il server WiThrottle in JMRI.</string>
-    <string name="introFinishSummary1">Quindi, completa questa introduzione e seleziona il tuo server WiThrottle se \'scoperto\', o inserisci manualmente l\'indirizzo IP e la porta.</string>
-    <string name="introFinishSummary2">((Questi sono mostrati nella finestra di WiThrottle in JMRI.)\n\nPer istruzioni dettagliate, vedere la pagina \'Informazioni\' dal menu o visitare la pagina iniziale di Engine Driver all\'indirizzo \n\'https://enginedriver.mstevetodd.com\'.</string>
+    <string name="introFinishSummary">Engine Driver è ora pronto per la connessione.</string>
+<!--    <string name="introFinishSummary1">Quindi, completa questa introduzione e seleziona il tuo server WiThrottle se \'scoperto\', o inserisci manualmente l\'indirizzo IP e la porta.</string> -->
+    <string name="introFinishSummary2">Per istruzioni dettagliate, vedere la pagina \'Informazioni\' dal menu o visitare la pagina iniziale di Engine Driver all\'indirizzo \n\'https://enginedriver.mstevetodd.com\'.</string>
     <string name="introFinishSummary3">Puoi apportare ulteriori modifiche all\'aspetto e al comportamento dell\'app dal menu \'Preferenze\'.</string>
 
     <string name="introButtonsTitle">Cursori e pulsanti di velocità</string>
@@ -633,5 +668,12 @@
     <string name="introButtonsNoSlider">Solo i pulsanti di velocità</string>
 
     <string name="introbackButtonPress">Please Riavvia l\'app Engine Driver per completare l\'introduzione.</string>
+    <string name="consist_trail_label">Locomotiva di piombo</string>
+    <string name="fb_column_label">Etichetta</string>
+    <string name="fb_column_function">funz #</string>
+    <string name="rosterEmpty">Impossibile trovare nessuna enties nel roster JMRI. Utilizzare il \'DCC Indirizzo\' o opzione \'recente\', invece.</string>
+    <string name="gamepadTestDeviceName">BT:</string>
+    <string name="prefConsistFollowDefaultActionTitle">Azione predefinita</string>
+    <string name="prefConsistFollowDefaultActionSummary">Quale locos nella consistere dovrebbero reagire ai tasti funzione, se nessuna delle regole di sotto sono si incontrano.</string>
 
 </resources>

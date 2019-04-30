@@ -64,8 +64,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+//import java.util.Arrays;
+//import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -79,8 +79,8 @@ import jmri.jmrit.roster.RosterEntry;
 public class select_loco extends Activity {
     static public final int RESULT_LOCO_EDIT = RESULT_FIRST_USER;
 
-    private static final int GONE = 8;
-    private static final int VISIBLE = 0;
+//    private static final int GONE = 8;
+//    private static final int VISIBLE = 0;
 
     private static final String WHICH_METHOD_FIRST = "0"; // furst time the app has been used
     private static final String WHICH_METHOD_ADDRESS = "1";
@@ -126,6 +126,8 @@ public class select_loco extends Activity {
     RadioButton rbRoster;
     RadioButton rbRecent;
     String prefSelectLocoMethod = WHICH_METHOD_FIRST;
+
+    boolean prefRosterRecentLocoNames = true;
 
     // populate the on-screen roster view from global hashmap
     public void refresh_roster_list() {
@@ -212,6 +214,22 @@ public class select_loco extends Activity {
         } // if roster_entries not null
     }
 
+    private String getLocoNameFromRoster(String engineAddressString) {
+        if (prefRosterRecentLocoNames) {
+            if ((mainapp.roster_entries != null) && (mainapp.roster_entries.size() > 0)) {
+                for (String rostername : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
+                    if (mainapp.roster_entries.get(rostername).equals(engineAddressString)) { //looking for value = input parm
+                        return engineAddressString + " - " + rostername;  //if found, return the roster name (key)
+                    }
+                }
+            }
+            if (mainapp.getConsistNameFromAddress(engineAddressString) != null) { //check for a JMRI consist for this address
+                return mainapp.getConsistNameFromAddress(engineAddressString);
+            }
+        }
+        return engineAddressString;
+    }
+
     // lookup and set values of various text labels
     protected void set_labels() {
 
@@ -228,25 +246,25 @@ public class select_loco extends Activity {
 
         boolean prefShowAddressInsteadOfName = prefs.getBoolean("prefShowAddressInsteadOfName", getResources().getBoolean(R.bool.prefShowAddressInsteadOfNameDefaultValue));
 
-        TextView vH = (TextView) findViewById(R.id.throttle_name_header);
+        TextView tvThrottleNameHeader = findViewById(R.id.throttle_name_header);
         // show throttle name
         String s = "Throttle Name: "
                 + prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
-        vH.setText(s);
+        tvThrottleNameHeader.setText(s);
 
         // format and show currently selected locos, and hide or show Release buttons
         final int conNomTextSize = 16;
         final double minTextScale = 0.8;
 
-        Button bR = (Button) findViewById(R.id.Sl_release);
-        LinearLayout llThrottle = (LinearLayout) findViewById(R.id.LL_loco);
+        Button bR = findViewById(R.id.Sl_release);
+        LinearLayout llThrottle = findViewById(R.id.LL_loco);
 
-        TextView tvSelectLocoHeading = (TextView) findViewById(R.id.select_loco_heading);
+        TextView tvSelectLocoHeading = findViewById(R.id.select_loco_heading);
         tvSelectLocoHeading.setText(this.getResources().getString(R.string.select_loco_heading).replace("%1$s",Integer.toString(mainapp.throttleCharToInt(sWhichThrottle.charAt(0))+1)));
 
         //hide the release button row if nothing currently aquired
-        TextView tvThrottleNameHeader = (TextView) findViewById(R.id.throttle_name_header);
-            if (mainapp.consists[whichThrottle].isActive()) {
+//        TextView tvThrottleNameHeader = findViewById(R.id.throttle_name_header);
+        if (mainapp.consists[whichThrottle].isActive()) {
             llThrottle.setVisibility(View.GONE);
             tvThrottleNameHeader.setVisibility(View.VISIBLE);
         } else {
@@ -462,14 +480,14 @@ public class select_loco extends Activity {
 
     public class button_listener implements View.OnClickListener {
         public void onClick(View v) {
-            EditText entry = (EditText) findViewById(R.id.loco_address);
+            EditText entry = findViewById(R.id.loco_address);
             try {
                 engine_address = Integer.valueOf(entry.getText().toString());
             } catch (NumberFormatException e) {
                 Toast.makeText(getApplicationContext(), "ERROR - Please enter a valid DCC address.\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 return;
             }
-            Spinner spinner = (Spinner) findViewById(R.id.address_length);
+            Spinner spinner = findViewById(R.id.address_length);
             address_size = spinner.getSelectedItemPosition();
             acquire_engine(true);
             InputMethodManager imm =
@@ -550,6 +568,7 @@ public class select_loco extends Activity {
         }
     }
 
+    @SuppressLint("ApplySharedPref")
     private void filterRoster() {
         prefRosterFilter = filter_roster_text.getText().toString().trim();
         prefs.edit().putString("prefRosterFilter", prefRosterFilter ).commit();
@@ -591,9 +610,12 @@ public class select_loco extends Activity {
         mainapp.select_loco_msg_handler = new select_loco_handler();
 
         prefRosterFilter = prefs.getString("prefRosterFilter", this.getResources().getString(R.string.prefRosterFilterDefaultValue));
+        prefRosterRecentLocoNames = prefs.getBoolean("prefRosterRecentLocoNames",
+                getResources().getBoolean(R.bool.prefRosterRecentLocoNamesDefaultValue));
+
 
         // Set the options for the address length.
-        Spinner address_spinner = (Spinner) findViewById(R.id.address_length);
+        Spinner address_spinner = findViewById(R.id.address_length);
         ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this,
                 R.array.address_size, android.R.layout.simple_spinner_item);
         spinner_adapter
@@ -607,7 +629,7 @@ public class select_loco extends Activity {
                 "roster_address", "roster_icon"}, new int[]{R.id.roster_name_label,
                 R.id.roster_address_label, R.id.roster_icon_image});
 
-        ListView roster_list_view = (ListView) findViewById(R.id.roster_list);
+        ListView roster_list_view = findViewById(R.id.roster_list);
         roster_list_view.setAdapter(roster_list_adapter);
         roster_list_view.setOnItemClickListener(new roster_item_ClickListener());
         roster_list_view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -626,7 +648,7 @@ public class select_loco extends Activity {
         SimpleAdapter recent_list_adapter = new SimpleAdapter(this, recent_engine_list,
                 R.layout.engine_list_item, new String[]{"engine"},
                 new int[]{R.id.engine_item_label});
-        ListView engine_list_view = (ListView) findViewById(R.id.engine_list);
+        ListView engine_list_view = findViewById(R.id.engine_list);
         engine_list_view.setAdapter(recent_list_adapter);
         engine_list_view.setOnItemClickListener(new engine_item());
 
@@ -636,7 +658,7 @@ public class select_loco extends Activity {
         //if no SD Card present then there is no recent locos list
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             //alert user that recent locos list requires SD Card
-            TextView v = (TextView) findViewById(R.id.recent_engines_heading);
+            TextView v = findViewById(R.id.recent_engines_heading);
             v.setText(getString(R.string.sl_recent_engine_notice));
         } else {
             try {
@@ -668,6 +690,7 @@ public class select_loco extends Activity {
                                 String addressLengthString = ((as == 0) ? "S" : "L");  //show L or S based on length from file
                                 String engineAddressString = String.format("%s(%s)", engine_address_list.get(
                                         engine_address_list.size() - 1).toString(), addressLengthString);
+                                engineAddressString = getLocoNameFromRoster(engineAddressString);
                                 hm.put("engine", engineAddressString);
                                 recent_engine_list.add(hm);
                             } //if ea>=0&&as>=0
@@ -684,15 +707,15 @@ public class select_loco extends Activity {
         }
 
         // Set the button callbacks.
-        Button button = (Button) findViewById(R.id.acquire);
+        Button button = findViewById(R.id.acquire);
         button_listener click_listener = new button_listener();
         button.setOnClickListener(click_listener);
 
         //Jeffrey added 7/3/2013
-        button = (Button) findViewById(R.id.clear_Loco_List_button);
+        button = findViewById(R.id.clear_Loco_List_button);
         button.setOnClickListener(new clear_Loco_List_button());
 
-        filter_roster_text = (EditText) findViewById(R.id.filter_roster_text);
+        filter_roster_text = findViewById(R.id.filter_roster_text);
         filter_roster_text.setText(prefRosterFilter);
         filter_roster_text.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -721,10 +744,10 @@ public class select_loco extends Activity {
             whichThrottle = mainapp.throttleCharToInt(sWhichThrottle.charAt(0));
         }
 
-        button = (Button) findViewById(R.id.Sl_release);
+        button = findViewById(R.id.Sl_release);
         button.setOnClickListener(new release_button_listener(whichThrottle));
 
-        EditText la = (EditText) findViewById(R.id.loco_address);
+        EditText la = findViewById(R.id.loco_address);
         la.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 updateAddressEntry();
@@ -749,22 +772,22 @@ public class select_loco extends Activity {
             }
         });
 
-        rbAddress=(RadioButton)findViewById(R.id.select_loco_method_address_button);
-        rbRoster=(RadioButton)findViewById(R.id.select_loco_method_roster_button);
-        rbRecent =(RadioButton)findViewById(R.id.select_loco_method_recent_button);
+        rbAddress= findViewById(R.id.select_loco_method_address_button);
+        rbRoster= findViewById(R.id.select_loco_method_roster_button);
+        rbRecent = findViewById(R.id.select_loco_method_recent_button);
 
         prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", WHICH_METHOD_FIRST);
 
-        rlAddress = (RelativeLayout) findViewById(R.id.enter_loco_group);
-        rlAddressHelp = (RelativeLayout) findViewById(R.id.enter_loco_group_help);
-        rlRosterHeader = (RelativeLayout) findViewById(R.id.roster_list_header_group);
-        rlRosterEmpty = (RelativeLayout) findViewById(R.id.roster_list_empty_group);
-        llRoster = (LinearLayout) findViewById(R.id.roster_list_group);
-        rlRecentHeader = (RelativeLayout) findViewById(R.id.engine_list_header_group);
-        llRecent = (LinearLayout) findViewById(R.id.engine_list_wrapper);
+        rlAddress = findViewById(R.id.enter_loco_group);
+        rlAddressHelp = findViewById(R.id.enter_loco_group_help);
+        rlRosterHeader = findViewById(R.id.roster_list_header_group);
+        rlRosterEmpty = findViewById(R.id.roster_list_empty_group);
+        llRoster = findViewById(R.id.roster_list_group);
+        rlRecentHeader = findViewById(R.id.engine_list_header_group);
+        llRecent = findViewById(R.id.engine_list_wrapper);
         showMethod(prefSelectLocoMethod);
 
-        RadioGroup rgLocoSelect = (RadioGroup) findViewById(R.id.select_loco_method_address_button_radio_group);
+        RadioGroup rgLocoSelect = findViewById(R.id.select_loco_method_address_button_radio_group);
         rgLocoSelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
 
@@ -786,6 +809,7 @@ public class select_loco extends Activity {
         set_labels();
     }
 
+    @SuppressLint("ApplySharedPref")
     private void showMethod(String whichMethod) {
         switch (whichMethod) {
             default:
@@ -912,8 +936,8 @@ public class select_loco extends Activity {
     }
 
     private int updateAddressEntry() {
-        Button ba = (Button) findViewById(R.id.acquire);
-        EditText la = (EditText) findViewById(R.id.loco_address);
+        Button ba = findViewById(R.id.acquire);
+        EditText la = findViewById(R.id.loco_address);
         int txtLen = la.getText().toString().trim().length();
 
         // don't allow acquire button if nothing entered
@@ -924,7 +948,7 @@ public class select_loco extends Activity {
         }
 
         // set address length
-        Spinner al = (Spinner) findViewById(R.id.address_length);
+        Spinner al = findViewById(R.id.address_length);
         if (default_address_length.equals("Long")
                 || (default_address_length.equals("Auto") && txtLen > 2)) {
             al.setSelection(1);
@@ -951,7 +975,7 @@ public class select_loco extends Activity {
         dialog.setTitle("Roster details for " + rosternamestring);
         dialog.setContentView(R.layout.roster_entry);
         String res = re.toString();
-        TextView tv = (TextView) dialog.findViewById(R.id.rosterEntryText);
+        TextView tv = dialog.findViewById(R.id.rosterEntryText);
         tv.setText(res);
         dialog.setCancelable(true);
         dialog.show();
@@ -982,19 +1006,19 @@ public class select_loco extends Activity {
 
             String str = hm.get("roster_name");
             if (str != null) {
-                TextView name = (TextView) view.findViewById(R.id.roster_name_label);
+                TextView name = view.findViewById(R.id.roster_name_label);
                 name.setText(str);
             }
 
             str = hm.get("roster_address");
             if (str != null) {
-                TextView secondLine = (TextView) view.findViewById(R.id.roster_address_label);
+                TextView secondLine = view.findViewById(R.id.roster_address_label);
                 secondLine.setText(hm.get("roster_address"));
             }
 
             String iconURL = hm.get("roster_icon");
             if ((iconURL != null) && (iconURL.length() > 0)) {
-                ImageView imageView = (ImageView) view.findViewById(R.id.roster_icon_image);
+                ImageView imageView = view.findViewById(R.id.roster_icon_image);
                 mainapp.imageDownloader.download(iconURL, imageView);
             } else {
                 View v = view.findViewById(R.id.roster_icon_image);

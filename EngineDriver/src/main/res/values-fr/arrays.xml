@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+      Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+      This program is free software; you can redistribute it and/or modify it
+      under the terms of the GNU General Public License as published by the
+      Free Software Foundation;
+      either version 3 of the License, or (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+      for more details. You should have received a copy of the GNU General
+      Public License along with this program; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+      original translation by Alain Carasso
+-->
+
+<resources>
+    <string-array name="address_size_defaultsEntries">
+        <item>Court</item>
+        <item>Long</item>
+        <item>Auto</item>
+    </string-array>
+
+    <string-array name="DisplaySpeedUnitsEntries">
+        <item>Pourcentage</item>
+        <item>Pas de vitesse automatiques</item>
+        <item>8 pas</item>
+        <item>10 pas</item>
+        <item>14 pas</item>
+        <item>28 pas</item>
+        <item>128 pas</item>
+    </string-array>
+
+    <string-array name="WebViewLocationEntries">
+        <item>Bas</item>
+        <item>aucun</item>
+    </string-array>
+
+    <string-array name="OrientationEntries">
+        <item>Portrait</item>
+        <item>Paysage</item>
+        <item>Rotation auto</item>
+        <item>Auto-Web</item>
+    </string-array>
+
+    <string-array name="NumOfThrottlesEntries">
+        <item>Un</item>
+        <item>Deux</item>
+        <item>Trois</item>
+        <item>Quatre</item>
+        <item>Cinq</item>
+        <item>Six</item>
+    </string-array>
+
+    <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
+        <item>Original &#8211; Téléphone ou Tablette (1&#8211;3 régulateurs)</item>
+        <item>Simple &#8211; Tablette (1&#8211;6 régulateurs)</item>
+        <item>Vertical &#8211; Téléphone ou Tablette (1&#8211;12 régulateurs)</item>
+        <item>Big Buttons &#8211;  Gauche (1 régulateur)</item>
+        <item>Big Buttons &#8211;  Droite (1 régulateur)</item>
+        <item>Vertical &#8211; Gauche (1 régulateur)</item>
+        <item>Vertical &#8211; Droite (1 régulateur)</item>
+    </string-array>
+
+    <string-array name="DisplayClockEntries">
+        <item>Aucun</item>
+        <item>Format 12 heures</item>
+        <item>Format 24 heures</item>
+    </string-array>
+
+    <string-array name="prefGamePadKeyEntries">
+        <item>Arrêter tout</item>
+        <item>Arrêt</item>
+        <item>Avant</item>
+        <item>Arrière</item>
+        <item>Bascule Avant/Arrière</item>
+        <item>Augmenter la vitesse</item>
+        <item>Réduire la vitesse</item>
+        <item>Prochain régulateur</item>
+        <item>Fonction 00/Lumière</item>
+        <item>Fonction 01/Cloche</item>
+        <item>Fonction 02/Sifflet</item>
+        <item>Fonction 03</item>
+        <item>Fonction 04</item>
+        <item>Fonction 05</item>
+        <item>Fonction 06</item>
+        <item>Fonction 07</item>
+        <item>Fonction 08</item>
+        <item>Fonction 09</item>
+        <item>Fonction 10</item>
+        <item>Fonction 11</item>
+        <item>Fonction 12</item>
+        <item>Fonction 13</item>
+        <item>Fonction 14</item>
+        <item>Fonction 15</item>
+        <item>Fonction 16</item>
+        <item>Fonction 17</item>
+        <item>Fonction 18</item>
+        <item>Fonction 19</item>
+        <item>Fonction 20</item>
+        <item>Fonction 21</item>
+        <item>Fonction 22</item>
+        <item>Fonction 23</item>
+        <item>Fonction 24</item>
+        <item>Fonction 25</item>
+        <item>Fonction 26</item>
+        <item>Fonction 27</item>
+        <item>Fonction 28</item>
+    </string-array>
+
+<!--
+    <string-array name="prefAutoImportExportOptionsDisplayEntries">
+        <item>Aucun</item>
+        <item>Auto Import/Export à la connexion/déconnexion</item>
+        <item>Auto Import à la connexion seul.</item>
+    </string-array>
+-->
+
+    <string-array name="prefThemeEntries">
+        <item>Thème par défaut</item>
+        <item>Standard</item>
+        <item>Fort contraste avec bords</item>
+        <item>Foncé</item>
+        <item>Coloré</item>
+    </string-array>
+
+    <string-array name="prefSelectedLocoIndicatorEntries">
+        <item>Aucun (Utilisez seulement \'v\',\'1\')</item>
+        <item>Pour Volume et Gamepad 1</item>
+        <item>Gamepad 1 seulement</item>
+    </string-array>
+
+    <string-array name="prefAccelerometerShakeEntries">
+        <item>Aucun</item>
+        <item>Cache la vue Web\n(Nécessite \'Throttle Web View\' dans les préférences.</item>
+        <item>Verrouille et assombri Ecran</item>
+        <item>Assombri Ecran</item>
+        <item>Prochain régulateur -pour touches de volume</item>
+        <item>Arret total</item>
+    </string-array>
+
+    <string-array name="prefTtsWhenEntries">
+        <item>Aucun</item>
+        <item>Evènements clé seulement</item>
+    </string-array>
+
+    <string-array name="prefSwipeUpOptionsEntries">  <!-- display version -->
+        <item>Aucun</item>
+        <item>Cache la vue Web\n(Nécessite \'Throttle Web View\' dans les préférences.</item>
+        <item>Bloquer et diminuer la luminosité de l écran</item>
+        <item>Assombrir l écran</item>
+        <item>Activation-désactivation provisoire du mode immersif</item>
+    </string-array>
+
+    <string-array name="prefImportExportEntries">  <!-- display version -->
+        <item>Aucun</item>
+        <item>Exportation</item>
+        <item>Importation</item>
+        <item>Réinitialiser</item>
+    </string-array>
+
+    <string-array name="prefLocaleEntries">  <!-- display version -->
+        <item>Utiliser les paramètres globaux du téléphone</item>
+        <item>Anglais (Etats-Unis) - Engine Driver\'s Standard</item>
+        <item>Italien</item>
+        <item>Portugais</item>
+        <item>Allemand</item>
+        <item>Espanol</item>
+        <item>Catalan</item>
+        <item>Français</item>
+        <item>Tchèque</item>
+    </string-array>
+
+    <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
+        <item>Correspondance de texte simple (original)</item>
+        <item>Correspondance de texte complexe - chaînes configurables par l utilisateur</item>
+    </string-array>
+
+    <string-array name="prefConsistFollowEntries">  <!-- display version -->
+        <item>Loco de tête - Correspondance partielle</item>
+        <item>Locos de tête et de queue - correspondance partielle</item>
+        <item>Toutes les locos - correspondance partielle</item>
+        <item>Loco de tête - correspondance exacte</item>
+        <item>Locos de tête et de queue - correspondance exacte</item>
+        <item>Toutes les locos - correspondance exacte</item>
+    </string-array>
+
+    <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
+        <item>Ne fais rien</item>
+        <item>Loco de tête - même n° de fonction</item>
+        <item>Locos de tête et de queue - même n° de fonction</item>
+        <item>Toutes les locos - même n° de fonction</item>
+    </string-array>
+
+    <string-array name="prefKidsTimerEntries">  <!-- display version -->
+        <item>Désactivé</item>
+        <item>1 minute</item>
+        <item>2 minutes</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>Fin de roulage</item>
+    </string-array>
+
+    <string-array name="prefGamePadTypeEntries"> <!-- display version -->
+        <item>Rien</item>
+        <item >Mocute iCade</item>
+        <!-- <item >Mocute/iOS- iCade Mode - DPAD rotated</item> -->
+        <item >Mocute iCade+DPAD</item>
+        <!-- <item >Mocute/iOS- iCade+DPAD Mode - DPAD rotated</item> -->
+        <item >Mocute MTK</item>
+        <!-- <item >Mocute/Android- MTK Mode - DPAD rotated</item> -->
+        <item >Mocute Android-Game</item>
+        <!-- <item >Mocute/Android- Game Mode - DPAD rotated</item> -->
+        <item>MagicseeR1 Android-Game B</item>
+        <item >Flydigi Wee 2</item>
+    </string-array>
+
+    <string-array name="prefGamePadFlydigiWee2Labels">
+        <item> </item> //not used
+        <item>Touche Select Action</item>
+        <item>Touche DPAD Action Haut</item>
+        <item>Touche DPAD Action Bas</item>
+        <item>Touche DPAD Action Gauche</item>
+        <item>Touche DPAD Action Droite</item>
+        <item>Touche DPAD Action Start</item>
+        <item>Touche DPAD Action X</item>
+        <item>Touche DPAD Action Y</item>
+        <item>Touche DPAD Action A</item>
+        <item>Touche DPAD Action B</item>
+        <item>Epaulement Gauche</item>
+        <item>Epaulement Droit</item>
+        <item>Gachette Gauche</item>
+        <item>Gachette Droite</item>
+    </string-array>
+
+    <string-array name="prefGamePadMocuteLabels">
+        <item> </item> //not used
+        <item>Touche Select Action</item>
+        <item>Touche DPAD Action Haut</item>
+        <item>Touche DPAD Action Bas</item>
+        <item>Touche DPAD Action Gauche</item>
+        <item>Touche DPAD Action Droite</item>
+        <item>Touche DPAD Action Start</item>
+        <item>Touche DPAD Action X</item>
+        <item>Touche DPAD Action Y</item>
+        <item>Touche DPAD Action A</item>
+        <item>Touche DPAD Action B</item>
+        <item>Epaulement Gauche</item>
+        <item>Epaulement Droit</item>
+        <item>Gachette Gauche</item>
+        <item>Gachette Droite</item>
+    </string-array>
+
+    <string-array name="prefGamePadMagicseeR1Labels">
+        <item> </item> //not used
+        <item>Touche OK Action</item>
+        <item>Touche DPAD Action Haut</item>
+        <item>Touche DPAD Action Bas</item>
+        <item>Touche DPAD Action Gauche</item>
+        <item>Touche DPAD Action Droite</item>
+        <item>Touche DPAD Action Return</item>
+        <item>Touche DPAD Action C</item>
+        <item>Touche DPAD Action D</item>
+        <item>Touche DPAD Action A</item>
+        <item>Touche DPAD Action B</item>
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+    </string-array>
+
+    <string-array name="prefGamePadNoneLabels">
+        <item> </item> //not used
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+        <item> </item> //not used
+    </string-array>
+
+    <string-array name="prefGamePadPrefButtonReferences">
+        <item> </item> //not used
+        <item>prefGamePadButtonReturn</item>
+        <item>prefGamePadButtonUp</item>
+        <item>prefGamePadButtonDown</item>
+        <item>prefGamePadButtonLeft</item>
+        <item>prefGamePadButtonRight</item>
+        <item>prefGamePadButtonStart</item>
+        <item>prefGamePadButton1</item>
+        <item>prefGamePadButton3</item>
+        <item>prefGamePadButton2</item>
+        <item>prefGamePadButton4</item>
+        <item>prefGamePadButtonLeftShoulder</item> //not used
+        <item>prefGamePadButtonRightShoulder</item> //not used
+        <item>prefGamePadButtonLeftTrigger</item> //not used
+        <item>prefGamePadButtonRightTrigger</item> //not used
+    </string-array>
+
+    <string-array name="prefEsuMc2KeyEntries"> <!-- display version -->
+        <item>(pas de fonction)</item>
+        <item>Arrêt total</item>
+        <item>Stop</item>
+        <item>Avant</item>
+        <item>Arrière</item>
+        <item>Bascule Avant-Arrière</item>
+        <item>Augmente vitesse</item>
+        <item>Réduit Vitesse</item>
+        <item>Prochain régulateur</item>
+        <item>Fonction 00/Lumière</item>
+        <item>Fonction 01/Cloche</item>
+        <item>Fonction 02/Sifflet</item>
+        <item>Fonction 03</item>
+        <item>Fonction 04</item>
+        <item>Fonction 05</item>
+        <item>Fonction 06</item>
+        <item>Fonction 07</item>
+        <item>Fonction 08</item>
+        <item>Fonction 09</item>
+        <item>Fonction 10</item>
+        <item>Fonction 11</item>
+        <item>Fonction 12</item>
+        <item>Fonction 13</item>
+        <item>Fonction 14</item>
+        <item>Fonction 15</item>
+        <item>Fonction 16</item>
+        <item>Fonction 17</item>
+        <item>Fonction 18</item>
+        <item>Fonction 19</item>
+        <item>Fonction 20</item>
+        <item>Fonction 21</item>
+        <item>Fonction 22</item>
+        <item>Fonction 23</item>
+        <item>Fonction 24</item>
+        <item>Fonction 25</item>
+        <item>Fonction 26</item>
+        <item>Fonction 27</item>
+        <item>Fonction 28</item>
+    </string-array>
+
+    <string-array name="prefAutoImportExportEntries"> <!-- display version -->
+        <item>Rien</item>
+        <item>Auto Import/Export à la connexion/déconnexion</item>
+        <item>Auto Import à la connexion seul.</item>
+    </string-array>
+
+    <string-array name="prefTtsThrottleResponseEntries"> <!-- display version -->
+        <item>Rien</item>
+        <item>Régulateur</item>
+        <item>Régulateur + Loco</item>
+        <item>Régulateur + Vitesse</item>
+        <item>Régulateur + Loco + Vitesse</item>
+    </string-array>
+
+    <string-array name="prefYesNoEntries"> <!-- display version -->
+        <item>Oui</item>
+        <item>Non</item>
+    </string-array>
+
+</resources>
