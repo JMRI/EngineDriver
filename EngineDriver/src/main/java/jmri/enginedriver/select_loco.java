@@ -128,6 +128,8 @@ public class select_loco extends Activity {
     String prefSelectLocoMethod = WHICH_METHOD_FIRST;
 
     boolean prefRosterRecentLocoNames = true;
+    boolean removingEngine = false; //flag used to indicate that the selected loco is being removed and not to save it.
+    ListView engine_list_view;
 
     // populate the on-screen roster view from global hashmap
     public void refresh_roster_list() {
@@ -461,7 +463,10 @@ public class select_loco extends Activity {
             if (mrl > 0) {
                 // Add this engine to the head of recent engines list.
                 mrl--;
-                list_output.format("%d:%d\n", engine_address, address_size);
+                if (!removingEngine) {
+                    list_output.format("%d:%d\n", engine_address, address_size);
+                }
+                removingEngine=false;
                 for (int i = 0; i < engine_address_list.size() && mrl > 0; i++) {
                     if (engine_address != engine_address_list.get(i) || address_size != address_size_list.get(i)) {
                         list_output.format("%d:%d\n", engine_address_list.get(i), address_size_list.get(i));
@@ -648,9 +653,16 @@ public class select_loco extends Activity {
         SimpleAdapter recent_list_adapter = new SimpleAdapter(this, recent_engine_list,
                 R.layout.engine_list_item, new String[]{"engine"},
                 new int[]{R.id.engine_item_label});
-        ListView engine_list_view = findViewById(R.id.engine_list);
+        engine_list_view = findViewById(R.id.engine_list);
         engine_list_view.setAdapter(recent_list_adapter);
         engine_list_view.setOnItemClickListener(new engine_item());
+        engine_list_view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
+                return onLongRecentListItemClick(v, pos, id);
+            }
+        });
+
 
         // simliar, but different, code exists in importExportPreferences.java. if you modify one, make sure you modify the other
         engine_address_list = new ArrayList<>();
@@ -979,6 +991,28 @@ public class select_loco extends Activity {
         tv.setText(res);
         dialog.setCancelable(true);
         dialog.show();
+        return true;
+    }
+
+    // long click for the recent loco list items.  Clears the entry from the list
+    protected boolean onLongRecentListItemClick(View v, int position, long id) {
+        HashMap<String, String> hm = recent_engine_list.get(position);
+        String rosterAddressString = hm.get("engine");
+        String ras[] = threaded_application.splitByString(rosterAddressString, "(");
+        if (ras[0].length() > 0) {  //only process if address found
+            recent_engine_list.remove(position);
+
+            for (int i = 0; i < engine_address_list.size(); i++) {
+                if (engine_address_list.get(i) == Integer.parseInt(ras[0])) {
+                    engine_address_list.remove(i);
+                    break;
+                }
+            }
+            removingEngine=true;
+            updateRecentEngines(true);
+            engine_list_view.invalidateViews();
+
+        }
         return true;
     }
 
