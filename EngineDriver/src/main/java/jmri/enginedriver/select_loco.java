@@ -90,6 +90,7 @@ public class select_loco extends Activity {
     ArrayList<HashMap<String, String>> recent_engine_list;
     ArrayList<HashMap<String, String>> roster_list;
     private RosterSimpleAdapter roster_list_adapter;
+    private RecentSimpleAdapter recent_list_adapter;
 
     private ArrayList<Integer> engine_address_list;
     private ArrayList<Integer> address_size_list; // Look at address_type.java
@@ -221,7 +222,8 @@ public class select_loco extends Activity {
             if ((mainapp.roster_entries != null) && (mainapp.roster_entries.size() > 0)) {
                 for (String rostername : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
                     if (mainapp.roster_entries.get(rostername).equals(engineAddressString)) { //looking for value = input parm
-                        return engineAddressString + " - " + rostername;  //if found, return the roster name (key)
+//                        return engineAddressString + " - " + rostername;  //if found, return the roster name (key)
+                        return rostername;  //if found, return the roster name (key)
                     }
                 }
             }
@@ -230,6 +232,21 @@ public class select_loco extends Activity {
             }
         }
         return engineAddressString;
+    }
+
+    private String getLocoIconUrlFromRoster(String engineAddressString) {
+        if (prefRosterRecentLocoNames) {
+            if ((mainapp.roster_entries != null) && (mainapp.roster_entries.size() > 0)) {
+                for (String rostername : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
+                    if (mainapp.roster_entries.get(rostername).equals(engineAddressString)) { //looking for value = input parm
+                        String iconPath = mainapp.roster.get(rostername).getIconPath();  //if found, return the icon url
+                        if (iconPath == null) return "";
+                        return iconPath;
+                    }
+                }
+            }
+        }
+        return "";
     }
 
     // lookup and set values of various text labels
@@ -650,9 +667,9 @@ public class select_loco extends Activity {
         // Set up a list adapter to allow adding the list of recent engines to
         // the UI.
         recent_engine_list = new ArrayList<>();
-        SimpleAdapter recent_list_adapter = new SimpleAdapter(this, recent_engine_list,
+        recent_list_adapter = new RecentSimpleAdapter(this, recent_engine_list,
                 R.layout.engine_list_item, new String[]{"engine"},
-                new int[]{R.id.engine_item_label});
+                new int[]{R.id.engine_item_label, R.id.engine_icon_image});
         engine_list_view = findViewById(R.id.engine_list);
         engine_list_view.setAdapter(recent_list_adapter);
         engine_list_view.setOnItemClickListener(new engine_item());
@@ -702,8 +719,11 @@ public class select_loco extends Activity {
                                 String addressLengthString = ((as == 0) ? "S" : "L");  //show L or S based on length from file
                                 String engineAddressString = String.format("%s(%s)", engine_address_list.get(
                                         engine_address_list.size() - 1).toString(), addressLengthString);
-                                engineAddressString = getLocoNameFromRoster(engineAddressString);
-                                hm.put("engine", engineAddressString);
+                                String engineIconUrl = getLocoIconUrlFromRoster(engineAddressString);
+//                                engineAddressString = getLocoNameFromRoster(engineAddressString);
+                                hm.put("engine_icon", engineIconUrl);
+                                hm.put("engine", getLocoNameFromRoster(engineAddressString));
+                                hm.put("engine_name", engineAddressString);
                                 recent_engine_list.add(hm);
                             } //if ea>=0&&as>=0
                         } //if splitPos>0
@@ -1056,6 +1076,54 @@ public class select_loco extends Activity {
                 mainapp.imageDownloader.download(iconURL, imageView);
             } else {
                 View v = view.findViewById(R.id.roster_icon_image);
+                v.setVisibility(View.GONE);
+            }
+
+            return view;
+        }
+    }
+
+
+    public class RecentSimpleAdapter extends SimpleAdapter {
+        private Context cont;
+
+        public RecentSimpleAdapter(Context context,
+                                   List<? extends Map<String, ?>> data, int resource,
+                                   String[] from, int[] to) {
+            super(context, data, resource, from, to);
+            cont = context;
+        }
+
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (position > recent_engine_list.size())
+                return convertView;
+
+            HashMap<String, String> hm = recent_engine_list.get(position);
+            if (hm == null)
+                return convertView;
+
+            LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.engine_list_item, null, false);
+
+            String str = hm.get("engine_name");
+            if (str != null) {
+                TextView name = view.findViewById(R.id.engine_name_label);
+                name.setText(str);
+            }
+
+            str = hm.get("engine");
+            if (str != null) {
+                TextView secondLine = view.findViewById(R.id.engine_item_label);
+                secondLine.setText(str);
+            }
+
+            String iconURL = hm.get("engine_icon");
+            if ((iconURL != null) && (iconURL.length() > 0)) {
+                ImageView imageView = view.findViewById(R.id.engine_icon_image);
+                mainapp.imageDownloader.download(iconURL, imageView);
+            } else {
+                View v = view.findViewById(R.id.engine_icon_image);
                 v.setVisibility(View.GONE);
             }
 

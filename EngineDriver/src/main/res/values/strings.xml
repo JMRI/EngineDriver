@@ -835,7 +835,7 @@
     <string name="prefKidsSectionTitle">Children\'s Preferences</string>
     <string name="prefKidsSectionSummary">Options for young children.</string>
     <string name="prefKidsHelpTitle">Notes for the Timer:</string>
-    <string name="prefKidsHelpSummary">- select the loco first.\n- Timer will start with the first increase in speed.\n- You must come back to this preference to reset the time (or clear it) after the timeout.\n\nRecommendions:\n- Disable the volume keys.\n- Disable \'Swipe Through Turnouts\'.\n- Disable \'Swipe Through Routes\'.\n- Disable EStop.</string>
+    <string name="prefKidsHelpSummary">- select the loco first.\n- Timer will start with the first increase in speed.\n- You must come back to this preference to reset the time (or clear it) after the timeout.\n\nRecommendations:\n- Disable the volume keys.\n- Disable \'Swipe Through Turnouts\'.\n- Disable \'Swipe Through Routes\'.\n- Disable EStop.</string>
     <string name="prefKidsTimerTitle">Time limited running</string>
     <string name="prefKidsTimerSummary">Restrict the time that the loco will run. e.g. Each child will get an equal amount of time.</string>
     <string name="prefKidsTimerDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
