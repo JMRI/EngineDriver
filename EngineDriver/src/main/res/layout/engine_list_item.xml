@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/engine_icon_image"
+        android:layout_width="200dp"
+        android:layout_height="54dp"
+        android:layout_alignParentRight="true"
+        android:contentDescription="roster icon"
+        tools:ignore="HardcodedText,RtlHardcoded">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/engine_name_label"
+        style="?attr/list_id_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TestAddress"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/engine_item_label"
@@ -10,6 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-</LinearLayout>
+        android:paddingTop="12dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:ignore="RelativeOverlap" />
+</RelativeLayout>
