@@ -393,6 +393,10 @@
     <string name="prefRightDirectionButtonsShortTitle">Etiqueta curta Botó Direcció Dret</string>
     <string name="prefRightDirectionButtonsShortSummary">Etiquetes curtes per a tots els botons de direcció DRETA. Introduïu \'Enr\' o en blanc per al comportament normal.</string>
     <string name="prefRightDirectionButtonsShortDefaultValue">Enr</string>
+
+    <string name="prefTickMarksOnSlidersTitle">Mostra marques dels barres de desplaçament de velocitat</string>
+    <string name="prefTickMarksOnSlidersSummary">Mostrar o amagar les marques de graduació en el fons dels barres de desplaçament de velocitat.</string>
+
     <string name="prefThemeTitle">Tema/Estil</string>
 
     <string name="prefThemeSummary">Tema de l\'App. ¡ATENCIÓ! Engine Driver es reiniciarà immediatament.\nRequereix Android Honeycomb o posterior.</string>
@@ -705,7 +709,7 @@
     <string name="introFinishTitle">Llest per usar</string>
 
     <string name="introFinishSummary">A continuació, inicieu el servidor WiThrottle al JMRI.</string>
-    <string name="introFinishSummary1">A continuació, completeu aquesta acció i seleccioneu el vostre servidor WiThrottle si és \'descobert \', o introduïu manualment l\'adreça IP i el port.</string>
+<!--    <string name="introFinishSummary1">A continuació, completeu aquesta acció i seleccioneu el vostre servidor WiThrottle si és \'descobert \', o introduïu manualment l\'adreça IP i el port.</string> -->
     <string name="introFinishSummary2">(Es mostren a la finestra WiThrottle del JMRI).\n\nPer obtenir instruccions detallades, consulteu la pàgina \'Quant a\' del menú o visiteu la pàgina d\'inici Engine Driver a\n\'https://enginedriver.mstevetodd.com\'.</string>
     <string name="introFinishSummary3">Podeu fer canvis addicionals de l\'aparença i del comportament de l\'aplicació en el menú \'Preferències\'.</string>
 

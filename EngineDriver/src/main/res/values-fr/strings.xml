@@ -416,6 +416,10 @@
     <string name="prefLeftDirectionButtonsShortDefaultValue">AV</string>
     <string name="prefRightDirectionButtonsShortTitle">Libellé court touche de direction à Droite</string>
     <string name="prefRightDirectionButtonsShortSummary">Libellé court pour toutes les touche de direction à Droite. Entrez \'AR\' ou ne pas remplir si etat normal.</string>
+
+    <string name="prefTickMarksOnSlidersTitle">Afficher Graduations sur Sliders vitesse</string>
+    <string name="prefTickMarksOnSlidersSummary">Afficher ou masquer les marques tique sur l\'arrière-plan des curseurs de vitesse.</string>
+
     <string name="prefRightDirectionButtonsShortDefaultValue">AR</string>
 
 

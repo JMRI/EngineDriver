@@ -72,4 +72,6 @@
 
     <bool name="prefShowAdvancedPreferencesDefaultValue">false</bool>
 
+    <bool name="prefTickMarksOnSlidersDefaultValue">true</bool>
+
 </resources>

@@ -32,6 +32,8 @@
     <color name="intro_background">#a56f00</color>
     <color name="intro_buttonbar_background">#ffac00</color>
 
+    <color name="seekBarTickColor">#AFAEAE</color>
+
     <!-- Black Theme -->
     <color name="primary_black">@color/solidWhite</color>
     <color name="secondary_black">#AFAEAE</color>

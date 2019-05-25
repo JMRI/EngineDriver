@@ -410,6 +410,10 @@
     <string name="prefRightDirectionButtonsShortTitle">Kurzbezeichnung des Richtungsknopfs Rechts</string>
     <string name="prefRightDirectionButtonsShortSummary">Kurzbezeichnungen für alle Richtungsknöpfe RECHTS. \'Rückwärts\' eingeben oder leer lassen für normales Verhalten.</string>
     <string name="prefRightDirectionButtonsShortDefaultValue">Rückw.</string>
+
+    <string name="prefTickMarksOnSlidersTitle">Show Tick Marks on Speed ​​Sliders</string>
+    <string name="prefTickMarksOnSlidersSummary">Ein- oder Ausblenden von Markierungen auf dem Hintergrund der Geschwindigkeit Schieberegler.</string>
+
     <string name="prefThemeTitle">Motiv/Stil</string>
 
     <string name="prefThemeSummary">App Motiv. WARNUNG! Engine Driver wird sofort neu starten.\'Benötigt Android Honeycomb oder neuer.</string>
