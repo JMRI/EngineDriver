@@ -314,7 +314,7 @@ public class web_activity extends Activity {
                 break;
             case "Default":
             default:
-                in = new Intent(this, throttle_big_buttons.class);
+                in = new Intent(this, throttle_full.class);
                 break;
         }
 
