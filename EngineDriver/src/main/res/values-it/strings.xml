@@ -430,6 +430,9 @@
     <string name="prefRightDirectionButtonsShortSummary">Etichette brevi per tutti i pulsanti direzione DESTRI. Inserire \'Ind\' o lasciare in bianco per funzionamento normale.</string>
     <string name="prefRightDirectionButtonsShortDefaultValue">Ind</string>
 
+    <string name="prefTickMarksOnSlidersTitle">Mostra segni di spunta sulla velocità Sliders</string>
+    <string name="prefTickMarksOnSlidersSummary">Mostrare o nascondere i segni di graduazione sullo sfondo dei cursori di velocità.</string>
+
     <string name="prefDirectionButtonLongPressDelayTitle">Ritardo prolungato del pulsante di direzione</string>
     <string name="prefDirectionButtonLongPressDelaySummary">Quanti millisecondi costituiscono una pressione prolungata per i pulsanti di direzione.</string>
 

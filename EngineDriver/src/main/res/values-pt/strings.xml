@@ -429,6 +429,9 @@
     <string name="prefRightDirectionButtonsShortSummary">Etiquetas breves para todos os botões direção DIREITOS. Inserir \'Rev\' ou deixarem branco para funcionamento normal.</string>
     <string name="prefRightDirectionButtonsShortDefaultValue">Rev</string>
 
+    <string name="prefTickMarksOnSlidersTitle">Mostrar Tick marcas na Melocidade Sliders</string>
+    <string name="prefTickMarksOnSlidersSummary">Mostrar ou ocultar as marcas no fundo dos controles deslizantes de velocidade.</string>
+
     <string name="prefDirectionButtonLongPressDelayTitle">Atraso Pressão Prolongada Botão Direcional </string>
     <string name="prefDirectionButtonLongPressDelaySummary">Quantos milissegundos constituem um toque longo para os botões de direção.</string>
 

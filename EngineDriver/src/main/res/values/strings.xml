@@ -529,6 +529,9 @@
     <string name="prefRightDirectionButtonsShortSummary">Labels for all Short RIGHT direction buttons. Enter \'Rev\' or blank for normal behaviour.</string>
     <string name="prefRightDirectionButtonsShortDefaultValue">Rev</string>
 
+    <string name="prefTickMarksOnSlidersTitle">Tick Marks on Speed Sliders</string>
+    <string name="prefTickMarksOnSlidersSummary">Show or hide tick marks on the background of the speed sliders.</string>
+
     <string name="prefThemeTitle">Theme/Style</string>
     <string name="prefThemeSummary">App theme. WARNING! Engine Driver will restart immediately!</string>
     <string name="prefThemeDefaultValue" translatable="false">Default</string>  <!-- DO NOT TRANSLATE -->

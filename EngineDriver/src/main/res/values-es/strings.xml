@@ -392,6 +392,10 @@
     <string name="prefRightDirectionButtonsShortTitle">Etiqueta corta Botón Dirección Derecho</string>
     <string name="prefRightDirectionButtonsShortSummary">Etiquetas cortas para todos los botones de dirección DERECHA. Introducir \'Atr\' o en blanco para el comportamiento normal.</string>
     <string name="prefRightDirectionButtonsShortDefaultValue">Atr</string>
+
+    <string name="prefTickMarksOnSlidersTitle">Mostrar marcas de los deslizadores de velocidad</string>
+    <string name="prefTickMarksOnSlidersSummary">Mostrar u ocultar las marcas de graduación en el fondo de los deslizadores de velocidad.</string>
+
     <string name="prefThemeTitle">Tema/Estilo</string>
 
     <string name="prefThemeSummary">Tema de la App. ¡ATENCIÓN! Engine Driver se reiniciará inmediatamente.\nRequiere Android Honeycomb o posterior.</string>
@@ -694,7 +698,7 @@
     <string name="introFinishTitle">Listo para usar</string>
 
     <string name="introFinishSummary">A continuación, inicie el servidor WiThrottle en JMRI.</string>
-    <string name="introFinishSummary1">Complete el proceso seleccionando un servidor WiThrottle de la lista, si és detectado, o ingrese manualmente la dirección IP y el puerto.</string>
+<!--    <string name="introFinishSummary1">Complete el proceso seleccionando un servidor WiThrottle de la lista, si és detectado, o ingrese manualmente la dirección IP y el puerto.</string> -->
     <string name="introFinishSummary2">(Estos se muestran en la ventana de WiThrottle del JMRI).\n\nPara obtener instrucciones detalladas, consulte la página \'Acerca de\' del menú o visite la página de inicio Engine Driver en \n\'https://enginedriver.mstevetodd.com\'.</string>
     <string name="introFinishSummary3">Puede realizar cambios adicionales del aspecto y del comportamiento de la aplicación desde el menú \'Preferencias\'.</string>
 

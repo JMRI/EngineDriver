@@ -505,6 +505,10 @@
 
     <string name="prefRightDirectionButtonsShortTitle">Štítek zkratka pravého tlačítka směru</string>
     <string name="prefRightDirectionButtonsShortSummary">Štítky zkratka pro všechna pravá tlačítka směru. Zadejte \'Z\' nebo nechte prázdné pro normální chování.</string>
+
+    <string name="prefTickMarksOnSlidersTitle">Show Tick Marks na rychlosti Klouzači</string>
+    <string name="prefTickMarksOnSlidersSummary">Skrytí nebo ukázání značkami na pozadí rychlostních jezdců.</string>
+
     <string name="prefRightDirectionButtonsShortDefaultValue">Z</string>
 
     <string name="prefThemeTitle">Téma/Styl</string>

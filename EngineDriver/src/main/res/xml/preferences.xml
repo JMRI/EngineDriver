@@ -119,7 +119,12 @@
                 android:defaultValue="@bool/prefHideSliderAndSpeedButtonsDefaultValue"
                 android:key="prefHideSliderAndSpeedButtons"
                 android:summary="@string/prefHideSliderAndSpeedButtonsSummary"
-                android:title="@string/prefHideSliderAndSpeedButtonsTitle" >
+                android:title="@string/prefHideSliderAndSpeedButtonsTitle" />
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefTickMarksOnSlidersDefaultValue"
+                android:key="prefTickMarksOnSliders"
+                android:summary="@string/prefTickMarksOnSlidersSummary"
+                android:title="@string/prefTickMarksOnSlidersTitle" >
             </CheckBoxPreference>
 
         </PreferenceScreen>
