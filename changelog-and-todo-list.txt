@@ -1,6 +1,9 @@
 **Version 2.24
  * Option to show/hide advanced preferences. Advanced preferences are hidden by default
  * Entering colon (":") into the host field changes focus to the port field
+ * Long press on an entry in the Recent Locos List removes it from the list
+ * Recent Locos List shows the icon from the roster if found
+ * fix bug when returning from web view
 **Version 2.23
  * ESU MC2 support Gradle dependency
  * Change target API to 26
