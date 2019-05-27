@@ -5129,6 +5129,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     kidsTimerActions(KIDS_TIMER_DISABLED,0);
                 }
 
+                redrawVerticalSliders();
                 break;
             }
             case ACTIVITY_GAMEPAD_TEST: {
@@ -5717,4 +5718,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         Runtime.getRuntime().exit(0); // really force the kill
     }
 
+    private void redrawVerticalSliders() {
+        if (vsbSpeeds != null) {
+            for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+                vsbSpeeds[throttleIndex].tickMarksChecked = false;
+                vsbSpeeds[throttleIndex].invalidate();
+            }
+        }
+    }
 }
