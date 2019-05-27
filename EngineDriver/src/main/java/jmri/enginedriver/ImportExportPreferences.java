@@ -158,6 +158,7 @@ public class ImportExportPreferences {
 
                 ObjectInputStream input = null;
                 try {
+                    String restoredDeviceId = "";
                     input = new ObjectInputStream(new FileInputStream(src));
                     prefEdit.clear();
 
@@ -186,6 +187,7 @@ public class ImportExportPreferences {
                         } else if (v instanceof String) {
 //                            Log.d("Engine_Driver", "ImportExportPreferences: loadSharedPreferencesFromFile: Key End: " + key + " - String - " + v);
                             prefEdit.putString(key, ((String) v));
+                            if (key.equals("prefAndroidId")) { restoredDeviceId = (String) v;}
                         }
 
                         Log.d("Engine_Driver", "ImportExportPreferences: loadSharedPreferencesFromFile: Key " + i +" End: " + key + " - " + v);
@@ -195,7 +197,6 @@ public class ImportExportPreferences {
 
 
                     // restore the remembered throttle name to avoid a duplicate throttle name if this is a different to device to where it was originally saved
-                    String restoredDeviceId = sharedPreferences.getString("prefAndroidId", "").trim();
                     if ((!restoredDeviceId.equals(deviceId)) || (restoredDeviceId.equals(""))) {
                         prefEdit.putString("throttle_name_preference", currentThrottleNameValue);
                     }
