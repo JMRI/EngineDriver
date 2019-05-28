@@ -385,7 +385,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         ListView conn_list = findViewById(R.id.connections_list);
         conn_list.setAdapter(connection_list_adapter);
         conn_list.setOnItemClickListener(new connect_item(server_list_type.RECENT_CONNECTION));
-        conn_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            conn_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             //When an entry is long-clicked, remove it from the consist
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id) {

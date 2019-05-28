@@ -724,8 +724,10 @@ public class threaded_application extends Application {
         private void sendThrottleName(Boolean sendHWID) {
             String s = prefs.getString("throttle_name_preference", getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue));
             withrottle_send("N" + s);  //send throttle name
+            String deviceId = "";
             if (sendHWID)
-                withrottle_send("HU" + s);  //also send throttle name as the UDID
+                deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+                withrottle_send("HU" + deviceId);  //also send throttle name as the UDID
         }
 
         /* ask for specific loco to be added to a throttle
