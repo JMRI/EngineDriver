@@ -67,6 +67,7 @@
     <string name="none">Ninguna</string>
     <string name="fb_helptext">Entra etiquetas y funciones en la lista de la derecha. Déjala en blanco  para esconder el botón. Estos se utilizan cuando las funciones de la Flota no están disponibles.</string>
     <string name="copy_function_labels">Copiar Etiquetas desde la Flota</string>
+
     <string name="fb_header">Modificar Funciones</string>
     <string name="consist_help">Pulsar una locomotora para cambiar su dirección respecto a la de la Multi Tracción. Mantener pulsado para eliminar una locomotora de la Multi Tracción. Pulsar Atrás para terminar.</string>
     <string name="about">Acerca de</string>
@@ -430,6 +431,7 @@
     <string name="gamepadTestButtonLabelButtonB">B [@]</string>
     <string name="gamepadTestButtonLabelButtonStart">Iniciar | Enviar</string>
     <string name="gamepadTestButtonLabelButtonEnter">Selecciona | Enviar</string>
+
     <string name="gamepadTestOptionalLabel">Opcional (puede ser que no esté en el dispositivo)</string>
     <string name="gamepadTestAllKeyCodesLabel">Todos los códigos:\s\s</string>
     <string name="gamepadTestModeLabel">Tipo:\s\s</string>
@@ -451,8 +453,10 @@
     <string name="gamepadTestKeyCodesDownCode">"Ab"</string>
     <string name="gamepadTestKeyCodesLeftCode">"Iz"</string>
     <string name="gamepadTestKeyCodesRightCode">"Dr"</string>
+
     <string name="prefGamepadTestNowTitle">¡Prueba de configuración del gamepad ahora!</string>
     <string name="prefGamepadTestNowSummary">Permite confirmar que la configuración seleccionada funciona correctamente.\nLa página de prueba se iniciará INMEDIATAMENTE al seleccionarla.</string>
+
     <string name="toastUnableToSetBrightness">No se ha podido establecer el brillo Automático/Adaptativo.</string>
     <string name="toastAccelerometerNotFound">Acelerómetro no encontrado o deshabilitado</string>
     <string name="toastLocoChangeNotAllowed">Cambio de locomotora no permitido:\'El cambio de dirección mientras hay movimiento\' está deshabilitado en las preferencias</string>
@@ -666,8 +670,8 @@
     <string name="prefKidsSectionTitle">Preferencias de los niños</string>
     <string name="prefKidsSectionSummary">Opciones para niños pequeños.</string>
     <string name="prefKidsHelpTitle">Notas para el temporizador:</string>
-<!-- <string name="prefKidsHelpSummary">- Seleccione la locomotora primero.\n- El temporizador comenzará con el primer aumento de velocidad.\n- Debe volver a este ajuste para reiniciar el tiempo (o borrarlo) después del tiempo de espera.\n\nRecomendaciones:\n- Deshabilite las teclas de volumen.\n- Deshabilite \'Deslizar por los Desvíos\'.\n- Deshabilite \'Deslizar por las Rutas\'.\n- Desactive EStop.</string> -->
-    <string name="prefKidsHelpSummary">- Selecciona primero la locomotora.\n- Se iniciará al primer incremento de velocidad.\n- Debes volver a este ajuste para reiniciarlo (o borrarlo) después de agotar el tiempo.\n\nRecomendaciones:\n- Desactiva teclas de volumen.\n- Desactiva Deslizar por los Desvíos.\n- Desactiva Deslizar por las Rutas.\n- Desactiva Parada de Emergencia.</string>
+    <string name="prefKidsHelpSummary">- Seleccione la locomotora primero.\n- El temporizador comenzará con el primer aumento de velocidad.\n- Debe volver a este ajuste para reiniciar el tiempo (o borrarlo) después del tiempo de espera.\n\nSe recomienda deshabilitar las opciones: Teclas de volumen, Deslizar por los Desvíos, Deslizar por las Rutas y la Parada de Emergencia.</string>
+    <!--    <string name="prefKidsHelpSummary">- Selecciona primero la locomotora.\n- Se iniciará al primer incremento de velocidad.\n- Debes volver a este ajuste para reiniciarlo (o borrarlo) después de agotar el tiempo.\n\nRecomendaciones:\n- Desactiva teclas de volumen.\n- Desactiva Deslizar por los Desvíos.\n- Desactiva Deslizar por las Rutas.\n- Desactiva Parada de Emergencia.</string> -->
     <string name="prefKidsTimerTitle">Tiempo limitado de ejecución</string>
     <string name="prefKidsTimerSummary">Restrinja el tiempo que circulará una locomotora. Por ejemplo, cada niño tendrá la misma cantidad de tiempo.</string>
 
@@ -675,7 +679,7 @@
     <string name="prefKidsTimerRestartPasswordSummary">Contraseña para reiniciar los parámetros actuales del temporizador.</string>
 
     <string name="prefKidsTimerResetPasswordTitle">Reinicia/Deshabilita Contraseña</string>
-    <string name="prefKidsTimerResetPasswordSummary">Contraseña para reiniciar/deshabilitar los parámetros del temporizador.</string>
+     <string name="prefKidsTimerResetPasswordSummary">Contraseña para reiniciar/deshabilitar los parámetros del temporizador.</string>
 
     <string name="app_name_throttle_kids_running">Controlador - %1$s seg. restante</string>
     <string name="app_name_throttle_kids_enabled">Controlador - Temporizador preparado</string>
@@ -707,7 +711,6 @@
     <string name="permissionsRetryTitle">Permisos Rechazados</string>
 
     <!-- Introduction / Setup Wizard -->
-
     <string name="introWelcomeTitle">Bienvenido a\nEngine Driver</string>
     <string name="introWelcomeSummary">Esta aplicación puede conectarse a un servidor JMRI, MRC o DigiTrax WiThrottle para controlar sus locomotoras y dispositivos DCC. Las siguientes páginas le guiarán a través de la configuración inicial.\n</string>
 
@@ -731,4 +734,4 @@
     <string name="introButtonsNoSlider">Botones de velocidad solamente</string>
 
     <string name="introbackButtonPress">Reinicie la aplicación Engine Driver para completar el proceso de inicio.</string>
-    </resources>
+</resources>

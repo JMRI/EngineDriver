@@ -409,7 +409,6 @@
     <string name="prefDirectionButtonsTitle">Etiquetes dels Botons de Direcció</string>
     <string name="prefDirectionButtonsSummary">Etiquetes per a tots els botons de direcció.</string>
 
-
     <string name="prefAccelerometerTitle">Preferencies de l\'Acceleròmetre</string>
     <string name="prefAccelerometerSummary">Opcions per al moviment del dispositiu a la Pàgina del Controlador</string>
     <string name="prefAccelerometerShakeTitle">Acció al Sacsejar</string>
@@ -671,7 +670,8 @@
     <string name="prefKidsSectionTitle">Preferències de la mainada</string>
     <string name="prefKidsSectionSummary">Opcions per als mes menuts.</string>
     <string name="prefKidsHelpTitle">Notes per al temporitzador:</string>
-    <string name="prefKidsHelpSummary">- Selecciona primer la locomotora.\n- S\'iniciarà al primer increment de velocitat.\n- Tornant a aquí reiniciaràs (o esborraràs) després d\'esgotar el temps.\n\nRecomanacions:\n- Desactiva tecles de volum.\n- Desactiva Lliscar per les Agulles.\n- Desactiva Lliscar per les Rutes.\n- Desactiva Parada d\'Emergència.</string>
+    <string name="prefKidsHelpSummary">- Primer selecciona la locomotora.\n- El temporizador s\'iniciarà amb el primer augment de velocitat.\n- Has de tornar a aquest ajust per reiniciar el temps (o esborrar-lo) després del temps d\'espera.\n\nEs recomana deshabilitar les següents opcions: Tecles de volum, Lliscar per les Agulles, Lliscar per les Rutes i la Parada d\'Emergència.</string>
+    <!-- <string name="prefKidsHelpSummary">- Selecciona primer la locomotora.\n- S\'iniciarà al primer increment de velocitat.\n- Tornant a aquí reiniciaràs (o esborraràs) després d\'esgotar el temps.\n\nRecomanacions:\n- Desactiva tecles de volum.\n- Desactiva Lliscar per les Agulles.\n- Desactiva Lliscar per les Rutes.\n- Desactiva Parada d\'Emergència.</string> -->
     <string name="prefKidsTimerTitle">Durada limitada</string>
     <string name="prefKidsTimerSummary">Restringiu el temps que circularà una locomotora. Per exemple, cada nen tindrà una quantitat igual de temps.</string>
 
@@ -712,7 +712,6 @@
     <string name="permissionsRetryTitle">Permisos Rebutjats</string>
 
     <!-- Introduction / Setup Wizard -->
-
     <string name="introWelcomeTitle">Benvingut a\nEngine Driver</string>
     <string name="introWelcomeSummary">Aquesta aplicació es pot connectar a un servidor JMRI, MRC o DigiTrax WiThrottle per controlar les vostres locomotores i dispositius DCC. Les següents pàgines us guiaran a través de la configuració inicial.\n</string>
 
