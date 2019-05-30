@@ -328,7 +328,7 @@
 
     <string name="prefRosterRecentLocosTitle">Evidence v Nedávných lokomotivách?</string>
     <string name="prefRosterRecentLocosSummary">Zahrnout výběr evidence v seznamu Nedávných?</string>
-    <string name="prefRosterRecentLocoNamesTitle">Názvy z evidence v nedávných lokomotivých?</string>
+    <string name="prefRosterRecentLocoNamesTitle">Názvy z evidence v Nedávných lokomotivách?</string>
     <string name="prefRosterRecentLocoNamesSummary">Přidat Název lokomotivy ze seznamu nedávných, pokud je nalezena odpovídající adresa?</string>
 
     <string name="prefRosterFilterTitle">Filtr Evidence</string>
