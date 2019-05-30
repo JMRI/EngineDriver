@@ -157,6 +157,8 @@ public class threaded_application extends Application {
 
     public static final int MAX_FUNCTION_NUMBER = 28;        // maximum number of the function buttons supported.
 
+    public String deviceId = "";
+
     String client_address; //address string of the client address
     Inet4Address client_address_inet4; //inet4 value of the client address
     String client_ssid = "UNKNOWN";    //string of the connected SSID
@@ -724,10 +726,16 @@ public class threaded_application extends Application {
         private void sendThrottleName(Boolean sendHWID) {
             String s = prefs.getString("throttle_name_preference", getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue));
             withrottle_send("N" + s);  //send throttle name
-            String deviceId = "";
-            if (sendHWID)
-                deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-                withrottle_send("HU" + deviceId);  //also send throttle name as the UDID
+            if (sendHWID) {
+                if (deviceId.equals("")) {
+                    deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+                }
+                if (deviceId.equals("")) {
+                    withrottle_send("HU" + s);  //also send throttle name as the UDID
+                } else {
+                    withrottle_send("HU" + deviceId);
+                }
+            }
         }
 
         /* ask for specific loco to be added to a throttle
