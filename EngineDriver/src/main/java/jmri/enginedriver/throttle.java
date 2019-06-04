@@ -4835,10 +4835,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         // Handle pressing of the back button
         if (key == KEYCODE_BACK) {
-            if (webView.canGoBack() && !clearHistory) {
+            if (webViewIsOn && webView.canGoBack() && !clearHistory) {
                 scale = webView.getScale(); // save scale
                 webView.goBack();
                 webView.setInitialScale((int) (100 * scale)); // restore scale
+                return (true);
             } else
                 if (webView != null) {
                     setImmersiveModeOn(webView);
