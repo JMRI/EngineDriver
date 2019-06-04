@@ -541,19 +541,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     public void reload() {
-        // restart the activity so all the preferences show correctly based on what was imported
-        Log.d("Engine_Driver", "Preferences: Forcing app reload");
-//        if (Build.VERSION.SDK_INT >= 11) {
-//            recreate();
-//        } else {
-        Intent intent = getIntent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        finish();
-        overridePendingTransition(0, 0);
-
-        startActivity(intent);
-        overridePendingTransition(0, 0);
-//        }
+        // restart the activity so all the preferences show correctly based on what was imported / hidden
+        Log.d("Engine_Driver", "Preferences: Forcing activity to recreate");
+            recreate();
     }
 
     @SuppressLint("ApplySharedPref")
