@@ -28,7 +28,6 @@ import android.content.SharedPreferences;
 import android.gesture.GestureOverlayView;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -45,12 +44,9 @@ import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
 import android.text.format.Time;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.InputDevice;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -84,7 +80,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -98,10 +93,21 @@ import jmri.enginedriver.util.PermissionsHelper;
 import static android.view.InputDevice.getDevice;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
-//import static android.view.KeyEvent.KEYCODE_0;
-//import static android.view.KeyEvent.KEYCODE_5;
 import static android.view.KeyEvent.KEYCODE_A;
 import static android.view.KeyEvent.KEYCODE_BACK;
+import static android.view.KeyEvent.KEYCODE_D;
+import static android.view.KeyEvent.KEYCODE_F;
+import static android.view.KeyEvent.KEYCODE_N;
+import static android.view.KeyEvent.KEYCODE_R;
+import static android.view.KeyEvent.KEYCODE_T;
+import static android.view.KeyEvent.KEYCODE_V;
+import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
+import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
+import static android.view.KeyEvent.KEYCODE_W;
+import static android.view.KeyEvent.KEYCODE_X;
+
+//import static android.view.KeyEvent.KEYCODE_0;
+//import static android.view.KeyEvent.KEYCODE_5;
 //import static android.view.KeyEvent.KEYCODE_BUTTON_A;
 //import static android.view.KeyEvent.KEYCODE_BUTTON_B;
 //import static android.view.KeyEvent.KEYCODE_BUTTON_L1;
@@ -110,23 +116,13 @@ import static android.view.KeyEvent.KEYCODE_BACK;
 //import static android.view.KeyEvent.KEYCODE_BUTTON_R2;
 //import static android.view.KeyEvent.KEYCODE_BUTTON_X;
 //import static android.view.KeyEvent.KEYCODE_BUTTON_Y;
-import static android.view.KeyEvent.KEYCODE_D;
 //import static android.view.KeyEvent.KEYCODE_DEL;
 //import static android.view.KeyEvent.KEYCODE_DPAD_DOWN;
 //import static android.view.KeyEvent.KEYCODE_DPAD_LEFT;
 //import static android.view.KeyEvent.KEYCODE_DPAD_RIGHT;
 //import static android.view.KeyEvent.KEYCODE_DPAD_UP;
 //import static android.view.KeyEvent.KEYCODE_ENTER;
-import static android.view.KeyEvent.KEYCODE_F;
-import static android.view.KeyEvent.KEYCODE_N;
-import static android.view.KeyEvent.KEYCODE_R;
 //import static android.view.KeyEvent.KEYCODE_SPACE;
-import static android.view.KeyEvent.KEYCODE_T;
-import static android.view.KeyEvent.KEYCODE_V;
-import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
-import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
-import static android.view.KeyEvent.KEYCODE_W;
-import static android.view.KeyEvent.KEYCODE_X;
 //import static android.view.KeyEvent.KEYCODE_Z;
 
 // for changing the screen brightness
@@ -802,6 +798,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     switch (com1) {
                         // various MultiThrottle messages
                         case 'M':
+                            if (response_str.length() < 3)
+                                return;  //bail if too short, to avoid crash
                             char com2 = response_str.charAt(2);
                             String[] ls = threaded_application.splitByString(response_str, "<;>");
                             String addr;
@@ -1742,7 +1740,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
 
     // get the consist for the specified throttle
+    private static final Consist emptyConsist = new Consist();
     private Consist getConsist(int whichThrottle) {
+        if (mainapp.consists == null || whichThrottle >= mainapp.consists.length || mainapp.consists[whichThrottle] == null)
+            return emptyConsist;
         return mainapp.consists[whichThrottle];
     }
 
@@ -4594,6 +4595,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (webView != null) {
             scale = webView.getScale(); // save current scale for next onCreate
         }
+        repeatUpdateHandler.removeCallbacksAndMessages(null);
+        volumeKeysRepeatUpdateHandler.removeCallbacksAndMessages(null);
+        gamepadRepeatUpdateHandler.removeCallbacksAndMessages(null);
         repeatUpdateHandler = null;
         volumeKeysRepeatUpdateHandler = null;
         gamepadRepeatUpdateHandler = null;
@@ -4604,6 +4608,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (tg != null) {
             tg.release();
         }
+        mainapp.throttle_msg_handler.removeCallbacksAndMessages(null);
         mainapp.throttle_msg_handler = null;
 
         super.onDestroy();
