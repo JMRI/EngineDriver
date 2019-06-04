@@ -1742,7 +1742,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     // get the consist for the specified throttle
     private static final Consist emptyConsist = new Consist();
     private Consist getConsist(int whichThrottle) {
-        if (mainapp.consists == null || whichThrottle >= mainapp.maxThrottles || mainapp.consists[whichThrottle] == null)
+        if (mainapp.consists == null || whichThrottle >= mainapp.consists.length || mainapp.consists[whichThrottle] == null)
             return emptyConsist;
         return mainapp.consists[whichThrottle];
     }
