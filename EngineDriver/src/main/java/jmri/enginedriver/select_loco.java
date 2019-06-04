@@ -239,7 +239,9 @@ public class select_loco extends Activity {
             if ((mainapp.roster_entries != null) && (mainapp.roster_entries.size() > 0)) {
                 for (String rostername : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
                     if (mainapp.roster_entries.get(rostername).equals(engineAddressString)) { //looking for value = input parm
-                        String iconPath = mainapp.roster.get(rostername).getIconPath();  //if found, return the icon url
+                        RosterEntry rosterentry = mainapp.roster.get(rostername);
+                        if(rosterentry == null) return "";
+                        String iconPath = rosterentry.getIconPath();  //if found, return the icon url
                         if (iconPath == null) return "";
                         return iconPath;
                     }
@@ -717,8 +719,7 @@ public class select_loco extends Activity {
                                 address_size_list.add(as);
                                 HashMap<String, String> hm = new HashMap<>();
                                 String addressLengthString = ((as == 0) ? "S" : "L");  //show L or S based on length from file
-                                String engineAddressString = String.format("%s(%s)", engine_address_list.get(
-                                        engine_address_list.size() - 1).toString(), addressLengthString);
+                                String engineAddressString = String.format("%s(%s)", ea.toString(), addressLengthString);
                                 String engineIconUrl = getLocoIconUrlFromRoster(engineAddressString);
 //                                engineAddressString = getLocoNameFromRoster(engineAddressString);
                                 hm.put("engine_icon", engineIconUrl);
