@@ -798,6 +798,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     switch (com1) {
                         // various MultiThrottle messages
                         case 'M':
+                            if (response_str.length() < 3)
+                                return;  //bail if too short, to avoid crash
                             char com2 = response_str.charAt(2);
                             String[] ls = threaded_application.splitByString(response_str, "<;>");
                             String addr;
@@ -1738,7 +1740,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
 
     // get the consist for the specified throttle
+    private static final Consist emptyConsist = new Consist();
     private Consist getConsist(int whichThrottle) {
+        if (mainapp.consists == null || whichThrottle >= mainapp.consists.length || mainapp.consists[whichThrottle] == null)
+            return emptyConsist;
         return mainapp.consists[whichThrottle];
     }
 
