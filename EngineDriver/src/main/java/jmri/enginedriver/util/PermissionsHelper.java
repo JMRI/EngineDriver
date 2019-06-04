@@ -1,7 +1,6 @@
 package jmri.enginedriver.util;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -13,6 +12,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -21,8 +21,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import jmri.enginedriver.R;
-
-import static android.support.v4.content.ContextCompat.startActivity;
 
 public class PermissionsHelper {
 
@@ -91,7 +89,6 @@ public class PermissionsHelper {
      * @param grantResults the results array
      * @return true if recognised permissions request
      */
-    @TargetApi(Build.VERSION_CODES.M)
     public boolean processRequestPermissionsResult(final Activity activity, @RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         boolean isRecognised = false;
@@ -168,7 +165,7 @@ public class PermissionsHelper {
      * @param activity the requesting Activity
      * @param requestCode the permissions request code
      */
-    @TargetApi(Build.VERSION_CODES.M)
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void requestNecessaryPermissions(final Activity activity, @RequestCodes final int requestCode) {
         // Request the necessary permissions based on request code
         // All possible request codes should be considered
@@ -276,20 +273,34 @@ public class PermissionsHelper {
      */
     private void showRetryDialog(final Context context, @RequestCodes final int requestCode) {
         isDialogOpen = true;
-        new AlertDialog.Builder(context)
-                .setTitle(context.getResources().getString(R.string.permissionsRetryTitle))
-                .setMessage(getMessage(context, requestCode))
-                .setPositiveButton(context.getResources().getString(R.string.permissionsRetryButton), new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialogInterface, int i) {
-                        isDialogOpen = false;
-                        requestNecessaryPermissions((Activity) context, requestCode);
-                    }
-                })
-                .setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialogInterface, int i) {
-                        isDialogOpen = false;
-                    }
-                }).create().show();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            new AlertDialog.Builder(context)
+                    .setTitle(context.getResources().getString(R.string.permissionsRetryTitle))
+                    .setMessage(getMessage(context, requestCode))
+                    .setPositiveButton(context.getResources().getString(R.string.permissionsRetryButton), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            isDialogOpen = false;
+                            requestNecessaryPermissions((Activity) context, requestCode);
+                        }
+                    })
+                    .setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            isDialogOpen = false;
+                        }
+                    }).create().show();
+        } else {
+            new AlertDialog.Builder(context)
+                    .setTitle(context.getResources().getString(R.string.permissionsRetryTitle))
+                    .setMessage(getMessage(context, requestCode))
+                    .setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            isDialogOpen = false;
+                        }
+                    }).create().show();
+        }
     }
 
     /**
