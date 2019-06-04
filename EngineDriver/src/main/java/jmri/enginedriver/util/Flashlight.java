@@ -163,7 +163,10 @@ public abstract class Flashlight {
                 cameraId = cameraManager.getCameraIdList()[0];
             } catch (CameraAccessException|SecurityException ex) {
                 Log.e("Engine_Driver", "Error initiating camera manager: " + ex.getMessage());
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                Log.e("Engine_Driver", "Error initiating camera manager: " + ex.getMessage());
             }
+
         }
 
         @Override
