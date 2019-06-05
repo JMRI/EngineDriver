@@ -64,17 +64,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import jmri.enginedriver.Consist.ConLoco;
 import jmri.jmrit.roster.RosterEntry;
+
+//import java.util.Arrays;
+//import java.util.Collection;
 
 public class select_loco extends Activity {
     static public final int RESULT_LOCO_EDIT = RESULT_FIRST_USER;
@@ -173,7 +173,7 @@ public class select_loco extends Activity {
 
             //add consist entries to screen list
             if (mainapp.consist_entries != null) {
-                Set<String> ces = mainapp.consist_entries.keySet();
+                ArrayList<String> ces = new ArrayList<>(mainapp.consist_entries.keySet());  //copy to prevent concurrentmodificationexception
                 for (String consist_addr : ces) {
                     // put key and values into temp hashmap
                     HashMap<String, String> hm = new HashMap<>();
@@ -183,9 +183,8 @@ public class select_loco extends Activity {
 
                     // add temp hashmap to list which view is hooked to
                     roster_list.add(hm);
-
-                } // for consistname
-            } //if consist_entries not null
+                }
+            }
 
             Comparator<HashMap<String, String>> comparator = new Comparator<HashMap<String, String>>() {
                 @Override
