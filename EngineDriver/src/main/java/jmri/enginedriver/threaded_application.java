@@ -777,7 +777,7 @@ public class threaded_application extends Application {
         }
 
         private void reacquireAllConsists() {
-            for (int i = 0; i < maxThrottles; i++)
+            for (int i = 0; i < maxThrottlesCurrentScreen; i++)
                 reacquireConsist(consists[i], i);
         }
 
@@ -1861,7 +1861,7 @@ public class threaded_application extends Application {
             String dwr = ex.toString();
         }
 
-        for (int i = 0; i < maxThrottles; i++) {
+        for (int i = 0; i < maxThrottlesCurrentScreen; i++) {
             function_states[i] = new boolean[32];
         }
 
@@ -2428,7 +2428,7 @@ public class threaded_application extends Application {
     }
 
     public void sendEStopMsg() {
-        for (int i = 0; i < maxThrottles; i++) {
+        for (int i = 0; i < maxThrottlesCurrentScreen; i++) {
             if (consists != null && consists[i] != null && consists[i].isActive()) {
                 sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
                 EStopActivated = true;

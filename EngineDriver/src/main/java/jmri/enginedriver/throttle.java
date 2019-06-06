@@ -728,7 +728,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         switch (action) {
             case KIDS_TIMER_DISABLED:
                 kidsTimerRunning = KIDS_TIMER_DISABLED;
-                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     enable_disable_buttons(throttleIndex, false);
                 }
                 setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
@@ -739,7 +739,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             case KIDS_TIMER_ENABLED:
                 if (((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING))) {
                     kidsTimerRunning = KIDS_TIMER_ENABLED;
-                    for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+                    for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                         enable_disable_buttons(throttleIndex, false);
                         bSels[throttleIndex].setEnabled(false);
                     }                    setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_enabled));
@@ -759,7 +759,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 speedUpdateAndNotify(0);
                 kidsTimerRunning = KIDS_TIMER_ENDED;
                 kidsTimer.cancel();
-                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     enable_disable_buttons(throttleIndex, true);
                     bSels[throttleIndex].setEnabled(false);
                 }
@@ -770,7 +770,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 //}
                 break;
             case KIDS_TIMER_RUNNNING:
-                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     bSels[throttleIndex].setEnabled(false);
                 }
                 setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_running).replace("%1$s", Integer.toString(arg)));
@@ -1395,7 +1395,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private void setDirectionButtonLabels() {
         String dirLeftText;
         String dirRightText;
-        for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             FullLeftText[throttleIndex] = DIRECTION_BUTTON_LEFT_TEXT;
             FullRightText[throttleIndex] = DIRECTION_BUTTON_RIGHT_TEXT;
             dirLeftIndicationText[throttleIndex] = "";
@@ -1404,7 +1404,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         if ( ((prefLeftDirectionButtons.equals(DIRECTION_BUTTON_LEFT_TEXT)) && (prefRightDirectionButtons.equals(DIRECTION_BUTTON_RIGHT_TEXT)))
                 || ((prefLeftDirectionButtons.equals("")) && (prefRightDirectionButtons.equals(""))) ){
-            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                 if (directionButtonsAreCurrentlyReversed(throttleIndex)) {
                     FullLeftText[throttleIndex] = DIRECTION_BUTTON_RIGHT_TEXT;
                     FullRightText[throttleIndex] = DIRECTION_BUTTON_LEFT_TEXT;
@@ -1414,7 +1414,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             dirLeftText = prefLeftDirectionButtons;
             dirRightText = prefRightDirectionButtons;
 
-            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                 if (!directionButtonsAreCurrentlyReversed(throttleIndex)) {
                     FullLeftText[throttleIndex] = dirLeftText;
                     dirLeftIndicationText[throttleIndex] = getApplicationContext().getResources().getString(R.string.loco_direction_left_extra);
@@ -1429,7 +1429,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         }
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             bFwds[throttleIndex].setText(FullLeftText[throttleIndex]);
             bRevs[throttleIndex].setText(FullRightText[throttleIndex]);
             tvLeftDirInds[throttleIndex].setText(dirLeftIndicationText[throttleIndex]);
@@ -4008,44 +4008,44 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         select_function_button_touch_listener sfbt;
         arrow_speed_button_touch_listener asbl;
 
-        bSels = new Button[mainapp.maxThrottles];
-        bRSpds = new Button[mainapp.maxThrottles];
-        bLSpds = new Button[mainapp.maxThrottles];
+        bSels = new Button[mainapp.maxThrottlesCurrentScreen];
+        bRSpds = new Button[mainapp.maxThrottlesCurrentScreen];
+        bLSpds = new Button[mainapp.maxThrottlesCurrentScreen];
 
-        tvLeftDirInds = new TextView[mainapp.maxThrottles];
-        tvRightDirInds = new TextView[mainapp.maxThrottles];
+        tvLeftDirInds = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvRightDirInds = new TextView[mainapp.maxThrottlesCurrentScreen];
 
-        bFwds = new Button[mainapp.maxThrottles];
-        bStops = new Button[mainapp.maxThrottles];
-        bRevs = new Button[mainapp.maxThrottles];
-        sbs = new SeekBar[mainapp.maxThrottles];
+        bFwds = new Button[mainapp.maxThrottlesCurrentScreen];
+        bStops = new Button[mainapp.maxThrottlesCurrentScreen];
+        bRevs = new Button[mainapp.maxThrottlesCurrentScreen];
+        sbs = new SeekBar[mainapp.maxThrottlesCurrentScreen];
 
-        tvGamePads = new TextView[mainapp.maxThrottles];
-        tvSpdLabs = new TextView[mainapp.maxThrottles];
-        tvSpdVals = new TextView[mainapp.maxThrottles];
-        tvVols = new TextView[mainapp.maxThrottles];
+        tvGamePads = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvSpdLabs = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvSpdVals = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvVols = new TextView[mainapp.maxThrottlesCurrentScreen];
 
-        lls = new LinearLayout[mainapp.maxThrottles];
-        llSetSpds = new LinearLayout[mainapp.maxThrottles];
-        llLocoIds = new LinearLayout[mainapp.maxThrottles];
-        llLocoDirs = new LinearLayout[mainapp.maxThrottles];
+        lls = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llSetSpds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llLocoIds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llLocoDirs = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
 
-        fbs = new ViewGroup[mainapp.maxThrottles];
+        fbs = new ViewGroup[mainapp.maxThrottlesCurrentScreen];
 
-        tops = new int[mainapp.maxThrottles];
-        bottoms= new int[mainapp.maxThrottles];
+        tops = new int[mainapp.maxThrottlesCurrentScreen];
+        bottoms= new int[mainapp.maxThrottlesCurrentScreen];
 
-        functionMaps = ( LinkedHashMap<Integer, Button>[]) new LinkedHashMap<?,?>[mainapp.maxThrottles];
+        functionMaps = ( LinkedHashMap<Integer, Button>[]) new LinkedHashMap<?,?>[mainapp.maxThrottlesCurrentScreen];
 
-        displayUnitScales = new double[mainapp.maxThrottles];
+        displayUnitScales = new double[mainapp.maxThrottlesCurrentScreen];
 
-        changeTimers = new ChangeDelay[mainapp.maxThrottles];
+        changeTimers = new ChangeDelay[mainapp.maxThrottlesCurrentScreen];
 
         // throttle layouts
         vThrotScr = findViewById(R.id.throttle_screen);
         vThrotScrWrap = findViewById(R.id.throttle_screen_wrapper);
 
-        for (int i=0; i < mainapp.maxThrottles; i++) {
+        for (int i=0; i < mainapp.maxThrottlesCurrentScreen; i++) {
             // set listener for select loco buttons
             Button bSel = findViewById(R.id.button_select_loco_0);
             TextView tvLeft = findViewById(R.id.loco_left_direction_indicaton_0);
@@ -4351,7 +4351,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         mainapp.throttle_msg_handler = new throttle_handler();
 
         // set throttle change delay timers
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             changeTimers[throttleIndex] = new ChangeDelay(throttleIndex);
         }
         // tone generator for feedback sounds
@@ -4420,7 +4420,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CURRENT_TIME); // request time update
 
         // format the screen area
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             enable_disable_buttons(throttleIndex);
         }
 
@@ -4463,7 +4463,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (IS_ESU_MCII && isEsuMc2Stopped) {
             if (isEsuMc2AllStopped) {
                 // disable buttons for all throttles
-                for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+                for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     setEnabledEsuMc2ThrottleScreenButtons(throttleIndex, false);
                 }
             } else {
@@ -4476,7 +4476,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         showDirectionIndications();
 
         if (TMenu != null) {
-            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
 
                 switch (throttleIndex) {
                     case 0:
@@ -4539,7 +4539,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // save the requested throttle direction so we can update the
         // direction indication immediately in OnCreate following a rotate
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             outState.putSerializable("dir" + mainapp.throttleIntToChar(throttleIndex), dirs[throttleIndex]);
         }
     }
@@ -4596,6 +4596,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             scale = webView.getScale(); // save current scale for next onCreate
         }
         repeatUpdateHandler.removeCallbacksAndMessages(null);
+        Log.d("Engine_Driver", "onDestroy: mainapp.throttle_msg_handler. Attempting to removeCallbacksAndMessages");
+        if (mainapp.throttle_msg_handler !=null) {
+            mainapp.throttle_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.throttle_msg_handler = null;
+        } else {
+            Log.d("Engine_Driver", "onDestroy: mainapp.throttle_msg_handler is null. Unable to removeCallbacksAndMessages");
+        }
         volumeKeysRepeatUpdateHandler.removeCallbacksAndMessages(null);
         gamepadRepeatUpdateHandler.removeCallbacksAndMessages(null);
         repeatUpdateHandler = null;
@@ -4608,8 +4615,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (tg != null) {
             tg.release();
         }
-        mainapp.throttle_msg_handler.removeCallbacksAndMessages(null);
-        mainapp.throttle_msg_handler = null;
 
         super.onDestroy();
     }
@@ -4661,7 +4666,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     void setAllFunctionLabelsAndListeners() {
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             set_function_labels_and_listeners_for_view(throttleIndex);
         }
     }
@@ -4772,7 +4777,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // set up max speeds for throttles
         int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             sbs[throttleIndex].setMax(maxThrottle);
         }
 
@@ -4780,7 +4785,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
         max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             sbs[throttleIndex].setMax(maxThrottle);
             if (mainapp.consists[throttleIndex].isEmpty()) {
                 maxSpeedSteps[throttleIndex] = 100;
@@ -5489,9 +5494,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (mainapp.numThrottles > mainapp.maxThrottlesCurrentScreen) {   // Maximum number of throttles this screen supports
             mainapp.numThrottles = mainapp.maxThrottlesCurrentScreen;
         }
-        if (mainapp.maxThrottles > mainapp.maxThrottlesCurrentScreen) {   // Maximum number of throttles this screen supports
-            mainapp.maxThrottles = mainapp.maxThrottlesCurrentScreen;
-        }
     }
 
 
@@ -5726,7 +5728,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private void redrawVerticalSliders() {
         if (vsbSpeeds != null) {
-            for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottles; throttleIndex++) {
+            for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                 vsbSpeeds[throttleIndex].tickMarksChecked = false;
                 vsbSpeeds[throttleIndex].invalidate();
             }

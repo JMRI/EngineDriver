@@ -63,46 +63,45 @@ public class throttle_vertical extends throttle {
 
         if (mainapp.appIsFinishing) { return;}
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {
                 case 0:
-                    fbs[throttleIndex] = (ViewGroup) findViewById(R.id.function_buttons_table_0);
+                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
                     break;
                 case 1:
-                    fbs[throttleIndex] = (ViewGroup) findViewById(R.id.function_buttons_table_1);
+                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_1);
                     break;
             }
 
         }
 
-        lThrottles = new LinearLayout[mainapp.maxThrottles];
-        lSpeeds = new LinearLayout[mainapp.maxThrottles];
-        svFnBtns = new ScrollView[mainapp.maxThrottles];
-        vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottles];
-        lUppers = new LinearLayout[mainapp.maxThrottles];
-        lLowers = new LinearLayout[mainapp.maxThrottles];
+        lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        lSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        svFnBtns = new ScrollView[mainapp.maxThrottlesCurrentScreen];
+        vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
+        lUppers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        lLowers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++)
             switch (throttleIndex) {
                 default:
                 case 0:
-                    lThrottles[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_0);
-                    lUppers[throttleIndex] = (LinearLayout) findViewById(R.id.loco_upper_0);
-                    lLowers[throttleIndex] = (LinearLayout) findViewById(R.id.loco_lower_0);
-                    lSpeeds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_0_SetSpeed);
-                    vsbSpeeds[throttleIndex] = (VerticalSeekBar) findViewById(R.id.speed_0);
-                    svFnBtns[throttleIndex] = (ScrollView) findViewById(R.id.function_buttons_scroller_0);
+                    lThrottles[throttleIndex] = findViewById(R.id.throttle_0);
+                    lUppers[throttleIndex] = findViewById(R.id.loco_upper_0);
+                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
+                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
+                    vsbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
+                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
                     break;
                 case 1:
-                    lThrottles[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_1);
-                    lUppers[throttleIndex] = (LinearLayout) findViewById(R.id.loco_upper_1);
-                    lLowers[throttleIndex] = (LinearLayout) findViewById(R.id.loco_lower_1);
-                    lSpeeds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_1_SetSpeed);
-                    vsbSpeeds[throttleIndex] = (VerticalSeekBar) findViewById(R.id.speed_1);
-                    svFnBtns[throttleIndex] = (ScrollView) findViewById(R.id.function_buttons_scroller_1);
+                    lThrottles[throttleIndex] = findViewById(R.id.throttle_1);
+                    lUppers[throttleIndex] = findViewById(R.id.loco_upper_1);
+                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_1);
+                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
+                    vsbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
+                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_1);
                     break;
             }
-        }
 
         setAllFunctionLabelsAndListeners();
 
@@ -114,7 +113,7 @@ public class throttle_vertical extends throttle {
 
         if (mainapp.appIsFinishing) { return;}
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             if( throttleIndex < mainapp.numThrottles) {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.VISIBLE);
             } else {
@@ -213,7 +212,7 @@ public class throttle_vertical extends throttle {
         final int conNomTextSize = 24;
         final double minTextScale = 0.5;
         String bLabel;
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             Button b = bSels[throttleIndex];
             if (mainapp.consists[throttleIndex].isActive()) {
                 if (!prefShowAddressInsteadOfName) {
@@ -250,7 +249,7 @@ public class throttle_vertical extends throttle {
             setImmersiveModeOn(webView);
         }
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
 
             //show speed buttons based on pref
             vsbSpeeds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
@@ -269,7 +268,7 @@ public class throttle_vertical extends throttle {
 
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
         int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.numThrottles;
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.FILL_PARENT;
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
             lThrottles[throttleIndex].requestLayout();
@@ -311,7 +310,7 @@ public class throttle_vertical extends throttle {
             speedButtonHeight = (int) ((screenHeight - (200 * denScale)) / 2);
         }
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             //show speed buttons based on pref
             if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
                 bLSpds[throttleIndex].setVisibility(View.VISIBLE);
@@ -331,7 +330,7 @@ public class throttle_vertical extends throttle {
             //bRSpds[throttleIndex].setText(speedButtonRightText);
         }
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             // set height of each function button area
             svFnBtns[throttleIndex].getLayoutParams().height = screenHeight - lUppers[throttleIndex].getHeight();
             svFnBtns[throttleIndex].requestLayout();
@@ -346,7 +345,7 @@ public class throttle_vertical extends throttle {
 
 
 //        // update the state of each function button based on shared variable
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             set_all_function_states(throttleIndex);
         }
 
