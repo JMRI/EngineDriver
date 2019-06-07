@@ -123,16 +123,16 @@ public class throttle_full extends throttle {
 
         if (mainapp.appIsFinishing) { return;}
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {
                 case 0:
-                    fbs[throttleIndex] = (ViewGroup) findViewById(R.id.function_buttons_table_0);
+                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
                     break;
                 case 1:
-                    fbs[throttleIndex] = (ViewGroup) findViewById(R.id.function_buttons_table_1);
+                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_1);
                     break;
                 case 2:
-                    fbs[throttleIndex] = (ViewGroup) findViewById(R.id.function_buttons_table_2);
+                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_2);
                     break;
             }
 
@@ -158,7 +158,7 @@ public class throttle_full extends throttle {
 
 
 //    void setAllFunctionLabelsAndListeners() {
-//        for (int i = 0; i < mainapp.maxThrottles; i++) {
+//        for (int i = 0; i < mainapp.maxThrottlesCurrentScreen; i++) {
 //            set_function_labels_and_listeners_for_view(i);
 //        }
 //    }
@@ -282,7 +282,7 @@ public class throttle_full extends throttle {
         final int conNomTextSize = 24;
         final double minTextScale = 0.5;
         String bLabel;
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             Button b = bSels[throttleIndex];
             if (mainapp.consists[throttleIndex].isActive()) {
                 if (!prefShowAddressInsteadOfName) {
@@ -344,23 +344,23 @@ public class throttle_full extends throttle {
         }
 
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {
                 default:
                 case 0:
-                    llSetSpds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_0_setspeed);
+                    llSetSpds[throttleIndex] = findViewById(R.id.throttle_0_setspeed);
                     break;
                 case 1:
-                    llSetSpds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_1_setspeed);
+                    llSetSpds[throttleIndex] = findViewById(R.id.throttle_1_setspeed);
                     break;
                 case 2:
-                    llSetSpds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_2_setspeed);
+                    llSetSpds[throttleIndex] = findViewById(R.id.throttle_2_setspeed);
                     break;
             }
         }
 
         // SPDHT set height of Loco Id and Direction Button areas
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
 
             LinearLayout.LayoutParams llLidp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newDlihHeight);
             llLocoIds[throttleIndex].setLayoutParams(llLidp);
@@ -458,7 +458,7 @@ public class throttle_full extends throttle {
             }
 
             LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
-            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                 // set height of each area
                 llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, heights[throttleIndex]);
                 llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
@@ -476,7 +476,7 @@ public class throttle_full extends throttle {
         showDirectionIndications();
 
 //        // update the state of each function button based on shared variable
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             set_all_function_states(throttleIndex);
         }
 
