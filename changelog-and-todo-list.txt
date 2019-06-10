@@ -3,7 +3,9 @@
  * Entering colon (":") into the host field changes focus to the port field
  * Long press on an entry in the Recent Locos List removes it from the list
  * Recent Locos List shows the icon from the roster if found
+ * Show tick marks on vertical sliders, with option to disable
  * fix bug when returning from web view
+ * prevent several crashes reported to Play Console
 **Version 2.23
  * ESU MC2 support Gradle dependency
  * Change target API to 26
