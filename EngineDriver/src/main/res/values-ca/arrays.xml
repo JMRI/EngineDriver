@@ -178,7 +178,7 @@
     </string-array>
 
     <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
-        <item>No fer res</item>
+        <item>No facis res</item>
         <item>Locomotora Capdavantera: El mateix número de funció</item>
         <item>Locomotora Capdavantera + Posterior - El mateix número de funció</item>
         <item>Totes les Locomotores: El mateix número de funció</item>
