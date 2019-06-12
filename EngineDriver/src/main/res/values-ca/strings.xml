@@ -5,14 +5,12 @@
       under the terms of the GNU General Public License as published by the
       Free Software Foundation;
       either version 3 of the License, or (at your option) any later version.
-
       This program is distributed in the hope that it will be useful, but
       WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
       or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
       for more details. You should have received a copy of the GNU General
       Public License along with this program; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
       translations provided by Luis Zamora (eldelinux)
 -->
 <resources>
@@ -30,7 +28,7 @@
     <string name="app_name_throttle">Controlador - Engine Driver</string>
     <string name="app_name_throttle_short">Controlador</string>
     <string name="app_name_power_control">Control de corrent - Engine Driver</string>
-    <string name="app_name_reconnect_status">Estat de reconnexió - Engine  Driver</string>
+    <string name="app_name_reconnect_status">Estat de reconnexió - Engine Driver</string>
     <string name="app_name_routes">Rutes - Engine Driver</string>
     <string name="app_name_turnouts">Agulles - Engine Driver</string>
     <string name="app_name_about">Quant a - Engine Driver</string>
@@ -75,7 +73,7 @@
     <string name="about_page_url">file:///android_asset/about_page-ca.html</string>
 
     <string name="mrc_settings">Paràmetres MRC</string>
-    <string name="loco">Loco:</string>
+    <string name="loco">Locomotora:</string>
     <string name="loco_direction_left_extra">"\u00B7E\u00B7"</string>
     <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>
     <string name="locoPressToSelect">Seleccionar</string>
@@ -106,7 +104,7 @@
     <string name="power_control_label">Control de Corrent de Via</string>
     <string name="power_control_button">desconegut</string>
     <string name="press_to_toggle">Prèm per canviar l\'estat de la Corrent de Via.</string>
-    <string name="power_control_not_allowed">Control de Corrent de Via no permés. Modifica\'l a Preferències/Configuració en el servidor.</string>
+    <string name="power_control_not_allowed">Control de Corrent de Via no permès. Modifica\'l a Preferències/Configuració en el servidor.</string>
     <string name="reconnect_label">Intenta Reconnectar</string>
     <string name="reconnect_help">Intenta Reconnectar automàticament. Espera per a la Reconnexió o prem Fletxa/Enrere per a Sortir.</string>
     <string name="reconnect_success">RECONNECTAT. Continuem funcionant.</string>
