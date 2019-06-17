@@ -683,4 +683,16 @@
     <string name="prefConsistFollowDefaultActionTitle">Ação padrão</string>
     <string name="prefConsistFollowDefaultActionSummary">Que locos na consistem deve reagir aos botões de função se nenhuma das regras abaixo são se encontram.</string>
 
+    <string name="edit_consist_throttle_1">Editar Consistem acelerador 1</string>
+    <string name="edit_consist_throttle_2">Editar Consistem acelerador 2</string>
+    <string name="edit_consist_throttle_3">Editar Consistem acelerador 3</string>
+    <string name="edit_consist_throttle_4">Editar Consistem acelerador 4</string>
+    <string name="edit_consist_throttle_5">Editar Consistem acelerador 5</string>
+    <string name="edit_consist_throttle_6">Editar Consistem estrangulamento 6</string>
+    <string name="edit_consist_lights_throttle_1">Editar Consistem Luzes do acelerador 1</string>
+    <string name="edit_consist_lights_throttle_2">Editar Consistem Luzes do acelerador 2</string>
+    <string name="edit_consist_lights_throttle_3">Editar Consistem Luzes do acelerador 3</string>
+    <string name="edit_consist_lights_throttle_4">Editar Consistem Luzes do acelerador 4</string>
+    <string name="edit_consist_lights_throttle_5">Editar Consistem Luzes do acelerador 5</string>
+    <string name="edit_consist_lights_throttle_6">Editar Consistem Luzes do acelerador 6</string>
 </resources>

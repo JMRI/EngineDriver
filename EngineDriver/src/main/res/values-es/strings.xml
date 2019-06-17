@@ -736,4 +736,17 @@
     <string name="introButtonsNoSlider">Botones de velocidad solamente</string>
 
     <string name="introbackButtonPress">Reinicie la aplicación Engine Driver para completar el proceso de inicio.</string>
+
+    <string name="edit_consist_throttle_1">Editar Consiste acelerador 1</string>
+    <string name="edit_consist_throttle_2">Editar Consiste acelerador 2</string>
+    <string name="edit_consist_throttle_3">Editar Consiste acelerador 3</string>
+    <string name="edit_consist_throttle_4">Editar Consiste acelerador 4</string>
+    <string name="edit_consist_throttle_5">Editar Consiste acelerador 5</string>
+    <string name="edit_consist_throttle_6">Editar Consiste acelerador 6</string>
+    <string name="edit_consist_lights_throttle_1">Editar Consiste luces del acelerador 1</string>
+    <string name="edit_consist_lights_throttle_2">Editar Consiste luces del acelerador 2</string>
+    <string name="edit_consist_lights_throttle_3">Editar Consiste luces del acelerador 3</string>
+    <string name="edit_consist_lights_throttle_4">Editar Consiste luces del acelerador 4</string>
+    <string name="edit_consist_lights_throttle_5">Editar Consiste luces del acelerador 5</string>
+    <string name="edit_consist_lights_throttle_6">Editar Consiste luces del acelerador 6</string>
 </resources>

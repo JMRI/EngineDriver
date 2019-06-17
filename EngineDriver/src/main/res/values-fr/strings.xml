@@ -762,4 +762,16 @@
     <string name="introMenu">Intro / Assistant d\'installation</string>
     <string name="rosterEmpty">Impossible de trouver un enties dans la liste JMRI. Utilisez l\'option « Adresse DCC » ou « récente » à la place.</string>
 
+    <string name="edit_consist_throttle_1">Consiste d\'accélérateur Modifier 1</string>
+    <string name="edit_consist_throttle_2">Consiste d\'accélérateur Modifier 2</string>
+    <string name="edit_consist_throttle_3">Consiste d\'accélérateur Modifier 3</string>
+    <string name="edit_consist_throttle_4">Consiste d\'accélérateur Modifier 4</string>
+    <string name="edit_consist_throttle_5">Consiste d\'accélérateur Modifier 5</string>
+    <string name="edit_consist_throttle_6">Consiste d\'accélérateur Modifier 6</string>
+    <string name="edit_consist_lights_throttle_1">Consiste Lumières d\'accélérateur Modifier 1</string>
+    <string name="edit_consist_lights_throttle_2">Consiste Lumières d\'accélérateur Modifier 2</string>
+    <string name="edit_consist_lights_throttle_3">Consiste Lumières d\'accélérateur Modifier 3</string>
+    <string name="edit_consist_lights_throttle_4">Consiste Lumières d\'accélérateur Modifier 4</string>
+    <string name="edit_consist_lights_throttle_5">Consiste Lumières d\'accélérateur Modifier 5</string>
+    <string name="edit_consist_lights_throttle_6">Consiste Lumières d\'accélérateur Modifier 6</string>
 </resources>

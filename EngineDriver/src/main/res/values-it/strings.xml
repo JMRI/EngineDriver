@@ -679,4 +679,16 @@
     <string name="prefConsistFollowDefaultActionTitle">Azione predefinita</string>
     <string name="prefConsistFollowDefaultActionSummary">Quale locos nella consistere dovrebbero reagire ai tasti funzione, se nessuna delle regole di sotto sono si incontrano.</string>
 
+    <string name="edit_consist_throttle_1">Modifica Consistono Acceleratore 1</string>
+    <string name="edit_consist_throttle_2">Modifica Consistono Acceleratore 2</string>
+    <string name="edit_consist_throttle_3">Modifica Consistono Acceleratore 3</string>
+    <string name="edit_consist_throttle_4">Modifica Consistono Acceleratore 4</string>
+    <string name="edit_consist_throttle_5">Modifica Consistono Acceleratore 5</string>
+    <string name="edit_consist_throttle_6">Modifica Consistono Acceleratore 6</string>
+    <string name="edit_consist_lights_throttle_1">Modifica Consiste Luci Acceleratore 1</string>
+    <string name="edit_consist_lights_throttle_2">Modifica Consiste Luci Acceleratore 2</string>
+    <string name="edit_consist_lights_throttle_3">Modifica Consiste Luci Acceleratore 3</string>
+    <string name="edit_consist_lights_throttle_4">Modifica Consiste Luci Acceleratore 4</string>
+    <string name="edit_consist_lights_throttle_5">Modifica Consiste Luci Acceleratore 5</string>
+    <string name="edit_consist_lights_throttle_6">Modifica Consiste Luci Acceleratore 6</string>
 </resources>
