@@ -235,7 +235,7 @@ public class select_loco extends Activity {
 
     private String getLocoIconUrlFromRoster(String engineAddressString) {
         if (prefRosterRecentLocoNames) {
-            if ((mainapp.roster_entries != null) && (mainapp.roster_entries.size() > 0)) {
+            if ((mainapp.roster_entries != null) && (mainapp.roster_entries.size() > 0) && (mainapp.roster != null)) {
                 for (String rostername : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
                     if (mainapp.roster_entries.get(rostername).equals(engineAddressString)) { //looking for value = input parm
                         RosterEntry rosterentry = mainapp.roster.get(rostername);
