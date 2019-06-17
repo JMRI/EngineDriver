@@ -748,4 +748,16 @@
     <string name="prefKidsTimerResetPasswordTitle">Reset / Passwort deaktivieren</string>
     <string name="prefKidsTimerResetPasswordSummary">Passwort zurücksetzen / deaktivieren Sie die Timer-Einstellungen.</string>
 
+    <string name="edit_consist_throttle_1">Bearbeiten Consist Drossel 1</string>
+    <string name="edit_consist_throttle_2">Bearbeiten Consist Drossel 2</string>
+    <string name="edit_consist_throttle_3">Bearbeiten Consist Drossel 3</string>
+    <string name="edit_consist_throttle_4">Bearbeiten Consist Drossel 4</string>
+    <string name="edit_consist_throttle_5">Bearbeiten Consist Drossel 5</string>
+    <string name="edit_consist_throttle_6">Bearbeiten Consist Drossel 6</string>
+    <string name="edit_consist_lights_throttle_1">Bearbeiten Consist Lichter Drossel 1</string>
+    <string name="edit_consist_lights_throttle_2">Bearbeiten Consist Lichter Drossel 2</string>
+    <string name="edit_consist_lights_throttle_3">Bearbeiten Consist Lichter Drossel 3</string>
+    <string name="edit_consist_lights_throttle_4">Bearbeiten Consist Lichter Drossel 4</string>
+    <string name="edit_consist_lights_throttle_5">Bearbeiten Consist Lichter Drossel 5</string>
+    <string name="edit_consist_lights_throttle_6">Bearbeiten Consist Lichter Drossel 6</string>
 </resources>
