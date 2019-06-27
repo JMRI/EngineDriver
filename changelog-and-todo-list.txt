@@ -1,3 +1,4 @@
+**Version 2.25
 **Version 2.24
  * Option to show/hide advanced preferences. Advanced preferences are hidden by default
  * Entering colon (":") into the host field changes focus to the port field

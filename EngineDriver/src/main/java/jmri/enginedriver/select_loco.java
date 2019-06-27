@@ -97,7 +97,7 @@ public class select_loco extends Activity {
 
     private int engine_address;
     private int address_size;
-    private String sWhichThrottle =  "0";  // "0" or "1" or "2" + roster name
+    private String sWhichThrottle = "0";  // "0" or "1" or "2" + roster name
     int whichThrottle = 0;
     private int result;
     protected boolean selectLocoRendered = false;         // this will be true once set_labels() runs following rendering of the loco select textViews
@@ -239,7 +239,7 @@ public class select_loco extends Activity {
                 for (String rostername : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
                     if (mainapp.roster_entries.get(rostername).equals(engineAddressString)) { //looking for value = input parm
                         RosterEntry rosterentry = mainapp.roster.get(rostername);
-                        if(rosterentry == null) return "";
+                        if (rosterentry == null) return "";
                         String iconPath = rosterentry.getIconPath();  //if found, return the icon url
                         if (iconPath == null) return "";
                         return iconPath;
@@ -255,7 +255,7 @@ public class select_loco extends Activity {
 
         refresh_roster_list();
         if (prefSelectLocoMethod.equals(WHICH_METHOD_FIRST)) {
-            if ((mainapp.roster != null) && (mainapp.roster.size() >0)) {
+            if ((mainapp.roster != null) && (mainapp.roster.size() > 0)) {
                 prefSelectLocoMethod = WHICH_METHOD_ROSTER;
                 showMethod(WHICH_METHOD_ROSTER);
             } else {
@@ -280,7 +280,7 @@ public class select_loco extends Activity {
         LinearLayout llThrottle = findViewById(R.id.LL_loco);
 
         TextView tvSelectLocoHeading = findViewById(R.id.select_loco_heading);
-        tvSelectLocoHeading.setText(this.getResources().getString(R.string.select_loco_heading).replace("%1$s",Integer.toString(mainapp.throttleCharToInt(sWhichThrottle.charAt(0))+1)));
+        tvSelectLocoHeading.setText(this.getResources().getString(R.string.select_loco_heading).replace("%1$s", Integer.toString(mainapp.throttleCharToInt(sWhichThrottle.charAt(0)) + 1)));
 
         //hide the release button row if nothing currently aquired
 //        TextView tvThrottleNameHeader = findViewById(R.id.throttle_name_header);
@@ -295,35 +295,35 @@ public class select_loco extends Activity {
         bR.setVisibility(View.VISIBLE);
         llThrottle.setVisibility(View.VISIBLE);
 
-         if (mainapp.consists[whichThrottle].isActive()) {
+        if (mainapp.consists[whichThrottle].isActive()) {
             String vLabel = mainapp.consists[whichThrottle].toString();
             if (prefShowAddressInsteadOfName) { // show the DCC Address instead of the loco name if the preference is set
                 vLabel = mainapp.consists[whichThrottle].formatConsistAddr();
             }
             bR.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
 
-             // scale text if required to fit the button
-             double textScale = 1.0;
-             int bWidth = bR.getWidth();
-             double textWidth = bR.getPaint().measureText(vLabel);
+            // scale text if required to fit the button
+            double textScale = 1.0;
+            int bWidth = bR.getWidth();
+            double textWidth = bR.getPaint().measureText(vLabel);
 
-             if (bWidth == 0) { // screen has probably not rendered yet
-                 final DisplayMetrics dm = getResources().getDisplayMetrics();
-                 // Get the screen's density scale
-                 final float denScale = dm.density;
-                 int screenWidth = dm.widthPixels; // get the width of usable area
-                 bWidth = (screenWidth - (int) (denScale * 6)) / 2 ;
-             }
-             if (textWidth > 0 && textWidth > bWidth) {
-                 textScale = bWidth / textWidth;
-                 if (textScale < minTextScale)
-                     textScale = minTextScale;
-             }
-             int textSize = (int) (conNomTextSize * textScale);
-             bR.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+            if (bWidth == 0) { // screen has probably not rendered yet
+                final DisplayMetrics dm = getResources().getDisplayMetrics();
+                // Get the screen's density scale
+                final float denScale = dm.density;
+                int screenWidth = dm.widthPixels; // get the width of usable area
+                bWidth = (screenWidth - (int) (denScale * 6)) / 2;
+            }
+            if (textWidth > 0 && textWidth > bWidth) {
+                textScale = bWidth / textWidth;
+                if (textScale < minTextScale)
+                    textScale = minTextScale;
+            }
+            int textSize = (int) (conNomTextSize * textScale);
+            bR.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
 
-             selectLocoRendered = true;
-            bR.setText(this.getResources().getString(R.string.releaseThrottleLocos).replace("%1$s",vLabel));
+            selectLocoRendered = true;
+            bR.setText(this.getResources().getString(R.string.releaseThrottleLocos).replace("%1$s", vLabel));
             bR.setEnabled(true);
         } else {
             bR.setEnabled(false);
@@ -484,7 +484,7 @@ public class select_loco extends Activity {
                 if (!removingEngine) {
                     list_output.format("%d:%d\n", engine_address, address_size);
                 }
-                removingEngine=false;
+                removingEngine = false;
                 for (int i = 0; i < engine_address_list.size() && mrl > 0; i++) {
                     if (engine_address != engine_address_list.get(i) || address_size != address_size_list.get(i)) {
                         list_output.format("%d:%d\n", engine_address_list.get(i), address_size_list.get(i));
@@ -514,7 +514,7 @@ public class select_loco extends Activity {
             address_size = spinner.getSelectedItemPosition();
             acquire_engine(true);
             InputMethodManager imm =
-            (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
 
         }
@@ -522,8 +522,8 @@ public class select_loco extends Activity {
 
     public class release_button_listener implements View.OnClickListener {
         int _throttle;
-        public release_button_listener(int throttle)
-        {
+
+        public release_button_listener(int throttle) {
             _throttle = throttle;
         }
 
@@ -552,7 +552,7 @@ public class select_loco extends Activity {
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSelectLocoConfirmClear), Toast.LENGTH_LONG).show();
             } else { // only clear the list if the button is clicked a second time
                 clearList();
-                clearListCount=0;
+                clearListCount = 0;
             }
             onCreate(null);
         }
@@ -594,7 +594,7 @@ public class select_loco extends Activity {
     @SuppressLint("ApplySharedPref")
     private void filterRoster() {
         prefRosterFilter = filter_roster_text.getText().toString().trim();
-        prefs.edit().putString("prefRosterFilter", prefRosterFilter ).commit();
+        prefs.edit().putString("prefRosterFilter", prefRosterFilter).commit();
         refresh_roster_list();
         //        onCreate(null);
     }
@@ -753,8 +753,12 @@ public class select_loco extends Activity {
             public void afterTextChanged(Editable s) {
                 filterRoster();
             }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
         });
         filter_roster_text.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
@@ -804,8 +808,8 @@ public class select_loco extends Activity {
             }
         });
 
-        rbAddress= findViewById(R.id.select_loco_method_address_button);
-        rbRoster= findViewById(R.id.select_loco_method_roster_button);
+        rbAddress = findViewById(R.id.select_loco_method_address_button);
+        rbRoster = findViewById(R.id.select_loco_method_roster_button);
         rbRecent = findViewById(R.id.select_loco_method_recent_button);
 
         prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", WHICH_METHOD_FIRST);
@@ -887,7 +891,7 @@ public class select_loco extends Activity {
                 rbRecent.setChecked(true);
             }
         }
-        prefs.edit().putString("prefSelectLocoMethod", whichMethod ).commit();
+        prefs.edit().putString("prefSelectLocoMethod", whichMethod).commit();
     }
 
 
@@ -1016,120 +1020,108 @@ public class select_loco extends Activity {
 
     // long click for the recent loco list items.  Clears the entry from the list
     protected boolean onLongRecentListItemClick(View v, int position, long id) {
-        HashMap<String, String> hm = recent_engine_list.get(position);
-        String rosterAddressString = hm.get("engine");
-        String ras[] = threaded_application.splitByString(rosterAddressString, "(");
-        if (ras[0].length() > 0) {  //only process if address found
-            recent_engine_list.remove(position);
-
-            for (int i = 0; i < engine_address_list.size(); i++) {
-                if (engine_address_list.get(i) == Integer.parseInt(ras[0])) {
-                    engine_address_list.remove(i);
-                    break;
-                }
-            }
-            removingEngine=true;
-            updateRecentEngines(true);
-            engine_list_view.invalidateViews();
-
-        }
+        recent_engine_list.remove(position);
+        removingEngine = true;
+        updateRecentEngines(true);
+        engine_list_view.invalidateViews();
         return true;
-    }
+}
 
-    public class RosterSimpleAdapter extends SimpleAdapter {
-        private Context cont;
+public class RosterSimpleAdapter extends SimpleAdapter {
+    private Context cont;
 
-        public RosterSimpleAdapter(Context context,
-                                   List<? extends Map<String, ?>> data, int resource,
-                                   String[] from, int[] to) {
-            super(context, data, resource, from, to);
-            cont = context;
-        }
-
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (position > roster_list.size())
-                return convertView;
-
-            HashMap<String, String> hm = roster_list.get(position);
-            if (hm == null)
-                return convertView;
-
-            LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.roster_list_item, null, false);
-
-            String str = hm.get("roster_name");
-            if (str != null) {
-                TextView name = view.findViewById(R.id.roster_name_label);
-                name.setText(str);
-            }
-
-            str = hm.get("roster_address");
-            if (str != null) {
-                TextView secondLine = view.findViewById(R.id.roster_address_label);
-                secondLine.setText(hm.get("roster_address"));
-            }
-
-            String iconURL = hm.get("roster_icon");
-            if ((iconURL != null) && (iconURL.length() > 0)) {
-                ImageView imageView = view.findViewById(R.id.roster_icon_image);
-                mainapp.imageDownloader.download(iconURL, imageView);
-            } else {
-                View v = view.findViewById(R.id.roster_icon_image);
-                v.setVisibility(View.GONE);
-            }
-
-            return view;
-        }
+    public RosterSimpleAdapter(Context context,
+                               List<? extends Map<String, ?>> data, int resource,
+                               String[] from, int[] to) {
+        super(context, data, resource, from, to);
+        cont = context;
     }
 
 
-    public class RecentSimpleAdapter extends SimpleAdapter {
-        private Context cont;
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (position > roster_list.size())
+            return convertView;
 
-        public RecentSimpleAdapter(Context context,
-                                   List<? extends Map<String, ?>> data, int resource,
-                                   String[] from, int[] to) {
-            super(context, data, resource, from, to);
-            cont = context;
+        HashMap<String, String> hm = roster_list.get(position);
+        if (hm == null)
+            return convertView;
+
+        LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.roster_list_item, null, false);
+
+        String str = hm.get("roster_name");
+        if (str != null) {
+            TextView name = view.findViewById(R.id.roster_name_label);
+            name.setText(str);
         }
 
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (position > recent_engine_list.size())
-                return convertView;
-
-            HashMap<String, String> hm = recent_engine_list.get(position);
-            if (hm == null)
-                return convertView;
-
-            LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.engine_list_item, null, false);
-
-            String str = hm.get("engine_name");
-            if (str != null) {
-                TextView name = view.findViewById(R.id.engine_name_label);
-                name.setText(str);
-            }
-
-            str = hm.get("engine");
-            if (str != null) {
-                TextView secondLine = view.findViewById(R.id.engine_item_label);
-                secondLine.setText(str);
-            }
-
-            String iconURL = hm.get("engine_icon");
-            if ((iconURL != null) && (iconURL.length() > 0)) {
-                ImageView imageView = view.findViewById(R.id.engine_icon_image);
-                mainapp.imageDownloader.download(iconURL, imageView);
-            } else {
-                View v = view.findViewById(R.id.engine_icon_image);
-                v.setVisibility(View.GONE);
-            }
-
-            return view;
+        str = hm.get("roster_address");
+        if (str != null) {
+            TextView secondLine = view.findViewById(R.id.roster_address_label);
+            secondLine.setText(hm.get("roster_address"));
         }
+
+        String iconURL = hm.get("roster_icon");
+        if ((iconURL != null) && (iconURL.length() > 0)) {
+            ImageView imageView = view.findViewById(R.id.roster_icon_image);
+            mainapp.imageDownloader.download(iconURL, imageView);
+        } else {
+            View v = view.findViewById(R.id.roster_icon_image);
+            v.setVisibility(View.GONE);
+        }
+
+        return view;
     }
+}
+
+
+public class RecentSimpleAdapter extends SimpleAdapter {
+    private Context cont;
+
+    public RecentSimpleAdapter(Context context,
+                               List<? extends Map<String, ?>> data, int resource,
+                               String[] from, int[] to) {
+        super(context, data, resource, from, to);
+        cont = context;
+    }
+
+
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (position > recent_engine_list.size())
+            return convertView;
+
+        HashMap<String, String> hm = recent_engine_list.get(position);
+        if (hm == null)
+            return convertView;
+
+        LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.engine_list_item, null, false);
+
+        String str = hm.get("engine_name");
+        if (str != null) {
+            TextView name = view.findViewById(R.id.engine_name_label);
+            name.setText(str);
+        }
+
+        str = hm.get("engine");
+        if (str != null) {
+            TextView secondLine = view.findViewById(R.id.engine_item_label);
+            secondLine.setText(str);
+        }
+
+        String iconURL = hm.get("engine_icon");
+        if ((iconURL != null) && (iconURL.length() > 0)) {
+            ImageView imageView = view.findViewById(R.id.engine_icon_image);
+            mainapp.imageDownloader.download(iconURL, imageView);
+        } else {
+            View v = view.findViewById(R.id.engine_icon_image);
+            v.setVisibility(View.GONE);
+        }
+
+        return view;
+    }
+
+}
 
     @Override
     protected void attachBaseContext(Context base) {
