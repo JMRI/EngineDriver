@@ -747,16 +747,16 @@
 
     <string name="introbackButtonPress">Torneu a iniciar l\'aplicació Engine Driver per completar el procés d\'inici.</string>
 
-    <string name="edit_consist_throttle_1">Consisteix editar accelerador 1</string>
-    <string name="edit_consist_throttle_2">Consisteix editar accelerador 2</string>
-    <string name="edit_consist_throttle_3">Consisteix editar accelerador 3</string>
-    <string name="edit_consist_throttle_4">Consisteix editar accelerador 4</string>
-    <string name="edit_consist_throttle_5">Consisteix editar accelerador 5</string>
-    <string name="edit_consist_throttle_6">Consisteix editar accelerador 6</string>
-    <string name="edit_consist_lights_throttle_1">Edita Consisteix llums de l\'accelerador 1</string>
-    <string name="edit_consist_lights_throttle_2">Edita Consisteix llums de l\'accelerador 2</string>
-    <string name="edit_consist_lights_throttle_3">Edita Consisteix llums de l\'accelerador 3</string>
-    <string name="edit_consist_lights_throttle_4">Edita Consisteix llums de l\'accelerador 4</string>
-    <string name="edit_consist_lights_throttle_5">Edita Consisteix llums de l\'accelerador 5</string>
-    <string name="edit_consist_lights_throttle_6">Edita Consisteix llums de l\'accelerador 6</string>
+    <string name="edit_consist_throttle_1">Editar el Regulador de TM 1</string>
+    <string name="edit_consist_throttle_2">Editar el Regulador de TM 2</string>
+    <string name="edit_consist_throttle_3">Editar el Regulador de TM 3</string>
+    <string name="edit_consist_throttle_4">Editar el Regulador de TM 4</string>
+    <string name="edit_consist_throttle_5">Editar el Regulador de TM 5</string>
+    <string name="edit_consist_throttle_6">Editar el Regulador de TM 6</string>
+    <string name="edit_consist_lights_throttle_1">Edita llums de la TM Regulador 1</string>
+    <string name="edit_consist_lights_throttle_2">Edita llums de la TM Regulador 2</string>
+    <string name="edit_consist_lights_throttle_3">Edita llums de la TM Regulador 3</string>
+    <string name="edit_consist_lights_throttle_4">Edita llums de la TM Regulador 4</string>
+    <string name="edit_consist_lights_throttle_5">Edita llums de la TM Regulador 5</string>
+    <string name="edit_consist_lights_throttle_6">Edita llums de la TM Regulador 6</string>
 </resources>
