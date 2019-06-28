@@ -1,4 +1,6 @@
 **Version 2.25
+ * prevent crash when removing recent loco
+ * enable clear text in webview
 **Version 2.24
  * Option to show/hide advanced preferences. Advanced preferences are hidden by default
  * Entering colon (":") into the host field changes focus to the port field
@@ -500,11 +502,9 @@
  *   support resend of function and direction commands, even when WiT knows it has already sent (may be there now)
  *   WiT send MT-xxx when commands are received from a client for a loco that is not active.  (to get ED up to date with server after connection loss)
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
- *   add throttle messages
- * 
+ *
  * These changes are likely to wait until ED3
  *   allow user to configure side-by-side panels for pads, etc.
  *   allow user to specify multiple web URLs
  *   change Connect to allow to be called from any Activity when needed
- *   kid throttle type with very large buttons for functions
  * */

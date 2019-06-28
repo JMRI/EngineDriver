@@ -1,4 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
     <title>Engine Driver Throttle for Android</title>
@@ -8,6 +9,7 @@
         dl {padding-left: 2em;}
         ul {margin-left:1em;margin-top:-1em;padding-left:0;}
         ul li {position:relative;left:1em;padding-right:1em;}​
+
     </style>
 </head>
 <body>
@@ -18,21 +20,23 @@
 <p><b>Latest changes for this version include:</b></p>
 <ul>
     <li>prevent crash when removing recent loco</li>
+    <li>enable clear text in webview</li>
 </ul>
 <p><em><a
         href="https://raw.githubusercontent.com/JMRI/EngineDriver/master/changelog-and-todo-list.txt"
-        target="_blank" title="View complete EngineDriver changelog">[view complete
-    changelog]</a></em></p>
+        target="_blank" title="View complete EngineDriver changelog">[view&nbsp;complete&nbsp;changelog]</a></em>
+</p>
 <p>This free application can connect to a <a
-        href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
-        target="_blank">JMRI WiThrottle</a> server running on a computer,
-    to an <a href="http://www.modelrectifier.com/category-s/332.htm" target="_blank">MRC Prodigy WiFi</a>,
-    or to a <a href="http://www.digitrax.com/products/wireless/lnwi/" target="_blank">Digitrax LnWi</a>,
+        href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
+        target="_blank">JMRI&nbsp;WiThrottle&nbsp;Server</a> running on a computer,
+    to an <a href="http://www.modelrectifier.com/category-s/332.htm" target="_blank">MRC&nbsp;Prodigy&nbsp;WiFi</a>,
+    or to a <a href="http://www.digitrax.com/products/wireless/lnwi/" target="_blank">Digitrax&nbsp;LnWi</a>,
     and in turn control your locomotives and your entire model railroad.
     Speed, direction, and up to 29 DCC functions are supported for one to six locos or consists.
     You can control layout power, turnouts and routes, and display panels and other JMRI windows
-    using the web views.
-    You can also create and edit consists (software-defined).</p>
+    using the web views. You can also create and edit consists (software-defined).
+    You can also control layout power, turnouts, routes, and access
+    <a href="http://jmri.org/help/en/html/web/">JMRI&nbsp;web</a> panels and windows.</p>
 <p>For more details, visit <a href="https://enginedriver.mstevetodd.com" target="_blank">[EngineDriver&nbsp;site]</a>.
     For screenshots, click <a href="https://enginedriver.mstevetodd.com/screenshots"
                               target="_blank">[here]</a>.</p>
@@ -42,15 +46,16 @@
     (2.8 works, 3.0+ works much better) on your PC, connected to your layout.&nbsp; Start up JMRI
     and verify you can use the included "Throttle" app to control a loco on your layout.</p>
 <p>Start the <a
-        href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
-        target="_blank">WiThrottle</a> function of JMRI, located in DecoderPro under Tools,
-    Throttles.&nbsp; It is also highly recommended that you start the <a
-            href="http://jmri.sourceforge.net/help/en/html/web/index.shtml" target="_blank"
-            title="Learn more about JMRI Web Server">JMRI Web Server</a>
+        href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
+        target="_blank">WiThrottle Server</a> function of JMRI, located in DecoderPro under Tools,
+    Throttles. It is also highly recommended that you start the <a
+            href="http://jmri.org/help/en/html/web/index.shtml" target="_blank"
+            title="Learn more about JMRI Web Server">JMRI&nbsp;Web&nbsp;Server</a>
     function (Tools, Start JMRI Web Server).&nbsp;
     Both of these should be added to Preferences, Start Up as well.</p>
 <h3>Prerequisites (for MRC Wifi):</h3>
-<p>Connect the MRC WiFi module, and verify your device can connect to its network and obtain an IP address.</p>
+<p>Connect the MRC WiFi module, and verify your device can connect to its network and obtain an IP
+    address.</p>
 <h3>Prerequisites (for Digitrax LnWi):</h3>
 <p>Connect the LnWi, and verify your device can connect to its network and obtain an IP address.</p>
 <h3>Operation:</h3>
@@ -82,7 +87,7 @@
     and Turnouts pages.</p>
 <h3>ESU MobileControl II operation:</h3>
 <p>The Engine Driver app fully supports the
-    <a href="http://www.esu.eu/en/products/digital-control/mobile-control-ii/">ESU MobileControl II</a>
+    <a href="http://www.esu.eu/en/products/digital-control/mobile-control-ii/">ESU&nbsp;MobileControl&nbsp;II</a>
     Android throttle.</p>
 <p>As well as being able to control speed of the selected throttle with the control knob, it's
     also possible to switch direction via the zero-position end-stop switch.</p>
@@ -105,12 +110,16 @@
     stopped throttles. Switching between controlled throttles is also disabled.</p>
 <p>It is possible to configure the device side buttons to perform various actions. The default
     assignment is as follows:</p>
-    <dl>
-        <dt>Top-left</dt><dd>Increase speed</dd>
-        <dt>Bottom-left</dt><dd>Decrease speed</dd>
-        <dt>Top-right</dt><dd>Toggle direction</dd>
-        <dt>Bottom-right</dt><dd>Select next throttle</dd>
-    </dl>
+<dl>
+    <dt>Top-left</dt>
+    <dd>Increase speed</dd>
+    <dt>Bottom-left</dt>
+    <dd>Decrease speed</dd>
+    <dt>Top-right</dt>
+    <dd>Toggle direction</dd>
+    <dt>Bottom-right</dt>
+    <dd>Select next throttle</dd>
+</dl>
 <p>These assignments can be modified via the ESU MobileControl II Options page in Preferences.</p>
 <h3>Configuration:</h3>
 <p>Under Preferences, there is an extensive list of options where you can customize the screens
@@ -135,11 +144,12 @@
 <h3>Development:</h3>
 <p>Engine Driver is free and open source software, part of the
     <a href="http://jmri.org" target="_blank">JMRI</a> project. It is built in
-    <a href="https://developer.android.com/studio/" target="_blank">Android Studio</a>.
+    <a href="https://developer.android.com/studio/" target="_blank">Android&nbsp;Studio</a>.
     You can browse or clone the current development source code (with tags for earlier releases)
     <a href="https://github.com/JMRI/EngineDriver" target="_blank">[HERE].</a> Pull Requests
     appreciated.</p>
 <hr>
-<p><a href="https://enginedriver.mstevetodd.com" target="_blank">[Homepage for EngineDriver]</a></p>
+<p><a href="https://enginedriver.mstevetodd.com" target="_blank">[Homepage&nbsp;for&nbsp;EngineDriver]</a>
+</p>
 </body>
 </html>
