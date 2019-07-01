@@ -1,6 +1,7 @@
 **Version 2.25
  * prevent crash when removing recent loco
  * enable clear text in webview
+ * prevent crashes reported to Play Console
 **Version 2.24
  * Option to show/hide advanced preferences. Advanced preferences are hidden by default
  * Entering colon (":") into the host field changes focus to the port field
