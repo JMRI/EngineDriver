@@ -1030,7 +1030,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 setScreenBrightnessMode(SCREEN_BRIGHTNESS_MODE_MANUAL);
 
                 if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.WRITE_SETTINGS)) {
-                    PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, PermissionsHelper.WRITE_SETTINGS);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, PermissionsHelper.WRITE_SETTINGS);
+                    }
                 }
                 try {
                     Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessValue);
@@ -1085,7 +1087,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (mainapp.androidVersion >= mainapp.minScreenDimNewMethodVersion) {
             if(brightnessModeValue >= 0 && brightnessModeValue <= 1){
                 if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.WRITE_SETTINGS)) {
-                    PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, PermissionsHelper.WRITE_SETTINGS);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, PermissionsHelper.WRITE_SETTINGS);
+                    }
                 }
                 try {
                     Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, brightnessModeValue);
@@ -4591,7 +4595,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     @SuppressWarnings("deprecation")
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "throttle.onDestroy()");
+        Log.d("Engine_Driver", "throttle.onDestroy() called");
         if (webView != null) {
             scale = webView.getScale(); // save current scale for next onCreate
         }
@@ -4761,7 +4765,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     // lookup and set values of various informational text labels and size the
     // screen elements
-    @SuppressWarnings("deprecation")
+
     protected void set_labels() {
         // Log.d("Engine_Driver","starting set_labels");
 
@@ -4817,7 +4821,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // Log.d("Engine_Driver","ending set_labels");
     }
 
-    @SuppressWarnings("deprecation")
+
     @Override
     public boolean onKeyUp(int key, KeyEvent event) {
 //        int repeatCnt = event.getRepeatCount();
@@ -4838,7 +4842,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // processing
     }
 
-    @SuppressWarnings("deprecation")
+
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
         int repeatCnt = event.getRepeatCount();
@@ -5544,7 +5548,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
         if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, requestCode)) {
-            PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, requestCode);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, requestCode);
+            }
         } else {
             // Go to the correct handler based on the request code.
             // Only need to consider relevant request codes initiated by this Activity
@@ -5699,7 +5705,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         ab.show();
     }
 
-    @SuppressWarnings({ "unchecked" })
+
     private void loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
         Log.d("Engine_Driver", "Preferences: Loading saved preferences from file: " + exportedPreferencesFileName);
         boolean res = importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);

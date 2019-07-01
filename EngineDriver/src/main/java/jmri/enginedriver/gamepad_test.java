@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -153,7 +154,7 @@ public class gamepad_test extends Activity implements OnGestureListener {
         whichGamePadModeIndex = Arrays.asList(gamePadModesArray).indexOf(whichGamePadMode);
         if (whichGamePadModeIndex<0) whichGamePadModeIndex=0;
 
-        Spinner spinner = (Spinner) findViewById(R.id.gamepad_test_mode);
+        Spinner spinner = findViewById(R.id.gamepad_test_mode);
         spinner.setSelection(whichGamePadModeIndex);
 
         // Gamepad button Preferences
@@ -605,10 +606,11 @@ public class gamepad_test extends Activity implements OnGestureListener {
 
     public class spinner_listener implements AdapterView.OnItemSelectedListener {
 
+        @SuppressLint("ApplySharedPref")
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            Spinner spinner = (Spinner) findViewById(R.id.gamepad_test_mode);
+            Spinner spinner = findViewById(R.id.gamepad_test_mode);
             whichGamePadModeIndex = spinner.getSelectedItemPosition();
 
             prefs.edit().putString("prefGamePadType", gamePadModesArray[whichGamePadModeIndex]).commit();  //reset the preference
@@ -650,7 +652,6 @@ public class gamepad_test extends Activity implements OnGestureListener {
     /**
      * Called when the activity is first created.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -682,63 +683,63 @@ public class gamepad_test extends Activity implements OnGestureListener {
                 preferences.getIntPrefValue(prefs,"prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
 
         // set listener for select loco buttons
-        bDpadUp = (Button) findViewById(R.id.gamepad_test_dpad_up);
+        bDpadUp = findViewById(R.id.gamepad_test_dpad_up);
         bDpadUp.setClickable(false);
 
-        bDpadDown = (Button) findViewById(R.id.gamepad_test_dpad_down);
+        bDpadDown = findViewById(R.id.gamepad_test_dpad_down);
         bDpadDown.setClickable(false);
 
-        bDpadLeft = (Button) findViewById(R.id.gamepad_test_dpad_left);
+        bDpadLeft = findViewById(R.id.gamepad_test_dpad_left);
         bDpadLeft.setClickable(false);
 
-        bDpadRight = (Button) findViewById(R.id.gamepad_test_dpad_right);
+        bDpadRight = findViewById(R.id.gamepad_test_dpad_right);
         bDpadRight.setClickable(false);
 
-        bButtonX = (Button) findViewById(R.id.gamepad_test_button_x);
+        bButtonX = findViewById(R.id.gamepad_test_button_x);
         bButtonX.setClickable(false);
 
-        bButtonY = (Button) findViewById(R.id.gamepad_test_button_y);
+        bButtonY = findViewById(R.id.gamepad_test_button_y);
         bButtonY.setClickable(false);
 
-        bButtonA = (Button) findViewById(R.id.gamepad_test_button_a);
+        bButtonA = findViewById(R.id.gamepad_test_button_a);
         bButtonA.setClickable(false);
 
-        bButtonB = (Button) findViewById(R.id.gamepad_test_button_b);
+        bButtonB = findViewById(R.id.gamepad_test_button_b);
         bButtonB.setClickable(false);
 
-        bButtonStart = (Button) findViewById(R.id.gamepad_test_button_start);
+        bButtonStart = findViewById(R.id.gamepad_test_button_start);
         bButtonStart.setClickable(false);
 
-        bButtonEnter = (Button) findViewById(R.id.gamepad_test_button_enter);
+        bButtonEnter = findViewById(R.id.gamepad_test_button_enter);
         bButtonEnter.setClickable(false);
 
-        bButtonLeftShoulder = (Button) findViewById(R.id.gamepad_test_button_left_shoulder);
+        bButtonLeftShoulder = findViewById(R.id.gamepad_test_button_left_shoulder);
         bButtonLeftShoulder.setClickable(false);
 
-        bButtonRightShoulder = (Button) findViewById(R.id.gamepad_test_button_right_shoulder);
+        bButtonRightShoulder = findViewById(R.id.gamepad_test_button_right_shoulder);
         bButtonRightShoulder.setClickable(false);
 
-        bButtonLeftTrigger = (Button) findViewById(R.id.gamepad_test_button_left_trigger);
+        bButtonLeftTrigger = findViewById(R.id.gamepad_test_button_left_trigger);
         bButtonLeftTrigger.setClickable(false);
 
-        bButtonRightTrigger = (Button) findViewById(R.id.gamepad_test_button_right_trigger);
+        bButtonRightTrigger = findViewById(R.id.gamepad_test_button_right_trigger);
         bButtonRightTrigger.setClickable(false);
 
 
         //tvGamepadMode =(TextView) findViewById(R.id.gamepad_test_mode);
 
-        tvGamepadAllKeyCodes =(TextView) findViewById(R.id.gamepad_test_all_keycodes);
+        tvGamepadAllKeyCodes = findViewById(R.id.gamepad_test_all_keycodes);
 
-        tvGamepadKeyCode =(TextView) findViewById(R.id.gamepad_test_keycode);
-        tvGamepadKeyFunction =(TextView) findViewById(R.id.gamepad_test_keyfunction);
-        tvGamepadComplete =(TextView) findViewById(R.id.gamepad_test_complete);
+        tvGamepadKeyCode = findViewById(R.id.gamepad_test_keycode);
+        tvGamepadKeyFunction = findViewById(R.id.gamepad_test_keyfunction);
+        tvGamepadComplete = findViewById(R.id.gamepad_test_complete);
 
         tvGamepadKeyCode.setText("");
         tvGamepadKeyFunction.setText("");
         tvGamepadComplete.setText(R.string.gamepadTestIncomplete);
 
         // Set the options for the mode.
-        Spinner mode_spinner = (Spinner) findViewById(R.id.gamepad_test_mode);
+        Spinner mode_spinner = findViewById(R.id.gamepad_test_mode);
         //ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.prefGamePadTypeOptions, android.R.layout.simple_spinner_item);
         ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.prefGamePadTypeEntryValues, android.R.layout.simple_spinner_item);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -748,20 +749,20 @@ public class gamepad_test extends Activity implements OnGestureListener {
         setGamepadKeys();
 
         //Set the button
-        Button cancelButton = (Button) findViewById(R.id.gamepad_test_button_cancel);
+        Button cancelButton = findViewById(R.id.gamepad_test_button_cancel);
         gamepad_test.cancel_button_listener cancel_click_listener = new gamepad_test.cancel_button_listener();
         cancelButton.setOnClickListener(cancel_click_listener);
 
-        Button resetButton = (Button) findViewById(R.id.gamepad_test_button_reset);
+        Button resetButton = findViewById(R.id.gamepad_test_button_reset);
         gamepad_test.reset_button_listener reset_click_listener = new gamepad_test.reset_button_listener();
         resetButton.setOnClickListener(reset_click_listener);
 
-        Button skipButton = (Button) findViewById(R.id.gamepad_test_button_skip);
+        Button skipButton = findViewById(R.id.gamepad_test_button_skip);
         if (whichGamepadNo.equals(" ")) {
             resetButton.setVisibility(View.GONE);
             skipButton.setVisibility(View.GONE);
             cancelButton.setText(R.string.gamepadTestCancelNonForced);
-            TextView tvHelpText = (TextView) findViewById(R.id.gamepad_test_help);
+            TextView tvHelpText = findViewById(R.id.gamepad_test_help);
             tvHelpText.setText(R.string.gamepadTestHelpNonForced);
         } else {
             gamepad_test.skip_button_listener skip_click_listener = new gamepad_test.skip_button_listener();
@@ -794,7 +795,7 @@ public class gamepad_test extends Activity implements OnGestureListener {
      */
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "gamepad_test.onDestroy()");
+        Log.d("Engine_Driver", "gamepad_test.onDestroy() called");
 
         if (tg != null) {
             tg.release();
@@ -825,6 +826,7 @@ public class gamepad_test extends Activity implements OnGestureListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
+        //noinspection SwitchStatementWithTooFewBranches
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();

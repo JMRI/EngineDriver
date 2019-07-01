@@ -175,7 +175,6 @@ public class ConsistEdit extends Activity implements OnGestureListener {
     /**
      * Called when the activity is first created.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -207,7 +206,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         consistListAdapter = new SimpleAdapter(this, consistList, R.layout.consist_item,
                 new String[]{"loco_name", "loco_addr", "lead_label", "trail_label", "loco_facing"},
                 new int[]{R.id.con_loco_name, R.id.con_loco_addr_hidden, R.id.con_lead_label, R.id.con_trail_label, R.id.con_loco_facing});
-        ListView consistLV = (ListView) findViewById(R.id.consist_list);
+        ListView consistLV = findViewById(R.id.consist_list);
         consistLV.setAdapter(consistListAdapter);
         consistLV.setOnItemClickListener(new OnItemClickListener() {
             //When an entry is clicked, toggle the facing state
@@ -251,7 +250,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         consistLV.setOnTouchListener(gestureListener);
 
         consistObjList = new ArrayList<>();
-        consistSpinner = (Spinner) findViewById(R.id.consist_lead);
+        consistSpinner = findViewById(R.id.consist_lead);
         consistObjListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, consistObjList);
         consistObjListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         consistSpinner.setAdapter(consistObjListAdapter);
@@ -270,7 +269,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
             }
         });
 
-        consistTrailSpinner = (Spinner) findViewById(R.id.consist_trail);
+        consistTrailSpinner = findViewById(R.id.consist_trail);
         consistTrailSpinner.setAdapter(consistObjListAdapter);
         consistTrailSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -320,7 +319,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
      */
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "ConsistEdit.onDestroy()");
+        Log.d("Engine_Driver", "ConsistEdit.onDestroy() called");
 
         mainapp.consist_edit_msg_handler = null;
         super.onDestroy();
@@ -338,6 +337,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
+        //noinspection SwitchStatementWithTooFewBranches
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();

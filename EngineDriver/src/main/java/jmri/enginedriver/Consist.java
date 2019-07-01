@@ -313,7 +313,7 @@ import java.util.Set;
             l.setFunctionLabels(functionLabelsString, mainapp);
 
     }
-/**
+/*
     public String getFunctionLabel(String address, Integer functionNo) {
         String functionLabel = "";
         ConLoco l = con.get(address);
@@ -321,6 +321,6 @@ import java.util.Set;
             functionLabel = l.getFunctionLabel(functionNo);
         return functionLabel;
     }
-**/
+*/
 
 }

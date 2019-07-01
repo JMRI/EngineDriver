@@ -21,6 +21,7 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 package jmri.enginedriver;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -163,6 +164,7 @@ public class intro_activity extends AppIntro2 {
         // Do something when users tap on Skip button.
     }
 
+    @SuppressLint("ApplySharedPref")
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
@@ -214,6 +216,8 @@ public class intro_activity extends AppIntro2 {
 
     @Override
     public void onDestroy() {
+        Log.d("Engine_Driver", "intro_activity.onDestroy() called");
+
         mainapp.introIsRunning = false;
         if (!introComplete) {
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.introbackButtonPress), Toast.LENGTH_LONG).show();

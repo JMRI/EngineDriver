@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -188,6 +189,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
 
     @Override
     public void onDestroy() {
+        Log.d("Engine_Driver", "function_Settings.onDestroy() called");
         mainapp.set_default_function_labels(false); // reload the preference in cases the display number is less than the total number
 
         Log.d("Engine_Driver", "function_settings.onDestroy() called");
@@ -210,6 +212,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
+        //noinspection SwitchStatementWithTooFewBranches
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
@@ -438,7 +441,6 @@ public class function_settings extends Activity implements PermissionsHelper.Per
         prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", prefAlwaysUseDefaultFunctionLabels).commit();
     }
 
-    @SuppressWarnings("deprecation")
     private String limitIntEditValue(String key, EditText et, int minVal, int maxVal, String defaultVal) {
         String sVal = defaultVal;
         boolean isValid = true;
@@ -498,9 +500,12 @@ public class function_settings extends Activity implements PermissionsHelper.Per
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
+    @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
         if (!PermissionsHelper.getInstance().isPermissionGranted(function_settings.this, requestCode)) {
-            PermissionsHelper.getInstance().requestNecessaryPermissions(function_settings.this, requestCode);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PermissionsHelper.getInstance().requestNecessaryPermissions(function_settings.this, requestCode);
+            }
         } else {
             switch (requestCode) {
                 case PermissionsHelper.STORE_FUNCTION_SETTINGS:
