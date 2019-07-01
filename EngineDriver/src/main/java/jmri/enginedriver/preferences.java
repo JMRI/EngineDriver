@@ -134,7 +134,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private String[] advancedPreferences;
 
     @SuppressLint("ApplySharedPref")
-    @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         ListPreference preference;
@@ -224,7 +223,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         hideAdvancedPreferences();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected void onResume() {
         super.onResume();
@@ -249,7 +247,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected void onPause() {
         //Log.d("Engine_Driver", "preferences.onPause() called");
@@ -264,7 +261,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     @Override
     protected void onDestroy() {
-        //Log.d("Engine_Driver", "preferences.onDestroy() called");
+        Log.d("Engine_Driver", "preferences.onDestroy() called");
         super.onDestroy();
     }
 
@@ -280,6 +277,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
+        //noinspection SwitchStatementWithTooFewBranches
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
@@ -289,7 +287,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     @SuppressLint("ApplySharedPref")
-    @SuppressWarnings("deprecation")
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         threaded_application mainapp = (threaded_application) this.getApplication();
 
@@ -504,7 +501,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
-    @SuppressWarnings({"unchecked"})
     private boolean loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
         Log.d("Engine_Driver", "Preferences: Loading saved preferences from file: " + exportedPreferencesFileName);
         boolean res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
@@ -647,7 +643,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     @SuppressLint("ApplySharedPref")
-    @SuppressWarnings("deprecation")
     private boolean limitIntPrefValue(SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
         boolean isValid = true;
         EditTextPreference prefText = (EditTextPreference) getPreferenceScreen().findPreference(key);
@@ -674,7 +669,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     @SuppressLint("ApplySharedPref")
-    @SuppressWarnings("deprecation")
     private boolean limitFloatPrefValue(SharedPreferences sharedPreferences, String key, Float minVal, Float maxVal, String defaultVal) {
         boolean isValid = true;
         EditTextPreference prefText = (EditTextPreference) getPreferenceScreen().findPreference(key);
@@ -781,6 +775,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         enableDisablePreference("WebViewLocation", enable);
         enableDisablePreference("prefIncreaseWebViewSize", enable);
         enableDisablePreference("InitialThrotWebPage", enable);
+
+        enable = !prefThrottleScreenTypeOriginal.equals("Default");
+        enableDisablePreference("prefTickMarksOnSliders", enable);
     }
 
 
@@ -796,7 +793,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private void hideAdvancedPreferences() {
         if (!sharedPreferences.getBoolean("prefShowAdvancedPreferences", getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue) ) ) {
             for (String advancedPreference1 : advancedPreferences) {
-                Log.d("Engine_Driver", "Preferences: Remove advanced preference: " + advancedPreference1);
+//                Log.d("Engine_Driver", "Preferences: Remove advanced preference: " + advancedPreference1);
 
                 Preference advancedPreference = getPreferenceScreen().findPreference(advancedPreference1);
                 removePreference(advancedPreference);
@@ -908,7 +905,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         return false;
     }
 
-    @SuppressWarnings("deprecation")
     private void setGamePadPrefLabels(SharedPreferences sharedPreferences) {
         String whichGamePadMode = sharedPreferences.getString("prefGamePadType", "None").trim();
         String[] gamePadPrefLabels;
@@ -978,9 +974,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     @SuppressLint("SwitchIntDef")
-    public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
+    public void navigateToHandler(@RequestCodes int requestCode) {
         if (!PermissionsHelper.getInstance().isPermissionGranted(preferences.this, requestCode)) {
-            PermissionsHelper.getInstance().requestNecessaryPermissions(preferences.this, requestCode);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PermissionsHelper.getInstance().requestNecessaryPermissions(preferences.this, requestCode);
+            }
         } else {
             // Go to the correct handler based on the request code.
             // Only need to consider relevant request codes initiated by this Activity
@@ -1015,7 +1013,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private class preferences_handler extends Handler {
 
         @SuppressLint("ApplySharedPref")
-        @SuppressWarnings("unchecked")
         public void handleMessage(Message msg) {
 //            SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
             switch (msg.what) {
@@ -1037,6 +1034,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     @Override
     protected Dialog onCreateDialog(int id) { // dialog for the progress bar
+        //noinspection SwitchStatementWithTooFewBranches
         switch (id) {
             case PROGRESS_BAR_TYPE: // we set this to 0
                 pDialog = new ProgressDialog(this);

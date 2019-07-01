@@ -86,14 +86,13 @@ public class power_control extends Activity {
         }
     }
 
-    //Set the button text based on current power state  TODO: improve code 
-    @SuppressWarnings("deprecation")
+    //Set the button text based on current power state  TODO: improve code
     public void refresh_power_control_view() {
-        Button b = (Button) findViewById(R.id.power_control_button);
+        Button b = findViewById(R.id.power_control_button);
         Drawable currentImage = power_unknown_drawable;
         if (!mainapp.isPowerControlAllowed()) {
             b.setEnabled(false);
-            TextView tv = (TextView) findViewById(R.id.power_control_text);
+            TextView tv = findViewById(R.id.power_control_text);
             tv.setText(getString(R.string.power_control_not_allowed));
         } else {
             b.setEnabled(true);
@@ -147,7 +146,7 @@ public class power_control extends Activity {
 
 
         //Set the button callbacks, storing the command to pass for each
-        Button b = (Button) findViewById(R.id.power_control_button);
+        Button b = findViewById(R.id.power_control_button);
         button_listener click_listener = new button_listener();
         b.setOnClickListener(click_listener);
 
@@ -199,6 +198,7 @@ public class power_control extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
+        //noinspection SwitchStatementWithTooFewBranches
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();

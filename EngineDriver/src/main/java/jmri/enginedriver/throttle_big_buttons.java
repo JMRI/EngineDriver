@@ -75,6 +75,7 @@ public class throttle_big_buttons extends throttle {
         if (mainapp.appIsFinishing) { return;}
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            //noinspection SwitchStatementWithTooFewBranches
             switch (throttleIndex) {
                 case 0:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
@@ -91,6 +92,7 @@ public class throttle_big_buttons extends throttle {
         lLowers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            //noinspection SwitchStatementWithTooFewBranches
             switch (throttleIndex) {
                 default:
                 case 0:

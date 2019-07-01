@@ -186,7 +186,7 @@
     <string name="prefShowAddressInsteadOfNameTitle">Zobrazit adresu lokomotivy místo názvu?</string>
     <string name="prefShowAddressInsteadOfNameSummary">Zobrazí DCC adresu lokomotivy místo názvu lokmotivy na stránce ovladače.</string>
     <string name="prefIncreaseWebViewSizeTitle">Zvětšit velikost zobrazení Webu?</string>
-    <string name="prefIncreaseWebViewSizeSummary">Zvětšit velikost zobrazení Webu na 60 % pro malé obrazovky.</string>
+    <string name="prefIncreaseWebViewSizeSummary">Zvětšit velikost zobrazení Webu na 60% pro malé obrazovky.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Použít pohlcující režim pro zobrazení ovladače?</string>
     <string name="prefThrottleViewImmersiveModeSummary">Zobrazit ovladač v režimu celé obrazovky. Přetažení prstem dolů dočasně deaktivujete a dostanete se do nabídky.</string>
     <string name="prefSwipeUpOptionTitle">Akce přetažení prstem nahoru v zobrazení ovladače?</string>

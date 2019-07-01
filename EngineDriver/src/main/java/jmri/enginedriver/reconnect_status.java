@@ -62,9 +62,8 @@ public class reconnect_status extends Activity {
         }
     }
 
-    @SuppressWarnings("deprecation")
     public void refresh_reconnect_status(String status) {
-        TextView tv = (TextView) findViewById(R.id.reconnect_status);
+        TextView tv = findViewById(R.id.reconnect_status);
         if (status != null) {
             prog = prog + ".";
             if (prog.length() > 5)
@@ -76,7 +75,7 @@ public class reconnect_status extends Activity {
     public void reconnected() {
         if (backOk) {                        // ensure we only run this once
             backOk = false;
-            TextView tv = (TextView) findViewById(R.id.reconnect_help);
+            TextView tv = findViewById(R.id.reconnect_help);
             tv.setText(getString(R.string.reconnect_success));
             if (mainapp.reconnect_status_msg_handler != null) {
                 mainapp.reconnect_status_msg_handler.postDelayed(delayCloseScreen, 500L);
@@ -157,6 +156,8 @@ public class reconnect_status extends Activity {
      */
     @Override
     public void onDestroy() {
+        Log.d("Engine_Driver", "reconnect_status.onDestroy() called");
+
         mainapp.reconnect_status_msg_handler = null;
         super.onDestroy();
     }

@@ -954,6 +954,7 @@ public class select_loco extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
+        //noinspection SwitchStatementWithTooFewBranches
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();

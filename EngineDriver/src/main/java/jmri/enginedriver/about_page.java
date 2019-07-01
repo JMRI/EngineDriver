@@ -19,6 +19,7 @@ package jmri.enginedriver;
 
 import java.util.HashMap;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ public class about_page extends Activity {
     /**
      * Called when the activity is first created.
      */
+    @SuppressLint("DefaultLocale")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +50,7 @@ public class about_page extends Activity {
         setContentView(R.layout.about_page);
 
         // format and show version info
-        TextView v = (TextView) findViewById(R.id.about_info);
+        TextView v = findViewById(R.id.about_info);
         String s;
         // ED version info
         try {
@@ -83,7 +85,7 @@ public class about_page extends Activity {
         v.setText(s);
 
         // show ED webpage
-        WebView webview = (WebView) findViewById(R.id.about_webview);
+        WebView webview = findViewById(R.id.about_webview);
         webview.loadUrl(getApplicationContext().getResources().getString(R.string.about_page_url));
 
     }
@@ -123,6 +125,7 @@ public class about_page extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
+        //noinspection SwitchStatementWithTooFewBranches
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();

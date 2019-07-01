@@ -24,6 +24,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import java.net.Inet4Address;
@@ -336,7 +337,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
      * Called when the activity is first created.
      */
     @SuppressLint("ApplySharedPref")
-    @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -545,7 +545,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "connection.onDestroy()");
+        Log.d("Engine_Driver", "connection.onDestroy() called");
         //		mainapp.connection_msg_handler = null;
         super.onDestroy();
     }
@@ -586,7 +586,9 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             //we must have location permissions to get SSID.
             PermissionsHelper phi = PermissionsHelper.getInstance();
             if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION)) {
-                phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION);
+                }
             }
             mainapp.client_ssid = wifiinfo.getSSID();
             if (mainapp.client_ssid != null && mainapp.client_ssid.startsWith("\"") && mainapp.client_ssid.endsWith("\"")) {
@@ -925,7 +927,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     }
 
     @SuppressLint("ApplySharedPref")
-    @SuppressWarnings({"unchecked"})
     private void loadSharedPreferencesFromFileImpl() {
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
@@ -961,7 +962,9 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         } else {
 
             if (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) {
-                PermissionsHelper.getInstance().requestNecessaryPermissions(connection_activity.this, requestCode);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    PermissionsHelper.getInstance().requestNecessaryPermissions(connection_activity.this, requestCode);
+                }
             } else {
                 // Go to the correct handler based on the request code.
                 // Only need to consider relevant request codes initiated by this Activity

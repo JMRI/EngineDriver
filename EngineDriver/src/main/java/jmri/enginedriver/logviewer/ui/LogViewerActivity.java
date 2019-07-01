@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -105,6 +106,7 @@ public class LogViewerActivity extends ListActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
+        //noinspection SwitchStatementWithTooFewBranches
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
@@ -116,6 +118,8 @@ public class LogViewerActivity extends ListActivity {
 
     @Override
     protected void onDestroy() {
+        Log.d("Engine_Driver", "log_viewer.onDestroy() called");
+
         if (logReaderTask != null ) {
             logReaderTask.stopTask();
         }
@@ -166,10 +170,13 @@ public class LogViewerActivity extends ListActivity {
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
         if (!PermissionsHelper.getInstance().isPermissionGranted(LogViewerActivity.this, requestCode)) {
-            PermissionsHelper.getInstance().requestNecessaryPermissions(LogViewerActivity.this, requestCode);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PermissionsHelper.getInstance().requestNecessaryPermissions(LogViewerActivity.this, requestCode);
+            }
         } else {
             // Go to the correct handler based on the request code.
             // Only need to consider relevant request codes initiated by this Activity
+            //noinspection SwitchStatementWithTooFewBranches
             switch (requestCode) {
                 case PermissionsHelper.STORE_LOG_FILES:
                     Log.d("Engine_Driver", "Preferences: Got permission for STORE_LOG_FILES - navigate to saveSharedPreferencesToFileImpl()");
@@ -229,7 +236,7 @@ public class LogViewerActivity extends ListActivity {
             String data = objects.get(position);
 
             if (null != data) {
-                TextView textview = (TextView) view.findViewById(R.id.txtLogString);
+                TextView textview = view.findViewById(R.id.txtLogString);
                 String msg = data;
                 int msgStart = data.indexOf("Engine_Driver: "); //post-marshmallow format
                 if (msgStart > 0) {

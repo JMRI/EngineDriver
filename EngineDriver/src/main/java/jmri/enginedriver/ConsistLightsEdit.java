@@ -169,7 +169,6 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     /**
      * Called when the activity is first created.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -202,7 +201,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         consistListAdapter = new SimpleAdapter(this, consistList, R.layout.consist_lights_item,
                 new String[]{"loco_name", "loco_addr", "loco_light"},
                 new int[]{R.id.con_loco_name, R.id.con_loco_addr_hidden, R.id.con_loco_light});
-        ListView consistLV = (ListView) findViewById(R.id.consist_lights_list);
+        ListView consistLV = findViewById(R.id.consist_lights_list);
         consistLV.setAdapter(consistListAdapter);
         consistLV.setOnItemClickListener(new OnItemClickListener() {
             //When an entry is clicked, toggle the lights state for that loco
@@ -301,7 +300,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
      */
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "ConsistLightsEdit.onDestroy()");
+        Log.d("Engine_Driver", "ConsistLightsEdit.onDestroy() called");
 
         mainapp.consist_lights_edit_msg_handler = null;
         super.onDestroy();
@@ -319,6 +318,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
+        //noinspection SwitchStatementWithTooFewBranches
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
