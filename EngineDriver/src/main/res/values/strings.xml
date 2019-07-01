@@ -353,7 +353,7 @@
     <string name="prefRosterFilterDefaultValue" />
     <string name="FilterRosterList">Filter</string>
     <string name="FilterRosterListHint">Contains…</string>
-    <string name="rosterEmpty">Unable to find any enties in the JMRI roster.  Use either the \'DCC Address\' or \'Recent\' option instead.</string>
+    <string name="rosterEmpty">Unable to find any entries in the JMRI roster.  Use either the \'DCC Address\' or \'Recent\' option instead.</string>
 
     <string name="LocoSelectMethodQuestion">Method: </string>
     <string name="LocoSelectMethodAddress">DCC Address</string>
