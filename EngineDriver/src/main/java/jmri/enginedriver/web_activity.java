@@ -214,10 +214,12 @@ public class web_activity extends Activity {
         super.onResume();
         mainapp.removeNotification();
 
-        if (mainapp.webMenuSelected) {
-            closeButton.setVisibility(View.VISIBLE);
-        } else {
-            closeButton.setVisibility(View.GONE);
+        if (closeButton != null) {
+            if (mainapp.webMenuSelected) {
+                closeButton.setVisibility(View.VISIBLE);
+            } else {
+                closeButton.setVisibility(View.GONE);
+            }
         }
 
         if (mainapp.isForcingFinish()) {    //expedite

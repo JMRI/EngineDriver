@@ -4787,7 +4787,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             sbs[throttleIndex].setMax(maxThrottle);
-            if (mainapp.consists[throttleIndex].isEmpty()) {
+            if (mainapp.consists != null && mainapp.consists[throttleIndex] != null &&
+                    mainapp.consists[throttleIndex].isEmpty()) {
                 maxSpeedSteps[throttleIndex] = 100;
             }
             //get speed steps from prefs
