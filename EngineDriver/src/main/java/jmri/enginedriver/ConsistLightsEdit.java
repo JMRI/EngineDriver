@@ -19,6 +19,7 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,15 +48,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import android.content.Context;
-
-import jmri.enginedriver.Consist;
 import jmri.enginedriver.Consist.ConLoco;
-import jmri.enginedriver.R;
-import jmri.enginedriver.connection_activity;
-import jmri.enginedriver.message_type;
-import jmri.enginedriver.reconnect_status;
-import jmri.enginedriver.threaded_application;
 
 public class ConsistLightsEdit extends Activity implements OnGestureListener {
     public static final int LIGHT_OFF = 0;
@@ -85,7 +78,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         //clear and rebuild
         consistObjList.clear();
         int pos = 0;
-        Collection<ConLoco> cgl = consist.getLocos(); //copy to prevent concurrentmodification
+        Collection<ConLoco> cgl = consist.getLocos(); //copy from synchronized map to avoid holding it while iterating
         for (ConLoco l : cgl) {
             if (l.isConfirmed()) {
                 consistObjList.add(l);
