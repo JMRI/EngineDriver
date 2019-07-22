@@ -81,11 +81,12 @@ import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 import javax.jmdns.JmDNS;
@@ -129,8 +130,8 @@ public class threaded_application extends Application {
     String[] rt_user_names;
     String[] rt_states;
     HashMap<String, String> rt_state_names; //if not set, routes are not allowed
-    LinkedHashMap<String, String> roster_entries;  //roster sent by WiThrottle
-    LinkedHashMap<String, String> consist_entries;
+    Map<String, String> roster_entries;  //roster sent by WiThrottle
+    Map<String, String> consist_entries;
     private static DownloadRosterTask dlRosterTask = null;
     private static DownloadMetaTask dlMetadataTask = null;
     HashMap<String, RosterEntry> roster;  //roster entries retrieved from /roster/?format=xml (null if not retrieved)
@@ -1044,7 +1045,8 @@ public class threaded_application extends Application {
         //  RL2]\[NS2591}|{2591}|{L]\[NS4805}|{4805}|{L
         private void process_roster_list(String response_str) {
             //clear the global variable
-            roster_entries = new LinkedHashMap<>();
+              roster_entries = Collections.synchronizedMap(new LinkedHashMap<String,String>());
+              //todo   RDB why don't we just clear the existing map with roster_entries.clear() instead of disposing and creating a new instance?
 
             String[] ta = splitByString(response_str, "]\\[");  //initial separation
             //initialize app arrays (skipping first)
@@ -2120,9 +2122,9 @@ public class threaded_application extends Application {
             function_states[i] = new boolean[32];        // also allocated in onCreate() ???
         }
 
-        consist_entries = new LinkedHashMap<>();
+        consist_entries = Collections.synchronizedMap(new LinkedHashMap<String,String>());
         roster = null;
-        roster_entries = new LinkedHashMap<>();
+        roster_entries = Collections.synchronizedMap(new LinkedHashMap<String,String>());
         metadata = null;
         doFinish = false;
         turnouts_list_position = 0;
