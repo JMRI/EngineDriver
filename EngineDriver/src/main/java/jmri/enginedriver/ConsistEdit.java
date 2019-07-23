@@ -19,6 +19,7 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,8 +48,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-
-import android.content.Context;
 
 import jmri.enginedriver.Consist.ConLoco;
 
@@ -84,7 +83,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         //clear and rebuild
         consistObjList.clear();
         int pos = 0;
-        Collection<ConLoco> cgl = consist.getLocos(); //copy to prevent concurrentmodification
+        Collection<ConLoco> cgl = consist.getLocos(); //copy from synchronized map to avoid holding it while iterating
         for (ConLoco l : cgl) {
             if (l.isConfirmed()) {
                 consistObjList.add(l);

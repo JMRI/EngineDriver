@@ -17,10 +17,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -63,14 +62,14 @@ import java.util.Set;
 
     }
 
-    private LinkedHashMap<String, ConLoco> con;            //locos assigned to this consist (i.e. this throttle)
+    private Map<String, ConLoco> con;                   //locos assigned to this consist (i.e. this throttle)
     private String leadAddr;                            //address of lead loco
     //TODO: eliminate stored leadAddr and create on the fly?
     private String trailAddr;                            //address of trail loco
 
 
     public Consist() {
-        con = new LinkedHashMap<>();
+        con = Collections.synchronizedMap(new LinkedHashMap<String, ConLoco>());
         leadAddr = "";
         trailAddr = "";
     }

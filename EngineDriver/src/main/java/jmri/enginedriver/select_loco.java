@@ -143,7 +143,7 @@ public class select_loco extends Activity {
 
             //put roster entries into screen list
             if (mainapp.roster_entries != null) {
-                ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy to prevent concurrentmodification
+                ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
                 for (String rostername : rns) {
                     if ((prefRosterFilter.length() == 0) || (rostername.toUpperCase().contains(prefRosterFilter.toUpperCase()))) {
                         // put key and values into temp hashmap
@@ -173,7 +173,7 @@ public class select_loco extends Activity {
 
             //add consist entries to screen list
             if (mainapp.consist_entries != null) {
-                ArrayList<String> ces = new ArrayList<>(mainapp.consist_entries.keySet());  //copy to prevent concurrentmodificationexception
+                ArrayList<String> ces = new ArrayList<>(mainapp.consist_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
                 for (String consist_addr : ces) {
                     // put key and values into temp hashmap
                     HashMap<String, String> hm = new HashMap<>();
