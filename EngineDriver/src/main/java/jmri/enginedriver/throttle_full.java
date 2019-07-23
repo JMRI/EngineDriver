@@ -284,15 +284,16 @@ public class throttle_full extends throttle {
         String bLabel;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             Button b = bSels[throttleIndex];
-            if (mainapp.consists[throttleIndex].isActive()) {
-                if (!prefShowAddressInsteadOfName) {
-                    bLabel = mainapp.consists[throttleIndex].toString();
-                } else {
-                    bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
+            bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
+            if (mainapp.consists[throttleIndex] != null) {
+                if (mainapp.consists[throttleIndex].isActive()) {
+                    if (!prefShowAddressInsteadOfName) {
+                        bLabel = mainapp.consists[throttleIndex].toString();
+                    } else {
+                        bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
+                    }
+                    throttle_count++;
                 }
-                throttle_count++;
-            } else {
-                bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
             }
             double textScale = 1.0;
             int bWidth = b.getWidth(); // scale text if required to fit the textView
