@@ -48,7 +48,7 @@ import java.util.Set;
         }
 
         private ConLoco(Loco l) {
-            super(l);
+            super( l);
             backward = false;
             lightOn = LIGHT_UNKNOWN;
         }

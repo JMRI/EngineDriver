@@ -304,6 +304,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected String speedButtonUpText;
     protected String speedButtonDownText;
 
+    protected boolean prefLimitSpeedButton = false;
+    protected int prefLimitSpeedPercent = 50;
+    protected int prefLimitSpeedMax = 50;
+    protected Button[] bLimitSpeeds;
+    protected boolean[] isLimitSpeeds;
+    protected float[] limitSpeedSliderScalingFactors;
+    protected int[] limitSpeedMax = {100,100,100,100,100,100 };
+
     private Handler repeatUpdateHandler = new Handler();
     private boolean mAutoIncrement = false;
     private boolean mAutoDecrement = false;
@@ -861,8 +869,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                         }
                                     } else if (com3 == 'V') {
                                         try {
-                                            int speed = Integer.parseInt(ls[1].substring(1));
-                                            speedUpdateWiT(whichThrottle, speed); // update speed slider and indicator
+                                            int speedWiT = Integer.parseInt(ls[1].substring(1));
+                                            speedUpdateWiT(whichThrottle, speedWiT); // update speed slider and indicator
                                         } catch (Exception ignored) {
                                         }
                                     } else if (com3 == 'F') {
@@ -1371,6 +1379,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefSelectiveLeadSoundF1 = prefs.getBoolean("SelectiveLeadSoundF1", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF1DefaultValue));
         prefSelectiveLeadSoundF2 = prefs.getBoolean("SelectiveLeadSoundF2", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF2DefaultValue));
 
+        prefLimitSpeedButton = prefs.getBoolean("prefLimitSpeedButton", getResources().getBoolean(R.bool.prefLimitSpeedButtonDefaultValue));
+        prefLimitSpeedPercent = Integer.parseInt(prefs.getString("prefLimitSpeedPercent", getResources().getString(R.string.prefLimitSpeedPercentDefaultValue)));
+        speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
 
         if (isCreate) {
             prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
@@ -1486,15 +1497,15 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     // process WiT speed report
     // update speed slider if didn't just send a speed update to WiT
-    void speedUpdateWiT(int whichThrottle, int speed) {
-        if (speed < 0)
-            speed = 0;
+    void speedUpdateWiT(int whichThrottle, int speedWiT) {
+        if (speedWiT < 0)
+            speedWiT = 0;
             if (!changeTimers[whichThrottle].delayInProg) {
-                sbs[whichThrottle].setProgress(speed);
+                sbs[whichThrottle].setProgress(speedWiT);
                 // Now update ESU MCII Knob position
                 if (IS_ESU_MCII) {
                     Log.d("Engine_Driver", "ESU_MCII: Move knob request for WiT speed report");
-                    setEsuThrottleKnobPosition(whichThrottle, speed);
+                    setEsuThrottleKnobPosition(whichThrottle, speedWiT);
                 }
             }
     }
@@ -1521,7 +1532,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         getThrottleSlider(whichThrottle).setProgress(speed);
     }
 
-    // get the current speed of the throttle
+    // get the current speed of the throttle from the slider
     int getSpeed(int whichThrottle) {
         return getThrottleSlider(whichThrottle).getProgress();
     }
@@ -1538,6 +1549,33 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         return (int) Math.round(speed * speedScale) -1;
     }
 
+//    int getLimitSpeedScaledSpeed(int whichThrottle,int speed) {
+//        // if the 'limit speed' button is on, change the scale
+//        int limitSpeedScaledSpeed = speed;
+//        if ( isLimitSpeeds[whichThrottle]) { limitSpeedScaledSpeed = (int) Math.round(speed * limitSpeedSliderScalingFactors[whichThrottle]); }
+//        return limitSpeedScaledSpeed;
+//    }
+//
+//    // take the speed and scale it UP if the 'limit speed' function is on.
+//    int setLimitSpeedScaledSlider(int whichThrottle,int speed) {
+//        // if the 'limit speed' button is on, change the scale for the slider position
+//        int limitSpeedScaledSlider = speed;
+//        if ( isLimitSpeeds[whichThrottle]) {
+//            limitSpeedScaledSlider = (int) Math.round(speed * limitSpeedSliderScalingFactors[whichThrottle]);
+//            if ( limitSpeedScaledSlider > limitSpeedMax[whichThrottle]) {
+//                limitSpeedScaledSlider = limitSpeedMax[whichThrottle];
+//            }
+//        }
+//        return limitSpeedScaledSlider;
+//    }
+//
+//    // take the position on the slider and scale it DOWN if the 'limit speed' function is on.
+//    int getLimitSpeedScaledSlider(int whichThrottle,int position) {
+//        // if the 'limit speed' button is on, change the scale of the position received from the slider
+//        int limitSpeedScaledPosition = position;
+//        if ( isLimitSpeeds[whichThrottle]) { limitSpeedScaledPosition = (int) Math.round(position / limitSpeedSliderScalingFactors[whichThrottle]); }
+//        return limitSpeedScaledPosition;
+//    }
 
     int getMaxSpeed(int whichThrottle) {
         return getThrottleSlider(whichThrottle).getMax();
@@ -1572,6 +1610,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             speed = 0;
         if (speed > MAX_SPEED_VAL_WIT)
             speed = MAX_SPEED_VAL_WIT;
+
+
+        if (prefLimitSpeedButton && isLimitSpeeds[whichThrottle] && (speed > limitSpeedMax[whichThrottle] )) {
+            speed = limitSpeedMax[whichThrottle];
+        }
+
         throttle_slider.setProgress(speed);
         return speed;
     }
@@ -1678,6 +1722,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         maxSpeedSteps[whichThrottle] = maxSpeedStep;
         esuThrottleScales[whichThrottle] = esuThrottleScale;
         setDisplayUnitScale(whichThrottle);
+
+        limitSpeedMax[whichThrottle] = Math.round(maxSpeedStep * ((float) prefLimitSpeedPercent) / 100);
     }
 
     //get max speedstep based on Preferences 
@@ -1694,6 +1740,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         maxStep = getSpeedSteps(maxSpeedSteps[whichThrottle]);
         displayUnitScales[whichThrottle] = calcDisplayUnitScale(maxStep);
         tvSpdLabs[whichThrottle].setText(calcDisplayUnitLabel(maxStep));
+
+        limitSpeedMax[whichThrottle] = Math.round(maxSpeedSteps[whichThrottle] * ((float) prefLimitSpeedPercent) / 100);
     }
 
     private double calcDisplayUnitScale(int maxSpeedStep) {
@@ -3393,6 +3441,36 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+    //listeners for the Limit Speed Button
+    protected class limit_speed_button_touch_listener implements View.OnTouchListener {
+        int whichThrottle;
+
+        protected limit_speed_button_touch_listener(int new_whichThrottle) {
+            whichThrottle = new_whichThrottle;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+            maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
+
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
+                if (isLimitSpeeds[whichThrottle]) {
+                    bLimitSpeeds[whichThrottle].setSelected(true);
+                    limitSpeedSliderScalingFactors[whichThrottle]=100/prefLimitSpeedPercent;
+                    sbs[whichThrottle].setMax( Math.round(maxThrottle / limitSpeedSliderScalingFactors[whichThrottle]));
+                } else {
+                    bLimitSpeeds[whichThrottle].setSelected(false);
+                    sbs[whichThrottle].setMax(maxThrottle);
+                }
+            }
+            speedChangeAndNotify(whichThrottle,0);
+            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+            return false;
+        }
+    }
+
     //listeners for the increase/decrease speed buttons (not the slider)
     protected class arrow_speed_button_touch_listener implements View.OnClickListener, View.OnLongClickListener, View.OnTouchListener {
         int whichThrottle;
@@ -4024,6 +4102,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         bRevs = new Button[mainapp.maxThrottlesCurrentScreen];
         sbs = new SeekBar[mainapp.maxThrottlesCurrentScreen];
 
+        bLimitSpeeds = new Button[mainapp.maxThrottlesCurrentScreen];
+        isLimitSpeeds = new boolean[mainapp.maxThrottlesCurrentScreen];
+        limitSpeedSliderScalingFactors = new float[mainapp.maxThrottlesCurrentScreen];
+
         tvGamePads = new TextView[mainapp.maxThrottlesCurrentScreen];
         tvSpdLabs = new TextView[mainapp.maxThrottlesCurrentScreen];
         tvSpdVals = new TextView[mainapp.maxThrottlesCurrentScreen];
@@ -4623,6 +4705,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         super.onDestroy();
     }
 
+//    public void onStop() {
+//        Log.d("Engine_Driver", "throttle.onStop() called");
+//        super.onStop();
+//    }
+
     private boolean callHiddenWebViewOnPause() {
         try {
             Method method = WebView.class.getMethod("onPause");
@@ -4794,6 +4881,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             if (mainapp.consists != null && mainapp.consists[throttleIndex] != null &&
                     mainapp.consists[throttleIndex].isEmpty()) {
                 maxSpeedSteps[throttleIndex] = 100;
+                limitSpeedMax[throttleIndex] = Math.round(100 * ((float) prefLimitSpeedPercent) / 100);
             }
             //get speed steps from prefs
             speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
@@ -5719,18 +5807,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     @SuppressLint("ApplySharedPref")
     public void forceRestartApp(int forcedRestartReason) {
         Log.d("Engine_Driver", "throttle.forceRestartApp() ");
-
-        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
-
-        sharedPreferences.edit().putBoolean("prefForcedRestart", false).commit();
-        sharedPreferences.edit().putInt("prefForcedRestartReason", forcedRestartReason).commit();
-
-        Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-        Runtime.getRuntime().exit(0); // really force the kill
+        mainapp.forceRestartApp(forcedRestartReason);
     }
 
     private void redrawVerticalSliders() {

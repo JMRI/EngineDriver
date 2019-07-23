@@ -695,4 +695,10 @@
     <string name="edit_consist_lights_throttle_4">Editar Consistem Luzes do acelerador 4</string>
     <string name="edit_consist_lights_throttle_5">Editar Consistem Luzes do acelerador 5</string>
     <string name="edit_consist_lights_throttle_6">Editar Consistem Luzes do acelerador 6</string>
+
+    <string name="prefLimitSpeedButtonTitle">botão Show \'Limite de velocidade\'</string>
+    <string name="prefLimitSpeedButtonSummary">Opção para mostrar um botão que limita a velocidade máxima de um loco.</string>
+    <string name="prefLimitSpeedPercentTitle">\'Limite de velocidade\' para \%</string>
+    <string name="prefLimitSpeedPercentSummary">Defina o \% do acelerador que a velocidade será limitada a.</string>
+    <string name="limitSpeedButtonLabel">limite de velocidade</string>
 </resources>

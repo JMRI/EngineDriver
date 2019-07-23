@@ -760,4 +760,10 @@
     <string name="edit_consist_lights_throttle_4">Bearbeiten Consist Lichter Drossel 4</string>
     <string name="edit_consist_lights_throttle_5">Bearbeiten Consist Lichter Drossel 5</string>
     <string name="edit_consist_lights_throttle_6">Bearbeiten Consist Lichter Drossel 6</string>
+
+    <string name="prefLimitSpeedButtonTitle">Show \'Limit Geschwindigkeit\' Taste</string>
+    <string name="prefLimitSpeedButtonSummary">Option zu zeigen, eine Schaltfläche, um die maximale Geschwindigkeit einer Lok einschränkt.</string>
+    <string name="prefLimitSpeedPercentTitle">\'Limit Geschwindigkeit\' auf \%</string>
+    <string name="prefLimitSpeedPercentSummary">Stellen Sie den \% der Drosselklappe, die die Geschwindigkeit auf diese beschränkt sind.</string>
+    <string name="limitSpeedButtonLabel">Grenzgeschwindigkeit</string>
 </resources>

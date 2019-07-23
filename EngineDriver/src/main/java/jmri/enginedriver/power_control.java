@@ -86,7 +86,7 @@ public class power_control extends Activity {
         }
     }
 
-    //Set the button text based on current power state  TODO: improve code
+    //Set the button text based on current power state  TODO: improve code 
     public void refresh_power_control_view() {
         Button b = findViewById(R.id.power_control_button);
         Drawable currentImage = power_unknown_drawable;

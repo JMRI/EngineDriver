@@ -398,7 +398,8 @@ public class select_loco extends Activity {
 
     void acquire_engine(boolean bUpdateList) {
         String roster_name = sWhichThrottle.substring(1);
-        String addr = (address_size == address_type.LONG ? "L" : "S") + engine_address;
+        String sAddr = (address_size == address_type.LONG ? "L" : "S") + engine_address;
+        String addr = sAddr;
         Loco l = new Loco(addr);
         if (!roster_name.equals("")) {
             l.setDesc(roster_name);       //use rosterName if present
@@ -417,7 +418,14 @@ public class select_loco extends Activity {
 
         //user preference set to not consist, or consisting not supported in this JMRI, so drop before adding
         if (prefs.getBoolean("drop_on_acquire_preference", false)) {
-            release_loco(whichThrottle);
+            ConLoco cl = consist.getLoco(sAddr);
+            if (cl == null) { // if the newly selected loco is different/not in the consist, release everything
+                release_loco(whichThrottle);
+            } else { // already have it so don't do anything
+                result = RESULT_OK;
+                end_this_activity();
+                return;
+            }
         }
 
         if (!consist.isActive()) {               // if this is the only loco in consist then just tell WiT and exit

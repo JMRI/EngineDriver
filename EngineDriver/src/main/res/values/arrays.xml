@@ -880,6 +880,8 @@
         <item>prefAlwaysUseDefaultFunctionLabels</item>
         <item>prefNumberOfDefaultFunctionLabels</item>
         <item>prefNumberOfDefaultFunctionLabelsForRoster</item>
+        <item>prefLimitSpeedButton</item>
+        <item>prefLimitSpeedPercent</item>
         <item>prefVolumeSpeedButtonsSpeedStep</item>
         <item>prefDisableVolumeKeys</item>
         <item>prefVolumeKeysFollowLastTouchedThrottle</item>

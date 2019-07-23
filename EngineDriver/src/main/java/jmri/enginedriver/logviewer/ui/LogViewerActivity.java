@@ -202,7 +202,7 @@ public class LogViewerActivity extends ListActivity {
     }
 
     private class LogStringAdaptor extends ArrayAdapter<String> {
-        private List<String> objects = null;
+        private List<String> objects;
 
         public LogStringAdaptor(Context context, int textviewid, List<String> objects) {
             super(context, textviewid, objects);

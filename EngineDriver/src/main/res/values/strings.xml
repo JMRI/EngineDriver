@@ -561,6 +561,15 @@
     <string name="prefLocaleSummary">Language to use. WARNING! Engine Driver will restart immediately. Direction Button labels will be reset.</string>
     <string name="prefLocaleDefaultValue" translatable="false">Default</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefLimitSpeedButtonTitle">Show \'Limit Speed\' button</string>
+    <string name="prefLimitSpeedButtonSummary">Option to show a button that restricts the maximum speed of a loco.</string>
+
+    <string name="prefLimitSpeedPercentTitle">\'Limit Speed\' to \%</string>
+    <string name="prefLimitSpeedPercentSummary">Set the \% of the throttle that the speed will be limited to.</string>
+    <string name="prefLimitSpeedPercentDefaultValue" translatable="false">50</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="limitSpeedButtonLabel">Limit Speed</string>
+
     <string name="functionButton00DefaultValue">Light</string>
     <string name="functionButton01DefaultValue">Bell</string>
     <string name="functionButton02DefaultValue">Horn</string>

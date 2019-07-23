@@ -41,8 +41,8 @@ public class throttle_big_buttons extends throttle {
     protected static final int MAX_SCREEN_THROTTLES = 1;
 
     private LinearLayout[] lThrottles;
-    private LinearLayout[] lUppers;
-    private LinearLayout[] lLowers;
+//    private LinearLayout[] lUppers;
+//    private LinearLayout[] lLowers;
     private LinearLayout[] lSpeeds;
     private ScrollView[] svFnBtns;
 
@@ -88,8 +88,8 @@ public class throttle_big_buttons extends throttle {
         lSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         svFnBtns = new ScrollView[mainapp.maxThrottlesCurrentScreen];
         vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
-        lUppers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        lLowers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+//        lUppers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+//        lLowers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             //noinspection SwitchStatementWithTooFewBranches
@@ -97,8 +97,8 @@ public class throttle_big_buttons extends throttle {
                 default:
                 case 0:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_0);
-                    lUppers[throttleIndex] = findViewById(R.id.loco_upper_0);
-                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
+//                    lUppers[throttleIndex] = findViewById(R.id.loco_upper_0);
+//                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
                     lSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
@@ -215,7 +215,7 @@ public class throttle_big_buttons extends throttle {
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the Hight of usable area
-        int keepHeight = screenHeight;  // default height
+//        int keepHeight = screenHeight;  // default height
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc

@@ -400,11 +400,11 @@ public class gamepad_test extends Activity implements OnGestureListener {
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
         //Log.d("Engine_Driver", "dgme " + event.getAction());
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
             if (!whichGamePadMode.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
                 int action;
 
-                float xAxis = 0;
+                float xAxis;
                 xAxis = event.getAxisValue(MotionEvent.AXIS_X);
                 float yAxis = event.getAxisValue(MotionEvent.AXIS_Y);
                 float xAxis2 = event.getAxisValue(MotionEvent.AXIS_Z);
@@ -478,7 +478,7 @@ public class gamepad_test extends Activity implements OnGestureListener {
                     return (true); // stop processing this key
                 }
             }
-        }
+//        }
 
         return super.dispatchGenericMotionEvent(event);
     }
