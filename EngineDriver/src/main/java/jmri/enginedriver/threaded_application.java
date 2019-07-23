@@ -23,6 +23,7 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.app.Notification;
@@ -2813,6 +2814,36 @@ public class threaded_application extends Application {
        }
         prefs.edit().putString("throttle_name_preference", newValue).commit();  //save new name to prefs
         return newValue;
+    }
+
+
+    @SuppressLint("ApplySharedPref")
+    public void forceRestartApp(int forcedRestartReason) {
+        Log.d("Engine_Driver", "threaded_application.forceRestartApp() ");
+
+        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
+        sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
+        sharedPreferences.edit().putInt("prefForcedRestartReason", forcedRestartReason).commit();
+
+//        Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+//        this.finish();
+//        Runtime.getRuntime().exit(0); // really force the kill
+
+        int delay = 500;
+        Context context = getBaseContext();
+        Intent restartIntent = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage(context.getPackageName() );
+        PendingIntent intent = PendingIntent.getActivity(
+                context, 0,
+                restartIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        manager.set(AlarmManager.RTC, System.currentTimeMillis() + delay, intent);
+        System.exit(2);
+        Runtime.getRuntime().exit(0); // really force the kill
     }
 
 }

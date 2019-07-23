@@ -749,4 +749,10 @@
     <string name="edit_consist_lights_throttle_4">Edita luces de la TM Regulador 4</string>
     <string name="edit_consist_lights_throttle_5">Edita luces de la TM Regulador 5</string>
     <string name="edit_consist_lights_throttle_6">Edita luces de la TM Regulador 6</string>
+
+    <string name="prefLimitSpeedButtonTitle">Mostrar el botón \'Límite de velocidad \'</string>
+    <string name="prefLimitSpeedButtonSummary">Opción para mostrar un botón que limita la velocidad máxima de un loco.</string>
+    <string name="prefLimitSpeedPercentTitle">\'Límite de velocidad\' a \%</string>
+    <string name="prefLimitSpeedPercentSummary">Ajuste el \% de la aceleración que la velocidad se limitará a.</string>
+    <string name="limitSpeedButtonLabel">límite de velocidad</string>
 </resources>

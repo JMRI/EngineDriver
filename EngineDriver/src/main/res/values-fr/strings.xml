@@ -774,4 +774,10 @@
     <string name="edit_consist_lights_throttle_4">Consiste Lumières d\'accélérateur Modifier 4</string>
     <string name="edit_consist_lights_throttle_5">Consiste Lumières d\'accélérateur Modifier 5</string>
     <string name="edit_consist_lights_throttle_6">Consiste Lumières d\'accélérateur Modifier 6</string>
+
+    <string name="prefLimitSpeedButtonTitle">Afficher le bouton \'Speed ​​Limit\'</string>
+    <string name="prefLimitSpeedButtonSummary">Option pour afficher un bouton qui limite la vitesse maximale d\'une loco.</string>
+    <string name="prefLimitSpeedPercentTitle">\'Speed ​​Limit\' à \%</string>
+    <string name="prefLimitSpeedPercentSummary">Réglez le \% de la manette des gaz que la vitesse sera limitée à.</string>
+    <string name="limitSpeedButtonLabel">limite de vitesse</string>
 </resources>

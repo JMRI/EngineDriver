@@ -127,6 +127,23 @@
                 android:title="@string/prefTickMarksOnSlidersTitle" >
             </CheckBoxPreference>
 
+            <CheckBoxPreference
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:defaultValue="@bool/prefLimitSpeedButtonDefaultValue"
+                android:key="prefLimitSpeedButton"
+                android:summary="@string/prefLimitSpeedButtonSummary"
+                android:title="@string/prefLimitSpeedButtonTitle">
+            </CheckBoxPreference>
+
+            <EditTextPreference
+                android:defaultValue="@string/prefLimitSpeedPercentDefaultValue"
+                android:dialogTitle="@string/prefLimitSpeedPercentTitle"
+                android:key="prefLimitSpeedPercent"
+                android:maxLength="3"
+                android:summary="@string/prefLimitSpeedPercentSummary"
+                android:title="@string/prefLimitSpeedPercentTitle" />
+
         </PreferenceScreen>
 
         <PreferenceScreen

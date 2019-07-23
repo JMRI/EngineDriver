@@ -691,4 +691,10 @@
     <string name="edit_consist_lights_throttle_4">Modifica Consiste Luci Acceleratore 4</string>
     <string name="edit_consist_lights_throttle_5">Modifica Consiste Luci Acceleratore 5</string>
     <string name="edit_consist_lights_throttle_6">Modifica Consiste Luci Acceleratore 6</string>
+
+    <string name="prefLimitSpeedButtonTitle">pulsante Show \'limite di velocità\'</string>
+    <string name="prefLimitSpeedButtonSummary">Opzione per mostrare un pulsante che limita la velocità massima di una locomotiva.</string>
+    <string name="prefLimitSpeedPercentTitle">\'Limite di velocità\' a \%</string>
+    <string name="prefLimitSpeedPercentSummary">Impostare il \% della valvola a farfalla che la velocità sarà limitata a.</string>
+    <string name="limitSpeedButtonLabel">limite di velocità</string>
 </resources>

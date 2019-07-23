@@ -74,4 +74,6 @@
 
     <bool name="prefTickMarksOnSlidersDefaultValue">true</bool>
 
+    <bool name="prefLimitSpeedButtonDefaultValue">false</bool>
+
 </resources>

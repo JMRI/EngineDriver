@@ -18,8 +18,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -450,8 +452,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
 //        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
-        sharedPreferences.edit().putInt("prefForcedRestartReason", forcedRestartReason).commit();
+//        sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
+//        sharedPreferences.edit().putInt("prefForcedRestartReason", forcedRestartReason).commit();
 
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -461,12 +463,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 saveSharedPreferencesToFile(sharedPreferences, exportedPreferencesFileName, false);
             }
         }
-        Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-        Runtime.getRuntime().exit(0); // really force the kill
+
+        mainapp.forceRestartApp(forcedRestartReason);
     }
 
     @SuppressLint("ApplySharedPref")
@@ -765,9 +763,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         enableDisablePreference("prefNumberOfDefaultFunctionLabels", enable);
         enableDisablePreference("prefNumberOfDefaultFunctionLabelsForRoster", enable);
 
-//        enable = prefThrottleScreenTypeOriginal.equals("Simple")
-//                || prefThrottleScreenTypeOriginal.equals("Vertical")
-//                || prefThrottleScreenTypeOriginal.equals("Big Left");
         enable = prefThrottleScreenTypeOriginal.equals("Default")
                 || prefThrottleScreenTypeOriginal.equals("Vertical")
                 || prefThrottleScreenTypeOriginal.equals("Vertical Left")
@@ -778,6 +773,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         enable = !prefThrottleScreenTypeOriginal.equals("Default");
         enableDisablePreference("prefTickMarksOnSliders", enable);
+
+        enable = prefThrottleScreenTypeOriginal.equals("Vertical");
+        enableDisablePreference("prefLimitSpeedButton", enable);
+        enableDisablePreference("prefLimitSpeedPercent", enable);
     }
 
 
