@@ -562,7 +562,7 @@
     <string name="prefLocaleDefaultValue" translatable="false">Default</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefLimitSpeedButtonTitle">Show \'Limit Speed\' button</string>
-    <string name="prefLimitSpeedButtonSummary">Option to show a button that restricts the maximum speed of a loco.</string>
+    <string name="prefLimitSpeedButtonSummary">Show a button that restricts the maximum speed of a loco.</string>
 
     <string name="prefLimitSpeedPercentTitle">\'Limit Speed\' to \%</string>
     <string name="prefLimitSpeedPercentSummary">Set the \% of the throttle that the speed will be limited to.</string>

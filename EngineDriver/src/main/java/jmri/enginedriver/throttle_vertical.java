@@ -149,7 +149,6 @@ public class throttle_vertical extends throttle {
 //        }
 
         // show or hide the limit speed buttons
-//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             if (!prefLimitSpeedButton) {
                 bLimitSpeeds[throttleIndex].setVisibility(View.GONE);
             } else {
