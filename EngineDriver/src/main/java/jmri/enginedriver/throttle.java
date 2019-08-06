@@ -5607,6 +5607,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
+        Log.d("Engine_Driver", "throttle: navigateToHandler:" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, requestCode);

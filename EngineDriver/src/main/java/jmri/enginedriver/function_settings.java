@@ -502,6 +502,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
+        Log.d("Engine_Driver", "function_settings: navigateToHandler:" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(function_settings.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(function_settings.this, requestCode);
