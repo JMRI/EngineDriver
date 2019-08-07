@@ -288,6 +288,20 @@
                         android:layout_weight="6"
                         android:padding="10dp">
 
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/limit_speed_0"
+                                style="?attr/ed_normal_button_style"
+                                android:layout_width="fill_parent"
+                                android:layout_marginLeft="11dp"
+                                android:layout_marginRight="7dp"
+                                android:text="@string/limitSpeedButtonLabel" />
+
+
                         <TableLayout
                             android:id="@+id/function_buttons_table_0"
                             android:layout_width="match_parent"
@@ -548,6 +562,7 @@
                             </TableRow>
 
                         </TableLayout>
+                        </LinearLayout>
                     </ScrollView>
 
 

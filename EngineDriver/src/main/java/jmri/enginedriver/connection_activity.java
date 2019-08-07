@@ -954,6 +954,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
+        Log.d("Engine_Driver", "connection_activity: navigateToHandler:" + requestCode);
         if ((requestCode == PermissionsHelper.READ_CONNECTION_LIST) &&
                 (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) &&
                 !(prefs.getString("prefRunIntro", "0").equals(threaded_application.INTRO_VERSION))) {

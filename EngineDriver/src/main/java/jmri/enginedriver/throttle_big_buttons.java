@@ -108,6 +108,28 @@ public class throttle_big_buttons extends throttle {
 
         setAllFunctionLabelsAndListeners();
 
+        limit_speed_button_touch_listener lstl;
+        Button bLimitSpeed = findViewById(R.id.limit_speed_0);
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            switch (throttleIndex) {
+                case 0:
+                    bLimitSpeed = findViewById(R.id.limit_speed_0);
+                    break;
+//                case 1:
+//                    bLimitSpeed = findViewById(R.id.limit_speed_1);
+//                    break;
+
+            }
+            bLimitSpeeds[throttleIndex] = bLimitSpeed;
+            limitSpeedSliderScalingFactors[throttleIndex] = 1;
+            lstl = new limit_speed_button_touch_listener(throttleIndex);
+            bLimitSpeeds[throttleIndex].setOnTouchListener(lstl);
+            isLimitSpeeds[throttleIndex] = false;
+            if (!prefLimitSpeedButton) {
+                bLimitSpeed.setVisibility(View.GONE);
+            }
+        }
     } // end of onCreate()
 
     @Override
@@ -290,16 +312,23 @@ public class throttle_big_buttons extends throttle {
 
     }
 
-//    @Override
-//    void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
-//        super.enable_disable_buttons(whichThrottle, forceDisable);
-//
-//        boolean newEnabledState = false;
-//        if (!forceDisable) {
-//            newEnabledState = mainapp.consists[whichThrottle].isActive();      // set false if lead loco is not assigned
-//        }
-//
-//    } // end of enable_disable_buttons
+    @Override
+    void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
+        boolean newEnabledState = false;
+        // avoid index and null crashes
+        if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
+                || bFwds[whichThrottle] == null) {
+            return;
+        }
+        if (!forceDisable) { // avoid index crash, but may simply push to next line
+            newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
+        }
+        bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
+
+        super.enable_disable_buttons(whichThrottle, forceDisable);
+
+    } // end of enable_disable_buttons
+
     // helper function to enable/disable all children for a group
     @Override
     void enable_disable_buttons_for_view(ViewGroup vg, boolean newEnabledState) {

@@ -1549,34 +1549,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         return (int) Math.round(speed * speedScale) -1;
     }
 
-//    int getLimitSpeedScaledSpeed(int whichThrottle,int speed) {
-//        // if the 'limit speed' button is on, change the scale
-//        int limitSpeedScaledSpeed = speed;
-//        if ( isLimitSpeeds[whichThrottle]) { limitSpeedScaledSpeed = (int) Math.round(speed * limitSpeedSliderScalingFactors[whichThrottle]); }
-//        return limitSpeedScaledSpeed;
-//    }
-//
-//    // take the speed and scale it UP if the 'limit speed' function is on.
-//    int setLimitSpeedScaledSlider(int whichThrottle,int speed) {
-//        // if the 'limit speed' button is on, change the scale for the slider position
-//        int limitSpeedScaledSlider = speed;
-//        if ( isLimitSpeeds[whichThrottle]) {
-//            limitSpeedScaledSlider = (int) Math.round(speed * limitSpeedSliderScalingFactors[whichThrottle]);
-//            if ( limitSpeedScaledSlider > limitSpeedMax[whichThrottle]) {
-//                limitSpeedScaledSlider = limitSpeedMax[whichThrottle];
-//            }
-//        }
-//        return limitSpeedScaledSlider;
-//    }
-//
-//    // take the position on the slider and scale it DOWN if the 'limit speed' function is on.
-//    int getLimitSpeedScaledSlider(int whichThrottle,int position) {
-//        // if the 'limit speed' button is on, change the scale of the position received from the slider
-//        int limitSpeedScaledPosition = position;
-//        if ( isLimitSpeeds[whichThrottle]) { limitSpeedScaledPosition = (int) Math.round(position / limitSpeedSliderScalingFactors[whichThrottle]); }
-//        return limitSpeedScaledPosition;
-//    }
-
     int getMaxSpeed(int whichThrottle) {
         return getThrottleSlider(whichThrottle).getMax();
     }
@@ -5635,6 +5607,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
+        Log.d("Engine_Driver", "throttle: navigateToHandler:" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, requestCode);

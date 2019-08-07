@@ -288,7 +288,7 @@
 
                             <Button
                                 android:id="@+id/limit_speed_0"
-                                style="?attr/ed_fn_button_style"
+                                style="?attr/ed_normal_button_style"
                                 android:layout_marginLeft="9dp"
                                 android:text="@string/limitSpeedButtonLabel" />
 
@@ -715,7 +715,7 @@
 
                             <Button
                                 android:id="@+id/limit_speed_1"
-                                style="?attr/ed_fn_button_style"
+                                style="?attr/ed_normal_button_style"
                                 android:layout_marginLeft="6dp"
                                 android:text="@string/limitSpeedButtonLabel" />
 

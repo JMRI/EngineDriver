@@ -236,10 +236,10 @@ public class threaded_application extends Application {
             public void serviceAdded(ServiceEvent event) {
                 //          Log.d("Engine_Driver", String.format("serviceAdded fired"));
                 //A service has been added. If no details, ask for them 
-                Log.d("Engine_Driver", String.format("serviceAdded for '%s', Type='%s'", event.getName(), event.getType()));
+                Log.d("Engine_Driver", String.format("threaded_application.serviceAdded for '%s', Type='%s'", event.getName(), event.getType()));
                 ServiceInfo si = jmdns.getServiceInfo(event.getType(), event.getName(), 0);
                 if (si == null || si.getPort() == 0) {
-                    Log.d("Engine_Driver", String.format("serviceAdded, requesting details: '%s', Type='%s'", event.getName(), event.getType()));
+                    Log.d("Engine_Driver", String.format("threaded_application.serviceAdded, requesting details: '%s', Type='%s'", event.getName(), event.getType()));
                     jmdns.requestServiceInfo(event.getType(), event.getName(), true, (long) 1000);
                 }
             }
@@ -247,11 +247,11 @@ public class threaded_application extends Application {
             public void serviceRemoved(ServiceEvent event) {
                 //Tell the UI thread to remove from the list of services available.
                 sendMsg(connection_msg_handler, message_type.SERVICE_REMOVED, event.getName()); //send the service name to be removed
-                Log.d("Engine_Driver", String.format("serviceRemoved: '%s'", event.getName()));
+                Log.d("Engine_Driver", String.format("threaded_application.serviceRemoved: '%s'", event.getName()));
             }
 
             public void serviceResolved(ServiceEvent event) {
-                //          Log.d("Engine_Driver", String.format("serviceResolved fired"));
+                //          Log.d("Engine_Driver", String.format("threaded_application.serviceResolved fired"));
                 //A service's information has been resolved. Send the port and service name to connect to that service.
                 int port = event.getInfo().getPort();
                 String host_name = event.getInfo().getName(); //
@@ -276,7 +276,7 @@ public class threaded_application extends Application {
                 if (!sent)
                     service_message.recycle();
 
-                Log.d("Engine_Driver", String.format("serviceResolved - %s(%s):%d -- %s", host_name, ip_address, port, event.toString().replace(System.getProperty("line.separator"), " ")));
+                Log.d("Engine_Driver", String.format("threaded_application.serviceResolved - %s(%s):%d -- %s", host_name, ip_address, port, event.toString().replace(System.getProperty("line.separator"), " ")));
 
             }
         }
@@ -293,12 +293,12 @@ public class threaded_application extends Application {
                         multicast_lock.setReferenceCounted(true);
                     }
 
-                    Log.d("Engine_Driver", "start_jmdns: local IP addr " + client_address);
+                    Log.d("Engine_Driver", "threaded_application.start_jmdns: local IP addr " + client_address);
 
                     jmdns = JmDNS.create(client_address_inet4, client_address);  //pass ip as name to avoid hostname lookup attempt
 
                     listener = new withrottle_listener();
-                    Log.d("Engine_Driver", "start_jmdns: listener created");
+                    Log.d("Engine_Driver", "threaded_application.start_jmdns: listener created");
 
                 } else {
 //                    show_toast_message("No local IP Address found.\nCheck your WiFi connection.", Toast.LENGTH_SHORT);
@@ -317,18 +317,18 @@ public class threaded_application extends Application {
                 @Override
                 public void run() {
                     try {
-                        Log.d("Engine_Driver", "removing jmdns listener");
+                        Log.d("Engine_Driver", "threaded_application.end_jmdns: removing jmdns listener");
                         jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
                         multicast_lock.release();
                     } catch (Exception e) {
-                        Log.d("Engine_Driver", "exception in jmdns.removeServiceListener()");
+                        Log.d("Engine_Driver", "threaded_application.end_jmdns: exception in jmdns.removeServiceListener()");
                     }
                     try {
-                        Log.d("Engine_Driver", "calling jmdns.close()");
+                        Log.d("Engine_Driver", "threaded_application.end_jmdns: calling jmdns.close()");
                         jmdns.close();
-                        Log.d("Engine_Driver", "after jmdns.close()");
+                        Log.d("Engine_Driver", "threaded_application.end_jmdns: after jmdns.close()");
                     } catch (Exception e) {
-                        Log.d("Engine_Driver", "exception in jmdns.close()");
+                        Log.d("Engine_Driver", "threaded_application.end_jmdns: exception in jmdns.close()");
                     }
                     jmdns = null;
                     endingJmdns = false;
@@ -383,7 +383,7 @@ public class threaded_application extends Application {
             if (!sent)
                 service_message.recycle();
 
-            Log.d("Engine_Driver", String.format("added DigiTrax LnWi at %s to Discovered List", server_addr));
+            Log.d("Engine_Driver", String.format("threaded_application: added DigiTrax LnWi at %s to Discovered List", server_addr));
 
         }
 
@@ -396,7 +396,7 @@ public class threaded_application extends Application {
              */
             @SuppressLint("DefaultLocale")
             public void handleMessage(Message msg) {
-//                Log.d("Engine_Driver", "comm_handler: message: " +msg.what);
+//                Log.d("Engine_Driver", "threaded_application.comm_handler: message: " +msg.what);
 
                 switch (msg.what) {
                     // note: if the Thottle is sent in arg1, it is always expected to be a int
@@ -423,15 +423,15 @@ public class threaded_application extends Application {
                                             multicast_lock.acquire();
                                         } catch (Exception e) {
                                             //log message, but keep going if this fails
-                                            Log.d("Engine_Driver", "comm_handler: multicast_lock.acquire() failed");
+                                            Log.d("Engine_Driver", "threaded_application.comm_handler: multicast_lock.acquire() failed");
                                         }
                                         jmdns.addServiceListener("_withrottle._tcp.local.", listener);
-                                        Log.d("Engine_Driver", "comm_handler: jmdns listener added");
+                                        Log.d("Engine_Driver", "threaded_application.comm_handler: jmdns listener added");
                                     } else {
-                                        Log.d("Engine_Driver", "comm_handler: jmdns not running, didn't start listener");
+                                        Log.d("Engine_Driver", "threaded_application.comm_handler: jmdns not running, didn't start listener");
                                     }
                                 } else {
-                                    Log.d("Engine_Driver", "comm_handler: jmdns already running");
+                                    Log.d("Engine_Driver", "threaded_application.comm_handler: jmdns already running");
                                 }
                             }
                         }
@@ -448,7 +448,7 @@ public class threaded_application extends Application {
                         //avoid duplicate connects, seen when user clicks address multiple times quickly
                         if (socketWiT != null && socketWiT.SocketGood()
                                 && new_host_ip.equals(host_ip) && new_port == port) {
-                            Log.d("Engine_Driver", "Duplicate CONNECT message received.");
+                            Log.d("Engine_Driver", "threaded_application: Duplicate CONNECT message received.");
                             return;
                         }
 
@@ -512,9 +512,9 @@ public class threaded_application extends Application {
 
                     //Disconnect from the WiThrottle server.
                     case message_type.DISCONNECT: {
-                        Log.d("Engine_Driver", "TA Disconnect");
+                        Log.d("Engine_Driver", "threaded_application: TA Disconnect");
                         doFinish = true;
-                        Log.d("Engine_Driver", "TA alert all activites to shutdown");
+                        Log.d("Engine_Driver", "threaded_application: TA alert all activities to shutdown");
                         alert_activities(message_type.SHUTDOWN, "");     //tell all activities to finish()
                         heart.stopHeartbeat();
                         if (phone != null) phone.disable();
@@ -697,7 +697,7 @@ public class threaded_application extends Application {
                         sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_TICK, "", msg.arg1);
                         break;
                     case message_type.IMPORT_SERVER_AUTO_AVAILABLE:
-                        Log.d("Engine_Driver", "comm_handler: message: AUTO_IMPORT_URL_AVAILABLE " +msg.what);
+                        Log.d("Engine_Driver", "threaded_application.comm_handler: message: AUTO_IMPORT_URL_AVAILABLE " +msg.what);
                         sendMsg(throttle_msg_handler, message_type.IMPORT_SERVER_AUTO_AVAILABLE,"", 0);
                         break;
                 }
@@ -705,7 +705,7 @@ public class threaded_application extends Application {
         }
 
         private void shutdown() {
-            Log.d("Engine_Driver", "TA.Shutdown");
+            Log.d("Engine_Driver", "threaded_application.Shutdown");
             end_jmdns();                        //jmdns should already be down but no harm in making call
             if (socketWiT != null) {
                 socketWiT.disconnect(true);     //stop reading from the socket
@@ -800,7 +800,7 @@ public class threaded_application extends Application {
 
         //display error msg using Toast()
         public void show_toast_message(final String msg_txt, int length) {
-            Log.d("Engine_Driver", "TA toast message: " + msg_txt);
+            Log.d("Engine_Driver", "threaded_application.show_toast_message: " + msg_txt);
             //need to do Toast() on the main thread so create a handler
             Handler h = new Handler(Looper.getMainLooper());
             h.post(new Runnable() {
@@ -834,7 +834,7 @@ public class threaded_application extends Application {
                 //handle responses from MultiThrottle function
                 case 'M': {
                     if (response_str.length() < 5) { //must be at least Mtxs9
-                        Log.d("Engine_Driver", "invalid response string: '" + response_str + "'");
+                        Log.d("Engine_Driver", "threaded_application: invalid response string: '" + response_str + "'");
                         break;
                     }
                     String sWhichThrottle = response_str.substring(1, 2);
@@ -854,13 +854,13 @@ public class threaded_application extends Application {
                         if (consistname != null) { //if found, request function keys for lead, format MTAS13<;>CL1234
                             String[] cna = splitByString(consistname, "+");
                             String cmd = String.format("M%sA%s<;>C%s", throttleIntToString(whichThrottle), addr, cvtToLAddr(cna[0]));
-                            Log.d("Engine_Driver", "rqsting fkeys for lead loco " + cvtToLAddr(cna[0]));
+                            Log.d("Engine_Driver", "threaded_application: rqsting fkeys for lead loco " + cvtToLAddr(cna[0]));
                             withrottle_send(cmd);
                         }
 
                     } else if (com2 == '-') { //"MS-L6318<;>"  loco removed from throttle
                         consists[whichThrottle].remove(addr);
-                        Log.d("Engine_Driver", "loco " + addr + " dropped from " + throttleIntToString(whichThrottle));
+                        Log.d("Engine_Driver", "threaded_application: loco " + addr + " dropped from " + throttleIntToString(whichThrottle));
 
                     } else if (com2 == 'L') { //list of function buttons
                         String lead;
@@ -879,7 +879,7 @@ public class threaded_application extends Application {
                         }
 
                     } else if (com2 == 'S') { //"MTSL4425<;>L4425" loco is in use, prompt for Steal
-                        Log.d("Engine_Driver", "rcvd MTS, request prompt for " + addr + " on " + throttleIntToString(whichThrottle));
+                        Log.d("Engine_Driver", "threaded_application: rcvd MTS, request prompt for " + addr + " on " + throttleIntToString(whichThrottle));
                         sendMsg(throttle_msg_handler, message_type.REQ_STEAL, addr, whichThrottle);
                     }
 
@@ -922,7 +922,7 @@ public class threaded_application extends Application {
                     try {
                         heartbeatInterval = Integer.parseInt(response_str.substring(1));  //set app variable
                     } catch (Exception e) {
-                        Log.d("Engine_Driver", "process response: invalid WiT hearbeat string");
+                        Log.d("Engine_Driver", "threaded_application: process response: invalid WiT hearbeat string");
                         heartbeatInterval = 0;
                     }
                     heart.startHeartbeat(heartbeatInterval);
@@ -996,7 +996,7 @@ public class threaded_application extends Application {
                             try {
                                 web_server_port = Integer.parseInt(response_str.substring(2));  //set app variable
                             } catch (Exception e) {
-                                Log.d("Engine_Driver", "process response: invalid web server port string");
+                                Log.d("Engine_Driver", "threaded_application: process response: invalid web server port string");
                             }
                             if (oldPort == web_server_port) {
                                 skipAlert = true;
@@ -1024,7 +1024,7 @@ public class threaded_application extends Application {
         //  //RF29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
         private void process_roster_function_string(String response_str, int whichThrottle) {
 
-            Log.d("Engine_Driver", "processing function labels for " + throttleIntToString(whichThrottle));
+            Log.d("Engine_Driver", "threaded_application: processing function labels for " + throttleIntToString(whichThrottle));
             String[] ta = splitByString(response_str, "]\\[");  //split into list of labels
 
             //populate a temp label array from RF command string
@@ -1058,7 +1058,7 @@ public class threaded_application extends Application {
                     try {
                         roster_entries.put(tv[0], tv[1] + "(" + tv[2] + ")"); //roster name is hashmap key, value is address(L or S), e.g.  2591(L)
                     } catch (Exception e) {
-                        Log.d("Engine_Driver", "process_roster_list caught Exception");  //ignore any bad stuff in roster entries
+                        Log.d("Engine_Driver", "threaded_application: process_roster_list caught Exception");  //ignore any bad stuff in roster entries
                     }
                 }  //end if i>0
                 i++;
@@ -1088,7 +1088,7 @@ public class threaded_application extends Application {
                 }  //end if i==0
                 i++;
             }  //end for
-            Log.d("Engine_Driver", "consist header, addr=" + consist_addr
+            Log.d("Engine_Driver", "threaded_application: consist header, addr=" + consist_addr
                     + ", name=" + consist_name + ", desc=" + consist_desc);
             //don't add empty consists to list
             if (consist_desc.length() > 0) {
@@ -1237,7 +1237,7 @@ public class threaded_application extends Application {
         //
         //send formatted msg to the socket using multithrottle format
         private void withrottle_send(String msg) {
-//            Log.d("Engine_Driver", "WiT send '" + msg + "'");
+//            Log.d("Engine_Driver", "threaded_application: WiT send '" + msg + "'");
 
             if (msg == null) {
                 Log.d("Engine_Driver", "--> null msg");
@@ -1303,7 +1303,7 @@ public class threaded_application extends Application {
                 if (socketOk) {
                     try {
                         //look for someone to answer on specified socket, and set timeout
-                        Log.d("Engine_Driver", "Opening socket, connectTimeout=" + connectTimeoutMs + " and socketTimeout=" + socketTimeoutMs);
+                        Log.d("Engine_Driver", "threaded_application: Opening socket, connectTimeout=" + connectTimeoutMs + " and socketTimeout=" + socketTimeoutMs);
                         clientSocket = new Socket();
                         InetSocketAddress sa = new InetSocketAddress(host_ip, port);
                         clientSocket.connect(sa, connectTimeoutMs);
@@ -1384,7 +1384,7 @@ public class threaded_application extends Application {
                     try {
                         clientSocket.close();
                     } catch (Exception e) {
-                        Log.d("Engine_Driver", "Error closing the Socket: " + e.getMessage());
+                        Log.d("Engine_Driver", "threaded_application: Error closing the Socket: " + e.getMessage());
                     }
                 }
             }
@@ -1406,7 +1406,7 @@ public class threaded_application extends Application {
                             socketGood = this.SocketCheck();
                         } catch (IOException e) {
                             if (socketGood) {
-                                Log.d("Engine_Driver", "WiT rcvr error.");
+                                Log.d("Engine_Driver", "threaded_application: WiT rcvr error.");
                                 socketGood = false;     //input buffer error so force reconnection on next send
                             }
                         }
@@ -1426,13 +1426,13 @@ public class threaded_application extends Application {
 //                    getWifiInfo();                  //update address in case network connection was lost
                     if (client_address == null) {
                         status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNotConnected);
-                        Log.d("Engine_Driver", "WiT send reconnection attempt.");
+                        Log.d("Engine_Driver", "threaded_application: WiT send reconnection attempt.");
                     } else if (inboundTimeout) {
                         status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse, host_ip, Integer.toString(port), heart.sGetInboundInterval());
-                        Log.d("Engine_Driver", "WiT receive reconnection attempt.");
+                        Log.d("Engine_Driver", "threaded_application: WiT receive reconnection attempt.");
                     } else {
                         status = getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect, host_ip, Integer.toString(port), client_address);
-                        Log.d("Engine_Driver", "WiT send reconnection attempt.");
+                        Log.d("Engine_Driver", "threaded_application: WiT send reconnection attempt.");
                     }
                     socketGood = false;
 
@@ -1458,12 +1458,12 @@ public class threaded_application extends Application {
 //                            getWifiInfo();          //update address in case network connection has changed
                             String status = "Connected to WiThrottle Server at " + host_ip + ":" + port;
                             sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT, status);
-                            Log.d("Engine_Driver", "WiT reconnection successful.");
+                            Log.d("Engine_Driver", "threaded_application: WiT reconnection successful.");
                             inboundTimeout = false;
                             heart.restartInboundInterval();     //socket is good so restart inbound heartbeat timer
                         }
                     } catch (Exception e) {
-                        Log.d("Engine_Driver", "WiT xmtr error.");
+                        Log.d("Engine_Driver", "threaded_application: WiT xmtr error.");
                         socketGood = false;             //output buffer error so force reconnection on next send
                     }
                 }
@@ -1659,7 +1659,7 @@ public class threaded_application extends Application {
                 if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
                     if (prefs.getBoolean("stop_on_phonecall_preference",
                             getResources().getBoolean(R.bool.prefStopOnPhonecallDefaultValue))) {
-                        Log.d("Engine_Driver", "Phone is OffHook, Stopping Trains");
+                        Log.d("Engine_Driver", "threaded_application: Phone is OffHook, Stopping Trains");
                         for (int i = 0; i < numThrottles; i++) {
                             if (consists[i].isActive()) {
                                 withrottle_send(String.format("M%sA*<;>V0", throttleIntToString(i)));
@@ -1684,10 +1684,10 @@ public class threaded_application extends Application {
             public void onOpen() {
                 displayClock = true;
                 try {
-                    Log.d("Engine_Driver", "ClockWebSocket open");
+                    Log.d("Engine_Driver", "threaded_application: ClockWebSocket open");
                     mConnection.sendTextMessage(sGetClockMemory);
                 } catch (Exception e) {
-                    Log.d("Engine_Driver", "ClockWebSocket open error: " + e.toString());
+                    Log.d("Engine_Driver", "threaded_application: ClockWebSocket open error: " + e.toString());
                 }
             }
 
@@ -1733,10 +1733,10 @@ public class threaded_application extends Application {
 
             private void connect() {
                 try {
-                    Log.d("Engine_Driver", "ClockWebSocket attempt connect");
+                    Log.d("Engine_Driver", "threaded_application: ClockWebSocket attempt connect");
                     mConnection.connect(createUri(), this);
                 } catch (Exception e) {
-                    Log.d("Engine_Driver", "ClockWebSocket connect error: " + e.toString());
+                    Log.d("Engine_Driver", "threaded_application: ClockWebSocket connect error: " + e.toString());
                 }
             }
 
@@ -1745,7 +1745,7 @@ public class threaded_application extends Application {
                 try {
                     mConnection.disconnect();
                 } catch (Exception e) {
-                    Log.d("Engine_Driver", "ClockWebSocket disconnect error: " + e.toString());
+                    Log.d("Engine_Driver", "threaded_application: ClockWebSocket disconnect error: " + e.toString());
                 }
             }
 
@@ -1827,7 +1827,7 @@ public class threaded_application extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("Engine_Driver", "TA.onCreate()");
+        Log.d("Engine_Driver", "threaded_application.onCreate()");
 
         //When starting ED after it has been killed in the bkg, the OS restarts any activities that were running.
         //Since we aren't connected at this point, we want all those activities to finish() so we do 2 things:
@@ -1947,7 +1947,7 @@ public class threaded_application extends Application {
             HashMap<String, RosterEntry> rosterTemp;
             if (rosterUrl == null || rosterUrl.equals("") || dl.cancel)
                 return;
-            Log.d("Engine_Driver", "Background loading roster from " + rosterUrl);
+            Log.d("Engine_Driver", "threaded_application: Background loading roster from " + rosterUrl);
             int rosterSize;
             try {
                 RosterLoader rl = new RosterLoader(rosterUrl);
@@ -1960,7 +1960,7 @@ public class threaded_application extends Application {
             } catch (Exception e) {
                 throw new IOException();
             }
-            Log.d("Engine_Driver", "Loaded " + rosterSize + " entries from /roster/?format=xml.");
+            Log.d("Engine_Driver", "threaded_application: Loaded " + rosterSize + " entries from /roster/?format=xml.");
         }
     }
 
@@ -1971,14 +1971,14 @@ public class threaded_application extends Application {
             String metaUrl = createUrl("json/metadata");
             if (metaUrl == null || metaUrl.equals("") || dl.cancel)
                 return;
-            Log.d("Engine_Driver", "Background loading metadata from " + metaUrl);
+            Log.d("Engine_Driver", "threaded_application: Background loading metadata from " + metaUrl);
 
             HttpClient Client = new DefaultHttpClient();
             HttpGet httpget = new HttpGet(metaUrl);
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
             String jsonResponse;
             jsonResponse = Client.execute(httpget, responseHandler);
-            Log.d("Engine_Driver", "Raw metadata retrieved: " + jsonResponse);
+            Log.d("Engine_Driver", "threaded_application: Raw metadata retrieved: " + jsonResponse);
 
             HashMap<String, String> metadataTemp = new HashMap<>();
             try {
@@ -1990,15 +1990,15 @@ public class threaded_application extends Application {
                     metadataTemp.put(metadataName, metadataValue);
                 }
             } catch (JSONException e) {
-                Log.d("Engine_Driver", "exception trying to retrieve json metadata.");
+                Log.d("Engine_Driver", "threaded_application: exception trying to retrieve json metadata.");
             } catch (Exception e) {
                 throw new IOException();
             }
             if (metadataTemp.size() == 0) {
-                Log.d("Engine_Driver", "did not retrieve any json metadata entries.");
+                Log.d("Engine_Driver", "threaded_application: did not retrieve any json metadata entries.");
             } else {
                 metadata = (HashMap<String, String>) metadataTemp.clone();  // save the metadata in global variable
-                Log.d("Engine_Driver", "Loaded " + metadata.size() + " metadata entries from json web server.");
+                Log.d("Engine_Driver", "threaded_application: Loaded " + metadata.size() + " metadata entries from json web server.");
             }
         }
     }
@@ -2018,13 +2018,13 @@ public class threaded_application extends Application {
                     if (!cancel)
                         sendMsg(comm_msg_handler, message_type.ROSTER_UPDATE);      //send message to alert other activities
                 } catch (Throwable t) {
-                    Log.d("Engine_Driver", "Data fetch failed: " + t.getMessage());
+                    Log.d("Engine_Driver", "threaded_application: Data fetch failed: " + t.getMessage());
                 }
 
                 // background load of Data completed
                 finally {
                     if (cancel)
-                        Log.d("Engine_Driver", "Data fetch cancelled");
+                        Log.d("Engine_Driver", "threaded_application: Data fetch cancelled");
                 }
             }
 
@@ -2435,7 +2435,7 @@ public class threaded_application extends Application {
             if (consists != null && consists[i] != null && consists[i].isActive()) {
                 sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
                 EStopActivated = true;
-                Log.d("Engine_Driver", "EStop sent to server for " + i);
+                Log.d("Engine_Driver", "threaded_application: EStop sent to server for " + i);
             }
         }
     }
@@ -2543,7 +2543,7 @@ public class threaded_application extends Application {
         int port = web_server_port;
         if (getServerType().equals("MRC")) {  //special case ignore any url passed-in if connected to MRC, as it does not forward
             defaultUrl = "";
-            Log.d("Engine_Driver", "ignoring web url for MRC");
+            Log.d("Engine_Driver", "threaded_application: ignoring web url for MRC");
         }
         if (port > 0) {
             if (defaultUrl.startsWith("http")) { //if url starts with http, use it as is
@@ -2821,7 +2821,7 @@ public class threaded_application extends Application {
 
     @SuppressLint("ApplySharedPref")
     public void forceRestartApp(int forcedRestartReason) {
-        Log.d("Engine_Driver", "threaded_application.forceRestartApp() ");
+        Log.d("Engine_Driver", "threaded_application: threaded_application.forceRestartApp() ");
 
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
 

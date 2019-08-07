@@ -169,6 +169,7 @@ public class LogViewerActivity extends ListActivity {
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
+        Log.d("Engine_Driver", "LogViewerActivity: navigateToHandler:" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(LogViewerActivity.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(LogViewerActivity.this, requestCode);
