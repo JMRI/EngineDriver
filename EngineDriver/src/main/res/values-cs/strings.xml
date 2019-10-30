@@ -808,6 +808,7 @@
     <string name="permissionsWriteSettingsAdditional">– Klikněte na tlačítko níže.\n– Udělit oprávnění.\n– Klikněte \'Zpět\' pro návrat sem.</string>
     <string name="permissionsWriteSettingsAdditional2">Toto ignorujte pokud nepotřebujete aby Engine Driver měnil jas.</string>
     <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver potřebuje oprávnění ACCESS_COARSE_LOCATION k načtení aktuálního SSID sítě WiFi.</string>
+    <string name="permissionsVIBRATE">Driver motor potřebuje oprávnění vibrovat poskytnout další zpětnou vazbu.</string>
     <string name="permissionsConnectToServer">Engine Driver potřebuje oprávnění STORAGE pro uložení nedávných připojení a oprávnění PHONE pro pozastavení provozu během hovoru.</string>
     <string name="permissionsGotoAppSettings">Prosím povolte tato oprávnění z nastavení aplikace.</string>
     <string name="permissionsAppSettingsButton">Nastavení aplikace</string>

@@ -105,6 +105,17 @@ public class intro_activity extends AppIntro2 {
             askForPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, slideNumber);
         }
 
+//        if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.VIBRATE )) {
+//            SliderPage sliderPage4 = new SliderPage();
+//            sliderPage4.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
+//            sliderPage4.setDescription(getApplicationContext().getResources().getString(R.string.permissionsVIBRATE));
+//            sliderPage4.setImageDrawable(R.drawable.icon_xl);
+//            sliderPage4.setBgColor(getResources().getColor(R.color.intro_background));
+//            addSlide(AppIntroFragment.newInstance(sliderPage4));
+//            slideNumber = slideNumber + 1;
+//            askForPermissions(new String[]{Manifest.permission.VIBRATE}, slideNumber);
+//        }
+
         if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.WRITE_SETTINGS)) {
             if (android.os.Build.VERSION.SDK_INT >= 23) {
                 Fragment fragment3 = new intro_write_settings();

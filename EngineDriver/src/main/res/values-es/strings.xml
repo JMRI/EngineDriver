@@ -704,6 +704,7 @@
     <string name="permissionsWriteSettingsAdditional">- Haz clic en el botón para conceder permisos.\n- Haz click \'Atrás\' para volver aquí.</string>
     <string name="permissionsWriteSettingsAdditional2">Ignora esto si no necesitas que el Engine Driver modifique el brillo de la pantalla de tu dispositivo.</string>
     <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver necesita permisos de GEOLOCALIZACION para obtener información de la conexión wifi SSID.</string>
+    <string name="permissionsVIBRATE">Controlador de motor necesita permisos vibrar para proporcionar información adicional.</string>
     <string name="permissionsConnectToServer">Engine Driver necesita permisos de ALMACENAMIENTO para almacenar conexiones recientes y permisos de TELÉFONO para pausar las operaciones durante una llamada.</string>
     <string name="permissionsGotoAppSettings">Por favor habilite estos permisos desde la configuración de la aplicación.</string>
     <string name="permissionsAppSettingsButton">Ajustes de Aplicacion</string>

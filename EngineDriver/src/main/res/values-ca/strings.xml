@@ -714,6 +714,7 @@
     <string name="permissionsWriteSettingsAdditional">- Fes clic en el botó per concedir els permisos.\n- Fes clic \'Enrera\' per torna aquí.</string>
     <string name="permissionsWriteSettingsAdditional2">Ignora-ho si no necessites que el Engine Driver modifiqui la brillantor de la pantalla del teu dispositiu.</string>
     <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver necessita permisos GEOLOCALITZACIO per obtenir informació de la connexó wifi SSID.</string>
+    <string name="permissionsVIBRATE">Controlador de motor necessita permisos vibrar per proporcionar informació addicional.</string>
     <string name="permissionsConnectToServer">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar les connexions recents i els permisos del TELÈFON per aturar les operacions en una trucada.</string>
     <string name="permissionsGotoAppSettings">Permet aquests permisos de la configuració de l\'aplicació.</string>
     <string name="permissionsAppSettingsButton">Configuració de l\'aplicació</string>

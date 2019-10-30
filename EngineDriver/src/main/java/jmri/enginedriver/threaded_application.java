@@ -45,6 +45,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.PhoneStateListener;
@@ -101,6 +103,7 @@ import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.enginedriver.util.Flashlight;
+import jmri.enginedriver.util.PermissionsHelper;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 
@@ -2848,6 +2851,24 @@ public class threaded_application extends Application {
         Runtime.getRuntime().exit(0); // really force the kill
     }
 
+    public void vibrate(int duration){
+        //we need vibrate permissions, otherwise do nothing
+        PermissionsHelper phi = PermissionsHelper.getInstance();
+        if (phi.isPermissionGranted(threaded_application.this, PermissionsHelper.VIBRATE)) {
+            try {
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                // Vibrate for 500 milliseconds
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    v.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    //deprecated in API 26
+                    v.vibrate(duration);
+                }
+            } catch (Exception ignored) {
+            }
+        }
+
+    }
 }
 
 
