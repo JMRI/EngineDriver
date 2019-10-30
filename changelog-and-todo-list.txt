@@ -467,7 +467,6 @@
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
- *   TODO: option to play sound and/or vibrate when phone disconnects.
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  * threaded_application

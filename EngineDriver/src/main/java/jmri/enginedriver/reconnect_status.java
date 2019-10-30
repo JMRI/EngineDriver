@@ -20,6 +20,8 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -127,6 +129,16 @@ public class reconnect_status extends Activity {
             }
         }
         retryFirst = false;
+
+        MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+        try {
+            mediaPlayer.start();
+        } catch (Exception e) {
+            Log.d("Engine_Driver", "Reconnect: Unable to play notification sound");
+        }
+
+        mainapp.vibrate(500);
+
     }
 
     @Override

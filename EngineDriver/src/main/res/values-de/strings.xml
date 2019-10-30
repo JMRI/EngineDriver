@@ -688,6 +688,7 @@
     <string name="permissionsReadPhoneState">Engine Driver benötigt PHONE-Berechtigungen, um Vorgänge während eines Anrufs anzuhalten.</string>
     <string name="permissionsReadFunctionSettings">Engine Driver benötigt STORAGE-Berechtigungen zum Lesen der Funktionseinstellungen.</string>
     <string name="permissionsStoreFunctionSettings">Engine Driver benötigt SPEICHER-Berechtigungen zum Speichern von Funktionseinstellungen.</string>
+    <string name="permissionsVIBRATE">Lokomotivführer muss VIBRATE Berechtigungen zusätzliches Feedback geben.</string>
     <string name="permissionsConnectToServer">Engine Driver benötigt STORAGE-Berechtigungen zum Speichern der letzten Verbindungen und PHONE-Berechtigungen, um Vorgänge während eines Anrufs anzuhalten.</string>
     <string name="permissionsGotoAppSettings">Bitte aktivieren Sie diese Berechtigungen in den App-Einstellungen.</string>
     <string name="permissionsAppSettingsButton">App Einstellungen</string>

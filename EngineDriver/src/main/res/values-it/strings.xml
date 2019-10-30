@@ -641,6 +641,7 @@
     <string name="permissionsReadPhoneState">Engine Driver ha bisogno delle autorizzazioni PHONE per mettere in pausa le operazioni durante una chiamata.</string>
     <string name="permissionsReadFunctionSettings">Engine Driver ha bisogno delle autorizzazioni di STORAGE per leggere le impostazioni della funzione.</string>
     <string name="permissionsStoreFunctionSettings">Engine Driver ha bisogno delle autorizzazioni di STORAGE per memorizzare le impostazioni delle funzioni.</string>
+    <string name="permissionsVIBRATE">Macchinista ha bisogno di autorizzazioni vibrano di fornire un feedback aggiuntivo.</string>
     <string name="permissionsConnectToServer">Engine Driver ha bisogno delle autorizzazioni di STORAGE per memorizzare le connessioni recenti e le autorizzazioni PHONE per mettere in pausa le operazioni durante una chiamata.</string>
     <string name="permissionsGotoAppSettings">Si prega di abilitare queste autorizzazioni dalle impostazioni dell\'app.</string>
     <string name="permissionsAppSettingsButton">Impostazioni dell\'app</string>

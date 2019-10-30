@@ -43,7 +43,8 @@ public class PermissionsHelper {
             WRITE_SETTINGS,
             ACCESS_COARSE_LOCATION,
             STORE_SERVER_AUTO_PREFERENCES,
-            READ_SERVER_AUTO_PREFERENCES
+            READ_SERVER_AUTO_PREFERENCES,
+            VIBRATE
     })
     public @interface RequestCodes {}
 
@@ -64,6 +65,7 @@ public class PermissionsHelper {
     public static final int STORE_SERVER_AUTO_PREFERENCES = 43;
     public static final int READ_SERVER_AUTO_PREFERENCES = 44;
     public static final int STORE_LOG_FILES = 45;
+    public static final int VIBRATE = 46;
 
     private boolean isDialogOpen = false;
     private static PermissionsHelper instance = null;
@@ -154,6 +156,8 @@ public class PermissionsHelper {
                 return context.getResources().getString(R.string.permissionsWriteSettings);
             case ACCESS_COARSE_LOCATION:
                 return context.getResources().getString(R.string.permissionsACCESS_COARSE_LOCATION);
+            case VIBRATE:
+                return context.getResources().getString(R.string.permissionsVIBRATE);
             default:
                 return "Unknown permission request: " + requestCode;
         }
@@ -219,6 +223,12 @@ public class PermissionsHelper {
                             showAppSettingsDialog(activity, requestCode);
                         }
                     }
+                    break;
+                case VIBRATE:
+                    Log.d("Engine_Driver", "Requesting VIBRATE permissions");
+                    activity.requestPermissions(new String[]{
+                                    Manifest.permission.VIBRATE},
+                            requestCode);
                     break;
             }
         } else {
@@ -347,6 +357,8 @@ public class PermissionsHelper {
                     result = Settings.System.canWrite(context);
                 }
                 return result;
+            case VIBRATE:
+                return ContextCompat.checkSelfPermission(context, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED;
             default:
                 return false;
         }
