@@ -137,7 +137,7 @@ public class reconnect_status extends Activity {
             Log.d("Engine_Driver", "Reconnect: Unable to play notification sound");
         }
 
-        mainapp.vibrate(500);
+        mainapp.vibrate(new long[]{1000, 500, 1000, 500, 1000, 500});
 
     }
 

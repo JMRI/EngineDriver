@@ -2869,6 +2869,26 @@ public class threaded_application extends Application {
         }
 
     }
+
+
+    public void vibrate(long[] pattern ){
+        //we need vibrate permissions, otherwise do nothing
+        PermissionsHelper phi = PermissionsHelper.getInstance();
+        if (phi.isPermissionGranted(threaded_application.this, PermissionsHelper.VIBRATE)) {
+            try {
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                // Vibrate for 500 milliseconds
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    v.vibrate(VibrationEffect.createWaveform(pattern, -1));
+                } else {
+                    //deprecated in API 26
+                    v.vibrate(pattern, -1);
+                }
+            } catch (Exception ignored) {
+            }
+        }
+
+    }
 }
 
 
