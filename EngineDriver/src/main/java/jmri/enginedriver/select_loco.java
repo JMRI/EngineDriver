@@ -149,6 +149,7 @@ public class select_loco extends Activity {
 
     boolean prefRosterRecentLocoNames = true;
     boolean removingEngine = false; //flag used to indicate that the selected loco is being removed and not to save it.
+    boolean removingConsist = false; //flag used to indicate that the selected consist is being removed and not to save it.
     ListView engine_list_view;
 
     // populate the on-screen roster view from global hashmap
@@ -617,44 +618,48 @@ public class select_loco extends Activity {
         ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<Integer>();
         ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<Integer>();
         ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<Integer>();
+        boolean haveConsist = false;
 
         //if not updating list or no SD Card present then nothing else to do
         if (!bUpdateList || !android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
             return;
 
-        Consist consist = mainapp.consists[whichThrottle];
-        int consistSize = consist.size();
-        Collection<ConLoco> conLocos = consist.getLocos();
+        if (!removingConsist) {
+            Consist consist = mainapp.consists[whichThrottle];
+//        int consistSize = consist.size();
+            Collection<ConLoco> conLocos = consist.getLocos();
 
-        for (ConLoco l : conLocos) {
-            tempConsistEngineAddressList_inner.add(l.getIntAddress());
-            tempConsistAddressSizeList_inner.add(l.getIntAddressLength());
-            String addr =(l.getIntAddressLength()==0 ? "S":"L")+l.getIntAddress().toString();
-            tempConsistDirectionList_inner.add( (consist.isBackward(addr) ? 1:0) );
-        }
+            for (ConLoco l : conLocos) {
+                tempConsistEngineAddressList_inner.add(l.getIntAddress());
+                tempConsistAddressSizeList_inner.add(l.getIntAddressLength());
+                String addr = (l.getIntAddressLength() == 0 ? "S" : "L") + l.getIntAddress().toString();
+                tempConsistDirectionList_inner.add((consist.isBackward(addr) ? 1 : 0));
+            }
 
-        // check if we already have it
-        boolean haveConsist = false;
-        for (int i = 0; i < consistEngineAddressList.size(); i++) {
-            if (consistEngineAddressList.get(i).size() == tempConsistEngineAddressList_inner.size()) {  // if the lists are different sizes don't bother
-                boolean isSame = true;
-                for (int j = 0; j < consistEngineAddressList.get(i).size() && isSame; j++) {
-                    if ( (!consistEngineAddressList.get(i).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
-                    || (!consistDirectionList.get(i).get(j).equals(tempConsistDirectionList_inner.get(j))) ) {
-                        isSame = false;
+            // check if we already have it
+            for (int i = 0; i < consistEngineAddressList.size(); i++) {
+                if (consistEngineAddressList.get(i).size() == tempConsistEngineAddressList_inner.size()) {  // if the lists are different sizes don't bother
+                    boolean isSame = true;
+                    for (int j = 0; j < consistEngineAddressList.get(i).size() && isSame; j++) {
+                        if ((!consistEngineAddressList.get(i).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
+                                || (!consistDirectionList.get(i).get(j).equals(tempConsistDirectionList_inner.get(j)))) {
+                            isSame = false;
+                        }
                     }
-                }
-                if (isSame) {
-                    haveConsist = true;
+                    if (isSame) {
+                        haveConsist = true;
+                    }
                 }
             }
         }
 
-        if (!haveConsist) {  // we don't have the consist already
+        if (!haveConsist) {  // we don't have the consist already, or ar removing
 
-            consistEngineAddressList.add(0, tempConsistEngineAddressList_inner);
-            consistAddressSizeList.add(0, tempConsistAddressSizeList_inner);
-            consistDirectionList.add(0, tempConsistDirectionList_inner);
+            if (!removingConsist) {
+                consistEngineAddressList.add(0, tempConsistEngineAddressList_inner);
+                consistAddressSizeList.add(0, tempConsistAddressSizeList_inner);
+                consistDirectionList.add(0, tempConsistDirectionList_inner);
+            }
 
             // Save the consist list to the recent_consist_list.txt file
             File sdcard_path = Environment.getExternalStorageDirectory();
@@ -988,7 +993,7 @@ public class select_loco extends Activity {
         consists_list_view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
-                return onLongRecentListItemClick(v, pos, id);
+                return onLongRecentConsistsListItemClick(v, pos, id);
             }
         });
         loadRecentConsistsList();
@@ -1331,10 +1336,22 @@ public class select_loco extends Activity {
         recent_engine_list.remove(position);
         removingEngine = true;
         updateRecentEngines(true);
-//        updateRecentConsists(true);
         engine_list_view.invalidateViews();
         return true;
 }
+
+    // long click for the recent consists list items.  Clears the entry from the list
+    protected boolean onLongRecentConsistsListItemClick(View v, int position, long id) {
+        recent_consists_list.remove(position);
+        consistEngineAddressList.remove(position);
+        consistAddressSizeList.remove(position);
+        consistDirectionList.remove(position);
+
+        removingConsist = true;
+        updateRecentConsists(true);
+        consists_list_view.invalidateViews();
+        return true;
+    }
 
 public class RosterSimpleAdapter extends SimpleAdapter {
     private Context cont;
