@@ -602,13 +602,13 @@ public class select_loco extends Activity {
         int splitPos = splitLine.indexOf(':');
         if (splitPos!=-1) {
             Integer addr = Integer.decode(splitLine.substring(0, splitPos));
-            Integer len = Integer.decode(splitLine.substring(splitPos + 1, splitPos + 2));
+            Integer size = Integer.decode(splitLine.substring(splitPos + 1, splitPos + 2));
             Integer dir = Integer.decode(splitLine.substring(splitPos + 2, splitPos + 3));
             tempConsistEngineAddressList_inner.add(addr);
-            tempConsistAddressSizeList_inner.add(len);
+            tempConsistAddressSizeList_inner.add(size);
             tempConsistDirectionList_inner.add(dir);
-//            rslt = addr.toString()+"("+ (len==0 ? "S":"L") +")"+ (dir==0 ? "f":"r") + " ";
-            rslt = addr.toString() + " " + (dir==0 ? "F>":"<R") + " ";
+            rslt = addr.toString()+"("+ (size==0 ? "S":"L") +")"+ (dir==0 ? "↑":"↓") + " ";
+//            rslt = addr.toString() + " " + (dir==0 ? "F>":"<R") + " ";
         }
         return rslt;
     }
@@ -735,7 +735,7 @@ public class select_loco extends Activity {
     }
 
     public class consist_item implements AdapterView.OnItemClickListener {
-        // When an item is clicked, acquire that engine.
+        // When an item is clicked, acquire that consist.
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
             Integer addr = 0;
@@ -746,11 +746,13 @@ public class select_loco extends Activity {
 
             for (int i = 0; i < consistEngineAddressList.get(position).size(); i++) {
                 addr = consistEngineAddressList.get(position).get(i);
-                size = consistEngineAddressList.get(position).get(i);
+                size = consistAddressSizeList.get(position).get(i);
                 dir = consistDirectionList.get(position).get(i);
 
-                sAddr = (size==0 ? "S":"L") + addr.toString();
+                sAddr = (size==0 ? "S":"L") + addr.toString();  // convert 0/1 to S/L
                 consist.add(sAddr);
+                Log.d("Engine_Driver", "select_loco Acquiring Consist. loco: " + addr.toString()+"("+ (size==0 ? "S":"L") +")"+ (dir==0 ? "↑":"↓"));
+
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
 
                 if (dir==1) {

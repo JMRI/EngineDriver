@@ -781,4 +781,6 @@
     <string name="prefLimitSpeedPercentTitle">\'Speed ​​Limit\' à \%</string>
     <string name="prefLimitSpeedPercentSummary">Réglez le \% de la manette des gaz que la vitesse sera limitée à.</string>
     <string name="limitSpeedButtonLabel">limite de vitesse</string>
+    <string name="LocoSelectMethodRecentConsist">Consiste récente</string>
+    <string name="toastSelectConsistsConfirmClear">Confirmeu que voleu eliminar tots els Recents Consisteix prement el botó \\\'Esborrar llista\\\' de nou.</string>
 </resources>

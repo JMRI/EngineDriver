@@ -861,4 +861,6 @@
     <string name="blank_page_url">file:///android_asset/blank_page-cs.html</string>
     <string name="toastThreadedAppNotWIFI">Používám %1$s síť, ne WIFI.\nZkontrolujte nastavení vaší WiFi.\n</string>
     <string name="toastThrottleImportServerAutoSucceeded">Automatický import předvoleb z Web serveru JMRI byl úspěšný.</string>
+    <string name="LocoSelectMethodRecentConsist">Nedávná Skládá</string>
+    <string name="toastSelectConsistsConfirmClear">Confirmeu que voleu eliminar tots els recents Consisteix prement el botó \\\'Esborrar llista\\\' DO NOU.</string>
 </resources>
