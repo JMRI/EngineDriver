@@ -69,6 +69,15 @@
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodRecent"
                         android:textSize="18sp" />
+
+
+                    <RadioButton
+                        android:id="@+id/select_consists_method_recent_button"
+                        style="?attr/floating_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/LocoSelectMethodRecentConsist"
+                        android:textSize="18sp" />
                 </RadioGroup>
 
             </RelativeLayout>
@@ -273,8 +282,8 @@
             android:text="@string/clearLocoList" />
 
     </RelativeLayout>
-        
-        
+
+
     <LinearLayout
         android:id="@+id/engine_list_wrapper"
         android:layout_width="fill_parent"
@@ -288,6 +297,53 @@
             android:layout_height="wrap_content" >
         </ListView>
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/consists_list_header_group"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp">
+
+        <TextView
+            android:id="@+id/recent_consists_heading"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="wrap_content"
+
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/clear_consists_list_button"
+            android:layout_toLeftOf="@+id/clear_consists_list_button"
+            android:text="@string/recent_consists"
+            tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/clear_consists_list_button"
+            style="?attr/ed_small_button_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/clearConsistsList" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/consists_list_wrapper"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/consists_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+    </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/throttle_name_header"

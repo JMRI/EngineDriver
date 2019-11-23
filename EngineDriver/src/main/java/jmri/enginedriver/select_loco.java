@@ -64,6 +64,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -86,6 +87,7 @@ public class select_loco extends Activity {
     private static final String WHICH_METHOD_ADDRESS = "1";
     private static final String WHICH_METHOD_ROSTER = "2";
     private static final String WHICH_METHOD_RECENT = "3";
+    private static final String WHICH_METHOD_CONSIST = "4";
 
     ArrayList<HashMap<String, String>> recent_engine_list;
     ArrayList<HashMap<String, String>> roster_list;
@@ -94,6 +96,19 @@ public class select_loco extends Activity {
 
     private ArrayList<Integer> engine_address_list;
     private ArrayList<Integer> address_size_list; // Look at address_type.java
+
+    // recent consists
+    ArrayList<HashMap<String, String>> recent_consists_list;
+    private RecentConsistsSimpleAdapter recent_consists_list_adapter;
+
+    private ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<ArrayList<Integer>>();
+//    private ArrayList<Integer> consistEngineAddressList_inner = new ArrayList<Integer>();
+    private ArrayList<ArrayList<Integer>> consistAddressSizeList = new ArrayList<ArrayList<Integer>>();
+//    private ArrayList<Integer> consistAddressSizeList_inner = new ArrayList<Integer>();
+    private ArrayList<ArrayList<Integer>> consistDirectionList = new ArrayList<ArrayList<Integer>>();
+
+    ListView consists_list_view;
+    //
 
     private int engine_address;
     private int address_size;
@@ -112,6 +127,7 @@ public class select_loco extends Activity {
     protected int layoutViewId = R.layout.select_loco;
 
     private int clearListCount = 0;
+    private int clearConsistsListCount = 0;
 
     private String prefRosterFilter = "";
     EditText filter_roster_text;
@@ -123,9 +139,12 @@ public class select_loco extends Activity {
     LinearLayout llRoster;
     RelativeLayout rlRecentHeader;
     LinearLayout llRecent;
+    RelativeLayout rlRecentConsistsHeader;
+    LinearLayout llRecentConsists;
     RadioButton rbAddress;
     RadioButton rbRoster;
     RadioButton rbRecent;
+    RadioButton rbRecentConsists;
     String prefSelectLocoMethod = WHICH_METHOD_FIRST;
 
     boolean prefRosterRecentLocoNames = true;
@@ -435,6 +454,7 @@ public class select_loco extends Activity {
 //            consist.setConfirmed(l.getAddress()); //this happens after response from WiTS
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, addr, whichThrottle);
             updateRecentEngines(bUpdateList);
+//            updateRecentConsists(bUpdateList);
             result = RESULT_OK;
             end_this_activity();
 
@@ -463,6 +483,7 @@ public class select_loco extends Activity {
         if (requestCode == throttle.ACTIVITY_CONSIST) {                          // edit consist
             if (newEngine) {
                 updateRecentEngines(saveUpdateList);
+                updateRecentConsists(saveUpdateList);
             }
             result = RESULT_LOCO_EDIT;                 //tell Throttle to update loco directions
         }
@@ -509,6 +530,168 @@ public class select_loco extends Activity {
         }
     }
 
+    private void loadRecentConsistsList() {
+        consistEngineAddressList = new ArrayList<>();
+        consistAddressSizeList = new ArrayList<>();
+        consistDirectionList = new ArrayList<>();
+
+        ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<Integer>();
+        ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<Integer>();
+        ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<Integer>();
+
+        //if no SD Card present then there is no recent consists list
+        if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+            //alert user that recent locos list requires SD Card
+            TextView v = findViewById(R.id.recent_consists_heading);
+            v.setText(getString(R.string.sl_recent_engine_notice));
+        } else {
+            try {
+                // Populate the list with the recent consists saved in a file
+                File sdcard_path = Environment.getExternalStorageDirectory();
+                File consist_list_file = new File(sdcard_path + "/engine_driver/recent_consist_list.txt");
+                if (consist_list_file.exists()) {
+                    BufferedReader list_reader = new BufferedReader(
+                            new FileReader(consist_list_file));
+                    while (list_reader.ready()) {
+                        StringBuilder oneConsist = new StringBuilder();
+                        String line = list_reader.readLine();
+                        tempConsistEngineAddressList_inner = new ArrayList<Integer>();
+                        tempConsistAddressSizeList_inner = new ArrayList<Integer>();
+                        tempConsistDirectionList_inner = new ArrayList<Integer>();
+
+                        int splitLoco = line.indexOf(',');
+                        if (splitLoco!=-1) {
+                            oneConsist.append(addOneConsistAddress(line, 0, splitLoco, tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner, tempConsistDirectionList_inner));
+
+                            boolean foundOne = true;
+                            while (foundOne) {
+                                Integer prevSplitLoco = splitLoco + 1;
+                                splitLoco = line.indexOf(',', prevSplitLoco);
+                                if (splitLoco != -1) {
+                                    oneConsist.append(addOneConsistAddress(line, prevSplitLoco, splitLoco, tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner, tempConsistDirectionList_inner));
+                                } else {
+                                    oneConsist.append(addOneConsistAddress(line, prevSplitLoco, line.length(), tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner, tempConsistDirectionList_inner));
+                                    foundOne = false;
+                                }
+                            }
+                            consistEngineAddressList.add(tempConsistEngineAddressList_inner);
+                            consistAddressSizeList.add(tempConsistAddressSizeList_inner);
+                            consistDirectionList.add(tempConsistDirectionList_inner);
+
+                            HashMap<String, String> hm = new HashMap<>();
+                            hm.put("consist", getLocoNameFromRoster(oneConsist.toString()));
+                            hm.put("consist_name", oneConsist.toString());
+                            recent_consists_list.add(hm);
+                        }
+                    }
+                    list_reader.close();
+                    recent_consists_list_adapter.notifyDataSetChanged();
+
+                }
+
+            } catch (IOException except) {
+                Log.e("Engine_Driver", "select_loco - Error reading recent loco file. "
+                        + except.getMessage());
+
+            }
+        }
+    }
+    String addOneConsistAddress(String line, Integer start, Integer end, ArrayList<Integer> tempConsistEngineAddressList_inner, ArrayList<Integer> tempConsistAddressSizeList_inner, ArrayList<Integer> tempConsistDirectionList_inner) {
+        String rslt = "";
+        String splitLine = line.substring(start, end);
+        int splitPos = splitLine.indexOf(':');
+        if (splitPos!=-1) {
+            Integer addr = Integer.decode(splitLine.substring(0, splitPos));
+            Integer len = Integer.decode(splitLine.substring(splitPos + 1, splitPos + 2));
+            Integer dir = Integer.decode(splitLine.substring(splitPos + 2, splitPos + 3));
+            tempConsistEngineAddressList_inner.add(addr);
+            tempConsistAddressSizeList_inner.add(len);
+            tempConsistDirectionList_inner.add(dir);
+//            rslt = addr.toString()+"("+ (len==0 ? "S":"L") +")"+ (dir==0 ? "f":"r") + " ";
+            rslt = addr.toString() + " " + (dir==0 ? "F>":"<R") + " ";
+        }
+        return rslt;
+    }
+
+    void updateRecentConsists(boolean bUpdateList) {
+        ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<Integer>();
+        ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<Integer>();
+        ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<Integer>();
+
+        //if not updating list or no SD Card present then nothing else to do
+        if (!bUpdateList || !android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
+            return;
+
+        Consist consist = mainapp.consists[whichThrottle];
+        int consistSize = consist.size();
+        Collection<ConLoco> conLocos = consist.getLocos();
+
+        for (ConLoco l : conLocos) {
+            tempConsistEngineAddressList_inner.add(l.getIntAddress());
+            tempConsistAddressSizeList_inner.add(l.getIntAddressLength());
+            String addr =(l.getIntAddressLength()==0 ? "S":"L")+l.getIntAddress().toString();
+            tempConsistDirectionList_inner.add( (consist.isBackward(addr) ? 1:0) );
+        }
+
+        // check if we already have it
+        boolean haveConsist = false;
+        for (int i = 0; i < consistEngineAddressList.size(); i++) {
+            if (consistEngineAddressList.get(i).size() == tempConsistEngineAddressList_inner.size()) {  // if the lists are different sizes don't bother
+                boolean isSame = true;
+                for (int j = 0; j < consistEngineAddressList.get(i).size() && isSame; j++) {
+                    if ( (!consistEngineAddressList.get(i).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
+                    || (!consistDirectionList.get(i).get(j).equals(tempConsistDirectionList_inner.get(j))) ) {
+                        isSame = false;
+                    }
+                }
+                if (isSame) {
+                    haveConsist = true;
+                }
+            }
+        }
+
+        if (!haveConsist) {  // we don't have the consist already
+
+            consistEngineAddressList.add(0, tempConsistEngineAddressList_inner);
+            consistAddressSizeList.add(0, tempConsistAddressSizeList_inner);
+            consistDirectionList.add(0, tempConsistDirectionList_inner);
+
+            // Save the consist list to the recent_consist_list.txt file
+            File sdcard_path = Environment.getExternalStorageDirectory();
+            File connections_list_file = new File(sdcard_path,
+                    "engine_driver/recent_consist_list.txt");
+            PrintWriter list_output;
+            String smrl = prefs.getString("maximum_recent_locos_preference", ""); //retrieve pref for max recent locos to show
+            try {
+                int mrl = 10; //default to 10 if pref is blank or invalid
+                try {
+                    mrl = Integer.parseInt(smrl);
+                } catch (NumberFormatException ignored) {
+                }
+                list_output = new PrintWriter(connections_list_file);
+                if (mrl > 0) {
+                    mrl--;
+
+                    for (int i = 0; i < consistEngineAddressList.size() && mrl > 0; i++) {
+                        list_output.format("%d:%d%d", consistEngineAddressList.get(i).get(0), consistAddressSizeList.get(i).get(0), consistDirectionList.get(i).get(0));
+                        for (int j = 1; j < consistAddressSizeList.get(i).size(); j++) {
+                            list_output.format(",%d:%d%d", consistEngineAddressList.get(i).get(j), consistAddressSizeList.get(i).get(j), consistDirectionList.get(i).get(j));
+                        }
+                        list_output.format("\n");
+                        mrl--;
+                    }
+                }
+                list_output.flush();
+                list_output.close();
+            } catch (IOException except) {
+                Log.e("Engine_Driver",
+                        "select_loco - Error creating a PrintWriter, IOException: "
+                                + except.getMessage());
+            }
+        }
+    }
+
+
     public class button_listener implements View.OnClickListener {
         public void onClick(View v) {
             EditText entry = findViewById(R.id.loco_address);
@@ -551,6 +734,37 @@ public class select_loco extends Activity {
         }
     }
 
+    public class consist_item implements AdapterView.OnItemClickListener {
+        // When an item is clicked, acquire that engine.
+        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+            Integer addr = 0;
+            String sAddr ="";
+            Integer size = 0;
+            Integer dir = 0;
+            Consist consist = mainapp.consists[whichThrottle];
+
+            for (int i = 0; i < consistEngineAddressList.get(position).size(); i++) {
+                addr = consistEngineAddressList.get(position).get(i);
+                size = consistEngineAddressList.get(position).get(i);
+                dir = consistDirectionList.get(position).get(i);
+
+                sAddr = (size==0 ? "S":"L") + addr.toString();
+                consist.add(sAddr);
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
+
+                if (dir==1) {
+                    consist = mainapp.consists[whichThrottle];
+                    consist.setBackward(sAddr, true);
+                }
+
+            }
+
+            result = RESULT_OK;
+            end_this_activity();
+        }
+    }
+
     //Jeffrey M added 7/3/2013
     //Clears recent connection list of locos when button is touched or clicked
     public class clear_Loco_List_button implements AdapterView.OnClickListener {
@@ -561,6 +775,19 @@ public class select_loco extends Activity {
             } else { // only clear the list if the button is clicked a second time
                 clearList();
                 clearListCount = 0;
+            }
+            onCreate(null);
+        }
+    }
+
+    public class clear_consists_list_button implements AdapterView.OnClickListener {
+        public void onClick(View v) {
+            clearConsistsListCount++;
+            if (clearConsistsListCount <= 1) {
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSelectLocoConfirmClear), Toast.LENGTH_LONG).show();
+            } else { // only clear the list if the button is clicked a second time
+                clearConsistsList();
+                clearConsistsListCount = 0;
             }
             onCreate(null);
         }
@@ -746,6 +973,26 @@ public class select_loco extends Activity {
             }
         }
 
+        // Set up a list adapter to allow adding the list of recent consists to
+        // the UI.
+        recent_consists_list = new ArrayList<>();
+        recent_consists_list_adapter = new RecentConsistsSimpleAdapter(this, recent_consists_list,
+                R.layout.consists_list_item, new String[]{"consist"},
+                new int[]{R.id.consist_item_label});
+//                new int[]{R.id.engine_item_label, R.id.engine_icon_image});
+        consists_list_view = findViewById(R.id.consists_list);
+        consists_list_view.setAdapter(recent_consists_list_adapter);
+        consists_list_view.setOnItemClickListener(new consist_item());
+        consists_list_view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
+                return onLongRecentListItemClick(v, pos, id);
+            }
+        });
+        loadRecentConsistsList();
+
+
+
         // Set the button callbacks.
         Button button = findViewById(R.id.acquire);
         button_listener click_listener = new button_listener();
@@ -754,6 +1001,10 @@ public class select_loco extends Activity {
         //Jeffrey added 7/3/2013
         button = findViewById(R.id.clear_Loco_List_button);
         button.setOnClickListener(new clear_Loco_List_button());
+
+        button = findViewById(R.id.clear_consists_list_button);
+        button.setOnClickListener(new clear_consists_list_button());
+
 
         filter_roster_text = findViewById(R.id.filter_roster_text);
         filter_roster_text.setText(prefRosterFilter);
@@ -819,6 +1070,7 @@ public class select_loco extends Activity {
         rbAddress = findViewById(R.id.select_loco_method_address_button);
         rbRoster = findViewById(R.id.select_loco_method_roster_button);
         rbRecent = findViewById(R.id.select_loco_method_recent_button);
+        rbRecentConsists = findViewById(R.id.select_consists_method_recent_button);
 
         prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", WHICH_METHOD_FIRST);
 
@@ -829,6 +1081,8 @@ public class select_loco extends Activity {
         llRoster = findViewById(R.id.roster_list_group);
         rlRecentHeader = findViewById(R.id.engine_list_header_group);
         llRecent = findViewById(R.id.engine_list_wrapper);
+        rlRecentConsistsHeader = findViewById(R.id.consists_list_header_group);
+        llRecentConsists = findViewById(R.id.consists_list_wrapper);
         showMethod(prefSelectLocoMethod);
 
         RadioGroup rgLocoSelect = findViewById(R.id.select_loco_method_address_button_radio_group);
@@ -845,6 +1099,9 @@ public class select_loco extends Activity {
                         break;
                     case R.id.select_loco_method_address_button:
                         showMethod(WHICH_METHOD_ADDRESS);
+                        break;
+                    case R.id.select_consists_method_recent_button:
+                        showMethod(WHICH_METHOD_CONSIST);
                         break;
                 }
             }
@@ -865,10 +1122,13 @@ public class select_loco extends Activity {
                 rlRosterEmpty.setVisibility(View.GONE);
                 rlRecentHeader.setVisibility(View.GONE);
                 llRecent.setVisibility(View.GONE);
+                rlRecentConsistsHeader.setVisibility(View.GONE);
+                llRecentConsists.setVisibility(View.GONE);
 
                 rbAddress.setChecked(true);
                 rbRoster.setChecked(false);
                 rbRecent.setChecked(false);
+                rbRecentConsists.setChecked(false);
                 break;
             }
             case WHICH_METHOD_ROSTER: {
@@ -879,10 +1139,13 @@ public class select_loco extends Activity {
                 rlRosterEmpty.setVisibility(View.VISIBLE);
                 rlRecentHeader.setVisibility(View.GONE);
                 llRecent.setVisibility(View.GONE);
+                rlRecentConsistsHeader.setVisibility(View.GONE);
+                llRecentConsists.setVisibility(View.GONE);
 
                 rbAddress.setChecked(false);
                 rbRoster.setChecked(true);
                 rbRecent.setChecked(false);
+                rbRecentConsists.setChecked(false);
                 break;
             }
             case WHICH_METHOD_RECENT: {
@@ -893,10 +1156,30 @@ public class select_loco extends Activity {
                 rlRosterEmpty.setVisibility(View.GONE);
                 rlRecentHeader.setVisibility(View.VISIBLE);
                 llRecent.setVisibility(View.VISIBLE);
+                rlRecentConsistsHeader.setVisibility(View.GONE);
+                llRecentConsists.setVisibility(View.GONE);
 
                 rbAddress.setChecked(false);
                 rbRoster.setChecked(false);
                 rbRecent.setChecked(true);
+                rbRecentConsists.setChecked(false);
+                break;
+            }
+            case WHICH_METHOD_CONSIST: {
+                rlAddress.setVisibility(View.GONE);
+                rlAddressHelp.setVisibility(View.GONE);
+                rlRosterHeader.setVisibility(View.GONE);
+                llRoster.setVisibility(View.GONE);
+                rlRosterEmpty.setVisibility(View.GONE);
+                rlRecentHeader.setVisibility(View.GONE);
+                llRecent.setVisibility(View.GONE);
+                rlRecentConsistsHeader.setVisibility(View.VISIBLE);
+                llRecentConsists.setVisibility(View.VISIBLE);
+
+                rbAddress.setChecked(false);
+                rbRoster.setChecked(false);
+                rbRecent.setChecked(false);
+                rbRecentConsists.setChecked(true);
             }
         }
         prefs.edit().putString("prefSelectLocoMethod", whichMethod).commit();
@@ -913,6 +1196,20 @@ public class select_loco extends Activity {
             //noinspection ResultOfMethodCallIgnored
             engine_list_file.delete();
             recent_engine_list.clear();
+        }
+    }
+
+    public void clearConsistsList() {
+        File sdcard_path = Environment.getExternalStorageDirectory();
+        File consists_list_file = new File(sdcard_path + "/engine_driver/recent_consist_list.txt");
+
+        if (consists_list_file.exists()) {
+            //noinspection ResultOfMethodCallIgnored
+            consists_list_file.delete();
+            recent_consists_list.clear();
+            consistEngineAddressList.clear();
+            consistAddressSizeList.clear();
+            consistDirectionList.clear();
         }
     }
 
@@ -1032,6 +1329,7 @@ public class select_loco extends Activity {
         recent_engine_list.remove(position);
         removingEngine = true;
         updateRecentEngines(true);
+//        updateRecentConsists(true);
         engine_list_view.invalidateViews();
         return true;
 }
@@ -1131,6 +1429,46 @@ public class RecentSimpleAdapter extends SimpleAdapter {
     }
 
 }
+
+    public class RecentConsistsSimpleAdapter extends SimpleAdapter {
+        private Context cont;
+
+        public RecentConsistsSimpleAdapter(Context context,
+                                   List<? extends Map<String, ?>> data, int resource,
+                                   String[] from, int[] to) {
+            super(context, data, resource, from, to);
+            cont = context;
+        }
+
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (position > recent_consists_list.size())
+                return convertView;
+
+            HashMap<String, String> hm = recent_consists_list.get(position);
+            if (hm == null)
+                return convertView;
+
+            LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.consists_list_item, null, false);
+
+            String str = hm.get("consist_name");
+            if (str != null) {
+                TextView name = view.findViewById(R.id.consist_name_label);
+                name.setText(str);
+            }
+
+            str = hm.get("consist");
+            if (str != null) {
+                TextView secondLine = view.findViewById(R.id.consist_item_label);
+                secondLine.setText(str);
+            }
+
+
+            return view;
+        }
+
+    }
 
     @Override
     protected void attachBaseContext(Context base) {

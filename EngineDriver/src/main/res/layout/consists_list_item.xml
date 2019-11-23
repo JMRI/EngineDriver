@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/consist_name_label"
+        style="?attr/list_id_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TestAddress"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/consist_item_label"
+        style="?attr/list_item_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="12dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:ignore="RelativeOverlap" />
+</RelativeLayout>
