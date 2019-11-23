@@ -760,4 +760,6 @@
     <string name="edit_consist_lights_throttle_4">Edita llums de la TM Regulador 4</string>
     <string name="edit_consist_lights_throttle_5">Edita llums de la TM Regulador 5</string>
     <string name="edit_consist_lights_throttle_6">Edita llums de la TM Regulador 6</string>
+    <string name="LocoSelectMethodRecentConsist">Recents Consisteixen</string>
+    <string name="toastSelectConsistsConfirmClear">Confirmeu que voleu eliminar tots els recents Consisteix prement el botó \\\'Esborrar llista\\\' DE NOU.</string>
 </resources>

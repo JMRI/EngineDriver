@@ -756,4 +756,5 @@
     <string name="prefLimitSpeedPercentTitle">\'Límite de velocidad\' a \%</string>
     <string name="prefLimitSpeedPercentSummary">Ajuste el \% de la aceleración que la velocidad se limitará a.</string>
     <string name="limitSpeedButtonLabel">límite de velocidad</string>
+    <string name="toastSelectConsistsConfirmClear">Confirmeu que voleu eliminar tots els recents Consisteix prement el botó \\\'Esborrar llista\\\' DE NOU.</string>
 </resources>

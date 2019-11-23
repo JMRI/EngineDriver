@@ -767,4 +767,6 @@
     <string name="prefLimitSpeedPercentTitle">\'Limit Geschwindigkeit\' auf \%</string>
     <string name="prefLimitSpeedPercentSummary">Stellen Sie den \% der Drosselklappe, die die Geschwindigkeit auf diese beschränkt sind.</string>
     <string name="limitSpeedButtonLabel">Grenzgeschwindigkeit</string>
+    <string name="LocoSelectMethodRecentConsist">Aktuelle Consist</string>
+    <string name="toastSelectConsistsConfirmClear">Bestätigen Sie, dass Sie alle Besteht das Letzte wollen entfernen, indem die ‚Liste löschen‘ Taste erneut drücken.</string>
 </resources>
