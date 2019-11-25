@@ -716,7 +716,8 @@
                             <Button
                                 android:id="@+id/limit_speed_1"
                                 style="?attr/ed_normal_button_style"
-                                android:layout_marginLeft="6dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginRight="8dp"
                                 android:text="@string/limitSpeedButtonLabel" />
 
                             <TableLayout
