@@ -86,6 +86,17 @@ public class Loco {
         return this.addr;
     }
 
+    public Integer getIntAddress() {
+        return Integer.parseInt(this.addr.substring(1));
+    }
+
+    public Integer getIntAddressLength() {
+        String s = this.addr.substring(0,1);
+        Integer rslt = 0;
+        if (s.equals("L")) { rslt=1;}
+        return rslt;
+    }
+
     public String getFormatAddress() {
         return this.formatAddr;
     }

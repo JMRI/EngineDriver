@@ -698,4 +698,6 @@
     <string name="prefLimitSpeedPercentTitle">\'Limite di velocità\' a \%</string>
     <string name="prefLimitSpeedPercentSummary">Impostare il \% della valvola a farfalla che la velocità sarà limitata a.</string>
     <string name="limitSpeedButtonLabel">limite di velocità</string>
+    <string name="LocoSelectMethodRecentConsist">recenti Consistono</string>
+    <string name="toastSelectConsistsConfirmClear">Confermare che si desidera rimuovere tutti i recenti Consiste premendo nuovamente il tasto \\\'Cancella elenco\\\'.</string>
 </resources>

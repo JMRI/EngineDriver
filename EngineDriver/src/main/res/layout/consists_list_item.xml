@@ -4,17 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" >
 
-    <ImageView
-        android:id="@+id/engine_icon_image"
-        android:layout_width="200dp"
-        android:layout_height="54dp"
-        android:layout_alignParentRight="true"
-        android:contentDescription="roster icon"
-        tools:ignore="HardcodedText,RtlHardcoded">
-    </ImageView>
-
     <TextView
-        android:id="@+id/engine_name_label"
+        android:id="@+id/consist_name_label"
         style="?attr/list_id_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,7 +14,7 @@
         tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/engine_item_label"
+        android:id="@+id/consist_item_label"
         style="?attr/list_item_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

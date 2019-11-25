@@ -56,6 +56,7 @@
     <string name="acquire_button">Acquire</string>
     <string name="roster_list">Select from Roster/Consist Entries</string>
     <string name="recent_engines">Select from Recent Locomotives</string>
+    <string name="recent_consists">Select from Recent Consists</string>
     <string name="direction">Fwd</string>
     <string name="speed">Speed:</string>
     <string name="discovered_services">Discovered Servers</string>
@@ -359,6 +360,7 @@
     <string name="LocoSelectMethodAddress">DCC Address</string>
     <string name="LocoSelectMethodRoster">JMRI Roster</string>
     <string name="LocoSelectMethodRecent">Recent</string>
+    <string name="LocoSelectMethodRecentConsist">Recent Consist</string>
     <string name="LocoSelectMethodHelp">Enter the DCC Address of your loco above and click \'Acquire\'.\n\nAlternately, select a loco from the JMRI \'Roster\' or select from \'Recent\' locos by clicking one of the radio buttons above.</string>
 
     <string name="prefMaximumRecentLocosTitle">Maximum Recent Locos</string>
@@ -405,6 +407,7 @@
     <string name="logViewer">View Log</string>
     <string name="clearLocoList">Clear List</string>
     <string name="ClearConnList">Clear Recent List</string>
+    <string name="clearConsistsList">Clear Consists List</string>
     <string name="prefEmerStopTitle">Show Emergency Stop Button?</string>
     <string name="prefEmerStopSummary">Show loco emergency stop button in action bar?</string>
     <string name="EStop">Estop</string>
@@ -732,6 +735,7 @@
 
     <!--    Toast messages for the Select Loco Activity -->
     <string name="toastSelectLocoConfirmClear">Confirm that you want remove all the Recent Locomotives by pressing the \'Clear List\' button AGAIN.</string>
+    <string name="toastSelectConsistsConfirmClear">Confirm that you want remove all the Recent Consists by pressing the \'Clear List\' button AGAIN.</string>
     <string name="toastNumThrottles">Chosen Throttle Screen Type does not support that many throttles. Reducing to %1$s.</string>
 
     <!--    Toast messages for the Log Viewer Activity -->
