@@ -595,6 +595,8 @@ public class select_loco extends Activity {
         }
     }
 
+    // read the recent consists from a file
+    // and load the on screen list
     private void loadRecentConsistsList() {
         consistEngineAddressList = new ArrayList<>();
         consistAddressSizeList = new ArrayList<>();
@@ -693,6 +695,7 @@ public class select_loco extends Activity {
         return rslt;
     }
 
+    //write the recents consists to a file
     void updateRecentConsists(boolean bUpdateList) {
         ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<Integer>();
         ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<Integer>();
@@ -840,7 +843,8 @@ public class select_loco extends Activity {
                 consist.add(sAddr);
                 Log.d("Engine_Driver", "select_loco Acquiring Consist. loco: " + addr.toString()+"("+ (size==0 ? "S":"L") +")"+ (dir==0 ? "↑":"↓"));
 
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
+//                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
+                mainapp.sendMsgDelay(mainapp.comm_msg_handler, i*200, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle,0);
 
                 if (dir==1) {
                     consist = mainapp.consists[whichThrottle];
@@ -849,7 +853,7 @@ public class select_loco extends Activity {
 
             }
 
-            result = RESULT_OK;
+            result = RESULT_LOCO_EDIT;
             end_this_activity();
         }
     }

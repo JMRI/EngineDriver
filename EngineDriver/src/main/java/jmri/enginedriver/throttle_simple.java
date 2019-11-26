@@ -183,22 +183,28 @@ public class throttle_simple extends throttle {
         final int conNomTextSize = 24;
         final double minTextScale = 0.5;
         String bLabel;
+        String bLabelPlainText;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             Button b = bSels[throttleIndex];
             if (mainapp.consists[throttleIndex].isActive()) {
                 if (!prefShowAddressInsteadOfName) {
-                    bLabel = mainapp.consists[throttleIndex].toString();
+//                    bLabel = mainapp.consists[throttleIndex].toString();
+                    bLabelPlainText = mainapp.consists[throttleIndex].toString();
+                    bLabel = mainapp.consists[throttleIndex].toHtml();
                 } else {
                     bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
+                    bLabelPlainText = bLabel;
                 }
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
+                bLabelPlainText = bLabel;
                 // whichVolume = 'S'; //set the next throttle to use volume control
             }
             double textScale = 1.0;
             int bWidth = b.getWidth(); // scale text if required to fit the textView
             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-            double textWidth = b.getPaint().measureText(bLabel);
+//            double textWidth = b.getPaint().measureText(bLabel);
+            double textWidth = b.getPaint().measureText(bLabelPlainText);
             if (bWidth == 0)
                 selectLocoRendered = false;
             else {

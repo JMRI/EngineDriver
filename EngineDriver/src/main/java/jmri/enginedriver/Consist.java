@@ -271,6 +271,9 @@ import java.util.Set;
     public String toString() {
         return formatConsist();
     }
+    public String toHtml() {
+        return formatConsistHtml();
+    }
 
     private String formatConsist() {
         StringBuilder formatCon;
@@ -281,6 +284,23 @@ import java.util.Set;
                 if (l.getValue().isConfirmed()) {
                     formatCon.append(sep).append(l.getValue().toString());
                     sep = " +";
+                }
+            }
+        } else {
+            formatCon = new StringBuilder("Not Set");
+        }
+        return formatCon.toString();
+    }
+
+    private String formatConsistHtml() {
+        StringBuilder formatCon;
+        if (con.size() > 0) {
+            formatCon = new StringBuilder();
+            String sep = "";
+            for (Map.Entry<String, ConLoco> l : con.entrySet()) {        // loop through locos in consist
+                if (l.getValue().isConfirmed()) {
+                    formatCon.append(sep).append(l.getValue().toHtml());
+                    sep = "<small><small> + </small></small>";
                 }
             }
         } else {
