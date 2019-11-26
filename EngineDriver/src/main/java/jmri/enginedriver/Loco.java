@@ -27,6 +27,7 @@ import java.util.List;
 public class Loco {
     private final String addr;                  //L2531 form
     private final String formatAddr;            //2531(L) form
+    private final String formatAddrHtml;            //2531(L) form with formatting
     //TODO: eliminate stored formatted address and create on the fly?
     private String desc;                        //typically the roster name
     private String rosterName;                  //null if loco has no roster entry
@@ -54,6 +55,7 @@ public class Loco {
         else
             this.addr = "";
         this.formatAddr = formatAddress();
+        this.formatAddrHtml = formatAddressHtml();
         this.desc = "";
         this.confirmed = false;
         this.rosterName = null;
@@ -101,6 +103,10 @@ public class Loco {
         return this.formatAddr;
     }
 
+    public String getFormatAddressHtml() {
+        return this.formatAddrHtml;
+    }
+
     public void setDesc(String rosterName) {
         this.desc = rosterName;
     }
@@ -130,6 +136,14 @@ public class Loco {
 
     private String formatAddress() {
         return this.addr.substring(1) + "(" + this.addr.substring(0, 1) + ")";  //reformat from L2591 to 2591(L)
+    }
+
+    public String toHtml() {
+        return (this.desc.length() > 0 ? this.desc : this.formatAddrHtml);
+    }
+
+    private String formatAddressHtml() {
+        return this.addr.substring(1) + "<small><small>(" + this.addr.substring(0, 1) + ")</small></small>";  //reformat from L2591 to 2591(L)
     }
 
     public void setFunctionLabels(String functionLabelsString,threaded_application mainapp) {

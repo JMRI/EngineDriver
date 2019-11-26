@@ -22,6 +22,7 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -247,22 +248,28 @@ public class throttle_vertical extends throttle {
         final int conNomTextSize = 24;
         final double minTextScale = 0.5;
         String bLabel;
+        String bLabelPlainText;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             Button b = bSels[throttleIndex];
             if (mainapp.consists[throttleIndex].isActive()) {
                 if (!prefShowAddressInsteadOfName) {
-                    bLabel = mainapp.consists[throttleIndex].toString();
+//                    bLabel = mainapp.consists[throttleIndex].toString();
+                    bLabelPlainText = mainapp.consists[throttleIndex].toString();
+                    bLabel = mainapp.consists[throttleIndex].toHtml();
                 } else {
                     bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
+                    bLabelPlainText = bLabel;
                 }
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
+                bLabelPlainText = bLabel;
                 // whichVolume = 'S'; //set the next throttle to use volume control
             }
             double textScale = 1.0;
             int bWidth = b.getWidth(); // scale text if required to fit the textView
             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-            double textWidth = b.getPaint().measureText(bLabel);
+//            double textWidth = b.getPaint().measureText(bLabel);
+            double textWidth = b.getPaint().measureText(bLabelPlainText);
             if (bWidth == 0)
                 selectLocoRendered = false;
             else {
@@ -275,7 +282,8 @@ public class throttle_vertical extends throttle {
             }
             int textSize = (int) (conNomTextSize * textScale);
             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
-            b.setText(bLabel);
+//            b.setText(bLabel);
+            b.setText(Html.fromHtml(bLabel));
             b.setSelected(false);
             b.setPressed(false);
         }
