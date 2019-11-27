@@ -102,10 +102,10 @@ public class select_loco extends Activity {
     ArrayList<HashMap<String, String>> recent_consists_list;
     private RecentConsistsSimpleAdapter recent_consists_list_adapter;
 
-    private ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<ArrayList<Integer>>();
-    private ArrayList<ArrayList<Integer>> consistAddressSizeList = new ArrayList<ArrayList<Integer>>();
-    private ArrayList<ArrayList<Integer>> consistDirectionList = new ArrayList<ArrayList<Integer>>();
-    private ArrayList<String> consistNameList = new ArrayList<String>();
+    private ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> consistAddressSizeList = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> consistDirectionList = new ArrayList<>();
+    private ArrayList<String> consistNameList = new ArrayList<>();
 
     ListView consists_list_view;
     //
@@ -557,7 +557,7 @@ public class select_loco extends Activity {
                             Integer ea, as;
                             try {
                                 ea = Integer.decode(line.substring(0, splitPos));
-                                as = Integer.decode(line.substring(splitPos + 1, line.length()));
+                                as = Integer.decode(line.substring(splitPos + 1));
                             } catch (Exception e) {
                                 ea = -1;
                                 as = -1;
@@ -603,9 +603,9 @@ public class select_loco extends Activity {
         consistDirectionList = new ArrayList<>();
         consistNameList = new ArrayList<>();
 
-        ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<Integer>();
-        ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<Integer>();
-        ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<Integer>();
+        ArrayList<Integer> tempConsistEngineAddressList_inner;
+        ArrayList<Integer> tempConsistAddressSizeList_inner;
+        ArrayList<Integer> tempConsistDirectionList_inner;
 
         //if no SD Card present then there is no recent consists list
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
@@ -623,9 +623,9 @@ public class select_loco extends Activity {
                     while (list_reader.ready()) {
                         StringBuilder oneConsist = new StringBuilder();
                         String line = list_reader.readLine();
-                        tempConsistEngineAddressList_inner = new ArrayList<Integer>();
-                        tempConsistAddressSizeList_inner = new ArrayList<Integer>();
-                        tempConsistDirectionList_inner = new ArrayList<Integer>();
+                        tempConsistEngineAddressList_inner = new ArrayList<>();
+                        tempConsistAddressSizeList_inner = new ArrayList<>();
+                        tempConsistDirectionList_inner = new ArrayList<>();
 
                         String consistName = "";
                         int splitName = line.indexOf('~');
@@ -670,7 +670,7 @@ public class select_loco extends Activity {
                         + except.getMessage());
             }
 
-            RadioButton myRadioButton = (RadioButton) findViewById(R.id.select_consists_method_recent_button);
+            RadioButton myRadioButton = findViewById(R.id.select_consists_method_recent_button);
             if (consistEngineAddressList.size()==0) {
                 myRadioButton.setVisibility(View.GONE); // if the list is empty, hide the radio button
             } else {
@@ -697,9 +697,9 @@ public class select_loco extends Activity {
 
     //write the recents consists to a file
     void updateRecentConsists(boolean bUpdateList) {
-        ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<Integer>();
-        ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<Integer>();
-        ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<Integer>();
+        ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<>();
+        ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<>();
+        ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<>();
         boolean haveConsist = false;
 
         //if not updating list or no SD Card present then nothing else to do
@@ -733,6 +733,27 @@ public class select_loco extends Activity {
                     }
                 }
             }
+
+            // check to see if we are still building the consist
+            if ( (consistEngineAddressList.size()>0)
+                    && (consistEngineAddressList.get(0).size() == (tempConsistEngineAddressList_inner.size()-1) ) ) {
+                // check of the last added one is the same other then the last extra loco
+                boolean isBuilding = true;
+                for (int j = 0; j < consistEngineAddressList.get(0).size(); j++) {
+                    if ((!consistEngineAddressList.get(0).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
+                            || (!consistDirectionList.get(0).get(j).equals(tempConsistDirectionList_inner.get(j)))) {
+                        isBuilding = false;
+                    }
+                }
+                if (isBuilding) {  // remove the first entry
+                    consistEngineAddressList.remove(0);
+                    consistAddressSizeList.remove(0);
+                    consistDirectionList.remove(0);
+                    consistNameList.remove(0);
+                    haveConsist = false;
+                }
+            }
+
         }
 
         if (!haveConsist) {  // we don't have the consist already, or ar removing
@@ -828,10 +849,10 @@ public class select_loco extends Activity {
         // When an item is clicked, acquire that consist.
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-            Integer addr = 0;
-            String sAddr ="";
-            Integer size = 0;
-            Integer dir = 0;
+            Integer addr;
+            String sAddr;
+            Integer size;
+            Integer dir;
             Consist consist = mainapp.consists[whichThrottle];
 
             for (int i = 0; i < consistEngineAddressList.get(position).size(); i++) {
@@ -897,7 +918,7 @@ public class select_loco extends Activity {
             String rosterAddressString = hm.get("roster_address");
             String rosterEntryType = hm.get("roster_entry_type");
             // parse address and length from string, e.g. 2591(L)
-            String ras[] = threaded_application.splitByString(rosterAddressString, "(");
+            String[] ras = threaded_application.splitByString(rosterAddressString, "(");
             if (ras[0].length() > 0) {  //only process if address found
                 address_size = (ras[1].charAt(0) == 'L')
                         ? address_type.LONG
