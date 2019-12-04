@@ -737,9 +737,18 @@
     <string name="toastSelectLocoConfirmClear">Confirm that you want remove all the Recent Locomotives by pressing the \'Clear List\' button AGAIN.</string>
     <string name="toastSelectConsistsConfirmClear">Confirm that you want remove all the Recent Consists by pressing the \'Clear List\' button AGAIN.</string>
     <string name="toastNumThrottles">Chosen Throttle Screen Type does not support that many throttles. Reducing to %1$s.</string>
+    <string name="toastRecentsHelp">Touch to select.\nLong press to rename.\nSwipe Left to Right to remove an entry.</string>
+    <string name="toastRecentConsistsHelp">Touch to select.\nLong press to rename.\nSwipe Left to Right to remove an entry.</string>
+    <string name="toastRosterHelp">Touch to Select.\nLong press for details.</string>
 
     <!--    Toast messages for the Log Viewer Activity -->
     <string name="toastSaveLogFile">Logging Started in file %1$s. Logging will continue until you exit the Engine Driver app.</string>
+
+    <string name="RecentsNameEditTitle">Recent Loco Name</string>
+    <string name="RecentsNameEditText">Enter a name for the Loco</string>
+
+    <string name="RecentConsistsNameEditTitle">Recent Consist Name</string>
+    <string name="RecentConsistsNameEditText">Enter a name for the Consist</string>
 
     <string name="prefTtsTitle">Voice Response Preferences</string>
     <string name="prefTtsSummary">Options to speak key events</string>
