@@ -169,73 +169,6 @@ public class throttle_vertical extends throttle {
         super.prefRightDirectionButtons = prefs.getString("prefRightDirectionButtonsShort", getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsShortDefaultValue)).trim();
     }
 
-    // helper function to set up function buttons for each throttle
-    // loop through all function buttons and
-    // set label and dcc functions (based on settings) or hide if no label
-//    @Override
-//    void set_function_labels_and_listeners_for_view(int whichThrottle) {
-//        // Log.d("Engine_Driver","starting set_function_labels_and_listeners_for_view");
-//
-//        ViewGroup tv; // group
-//        ViewGroup r; // row
-//        function_button_touch_listener fbtl;
-//        Button b; // button
-//        int k = 0; // button count
-//        LinkedHashMap<Integer, String> function_labels_temp;
-//        LinkedHashMap<Integer, Button> functionButtonMap = new LinkedHashMap<>();
-//
-//        tv = fbs[whichThrottle];
-//
-//        // note: we make a copy of function_labels_x because TA might change it
-//        // while we are using it (causing issues during button update below)
-//        function_labels_temp = mainapp.function_labels_default;
-//        if (!prefAlwaysUseDefaultFunctionLabels) {
-//            if (mainapp.function_labels[whichThrottle] != null && mainapp.function_labels[whichThrottle].size() > 0) {
-//                function_labels_temp = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
-//            } else {
-//                function_labels_temp = mainapp.function_labels_default;
-//            }
-//        }
-//
-//        // put values in array for indexing in next step
-//        // to do this
-//        ArrayList<Integer> aList = new ArrayList<>();
-//        aList.addAll(function_labels_temp.keySet());
-//
-//        if (tv != null) {
-//            for (int i = 0; i < tv.getChildCount(); i++) {
-//                r = (ViewGroup) tv.getChildAt(i);
-//                for (int j = 0; j < r.getChildCount(); j++) {
-//                    b = (Button) r.getChildAt(j);
-//                    if (k < function_labels_temp.size()) {
-//                        Integer func = aList.get(k);
-//                        functionButtonMap.put(func, b); // save function to button
-//                        // mapping
-//                        String bt = function_labels_temp.get(func);
-//                        fbtl = new function_button_touch_listener(func, whichThrottle, bt);
-//                        b.setOnTouchListener(fbtl);
-//                        if ((mainapp.getCurrentTheme().equals(THEME_DEFAULT))) {
-//                            bt = bt + "        ";  // pad with spaces, and limit to 7 characters
-//                            b.setText(bt.substring(0, 7));
-//                        } else {
-//                            bt = bt + "                      ";  // pad with spaces, and limit to 20 characters
-//                            b.setText(bt.trim());
-//                        }
-//                        b.setVisibility(View.VISIBLE);
-//                        b.setEnabled(false); // start out with everything disabled
-//                    } else {
-//                        b.setVisibility(View.GONE);
-//                    }
-//                    k++;
-//                }
-//            }
-//        }
-//
-//        // update the function-to-button map for the current throttle
-//        functionMaps[whichThrottle] = functionButtonMap;
-//    }
-
-
     protected void set_labels() {
         super.set_labels();
         // Log.d("Engine_Driver","starting set_labels");
@@ -312,6 +245,11 @@ public class throttle_vertical extends throttle {
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
         int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.numThrottles;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            if ((screenWidth>0) && (throttleWidth >900)) {
+                svFnBtns[throttleIndex].getLayoutParams().width = throttleWidth/3;
+                svFnBtns[throttleIndex].requestLayout();
+            }
+
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.FILL_PARENT;
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
             lThrottles[throttleIndex].requestLayout();

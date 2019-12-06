@@ -762,4 +762,15 @@
     <string name="edit_consist_lights_throttle_6">Edita llums de la TM Regulador 6</string>
     <string name="LocoSelectMethodRecentConsist">Recents Consisteixen</string>
     <string name="toastSelectConsistsConfirmClear">Confirmeu que voleu eliminar tots els recents Consisteix prement el botó \\\'Esborrar llista\\\' DE NOU.</string>
+    <string name="toastRecentConsistsHelp">Toc per seleccionar.\\nllarg de premsa per canviar el nom.\\npassi a l\\\'esquerra a la dreta per eliminar una entrada.</string>
+    <string name="toastRecentsHelp">Toc per seleccionar.\\nllarg de premsa per canviar el nom.\\npassi a l\\\'esquerra a la dreta per eliminar una entrada.</string>
+    <string name="toastRosterHelp">Toc per seleccionar.\\nllarg de premsa per a més detalls.</string>
+    <string name="RecentConsistsNameEditText">Introduïu un nom per al Consisteixen</string>
+    <string name="RecentConsistsNameEditTitle">Recents Consisteixen Nom</string>
+    <string name="RecentsNameEditText">Introduïu un nom per al Boig</string>
+    <string name="RecentsNameEditTitle">Nom recent Boig</string>
+    <string name="prefLimitSpeedButtonSummary">Opció per mostrar un botó que limita la velocitat màxima d\'un boig.</string>
+    <string name="prefLimitSpeedButtonTitle">Mostra el botó \\\'Límit de velocitat\\\'</string>
+    <string name="prefLimitSpeedPercentSummary">Ajust el \\% de l\\\'acceleració que la velocitat es limitarà a.</string>
+    <string name="prefLimitSpeedPercentTitle">\\\'Límit de velocitat\\\' a \\%</string>
 </resources>

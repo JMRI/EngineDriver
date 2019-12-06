@@ -700,4 +700,11 @@
     <string name="limitSpeedButtonLabel">limite di velocità</string>
     <string name="LocoSelectMethodRecentConsist">recenti Consistono</string>
     <string name="toastSelectConsistsConfirmClear">Confermare che si desidera rimuovere tutti i recenti Consiste premendo nuovamente il tasto \\\'Cancella elenco\\\'.</string>
+    <string name="toastRecentConsistsHelp">Toccare per selezionare.\\nPremere a lungo per rinominare.\\nSwipe sinistra a destra per rimuovere una voce.</string>
+    <string name="toastRecentsHelp">Toccare per selezionare.\\nPremere a lungo per rinominare.\\nSwipe sinistra a destra per rimuovere una voce.</string>
+    <string name="toastRosterHelp">Toccare per selezionare.\\nPremere a lungo per i dettagli.</string>
+    <string name="RecentConsistsNameEditText">Inserire un nome per il Consist</string>
+    <string name="RecentConsistsNameEditTitle">Recenti Consistono Nome</string>
+    <string name="RecentsNameEditText">Inserire un nome per il Loco</string>
+    <string name="RecentsNameEditTitle">Recenti Nome Loco</string>
 </resources>
