@@ -2838,7 +2838,7 @@ public class threaded_application extends Application {
 //        this.finish();
 //        Runtime.getRuntime().exit(0); // really force the kill
 
-        int delay = 500;
+        int delay = 100;
         Context context = getBaseContext();
         Intent restartIntent = getBaseContext().getPackageManager()
                 .getLaunchIntentForPackage(context.getPackageName() );

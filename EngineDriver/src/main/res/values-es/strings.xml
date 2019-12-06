@@ -757,4 +757,11 @@
     <string name="prefLimitSpeedPercentSummary">Ajuste el \% de la aceleración que la velocidad se limitará a.</string>
     <string name="limitSpeedButtonLabel">límite de velocidad</string>
     <string name="toastSelectConsistsConfirmClear">Confirmeu que voleu eliminar tots els recents Consisteix prement el botó \\\'Esborrar llista\\\' DE NOU.</string>
+    <string name="toastRecentConsistsHelp">Toque para seleccionar.\\nlargo de prensa para cambiar el nombre.\\npase a la izquierda a la derecha para eliminar una entrada.</string>
+    <string name="toastRecentsHelp">Toque para seleccionar.\\nlargo de prensa para cambiar el nombre.\\npase a la izquierda a la derecha para eliminar una entrada.</string>
+    <string name="toastRosterHelp">Toque para seleccionar.\\nlargo de prensa para más detalles.</string>
+    <string name="RecentConsistsNameEditText">Introduzca un nombre para el Consisten</string>
+    <string name="RecentConsistsNameEditTitle">Recientes Consisten Nombre</string>
+    <string name="RecentsNameEditText">Introduzca un nombre para el Loco</string>
+    <string name="RecentsNameEditTitle">Nombre reciente Loco</string>
 </resources>
