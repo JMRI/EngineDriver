@@ -496,6 +496,7 @@
  *   TODO: add close button and roster image to details dialog
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
+ *   TODO: save and restore the Light settings for the consist locos
  * log_viewer:
  *
  * These require changes to WiThrottle
