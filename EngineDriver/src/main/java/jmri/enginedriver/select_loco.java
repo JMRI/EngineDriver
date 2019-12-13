@@ -924,7 +924,7 @@ public class select_loco extends Activity {
                     Log.d("Engine_Driver", "select_loco Acquiring Consist. loco: " + locoAddressToString(addr, size, false) + (dir==0 ? "↑":"↓"));
 
     //                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
-                    mainapp.sendMsgDelay(mainapp.comm_msg_handler, i*100, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle,0);
+                    mainapp.sendMsgDelay(mainapp.comm_msg_handler, i*50, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle,0);
 
                     if (dir==1) {
                         consist = mainapp.consists[whichThrottle];
