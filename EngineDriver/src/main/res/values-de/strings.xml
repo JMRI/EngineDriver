@@ -776,4 +776,5 @@
     <string name="RecentConsistsNameEditTitle">Aktuelle Consist-Name</string>
     <string name="RecentsNameEditText">Geben Sie einen Namen für die Loco</string>
     <string name="RecentsNameEditTitle">Aktuelle Lokname</string>
+    <string name="rosterDetailsDialogTitle">"Wählen Sie aus Roster / Consist Einträge "</string>
 </resources>

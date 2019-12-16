@@ -773,4 +773,5 @@
     <string name="prefLimitSpeedButtonTitle">Mostra el botó \\\'Límit de velocitat\\\'</string>
     <string name="prefLimitSpeedPercentSummary">Ajust el \\% de l\\\'acceleració que la velocitat es limitarà a.</string>
     <string name="prefLimitSpeedPercentTitle">\\\'Límit de velocitat\\\' a \\%</string>
+    <string name="rosterDetailsDialogTitle">"Seleccionar de Llista / Consisteix entrades "</string>
 </resources>

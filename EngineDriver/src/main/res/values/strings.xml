@@ -55,6 +55,7 @@
     <string name="select_loco_address">Address</string>
     <string name="acquire_button">Acquire</string>
     <string name="roster_list">Select from Roster/Consist Entries</string>
+    <string name="rosterDetailsDialogTitle">"Roster details for "</string>
     <string name="recent_engines">Select from Recent Locomotives</string>
     <string name="recent_consists">Select from Recent Consists</string>
     <string name="direction">Fwd</string>

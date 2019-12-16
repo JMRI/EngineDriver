@@ -36,6 +36,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -2574,31 +2575,33 @@ public class threaded_application extends Application {
         return setActivityOrientation(activity, false);
     }
 
+    public int getSelectedTheme() {
+        String prefTheme = getCurrentTheme();
+        switch (prefTheme) {
+            case "Black":
+                return R.style.app_theme_black;
+            case "Outline":
+                return R.style.app_theme_outline;
+            case "Ultra":
+                return R.style.app_theme_ultra;
+            case "Colorful":
+                return R.style.app_theme_colorful;
+            default:
+                return R.style.app_theme;
+        }
+    }
+
     /**
      * Applies the chosen theme from preferences to the specified activity
      *
      * @param activity the activity to set the theme for
      */
     public void applyTheme(Activity activity) {
-        String prefTheme = getCurrentTheme();
-        switch (prefTheme) {
-            case "Black":
-                activity.setTheme(R.style.app_theme_black);
-                break;
-            case "Outline":
-                activity.setTheme(R.style.app_theme_outline);
-                break;
-            case "Ultra":
-                activity.setTheme(R.style.app_theme_ultra);
-                break;
-            case "Colorful":
-                activity.setTheme(R.style.app_theme_colorful);
-                break;
-            default:
-                activity.setTheme(R.style.app_theme);
-                break;
-        }
+        int selectedTheme = getSelectedTheme();
+        activity.setTheme(selectedTheme);
+
     }
+
 
     /**
      * Retrieve the currently configure theme from preferences

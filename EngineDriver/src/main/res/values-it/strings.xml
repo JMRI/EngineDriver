@@ -707,4 +707,5 @@
     <string name="RecentConsistsNameEditTitle">Recenti Consistono Nome</string>
     <string name="RecentsNameEditText">Inserire un nome per il Loco</string>
     <string name="RecentsNameEditTitle">Recenti Nome Loco</string>
+    <string name="rosterDetailsDialogTitle">"Selezionare tra Roster / Consistono Entries "</string>
 </resources>
