@@ -790,4 +790,5 @@
     <string name="RecentConsistsNameEditTitle">Consiste récente Nom</string>
     <string name="RecentsNameEditText">Entrez un nom pour la Loco</string>
     <string name="RecentsNameEditTitle">Nom Loco récente</string>
+    <string name="rosterDetailsDialogTitle">"Choisissez parmi la liste d'/ Consiste Entrées "</string>
 </resources>

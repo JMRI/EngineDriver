@@ -1446,12 +1446,28 @@ public class select_loco extends Activity {
             return true;
         }
         Log.d("Engine_Driver", "Showing details for roster entry " + rosternamestring);
-        Dialog dialog = new Dialog(select_loco.this);
-        dialog.setTitle("Roster details for " + rosternamestring);
+        final Dialog dialog = new Dialog(select_loco.this, mainapp.getSelectedTheme());
+        dialog.setTitle(getApplicationContext().getResources().getString(R.string.rosterDetailsDialogTitle) + rosternamestring);
         dialog.setContentView(R.layout.roster_entry);
         String res = re.toString();
         TextView tv = dialog.findViewById(R.id.rosterEntryText);
         tv.setText(res);
+
+        String iconURL = hm.get("roster_icon");
+        ImageView imageView = dialog.findViewById(R.id.rosterEntryImage);
+        if ((iconURL != null) && (iconURL.length() > 0)) {
+            mainapp.imageDownloader.download(iconURL, imageView);
+        } else {
+            imageView.setVisibility(View.GONE);
+        }
+
+        Button buttonClose = dialog.findViewById(R.id.rosterEntryButtonClose);
+        buttonClose.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
         dialog.setCancelable(true);
         dialog.show();
         return true;
