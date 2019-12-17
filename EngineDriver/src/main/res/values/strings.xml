@@ -741,6 +741,7 @@
     <string name="toastRecentsHelp">Touch to select.\nLong press to rename.\nSwipe Left to Right to remove an entry.</string>
     <string name="toastRecentConsistsHelp">Touch to select.\nLong press to rename.\nSwipe Left to Right to remove an entry.</string>
     <string name="toastRosterHelp">Touch to Select.\nLong press for details.</string>
+    <string name="toastConnectionsListHelp">Touch to Select.\nSwipe Left to Right to remove an entry.</string>
 
     <!--    Toast messages for the Log Viewer Activity -->
     <string name="toastSaveLogFile">Logging Started in file %1$s. Logging will continue until you exit the Engine Driver app.</string>
