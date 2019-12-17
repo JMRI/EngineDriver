@@ -1270,7 +1270,8 @@ public class select_loco extends Activity {
                 if (!rosterHelp) {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRosterHelp), Toast.LENGTH_SHORT).show();
                     rosterHelp = true;
-                }                break;
+                }
+                break;
             }
             case WHICH_METHOD_RECENT: {
                 rlAddress.setVisibility(View.GONE);
