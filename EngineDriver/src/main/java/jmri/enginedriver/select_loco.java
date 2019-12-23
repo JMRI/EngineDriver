@@ -476,7 +476,7 @@ public class select_loco extends Activity {
             newEngine = (cl == null);
             if (newEngine || !cl.isConfirmed()) {        // if engine is not already in the consist, or if it is but never got acquired
                 consist.add(l);
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, addr, whichThrottle);
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type. REQ_LOCO_ADDR, addr, whichThrottle);
 
                 saveUpdateList = bUpdateList;
                 Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
@@ -859,6 +859,8 @@ public class select_loco extends Activity {
             }
             Spinner spinner = findViewById(R.id.address_length);
             address_size = spinner.getSelectedItemPosition();
+            sWhichThrottle += getLocoNameFromRoster(locoAddressToString(engine_address, address_size, false));
+
             acquire_engine(true);
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -891,6 +893,7 @@ public class select_loco extends Activity {
             } else {  //no swipe
                 engine_address = recent_loco_address_list.get(position);
                 address_size = recent_loco_address_size_list.get(position);
+                sWhichThrottle += getLocoNameFromRoster(locoAddressToString(engine_address, address_size, false));
                 acquire_engine(true);
             }
         }
@@ -913,7 +916,13 @@ public class select_loco extends Activity {
                 }
             } else {  //no swipe
 
-                for (int i = 0; i < consistEngineAddressList.get(position).size(); i++) {
+                // use the normal acquire process to get the first loco, that way the function buttons will be correct.
+                engine_address = consistEngineAddressList.get(position).get(0);
+                address_size = consistAddressSizeList.get(position).get(0);
+                sWhichThrottle += getLocoNameFromRoster(locoAddressToString(engine_address, address_size, false));
+                acquire_engine(true);
+
+                for (int i = 1; i < consistEngineAddressList.get(position).size(); i++) {
                     addr = consistEngineAddressList.get(position).get(i);
                     size = consistAddressSizeList.get(position).get(i);
                     dir = consistDirectionList.get(position).get(i);
