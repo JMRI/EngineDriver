@@ -441,7 +441,6 @@ public class select_loco extends Activity {
         String roster_name = "";
         String sAddr = locoAddressToString(engine_address, address_size, true);
         Loco l = new Loco(sAddr);
-//        if (!roster_name.equals("")) {
         if (locoSource!=WHICH_SOURCE_ADDRESS) {
             roster_name = sWhichThrottle.substring(1);
             l.setDesc(roster_name);       //use rosterName if present
@@ -456,7 +455,6 @@ public class select_loco extends Activity {
         }
         Consist consist = mainapp.consists[whichThrottle];
 
-//        if ((sWhichThrottle.length() > 1) && (source!=WHICH_SOURCE_ADDRESS)) {// add roster selection info if present
         if (!roster_name.equals("")) {// add roster selection info if present
 //            addr += "<;>" + sWhichThrottle.substring(1);
             sAddr += "<;>" + roster_name;

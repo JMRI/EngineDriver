@@ -2078,10 +2078,9 @@ public class threaded_application extends Application {
 
     public String findLocoNameInRoster(String searchName) {
         if ((roster_entries != null) && (roster_entries.size() > 0)) {
-            for (String rosterName : roster_entries.keySet()) {  // loop thru roster entries,
-                if (roster_entries.get(rosterName).equals(searchName)) { //looking for value = input parm
-                    return searchName;  //if found, return the roster name (key)
-                }
+            String rslt =  roster_entries.get(searchName);
+            if (rslt.length()>0) {
+                return searchName;
             }
         }
         return ""; //return blank if not found
