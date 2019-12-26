@@ -822,7 +822,7 @@ public class select_loco extends Activity {
             tempConsistLightList_inner.add(light);
 
             rslt = "<span>" + addr.toString()+"<small><small>("+ (size==0 ? "S":"L") +")</small>"
-                    + (dir==0 ? "▲":"▼") + "</small> " +  getSourceHtmlString(source) + " &nbsp;</span>";
+                    + (dir==0 ? "▲":"▼") + "</small>" +  getSourceHtmlString(source) + " &nbsp;</span>";
 //                    +  (light==0 ? "○": (light==1 ? "● ":"≡")) + "</small> &nbsp;</span>";
         }
         return rslt;
@@ -1565,22 +1565,29 @@ public class select_loco extends Activity {
         Button ba = findViewById(R.id.acquire);
         EditText la = findViewById(R.id.loco_address);
         int txtLen = la.getText().toString().trim().length();
+        int addr = 0;
+        if (txtLen>0) {
+            addr = Integer.parseInt(la.getText().toString().trim());
+        }
 
         // don't allow acquire button if nothing entered
         if (txtLen > 0) {
             ba.setEnabled(true);
+
+            // set address length
+            Spinner al = findViewById(R.id.address_length);
+            if (default_address_length.equals("Long") ||
+                    ( default_address_length.equals("Auto") && (addr > 127)) ) {
+//                    ( default_address_length.equals("Auto") && (txtLen > 2)) ) {
+                al.setSelection(1);
+            } else {
+                al.setSelection(0);
+            }
+
         } else {
             ba.setEnabled(false);
         }
 
-        // set address length
-        Spinner al = findViewById(R.id.address_length);
-        if (default_address_length.equals("Long")
-                || (default_address_length.equals("Auto") && txtLen > 2)) {
-            al.setSelection(1);
-        } else {
-            al.setSelection(0);
-        }
         return txtLen;
     }
 
@@ -1919,7 +1926,7 @@ public class RecentSimpleAdapter extends SimpleAdapter {
         try {
             String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
             String addressSourceString = getSourceHtmlString(source);
-            engineAddressHtml = String.format("<span>%s<small>(%s)</small> %s </span>", addr.toString(), addressLengthString, addressSourceString);
+            engineAddressHtml = String.format("<span>%s<small>(%s)</small>%s </span>", addr.toString(), addressLengthString, addressSourceString);
         } catch (Exception e) {
             Log.e("Engine_Driver", "locoAddressToString. ");
         }
@@ -1930,10 +1937,10 @@ public class RecentSimpleAdapter extends SimpleAdapter {
         String addressSourceString = "?";
         switch (source) {
             case WHICH_SOURCE_ROSTER:
-                addressSourceString = "<big>≡</big>";
+                addressSourceString = " <big>≡</big> ";
                 break;
             case WHICH_SOURCE_ADDRESS:
-                addressSourceString = "<small><small><small><sub>└─┘</sub></small></small></small>";
+                addressSourceString = "<small><small><sub>└─┘</sub></small></small>";
                 break;
         }
         return addressSourceString;

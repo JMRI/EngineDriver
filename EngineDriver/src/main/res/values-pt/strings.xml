@@ -712,4 +712,6 @@
     <string name="RecentsNameEditText">Digite um nome para o Loco</string>
     <string name="RecentsNameEditTitle">Recentes Nome Loco</string>
     <string name="rosterDetailsDialogTitle">"Seleccione a partir Roster / Consistem Entradas "</string>
+    <string name="toastRecentCleared">Loco removido da lista</string>
+    <string name="toastRecentConsistCleared">Consistem removido da lista</string>
 </resources>
