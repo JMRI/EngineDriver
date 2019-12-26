@@ -445,6 +445,7 @@ public class select_loco extends Activity {
         if (locoSource!=WHICH_SOURCE_ADDRESS) {
             roster_name = sWhichThrottle.substring(1);
             l.setDesc(roster_name);       //use rosterName if present
+            roster_name = mainapp.findLocoNameInRoster(roster_name);  // confirm that the loco is actually in the roster
             l.setRosterName(roster_name); //use rosterName if present
             l.setIsFromRoster(true);
         } else {

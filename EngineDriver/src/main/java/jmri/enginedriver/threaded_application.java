@@ -2076,6 +2076,17 @@ public class threaded_application extends Application {
         return addr_str; //return input if not found
     }
 
+    public String findLocoNameInRoster(String searchName) {
+        if ((roster_entries != null) && (roster_entries.size() > 0)) {
+            for (String rosterName : roster_entries.keySet()) {  // loop thru roster entries,
+                if (roster_entries.get(rosterName).equals(searchName)) { //looking for value = input parm
+                    return searchName;  //if found, return the roster name (key)
+                }
+            }
+        }
+        return ""; //return blank if not found
+    }
+
     public String getConsistNameFromAddress(String addr_str) {
         if (addr_str.charAt(0) == 'S' || addr_str.charAt(0) == 'L') { //convert from S123 to 123(S) formatting if needed
             addr_str = cvtToAddrP(addr_str);
