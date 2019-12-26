@@ -791,4 +791,6 @@
     <string name="RecentsNameEditText">Entrez un nom pour la Loco</string>
     <string name="RecentsNameEditTitle">Nom Loco récente</string>
     <string name="rosterDetailsDialogTitle">"Choisissez parmi la liste d'/ Consiste Entrées "</string>
+    <string name="toastRecentCleared">Loco supprimé de la liste</string>
+    <string name="toastRecentConsistCleared">Rayé de la liste sont composés</string>
 </resources>

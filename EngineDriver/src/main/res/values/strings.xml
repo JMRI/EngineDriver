@@ -739,9 +739,12 @@
     <string name="toastSelectConsistsConfirmClear">Confirm that you want remove all the Recent Consists by pressing the \'Clear List\' button AGAIN.</string>
     <string name="toastNumThrottles">Chosen Throttle Screen Type does not support that many throttles. Reducing to %1$s.</string>
     <string name="toastRecentsHelp">Touch to select.\nLong press to rename.\nSwipe Left to Right to remove an entry.</string>
-    <string name="toastRecentConsistsHelp">Touch to select.\nLong press to rename.\nSwipe Left to Right to remove an entry.</string>
+    <string name="toastRecentConsistsHelp">Touch to select.\nLong press to Rename (for entered addresses) or show Roster Details.\nSwipe Left to Right to remove an entry.</string>
     <string name="toastRosterHelp">Touch to Select.\nLong press for details.</string>
     <string name="toastConnectionsListHelp">Touch to Select.\nSwipe Left to Right to remove an entry.</string>
+
+    <string name="toastRecentCleared">Loco removed from list</string>
+    <string name="toastRecentConsistCleared">Consist removed from list</string>
 
     <!--    Toast messages for the Log Viewer Activity -->
     <string name="toastSaveLogFile">Logging Started in file %1$s. Logging will continue until you exit the Engine Driver app.</string>

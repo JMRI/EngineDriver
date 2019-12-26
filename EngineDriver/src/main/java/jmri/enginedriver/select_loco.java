@@ -67,6 +67,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -102,6 +103,15 @@ public class select_loco extends Activity {
     private ArrayList<Integer> recent_loco_address_list;
     private ArrayList<Integer> recent_loco_address_size_list; // Look at address_type.java
     private ArrayList<String> recent_loco_name_list;
+    private ArrayList<Integer> recent_loco_source_list;
+
+    private static final int WHICH_SOURCE_UNKNOWN = 0;
+    private static final int WHICH_SOURCE_ADDRESS = 1;
+    private static final int WHICH_SOURCE_ROSTER = 2;
+
+//    private static final int LIGHT_OFF = 0;
+//    private static final int LIGHT_FOLLOW = 1;
+    private static final int LIGHT_UNKNOWN = 2;
 
     // recent consists
     ArrayList<HashMap<String, String>> recent_consists_list;
@@ -110,6 +120,9 @@ public class select_loco extends Activity {
     private ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> consistAddressSizeList = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> consistDirectionList = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> consistSourceList = new ArrayList<>();
+    private ArrayList<ArrayList<String>> consistRosterNameList = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> consistLightList = new ArrayList<>();  // placeholder - not currently use
     private ArrayList<String> consistNameList = new ArrayList<>();
 
     ListView consists_list_view;
@@ -123,6 +136,9 @@ public class select_loco extends Activity {
 
     private int engine_address;
     private int address_size;
+    private String locoName = "";
+    private int locoSource = 0;
+
     private String sWhichThrottle = "0";  // "0" or "1" or "2" + roster name
     int whichThrottle = 0;
     private int result;
@@ -247,33 +263,27 @@ public class select_loco extends Activity {
         } // if roster_entries not null
     }
 
-    private String getLocoNameFromRoster(String engineAddressString) {
-        if (prefRosterRecentLocoNames) {
-            if ((mainapp.roster_entries != null) && (mainapp.roster_entries.size() > 0)) {
-                for (String rostername : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
-                    if (mainapp.roster_entries.get(rostername).equals(engineAddressString)) { //looking for value = input parm
-//                        return engineAddressString + " - " + rostername;  //if found, return the roster name (key)
-                        return rostername;  //if found, return the roster name (key)
-                    }
-                }
-            }
-            if (mainapp.getConsistNameFromAddress(engineAddressString) != null) { //check for a JMRI consist for this address
-                return mainapp.getConsistNameFromAddress(engineAddressString);
-            }
-        }
-        return engineAddressString;
-    }
-
-    private String getLocoIconUrlFromRoster(String engineAddressString) {
+    private String getLocoIconUrlFromRoster(String engineAddress, String engineName) {
         if (prefRosterRecentLocoNames) {
             if ((mainapp.roster_entries != null) && (mainapp.roster_entries.size() > 0) && (mainapp.roster != null)) {
                 for (String rostername : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
-                    if (mainapp.roster_entries.get(rostername).equals(engineAddressString)) { //looking for value = input parm
-                        RosterEntry rosterentry = mainapp.roster.get(rostername);
-                        if (rosterentry == null) return "";
-                        String iconPath = rosterentry.getIconPath();  //if found, return the icon url
-                        if (iconPath == null) return "";
-                        return iconPath;
+                    if (engineName.equals("")) {
+                        if (mainapp.roster_entries.get(rostername).equals(engineAddress)) {
+                            RosterEntry rosterentry = mainapp.roster.get(rostername);
+                            if (rosterentry == null) return "";
+                            String iconPath = rosterentry.getIconPath();  //if found, return the icon url
+                            if (iconPath == null) return "";
+                            return iconPath;
+                        }
+                    } else { // if there is a name as well, confirm they match (for entries with the same address)
+                        if (rostername.equals(engineName)) {
+                            RosterEntry rosterentry = mainapp.roster.get(rostername);
+                            if (rosterentry == null) return "";
+                            String iconPath = rosterentry.getIconPath();  //if found, return the icon url
+                            if (iconPath == null) return "";
+                            return iconPath;
+                        }
+
                     }
                 }
             }
@@ -427,26 +437,30 @@ public class select_loco extends Activity {
     boolean saveUpdateList;         // save value across ConsistEdit activity 
     boolean newEngine;              // save value across ConsistEdit activity
 
-    void acquire_engine(boolean bUpdateList) {
-        String roster_name = sWhichThrottle.substring(1);
-//        String sAddr = (address_size == address_type.LONG ? "L" : "S") + engine_address;
+    void acquire_engine(boolean bUpdateList, boolean showConsistEdit) {
+        String roster_name = "";
         String sAddr = locoAddressToString(engine_address, address_size, true);
-        String addr = sAddr;
-        Loco l = new Loco(addr);
-        if (!roster_name.equals("")) {
+        Loco l = new Loco(sAddr);
+//        if (!roster_name.equals("")) {
+        if (locoSource!=WHICH_SOURCE_ADDRESS) {
+            roster_name = sWhichThrottle.substring(1);
             l.setDesc(roster_name);       //use rosterName if present
+            roster_name = mainapp.findLocoNameInRoster(roster_name);  // confirm that the loco is actually in the roster
             l.setRosterName(roster_name); //use rosterName if present
             l.setIsFromRoster(true);
         } else {
-            l.setDesc(mainapp.getRosterNameFromAddress(l.toString()));  //lookup rostername from address if not set
+//            l.setDesc(mainapp.getRosterNameFromAddress(l.toString(),false));  //lookup rostername from address if not set
+            l.setDesc(locoName);
             l.setRosterName(null); //make sure rosterName is null
-            l.setFunctionLabelDefaults(mainapp, whichThrottle); //make sure rosterName is null
+            l.setFunctionLabelDefaults(mainapp, whichThrottle);
         }
         Consist consist = mainapp.consists[whichThrottle];
 
-        if (sWhichThrottle.length() > 1) // add roster selection info if present
-            addr += "<;>" + sWhichThrottle.substring(1);
-
+//        if ((sWhichThrottle.length() > 1) && (source!=WHICH_SOURCE_ADDRESS)) {// add roster selection info if present
+        if (!roster_name.equals("")) {// add roster selection info if present
+//            addr += "<;>" + sWhichThrottle.substring(1);
+            sAddr += "<;>" + roster_name;
+        }
 
         //user preference set to not consist, or consisting not supported in this JMRI, so drop before adding
         if (prefs.getBoolean("drop_on_acquire_preference", false)) {
@@ -465,18 +479,18 @@ public class select_loco extends Activity {
             consist.setLeadAddr(l.getAddress());
             consist.setTrailAddr(l.getAddress());
 //            consist.setConfirmed(l.getAddress()); //this happens after response from WiTS
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, addr, whichThrottle);
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
             updateRecentEngines(bUpdateList);
 //            updateRecentConsists(bUpdateList);
             result = RESULT_OK;
             end_this_activity();
 
         } else {                                // else consist exists so bring up editor
-            ConLoco cl = consist.getLoco(addr);
+            ConLoco cl = consist.getLoco(sAddr);
             newEngine = (cl == null);
             if (newEngine || !cl.isConfirmed()) {        // if engine is not already in the consist, or if it is but never got acquired
                 consist.add(l);
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type. REQ_LOCO_ADDR, addr, whichThrottle);
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type. REQ_LOCO_ADDR, sAddr, whichThrottle);
 
                 saveUpdateList = bUpdateList;
                 Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
@@ -484,9 +498,11 @@ public class select_loco extends Activity {
 
                 consist.setTrailAddr(l.getAddress());  // set the newly added loco as the trailing loco
 
-                navigatingAway = true;
-                startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                if (showConsistEdit) { // don't show the Consist edit screen.  Only used for Recent Consists
+                    navigatingAway = true;
+                    startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
+                    connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                }
             }
         }
     }
@@ -525,23 +541,29 @@ public class select_loco extends Activity {
                 if (!removingLocoOrForceReload) {
                     mrl--;
                     // Add this engine to the head of recent engines list.
-                    String locoName = locoAddressToString(engine_address, address_size,false);
+                    String tempLocoName = (locoName.equals("") ? locoAddressToString(engine_address, address_size,false) : locoName);
+
+                    // check if it is already in the list and remove it if necessary
                     for (int i = 0; i < recent_loco_address_list.size() && mrl > 0; i++) {
-                        if (engine_address == recent_loco_address_list.get(i) && address_size == recent_loco_address_size_list.get(i)) {
-                            locoName = recent_loco_name_list.get(i); // grab the current name
+                        if (engine_address == recent_loco_address_list.get(i)
+                                && address_size == recent_loco_address_size_list.get(i)
+                                && tempLocoName.equals(recent_loco_name_list.get(i))) {
+//                            tempLocoName = recent_loco_name_list.get(i); // grab the current name
                             recent_loco_address_list.remove(i);      // before removing it from its current location in the list
                             recent_loco_address_size_list.remove(i);
                             recent_loco_name_list.remove(i);
+                            recent_loco_source_list.remove(i);
                         }
                     }
-                    list_output.format("%d:%d~%s\n", engine_address, address_size, locoName);
+                    list_output.format("%d:%d%d~%s\n", engine_address, address_size, locoSource, tempLocoName);
                 }
                 removingLocoOrForceReload = false;
                 for (int i = 0; i < recent_loco_address_list.size() && mrl > 0; i++) {
-//                    if (engine_address != recent_loco_address_list.get(i) || address_size != recent_loco_address_size_list.get(i)) {
-                        list_output.format("%d:%d~%s\n", recent_loco_address_list.get(i), recent_loco_address_size_list.get(i), recent_loco_name_list.get(i));
-//                        mrl--;
-//                    }
+                    list_output.format("%d:%d%d~%s\n",
+                            recent_loco_address_list.get(i),
+                            recent_loco_address_size_list.get(i),
+                            recent_loco_source_list.get(i),
+                            recent_loco_name_list.get(i));
                 }
             }
             list_output.flush();
@@ -560,6 +582,7 @@ public class select_loco extends Activity {
         recent_loco_address_list = new ArrayList<>();
         recent_loco_address_size_list = new ArrayList<>();
         recent_loco_name_list = new ArrayList<>();
+        recent_loco_source_list = new ArrayList<>();
         if (reload) {
             recent_engine_list = new ArrayList<>();
         }
@@ -583,38 +606,49 @@ public class select_loco extends Activity {
                         String line = list_reader.readLine();
                         Integer splitPos = line.indexOf(':');
                         if (splitPos > 0) {
-                            Integer ea, as;
-                            String ln = "";
+                            Integer addr, size, source = 0;
+                            String locoName = "";
                             try {
-                                ea = Integer.decode(line.substring(0, splitPos));
-                                as = Integer.decode(line.substring(splitPos + 1,splitPos + 2));
+                                addr = Integer.decode(line.substring(0, splitPos));
+                                size = Integer.decode(line.substring(splitPos + 1,splitPos + 2));
                                 if (line.length()>splitPos+2) { // has the name extras
-                                    if (line.substring(splitPos + 2,splitPos + 3).equals("~")) { // get the name
-                                        ln = line.substring(splitPos + 3);
+                                    if (line.substring(splitPos + 2,splitPos + 3).equals("~")) { // old format
+                                        locoName = line.substring(splitPos + 3);
+                                    } else {
+                                        if (line.substring(splitPos + 3,splitPos + 4).equals("~")) { // new format. Includes the source
+                                            source = Integer.decode(line.substring(splitPos + 2,splitPos + 3));
+                                            locoName = line.substring(splitPos + 4);
+                                        }
                                     }
                                 }
                             } catch (Exception e) {
-                                ea = -1;
-                                as = -1;
-                                ln = "";
+                                addr = -1;
+                                size = -1;
+                                locoName = "";
+                                source = -1;
                             }
 
-                            if ((ea >= 0) && (as >= 0)) {
-                                recent_loco_address_list.add(ea);
-                                recent_loco_address_size_list.add(as);
+                            if ((addr >= 0) && (size >= 0)) {
+                                recent_loco_address_list.add(addr);
+                                recent_loco_address_size_list.add(size);
                                 HashMap<String, String> hm = new HashMap<>();
-//                                String addressLengthString = ((as == 0) ? "S" : "L");  //show L or S based on length from file
-                                String engineAddressString = locoAddressToString(ea, as, false);
-                                if ((ln.length()==0  || ln.equals(engineAddressString))) { // if nothing is stored, or what is stored is the same as the address, look for it in the roster
-                                    ln = getLocoNameFromRoster(engineAddressString);
-                                }
-                                recent_loco_name_list.add(ln);
+                                String engineAddressString = locoAddressToString(addr, size, false);
+                                String engineAddressHtml = locoAddressToHtml(addr, size, source);
 
-                                String engineIconUrl = getLocoIconUrlFromRoster(engineAddressString);
+                                if ((locoName.length()==0  || locoName.equals(engineAddressString)) // if nothing is stored, or what is stored is the same as the address
+                                        && (source==WHICH_SOURCE_UNKNOWN)) { // as long as the source is listed as unknown
+                                    // if nothing is stored, or what is stored is the same as the address, look for it in the roster
+                                    locoName = mainapp.getRosterNameFromAddress(engineAddressString, false);
+                                }
+                                recent_loco_name_list.add(locoName);
+                                recent_loco_source_list.add(source);
+
+                                String engineIconUrl = getLocoIconUrlFromRoster(engineAddressString,locoName);
 //                                engineAddressString = getLocoNameFromRoster(engineAddressString);
                                 hm.put("engine_icon", engineIconUrl);
-                                hm.put("engine", ln);
-                                hm.put("engine_name", engineAddressString);
+                                hm.put("engine", locoName);
+//                                hm.put("engine_name", engineAddressString);
+                                hm.put("engine_name", engineAddressHtml);
                                 recent_engine_list.add(hm);
                             } //if ea>=0&&as>=0
                         } //if splitPos>0
@@ -642,6 +676,9 @@ public class select_loco extends Activity {
         consistEngineAddressList = new ArrayList<>();
         consistAddressSizeList = new ArrayList<>();
         consistDirectionList = new ArrayList<>();
+        consistLightList = new ArrayList<>();
+        consistSourceList = new ArrayList<>();
+        consistRosterNameList = new ArrayList<>();
         consistNameList = new ArrayList<>();
         if (reload) {
             recent_consists_list = new ArrayList<>();
@@ -650,6 +687,9 @@ public class select_loco extends Activity {
         ArrayList<Integer> tempConsistEngineAddressList_inner;
         ArrayList<Integer> tempConsistAddressSizeList_inner;
         ArrayList<Integer> tempConsistDirectionList_inner;
+        ArrayList<Integer> tempConsistSourceList_inner;
+        ArrayList<String> tempConsistRosterNameList_inner;
+        ArrayList<Integer> tempConsistLightList_inner;
 
         //if no SD Card present then there is no recent consists list
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
@@ -670,37 +710,69 @@ public class select_loco extends Activity {
                         tempConsistEngineAddressList_inner = new ArrayList<>();
                         tempConsistAddressSizeList_inner = new ArrayList<>();
                         tempConsistDirectionList_inner = new ArrayList<>();
+                        tempConsistSourceList_inner = new ArrayList<>();
+                        tempConsistRosterNameList_inner = new ArrayList<>();
+                        tempConsistLightList_inner = new ArrayList<>();
 
                         String consistName = "";
-                        int splitName = line.indexOf('~');
-                        if (splitName!=-1) { // see if there is a name saved as well
-                            consistName = line.substring(splitName+1);
-                            line = line.substring(0,splitName);
+                        String splitOn = "<~>";
+                        if (line.indexOf("<~>")==-1) { // must be the old format
+                            splitOn = "~";
+                        }
+                        String[] splitLine = line.split(splitOn, -1);
+
+                        if (splitLine.length>1) { // see if there is a name saved as well
+                            consistName = splitLine[1];
+                            line = splitLine[0];
+                            if (splitLine.length>2) {  // see if there is roster names saved as well
+                                String[] rosterNames = splitLine[2].split("<,>", -1);
+                                tempConsistRosterNameList_inner.addAll(Arrays.asList(rosterNames));
+                            }
                         }
 
                         int splitLoco = line.indexOf(',');
                         if (splitLoco!=-1) {
-                            oneConsist.append(addOneConsistAddress(line, 0, splitLoco, tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner, tempConsistDirectionList_inner));
+                            oneConsist.append(addOneConsistAddress(line, 0, splitLoco,
+                                    tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner,
+                                    tempConsistDirectionList_inner,
+                                    tempConsistSourceList_inner,
+                                    tempConsistLightList_inner));
 
                             boolean foundOne = true;
                             while (foundOne) {
                                 Integer prevSplitLoco = splitLoco + 1;
                                 splitLoco = line.indexOf(',', prevSplitLoco);
                                 if (splitLoco != -1) {
-                                    oneConsist.append(addOneConsistAddress(line, prevSplitLoco, splitLoco, tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner, tempConsistDirectionList_inner));
+                                    oneConsist.append(addOneConsistAddress(line, prevSplitLoco, splitLoco,
+                                            tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner,
+                                            tempConsistDirectionList_inner,
+                                            tempConsistSourceList_inner,
+                                            tempConsistLightList_inner));
                                 } else {
-                                    oneConsist.append(addOneConsistAddress(line, prevSplitLoco, line.length(), tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner, tempConsistDirectionList_inner));
+                                    oneConsist.append(addOneConsistAddress(line, prevSplitLoco, line.length(),
+                                            tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner,
+                                            tempConsistDirectionList_inner,
+                                            tempConsistSourceList_inner,
+                                            tempConsistLightList_inner));
                                     foundOne = false;
+                                }
+                            }
+                            if (splitLine.length<3) {  // old format - need to add some dummy roster names
+                                for (int j=0; j<tempConsistEngineAddressList_inner.size(); j++) {
+                                    tempConsistRosterNameList_inner.add("");
                                 }
                             }
                             consistEngineAddressList.add(tempConsistEngineAddressList_inner);
                             consistAddressSizeList.add(tempConsistAddressSizeList_inner);
                             consistDirectionList.add(tempConsistDirectionList_inner);
+                            consistSourceList.add(tempConsistSourceList_inner);
+                            consistRosterNameList.add(tempConsistRosterNameList_inner);
+                            consistLightList.add(tempConsistLightList_inner);
                             if (consistName.length()==0) { consistName = oneConsist.toString(); }
                             consistNameList.add(consistName);
 
                             HashMap<String, String> hm = new HashMap<>();
-                            hm.put("consist_name", getLocoNameFromRoster(oneConsist.toString()));
+                            hm.put("consist_name", mainapp.getRosterNameFromAddress(oneConsist.toString(), false));
                             hm.put("consist", consistName);
                             recent_consists_list.add(hm);
                         }
@@ -722,19 +794,36 @@ public class select_loco extends Activity {
             }
         }
     }
-    String addOneConsistAddress(String line, Integer start, Integer end, ArrayList<Integer> tempConsistEngineAddressList_inner, ArrayList<Integer> tempConsistAddressSizeList_inner, ArrayList<Integer> tempConsistDirectionList_inner) {
+
+
+    String addOneConsistAddress(String line, Integer start, Integer end,
+                                ArrayList<Integer> tempConsistEngineAddressList_inner,
+                                ArrayList<Integer> tempConsistAddressSizeList_inner,
+                                ArrayList<Integer> tempConsistDirectionList_inner,
+                                ArrayList<Integer> tempConsistSourceList_inner,
+                                ArrayList<Integer> tempConsistLightList_inner) {
         String rslt = "";
         String splitLine = line.substring(start, end);
         int splitPos = splitLine.indexOf(':');
         if (splitPos!=-1) {
             Integer addr = Integer.decode(splitLine.substring(0, splitPos));
-            Integer size = Integer.decode(splitLine.substring(splitPos + 1, splitPos + 2));
-            Integer dir = Integer.decode(splitLine.substring(splitPos + 2, splitPos + 3));
+            int size = Integer.decode(splitLine.substring(splitPos + 1, splitPos + 2));
+            int dir = Integer.decode(splitLine.substring(splitPos + 2, splitPos + 3));
+            int source = WHICH_SOURCE_UNKNOWN; //default to unknown
+            int light = LIGHT_UNKNOWN; //default to unknown
+            if (splitLine.length()>splitPos + 3) {  // if short, then this is the first format that did not include the source or light value
+                source = Integer.decode(splitLine.substring(splitPos + 3, splitPos + 4));
+                light = Integer.decode(splitLine.substring(splitPos + 4, splitPos + 5));
+            }
             tempConsistEngineAddressList_inner.add(addr);
             tempConsistAddressSizeList_inner.add(size);
             tempConsistDirectionList_inner.add(dir);
-            rslt = "<span>" + addr.toString()+"<small><small>("+ (size==0 ? "S":"L") +")</small>"+ (dir==0 ? "▲":"▼") + "</small> &nbsp;</span>";
-//            rslt = addr.toString() + " " + (dir==0 ? "F>":"<R") + " ";
+            tempConsistSourceList_inner.add(source);
+            tempConsistLightList_inner.add(light);
+
+            rslt = "<span>" + addr.toString()+"<small><small>("+ (size==0 ? "S":"L") +")</small>"
+                    + (dir==0 ? "▲":"▼") + "</small>" +  getSourceHtmlString(source) + " &nbsp;</span>";
+//                    +  (light==0 ? "○": (light==1 ? "● ":"≡")) + "</small> &nbsp;</span>";
         }
         return rslt;
     }
@@ -744,6 +833,9 @@ public class select_loco extends Activity {
         ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<>();
         ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<>();
         ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<>();
+        ArrayList<Integer> tempConsistSourceList_inner = new ArrayList<>();
+        ArrayList<String> tempConsistRosterNameList_inner = new ArrayList<>();
+        ArrayList<Integer> tempConsistLightList_inner = new ArrayList<>();
         boolean haveConsist = false;
 
         //if not updating list or no SD Card present then nothing else to do
@@ -758,9 +850,16 @@ public class select_loco extends Activity {
             for (ConLoco l : conLocos) {
                 tempConsistEngineAddressList_inner.add(l.getIntAddress());
                 tempConsistAddressSizeList_inner.add(l.getIntAddressLength());
-//                String addr = (l.getIntAddressLength() == 0 ? "S" : "L") + l.getIntAddress().toString();
                 String addr = locoAddressToString(l.getIntAddress(), l.getIntAddressLength(), true);
                 tempConsistDirectionList_inner.add((consist.isBackward(addr) ? 1 : 0));
+                String rosterName = "";
+                if (l.getRosterName() != null) {
+                    rosterName = l.getRosterName();
+                }
+                tempConsistSourceList_inner.add(rosterName.equals("") ? WHICH_SOURCE_ADDRESS : WHICH_SOURCE_ROSTER);
+                tempConsistRosterNameList_inner.add(rosterName);
+//                tempConsistLightList_inner.add((consist.isLight(addr)));
+                tempConsistLightList_inner.add(2);  // for now just default to unknown
             }
 
             // check if we already have it
@@ -794,6 +893,9 @@ public class select_loco extends Activity {
                     consistEngineAddressList.remove(0);
                     consistAddressSizeList.remove(0);
                     consistDirectionList.remove(0);
+                    consistSourceList.remove(0);
+                    consistRosterNameList.remove(0);
+                    consistLightList.remove(0);
                     consistNameList.remove(0);
                     haveConsist = false;
                 }
@@ -807,6 +909,9 @@ public class select_loco extends Activity {
                 consistEngineAddressList.add(0, tempConsistEngineAddressList_inner);
                 consistAddressSizeList.add(0, tempConsistAddressSizeList_inner);
                 consistDirectionList.add(0, tempConsistDirectionList_inner);
+                consistSourceList.add(0, tempConsistSourceList_inner);
+                consistRosterNameList.add(0, tempConsistRosterNameList_inner);
+                consistLightList.add(0, tempConsistLightList_inner);
                 String consistName = consist.toString();
                 consistNameList.add(0, consistName);
             }
@@ -828,11 +933,27 @@ public class select_loco extends Activity {
                     mrl--;
 
                     for (int i = 0; i < consistEngineAddressList.size() && mrl > 0; i++) {
-                        list_output.format("%d:%d%d", consistEngineAddressList.get(i).get(0), consistAddressSizeList.get(i).get(0), consistDirectionList.get(i).get(0));
-                        for (int j = 1; j < consistAddressSizeList.get(i).size(); j++) {
-                            list_output.format(",%d:%d%d", consistEngineAddressList.get(i).get(j), consistAddressSizeList.get(i).get(j), consistDirectionList.get(i).get(j));
+
+                        for (int j = 0; j < consistAddressSizeList.get(i).size(); j++) {
+                            if (j>0) {
+                                list_output.format(",");
+                            }
+                            list_output.format("%d:%d%d%d%d",
+                                    consistEngineAddressList.get(i).get(j),
+                                    consistAddressSizeList.get(i).get(j),
+                                    consistDirectionList.get(i).get(j),
+                                    consistSourceList.get(i).get(j),
+                                    consistLightList.get(i).get(j));
                         }
-                        list_output.format("~%s",consistNameList.get(i));
+                        list_output.format("<~>%s<~>",consistNameList.get(i));
+                        for (int j = 0; j < consistRosterNameList.get(i).size(); j++) {
+                            if (j>0) {
+                                list_output.format("<,>");
+                            }
+                            list_output.format("%s",
+                                    consistRosterNameList.get(i).get(j));
+                        }
+
                         list_output.format("\n");
                         mrl--;
                     }
@@ -847,7 +968,7 @@ public class select_loco extends Activity {
         }
     }
 
-
+    // listener for the Acquire button when entering a DCC Address
     public class button_listener implements View.OnClickListener {
         public void onClick(View v) {
             EditText entry = findViewById(R.id.loco_address);
@@ -859,9 +980,12 @@ public class select_loco extends Activity {
             }
             Spinner spinner = findViewById(R.id.address_length);
             address_size = spinner.getSelectedItemPosition();
-            sWhichThrottle += getLocoNameFromRoster(locoAddressToString(engine_address, address_size, false));
+//            locoName = mainapp.getRosterNameFromAddress(locoAddressToString(engine_address, address_size, false),false);
+            locoName = locoAddressToString(engine_address, address_size, false);
+            sWhichThrottle += locoName;
+            locoSource = WHICH_SOURCE_ADDRESS;
 
-            acquire_engine(true);
+            acquire_engine(true,true);
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
@@ -882,6 +1006,7 @@ public class select_loco extends Activity {
         }
     }
 
+    // onClick for the Recent Locos list items
     public class engine_item implements AdapterView.OnItemClickListener {
         // When an item is clicked, acquire that engine.
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -893,21 +1018,33 @@ public class select_loco extends Activity {
             } else {  //no swipe
                 engine_address = recent_loco_address_list.get(position);
                 address_size = recent_loco_address_size_list.get(position);
-                sWhichThrottle += getLocoNameFromRoster(locoAddressToString(engine_address, address_size, false));
-                acquire_engine(true);
+                locoSource = recent_loco_source_list.get(position);
+                locoName = recent_loco_name_list.get(position);
+                if (locoSource==WHICH_SOURCE_UNKNOWN ) {
+                    locoName = mainapp.getRosterNameFromAddress(locoAddressToString(engine_address, address_size, false),true);
+                }
+
+                sWhichThrottle += locoName;
+                acquire_engine(true,true);
             }
         }
     }
 
+    // onClick for the Recent Consists list items
     public class consist_item implements AdapterView.OnItemClickListener {
         // When an item is clicked, acquire that consist.
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-            Integer addr;
+//            Integer addr;
             String sAddr;
-            Integer size;
-            Integer dir;
+//            int size;
+            int dir;
+//            int source;
+            String rosterName;
+//            int light;
             Consist consist = mainapp.consists[whichThrottle];
+
+            String tempsWhichThrottle = sWhichThrottle;
 
             if(recentConsistsSwipeDetector.swipeDetected()) {
                 if(recentConsistsSwipeDetector.getAction() == SwipeDetector.Action.LR) {
@@ -916,28 +1053,24 @@ public class select_loco extends Activity {
                 }
             } else {  //no swipe
 
-                // use the normal acquire process to get the first loco, that way the function buttons will be correct.
-                engine_address = consistEngineAddressList.get(position).get(0);
-                address_size = consistAddressSizeList.get(position).get(0);
-                sWhichThrottle += getLocoNameFromRoster(locoAddressToString(engine_address, address_size, false));
-                acquire_engine(true);
+                for (int i = 0; i < consistEngineAddressList.get(position).size(); i++) {
 
-                for (int i = 1; i < consistEngineAddressList.get(position).size(); i++) {
-                    addr = consistEngineAddressList.get(position).get(i);
-                    size = consistAddressSizeList.get(position).get(i);
+                    engine_address = consistEngineAddressList.get(position).get(i);
+                    address_size = consistAddressSizeList.get(position).get(i);
+                    locoSource = consistSourceList.get(position).get(i);
+                    locoName = mainapp.getRosterNameFromAddress(locoAddressToString(engine_address, address_size, false), false);
+                    if ( (locoSource!=WHICH_SOURCE_ADDRESS) && (!consistRosterNameList.get(position).get(i).equals("")) ) {
+                            locoName = consistRosterNameList.get(position).get(i);
+                    }
+                    sWhichThrottle = tempsWhichThrottle
+                            + locoName;
+
+                    acquire_engine(true,false);
+
                     dir = consistDirectionList.get(position).get(i);
-
-//                    sAddr = (size==0 ? "S":"L") + addr.toString();  // convert 0/1 to S/L
-                    sAddr = locoAddressToString(addr, size, true);  // convert 0/1 to S/L + addr
-                    consist.add(sAddr);
-                    Log.d("Engine_Driver", "select_loco Acquiring Consist. loco: " + locoAddressToString(addr, size, false) + (dir==0 ? "↑":"↓"));
-
-    //                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
-                    mainapp.sendMsgDelay(mainapp.comm_msg_handler, i*50, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle,0);
-
                     if (dir==1) {
                         consist = mainapp.consists[whichThrottle];
-                        consist.setBackward(sAddr, true);
+                        consist.setBackward(locoName, true);
                     }
                 }
 
@@ -976,6 +1109,7 @@ public class select_loco extends Activity {
         }
     }
 
+    // onClick Listener for the Roster list items
     public class roster_item_ClickListener implements
             AdapterView.OnItemClickListener {
         // When a roster item is clicked, send request to acquire that engine.
@@ -1000,11 +1134,15 @@ public class select_loco extends Activity {
                     return; //get out, don't try to acquire
                 }
                 if ("loco".equals(rosterEntryType)) {
+                    locoName = rosterNameString;
                     sWhichThrottle += rosterNameString;     //append rostername if type is loco (not consist) 
                 }
+                locoSource = WHICH_SOURCE_ROSTER;
+
                 boolean bRosterRecent = prefs.getBoolean("roster_recent_locos_preference",
                         getResources().getBoolean(R.bool.prefRosterRecentLocosDefaultValue));
-                acquire_engine(bRosterRecent);
+
+                acquire_engine(bRosterRecent, true);
             }
         }
     }
@@ -1353,6 +1491,9 @@ public class select_loco extends Activity {
             consistEngineAddressList.clear();
             consistAddressSizeList.clear();
             consistDirectionList.clear();
+            consistSourceList.clear();
+            consistRosterNameList.clear();
+            consistLightList.clear();
         }
     }
 
@@ -1424,46 +1565,61 @@ public class select_loco extends Activity {
         Button ba = findViewById(R.id.acquire);
         EditText la = findViewById(R.id.loco_address);
         int txtLen = la.getText().toString().trim().length();
+        int addr = 0;
+        if (txtLen>0) {
+            addr = Integer.parseInt(la.getText().toString().trim());
+        }
 
         // don't allow acquire button if nothing entered
         if (txtLen > 0) {
             ba.setEnabled(true);
+
+            // set address length
+            Spinner al = findViewById(R.id.address_length);
+            if (default_address_length.equals("Long") ||
+                    ( default_address_length.equals("Auto") && (addr > 127)) ) {
+//                    ( default_address_length.equals("Auto") && (txtLen > 2)) ) {
+                al.setSelection(1);
+            } else {
+                al.setSelection(0);
+            }
+
         } else {
             ba.setEnabled(false);
         }
 
-        // set address length
-        Spinner al = findViewById(R.id.address_length);
-        if (default_address_length.equals("Long")
-                || (default_address_length.equals("Auto") && txtLen > 2)) {
-            al.setSelection(1);
-        } else {
-            al.setSelection(0);
-        }
         return txtLen;
     }
 
+    // long click handler for the Roster List items.  Shows the details of the enter in a dialog.
     protected boolean onLongListItemClick(View v, int position, long id) {
         if (mainapp.roster == null) {
             Log.w("Engine_Driver", "No roster details found.");
             return true;
         }
         HashMap<String, String> hm = roster_list.get(position);
-        String rosternamestring = hm.get("roster_name");
-        RosterEntry re = mainapp.roster.get(rosternamestring);
+        String rosterNameString = hm.get("roster_name");
+        RosterEntry re = mainapp.roster.get(rosterNameString);
         if (re == null) {
-            Log.w("Engine_Driver", "Roster entry " + rosternamestring + " not available.");
+            Log.w("Engine_Driver", "Roster entry " + rosterNameString + " not available.");
             return true;
         }
-        Log.d("Engine_Driver", "Showing details for roster entry " + rosternamestring);
+        String iconURL = hm.get("roster_icon");
+
+        showRosterDetailsDialog(re, rosterNameString, iconURL);
+
+        return true;
+    }
+
+    protected void showRosterDetailsDialog(RosterEntry re, String rosterNameString, String iconURL) {
+        Log.d("Engine_Driver", "Showing details for roster entry " + rosterNameString);
         final Dialog dialog = new Dialog(select_loco.this, mainapp.getSelectedTheme());
-        dialog.setTitle(getApplicationContext().getResources().getString(R.string.rosterDetailsDialogTitle) + rosternamestring);
+        dialog.setTitle(getApplicationContext().getResources().getString(R.string.rosterDetailsDialogTitle) + rosterNameString);
         dialog.setContentView(R.layout.roster_entry);
         String res = re.toString();
         TextView tv = dialog.findViewById(R.id.rosterEntryText);
         tv.setText(res);
 
-        String iconURL = hm.get("roster_icon");
         ImageView imageView = dialog.findViewById(R.id.rosterEntryImage);
         if ((iconURL != null) && (iconURL.length() > 0)) {
             mainapp.imageDownloader.download(iconURL, imageView);
@@ -1480,15 +1636,25 @@ public class select_loco extends Activity {
 
         dialog.setCancelable(true);
         dialog.show();
-        return true;
+
     }
 
     // long click for the recent loco list items.
     protected boolean onLongRecentListItemClick(View v, int position, long id) {
 //        clearRecentListItem(v, position, id);
-        showEditRecentsNameDialog(position);
+        if (recent_loco_source_list.get(position)==WHICH_SOURCE_ROSTER) {
+            String rosterEntryName = recent_loco_name_list.get(position);
+            RosterEntry re = mainapp.roster.get(rosterEntryName);
+            if (re == null) {
+                Log.w("Engine_Driver", "Roster entry " + rosterEntryName + " not available.");
+                return true;
+            }
+            showRosterDetailsDialog(re, rosterEntryName, "");
+        } else {
+            showEditRecentsNameDialog(position);
+        }
         return true;
-}
+    }
 
     //  Clears the entry from the list
     protected boolean clearRecentListItem(View v, int position, long id) {
@@ -1497,16 +1663,18 @@ public class select_loco extends Activity {
         recent_loco_address_list.remove(position);
         recent_loco_address_size_list.remove(position);
         recent_loco_name_list.remove(position);
+        recent_loco_source_list.remove(position);
 
         removingLocoOrForceReload = true;
         updateRecentEngines(true);
         engine_list_view.invalidateViews();
+        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentCleared), Toast.LENGTH_SHORT).show();
+
         return true;
     }
 
     // long click for the recent consists list items.  Clears the entry from the list
     protected boolean onLongRecentConsistsListItemClick(View v, int position, long id) {
-//        clearRecentConsistsListItem(v, position, id);
         showEditRecentConsistsNameDialog(position);
         return true;
     }
@@ -1518,12 +1686,17 @@ public class select_loco extends Activity {
         consistEngineAddressList.remove(position);
         consistAddressSizeList.remove(position);
         consistDirectionList.remove(position);
+        consistSourceList.remove(position);
+        consistRosterNameList.remove(position);
+        consistLightList.remove(position);
         consistNameList.remove(position);
 
         removingConsistOrForceRewite = true;
 
         updateRecentConsists(true);
         consists_list_view.invalidateViews();
+        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentConsistCleared), Toast.LENGTH_SHORT).show();
+
         return true;
     }
 
@@ -1600,7 +1773,8 @@ public class RecentSimpleAdapter extends SimpleAdapter {
         String str = hm.get("engine_name");
         if (str != null) {
             TextView name = view.findViewById(R.id.engine_name_label);
-            name.setText(str);
+//            name.setText(str);
+            name.setText(Html.fromHtml(str));
         }
 
         str = hm.get("engine");
@@ -1674,7 +1848,7 @@ public class RecentSimpleAdapter extends SimpleAdapter {
         final View dialogView = inflater.inflate(R.layout.edit_recent_name, null);
         dialogBuilder.setView(dialogView);
 
-        final EditText edt = (EditText) dialogView.findViewById(R.id.editRecentName);
+        final EditText edt = dialogView.findViewById(R.id.editRecentName);
         edt.setText(consistNameList.get(pos));
 
         dialogBuilder.setTitle(getApplicationContext().getResources().getString(R.string.RecentConsistsNameEditTitle));
@@ -1706,7 +1880,7 @@ public class RecentSimpleAdapter extends SimpleAdapter {
         final View dialogView = inflater.inflate(R.layout.edit_recent_name, null);
         dialogBuilder.setView(dialogView);
 
-        final EditText edt = (EditText) dialogView.findViewById(R.id.editRecentName);
+        final EditText edt = dialogView.findViewById(R.id.editRecentName);
         edt.setText(recent_loco_name_list.get(pos));
 
         dialogBuilder.setTitle(getApplicationContext().getResources().getString(R.string.RecentsNameEditTitle));
@@ -1745,6 +1919,31 @@ public class RecentSimpleAdapter extends SimpleAdapter {
             Log.e("Engine_Driver", "locoAddressToString. ");
         }
         return engineAddressString;
+    }
+
+    String locoAddressToHtml(Integer addr, int size, int source) {
+        String engineAddressHtml = "";
+        try {
+            String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
+            String addressSourceString = getSourceHtmlString(source);
+            engineAddressHtml = String.format("<span>%s<small>(%s)</small>%s </span>", addr.toString(), addressLengthString, addressSourceString);
+        } catch (Exception e) {
+            Log.e("Engine_Driver", "locoAddressToString. ");
+        }
+        return engineAddressHtml;
+    }
+
+    String getSourceHtmlString(int source) {
+        String addressSourceString = "?";
+        switch (source) {
+            case WHICH_SOURCE_ROSTER:
+                addressSourceString = " <big>≡</big> ";
+                break;
+            case WHICH_SOURCE_ADDRESS:
+                addressSourceString = "<small><small><sub>└─┘</sub></small></small>";
+                break;
+        }
+        return addressSourceString;
     }
 
 }

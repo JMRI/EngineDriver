@@ -875,4 +875,6 @@
     <string name="prefLimitSpeedPercentSummary">Nastavení \\% z ceny plynu, že rychlost bude omezena na.</string>
     <string name="prefLimitSpeedPercentTitle">Rychlostní limit na \\%</string>
     <string name="rosterDetailsDialogTitle">Vyberte si z Roster / Skládá se Příspěvky</string>
+    <string name="toastRecentConsistCleared">Skládat odstraněn ze seznamu</string>
+    <string name="toastRecentCleared">Loco odstraněn ze seznamu</string>
 </resources>

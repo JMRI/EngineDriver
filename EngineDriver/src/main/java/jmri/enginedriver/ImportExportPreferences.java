@@ -38,6 +38,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,11 +51,23 @@ public class ImportExportPreferences {
     private ArrayList<Integer> recent_loco_address_list;
     private ArrayList<Integer> recent_loco_address_size_list; // Look at address_type.java
     private ArrayList<String> recent_loco_name_list;
+    private ArrayList<Integer> recent_loco_source_list;
 
     private ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> consistAddressSizeList = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> consistDirectionList = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> consistSourceList = new ArrayList<>();
+    private ArrayList<ArrayList<String>> consistRosterNameList = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> consistLightList = new ArrayList<>();  // placeholder - not currently use
     private ArrayList<String> consistNameList = new ArrayList<>();
+
+    private static final int WHICH_SOURCE_UNKNOWN = 0;
+//    private static final int WHICH_SOURCE_ADDRESS = 1;
+//    private static final int WHICH_SOURCE_ROSTER = 2;
+
+//    private static final int LIGHT_OFF = 0;
+//    private static final int LIGHT_FOLLOW = 1;
+      private static final int LIGHT_UNKNOWN = 2;
 
     private static final int FORCED_RESTART_REASON_NONE = 0;
 
@@ -63,7 +76,7 @@ public class ImportExportPreferences {
     private static final String PREF_IMPORT_ALL_RESET = "-";
 
     private boolean writeExportFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName){
-        Log.d("Engine_Driver", "ImportExportPreferences: Writing export file");
+        Log.d("Engine_Driver", "writeExportFile: ImportExportPreferences: Writing export file");
         boolean res = false;
         ObjectOutputStream output = null;
 
@@ -95,13 +108,17 @@ public class ImportExportPreferences {
             }
         }
         if (!res) {
+            Log.e("Engine_Driver", "writeExportFile: ImportExportPreferences: Export Failed");
             Toast.makeText(context, "Export failed!", Toast.LENGTH_LONG).show();
+        } else {
+            Log.d("Engine_Driver", "writeExportFile: ImportExportPreferences: Export succeeded");
+
         }
         return res;
     }
 
     public boolean saveSharedPreferencesToFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
-        Log.d("Engine_Driver", "ImportExportPreferences: Saving preferences to file");
+        Log.d("Engine_Driver", "saveSharedPreferencesToFile: ImportExportPreferences: Saving preferences to file");
         boolean res = false;
 
         boolean prefImportExportLocoList = sharedPreferences.getBoolean("prefImportExportLocoList", context.getResources().getBoolean(R.bool.prefImportExportLocoListDefaultValue));
@@ -109,10 +126,12 @@ public class ImportExportPreferences {
             recent_loco_address_list = new ArrayList<>();
             recent_loco_address_size_list = new ArrayList<>();
             recent_loco_name_list = new ArrayList<>();
+            recent_loco_source_list = new ArrayList<>();
             getRecentLocosListFromFile();
             saveIntListDataToPreferences(recent_loco_address_list, "prefRecentLoco", sharedPreferences);
             saveIntListDataToPreferences(recent_loco_address_size_list, "prefRecentLocoSize", sharedPreferences);
             saveStringListDataToPreferences(recent_loco_name_list, "prefRecentLocoName", sharedPreferences);
+            saveIntListDataToPreferences(recent_loco_source_list, "prefRecentLocoSource", sharedPreferences);
 
             getRecentConsistsListFromFile();
             saveStringListDataToPreferences(consistNameList, "prefRecentConsistName", sharedPreferences);
@@ -120,6 +139,9 @@ public class ImportExportPreferences {
                 saveIntListDataToPreferences(consistEngineAddressList.get(i), "prefRecentConsistAddress_"+i, sharedPreferences);
                 saveIntListDataToPreferences(consistAddressSizeList.get(i), "prefRecentConsistSize_"+i, sharedPreferences);
                 saveIntListDataToPreferences(consistDirectionList.get(i), "prefRecentConsistDirection_"+i, sharedPreferences);
+                saveIntListDataToPreferences(consistSourceList.get(i), "prefRecentConsistSource_"+i, sharedPreferences);
+                saveStringListDataToPreferences(consistRosterNameList.get(i), "prefRecentConsistRosterName_"+i, sharedPreferences);
+                saveIntListDataToPreferences(consistLightList.get(i), "prefRecentConsistLight_"+i, sharedPreferences);
             }
         }
 
@@ -129,13 +151,14 @@ public class ImportExportPreferences {
             Toast.makeText(context, context.getResources().getString(R.string.toastImportExportExportFailed), Toast.LENGTH_LONG).show();
         }
 
+        Log.d("Engine_Driver", "saveSharedPreferencesToFile: ImportExportPreferences: Saving preferences to file - Finished");
         return res;
     }
 
     @SuppressLint("ApplySharedPref")
     @SuppressWarnings({ "unchecked" })
     public boolean loadSharedPreferencesFromFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId) {
-        Log.d("Engine_Driver", "ImportExportPreferences: Loading saved preferences from file");
+        Log.d("Engine_Driver", "loadSharedPreferencesFromFile: ImportExportPreferences: Loading saved preferences from file");
         currentlyImporting = true;
         boolean res = false;
         boolean srcExists = false;
@@ -264,9 +287,11 @@ public class ImportExportPreferences {
                     recent_loco_address_list = new ArrayList<>();
                     recent_loco_address_size_list = new ArrayList<>();
                     recent_loco_name_list = new ArrayList<>();
+                    recent_loco_source_list = new ArrayList<>();
                     getIntListDataFromPreferences(recent_loco_address_list, "prefRecentLoco", sharedPreferences);
                     getIntListDataFromPreferences(recent_loco_address_size_list, "prefRecentLocoSize", sharedPreferences);
                     getStringListDataFromPreferences(recent_loco_name_list, "prefRecentLocoName", sharedPreferences);
+                    getIntListDataFromPreferences(recent_loco_source_list, "prefRecentLocoSource", sharedPreferences);
                     writeRecentLocosListToFile(sharedPreferences);
 
                     getStringListDataFromPreferences(consistNameList, "prefRecentConsistName", sharedPreferences);
@@ -274,14 +299,23 @@ public class ImportExportPreferences {
                         ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<>();
                         ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<>();
                         ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<>();
+                        ArrayList<Integer> tempConsistSourceList_inner = new ArrayList<>();
+                        ArrayList<String> tempConsistRosterNameList_inner = new ArrayList<>();
+                        ArrayList<Integer> tempConsistLightList_inner = new ArrayList<>();
 
                         getIntListDataFromPreferences(tempConsistEngineAddressList_inner, "prefRecentConsistAddress_"+i, sharedPreferences);
                         getIntListDataFromPreferences(tempConsistAddressSizeList_inner, "prefRecentConsistSize_"+i, sharedPreferences);
                         getIntListDataFromPreferences(tempConsistDirectionList_inner, "prefRecentConsistDirection_"+i, sharedPreferences);
+                        getIntListDataFromPreferences(tempConsistSourceList_inner, "prefRecentConsistSource_"+i, sharedPreferences);
+                        getStringListDataFromPreferences(tempConsistRosterNameList_inner, "prefRecentConsistRosterName_"+i, sharedPreferences);
+                        getIntListDataFromPreferences(tempConsistLightList_inner, "prefRecentConsistLight_"+i, sharedPreferences);
 
                         consistEngineAddressList.add(tempConsistEngineAddressList_inner);
                         consistAddressSizeList.add(tempConsistAddressSizeList_inner);
                         consistDirectionList.add(tempConsistDirectionList_inner);
+                        consistSourceList.add(tempConsistSourceList_inner);
+                        consistRosterNameList.add(tempConsistRosterNameList_inner);
+                        consistLightList.add(tempConsistLightList_inner);
                     }
                     writeRecentConsistsListToFile(sharedPreferences);
                 }
@@ -298,12 +332,13 @@ public class ImportExportPreferences {
         }
 
         prefEdit.commit();
+        Log.d("Engine_Driver", "loadSharedPreferencesFromFile: ImportExportPreferences: Loading saved preferences from file - Finished");
         return res;
     }
 
     // simliar, but different, code exists in select_loco.java. if you modify one, make sure you modify the other
     private void getRecentLocosListFromFile() {
-        Log.d("Engine_Driver", "ImportExportPreferences: Loading recent locos list from file");
+        Log.d("Engine_Driver", "getRecentLocosListFromFile: ImportExportPreferences: Loading recent locos list from file");
         try {
             // Populate the List with the recent engines saved in a file. This
             // will be stored in /sdcard/engine_driver/recent_engine_list.txt
@@ -316,48 +351,54 @@ public class ImportExportPreferences {
                     String line = list_reader.readLine();
                     Integer splitPos = line.indexOf(':');
                     if (splitPos > 0) {
-                        Integer ea, as;
-                        String ln = "";
+                        Integer addr, size, source = 0;
+                        String locoName = "";
                         try {
-                            ea = Integer.decode(line.substring(0, splitPos));
-//                            as = Integer.decode(line.substring(splitPos + 1, line.length()));
-                            as = Integer.decode(line.substring(splitPos + 1, splitPos + 2));
+                            addr = Integer.decode(line.substring(0, splitPos));
+                            size = Integer.decode(line.substring(splitPos + 1, splitPos + 2));
                             if (line.length()>splitPos+2) { // has the name extras
-                                if (line.substring(splitPos + 2,splitPos + 3).equals("~")) { // get the name
-                                    ln = line.substring(splitPos + 3);
+                                if (line.substring(splitPos + 2,splitPos + 3).equals("~")) { // old format
+                                    locoName = line.substring(splitPos + 3);
+                                }else {
+                                    if (line.substring(splitPos + 3,splitPos + 4).equals("~")) { // new format. Includes the source
+                                        source = Integer.decode(line.substring(splitPos + 2,splitPos + 3));
+                                        locoName = line.substring(splitPos + 4);
+                                    }
                                 }
                             }
                         } catch (Exception e) {
-                            ea = -1;
-                            as = -1;
-                            ln = "";
+                            addr = -1;
+                            size = -1;
+                            locoName = "";
+                            source = -1;
                         }
-                        if ((ea >= 0) && (as >= 0)) {
-                            recent_loco_address_list.add(ea);
-                            recent_loco_address_size_list.add(as);
-                            HashMap<String, String> hm = new HashMap<>();
-                            String addressLengthString = ((as == 0) ? "S" : "L");  //show L or S based on length from file
-                            String engineAddressString = String.format("%s(%s)", ea.toString(), addressLengthString);
-                            if ((ln.length()==0  || ln.equals(engineAddressString))) { // if nothing is stored, or what is stored is the same as the address, look for it in the roster
-                                ln = engineAddressString;
+                        if ((addr >= 0) && (size >= 0)) {
+                            recent_loco_address_list.add(addr);
+                            recent_loco_address_size_list.add(size);
+                            String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
+                            String engineAddressString = String.format("%s(%s)", addr.toString(), addressLengthString);
+                            if ((locoName.length()==0  || locoName.equals(engineAddressString))) { // if nothing is stored, or what is stored is the same as the address, look for it in the roster
+                                locoName = engineAddressString;
                             }
-                            recent_loco_name_list.add(ln);
+                            recent_loco_name_list.add(locoName);
+                            recent_loco_source_list.add(source);
 
                         }
                     }
                 }
                 list_reader.close();
             }
+            Log.d("Engine_Driver", "getRecentLocosListFromFile: ImportExportPreferences: Read recent locos list from file complete successfully");
 
         } catch (IOException except) {
-            Log.e("Engine_Driver", "ImportExportPreferences: select_loco - Error reading recent loco file. "
+            Log.e("Engine_Driver", "getRecentLocosListFromFile: ImportExportPreferences: select_loco - Error reading recent loco file. "
                     + except.getMessage());
         }
     }
 
     // simliar, but different, code exists in select_loco.java. if you modify one, make sure you modify the other
     private void writeRecentLocosListToFile(SharedPreferences sharedPreferences) {
-        Log.d("Engine_Driver", "ImportExportPreferences: Writing recent locos list to file");
+        Log.d("Engine_Driver", "writeRecentLocosListToFile: ImportExportPreferences: Writing recent locos list to file");
 
         // write it out from the saved preferences to the file
         File sdcard_path = Environment.getExternalStorageDirectory();
@@ -372,30 +413,41 @@ public class ImportExportPreferences {
             if (mrl > 0) {
                 for (int i = 0; i < recent_loco_address_list.size() && mrl > 0; i++) {
 //                    list_output.format("%d:%d\n", recent_loco_address_list.get(i), recent_loco_address_size_list.get(i));
-                    list_output.format("%d:%d~%s\n", recent_loco_address_list.get(i), recent_loco_address_size_list.get(i), recent_loco_name_list.get(i));
+                    list_output.format("%d:%d%d~%s\n",
+                            recent_loco_address_list.get(i),
+                            recent_loco_address_size_list.get(i),
+                            recent_loco_source_list.get(i),
+                            recent_loco_name_list.get(i));
                 }
             }
             list_output.flush();
             list_output.close();
+            Log.d("Engine_Driver", "writeRecentLocosListToFile: ImportExportPreferences: Write recent locos list to file complete successfully");
         } catch (IOException except) {
             Log.e("Engine_Driver",
-                    "select_loco - Error creating a PrintWriter, IOException: "
+                    "writeRecentLocosListToFile: ImportExportPreferences: Error creating a PrintWriter, IOException: "
                             + except.getMessage());
         }
     }
 
     // simliar, but different, code exists in select_loco.java. if you modify one, make sure you modify the other
     private void getRecentConsistsListFromFile() {
-        Log.d("Engine_Driver", "ImportExportPreferences: Loading recent consists list from file");
+        Log.d("Engine_Driver", "getRecentConsistsListFromFile: ImportExportPreferences: Loading recent consists list from file");
 
         consistEngineAddressList = new ArrayList<>();
         consistAddressSizeList = new ArrayList<>();
         consistDirectionList = new ArrayList<>();
+        consistLightList = new ArrayList<>();
+        consistSourceList = new ArrayList<>();
+        consistRosterNameList = new ArrayList<>();
         consistNameList = new ArrayList<>();
 
         ArrayList<Integer> tempConsistEngineAddressList_inner;
         ArrayList<Integer> tempConsistAddressSizeList_inner;
         ArrayList<Integer> tempConsistDirectionList_inner;
+        ArrayList<Integer> tempConsistSourceList_inner;
+        ArrayList<String> tempConsistRosterNameList_inner;
+        ArrayList<Integer> tempConsistLightList_inner;
 
         try {
             // Populate the List with the recent engines saved in a file. This
@@ -411,66 +463,112 @@ public class ImportExportPreferences {
                     tempConsistEngineAddressList_inner = new ArrayList<>();
                     tempConsistAddressSizeList_inner = new ArrayList<>();
                     tempConsistDirectionList_inner = new ArrayList<>();
+                    tempConsistSourceList_inner = new ArrayList<>();
+                    tempConsistRosterNameList_inner = new ArrayList<>();
+                    tempConsistLightList_inner = new ArrayList<>();
 
                     String consistName = "";
-                    int splitName = line.indexOf('~');
-                    if (splitName!=-1) { // see if there is a name saved as well
-                        consistName = line.substring(splitName+1);
-                        line = line.substring(0,splitName);
+                    String splitOn = "<~>";
+                    if (line.indexOf("<~>")==-1) { // must be the old format
+                        splitOn = "~";
+                    }
+                    String[] splitLine = line.split(splitOn, -1);
+
+                    if (splitLine.length>1) { // see if there is a name saved as well
+                        consistName = splitLine[1];
+                        line = splitLine[0];
+                        if (splitLine.length>2) {  // see if there is roster names saved as well
+                            String[] rosterNames = splitLine[2].split("<,>", -1);
+                            tempConsistRosterNameList_inner.addAll(Arrays.asList(rosterNames));
+                        }
                     }
 
                     int splitLoco = line.indexOf(',');
                     if (splitLoco!=-1) {
-                        oneConsist.append(addOneConsistAddress(line, 0, splitLoco, tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner, tempConsistDirectionList_inner));
+                        oneConsist.append(addOneConsistAddress(line, 0, splitLoco, tempConsistEngineAddressList_inner,
+                                tempConsistAddressSizeList_inner,
+                                tempConsistDirectionList_inner,
+                                tempConsistSourceList_inner,
+                                tempConsistLightList_inner));
 
                         boolean foundOne = true;
                         while (foundOne) {
                             Integer prevSplitLoco = splitLoco + 1;
                             splitLoco = line.indexOf(',', prevSplitLoco);
                             if (splitLoco != -1) {
-                                oneConsist.append(addOneConsistAddress(line, prevSplitLoco, splitLoco, tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner, tempConsistDirectionList_inner));
+                                oneConsist.append(addOneConsistAddress(line, prevSplitLoco, splitLoco,
+                                        tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner,
+                                        tempConsistDirectionList_inner,
+                                        tempConsistSourceList_inner,
+                                        tempConsistLightList_inner));
                             } else {
-                                oneConsist.append(addOneConsistAddress(line, prevSplitLoco, line.length(), tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner, tempConsistDirectionList_inner));
+                                oneConsist.append(addOneConsistAddress(line, prevSplitLoco, line.length(),
+                                        tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner,
+                                        tempConsistDirectionList_inner,
+                                        tempConsistSourceList_inner,
+                                        tempConsistLightList_inner));
                                 foundOne = false;
+                            }
+                        }
+                        if (splitLine.length<3) {  // old format - need to add some dummy roster names
+                            for (int j=0; j<tempConsistEngineAddressList_inner.size(); j++) {
+                                tempConsistRosterNameList_inner.add("");
                             }
                         }
                         consistEngineAddressList.add(tempConsistEngineAddressList_inner);
                         consistAddressSizeList.add(tempConsistAddressSizeList_inner);
                         consistDirectionList.add(tempConsistDirectionList_inner);
+                        consistSourceList.add(tempConsistSourceList_inner);
+                        consistRosterNameList.add(tempConsistRosterNameList_inner);
+                        consistLightList.add(tempConsistLightList_inner);
                         if (consistName.length()==0) { consistName = oneConsist.toString(); }
                         consistNameList.add(consistName);
 
                     }
                 }
                 list_reader.close();
+                Log.d("Engine_Driver", "getRecentConsistsListFromFile: ImportExportPreferences: Read recent consists list from file completed successfully");
             }
 
         } catch (IOException except) {
-            Log.e("Engine_Driver", "ImportExportPreferences: select_loco - Error reading recent consist file. "
+            Log.e("Engine_Driver", "getRecentConsistsListFromFile: ImportExportPreferences: Error reading recent consist file. "
                     + except.getMessage());
         }
     }
 
-    String addOneConsistAddress(String line, Integer start, Integer end, ArrayList<Integer> tempConsistEngineAddressList_inner, ArrayList<Integer> tempConsistAddressSizeList_inner, ArrayList<Integer> tempConsistDirectionList_inner) {
+    private String addOneConsistAddress(String line, Integer start, Integer end,
+                                        ArrayList<Integer> tempConsistEngineAddressList_inner,
+                                        ArrayList<Integer> tempConsistAddressSizeList_inner,
+                                        ArrayList<Integer> tempConsistDirectionList_inner,
+                                        ArrayList<Integer> tempConsistSourceList_inner,
+                                        ArrayList<Integer> tempConsistLightList_inner) {
         String rslt = "";
         String splitLine = line.substring(start, end);
         int splitPos = splitLine.indexOf(':');
         if (splitPos!=-1) {
             Integer addr = Integer.decode(splitLine.substring(0, splitPos));
-            Integer size = Integer.decode(splitLine.substring(splitPos + 1, splitPos + 2));
-            Integer dir = Integer.decode(splitLine.substring(splitPos + 2, splitPos + 3));
+            int size = Integer.decode(splitLine.substring(splitPos + 1, splitPos + 2));
+            int dir = Integer.decode(splitLine.substring(splitPos + 2, splitPos + 3));
+            int source = WHICH_SOURCE_UNKNOWN; //default to unknown
+            int light = LIGHT_UNKNOWN; //default to unknown
+            if (splitLine.length()>splitPos + 3) {  // if short, then this is the first format that did not include the source or light value
+                source = Integer.decode(splitLine.substring(splitPos + 3, splitPos + 4));
+                light = Integer.decode(splitLine.substring(splitPos + 4, splitPos + 5));
+            }
             tempConsistEngineAddressList_inner.add(addr);
             tempConsistAddressSizeList_inner.add(size);
             tempConsistDirectionList_inner.add(dir);
-            rslt = "<span>" + addr.toString()+"<small><small>("+ (size==0 ? "S":"L") +")</small>"+ (dir==0 ? "▲":"▼") + "</small> &nbsp;</span>";
-//            rslt = addr.toString() + " " + (dir==0 ? "F>":"<R") + " ";
+            tempConsistSourceList_inner.add(source);
+            tempConsistLightList_inner.add(light);
+
+            rslt = addr.toString();
         }
         return rslt;
     }
 
     // simliar, but different, code exists in select_loco.java. if you modify one, make sure you modify the other
     private void writeRecentConsistsListToFile(SharedPreferences sharedPreferences) {
-        Log.d("Engine_Driver", "ImportExportPreferences: Writing recent consists list to file");
+        Log.d("Engine_Driver", "writeRecentConsistsListToFile: ImportExportPreferences: Writing recent consists list to file");
 
         // write it out from the saved preferences to the file
         File sdcard_path = Environment.getExternalStorageDirectory();
@@ -484,11 +582,26 @@ public class ImportExportPreferences {
             list_output = new PrintWriter(consist_list_file);
             if (mrl > 0) {
                 for (int i = 0; i < consistNameList.size() && mrl > 0; i++) {
-                    list_output.format("%d:%d%d", consistEngineAddressList.get(i).get(0), consistAddressSizeList.get(i).get(0), consistDirectionList.get(i).get(0));
-                    for (int j = 1; j < consistAddressSizeList.get(i).size(); j++) {
-                        list_output.format(",%d:%d%d", consistEngineAddressList.get(i).get(j), consistAddressSizeList.get(i).get(j), consistDirectionList.get(i).get(j));
+                    for (int j = 0; j < consistAddressSizeList.get(i).size(); j++) {
+                        if (j>0) {
+                            list_output.format(",");
+                        }
+                        list_output.format("%d:%d%d%d%d",
+                                consistEngineAddressList.get(i).get(j),
+                                consistAddressSizeList.get(i).get(j),
+                                consistDirectionList.get(i).get(j),
+                                consistSourceList.get(i).get(j),
+                                consistLightList.get(i).get(j));
                     }
-                    list_output.format("~%s",consistNameList.get(i));
+                    list_output.format("<~>%s<~>",consistNameList.get(i));
+                    for (int j = 0; j < consistRosterNameList.get(i).size(); j++) {
+                        if (j>0) {
+                            list_output.format("<,>");
+                        }
+                        list_output.format("%s",
+                                consistRosterNameList.get(i).get(j));
+                    }
+
                     list_output.format("\n");
                     mrl--;
 
@@ -496,9 +609,10 @@ public class ImportExportPreferences {
             }
             list_output.flush();
             list_output.close();
+            Log.d("Engine_Driver", "writeRecentConsistsListToFile: ImportExportPreferences: Write recent consists list to file completed successfully");
         } catch (IOException except) {
             Log.e("Engine_Driver",
-                    "select_loco - Error creating a PrintWriter, IOException: "
+                    "writeRecentConsistsListToFile: ImportExportPreferences: Error creating a PrintWriter, IOException: "
                             + except.getMessage());
         }
     }

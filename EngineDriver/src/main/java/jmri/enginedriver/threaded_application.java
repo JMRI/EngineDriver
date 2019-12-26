@@ -867,11 +867,13 @@ public class threaded_application extends Application {
                         Log.d("Engine_Driver", "threaded_application: loco " + addr + " dropped from " + throttleIntToString(whichThrottle));
 
                     } else if (com2 == 'L') { //list of function buttons
-                        String lead;
-                        lead = consists[whichThrottle].getLeadAddr();
-                        if (lead.equals(addr))                        //*** temp - only process if for lead engine in consist
-                            process_roster_function_string("RF29}|{1234(L)" + ls[1], whichThrottle);  //prepend some stuff to match old-style
-                        consists[whichThrottle].setFunctionLabels(addr,"RF29}|{1234(L)" + ls[1], threaded_application.this);
+                        if (consists[whichThrottle].isLeadFromRoster()) { // if not from the roster ignore the function labels that WiT has sent back
+                            String lead;
+                            lead = consists[whichThrottle].getLeadAddr();
+                            if (lead.equals(addr))                        //*** temp - only process if for lead engine in consist
+                                process_roster_function_string("RF29}|{1234(L)" + ls[1], whichThrottle);  //prepend some stuff to match old-style
+                            consists[whichThrottle].setFunctionLabels(addr, "RF29}|{1234(L)" + ls[1], threaded_application.this);
+                        }
 
                     } else if (com2 == 'A') { //process change in function value  MTAL4805<;>F028
                         if (ls.length == 2 && "F".equals(ls[1].substring(0, 1))) {
@@ -2053,20 +2055,36 @@ public class threaded_application extends Application {
     }
 
     // get the roster name from address string 123(L).  Return input if not found in roster or in consist
-    public String getRosterNameFromAddress(String addr_str) {
+    public String getRosterNameFromAddress(String addr_str, boolean returnBlankIfNotFound) {
+        boolean prefRosterRecentLocoNames = prefs.getBoolean("prefRosterRecentLocoNames",
+                getResources().getBoolean(R.bool.prefRosterRecentLocoNamesDefaultValue));
 
+        if (prefRosterRecentLocoNames) {
+            if ((roster_entries != null) && (roster_entries.size() > 0)) {
+                for (String rosterName : roster_entries.keySet()) {  // loop thru roster entries,
+                    if (roster_entries.get(rosterName).equals(addr_str)) { //looking for value = input parm
+                        return rosterName;  //if found, return the roster name (key)
+                    }
+                }
+            }
+            if (getConsistNameFromAddress(addr_str) != null) { //check for a JMRI consist for this address
+                return getConsistNameFromAddress(addr_str);
+            }
+        }
+        if (returnBlankIfNotFound) return "";
+
+        return addr_str; //return input if not found
+    }
+
+    public String findLocoNameInRoster(String searchName) {
         if ((roster_entries != null) && (roster_entries.size() > 0)) {
-            for (String rostername : roster_entries.keySet()) {  // loop thru roster entries,
-                if (roster_entries.get(rostername).equals(addr_str)) { //looking for value = input parm
-                    return rostername;  //if found, return the roster name (key)
+            for (String rosterName : roster_entries.keySet()) {  // loop thru roster entries,
+                if (roster_entries.get(rosterName).equals(searchName)) { //looking for value = input parm
+                    return searchName;  //if found, return the roster name (key)
                 }
             }
         }
-        if (getConsistNameFromAddress(addr_str) != null) { //check for a JMRI consist for this address
-            return getConsistNameFromAddress(addr_str);
-        }
-
-        return addr_str; //return input if not found
+        return ""; //return blank if not found
     }
 
     public String getConsistNameFromAddress(String addr_str) {
