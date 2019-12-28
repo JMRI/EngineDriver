@@ -218,6 +218,8 @@ public class threaded_application extends Application {
     public boolean introIsRunning = false;
 
     public boolean webMenuSelected = false;  // used as an override for the auto-web code when the web menu is selected.
+    public boolean isRotating = false;
+    private int previousOrientation = Configuration.ORIENTATION_UNDEFINED;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -2909,6 +2911,18 @@ public class threaded_application extends Application {
         }
 
     }
+
+    public void checkAndSetOrientationInfo() {
+        int currentOrientation = getResources().getConfiguration().orientation;
+        if(previousOrientation != Configuration.ORIENTATION_UNDEFINED // starts undefined
+                && previousOrientation != currentOrientation) {
+            isRotating = true;
+//            navigatingAway = false;
+        }
+
+        previousOrientation = currentOrientation;
+    }
+
 }
 
 

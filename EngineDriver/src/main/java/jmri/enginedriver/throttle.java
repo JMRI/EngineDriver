@@ -4453,6 +4453,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             autoImportFromURL();
         }
 
+        mainapp.checkAndSetOrientationInfo();
+
     } // end of onCreate()
 
     @Override
@@ -4600,6 +4602,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         super.onSaveInstanceState(outState);
         webView.saveState(outState); // save history (on rotation) if at least one page has loaded
 
+        mainapp.isRotating = false;
+
         // save the requested throttle direction so we can update the
         // direction indication immediately in OnCreate following a rotate
 
@@ -4624,7 +4628,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         CookieSyncManager.getInstance().stopSync();
 
         if (!this.isFinishing() && !navigatingAway) { // only invoke setContentIntentNotification when going into background
-            mainapp.addNotification(this.getIntent());
+            mainapp.checkAndSetOrientationInfo();
+            if (!mainapp.isRotating) {
+                mainapp.addNotification(this.getIntent());
+            }
         }
 
         if ((isScreenLocked) || (screenDimmed)) {

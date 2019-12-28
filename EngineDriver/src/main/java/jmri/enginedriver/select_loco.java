@@ -1374,6 +1374,9 @@ public class select_loco extends Activity {
         });
 
         set_labels();
+
+        mainapp.checkAndSetOrientationInfo();
+
     }
 
     @SuppressLint("ApplySharedPref")
@@ -1515,10 +1518,19 @@ public class select_loco extends Activity {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mainapp.isRotating = false;
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         if (!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
-            mainapp.addNotification(this.getIntent());
+            mainapp.checkAndSetOrientationInfo();
+            if (!mainapp.isRotating) {
+                mainapp.addNotification(this.getIntent());
+            }
         }
     }
 

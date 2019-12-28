@@ -223,6 +223,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         advancedPreferences = getResources().getStringArray(R.array.advancedPreferences);
         hideAdvancedPreferences();
+
+        mainapp.checkAndSetOrientationInfo();
+
     }
 
     @Override
@@ -250,6 +253,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mainapp.isRotating = false;
+    }
+
+    @Override
     protected void onPause() {
         //Log.d("Engine_Driver", "preferences.onPause() called");
         super.onPause();
@@ -257,7 +266,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         // Unregister the listener            
         getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
         if (!this.isFinishing()) {
-            mainapp.addNotification(this.getIntent());
+            mainapp.checkAndSetOrientationInfo();
+            if (!mainapp.isRotating) {
+                mainapp.addNotification(this.getIntent());
+            }
         }
     }
 

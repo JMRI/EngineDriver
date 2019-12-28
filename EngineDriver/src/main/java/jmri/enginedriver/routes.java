@@ -382,6 +382,9 @@ public class routes extends Activity implements OnGestureListener {
 
         //update route list
         refresh_route_view();
+
+        mainapp.checkAndSetOrientationInfo();
+
     }
 
     @Override
@@ -433,6 +436,12 @@ public class routes extends Activity implements OnGestureListener {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mainapp.isRotating = false;
+    }
+
+    @Override
     public void onPause() {
         //Log.d("Engine_Driver","routes.onPause()");
         super.onPause();
@@ -448,7 +457,10 @@ public class routes extends Activity implements OnGestureListener {
         }
 
         if (!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
-            mainapp.addNotification(this.getIntent());
+            mainapp.checkAndSetOrientationInfo();
+            if (!mainapp.isRotating) {
+                mainapp.addNotification(this.getIntent());
+            }
         }
     }
 
