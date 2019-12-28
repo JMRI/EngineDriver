@@ -471,6 +471,7 @@ public class select_loco extends Activity {
                 return;
             }
         }
+        Log.d("Engine_Driver", "select_loco: acquire_engine: sAddr:'" + sAddr +"'");
 
         if (!consist.isActive()) {               // if this is the only loco in consist then just tell WiT and exit
             consist.add(l);
@@ -539,13 +540,14 @@ public class select_loco extends Activity {
                 if (!removingLocoOrForceReload) {
                     mrl--;
                     // Add this engine to the head of recent engines list.
-                    String tempLocoName = (locoName.equals("") ? locoAddressToString(engine_address, address_size,false) : locoName);
+//                    String tempLocoName = (locoName.equals("") ? locoAddressToString(engine_address, address_size,false) : locoName);
 
                     // check if it is already in the list and remove it if necessary
                     for (int i = 0; i < recent_loco_address_list.size() && mrl > 0; i++) {
                         if (engine_address == recent_loco_address_list.get(i)
                                 && address_size == recent_loco_address_size_list.get(i)
-                                && tempLocoName.equals(recent_loco_name_list.get(i))) {
+//                                && tempLocoName.equals(recent_loco_name_list.get(i))) {
+                                && locoName.equals(recent_loco_name_list.get(i))) {
 //                            tempLocoName = recent_loco_name_list.get(i); // grab the current name
                             recent_loco_address_list.remove(i);      // before removing it from its current location in the list
                             recent_loco_address_size_list.remove(i);
@@ -553,7 +555,8 @@ public class select_loco extends Activity {
                             recent_loco_source_list.remove(i);
                         }
                     }
-                    list_output.format("%d:%d%d~%s\n", engine_address, address_size, locoSource, tempLocoName);
+//                    list_output.format("%d:%d%d~%s\n", engine_address, address_size, locoSource, tempLocoName);
+                    list_output.format("%d:%d%d~%s\n", engine_address, address_size, locoSource, locoName);
                 }
                 removingLocoOrForceReload = false;
                 for (int i = 0; i < recent_loco_address_list.size() && mrl > 0; i++) {

@@ -763,6 +763,7 @@ public class threaded_application extends Application {
 
             //format multithrottle request for loco M1+L37<;>ECSX37
             String msgTxt = String.format("M%s+%s<;>%s", throttleIntToString(whichThrottle), address, rosterName);  //add requested loco to this throttle
+            Log.d("Engine_Driver", "threaded_application: acquireLoco: addr:'" + addr +"' msgTxt: '" + msgTxt + "'");
             sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, msgTxt);
 
             if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
