@@ -437,7 +437,7 @@ public class select_loco extends Activity {
     boolean saveUpdateList;         // save value across ConsistEdit activity 
     boolean newEngine;              // save value across ConsistEdit activity
 
-    void acquire_engine(boolean bUpdateList, boolean showConsistEdit) {
+    void acquire_engine(boolean bUpdateList, int numberInConsist) { // if numberInConsist is greater then it is not from the recent consists list
         String roster_name = "";
         String sAddr = locoAddressToString(engine_address, address_size, true);
         Loco l = new Loco(sAddr);
@@ -473,14 +473,15 @@ public class select_loco extends Activity {
         }
         Log.d("Engine_Driver", "select_loco: acquire_engine: sAddr:'" + sAddr +"'");
 
-        if (!consist.isActive()) {               // if this is the only loco in consist then just tell WiT and exit
+        if ( (!consist.isActive()) && (numberInConsist<1) ) {               // if this is the only loco in consist then just tell WiT and exit
             consist.add(l);
             consist.setLeadAddr(l.getAddress());
             consist.setTrailAddr(l.getAddress());
 //            consist.setConfirmed(l.getAddress()); //this happens after response from WiTS
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
-            updateRecentEngines(bUpdateList);
-//            updateRecentConsists(bUpdateList);
+            if(numberInConsist<0) { // don't save the recents if a recent consist was selected
+                updateRecentEngines(bUpdateList);
+            }
             result = RESULT_OK;
             end_this_activity();
 
@@ -497,7 +498,7 @@ public class select_loco extends Activity {
 
                 consist.setTrailAddr(l.getAddress());  // set the newly added loco as the trailing loco
 
-                if (showConsistEdit) { // don't show the Consist edit screen.  Only used for Recent Consists
+                if (numberInConsist<0) { // don't show the Consist edit screen.  Only used for Recent Consists
                     navigatingAway = true;
                     startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
                     connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -986,7 +987,7 @@ public class select_loco extends Activity {
             sWhichThrottle += locoName;
             locoSource = WHICH_SOURCE_ADDRESS;
 
-            acquire_engine(true,true);
+            acquire_engine(true, -1);
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
@@ -1026,7 +1027,7 @@ public class select_loco extends Activity {
                 }
 
                 sWhichThrottle += locoName;
-                acquire_engine(true,true);
+                acquire_engine(true, -1);
             }
         }
     }
@@ -1066,7 +1067,7 @@ public class select_loco extends Activity {
                     sWhichThrottle = tempsWhichThrottle
                             + locoName;
 
-                    acquire_engine(true,false);
+                    acquire_engine(true,i);
 
                     dir = consistDirectionList.get(position).get(i);
                     if (dir==1) {
@@ -1143,7 +1144,7 @@ public class select_loco extends Activity {
                 boolean bRosterRecent = prefs.getBoolean("roster_recent_locos_preference",
                         getResources().getBoolean(R.bool.prefRosterRecentLocosDefaultValue));
 
-                acquire_engine(bRosterRecent, true);
+                acquire_engine(bRosterRecent,  -1);
             }
         }
     }
