@@ -84,6 +84,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -220,6 +221,14 @@ public class threaded_application extends Application {
     public boolean webMenuSelected = false;  // used as an override for the auto-web code when the web menu is selected.
     public boolean isRotating = false;
     private int previousOrientation = Configuration.ORIENTATION_UNDEFINED;
+
+    private static final int WHICH_SOURCE_UNKNOWN = 0;
+    private static final int WHICH_SOURCE_ADDRESS = 1;
+    private static final int WHICH_SOURCE_ROSTER = 2;
+
+    public static final int LIGHT_OFF = 0;
+    public static final int LIGHT_FOLLOW = 1;
+    public static final int LIGHT_UNKNOWN = 2;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -2924,6 +2933,79 @@ public class threaded_application extends Application {
         }
 
         previousOrientation = currentOrientation;
+    }
+
+    public String locoAddressToString(Integer addr, int size, boolean sizeAsPrefix) {
+        String engineAddressString = "";
+        try {
+            String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
+            if (!sizeAsPrefix) {
+                engineAddressString = String.format("%s(%s)", addr.toString(), addressLengthString);  //e.g.  1009(L)
+            } else {
+                engineAddressString = addressLengthString + addr.toString();  //e.g.  L1009
+            }
+        } catch (Exception e) {
+            Log.e("Engine_Driver", "locoAddressToString. ");
+        }
+        return engineAddressString;
+    }
+
+    public String locoAddressToHtml(Integer addr, int size, int source) {
+        String engineAddressHtml = "";
+        try {
+            String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
+            String addressSourceString = getSourceHtmlString(source);
+            engineAddressHtml = String.format("<span>%s<small>(%s)</small>%s </span>", addr.toString(), addressLengthString, addressSourceString);
+        } catch (Exception e) {
+            Log.e("Engine_Driver", "locoAddressToString. ");
+        }
+        return engineAddressHtml;
+    }
+
+    public String getSourceHtmlString(int source) {
+        String addressSourceString = "?";
+        switch (source) {
+            case WHICH_SOURCE_ROSTER:
+                addressSourceString = " <big>≡</big> ";
+                break;
+            case WHICH_SOURCE_ADDRESS:
+                addressSourceString = "<sub><small><small><small>└─┘</small></small></small></sub>";
+                break;
+        }
+        return addressSourceString;
+    }
+
+    public String addOneConsistAddress(String line, Integer start, Integer end,
+                                ArrayList<Integer> tempConsistEngineAddressList_inner,
+                                ArrayList<Integer> tempConsistAddressSizeList_inner,
+                                ArrayList<Integer> tempConsistDirectionList_inner,
+                                ArrayList<Integer> tempConsistSourceList_inner,
+                                ArrayList<Integer> tempConsistLightList_inner) {
+        String rslt = "";
+        String splitLine = line.substring(start, end);
+        int splitPos = splitLine.indexOf(':');
+        if (splitPos!=-1) {
+            Integer addr = Integer.decode(splitLine.substring(0, splitPos));
+            int size = Integer.decode(splitLine.substring(splitPos + 1, splitPos + 2));
+            int dir = Integer.decode(splitLine.substring(splitPos + 2, splitPos + 3));
+            int source = WHICH_SOURCE_UNKNOWN; //default to unknown
+            int light = LIGHT_UNKNOWN; //default to unknown
+            if (splitLine.length()>splitPos + 3) {  // if short, then this is the first format that did not include the source or light value
+                source = Integer.decode(splitLine.substring(splitPos + 3, splitPos + 4));
+                light = Integer.decode(splitLine.substring(splitPos + 4, splitPos + 5));
+            }
+            tempConsistEngineAddressList_inner.add(addr);
+            tempConsistAddressSizeList_inner.add(size);
+            tempConsistDirectionList_inner.add(dir);
+            tempConsistSourceList_inner.add(source);
+            tempConsistLightList_inner.add(light);
+
+            rslt = "<span>" + addr.toString()+"<small><small>("+ (size==0 ? "S":"L") +")"
+                    + (dir==0 ? "▲":"▼") + "</small></small>"
+                    +  (light==LIGHT_OFF ? "○": (light==LIGHT_FOLLOW ? "●":"<small><small>?</small></small>"))
+                    +  getSourceHtmlString(source) + " &nbsp;</span>";
+        }
+        return rslt;
     }
 
 }

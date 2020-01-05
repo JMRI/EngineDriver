@@ -495,7 +495,7 @@
  *   TODO: disconnect connections made by roster stuff
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
- *   TODO: save and restore the Light settings for the consist locos
+ *   TODO: remove the similar code the read and write the recents and recent consists in threaded_application.java, ImportExportPreferences.java and ConsistLightsEdit.java
 8 * log_viewer:
  *
  * These require changes to WiThrottle

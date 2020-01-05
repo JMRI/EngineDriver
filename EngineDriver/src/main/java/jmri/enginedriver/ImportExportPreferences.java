@@ -396,7 +396,7 @@ public class ImportExportPreferences {
         }
     }
 
-    // simliar, but different, code exists in select_loco.java. if you modify one, make sure you modify the other
+    // simliar, but different, code exists in select_loco.java, ImportExportPreferences.java and ConsistLightsEdit.java. if you modify one, make sure you modify the other
     private void writeRecentLocosListToFile(SharedPreferences sharedPreferences) {
         Log.d("Engine_Driver", "writeRecentLocosListToFile: ImportExportPreferences: Writing recent locos list to file");
 
@@ -430,7 +430,7 @@ public class ImportExportPreferences {
         }
     }
 
-    // simliar, but different, code exists in select_loco.java. if you modify one, make sure you modify the other
+    // simliar, but different, code exists in select_loco.java, ImportExportPreferences.java and ConsistLightsEdit.java. if you modify one, make sure you modify the other
     private void getRecentConsistsListFromFile() {
         Log.d("Engine_Driver", "getRecentConsistsListFromFile: ImportExportPreferences: Loading recent consists list from file");
 
@@ -536,6 +536,7 @@ public class ImportExportPreferences {
         }
     }
 
+    // simliar, but different, code exists in threaded_application.java, ImportExportPreferences.java and ConsistLightsEdit.java. if you modify one, make sure you modify the other
     private String addOneConsistAddress(String line, Integer start, Integer end,
                                         ArrayList<Integer> tempConsistEngineAddressList_inner,
                                         ArrayList<Integer> tempConsistAddressSizeList_inner,
@@ -576,12 +577,13 @@ public class ImportExportPreferences {
                 "engine_driver/recent_consist_list.txt");
 
         PrintWriter list_output;
-        String smrl = sharedPreferences.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
+//        String smrl = sharedPreferences.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
+        int numberOfRecentLocosToWrite = preferences.getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", "10");
         try {
-            int mrl = Integer.parseInt(smrl);
+//            int numberOfRecentLocosToWrite = Integer.parseInt(smrl);
             list_output = new PrintWriter(consist_list_file);
-            if (mrl > 0) {
-                for (int i = 0; i < consistNameList.size() && mrl > 0; i++) {
+            if (numberOfRecentLocosToWrite > 0) {
+                for (int i = 0; i < consistNameList.size() && numberOfRecentLocosToWrite > 0; i++) {
                     for (int j = 0; j < consistAddressSizeList.get(i).size(); j++) {
                         if (j>0) {
                             list_output.format(",");
@@ -603,7 +605,7 @@ public class ImportExportPreferences {
                     }
 
                     list_output.format("\n");
-                    mrl--;
+                    numberOfRecentLocosToWrite--;
 
                 }
             }
