@@ -53,12 +53,12 @@
 
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
         <item >Original &#8211; telefone ou tablet (1&#8211;3 controladores)</item>
-        <item >Simples &#8211; Tablet Recomendado (1&#8211;6 controladores)</item>
         <item >Vertical &#8211; telefone ou tablet (1&#8211;3 controladores)</item>
         <item >Botões Grandes &#8211; Esquerda (1 acelerador)</item>
         <item >Botões Grandes &#8211; Direita (1 acelerador)</item>
         <item >Vertical &#8211; Esquerda (1 acelerador)</item>
         <item >Vertical &#8211; Direita (1 acelerador)</item>
+        <item >Simples &#8211; Tablet Recomendado (1&#8211;6 controladores)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">

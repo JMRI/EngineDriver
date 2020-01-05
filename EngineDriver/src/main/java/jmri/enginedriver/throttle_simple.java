@@ -36,6 +36,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -217,7 +218,8 @@ public class throttle_simple extends throttle {
             }
             int textSize = (int) (conNomTextSize * textScale);
             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
-            b.setText(bLabel);
+//            b.setText(bLabel);
+            b.setText(Html.fromHtml(bLabel));
             b.setSelected(false);
             b.setPressed(false);
         }
