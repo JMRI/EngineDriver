@@ -226,10 +226,6 @@ public class threaded_application extends Application {
     private static final int WHICH_SOURCE_ADDRESS = 1;
     private static final int WHICH_SOURCE_ROSTER = 2;
 
-    public static final int LIGHT_OFF = 0;
-    public static final int LIGHT_FOLLOW = 1;
-    public static final int LIGHT_UNKNOWN = 2;
-
     class comm_thread extends Thread {
         JmDNS jmdns = null;
         volatile boolean endingJmdns = false;
@@ -2973,39 +2969,6 @@ public class threaded_application extends Application {
                 break;
         }
         return addressSourceString;
-    }
-
-    public String addOneConsistAddress(String line, Integer start, Integer end,
-                                ArrayList<Integer> tempConsistEngineAddressList_inner,
-                                ArrayList<Integer> tempConsistAddressSizeList_inner,
-                                ArrayList<Integer> tempConsistDirectionList_inner,
-                                ArrayList<Integer> tempConsistSourceList_inner,
-                                ArrayList<Integer> tempConsistLightList_inner) {
-        String rslt = "";
-        String splitLine = line.substring(start, end);
-        int splitPos = splitLine.indexOf(':');
-        if (splitPos!=-1) {
-            Integer addr = Integer.decode(splitLine.substring(0, splitPos));
-            int size = Integer.decode(splitLine.substring(splitPos + 1, splitPos + 2));
-            int dir = Integer.decode(splitLine.substring(splitPos + 2, splitPos + 3));
-            int source = WHICH_SOURCE_UNKNOWN; //default to unknown
-            int light = LIGHT_UNKNOWN; //default to unknown
-            if (splitLine.length()>splitPos + 3) {  // if short, then this is the first format that did not include the source or light value
-                source = Integer.decode(splitLine.substring(splitPos + 3, splitPos + 4));
-                light = Integer.decode(splitLine.substring(splitPos + 4, splitPos + 5));
-            }
-            tempConsistEngineAddressList_inner.add(addr);
-            tempConsistAddressSizeList_inner.add(size);
-            tempConsistDirectionList_inner.add(dir);
-            tempConsistSourceList_inner.add(source);
-            tempConsistLightList_inner.add(light);
-
-            rslt = "<span>" + addr.toString()+"<small><small>("+ (size==0 ? "S":"L") +")"
-                    + (dir==0 ? "▲":"▼") + "</small></small>"
-                    +  (light==LIGHT_OFF ? "○": (light==LIGHT_FOLLOW ? "●":"<small><small>?</small></small>"))
-                    +  getSourceHtmlString(source) + " &nbsp;</span>";
-        }
-        return rslt;
     }
 
 }
