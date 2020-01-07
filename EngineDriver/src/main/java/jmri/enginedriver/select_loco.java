@@ -114,7 +114,7 @@ public class select_loco extends Activity {
     private static final int DIRECTION_FORWARD = 0;
     private static final int DIRECTION_BACKWARD = 1;
 
-//    private static final int LIGHT_OFF = 0;
+    private static final int LIGHT_OFF = 0;
     private static final int LIGHT_FOLLOW = 1;
     private static final int LIGHT_UNKNOWN = 2;
 
@@ -613,9 +613,9 @@ public class select_loco extends Activity {
                             new FileReader(engine_list_file));
                     while (list_reader.ready()) {
                         String line = list_reader.readLine();
-                        Integer splitPos = line.indexOf(':');
+                        int splitPos = line.indexOf(':');
                         if (splitPos > 0) {
-                            Integer addr, size, source = 0;
+                            int addr, size, source = 0;
                             String locoName = "";
                             try {
                                 addr = Integer.decode(line.substring(0, splitPos));
@@ -681,6 +681,7 @@ public class select_loco extends Activity {
 
     // read the recent consists from a file
     // and load the on screen list
+    // simliar, but different, code exists in select_loco.java, ImportExportPreferences.java. if you modify one, make sure you modify the other
     private void loadRecentConsistsList(boolean reload) {
         consistEngineAddressList = new ArrayList<>();
         consistAddressSizeList = new ArrayList<>();
@@ -725,7 +726,7 @@ public class select_loco extends Activity {
 
                         String consistName = "";
                         String splitOn = "<~>";
-                        if (line.indexOf("<~>")==-1) { // must be the old format
+                        if (!line.contains("<~>")) { // must be the old format
                             splitOn = "~";
                         }
                         String[] splitLine = line.split(splitOn, -1);
@@ -741,7 +742,7 @@ public class select_loco extends Activity {
 
                         int splitLoco = line.indexOf(',');
                         if (splitLoco!=-1) {
-                            oneConsist.append(mainapp.addOneConsistAddress(line, 0, splitLoco,
+                            oneConsist.append(addOneConsistAddress(line, 0, splitLoco,
                                     tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner,
                                     tempConsistDirectionList_inner,
                                     tempConsistSourceList_inner,
@@ -752,13 +753,13 @@ public class select_loco extends Activity {
                                 Integer prevSplitLoco = splitLoco + 1;
                                 splitLoco = line.indexOf(',', prevSplitLoco);
                                 if (splitLoco != -1) {
-                                    oneConsist.append(mainapp.addOneConsistAddress(line, prevSplitLoco, splitLoco,
+                                    oneConsist.append(addOneConsistAddress(line, prevSplitLoco, splitLoco,
                                             tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner,
                                             tempConsistDirectionList_inner,
                                             tempConsistSourceList_inner,
                                             tempConsistLightList_inner));
                                 } else {
-                                    oneConsist.append(mainapp.addOneConsistAddress(line, prevSplitLoco, line.length(),
+                                    oneConsist.append(addOneConsistAddress(line, prevSplitLoco, line.length(),
                                             tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner,
                                             tempConsistDirectionList_inner,
                                             tempConsistSourceList_inner,
@@ -804,9 +805,42 @@ public class select_loco extends Activity {
         }
     }
 
+    // simliar, but different, code exists in select_loco.java, ImportExportPreferences.java. if you modify one, make sure you modify the other
+    public String addOneConsistAddress(String line, Integer start, Integer end,
+                                ArrayList<Integer> tempConsistEngineAddressList_inner,
+                                ArrayList<Integer> tempConsistAddressSizeList_inner,
+                                ArrayList<Integer> tempConsistDirectionList_inner,
+                                ArrayList<Integer> tempConsistSourceList_inner,
+                                ArrayList<Integer> tempConsistLightList_inner) {
+        String rslt = "";
+        String splitLine = line.substring(start, end);
+        int splitPos = splitLine.indexOf(':');
+        if (splitPos!=-1) {
+            Integer addr = Integer.decode(splitLine.substring(0, splitPos));
+            int size = Integer.decode(splitLine.substring(splitPos + 1, splitPos + 2));
+            int dir = Integer.decode(splitLine.substring(splitPos + 2, splitPos + 3));
+            int source = WHICH_SOURCE_UNKNOWN; //default to unknown
+            int light = LIGHT_UNKNOWN; //default to unknown
+            if (splitLine.length()>splitPos + 3) {  // if short, then this is the first format that did not include the source or light value
+                source = Integer.decode(splitLine.substring(splitPos + 3, splitPos + 4));
+                light = Integer.decode(splitLine.substring(splitPos + 4, splitPos + 5));
+            }
+            tempConsistEngineAddressList_inner.add(addr);
+            tempConsistAddressSizeList_inner.add(size);
+            tempConsistDirectionList_inner.add(dir);
+            tempConsistSourceList_inner.add(source);
+            tempConsistLightList_inner.add(light);
+
+            rslt = "<span>" + addr.toString()+"<small><small>("+ (size==0 ? "S":"L") +")"
+                    + (dir==0 ? "▲":"▼") + "</small></small>"
+                    +  (light==LIGHT_OFF ? "○": (light==LIGHT_FOLLOW ? "●":"<small><small>?</small></small>"))
+                    +  mainapp.getSourceHtmlString(source) + " &nbsp;</span>";
+        }
+        return rslt;
+    }
 
     // write the recent consists to a file
-    // simliar, but different, code exists in select_loco.java, ImportExportPreferences.java and ConsistLightsEdit.java. if you modify one, make sure you modify the other
+    // simliar, but different, code exists in select_loco.java, ImportExportPreferences.java. if you modify one, make sure you modify the other
     void updateRecentConsists(boolean bUpdateList) {
         ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<>();
         ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<>();
@@ -908,7 +942,7 @@ public class select_loco extends Activity {
             try {
                 list_output = new PrintWriter(connections_list_file);
                 if (numberOfRecentLocosToWrite > 0) {
-                    numberOfRecentLocosToWrite--;
+//                    numberOfRecentLocosToWrite--;
 
                     for (int i = 0; i < consistEngineAddressList.size() && numberOfRecentLocosToWrite > 0; i++) {
 
