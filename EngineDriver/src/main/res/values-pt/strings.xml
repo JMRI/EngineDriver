@@ -714,4 +714,8 @@
     <string name="rosterDetailsDialogTitle">"Seleccione a partir Roster / Consistem Entradas "</string>
     <string name="toastRecentCleared">Loco removido da lista</string>
     <string name="toastRecentConsistCleared">Consistem removido da lista</string>
+    <string name="editConsistButtonLabel">Editar ordem e direção</string>
+    <string name="editConsistLightsButtonLabel">Editar Luzes</string>
+    <string name="toastConnectionsListHelp">Toque para selecionar.\\nSwipe esquerda para a direita para remover uma entrada.</string>
+    <string name="toastConsistEditHelp">Toque para mudar de direção.\\nSwipe esquerda para a direita para remover uma entrada.</string>
 </resources>

@@ -79,7 +79,7 @@
     <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limit the Function Labels shown for JMRI Roster Entries with no function Labels.</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterDefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="consist_help">Click an engine to change its direction with respect to the top of the consist.  Long press an engine to remove it from the consist.  Press Back Arrow when done.</string>
+    <string name="consist_help">Click a loco to change its direction with respect to the front of the consist.  Swipe Left to Right on an loco to remove it from the consist.  Press Back Arrow when done.</string>
     <string name="about">About</string>
     <string name="web">Web</string>
 
@@ -743,6 +743,9 @@
     <string name="toastRosterHelp">Touch to Select.\nLong press for details.</string>
     <string name="toastConnectionsListHelp">Touch to Select.\nSwipe Left to Right to remove an entry.</string>
 
+    <!--    Toast messages for the Consist Edit Activity -->
+    <string name="toastConsistEditHelp">Touch to change direction. Swipe Left to Right to remove an entry.</string>
+
     <string name="toastRecentCleared">Loco removed from list</string>
     <string name="toastRecentConsistCleared">Consist removed from list</string>
 
@@ -947,4 +950,8 @@
     <string name="edit_consist_lights_throttle_4">Edit Consist Lights Throttle 4</string>
     <string name="edit_consist_lights_throttle_5">Edit Consist Lights Throttle 5</string>
     <string name="edit_consist_lights_throttle_6">Edit Consist Lights Throttle 6</string>
+
+    <string name="editConsistButtonLabel">Edit Order and Direction</string>
+    <string name="editConsistLightsButtonLabel">Edit Lights</string>
+
 </resources>

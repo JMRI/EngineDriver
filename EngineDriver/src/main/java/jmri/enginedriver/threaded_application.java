@@ -2931,46 +2931,46 @@ public class threaded_application extends Application {
         previousOrientation = currentOrientation;
     }
 
-    public String locoAddressToString(Integer addr, int size, boolean sizeAsPrefix) {
-        String engineAddressString = "";
-        try {
-            String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
-            if (!sizeAsPrefix) {
-                engineAddressString = String.format("%s(%s)", addr.toString(), addressLengthString);  //e.g.  1009(L)
-            } else {
-                engineAddressString = addressLengthString + addr.toString();  //e.g.  L1009
-            }
-        } catch (Exception e) {
-            Log.e("Engine_Driver", "locoAddressToString. ");
-        }
-        return engineAddressString;
-    }
-
-    public String locoAddressToHtml(Integer addr, int size, int source) {
-        String engineAddressHtml = "";
-        try {
-            String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
-            String addressSourceString = getSourceHtmlString(source);
-            engineAddressHtml = String.format("<span>%s<small>(%s)</small>%s </span>", addr.toString(), addressLengthString, addressSourceString);
-        } catch (Exception e) {
-            Log.e("Engine_Driver", "locoAddressToString. ");
-        }
-        return engineAddressHtml;
-    }
-
-    public String getSourceHtmlString(int source) {
-        String addressSourceString = "?";
-        switch (source) {
-            case WHICH_SOURCE_ROSTER:
-                addressSourceString = " <big>≡</big> ";
-                break;
-            case WHICH_SOURCE_ADDRESS:
-                addressSourceString = "<sub><small><small><small>└─┘</small></small></small></sub>";
-                break;
-        }
-        return addressSourceString;
-    }
-
+//    public String locoAddressToString(Integer addr, int size, boolean sizeAsPrefix) {
+//        String engineAddressString = "";
+//        try {
+//            String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
+//            if (!sizeAsPrefix) {
+//                engineAddressString = String.format("%s(%s)", addr.toString(), addressLengthString);  //e.g.  1009(L)
+//            } else {
+//                engineAddressString = addressLengthString + addr.toString();  //e.g.  L1009
+//            }
+//        } catch (Exception e) {
+//            Log.e("Engine_Driver", "locoAddressToString. ");
+//        }
+//        return engineAddressString;
+//    }
+//
+//    public String locoAddressToHtml(Integer addr, int size, int source) {
+//        String engineAddressHtml = "";
+//        try {
+//            String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
+//            String addressSourceString = getSourceHtmlString(source);
+//            engineAddressHtml = String.format("<span>%s<small>(%s)</small>%s </span>", addr.toString(), addressLengthString, addressSourceString);
+//        } catch (Exception e) {
+//            Log.e("Engine_Driver", "locoAddressToString. ");
+//        }
+//        return engineAddressHtml;
+//    }
+//
+//    public String getSourceHtmlString(int source) {
+//        String addressSourceString = "?";
+//        switch (source) {
+//            case WHICH_SOURCE_ROSTER:
+//                addressSourceString = " <big>≡</big> ";
+//                break;
+//            case WHICH_SOURCE_ADDRESS:
+//                addressSourceString = "<sub><small><small><small>└─┘</small></small></small></sub>";
+//                break;
+//        }
+//        return addressSourceString;
+//    }
+//
 }
 
 

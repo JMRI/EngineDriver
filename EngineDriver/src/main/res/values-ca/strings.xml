@@ -776,4 +776,8 @@
     <string name="rosterDetailsDialogTitle">"Seleccionar de Llista / Consisteix entrades "</string>
     <string name="toastRecentCleared">Boig elimina de la llista</string>
     <string name="toastRecentConsistCleared">Consisteixen eliminat de la llista</string>
+    <string name="editConsistButtonLabel">Edita ordre i la direcció</string>
+    <string name="editConsistLightsButtonLabel">Edita Llums</string>
+    <string name="toastConnectionsListHelp">Toc per seleccionar.\\nPas a l\'esquerra a la dreta per eliminar una entrada.</string>
+    <string name="toastConsistEditHelp">Toc per canviar de direcció.\\nPas a l\'esquerra a la dreta per eliminar una entrada.</string>
 </resources>
