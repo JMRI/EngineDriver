@@ -67,15 +67,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.transform.Source;
 
 import jmri.enginedriver.Consist.ConLoco;
 import jmri.jmrit.roster.RosterEntry;
@@ -122,13 +119,15 @@ public class select_loco extends Activity {
     ArrayList<HashMap<String, String>> recent_consists_list;
     private RecentConsistsSimpleAdapter recent_consists_list_adapter;
 
-    private ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<>();
-    private ArrayList<ArrayList<Integer>> consistAddressSizeList = new ArrayList<>();
-    private ArrayList<ArrayList<Integer>> consistDirectionList = new ArrayList<>();
-    private ArrayList<ArrayList<Integer>> consistSourceList = new ArrayList<>();
-    private ArrayList<ArrayList<String>> consistRosterNameList = new ArrayList<>();
-    private ArrayList<ArrayList<Integer>> consistLightList = new ArrayList<>();  // placeholder - not currently use
-    private ArrayList<String> consistNameList = new ArrayList<>();
+    public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
+
+//    private ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<>();
+//    private ArrayList<ArrayList<Integer>> consistAddressSizeList = new ArrayList<>();
+//    private ArrayList<ArrayList<Integer>> consistDirectionList = new ArrayList<>();
+//    private ArrayList<ArrayList<Integer>> consistSourceList = new ArrayList<>();
+//    private ArrayList<ArrayList<String>> consistRosterNameList = new ArrayList<>();
+//    private ArrayList<ArrayList<Integer>> consistLightList = new ArrayList<>();  // placeholder - not currently use
+//    private ArrayList<String> consistNameList = new ArrayList<>();
 
     ListView consists_list_view;
     SwipeDetector recentConsistsSwipeDetector;
@@ -442,9 +441,9 @@ public class select_loco extends Activity {
     boolean saveUpdateList;         // save value across ConsistEdit activity 
     boolean newEngine;              // save value across ConsistEdit activity
 
-    void acquire_engine(boolean bUpdateList, int numberInConsist) { // if numberInConsist is greater then it is not from the recent consists list
+    void acquire_engine(boolean bUpdateList, int numberInConsist) { // if numberInConsist is greater than -1 it is not from the recent consists list
         String roster_name = "";
-        String sAddr = mainapp.locoAddressToString(engine_address, address_size, true);
+        String sAddr = importExportPreferences.locoAddressToString(engine_address, address_size, true);
         Loco l = new Loco(sAddr);
         if (locoSource!=WHICH_SOURCE_ADDRESS) {
             roster_name = sWhichThrottle.substring(1);
@@ -465,8 +464,9 @@ public class select_loco extends Activity {
             sAddr += "<;>" + roster_name;
         }
 
-        //user preference set to not consist, or consisting not supported in this JMRI, so drop before adding
-        if (prefs.getBoolean("drop_on_acquire_preference", false)) {
+        // user preference set to not consist, or consisting not supported in this JMRI, so drop before adding
+        // ignore the preference if a recent consist was selected
+        if (prefs.getBoolean("drop_on_acquire_preference", false) && numberInConsist<0) {
             ConLoco cl = consist.getLoco(sAddr);
             if (cl == null) { // if the newly selected loco is different/not in the consist, release everything
                 release_loco(whichThrottle);
@@ -480,7 +480,7 @@ public class select_loco extends Activity {
 
         if ( (!consist.isActive()) && (numberInConsist<1) ) {               // if this is the only loco in consist then just tell WiT and exit
             consist.add(l);
-            consist.setWhichSource(mainapp.locoAddressToString(engine_address, address_size, true), locoSource);
+            consist.setWhichSource(importExportPreferences.locoAddressToString(engine_address, address_size, true), locoSource);
             consist.setLeadAddr(l.getAddress());
             consist.setTrailAddr(l.getAddress());
 //            consist.setConfirmed(l.getAddress()); //this happens after response from WiTS
@@ -496,7 +496,7 @@ public class select_loco extends Activity {
             newEngine = (cl == null);
             if (newEngine || !cl.isConfirmed()) {        // if engine is not already in the consist, or if it is but never got acquired
                 consist.add(l);
-                consist.setWhichSource(mainapp.locoAddressToString(engine_address, address_size, true), locoSource);
+                consist.setWhichSource(importExportPreferences.locoAddressToString(engine_address, address_size, true), locoSource);
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type. REQ_LOCO_ADDR, sAddr, whichThrottle);
 
                 saveUpdateList = bUpdateList;
@@ -504,6 +504,8 @@ public class select_loco extends Activity {
                 consistEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
 
                 consist.setTrailAddr(l.getAddress());  // set the newly added loco as the trailing loco
+
+                updateRecentConsists(true);
 
                 if (numberInConsist<0) { // don't show the Consist edit screen.  Only used for Recent Consists
                     navigatingAway = true;
@@ -519,7 +521,7 @@ public class select_loco extends Activity {
         if (requestCode == throttle.ACTIVITY_CONSIST) {                          // edit consist
             if (newEngine) {
                 updateRecentEngines(saveUpdateList);
-                updateRecentConsists(saveUpdateList);
+//                updateRecentConsists(saveUpdateList); // this is now done in the activity
             }
             result = RESULT_LOCO_EDIT;                 //tell Throttle to update loco directions
         }
@@ -641,8 +643,8 @@ public class select_loco extends Activity {
                                 recent_loco_address_list.add(addr);
                                 recent_loco_address_size_list.add(size);
                                 HashMap<String, String> hm = new HashMap<>();
-                                String engineAddressString = mainapp.locoAddressToString(addr, size, false);
-                                String engineAddressHtml = mainapp.locoAddressToHtml(addr, size, source);
+                                String engineAddressString = importExportPreferences.locoAddressToString(addr, size, false);
+                                String engineAddressHtml = importExportPreferences.locoAddressToHtml(addr, size, source);
 
                                 if ((locoName.length()==0  || locoName.equals(engineAddressString)) // if nothing is stored, or what is stored is the same as the address
                                         && (source==WHICH_SOURCE_UNKNOWN)) { // as long as the source is listed as unknown
@@ -679,168 +681,38 @@ public class select_loco extends Activity {
         }
     }
 
-    // read the recent consists from a file
-    // and load the on screen list
-    // simliar, but different, code exists in select_loco.java, ImportExportPreferences.java. if you modify one, make sure you modify the other
     private void loadRecentConsistsList(boolean reload) {
-        consistEngineAddressList = new ArrayList<>();
-        consistAddressSizeList = new ArrayList<>();
-        consistDirectionList = new ArrayList<>();
-        consistLightList = new ArrayList<>();
-        consistSourceList = new ArrayList<>();
-        consistRosterNameList = new ArrayList<>();
-        consistNameList = new ArrayList<>();
+        recent_consists_list_adapter.notifyDataSetChanged();
+        RadioButton myRadioButton = findViewById(R.id.select_consists_method_recent_button);
+
         if (reload) {
             recent_consists_list = new ArrayList<>();
         }
-
-        ArrayList<Integer> tempConsistEngineAddressList_inner;
-        ArrayList<Integer> tempConsistAddressSizeList_inner;
-        ArrayList<Integer> tempConsistDirectionList_inner;
-        ArrayList<Integer> tempConsistSourceList_inner;
-        ArrayList<String> tempConsistRosterNameList_inner;
-        ArrayList<Integer> tempConsistLightList_inner;
 
         //if no SD Card present then there is no recent consists list
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             //alert user that recent locos list requires SD Card
             TextView v = findViewById(R.id.recent_consists_heading);
             v.setText(getString(R.string.sl_recent_engine_notice));
+            myRadioButton.setVisibility(View.GONE); // if the list is empty, hide the radio button
         } else {
-            try {
-                // Populate the list with the recent consists saved in a file
-                File sdcard_path = Environment.getExternalStorageDirectory();
-                File consist_list_file = new File(sdcard_path + "/engine_driver/recent_consist_list.txt");
-                if (consist_list_file.exists()) {
-                    BufferedReader list_reader = new BufferedReader(
-                            new FileReader(consist_list_file));
-                    while (list_reader.ready()) {
-                        StringBuilder oneConsist = new StringBuilder();
-                        String line = list_reader.readLine();
-                        tempConsistEngineAddressList_inner = new ArrayList<>();
-                        tempConsistAddressSizeList_inner = new ArrayList<>();
-                        tempConsistDirectionList_inner = new ArrayList<>();
-                        tempConsistSourceList_inner = new ArrayList<>();
-                        tempConsistRosterNameList_inner = new ArrayList<>();
-                        tempConsistLightList_inner = new ArrayList<>();
-
-                        String consistName = "";
-                        String splitOn = "<~>";
-                        if (!line.contains("<~>")) { // must be the old format
-                            splitOn = "~";
-                        }
-                        String[] splitLine = line.split(splitOn, -1);
-
-                        if (splitLine.length>1) { // see if there is a name saved as well
-                            consistName = splitLine[1];
-                            line = splitLine[0];
-                            if (splitLine.length>2) {  // see if there is roster names saved as well
-                                String[] rosterNames = splitLine[2].split("<,>", -1);
-                                tempConsistRosterNameList_inner.addAll(Arrays.asList(rosterNames));
-                            }
-                        }
-
-                        int splitLoco = line.indexOf(',');
-                        if (splitLoco!=-1) {
-                            oneConsist.append(addOneConsistAddress(line, 0, splitLoco,
-                                    tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner,
-                                    tempConsistDirectionList_inner,
-                                    tempConsistSourceList_inner,
-                                    tempConsistLightList_inner));
-
-                            boolean foundOne = true;
-                            while (foundOne) {
-                                Integer prevSplitLoco = splitLoco + 1;
-                                splitLoco = line.indexOf(',', prevSplitLoco);
-                                if (splitLoco != -1) {
-                                    oneConsist.append(addOneConsistAddress(line, prevSplitLoco, splitLoco,
-                                            tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner,
-                                            tempConsistDirectionList_inner,
-                                            tempConsistSourceList_inner,
-                                            tempConsistLightList_inner));
-                                } else {
-                                    oneConsist.append(addOneConsistAddress(line, prevSplitLoco, line.length(),
-                                            tempConsistEngineAddressList_inner, tempConsistAddressSizeList_inner,
-                                            tempConsistDirectionList_inner,
-                                            tempConsistSourceList_inner,
-                                            tempConsistLightList_inner));
-                                    foundOne = false;
-                                }
-                            }
-                            if (splitLine.length<3) {  // old format - need to add some dummy roster names
-                                for (int j=0; j<tempConsistEngineAddressList_inner.size(); j++) {
-                                    tempConsistRosterNameList_inner.add("");
-                                }
-                            }
-                            consistEngineAddressList.add(tempConsistEngineAddressList_inner);
-                            consistAddressSizeList.add(tempConsistAddressSizeList_inner);
-                            consistDirectionList.add(tempConsistDirectionList_inner);
-                            consistSourceList.add(tempConsistSourceList_inner);
-                            consistRosterNameList.add(tempConsistRosterNameList_inner);
-                            consistLightList.add(tempConsistLightList_inner);
-                            if (consistName.length()==0) { consistName = oneConsist.toString(); }
-                            consistNameList.add(consistName);
-
-                            HashMap<String, String> hm = new HashMap<>();
-                            hm.put("consist_name", mainapp.getRosterNameFromAddress(oneConsist.toString(), false));
-                            hm.put("consist", consistName);
-                            recent_consists_list.add(hm);
-                        }
-                    }
-                    list_reader.close();
-                    recent_consists_list_adapter.notifyDataSetChanged();
-                }
-
-            } catch (IOException except) {
-                Log.e("Engine_Driver", "select_loco - Error reading recent loco file. "
-                        + except.getMessage());
+            importExportPreferences.getRecentConsistsListFromFile();
+            for (int i = 0; i < importExportPreferences.consistEngineAddressList.size(); i++) {
+                HashMap<String, String> hm = new HashMap<>();
+                hm.put("consist_name", mainapp.getRosterNameFromAddress(importExportPreferences.consistNameHtmlList.get(i).toString(), false));
+                hm.put("consist", importExportPreferences.consistNameList.get(i));
+                recent_consists_list.add(hm);
             }
-
-            RadioButton myRadioButton = findViewById(R.id.select_consists_method_recent_button);
-            if (consistEngineAddressList.size()==0) {
+            if (importExportPreferences.consistEngineAddressList.size()==0) {
                 myRadioButton.setVisibility(View.GONE); // if the list is empty, hide the radio button
             } else {
                 myRadioButton.setVisibility(View.VISIBLE);
             }
+
         }
     }
 
-    // simliar, but different, code exists in select_loco.java, ImportExportPreferences.java. if you modify one, make sure you modify the other
-    public String addOneConsistAddress(String line, Integer start, Integer end,
-                                ArrayList<Integer> tempConsistEngineAddressList_inner,
-                                ArrayList<Integer> tempConsistAddressSizeList_inner,
-                                ArrayList<Integer> tempConsistDirectionList_inner,
-                                ArrayList<Integer> tempConsistSourceList_inner,
-                                ArrayList<Integer> tempConsistLightList_inner) {
-        String rslt = "";
-        String splitLine = line.substring(start, end);
-        int splitPos = splitLine.indexOf(':');
-        if (splitPos!=-1) {
-            Integer addr = Integer.decode(splitLine.substring(0, splitPos));
-            int size = Integer.decode(splitLine.substring(splitPos + 1, splitPos + 2));
-            int dir = Integer.decode(splitLine.substring(splitPos + 2, splitPos + 3));
-            int source = WHICH_SOURCE_UNKNOWN; //default to unknown
-            int light = LIGHT_UNKNOWN; //default to unknown
-            if (splitLine.length()>splitPos + 3) {  // if short, then this is the first format that did not include the source or light value
-                source = Integer.decode(splitLine.substring(splitPos + 3, splitPos + 4));
-                light = Integer.decode(splitLine.substring(splitPos + 4, splitPos + 5));
-            }
-            tempConsistEngineAddressList_inner.add(addr);
-            tempConsistAddressSizeList_inner.add(size);
-            tempConsistDirectionList_inner.add(dir);
-            tempConsistSourceList_inner.add(source);
-            tempConsistLightList_inner.add(light);
 
-            rslt = "<span>" + addr.toString()+"<small><small>("+ (size==0 ? "S":"L") +")"
-                    + (dir==0 ? "▲":"▼") + "</small></small>"
-                    +  (light==LIGHT_OFF ? "○": (light==LIGHT_FOLLOW ? "●":"<small><small>?</small></small>"))
-                    +  mainapp.getSourceHtmlString(source) + " &nbsp;</span>";
-        }
-        return rslt;
-    }
-
-    // write the recent consists to a file
-    // simliar, but different, code exists in select_loco.java, ImportExportPreferences.java. if you modify one, make sure you modify the other
     void updateRecentConsists(boolean bUpdateList) {
         ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<>();
         ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<>();
@@ -855,16 +727,19 @@ public class select_loco extends Activity {
 
         Consist consist = mainapp.consists[whichThrottle];
         Collection<ConLoco> conLocos = consist.getLocos();
+        StringBuilder oneConsistHtml = new StringBuilder();
 
         int whichEntryIsBeingUpdated = -1;
         boolean isBuilding = true;
 
         if (!removingConsistOrForceRewite) {
 
+            int k = -1;
             for (ConLoco l : conLocos) {
+                k++;
                 tempConsistEngineAddressList_inner.add(l.getIntAddress());
                 tempConsistAddressSizeList_inner.add(l.getIntAddressLength());
-                String addr = mainapp.locoAddressToString(l.getIntAddress(), l.getIntAddressLength(), true);
+                String addr = importExportPreferences.locoAddressToString(l.getIntAddress(), l.getIntAddressLength(), true);
                 tempConsistDirectionList_inner.add((consist.isBackward(addr) ? DIRECTION_BACKWARD : DIRECTION_FORWARD));
                 String rosterName = "";
                 if (l.getRosterName() != null) {
@@ -873,113 +748,76 @@ public class select_loco extends Activity {
 //                tempConsistSourceList_inner.add(rosterName.equals("") ? WHICH_SOURCE_ADDRESS : WHICH_SOURCE_ROSTER);
                 tempConsistSourceList_inner.add(l.getWhichSource());
                 tempConsistRosterNameList_inner.add(rosterName);
-                tempConsistLightList_inner.add(consist.isLight(addr));
-//                tempConsistLightList_inner.add(2);  // for now just default to unknown
+                tempConsistLightList_inner.add(k==0 ? LIGHT_FOLLOW : consist.isLight(addr));   // always set the first loco as 'follow'
+
+                int lastItem = tempConsistEngineAddressList_inner.size()-1;
+                oneConsistHtml.append(importExportPreferences.addOneConsistAddressHtml(
+                        tempConsistEngineAddressList_inner.get(lastItem),
+                        tempConsistAddressSizeList_inner.get(lastItem),
+                        tempConsistDirectionList_inner.get(lastItem),
+                        tempConsistSourceList_inner.get(lastItem),
+                        tempConsistLightList_inner.get(lastItem)));
             }
 
             // check if we already have it
-            for (int i = 0; i < consistEngineAddressList.size(); i++) {
-                if (consistEngineAddressList.get(i).size() == tempConsistEngineAddressList_inner.size()) {  // if the lists are different sizes don't bother
+            for (int i = 0; i < importExportPreferences.consistEngineAddressList.size(); i++) {
+                if (importExportPreferences.consistEngineAddressList.get(i).size() == tempConsistEngineAddressList_inner.size()) {  // if the lists are different sizes don't bother
                     boolean isSame = true;
-                    for (int j = 0; j < consistEngineAddressList.get(i).size() && isSame; j++) {
-                        if ((!consistEngineAddressList.get(i).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
-                                || (!consistDirectionList.get(i).get(j).equals(tempConsistDirectionList_inner.get(j)))) {
+                    for (int j = 0; j < importExportPreferences.consistEngineAddressList.get(i).size() && isSame; j++) {
+                        if ((!importExportPreferences.consistEngineAddressList.get(i).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
+                                || (!importExportPreferences.consistDirectionList.get(i).get(j).equals(tempConsistDirectionList_inner.get(j)))) {
                             isSame = false;
                         }
                     }
                     if (isSame) {
-                        whichEntryIsBeingUpdated = i + 1; //remember this, so we can remove this line in the list.  Add 1 because we are gone to force a new line at the top
+                        whichEntryIsBeingUpdated = i + 1; //remember this, so we can remove this line in the list.  Add 1 because we are going to force a new line at the top
                     }
                 }
             }
 
             // check to see if we are still building the consist
-            if ( (consistEngineAddressList.size()>0)
-                    && (consistEngineAddressList.get(0).size() == (tempConsistEngineAddressList_inner.size()-1) ) ) {
+            if ( (importExportPreferences.consistEngineAddressList.size()>0)
+                    && (importExportPreferences.consistEngineAddressList.get(0).size() == (tempConsistEngineAddressList_inner.size()-1) ) ) {
                 // check of the last added one is the same other then the last extra loco
-                for (int j = 0; j < consistEngineAddressList.get(0).size(); j++) {
-                    if (tempConsistEngineAddressList_inner.get(j) == (consistEngineAddressList.get(0).size()+1)) {
-                        if ((!consistEngineAddressList.get(0).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
-                                || (!consistDirectionList.get(0).get(j).equals(tempConsistDirectionList_inner.get(j)))) {
+                for (int j = 0; j < importExportPreferences.consistEngineAddressList.get(0).size(); j++) {
+                    if (tempConsistEngineAddressList_inner.get(j) == (importExportPreferences.consistEngineAddressList.get(0).size()+1)) {
+                        if ((!importExportPreferences.consistEngineAddressList.get(0).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
+                                || (!importExportPreferences.consistDirectionList.get(0).get(j).equals(tempConsistDirectionList_inner.get(j)))) {
                             isBuilding = false;
                         }
                     }
                 }
                 if (isBuilding) {  // remove the first entry
-                    consistEngineAddressList.remove(0);
-                    consistAddressSizeList.remove(0);
-                    consistDirectionList.remove(0);
-                    consistSourceList.remove(0);
-                    consistRosterNameList.remove(0);
-                    consistLightList.remove(0);
-                    consistNameList.remove(0);
+                    importExportPreferences.consistEngineAddressList.remove(0);
+                    importExportPreferences.consistAddressSizeList.remove(0);
+                    importExportPreferences.consistDirectionList.remove(0);
+                    importExportPreferences.consistSourceList.remove(0);
+                    importExportPreferences.consistRosterNameList.remove(0);
+                    importExportPreferences.consistLightList.remove(0);
+                    importExportPreferences.consistNameList.remove(0);
+                    importExportPreferences.consistNameHtmlList.remove(0);
                     whichEntryIsBeingUpdated = -1;
                 }
             }
 
+            // now add it
+            importExportPreferences.consistEngineAddressList.add(0, tempConsistEngineAddressList_inner);
+            importExportPreferences.consistAddressSizeList.add(0, tempConsistAddressSizeList_inner);
+            importExportPreferences.consistDirectionList.add(0, tempConsistDirectionList_inner);
+            importExportPreferences.consistSourceList.add(0, tempConsistSourceList_inner);
+            importExportPreferences.consistRosterNameList.add(0, tempConsistRosterNameList_inner);
+            importExportPreferences.consistLightList.add(0, tempConsistLightList_inner);
+            String consistName = consist.toString();
+            if (whichEntryIsBeingUpdated>0) { //this may already have a custom name
+                consistName = importExportPreferences.consistNameList.get(whichEntryIsBeingUpdated - 1);
+            }
+            importExportPreferences.consistNameList.add(0, consistName);
+            importExportPreferences.consistNameHtmlList.add(0, oneConsistHtml.toString());
+
         }
-
-            if (!removingConsistOrForceRewite) {
-                consistEngineAddressList.add(0, tempConsistEngineAddressList_inner);
-                consistAddressSizeList.add(0, tempConsistAddressSizeList_inner);
-                consistDirectionList.add(0, tempConsistDirectionList_inner);
-                consistSourceList.add(0, tempConsistSourceList_inner);
-                consistRosterNameList.add(0, tempConsistRosterNameList_inner);
-                consistLightList.add(0, tempConsistLightList_inner);
-                String consistName = consist.toString();
-                if (whichEntryIsBeingUpdated>0) { //this may already have a custom name
-                    consistName = consistNameList.get(whichEntryIsBeingUpdated - 1);
-                }
-                consistNameList.add(0, consistName);
-            }
-
-            // Save the consist list to the recent_consist_list.txt file
-            File sdcard_path = Environment.getExternalStorageDirectory();
-            File connections_list_file = new File(sdcard_path,
-                    "engine_driver/recent_consist_list.txt");
-            PrintWriter list_output;
-            int numberOfRecentLocosToWrite = preferences.getIntPrefValue(prefs, "maximum_recent_locos_preference", getApplicationContext().getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
-            try {
-                list_output = new PrintWriter(connections_list_file);
-                if (numberOfRecentLocosToWrite > 0) {
-//                    numberOfRecentLocosToWrite--;
-
-                    for (int i = 0; i < consistEngineAddressList.size() && numberOfRecentLocosToWrite > 0; i++) {
-
-                        if (i!=whichEntryIsBeingUpdated) { // if this is the one being updated, don't write it
-                            for (int j = 0; j < consistAddressSizeList.get(i).size(); j++) {
-                                if (j > 0) {
-                                    list_output.format(",");
-                                }
-                                list_output.format("%d:%d%d%d%d",
-                                        consistEngineAddressList.get(i).get(j),
-                                        consistAddressSizeList.get(i).get(j),
-                                        consistDirectionList.get(i).get(j),
-                                        consistSourceList.get(i).get(j),
-                                        (j==0 ? LIGHT_FOLLOW :consistLightList.get(i).get(j)) );  // always set the first loco as 'follow'
-                            }
-                            list_output.format("<~>%s<~>", consistNameList.get(i));
-                            for (int j = 0; j < consistRosterNameList.get(i).size(); j++) {
-                                if (j > 0) {
-                                    list_output.format("<,>");
-                                }
-                                list_output.format("%s",
-                                        consistRosterNameList.get(i).get(j));
-                            }
-
-                            list_output.format("\n");
-                            numberOfRecentLocosToWrite--;
-                        }
-                    }
-                }
-                list_output.flush();
-                list_output.close();
-            } catch (IOException except) {
-                Log.e("Engine_Driver",
-                        "select_loco - Error creating a PrintWriter, IOException: "
-                                + except.getMessage());
-            }
+        importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
     }
+
 
     // listener for the Acquire button when entering a DCC Address
     public class button_listener implements View.OnClickListener {
@@ -994,7 +832,7 @@ public class select_loco extends Activity {
             Spinner spinner = findViewById(R.id.address_length);
             address_size = spinner.getSelectedItemPosition();
 //            locoName = mainapp.getRosterNameFromAddress(locoAddressToString(engine_address, address_size, false),false);
-            locoName = mainapp.locoAddressToString(engine_address, address_size, false);
+            locoName = importExportPreferences.locoAddressToString(engine_address, address_size, false);
             sWhichThrottle += locoName;
             locoSource = WHICH_SOURCE_ADDRESS;
 
@@ -1009,13 +847,53 @@ public class select_loco extends Activity {
     public class release_button_listener implements View.OnClickListener {
         int _throttle;
 
-        public release_button_listener(int throttle) {
+        release_button_listener(int throttle) {
             _throttle = throttle;
         }
 
         public void onClick(View v) {
             release_loco(_throttle);
             end_this_activity();
+        }
+    }
+
+    public class edit_consist_button_listener implements View.OnClickListener {
+        int _throttle;
+        Activity _selectLocoActivity;
+
+        edit_consist_button_listener(int throttle, Activity selectLocoActivity) {
+            _throttle = throttle;
+            _selectLocoActivity = selectLocoActivity;
+        }
+
+        public void onClick(View v) {
+            Intent consistEdit = new Intent().setClass(_selectLocoActivity, ConsistEdit.class);
+            consistEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
+
+            navigatingAway = true;
+            startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
+            connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
+
+        }
+    }
+
+     public class edit_consist_lights_button_listener implements View.OnClickListener {
+        int _throttle;
+        Activity _selectLocoActivity;
+
+        edit_consist_lights_button_listener(int throttle, Activity selectLocoActivity) {
+            _throttle = throttle;
+            _selectLocoActivity = selectLocoActivity;
+        }
+
+        public void onClick(View v) {
+            Intent consistLightsEdit = new Intent().setClass(_selectLocoActivity, ConsistLightsEdit.class);
+            consistLightsEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
+
+            navigatingAway = true;
+            startActivityForResult(consistLightsEdit, throttle.ACTIVITY_CONSIST_LIGHTS);
+            connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
+
         }
     }
 
@@ -1034,7 +912,7 @@ public class select_loco extends Activity {
                 locoSource = recent_loco_source_list.get(position);
                 locoName = recent_loco_name_list.get(position);
                 if (locoSource==WHICH_SOURCE_UNKNOWN ) {
-                    locoName = mainapp.getRosterNameFromAddress(mainapp.locoAddressToString(engine_address, address_size, false),true);
+                    locoName = mainapp.getRosterNameFromAddress(importExportPreferences.locoAddressToString(engine_address, address_size, false),true);
                 }
 
                 sWhichThrottle += locoName;
@@ -1061,15 +939,15 @@ public class select_loco extends Activity {
                 }
             } else {  //no swipe
 
-                for (int i = 0; i < consistEngineAddressList.get(position).size(); i++) {
+                for (int i = 0; i < importExportPreferences.consistEngineAddressList.get(position).size(); i++) {
 
-                    engine_address = consistEngineAddressList.get(position).get(i);
-                    address_size = consistAddressSizeList.get(position).get(i);
-                    sAddr = mainapp.locoAddressToString(engine_address, address_size, true);
-                    locoSource = consistSourceList.get(position).get(i);
-                    locoName = mainapp.getRosterNameFromAddress(mainapp.locoAddressToString(engine_address, address_size, false), false);
-                    if ( (locoSource!=WHICH_SOURCE_ADDRESS) && (!consistRosterNameList.get(position).get(i).equals("")) ) {
-                            locoName = consistRosterNameList.get(position).get(i);
+                    engine_address = importExportPreferences.consistEngineAddressList.get(position).get(i);
+                    address_size = importExportPreferences.consistAddressSizeList.get(position).get(i);
+                    sAddr = importExportPreferences.locoAddressToString(engine_address, address_size, true);
+                    locoSource = importExportPreferences.consistSourceList.get(position).get(i);
+                    locoName = mainapp.getRosterNameFromAddress(importExportPreferences.locoAddressToString(engine_address, address_size, false), false);
+                    if ( (locoSource!=WHICH_SOURCE_ADDRESS) && (!importExportPreferences.consistRosterNameList.get(position).get(i).equals("")) ) {
+                            locoName = importExportPreferences.consistRosterNameList.get(position).get(i);
                     }
                     sWhichThrottle = tempsWhichThrottle
                             + locoName;
@@ -1078,19 +956,19 @@ public class select_loco extends Activity {
 
                     Consist consist = mainapp.consists[whichThrottle];
 
-                    dir = consistDirectionList.get(position).get(i);
+                    dir = importExportPreferences.consistDirectionList.get(position).get(i);
                     if (dir==DIRECTION_BACKWARD) {
 //                        consist.setBackward(locoName, true);
                         consist.setBackward(sAddr, true);
                     }
 
-                    light = consistLightList.get(position).get(i);
+                    light = importExportPreferences.consistLightList.get(position).get(i);
                     if (light!=LIGHT_UNKNOWN) {
                         consist.setLight(sAddr,light);
                     }
 
                 }
-                updateRecentConsists(saveUpdateList);
+//                updateRecentConsists(saveUpdateList);
 
                 result = RESULT_LOCO_EDIT;
                 end_this_activity();
@@ -1348,6 +1226,15 @@ public class select_loco extends Activity {
             }
         });
 
+        // consist edit button
+        button = findViewById(R.id.Sl_edit_consist);
+        button.setOnClickListener(new edit_consist_button_listener(whichThrottle, this));
+
+        // consist lights edit button
+        button = findViewById(R.id.Sl_edit_consist_lights);
+        button.setOnClickListener(new edit_consist_lights_button_listener(whichThrottle, this));
+
+
         rbAddress = findViewById(R.id.select_loco_method_address_button);
         rbRoster = findViewById(R.id.select_loco_method_roster_button);
 //        rbRecent = findViewById(R.id.select_loco_method_recent_button);
@@ -1509,12 +1396,12 @@ public class select_loco extends Activity {
             //noinspection ResultOfMethodCallIgnored
             consists_list_file.delete();
             recent_consists_list.clear();
-            consistEngineAddressList.clear();
-            consistAddressSizeList.clear();
-            consistDirectionList.clear();
-            consistSourceList.clear();
-            consistRosterNameList.clear();
-            consistLightList.clear();
+            importExportPreferences.consistEngineAddressList.clear();
+            importExportPreferences.consistAddressSizeList.clear();
+            importExportPreferences.consistDirectionList.clear();
+            importExportPreferences.consistSourceList.clear();
+            importExportPreferences.consistRosterNameList.clear();
+            importExportPreferences.consistLightList.clear();
         }
     }
 
@@ -1713,13 +1600,13 @@ public class select_loco extends Activity {
     protected boolean clearRecentConsistsListItem(View v, int position, long id) {
         recent_consists_list.remove(position);
 
-        consistEngineAddressList.remove(position);
-        consistAddressSizeList.remove(position);
-        consistDirectionList.remove(position);
-        consistSourceList.remove(position);
-        consistRosterNameList.remove(position);
-        consistLightList.remove(position);
-        consistNameList.remove(position);
+        importExportPreferences.consistEngineAddressList.remove(position);
+        importExportPreferences.consistAddressSizeList.remove(position);
+        importExportPreferences.consistDirectionList.remove(position);
+        importExportPreferences.consistSourceList.remove(position);
+        importExportPreferences.consistRosterNameList.remove(position);
+        importExportPreferences.consistLightList.remove(position);
+        importExportPreferences.consistNameList.remove(position);
 
         removingConsistOrForceRewite = true;
 
@@ -1733,9 +1620,9 @@ public class select_loco extends Activity {
 public class RosterSimpleAdapter extends SimpleAdapter {
     private Context cont;
 
-    public RosterSimpleAdapter(Context context,
-                               List<? extends Map<String, ?>> data, int resource,
-                               String[] from, int[] to) {
+    RosterSimpleAdapter(Context context,
+                        List<? extends Map<String, ?>> data, int resource,
+                        String[] from, int[] to) {
         super(context, data, resource, from, to);
         cont = context;
     }
@@ -1781,9 +1668,9 @@ public class RosterSimpleAdapter extends SimpleAdapter {
 public class RecentSimpleAdapter extends SimpleAdapter {
     private Context cont;
 
-    public RecentSimpleAdapter(Context context,
-                               List<? extends Map<String, ?>> data, int resource,
-                               String[] from, int[] to) {
+    RecentSimpleAdapter(Context context,
+                        List<? extends Map<String, ?>> data, int resource,
+                        String[] from, int[] to) {
         super(context, data, resource, from, to);
         cont = context;
     }
@@ -1830,9 +1717,9 @@ public class RecentSimpleAdapter extends SimpleAdapter {
     public class RecentConsistsSimpleAdapter extends SimpleAdapter {
         private Context cont;
 
-        public RecentConsistsSimpleAdapter(Context context,
-                                   List<? extends Map<String, ?>> data, int resource,
-                                   String[] from, int[] to) {
+        RecentConsistsSimpleAdapter(Context context,
+                                    List<? extends Map<String, ?>> data, int resource,
+                                    String[] from, int[] to) {
             super(context, data, resource, from, to);
             cont = context;
         }
@@ -1879,7 +1766,7 @@ public class RecentSimpleAdapter extends SimpleAdapter {
         dialogBuilder.setView(dialogView);
 
         final EditText edt = dialogView.findViewById(R.id.editRecentName);
-        edt.setText(consistNameList.get(pos));
+        edt.setText(importExportPreferences.consistNameList.get(pos));
 
         dialogBuilder.setTitle(getApplicationContext().getResources().getString(R.string.RecentConsistsNameEditTitle));
         dialogBuilder.setMessage(getApplicationContext().getResources().getString(R.string.RecentConsistsNameEditText));
@@ -1887,7 +1774,7 @@ public class RecentSimpleAdapter extends SimpleAdapter {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String rslt = edt.getText().toString();
                 if (rslt.length()>0) {
-                    consistNameList.set(pos, rslt);
+                    importExportPreferences.consistNameList.set(pos, rslt);
                     removingConsistOrForceRewite = true;
                     updateRecentConsists(true);
                     loadRecentConsistsList(true);

@@ -710,4 +710,8 @@
     <string name="rosterDetailsDialogTitle">"Selezionare tra Roster / Consistono Entries "</string>
     <string name="toastRecentCleared">Loco rimosso dalla lista</string>
     <string name="toastRecentConsistCleared">Consistono rimosso dalla lista</string>
+    <string name="editConsistButtonLabel">Modifica ordine e la direzione</string>
+    <string name="editConsistLightsButtonLabel">Modifica Luci</string>
+    <string name="toastConnectionsListHelp">Toccare per selezionare.\\nSwipe sinistra a destra per rimuovere una voce.</string>
+    <string name="toastConsistEditHelp">Toccare per cambiare direzione.\\nSwipe sinistra a destra per rimuovere una voce.</string>
 </resources>

@@ -1,4 +1,11 @@
 **Version 2.25
+**Version 2.24.??
+ * Option to show a Shunting/Switching speed button (Vertical Throttle only)
+ * Fix problem in 'drop before acquire' when re-selecting the same loco
+ * Play sound and vibrate when device disconnects
+ * Remember Recent Consists and restore them from the select loco screen
+ * Added close button and roster image to roster details dialog
+ * Rework of roster name usage when an address is entered
 **Version 2.24.93
  * prevent crash when removing recent loco
  * enable clear text in webview
@@ -495,8 +502,10 @@
  *   TODO: disconnect connections made by roster stuff
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
- *   TODO: remove the similar code the read and write the recents and recent consists in threaded_application.java, ImportExportPreferences.java and ConsistLightsEdit.java
-8 * log_viewer:
+ *   TODO: remove the similar code the read and write the recents in threaded_application.java and ImportExportPreferences.java
+ * consist edit:
+ *   TODO: add swipe action or other action to change the lights
+ * log_viewer:
  *
  * These require changes to WiThrottle
  *   resend turnout and routes when items are added or removed, by adding listeners to WiT

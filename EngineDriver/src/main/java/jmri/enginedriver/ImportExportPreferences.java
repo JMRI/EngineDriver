@@ -39,6 +39,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 
 public class ImportExportPreferences {
@@ -59,13 +60,14 @@ public class ImportExportPreferences {
     ArrayList<ArrayList<String>> consistRosterNameList = new ArrayList<>();
     ArrayList<ArrayList<Integer>> consistLightList = new ArrayList<>();  // placeholder - not currently use
     ArrayList<String> consistNameList = new ArrayList<>();
+    ArrayList<String> consistNameHtmlList = new ArrayList<>();
 
     private static final int WHICH_SOURCE_UNKNOWN = 0;
-//    private static final int WHICH_SOURCE_ADDRESS = 1;
-//    private static final int WHICH_SOURCE_ROSTER = 2;
+    private static final int WHICH_SOURCE_ADDRESS = 1;
+    private static final int WHICH_SOURCE_ROSTER = 2;
 
-//    private static final int LIGHT_OFF = 0;
-//    private static final int LIGHT_FOLLOW = 1;
+    private static final int LIGHT_OFF = 0;
+    private static final int LIGHT_FOLLOW = 1;
       private static final int LIGHT_UNKNOWN = 2;
 
     private static final int FORCED_RESTART_REASON_NONE = 0;
@@ -440,6 +442,7 @@ public class ImportExportPreferences {
         consistSourceList = new ArrayList<>();
         consistRosterNameList = new ArrayList<>();
         consistNameList = new ArrayList<>();
+        consistNameHtmlList = new ArrayList<>();
 
         ArrayList<Integer> tempConsistEngineAddressList_inner;
         ArrayList<Integer> tempConsistAddressSizeList_inner;
@@ -460,6 +463,8 @@ public class ImportExportPreferences {
                             new FileReader(consist_list_file));
                     while (list_reader.ready()) {
                         StringBuilder oneConsist = new StringBuilder();
+                        StringBuilder oneConsistHtml = new StringBuilder();
+
                         String line = list_reader.readLine();
                         tempConsistEngineAddressList_inner = new ArrayList<>();
                         tempConsistAddressSizeList_inner = new ArrayList<>();
@@ -470,7 +475,7 @@ public class ImportExportPreferences {
 
                         String consistName = "";
                         String splitOn = "<~>";
-                        if (line.indexOf("<~>") == -1) { // must be the old format
+                        if (!line.contains("<~>")) { // must be the old format
                             splitOn = "~";
                         }
                         String[] splitLine = line.split(splitOn, -1);
@@ -492,6 +497,12 @@ public class ImportExportPreferences {
                                     tempConsistDirectionList_inner,
                                     tempConsistSourceList_inner,
                                     tempConsistLightList_inner));
+                            oneConsistHtml.append(addOneConsistAddressHtml(
+                                    tempConsistEngineAddressList_inner.get(0),
+                                    tempConsistAddressSizeList_inner.get(0),
+                                    tempConsistDirectionList_inner.get(0),
+                                    tempConsistSourceList_inner.get(0),
+                                    LIGHT_FOLLOW));
 
                             boolean foundOne = true;
                             while (foundOne) {
@@ -513,6 +524,13 @@ public class ImportExportPreferences {
                                             tempConsistLightList_inner));
                                     foundOne = false;
                                 }
+                                int lastItem = tempConsistEngineAddressList_inner.size()-1;
+                                oneConsistHtml.append(addOneConsistAddressHtml(
+                                        tempConsistEngineAddressList_inner.get(lastItem),
+                                        tempConsistAddressSizeList_inner.get(lastItem),
+                                        tempConsistDirectionList_inner.get(lastItem),
+                                        tempConsistSourceList_inner.get(lastItem),
+                                        tempConsistLightList_inner.get(lastItem)));
                             }
                             if (splitLine.length < 3) {  // old format - need to add some dummy roster names
                                 for (int j = 0; j < tempConsistEngineAddressList_inner.size(); j++) {
@@ -529,6 +547,7 @@ public class ImportExportPreferences {
                                 consistName = oneConsist.toString();
                             }
                             consistNameList.add(consistName);
+                            consistNameHtmlList.add(oneConsistHtml.toString());
                         }
                     }
                     list_reader.close();
@@ -573,6 +592,81 @@ public class ImportExportPreferences {
         return rslt;
     }
 
+    String addOneConsistAddressHtml(Integer addr, int size, int dir, int source, int light) {
+        String rslt = "<span>" + addr.toString()+"<small><small>("+ (size==0 ? "S":"L") +")"
+        + (dir==0 ? "▲":"▼") + "</small></small>"
+        +  (light==LIGHT_OFF ? "○": (light==LIGHT_FOLLOW ? "●":"<small><small>?</small></small>"))
+        +  getSourceHtmlString(source) + " &nbsp;</span>";
+
+        return rslt;
+
+    }
+
+    int addCurrentConistToBeginningOfList(Consist consist) { // if necessary   return -1 if not currently in the list
+        ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<>();
+        ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<>();
+        ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<>();
+        ArrayList<Integer> tempConsistSourceList_inner = new ArrayList<>();
+        ArrayList<String> tempConsistRosterNameList_inner = new ArrayList<>();
+        ArrayList<Integer> tempConsistLightList_inner = new ArrayList<>();
+
+        //if not updating list or no SD Card present then nothing else to do
+        if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
+            return -1;
+
+        Collection<Consist.ConLoco> conLocos = consist.getLocos();
+
+
+        for (Consist.ConLoco l : conLocos) {
+            tempConsistEngineAddressList_inner.add(l.getIntAddress());
+            tempConsistAddressSizeList_inner.add(l.getIntAddressLength());
+            String addr = locoAddressToString(l.getIntAddress(), l.getIntAddressLength(), true);
+            tempConsistDirectionList_inner.add((consist.isBackward(addr) ? 1 : 0));
+            String rosterName = "";
+            if (l.getRosterName() != null) {
+                rosterName = l.getRosterName();
+            }
+//            tempConsistSourceList_inner.add(rosterName.equals("") ? WHICH_SOURCE_ADDRESS : WHICH_SOURCE_ROSTER);
+            tempConsistSourceList_inner.add(l.getWhichSource());
+            tempConsistRosterNameList_inner.add(rosterName);
+            tempConsistLightList_inner.add((consist.isLight(addr)));
+        }
+
+        int whichEntryIsBeingUpdated = -1;
+        // find out which entry it is in the roster
+        boolean isSame = false;
+        for (int i = 0; i < consistEngineAddressList.size() && !isSame; i++) {
+            if (consistEngineAddressList.get(i).size() == tempConsistEngineAddressList_inner.size()) {  // if the lists are different sizes don't bother
+                for (int j = 0; j < consistEngineAddressList.get(i).size() && !isSame; j++) {
+                    if ((consistEngineAddressList.get(i).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
+                            && (consistDirectionList.get(i).get(j).equals(tempConsistDirectionList_inner.get(j)))) {
+                        isSame = true;
+                    }
+                }
+                if (isSame) {
+                    whichEntryIsBeingUpdated = i + 1; //remember this, so we can remove this line in the list.  Add 1 because we are gone to force a new line at the top
+                }
+            }
+        }
+
+        //add it to the beginning of the list
+        consistEngineAddressList.add(0, tempConsistEngineAddressList_inner);
+        consistAddressSizeList.add(0, tempConsistAddressSizeList_inner);
+        consistDirectionList.add(0, tempConsistDirectionList_inner);
+        consistSourceList.add(0, tempConsistSourceList_inner);
+        consistRosterNameList.add(0, tempConsistRosterNameList_inner);
+        consistLightList.add(0, tempConsistLightList_inner);
+
+        String consistName = consist.toString();
+        if (whichEntryIsBeingUpdated>0) { //this may already have a name
+            consistName = consistNameList.get(whichEntryIsBeingUpdated-1);
+        }
+        consistNameList.add(0, consistName);
+
+        return whichEntryIsBeingUpdated;
+    }
+
+
     // simliar, but different, code exists in select_loco.java. if you modify one, make sure you modify the other
     void writeRecentConsistsListToFile(SharedPreferences sharedPreferences, int whichEntryIsBeingUpdated) {
         Log.d("Engine_Driver", "writeRecentConsistsListToFile: ImportExportPreferences: Writing recent consists list to file");
@@ -602,7 +696,7 @@ public class ImportExportPreferences {
                                     consistAddressSizeList.get(i).get(j),
                                     consistDirectionList.get(i).get(j),
                                     consistSourceList.get(i).get(j),
-                                    consistLightList.get(i).get(j));
+                                    (j==0 ? LIGHT_FOLLOW :consistLightList.get(i).get(j)) );  // always set the first loco as 'follow'
                         }
                         list_output.format("<~>%s<~>", consistNameList.get(i));
                         for (int j = 0; j < consistRosterNameList.get(i).size(); j++) {
@@ -670,5 +764,46 @@ public class ImportExportPreferences {
         }
         return size;
     }
+
+    public String locoAddressToString(Integer addr, int size, boolean sizeAsPrefix) {
+        String engineAddressString = "";
+        try {
+            String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
+            if (!sizeAsPrefix) {
+                engineAddressString = String.format("%s(%s)", addr.toString(), addressLengthString);  //e.g.  1009(L)
+            } else {
+                engineAddressString = addressLengthString + addr.toString();  //e.g.  L1009
+            }
+        } catch (Exception e) {
+            Log.e("Engine_Driver", "locoAddressToString. ");
+        }
+        return engineAddressString;
+    }
+
+    public String locoAddressToHtml(Integer addr, int size, int source) {
+        String engineAddressHtml = "";
+        try {
+            String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
+            String addressSourceString = getSourceHtmlString(source);
+            engineAddressHtml = String.format("<span>%s<small>(%s)</small>%s </span>", addr.toString(), addressLengthString, addressSourceString);
+        } catch (Exception e) {
+            Log.e("Engine_Driver", "locoAddressToString. ");
+        }
+        return engineAddressHtml;
+    }
+
+    public String getSourceHtmlString(int source) {
+        String addressSourceString = "?";
+        switch (source) {
+            case WHICH_SOURCE_ROSTER:
+                addressSourceString = " <big>≡</big> ";
+                break;
+            case WHICH_SOURCE_ADDRESS:
+                addressSourceString = "<sub><small><small><small>└─┘</small></small></small></sub>";
+                break;
+        }
+        return addressSourceString;
+    }
+
 
 }

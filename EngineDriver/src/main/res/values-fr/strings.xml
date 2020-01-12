@@ -793,4 +793,8 @@
     <string name="rosterDetailsDialogTitle">"Choisissez parmi la liste d'/ Consiste Entrées "</string>
     <string name="toastRecentCleared">Loco supprimé de la liste</string>
     <string name="toastRecentConsistCleared">Rayé de la liste sont composés</string>
+    <string name="editConsistButtonLabel">Modifier l\'ordre et direction</string>
+    <string name="editConsistLightsButtonLabel">Modifier les lumières</string>
+    <string name="toastConnectionsListHelp">Touchez pour sélectionner.\\nSwipe gauche à droite pour supprimer une entrée.</string>
+    <string name="toastConsistEditHelp">Touchez pour changer de direction.\\nSwipe gauche à droite pour supprimer une entrée.</string>
 </resources>

@@ -301,7 +301,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
 
 //        loadRecentConsistsList();
         importExportPreferences.getRecentConsistsListFromFile();
-        int whichEntryIsBeingUpdated = addCurrentConistToBeginningOfList();
+        int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConistToBeginningOfList(consist);
 //        updateRecentConsists(whichEntryIsBeingUpdated);
         importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
 
@@ -380,70 +380,5 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
-
-    int addCurrentConistToBeginningOfList() { // if necessary   return -1 if not currently in the list
-        ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<>();
-        ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<>();
-        ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<>();
-        ArrayList<Integer> tempConsistSourceList_inner = new ArrayList<>();
-        ArrayList<String> tempConsistRosterNameList_inner = new ArrayList<>();
-        ArrayList<Integer> tempConsistLightList_inner = new ArrayList<>();
-
-        //if not updating list or no SD Card present then nothing else to do
-        if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
-            return -1;
-
-        Collection<ConLoco> conLocos = consist.getLocos();
-
-
-        for (ConLoco l : conLocos) {
-            tempConsistEngineAddressList_inner.add(l.getIntAddress());
-            tempConsistAddressSizeList_inner.add(l.getIntAddressLength());
-            String addr = mainapp.locoAddressToString(l.getIntAddress(), l.getIntAddressLength(), true);
-            tempConsistDirectionList_inner.add((consist.isBackward(addr) ? 1 : 0));
-            String rosterName = "";
-            if (l.getRosterName() != null) {
-                rosterName = l.getRosterName();
-            }
-//            tempConsistSourceList_inner.add(rosterName.equals("") ? WHICH_SOURCE_ADDRESS : WHICH_SOURCE_ROSTER);
-            tempConsistSourceList_inner.add(l.getWhichSource());
-            tempConsistRosterNameList_inner.add(rosterName);
-            tempConsistLightList_inner.add((consist.isLight(addr)));
-        }
-
-        int whichEntryIsBeingUpdated = -1;
-        // find out which entry it is in the roster
-        boolean isSame = false;
-        for (int i = 0; i < importExportPreferences.consistEngineAddressList.size() && !isSame; i++) {
-            if (importExportPreferences.consistEngineAddressList.get(i).size() == tempConsistEngineAddressList_inner.size()) {  // if the lists are different sizes don't bother
-                for (int j = 0; j < importExportPreferences.consistEngineAddressList.get(i).size() && !isSame; j++) {
-                    if ((importExportPreferences.consistEngineAddressList.get(i).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
-                            && (importExportPreferences.consistDirectionList.get(i).get(j).equals(tempConsistDirectionList_inner.get(j)))) {
-                        isSame = true;
-                    }
-                }
-                if (isSame) {
-                    whichEntryIsBeingUpdated = i + 1; //remember this, so we can remove this line in the list.  Add 1 because we are gone to force a new line at the top
-                }
-            }
-        }
-
-        //add it to the beginning of the list
-        importExportPreferences.consistEngineAddressList.add(0, tempConsistEngineAddressList_inner);
-        importExportPreferences.consistAddressSizeList.add(0, tempConsistAddressSizeList_inner);
-        importExportPreferences.consistDirectionList.add(0, tempConsistDirectionList_inner);
-        importExportPreferences.consistSourceList.add(0, tempConsistSourceList_inner);
-        importExportPreferences.consistRosterNameList.add(0, tempConsistRosterNameList_inner);
-        importExportPreferences.consistLightList.add(0, tempConsistLightList_inner);
-
-        String consistName = consist.toString();
-        if (whichEntryIsBeingUpdated>0) { //this may already have a name
-            consistName = importExportPreferences.consistNameList.get(whichEntryIsBeingUpdated-1);
-        }
-        importExportPreferences.consistNameList.add(0, consistName);
-
-        return whichEntryIsBeingUpdated;
-    }
-
 
 }

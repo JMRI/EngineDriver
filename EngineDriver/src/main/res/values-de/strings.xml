@@ -779,4 +779,8 @@
     <string name="rosterDetailsDialogTitle">"Wählen Sie aus Roster / Consist Einträge "</string>
     <string name="toastRecentCleared">Loco entfernt von der Liste</string>
     <string name="toastRecentConsistCleared">Consist aus der Liste entfernt</string>
+    <string name="editConsistButtonLabel">Bearbeiten Reihenfolge und Richtung</string>
+    <string name="editConsistLightsButtonLabel">Bearbeiten Lichter</string>
+    <string name="toastConnectionsListHelp">Tippen auswählen.\\nSwipe links nach rechts um einen Eintrag zu entfernen.</string>
+    <string name="toastConsistEditHelp">Berühren Sie, um die Richtung ändern.\\nSwipe links nach rechts um einen Eintrag zu entfernen.</string>
 </resources>
