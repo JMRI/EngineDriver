@@ -769,4 +769,18 @@
     <string name="limitSpeedButtonLabel">Grenzgeschwindigkeit</string>
     <string name="LocoSelectMethodRecentConsist">Aktuelle Consist</string>
     <string name="toastSelectConsistsConfirmClear">Bestätigen Sie, dass Sie alle Besteht das Letzte wollen entfernen, indem die ‚Liste löschen‘ Taste erneut drücken.</string>
+    <string name="toastRecentConsistsHelp">Tippen auswählen.\\nLanges Drücken umzubenennen.\\nSwipe links nach rechts um einen Eintrag zu entfernen.</string>
+    <string name="toastRecentsHelp">Tippen auswählen.\\nLanges Drücken umzubenennen.\\nSwipe links nach rechts um einen Eintrag zu entfernen.</string>
+    <string name="toastRosterHelp">Tippen auswählen.\\nLange drücken für weitere Einzelheiten.</string>
+    <string name="RecentConsistsNameEditText">Geben Sie einen Namen für den Consist</string>
+    <string name="RecentConsistsNameEditTitle">Aktuelle Consist-Name</string>
+    <string name="RecentsNameEditText">Geben Sie einen Namen für die Loco</string>
+    <string name="RecentsNameEditTitle">Aktuelle Lokname</string>
+    <string name="rosterDetailsDialogTitle">"Wählen Sie aus Roster / Consist Einträge "</string>
+    <string name="toastRecentCleared">Loco entfernt von der Liste</string>
+    <string name="toastRecentConsistCleared">Consist aus der Liste entfernt</string>
+    <string name="editConsistButtonLabel">Bearbeiten Reihenfolge und Richtung</string>
+    <string name="editConsistLightsButtonLabel">Bearbeiten Lichter</string>
+    <string name="toastConnectionsListHelp">Tippen auswählen.\\nSwipe links nach rechts um einen Eintrag zu entfernen.</string>
+    <string name="toastConsistEditHelp">Berühren Sie, um die Richtung ändern.\\nSwipe links nach rechts um einen Eintrag zu entfernen.</string>
 </resources>

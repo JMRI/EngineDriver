@@ -863,4 +863,22 @@
     <string name="toastThrottleImportServerAutoSucceeded">Automatický import předvoleb z Web serveru JMRI byl úspěšný.</string>
     <string name="LocoSelectMethodRecentConsist">Nedávná Skládá</string>
     <string name="toastSelectConsistsConfirmClear">Confirmeu que voleu eliminar tots els recents Consisteix prement el botó \\\'Esborrar llista\\\' DO NOU.</string>
+    <string name="toastRecentConsistsHelp">Dotykem vyberte.\\nDlouhým stiskem přejmenovat.\\nSwipe zleva doprava, aby se odstranily položku.</string>
+    <string name="toastRecentsHelp">Dotykem vyberte.\\nDlouhým stiskem přejmenovat.\\nSwipe zleva doprava, aby se odstranily položku.</string>
+    <string name="toastRosterHelp">Dotykem vyberte.\\nDlouhým stiskem podrobnosti.</string>
+    <string name="RecentConsistsNameEditText">Zadejte název pro Skládá</string>
+    <string name="RecentConsistsNameEditTitle">Nedávná Skládá Name</string>
+    <string name="RecentsNameEditText">Zadejte název pro Loco</string>
+    <string name="RecentsNameEditTitle">Nedávná Loco Name</string>
+    <string name="prefLimitSpeedButtonSummary">Možnost zobrazit tlačítko, které omezuje rychlost maximálně lokomotivy.</string>
+    <string name="prefLimitSpeedButtonTitle">Show tlačítka \\\'rychlostní limit\\\'</string>
+    <string name="prefLimitSpeedPercentSummary">Nastavení \\% z ceny plynu, že rychlost bude omezena na.</string>
+    <string name="prefLimitSpeedPercentTitle">Rychlostní limit na \\%</string>
+    <string name="rosterDetailsDialogTitle">Vyberte si z Roster / Skládá se Příspěvky</string>
+    <string name="toastRecentConsistCleared">Skládat odstraněn ze seznamu</string>
+    <string name="toastRecentCleared">Loco odstraněn ze seznamu</string>
+    <string name="editConsistButtonLabel">Editovat pořádek a Direction</string>
+    <string name="editConsistLightsButtonLabel">Editovat Lights</string>
+    <string name="toastConnectionsListHelp">Dotykem vyberte.\\nPřejeďte zleva doprava, aby se odstranily položku.</string>
+    <string name="toastConsistEditHelp">Dotykem změnit směr.\\nPřejeďte zleva doprava, aby se odstranily položku.</string>
 </resources>

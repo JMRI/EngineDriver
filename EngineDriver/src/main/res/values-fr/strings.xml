@@ -783,4 +783,18 @@
     <string name="limitSpeedButtonLabel">limite de vitesse</string>
     <string name="LocoSelectMethodRecentConsist">Consiste récente</string>
     <string name="toastSelectConsistsConfirmClear">Confirmeu que voleu eliminar tots els Recents Consisteix prement el botó \\\'Esborrar llista\\\' de nou.</string>
+    <string name="toastRecentConsistsHelp">Touchez pour sélectionner.\\nAppuyez longuement pour renommer.\\nSwipe gauche à droite pour supprimer une entrée.</string>
+    <string name="toastRecentsHelp">Touchez pour sélectionner.\\nAppuyez longuement pour renommer.\\nSwipe gauche à droite pour supprimer une entrée.</string>
+    <string name="toastRosterHelp">Touchez pour sélectionner.\\nAppui long pour plus de détails.</string>
+    <string name="RecentConsistsNameEditText">Entrez un nom pour le Consiste</string>
+    <string name="RecentConsistsNameEditTitle">Consiste récente Nom</string>
+    <string name="RecentsNameEditText">Entrez un nom pour la Loco</string>
+    <string name="RecentsNameEditTitle">Nom Loco récente</string>
+    <string name="rosterDetailsDialogTitle">"Choisissez parmi la liste d'/ Consiste Entrées "</string>
+    <string name="toastRecentCleared">Loco supprimé de la liste</string>
+    <string name="toastRecentConsistCleared">Rayé de la liste sont composés</string>
+    <string name="editConsistButtonLabel">Modifier l\'ordre et direction</string>
+    <string name="editConsistLightsButtonLabel">Modifier les lumières</string>
+    <string name="toastConnectionsListHelp">Touchez pour sélectionner.\\nSwipe gauche à droite pour supprimer une entrée.</string>
+    <string name="toastConsistEditHelp">Touchez pour changer de direction.\\nSwipe gauche à droite pour supprimer une entrée.</string>
 </resources>

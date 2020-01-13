@@ -9,7 +9,8 @@
         android:layout_height="wrap_content" >
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/rosterEntryText"
@@ -17,6 +18,37 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="" />
+
+
         </LinearLayout>
     </ScrollView>
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp">
+
+        <TableRow android:gravity="center_horizontal">
+
+            <ImageView
+                android:id="@+id/rosterEntryImage"
+                android:layout_width="300dp"
+                android:layout_height="150dp" />
+        </TableRow>
+
+        <TableRow android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/rosterEntryButtonClose"
+                style="?attr/ed_normal_button_style"
+                android:layout_marginTop="5dp"
+                android:text="@string/logviewerClose" />
+        </TableRow>
+
+    </TableLayout>
+
 </LinearLayout>

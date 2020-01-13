@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -38,10 +39,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -65,14 +64,18 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     private ArrayList<HashMap<String, String>> consistList;
     private SimpleAdapter consistListAdapter;
     private ArrayList<ConLoco> consistObjList;
-    private ArrayAdapter<ConLoco> consistObjListAdapter;
-    private Spinner consistSpinner;
+//    private ArrayAdapter<ConLoco> consistObjListAdapter;
+//    private Spinner consistSpinner;
     private Consist consist;
     private int result;                     // set to RESULT_FIRST_USER when something is edited
 
     private int whichThrottle;
 
+    public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
+
     private GestureDetector myGesture;
+
+    private SharedPreferences prefs;
 
     public void refreshConsistLists() {
         //clear and rebuild
@@ -169,6 +172,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         if (mainapp.isForcingFinish()) {     // expedite
             return;
         }
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         mainapp.applyTheme(this);
         setTitle(getApplicationContext().getResources().getString(R.string.app_name_ConsistLightsEdit)); // needed in case the langauge was changed from the default
@@ -295,6 +299,12 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     public void onDestroy() {
         Log.d("Engine_Driver", "ConsistLightsEdit.onDestroy() called");
 
+//        loadRecentConsistsList();
+        importExportPreferences.getRecentConsistsListFromFile();
+        int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConistToBeginningOfList(consist);
+//        updateRecentConsists(whichEntryIsBeingUpdated);
+        importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
+
         mainapp.consist_lights_edit_msg_handler = null;
         super.onDestroy();
     }
@@ -370,4 +380,5 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
+
 }

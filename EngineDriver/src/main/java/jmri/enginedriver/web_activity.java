@@ -200,6 +200,9 @@ public class web_activity extends Activity {
 
         //put pointer to this activity's handler in main app's shared variable
         mainapp.web_msg_handler = new web_handler();
+
+        mainapp.checkAndSetOrientationInfo();
+
     }
 
     @Override
@@ -257,6 +260,9 @@ public class web_activity extends Activity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
+        mainapp.isRotating = false;
+
         if (webView != null)
             webView.saveState(outState);        // save history
 
@@ -277,7 +283,10 @@ public class web_activity extends Activity {
         CookieSyncManager.getInstance().stopSync();
 
         if (!this.isFinishing() && !navigatingAway ) {        //only invoke setContentIntentNotification when going into background
-            mainapp.addNotification(this.getIntent());
+            mainapp.checkAndSetOrientationInfo();
+            if (!mainapp.isRotating) {
+                mainapp.addNotification(this.getIntent());
+            }
         }
     }
 

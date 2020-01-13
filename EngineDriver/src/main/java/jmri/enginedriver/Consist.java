@@ -37,20 +37,27 @@ import java.util.Set;
     public static final int LIGHT_FOLLOW = 1;
     public static final int LIGHT_UNKNOWN = 2;
 
+    private static final int WHICH_SOURCE_UNKNOWN = 0;
+    private static final int WHICH_SOURCE_ADDRESS = 1;
+    private static final int WHICH_SOURCE_ROSTER = 2;
+
     public class ConLoco extends Loco {
         private boolean backward;                        //end of loco that faces the top of the consist
-        private int lightOn;                        //end of loco that faces the top of the consist
+        private int lightOn;                             //state of the headlight
+        private int source;                              //how was the loco originally selected
 
         private ConLoco(String address) {
             super(address);
             backward = false;
             lightOn = LIGHT_UNKNOWN;
+            source = WHICH_SOURCE_UNKNOWN;
         }
 
         private ConLoco(Loco l) {
             super( l);
             backward = false;
             lightOn = LIGHT_UNKNOWN;
+            source = WHICH_SOURCE_UNKNOWN;
         }
 
         public boolean isBackward() {
@@ -59,6 +66,7 @@ import java.util.Set;
         public int isLightOn() {
             return lightOn;
         }
+        public int getWhichSource() { return source; }
 
     }
 
@@ -174,7 +182,7 @@ import java.util.Set;
         return l.lightOn;
     }
 
-    public void setLight(String address, int state) {
+    public void setLight(String address, int state) {  //address needs to be in the format L1234
 
         ConLoco l = con.get(address);
         if (l != null)
@@ -191,6 +199,14 @@ import java.util.Set;
                 isRoster = true;
         }
         return isRoster;
+    }
+
+    // set how the loco was originally selected
+    public void setWhichSource(String address, int whichSource) {
+
+        ConLoco l = con.get(address);
+        if (l != null)
+            l.source = whichSource;
     }
 
     //
@@ -271,6 +287,9 @@ import java.util.Set;
     public String toString() {
         return formatConsist();
     }
+    public String toHtml() {
+        return formatConsistHtml();
+    }
 
     private String formatConsist() {
         StringBuilder formatCon;
@@ -281,6 +300,23 @@ import java.util.Set;
                 if (l.getValue().isConfirmed()) {
                     formatCon.append(sep).append(l.getValue().toString());
                     sep = " +";
+                }
+            }
+        } else {
+            formatCon = new StringBuilder("Not Set");
+        }
+        return formatCon.toString();
+    }
+
+    private String formatConsistHtml() {
+        StringBuilder formatCon;
+        if (con.size() > 0) {
+            formatCon = new StringBuilder();
+            String sep = "";
+            for (Map.Entry<String, ConLoco> l : con.entrySet()) {        // loop through locos in consist
+                if (l.getValue().isConfirmed()) {
+                    formatCon.append(sep).append(l.getValue().toHtml());
+                    sep = "<small><small> + </small></small>";
                 }
             }
         } else {

@@ -55,6 +55,7 @@
     <string name="select_loco_address">Address</string>
     <string name="acquire_button">Acquire</string>
     <string name="roster_list">Select from Roster/Consist Entries</string>
+    <string name="rosterDetailsDialogTitle">"Roster details for "</string>
     <string name="recent_engines">Select from Recent Locomotives</string>
     <string name="recent_consists">Select from Recent Consists</string>
     <string name="direction">Fwd</string>
@@ -78,7 +79,7 @@
     <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limit the Function Labels shown for JMRI Roster Entries with no function Labels.</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterDefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="consist_help">Click an engine to change its direction with respect to the top of the consist.  Long press an engine to remove it from the consist.  Press Back Arrow when done.</string>
+    <string name="consist_help">Click a loco to change its direction with respect to the front of the consist.  Swipe Left to Right on an loco to remove it from the consist.  Press Back Arrow when done.</string>
     <string name="about">About</string>
     <string name="web">Web</string>
 
@@ -737,9 +738,25 @@
     <string name="toastSelectLocoConfirmClear">Confirm that you want remove all the Recent Locomotives by pressing the \'Clear List\' button AGAIN.</string>
     <string name="toastSelectConsistsConfirmClear">Confirm that you want remove all the Recent Consists by pressing the \'Clear List\' button AGAIN.</string>
     <string name="toastNumThrottles">Chosen Throttle Screen Type does not support that many throttles. Reducing to %1$s.</string>
+    <string name="toastRecentsHelp">Touch to select.\nLong press to rename.\nSwipe Left to Right to remove an entry.</string>
+    <string name="toastRecentConsistsHelp">Touch to select.\nLong press to Rename (for entered addresses) or show Roster Details.\nSwipe Left to Right to remove an entry.</string>
+    <string name="toastRosterHelp">Touch to Select.\nLong press for details.</string>
+    <string name="toastConnectionsListHelp">Touch to Select.\nSwipe Left to Right to remove an entry.</string>
+
+    <!--    Toast messages for the Consist Edit Activity -->
+    <string name="toastConsistEditHelp">Touch to change direction. Swipe Left to Right to remove an entry.</string>
+
+    <string name="toastRecentCleared">Loco removed from list</string>
+    <string name="toastRecentConsistCleared">Consist removed from list</string>
 
     <!--    Toast messages for the Log Viewer Activity -->
     <string name="toastSaveLogFile">Logging Started in file %1$s. Logging will continue until you exit the Engine Driver app.</string>
+
+    <string name="RecentsNameEditTitle">Recent Loco Name</string>
+    <string name="RecentsNameEditText">Enter a name for the Loco</string>
+
+    <string name="RecentConsistsNameEditTitle">Recent Consist Name</string>
+    <string name="RecentConsistsNameEditText">Enter a name for the Consist</string>
 
     <string name="prefTtsTitle">Voice Response Preferences</string>
     <string name="prefTtsSummary">Options to speak key events</string>
@@ -933,4 +950,8 @@
     <string name="edit_consist_lights_throttle_4">Edit Consist Lights Throttle 4</string>
     <string name="edit_consist_lights_throttle_5">Edit Consist Lights Throttle 5</string>
     <string name="edit_consist_lights_throttle_6">Edit Consist Lights Throttle 6</string>
+
+    <string name="editConsistButtonLabel">Edit Order and Direction</string>
+    <string name="editConsistLightsButtonLabel">Edit Lights</string>
+
 </resources>

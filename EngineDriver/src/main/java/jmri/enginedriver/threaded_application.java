@@ -36,6 +36,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -83,6 +84,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -217,6 +219,12 @@ public class threaded_application extends Application {
     public boolean introIsRunning = false;
 
     public boolean webMenuSelected = false;  // used as an override for the auto-web code when the web menu is selected.
+    public boolean isRotating = false;
+    private int previousOrientation = Configuration.ORIENTATION_UNDEFINED;
+
+    private static final int WHICH_SOURCE_UNKNOWN = 0;
+    private static final int WHICH_SOURCE_ADDRESS = 1;
+    private static final int WHICH_SOURCE_ROSTER = 2;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -760,6 +768,7 @@ public class threaded_application extends Application {
 
             //format multithrottle request for loco M1+L37<;>ECSX37
             String msgTxt = String.format("M%s+%s<;>%s", throttleIntToString(whichThrottle), address, rosterName);  //add requested loco to this throttle
+            Log.d("Engine_Driver", "threaded_application: acquireLoco: addr:'" + addr +"' msgTxt: '" + msgTxt + "'");
             sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, msgTxt);
 
             if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
@@ -866,11 +875,13 @@ public class threaded_application extends Application {
                         Log.d("Engine_Driver", "threaded_application: loco " + addr + " dropped from " + throttleIntToString(whichThrottle));
 
                     } else if (com2 == 'L') { //list of function buttons
-                        String lead;
-                        lead = consists[whichThrottle].getLeadAddr();
-                        if (lead.equals(addr))                        //*** temp - only process if for lead engine in consist
-                            process_roster_function_string("RF29}|{1234(L)" + ls[1], whichThrottle);  //prepend some stuff to match old-style
-                        consists[whichThrottle].setFunctionLabels(addr,"RF29}|{1234(L)" + ls[1], threaded_application.this);
+                        if (consists[whichThrottle].isLeadFromRoster()) { // if not from the roster ignore the function labels that WiT has sent back
+                            String lead;
+                            lead = consists[whichThrottle].getLeadAddr();
+                            if (lead.equals(addr))                        //*** temp - only process if for lead engine in consist
+                                process_roster_function_string("RF29}|{1234(L)" + ls[1], whichThrottle);  //prepend some stuff to match old-style
+                            consists[whichThrottle].setFunctionLabels(addr, "RF29}|{1234(L)" + ls[1], threaded_application.this);
+                        }
 
                     } else if (com2 == 'A') { //process change in function value  MTAL4805<;>F028
                         if (ls.length == 2 && "F".equals(ls[1].substring(0, 1))) {
@@ -2052,20 +2063,37 @@ public class threaded_application extends Application {
     }
 
     // get the roster name from address string 123(L).  Return input if not found in roster or in consist
-    public String getRosterNameFromAddress(String addr_str) {
+    public String getRosterNameFromAddress(String addr_str, boolean returnBlankIfNotFound) {
+        boolean prefRosterRecentLocoNames = prefs.getBoolean("prefRosterRecentLocoNames",
+                getResources().getBoolean(R.bool.prefRosterRecentLocoNamesDefaultValue));
 
+        if (prefRosterRecentLocoNames) {
+            if ((roster_entries != null) && (roster_entries.size() > 0)) {
+                for (String rosterName : roster_entries.keySet()) {  // loop thru roster entries,
+                    if (roster_entries.get(rosterName).equals(addr_str)) { //looking for value = input parm
+                        return rosterName;  //if found, return the roster name (key)
+                    }
+                }
+            }
+            if (getConsistNameFromAddress(addr_str) != null) { //check for a JMRI consist for this address
+                return getConsistNameFromAddress(addr_str);
+            }
+        }
+        if (returnBlankIfNotFound) return "";
+
+        return addr_str; //return input if not found
+    }
+
+    public String findLocoNameInRoster(String searchName) {
         if ((roster_entries != null) && (roster_entries.size() > 0)) {
-            for (String rostername : roster_entries.keySet()) {  // loop thru roster entries,
-                if (roster_entries.get(rostername).equals(addr_str)) { //looking for value = input parm
-                    return rostername;  //if found, return the roster name (key)
+            String rslt =  roster_entries.get(searchName);
+            if (rslt!=null) {
+                if (rslt.length() > 0) {
+                    return searchName;
                 }
             }
         }
-        if (getConsistNameFromAddress(addr_str) != null) { //check for a JMRI consist for this address
-            return getConsistNameFromAddress(addr_str);
-        }
-
-        return addr_str; //return input if not found
+        return ""; //return blank if not found
     }
 
     public String getConsistNameFromAddress(String addr_str) {
@@ -2574,31 +2602,33 @@ public class threaded_application extends Application {
         return setActivityOrientation(activity, false);
     }
 
+    public int getSelectedTheme() {
+        String prefTheme = getCurrentTheme();
+        switch (prefTheme) {
+            case "Black":
+                return R.style.app_theme_black;
+            case "Outline":
+                return R.style.app_theme_outline;
+            case "Ultra":
+                return R.style.app_theme_ultra;
+            case "Colorful":
+                return R.style.app_theme_colorful;
+            default:
+                return R.style.app_theme;
+        }
+    }
+
     /**
      * Applies the chosen theme from preferences to the specified activity
      *
      * @param activity the activity to set the theme for
      */
     public void applyTheme(Activity activity) {
-        String prefTheme = getCurrentTheme();
-        switch (prefTheme) {
-            case "Black":
-                activity.setTheme(R.style.app_theme_black);
-                break;
-            case "Outline":
-                activity.setTheme(R.style.app_theme_outline);
-                break;
-            case "Ultra":
-                activity.setTheme(R.style.app_theme_ultra);
-                break;
-            case "Colorful":
-                activity.setTheme(R.style.app_theme_colorful);
-                break;
-            default:
-                activity.setTheme(R.style.app_theme);
-                break;
-        }
+        int selectedTheme = getSelectedTheme();
+        activity.setTheme(selectedTheme);
+
     }
+
 
     /**
      * Retrieve the currently configure theme from preferences
@@ -2838,7 +2868,7 @@ public class threaded_application extends Application {
 //        this.finish();
 //        Runtime.getRuntime().exit(0); // really force the kill
 
-        int delay = 500;
+        int delay = 100;
         Context context = getBaseContext();
         Intent restartIntent = getBaseContext().getPackageManager()
                 .getLaunchIntentForPackage(context.getPackageName() );
@@ -2889,6 +2919,58 @@ public class threaded_application extends Application {
         }
 
     }
+
+    public void checkAndSetOrientationInfo() {
+        int currentOrientation = getResources().getConfiguration().orientation;
+        if(previousOrientation != Configuration.ORIENTATION_UNDEFINED // starts undefined
+                && previousOrientation != currentOrientation) {
+            isRotating = true;
+//            navigatingAway = false;
+        }
+
+        previousOrientation = currentOrientation;
+    }
+
+//    public String locoAddressToString(Integer addr, int size, boolean sizeAsPrefix) {
+//        String engineAddressString = "";
+//        try {
+//            String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
+//            if (!sizeAsPrefix) {
+//                engineAddressString = String.format("%s(%s)", addr.toString(), addressLengthString);  //e.g.  1009(L)
+//            } else {
+//                engineAddressString = addressLengthString + addr.toString();  //e.g.  L1009
+//            }
+//        } catch (Exception e) {
+//            Log.e("Engine_Driver", "locoAddressToString. ");
+//        }
+//        return engineAddressString;
+//    }
+//
+//    public String locoAddressToHtml(Integer addr, int size, int source) {
+//        String engineAddressHtml = "";
+//        try {
+//            String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
+//            String addressSourceString = getSourceHtmlString(source);
+//            engineAddressHtml = String.format("<span>%s<small>(%s)</small>%s </span>", addr.toString(), addressLengthString, addressSourceString);
+//        } catch (Exception e) {
+//            Log.e("Engine_Driver", "locoAddressToString. ");
+//        }
+//        return engineAddressHtml;
+//    }
+//
+//    public String getSourceHtmlString(int source) {
+//        String addressSourceString = "?";
+//        switch (source) {
+//            case WHICH_SOURCE_ROSTER:
+//                addressSourceString = " <big>≡</big> ";
+//                break;
+//            case WHICH_SOURCE_ADDRESS:
+//                addressSourceString = "<sub><small><small><small>└─┘</small></small></small></sub>";
+//                break;
+//        }
+//        return addressSourceString;
+//    }
+//
 }
 
 

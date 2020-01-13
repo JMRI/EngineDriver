@@ -100,7 +100,46 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:text="@string/release"
+                    android:baselineAligned="false"
                     android:textAlignment="center" />
+
+                <LinearLayout
+                    android:id="@+id/LL_edit_consist"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false"
+                    android:weightSum="1">
+
+                    <Button
+                        android:id="@+id/Sl_edit_consist"
+                        style="?attr/ed_small_button_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:text="@string/editConsistButtonLabel"
+                        android:textAlignment="center"
+                        android:baselineAligned="false"
+                                                                                                                           android:textSize="10sp" />
+
+                    <Button
+                        android:id="@+id/Sl_edit_consist_lights"
+                        style="?attr/ed_small_button_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:text="@string/editConsistLightsButtonLabel"
+                        android:textAlignment="center"
+                        android:baselineAligned="false"
+                        android:textSize="10sp" />
+                </LinearLayout>
 
             </LinearLayout>
 

@@ -20,6 +20,7 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -282,15 +283,20 @@ public class throttle_full extends throttle {
         final int conNomTextSize = 24;
         final double minTextScale = 0.5;
         String bLabel;
+        String bLabelPlainText;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             Button b = bSels[throttleIndex];
             bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
+            bLabelPlainText = bLabel;
             if (mainapp.consists[throttleIndex] != null) {
                 if (mainapp.consists[throttleIndex].isActive()) {
                     if (!prefShowAddressInsteadOfName) {
-                        bLabel = mainapp.consists[throttleIndex].toString();
+//                        bLabel = mainapp.consists[throttleIndex].toString();
+                        bLabelPlainText = mainapp.consists[throttleIndex].toString();
+                        bLabel = mainapp.consists[throttleIndex].toHtml();
                     } else {
                         bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
+                        bLabelPlainText = bLabel;
                     }
                     throttle_count++;
                 }
@@ -298,7 +304,8 @@ public class throttle_full extends throttle {
             double textScale = 1.0;
             int bWidth = b.getWidth(); // scale text if required to fit the textView
             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
-            double textWidth = b.getPaint().measureText(bLabel);
+//            double textWidth = b.getPaint().measureText(bLabel);
+            double textWidth = b.getPaint().measureText(bLabelPlainText);
             if (bWidth == 0)
                 selectLocoRendered = false;
             else {
@@ -311,7 +318,8 @@ public class throttle_full extends throttle {
             }
             int textSize = (int) (conNomTextSize * textScale);
             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
-            b.setText(bLabel);
+//            b.setText(bLabel);
+            b.setText(Html.fromHtml(bLabel));
             b.setSelected(false);
             b.setPressed(false);
         }

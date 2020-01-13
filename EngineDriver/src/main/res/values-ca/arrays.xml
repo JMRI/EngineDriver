@@ -52,12 +52,12 @@
     </string-array>
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
         <item>Original &#8211; Telèfon o Tablet (1&#8211;3 controladors)</item>
-        <item>Simple &#8211; Tablet Recomenat (1&#8211;6 controladors)</item>
         <item>Vertical &#8211; Telèfon o Tableta (2 controladors)</item>
         <item>Botons grans &#8211; Esquerra (1 controlador)</item>
         <item>Botons grans &#8211; Dreta (1 controlador)</item>
         <item>Vertical &#8211; Esquerra (1 controlador)</item>
         <item>Vertical &#8211; Dreta (1 controlador)</item>
+        <item>Simple &#8211; Tablet Recomenat (1&#8211;6 controladors)</item>
     </string-array>
     <string-array name="DisplayClockEntries">
         <item>Cap</item>

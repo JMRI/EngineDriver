@@ -422,6 +422,15 @@ public class turnouts extends Activity implements OnGestureListener {
 
         //update turnout list
         refresh_turnout_view();
+
+        mainapp.checkAndSetOrientationInfo();
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mainapp.isRotating = false;
     }
 
     @Override
@@ -440,7 +449,10 @@ public class turnouts extends Activity implements OnGestureListener {
         }
 
         if (!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
-            mainapp.addNotification(this.getIntent());
+            mainapp.checkAndSetOrientationInfo();
+            if (!mainapp.isRotating) {
+                mainapp.addNotification(this.getIntent());
+            }
         }
     }
 

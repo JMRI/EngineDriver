@@ -821,6 +821,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                     if (com2 == ('+')) {
                                         // set_default_function_labels();
                                         enable_disable_buttons(whichThrottle); // direction and slider: pass whichthrottle
+                                        showHideConsistMenus();
                                     }
                                     // loop through all function buttons and set label and dcc functions (based on settings) or hide if no label
                                     set_function_labels_and_listeners_for_view(whichThrottle);
@@ -4452,6 +4453,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             autoImportFromURL();
         }
 
+        mainapp.checkAndSetOrientationInfo();
+
     } // end of onCreate()
 
     @Override
@@ -4533,6 +4536,33 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // update the direction indicators
         showDirectionIndications();
 
+        showHideConsistMenus();
+
+        CookieSyncManager.getInstance().startSync();
+
+        if (!prefAccelerometerShake.equals(ACCELERATOROMETER_SHAKE_NONE)) {
+            if (!accelerometerCurrent) { // perference has only just been changed to turn it on
+                setupSensor();
+            } else {
+                sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
+            }
+        }
+
+        if (((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING))) {
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_ENABLE, "", 0, 0);
+        } else {
+            if (kidsTimerRunning == KIDS_TIMER_ENDED) {
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_END, "", 0, 0);
+            }
+            if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)){
+                kidsTimerActions(KIDS_TIMER_DISABLED,0);
+            }
+        }
+
+        setupTts();
+    }
+
+    private void showHideConsistMenus(){
         if (TMenu != null) {
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
 
@@ -4565,34 +4595,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         }
 
-        CookieSyncManager.getInstance().startSync();
-
-        if (!prefAccelerometerShake.equals(ACCELERATOROMETER_SHAKE_NONE)) {
-            if (!accelerometerCurrent) { // perference has only just been changed to turn it on
-                setupSensor();
-            } else {
-                sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
-            }
-        }
-
-        if (((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING))) {
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_ENABLE, "", 0, 0);
-        } else {
-            if (kidsTimerRunning == KIDS_TIMER_ENDED) {
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_END, "", 0, 0);
-            }
-            if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)){
-                kidsTimerActions(KIDS_TIMER_DISABLED,0);
-            }
-        }
-
-        setupTts();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         webView.saveState(outState); // save history (on rotation) if at least one page has loaded
+
+        mainapp.isRotating = false;
 
         // save the requested throttle direction so we can update the
         // direction indication immediately in OnCreate following a rotate
@@ -4618,7 +4628,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         CookieSyncManager.getInstance().stopSync();
 
         if (!this.isFinishing() && !navigatingAway) { // only invoke setContentIntentNotification when going into background
-            mainapp.addNotification(this.getIntent());
+            mainapp.checkAndSetOrientationInfo();
+            if (!mainapp.isRotating) {
+                mainapp.addNotification(this.getIntent());
+            }
         }
 
         if ((isScreenLocked) || (screenDimmed)) {

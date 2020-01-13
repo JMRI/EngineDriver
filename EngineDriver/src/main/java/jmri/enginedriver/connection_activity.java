@@ -76,6 +76,8 @@ import android.content.Context;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
+import jmri.enginedriver.util.SwipeDetector;
+
 
 public class connection_activity extends Activity implements PermissionsHelper.PermissionsHelperGrantedCallback {
     private ArrayList<HashMap<String, String>> connections_list;
@@ -117,6 +119,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private static final int FORCED_RESTART_REASON_LOCALE = 6;
     private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
     private static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
+
+    SwipeDetector connectionsListSwipeDetector;
 
     EditText host_ip;
     EditText port;
@@ -201,19 +205,26 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
         //When an item is clicked, connect to the given IP address and port.
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            switch (server_type) {
-                case DISCOVERED_SERVER:
-                case RECENT_CONNECTION:
-                    ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
-                    TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
-                    connected_hostip = hip.getText().toString();
-                    TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
-                    connected_hostname = hnv.getText().toString();
-                    TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
-                    connected_port = Integer.valueOf(hpv.getText().toString());
-                    break;
+            if(connectionsListSwipeDetector.swipeDetected()) { // check for swipe
+                if(connectionsListSwipeDetector.getAction() == SwipeDetector.Action.LR) {
+                    clearConnectionsListItem(v, position, id);
+//                } else {
+                }
+            } else {  //no swipe
+                switch (server_type) {
+                    case DISCOVERED_SERVER:
+                    case RECENT_CONNECTION:
+                        ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
+                        TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
+                        connected_hostip = hip.getText().toString();
+                        TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
+                        connected_hostname = hnv.getText().toString();
+                        TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
+                        connected_port = Integer.valueOf(hpv.getText().toString());
+                        break;
+                }
+                connect();
             }
-            connect();
         }
     }
 
@@ -237,6 +248,29 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             }
         }
     }
+
+    private void clearConnectionsListItem(View v, int position, long id) {
+        //When an swiped is long-clicked, remove it from the consist
+        ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
+        TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
+        //connected_hostip = hip.getText().toString();
+        TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
+        //connected_hostname = hnv.getText().toString();
+        TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
+        //connected_port = Integer.valueOf(hpv.getText().toString());
+        //Log.d("Engine_Driver", "connection.longClick " + connected_hostip );
+        if (!(hnv.getText().toString().equals(demo_host)) || !(hpv.getText().toString().equals(demo_port))) {
+            getConnectionsListImpl(hip.getText().toString(), hpv.getText().toString());
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
+            connected_hostip = DUMMY_ADDRESS;
+            connected_hostname = DUMMY_HOST;
+            connected_port = DUMMY_PORT;
+            new saveConnectionsList().execute();
+        } else {
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoveDemoHostError), Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     //Method to connect to first discovered WiThrottle server.
     private void connectA() {
@@ -384,32 +418,33 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                 new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
         ListView conn_list = findViewById(R.id.connections_list);
         conn_list.setAdapter(connection_list_adapter);
+        conn_list.setOnTouchListener(connectionsListSwipeDetector = new SwipeDetector());
         conn_list.setOnItemClickListener(new connect_item(server_list_type.RECENT_CONNECTION));
-            conn_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            //When an entry is long-clicked, remove it from the consist
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id) {
-                ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
-                TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
-                //connected_hostip = hip.getText().toString();
-                TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
-                //connected_hostname = hnv.getText().toString();
-                TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
-                //connected_port = Integer.valueOf(hpv.getText().toString());
-                //Log.d("Engine_Driver", "connection.longClick " + connected_hostip );
-                if (!(hnv.getText().toString().equals(demo_host)) || !(hpv.getText().toString().equals(demo_port))) {
-                    getConnectionsListImpl(hip.getText().toString(), hpv.getText().toString());
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
-                    connected_hostip = DUMMY_ADDRESS;
-                    connected_hostname = DUMMY_HOST;
-                    connected_port = DUMMY_PORT;
-                    new saveConnectionsList().execute();
-                } else {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoveDemoHostError), Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            }
-        });
+//        conn_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            //When an entry is long-clicked, remove it from the consist
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id) {
+//            ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
+//            TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
+//            //connected_hostip = hip.getText().toString();
+//            TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
+//            //connected_hostname = hnv.getText().toString();
+//            TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
+//            //connected_port = Integer.valueOf(hpv.getText().toString());
+//            //Log.d("Engine_Driver", "connection.longClick " + connected_hostip );
+//            if (!(hnv.getText().toString().equals(demo_host)) || !(hpv.getText().toString().equals(demo_port))) {
+//                getConnectionsListImpl(hip.getText().toString(), hpv.getText().toString());
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
+//                connected_hostip = DUMMY_ADDRESS;
+//                connected_hostname = DUMMY_HOST;
+//                connected_port = DUMMY_PORT;
+//                new saveConnectionsList().execute();
+//            } else {
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoveDemoHostError), Toast.LENGTH_SHORT).show();
+//            }
+//            return true;
+//            }
+//        });
 
 
         // suppress popup keyboard until EditText is touched
@@ -486,6 +521,9 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
         }
+
+        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectionsListHelp), Toast.LENGTH_LONG).show();
+
     }
 
     @Override
