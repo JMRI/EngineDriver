@@ -121,14 +121,6 @@ public class select_loco extends Activity {
 
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
 
-//    private ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<>();
-//    private ArrayList<ArrayList<Integer>> consistAddressSizeList = new ArrayList<>();
-//    private ArrayList<ArrayList<Integer>> consistDirectionList = new ArrayList<>();
-//    private ArrayList<ArrayList<Integer>> consistSourceList = new ArrayList<>();
-//    private ArrayList<ArrayList<String>> consistRosterNameList = new ArrayList<>();
-//    private ArrayList<ArrayList<Integer>> consistLightList = new ArrayList<>();  // placeholder - not currently use
-//    private ArrayList<String> consistNameList = new ArrayList<>();
-
     ListView consists_list_view;
     SwipeDetector recentConsistsSwipeDetector;
     SwipeDetector recentsSwipeDetector;
@@ -505,8 +497,6 @@ public class select_loco extends Activity {
 
                 consist.setTrailAddr(l.getAddress());  // set the newly added loco as the trailing loco
 
-                updateRecentConsists(true);
-
                 if (numberInConsist<0) { // don't show the Consist edit screen.  Only used for Recent Consists
                     navigatingAway = true;
                     startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
@@ -765,7 +755,8 @@ public class select_loco extends Activity {
                     boolean isSame = true;
                     for (int j = 0; j < importExportPreferences.consistEngineAddressList.get(i).size() && isSame; j++) {
                         if ((!importExportPreferences.consistEngineAddressList.get(i).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
-                                || (!importExportPreferences.consistDirectionList.get(i).get(j).equals(tempConsistDirectionList_inner.get(j)))) {
+//                                || (!importExportPreferences.consistDirectionList.get(i).get(j).equals(tempConsistDirectionList_inner.get(j)))\
+                        ) {
                             isSame = false;
                         }
                     }
@@ -782,7 +773,8 @@ public class select_loco extends Activity {
                 for (int j = 0; j < importExportPreferences.consistEngineAddressList.get(0).size(); j++) {
                     if (tempConsistEngineAddressList_inner.get(j) == (importExportPreferences.consistEngineAddressList.get(0).size()+1)) {
                         if ((!importExportPreferences.consistEngineAddressList.get(0).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
-                                || (!importExportPreferences.consistDirectionList.get(0).get(j).equals(tempConsistDirectionList_inner.get(j)))) {
+//                                || (!importExportPreferences.consistDirectionList.get(0).get(j).equals(tempConsistDirectionList_inner.get(j)))
+                        ) {
                             isBuilding = false;
                         }
                     }
@@ -968,7 +960,7 @@ public class select_loco extends Activity {
                     }
 
                 }
-//                updateRecentConsists(saveUpdateList);
+                updateRecentConsists(saveUpdateList);
 
                 result = RESULT_LOCO_EDIT;
                 end_this_activity();
