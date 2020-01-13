@@ -526,7 +526,7 @@
     <string name="toastConnectErrorReadingRecentConnections">Fehler beim Lesen der Liste Letzte Verbindungen:</string>
     <string name="toastConnectErrorSavingRecentConnection">Fehler beim Speichern der letzten Verbindung:</string>
     <string name="toastConnectRemoveDemoHostError">Der Demo-Server kann nur durch Ändern der Einstellungen entfernt werden.</string>
-    <string name="toastConnectRemoved">Sever wurde aus der Liste entfernt.</string>
+    <string name="toastConnectRemoved">Server wurde aus der Liste entfernt.</string>
 
     <string name="toastRoutesCommandSent">"Befehl geschickt zum Stellen der Fahrstraße "</string>
     <string name="toastImportExportExportSucceeded">Voreinstellungen exportieren zu \'engine_driver/%1$s\' war erfolgreich.</string>

@@ -538,7 +538,7 @@
     <string name="toastConnectErrorReadingRecentConnections">Erro de leitura da lista de conexões recentes:</string>
     <string name="toastConnectErrorSavingRecentConnection">Erro salvando conexões recentes:</string>
     <string name="toastConnectRemoveDemoHostError">O servidor de demonstração só pode ser removido modificando as preferências.</string>
-    <string name="toastConnectRemoved">Sever removido da lista.</string>
+    <string name="toastConnectRemoved">Server removido da lista.</string>
 
     <string name="toastRoutesCommandSent">"Comando enviado para escolher Rota"</string>
     <string name="toastImportExportExportSucceeded">Exportação preferências para \'engine_driver/%1$s\' realizada com sucesso.</string>
