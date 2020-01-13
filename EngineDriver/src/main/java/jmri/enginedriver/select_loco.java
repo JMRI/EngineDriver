@@ -988,7 +988,7 @@ public class select_loco extends Activity {
         public void onClick(View v) {
             clearConsistsListCount++;
             if (clearConsistsListCount <= 1) {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSelectLocoConfirmClear), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSelectConsistsConfirmClear), Toast.LENGTH_LONG).show();
             } else { // only clear the list if the button is clicked a second time
                 clearConsistsList();
                 clearConsistsListCount = 0;

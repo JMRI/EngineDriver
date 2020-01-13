@@ -79,7 +79,7 @@
     <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limit the Function Labels shown for JMRI Roster Entries with no function Labels.</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterDefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="consist_help">Click a loco to change its direction with respect to the front of the consist.  Swipe Left to Right on an loco to remove it from the consist.  Press Back Arrow when done.</string>
+    <string name="consist_help">Click a loco to change its direction with respect to the front of the consist.  Swipe Right on a loco to remove it from the consist.  Press Back Arrow when done.</string>
     <string name="about">About</string>
     <string name="web">Web</string>
 
@@ -360,8 +360,8 @@
     <string name="LocoSelectMethodQuestion">Method: </string>
     <string name="LocoSelectMethodAddress">DCC Address</string>
     <string name="LocoSelectMethodRoster">JMRI Roster</string>
-    <string name="LocoSelectMethodRecent">Recent</string>
-    <string name="LocoSelectMethodRecentConsist">Recent Consist</string>
+    <string name="LocoSelectMethodRecent">Recent Locos</string>
+    <string name="LocoSelectMethodRecentConsist">Recent Consists</string>
     <string name="LocoSelectMethodHelp">Enter the DCC Address of your loco above and click \'Acquire\'.\n\nAlternately, select a loco from the JMRI \'Roster\' or select from \'Recent\' locos by clicking one of the radio buttons above.</string>
 
     <string name="prefMaximumRecentLocosTitle">Maximum Recent Locos</string>
@@ -719,7 +719,7 @@
     <string name="toastConnectErrorReadingRecentConnections">Error reading recent connections list:</string>
     <string name="toastConnectErrorSavingRecentConnection">Error saving recent connection:</string>
     <string name="toastConnectRemoveDemoHostError">The demo Server can only be removed by modifying the preferences.</string>
-    <string name="toastConnectRemoved">Sever removed from List.</string>
+    <string name="toastConnectRemoved">Server removed from List.</string>
     <string name="toastPreferencesImportServerAutoSucceeded">Auto Preferences Import from Server Succeeded. (%1$s)</string>
 
     <!--    Toast messages for the Routes Activity -->
@@ -738,13 +738,13 @@
     <string name="toastSelectLocoConfirmClear">Confirm that you want remove all the Recent Locomotives by pressing the \'Clear List\' button AGAIN.</string>
     <string name="toastSelectConsistsConfirmClear">Confirm that you want remove all the Recent Consists by pressing the \'Clear List\' button AGAIN.</string>
     <string name="toastNumThrottles">Chosen Throttle Screen Type does not support that many throttles. Reducing to %1$s.</string>
-    <string name="toastRecentsHelp">Touch to select.\nLong press to rename.\nSwipe Left to Right to remove an entry.</string>
-    <string name="toastRecentConsistsHelp">Touch to select.\nLong press to Rename (for entered addresses) or show Roster Details.\nSwipe Left to Right to remove an entry.</string>
-    <string name="toastRosterHelp">Touch to Select.\nLong press for details.</string>
-    <string name="toastConnectionsListHelp">Touch to Select.\nSwipe Left to Right to remove an entry.</string>
+    <string name="toastRecentsHelp">Touch to select a Recent Entry.\nLong press to rename.\nSwipe Right to remove an entry.</string>
+    <string name="toastRecentConsistsHelp">Touch to select a Consist Entry.\nLong press to Rename (for entered addresses) or show Roster Details.\nSwipe Right to remove an entry.</string>
+    <string name="toastRosterHelp">Touch to select a Roster Entry.\nLong press for details.</string>
+    <string name="toastConnectionsListHelp">Touch to select a Recent Connection\nor enter Server Address and Port.\nSwipe Right to remove an entry.</string>
 
     <!--    Toast messages for the Consist Edit Activity -->
-    <string name="toastConsistEditHelp">Touch to change direction. Swipe Left to Right to remove an entry.</string>
+    <string name="toastConsistEditHelp">Touch to change direction. Swipe Right to remove an entry.</string>
 
     <string name="toastRecentCleared">Loco removed from list</string>
     <string name="toastRecentConsistCleared">Consist removed from list</string>
