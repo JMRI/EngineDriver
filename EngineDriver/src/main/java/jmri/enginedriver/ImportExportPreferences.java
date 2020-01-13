@@ -639,7 +639,8 @@ public class ImportExportPreferences {
             if (consistEngineAddressList.get(i).size() == tempConsistEngineAddressList_inner.size()) {  // if the lists are different sizes don't bother
                 for (int j = 0; j < consistEngineAddressList.get(i).size() && !isSame; j++) {
                     if ((consistEngineAddressList.get(i).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
-                            && (consistDirectionList.get(i).get(j).equals(tempConsistDirectionList_inner.get(j)))) {
+//                            && (consistDirectionList.get(i).get(j).equals(tempConsistDirectionList_inner.get(j)))
+                    ) {
                         isSame = true;
                     }
                 }
