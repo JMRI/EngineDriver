@@ -483,6 +483,7 @@
  *   TODO: check for error on send and do something with it 
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: option/button to support DPU "unfenced" mode, relatively adjusting 2nd throttle from first
  *   TODO: retrieve and show icons for function buttons (if set)
  *   TODO: manually create roster entries (function labels) and store on device
  *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
@@ -498,6 +499,7 @@
  *   TODO: unset all states when loco not selected
  *   TODO: option to show the turnout view instead of the webview
  * select_loco:
+ *   TODO: handle roster entry names with forward slash
  *   TODO: check length of text to avoid overlapping images, slide images to right
  *   TODO: disconnect connections made by roster stuff
  *   TODO: simplify select_loco by removing handler
