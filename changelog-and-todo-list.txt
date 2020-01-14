@@ -498,6 +498,7 @@
  *   TODO: add preference to disable other hardware buttons in throttle screen
  *   TODO: unset all states when loco not selected
  *   TODO: option to show the turnout view instead of the webview
+ *   TODO: use the renamed locos and Consists on the Throttle page
  * select_loco:
  *   TODO: handle roster entry names with forward slash
  *   TODO: check length of text to avoid overlapping images, slide images to right
@@ -506,7 +507,7 @@
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
  *   TODO: remove the similar code the read and write the recents in threaded_application.java and ImportExportPreferences.java
  * consist edit:
- *   TODO: add swipe action or other action to change the lights
+ *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  * log_viewer:
  *
  * These require changes to WiThrottle

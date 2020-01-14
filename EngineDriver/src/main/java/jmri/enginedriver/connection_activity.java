@@ -522,9 +522,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             }
         }
 
-        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectionsListHelp), Toast.LENGTH_LONG).show();
-
-    }
+   }
 
     @Override
     public void onResume() {
@@ -893,6 +891,11 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                             }
                         }
                         list_reader.close();
+
+                        if (((foundDemoHost) && (connections_list.size()>1)) || (connections_list.size()>0)) {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectionsListHelp), Toast.LENGTH_LONG).show();
+                        }
+
                     }
                 } catch (IOException except) {
                     errMsg = except.getMessage();

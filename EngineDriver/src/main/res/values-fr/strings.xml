@@ -797,4 +797,7 @@
     <string name="editConsistLightsButtonLabel">Modifier les lumières</string>
     <string name="toastConnectionsListHelp">Touchez pour sélectionner.\\nSwipe gauche à droite pour supprimer une entrée.</string>
     <string name="toastConsistEditHelp">Touchez pour changer de direction.\\nSwipe gauche à droite pour supprimer une entrée.</string>
+    <string name="consistLocoFacingFront">De face</string>
+    <string name="consistLocoFacingRear">Arrière</string>
+    <string name="editConsistLocoFacingLabel">Orienté vers</string>
 </resources>
