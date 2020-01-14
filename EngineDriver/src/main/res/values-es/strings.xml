@@ -496,7 +496,7 @@
     <string name="toastConnectErrorReadingRecentConnections">Error leyendo la lista de conexiones recientes:</string>
     <string name="toastConnectErrorSavingRecentConnection">Error guardando la conexión reciente:</string>
     <string name="toastConnectRemoveDemoHostError">El servidor de demostración solo se puede eliminar modificando las preferencias.</string>
-    <string name="toastConnectRemoved">Server eliminado de la lista.</string>
+    <string name="toastConnectRemoved">Servidor eliminado de la lista.</string>
 
     <string name="toastRoutesCommandSent">"Comando enviado para establecer la ruta"</string>
     <string name="toastImportExportExportSucceeded">La exportación de preferencias a \'engine_driver/%1$s\' ha tenido éxito.</string>
@@ -771,4 +771,7 @@
     <string name="editConsistLightsButtonLabel">Editar Luces</string>
     <string name="toastConnectionsListHelp">Toque para seleccionar.\\nPase a la izquierda a la derecha para eliminar una entrada.</string>
     <string name="toastConsistEditHelp">Toque para cambiar de dirección.\\nPase a la izquierda a la derecha para eliminar una entrada.</string>
+    <string name="consistLocoFacingFront">Frente</string>
+    <string name="consistLocoFacingRear">Posterior</string>
+    <string name="editConsistLocoFacingLabel">Frente a</string>
 </resources>

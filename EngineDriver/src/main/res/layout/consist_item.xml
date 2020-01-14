@@ -52,4 +52,18 @@
         android:paddingTop="15dp"
         android:text="facing"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true">
+
+        <TextView
+            android:id="@+id/con_facing_label"
+            style="?attr/list_id_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/editConsistLocoFacingLabel" />
+
+    </LinearLayout>
 </RelativeLayout>

@@ -780,4 +780,7 @@
     <string name="editConsistLightsButtonLabel">Edita Llums</string>
     <string name="toastConnectionsListHelp">Toc per seleccionar.\\nPas a l\'esquerra a la dreta per eliminar una entrada.</string>
     <string name="toastConsistEditHelp">Toc per canviar de direcció.\\nPas a l\'esquerra a la dreta per eliminar una entrada.</string>
+    <string name="consistLocoFacingFront">Front</string>
+    <string name="consistLocoFacingRear">Posterior</string>
+    <string name="editConsistLocoFacingLabel">Enfront de</string>
 </resources>

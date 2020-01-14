@@ -315,24 +315,29 @@ public class select_loco extends Activity {
 
         Button bR = findViewById(R.id.Sl_release);
         LinearLayout llThrottle = findViewById(R.id.LL_loco);
+        LinearLayout llEditConsist = findViewById(R.id.LL_edit_consist);
 
         TextView tvSelectLocoHeading = findViewById(R.id.select_loco_heading);
         tvSelectLocoHeading.setText(this.getResources().getString(R.string.select_loco_heading).replace("%1$s", Integer.toString(mainapp.throttleCharToInt(sWhichThrottle.charAt(0)) + 1)));
 
-        //hide the release button row if nothing currently aquired
+        //hide the release button row if nothing currently acquired
 //        TextView tvThrottleNameHeader = findViewById(R.id.throttle_name_header);
-        if (mainapp.consists[whichThrottle].isActive()) {
-            llThrottle.setVisibility(View.GONE);
-            tvThrottleNameHeader.setVisibility(View.VISIBLE);
-        } else {
-            llThrottle.setVisibility(View.VISIBLE);
-            tvThrottleNameHeader.setVisibility(View.GONE);
-        }
+//        if (mainapp.consists[whichThrottle].isActive()) {
+//            llThrottle.setVisibility(View.GONE);
+//            tvThrottleNameHeader.setVisibility(View.VISIBLE);
+//        } else {
+//            llThrottle.setVisibility(View.VISIBLE);
+//            tvThrottleNameHeader.setVisibility(View.GONE);
+//        }
 
         bR.setVisibility(View.VISIBLE);
         llThrottle.setVisibility(View.VISIBLE);
+        llEditConsist.setVisibility(View.GONE);
 
         if (mainapp.consists[whichThrottle].isActive()) {
+            if (mainapp.consists[whichThrottle].size()>1) {
+                llEditConsist.setVisibility(View.VISIBLE);
+            }
             String vLabel = mainapp.consists[whichThrottle].toString();
             if (prefShowAddressInsteadOfName) { // show the DCC Address instead of the loco name if the preference is set
                 vLabel = mainapp.consists[whichThrottle].formatConsistAddr();
@@ -366,6 +371,7 @@ public class select_loco extends Activity {
             bR.setEnabled(false);
             bR.setVisibility(View.GONE);
             llThrottle.setVisibility(View.GONE);
+            tvThrottleNameHeader.setVisibility(View.GONE);
         }
 
         if (SMenu != null) {
@@ -433,7 +439,7 @@ public class select_loco extends Activity {
     boolean saveUpdateList;         // save value across ConsistEdit activity 
     boolean newEngine;              // save value across ConsistEdit activity
 
-    void acquire_engine(boolean bUpdateList, int numberInConsist) { // if numberInConsist is greater than -1 it is not from the recent consists list
+    void acquire_engine(boolean bUpdateList, int numberInConsist, int totalInConsist) { // if numberInConsist is greater than -1 it is not from the recent consists list
         String roster_name = "";
         String sAddr = importExportPreferences.locoAddressToString(engine_address, address_size, true);
         Loco l = new Loco(sAddr);
@@ -502,6 +508,9 @@ public class select_loco extends Activity {
                     startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
                     connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 }
+//                if (numberInConsist == (totalInConsist-1)) {
+//                    updateRecentConsists(saveUpdateList);
+//                }
             }
         }
     }
@@ -511,7 +520,7 @@ public class select_loco extends Activity {
         if (requestCode == throttle.ACTIVITY_CONSIST) {                          // edit consist
             if (newEngine) {
                 updateRecentEngines(saveUpdateList);
-//                updateRecentConsists(saveUpdateList); // this is now done in the activity
+                updateRecentConsists(saveUpdateList);
             }
             result = RESULT_LOCO_EDIT;                 //tell Throttle to update loco directions
         }
@@ -755,7 +764,6 @@ public class select_loco extends Activity {
                     boolean isSame = true;
                     for (int j = 0; j < importExportPreferences.consistEngineAddressList.get(i).size() && isSame; j++) {
                         if ((!importExportPreferences.consistEngineAddressList.get(i).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
-//                                || (!importExportPreferences.consistDirectionList.get(i).get(j).equals(tempConsistDirectionList_inner.get(j)))\
                         ) {
                             isSame = false;
                         }
@@ -773,7 +781,6 @@ public class select_loco extends Activity {
                 for (int j = 0; j < importExportPreferences.consistEngineAddressList.get(0).size(); j++) {
                     if (tempConsistEngineAddressList_inner.get(j) == (importExportPreferences.consistEngineAddressList.get(0).size()+1)) {
                         if ((!importExportPreferences.consistEngineAddressList.get(0).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
-//                                || (!importExportPreferences.consistDirectionList.get(0).get(j).equals(tempConsistDirectionList_inner.get(j)))
                         ) {
                             isBuilding = false;
                         }
@@ -828,7 +835,7 @@ public class select_loco extends Activity {
             sWhichThrottle += locoName;
             locoSource = WHICH_SOURCE_ADDRESS;
 
-            acquire_engine(true, -1);
+            acquire_engine(true, -1, -1);
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
@@ -861,6 +868,7 @@ public class select_loco extends Activity {
         public void onClick(View v) {
             Intent consistEdit = new Intent().setClass(_selectLocoActivity, ConsistEdit.class);
             consistEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
+            consistEdit.putExtra("saveConsistsFile", 'N');
 
             navigatingAway = true;
             startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
@@ -908,7 +916,7 @@ public class select_loco extends Activity {
                 }
 
                 sWhichThrottle += locoName;
-                acquire_engine(true, -1);
+                acquire_engine(true, -1, -1);
             }
         }
     }
@@ -944,7 +952,7 @@ public class select_loco extends Activity {
                     sWhichThrottle = tempsWhichThrottle
                             + locoName;
 
-                    acquire_engine(true,i);
+                    acquire_engine(true, i, importExportPreferences.consistEngineAddressList.get(position).size());
 
                     Consist consist = mainapp.consists[whichThrottle];
 
@@ -1030,7 +1038,7 @@ public class select_loco extends Activity {
                 boolean bRosterRecent = prefs.getBoolean("roster_recent_locos_preference",
                         getResources().getBoolean(R.bool.prefRosterRecentLocosDefaultValue));
 
-                acquire_engine(bRosterRecent,  -1);
+                acquire_engine(bRosterRecent,  -1, -1);
             }
         }
     }
@@ -1109,8 +1117,8 @@ public class select_loco extends Activity {
 
         // Set up a list adapter to allow adding the list of recent engines to the UI.
         recent_engine_list = new ArrayList<>();
-        recent_list_adapter = new RecentSimpleAdapter(this, recent_engine_list,
-                R.layout.engine_list_item, new String[]{"engine"},
+        recent_list_adapter = new RecentSimpleAdapter(this, recent_engine_list, R.layout.engine_list_item,
+                new String[]{"engine"},
                 new int[]{R.id.engine_item_label, R.id.engine_icon_image});
         engine_list_view = findViewById(R.id.engine_list);
         engine_list_view.setAdapter(recent_list_adapter);

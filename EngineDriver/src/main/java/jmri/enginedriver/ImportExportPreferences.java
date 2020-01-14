@@ -289,13 +289,13 @@ public class ImportExportPreferences {
                     recent_loco_address_size_list = new ArrayList<>();
                     recent_loco_name_list = new ArrayList<>();
                     recent_loco_source_list = new ArrayList<>();
-                    getIntListDataFromPreferences(recent_loco_address_list, "prefRecentLoco", sharedPreferences);
-                    getIntListDataFromPreferences(recent_loco_address_size_list, "prefRecentLocoSize", sharedPreferences);
-                    getStringListDataFromPreferences(recent_loco_name_list, "prefRecentLocoName", sharedPreferences);
-                    getIntListDataFromPreferences(recent_loco_source_list, "prefRecentLocoSource", sharedPreferences);
+                    getIntListDataFromPreferences(recent_loco_address_list, "prefRecentLoco", sharedPreferences,-1, 0);
+                    getIntListDataFromPreferences(recent_loco_address_size_list, "prefRecentLocoSize", sharedPreferences, recent_loco_address_list.size(), 0);
+                    getStringListDataFromPreferences(recent_loco_name_list, "prefRecentLocoName", sharedPreferences, recent_loco_address_list.size(), "");
+                    getIntListDataFromPreferences(recent_loco_source_list, "prefRecentLocoSource", sharedPreferences, recent_loco_address_list.size(), WHICH_SOURCE_UNKNOWN);
                     writeRecentLocosListToFile(sharedPreferences);
 
-                    getStringListDataFromPreferences(consistNameList, "prefRecentConsistName", sharedPreferences);
+                    getStringListDataFromPreferences(consistNameList, "prefRecentConsistName", sharedPreferences, -1, "");
                     for (int i = 0; i < consistNameList.size(); i++) {
                         ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<>();
                         ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<>();
@@ -304,12 +304,12 @@ public class ImportExportPreferences {
                         ArrayList<String> tempConsistRosterNameList_inner = new ArrayList<>();
                         ArrayList<Integer> tempConsistLightList_inner = new ArrayList<>();
 
-                        getIntListDataFromPreferences(tempConsistEngineAddressList_inner, "prefRecentConsistAddress_"+i, sharedPreferences);
-                        getIntListDataFromPreferences(tempConsistAddressSizeList_inner, "prefRecentConsistSize_"+i, sharedPreferences);
-                        getIntListDataFromPreferences(tempConsistDirectionList_inner, "prefRecentConsistDirection_"+i, sharedPreferences);
-                        getIntListDataFromPreferences(tempConsistSourceList_inner, "prefRecentConsistSource_"+i, sharedPreferences);
-                        getStringListDataFromPreferences(tempConsistRosterNameList_inner, "prefRecentConsistRosterName_"+i, sharedPreferences);
-                        getIntListDataFromPreferences(tempConsistLightList_inner, "prefRecentConsistLight_"+i, sharedPreferences);
+                        getIntListDataFromPreferences(tempConsistEngineAddressList_inner, "prefRecentConsistAddress_"+i, sharedPreferences, -1, 0);
+                        getIntListDataFromPreferences(tempConsistAddressSizeList_inner, "prefRecentConsistSize_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), 0);
+                        getIntListDataFromPreferences(tempConsistDirectionList_inner, "prefRecentConsistDirection_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), 0);
+                        getIntListDataFromPreferences(tempConsistSourceList_inner, "prefRecentConsistSource_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), WHICH_SOURCE_UNKNOWN);
+                        getStringListDataFromPreferences(tempConsistRosterNameList_inner, "prefRecentConsistRosterName_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), "");
+                        getIntListDataFromPreferences(tempConsistLightList_inner, "prefRecentConsistLight_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), LIGHT_UNKNOWN);
 
                         consistEngineAddressList.add(tempConsistEngineAddressList_inner);
                         consistAddressSizeList.add(tempConsistAddressSizeList_inner);
@@ -431,7 +431,6 @@ public class ImportExportPreferences {
         }
     }
 
-    // simliar, but different, code exists in select_loco.java, ImportExportPreferences.java. if you modify one, make sure you modify the other
     void getRecentConsistsListFromFile() {
         Log.d("Engine_Driver", "getRecentConsistsListFromFile: ImportExportPreferences: Loading recent consists list from file");
 
@@ -593,10 +592,12 @@ public class ImportExportPreferences {
     }
 
     String addOneConsistAddressHtml(Integer addr, int size, int dir, int source, int light) {
-        String rslt = "<span>" + addr.toString()+"<small><small>("+ (size==0 ? "S":"L") +")"
-        + (dir==0 ? "▲":"▼") + "</small></small>"
-        +  (light==LIGHT_OFF ? "○": (light==LIGHT_FOLLOW ? "●":"<small><small>?</small></small>"))
-        +  getSourceHtmlString(source) + " &nbsp;</span>";
+        String rslt = "<span>" + addr.toString()
+                +"<small><small>("+ (size==0 ? "S":"L") +")"  + "</small></small>"
+//                + "<small><small>" + (dir==0 ? "▲":"▼") + "</small></small>"
+//                +  (light==LIGHT_OFF ? "○": (light==LIGHT_FOLLOW ? "●":"<small><small>?</small></small>"))
+//                +  getSourceHtmlString(source)
+                + " &nbsp;</span>";
 
         return rslt;
 
@@ -735,11 +736,14 @@ public class ImportExportPreferences {
         return sharedPreferences.edit().commit();
     }
 
-    private int getIntListDataFromPreferences(ArrayList<Integer> list, String listName, SharedPreferences sharedPreferences) {
+    private int getIntListDataFromPreferences(ArrayList<Integer> list, String listName, SharedPreferences sharedPreferences, int forceSize, int defaultValue) {
         int size = sharedPreferences.getInt(listName + "_size", 0);
+        if (forceSize>0) { // get a specified number regardless of how many are stored
+            size = forceSize;
+        }
         int prefInt;
         for(int i=0 ; i<size ; i++){
-            prefInt = sharedPreferences.getInt(listName + "_" + i, 0);
+            prefInt = sharedPreferences.getInt(listName + "_" + i, defaultValue);
             list.add(prefInt);
         }
         return size;
@@ -756,11 +760,14 @@ public class ImportExportPreferences {
         return sharedPreferences.edit().commit();
     }
 
-    private int getStringListDataFromPreferences(ArrayList<String> list, String listName, SharedPreferences sharedPreferences) {
+    private int getStringListDataFromPreferences(ArrayList<String> list, String listName, SharedPreferences sharedPreferences, int forceSize, String defaultValue) {
         int size = sharedPreferences.getInt(listName + "_size", 0);
+        if (forceSize>0) { // get a specified number regardless of how many are stored
+            size = forceSize;
+        }
         String prefString;
         for(int i=0 ; i<size ; i++){
-            prefString = sharedPreferences.getString(listName + "_" + i, "");
+            prefString = sharedPreferences.getString(listName + "_" + i, defaultValue);
             list.add(prefString);
         }
         return size;
@@ -785,26 +792,27 @@ public class ImportExportPreferences {
         String engineAddressHtml = "";
         try {
             String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
-            String addressSourceString = getSourceHtmlString(source);
-            engineAddressHtml = String.format("<span>%s<small>(%s)</small>%s </span>", addr.toString(), addressLengthString, addressSourceString);
+//            String addressSourceString = getSourceHtmlString(source);
+//            engineAddressHtml = String.format("<span>%s<small>(%s)</small>%s </span>", addr.toString(), addressLengthString, addressSourceString);
+            engineAddressHtml = String.format("<span>%s<small>(%s)</small> </span>", addr.toString(), addressLengthString);
         } catch (Exception e) {
             Log.e("Engine_Driver", "locoAddressToString. ");
         }
         return engineAddressHtml;
     }
 
-    public String getSourceHtmlString(int source) {
-        String addressSourceString = "?";
-        switch (source) {
-            case WHICH_SOURCE_ROSTER:
-                addressSourceString = " <big>≡</big> ";
-                break;
-            case WHICH_SOURCE_ADDRESS:
-                addressSourceString = "<sub><small><small><small>└─┘</small></small></small></sub>";
-                break;
-        }
-        return addressSourceString;
-    }
+//    public String getSourceHtmlString(int source) {
+//        String addressSourceString = "?";
+//        switch (source) {
+//            case WHICH_SOURCE_ROSTER:
+//                addressSourceString = " <big>≡</big> ";
+//                break;
+//            case WHICH_SOURCE_ADDRESS:
+//                addressSourceString = "<sub><small><small><small>└─┘</small></small></small></sub>";
+//                break;
+//        }
+//        return addressSourceString;
+//    }
 
 
 }

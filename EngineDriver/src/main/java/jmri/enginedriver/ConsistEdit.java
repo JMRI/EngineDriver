@@ -79,9 +79,11 @@ public class ConsistEdit extends Activity implements OnGestureListener {
     private int result;                     // set to RESULT_FIRST_USER when something is edited
 
     private int whichThrottle;
+    private char saveConsistsFile = 'Y';
 
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
     SwipeDetector LvSwipeDetector;
+    ListView consistLV;
 
     private GestureDetector myGesture;
 
@@ -113,8 +115,10 @@ public class ConsistEdit extends Activity implements OnGestureListener {
                 hm.put("trail_label", consist.getTrailAddr().equals(l.getAddress()) ? CONSIST_EDIT_LABEL_TRAIL : "");
                 hm.put("loco_addr", l.getAddress());
                 hm.put("loco_name", l.toString());
-                hm.put("loco_facing", l.isBackward() ? "Rear" : "Front");
-
+//                hm.put("loco_facing", l.isBackward() ? "Rear" : "Front");
+                hm.put("loco_facing", l.isBackward()
+                        ? this.getResources().getString(R.string.consistLocoFacingRear)
+                        : this.getResources().getString(R.string.consistLocoFacingFront) );
 
                 // the following is ignored if the 'complex' prefConsistFollowRuleStyle is chosen in the preferences
                 if (consist.getLeadAddr().equals(l.getAddress())) { // first one is always 'follow'
@@ -174,10 +178,10 @@ public class ConsistEdit extends Activity implements OnGestureListener {
     }
 
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return myGesture.onTouchEvent(event);
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        return myGesture.onTouchEvent(event);
+//    }
 
     /**
      * Called when the activity is first created.
@@ -206,6 +210,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             whichThrottle = mainapp.throttleCharToInt(extras.getChar("whichThrottle"));
+            saveConsistsFile = extras.getChar("whichThrottle");
         }
 
         consist = mainapp.consists[whichThrottle];
@@ -214,11 +219,13 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         consistList = new ArrayList<>();
         consistListAdapter = new SimpleAdapter(this, consistList, R.layout.consist_item,
                 new String[]{"loco_name", "loco_addr", "lead_label", "trail_label", "loco_facing"},
-                new int[]{R.id.con_loco_name, R.id.con_loco_addr_hidden, R.id.con_lead_label, R.id.con_trail_label, R.id.con_loco_facing});
-        ListView consistLV = findViewById(R.id.consist_list);
+                new int[]{R.id.con_loco_name, R.id.con_loco_addr_hidden,
+                        R.id.con_lead_label, R.id.con_trail_label, R.id.con_loco_facing}
+                        );
+        consistLV = findViewById(R.id.consist_list);
         consistLV.setAdapter(consistListAdapter);
         consistLV.setOnTouchListener(LvSwipeDetector = new SwipeDetector());
-        consistLV.setOnItemClickListener(new locoItemClickListner());
+        consistLV.setOnItemClickListener(new locoItemClickListener());
 //        consistLV.setOnItemLongClickListener(new OnItemLongClickListener() {
 //            //When an entry is long-clicked, remove it from the consist
 //            @Override
@@ -235,14 +242,14 @@ public class ConsistEdit extends Activity implements OnGestureListener {
 //                return true;
 //            }
 //        });
-
-        OnTouchListener gestureListener = new ListView.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return myGesture.onTouchEvent(event);
-            }
-        };
-
-        consistLV.setOnTouchListener(gestureListener);
+//
+//        OnTouchListener gestureListener = new ListView.OnTouchListener() {
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return myGesture.onTouchEvent(event);
+//            }
+//        };
+//
+//        consistLV.setOnTouchListener(gestureListener);
 
         consistObjList = new ArrayList<>();
         consistSpinner = findViewById(R.id.consist_lead);
@@ -319,11 +326,11 @@ public class ConsistEdit extends Activity implements OnGestureListener {
     public void onDestroy() {
         Log.d("Engine_Driver", "ConsistEdit.onDestroy() called");
 
-        importExportPreferences.getRecentConsistsListFromFile();
-        int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConistToBeginningOfList(consist);
-//        updateRecentConsists(whichEntryIsBeingUpdated);
-        importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
-
+        if (saveConsistsFile=='Y') {
+            importExportPreferences.getRecentConsistsListFromFile();
+            int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConistToBeginningOfList(consist);
+            importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
+        }
         mainapp.consist_edit_msg_handler = null;
         super.onDestroy();
     }
@@ -401,15 +408,15 @@ public class ConsistEdit extends Activity implements OnGestureListener {
     }
 
     // onClick for the Locos list items
-    public class locoItemClickListner implements AdapterView.OnItemClickListener {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            // When an item is clicked,
-            ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
-            TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
-            String address = addrv.getText().toString();
+    public class locoItemClickListener implements AdapterView.OnItemClickListener {
 
+        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
             if (LvSwipeDetector.swipeDetected()) {
                 if (LvSwipeDetector.getAction() == SwipeDetector.Action.LR) {
+                    ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
+                    TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
+                    String address = addrv.getText().toString();
+
                     if (!consist.getLeadAddr().equals(address)) {
                         consist.remove(address);
                         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, address, whichThrottle);   //release the loco
@@ -418,9 +425,13 @@ public class ConsistEdit extends Activity implements OnGestureListener {
 //                } else {
                 }
             } else {  //no swipe
+                // When an item is clicked,
+                ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
+                TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
+                String address = addrv.getText().toString();
 
                 try {
-                    consist.setBackward(address, !consist.isBackward(address));
+                    consist.setBackward(address, ! consist.isBackward(address));
                 } catch (Exception e) {    // isBackward returns null if address is not in consist - should not happen since address was selected from consist list
                     Log.d("Engine_Driver", "ConsistEdit selected engine " + address + " that is not in consist");
                 }

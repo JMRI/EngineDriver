@@ -714,4 +714,7 @@
     <string name="editConsistLightsButtonLabel">Modifica Luci</string>
     <string name="toastConnectionsListHelp">Toccare per selezionare.\\nSwipe sinistra a destra per rimuovere una voce.</string>
     <string name="toastConsistEditHelp">Toccare per cambiare direzione.\\nSwipe sinistra a destra per rimuovere una voce.</string>
+    <string name="consistLocoFacingFront">Davanti</string>
+    <string name="consistLocoFacingRear">Posteriore</string>
+    <string name="editConsistLocoFacingLabel">Di fronte</string>
 </resources>
