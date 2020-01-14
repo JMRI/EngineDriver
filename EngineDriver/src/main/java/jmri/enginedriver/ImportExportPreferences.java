@@ -428,6 +428,10 @@ public class ImportExportPreferences {
             Log.e("Engine_Driver",
                     "writeRecentLocosListToFile: ImportExportPreferences: Error creating a PrintWriter, IOException: "
                             + except.getMessage());
+        } catch (IndexOutOfBoundsException except) {
+            Log.e("Engine_Driver",
+                    "writeRecentLocosListToFile: ImportExportPreferences: Error getting recent locos lists, IndexOutOfBoundsException: "
+                            + except.getMessage());
         }
     }
 
