@@ -392,7 +392,7 @@
     <string name="prefImportServerAutoTitle">Importación automática desde todos los servidores</string>
     <string name="prefImportServerAutoSummary">Importa automáticamente las preferencias de los servidores en conexión. \n(Si el archivo \'/engine_driver/auto_preferences.ed\' está en el servidor y si es más reciente que la última vez que se verificó.)</string>
 
-    <string name="importServerAutoDialog">O arquivo New Preferences foi encontrado neste servidor.\nVocê deseja importá-lo?\n\nAviso!\n\'Completo\' - Todas as suas preferências serão sobrescritas.\n\n\'Parcial\' - Todas as preferências, exceto as preferências Tema e Tipo de página do acelerador, serão sobrescritas.</string>
+    <string name="importServerAutoDialog">O arquivo New Preferences foi encontrado neste servidor (%1$s).\nVocê deseja importá-lo?\n\nAviso!\n\'Completo\' - Todas as suas preferências serão sobrescritas.\n\n\'Parcial\' - Todas as preferências, exceto as preferências Tema e Tipo de página do acelerador, serão sobrescritas.</string>
     <string name="importServerAutoDialogPositiveButton">Completo</string>
     <string name="importServerAutoDialogNeutralButton">Parcial</string>
 
