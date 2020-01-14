@@ -5772,7 +5772,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         };
 
         AlertDialog.Builder ab = new AlertDialog.Builder(throttle.this);
-        ab.setMessage(R.string.importServerAutoDialog)
+        ab.setMessage(getApplicationContext().getResources().getString(R.string.importServerAutoDialog, mainapp.connectedHostName))
                 .setPositiveButton(R.string.importServerAutoDialogPositiveButton, dialogClickListener)
                 .setNegativeButton(R.string.no, dialogClickListener)
                 .setNeutralButton(R.string.importServerAutoDialogNeutralButton, dialogClickListener);
