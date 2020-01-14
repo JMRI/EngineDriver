@@ -744,7 +744,7 @@
     <string name="toastConnectionsListHelp">Touch to select a Recent Connection\nor enter Server Address and Port.\nSwipe Right to remove an entry.</string>
 
     <!--    Toast messages for the Consist Edit Activity -->
-    <string name="toastConsistEditHelp">Touch to change direction. Swipe Right to remove an entry.</string>
+    <string name="toastConsistEditHelp">Touch to change facing. Swipe Right to remove an entry.</string>
 
     <string name="toastRecentCleared">Loco removed from list</string>
     <string name="toastRecentConsistCleared">Consist removed from list</string>
@@ -951,7 +951,11 @@
     <string name="edit_consist_lights_throttle_5">Edit Consist Lights Throttle 5</string>
     <string name="edit_consist_lights_throttle_6">Edit Consist Lights Throttle 6</string>
 
-    <string name="editConsistButtonLabel">Edit Order and Direction</string>
+    <string name="editConsistButtonLabel">Edit Order &amp; Facing</string>
     <string name="editConsistLightsButtonLabel">Edit Lights</string>
+
+    <string name="editConsistLocoFacingLabel">Facing</string>
+    <string name="consistLocoFacingFront">Front</string>
+    <string name="consistLocoFacingRear">Rear</string>
 
 </resources>
