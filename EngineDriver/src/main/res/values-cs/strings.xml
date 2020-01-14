@@ -472,7 +472,7 @@
     <string name="prefImportServerAutoTitle">Automaticky importovat ze všech serverů</string>
     <string name="prefImportServerAutoSummary">Automaticky importuje předvolby ze všech připojených serverů.\nPokud je soubor \'/engine_driver/auto_preferences.ed\' na serveru a pokud je novější než poslední kontrola.)</string>
 
-    <string name="importServerAutoDialog">Nový soubor předvoleb byl nalezen na tomto serveru.\nChcete ho importovat?\n\nVarování!\n\'Úplný\' - Všechny předvolby budou přepsány.\n\n\'Částečný\' - Všechny předvolby s výjimkou Téma a některé předvolby Stránky typu ovladače budou přepsány.</string>
+    <string name="importServerAutoDialog">Nový soubor předvoleb byl nalezen na tomto serveru (%1$s).\nChcete ho importovat?\n\nVarování!\n\'Úplný\' - Všechny předvolby budou přepsány.\n\n\'Částečný\' - Všechny předvolby s výjimkou Téma a některé předvolby Stránky typu ovladače budou přepsány.</string>
     <string name="importServerAutoDialogPositiveButton">Úplný</string>
     <string name="importServerAutoDialogNeutralButton">Částečný</string>
 

@@ -189,7 +189,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             enableDisablePreference("prefSelectedLocoIndicator", false);
         }
 
-        deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+        deviceId = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         sharedPreferences.edit().putString("prefAndroidId", deviceId).commit();
 
         String currentValue = sharedPreferences.getString("prefTtsWhen", "");
