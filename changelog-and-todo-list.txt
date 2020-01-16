@@ -1,5 +1,5 @@
-**Version 2.25
-**Version 2.24.??
+**Version 2.25.96
+**Version 2.25.94
  * Option to show a Shunting/Switching speed button (Vertical Throttle only)
  * Fix problem in 'drop before acquire' when re-selecting the same loco
  * Play sound and vibrate when device disconnects
