@@ -175,6 +175,8 @@ public class select_loco extends Activity {
     boolean removingConsistOrForceRewite = false; //flag used to indicate that the selected consist is being removed and not to save it.
     ListView engine_list_view;
 
+    String overrideThrottleName;
+
     // populate the on-screen roster view from global hashmap
     public void refresh_roster_list() {
         // clear and rebuild
@@ -524,6 +526,7 @@ public class select_loco extends Activity {
             }
             result = RESULT_LOCO_EDIT;                 //tell Throttle to update loco directions
         }
+        overrideThrottleName="";
         end_this_activity();
     }
 
@@ -778,12 +781,9 @@ public class select_loco extends Activity {
             if ( (importExportPreferences.consistEngineAddressList.size()>0)
                     && (importExportPreferences.consistEngineAddressList.get(0).size() == (tempConsistEngineAddressList_inner.size()-1) ) ) {
                 // check of the last added one is the same other then the last extra loco
-                for (int j = 0; j < importExportPreferences.consistEngineAddressList.get(0).size(); j++) {
-                    if (tempConsistEngineAddressList_inner.get(j) == (importExportPreferences.consistEngineAddressList.get(0).size()+1)) {
-                        if ((!importExportPreferences.consistEngineAddressList.get(0).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
-                        ) {
-                            isBuilding = false;
-                        }
+                for (int j = 0; j < tempConsistEngineAddressList_inner.size()-1; j++) {
+                    if ((!importExportPreferences.consistEngineAddressList.get(0).get(j).equals(tempConsistEngineAddressList_inner.get(j)))) {
+                        isBuilding = false;
                     }
                 }
                 if (isBuilding) {  // remove the first entry
@@ -852,6 +852,7 @@ public class select_loco extends Activity {
 
         public void onClick(View v) {
             release_loco(_throttle);
+            overrideThrottleName="";
             end_this_activity();
         }
     }
@@ -938,6 +939,7 @@ public class select_loco extends Activity {
 //                } else {
                 }
             } else {  //no swipe
+                overrideThrottleName = importExportPreferences.consistNameList.get(position);
 
                 for (int i = 0; i < importExportPreferences.consistEngineAddressList.get(position).size(); i++) {
 
@@ -1038,6 +1040,7 @@ public class select_loco extends Activity {
                 boolean bRosterRecent = prefs.getBoolean("roster_recent_locos_preference",
                         getResources().getBoolean(R.bool.prefRosterRecentLocosDefaultValue));
 
+                overrideThrottleName = rosterNameString;
                 acquire_engine(bRosterRecent,  -1, -1);
             }
         }
@@ -1055,6 +1058,7 @@ public class select_loco extends Activity {
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
         if (key == KeyEvent.KEYCODE_BACK) {
+            overrideThrottleName="";
             end_this_activity();
             return true;
         }
@@ -1284,6 +1288,7 @@ public class select_loco extends Activity {
 
         mainapp.checkAndSetOrientationInfo();
 
+        overrideThrottleName = "";
     }
 
     @SuppressLint("ApplySharedPref")
@@ -1473,6 +1478,7 @@ public class select_loco extends Activity {
     void end_this_activity() {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("whichThrottle", sWhichThrottle.charAt(0));  //pass whichThrottle as an extra
+        resultIntent.putExtra("overrideThrottleName", overrideThrottleName);
         setResult(result, resultIntent);
         this.finish();
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

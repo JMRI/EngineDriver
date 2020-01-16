@@ -275,6 +275,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     // current direction
     private int[] dirs = {1,1,1,1,1,1};   // requested direction for each throttle (single or multiple engines)
+    protected String[] overrideThrottleNames = {"", "", "", "", "", ""};
 
     protected static final String WEB_VIEW_LOCATION_NONE = "none";
     protected static final String WEB_VIEW_LOCATION_BOTTOM = "Bottom";
@@ -5174,8 +5175,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case ACTIVITY_SELECT_LOCO:
-                if (resultCode == select_loco.RESULT_LOCO_EDIT)
+                if (resultCode == select_loco.RESULT_LOCO_EDIT) {
                     ActivityConsistUpdate(resultCode, data.getExtras());
+                }
+                overrideThrottleNames[mainapp.throttleCharToInt(data.getCharExtra("whichThrottle",' '))] = data.getStringExtra("overrideThrottleName");
+
                 if ((getConsist(whichVolume) != null) && (!getConsist(whichVolume).isActive())) {
                     setNextActiveThrottle(); // if consist on Volume throttle was released, move to next throttle
                 } else {
