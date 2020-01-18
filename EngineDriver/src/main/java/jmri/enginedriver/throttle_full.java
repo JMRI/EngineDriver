@@ -291,11 +291,23 @@ public class throttle_full extends throttle {
             if (mainapp.consists[throttleIndex] != null) {
                 if (mainapp.consists[throttleIndex].isActive()) {
                     if (!prefShowAddressInsteadOfName) {
+                        if (!overrideThrottleNames[throttleIndex].equals("")) {
+                            bLabel = overrideThrottleNames[throttleIndex];
+                            bLabelPlainText = overrideThrottleNames[throttleIndex];
+                        } else {
+                            bLabel = mainapp.consists[throttleIndex].toHtml();
+                            bLabelPlainText = mainapp.consists[throttleIndex].toString();
+                        }
+
 //                        bLabel = mainapp.consists[throttleIndex].toString();
-                        bLabelPlainText = mainapp.consists[throttleIndex].toString();
-                        bLabel = mainapp.consists[throttleIndex].toHtml();
+//                        bLabelPlainText = mainapp.consists[throttleIndex].toString();
+//                        bLabel = mainapp.consists[throttleIndex].toHtml();
                     } else {
-                        bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
+                        if (overrideThrottleNames[throttleIndex].equals("")) {
+                            bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
+                        } else {
+                            bLabel = overrideThrottleNames[throttleIndex];
+                        }
                         bLabelPlainText = bLabel;
                     }
                     throttle_count++;

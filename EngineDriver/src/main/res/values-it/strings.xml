@@ -717,4 +717,5 @@
     <string name="consistLocoFacingFront">Davanti</string>
     <string name="consistLocoFacingRear">Posteriore</string>
     <string name="editConsistLocoFacingLabel">Di fronte</string>
+    <string name="toastLocoAlreadySelected">Loco Già selezionato</string>
 </resources>

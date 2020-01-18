@@ -721,4 +721,5 @@
     <string name="consistLocoFacingFront">Frente</string>
     <string name="consistLocoFacingRear">traseiro</string>
     <string name="editConsistLocoFacingLabel">Voltado para</string>
+    <string name="toastLocoAlreadySelected">Loco já seleccionados</string>
 </resources>

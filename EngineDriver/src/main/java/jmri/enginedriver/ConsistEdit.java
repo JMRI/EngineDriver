@@ -291,8 +291,10 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         refreshConsistLists();
         result = RESULT_OK;
 
-        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConsistEditHelp), Toast.LENGTH_LONG).show();
-
+        if(!mainapp.shownToastConsistEdit) {
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConsistEditHelp), Toast.LENGTH_LONG).show();
+            mainapp.shownToastConsistEdit = false;
+        }
     }
 
     @Override

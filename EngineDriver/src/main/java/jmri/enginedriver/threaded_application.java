@@ -226,6 +226,11 @@ public class threaded_application extends Application {
     private static final int WHICH_SOURCE_ADDRESS = 1;
     private static final int WHICH_SOURCE_ROSTER = 2;
 
+    public boolean shownToastRecentConsists = false;
+    public boolean shownToastRecentLocos = false;
+    public boolean shownToastRoster = false;
+    public boolean shownToastConsistEdit = false;
+
     class comm_thread extends Thread {
         JmDNS jmdns = null;
         volatile boolean endingJmdns = false;

@@ -126,10 +126,6 @@ public class select_loco extends Activity {
     SwipeDetector recentsSwipeDetector;
     //
 
-    boolean rosterHelp = false;
-    boolean recentsHelp = false;
-    boolean recentsConsistsHelp = false;
-
     private int engine_address;
     private int address_size;
     private String locoName = "";
@@ -174,6 +170,8 @@ public class select_loco extends Activity {
     boolean removingLocoOrForceReload = false; //flag used to indicate that the selected loco is being removed and not to save it.
     boolean removingConsistOrForceRewite = false; //flag used to indicate that the selected consist is being removed and not to save it.
     ListView engine_list_view;
+
+    String overrideThrottleName;
 
     // populate the on-screen roster view from global hashmap
     public void refresh_roster_list() {
@@ -457,7 +455,18 @@ public class select_loco extends Activity {
         }
         Consist consist = mainapp.consists[whichThrottle];
 
-        if (!roster_name.equals("")) {// add roster selection info if present
+        // if we already have it do nothing
+        if (consist.size()>=1) {
+            for (int i = 0; i<=consist.size();i++) {
+                if (consist.getLoco(sAddr)!=null) {
+                    overrideThrottleName = "";
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastLocoAlreadySelected), Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        }
+
+            if (!roster_name.equals("")) {// add roster selection info if present
 //            addr += "<;>" + sWhichThrottle.substring(1);
             sAddr += "<;>" + roster_name;
         }
@@ -524,6 +533,7 @@ public class select_loco extends Activity {
             }
             result = RESULT_LOCO_EDIT;                 //tell Throttle to update loco directions
         }
+        overrideThrottleName="";
         end_this_activity();
     }
 
@@ -778,12 +788,9 @@ public class select_loco extends Activity {
             if ( (importExportPreferences.consistEngineAddressList.size()>0)
                     && (importExportPreferences.consistEngineAddressList.get(0).size() == (tempConsistEngineAddressList_inner.size()-1) ) ) {
                 // check of the last added one is the same other then the last extra loco
-                for (int j = 0; j < importExportPreferences.consistEngineAddressList.get(0).size(); j++) {
-                    if (tempConsistEngineAddressList_inner.get(j) == (importExportPreferences.consistEngineAddressList.get(0).size()+1)) {
-                        if ((!importExportPreferences.consistEngineAddressList.get(0).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
-                        ) {
-                            isBuilding = false;
-                        }
+                for (int j = 0; j < tempConsistEngineAddressList_inner.size()-1; j++) {
+                    if ((!importExportPreferences.consistEngineAddressList.get(0).get(j).equals(tempConsistEngineAddressList_inner.get(j)))) {
+                        isBuilding = false;
                     }
                 }
                 if (isBuilding) {  // remove the first entry
@@ -852,6 +859,7 @@ public class select_loco extends Activity {
 
         public void onClick(View v) {
             release_loco(_throttle);
+            overrideThrottleName="";
             end_this_activity();
         }
     }
@@ -938,6 +946,7 @@ public class select_loco extends Activity {
 //                } else {
                 }
             } else {  //no swipe
+                overrideThrottleName = importExportPreferences.consistNameList.get(position);
 
                 for (int i = 0; i < importExportPreferences.consistEngineAddressList.get(position).size(); i++) {
 
@@ -1038,6 +1047,7 @@ public class select_loco extends Activity {
                 boolean bRosterRecent = prefs.getBoolean("roster_recent_locos_preference",
                         getResources().getBoolean(R.bool.prefRosterRecentLocosDefaultValue));
 
+                overrideThrottleName = rosterNameString;
                 acquire_engine(bRosterRecent,  -1, -1);
             }
         }
@@ -1055,6 +1065,7 @@ public class select_loco extends Activity {
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
         if (key == KeyEvent.KEYCODE_BACK) {
+            overrideThrottleName="";
             end_this_activity();
             return true;
         }
@@ -1284,6 +1295,7 @@ public class select_loco extends Activity {
 
         mainapp.checkAndSetOrientationInfo();
 
+        overrideThrottleName = "";
     }
 
     @SuppressLint("ApplySharedPref")
@@ -1322,9 +1334,9 @@ public class select_loco extends Activity {
                 rbRoster.setChecked(true);
                 rbRecent.setChecked(false);
                 rbRecentConsists.setChecked(false);
-                if (!rosterHelp) {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRosterHelp), Toast.LENGTH_SHORT).show();
-                    rosterHelp = true;
+                if (!mainapp.shownToastRoster) {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRosterHelp), Toast.LENGTH_LONG).show();
+                    mainapp.shownToastRoster = true;
                 }
                 break;
             }
@@ -1343,9 +1355,9 @@ public class select_loco extends Activity {
                 rbRoster.setChecked(false);
                 rbRecent.setChecked(true);
                 rbRecentConsists.setChecked(false);
-                if (!recentsHelp) {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentsHelp), Toast.LENGTH_SHORT).show();
-                    recentsHelp = true;
+                if (!mainapp.shownToastRecentLocos) {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentsHelp), Toast.LENGTH_LONG).show();
+                    mainapp.shownToastRecentLocos = true;
                 }
                 break;
             }
@@ -1364,9 +1376,9 @@ public class select_loco extends Activity {
                 rbRoster.setChecked(false);
                 rbRecent.setChecked(false);
                 rbRecentConsists.setChecked(true);
-                if (!recentsConsistsHelp) {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentConsistsHelp), Toast.LENGTH_SHORT).show();
-                    recentsConsistsHelp = true;
+                if (!mainapp.shownToastRecentConsists) {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentConsistsHelp), Toast.LENGTH_LONG).show();
+                    mainapp.shownToastRecentConsists = true;
                 }
                 break;
             }
@@ -1473,6 +1485,7 @@ public class select_loco extends Activity {
     void end_this_activity() {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("whichThrottle", sWhichThrottle.charAt(0));  //pass whichThrottle as an extra
+        resultIntent.putExtra("overrideThrottleName", overrideThrottleName);
         setResult(result, resultIntent);
         this.finish();
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
