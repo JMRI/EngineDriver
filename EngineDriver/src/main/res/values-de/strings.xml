@@ -786,4 +786,5 @@
     <string name="consistLocoFacingFront">Vorderseite</string>
     <string name="consistLocoFacingRear">Rückseite</string>
     <string name="editConsistLocoFacingLabel">Zugewandt</string>
+    <string name="toastLocoAlreadySelected">Loco bereits ausgewählt</string>
 </resources>

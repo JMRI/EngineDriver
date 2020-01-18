@@ -884,4 +884,5 @@
     <string name="consistLocoFacingFront">Přední</string>
     <string name="consistLocoFacingRear">Zadní</string>
     <string name="editConsistLocoFacingLabel">Obložení</string>
+    <string name="toastLocoAlreadySelected">Loco již vybrána</string>
 </resources>

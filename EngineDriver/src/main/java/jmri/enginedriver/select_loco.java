@@ -126,10 +126,6 @@ public class select_loco extends Activity {
     SwipeDetector recentsSwipeDetector;
     //
 
-    boolean rosterHelp = false;
-    boolean recentsHelp = false;
-    boolean recentsConsistsHelp = false;
-
     private int engine_address;
     private int address_size;
     private String locoName = "";
@@ -459,7 +455,17 @@ public class select_loco extends Activity {
         }
         Consist consist = mainapp.consists[whichThrottle];
 
-        if (!roster_name.equals("")) {// add roster selection info if present
+        // if we already have it do nothing
+        if (consist.size()>=1) {
+            for (int i = 0; i<=consist.size();i++) {
+                if (consist.getLoco(sAddr)!=null) {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastLocoAlreadySelected), Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        }
+
+            if (!roster_name.equals("")) {// add roster selection info if present
 //            addr += "<;>" + sWhichThrottle.substring(1);
             sAddr += "<;>" + roster_name;
         }
@@ -1327,9 +1333,9 @@ public class select_loco extends Activity {
                 rbRoster.setChecked(true);
                 rbRecent.setChecked(false);
                 rbRecentConsists.setChecked(false);
-                if (!rosterHelp) {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRosterHelp), Toast.LENGTH_SHORT).show();
-                    rosterHelp = true;
+                if (!mainapp.shownToastRoster) {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRosterHelp), Toast.LENGTH_LONG).show();
+                    mainapp.shownToastRoster = true;
                 }
                 break;
             }
@@ -1348,9 +1354,9 @@ public class select_loco extends Activity {
                 rbRoster.setChecked(false);
                 rbRecent.setChecked(true);
                 rbRecentConsists.setChecked(false);
-                if (!recentsHelp) {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentsHelp), Toast.LENGTH_SHORT).show();
-                    recentsHelp = true;
+                if (!mainapp.shownToastRecentLocos) {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentsHelp), Toast.LENGTH_LONG).show();
+                    mainapp.shownToastRecentLocos = true;
                 }
                 break;
             }
@@ -1369,9 +1375,9 @@ public class select_loco extends Activity {
                 rbRoster.setChecked(false);
                 rbRecent.setChecked(false);
                 rbRecentConsists.setChecked(true);
-                if (!recentsConsistsHelp) {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentConsistsHelp), Toast.LENGTH_SHORT).show();
-                    recentsConsistsHelp = true;
+                if (!mainapp.shownToastRecentConsists) {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentConsistsHelp), Toast.LENGTH_LONG).show();
+                    mainapp.shownToastRecentConsists = true;
                 }
                 break;
             }

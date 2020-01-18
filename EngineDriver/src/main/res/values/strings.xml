@@ -742,6 +742,7 @@
     <string name="toastRecentConsistsHelp">Touch to select a Consist Entry,\n  or change entry method.\nLong press to Rename (for entered addresses) or show Roster Details.\nSwipe Right to remove an entry.</string>
     <string name="toastRosterHelp">Touch to select a Roster Entry,\n  or change entry method.\nLong press for details.</string>
     <string name="toastConnectionsListHelp">Touch to select a Server,\n  or enter Server Address and Port.\nSwipe Right to remove an entry.</string>
+    <string name="toastLocoAlreadySelected">Loco Already selected</string>
 
     <!--    Toast messages for the Consist Edit Activity -->
     <string name="toastConsistEditHelp">Touch to change facing. Swipe Right to remove an entry.</string>

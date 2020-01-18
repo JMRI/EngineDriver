@@ -800,4 +800,5 @@
     <string name="consistLocoFacingFront">De face</string>
     <string name="consistLocoFacingRear">Arrière</string>
     <string name="editConsistLocoFacingLabel">Orienté vers</string>
+    <string name="toastLocoAlreadySelected">Loco Déjà sélectionné</string>
 </resources>
