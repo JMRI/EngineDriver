@@ -36,6 +36,8 @@ import java.util.List;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -250,7 +252,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     }
 
     private void clearConnectionsListItem(View v, int position, long id) {
-        //When an swiped is long-clicked, remove it from the consist
+        //When a connection swiped , remove it from the list
         ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
         TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
         //connected_hostip = hip.getText().toString();
@@ -261,11 +263,31 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         //Log.d("Engine_Driver", "connection.longClick " + connected_hostip );
         if (!(hnv.getText().toString().equals(demo_host)) || !(hpv.getText().toString().equals(demo_port))) {
             getConnectionsListImpl(hip.getText().toString(), hpv.getText().toString());
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
             connected_hostip = DUMMY_ADDRESS;
             connected_hostname = DUMMY_HOST;
             connected_port = DUMMY_PORT;
-            new saveConnectionsList().execute();
+//            new saveConnectionsList().execute();
+
+            Animation anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
+            anim.setDuration(500);
+            v.startAnimation(anim);
+            anim.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {}
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
+                    new saveConnectionsList().execute();
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+
+                public void run() {}
+            });
+
         } else {
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoveDemoHostError), Toast.LENGTH_SHORT).show();
         }
