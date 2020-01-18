@@ -459,6 +459,7 @@ public class select_loco extends Activity {
         if (consist.size()>=1) {
             for (int i = 0; i<=consist.size();i++) {
                 if (consist.getLoco(sAddr)!=null) {
+                    overrideThrottleName = "";
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastLocoAlreadySelected), Toast.LENGTH_LONG).show();
                     return;
                 }
