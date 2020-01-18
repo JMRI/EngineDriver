@@ -43,6 +43,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -1587,8 +1590,8 @@ public class select_loco extends Activity {
     }
 
     //  Clears the entry from the list
-    protected boolean clearRecentListItem(View v, int position, long id) {
-        recent_engine_list.remove(position);
+    protected boolean clearRecentListItem(View v, final int position, long id) {
+//        recent_engine_list.remove(position);
 
         recent_loco_address_list.remove(position);
         recent_loco_address_size_list.remove(position);
@@ -1596,9 +1599,32 @@ public class select_loco extends Activity {
         recent_loco_source_list.remove(position);
 
         removingLocoOrForceReload = true;
-        updateRecentEngines(true);
-        engine_list_view.invalidateViews();
-        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentCleared), Toast.LENGTH_SHORT).show();
+
+//        updateRecentEngines(true);
+//        engine_list_view.invalidateViews();
+//        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentCleared), Toast.LENGTH_SHORT).show();
+
+        Animation anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
+        anim.setDuration(500);
+        View itemView = engine_list_view.getChildAt(position - engine_list_view.getFirstVisiblePosition());
+        itemView.startAnimation(anim);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {}
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    recent_engine_list.remove(position);
+                    updateRecentEngines(true);
+                    engine_list_view.invalidateViews();
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentCleared), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+
+                public void run() {}
+        });
 
         return true;
     }
@@ -1610,8 +1636,9 @@ public class select_loco extends Activity {
     }
 
     // Clears the entry from the list
-    protected boolean clearRecentConsistsListItem(View v, int position, long id) {
-        recent_consists_list.remove(position);
+    protected boolean clearRecentConsistsListItem(View v, final int position, long id) {
+//        recent_consists_list.remove(position);
+        View itemView = consists_list_view.getChildAt(position - consists_list_view.getFirstVisiblePosition());
 
         importExportPreferences.consistEngineAddressList.remove(position);
         importExportPreferences.consistAddressSizeList.remove(position);
@@ -1623,9 +1650,30 @@ public class select_loco extends Activity {
 
         removingConsistOrForceRewite = true;
 
-        updateRecentConsists(true);
-        consists_list_view.invalidateViews();
-        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentConsistCleared), Toast.LENGTH_SHORT).show();
+//        updateRecentConsists(true);
+//        consists_list_view.invalidateViews();
+//        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentConsistCleared), Toast.LENGTH_SHORT).show();
+
+        Animation anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
+        anim.setDuration(500);
+        itemView.startAnimation(anim);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                recent_consists_list.remove(position);
+                updateRecentConsists(true);
+                consists_list_view.invalidateViews();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentConsistCleared), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+
+            public void run() {}
+        });
 
         return true;
     }

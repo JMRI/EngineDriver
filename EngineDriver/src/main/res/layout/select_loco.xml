@@ -288,8 +288,8 @@
         <jmri.enginedriver.TransparentListView
             android:id="@+id/roster_list"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
-        </jmri.enginedriver.TransparentListView>
+            android:layout_height="fill_parent"
+            android:animateLayoutChanges="true"></jmri.enginedriver.TransparentListView>
     </LinearLayout>
 
     <RelativeLayout
@@ -333,8 +333,8 @@
         <ListView
             android:id="@+id/engine_list"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
-        </ListView>
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"></ListView>
     </LinearLayout>
 
     <RelativeLayout
@@ -378,8 +378,8 @@
         <ListView
             android:id="@+id/consists_list"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
-        </ListView>
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"></ListView>
     </LinearLayout>
 
 
