@@ -879,7 +879,7 @@ public class select_loco extends Activity {
         public void onClick(View v) {
             Intent consistEdit = new Intent().setClass(_selectLocoActivity, ConsistEdit.class);
             consistEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
-            consistEdit.putExtra("saveConsistsFile", 'N');
+            consistEdit.putExtra("saveConsistsFile", 'Y');
 
             navigatingAway = true;
             startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
