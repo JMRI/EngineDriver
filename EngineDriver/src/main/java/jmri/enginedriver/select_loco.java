@@ -102,10 +102,10 @@ public class select_loco extends Activity {
     private RosterSimpleAdapter roster_list_adapter;
     private RecentSimpleAdapter recent_list_adapter;
 
-    private ArrayList<Integer> recent_loco_address_list;
-    private ArrayList<Integer> recent_loco_address_size_list; // Look at address_type.java
-    private ArrayList<String> recent_loco_name_list;
-    private ArrayList<Integer> recent_loco_source_list;
+//    private ArrayList<Integer> recent_loco_address_list;
+//    private ArrayList<Integer> recent_loco_address_size_list; // Look at address_type.java
+//    private ArrayList<String> recent_loco_name_list;
+//    private ArrayList<Integer> recent_loco_source_list;
 
     private static final int WHICH_SOURCE_UNKNOWN = 0;
     private static final int WHICH_SOURCE_ADDRESS = 1;
@@ -496,7 +496,7 @@ public class select_loco extends Activity {
 //            consist.setConfirmed(l.getAddress()); //this happens after response from WiTS
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
             if(numberInConsist<0) { // don't save the recents if a recent consist was selected
-                updateRecentEngines(bUpdateList);
+                saveRecentLocosList(bUpdateList);
             }
             result = RESULT_OK;
             end_this_activity();
@@ -531,7 +531,8 @@ public class select_loco extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == throttle.ACTIVITY_CONSIST) {                          // edit consist
             if (newEngine) {
-                updateRecentEngines(saveUpdateList);
+//                updateRecentEngines(saveUpdateList);
+                saveRecentLocosList(saveUpdateList);
                 updateRecentConsists(saveUpdateList);
             }
             result = RESULT_LOCO_EDIT;                 //tell Throttle to update loco directions
@@ -540,158 +541,248 @@ public class select_loco extends Activity {
         end_this_activity();
     }
 
+//    //write the recent locos to a file
+//    void updateRecentEngines(boolean bUpdateList) {
+//        //if not updating list or no SD Card present then nothing else to do
+//        if (!bUpdateList || !android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
+//            return;
+//        // Save the engine list to the recent_engine_list.txt file
+//        File sdcard_path = Environment.getExternalStorageDirectory();
+//        File connections_list_file = new File(sdcard_path,
+//                "engine_driver/recent_engine_list.txt");
+//        PrintWriter list_output;
+//        String smrl = prefs.getString("maximum_recent_locos_preference", ""); //retrieve pref for max recent locos to show
+//        try {
+//            int mrl = 10; //default to 10 if pref is blank or invalid
+//            try {
+//                mrl = Integer.parseInt(smrl);
+//            } catch (NumberFormatException ignored) {
+//            }
+//            list_output = new PrintWriter(connections_list_file);
+//            if (mrl > 0) {
+//                if (!removingLocoOrForceReload) {
+//                    mrl--;
+//                    // Add this engine to the head of recent engines list.
+////                    String tempLocoName = (locoName.equals("") ? locoAddressToString(engine_address, address_size,false) : locoName);
+//
+//                    // check if it is already in the list and remove it if necessary
+//                    for (int i = 0; i < recent_loco_address_list.size() && mrl > 0; i++) {
+//                        if (engine_address == recent_loco_address_list.get(i)
+//                                && address_size == recent_loco_address_size_list.get(i)
+////                                && tempLocoName.equals(recent_loco_name_list.get(i))) {
+//                                && locoName.equals(recent_loco_name_list.get(i))) {
+////                            tempLocoName = recent_loco_name_list.get(i); // grab the current name
+//                            recent_loco_address_list.remove(i);      // before removing it from its current location in the list
+//                            recent_loco_address_size_list.remove(i);
+//                            recent_loco_name_list.remove(i);
+//                            recent_loco_source_list.remove(i);
+//                        }
+//                    }
+////                    list_output.format("%d:%d%d~%s\n", engine_address, address_size, locoSource, tempLocoName);
+//                    list_output.format("%d:%d%d~%s\n", engine_address, address_size, locoSource, locoName);
+//                }
+//                removingLocoOrForceReload = false;
+//                for (int i = 0; i < recent_loco_address_list.size() && mrl > 0; i++) {
+//                    list_output.format("%d:%d%d~%s\n",
+//                            recent_loco_address_list.get(i),
+//                            recent_loco_address_size_list.get(i),
+//                            recent_loco_source_list.get(i),
+//                            recent_loco_name_list.get(i));
+//                }
+//            }
+//            list_output.flush();
+//            list_output.close();
+//        } catch (IOException except) {
+//            Log.e("Engine_Driver",
+//                    "select_loco - Error creating a PrintWriter, IOException: "
+//                            + except.getMessage());
+//        }
+//    }
+
+
     //write the recent locos to a file
-    void updateRecentEngines(boolean bUpdateList) {
+    void saveRecentLocosList(boolean bUpdateList) {
+
         //if not updating list or no SD Card present then nothing else to do
         if (!bUpdateList || !android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
             return;
-        // Save the engine list to the recent_engine_list.txt file
-        File sdcard_path = Environment.getExternalStorageDirectory();
-        File connections_list_file = new File(sdcard_path,
-                "engine_driver/recent_engine_list.txt");
-        PrintWriter list_output;
-        String smrl = prefs.getString("maximum_recent_locos_preference", ""); //retrieve pref for max recent locos to show  
-        try {
-            int mrl = 10; //default to 10 if pref is blank or invalid
-            try {
-                mrl = Integer.parseInt(smrl);
-            } catch (NumberFormatException ignored) {
-            }
-            list_output = new PrintWriter(connections_list_file);
-            if (mrl > 0) {
-                if (!removingLocoOrForceReload) {
-                    mrl--;
-                    // Add this engine to the head of recent engines list.
-//                    String tempLocoName = (locoName.equals("") ? locoAddressToString(engine_address, address_size,false) : locoName);
 
-                    // check if it is already in the list and remove it if necessary
-                    for (int i = 0; i < recent_loco_address_list.size() && mrl > 0; i++) {
-                        if (engine_address == recent_loco_address_list.get(i)
-                                && address_size == recent_loco_address_size_list.get(i)
-//                                && tempLocoName.equals(recent_loco_name_list.get(i))) {
-                                && locoName.equals(recent_loco_name_list.get(i))) {
-//                            tempLocoName = recent_loco_name_list.get(i); // grab the current name
-                            recent_loco_address_list.remove(i);      // before removing it from its current location in the list
-                            recent_loco_address_size_list.remove(i);
-                            recent_loco_name_list.remove(i);
-                            recent_loco_source_list.remove(i);
-                        }
-                    }
-//                    list_output.format("%d:%d%d~%s\n", engine_address, address_size, locoSource, tempLocoName);
-                    list_output.format("%d:%d%d~%s\n", engine_address, address_size, locoSource, locoName);
-                }
-                removingLocoOrForceReload = false;
-                for (int i = 0; i < recent_loco_address_list.size() && mrl > 0; i++) {
-                    list_output.format("%d:%d%d~%s\n",
-                            recent_loco_address_list.get(i),
-                            recent_loco_address_size_list.get(i),
-                            recent_loco_source_list.get(i),
-                            recent_loco_name_list.get(i));
+
+        if (!removingLocoOrForceReload) {
+            removingLocoOrForceReload = false;
+
+            // check if it already in the list and remove it
+            for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
+                if (engine_address == importExportPreferences.recent_loco_address_list.get(i)
+                        && address_size == importExportPreferences.recent_loco_address_size_list.get(i)
+                        && locoName.equals(importExportPreferences.recent_loco_name_list.get(i))) {
+                    importExportPreferences.recent_loco_address_list.remove(i);
+                    importExportPreferences.recent_loco_address_size_list.remove(i);
+                    importExportPreferences.recent_loco_name_list.remove(i);
+                    importExportPreferences.recent_loco_source_list.remove(i);
                 }
             }
-            list_output.flush();
-            list_output.close();
-        } catch (IOException except) {
-            Log.e("Engine_Driver",
-                    "select_loco - Error creating a PrintWriter, IOException: "
-                            + except.getMessage());
+
+            // now append it to the beginning of the list
+            importExportPreferences.recent_loco_address_list.add(0, engine_address);
+            importExportPreferences.recent_loco_address_size_list.add(0, address_size);
+            importExportPreferences.recent_loco_name_list.add(0, locoName);
+            importExportPreferences.recent_loco_source_list.add(0, locoSource);
+
+
         }
+
+        importExportPreferences.writeRecentLocosListToFile(prefs);
     }
 
-    // read the recent locos from a file
-    // and load the on screen list
-    private void loadRecentsList(boolean reload) {
-        // simliar, but different, code exists in importExportPreferences.java. if you modify one, make sure you modify the other
-        recent_loco_address_list = new ArrayList<>();
-        recent_loco_address_size_list = new ArrayList<>();
-        recent_loco_name_list = new ArrayList<>();
-        recent_loco_source_list = new ArrayList<>();
+//    // read the recent locos from a file
+//    // and load the on screen list
+//    private void loadRecentsList(boolean reload) {
+//        // simliar, but different, code exists in importExportPreferences.java. if you modify one, make sure you modify the other
+//        recent_loco_address_list = new ArrayList<>();
+//        recent_loco_address_size_list = new ArrayList<>();
+//        recent_loco_name_list = new ArrayList<>();
+//        recent_loco_source_list = new ArrayList<>();
+//        if (reload) {
+//            recent_engine_list = new ArrayList<>();
+//        }
+//
+//        //if no SD Card present then there is no recent locos list
+//        if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+//            //alert user that recent locos list requires SD Card
+//            TextView v = findViewById(R.id.recent_engines_heading);
+//            v.setText(getString(R.string.sl_recent_engine_notice));
+//        } else {
+//            try {
+//                // Populate the ListView with the recent engines saved in a file. This
+//                // will be stored in /sdcard/engine_driver/recent_engine_list.txt
+//                // entries not matching the assumptions will be ignored
+//                File sdcard_path = Environment.getExternalStorageDirectory();
+//                File engine_list_file = new File(sdcard_path + "/engine_driver/recent_engine_list.txt");
+//                if (engine_list_file.exists()) {
+//                    BufferedReader list_reader = new BufferedReader(
+//                            new FileReader(engine_list_file));
+//                    while (list_reader.ready()) {
+//                        String line = list_reader.readLine();
+//                        int splitPos = line.indexOf(':');
+//                        if (splitPos > 0) {
+//                            int addr, size, source = 0;
+//                            String locoName = "";
+//                            try {
+//                                addr = Integer.decode(line.substring(0, splitPos));
+//                                size = Integer.decode(line.substring(splitPos + 1,splitPos + 2));
+//                                if (line.length()>splitPos+2) { // has the name extras
+//                                    if (line.substring(splitPos + 2,splitPos + 3).equals("~")) { // old format
+//                                        locoName = line.substring(splitPos + 3);
+//                                    } else {
+//                                        if (line.substring(splitPos + 3,splitPos + 4).equals("~")) { // new format. Includes the source
+//                                            source = Integer.decode(line.substring(splitPos + 2,splitPos + 3));
+//                                            locoName = line.substring(splitPos + 4);
+//                                        }
+//                                    }
+//                                }
+//                            } catch (Exception e) {
+//                                addr = -1;
+//                                size = -1;
+//                                locoName = "";
+//                                source = -1;
+//                            }
+//
+//                            if ((addr >= 0) && (size >= 0)) {
+//                                recent_loco_address_list.add(addr);
+//                                recent_loco_address_size_list.add(size);
+//                                HashMap<String, String> hm = new HashMap<>();
+//                                String engineAddressString = importExportPreferences.locoAddressToString(addr, size, false);
+//                                String engineAddressHtml = importExportPreferences.locoAddressToHtml(addr, size, source);
+//
+//                                if ((locoName.length()==0  || locoName.equals(engineAddressString)) // if nothing is stored, or what is stored is the same as the address
+//                                        && (source==WHICH_SOURCE_UNKNOWN)) { // as long as the source is listed as unknown
+//                                    // if nothing is stored, or what is stored is the same as the address, look for it in the roster
+//                                    locoName = mainapp.getRosterNameFromAddress(engineAddressString, false);
+//                                }
+//                                recent_loco_name_list.add(locoName);
+//                                recent_loco_source_list.add(source);
+//
+//                                String engineIconUrl = getLocoIconUrlFromRoster(engineAddressString,locoName);
+////                                engineAddressString = getLocoNameFromRoster(engineAddressString);
+//                                hm.put("engine_icon", engineIconUrl);
+//                                hm.put("engine", locoName);
+////                                hm.put("engine_name", engineAddressString);
+//                                hm.put("engine_name", engineAddressHtml);
+//                                recent_engine_list.add(hm);
+//                            } //if ea>=0&&as>=0
+//                        } //if splitPos>0
+//                    }
+//                    list_reader.close();
+//                    recent_list_adapter.notifyDataSetChanged();
+//                }
+//
+//            } catch (IOException except) {
+//                Log.e("Engine_Driver", "select_loco - Error reading recent loco file. "
+//                        + except.getMessage());
+//            }
+//        }
+//        rbRecent = findViewById(R.id.select_loco_method_recent_button);
+//        if (recent_loco_address_list.size()==0) {  // if the list is empty, hide the radio button
+//            rbRecent.setVisibility(View.GONE);
+//        } else {
+//            rbRecent.setVisibility(View.VISIBLE);
+//        }
+//    }
+
+    private void loadRecentLocosList(boolean reload) {
+
+        importExportPreferences.recent_loco_address_list = new ArrayList<>();
+        importExportPreferences.recent_loco_address_size_list = new ArrayList<>();
+        importExportPreferences.recent_loco_name_list = new ArrayList<>();
+        importExportPreferences.recent_loco_source_list = new ArrayList<>();
         if (reload) {
             recent_engine_list = new ArrayList<>();
         }
 
-        //if no SD Card present then there is no recent locos list
+
+        rbRecent = findViewById(R.id.select_loco_method_recent_button);
+
+        if (reload) {
+            recent_consists_list = new ArrayList<>();
+        }
+
+        //if no SD Card present then there is no recent consists list
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             //alert user that recent locos list requires SD Card
             TextView v = findViewById(R.id.recent_engines_heading);
             v.setText(getString(R.string.sl_recent_engine_notice));
+            rbRecent.setVisibility(View.GONE); // if the list is empty, hide the radio button
         } else {
-            try {
-                // Populate the ListView with the recent engines saved in a file. This
-                // will be stored in /sdcard/engine_driver/recent_engine_list.txt
-                // entries not matching the assumptions will be ignored
-                File sdcard_path = Environment.getExternalStorageDirectory();
-                File engine_list_file = new File(sdcard_path + "/engine_driver/recent_engine_list.txt");
-                if (engine_list_file.exists()) {
-                    BufferedReader list_reader = new BufferedReader(
-                            new FileReader(engine_list_file));
-                    while (list_reader.ready()) {
-                        String line = list_reader.readLine();
-                        int splitPos = line.indexOf(':');
-                        if (splitPos > 0) {
-                            int addr, size, source = 0;
-                            String locoName = "";
-                            try {
-                                addr = Integer.decode(line.substring(0, splitPos));
-                                size = Integer.decode(line.substring(splitPos + 1,splitPos + 2));
-                                if (line.length()>splitPos+2) { // has the name extras
-                                    if (line.substring(splitPos + 2,splitPos + 3).equals("~")) { // old format
-                                        locoName = line.substring(splitPos + 3);
-                                    } else {
-                                        if (line.substring(splitPos + 3,splitPos + 4).equals("~")) { // new format. Includes the source
-                                            source = Integer.decode(line.substring(splitPos + 2,splitPos + 3));
-                                            locoName = line.substring(splitPos + 4);
-                                        }
-                                    }
-                                }
-                            } catch (Exception e) {
-                                addr = -1;
-                                size = -1;
-                                locoName = "";
-                                source = -1;
-                            }
 
-                            if ((addr >= 0) && (size >= 0)) {
-                                recent_loco_address_list.add(addr);
-                                recent_loco_address_size_list.add(size);
-                                HashMap<String, String> hm = new HashMap<>();
-                                String engineAddressString = importExportPreferences.locoAddressToString(addr, size, false);
-                                String engineAddressHtml = importExportPreferences.locoAddressToHtml(addr, size, source);
+            importExportPreferences.getRecentLocosListFromFile();
 
-                                if ((locoName.length()==0  || locoName.equals(engineAddressString)) // if nothing is stored, or what is stored is the same as the address
-                                        && (source==WHICH_SOURCE_UNKNOWN)) { // as long as the source is listed as unknown
-                                    // if nothing is stored, or what is stored is the same as the address, look for it in the roster
-                                    locoName = mainapp.getRosterNameFromAddress(engineAddressString, false);
-                                }
-                                recent_loco_name_list.add(locoName);
-                                recent_loco_source_list.add(source);
+            for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
+                HashMap<String, String> hm = new HashMap<>();
+                String engineAddressString = importExportPreferences.locoAddressToString(
+                        importExportPreferences.recent_loco_address_list.get(i),
+                        importExportPreferences.recent_loco_address_size_list.get(i), false);
+                String engineIconUrl = getLocoIconUrlFromRoster(engineAddressString,importExportPreferences.recent_loco_name_list.get(i));
 
-                                String engineIconUrl = getLocoIconUrlFromRoster(engineAddressString,locoName);
-//                                engineAddressString = getLocoNameFromRoster(engineAddressString);
-                                hm.put("engine_icon", engineIconUrl);
-                                hm.put("engine", locoName);
-//                                hm.put("engine_name", engineAddressString);
-                                hm.put("engine_name", engineAddressHtml);
-                                recent_engine_list.add(hm);
-                            } //if ea>=0&&as>=0
-                        } //if splitPos>0
-                    }
-                    list_reader.close();
-                    recent_list_adapter.notifyDataSetChanged();
-                }
-
-            } catch (IOException except) {
-                Log.e("Engine_Driver", "select_loco - Error reading recent loco file. "
-                        + except.getMessage());
+                hm.put("engine_icon", engineIconUrl);
+                hm.put("engine", importExportPreferences.recent_loco_name_list.get(i)); // the larger loco name text
+                hm.put("engine_name", importExportPreferences.locoAddressToHtml(
+                        importExportPreferences.recent_loco_address_list.get(i),
+                        importExportPreferences.recent_loco_address_size_list.get(i),
+                        importExportPreferences.recent_loco_source_list.get(i)));   // the small loco address field at the top of the row
+                recent_engine_list.add(hm);
             }
+
+            if (importExportPreferences.recent_loco_address_list.size()==0) {  // if the list is empty, hide the radio button
+                rbRecent.setVisibility(View.GONE);
+            } else {
+                rbRecent.setVisibility(View.VISIBLE);
+            }
+
         }
-        rbRecent = findViewById(R.id.select_loco_method_recent_button);
-        if (recent_loco_address_list.size()==0) {  // if the list is empty, hide the radio button
-            rbRecent.setVisibility(View.GONE);
-        } else {
-            rbRecent.setVisibility(View.VISIBLE);
-        }
+        recent_list_adapter.notifyDataSetChanged();
     }
+
 
     private void loadRecentConsistsList(boolean reload) {
         recent_consists_list_adapter.notifyDataSetChanged();
@@ -918,10 +1009,10 @@ public class select_loco extends Activity {
 //                } else {
                 }
             } else {  //no swipe
-                engine_address = recent_loco_address_list.get(position);
-                address_size = recent_loco_address_size_list.get(position);
-                locoSource = recent_loco_source_list.get(position);
-                locoName = recent_loco_name_list.get(position);
+                engine_address = importExportPreferences.recent_loco_address_list.get(position);
+                address_size = importExportPreferences.recent_loco_address_size_list.get(position);
+                locoSource = importExportPreferences.recent_loco_source_list.get(position);
+                locoName = importExportPreferences.recent_loco_name_list.get(position);
                 if (locoSource==WHICH_SOURCE_UNKNOWN ) {
                     locoName = mainapp.getRosterNameFromAddress(importExportPreferences.locoAddressToString(engine_address, address_size, false),true);
                 }
@@ -1144,7 +1235,8 @@ public class select_loco extends Activity {
                 return onLongRecentListItemClick(v, pos, id);
             }
         });
-        loadRecentsList(false);
+//        loadRecentsList(false);
+        loadRecentLocosList(false);
 
         // Set up a list adapter to allow adding the list of recent consists to the UI.
         recent_consists_list = new ArrayList<>();
@@ -1257,7 +1349,7 @@ public class select_loco extends Activity {
         prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", WHICH_METHOD_FIRST);
         // if the recent lists are empty make sure the radio button will be pointing to something valid
         if ( ((recent_consists_list.size()==0) && (prefSelectLocoMethod.equals(WHICH_METHOD_CONSIST)))
-           | ((recent_loco_address_list.size()==0) && (prefSelectLocoMethod.equals(WHICH_METHOD_RECENT))) ) {
+           | ((importExportPreferences.recent_loco_address_list.size()==0) && (prefSelectLocoMethod.equals(WHICH_METHOD_RECENT))) ) {
             prefSelectLocoMethod = WHICH_METHOD_ADDRESS;
         }
 
@@ -1575,8 +1667,8 @@ public class select_loco extends Activity {
     // long click for the recent loco list items.
     protected boolean onLongRecentListItemClick(View v, int position, long id) {
 //        clearRecentListItem(v, position, id);
-        if (recent_loco_source_list.get(position)==WHICH_SOURCE_ROSTER) {
-            String rosterEntryName = recent_loco_name_list.get(position);
+        if (importExportPreferences.recent_loco_source_list.get(position)==WHICH_SOURCE_ROSTER) {
+            String rosterEntryName = importExportPreferences.recent_loco_name_list.get(position);
             RosterEntry re = mainapp.roster.get(rosterEntryName);
             if (re == null) {
                 Log.w("Engine_Driver", "Roster entry " + rosterEntryName + " not available.");
@@ -1593,10 +1685,10 @@ public class select_loco extends Activity {
     protected boolean clearRecentListItem(View v, final int position, long id) {
 //        recent_engine_list.remove(position);
 
-        recent_loco_address_list.remove(position);
-        recent_loco_address_size_list.remove(position);
-        recent_loco_name_list.remove(position);
-        recent_loco_source_list.remove(position);
+        importExportPreferences.recent_loco_address_list.remove(position);
+        importExportPreferences.recent_loco_address_size_list.remove(position);
+        importExportPreferences.recent_loco_name_list.remove(position);
+        importExportPreferences.recent_loco_source_list.remove(position);
 
         removingLocoOrForceReload = true;
 
@@ -1615,7 +1707,8 @@ public class select_loco extends Activity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     recent_engine_list.remove(position);
-                    updateRecentEngines(true);
+//                    updateRecentEngines(true);
+                    saveRecentLocosList(true);
                     engine_list_view.invalidateViews();
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentCleared), Toast.LENGTH_SHORT).show();
                 }
@@ -1859,7 +1952,7 @@ public class RecentSimpleAdapter extends SimpleAdapter {
         dialogBuilder.setView(dialogView);
 
         final EditText edt = dialogView.findViewById(R.id.editRecentName);
-        edt.setText(recent_loco_name_list.get(pos));
+        edt.setText(importExportPreferences.recent_loco_name_list.get(pos));
 
         dialogBuilder.setTitle(getApplicationContext().getResources().getString(R.string.RecentsNameEditTitle));
         dialogBuilder.setMessage(getApplicationContext().getResources().getString(R.string.RecentsNameEditText));
@@ -1867,10 +1960,12 @@ public class RecentSimpleAdapter extends SimpleAdapter {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String rslt = edt.getText().toString();
                 if (rslt.length()>0) {
-                    recent_loco_name_list.set(pos, rslt);
+                    importExportPreferences.recent_loco_name_list.set(pos, rslt);
                     removingLocoOrForceReload = true;
-                    updateRecentEngines(true);
-                    loadRecentsList(true);
+//                    updateRecentEngines(true);
+                    saveRecentLocosList(true);
+//                    loadRecentsList(true);
+                    loadRecentLocosList(true);
                     engine_list_view.invalidateViews();
                 }
             }
