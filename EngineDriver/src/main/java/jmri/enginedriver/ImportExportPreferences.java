@@ -48,10 +48,11 @@ public class ImportExportPreferences {
 
     //private String exportedPreferencesFileName =  "exported_preferences.ed";
 
-    private ArrayList<Integer> recent_loco_address_list;
-    private ArrayList<Integer> recent_loco_address_size_list; // Look at address_type.java
-    private ArrayList<String> recent_loco_name_list;
-    private ArrayList<Integer> recent_loco_source_list;
+    ArrayList<Integer> recent_loco_address_list;
+    ArrayList<Integer> recent_loco_address_size_list; // Look at address_type.java
+    ArrayList<String> recent_loco_name_list;
+    ArrayList<String> recent_loco_name_html_list;
+    ArrayList<Integer> recent_loco_source_list;
 
     ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<>();
     ArrayList<ArrayList<Integer>> consistAddressSizeList = new ArrayList<>();
@@ -337,8 +338,7 @@ public class ImportExportPreferences {
         return res;
     }
 
-    // simliar, but different, code exists in select_loco.java. if you modify one, make sure you modify the other
-    private void getRecentLocosListFromFile() {
+    void getRecentLocosListFromFile() {
         Log.d("Engine_Driver", "getRecentLocosListFromFile: ImportExportPreferences: Loading recent locos list from file");
         try {
             // Populate the List with the recent engines saved in a file. This
@@ -397,8 +397,7 @@ public class ImportExportPreferences {
         }
     }
 
-    // simliar, but different, code exists in select_loco.java, ImportExportPreferences.java and ConsistLightsEdit.java. if you modify one, make sure you modify the other
-    private void writeRecentLocosListToFile(SharedPreferences sharedPreferences) {
+    void writeRecentLocosListToFile(SharedPreferences sharedPreferences) {
         Log.d("Engine_Driver", "writeRecentLocosListToFile: ImportExportPreferences: Writing recent locos list to file");
 
         // write it out from the saved preferences to the file
@@ -564,7 +563,6 @@ public class ImportExportPreferences {
         }
     }
 
-    // simliar, but different, code exists in select_loco.java, ImportExportPreferences.java. if you modify one, make sure you modify the other
     private String addOneConsistAddress(String line, Integer start, Integer end,
                                         ArrayList<Integer> tempConsistEngineAddressList_inner,
                                         ArrayList<Integer> tempConsistAddressSizeList_inner,
@@ -673,7 +671,6 @@ public class ImportExportPreferences {
     }
 
 
-    // simliar, but different, code exists in select_loco.java. if you modify one, make sure you modify the other
     void writeRecentConsistsListToFile(SharedPreferences sharedPreferences, int whichEntryIsBeingUpdated) {
         Log.d("Engine_Driver", "writeRecentConsistsListToFile: ImportExportPreferences: Writing recent consists list to file");
 
