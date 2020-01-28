@@ -1,4 +1,4 @@
-**Version 2.25.96
+**Version 2.25.97
 **Version 2.25.94
  * Option to show a Shunting/Switching speed button (Vertical Throttle only)
  * Fix problem in 'drop before acquire' when re-selecting the same loco
