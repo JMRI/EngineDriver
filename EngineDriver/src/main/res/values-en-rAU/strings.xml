@@ -43,4 +43,9 @@
 
     <string name="introThemeSummary">Choose the colours and appearance of the whole app.</string>
 
+    <string name="turnoutsRecentHeading">Recent Points</string>
+    <string name="turnoutsSelectionTypeHeading">Points Selection Method</string>
+    <string name="toastRecentTurnoutCleared">Point removed from list</string>
+    <string name="toastRecentTurnoutsConfirmClear">Confirm that you want remove all the Recent Points by pressing the \'Clear List\' button AGAIN.</string>
+
 </resources>

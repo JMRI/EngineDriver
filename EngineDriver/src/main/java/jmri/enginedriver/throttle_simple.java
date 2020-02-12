@@ -204,6 +204,7 @@ public class throttle_simple extends throttle {
                     bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
                     bLabelPlainText = bLabel;
                 }
+                bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
                 bLabelPlainText = bLabel;

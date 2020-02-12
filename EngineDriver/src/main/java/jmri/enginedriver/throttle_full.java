@@ -310,6 +310,7 @@ public class throttle_full extends throttle {
                         }
                         bLabelPlainText = bLabel;
                     }
+                    bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
                     throttle_count++;
                 }
             }

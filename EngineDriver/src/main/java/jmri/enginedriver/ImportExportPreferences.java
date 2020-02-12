@@ -63,6 +63,10 @@ public class ImportExportPreferences {
     ArrayList<String> consistNameList = new ArrayList<>();
     ArrayList<String> consistNameHtmlList = new ArrayList<>();
 
+    ArrayList<String> recent_turnout_address_list;
+    ArrayList<String> recent_turnout_name_list;
+    ArrayList<Integer> recent_turnout_source_list;
+
     private static final int WHICH_SOURCE_UNKNOWN = 0;
     private static final int WHICH_SOURCE_ADDRESS = 1;
     private static final int WHICH_SOURCE_ROSTER = 2;
@@ -146,6 +150,11 @@ public class ImportExportPreferences {
                 saveIntListDataToPreferences(consistLightList.get(i), "prefRecentConsistLight_"+i, sharedPreferences);
             }
         }
+
+        getRecentTurnoutsListFromFile();
+        saveStringListDataToPreferences(recent_turnout_address_list, "prefRecentTurnout", sharedPreferences);
+        saveStringListDataToPreferences(recent_turnout_name_list, "prefRecentTurnoutName", sharedPreferences);
+        saveIntListDataToPreferences(recent_turnout_source_list, "prefRecentTurnoutSource", sharedPreferences);
 
         if (!exportedPreferencesFileName.equals(".ed")) {
             res = writeExportFile(context, sharedPreferences, exportedPreferencesFileName);
@@ -320,6 +329,15 @@ public class ImportExportPreferences {
                         consistLightList.add(tempConsistLightList_inner);
                     }
                     writeRecentConsistsListToFile(sharedPreferences, -1);
+
+                    recent_turnout_address_list = new ArrayList<>();
+                    recent_turnout_name_list = new ArrayList<>();
+                    recent_turnout_source_list = new ArrayList<>();
+                    getStringListDataFromPreferences(recent_turnout_address_list, "prefRecentTurnout", sharedPreferences, -1,"");
+                    getStringListDataFromPreferences(recent_turnout_name_list, "prefRecentTurnoutName", sharedPreferences, recent_turnout_address_list.size(), "");
+                    getIntListDataFromPreferences(recent_turnout_source_list, "prefRecentTurnoutSource", sharedPreferences, recent_turnout_address_list.size(), WHICH_SOURCE_UNKNOWN);
+                    writeRecentTurnoutsListToFile(sharedPreferences);
+
                 }
             }
             if (!res) {
@@ -797,7 +815,7 @@ public class ImportExportPreferences {
 //            engineAddressHtml = String.format("<span>%s<small>(%s)</small>%s </span>", addr.toString(), addressLengthString, addressSourceString);
             engineAddressHtml = String.format("<span>%s<small>(%s)</small> </span>", addr.toString(), addressLengthString);
         } catch (Exception e) {
-            Log.e("Engine_Driver", "locoAddressToString. ");
+            Log.e("Engine_Driver", "locoAddressToHtml. ");
         }
         return engineAddressHtml;
     }
@@ -815,5 +833,89 @@ public class ImportExportPreferences {
 //        return addressSourceString;
 //    }
 
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    void writeRecentTurnoutsListToFile(SharedPreferences sharedPreferences) {
+        Log.d("Engine_Driver", "writeRecentTurnoutsListToFile: ImportExportPreferences: Writing recent turnouts list to file");
+
+        File sdcard_path = Environment.getExternalStorageDirectory();
+        File engine_list_file = new File(sdcard_path,
+                "engine_driver/recent_turnouts_list.txt");
+
+        PrintWriter list_output;
+        String smrl = sharedPreferences.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
+        try {
+            int numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl);
+            list_output = new PrintWriter(engine_list_file);
+            if (numberOfRecentTurnoutsToWrite > 0) {
+                for (int i = 0; i < recent_turnout_address_list.size() && numberOfRecentTurnoutsToWrite > 0; i++) {
+                    list_output.format("%s:%d~%s\n",
+                            recent_turnout_address_list.get(i),
+                            recent_turnout_source_list.get(i),
+                            recent_turnout_name_list.get(i));
+                    numberOfRecentTurnoutsToWrite--;
+                }
+            }
+            list_output.flush();
+            list_output.close();
+            Log.d("Engine_Driver", "writeRecentTurnoutsListToFile: ImportExportPreferences: Write recent turnouts list to file completed successfully");
+        } catch (IOException except) {
+            Log.e("Engine_Driver",
+                    "writeRecentTurnoutsListToFile: ImportExportPreferences: Error creating a PrintWriter, IOException: "
+                            + except.getMessage());
+        } catch (IndexOutOfBoundsException except) {
+            Log.e("Engine_Driver",
+                    "writeRecentTurnoutsListToFile: ImportExportPreferences: Error writing recent turnouts lists, IndexOutOfBoundsException: "
+                            + except.getMessage());
+        }
+    }
+
+    void getRecentTurnoutsListFromFile() {
+        Log.d("Engine_Driver", "getRecentTurnoutsListFromFile: ImportExportPreferences: Loading recent turnouts list from file");
+        try {
+            // Populate the List with the recent engines saved in a file. This
+            // will be stored in /sdcard/engine_driver/recent_engine_list.txt
+            File sdcard_path = Environment.getExternalStorageDirectory();
+            File turnouts_list_file = new File(sdcard_path + "/engine_driver/recent_turnouts_list.txt");
+            if (turnouts_list_file.exists()) {
+                BufferedReader list_reader = new BufferedReader(
+                        new FileReader(turnouts_list_file));
+                while (list_reader.ready()) {
+                    String line = list_reader.readLine();
+                    int splitPos = line.indexOf(':');
+                    if (splitPos > 0) {
+                        Integer source = 0;
+                        String addr, turnoutName = "";
+                        try {
+                            addr = line.substring(0, splitPos);
+                            source = Integer.decode(line.substring(splitPos + 1, splitPos + 2));
+                            if (line.length()>splitPos+2) { // has the name extras
+                                if (line.substring(splitPos + 2,splitPos + 3).equals("~")) {
+                                    turnoutName = line.substring(splitPos + 3);
+                                }
+                            }
+                        } catch (Exception e) {
+                            addr = "";
+                            turnoutName = "";
+                            source = -1;
+                        }
+                        if (addr.length() > 0) {
+                            recent_turnout_address_list.add(addr);
+                            recent_turnout_name_list.add(turnoutName);
+                            recent_turnout_source_list.add(source);
+
+                        }
+                    }
+                }
+                list_reader.close();
+            }
+            Log.d("Engine_Driver", "getRecentTurnoutsListFromFile: ImportExportPreferences: Read recent turnouts list from file complete successfully");
+
+        } catch (IOException except) {
+            Log.e("Engine_Driver", "getRecentTurnoutsListFromFile: ImportExportPreferences: Error reading recent turnouts file. "
+                    + except.getMessage());
+        }
+    }
 
 }

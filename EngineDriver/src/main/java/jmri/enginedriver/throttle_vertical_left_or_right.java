@@ -211,6 +211,7 @@ public class throttle_vertical_left_or_right extends throttle {
                     }
                         bLabelPlainText = bLabel;
                 }
+                bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
                 bLabelPlainText = bLabel;

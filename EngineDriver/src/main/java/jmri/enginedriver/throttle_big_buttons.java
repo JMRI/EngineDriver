@@ -196,6 +196,7 @@ public class throttle_big_buttons extends throttle {
                     }
                     bLabelPlainText = bLabel;
                 }
+                bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
                 bLabelPlainText = bLabel;
