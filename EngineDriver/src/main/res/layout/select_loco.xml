@@ -334,7 +334,8 @@
             android:id="@+id/engine_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"></ListView>
+            android:animateLayoutChanges="true">
+        </ListView>
     </LinearLayout>
 
     <RelativeLayout
@@ -379,7 +380,8 @@
             android:id="@+id/consists_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"></ListView>
+            android:animateLayoutChanges="true">
+        </ListView>
     </LinearLayout>
 
 

@@ -230,6 +230,7 @@ public class threaded_application extends Application {
     public boolean shownToastRecentLocos = false;
     public boolean shownToastRoster = false;
     public boolean shownToastConsistEdit = false;
+    public boolean shownToastRecentTurnouts = false;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -2936,6 +2937,12 @@ public class threaded_application extends Application {
         previousOrientation = currentOrientation;
     }
 
+    //post process loco or Consist names to reduce the size of the address length strings
+    public String locoAndConsistNamesCleanupHtml(String name) {
+        return name.replaceAll("[(]S[)]","<small><small>(S)</small></small>")
+                .replaceAll("[(]L[)]","<small><small>(L)</small></small>")
+                .replaceAll("[+]","<small>+</small>");
+    }
 }
 
 

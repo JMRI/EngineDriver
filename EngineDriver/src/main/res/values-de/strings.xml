@@ -787,4 +787,12 @@
     <string name="consistLocoFacingRear">Rückseite</string>
     <string name="editConsistLocoFacingLabel">Zugewandt</string>
     <string name="toastLocoAlreadySelected">Loco bereits ausgewählt</string>
+    <string name="turnoutsRecentHeading">Aktuelle Weichen</string>
+    <string name="turnoutsSelectionTypeAddress">Adresse</string>
+    <string name="turnoutsSelectionTypeHeading">Turnout Auswahlmethode</string>
+    <string name="turnoutsSelectionTypeRecent">Kürzlich</string>
+    <string name="turnoutsSelectionTypeRoster">Dienstplan</string>
+    <string name="toastRecentTurnoutCleared">Weiche entfernt von der Liste</string>
+    <string name="toastRecentTurnoutsConfirmClear">estätigen, dass Sie entfernen möchten alle die Neue Weichen durch die ‚Liste löschen‘ Taste erneut drücken.</string>
+    <string name="toastTurnoutsRecentsHelp">Lange drücken, um einen Eintrag zu entfernen.</string>
 </resources>
