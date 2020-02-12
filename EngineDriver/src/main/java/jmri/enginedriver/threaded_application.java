@@ -87,6 +87,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -846,6 +847,13 @@ public class threaded_application extends Application {
             Log.d("Engine_Driver", "<--:" + response_str);
 
             boolean skipAlert = false;          //set to true if the Activities do not need to be Alerted
+            int displayClockHrs = 0;
+            @SuppressLint("SimpleDateFormat")
+            final SimpleDateFormat sdf12 = new SimpleDateFormat("h:mm a");
+            @SuppressLint("SimpleDateFormat")
+            final SimpleDateFormat sdf24 = new SimpleDateFormat("HH:mm");
+
+
             switch (response_str.charAt(0)) {
 
                 //handle responses from MultiThrottle function
@@ -1010,6 +1018,27 @@ public class threaded_application extends Application {
                             }
                             break;
 
+                        case 'F':  //FastClock message
+                            Log.d("Engine_Driver", "Fast Clock message rcvd:" + response_str);
+                            String[] ta = splitByString(response_str.substring(3), "<;>");
+                            if (ta.length > 0) {
+                                try {
+                                    displayClockHrs = Integer.parseInt(prefs.getString("ClockDisplayTypePreference", "0"));
+                                } catch (NumberFormatException e) {
+                                    displayClockHrs = 0;
+                                }
+                                Long unixSeconds = Long.parseLong(ta[0]);
+                                Date date = new java.util.Date(unixSeconds*1000L);
+                                if (displayClockHrs == 1) {              // display in 12 hr format
+                                    currentTime = sdf12.format(date);
+                                } else if (displayClockHrs == 2) {       // display in 24 hr format
+                                    currentTime = sdf24.format(date);
+                                }
+                                Log.d("Engine_Driver", "Fast Clock set to " + currentTime);
+                                alert_activities(message_type.CURRENT_TIME, currentTime);     //send the time update
+                            }
+                            break;
+
                         case 'W':  //Web Server port
                             int oldPort = web_server_port;
                             try {
@@ -1023,11 +1052,11 @@ public class threaded_application extends Application {
                                 dlMetadataTask.get();           // start background metadata update
                                 dlRosterTask.get();             // start background roster update
 
-                                if (androidVersion >= minWebSocketVersion) {
-                                    if (clockWebSocket == null)
-                                        clockWebSocket = new ClockWebSocketHandler();
-                                    clockWebSocket.refresh();
-                                }
+//                                if (androidVersion >= minWebSocketVersion) {
+//                                    if (clockWebSocket == null)
+//                                        clockWebSocket = new ClockWebSocketHandler();
+//                                    clockWebSocket.refresh();
+//                                }
                             }
                             break;
                     }  //end switch inside P
