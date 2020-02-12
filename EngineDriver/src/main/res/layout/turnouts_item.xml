@@ -7,20 +7,24 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.75" >
+
         <TextView
             android:id="@+id/to_user_name"
             style="?attr/list_item_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="4dp"
+            android:paddingLeft="5dp"
             android:paddingTop="15dp"
+            android:paddingBottom="4dp"
             android:text="Test user name string"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+
         <TextView
             android:id="@+id/to_system_name"
             style="?attr/list_id_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
             android:paddingTop="2dp"
             android:text="System name" />
     </RelativeLayout>

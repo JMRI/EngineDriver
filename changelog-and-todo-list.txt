@@ -469,7 +469,6 @@
  * routes
  *   TODO: use PRT titles for Active/inactive
  * turnouts
- *   TODO: add turnouts to list as used, when no list available
  *   TODO: combine loco control and turnout control in one page
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout

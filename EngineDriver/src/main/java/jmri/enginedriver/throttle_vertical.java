@@ -201,6 +201,7 @@ public class throttle_vertical extends throttle {
                     bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
                     bLabelPlainText = bLabel;
                 }
+                bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
                 bLabelPlainText = bLabel;

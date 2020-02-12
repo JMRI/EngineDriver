@@ -753,6 +753,11 @@
     <!--    Toast messages for the Log Viewer Activity -->
     <string name="toastSaveLogFile">Logging Started in file %1$s. Logging will continue until you exit the Engine Driver app.</string>
 
+    <!--    Toast messages for the Turnouts Activity -->
+    <string name="toastRecentTurnoutCleared">Turnout removed from list</string>
+    <string name="toastRecentTurnoutsConfirmClear">Confirm that you want remove all the Recent Turnouts by pressing the \'Clear List\' button AGAIN.</string>
+    <string name="toastTurnoutsRecentsHelp">Long press to remove an entry.</string>
+
     <string name="RecentsNameEditTitle">Recent Loco Name</string>
     <string name="RecentsNameEditText">Enter a name for the Loco</string>
 
@@ -958,5 +963,11 @@
     <string name="editConsistLocoFacingLabel">Facing</string>
     <string name="consistLocoFacingFront">Front</string>
     <string name="consistLocoFacingRear">Rear</string>
+
+    <string name="turnoutsSelectionTypeHeading">Turnout Selection Method</string>
+    <string name="turnoutsSelectionTypeAddress">Address</string>
+    <string name="turnoutsSelectionTypeRoster">Roster</string>
+    <string name="turnoutsSelectionTypeRecent">Recent</string>
+    <string name="turnoutsRecentHeading">Recent Turnouts</string>
 
 </resources>
