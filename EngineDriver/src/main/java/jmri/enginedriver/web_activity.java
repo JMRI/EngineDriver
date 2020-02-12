@@ -40,8 +40,6 @@ import android.webkit.WebViewClient;
 import android.webkit.WebSettings;
 import android.widget.Button;
 
-import jmri.enginedriver.logviewer.ui.LogViewerActivity;
-
 public class web_activity extends Activity {
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -54,7 +52,7 @@ public class web_activity extends Activity {
     private static boolean clearHistory = false;        // flags webViewClient to clear history when page load finishes
     private static String firstUrl = null;            // first url loaded that isn't noUrl
     private static String currentUrl = null;
-    private String currentTime = "";
+//    private String currentTime = "";
     private Menu WMenu;
     private boolean navigatingAway = false;        // flag for onPause: set to true when another activity is selected, false if going into background
     private boolean webInited = false;
@@ -90,8 +88,7 @@ public class web_activity extends Activity {
                 case message_type.INITIAL_WEBPAGE:
                     initWeb();
                     break;
-                case message_type.CURRENT_TIME:
-                    currentTime = msg.obj.toString();
+                case message_type.TIME_CHANGED:
                     setTitle();
                     break;
                 case message_type.DISCONNECT:
@@ -104,8 +101,9 @@ public class web_activity extends Activity {
 
     //	set the title, optionally adding the current time.
     public void setTitle() {
-        if (mainapp.displayClock)
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name) + "  " + currentTime);
+//        if (mainapp.displayClock)
+        if (mainapp.fastClockFormat > 0)
+            setTitle(getApplicationContext().getResources().getString(R.string.app_name) + "  " + mainapp.fastClockTime);
         else
             setTitle(getApplicationContext().getResources().getString(R.string.app_name_web));
     }
@@ -217,6 +215,8 @@ public class web_activity extends Activity {
         super.onResume();
         mainapp.removeNotification();
 
+        setTitle();
+
         if (closeButton != null) {
             if (mainapp.webMenuSelected) {
                 closeButton.setVisibility(View.VISIBLE);
@@ -236,8 +236,7 @@ public class web_activity extends Activity {
         }
 
         navigatingAway = false;
-        currentTime = "";
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CURRENT_TIME);    // request time update
+        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TIME_CHANGED);    // request time update
         if (WMenu != null) {
             mainapp.displayEStop(WMenu);
         }

@@ -289,7 +289,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static boolean clearHistory = false;    // flags webViewClient to clear history when page load finishes
     private static String firstUrl = null;          // desired first url when clearing history
     private static String currentUrl = null;
-    private String currentTime = "";
+//    private String currentTime = "";
     private Menu TMenu;
     static int REP_DELAY = 25;
     private int prefSpeedButtonsSpeedStep = 4;
@@ -950,8 +950,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     break;
                 case message_type.WIT_CON_RECONNECT:
                     break;
-                case message_type.CURRENT_TIME:
-                    currentTime = response_str;
+                case message_type.TIME_CHANGED:
+//                    currentTime = response_str;
                     setTitle();
                     break;
                 case message_type.DISCONNECT:
@@ -1384,6 +1384,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefLimitSpeedButton = prefs.getBoolean("prefLimitSpeedButton", getResources().getBoolean(R.bool.prefLimitSpeedButtonDefaultValue));
         prefLimitSpeedPercent = Integer.parseInt(prefs.getString("prefLimitSpeedPercent", getResources().getString(R.string.prefLimitSpeedPercentDefaultValue)));
         speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+
+        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY);
 
         if (isCreate) {
             prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
@@ -4000,8 +4002,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     // set the title, optionally adding the current time.
     public void setTitle() {
-        if (mainapp.displayClock)
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_short) + "  " + currentTime);
+//        if (mainapp.displayClock)
+        if (mainapp.fastClockFormat > 0)
+            setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_short) + "  " + mainapp.fastClockTime);
         else
             setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
     }
@@ -4477,9 +4480,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return;
         }
+
         navigatingAway = false;
-        currentTime = "";
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CURRENT_TIME); // request time update
+//        currentTime = "";
+//        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TIME_CHANGED); // request time update
 
         // format the screen area
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -4492,6 +4496,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         getCommonPrefs(false);
         getDirectionButtonPrefs();
         setThottleNumLimits();
+        setTitle();
 
         clearVolumeAndGamepadAdditionalIndicators();
 
