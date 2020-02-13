@@ -4493,7 +4493,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         getCommonPrefs(false);
         getDirectionButtonPrefs();
         setThottleNumLimits();
-        setActivityTitle();
 
         clearVolumeAndGamepadAdditionalIndicators();
 
