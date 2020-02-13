@@ -33,9 +33,10 @@
     <string name="app_name_power_control">Ovládání napájení – Engine Driver</string>
     <string name="app_name_reconnect_status">Stav znovupřipojení – Engine Driver</string>
     <string name="app_name_routes">Trasy – Engine Driver</string>
+    <string name="app_name_routes_short">Trasy</string>
     <string name="app_name_turnouts">Výhybky – Engine Driver</string>
+    <string name="app_name_turnouts_short">Výhybky</string>
     <string name="app_name_about">O aplikaci – Engine Driver</string>
-    <string name="app_name_web">Web – Engine Driver</string>
     <string name="app_name_functions">Výchozí nastavení funkcí – Engine Driver</string>
     <string name="app_name_preferences">Předvolby – Engine Driver</string>
     <string name="app_name_select_loco">Vybrat/Vzdát se Lokomotivy – Engine Driver</string>

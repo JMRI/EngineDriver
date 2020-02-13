@@ -89,7 +89,7 @@ public class web_activity extends Activity {
                     initWeb();
                     break;
                 case message_type.TIME_CHANGED:
-                    setTitle();
+                    setActivityTitle();
                     break;
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
@@ -100,10 +100,9 @@ public class web_activity extends Activity {
     }
 
     //	set the title, optionally adding the current time.
-    public void setTitle() {
-//        if (mainapp.displayClock)
+    private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name) + "  " + mainapp.fastClockTime);
+            setTitle(getApplicationContext().getResources().getString(R.string.app_name_web_short) + "  " + mainapp.fastClockTime);
         else
             setTitle(getApplicationContext().getResources().getString(R.string.app_name_web));
     }
@@ -215,7 +214,7 @@ public class web_activity extends Activity {
         super.onResume();
         mainapp.removeNotification();
 
-        setTitle();
+        setActivityTitle();
 
         if (closeButton != null) {
             if (mainapp.webMenuSelected) {

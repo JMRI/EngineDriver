@@ -18,6 +18,7 @@
     <string name="prefEsuMc2EndStopDirectionChangeSummary">Allow Loco direction to change when control knob at anti-clockwise end-stop position.</string>
 
     <string name="app_name_turnouts">Points - Engine Driver</string>
+    <string name="app_name_turnouts_short">Points</string>
 
     <string name="turnouts">Points</string>
     <string name="turnouts_label">Control Points</string>

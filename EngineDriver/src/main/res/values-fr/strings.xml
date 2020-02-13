@@ -32,9 +32,10 @@
     <string name="app_name_power_control">Contrôle de l alimentation - Engine Driver</string>
     <string name="app_name_reconnect_status">État Reconnexion - Engine Driver</string>
     <string name="app_name_routes">Itinéraires - Engine Driver</string>
+    <string name="app_name_routes_short">Itinéraires</string>
     <string name="app_name_turnouts">Aiguilles - Engine Driver</string>
+    <string name="app_name_turnouts_short">Aiguilles</string>
     <string name="app_name_about">A propos - Engine Driver</string>
-    <string name="app_name_web">Web - Engine Driver</string>
     <string name="app_name_functions">Paramètres par défaut de la fonction - Engine Driver</string>
     <string name="app_name_preferences">Préférences - Engine Driver</string>
     <string name="app_name_select_loco">Sélection / Libération Loco - Engine Driver</string>

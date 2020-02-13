@@ -30,9 +30,10 @@
     <string name="app_name_power_control">Control de tensión de vía- Engine Driver</string>
     <string name="app_name_reconnect_status">Estado de reconexión - Engine Driver</string>
     <string name="app_name_routes">Rutas - Engine Driver</string>
+    <string name="app_name_routes_short">Rutas</string>
     <string name="app_name_turnouts">Desvíos - Engine Driver</string>
+    <string name="app_name_turnouts_short">Desvíos</string>
     <string name="app_name_about">Acerca de - Engine Driver</string>
-    <string name="app_name_web">Web - Engine Driver</string>
     <string name="app_name_functions">Parámetros de funciones por defecto - Engine Driver</string>
     <string name="app_name_preferences">Preferencias - Engine Driver</string>
     <string name="app_name_select_loco">Selecciona/Libera Locomotora - Engine Driver</string>

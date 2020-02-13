@@ -952,7 +952,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     break;
                 case message_type.TIME_CHANGED:
 //                    currentTime = response_str;
-                    setTitle();
+                    setActivityTitle();
                     break;
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
@@ -4001,7 +4001,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     // set the title, optionally adding the current time.
-    public void setTitle() {
+    private void setActivityTitle() {
 //        if (mainapp.displayClock)
         if (mainapp.fastClockFormat > 0)
             setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_short) + "  " + mainapp.fastClockTime);
@@ -4038,12 +4038,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         mainapp.applyTheme(this);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle)); // needed in case the language was changed from the default
 
-//        setContentView(R.layout.throttle);
         setContentView(layoutViewId);
 
         getCommonPrefs(true); // get all the common preferences
+
+        setActivityTitle();
+
         setThottleNumLimits();
 
         getDirectionButtonPrefs();
@@ -4482,8 +4483,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         navigatingAway = false;
-//        currentTime = "";
-//        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TIME_CHANGED); // request time update
 
         // format the screen area
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -4496,7 +4495,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         getCommonPrefs(false);
         getDirectionButtonPrefs();
         setThottleNumLimits();
-        setTitle();
+        setActivityTitle();
 
         clearVolumeAndGamepadAdditionalIndicators();
 
@@ -4566,6 +4565,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         setupTts();
+
+        setActivityTitle();
+
     }
 
     private void showHideConsistMenus(){

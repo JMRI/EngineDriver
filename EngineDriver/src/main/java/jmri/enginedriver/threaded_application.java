@@ -83,7 +83,6 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -143,6 +142,7 @@ public class threaded_application extends Application {
     ImageDownloader imageDownloader = new ImageDownloader();
     String power_state;
     public int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
+    public String fastClockTime = "";
     public int androidVersion = 0;
     //minimum Android version for some features
     public final int minWebSocketVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
@@ -229,8 +229,6 @@ public class threaded_application extends Application {
     public boolean shownToastRoster = false;
     public boolean shownToastConsistEdit = false;
     public boolean shownToastRecentTurnouts = false;
-
-    public String fastClockTime = "";
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -1006,25 +1004,25 @@ public class threaded_application extends Application {
 
                         case 'F':  //FastClock message: PFT1581530521<;>2.0
                             if (response_str.startsWith("PFT")) {
-                                String[] ta = splitByString(response_str.substring(3), "<;>"); //get number between the "PFT" and the "<;>"
+                                String[] ta = splitByString(response_str.substring(3), "<;>"); //get the number between "PFT" and the "<;>"
                                 Long unixSeconds = 0L;
-                                String f = "";
+                                String f;
                                 try {
                                     unixSeconds = Long.parseLong(ta[0]);
                                 } catch (NumberFormatException e) {
-                                    Log.d("Engine_Driver", "unable to convert fastClock time '" + ta[0] + "'");
+                                    Log.w("Engine_Driver", "unable to convert fastClock time '" + ta[0] + "'");
                                 }
                                 if (unixSeconds > 0) {
                                     int tz_offset = TimeZone.getDefault().getRawOffset();
-                                    if (fastClockFormat == 1) {              // display in 12 hr format
-                                        f = "h:mm a";
-                                    } else if (fastClockFormat == 2) {       // display in 24 hr format
+                                    if (fastClockFormat == 2) {              // display in 24 hr format
                                         f = "HH:mm";
+                                    } else {       // display in 12 hr format
+                                        f = "h:mm a";
                                     }
                                     SimpleDateFormat sdf = new SimpleDateFormat(f, Locale.getDefault());
                                     Date date = new java.util.Date((unixSeconds * 1000L) - tz_offset);
                                     fastClockTime = sdf.format(date);
-                                    alert_activities(message_type.TIME_CHANGED, fastClockTime);     //send the time update
+                                    alert_activities(message_type.TIME_CHANGED, fastClockTime);     //tell activities the time has changed
                                 }
                             }
                             break;
@@ -2183,7 +2181,7 @@ public class threaded_application extends Application {
      */
     public void setGamepadTestMenuOption(Menu menu, int gamepadCount) {
         String whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
-        boolean result = false;
+        boolean result;
 
         if (menu != null) {
             for (int i = 1; i <= 3; i++) {

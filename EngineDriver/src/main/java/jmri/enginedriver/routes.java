@@ -221,6 +221,9 @@ public class routes extends Activity implements OnGestureListener {
                 case message_type.WIT_CON_RECONNECT:
                     refresh_route_view();
                     break;
+                case message_type.TIME_CHANGED:
+                    setActivityTitle();
+                    break;
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     disconnect();
@@ -297,7 +300,8 @@ public class routes extends Activity implements OnGestureListener {
 //      setTitleToIncludeThrotName();
 
         mainapp.applyTheme(this);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_routes)); // needed in case the langauge was changed from the default
+
+        setActivityTitle();
 
         setContentView(R.layout.routes);
         //put pointer to this activity's handler in main app's shared variable
@@ -420,6 +424,8 @@ public class routes extends Activity implements OnGestureListener {
             mainapp.displayFlashlightMenuButton(RMenu);
             mainapp.setFlashlightButton(RMenu);
         }
+        setActivityTitle();
+
         updateRouteEntry(); // enable/disable button
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -619,4 +625,13 @@ public class routes extends Activity implements OnGestureListener {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
+
+    //	set the title, optionally adding the current time.
+    private void setActivityTitle() {
+        if (mainapp.fastClockFormat > 0)
+            setTitle(getApplicationContext().getResources().getString(R.string.app_name_routes_short) + "  " + mainapp.fastClockTime);
+        else
+            setTitle(getApplicationContext().getResources().getString(R.string.app_name_routes));
+    }
+
 }
