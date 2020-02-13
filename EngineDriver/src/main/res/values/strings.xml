@@ -31,9 +31,12 @@
     <string name="app_name_power_control">Power Control - Engine Driver</string>
     <string name="app_name_reconnect_status">Reconnect Status - Engine Driver</string>
     <string name="app_name_routes">Routes - Engine Driver</string>
+    <string name="app_name_routes_short">Routes</string>
     <string name="app_name_turnouts">Turnouts - Engine Driver</string>
+    <string name="app_name_turnouts_short">Turnouts</string>
     <string name="app_name_about">About - Engine Driver</string>
     <string name="app_name_web">Web - Engine Driver</string>
+    <string name="app_name_web_short">Web</string>
     <string name="app_name_functions">Default Function Settings - Engine Driver</string>
     <string name="app_name_preferences">Preferences - Engine Driver</string>
     <string name="app_name_select_loco">Select/Release Loco - Engine Driver</string>

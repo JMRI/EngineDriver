@@ -31,9 +31,10 @@
     <string name="app_name_power_control">Controllo di Energia - Engine Driver</string>
     <string name="app_name_reconnect_status">Status Ri-connessione - Engine Driver</string>
     <string name="app_name_routes">Rotte - Engine Driver</string>
+    <string name="app_name_routes_short">Rotte</string>
     <string name="app_name_turnouts">Scambi - Engine Driver</string>
+    <string name="app_name_turnouts_short">Scambi</string>
     <string name="app_name_about">Circa - Engine Driver</string>
-    <string name="app_name_web">Web - Engine Driver</string>
     <string name="app_name_functions">Configurazione Funzioni Default - Engine Driver</string>
     <string name="app_name_preferences">Preferenze - Engine Driver</string>
     <string name="app_name_select_loco">Selezione Locomotiva - Engine Driver</string>

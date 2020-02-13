@@ -32,9 +32,10 @@
     <string name="app_name_power_control">Anlagenstrom - Engine Driver</string>
     <string name="app_name_reconnect_status">Wiederverbindungsstatus - Engine Driver</string>
     <string name="app_name_routes">Fahrstraßen - Engine Driver</string>
+    <string name="app_name_routes_short">Fahrstraßen</string>
     <string name="app_name_turnouts">Weichen - Engine Driver</string>
+    <string name="app_name_turnouts_short">Weichen</string>
     <string name="app_name_about">Über  - Engine Driver</string>
-    <string name="app_name_web">Web - Engine Driver</string>
     <string name="app_name_functions">Standardfunktionseinstellungen - Engine Driver</string>
     <string name="app_name_preferences">Voreinstellungen - Engine Driver</string>
     <string name="app_name_select_loco">Lok Auswählen/Freigeben - Engine Driver</string>

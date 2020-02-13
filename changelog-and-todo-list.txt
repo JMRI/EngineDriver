@@ -1,5 +1,6 @@
 **Version 2.25.98
   * change fastclock from websocket to withrottle PFT message
+  * add fastclock to other activities
   * Remember Recent Turnouts/Points and allow selection from the turnouts/points screen
 **Version 2.25.95
  * Option to show a Shunting/Switching speed button (Vertical Throttle only)
