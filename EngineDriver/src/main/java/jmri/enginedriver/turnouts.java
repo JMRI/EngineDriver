@@ -418,11 +418,8 @@ public class turnouts extends Activity implements OnGestureListener {
         }
 
         mainapp.applyTheme(this);
-        setActivityTitle();
+
         setContentView(R.layout.turnouts);
-
-
-//      setTitleToIncludeThrotName();
 
         //put pointer to this activity's handler in main app's shared variable (If needed)
         mainapp.turnouts_msg_handler = new turnouts_handler();
@@ -652,8 +649,6 @@ public class turnouts extends Activity implements OnGestureListener {
         //restore view to last known scroll position
         ListView lv = findViewById(R.id.turnouts_list);
         lv.setSelectionFromTop(mainapp.turnouts_list_position, 0);
-
-//      setTitleToIncludeThrotName();
 
         // enable/disable buttons
         updateTurnoutEntry();

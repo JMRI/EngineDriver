@@ -142,7 +142,6 @@ public class web_activity extends Activity {
             return;
         }
         mainapp.applyTheme(this);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_web)); // needed in case the language was changed from the default
 
         setContentView(R.layout.web_activity);
 

@@ -301,8 +301,6 @@ public class routes extends Activity implements OnGestureListener {
 
         mainapp.applyTheme(this);
 
-        setActivityTitle();
-
         setContentView(R.layout.routes);
         //put pointer to this activity's handler in main app's shared variable
         mainapp.routes_msg_handler = new routes_handler();
