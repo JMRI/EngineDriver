@@ -142,7 +142,6 @@ public class threaded_application extends Application {
     public static HashMap<String, String> metadata;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
     ImageDownloader imageDownloader = new ImageDownloader();
     String power_state;
-//    public boolean displayClock = false;
     public int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
     public int androidVersion = 0;
     //minimum Android version for some features
@@ -240,9 +239,7 @@ public class threaded_application extends Application {
         android.net.wifi.WifiManager.MulticastLock multicast_lock;
         socket_WiT socketWiT;
         PhoneListener phone;
-//        ClockWebSocketHandler clockWebSocket = null;
         heartbeat heart = new heartbeat();
-//        volatile String currentTime = "";
 
         comm_thread() {
             super("comm_thread");
@@ -539,10 +536,6 @@ public class threaded_application extends Application {
                         end_jmdns();
                         dlMetadataTask.stop();
                         dlRosterTask.stop();
-//                        if (clockWebSocket != null) {
-//                            clockWebSocket.disconnect();
-//                            clockWebSocket = null;
-//                        }
 
                         //send quit message to withrottle after a short delay for other activities to communicate
                         sendMsgDelay(comm_msg_handler, 100L, message_type.WITHROTTLE_QUIT);
@@ -648,18 +641,9 @@ public class threaded_application extends Application {
                         withrottle_send("*+");
                         break;
 
-                    //Current Time update request
-//                    case message_type.TIME_CHANGED:
-//                        if (!doFinish) {
-//                            alert_activities(message_type.TIME_CHANGED, currentTime);
-//                        }
-//                        break;
-
                     //Current Time clock display preference change
                     case message_type.CLOCK_DISPLAY:
-//                        if (!doFinish && clockWebSocket != null) {
                         if (!doFinish) {
-//                            clockWebSocket.refresh();
                             try {
                                 fastClockFormat = Integer.parseInt(prefs.getString("ClockDisplayTypePreference", "0"));
                             } catch (NumberFormatException e) {
@@ -1021,19 +1005,28 @@ public class threaded_application extends Application {
                             break;
 
                         case 'F':  //FastClock message: PFT1581530521<;>2.0
-                            String[] ta = splitByString(response_str.substring(3), "<;>"); //get number between the "PFT" and the "<;>"
-                            Long unixSeconds = Long.parseLong(ta[0]);
-                            int tz_offset = TimeZone.getDefault().getRawOffset();
-                            String f = "";
-                            if (fastClockFormat == 1) {              // display in 12 hr format
-                                f = "h:mm a";
-                            } else if (fastClockFormat == 2) {       // display in 24 hr format
-                                f = "HH:mm";
+                            if (response_str.startsWith("PFT")) {
+                                String[] ta = splitByString(response_str.substring(3), "<;>"); //get number between the "PFT" and the "<;>"
+                                Long unixSeconds = 0L;
+                                String f = "";
+                                try {
+                                    unixSeconds = Long.parseLong(ta[0]);
+                                } catch (NumberFormatException e) {
+                                    Log.d("Engine_Driver", "unable to convert fastClock time '" + ta[0] + "'");
+                                }
+                                if (unixSeconds > 0) {
+                                    int tz_offset = TimeZone.getDefault().getRawOffset();
+                                    if (fastClockFormat == 1) {              // display in 12 hr format
+                                        f = "h:mm a";
+                                    } else if (fastClockFormat == 2) {       // display in 24 hr format
+                                        f = "HH:mm";
+                                    }
+                                    SimpleDateFormat sdf = new SimpleDateFormat(f, Locale.getDefault());
+                                    Date date = new java.util.Date((unixSeconds * 1000L) - tz_offset);
+                                    fastClockTime = sdf.format(date);
+                                    alert_activities(message_type.TIME_CHANGED, fastClockTime);     //send the time update
+                                }
                             }
-                            SimpleDateFormat sdf = new SimpleDateFormat(f, Locale.getDefault());
-                            Date date = new java.util.Date((unixSeconds * 1000L) - tz_offset);
-                            fastClockTime = sdf.format(date);
-                            alert_activities(message_type.TIME_CHANGED, fastClockTime);     //send the time update
                             break;
 
                         case 'W':  //Web Server port
@@ -1710,101 +1703,6 @@ public class threaded_application extends Application {
             }
         }
 
-//        class ClockWebSocketHandler extends WebSocketHandler {
-//            private final String sGetClockMemory = "{\"type\":\"memory\",\"data\":{\"name\":\"IMCURRENTTIME\"}}";
-//            private final String sClockMemoryName = "IMCURRENTTIME";
-//            private WebSocketConnection mConnection = new WebSocketConnection();
-//            private int displayClockHrs = 0;
-//            @SuppressLint("SimpleDateFormat")
-//            private final SimpleDateFormat sdf12 = new SimpleDateFormat("h:mm a");
-//            @SuppressLint("SimpleDateFormat")
-//            private final SimpleDateFormat sdf24 = new SimpleDateFormat("HH:mm");
-//
-//            @Override
-//            public void onOpen() {
-//                displayClock = true;
-//                try {
-//                    Log.d("Engine_Driver", "threaded_application: ClockWebSocket open");
-//                    mConnection.sendTextMessage(sGetClockMemory);
-//                } catch (Exception e) {
-//                    Log.d("Engine_Driver", "threaded_application: ClockWebSocket open error: " + e.toString());
-//                }
-//            }
-//
-//            @Override
-//            public void onTextMessage(String msg) {
-//                try {
-//                    JSONObject currentTimeMemory = new JSONObject(msg);
-//                    JSONObject data = currentTimeMemory.getJSONObject("data");
-//                    if (sClockMemoryName.equals(data.getString("name"))) {
-//                        currentTime = data.getString("value");
-//                        if (currentTime.length() > 0) {
-//                            String newTime;
-//                            try {
-//                                if (!currentTime.contains("M")) {          // no AM or PM - in 24 hr format
-//                                    if (displayClockHrs == 1) {              // display in 12 hr format
-//                                        newTime = sdf12.format(sdf24.parse(currentTime));
-//                                        currentTime = newTime;
-//                                    }
-//                                } else {                                    // in 12 hr format
-//                                    if (displayClockHrs == 2) {              // display in 24 hr format
-//                                        newTime = sdf24.format(sdf12.parse(currentTime));
-//                                        currentTime = newTime;
-//                                    }
-//                                }
-//                            } catch (ParseException ignored) {
-//                            }
-//                            alert_activities(message_type.TIME_CHANGED, currentTime);     //send the time update
-//                        }
-//                    }
-//                } catch (JSONException e) {
-//                    // wasn't a clock memory message so just ignore it
-//                }
-//            }
-//
-//            @Override
-//            public void onClose(int code, String closeReason) {
-//                // attempt reconnection unless finishing
-//                if (!doFinish && displayClock) {
-//                    displayClock = false;
-//                    this.connect();
-//                }
-//            }
-//
-//            private void connect() {
-//                try {
-//                    Log.d("Engine_Driver", "threaded_application: ClockWebSocket attempt connect");
-//                    mConnection.connect(createUri(), this);
-//                } catch (Exception e) {
-//                    Log.d("Engine_Driver", "threaded_application: ClockWebSocket connect error: " + e.toString());
-//                }
-//            }
-//
-//            public void disconnect() {
-//                displayClock = false;
-//                try {
-//                    mConnection.disconnect();
-//                } catch (Exception e) {
-//                    Log.d("Engine_Driver", "threaded_application: ClockWebSocket disconnect error: " + e.toString());
-//                }
-//            }
-//
-//            public void refresh() {
-//                currentTime = "";
-//                try {
-//                    displayClockHrs = Integer.parseInt(prefs.getString("ClockDisplayTypePreference", "0"));
-//                } catch (NumberFormatException e) {
-//                    displayClockHrs = 0;
-//                }
-//                if (displayClockHrs > 0) {
-//                    if (mConnection.isConnected())
-//                        this.disconnect();
-//                    this.connect();
-//                } else {
-//                    this.disconnect();
-//                }
-//            }
-//        }
     }
 
     /**
