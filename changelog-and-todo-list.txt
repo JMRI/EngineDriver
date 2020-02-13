@@ -461,7 +461,7 @@
  *   added html About page
  */
 /*
- *   TODO: handle MRC, Digitrax and new WiThrottle fastclock messages
+ *   TODO: verify MRC fastclock messages
  *   TODO: change config files to use db instead of .txt files, turn off sd card permission
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
