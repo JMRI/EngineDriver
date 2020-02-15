@@ -113,7 +113,6 @@ public class turnouts extends Activity implements OnGestureListener {
     LinearLayout llRecent;
     RadioButton rbAddress;
     RadioButton rbRoster;
-    RadioButton rbRecent;
 
     ArrayList<HashMap<String, String>> recentTurnoutsList;
     private RecentTurnoutsSimpleAdapter recentTurnoutsListAdapter;
@@ -344,8 +343,21 @@ public class turnouts extends Activity implements OnGestureListener {
                 turnoutSystemName = entrytext;
                 turnoutUserName = entrytext;
                 turnoutSource = WHICH_SOURCE_ADDRESS;
+
+                boolean reloadRecents = false;
+                if (importExportPreferences.recent_turnout_address_list.size()>0) {
+                    if (!turnoutSystemName.equals(importExportPreferences.recent_turnout_address_list.get(0))) {
+                        reloadRecents = true;
+                        loadRecentTurnoutsList();
+                    }
+                }
+
                 saveRecentTurnoutsList(true);
-                showHideRecentsRadioButton();
+
+                if (reloadRecents) {
+//                    loadRecentTurnoutsList();
+                    showHideRecentsList();
+                }
             }
         }
     }
@@ -364,7 +376,7 @@ public class turnouts extends Activity implements OnGestureListener {
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, '2' + turnoutSystemName);    // 2=toggle
 
             saveRecentTurnoutsList(true);
-            showHideRecentsRadioButton();
+            showHideRecentsList();
         }
     }
 
@@ -389,7 +401,7 @@ public class turnouts extends Activity implements OnGestureListener {
 
             removingTurnoutOrForceReload = true;
             saveRecentTurnoutsList(true);
-            showHideRecentsRadioButton();
+            showHideRecentsList();
         }
     }
 
@@ -510,6 +522,11 @@ public class turnouts extends Activity implements OnGestureListener {
             }
         });
 
+
+        llAddress = findViewById(R.id.enter_turnout_address_group);
+        llRoster = findViewById(R.id.turnouts_from_roster_group);
+        llRecent = findViewById(R.id.turnouts_recent_group);
+
         // Set up a list adapter to allow adding the list of recent consists to the UI.
         recentTurnoutsList = new ArrayList<>();
         recentTurnoutsListAdapter = new RecentTurnoutsSimpleAdapter(this, recentTurnoutsList, R.layout.turnouts_recent_item,
@@ -557,7 +574,6 @@ public class turnouts extends Activity implements OnGestureListener {
         // setup the method radio buttons
         rbAddress = findViewById(R.id.select_turnout_method_address_button);
         rbRoster = findViewById(R.id.select_turnout_method_roster_button);
-        rbRecent = findViewById(R.id.select_turnout_method_recent_button);
 
         prefSelectTurnoutsMethod = prefs.getString("prefSelectTurnoutsMethod", WHICH_METHOD_FIRST);
         // if the recent lists are empty make sure the radio button will be pointing to something valid
@@ -565,9 +581,6 @@ public class turnouts extends Activity implements OnGestureListener {
             prefSelectTurnoutsMethod = WHICH_METHOD_ADDRESS;
         }
 
-        llAddress = findViewById(R.id.enter_turnout_address_group);
-        llRoster = findViewById(R.id.turnouts_from_roster_group);
-        llRecent = findViewById(R.id.turnouts_recent_group);
         showMethod(prefSelectTurnoutsMethod);
 
         RadioGroup rgTurnoutsSelect = findViewById(R.id.select_turnout_method_radio_group);
@@ -581,9 +594,6 @@ public class turnouts extends Activity implements OnGestureListener {
                         break;
                     case R.id.select_turnout_method_roster_button:
                         showMethod(WHICH_METHOD_ROSTER);
-                        break;
-                    case R.id.select_turnout_method_recent_button:
-                        showMethod(WHICH_METHOD_RECENT);
                         break;
                 }
             }
@@ -834,30 +844,30 @@ public class turnouts extends Activity implements OnGestureListener {
         importExportPreferences.recent_turnout_address_list = new ArrayList<>();
         importExportPreferences.recent_turnout_name_list = new ArrayList<>();
         importExportPreferences.recent_turnout_source_list = new ArrayList<>();
+        importExportPreferences.recent_turnout_server_list = new ArrayList<>();
         ArrayList<HashMap<String, String>> tempRecentTurnoutsList = new ArrayList<>();
 
-        rbRecent = findViewById(R.id.select_turnout_method_recent_button);
-
         //if no SD Card present then there is no recent consists list
-        if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-            //alert user that recent list requires SD Card
-            rbRecent.setVisibility(View.GONE); // if the list is empty, hide the radio button
-        } else {
-
+        if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             importExportPreferences.getRecentTurnoutsListFromFile();
             for (int i = 0; i < importExportPreferences.recent_turnout_address_list.size(); i++) {
-                HashMap<String, String> hm = new HashMap<>();
-                String turnoutAddressString = importExportPreferences.recent_turnout_address_list.get(i);
-                String turnoutAddressSource = importExportPreferences.recent_turnout_source_list.get(i).toString();
+                // only load the turnout if it came from the current server
+                if (importExportPreferences.recent_turnout_server_list.get(i).equals(mainapp.connectedHostip) ) {
+                    HashMap<String, String> hm = new HashMap<>();
+                    String turnoutAddressString = importExportPreferences.recent_turnout_address_list.get(i);
+                    String turnoutAddressSource = importExportPreferences.recent_turnout_source_list.get(i).toString();
+                    String turnoutAddressServer = importExportPreferences.recent_turnout_server_list.get(i);
 
-                hm.put("turnout_name", importExportPreferences.recent_turnout_name_list.get(i)); // the larger name text
-                hm.put("turnout", turnoutAddressString);   // the small address field at the top of the row
-                hm.put("turnout_source", turnoutAddressSource);   // the small address field at the top of the row
+                    hm.put("turnout_name", importExportPreferences.recent_turnout_name_list.get(i)); // the larger name text
+                    hm.put("turnout", turnoutAddressString);   // the small address field at the top of the row
+                    hm.put("turnout_source", turnoutAddressSource);
+                    hm.put("turnout_server", turnoutAddressServer);
 //                recentTurnoutsList.add(hm);
-                tempRecentTurnoutsList.add(hm);
+                    tempRecentTurnoutsList.add(hm);
+                }
             }
 
-            showHideRecentsRadioButton();
+            showHideRecentsList();
 
             recentTurnoutsList.clear();
             recentTurnoutsList.addAll(tempRecentTurnoutsList);
@@ -877,7 +887,8 @@ public class turnouts extends Activity implements OnGestureListener {
 
                 rbAddress.setChecked(true);
                 rbRoster.setChecked(false);
-                rbRecent.setChecked(false);
+
+                loadRecentTurnoutsList();
                 break;
             }
             case WHICH_METHOD_ROSTER: {
@@ -887,29 +898,8 @@ public class turnouts extends Activity implements OnGestureListener {
 
                 rbAddress.setChecked(false);
                 rbRoster.setChecked(true);
-                rbRecent.setChecked(false);
-
                 break;
             }
-            case WHICH_METHOD_RECENT: {
-                llAddress.setVisibility(View.GONE);
-                llRoster.setVisibility(View.GONE);
-                llRecent.setVisibility(View.VISIBLE);
-
-                rbAddress.setChecked(false);
-                rbRoster.setChecked(false);
-                rbRecent.setChecked(true);
-
-                loadRecentTurnoutsList();
-
-//                if (!mainapp.shownToastRecentTurnouts) {
-//                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastTurnoutsRecentsHelp), Toast.LENGTH_LONG).show();
-//                    mainapp.shownToastRecentTurnouts = true;
-//                }
-
-                break;
-            }
-
         }
         prefs.edit().putString("prefSelectTurnoutsMethod", whichMethod).commit();
     }
@@ -1001,6 +991,7 @@ public class turnouts extends Activity implements OnGestureListener {
                     importExportPreferences.recent_turnout_address_list.remove(i);
                     importExportPreferences.recent_turnout_name_list.remove(i);
                     importExportPreferences.recent_turnout_source_list.remove(i);
+                    importExportPreferences.recent_turnout_server_list.remove(i);
                 }
             }
 
@@ -1008,57 +999,13 @@ public class turnouts extends Activity implements OnGestureListener {
             importExportPreferences.recent_turnout_address_list.add(0, turnoutSystemName);
             importExportPreferences.recent_turnout_name_list.add(0, turnoutUserName);
             importExportPreferences.recent_turnout_source_list.add(0, turnoutSource);
+            importExportPreferences.recent_turnout_server_list.add(0, mainapp.connectedHostip);
         }
         removingTurnoutOrForceReload = false;
 
         importExportPreferences.writeRecentTurnoutsListToFile(prefs);
     }
 
-//    //handle long click for each recent turnout
-//    public class onRecentTurnoutsListItemLongClick implements View.OnLongClickListener {
-//        onRecentTurnoutsListItemLongClick() {
-//        }
-//
-//        public boolean onLongClick(View v) {
-//            return clearRecentTurnoutsListItem(v);
-//        }
-//    }
-//
-//            //  Clears the entry from the recent tournouts list
-////    protected boolean clearRecentTurnoutsListItem(View v, final int position, long id) {
-//    protected boolean clearRecentTurnoutsListItem(View v) {
-//        final int position = recentTurnoutsListView.getPositionForView(v);
-//
-//        importExportPreferences.recent_turnout_address_list.remove(position);
-//        importExportPreferences.recent_turnout_name_list.remove(position);
-//        importExportPreferences.recent_turnout_source_list.remove(position);
-//
-//        removingTurnoutOrForceReload = true;
-//
-//        Animation anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
-//        anim.setDuration(500);
-//        View itemView = recentTurnoutsListView.getChildAt(position - recentTurnoutsListView.getFirstVisiblePosition());
-//        itemView.startAnimation(anim);
-//        anim.setAnimationListener(new Animation.AnimationListener() {
-//            @Override
-//            public void onAnimationStart(Animation animation) {}
-//
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//                recentTurnoutsList.remove(position);
-//                saveRecentTurnoutsList(true);
-//                recentTurnoutsListView.invalidateViews();
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentTurnoutCleared), Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {}
-//
-//            public void run() {}
-//        });
-//
-//        return true;
-//    }
 
     public class clearRecentTurnoutsListButton implements AdapterView.OnClickListener {
         public void onClick(View v) {
@@ -1132,18 +1079,20 @@ public class turnouts extends Activity implements OnGestureListener {
     }
 
 
-    void showHideRecentsRadioButton() {
+    void showHideRecentsList() {
         if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             // if the list is empty, hide the radio button
             if (importExportPreferences.recent_turnout_address_list.size()==0) {
-                rbRecent.setVisibility(View.GONE);
+                llRecent.setVisibility(View.GONE);
             } else {
-                rbRecent.setVisibility(View.VISIBLE);
+                llRecent.setVisibility(View.VISIBLE);
             }
         } else {
-            rbRecent.setVisibility(View.GONE);
+            llRecent.setVisibility(View.GONE);
         }
     }
+
+
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)

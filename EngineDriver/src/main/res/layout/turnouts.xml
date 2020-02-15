@@ -35,7 +35,7 @@
             android:layout_marginLeft="10dp"
             android:text="@string/turnoutsSelectionTypeRoster"
             android:textSize="18sp" />
-
+<!--
         <RadioButton
             android:id="@+id/select_turnout_method_recent_button"
             style="?attr/floating_text_style"
@@ -44,7 +44,7 @@
             android:layout_marginLeft="10dp"
             android:text="@string/turnoutsSelectionTypeRecent"
             android:textSize="18sp" />
-
+-->
     </RadioGroup>
 
     <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   -->
