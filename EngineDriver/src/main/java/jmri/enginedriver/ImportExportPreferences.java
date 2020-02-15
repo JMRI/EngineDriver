@@ -66,6 +66,7 @@ public class ImportExportPreferences {
     ArrayList<String> recent_turnout_address_list;
     ArrayList<String> recent_turnout_name_list;
     ArrayList<Integer> recent_turnout_source_list;
+    ArrayList<String> recent_turnout_server_list;
 
     private static final int WHICH_SOURCE_UNKNOWN = 0;
     private static final int WHICH_SOURCE_ADDRESS = 1;
@@ -155,6 +156,7 @@ public class ImportExportPreferences {
         saveStringListDataToPreferences(recent_turnout_address_list, "prefRecentTurnout", sharedPreferences);
         saveStringListDataToPreferences(recent_turnout_name_list, "prefRecentTurnoutName", sharedPreferences);
         saveIntListDataToPreferences(recent_turnout_source_list, "prefRecentTurnoutSource", sharedPreferences);
+        saveStringListDataToPreferences(recent_turnout_server_list, "prefRecentTurnoutServer", sharedPreferences);
 
         if (!exportedPreferencesFileName.equals(".ed")) {
             res = writeExportFile(context, sharedPreferences, exportedPreferencesFileName);
@@ -333,9 +335,11 @@ public class ImportExportPreferences {
                     recent_turnout_address_list = new ArrayList<>();
                     recent_turnout_name_list = new ArrayList<>();
                     recent_turnout_source_list = new ArrayList<>();
+                    recent_turnout_server_list = new ArrayList<>();
                     getStringListDataFromPreferences(recent_turnout_address_list, "prefRecentTurnout", sharedPreferences, -1,"");
                     getStringListDataFromPreferences(recent_turnout_name_list, "prefRecentTurnoutName", sharedPreferences, recent_turnout_address_list.size(), "");
                     getIntListDataFromPreferences(recent_turnout_source_list, "prefRecentTurnoutSource", sharedPreferences, recent_turnout_address_list.size(), WHICH_SOURCE_UNKNOWN);
+                    getStringListDataFromPreferences(recent_turnout_server_list, "prefRecentTurnoutServer", sharedPreferences, recent_turnout_server_list.size(), "");
                     writeRecentTurnoutsListToFile(sharedPreferences);
 
                 }
@@ -850,9 +854,10 @@ public class ImportExportPreferences {
             list_output = new PrintWriter(engine_list_file);
             if (numberOfRecentTurnoutsToWrite > 0) {
                 for (int i = 0; i < recent_turnout_address_list.size() && numberOfRecentTurnoutsToWrite > 0; i++) {
-                    list_output.format("%s:%d~%s\n",
+                    list_output.format("%s:%d<~>%s<~>%s\n",
                             recent_turnout_address_list.get(i),
                             recent_turnout_source_list.get(i),
+                            recent_turnout_server_list.get(i),
                             recent_turnout_name_list.get(i));
                     numberOfRecentTurnoutsToWrite--;
                 }
@@ -886,13 +891,21 @@ public class ImportExportPreferences {
                     int splitPos = line.indexOf(':');
                     if (splitPos > 0) {
                         Integer source = 0;
-                        String addr, turnoutName = "";
+                        String addr, turnoutName ="", turnoutServer = "";
                         try {
-                            addr = line.substring(0, splitPos);
+                             addr = line.substring(0, splitPos);
                             source = Integer.decode(line.substring(splitPos + 1, splitPos + 2));
                             if (line.length()>splitPos+2) { // has the name extras
-                                if (line.substring(splitPos + 2,splitPos + 3).equals("~")) {
-                                    turnoutName = line.substring(splitPos + 3);
+//                                if (line.substring(splitPos + 2,splitPos + 3).equals("~")) { // is the early format without the server
+//                                    turnoutName = line.substring(splitPos + 3);
+//                                }
+                                if (!line.contains("<~>")) { // must be the old format
+                                    String[] splitLine = line.split("~", -1);
+                                    turnoutName = splitLine[1];
+                                } else {
+                                    String[] splitLine = line.split("<~>", -1);
+                                    turnoutServer = splitLine[1];
+                                    turnoutName = splitLine[2];
                                 }
                             }
                         } catch (Exception e) {
@@ -904,6 +917,7 @@ public class ImportExportPreferences {
                             recent_turnout_address_list.add(addr);
                             recent_turnout_name_list.add(turnoutName);
                             recent_turnout_source_list.add(source);
+                            recent_turnout_server_list.add(turnoutServer);
 
                         }
                     }
