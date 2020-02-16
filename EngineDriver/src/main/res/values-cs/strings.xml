@@ -887,10 +887,9 @@
     <string name="editConsistLocoFacingLabel">Obložení</string>
     <string name="toastLocoAlreadySelected">Loco již vybrána</string>
     <string name="turnoutsRecentHeading">Nedávné Výhybky</string>
-    <string name="turnoutsSelectionTypeAddress">Adresa</string>
+    <string name="turnoutsSelectionTypeAddress">Adresa / Poslední</string>
     <string name="turnoutsSelectionTypeHeading">Volební účast Method Selection</string>
-    <string name="turnoutsSelectionTypeRecent">nedávný</string>
-    <string name="turnoutsSelectionTypeRoster">Seznam</string>
+    <string name="turnoutsSelectionTypeRoster">JMRI Definované</string>
     <string name="toastRecentTurnoutCleared">Volební účast odstraněn ze seznamu</string>
     <string name="toastRecentTurnoutsConfirmClear">onfirm, že chcete odstranit všechny Nejnovější výhybek opětovným stisknutím tlačítka ‚Smazat seznam‘.</string>
     <string name="toastTurnoutsRecentsHelp">Dlouhým stiskem lze odstranit položku.</string>

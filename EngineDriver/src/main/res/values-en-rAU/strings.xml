@@ -48,5 +48,6 @@
     <string name="turnoutsSelectionTypeHeading">Points Selection Method</string>
     <string name="toastRecentTurnoutCleared">Point removed from list</string>
     <string name="toastRecentTurnoutsConfirmClear">Confirm that you want remove all the Recent Points by pressing the \'Clear List\' button AGAIN.</string>
+    <string name="turnoutsSelectionTypeAddress">Adresa / Poslední</string>
 
 </resources>

@@ -803,9 +803,8 @@
     <string name="editConsistLocoFacingLabel">Orienté vers</string>
     <string name="toastLocoAlreadySelected">Loco Déjà sélectionné</string>
     <string name="turnoutsRecentHeading">Aiguille récents</string>
-    <string name="turnoutsSelectionTypeRecent">Récent</string>
-    <string name="turnoutsSelectionTypeRoster">Liste</string>
-    <string name="turnoutsSelectionTypeAddress">Adresse</string>
+    <string name="turnoutsSelectionTypeRoster">JMRI Défini</string>
+    <string name="turnoutsSelectionTypeAddress">Adresse / Le plus récent</string>
     <string name="turnoutsSelectionTypeHeading">Aiguillage Méthode de sélection</string>
     <string name="toastRecentTurnoutCleared">Le taux de participation supprimé de la liste</string>
     <string name="toastRecentTurnoutsConfirmClear">onfirm que vous voulez supprimer tous les Turnouts récents en appuyant sur le bouton « Effacer la liste » ENCORE.</string>

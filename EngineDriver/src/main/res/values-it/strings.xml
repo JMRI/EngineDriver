@@ -719,10 +719,9 @@
     <string name="consistLocoFacingRear">Posteriore</string>
     <string name="editConsistLocoFacingLabel">Di fronte</string>
     <string name="toastLocoAlreadySelected">Loco Già selezionato</string>
-    <string name="turnoutsSelectionTypeAddress">Indirizzo</string>
+    <string name="turnoutsSelectionTypeAddress">Indirizzo / Recenti</string>
     <string name="turnoutsSelectionTypeHeading">Affluenza Metodo di selezione</string>
-    <string name="turnoutsSelectionTypeRecent">Recente</string>
-    <string name="turnoutsSelectionTypeRoster">ruolino</string>
+    <string name="turnoutsSelectionTypeRoster">JMRI Definito</string>
     <string name="turnoutsRecentHeading">deviatoi recenti</string>
     <string name="toastRecentTurnoutCleared">Affluenza rimosso dalla lista</string>
     <string name="toastRecentTurnoutsConfirmClear">ONFERMA che si desidera rimuovere tutti i deviatoi recenti premendo il tasto \\\'Cancella elenco\\\' ANCORA.</string>
