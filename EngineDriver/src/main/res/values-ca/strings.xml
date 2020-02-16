@@ -785,10 +785,9 @@
     <string name="consistLocoFacingRear">Posterior</string>
     <string name="editConsistLocoFacingLabel">Enfront de</string>
     <string name="toastLocoAlreadySelected">Boig ja seleccionats</string>
-    <string name="turnoutsSelectionTypeAddress">adreça</string>
+    <string name="turnoutsSelectionTypeAddress">Direcció / Recents</string>
     <string name="turnoutsSelectionTypeHeading">Mètode de selecció de participació</string>
-    <string name="turnoutsSelectionTypeRoster">Llistat</string>
-    <string name="turnoutsSelectionTypeRecent">recent</string>
+    <string name="turnoutsSelectionTypeRoster">JMRI Definit</string>
     <string name="turnoutsRecentHeading">Desviaments recents</string>
     <string name="toastRecentTurnoutCleared">La participació elimina de la llista</string>
     <string name="toastRecentTurnoutsConfirmClear">ONFIRMAR que desitja eliminar tots els desviaments recents prement el botó \\\'Esborrar llista\\\' de nou.</string>
