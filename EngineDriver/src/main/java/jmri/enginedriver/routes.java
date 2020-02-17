@@ -55,6 +55,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+
 public class routes extends Activity implements OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -588,6 +590,12 @@ public class routes extends Activity implements OnGestureListener {
                 in = new Intent().setClass(this, preferences.class);
                 navigatingAway = true;
                 startActivityForResult(in, 0);   // refresh view on return
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.logviewer_menu:
+                Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
+                navigatingAway = true;
+                startActivity(logviewer);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.about_mnu:

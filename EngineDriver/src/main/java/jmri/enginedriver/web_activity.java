@@ -40,6 +40,8 @@ import android.webkit.WebViewClient;
 import android.webkit.WebSettings;
 import android.widget.Button;
 
+import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+
 public class web_activity extends Activity {
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -433,6 +435,12 @@ public class web_activity extends Activity {
                 break;
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                break;
+            case R.id.logviewer_menu:
+                Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
+                navigatingAway = true;
+                startActivity(logviewer);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.about_mnu:
                 in = new Intent().setClass(this, about_page.class);

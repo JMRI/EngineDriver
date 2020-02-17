@@ -70,6 +70,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+
 //import jmri.enginedriver.util.SwipeDetector;
 
 public class turnouts extends Activity implements OnGestureListener {
@@ -806,6 +808,12 @@ public class turnouts extends Activity implements OnGestureListener {
                 in = new Intent().setClass(this, about_page.class);
                 navigatingAway = true;
                 startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.logviewer_menu:
+                Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
+                navigatingAway = true;
+                startActivity(logviewer);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.EmerStop:
