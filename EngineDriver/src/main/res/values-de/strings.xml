@@ -766,7 +766,7 @@
     <string name="prefLimitSpeedButtonTitle">Show \'Limit Geschwindigkeit\' Taste</string>
     <string name="prefLimitSpeedButtonSummary">Option zu zeigen, eine Schaltfläche, um die maximale Geschwindigkeit einer Lok einschränkt.</string>
     <string name="prefLimitSpeedPercentTitle">\'Limit Geschwindigkeit\' auf \%</string>
-    <string name="prefLimitSpeedPercentSummary">Stellen Sie den \% der Drosselklappe, die die Geschwindigkeit auf diese beschränkt sind.</string>
+    <string name="prefLimitSpeedPercentSummary" tools:ignore="Typos">Stellen Sie den \% der Drosselklappe, die die Geschwindigkeit auf diese beschränkt sind.</string>
     <string name="limitSpeedButtonLabel">Grenzgeschwindigkeit</string>
     <string name="LocoSelectMethodRecentConsist">Aktuelle Consist</string>
     <string name="toastSelectConsistsConfirmClear">Bestätigen Sie, dass Sie alle Besteht das Letzte wollen entfernen, indem die ‚Liste löschen‘ Taste erneut drücken.</string>
@@ -789,10 +789,9 @@
     <string name="editConsistLocoFacingLabel">Zugewandt</string>
     <string name="toastLocoAlreadySelected">Loco bereits ausgewählt</string>
     <string name="turnoutsRecentHeading">Aktuelle Weichen</string>
-    <string name="turnoutsSelectionTypeAddress">Adresse</string>
+    <string name="turnoutsSelectionTypeAddress">Adresse / Aktuelle</string>
     <string name="turnoutsSelectionTypeHeading">Turnout Auswahlmethode</string>
-    <string name="turnoutsSelectionTypeRecent">Kürzlich</string>
-    <string name="turnoutsSelectionTypeRoster">Dienstplan</string>
+    <string name="turnoutsSelectionTypeRoster">JMRI Definierte</string>
     <string name="toastRecentTurnoutCleared">Weiche entfernt von der Liste</string>
     <string name="toastRecentTurnoutsConfirmClear">estätigen, dass Sie entfernen möchten alle die Neue Weichen durch die ‚Liste löschen‘ Taste erneut drücken.</string>
     <string name="toastTurnoutsRecentsHelp">Lange drücken, um einen Eintrag zu entfernen.</string>

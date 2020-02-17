@@ -724,10 +724,9 @@
     <string name="editConsistLocoFacingLabel">Voltado para</string>
     <string name="toastLocoAlreadySelected">Loco já seleccionados</string>
     <string name="turnoutsRecentHeading">Agulhas recentes</string>
-    <string name="turnoutsSelectionTypeAddress">Endereço</string>
+    <string name="turnoutsSelectionTypeAddress">Endereço / recentes</string>
     <string name="turnoutsSelectionTypeHeading">O comparecimento às urnas Método de Selecção</string>
-    <string name="turnoutsSelectionTypeRecent">Recente</string>
-    <string name="turnoutsSelectionTypeRoster">Lista</string>
+    <string name="turnoutsSelectionTypeRoster">JMRI Definiram</string>
     <string name="toastRecentTurnoutCleared">A afluência removido da lista</string>
     <string name="toastRecentTurnoutsConfirmClear">onfirm que deseja remover todas as Agulhas recentes, pressionando o botão \\\'Limpar Lista\\\' NOVAMENTE.</string>
     <string name="toastTurnoutsRecentsHelp">Longo pressionar para remover uma entrada.</string>

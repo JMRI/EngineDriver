@@ -968,9 +968,8 @@
     <string name="consistLocoFacingRear">Rear</string>
 
     <string name="turnoutsSelectionTypeHeading">Turnout Selection Method</string>
-    <string name="turnoutsSelectionTypeAddress">Address</string>
-    <string name="turnoutsSelectionTypeRoster">Roster</string>
-    <string name="turnoutsSelectionTypeRecent">Recent</string>
+    <string name="turnoutsSelectionTypeAddress">Address/Recent</string>
+    <string name="turnoutsSelectionTypeRoster">JMRI Defined</string>
     <string name="turnoutsRecentHeading">Recent Turnouts</string>
 
 </resources>

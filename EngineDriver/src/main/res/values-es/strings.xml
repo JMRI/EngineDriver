@@ -777,10 +777,9 @@
     <string name="editConsistLocoFacingLabel">Frente a</string>
     <string name="toastLocoAlreadySelected">Loco ya seleccionados</string>
     <string name="turnoutsRecentHeading">Desvíos recientes</string>
-    <string name="turnoutsSelectionTypeRecent">Reciente</string>
-    <string name="turnoutsSelectionTypeRoster">Lista</string>
+    <string name="turnoutsSelectionTypeRoster">JMRI Definido</string>
     <string name="turnoutsSelectionTypeHeading">Método de selección de participación</string>
-    <string name="turnoutsSelectionTypeAddress">Habla a</string>
+    <string name="turnoutsSelectionTypeAddress">Dirección / Recientes</string>
     <string name="toastRecentTurnoutCleared">La participación elimina de la lista</string>
     <string name="toastRecentTurnoutsConfirmClear">ONFIRMAR que desea eliminar todos los desvíos recientes pulsando el botón \\\'Borrar lista\\\' de nuevo.</string>
     <string name="toastTurnoutsRecentsHelp">Pulsación larga para eliminar una entrada.</string>
