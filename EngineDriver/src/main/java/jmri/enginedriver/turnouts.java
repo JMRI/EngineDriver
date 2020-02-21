@@ -1104,7 +1104,7 @@ public class turnouts extends Activity implements OnGestureListener {
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts_short) + "  " + mainapp.fastClockTime);
+            setTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts_short) + "  " + mainapp.getFastClockTime());
         else
             setTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts));
     }

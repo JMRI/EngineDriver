@@ -104,7 +104,7 @@ public class web_activity extends Activity {
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_web_short) + "  " + mainapp.fastClockTime);
+            setTitle(getApplicationContext().getResources().getString(R.string.app_name_web_short) + "  " + mainapp.getFastClockTime());
         else
             setTitle(getApplicationContext().getResources().getString(R.string.app_name_web));
     }

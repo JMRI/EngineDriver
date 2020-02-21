@@ -82,6 +82,8 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -142,10 +144,10 @@ public class threaded_application extends Application {
     ImageDownloader imageDownloader = new ImageDownloader();
     String power_state;
     public int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
-    public String fastClockTime = "";
+    private Long fastClockSeconds = 0L;
     public int androidVersion = 0;
     //minimum Android version for some features
-    public final int minWebSocketVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
+//    public final int minWebSocketVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
     public final int minImmersiveModeVersion = android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
     public final int minThemeVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
     public final int minScreenDimNewMethodVersion = Build.VERSION_CODES.KITKAT;
@@ -490,7 +492,7 @@ public class threaded_application extends Application {
                             host_ip = null;  //clear vars if failed to connect
                             port = 0;
                         }
-                        fastClockTime = "";
+                        fastClockSeconds = 0L;
                         break;
 
                     //Release one or all locos on the specified throttle.  addr is in msg (""==all), arg1 holds whichThrottle.
@@ -639,15 +641,15 @@ public class threaded_application extends Application {
                         withrottle_send("*+");
                         break;
 
-                    //Current Time clock display preference change
-                    case message_type.CLOCK_DISPLAY:
+                    //Current Time clock display preference change, sets mainapp.fastClockFormat
+                    case message_type.CLOCK_DISPLAY_CHANGED:
                         if (!doFinish) {
                             try {
                                 fastClockFormat = Integer.parseInt(prefs.getString("ClockDisplayTypePreference", "0"));
                             } catch (NumberFormatException e) {
                                 fastClockFormat = 0;
                             }
-                            alert_activities(message_type.TIME_CHANGED, fastClockTime);
+                            alert_activities(message_type.TIME_CHANGED, "");
                         }
                         break;
 
@@ -1003,27 +1005,16 @@ public class threaded_application extends Application {
                             break;
 
                         case 'F':  //FastClock message: PFT1581530521<;>2.0
+                            //extracts and sets shared fastClockSeconds
                             if (response_str.startsWith("PFT")) {
+                                fastClockSeconds = 0L;
                                 String[] ta = splitByString(response_str.substring(3), "<;>"); //get the number between "PFT" and the "<;>"
-                                Long unixSeconds = 0L;
-                                String f;
                                 try {
-                                    unixSeconds = Long.parseLong(ta[0]);
+                                    fastClockSeconds = Long.parseLong(ta[0]);
                                 } catch (NumberFormatException e) {
-                                    Log.w("Engine_Driver", "unable to convert fastClock time '" + ta[0] + "'");
+                                    Log.w("Engine_Driver", "unable to extract fastClockSeconds from '" + response_str + "'");
                                 }
-                                if (unixSeconds > 0) {
-                                    int tz_offset = TimeZone.getDefault().getRawOffset();
-                                    if (fastClockFormat == 2) {              // display in 24 hr format
-                                        f = "HH:mm";
-                                    } else {       // display in 12 hr format
-                                        f = "h:mm a";
-                                    }
-                                    SimpleDateFormat sdf = new SimpleDateFormat(f, Locale.getDefault());
-                                    Date date = new java.util.Date((unixSeconds * 1000L) - tz_offset);
-                                    fastClockTime = sdf.format(date);
-                                    alert_activities(message_type.TIME_CHANGED, fastClockTime);     //tell activities the time has changed
-                                }
+                                alert_activities(message_type.TIME_CHANGED, "");     //tell activities the time has changed
                             }
                             break;
 
@@ -2559,6 +2550,25 @@ public class threaded_application extends Application {
      */
     public String getCurrentTheme() {
         return prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+    }
+
+    /**
+     * Return fastClockSeconds as formatted time string
+     *
+     * @return a String representation of the time
+     */
+    public String getFastClockTime() {
+        String t = "";
+        String f = "";
+        int tz_offset = TimeZone.getDefault().getRawOffset();
+        if (fastClockFormat == 2) {
+            f = "HH:mm"; // display in 24 hr format
+        } else if (fastClockFormat == 1){
+            f = "h:mm a"; // display in 12 hr format
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(f, Locale.getDefault());
+        Date date = new java.util.Date((fastClockSeconds * 1000L) - tz_offset);
+        return sdf.format(date);
     }
 
     /**

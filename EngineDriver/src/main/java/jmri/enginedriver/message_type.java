@@ -48,7 +48,7 @@ interface message_type {
     int WIT_CON_RECONNECT = 25; // ta -> ed  WiT connection reestablished
     int INITIAL_WEBPAGE = 26;   // pref -> throt or web  user changed initial webpage
     int TIME_CHANGED = 28;      // ta -> activities  updates current time
-    int CLOCK_DISPLAY = 29;     // pref -> ta  clock display preference changed
+    int CLOCK_DISPLAY_CHANGED = 29;     // pref -> ta  clock display preference changed
     int ESTOP = 30;             // ta(sendeStopMsg) -> ta  estop requested
     int WITHROTTLE_QUIT = 31;   // ta(disconnect) -> ta send quit command to server
     int REQ_STEAL = 32;         // ta(message_action) pass addr, throttle -> throttle
