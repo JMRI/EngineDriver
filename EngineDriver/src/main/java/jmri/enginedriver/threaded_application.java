@@ -147,7 +147,6 @@ public class threaded_application extends Application {
     private Long fastClockSeconds = 0L;
     public int androidVersion = 0;
     //minimum Android version for some features
-//    public final int minWebSocketVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
     public final int minImmersiveModeVersion = android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
     public final int minThemeVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
     public final int minScreenDimNewMethodVersion = Build.VERSION_CODES.KITKAT;

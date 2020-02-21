@@ -147,9 +147,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         if (!mainapp.isPowerControlAllowed()) {
             enableDisablePreference("show_layout_power_button_preference", false);
         }
-//        if (mainapp.androidVersion < mainapp.minWebSocketVersion) {
-//            enableDisablePreference("ClockDisplayTypePreference", false);
-//        }
         if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
             enableDisablePreference("prefThrottleViewImmersiveMode", false);
         }
@@ -457,11 +454,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     @SuppressLint("ApplySharedPref")
     void forceRestartApp(int forcedRestartReason) {
         Log.d("Engine_Driver", "Preferences.forceRestartApp() ");
-
-//        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
-
-//        sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
-//        sharedPreferences.edit().putInt("prefForcedRestartReason", forcedRestartReason).commit();
 
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
