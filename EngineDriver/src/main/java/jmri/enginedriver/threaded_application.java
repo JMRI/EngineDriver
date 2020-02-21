@@ -2558,7 +2558,6 @@ public class threaded_application extends Application {
      * @return a String representation of the time
      */
     public String getFastClockTime() {
-        String t = "";
         String f = "";
         int tz_offset = TimeZone.getDefault().getRawOffset();
         if (fastClockFormat == 2) {
