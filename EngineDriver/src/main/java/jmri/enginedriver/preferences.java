@@ -18,10 +18,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,7 +39,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -59,7 +56,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -150,9 +146,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         addPreferencesFromResource(R.xml.preferences);
         if (!mainapp.isPowerControlAllowed()) {
             enableDisablePreference("show_layout_power_button_preference", false);
-        }
-        if (mainapp.androidVersion < mainapp.minWebSocketVersion) {
-            enableDisablePreference("ClockDisplayTypePreference", false);
         }
         if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
             enableDisablePreference("prefThrottleViewImmersiveMode", false);
@@ -346,7 +339,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     mainapp.alert_activities(message_type.INITIAL_WEBPAGE, "");
                     break;
                 case "ClockDisplayTypePreference":
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY);
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY_CHANGED);
                     break;
                 case "prefGamePadFeedbackVolume":
                     //limit check new value
@@ -461,11 +454,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     @SuppressLint("ApplySharedPref")
     void forceRestartApp(int forcedRestartReason) {
         Log.d("Engine_Driver", "Preferences.forceRestartApp() ");
-
-//        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
-
-//        sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
-//        sharedPreferences.edit().putInt("prefForcedRestartReason", forcedRestartReason).commit();
 
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 

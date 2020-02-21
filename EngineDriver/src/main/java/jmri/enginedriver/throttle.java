@@ -1385,7 +1385,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefLimitSpeedPercent = Integer.parseInt(prefs.getString("prefLimitSpeedPercent", getResources().getString(R.string.prefLimitSpeedPercentDefaultValue)));
         speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
 
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY);
+        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY_CHANGED);
 
         if (isCreate) {
             prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
@@ -2738,8 +2738,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         boolean isExternal = false;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             InputDevice idev = getDevice(event.getDeviceId());
-            if( idev != null && idev.toString() != null
-                    && idev.toString().contains("Location: external")) isExternal = true;
+            if( idev != null && idev.toString().contains("Location: external")) isExternal = true;
         }
 
         if (isExternal) { // if has come from the phone itself, don't try to process it here
@@ -3404,7 +3403,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            int pos[] = new int[2];
+            int[] pos = new int[2];
             v.getLocationOnScreen(pos);
 
             // if gesture in progress, we may need to skip button processing
@@ -4004,7 +4003,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private void setActivityTitle() {
 //        if (mainapp.displayClock)
         if (mainapp.fastClockFormat > 0)
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_short) + "  " + mainapp.fastClockTime);
+            setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_short) + "  " + mainapp.getFastClockTime());
         else
             setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
     }
