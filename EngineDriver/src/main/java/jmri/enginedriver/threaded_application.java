@@ -229,7 +229,8 @@ public class threaded_application extends Application {
     public boolean shownToastRecentLocos = false;
     public boolean shownToastRoster = false;
     public boolean shownToastConsistEdit = false;
-    public boolean shownToastRecentTurnouts = false;
+
+    public boolean shownRosterTurnouts = false;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -2579,6 +2580,7 @@ public class threaded_application extends Application {
      * @return true if the new orientation is ok for this activity.
      * false if "Auto Web on Landscape" is enabled and new orientation requires activity switch
      */
+    @SuppressLint("SourceLockedOrientationActivity")
     public boolean setActivityOrientation(Activity activity, Boolean webPref) {
         String to;
         to = prefs.getString("ThrottleOrientation",

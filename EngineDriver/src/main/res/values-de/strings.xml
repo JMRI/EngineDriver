@@ -791,7 +791,7 @@
     <string name="turnoutsRecentHeading">Aktuelle Weichen</string>
     <string name="turnoutsSelectionTypeAddress">Adresse / Aktuelle</string>
     <string name="turnoutsSelectionTypeHeading">Turnout Auswahlmethode</string>
-    <string name="turnoutsSelectionTypeRoster">JMRI Definierte</string>
+    <string name="turnoutsSelectionTypeRoster">%1$s Definierte</string>
     <string name="toastRecentTurnoutCleared">Weiche entfernt von der Liste</string>
     <string name="toastRecentTurnoutsConfirmClear">estätigen, dass Sie entfernen möchten alle die Neue Weichen durch die ‚Liste löschen‘ Taste erneut drücken.</string>
     <string name="toastTurnoutsRecentsHelp">Lange drücken, um einen Eintrag zu entfernen.</string>

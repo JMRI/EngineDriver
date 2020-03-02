@@ -777,7 +777,7 @@
     <string name="editConsistLocoFacingLabel">Frente a</string>
     <string name="toastLocoAlreadySelected">Loco ya seleccionados</string>
     <string name="turnoutsRecentHeading">Desvíos recientes</string>
-    <string name="turnoutsSelectionTypeRoster">JMRI Definido</string>
+    <string name="turnoutsSelectionTypeRoster">%1$s Definido</string>
     <string name="turnoutsSelectionTypeHeading">Método de selección de participación</string>
     <string name="turnoutsSelectionTypeAddress">Dirección / Recientes</string>
     <string name="toastRecentTurnoutCleared">La participación elimina de la lista</string>
