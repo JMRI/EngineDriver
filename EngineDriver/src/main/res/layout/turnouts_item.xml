@@ -29,10 +29,31 @@
             android:text="System name" />
     </RelativeLayout>
     <Button
+        android:id="@+id/turnout_throw"
+        style="?attr/ed_list_button_style"
+        android:layout_width="18sp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25"
+        android:layout_gravity="center_vertical"
+        android:textSize="18sp"
+        android:text="@string/throw_button" />
+    <Button
+        android:id="@+id/turnout_close"
+        style="?attr/ed_list_button_style"
+        android:layout_width="18sp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25"
+        android:layout_gravity="center_vertical"
+        android:textSize="18sp"
+        android:text="@string/close_button" />
+
+    <Button
         android:id="@+id/to_current_state_desc"
         style="?attr/ed_list_button_style"
         android:layout_width="0dp"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.25"
-        android:text="State" />
+        android:text="State"
+        android:textSize="18sp"
+        android:visibility="gone" />
 </LinearLayout>

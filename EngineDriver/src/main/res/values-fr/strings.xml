@@ -803,7 +803,7 @@
     <string name="editConsistLocoFacingLabel">Orienté vers</string>
     <string name="toastLocoAlreadySelected">Loco Déjà sélectionné</string>
     <string name="turnoutsRecentHeading">Aiguille récents</string>
-    <string name="turnoutsSelectionTypeRoster">JMRI Défini</string>
+    <string name="turnoutsSelectionTypeRoster">%1$s Défini</string>
     <string name="turnoutsSelectionTypeAddress">Adresse / Le plus récent</string>
     <string name="turnoutsSelectionTypeHeading">Aiguillage Méthode de sélection</string>
     <string name="toastRecentTurnoutCleared">Le taux de participation supprimé de la liste</string>

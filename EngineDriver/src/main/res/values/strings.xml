@@ -969,7 +969,7 @@
 
     <string name="turnoutsSelectionTypeHeading">Turnout Selection Method</string>
     <string name="turnoutsSelectionTypeAddress">Address/Recent</string>
-    <string name="turnoutsSelectionTypeRoster">JMRI Defined</string>
+    <string name="turnoutsSelectionTypeRoster">%1$s Defined</string>
     <string name="turnoutsRecentHeading">Recent Turnouts</string>
 
 </resources>

@@ -2848,6 +2848,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         performButtonAction(9, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
                         return (true); // stop processing this key
                     }
+                    if (whichGamePadIsEventFrom < gamePadDeviceIdsTested.length) {// checked all the code and didn't find it
+                        return (true); // ignore it
+                    }
                 } else { // event is from a gamepad that has not finished testing. Ignore it
                     return (true); // stop processing this key
                 }

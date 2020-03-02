@@ -41,21 +41,19 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
+//import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
+//import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -71,8 +69,6 @@ import java.util.List;
 import java.util.Map;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
-
-//import jmri.enginedriver.util.SwipeDetector;
 
 public class turnouts extends Activity implements OnGestureListener {
 
@@ -94,7 +90,7 @@ public class turnouts extends Activity implements OnGestureListener {
     private Menu TuMenu;
     private boolean navigatingAway = false;     // flag for onPause: set to true when another activity is selected, false if going into background 
 
-    private static final int WHICH_SOURCE_UNKNOWN = 0;
+//    private static final int WHICH_SOURCE_UNKNOWN = 0;
     private static final int WHICH_SOURCE_ADDRESS = 1;
     private static final int WHICH_SOURCE_ROSTER = 2;
     private static final int WHICH_SOURCE_RECENT = 2;
@@ -109,7 +105,12 @@ public class turnouts extends Activity implements OnGestureListener {
     private static final String TURNOUT_THROW = "T";
     private static final String TURNOUT_CLOSE = "C";
 
+    private static final String TURNOUT_STATE_UNKNOWN_LABEL = "   ???";
 
+    ListView turnouts_lv;
+
+    TextView tvSelectionHeading;
+    LinearLayout llSelectionGroup;
     LinearLayout llAddress;
     LinearLayout llRoster;
     LinearLayout llRecent;
@@ -119,7 +120,6 @@ public class turnouts extends Activity implements OnGestureListener {
     ArrayList<HashMap<String, String>> recentTurnoutsList;
     private RecentTurnoutsSimpleAdapter recentTurnoutsListAdapter;
     ListView recentTurnoutsListView;
-//    SwipeDetector recentsSwipeDetector;
 
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
     boolean removingTurnoutOrForceReload = false;
@@ -151,21 +151,18 @@ public class turnouts extends Activity implements OnGestureListener {
                     boolean hasUserName = (username != null && !username.equals(""));
                     if (hasUserName || !hideIfNoUserName) {  //skip turnouts without usernames if pref is set
                         //get values from global array
-                        String systemname = mainapp.to_system_names[pos];
-                        String currentstate = mainapp.to_states[pos];
-                        String currentstatedesc = mainapp.to_state_names.get(currentstate);
-                        if (currentstatedesc == null) {
-                            currentstatedesc = "   ???";
-                        }
+                        String systemName = mainapp.to_system_names[pos];
+                        String currentState = mainapp.to_states[pos];
+                        String currentStateDesc = getCurrentStateDesc(currentState);
 
                         //put values into temp hashmap
                         HashMap<String, String> hm = new HashMap<>();
                         if (hasUserName)
                             hm.put("to_user_name", username);
                         else
-                            hm.put("to_user_name", systemname);
-                        hm.put("to_system_name", systemname);
-                        hm.put("to_current_state_desc", currentstatedesc);
+                            hm.put("to_user_name", systemName);
+                        hm.put("to_system_name", systemName);
+                        hm.put("to_current_state_desc", currentStateDesc);
                         turnoutsFullList.add(hm);
 
                         //if location is new, add to list
@@ -197,6 +194,50 @@ public class turnouts extends Activity implements OnGestureListener {
         filterTurnoutView();
     }
 
+
+    public void refreshTurnoutViewStates() {
+        if (mainapp.isTurnoutControlAllowed()) {
+            if (mainapp.to_user_names != null) { //none defined
+                int pos = 0;
+                boolean hideIfNoUserName = prefs.getBoolean("HideIfNoUserNamePreference", getResources().getBoolean(R.bool.prefHideIfNoUserNameDefaultValue));
+                for (String username : mainapp.to_user_names) {
+                    boolean hasUserName = (username != null && !username.equals(""));
+                    if (hasUserName || !hideIfNoUserName) {  //skip turnouts without usernames if pref is set
+                        //get values from global array
+//                        String systemName = mainapp.to_system_names[pos];
+                        String currentState = mainapp.to_states[pos];
+                        String currentStateDesc = getCurrentStateDesc(currentState);
+
+                        boolean found = false;
+                        for (int i = 0; i < turnouts_lv.getCount() && !found; i++) {
+                            ViewGroup vg = (ViewGroup) turnouts_lv.getChildAt(i);  //start with the list item the button belongs to
+                            if (vg!=null) {
+                                ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemname and username
+//                                TextView source = (TextView) rl.getChildAt(2); // get source from 3nd (hidden) box
+                                TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
+                                TextView unv = (TextView) rl.getChildAt(0); // get username text from 1st box
+//                                String rowSystemName = snv.getText().toString();
+                                String rowUserName = unv.getText().toString();
+//                                int src = WHICH_SOURCE_ROSTER;
+
+                                if (username.equals(rowUserName)) {
+                                    Button b = vg.findViewById(R.id.to_current_state_desc);
+                                    Button bt = vg.findViewById(R.id.turnout_throw);
+                                    Button bc = vg.findViewById(R.id.turnout_close);
+
+                                    showHideTurnoutButtons(currentStateDesc, b, bt, bc);
+                                    found = true;
+                                }
+                            }
+                        }
+                    }
+                    pos++;
+                }
+            }
+        }
+//        updateTurnoutEntry();
+    }
+
     @SuppressWarnings("unchecked")
     private void filterTurnoutView() {
         final String loc = location + prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
@@ -214,6 +255,7 @@ public class turnouts extends Activity implements OnGestureListener {
         turnouts_list_adapter.notifyDataSetChanged();  //update the list
     }
 
+    //set the button states for the turnout address direct entry
     private int updateTurnoutEntry() {
         Button butTog = findViewById(R.id.turnout_toggle);
         Button butClose = findViewById(R.id.turnout_close);
@@ -275,6 +317,7 @@ public class turnouts extends Activity implements OnGestureListener {
                         //refresh turnouts if any have changed or if turnout list has changed
                         if ("PTA".equals(com1) || "PTL".equals(com1)) {
                             refresh_turnout_view();
+                            refreshTurnoutViewStates();
                             refreshRecentTurnoutView();
                         }
                         //update power icon
@@ -288,6 +331,7 @@ public class turnouts extends Activity implements OnGestureListener {
                     break;
                 case message_type.WIT_CON_RECONNECT:
                     refresh_turnout_view();
+                    refreshTurnoutViewStates();
                     refreshRecentTurnoutView();
                     break;
                 case message_type.TIME_CHANGED:
@@ -366,6 +410,11 @@ public class turnouts extends Activity implements OnGestureListener {
 
     //handle click for each turnout's state toggle button
     public class turnout_state_button_listener implements View.OnClickListener {
+        String _buttonType;
+
+        turnout_state_button_listener(String buttonType) {
+            _buttonType = buttonType;
+        }
 
         public void onClick(View v) {
             ViewGroup vg = (ViewGroup) v.getParent();  //start with the list item the button belongs to
@@ -375,7 +424,7 @@ public class turnouts extends Activity implements OnGestureListener {
             turnoutSystemName = snv.getText().toString();
             turnoutUserName = unv.getText().toString();
             turnoutSource = WHICH_SOURCE_ROSTER;
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, '2' + turnoutSystemName);    // 2=toggle
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, _buttonType + turnoutSystemName);    // C=Close T=Throw 2=toggle
 
             saveRecentTurnoutsList(true);
             showHideRecentsList();
@@ -440,8 +489,10 @@ public class turnouts extends Activity implements OnGestureListener {
 
         myGesture = new GestureDetector(this);
 
+        // -------------------------------------------------------------------
+
         turnoutsFullList = new ArrayList<>();
-        //Set up a list adapter to allow adding the list of recent connections to the UI.
+        //Set up a list adapter to allow adding the list of defined turnouts to the UI.
         turnouts_list = new ArrayList<>();
         turnouts_list_adapter = new SimpleAdapter(this, turnouts_list, R.layout.turnouts_item,
                 new String[]{"to_user_name", "to_system_name", "to_current_state_desc"},
@@ -452,13 +503,21 @@ public class turnouts extends Activity implements OnGestureListener {
             public View getView(int position, View convertView, ViewGroup parent) {
                 View row = super.getView(position, convertView, parent);
                 if (row != null) {
+                    Button bt = row.findViewById(R.id.turnout_throw);
+                    bt.setOnClickListener(new turnout_state_button_listener(TURNOUT_THROW));
+
+                    Button bc = row.findViewById(R.id.turnout_close);
+                    bc.setOnClickListener(new turnout_state_button_listener(TURNOUT_CLOSE));
+
                     Button b = row.findViewById(R.id.to_current_state_desc);
-                    b.setOnClickListener(new turnout_state_button_listener());
+                    b.setOnClickListener(new turnout_state_button_listener(TURNOUT_TOGGLE));
+
+                    setTurnoutRowButtonState(row, b, bt, bc);
                 }
                 return row;
             }
         };
-        ListView turnouts_lv = findViewById(R.id.turnouts_list);
+        turnouts_lv = findViewById(R.id.turnouts_list);
         turnouts_lv.setAdapter(turnouts_list_adapter);
 
         OnTouchListener gestureListener = new ListView.OnTouchListener() {
@@ -467,6 +526,18 @@ public class turnouts extends Activity implements OnGestureListener {
             }
         };
         turnouts_lv.setOnTouchListener(gestureListener);
+
+        turnouts_lv.setOnScrollListener(new AbsListView.OnScrollListener(){
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            }
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if(scrollState == 0) {  // scrolling has stopped
+                    refreshTurnoutViewStates();
+                }
+            }
+        });
+
+        // -------------------------------------------------------------------
 
         EditText trn = findViewById(R.id.turnout_entry);
         trn.addTextChangedListener(new TextWatcher() {
@@ -518,6 +589,7 @@ public class turnouts extends Activity implements OnGestureListener {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 location = parent.getSelectedItem().toString();
                 filterTurnoutView();
+                refreshTurnoutViewStates();
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -525,9 +597,13 @@ public class turnouts extends Activity implements OnGestureListener {
         });
 
 
+        llSelectionGroup = findViewById(R.id.select_turnout_method_radio_group);
+        tvSelectionHeading = findViewById(R.id.turnouts_selection_type_heading);
         llAddress = findViewById(R.id.enter_turnout_address_group);
         llRoster = findViewById(R.id.turnouts_from_roster_group);
         llRecent = findViewById(R.id.turnouts_recent_group);
+
+        // -------------------------------------------------------------------
 
         // Set up a list adapter to allow adding the list of recent consists to the UI.
         recentTurnoutsList = new ArrayList<>();
@@ -544,7 +620,6 @@ public class turnouts extends Activity implements OnGestureListener {
                 if (row != null) {
 //                    View v = row.findViewById(R.id.to_recent_item);
 //                    v.setOnLongClickListener(new onRecentTurnoutsListItemLongClick());
-
 
                     Button b = row.findViewById(R.id.turnout_recent_throw);
                     b.setOnClickListener(new recentTurnoutStateButtonListener(TURNOUT_THROW));
@@ -573,9 +648,12 @@ public class turnouts extends Activity implements OnGestureListener {
         b = findViewById(R.id.clear_turnouts_list_button);
         b.setOnClickListener(new clearRecentTurnoutsListButton());
 
+        // -------------------------------------------------------------------
+
         // setup the method radio buttons
         rbAddress = findViewById(R.id.select_turnout_method_address_button);
         rbRoster = findViewById(R.id.select_turnout_method_roster_button);
+        rbRoster.setText(getApplicationContext().getResources().getString(R.string.turnoutsSelectionTypeRoster,mainapp.getServerType()));
 
         prefSelectTurnoutsMethod = prefs.getString("prefSelectTurnoutsMethod", WHICH_METHOD_FIRST);
         // if the recent lists are empty make sure the radio button will be pointing to something valid
@@ -603,6 +681,7 @@ public class turnouts extends Activity implements OnGestureListener {
 
         //update turnout list
         refresh_turnout_view();
+        refreshTurnoutViewStates();
 
         mainapp.checkAndSetOrientationInfo();
 
@@ -833,6 +912,7 @@ public class turnouts extends Activity implements OnGestureListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //since we always do the same action no need to distinguish between requests
         refresh_turnout_view();
+        refreshTurnoutViewStates();
         refreshRecentTurnoutView();
     }
 
@@ -886,6 +966,18 @@ public class turnouts extends Activity implements OnGestureListener {
 
     @SuppressLint("ApplySharedPref")
     private void showMethod(String whichMethod) {
+        if (mainapp.to_user_names == null) { // no defined Turnouts  Always force it to the address
+            tvSelectionHeading.setVisibility(View.GONE);
+            llSelectionGroup.setVisibility(View.GONE);
+            whichMethod = WHICH_METHOD_ADDRESS;
+        } else{
+            tvSelectionHeading.setVisibility(View.VISIBLE);
+            llSelectionGroup.setVisibility(View.VISIBLE);
+            if (!mainapp.shownRosterTurnouts) { //this server has turnouts, and this is the first time in the turnouts view for this session
+                mainapp.shownRosterTurnouts = true;
+                whichMethod = WHICH_METHOD_ROSTER;
+            }
+        }
         switch (whichMethod) {
             default:
             case WHICH_METHOD_ADDRESS: {
@@ -952,35 +1044,34 @@ public class turnouts extends Activity implements OnGestureListener {
                 TextView name = view.findViewById(R.id.to_recent_source);
                 name.setText(Html.fromHtml(str));
                 int i = Integer.parseInt(str);
-                if (i==WHICH_SOURCE_ROSTER) {
-                    Button b = view.findViewById(R.id.turnout_recent_throw);
-                    b.setVisibility(LinearLayout.GONE);
-                    b = view.findViewById(R.id.turnout_recent_close);
-                    b.setVisibility(LinearLayout.GONE);
 
-                    b = view.findViewById(R.id.turnout_recent_toggle);
+                Button b = view.findViewById(R.id.turnout_recent_toggle);
+                if (i!=WHICH_SOURCE_ROSTER) {
+                    b.setVisibility(LinearLayout.GONE);
+                } else {
+                    Button bt = view.findViewById(R.id.turnout_recent_throw);
+//                    bt.setVisibility(LinearLayout.GONE);
+                    Button bc = view.findViewById(R.id.turnout_recent_close);
+//                    bc.setVisibility(LinearLayout.GONE);
 
                     String currentState;
-                    String currentStateDesc = "???";
+                    String currentStateDesc = TURNOUT_STATE_UNKNOWN_LABEL;
                     if (mainapp.to_user_names!=null) {
                         for (int pos = 0; pos < mainapp.to_user_names.length; pos++) {
-                            String systemname = mainapp.to_system_names[pos];
-                            if (systemname.equals(toAddress)) {
+                            String systemName = mainapp.to_system_names[pos];
+                            if (systemName.equals(toAddress)) {
                                 currentState = mainapp.to_states[pos];
-                                currentStateDesc = mainapp.to_state_names.get(currentState);
-                                if (currentStateDesc == null) {
-                                    currentStateDesc = "   ???";
-                                }
+                                currentStateDesc = getCurrentStateDesc(currentState);
                             }
                         }
                     }
                     b.setText(currentStateDesc);
+
+                    showHideTurnoutButtons(currentStateDesc, b, bt, bc);
                 }
             }
-
             return view;
         }
-
     }
 
     //write the recent turnouts to a file
@@ -1051,17 +1142,17 @@ public class turnouts extends Activity implements OnGestureListener {
                         //get values from global array
                         String systemName = mainapp.to_system_names[pos];
                         String currentState = mainapp.to_states[pos];
-                        String currentStateDesc = mainapp.to_state_names.get(currentState);
-                        if (currentStateDesc == null) {
-                            currentStateDesc = "   ???";
-                        }
+                        String currentStateDesc = getCurrentStateDesc(currentState);
                         for (int i = 0; i < importExportPreferences.recent_turnout_address_list.size(); i++) {
                             if (systemName.equals(importExportPreferences.recent_turnout_address_list.get(i))) {
 
                                 View view = getViewByPosition(i, recentTurnoutsListView);
                                 if (view!=null) {
                                     Button b = view.findViewById(R.id.turnout_recent_toggle);
-                                    b.setText(currentStateDesc);
+                                    Button bt = view.findViewById(R.id.turnout_recent_throw);
+                                    Button bc = view.findViewById(R.id.turnout_recent_close);
+
+                                    showHideTurnoutButtons(currentStateDesc, b, bt, bc);
                                 }
                             }
                         }
@@ -1109,4 +1200,42 @@ public class turnouts extends Activity implements OnGestureListener {
             setTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts));
     }
 
+    private String getCurrentStateDesc(String currentState) {
+        String currentStateDesc = mainapp.to_state_names.get(currentState);
+        if (currentStateDesc == null) {
+            currentStateDesc = TURNOUT_STATE_UNKNOWN_LABEL;
+        }
+        return currentStateDesc;
+    }
+
+    private void setTurnoutRowButtonState(View vRow, Button bToggle, Button bThrow, Button bClose) {
+        TextView snv = vRow.findViewById(R.id.to_system_name);
+        String systemName = snv.getText().toString();
+//        TextView unv = vRow.findViewById(R.id.to_user_name);
+//        String userName = unv.getText().toString();
+        String currentStateDesc = TURNOUT_STATE_UNKNOWN_LABEL;
+        boolean found = false;
+        for (int i = 0; i < mainapp.to_system_names.length && !found; i++) {
+            if (systemName.equals(mainapp.to_system_names[i])) {
+                currentStateDesc = getCurrentStateDesc(mainapp.to_states[i]);
+                found = true;
+            }
+        }
+        showHideTurnoutButtons(currentStateDesc, bToggle, bThrow, bClose);
+    }
+
+    private void showHideTurnoutButtons(String currentStateDesc, Button bToggle, Button bThrow, Button bClose) {
+        if ((currentStateDesc.equals(TURNOUT_STATE_UNKNOWN_LABEL)) ||
+                (currentStateDesc.equals(getApplicationContext().getResources().getString(R.string.toggle_button))) ||
+                (mainapp.getServerType().equals("Digitrax"))) {  //Digitrax LnWi does not support toggle
+            bToggle.setVisibility(View.GONE);
+            bThrow.setVisibility(View.VISIBLE);
+            bClose.setVisibility(View.VISIBLE);
+        } else {
+            bToggle.setVisibility(View.VISIBLE);
+            bThrow.setVisibility(View.GONE);
+            bClose.setVisibility(View.GONE);
+        }
+        bToggle.setText(currentStateDesc);
+    }
 }
