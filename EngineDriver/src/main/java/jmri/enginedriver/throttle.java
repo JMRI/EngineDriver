@@ -767,7 +767,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             case KIDS_TIMER_ENDED:
                 speedUpdateAndNotify(0);
                 kidsTimerRunning = KIDS_TIMER_ENDED;
-                kidsTimer.cancel();
+                if (kidsTimer!=null) kidsTimer.cancel();
                 for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     enable_disable_buttons(throttleIndex, true);
                     bSels[throttleIndex].setEnabled(false);
