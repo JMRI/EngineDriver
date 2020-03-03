@@ -394,14 +394,16 @@ public class turnouts extends Activity implements OnGestureListener {
                 if (importExportPreferences.recent_turnout_address_list.size()>0) {
                     if (!turnoutSystemName.equals(importExportPreferences.recent_turnout_address_list.get(0))) {
                         reloadRecents = true;
-                        loadRecentTurnoutsList();
+//                        loadRecentTurnoutsList();
                     }
+                } else {
+                    reloadRecents = true;
                 }
 
                 saveRecentTurnoutsList(true);
 
                 if (reloadRecents) {
-//                    loadRecentTurnoutsList();
+                    loadRecentTurnoutsList();
                     showHideRecentsList();
                 }
             }
