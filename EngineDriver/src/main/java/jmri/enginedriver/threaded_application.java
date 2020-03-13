@@ -94,6 +94,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
@@ -926,6 +928,15 @@ public class threaded_application extends Application {
                         }
                     } else if (response_str.charAt(1) == 'M') { //alert message sent from server to throttle
                         show_toast_message(response_str.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
+                        //see if it is a turnout fail
+                        if ((response_str.contains("Turnout")) || (response_str.contains("create not allowed"))) {
+                            Pattern pattern = Pattern.compile(".*\\\'(.*)\\\'.*");
+                            Matcher matcher = pattern.matcher(response_str);
+                            if(matcher.find()) {
+                                sendMsg(turnouts_msg_handler, message_type.WIT_TURNOUT_NOT_DEFINED, matcher.group(1));
+                            }
+                        }
+
                     } else if (response_str.charAt(1) == 'm') { //info message sent from server to throttle
                         show_toast_message(response_str.substring(2), Toast.LENGTH_SHORT); // copy to UI as toast message
                     }

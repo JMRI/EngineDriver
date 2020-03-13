@@ -3959,6 +3959,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         @Override
         public void onStopTrackingTouch(SeekBar sb) {
             mAutoIncrement = false;
+            kidsTimerActions(KIDS_TIMER_STARTED,0);
         }
     }
 

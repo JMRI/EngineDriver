@@ -98,8 +98,10 @@ public class turnouts extends Activity implements OnGestureListener {
     private static final String WHICH_METHOD_FIRST = "0"; // first time the app has been used
     private static final String WHICH_METHOD_ADDRESS = "1";
     private static final String WHICH_METHOD_ROSTER = "2";
-    private static final String WHICH_METHOD_RECENT = "3";
-    String  prefSelectTurnoutsMethod = "0";
+//    private static final String WHICH_METHOD_RECENT = "3";
+    String prefSelectTurnoutsMethod = "0";
+    String currentSelectTurnoutMethod = "0";
+    String lastTurnoutUsedName = "XYZZY";
 
     private static final String TURNOUT_TOGGLE = "2";
     private static final String TURNOUT_THROW = "T";
@@ -308,9 +310,10 @@ public class turnouts extends Activity implements OnGestureListener {
     class turnouts_handler extends Handler {
 
         public void handleMessage(Message msg) {
+            String response_str ="";
             switch (msg.what) {
                 case message_type.RESPONSE:
-                    String response_str = msg.obj.toString();
+                    response_str = msg.obj.toString();
 
                     if (response_str.length() >= 3) {
                         String com1 = response_str.substring(0, 3);
@@ -340,6 +343,9 @@ public class turnouts extends Activity implements OnGestureListener {
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     disconnect();
+                    break;
+                case message_type.WIT_TURNOUT_NOT_DEFINED:
+                    removeTurnoutFromRecentList(msg.obj.toString());
                     break;
             }
         }
@@ -659,7 +665,7 @@ public class turnouts extends Activity implements OnGestureListener {
 
         prefSelectTurnoutsMethod = prefs.getString("prefSelectTurnoutsMethod", WHICH_METHOD_FIRST);
         // if the recent lists are empty make sure the radio button will be pointing to something valid
-        if ( ((importExportPreferences.recent_turnout_address_list.size()==0) && (prefSelectTurnoutsMethod.equals(WHICH_METHOD_RECENT))) ) {
+        if ( ((importExportPreferences.recent_turnout_address_list.size()==0) && (prefSelectTurnoutsMethod.equals(WHICH_METHOD_ADDRESS))) ) {
             prefSelectTurnoutsMethod = WHICH_METHOD_ADDRESS;
         }
 
@@ -980,6 +986,7 @@ public class turnouts extends Activity implements OnGestureListener {
                 whichMethod = WHICH_METHOD_ROSTER;
             }
         }
+        currentSelectTurnoutMethod = whichMethod;
         switch (whichMethod) {
             default:
             case WHICH_METHOD_ADDRESS: {
@@ -1076,6 +1083,26 @@ public class turnouts extends Activity implements OnGestureListener {
         }
     }
 
+    void removeTurnoutFromRecentList(String turnoutToRemoveSystemName) {
+        if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
+            return;
+
+        for (int i = 0; i < importExportPreferences.recent_turnout_address_list.size(); i++) {
+//                String sName = importExportPreferences.recent_turnout_address_list.get(i);
+            if (turnoutToRemoveSystemName.equals(importExportPreferences.recent_turnout_address_list.get(i))) {
+                importExportPreferences.recent_turnout_address_list.remove(i);
+                importExportPreferences.recent_turnout_name_list.remove(i);
+                importExportPreferences.recent_turnout_source_list.remove(i);
+                importExportPreferences.recent_turnout_server_list.remove(i);
+            }
+        }
+        removingTurnoutOrForceReload=true;
+        saveRecentTurnoutsList(true);
+        loadRecentTurnoutsList();
+        showHideRecentsList();
+    }
+
+
     //write the recent turnouts to a file
     void saveRecentTurnoutsList(boolean bUpdateList) {
 
@@ -1085,6 +1112,11 @@ public class turnouts extends Activity implements OnGestureListener {
 
 
         if (!removingTurnoutOrForceReload) {
+            if (lastTurnoutUsedName.equals(turnoutSystemName)) {
+                return;
+            }
+            lastTurnoutUsedName = turnoutSystemName;
+
             // check if it already in the list and remove it
             for (int i = 0; i < importExportPreferences.recent_turnout_address_list.size(); i++) {
 //                String sName = importExportPreferences.recent_turnout_address_list.get(i);
@@ -1181,16 +1213,15 @@ public class turnouts extends Activity implements OnGestureListener {
 
 
     void showHideRecentsList() {
-        if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-            // if the list is empty, hide the radio button
-            if (importExportPreferences.recent_turnout_address_list.size()==0) {
-                llRecent.setVisibility(View.GONE);
-            } else {
-                llRecent.setVisibility(View.VISIBLE);
+        int visible = View.GONE;
+        if (currentSelectTurnoutMethod.equals(WHICH_METHOD_ADDRESS)) { // not set to address/recent
+            if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) { // has an SD Card
+                if (importExportPreferences.recent_turnout_address_list.size() > 0) { // if the list is empty
+                    visible=View.VISIBLE;  // hide the list
+                }
             }
-        } else {
-            llRecent.setVisibility(View.GONE);
         }
+        llRecent.setVisibility(visible);
     }
 
 
