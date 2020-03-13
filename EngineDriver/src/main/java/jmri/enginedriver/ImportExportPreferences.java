@@ -42,6 +42,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
+import static java.lang.Math.min;
+
 public class ImportExportPreferences {
 
     boolean currentlyImporting = false;
@@ -850,17 +852,22 @@ public class ImportExportPreferences {
         PrintWriter list_output;
         String smrl = sharedPreferences.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
         try {
-            int numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl);
+            int numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl) * 2;
+            numberOfRecentTurnoutsToWrite = min(numberOfRecentTurnoutsToWrite, recent_turnout_address_list.size());
             list_output = new PrintWriter(engine_list_file);
             if (numberOfRecentTurnoutsToWrite > 0) {
-                for (int i = 0; i < recent_turnout_address_list.size() && numberOfRecentTurnoutsToWrite > 0; i++) {
+//                for (int i = 0; i < recent_turnout_address_list.size() && numberOfRecentTurnoutsToWrite > 0; i++) {
+                for (int i = 0; i < numberOfRecentTurnoutsToWrite; i++) {
                     list_output.format("%s:%d<~>%s<~>%s\n",
                             recent_turnout_address_list.get(i),
                             recent_turnout_source_list.get(i),
                             recent_turnout_server_list.get(i),
                             recent_turnout_name_list.get(i));
-                    numberOfRecentTurnoutsToWrite--;
+//                    numberOfRecentTurnoutsToWrite--;
                 }
+            } else {
+                deleteRecentTurnoutsListFile();
+                return;
             }
             list_output.flush();
             list_output.close();
@@ -876,7 +883,24 @@ public class ImportExportPreferences {
         }
     }
 
-    void getRecentTurnoutsListFromFile() {
+    void deleteRecentTurnoutsListFile() {
+        Log.d("Engine_Driver", "deleteRecentTurnoutsListFile: ImportExportPreferences: delete file");
+
+        File sdcard_path = Environment.getExternalStorageDirectory();
+        File engine_list_file = new File(sdcard_path,
+                "engine_driver/recent_turnouts_list.txt");
+        if (engine_list_file.exists()) {
+            try {
+                engine_list_file.delete();
+            } catch (Exception except) {
+                Log.e("Engine_Driver",
+                        "deleteRecentTurnoutsListFile: ImportExportPreferences: Error deleting Recent Turnouts file: "
+                                + except.getMessage());
+            }
+        }
+    }
+
+        void getRecentTurnoutsListFromFile() {
         Log.d("Engine_Driver", "getRecentTurnoutsListFromFile: ImportExportPreferences: Loading recent turnouts list from file");
         try {
             // Populate the List with the recent engines saved in a file. This

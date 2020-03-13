@@ -64,4 +64,5 @@ interface message_type {
     int IMPORT_SERVER_MANUAL_SUCCESS = 42;    //
     int IMPORT_SERVER_MANUAL_FAIL = 43;    //
     int IMPORT_SERVER_AUTO_AVAILABLE = 44;    //
+    int WIT_TURNOUT_NOT_DEFINED = 45;    //
 }
