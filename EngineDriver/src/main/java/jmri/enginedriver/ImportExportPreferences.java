@@ -50,6 +50,10 @@ public class ImportExportPreferences {
 
     //private String exportedPreferencesFileName =  "exported_preferences.ed";
 
+    private static final String RECENT_TURNOUTS_FILENAME = "engine_driver/recent_turnouts_list.txt";
+    private static final String RECENT_CONSISTS_FILENAME = "engine_driver/recent_consist_list.txt";
+    private static final String RECENT_ENGINES_FILENAME = "engine_driver/recent_engine_list.txt";
+
     ArrayList<Integer> recent_loco_address_list;
     ArrayList<Integer> recent_loco_address_size_list; // Look at address_type.java
     ArrayList<String> recent_loco_name_list;
@@ -368,7 +372,7 @@ public class ImportExportPreferences {
             // Populate the List with the recent engines saved in a file. This
             // will be stored in /sdcard/engine_driver/recent_engine_list.txt
             File sdcard_path = Environment.getExternalStorageDirectory();
-            File engine_list_file = new File(sdcard_path + "/engine_driver/recent_engine_list.txt");
+            File engine_list_file = new File(sdcard_path + "/" + RECENT_ENGINES_FILENAME);
             if (engine_list_file.exists()) {
                 BufferedReader list_reader = new BufferedReader(
                         new FileReader(engine_list_file));
@@ -426,8 +430,7 @@ public class ImportExportPreferences {
 
         // write it out from the saved preferences to the file
         File sdcard_path = Environment.getExternalStorageDirectory();
-        File engine_list_file = new File(sdcard_path,
-                "engine_driver/recent_engine_list.txt");
+        File engine_list_file = new File(sdcard_path, RECENT_ENGINES_FILENAME);
 
         PrintWriter list_output;
         String smrl = sharedPreferences.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
@@ -480,10 +483,10 @@ public class ImportExportPreferences {
         //if no SD Card present then there is no recent consists list
         if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             try {
-                // Populate the List with the recent engines saved in a file. This
+                // Populate the List with the recent consists saved in a file. This
                 // will be stored in /sdcard/engine_driver/recent_consist_list.txt
                 File sdcard_path = Environment.getExternalStorageDirectory();
-                File consist_list_file = new File(sdcard_path + "/engine_driver/recent_consist_list.txt");
+                File consist_list_file = new File(sdcard_path + "/" + RECENT_CONSISTS_FILENAME);
                 if (consist_list_file.exists()) {
                     BufferedReader list_reader = new BufferedReader(
                             new FileReader(consist_list_file));
@@ -700,8 +703,7 @@ public class ImportExportPreferences {
 
         // write it out from the saved preferences to the file
         File sdcard_path = Environment.getExternalStorageDirectory();
-        File consist_list_file = new File(sdcard_path,
-                "engine_driver/recent_consist_list.txt");
+        File consist_list_file = new File(sdcard_path, RECENT_CONSISTS_FILENAME);
 
         PrintWriter list_output;
 //        String smrl = sharedPreferences.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
@@ -847,7 +849,7 @@ public class ImportExportPreferences {
 
         File sdcard_path = Environment.getExternalStorageDirectory();
         File engine_list_file = new File(sdcard_path,
-                "engine_driver/recent_turnouts_list.txt");
+                RECENT_TURNOUTS_FILENAME);
 
         PrintWriter list_output;
         String smrl = sharedPreferences.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
@@ -883,21 +885,23 @@ public class ImportExportPreferences {
         }
     }
 
-    void deleteRecentTurnoutsListFile() {
+    public boolean deleteRecentTurnoutsListFile() {
         Log.d("Engine_Driver", "deleteRecentTurnoutsListFile: ImportExportPreferences: delete file");
 
         File sdcard_path = Environment.getExternalStorageDirectory();
         File engine_list_file = new File(sdcard_path,
-                "engine_driver/recent_turnouts_list.txt");
+                RECENT_TURNOUTS_FILENAME);
         if (engine_list_file.exists()) {
             try {
                 engine_list_file.delete();
+                return(true);
             } catch (Exception except) {
                 Log.e("Engine_Driver",
                         "deleteRecentTurnoutsListFile: ImportExportPreferences: Error deleting Recent Turnouts file: "
                                 + except.getMessage());
             }
         }
+        return(false);
     }
 
         void getRecentTurnoutsListFromFile() {
@@ -906,7 +910,7 @@ public class ImportExportPreferences {
             // Populate the List with the recent engines saved in a file. This
             // will be stored in /sdcard/engine_driver/recent_engine_list.txt
             File sdcard_path = Environment.getExternalStorageDirectory();
-            File turnouts_list_file = new File(sdcard_path + "/engine_driver/recent_turnouts_list.txt");
+            File turnouts_list_file = new File(sdcard_path + "/" + RECENT_TURNOUTS_FILENAME);
             if (turnouts_list_file.exists()) {
                 BufferedReader list_reader = new BufferedReader(
                         new FileReader(turnouts_list_file));
