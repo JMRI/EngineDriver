@@ -29,6 +29,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
@@ -1121,11 +1122,14 @@ public class turnouts extends Activity implements OnGestureListener {
             String smrl = prefs.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
             try {
                 numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl) * 2;
-            } finally {
+            } catch (Exception except) {
+                Log.e("Engine_Driver",
+                        "deleteRecentTurnoutsListFile: Turnouts: Error retrieving maximum_recent_locos_preference "
+                                + except.getMessage());
                 numberOfRecentTurnoutsToWrite = 20;
             }
 
-                // check if it already in the list and remove it
+            // check if the most recently used turnout is already in the list and remove it
             for (int i = 0; i < importExportPreferences.recent_turnout_address_list.size(); i++) {
 //                String sName = importExportPreferences.recent_turnout_address_list.get(i);
                 if (turnoutSystemName.equals(importExportPreferences.recent_turnout_address_list.get(i))) {

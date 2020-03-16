@@ -158,11 +158,11 @@ public class ImportExportPreferences {
             }
         }
 
-        getRecentTurnoutsListFromFile();
-        saveStringListDataToPreferences(recent_turnout_address_list, "prefRecentTurnout", sharedPreferences);
-        saveStringListDataToPreferences(recent_turnout_name_list, "prefRecentTurnoutName", sharedPreferences);
-        saveIntListDataToPreferences(recent_turnout_source_list, "prefRecentTurnoutSource", sharedPreferences);
-        saveStringListDataToPreferences(recent_turnout_server_list, "prefRecentTurnoutServer", sharedPreferences);
+//        getRecentTurnoutsListFromFile();
+//        saveStringListDataToPreferences(recent_turnout_address_list, "prefRecentTurnout", sharedPreferences);
+//        saveStringListDataToPreferences(recent_turnout_name_list, "prefRecentTurnoutName", sharedPreferences);
+//        saveIntListDataToPreferences(recent_turnout_source_list, "prefRecentTurnoutSource", sharedPreferences);
+//        saveStringListDataToPreferences(recent_turnout_server_list, "prefRecentTurnoutServer", sharedPreferences);
 
         if (!exportedPreferencesFileName.equals(".ed")) {
             res = writeExportFile(context, sharedPreferences, exportedPreferencesFileName);
@@ -338,15 +338,15 @@ public class ImportExportPreferences {
                     }
                     writeRecentConsistsListToFile(sharedPreferences, -1);
 
-                    recent_turnout_address_list = new ArrayList<>();
-                    recent_turnout_name_list = new ArrayList<>();
-                    recent_turnout_source_list = new ArrayList<>();
-                    recent_turnout_server_list = new ArrayList<>();
-                    getStringListDataFromPreferences(recent_turnout_address_list, "prefRecentTurnout", sharedPreferences, -1,"");
-                    getStringListDataFromPreferences(recent_turnout_name_list, "prefRecentTurnoutName", sharedPreferences, recent_turnout_address_list.size(), "");
-                    getIntListDataFromPreferences(recent_turnout_source_list, "prefRecentTurnoutSource", sharedPreferences, recent_turnout_address_list.size(), WHICH_SOURCE_UNKNOWN);
-                    getStringListDataFromPreferences(recent_turnout_server_list, "prefRecentTurnoutServer", sharedPreferences, recent_turnout_server_list.size(), "");
-                    writeRecentTurnoutsListToFile(sharedPreferences);
+//                    recent_turnout_address_list = new ArrayList<>();
+//                    recent_turnout_name_list = new ArrayList<>();
+//                    recent_turnout_source_list = new ArrayList<>();
+//                    recent_turnout_server_list = new ArrayList<>();
+//                    getStringListDataFromPreferences(recent_turnout_address_list, "prefRecentTurnout", sharedPreferences, -1,"");
+//                    getStringListDataFromPreferences(recent_turnout_name_list, "prefRecentTurnoutName", sharedPreferences, recent_turnout_address_list.size(), "");
+//                    getIntListDataFromPreferences(recent_turnout_source_list, "prefRecentTurnoutSource", sharedPreferences, recent_turnout_address_list.size(), WHICH_SOURCE_UNKNOWN);
+//                    getStringListDataFromPreferences(recent_turnout_server_list, "prefRecentTurnoutServer", sharedPreferences, recent_turnout_server_list.size(), "");
+//                    writeRecentTurnoutsListToFile(sharedPreferences);
 
                 }
             }
