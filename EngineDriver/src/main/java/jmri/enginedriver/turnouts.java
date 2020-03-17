@@ -1088,7 +1088,7 @@ public class turnouts extends Activity implements OnGestureListener {
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
             return;
 
-        for (int i = 0; i < importExportPreferences.recent_turnout_address_list.size(); i++) {
+        for (int i = importExportPreferences.recent_turnout_address_list.size()-1; i >= 0 ; i--) {
 //                String sName = importExportPreferences.recent_turnout_address_list.get(i);
             if (turnoutToRemoveSystemName.equals(importExportPreferences.recent_turnout_address_list.get(i))) {
                 importExportPreferences.recent_turnout_address_list.remove(i);
@@ -1121,7 +1121,7 @@ public class turnouts extends Activity implements OnGestureListener {
             int numberOfRecentTurnoutsToWrite;
             String smrl = prefs.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
             try {
-                numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl) * 2;
+                numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl) * 3;
             } catch (Exception except) {
                 Log.e("Engine_Driver",
                         "deleteRecentTurnoutsListFile: Turnouts: Error retrieving maximum_recent_locos_preference "
@@ -1148,11 +1148,11 @@ public class turnouts extends Activity implements OnGestureListener {
 
             // remove any extra ones
             if (importExportPreferences.recent_turnout_address_list.size()>numberOfRecentTurnoutsToWrite) {
-                for (int i = numberOfRecentTurnoutsToWrite; i < importExportPreferences.recent_turnout_address_list.size(); i++) {
-                        importExportPreferences.recent_turnout_address_list.remove(i);
-                        importExportPreferences.recent_turnout_name_list.remove(i);
-                        importExportPreferences.recent_turnout_source_list.remove(i);
-                        importExportPreferences.recent_turnout_server_list.remove(i);
+                for (int i = importExportPreferences.recent_turnout_address_list.size()-1; i >= numberOfRecentTurnoutsToWrite; i--) {
+                    importExportPreferences.recent_turnout_address_list.remove(i);
+                    importExportPreferences.recent_turnout_name_list.remove(i);
+                    importExportPreferences.recent_turnout_source_list.remove(i);
+                    importExportPreferences.recent_turnout_server_list.remove(i);
                 }
             }
         }
@@ -1178,9 +1178,23 @@ public class turnouts extends Activity implements OnGestureListener {
 
 
     public void clearRecentTurnoutsList() {
-        if (importExportPreferences.deleteRecentTurnoutsListFile()) {
-            recentTurnoutsList.clear();
+
+        for (int i = importExportPreferences.recent_turnout_address_list.size()-1; i >= 0; i--) {
+            // only load the turnout if it came from the current server
+            if (importExportPreferences.recent_turnout_server_list.get(i).equals(mainapp.connectedHostip) ) {
+                importExportPreferences.recent_turnout_name_list.remove(i);
+                importExportPreferences.recent_turnout_address_list.remove(i);
+                importExportPreferences.recent_turnout_source_list.remove(i);
+                importExportPreferences.recent_turnout_server_list.remove(i);
+            }
         }
+
+        if (importExportPreferences.recent_turnout_address_list.size()==0) {
+            importExportPreferences.deleteRecentTurnoutsListFile();
+        } else {
+            importExportPreferences.writeRecentTurnoutsListToFile(prefs);
+        }
+        recentTurnoutsList.clear();
     }
 
 
