@@ -5794,7 +5794,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private void loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
         Log.d("Engine_Driver", "Preferences: Loading saved preferences from file: " + exportedPreferencesFileName);
-        boolean res = importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId);
+        boolean res = importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
         if (!res) {
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG).show();

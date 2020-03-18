@@ -1190,7 +1190,7 @@ public class turnouts extends Activity implements OnGestureListener {
         }
 
         if (importExportPreferences.recent_turnout_address_list.size()==0) {
-            importExportPreferences.deleteRecentTurnoutsListFile();
+            importExportPreferences.deleteFile(importExportPreferences.RECENT_TURNOUTS_FILENAME);
         } else {
             importExportPreferences.writeRecentTurnoutsListToFile(prefs);
         }
