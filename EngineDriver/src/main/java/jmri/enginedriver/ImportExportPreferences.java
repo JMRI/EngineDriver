@@ -50,14 +50,14 @@ public class ImportExportPreferences {
 
     //private String exportedPreferencesFileName =  "exported_preferences.ed";
 
-    private static final String RECENT_TURNOUTS_FILENAME = "engine_driver/recent_turnouts_list.txt";
+    public static final String RECENT_TURNOUTS_FILENAME = "engine_driver/recent_turnouts_list.txt";
     private static final String RECENT_CONSISTS_FILENAME = "engine_driver/recent_consist_list.txt";
     private static final String RECENT_ENGINES_FILENAME = "engine_driver/recent_engine_list.txt";
 
     ArrayList<Integer> recent_loco_address_list;
     ArrayList<Integer> recent_loco_address_size_list; // Look at address_type.java
     ArrayList<String> recent_loco_name_list;
-    ArrayList<String> recent_loco_name_html_list;
+//    ArrayList<String> recent_loco_name_html_list;
     ArrayList<Integer> recent_loco_source_list;
 
     ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<>();
@@ -176,7 +176,7 @@ public class ImportExportPreferences {
 
     @SuppressLint("ApplySharedPref")
     @SuppressWarnings({ "unchecked" })
-    boolean loadSharedPreferencesFromFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId) {
+    boolean loadSharedPreferencesFromFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, boolean clearRecentsIfNoFile) {
         Log.d("Engine_Driver", "loadSharedPreferencesFromFile: ImportExportPreferences: Loading saved preferences from file");
         currentlyImporting = true;
         boolean res = false;
@@ -299,6 +299,8 @@ public class ImportExportPreferences {
                         Log.e("Engine_Driver", "ImportExportPreferences: loadSharedPreferencesFromFile: " + ex);
                     }
                 }
+                prefEdit.apply();
+                prefEdit.commit();
                 currentlyImporting = false;
 
                 if (prefImportExportLocoList) {
@@ -349,7 +351,12 @@ public class ImportExportPreferences {
 //                    writeRecentTurnoutsListToFile(sharedPreferences);
 
                 }
+            } else {
+                deleteFile(RECENT_ENGINES_FILENAME);
+                deleteFile(RECENT_CONSISTS_FILENAME);
+                deleteFile(RECENT_TURNOUTS_FILENAME);
             }
+
             if (!res) {
                 if (srcExists) {
                     Toast.makeText(context, context.getResources().getString(R.string.toastImportExportImportFailed, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
@@ -868,7 +875,7 @@ public class ImportExportPreferences {
 //                    numberOfRecentTurnoutsToWrite--;
                 }
             } else {
-                deleteRecentTurnoutsListFile();
+                deleteFile(RECENT_TURNOUTS_FILENAME);
                 return;
             }
             list_output.flush();
@@ -885,19 +892,19 @@ public class ImportExportPreferences {
         }
     }
 
-    public boolean deleteRecentTurnoutsListFile() {
+    public boolean deleteFile(String filename) {
         Log.d("Engine_Driver", "deleteRecentTurnoutsListFile: ImportExportPreferences: delete file");
 
         File sdcard_path = Environment.getExternalStorageDirectory();
-        File engine_list_file = new File(sdcard_path,
-                RECENT_TURNOUTS_FILENAME);
-        if (engine_list_file.exists()) {
+        File file = new File(sdcard_path,
+                filename);
+        if (file.exists()) {
             try {
-                engine_list_file.delete();
+                file.delete();
                 return(true);
             } catch (Exception except) {
                 Log.e("Engine_Driver",
-                        "deleteRecentTurnoutsListFile: ImportExportPreferences: Error deleting Recent Turnouts file: "
+                        "deleteRecentTurnoutsListFile: ImportExportPreferences: Error deleting : " + filename
                                 + except.getMessage());
             }
         }
