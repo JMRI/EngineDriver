@@ -286,43 +286,6 @@ public class throttle_big_buttons extends throttle {
         }
 
         int speedButtonHeight = (int) (50 * denScale);
-//        if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
-//            speedButtonHeight = (int) ((screenHeight - (200 * denScale)) / 2);
-//        }
-
-//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-//            //show speed buttons based on pref
-//            if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
-//                bLSpds[throttleIndex].setVisibility(View.VISIBLE);
-//                bRSpds[throttleIndex].setVisibility(View.VISIBLE);
-//
-//                bLSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.FILL_PARENT;
-//                bLSpds[throttleIndex].getLayoutParams().height = speedButtonHeight;
-//                bLSpds[throttleIndex].requestLayout();
-//                bRSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.FILL_PARENT;
-//                bRSpds[throttleIndex].getLayoutParams().height = speedButtonHeight;
-//                bRSpds[throttleIndex].requestLayout();
-//            } else {
-//                bLSpds[throttleIndex].setVisibility(View.GONE);
-//                bRSpds[throttleIndex].setVisibility(View.GONE);
-//            }
-//            //bLSpds[throttleIndex].setText(speedButtonLeftText);
-//            //bRSpds[throttleIndex].setText(speedButtonRightText);
-//        }
-
-//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-//            // set height of each function button area
-//            svFnBtns[throttleIndex].getLayoutParams().height = screenHeight - lUppers[throttleIndex].getHeight();
-//            svFnBtns[throttleIndex].requestLayout();
-//            lLowers[throttleIndex].getLayoutParams().height = screenHeight - lUppers[throttleIndex].getHeight();
-//            lLowers[throttleIndex].requestLayout();
-//
-//            // update throttle slider top/bottom
-//            tops[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
-//            bottoms[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
-//        }
-
-
 
 //        // update the state of each function button based on shared variable
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {

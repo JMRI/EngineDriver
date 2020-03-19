@@ -294,6 +294,32 @@ public class throttle_simple extends throttle {
             //bRSpds[throttleIndex].setText(speedButtonRightText);
         }
 
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+             // update throttle slider top/bottom
+//            tops[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+//            bottoms[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+
+            int[] location = new int[2];
+            ov.getLocationOnScreen(location);
+            int ovx = location[0];
+            int ovy = location[1];
+
+            location = new int[2];
+            vsbSpeeds[throttleIndex].getLocationOnScreen(location);
+            int x = location[0];
+            int y = location[1];
+
+            sliderTopLeftX[throttleIndex] = x - ovx;
+            sliderTopLeftY[throttleIndex] = y - ovy;
+            sliderBottomRightX[throttleIndex] = x + vsbSpeeds[throttleIndex].getWidth() - ovx;
+            sliderBottomRightY[throttleIndex] = y + vsbSpeeds[throttleIndex].getHeight() -ovy;
+
+//            Log.d("Engine_Driver","slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
+//                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);
+        }
+
+
+
 //        // update the state of each function button based on shared variable
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             set_all_function_states(throttleIndex);
