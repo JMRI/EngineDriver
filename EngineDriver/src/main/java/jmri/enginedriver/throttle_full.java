@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ import java.util.LinkedHashMap;
 public class throttle_full extends throttle {
 
     protected static final int MAX_SCREEN_THROTTLES = 3;
+    protected SeekBar[] sbSpeeds = {};
+
 
     protected void removeLoco(int whichThrottle) {
         super.removeLoco(whichThrottle);
@@ -124,16 +127,21 @@ public class throttle_full extends throttle {
 
         if (mainapp.appIsFinishing) { return;}
 
+        sbSpeeds = new SeekBar[mainapp.maxThrottlesCurrentScreen];
+
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {
                 case 0:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
+                    sbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
                     break;
                 case 1:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_1);
+                    sbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
                     break;
                 case 2:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_2);
+                    sbSpeeds[throttleIndex] = findViewById(R.id.speed_2);
                     break;
             }
 
@@ -157,88 +165,6 @@ public class throttle_full extends throttle {
         }
     }
 
-
-//    void setAllFunctionLabelsAndListeners() {
-//        for (int i = 0; i < mainapp.maxThrottlesCurrentScreen; i++) {
-//            set_function_labels_and_listeners_for_view(i);
-//        }
-//    }
-
-    // helper function to set up function buttons for each throttle
-    // loop through all function buttons and
-    // set label and dcc functions (based on settings) or hide if no label
-//    @Override
-//    void set_function_labels_and_listeners_for_view(int whichThrottle) {
-//        // Log.d("Engine_Driver","starting set_function_labels_and_listeners_for_view");
-//
-//        ViewGroup tv; // group
-//        ViewGroup r; // row
-//        function_button_touch_listener fbtl;
-//        Button b; // button
-//        int k = 0; // button count
-//        LinkedHashMap<Integer, String> function_labels_temp;
-//        LinkedHashMap<Integer, Button> functionButtonMap = new LinkedHashMap<>();
-//
-//        tv = fbs[whichThrottle];
-//
-//        // note: we make a copy of function_labels_x because TA might change it
-//        // while we are using it (causing issues during button update below)
-//        function_labels_temp = mainapp.function_labels_default;
-//        if (!prefAlwaysUseDefaultFunctionLabels) {
-//            if (mainapp.function_labels[whichThrottle] != null && mainapp.function_labels[whichThrottle].size() > 0) {
-//                function_labels_temp = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
-//            } else {
-//                function_labels_temp = mainapp.function_labels_default;
-//            }
-//        }
-//
-//        // put values in array for indexing in next step
-//        // to do this
-//        ArrayList<Integer> aList = new ArrayList<>();
-//        aList.addAll(function_labels_temp.keySet());
-//
-//        if (tv != null) {
-//            for (int i = 0; i < tv.getChildCount(); i++) {
-//                r = (ViewGroup) tv.getChildAt(i);
-//                for (int j = 0; j < r.getChildCount(); j++) {
-//                    b = (Button) r.getChildAt(j);
-//                    if (k < function_labels_temp.size()) {
-//                        Integer func = aList.get(k);
-//                        functionButtonMap.put(func, b); // save function to button
-//                        // mapping
-//                        String bt = function_labels_temp.get(func);
-//                        fbtl = new function_button_touch_listener(func, whichThrottle, bt);
-//                        b.setOnTouchListener(fbtl);
-//                        if ((mainapp.getCurrentTheme().equals(THEME_DEFAULT))) {
-//                            bt = bt + "        ";  // pad with spaces, and limit to 7 characters
-//                            b.setText(bt.substring(0, 7));
-//                        } else {
-//                            bt = bt + "                      ";  // pad with spaces, and limit to 20 characters
-//                            b.setText(bt.trim());
-//                        }
-//                        b.setVisibility(View.VISIBLE);
-//                        b.setEnabled(false); // start out with everything disabled
-//                    } else {
-//                        b.setVisibility(View.GONE);
-//                    }
-//                    k++;
-//                }
-//            }
-//        }
-//
-//        // update the function-to-button map for the current throttle
-//        functionMaps[whichThrottle] = functionButtonMap;
-//    }
-
-    // helper function to get a numbered function button from its throttle and function number
-//    Button getFunctionButton(int whichThrottle, int func) {
-//        Button b; // button
-//        LinkedHashMap<Integer, Button> functionButtonMap;
-//
-//        functionButtonMap = functionMaps[whichThrottle];
-//        b = functionButtonMap.get(func);
-//        return b;
-//    }
 
 //    // lookup and set values of various informational text labels and size the
 //    // screen elements
@@ -487,8 +413,26 @@ public class throttle_full extends throttle {
                 lls[throttleIndex].setLayoutParams(llLp);
 
                 // update throttle slider top/bottom
-                tops[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
-                bottoms[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+//                tops[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+//                bottoms[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+
+                int[] location = new int[2];
+                ov.getLocationOnScreen(location);
+                int ovx = location[0];
+                int ovy = location[1];
+
+                location = new int[2];
+                sbSpeeds[throttleIndex].getLocationOnScreen(location);
+                int x = location[0];
+                int y = location[1];
+
+                sliderTopLeftX[throttleIndex] = x - ovx;
+                sliderTopLeftY[throttleIndex] = y - ovy;
+                sliderBottomRightX[throttleIndex] = x + sbSpeeds[throttleIndex].getWidth() - ovx;
+                sliderBottomRightY[throttleIndex] = y + sbSpeeds[throttleIndex].getHeight() -ovy;
+
+//            Log.d("Engine_Driver","slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
+//                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);
             }
         } else {
             Log.d("Engine_Driver", "screen height adjustments skipped, screenHeight=" + screenHeight);

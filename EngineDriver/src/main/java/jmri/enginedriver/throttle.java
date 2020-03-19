@@ -210,8 +210,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
 
     // screen coordinates for throttle sliders, so we can ignore swipe on them
-    protected int[] tops;
-    protected int[] bottoms;
+//    protected int[] tops;
+//    protected int[] bottoms;
+    protected int[] sliderTopLeftX = {0,0,0,0,0,0};
+    protected int[] sliderTopLeftY = {0,0,0,0,0,0};
+    protected int[] sliderBottomRightX = {0,0,0,0,0,0};
+    protected int[] sliderBottomRightY = {0,0,0,0,0,0};
+    protected GestureOverlayView ov;
 
     // these are used for gesture tracking
     private float gestureStartX = 0;
@@ -4061,7 +4066,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         screenBrightnessModeOriginal = getScreenBrightnessMode();
 
         // myGesture = new GestureDetector(this);
-        GestureOverlayView ov = findViewById(R.id.throttle_overlay);
+        ov = findViewById(R.id.throttle_overlay);
         ov.addOnGestureListener(this);
         ov.setGestureVisible(false);
 
@@ -4098,8 +4103,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         fbs = new ViewGroup[mainapp.maxThrottlesCurrentScreen];
 
-        tops = new int[mainapp.maxThrottlesCurrentScreen];
-        bottoms= new int[mainapp.maxThrottlesCurrentScreen];
+//        tops = new int[mainapp.maxThrottlesCurrentScreen];
+//        bottoms= new int[mainapp.maxThrottlesCurrentScreen];
 
         functionMaps = ( LinkedHashMap<Integer, Button>[]) new LinkedHashMap<?,?>[mainapp.maxThrottlesCurrentScreen];
 
@@ -5358,14 +5363,23 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private void gestureStart(MotionEvent event) {
         gestureStartX = event.getX();
         gestureStartY = event.getY();
-        // Log.d("Engine_Driver", "gestureStart y=" + gestureStartY);
+//        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
 
         // check if the sliders are already hidden by preference
         if (!prefs.getBoolean("hide_slider_preference", false)) {
             // if gesture is attempting to start over an enabled slider, ignore it and return immediately.
             for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
-                if ((sbs[throttleIndex].isEnabled() && gestureStartY >= tops[throttleIndex] && gestureStartY <= bottoms[throttleIndex])) {
-                    // Log.d("Engine_Driver","exiting gestureStart");
+//                if ((sbs[throttleIndex].isEnabled() && gestureStartY >= tops[throttleIndex] && gestureStartY <= bottoms[throttleIndex])) {
+//                    // Log.d("Engine_Driver","exiting gestureStart");
+//                    return;
+//                }
+                if ((sbs[throttleIndex].isEnabled())
+                        && (gestureStartX >= sliderTopLeftX[throttleIndex])
+                        && (gestureStartX <= sliderBottomRightX[throttleIndex])
+                        && (gestureStartY >= sliderTopLeftY[throttleIndex])
+                        && (gestureStartY <= sliderBottomRightY[throttleIndex])
+                ) {
+                    Log.d("Engine_Driver","exiting gestureStart on slider: " + gestureStartX + ", " + gestureStartY);
                     return;
                 }
             }

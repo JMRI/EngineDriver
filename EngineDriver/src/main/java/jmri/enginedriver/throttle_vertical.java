@@ -24,6 +24,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -328,8 +329,26 @@ public class throttle_vertical extends throttle {
             lLowers[throttleIndex].requestLayout();
 
             // update throttle slider top/bottom
-            tops[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
-            bottoms[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+//            tops[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+//            bottoms[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+
+            int[] location = new int[2];
+            ov.getLocationOnScreen(location);
+            int ovx = location[0];
+            int ovy = location[1];
+
+            location = new int[2];
+            vsbSpeeds[throttleIndex].getLocationOnScreen(location);
+            int x = location[0];
+            int y = location[1];
+
+            sliderTopLeftX[throttleIndex] = x - ovx;
+            sliderTopLeftY[throttleIndex] = y - ovy;
+            sliderBottomRightX[throttleIndex] = x + vsbSpeeds[throttleIndex].getWidth() - ovx;
+            sliderBottomRightY[throttleIndex] = y + vsbSpeeds[throttleIndex].getHeight() -ovy;
+
+//            Log.d("Engine_Driver","slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
+//                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);
         }
 
 
