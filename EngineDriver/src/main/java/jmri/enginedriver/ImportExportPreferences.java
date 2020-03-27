@@ -170,6 +170,24 @@ public class ImportExportPreferences {
             Toast.makeText(context, context.getResources().getString(R.string.toastImportExportExportFailed), Toast.LENGTH_LONG).show();
         }
 
+
+        if (prefImportExportLocoList) {  // now clean out the preference data
+            removeExtraListDataFromPreferences(0,"prefRecentLoco", sharedPreferences);
+            removeExtraListDataFromPreferences(0,"prefRecentLocoSize", sharedPreferences);
+            removeExtraListDataFromPreferences(0,"prefRecentLocoName", sharedPreferences);
+            removeExtraListDataFromPreferences(0,"prefRecentLocoSource", sharedPreferences);
+
+            removeExtraListDataFromPreferences(0,"prefRecentConsistName", sharedPreferences);
+            for (int i = 0; i < 100; i++) {
+                removeExtraListDataFromPreferences(0,"prefRecentConsistAddress_"+i, sharedPreferences);
+                removeExtraListDataFromPreferences(0,"prefRecentConsistSize_"+i, sharedPreferences);
+                removeExtraListDataFromPreferences(0, "prefRecentConsistDirection_"+i, sharedPreferences);
+                removeExtraListDataFromPreferences(0,"prefRecentConsistSource_"+i, sharedPreferences);
+                removeExtraListDataFromPreferences(0,"prefRecentConsistRosterName_"+i, sharedPreferences);
+                removeExtraListDataFromPreferences(0,"prefRecentConsistLight_"+i, sharedPreferences);
+            }
+        }
+
         Log.d("Engine_Driver", "saveSharedPreferencesToFile: ImportExportPreferences: Saving preferences to file - Finished");
         return res;
     }
@@ -769,6 +787,22 @@ public class ImportExportPreferences {
         }
         return sharedPreferences.edit().commit();
     }
+
+    @SuppressLint("ApplySharedPref")
+    private boolean removeExtraListDataFromPreferences(int startFrom, String listName, SharedPreferences sharedPreferences) {
+        if (startFrom==0) {   // startFrom = zero will clear all items
+            sharedPreferences.edit().remove(listName + "_size").commit();
+        }
+        for(int i=startFrom ; i<=100 ; i++){
+            try {
+             sharedPreferences.edit().remove(listName + "_" + i).commit();
+            } catch (Exception except) {
+                //ignore it
+            }
+        }
+        return sharedPreferences.edit().commit();
+    }
+
 
     private int getIntListDataFromPreferences(ArrayList<Integer> list, String listName, SharedPreferences sharedPreferences, int forceSize, int defaultValue) {
         int size = sharedPreferences.getInt(listName + "_size", 0);

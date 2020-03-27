@@ -1683,6 +1683,34 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         speed_label.setText(Integer.toString(scaleSpeed));
     }
 
+    // set the displayed numeric speed value
+    @SuppressLint("SetTextI18n")
+    protected void setDisplayedSpeedWithDirection(int whichThrottle, int speed) {
+        TextView speed_label;
+        double speedScale = getDisplayUnitScale(whichThrottle);
+        speed_label = tvSpdVals[whichThrottle];
+        if (speed < 0) {
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG).show();
+            speed = 0;
+        }
+        int scaleSpeed = (int) Math.round(speed * speedScale);
+
+        String prefix = "";
+        String suffix = "";
+        suffix = "    ";
+        int dir = getDirection(whichThrottle);
+
+        if (speed > 0) {
+            if (((!directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_FORWARD))
+                    || ((directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_REVERSE))) {
+                prefix = "◄ ";
+            } else {
+                suffix = " ►";
+            }
+        }
+        speed_label.setText(prefix + Integer.toString(scaleSpeed) + suffix);
+    }
+
     //adjust maxspeedsteps from code passed from JMRI, but only if set to Auto, else do not change
     private void setSpeedStepsFromWiT(int whichThrottle, int speedStepCode) {
         int maxSpeedStep = 100;

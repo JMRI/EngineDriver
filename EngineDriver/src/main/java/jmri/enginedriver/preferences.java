@@ -766,7 +766,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         enable = prefThrottleScreenTypeOriginal.equals("Default")
                 || prefThrottleScreenTypeOriginal.equals("Vertical")
                 || prefThrottleScreenTypeOriginal.equals("Vertical Left")
-                || prefThrottleScreenTypeOriginal.equals("Vertical Right");
+                || prefThrottleScreenTypeOriginal.equals("Vertical Right")
+                || prefThrottleScreenTypeOriginal.equals("Switching Left")
+                || prefThrottleScreenTypeOriginal.equals("Switching Right");
         enableDisablePreference("WebViewLocation", enable);
         enableDisablePreference("prefIncreaseWebViewSize", enable);
         enableDisablePreference("InitialThrotWebPage", enable);

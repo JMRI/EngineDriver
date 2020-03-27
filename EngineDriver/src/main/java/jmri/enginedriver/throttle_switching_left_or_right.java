@@ -549,7 +549,7 @@ public class throttle_switching_left_or_right extends throttle {
                         throttle.setProgress(jumpSpeed);
                     }
                 }
-//                setDisplayedSpeed(whichThrottle, speed);
+//                setDisplayedSpeed(whichThrottle, speed, true);
             }
 //            if (sliderPosition == 0 || lastSliderPosition == 0) {     // check rules when going to/from 0 speed
 //                applySpeedRelatedOptions(whichThrottle);
@@ -728,4 +728,9 @@ public class throttle_switching_left_or_right extends throttle {
         return newSliderPosition;
     }
 
+    // set the displayed numeric speed value
+    @Override
+    protected void setDisplayedSpeed(int whichThrottle, int speed) {
+        setDisplayedSpeedWithDirection(whichThrottle, speed);
+    }
 }
