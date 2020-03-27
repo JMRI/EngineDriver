@@ -97,6 +97,8 @@
         <item >Big Buttons &#8211; Right (1 throttle)</item>
         <item >Vertical &#8211; Left (1 throttle)</item>
         <item >Vertical &#8211; Right (1 throttle)</item>
+        <item >Switching &#8211; Left (1 throttle)</item>
+        <item >Switching &#8211; Right (1 throttle)</item>
         <item tools:ignore="TypographyDashes">Simple &#8211; Tablet Recommended (1-6 throttles)</item>
     </string-array>
     <string-array name="prefThrottleScreenTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -106,6 +108,8 @@
         <item >Big Right</item>
         <item >Vertical Left</item>
         <item >Vertical Right</item>
+        <item >Switching Left</item>
+        <item >Switching Right</item>
         <item >Simple</item>
     </string-array>
 
