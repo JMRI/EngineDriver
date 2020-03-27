@@ -57,6 +57,8 @@
         <item>Botons grans &#8211; Dreta (1 controlador)</item>
         <item>Vertical &#8211; Esquerra (1 controlador)</item>
         <item>Vertical &#8211; Dreta (1 controlador)</item>
+        <item>Switching &#8211; Esquerra (1 controlador)</item>
+        <item>Switching &#8211; Dreta (1 controlador)</item>
         <item>Simple &#8211; Tablet Recomenat (1&#8211;6 controladors)</item>
     </string-array>
     <string-array name="DisplayClockEntries">

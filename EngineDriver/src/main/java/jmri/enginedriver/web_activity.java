@@ -318,6 +318,10 @@ public class web_activity extends Activity {
             case "Vertical Right":
                 in = new Intent(this, throttle_vertical_left_or_right.class);
                 break;
+            case "Switching Left":
+            case "Switching Right":
+                in = new Intent(this, throttle_switching_left_or_right.class);
+                break;
             case "Big Left":
             case "Big Right":
                 in = new Intent(this, throttle_big_buttons.class);
