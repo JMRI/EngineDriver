@@ -54,7 +54,7 @@ public class throttle_switching_left_or_right extends throttle {
     private static final int TICK_TYPE_0_100_0 = 1;
 
     private int throttleMidPointZero;
-    private int throttleMax;
+    private int throttleSwitchingMax;
 //    private double throttleReScale;
     private static final int THROTTLE_DEAD_ZONE = 10;
     private int throttleMidPointDeadZoneUpper;
@@ -97,7 +97,7 @@ public class throttle_switching_left_or_right extends throttle {
         }
 
         throttleMidPointZero = (MAX_SPEED_VAL_WIT + THROTTLE_DEAD_ZONE);
-        throttleMax = (MAX_SPEED_VAL_WIT + THROTTLE_DEAD_ZONE) * 2;
+        throttleSwitchingMax = (MAX_SPEED_VAL_WIT + THROTTLE_DEAD_ZONE) * 2;
         throttleMidPointDeadZoneUpper = throttleMidPointZero + THROTTLE_DEAD_ZONE;
         throttleMidPointDeadZoneLower = throttleMidPointZero - THROTTLE_DEAD_ZONE;
 //        throttleReScale = ((throttleMidPointZero * 2)) / (double) throttleMidPointDeadZoneLower;
@@ -122,7 +122,7 @@ public class throttle_switching_left_or_right extends throttle {
                     vsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_0);
                     vsbSwitchingSpeeds[throttleIndex].setTickType(TICK_TYPE_0_100_0);
 //                    vsbSwitchingSpeeds[throttleIndex].setMax(MAX_SPEED_VAL_WIT);
-                    vsbSwitchingSpeeds[throttleIndex].setMax(throttleMax);
+                    vsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax);
                     vsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
                     break;
@@ -131,28 +131,28 @@ public class throttle_switching_left_or_right extends throttle {
 
         setAllFunctionLabelsAndListeners();
 
-        limit_speed_button_touch_listener lstl;
+        limit_speed_button_switching_touch_listener lsstl;
         Button bLimitSpeed = findViewById(R.id.limit_speed_0);
 
-//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-//            switch (throttleIndex) {
-//                case 0:
-//                    bLimitSpeed = findViewById(R.id.limit_speed_0);
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            switch (throttleIndex) {
+                case 0:
+                    bLimitSpeed = findViewById(R.id.limit_speed_0);
+                    break;
+//                case 1:
+//                    bLimitSpeed = findViewById(R.id.limit_speed_1);
 //                    break;
-////                case 1:
-////                    bLimitSpeed = findViewById(R.id.limit_speed_1);
-////                    break;
-//
-//            }
-//            bLimitSpeeds[throttleIndex] = bLimitSpeed;
-//            limitSpeedSliderScalingFactors[throttleIndex] = 1;
-//            lstl = new limit_speed_button_touch_listener(throttleIndex);
-//            bLimitSpeeds[throttleIndex].setOnTouchListener(lstl);
-//            isLimitSpeeds[throttleIndex] = false;
-//            if (!prefLimitSpeedButton) {
-//                bLimitSpeed.setVisibility(View.GONE);
-//            }
-//        }
+
+            }
+            bLimitSpeeds[throttleIndex] = bLimitSpeed;
+            limitSpeedSliderScalingFactors[throttleIndex] = 1;
+            lsstl = new limit_speed_button_switching_touch_listener(throttleIndex);
+            bLimitSpeeds[throttleIndex].setOnTouchListener(lsstl);
+            isLimitSpeeds[throttleIndex] = false;
+            if (!prefLimitSpeedButton) {
+                bLimitSpeed.setVisibility(View.GONE);
+            }
+        }
 
 
         throttleSwitchingListener thsl;
@@ -180,12 +180,12 @@ public class throttle_switching_left_or_right extends throttle {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.GONE);
             }
 
-            // show or hide the limit speed buttons
-//            if (!prefLimitSpeedButton) {
-//                bLimitSpeeds[throttleIndex].setVisibility(View.GONE);
-//            } else {
-//                bLimitSpeeds[throttleIndex].setVisibility(View.VISIBLE);
-//            }
+//             show or hide the limit speed buttons
+            if (!prefLimitSpeedButton) {
+                bLimitSpeeds[throttleIndex].setVisibility(View.GONE);
+            } else {
+                bLimitSpeeds[throttleIndex].setVisibility(View.VISIBLE);
+            }
         }
 
     } // end of onResume()
@@ -272,11 +272,11 @@ public class throttle_switching_left_or_right extends throttle {
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
 
-            //show speed buttons based on pref
-            vsbSpeeds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
-            if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
-                vsbSpeeds[throttleIndex].setVisibility(View.GONE);
-            }
+//            //show speed buttons based on pref
+//            vsbSpeeds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
+//            if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
+//                vsbSpeeds[throttleIndex].setVisibility(View.GONE);
+//            }
 
             vsbSpeeds[throttleIndex].setVisibility(View.GONE); //always hide the real slider
 
@@ -410,7 +410,7 @@ public class throttle_switching_left_or_right extends throttle {
         if (!forceDisable) { // avoid index crash, but may simply push to next line
             newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
         }
-//        bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
+        bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
 
         super.enable_disable_buttons(whichThrottle, forceDisable);
 
@@ -589,16 +589,20 @@ public class throttle_switching_left_or_right extends throttle {
         if (getDirection(whichThrottle)==DIRECTION_REVERSE) {  // treat negative as positive
             change = change * -1;
         }
-        Log.d("Engine_Driver", "throttle_switching_left_or_right - change: " + change + " lastSliderPosition: " + lastSliderPosition);
+//        Log.d("Engine_Driver", "throttle_switching_left_or_right - change: " + change + " lastSliderPosition: " + lastSliderPosition);
 
         lastScaleSpeed = getSpeedFromSliderPosition(lastSliderPosition, whichThrottle, true);
         scaleSpeed = lastScaleSpeed + change;
         speed = getSpeedFromSliderPosition(lastSliderPosition, whichThrottle, false);
 
-        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
+//        if (prefLimitSpeedButton && isLimitSpeeds[whichThrottle] && (speed > limitSpeedMax[whichThrottle] )) {
+//            speed = limitSpeedMax[whichThrottle];
+//        }
+
+//        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
         if (scaleSpeed<0) {
             int dir = getDirection(whichThrottle) == DIRECTION_FORWARD ? DIRECTION_REVERSE : DIRECTION_FORWARD;
-            Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - auto Reverse - dir:" + dir);
+//            Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - auto Reverse - dir:" + dir);
             dirs[whichThrottle] = dir;
             setEngineDirection(whichThrottle, dir, false);
             showDirectionIndication(whichThrottle, dir);
@@ -607,7 +611,7 @@ public class throttle_switching_left_or_right extends throttle {
         scaleSpeed = Math.abs(scaleSpeed);
 
         int newSliderPosition = getNewSliderPositionFromSpeed(scaleSpeed, whichThrottle, true);
-        Log.d("Engine_Driver", "throttle_switching_left_or_right - newSliderPosition: " + newSliderPosition);
+//        Log.d("Engine_Driver", "throttle_switching_left_or_right - newSliderPosition: " + newSliderPosition);
 
         if (lastScaleSpeed == scaleSpeed) {
             newSliderPosition += Math.signum(change);
@@ -616,19 +620,15 @@ public class throttle_switching_left_or_right extends throttle {
         if (newSliderPosition < 0)  //insure speed is inside bounds
             newSliderPosition = 0;
 
-        if (newSliderPosition > throttleMax)
-            newSliderPosition = throttleMax;
+        if (newSliderPosition > throttleSwitchingMax)
+            newSliderPosition = throttleSwitchingMax;
 
-        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) + " newSliderPosition: " + newSliderPosition);
-
-//        if (prefLimitSpeedButton && isLimitSpeeds[whichThrottle] && (speed > limitSpeedMax[whichThrottle] )) {
-//            speed = limitSpeedMax[whichThrottle];
-//        }
+//        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) + " newSliderPosition: " + newSliderPosition);
 
         switchingThrottleSlider.setProgress(newSliderPosition);
         setDisplayedSpeed(whichThrottle, speed);
 
-        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange -  change: " + change);
+//        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange -  change: " + change);
 
         int realSpeed = super.speedChange(whichThrottle, change);
         return realSpeed;
@@ -645,13 +645,13 @@ public class throttle_switching_left_or_right extends throttle {
         if (sliderPosition < 0)  //insure speed is inside bounds
             sliderPosition = 0;
 
-        if (sliderPosition > throttleMax)
-            sliderPosition = throttleMax;
+        if (sliderPosition > throttleSwitchingMax)
+            sliderPosition = throttleSwitchingMax;
 
         getSwitchingThrottleSlider(whichThrottle).setProgress(sliderPosition);
         setDisplayedSpeed(whichThrottle, speed);
 
-        Log.d("Engine_Driver","throttle_switching_left_or_right - speedUpdate -  sliderPosition: " + sliderPosition + " dir: " + getDirection(whichThrottle) + " Speed: " + speed);
+//        Log.d("Engine_Driver","throttle_switching_left_or_right - speedUpdate -  sliderPosition: " + sliderPosition + " dir: " + getDirection(whichThrottle) + " Speed: " + speed);
     }
 
     // process WiT speed report
@@ -704,7 +704,7 @@ public class throttle_switching_left_or_right extends throttle {
         } else { // zero - deadzone
             speed = 0;
         }
-        Log.d("Engine_Driver","throttle_switching_left_or_right - getSpeedFromSliderPosition -  scale: " + scale + " sliderPosition: " + sliderPosition + " speed: " + speed );
+//        Log.d("Engine_Driver","throttle_switching_left_or_right - getSpeedFromSliderPosition -  scale: " + scale + " sliderPosition: " + sliderPosition + " speed: " + speed );
         return speed;
     }
 
@@ -723,7 +723,7 @@ public class throttle_switching_left_or_right extends throttle {
                 newSliderPosition = throttleMidPointDeadZoneLower - (int) Math.round( speed / scale );
             }
         }
-        Log.d("Engine_Driver","throttle_switching_left_or_right - getNewSliderPositionFromSpeed -  scale: " + scale + " speed: " + speed + " newSliderPosition: " + newSliderPosition );
+//        Log.d("Engine_Driver","throttle_switching_left_or_right - getNewSliderPositionFromSpeed -  scale: " + scale + " speed: " + speed + " newSliderPosition: " + newSliderPosition );
 
         return newSliderPosition;
     }
@@ -733,4 +733,56 @@ public class throttle_switching_left_or_right extends throttle {
     protected void setDisplayedSpeed(int whichThrottle, int speed) {
         setDisplayedSpeedWithDirection(whichThrottle, speed);
     }
+
+    //listeners for the Limit Speed Button
+    protected class limit_speed_button_switching_touch_listener implements View.OnTouchListener {
+        int whichThrottle;
+
+        protected limit_speed_button_switching_touch_listener(int new_whichThrottle) {
+            whichThrottle = new_whichThrottle;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            int speed = 0;
+            int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+            maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
+
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                int dir = getDirection(whichThrottle);
+                speed=getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle, false);
+//                Log.d("Engine_Driver","limit_speed_button_switching_touch_listener -  speed: " + speed );
+
+                isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
+                if (isLimitSpeeds[whichThrottle]) {
+                    bLimitSpeeds[whichThrottle].setSelected(true);
+                    limitSpeedSliderScalingFactors[whichThrottle]=100/prefLimitSpeedPercent;
+                    sbs[whichThrottle].setMax( Math.round(maxThrottle / limitSpeedSliderScalingFactors[whichThrottle]));
+
+                    throttleMidPointZero = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + THROTTLE_DEAD_ZONE);
+                    throttleSwitchingMax = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + THROTTLE_DEAD_ZONE) * 2;
+                    vsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax);
+
+                } else {
+                    bLimitSpeeds[whichThrottle].setSelected(false);
+                    sbs[whichThrottle].setMax(maxThrottle);
+
+                    throttleMidPointZero = (MAX_SPEED_VAL_WIT + THROTTLE_DEAD_ZONE);
+                    throttleSwitchingMax = (MAX_SPEED_VAL_WIT + THROTTLE_DEAD_ZONE) * 2;
+                    vsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax);
+                }
+                throttleMidPointDeadZoneUpper = throttleMidPointZero + THROTTLE_DEAD_ZONE;
+                throttleMidPointDeadZoneLower = throttleMidPointZero - THROTTLE_DEAD_ZONE;
+
+                speedUpdate(whichThrottle,  speed);
+                setEngineDirection(whichThrottle, dir, false);
+            }
+//            Log.d("Engine_Driver","limit_speed_button_switching_touch_listener -  speed: " + speed );
+
+            speedChangeAndNotify(whichThrottle,0);
+            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+            return false;
+        }
+    }
+
 }
