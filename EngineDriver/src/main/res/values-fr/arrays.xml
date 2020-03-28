@@ -57,14 +57,14 @@
 
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
         <item>Original &#8211; Téléphone ou Tablette (1&#8211;3 régulateurs)</item>
-        <item>Vertical &#8211; Téléphone ou Tablette (1&#8211;12 régulateurs)</item>
+        <item>Vertical &#8211; Téléphone ou Tablette (1-2 régulateurs)</item>
         <item>Big Buttons &#8211;  Gauche (1 régulateur)</item>
         <item>Big Buttons &#8211;  Droite (1 régulateur)</item>
         <item>Vertical &#8211; Gauche (1 régulateur)</item>
         <item>Vertical &#8211; Droite (1 régulateur)</item>
         <item>Switching &#8211; Gauche (1 régulateur)</item>
         <item>Switching &#8211; Droite (1 régulateur)</item>
-        <item>Simple &#8211; Tablette (1&#8211;6 régulateurs)</item>
+        <item>Simple &#8211; Recommandé Tablette (1-6 régulateurs)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">
@@ -82,7 +82,7 @@
         <item>Augmenter la vitesse</item>
         <item>Réduire la vitesse</item>
         <item>Prochain régulateur</item>
-        <item>Fonction 00/Lumière</item>
+        <item>Fonction 00/Feux loco</item>
         <item>Fonction 01/Cloche</item>
         <item>Fonction 02/Sifflet</item>
         <item>Fonction 03</item>
@@ -191,7 +191,7 @@
     </string-array>
 
     <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
-        <item>Ne fais rien</item>
+        <item>Aucune action</item>
         <item>Loco de tête - même n° de fonction</item>
         <item>Locos de tête et de queue - même n° de fonction</item>
         <item>Toutes les locos - même n° de fonction</item>
@@ -276,16 +276,16 @@
 
     <string-array name="prefGamePadNoneLabels">
         <item> </item> //not used
-        <item>Button not available</item>
-        <item>Button not available</item>
-        <item>Button not available</item>
-        <item>Button not available</item>
-        <item>Button not available</item>
-        <item>Button not available</item>
-        <item>Button not available</item>
-        <item>Button not available</item>
-        <item>Button not available</item>
-        <item>Button not available</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
         <item> </item> //not used
         <item> </item> //not used
         <item> </item> //not used
