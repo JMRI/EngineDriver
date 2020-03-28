@@ -481,6 +481,7 @@
  * connection
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
+ *   TODO: add confirmation dialog to clear recent connections
  * threaded_application
  *   TODO: remember consist details
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
@@ -510,8 +511,12 @@
  *   TODO: disconnect connections made by roster stuff
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
+ *   TODO: add confirmation dialog to clear recent locos
+ *   TODO: add confirmation dialog to clear recent consists
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
+ * preferences:
+ *   TODO: add confirmation dialog to import and reset
  * log_viewer:
  *
  * These require changes to WiThrottle
