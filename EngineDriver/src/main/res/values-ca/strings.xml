@@ -792,4 +792,6 @@
     <string name="toastRecentTurnoutCleared">La participació elimina de la llista</string>
     <string name="toastRecentTurnoutsConfirmClear">ONFIRMAR que desitja eliminar tots els desviaments recents prement el botó \\\'Esborrar llista\\\' de nou.</string>
     <string name="toastTurnoutsRecentsHelp">Pulsació llarga per eliminar una entrada.</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneSummary">Canvi de zona morta de l\'accelerador</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Ajust la mida de la zona morta en el control lliscant de la pantalla de commutació de l\'accelerador</string>
 </resources>

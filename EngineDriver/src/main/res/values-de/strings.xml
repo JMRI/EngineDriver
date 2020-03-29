@@ -795,4 +795,6 @@
     <string name="toastRecentTurnoutCleared">Weiche entfernt von der Liste</string>
     <string name="toastRecentTurnoutsConfirmClear">estätigen, dass Sie entfernen möchten alle die Neue Weichen durch die ‚Liste löschen‘ Taste erneut drücken.</string>
     <string name="toastTurnoutsRecentsHelp">Lange drücken, um einen Eintrag zu entfernen.</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneSummary">Schaltgas Dead Zone</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Legen Sie die Größe der toten Zone auf dem Schieber des Schaltgas Bildschirm</string>
 </resources>

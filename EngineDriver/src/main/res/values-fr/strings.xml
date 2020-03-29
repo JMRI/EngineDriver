@@ -811,4 +811,6 @@
     <string name="toastRecentTurnoutCleared">Aiguille supprimée de la liste</string>
     <string name="toastRecentTurnoutsConfirmClear">Confirmez la suppression des aiguilles récentes en appuyant à nouveau sur la touche \'Efface list\'</string>
     <string name="toastTurnoutsRecentsHelp">Appui long pour supprimer</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneSummary">Zone Manoeuvre inactive</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Définissez la taille de la Zone Manoeuvre via le curseur du régulateur Mode Manoeuvre</string>
 </resources>

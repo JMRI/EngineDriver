@@ -726,4 +726,6 @@
     <string name="toastRecentTurnoutCleared">Affluenza rimosso dalla lista</string>
     <string name="toastRecentTurnoutsConfirmClear">ONFERMA che si desidera rimuovere tutti i deviatoi recenti premendo il tasto \\\'Cancella elenco\\\' ANCORA.</string>
     <string name="toastTurnoutsRecentsHelp">Premere a lungo per rimuovere una voce.</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneSummary">Commutazione Throttle Dead Zone</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Impostare la dimensione della zona morta sul cursore dello schermo Throttle Switching</string>
 </resources>

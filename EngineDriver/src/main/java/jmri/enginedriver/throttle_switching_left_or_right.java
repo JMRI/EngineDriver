@@ -55,10 +55,11 @@ public class throttle_switching_left_or_right extends throttle {
 
     private int throttleMidPointZero;
     private int throttleSwitchingMax;
-//    private double throttleReScale;
-    private static final int THROTTLE_DEAD_ZONE = 10;
+
     private int throttleMidPointDeadZoneUpper;
     private int throttleMidPointDeadZoneLower;
+
+    private int prefSwitchingThrottleSliderDeadZone = 10;
 
     protected void removeLoco(int whichThrottle) {
         super.removeLoco(whichThrottle);
@@ -96,10 +97,12 @@ public class throttle_switching_left_or_right extends throttle {
 
         }
 
-        throttleMidPointZero = (MAX_SPEED_VAL_WIT + THROTTLE_DEAD_ZONE);
-        throttleSwitchingMax = (MAX_SPEED_VAL_WIT + THROTTLE_DEAD_ZONE) * 2;
-        throttleMidPointDeadZoneUpper = throttleMidPointZero + THROTTLE_DEAD_ZONE;
-        throttleMidPointDeadZoneLower = throttleMidPointZero - THROTTLE_DEAD_ZONE;
+        prefSwitchingThrottleSliderDeadZone = Integer.parseInt(prefs.getString("prefSwitchingThrottleSliderDeadZone", getResources().getString(R.string.prefSwitchingThrottleSliderDeadZoneDefaultValue)));
+
+        throttleMidPointZero = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone);
+        throttleSwitchingMax = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone) * 2;
+        throttleMidPointDeadZoneUpper = throttleMidPointZero + prefSwitchingThrottleSliderDeadZone;
+        throttleMidPointDeadZoneLower = throttleMidPointZero - prefSwitchingThrottleSliderDeadZone;
 //        throttleReScale = ((throttleMidPointZero * 2)) / (double) throttleMidPointDeadZoneLower;
 
         lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
@@ -279,6 +282,7 @@ public class throttle_switching_left_or_right extends throttle {
 //            }
 
             vsbSpeeds[throttleIndex].setVisibility(View.GONE); //always hide the real slider
+//            vsbSpeeds[throttleIndex].setVisibility(View.VISIBLE);
 
             vsbSwitchingSpeeds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
             if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
@@ -528,12 +532,16 @@ public class throttle_switching_left_or_right extends throttle {
                         repeatUpdateHandler.post(new RptUpdater(whichThrottle));
                         return;
                     }
+                    speedUpdate(whichThrottle,
+                            getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false));
                     sendSpeedMsg(whichThrottle, speed);
                     setDisplayedSpeed(whichThrottle, speed);
                 }
                 else {                      // got a touch while processing limitJump
                     newSliderPosition = lastSliderPosition;    //   so suppress multiple touches
                     throttle.setProgress(lastSliderPosition);
+                    speedUpdate(whichThrottle,
+                            getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false));
                 }
                 // Now update ESU MCII Knob position
                 if (IS_ESU_MCII) {
@@ -547,6 +555,8 @@ public class throttle_switching_left_or_right extends throttle {
                         mAutoIncrement = false;
                         limitedJump = false;
                         throttle.setProgress(jumpSpeed);
+                        speedUpdate(whichThrottle,
+                                getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false));
                     }
                 }
 //                setDisplayedSpeed(whichThrottle, speed, true);
@@ -628,7 +638,7 @@ public class throttle_switching_left_or_right extends throttle {
         switchingThrottleSlider.setProgress(newSliderPosition);
         setDisplayedSpeed(whichThrottle, speed);
 
-//        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange -  change: " + change);
+//        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange -  speed: " + speed + " change: " + change);
 
         int realSpeed = super.speedChange(whichThrottle, change);
         return realSpeed;
@@ -759,20 +769,20 @@ public class throttle_switching_left_or_right extends throttle {
                     limitSpeedSliderScalingFactors[whichThrottle]=100/prefLimitSpeedPercent;
                     sbs[whichThrottle].setMax( Math.round(maxThrottle / limitSpeedSliderScalingFactors[whichThrottle]));
 
-                    throttleMidPointZero = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + THROTTLE_DEAD_ZONE);
-                    throttleSwitchingMax = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + THROTTLE_DEAD_ZONE) * 2;
+                    throttleMidPointZero = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone);
+                    throttleSwitchingMax = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone) * 2;
                     vsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax);
 
                 } else {
                     bLimitSpeeds[whichThrottle].setSelected(false);
                     sbs[whichThrottle].setMax(maxThrottle);
 
-                    throttleMidPointZero = (MAX_SPEED_VAL_WIT + THROTTLE_DEAD_ZONE);
-                    throttleSwitchingMax = (MAX_SPEED_VAL_WIT + THROTTLE_DEAD_ZONE) * 2;
+                    throttleMidPointZero = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone);
+                    throttleSwitchingMax = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone) * 2;
                     vsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax);
                 }
-                throttleMidPointDeadZoneUpper = throttleMidPointZero + THROTTLE_DEAD_ZONE;
-                throttleMidPointDeadZoneLower = throttleMidPointZero - THROTTLE_DEAD_ZONE;
+                throttleMidPointDeadZoneUpper = throttleMidPointZero + prefSwitchingThrottleSliderDeadZone;
+                throttleMidPointDeadZoneLower = throttleMidPointZero - prefSwitchingThrottleSliderDeadZone;
 
                 speedUpdate(whichThrottle,  speed);
                 setEngineDirection(whichThrottle, dir, false);
