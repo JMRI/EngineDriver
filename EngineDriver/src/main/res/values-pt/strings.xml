@@ -730,4 +730,6 @@
     <string name="toastRecentTurnoutCleared">A afluência removido da lista</string>
     <string name="toastRecentTurnoutsConfirmClear">onfirm que deseja remover todas as Agulhas recentes, pressionando o botão \\\'Limpar Lista\\\' NOVAMENTE.</string>
     <string name="toastTurnoutsRecentsHelp">Longo pressionar para remover uma entrada.</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneSummary">Alternando acelerador Dead Zone</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Defina o tamanho da zona morta no controle deslizante do Switching do acelerador Tela</string>
 </resources>

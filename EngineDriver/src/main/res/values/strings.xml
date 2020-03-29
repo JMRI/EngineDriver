@@ -575,6 +575,10 @@
     <string name="prefLimitSpeedPercentSummary">Set the \% of the throttle that the speed will be limited to.</string>
     <string name="prefLimitSpeedPercentDefaultValue" translatable="false">50</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Switching Throttle Dead Zone</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneSummary">Set the size of the dead zone on the slider of the Switching Throttle Screen</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneDefaultValue" translatable="false">10</string>  <!-- DO NOT TRANSLATE -->
+
     <string name="limitSpeedButtonLabel">Limit Speed</string>
 
     <string name="functionButton00DefaultValue">Light</string>

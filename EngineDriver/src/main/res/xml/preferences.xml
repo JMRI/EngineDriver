@@ -127,6 +127,14 @@
                 android:title="@string/prefTickMarksOnSlidersTitle" >
             </CheckBoxPreference>
 
+            <EditTextPreference
+                android:defaultValue="@string/prefSwitchingThrottleSliderDeadZoneDefaultValue"
+                android:dialogTitle="@string/prefSwitchingThrottleSliderDeadZoneTitle"
+                android:key="prefSwitchingThrottleSliderDeadZone"
+                android:maxLength="3"
+                android:summary="@string/prefSwitchingThrottleSliderDeadZoneSummary"
+                android:title="@string/prefSwitchingThrottleSliderDeadZoneTitle" />
+
             <CheckBoxPreference
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

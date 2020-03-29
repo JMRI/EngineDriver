@@ -48,5 +48,7 @@
     <string name="turnoutsSelectionTypeHeading">Points Selection Method</string>
     <string name="toastRecentTurnoutCleared">Point removed from list</string>
     <string name="toastRecentTurnoutsConfirmClear">Confirm that you want remove all the Recent Points by pressing the \'Clear List\' button AGAIN.</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneSummary">Switching Throttle Dead Zone</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Set the size of the dead zone on the slider of the Switching Throttle Screen</string>
 
 </resources>
