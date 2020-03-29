@@ -1954,6 +1954,7 @@ public class threaded_application extends Application {
                 try {
                     runMethod(this);
                     if (!cancel)
+                        Log.d("Engine_Driver", "threaded_application: sendMsg - message - ROSTER_UPDATE");
                         sendMsg(comm_msg_handler, message_type.ROSTER_UPDATE);      //send message to alert other activities
                 } catch (Throwable t) {
                     Log.d("Engine_Driver", "threaded_application: Data fetch failed: " + t.getMessage());

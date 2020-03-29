@@ -196,13 +196,13 @@ public class select_loco extends Activity {
                                 if ((mainapp.roster != null) && (mainapp.roster.get(rostername) != null) && (mainapp.roster.get(rostername).getIconPath() != null)) {
                                     hm.put("roster_icon", mainapp.roster.get(rostername).getIconPath() + "?maxHeight=52");  //include sizing instructions
                                 } else {
-                                    Log.d("Engine_Driver", "xml roster entry " + rostername + " found, but no icon specified.");
+                                    Log.d("Engine_Driver", "select_loco: xml roster entry " + rostername + " found, but no icon specified.");
                                 }
                             } else {
-                                Log.w("Engine_Driver", "WiThrottle roster entry " + rostername + " not found in xml roster.");
+                                Log.w("Engine_Driver", "select_loco: WiThrottle roster entry " + rostername + " not found in xml roster.");
                             }
                         } else {
-                            Log.w("Engine_Driver", "xml roster not available");
+                            Log.w("Engine_Driver", "select_loco: xml roster not available");
                         }
                         // add temp hashmap to list which view is hooked to
                         roster_list.add(hm);
@@ -384,15 +384,19 @@ public class select_loco extends Activity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case message_type.ROSTER_UPDATE:
+                    Log.d("Engine_Driver", "select_loco: select_loco_handler - ROSTER_UPDATE");
                     //refresh labels when any roster response is received
                     roster_list_adapter.notifyDataSetChanged();
                     set_labels();
                     break;
                 case message_type.RESPONSE:
                     String response_str = msg.obj.toString();
+                    Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - message: " + response_str);
                     if (response_str.length() >= 1) {
                         char com1 = response_str.charAt(0);
-                        if (com1 == 'R') {                                  //refresh labels when any roster response is received
+                        if (com1 == '*') { //heartbeat - ignore
+                            break;
+                        } else if (com1 == 'R') {                                  //refresh labels when any roster response is received
                             roster_list_adapter.notifyDataSetChanged();
                             set_labels();
                         } else if (com1 == 'M' && response_str.length() >= 3) { // refresh Release buttons if loco is added or removed from a consist
@@ -405,13 +409,16 @@ public class select_loco extends Activity {
                         set_labels();
                     break;
                 case message_type.WIT_CON_RETRY:
+                    Log.d("Engine_Driver", "select_loco: select_loco_handler - WIT_CON_RETRY");
                     witRetry(msg.obj.toString());
                     break;
                 case message_type.WIT_CON_RECONNECT:
+                    Log.d("Engine_Driver", "select_loco: select_loco_handler - WIT_CON_RECONNECT");
                     roster_list_adapter.notifyDataSetChanged();
                     set_labels();
                     break;
                 case message_type.DISCONNECT:
+                    Log.d("Engine_Driver", "select_loco: select_loco_handler - DISCONNECT");
                     end_this_activity();
                     break;
             }
@@ -1469,7 +1476,7 @@ public class select_loco extends Activity {
         String rosterNameString = hm.get("roster_name");
         RosterEntry re = mainapp.roster.get(rosterNameString);
         if (re == null) {
-            Log.w("Engine_Driver", "Roster entry " + rosterNameString + " not available.");
+            Log.w("Engine_Driver", "select_loco: Roster entry " + rosterNameString + " not available.");
             return true;
         }
         String iconURL = hm.get("roster_icon");
@@ -1480,7 +1487,7 @@ public class select_loco extends Activity {
     }
 
     protected void showRosterDetailsDialog(RosterEntry re, String rosterNameString, String iconURL) {
-        Log.d("Engine_Driver", "Showing details for roster entry " + rosterNameString);
+        Log.d("Engine_Driver", "select_loco: Showing details for roster entry " + rosterNameString);
         final Dialog dialog = new Dialog(select_loco.this, mainapp.getSelectedTheme());
         dialog.setTitle(getApplicationContext().getResources().getString(R.string.rosterDetailsDialogTitle) + rosterNameString);
         dialog.setContentView(R.layout.roster_entry);
