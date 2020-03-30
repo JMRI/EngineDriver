@@ -394,7 +394,10 @@ public class select_loco extends Activity {
                     Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - message: " + response_str);
                     if (response_str.length() >= 1) {
                         char com1 = response_str.charAt(0);
-                        if (com1 == '*') { //heartbeat - ignore
+                        String com123 = response_str.substring(0,3);
+                        if ( (com1 == '*') //heartbeat - ignore
+                        || (com123.equals("PFT")) ) { //fast clock - ignore
+//                            Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - ignoring message: " + response_str);
                             break;
                         } else if (com1 == 'R') {                                  //refresh labels when any roster response is received
                             roster_list_adapter.notifyDataSetChanged();

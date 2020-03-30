@@ -1599,7 +1599,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             speed = limitSpeedMax[whichThrottle];
         }
 
-        Log.d("Engine_Driver","throttle - (throttle_switching_left_or_right) - speedChange -  change: " + change + " speed: " + speed+ " scaleSpeed: " + scaleSpeed);
+//        Log.d("Engine_Driver","throttle - (throttle_switching_left_or_right) - speedChange -  change: " + change + " speed: " + speed+ " scaleSpeed: " + scaleSpeed);
 
         throttle_slider.setProgress(speed);
         return speed;
