@@ -1,4 +1,14 @@
+**Version 2.25.102
+ * New Switching/Shunting Throttle Screen types
+ * Additional French Translations by Alain Carasso
 **Version 2.25.100
+ * Swipe now works everywhere except active sliders
+ * Less likely to activate function button when scrolling or swiping
+ * Fix problem in 'drop before acquire' when re-selecting the same loco
+ * Play sound and vibrate when device disconnects
+ * Remember Recent Consists and restore them from the select loco screen
+ * Added close button and roster image to roster details dialog
+ * Rework of roster name usage when an address is entered
 **Version 2.25.98
  * change fastclock from websocket to withrottle PFT message
  * add fastclock to other activities
@@ -489,6 +499,7 @@
  *   TODO: check for error on send and do something with it 
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: support reordering of roster labels based on function number
  *   TODO: option/button to support DPU "unfenced" mode, relatively adjusting 2nd throttle from first
  *   TODO: retrieve and show icons for function buttons (if set)
  *   TODO: manually create roster entries (function labels) and store on device
