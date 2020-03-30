@@ -595,6 +595,7 @@ public class throttle_switching_left_or_right extends throttle {
         int lastScaleSpeed;
         int scaleSpeed;
         int speed;
+//        int lastSpeed;
 
         if (getDirection(whichThrottle)==DIRECTION_REVERSE) {  // treat negative as positive
             change = change * -1;
@@ -603,20 +604,22 @@ public class throttle_switching_left_or_right extends throttle {
 
         lastScaleSpeed = getSpeedFromSliderPosition(lastSliderPosition, whichThrottle, true);
         scaleSpeed = lastScaleSpeed + change;
-        speed = getSpeedFromSliderPosition(lastSliderPosition, whichThrottle, false);
+//        lastSpeed = getSpeedFromSliderPosition(lastSliderPosition, whichThrottle, false);
 
 //        if (prefLimitSpeedButton && isLimitSpeeds[whichThrottle] && (speed > limitSpeedMax[whichThrottle] )) {
 //            speed = limitSpeedMax[whichThrottle];
 //        }
 
-//        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
+//        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastSpeed: " + lastSpeed + " lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
         if (scaleSpeed<0) {
             int dir = getDirection(whichThrottle) == DIRECTION_FORWARD ? DIRECTION_REVERSE : DIRECTION_FORWARD;
-//            Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - auto Reverse - dir:" + dir);
+            Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - auto Reverse - dir:" + dir);
             dirs[whichThrottle] = dir;
             setEngineDirection(whichThrottle, dir, false);
             showDirectionIndication(whichThrottle, dir);
         }
+//        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
+//        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange -  lastSpeed: " + lastSpeed + " change: " + change);
 
         scaleSpeed = Math.abs(scaleSpeed);
 
@@ -634,8 +637,10 @@ public class throttle_switching_left_or_right extends throttle {
             newSliderPosition = throttleSwitchingMax;
 
 //        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) + " newSliderPosition: " + newSliderPosition);
+//        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange -  lastSpeed: " + lastSpeed + " change: " + change);
 
         switchingThrottleSlider.setProgress(newSliderPosition);
+        speed = getSpeedFromSliderPosition(newSliderPosition, whichThrottle, false);
         setDisplayedSpeed(whichThrottle, speed);
 
 //        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange -  speed: " + speed + " change: " + change);
