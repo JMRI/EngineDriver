@@ -595,7 +595,7 @@ public class throttle_switching_left_or_right extends throttle {
         int lastScaleSpeed;
         int scaleSpeed;
         int speed;
-//        int lastSpeed;
+        int lastSpeed;
 
         if (getDirection(whichThrottle)==DIRECTION_REVERSE) {  // treat negative as positive
             change = change * -1;
@@ -610,21 +610,21 @@ public class throttle_switching_left_or_right extends throttle {
 //            speed = limitSpeedMax[whichThrottle];
 //        }
 
-//        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastSpeed: " + lastSpeed + " lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
+//        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
         if (scaleSpeed<0) {
             int dir = getDirection(whichThrottle) == DIRECTION_FORWARD ? DIRECTION_REVERSE : DIRECTION_FORWARD;
-            Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - auto Reverse - dir:" + dir);
+//            Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - auto Reverse - dir:" + dir);
             dirs[whichThrottle] = dir;
             setEngineDirection(whichThrottle, dir, false);
             showDirectionIndication(whichThrottle, dir);
         }
 //        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
-//        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange -  lastSpeed: " + lastSpeed + " change: " + change);
+//        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange - change: " + change);
 
         scaleSpeed = Math.abs(scaleSpeed);
 
         int newSliderPosition = getNewSliderPositionFromSpeed(scaleSpeed, whichThrottle, true);
-//        Log.d("Engine_Driver", "throttle_switching_left_or_right - newSliderPosition: " + newSliderPosition);
+//        Log.d("Engine_Driver", "throttle_switching_left_or_right - newSliderPosition: " + newSliderPosition );
 
         if (lastScaleSpeed == scaleSpeed) {
             newSliderPosition += Math.signum(change);
@@ -637,16 +637,16 @@ public class throttle_switching_left_or_right extends throttle {
             newSliderPosition = throttleSwitchingMax;
 
 //        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) + " newSliderPosition: " + newSliderPosition);
-//        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange -  lastSpeed: " + lastSpeed + " change: " + change);
+//        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange - change: " + change);
 
         switchingThrottleSlider.setProgress(newSliderPosition);
-        speed = getSpeedFromSliderPosition(newSliderPosition, whichThrottle, false);
+        speed = Math.abs(getSpeedFromSliderPosition(newSliderPosition, whichThrottle, false));
         setDisplayedSpeed(whichThrottle, speed);
 
 //        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange -  speed: " + speed + " change: " + change);
 
-        int realSpeed = super.speedChange(whichThrottle, change);
-        return realSpeed;
+        speedUpdateAndNotify(whichThrottle, speed);
+        return speed;
 
     } // end speedChange
 
@@ -792,7 +792,7 @@ public class throttle_switching_left_or_right extends throttle {
                 speedUpdate(whichThrottle,  speed);
                 setEngineDirection(whichThrottle, dir, false);
             }
-//            Log.d("Engine_Driver","limit_speed_button_switching_touch_listener -  speed: " + speed );
+            Log.d("Engine_Driver","limit_speed_button_switching_touch_listener -  speed: " + speed );
 
             speedChangeAndNotify(whichThrottle,0);
             setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference

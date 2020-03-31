@@ -394,15 +394,19 @@ public class select_loco extends Activity {
                     Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - message: " + response_str);
                     if (response_str.length() >= 1) {
                         char com1 = response_str.charAt(0);
-                        if (com1 == '*') { //heartbeat - ignore
-                            break;
-                        } else if (com1 == 'R') {                                  //refresh labels when any roster response is received
+                        String com123 = response_str.substring(0,3);
+                        if (com1 == 'R') {                                  //refresh labels when any roster response is received
                             roster_list_adapter.notifyDataSetChanged();
                             set_labels();
+                            break;
                         } else if (com1 == 'M' && response_str.length() >= 3) { // refresh Release buttons if loco is added or removed from a consist
                             char com2 = response_str.charAt(2);
                             if (com2 == '+' || com2 == '-')
                                 set_labels();
+                                break;
+                        } else { // ignore everything else
+                            Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - ignoring message: " + response_str);
+                            break;
                         }
                     }
                     if (!selectLocoRendered)         // call set_labels if the select loco textViews had not rendered the last time it was called

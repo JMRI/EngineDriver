@@ -130,8 +130,8 @@
     <string name="prefTitle">Préférences</string>
     <string name="prefSummary">Préférences pour Engine Driver</string>
     <string name="preferences">Préférences</string>
-    <string name="prefSwipeUpDownTitle">Faire glisser vers le haut-le bas les préférences</string>
-    <string name="prefSwipeUpDownSummary">Options du Glisser/deplacer sur l écran du régulateur</string>
+    <string name="prefSwipeUpDownTitle">Faire glisser Haut vers Bas les préférences</string>
+    <string name="prefSwipeUpDownSummary">Options du Glisser Haut vers Bas sur régulateur</string>
     <string name="prefThrottleNameTitle">Nom du régulateur</string>
 
     <string name="prefThrottleNameSummary">Définir le nom de ce terminal (affiché sur l écran WiThrottle)</string>
@@ -164,7 +164,7 @@
     <string name="prefIncreaseWebViewSizeSummary">Augmenter la taille de l affichage Web de 60% (petits écrans)</string>
     <string name="prefThrottleViewImmersiveModeTitle">Utilisation du régulateur en mode immersif?</string>
     <string name="prefThrottleViewImmersiveModeSummary">Affichage plein écran, faire glisser vers le bas pour effacement temporaire et accès au menu.</string>
-    <string name="prefSwipeUpOptionTitle">Autoriser faire glisser vers le haut dans l affichage du régulateur?</string>
+    <string name="prefSwipeUpOptionTitle">Autoriser glisser vers le haut dans l affichage du régulateur?</string>
     <string name="prefSwipeUpOptionSummary">Que se passe-t il si vous faites glisser vers le haut l affichage du régulateur?</string>
     <string name="prefVolumeTitle">Préférences de volume</string>
     <string name="prefVolumeSummary">Options des touches de volumes</string>
@@ -590,8 +590,8 @@
     <string name="TtsGamepadTestFail">Test annulé</string>
     <string name="TtsGamepadTestReset">Reset du Gamepad</string>
     <!--
-    <string name="TTS_Screen_Dimmed">Luminosité réduite, faire glisser pour rétablir</string>
-    <string name="TTS_Screen_Locked">Verrouillé, faire glisser pour rétablir</string>
+    <string name="TTS_Screen_Dimmed">Luminosité réduite, glisser vers Haut pour rétablir</string>
+    <string name="TTS_Screen_Locked">Verrouillé, glisser Haut pour rétablir</string>
     <string name="TTS_Screen_Unlocked">Déverrouillé</string>
     <string name="TTS_Immersive_Mode_Disabled">Mode immersif temporairement désactivé.</string>
     <string name="TTS_Forward">Avant</string>
@@ -635,9 +635,9 @@
     <string name="LocoSelectMethodAddress">Adresse DCC</string>
     <string name="LocoSelectMethodRoster">Catalogue (roster) JMRI</string>
     <string name="LocoSelectMethodRecent">Récent</string>
-    <string name="LocoSelectMethodHelp">Entrer une adresse DCC correspondant à la locomotive et cliquer sur \'Acquérir\'.
-\nOu bien choisir la locomotive dans le répertoire,
-\nou la selectionner dans la liste de locomotives récentes en cliquant sur un des boutons ci dessus.</string>
+    <string name="LocoSelectMethodHelp">"Entrer l adresse DCC de la locomotive et cliquer sur \'Acquérir\'.
+\nOu la choisir dans le répertoire JMRI,
+\nOu la choisir dans les locomotives récentes en cliquant sur un des boutons ci dessus."</string>
     <string name="flashlightAction">Lampe Flash</string>
     <string name="flashlightStateOn">Lampe Flash allumée</string>
     <string name="flashlightStateOff">Lampe Flash éteinte</string>
@@ -786,8 +786,8 @@
     <string name="limitSpeedButtonLabel">Vitesse Maxi</string>
     <string name="LocoSelectMethodRecentConsist">UM récent(s</string>
     <string name="toastSelectConsistsConfirmClear">Confirmer la suppression des UM récents en appuyant à nouveau sur la touche \'Efface list\'</string>
-    <string name="toastRecentConsistsHelp">Appuyer pour sélectionner.\n Appui long pour afficher détails ou renommer les lok selectionnées.\n Glisser Gauche pour supprimer une entrée</string>
-    <string name="toastRecentsHelp">Appuyer pour sélectionner.\n Appui long pour renommer.\n Glisser Gauche pour supprimer l entrée</string>
+    <string name="toastRecentConsistsHelp">Appuyer pour sélectionner.\nAppui long pour afficher détails ou renommer les lok selectionnées.\n Glisser de Gauche à Droite pour supprimer une entrée</string>
+    <string name="toastRecentsHelp">Appuyer pour sélectionner.\n Appui long pour renommer.\n Glisser de Gauche à Droite pour supprimer l entrée</string>
     <string name="toastRosterHelp">Appuyer pour sélectionner.\n Appui long pour afficher details</string>
     <string name="RecentConsistsNameEditText">Entrer un nom d UM</string>
     <string name="RecentConsistsNameEditTitle">UM récents</string>
@@ -798,8 +798,8 @@
     <string name="toastRecentConsistCleared">UM supprimée de la liste</string>
     <string name="editConsistButtonLabel">Modif Ordre et Direction</string>
     <string name="editConsistLightsButtonLabel">Modif Eclairage</string>
-    <string name="toastConnectionsListHelp">Appuyer pour sélectionner. Glisser Gauche vers droite pour supprimer l entrée</string>
-    <string name="toastConsistEditHelp">Appuyer pour changer de sens. Glisser Gauche vers droite pour supprimer l entrée</string>
+    <string name="toastConnectionsListHelp">Appuyer pour sélectionner. Glisser Gauche vers Droite pour supprimer l entrée</string>
+    <string name="toastConsistEditHelp">Appuyer pour changer de sens. Glisser Gauche vers Droite pour supprimer l entrée</string>
     <string name="consistLocoFacingFront">Avant</string>
     <string name="consistLocoFacingRear">Arrière</string>
     <string name="editConsistLocoFacingLabel">Orienté vers</string>
@@ -811,6 +811,6 @@
     <string name="toastRecentTurnoutCleared">Aiguille supprimée de la liste</string>
     <string name="toastRecentTurnoutsConfirmClear">Confirmez la suppression des aiguilles récentes en appuyant à nouveau sur la touche \'Efface list\'</string>
     <string name="toastTurnoutsRecentsHelp">Appui long pour supprimer</string>
-    <string name="prefSwitchingThrottleSliderDeadZoneSummary">Zone Manoeuvre inactive</string>
-    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Définissez la taille de la Zone Manoeuvre via le curseur du régulateur Mode Manoeuvre</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Zone Manoeuvre inactive</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneSummary">Définissez la taille de la Zone Manoeuvre via le curseur du régulateur Mode Manoeuvre </string>
 </resources>
