@@ -1586,6 +1586,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         int lastScaleSpeed = (int) Math.round(lastSpeed * displayUnitScale);
         int scaleSpeed = lastScaleSpeed + change;
         int speed = (int) Math.round(scaleSpeed / displayUnitScale);
+//        Log.d("Engine_Driver","throttle: speedChange -  change: " + change + " lastSpeed: " + lastSpeed+ " lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed:" + scaleSpeed);
         if (lastScaleSpeed == scaleSpeed) {
             speed += Math.signum(change);
         }
@@ -1599,7 +1600,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             speed = limitSpeedMax[whichThrottle];
         }
 
-//        Log.d("Engine_Driver","throttle - (throttle_switching_left_or_right) - speedChange -  change: " + change + " speed: " + speed+ " scaleSpeed: " + scaleSpeed);
+//        Log.d("Engine_Driver","throttle: speedChange -  change: " + change + " speed: " + speed+ " scaleSpeed: " + scaleSpeed);
 
         throttle_slider.setProgress(speed);
         return speed;
