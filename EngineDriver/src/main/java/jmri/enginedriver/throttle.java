@@ -2932,12 +2932,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     void GamepadIncrementSpeed(int whichThrottle) {
         incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_GAMEPAD);
-        GamepadFeedbackSound(atMaxSpeed(whichThrottle));
+        GamepadFeedbackSound(atMaxSpeed(whichThrottle) || atMinSpeed(whichThrottle));
     }
 
     void GamepadDecrementSpeed(int whichThrottle) {
         decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_GAMEPAD);
-        GamepadFeedbackSound(atMinSpeed(whichThrottle));
+        GamepadFeedbackSound(atMinSpeed(whichThrottle) || atMaxSpeed(whichThrottle));
     }
 
     void GamepadFeedbackSound(boolean invalidAction) {
