@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.gesture.GestureOverlayView;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
@@ -4370,8 +4371,15 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // zoom-out
         webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
         webView.setInitialScale((int) (100 * scale));
-        // webView.getSettings().setLoadWithOverviewMode(true); // size image to
-        // fill width
+        webView.clearCache(true);   // force fresh javascript download on first connection
+        // webView.getSettings().setLoadWithOverviewMode(true); // size image to fill width
+
+
+        // enable remote debugging of all webviews
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE))
+            { WebView.setWebContentsDebuggingEnabled(true); }
+        }
 
         // open all links inside the current view (don't start external web
         // browser)
@@ -4388,7 +4396,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 super.onPageFinished(view, url);
                 if (!noUrl.equals(url)) {               // if url is legit
                     currentUrl = url;
-                    if (firstUrl == null) {             // if this is the first legit url 
+                    if (firstUrl == null) {             // if this is the first legit url
                         firstUrl = url;
                         clearHistory = true;
                     }
