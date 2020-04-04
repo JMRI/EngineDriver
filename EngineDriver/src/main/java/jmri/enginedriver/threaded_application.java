@@ -82,8 +82,6 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -2571,14 +2569,16 @@ public class threaded_application extends Application {
      */
     public String getFastClockTime() {
         String f = "";
-        int tz_offset = TimeZone.getDefault().getRawOffset();
+        int gmtOffset = TimeZone.getTimeZone("GMT").getRawOffset();
+
         if (fastClockFormat == 2) {
             f = "HH:mm"; // display in 24 hr format
         } else if (fastClockFormat == 1){
             f = "h:mm a"; // display in 12 hr format
         }
         SimpleDateFormat sdf = new SimpleDateFormat(f, Locale.getDefault());
-        Date date = new java.util.Date((fastClockSeconds * 1000L) - tz_offset);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        Date date = new java.util.Date((fastClockSeconds * 1000L) - gmtOffset);
         return sdf.format(date);
     }
 
