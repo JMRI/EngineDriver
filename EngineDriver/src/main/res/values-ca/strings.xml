@@ -794,4 +794,8 @@
     <string name="toastTurnoutsRecentsHelp">Pulsació llarga per eliminar una entrada.</string>
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Canvi de zona morta de l\'accelerador</string>
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Ajust la mida de la zona morta en el control lliscant de la pantalla de commutació de l\'accelerador</string>
+    <string name="dialogConfirmClearTitle">esborrar llista</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">Confirmeu que voleu eliminar tota Consisteix en la recent</string>
+    <string name="dialogRecentLocoConfirmClearQuestion">Confirmeu que voleu eliminar totes les locomotores recents</string>
+    <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmeu que voleu eliminar tots els desviaments recents</string>
 </resources>

@@ -813,4 +813,8 @@
     <string name="toastTurnoutsRecentsHelp">Appui long pour supprimer</string>
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Zone Manoeuvre inactive</string>
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Définissez la taille de la Zone Manoeuvre via le curseur du régulateur Mode Manoeuvre </string>
+    <string name="dialogConfirmClearTitle">Effacer la liste</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">Confirmez que vous voulez supprimer tous les derniers Consiste</string>
+    <string name="dialogRecentLocoConfirmClearQuestion">Confirmez que vous voulez supprimer tous les récents Locomotives</string>
+    <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmez que vous voulez supprimer tous les Turnouts récents</string>
 </resources>

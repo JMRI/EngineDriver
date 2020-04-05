@@ -728,4 +728,8 @@
     <string name="toastTurnoutsRecentsHelp">Premere a lungo per rimuovere una voce.</string>
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Commutazione Throttle Dead Zone</string>
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Impostare la dimensione della zona morta sul cursore dello schermo Throttle Switching</string>
+    <string name="dialogConfirmClearTitle">Elenco chiaro</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">Confermare che si desidera rimuovere tutti Consiste la recente</string>
+    <string name="dialogRecentLocoConfirmClearQuestion">Confermare che si desidera rimuovere tutte le locomotive recenti</string>
+    <string name="dialogRecentTurnoutsConfirmClearQuestions">Confermare che si desidera rimuovere tutti i deviatoi recenti</string>
 </resources>
