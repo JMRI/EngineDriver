@@ -488,6 +488,7 @@
  *   TODO: combine loco control and turnout control in one page
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout
+ *   TODO: fix the swipe over the buttons
  * connection
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
@@ -516,14 +517,13 @@
  *   TODO: unset all states when loco not selected
  *   TODO: option to show the turnout view instead of the webview
  *   TODO: use the renamed locos and Consists on the Throttle page
+ *   TODO: User request to have re-arrangeable function buttons
  * select_loco:
  *   TODO: handle roster entry names with forward slash
  *   TODO: check length of text to avoid overlapping images, slide images to right
  *   TODO: disconnect connections made by roster stuff
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
- *   TODO: add confirmation dialog to clear recent locos
- *   TODO: add confirmation dialog to clear recent consists
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  * preferences:

@@ -19,7 +19,9 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -130,8 +132,6 @@ public class turnouts extends Activity implements OnGestureListener {
     String turnoutSystemName = "";
     String turnoutUserName = "";
     int turnoutSource = 0;
-
-    int clearListCount = 0;
 
     public void refresh_turnout_view() {
         //specify logic for sort comparison (by username)
@@ -1133,9 +1133,13 @@ public class turnouts extends Activity implements OnGestureListener {
             for (int i = 0; i < importExportPreferences.recent_turnout_address_list.size(); i++) {
 //                String sName = importExportPreferences.recent_turnout_address_list.get(i);
                 if (turnoutSystemName.equals(importExportPreferences.recent_turnout_address_list.get(i))) {
+                    //noinspection SuspiciousListRemoveInLoop
                     importExportPreferences.recent_turnout_address_list.remove(i);
+                    //noinspection SuspiciousListRemoveInLoop
                     importExportPreferences.recent_turnout_name_list.remove(i);
+                    //noinspection SuspiciousListRemoveInLoop
                     importExportPreferences.recent_turnout_source_list.remove(i);
+                    //noinspection SuspiciousListRemoveInLoop
                     importExportPreferences.recent_turnout_server_list.remove(i);
                 }
             }
@@ -1165,14 +1169,27 @@ public class turnouts extends Activity implements OnGestureListener {
 
     public class clearRecentTurnoutsListButton implements AdapterView.OnClickListener {
         public void onClick(View v) {
-            clearListCount++;
-            if (clearListCount <= 1) {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentTurnoutsConfirmClear), Toast.LENGTH_LONG).show();
-            } else { // only clear the list if the button is clicked a second time
-                clearRecentTurnoutsList();
-                clearListCount = 0;
-            }
-            onCreate(null);
+
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                //@Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            clearRecentTurnoutsList();
+                            onCreate(null);
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder ab = new AlertDialog.Builder(turnouts.this);
+            ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
+                    .setMessage(getApplicationContext().getResources().getString(R.string.dialogRecentTurnoutsConfirmClearQuestions))
+                    .setPositiveButton(R.string.yes, dialogClickListener)
+                    .setNegativeButton(R.string.cancel, dialogClickListener);
+            ab.show();
         }
     }
 
