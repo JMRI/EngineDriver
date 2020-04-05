@@ -232,6 +232,8 @@ public class threaded_application extends Application {
 
     public boolean shownRosterTurnouts = false;
 
+    public boolean simpleConfirmDialogResult = false;
+
     class comm_thread extends Thread {
         JmDNS jmdns = null;
         volatile boolean endingJmdns = false;
@@ -1295,10 +1297,10 @@ public class threaded_application extends Application {
         }
 
         class socket_WiT extends Thread {
-            protected InetAddress host_address;
-            protected Socket clientSocket = null;
-            protected BufferedReader inputBR = null;
-            protected PrintWriter outputPW = null;
+            InetAddress host_address;
+            Socket clientSocket = null;
+            BufferedReader inputBR = null;
+            PrintWriter outputPW = null;
             private volatile boolean endRead = false;           //signals rcvr to terminate
             private volatile boolean socketGood = false;        //indicates socket condition
             private volatile boolean inboundTimeout = false;    //indicates inbound messages are not arriving from WiT
@@ -1449,7 +1451,7 @@ public class threaded_application extends Application {
                 heart.stopHeartbeat();
             }
 
-            public void Send(String msg) {
+            void Send(String msg) {
                 boolean reconInProg = false;
                 //reconnect socket if needed
                 if (!socketGood || inboundTimeout) {
@@ -1508,7 +1510,7 @@ public class threaded_application extends Application {
             // unfortunatley isConnected returns true if the Socket was disconnected other than by calling close() 
             // so on signal loss it still returns true.  
             // Eventually we just try to send and handle the IOException if the socket was disconnected.
-            public boolean SocketCheck() {
+            boolean SocketCheck() {
                 boolean status = clientSocket.isConnected() && !clientSocket.isInputShutdown() && !clientSocket.isOutputShutdown();
                 if (status)
                     status = HaveNetworkConnection();   // can't trust the socket flags so try something else...
@@ -1536,11 +1538,11 @@ public class threaded_application extends Application {
                 return haveConnectedWifi || haveConnectedMobile;
             }
 
-            public boolean SocketGood() {
+            boolean SocketGood() {
                 return this.socketGood;
             }
 
-            public void InboundTimeout() {
+            void InboundTimeout() {
                 inboundTimeout = true;
                 comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 200L);    //force a send so the reconnection process start immediately
             }
@@ -1565,7 +1567,7 @@ public class threaded_application extends Application {
             private int heartbeatInboundInterval = 0;       //alerts user if there was no inbound traffic for this long (msec)
             private String sInboundInterval = "";           //inbound heartbeat interval in seconds
 
-            public int getInboundInterval() {
+            int getInboundInterval() {
                 return heartbeatInboundInterval;
             }
 
@@ -1573,14 +1575,14 @@ public class threaded_application extends Application {
                 return heartbeatOutboundInterval;
             }
 
-            public String sGetInboundInterval() {
+            String sGetInboundInterval() {
                 return sInboundInterval;
             }
 
 
             //startHeartbeat(timeoutInterval in seconds)
             //calcs the inbound and outbound intervals and starts the beating
-            public void startHeartbeat(int timeoutInterval) {
+            void startHeartbeat(int timeoutInterval) {
                 //update interval timers only when the heartbeat timeout interval changed
                 if (timeoutInterval != heartbeatIntervalSetpoint) {
                     heartbeatIntervalSetpoint = timeoutInterval;
@@ -1608,7 +1610,7 @@ public class threaded_application extends Application {
 
             //restartOutboundInterval()
             //restarts the outbound interval timing - call this after sending anything to WiT that requires a response
-            public void restartOutboundInterval() {
+            void restartOutboundInterval() {
                 comm_msg_handler.removeCallbacks(outboundHeartbeatTimer);                   //remove any pending requests
                 if (heartbeatOutboundInterval > 0) {
                     comm_msg_handler.postDelayed(outboundHeartbeatTimer, heartbeatOutboundInterval);    //restart interval
@@ -1617,14 +1619,14 @@ public class threaded_application extends Application {
 
             //restartInboundInterval()
             //restarts the inbound interval timing - call this after receiving anything from WiT
-            public void restartInboundInterval() {
+            void restartInboundInterval() {
                 comm_msg_handler.removeCallbacks(inboundHeartbeatTimer);
                 if (heartbeatInboundInterval > 0) {
                     comm_msg_handler.postDelayed(inboundHeartbeatTimer, heartbeatInboundInterval);
                 }
             }
 
-            public void stopHeartbeat() {
+            void stopHeartbeat() {
                 comm_msg_handler.removeCallbacks(outboundHeartbeatTimer);           //remove any pending requests
                 comm_msg_handler.removeCallbacks(inboundHeartbeatTimer);
                 heartbeatIntervalSetpoint = 0;
@@ -1672,7 +1674,7 @@ public class threaded_application extends Application {
         class PhoneListener extends PhoneStateListener {
             private TelephonyManager telMgr;
 
-            public PhoneListener() {
+            PhoneListener() {
                 telMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
                 this.enable();
             }
@@ -1939,7 +1941,7 @@ public class threaded_application extends Application {
         }
     }
 
-    abstract public class DownloadDataTask {
+    abstract class DownloadDataTask {
         private Download dl = null;
 
         abstract void runMethod(Download dl) throws IOException;

@@ -783,4 +783,8 @@
     <string name="toastRecentTurnoutCleared">La participación elimina de la lista</string>
     <string name="toastRecentTurnoutsConfirmClear">ONFIRMAR que desea eliminar todos los desvíos recientes pulsando el botón \\\'Borrar lista\\\' de nuevo.</string>
     <string name="toastTurnoutsRecentsHelp">Pulsación larga para eliminar una entrada.</string>
+    <string name="dialogConfirmClearTitle">Limpiar lista</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">Confirme que desea eliminar toda Consiste en la reciente</string>
+    <string name="dialogRecentLocoConfirmClearQuestion">Confirme que desea eliminar todas las locomotoras recientes</string>
+    <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirme que desea eliminar todos los desvíos recientes</string>
 </resources>

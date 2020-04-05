@@ -797,4 +797,8 @@
     <string name="toastTurnoutsRecentsHelp">Lange drücken, um einen Eintrag zu entfernen.</string>
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Schaltgas Dead Zone</string>
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Legen Sie die Größe der toten Zone auf dem Schieber des Schaltgas Bildschirm</string>
+    <string name="dialogConfirmClearTitle">Liste leeren</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">Bestätigen Sie, dass Sie entfernen möchten alle Recent Besteht</string>
+    <string name="dialogRecentLocoConfirmClearQuestion">Bestätigen Sie, dass Sie die letzten Lokomotiven wollen entfernen</string>
+    <string name="dialogRecentTurnoutsConfirmClearQuestions">Bestätigen Sie, dass Sie alle Neue Weichen wollen entfernen</string>
 </resources>

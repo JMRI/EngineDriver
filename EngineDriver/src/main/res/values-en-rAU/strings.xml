@@ -50,5 +50,6 @@
     <string name="toastRecentTurnoutsConfirmClear">Confirm that you want remove all the Recent Points by pressing the \'Clear List\' button AGAIN.</string>
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Switching Throttle Dead Zone</string>
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Set the size of the dead zone on the slider of the Switching Throttle Screen</string>
+    <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirm that you want remove all the Recent Points</string>
 
 </resources>

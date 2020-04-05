@@ -976,4 +976,9 @@
     <string name="turnoutsSelectionTypeRoster">%1$s Defined</string>
     <string name="turnoutsRecentHeading">Recent Turnouts</string>
 
+    <string name="dialogConfirmClearTitle">Clear List</string>
+    <string name="dialogRecentLocoConfirmClearQuestion">Confirm that you want remove all the Recent Locomotives</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">Confirm that you want remove all the Recent Consists</string>
+    <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirm that you want remove all the Recent Turnouts</string>
+
 </resources>

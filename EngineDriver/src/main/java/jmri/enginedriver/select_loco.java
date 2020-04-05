@@ -143,9 +143,6 @@ public class select_loco extends Activity {
 
     protected int layoutViewId = R.layout.select_loco;
 
-    private int clearListCount = 0;
-    private int clearConsistsListCount = 0;
-
     private String prefRosterFilter = "";
     EditText filter_roster_text;
 
@@ -563,9 +560,13 @@ public class select_loco extends Activity {
                 if (engine_address == importExportPreferences.recent_loco_address_list.get(i)
                         && address_size == importExportPreferences.recent_loco_address_size_list.get(i)
                         && locoName.equals(importExportPreferences.recent_loco_name_list.get(i))) {
+                    //noinspection SuspiciousListRemoveInLoop
                     importExportPreferences.recent_loco_address_list.remove(i);
+                    //noinspection SuspiciousListRemoveInLoop
                     importExportPreferences.recent_loco_address_size_list.remove(i);
+                    //noinspection SuspiciousListRemoveInLoop
                     importExportPreferences.recent_loco_name_list.remove(i);
+                    //noinspection SuspiciousListRemoveInLoop
                     importExportPreferences.recent_loco_source_list.remove(i);
                 }
             }
@@ -938,27 +939,55 @@ public class select_loco extends Activity {
     //Clears recent connection list of locos when button is touched or clicked
     public class clear_Loco_List_button implements AdapterView.OnClickListener {
         public void onClick(View v) {
-            clearListCount++;
-            if (clearListCount <= 1) {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSelectLocoConfirmClear), Toast.LENGTH_LONG).show();
-            } else { // only clear the list if the button is clicked a second time
-                clearList();
-                clearListCount = 0;
-            }
-            onCreate(null);
+
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                //@Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            clearList();
+                            onCreate(null);
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder ab = new AlertDialog.Builder(select_loco.this);
+            ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
+                    .setMessage(getApplicationContext().getResources().getString(R.string.dialogRecentLocoConfirmClearQuestion))
+                    .setPositiveButton(R.string.yes, dialogClickListener)
+                    .setNegativeButton(R.string.cancel, dialogClickListener);
+            ab.show();
+
         }
     }
 
     public class clear_consists_list_button implements AdapterView.OnClickListener {
         public void onClick(View v) {
-            clearConsistsListCount++;
-            if (clearConsistsListCount <= 1) {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSelectConsistsConfirmClear), Toast.LENGTH_LONG).show();
-            } else { // only clear the list if the button is clicked a second time
-                clearConsistsList();
-                clearConsistsListCount = 0;
-            }
-            onCreate(null);
+
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                //@Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            clearConsistsList();
+                            onCreate(null);
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder ab = new AlertDialog.Builder(select_loco.this);
+            ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
+                    .setMessage(getApplicationContext().getResources().getString(R.string.dialogRecentConsistsConfirmClearQuestions))
+                    .setPositiveButton(R.string.yes, dialogClickListener)
+                    .setNegativeButton(R.string.cancel, dialogClickListener);
+            ab.show();
+
         }
     }
 

@@ -895,4 +895,8 @@
     <string name="toastTurnoutsRecentsHelp">Dlouhým stiskem lze odstranit položku.</string>
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Přepínání Throttle Mrtvé zóny</string>
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Nastavit velikost mrtvé zóny na jezdci spínacího škrticí Screen</string>
+    <string name="dialogConfirmClearTitle">Prázdný seznam</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">Potvrďte, že chcete odstranit všechny Nedávný Sestává</string>
+    <string name="dialogRecentLocoConfirmClearQuestion">Potvrďte, že chcete odstranit všechny Nejnovější Lokomotivy</string>
+    <string name="dialogRecentTurnoutsConfirmClearQuestions">Potvrďte, že chcete odstranit všechny Nejnovější výhybky</string>
 </resources>
