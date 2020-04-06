@@ -88,6 +88,10 @@ public class ImportExportPreferences {
     private static final String PREF_IMPORT_ALL_PARTIAL = "No";
     private static final String PREF_IMPORT_ALL_RESET = "-";
 
+    private static final int PREF_TYPE_INT = 0;
+    private static final int PREF_TYPE_BOOLEAN = 1;
+    private static final int PREF_TYPE_STRING = 2;
+
     private boolean writeExportFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName){
         Log.d("Engine_Driver", "writeExportFile: ImportExportPreferences: Writing export file");
         boolean res = false;
@@ -170,21 +174,36 @@ public class ImportExportPreferences {
             Toast.makeText(context, context.getResources().getString(R.string.toastImportExportExportFailed), Toast.LENGTH_LONG).show();
         }
 
+        int numberOfRecentLocosToWrite = preferences.getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", "10");
 
+        int prefCount = 0;
         if (prefImportExportLocoList) {  // now clean out the preference data
-            removeExtraListDataFromPreferences(0,"prefRecentLoco", sharedPreferences);
-            removeExtraListDataFromPreferences(0,"prefRecentLocoSize", sharedPreferences);
-            removeExtraListDataFromPreferences(0,"prefRecentLocoName", sharedPreferences);
-            removeExtraListDataFromPreferences(0,"prefRecentLocoSource", sharedPreferences);
+            prefCount = removeExtraListDataFromPreferences(0,numberOfRecentLocosToWrite+1,"prefRecentLoco", sharedPreferences);
+            if (prefCount == numberOfRecentLocosToWrite+1) {  // if there were that many, assume the worst
+                prefCount = removeExtraListDataFromPreferences(numberOfRecentLocosToWrite+1, 600, "prefRecentLoco", sharedPreferences);
+            }
+            removeExtraListDataFromPreferences(0, prefCount,"prefRecentLocoSize", sharedPreferences);
+            removeExtraListDataFromPreferences(0,prefCount,"prefRecentLocoName", sharedPreferences);
+            removeExtraListDataFromPreferences(0,prefCount,"prefRecentLocoSource", sharedPreferences);
 
-            removeExtraListDataFromPreferences(0,"prefRecentConsistName", sharedPreferences);
-            for (int i = 0; i < 100; i++) {
-                removeExtraListDataFromPreferences(0,"prefRecentConsistAddress_"+i, sharedPreferences);
-                removeExtraListDataFromPreferences(0,"prefRecentConsistSize_"+i, sharedPreferences);
-                removeExtraListDataFromPreferences(0, "prefRecentConsistDirection_"+i, sharedPreferences);
-                removeExtraListDataFromPreferences(0,"prefRecentConsistSource_"+i, sharedPreferences);
-                removeExtraListDataFromPreferences(0,"prefRecentConsistRosterName_"+i, sharedPreferences);
-                removeExtraListDataFromPreferences(0,"prefRecentConsistLight_"+i, sharedPreferences);
+            prefCount =removeExtraListDataFromPreferences(0,60,"prefRecentConsistName", sharedPreferences);
+            if (prefCount == numberOfRecentLocosToWrite+1) {  // if there were that many, assume the worst
+                prefCount = removeExtraListDataFromPreferences(numberOfRecentLocosToWrite+1, 600, "prefRecentConsistName", sharedPreferences);
+            }
+            for (int i = 0; i < prefCount; i++) {
+                int subPrefCount = removeExtraListDataFromPreferences(0,20,"prefRecentConsistAddress_"+i, sharedPreferences);
+                removeExtraListDataFromPreferences(0,subPrefCount,"prefRecentConsistSize_"+i, sharedPreferences);
+                removeExtraListDataFromPreferences(0,subPrefCount,"prefRecentConsistDirection_"+i, sharedPreferences);
+                removeExtraListDataFromPreferences(0,subPrefCount,"prefRecentConsistSource_"+i, sharedPreferences);
+                removeExtraListDataFromPreferences(0,subPrefCount,"prefRecentConsistRosterName_"+i, sharedPreferences);
+                removeExtraListDataFromPreferences(0,subPrefCount,"prefRecentConsistLight_"+i, sharedPreferences);
+            }
+
+            if (sharedPreferences.contains("prefRecentTurnoutServer_0")) {  // there should not be any so assume the worst
+                prefCount = removeExtraListDataFromPreferences(0, 600, "prefRecentTurnout", sharedPreferences);
+                removeExtraListDataFromPreferences(0, prefCount, "prefRecentTurnoutName", sharedPreferences);
+                removeExtraListDataFromPreferences(0, prefCount, "prefRecentTurnoutSource", sharedPreferences);
+                removeExtraListDataFromPreferences(0, prefCount, "prefRecentTurnoutServer", sharedPreferences);
             }
         }
 
@@ -463,7 +482,7 @@ public class ImportExportPreferences {
             int mrl = Integer.parseInt(smrl);
             list_output = new PrintWriter(engine_list_file);
             if (mrl > 0) {
-                for (int i = 0; i < recent_loco_address_list.size(); i++) {
+                for (int i = 0; i < recent_loco_address_list.size() && i < mrl; i++) {
 //                    list_output.format("%d:%d\n", recent_loco_address_list.get(i), recent_loco_address_size_list.get(i));
                     list_output.format("%d:%d%d~%s\n",
                             recent_loco_address_list.get(i),
@@ -789,18 +808,27 @@ public class ImportExportPreferences {
     }
 
     @SuppressLint("ApplySharedPref")
-    private boolean removeExtraListDataFromPreferences(int startFrom, String listName, SharedPreferences sharedPreferences) {
+    private int removeExtraListDataFromPreferences(int startFrom, int stopAt, String listName, SharedPreferences sharedPreferences) {
+        int prefCount = 0;
         if (startFrom==0) {   // startFrom = zero will clear all items
             sharedPreferences.edit().remove(listName + "_size").commit();
         }
-        for(int i=startFrom ; i<=100 ; i++){
+        for(int i=startFrom ; i<stopAt ; i++){
             try {
-             sharedPreferences.edit().remove(listName + "_" + i).commit();
+                String prefName = listName + "_" + i;
+                if (sharedPreferences.contains(prefName)) {
+                    sharedPreferences.edit().remove(prefName).commit();
+                    prefCount = i + 1;
+                }
             } catch (Exception except) {
                 //ignore it
             }
         }
-        return sharedPreferences.edit().commit();
+        sharedPreferences.edit().commit();
+
+        Log.d("Engine_Driver", "writeRecentConsistsListToFile: removeExtraListDataFromPreferences: list: " +listName + " prefCount" + prefCount);
+
+        return prefCount;
     }
 
 
