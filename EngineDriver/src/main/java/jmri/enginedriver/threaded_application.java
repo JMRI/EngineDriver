@@ -231,6 +231,7 @@ public class threaded_application extends Application {
     public boolean shownToastConsistEdit = false;
 
     public boolean shownRosterTurnouts = false;
+    public boolean firstWebActivity = false;
 
     public boolean simpleConfirmDialogResult = false;
 
