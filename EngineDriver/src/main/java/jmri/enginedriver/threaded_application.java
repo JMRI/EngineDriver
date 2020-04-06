@@ -471,6 +471,7 @@ public class threaded_application extends Application {
 
                         //clear app.thread shared variables so they can be reinitialized
                         initShared();
+                        fastClockSeconds = 0L;
 
                         //store ip and port in global variables
                         host_ip = new_host_ip;
@@ -494,7 +495,6 @@ public class threaded_application extends Application {
                             host_ip = null;  //clear vars if failed to connect
                             port = 0;
                         }
-                        fastClockSeconds = 0L;
                         break;
 
                     //Release one or all locos on the specified throttle.  addr is in msg (""==all), arg1 holds whichThrottle.
@@ -2571,8 +2571,6 @@ public class threaded_application extends Application {
      */
     public String getFastClockTime() {
         String f = "";
-        int gmtOffset = TimeZone.getTimeZone("GMT").getRawOffset();
-
         if (fastClockFormat == 2) {
             f = "HH:mm"; // display in 24 hr format
         } else if (fastClockFormat == 1){
@@ -2580,7 +2578,7 @@ public class threaded_application extends Application {
         }
         SimpleDateFormat sdf = new SimpleDateFormat(f, Locale.getDefault());
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Date date = new java.util.Date((fastClockSeconds * 1000L) - gmtOffset);
+        Date date = new java.util.Date((fastClockSeconds * 1000L));
         return sdf.format(date);
     }
 
