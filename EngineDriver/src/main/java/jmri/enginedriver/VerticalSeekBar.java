@@ -153,7 +153,7 @@ public class VerticalSeekBar extends SeekBar {
 
                     for (int i = 0; i < tempSteps; i++) {
                         j = (tempSteps - i);
-                        d = gridBottom + ((tempSteps - i) * tickSpacing);
+                        d = gridBottom + ((tempSteps - i - 1) * tickSpacing);
                         l = gridMiddle - 10 - (sizeIncrease) * j * j;
                         r = gridMiddle + 10 + (sizeIncrease) * j * j;
                         c.drawLine(d, l, d, r, tickPaint);
