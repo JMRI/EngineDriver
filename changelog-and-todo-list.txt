@@ -1,6 +1,8 @@
 **Version 2.25.102
  * New Switching/Shunting Throttle Screen types
  * Additional French Translations by Alain Carasso
+ * fix time zone offset issue
+ * add clearcache at connect for web views
 **Version 2.25.100
  * Swipe now works everywhere except active sliders
  * Less likely to activate function button when scrolling or swiping
