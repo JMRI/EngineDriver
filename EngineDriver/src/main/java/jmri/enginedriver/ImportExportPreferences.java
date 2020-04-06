@@ -186,7 +186,7 @@ public class ImportExportPreferences {
             removeExtraListDataFromPreferences(0,prefCount,"prefRecentLocoName", sharedPreferences);
             removeExtraListDataFromPreferences(0,prefCount,"prefRecentLocoSource", sharedPreferences);
 
-            prefCount =removeExtraListDataFromPreferences(0,60,"prefRecentConsistName", sharedPreferences);
+            prefCount =removeExtraListDataFromPreferences(0,numberOfRecentLocosToWrite+1,"prefRecentConsistName", sharedPreferences);
             if (prefCount == numberOfRecentLocosToWrite+1) {  // if there were that many, assume the worst
                 prefCount = removeExtraListDataFromPreferences(numberOfRecentLocosToWrite+1, 600, "prefRecentConsistName", sharedPreferences);
             }
