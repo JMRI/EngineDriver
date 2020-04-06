@@ -158,7 +158,10 @@ public class web_activity extends Activity {
         webView.getSettings().setUseWideViewPort(true);        // Enable greater zoom-out
         webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
         webView.setInitialScale((int) (100 * scale));
-        webView.clearCache(true);   // force fresh javascript download on first connection
+        if (mainapp.firstWebActivity == false) {
+            webView.clearCache(true);   // force fresh javascript download on first connection
+            mainapp.firstWebActivity = true;
+        }
 
         // enable remote debugging of all webviews
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
