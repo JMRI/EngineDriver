@@ -56,6 +56,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.webkit.CookieSyncManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -477,6 +478,10 @@ public class threaded_application extends Application {
                         //store ip and port in global variables
                         host_ip = new_host_ip;
                         port = new_port;
+                        // skip url checking on Play Protect
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                            WebView.setSafeBrowsingWhitelist(Collections.singletonList(host_ip), null);
+                        }
 
                         //attempt connection to WiThrottle server
                         socketWiT = new socket_WiT();

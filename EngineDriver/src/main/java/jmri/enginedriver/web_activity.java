@@ -165,8 +165,9 @@ public class web_activity extends Activity {
 
         // enable remote debugging of all webviews
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE))
-            { WebView.setWebContentsDebuggingEnabled(true); }
+            if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
+                WebView.setWebContentsDebuggingEnabled(true);
+            }
         }
 
 
@@ -202,6 +203,15 @@ public class web_activity extends Activity {
         webView.setWebViewClient(EDWebClient);
         if (currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null)
             load_webview();            // reload if no saved state or no page had loaded when state was saved
+
+        //longpress webview to reload
+        webView.setOnLongClickListener(new WebView.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                reloadWeb();
+                return true;
+            }
+        });
 
         //Set the buttons
         closeButton = findViewById(R.id.webview_button_close);
@@ -287,7 +297,7 @@ public class web_activity extends Activity {
         if (webView != null) {
             if (!callHiddenWebViewOnPause())
                 webView.pauseTimers();
-            String url = webView.getUrl();
+//            String url = webView.getUrl();
 //            if (url != null && !noUrl.equals(url)) {    // if any url has been loaded
 //                webView.loadUrl(noUrl);                // load a static url to stop any javascript
 //            }
