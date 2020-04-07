@@ -4415,6 +4415,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null) {
             load_webview(); // reload if no saved state or no page had loaded when state was saved
         }
+
+        //longpress webview to reload
+        webView.setOnLongClickListener(new WebView.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                reloadWeb();
+                return true;
+            }
+        });
+
         // put pointer to this activity's handler in main app's shared variable
         mainapp.throttle_msg_handler = new throttle_handler();
 
@@ -4517,9 +4527,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             if (!callHiddenWebViewOnResume()) {
                 webView.resumeTimers();
             }
-            if (noUrl.equals(webView.getUrl()) && webView.canGoBack()) {    //unload static url loaded by onPause
-                webView.goBack();
-            }
+//            if (noUrl.equals(webView.getUrl()) && webView.canGoBack()) {    //unload static url loaded by onPause
+//                webView.goBack();
+//            }
         }
 
         if (mainapp.EStopActivated) {
@@ -4631,10 +4641,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 webView.pauseTimers();
             }
 
-            String url = webView.getUrl();
-            if (url != null && !noUrl.equals(url)) {    // if any url has been loaded 
-                webView.loadUrl(noUrl);                 // load a static url to stop any javascript
-            }
+ //           String url = webView.getUrl();
+ //           if (url != null && !noUrl.equals(url)) {    // if any url has been loaded
+ //               webView.loadUrl(noUrl);                 // load a static url to stop any javascript
+ //           }
         }
         CookieSyncManager.getInstance().stopSync();
 
@@ -4734,8 +4744,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             url = noUrl;                            // load static url to stop javascript
             currentUrl = null;
             firstUrl = null;
-        } else if (url == null)                       // else if initializing
-        {
+        }
+        else if (url == null) {                // else if initializing
             webViewIsOn = true;
             url = mainapp.createUrl(prefs.getString("InitialThrotWebPage",
                     getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue)));
