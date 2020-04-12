@@ -520,6 +520,7 @@
  *   TODO: option to show the turnout view instead of the webview
  *   TODO: use the renamed locos and Consists on the Throttle page
  *   TODO: User request to have re-arrangeable function buttons
+ *   TODO: change throttle_vertical_left_or_right.java so that in inherits from throttle_vertical.java not throttle.java
  * select_loco:
  *   TODO: handle roster entry names with forward slash
  *   TODO: check length of text to avoid overlapping images, slide images to right
@@ -529,7 +530,7 @@
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  * preferences:
- *   TODO: add confirmation dialog to import and reset
+ *
  * log_viewer:
  *
  * These require changes to WiThrottle

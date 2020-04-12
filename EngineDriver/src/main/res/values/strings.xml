@@ -316,7 +316,7 @@
 
     <string name="prefMaximumThrottleTitle">Maximum Throttle Percentage</string>
     <string name="prefMaximumThrottleDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value in %</string>
+    <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value in % in ALL sliders</string>
     <string name="prefMaximumThrottleChangeTitle">Maximum Throttle Change</string>
     <string name="prefMaximumThrottleChangeDefaultValue" translatable="false">25</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefMaximumThrottleChangeSummary">Maximum Allowed throttle change in %</string>
@@ -569,10 +569,10 @@
     <string name="prefLocaleDefaultValue" translatable="false">Default</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefLimitSpeedButtonTitle">Show \'Limit Speed\' button</string>
-    <string name="prefLimitSpeedButtonSummary">Show a button that restricts the maximum speed of a loco.</string>
+    <string name="prefLimitSpeedButtonSummary">Show a button to temporarily restrict the maximum speed on an individual throttle.</string>
 
-    <string name="prefLimitSpeedPercentTitle">\'Limit Speed\' to \%</string>
-    <string name="prefLimitSpeedPercentSummary">Set the \% of the throttle that the speed will be limited to.</string>
+    <string name="prefLimitSpeedPercentTitle">\'Limit Speed\' button \%</string>
+    <string name="prefLimitSpeedPercentSummary">Set the \% of the throttle that the speed will be temporarily limited to.</string>
     <string name="prefLimitSpeedPercentDefaultValue" translatable="false">50</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Switching Throttle Dead Zone</string>
@@ -980,5 +980,11 @@
     <string name="dialogRecentLocoConfirmClearQuestion">Confirm that you want remove all the Recent Locomotives</string>
     <string name="dialogRecentConsistsConfirmClearQuestions">Confirm that you want remove all the Recent Consists</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirm that you want remove all the Recent Turnouts</string>
+
+    <string name="dialogConfirmResetPreferencesTitle">Reset Preferences</string>
+    <string name="dialogResetPreferencesQuestion">Confirm that you want reset all preferences.\nALL current preferences will be lost.</string>
+
+    <string name="dialogConfirmImportPreferencesTitle">Import Preferences</string>
+    <string name="dialogImportPreferencesQuestion">Confirm that you want import preferences.\nALL current preferences will be lost.</string>
 
 </resources>

@@ -55,6 +55,8 @@ public class VerticalSeekBar extends SeekBar {
     private static final int TICK_TYPE_0_100_0 = 1;
     int tickMarkType = 0;
 
+    public boolean touchFromUser = false;
+
     public VerticalSeekBar(final Context context) {
         super(context);
     }
@@ -222,6 +224,7 @@ public class VerticalSeekBar extends SeekBar {
     }
 
     private void setSeekBarProgress(int progress, final boolean fromUser) {
+        touchFromUser = fromUser;
 
         if (progress != getProgress()) {
             super.setProgress(progress);

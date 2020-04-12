@@ -372,9 +372,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         if (currentValue.equals(IMPORT_EXPORT_OPTION_EXPORT)) {
                             saveSharedPreferencesToFile(sharedPreferences, exportedPreferencesFileName, true);
                         } else if (currentValue.equals(IMPORT_EXPORT_OPTION_IMPORT)) {
-                            loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT);
+                            loadSharedPreferencesFromFileDialog(sharedPreferences, exportedPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT);
                         } else if (currentValue.equals(IMPORT_EXPORT_OPTION_RESET)) {
-                            resetPreferences(sharedPreferences);
+                            resetPreferencesDialog();
                         }
                     }
                     break;
@@ -499,6 +499,31 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
+    private void loadSharedPreferencesFromFileDialog(final SharedPreferences sharedPreferences, final String exportedPreferencesFileName, final String deviceId, final int forceRestartReason) {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            //@Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName, deviceId, forceRestartReason);
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
+                        reload();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder ab = new AlertDialog.Builder(preferences.this);
+        ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmImportPreferencesTitle))
+                .setMessage(getApplicationContext().getResources().getString(R.string.dialogImportPreferencesQuestion))
+                .setPositiveButton(R.string.yes, dialogClickListener)
+                .setNegativeButton(R.string.cancel, dialogClickListener);
+        ab.show();
+    }
+
+
     private boolean loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
         Log.d("Engine_Driver", "Preferences: Loading saved preferences from file: " + exportedPreferencesFileName);
         boolean res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
@@ -540,9 +565,34 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             recreate();
     }
 
-    @SuppressLint("ApplySharedPref")
-    private void resetPreferences(SharedPreferences sharedPreferences) {
+    private void resetPreferencesDialog() {
         Log.d("Engine_Driver", "Preferences: Resetting preferences");
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            //@Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        resetPreferences();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
+                        reload();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder ab = new AlertDialog.Builder(preferences.this);
+        ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmResetPreferencesTitle))
+                .setMessage(getApplicationContext().getResources().getString(R.string.dialogResetPreferencesQuestion))
+                .setPositiveButton(R.string.yes, dialogClickListener)
+                .setNegativeButton(R.string.cancel, dialogClickListener);
+        ab.show();
+    }
+
+    @SuppressLint("ApplySharedPref")
+    private void resetPreferences() {
         SharedPreferences.Editor prefEdit = sharedPreferences.edit();
         prefEdit.clear();
         prefEdit.commit();
@@ -781,18 +831,22 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
 
     private void removePreference(Preference preference) {
-        PreferenceGroup parent = getParent(getPreferenceScreen(), preference);
-        if (parent != null)
-            parent.removePreference(preference);
-        else //Doesn't have a parent
-            getPreferenceScreen().removePreference(preference);
-
+        try {
+            PreferenceGroup parent = getParent(getPreferenceScreen(), preference);
+            if (parent != null)
+                parent.removePreference(preference);
+            else //Doesn't have a parent
+                getPreferenceScreen().removePreference(preference);
+        } catch (Exception except) {
+            Log.d("Engine_Driver", "Preferences: removePreference: failed: " + preference);
+            return;
+        }
     }
 
     private void hideAdvancedPreferences() {
         if (!sharedPreferences.getBoolean("prefShowAdvancedPreferences", getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue) ) ) {
             for (String advancedPreference1 : advancedPreferences) {
-//                Log.d("Engine_Driver", "Preferences: Remove advanced preference: " + advancedPreference1);
+//                Log.d("Engine_Driver", "Preferences: hideAdvancedPreferences(): " + advancedPreference1);
 
                 Preference advancedPreference = getPreferenceScreen().findPreference(advancedPreference1);
                 removePreference(advancedPreference);

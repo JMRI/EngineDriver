@@ -855,6 +855,7 @@
         <item>Run completed</item>
     </string-array>
 
+    <!-- always put any categories last.  i.e. preferences, then sub categories, then categories -->
     <string-array name="advancedPreferences" translatable="false">
         <item>prefLocale</item>
         <item>show_emergency_stop_menu_preference</item>
@@ -974,6 +975,8 @@
         <item>prefAutoImportExport</item>
         <item>prefHostImportExport</item>
 
+        <item>prefSwitchingThrottleSliderDeadZone</item>
+
         <item>prefCategoryEsuMc2StopButton</item>
         <item>prefCategoryEsiMc2ControlKnob</item>
 
@@ -993,7 +996,6 @@
         <item>prefCategoryWeb</item>
         <item>prefCategoryChildren</item>
 
-        <item>prefSwitchingThrottleSliderDeadZone</item>
     </string-array>
 
 </resources>
