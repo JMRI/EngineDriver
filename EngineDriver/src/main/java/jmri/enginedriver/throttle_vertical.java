@@ -143,14 +143,14 @@ public class throttle_vertical extends throttle {
         if (mainapp.appIsFinishing) { return;}
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            if( throttleIndex < mainapp.numThrottles) {
+            if (throttleIndex < mainapp.numThrottles) {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.VISIBLE);
             } else {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.GONE);
             }
 //        }
 
-        // show or hide the limit speed buttons
+            // show or hide the limit speed buttons
             if (!prefLimitSpeedButton) {
                 bLimitSpeeds[throttleIndex].setVisibility(View.GONE);
             } else {
@@ -199,8 +199,12 @@ public class throttle_vertical extends throttle {
 //                    bLabelPlainText = mainapp.consists[throttleIndex].toString();
 //                    bLabel = mainapp.consists[throttleIndex].toHtml();
                 } else {
-                    bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
-                    bLabelPlainText = bLabel;
+                    if (overrideThrottleNames[throttleIndex].equals("")) {
+                        bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
+                    } else {
+                        bLabel = overrideThrottleNames[throttleIndex];
+                    }
+                        bLabelPlainText = bLabel;
                 }
                 bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
             } else {
@@ -255,8 +259,8 @@ public class throttle_vertical extends throttle {
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
         int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.numThrottles;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            if ((screenWidth>0) && (throttleWidth >900)) {
-                svFnBtns[throttleIndex].getLayoutParams().width = throttleWidth/3;
+            if ((screenWidth > 0) && (throttleWidth > 900)) {
+                svFnBtns[throttleIndex].getLayoutParams().width = throttleWidth / 3;
                 svFnBtns[throttleIndex].requestLayout();
             }
 
@@ -268,7 +272,7 @@ public class throttle_vertical extends throttle {
             lSpeeds[throttleIndex].requestLayout();
         }
 
-        int screenHeight = vThrotScrWrap.getHeight(); // get the Hight of usable area
+        int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area
         int keepHeight = screenHeight;  // default height
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
@@ -276,7 +280,7 @@ public class throttle_vertical extends throttle {
             //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
-        if (webView!=null) {
+        if (webView != null) {
             setImmersiveModeOn(webView);
         }
 
@@ -345,12 +349,11 @@ public class throttle_vertical extends throttle {
             sliderTopLeftX[throttleIndex] = x - ovx;
             sliderTopLeftY[throttleIndex] = y - ovy;
             sliderBottomRightX[throttleIndex] = x + vsbSpeeds[throttleIndex].getWidth() - ovx;
-            sliderBottomRightY[throttleIndex] = y + vsbSpeeds[throttleIndex].getHeight() -ovy;
+            sliderBottomRightY[throttleIndex] = y + vsbSpeeds[throttleIndex].getHeight() - ovy;
 
 //            Log.d("Engine_Driver","slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
 //                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);
         }
-
 
 
 //        // update the state of each function button based on shared variable
@@ -362,22 +365,22 @@ public class throttle_vertical extends throttle {
 
     }
 
-    @Override
-    void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
-        boolean newEnabledState = false;
-        // avoid index and null crashes
-        if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
-                || bFwds[whichThrottle] == null) {
-            return;
-        }
-        if (!forceDisable) { // avoid index crash, but may simply push to next line
-            newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
-        }
-        bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
-
-        super.enable_disable_buttons(whichThrottle, forceDisable);
-
-    } // end of enable_disable_buttons
+//    @Override
+//    void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
+//        boolean newEnabledState = false;
+//        // avoid index and null crashes
+//        if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
+//                || bFwds[whichThrottle] == null) {
+//            return;
+//        }
+//        if (!forceDisable) { // avoid index crash, but may simply push to next line
+//            newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
+//        }
+//        bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
+//
+//        super.enable_disable_buttons(whichThrottle, forceDisable);
+//
+//    } // end of enable_disable_buttons
 
     // helper function to enable/disable all children for a group
     @Override

@@ -708,6 +708,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         @Override
         public void run() {
+//            Log.d("Engine_Driver", "RptUpdater: onProgressChanged - mAutoIncrement: " + mAutoIncrement + " mAutoDecrement: " + mAutoDecrement);
             if (mAutoIncrement) {
                 incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
                 repeatUpdateHandler.postDelayed(new RptUpdater(whichThrottle), REP_DELAY);
@@ -3897,15 +3898,23 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            // Log.d("Engine_Driver", "onTouchThrot action " + event.getAction());
+//             Log.d("Engine_Driver", "throttle_listener: onTouch: Throttle action " + event.getAction());
             // consume event if gesture is in progress, otherwise pass it to the SeekBar onProgressChanged()
             return (gestureInProgress);
         }
 
         @Override
         public void onProgressChanged(SeekBar throttle, int speed, boolean fromUser) {
+
+            //special check for the vertical throttles
+            boolean touchFromUser = false;
+            if (vsbSpeeds != null) {
+                touchFromUser = vsbSpeeds[whichThrottle].touchFromUser;
+            }
+//                Log.d("Engine_Driver", "onProgressChanged -- lj: " + limitedJump + " ai: " + mAutoIncrement + " ad: " + mAutoDecrement + " s: " + speed + " js: " + jumpSpeed);
+
             // limit speed change if change was initiated by a user slider touch (prevents "bouncing")
-            if (fromUser) {
+            if ((fromUser) || (touchFromUser)) {
                 if (!limitedJump) {         // touch generates multiple onProgressChanged events, skip processing after first limited jump
                     if ((speed - lastSpeed) > max_throttle_change) {    // if jump is too large then limit it
                         // Log.d("Engine_Driver", "onProgressChanged -- throttling change");
@@ -3948,12 +3957,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         @Override
         public void onStartTrackingTouch(SeekBar sb) {
             gestureInProgress = false;
-            limitedJump = false;
+//            limitedJump = false;
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar sb) {
+            limitedJump = false;
             mAutoIncrement = false;
+            mAutoDecrement = false;
             kidsTimerActions(KIDS_TIMER_STARTED,0);
         }
     }

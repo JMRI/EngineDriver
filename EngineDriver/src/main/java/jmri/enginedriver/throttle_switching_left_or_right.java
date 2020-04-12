@@ -61,9 +61,22 @@ public class throttle_switching_left_or_right extends throttle {
 
     private int prefSwitchingThrottleSliderDeadZone = 10;
 
+    int maxThrottlePcnt = 100;
+    int maxThrottle = 126;
+
+    boolean mChangeDirectionAtZero = false; // needed for the mAutoincrement and mAutoDecrement
+
     protected void removeLoco(int whichThrottle) {
         super.removeLoco(whichThrottle);
         set_function_labels_and_listeners_for_view(whichThrottle);
+    }
+
+    @Override
+    protected void getCommonPrefs(boolean isCreate) {
+        super.getCommonPrefs(isCreate);
+
+        maxThrottlePcnt = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (0.01 * maxThrottlePcnt)); // convert from percent
     }
 
     @SuppressLint({"Recycle", "SetJavaScriptEnabled"})
@@ -486,8 +499,10 @@ public class throttle_switching_left_or_right extends throttle {
     protected class throttleSwitchingListener implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
         int whichThrottle;
         int lastSliderPosition;
+        int lastDir;
         boolean limitedJump;
         int jumpSpeed;
+        int jumpDir;
 
         protected throttleSwitchingListener(int new_whichThrottle) {
             whichThrottle = new_whichThrottle; // store values for this listener
@@ -497,7 +512,7 @@ public class throttle_switching_left_or_right extends throttle {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            // Log.d("Engine_Driver", "onTouchThrot action " + event.getAction());
+            // Log.d("Engine_Driver", "onTouchThrottle action " + event.getAction());
             // consume event if gesture is in progress, otherwise pass it to the SeekBar onProgressChanged()
             return (gestureInProgress);
         }
@@ -508,74 +523,118 @@ public class throttle_switching_left_or_right extends throttle {
             int dir;
 
             speed = getSpeedFromSliderPosition(newSliderPosition, whichThrottle, false);
-            if (newSliderPosition >= throttleMidPointZero) { //forward
-                dir = DIRECTION_FORWARD;
-            } else { // reverse
-                dir = DIRECTION_REVERSE;
-            }
+            dir = getDirectionFromSliderPosition(newSliderPosition,whichThrottle);
+            lastDir = getDirectionFromSliderPosition(lastSliderPosition,whichThrottle);
 
-            if (dirs[whichThrottle]!=dir) {
-                dirs[whichThrottle] = dir;
-                setEngineDirection(whichThrottle, dir, false);
-                showDirectionIndication(whichThrottle, dir);
-            }
+//            Log.d("Engine_Driver", "onProgressChanged: touchFromUser: " + vsbSwitchingSpeeds[whichThrottle].touchFromUser + " limitedJump: " + limitedJump);
 
             // limit speed change if change was initiated by a user slider touch (prevents "bouncing")
-            if (fromUser) {
+            if ((fromUser) || (vsbSwitchingSpeeds[whichThrottle].touchFromUser)) {
                 if (!limitedJump) {         // touch generates multiple onProgressChanged events, skip processing after first limited jump
-                    if ((newSliderPosition - lastSliderPosition) > max_throttle_change) {    // if jump is too large then limit it
-                        // Log.d("Engine_Driver", "onProgressChanged -- throttling change");
-                        mAutoIncrement = true;  // advance slowly
-                        jumpSpeed = speed;      // save ultimate target value
+
+                    if (Math.abs(newSliderPosition - lastSliderPosition) > max_throttle_change) {    // if jump is too large then limit it
+//                        Log.d("Engine_Driver", "onProgressChanged -- throttling change");
+
+                        jumpSpeed = getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false);      // save ultimate target value
+                        jumpDir = dir; // save ultimate target direction
                         limitedJump = true;
-                        throttle.setProgress(lastSliderPosition);
+                        throttle.setProgress(lastSliderPosition);  // put the slider back to the original position
+
+                        if (newSliderPosition < lastSliderPosition) { // going down
+                            mAutoIncrement = false;
+                            mAutoDecrement = true; //decrease slowly
+                        } else { // going up
+                            mAutoIncrement = true;  // advance slowly
+                            mAutoDecrement = false;
+                        }
+
+                        if ((lastSliderPosition < throttleMidPointZero) && (newSliderPosition > throttleMidPointZero)) { // passing from reverse to forward
+                            mChangeDirectionAtZero= true;
+                        } else if ((lastSliderPosition > throttleMidPointZero) && (newSliderPosition < throttleMidPointZero)) { // passing from forward to reverse
+                            mChangeDirectionAtZero= true;
+                        }
+
                         repeatUpdateHandler.post(new RptUpdater(whichThrottle));
                         return;
                     }
+
+//                    Log.d("Engine_Driver", "onProgressChanged -- no throttling");
+
+                    reverseDirectionIfNeeded(dir, whichThrottle);
+
                     speedUpdate(whichThrottle,
                             getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false));
                     sendSpeedMsg(whichThrottle, speed);
                     setDisplayedSpeed(whichThrottle, speed);
-                }
-                else {                      // got a touch while processing limitJump
+
+                } else { // got a touch while processing limitJump
+//                    Log.d("Engine_Driver", "onProgressChanged -- touch while processing limited jump");
                     newSliderPosition = lastSliderPosition;    //   so suppress multiple touches
                     throttle.setProgress(lastSliderPosition);
-                    speedUpdate(whichThrottle,
-                            getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false));
                 }
+
                 // Now update ESU MCII Knob position
                 if (IS_ESU_MCII) {
                     setEsuThrottleKnobPosition(whichThrottle, speed);
                 }
 
                 setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
+
             } else {
+//                Log.d("Engine_Driver", "onProgressChanged -- lj: " + limitedJump + " d: " + dir + " ld: " + lastDir + " ai: " + mAutoIncrement + " ad: " + mAutoDecrement + " cdaZ: " + mChangeDirectionAtZero + " s: " + speed + " js: " + jumpSpeed);
                 if (limitedJump) {
-                    if (speed >= jumpSpeed) {   // stop when we reach the target
-                        mAutoIncrement = false;
-                        limitedJump = false;
-                        throttle.setProgress(jumpSpeed);
-                        speedUpdate(whichThrottle,
-                                getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false));
+
+                    int tempJumpSpeed = jumpSpeed;
+                    if (mChangeDirectionAtZero) { tempJumpSpeed = 0; }  // we will need to change directions.  for now just get to zero
+
+//                    Log.d("Engine_Driver", "onProgressChanged -- lj: " + limitedJump + " d: " + dir + " ld: " + lastDir + " ai: " + mAutoIncrement + " ad: " + mAutoDecrement + " cdaZ: " + mChangeDirectionAtZero + " s: " + speed + " js: " + jumpSpeed + " tjs: " + tempJumpSpeed);
+
+                    // check if we have hit the jumpSpeed or tempJumpSpeed (zero)
+                    boolean hitJumpSpeed = false;
+                    if (speed <= 0) {
+                        if (jumpSpeed == 0) { hitJumpSpeed = true; }
+                    } else // speed > 0
+                        if (dir==DIRECTION_FORWARD) {
+                       if (((mAutoIncrement) && (speed >= tempJumpSpeed)) || ((mAutoDecrement) && (speed <= tempJumpSpeed))) {
+                           hitJumpSpeed = true;
+                       }
+                    } else if (dir==DIRECTION_REVERSE) {
+                        if (((mAutoDecrement) && (speed >= tempJumpSpeed)) || ((mAutoIncrement) && (speed <= tempJumpSpeed))) {
+                            hitJumpSpeed = true;
+                        }
+                    }
+
+                    if ( hitJumpSpeed) {   // stop when we reach the target
+                        if (mChangeDirectionAtZero) { // if change of direction is needed, then we must be at zero now.  need to continue to the final speed.
+                            Log.d("Engine_Driver", "onProgressChanged !!-- Direction change now needed");
+                            mChangeDirectionAtZero = false;
+                            reverseDirectionIfNeeded(jumpDir, whichThrottle);
+                        } else {
+                            Log.d("Engine_Driver", "onProgressChanged !!-- LimitedJump hit jump speed.");
+                            limitedJump = false;
+                            mAutoIncrement = false;
+                            mAutoDecrement = false;
+                            throttle.setProgress(getNewSliderPositionFromSpeed(jumpSpeed, whichThrottle, false));
+                            speedUpdate(whichThrottle, getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false));
+                        }
                     }
                 }
-//                setDisplayedSpeed(whichThrottle, speed, true);
             }
-//            if (sliderPosition == 0 || lastSliderPosition == 0) {     // check rules when going to/from 0 speed
-//                applySpeedRelatedOptions(whichThrottle);
-//            }
             lastSliderPosition = newSliderPosition;
         }
 
         @Override
         public void onStartTrackingTouch(SeekBar sb) {
+//            Log.d("Engine_Driver", "onStartTrackingTouch() onProgressChanged");
             gestureInProgress = false;
-            limitedJump = false;
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar sb) {
+//            Log.d("Engine_Driver", "onStopTrackingTouch() onProgressChanged");
+            limitedJump = false;
             mAutoIncrement = false;
+            mAutoDecrement = false;
             kidsTimerActions(KIDS_TIMER_STARTED,0);
         }
     }
@@ -606,9 +665,9 @@ public class throttle_switching_left_or_right extends throttle {
         scaleSpeed = lastScaleSpeed + change;
 //        lastSpeed = getSpeedFromSliderPosition(lastSliderPosition, whichThrottle, false);
 
-//        if (prefLimitSpeedButton && isLimitSpeeds[whichThrottle] && (speed > limitSpeedMax[whichThrottle] )) {
-//            speed = limitSpeedMax[whichThrottle];
-//        }
+         if ((lastScaleSpeed>0) && (scaleSpeed<0)) {   // force a zero speed at least once when changing directions
+             scaleSpeed = 0;
+         }
 
 //        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
         if (scaleSpeed<0) {
@@ -723,6 +782,26 @@ public class throttle_switching_left_or_right extends throttle {
         return speed;
     }
 
+    int getDirectionFromSliderPosition(int sliderPosition, int whichThrottle) {
+        int dir;
+
+        if (sliderPosition >= (throttleMidPointDeadZoneUpper)) { //forward
+            dir = DIRECTION_FORWARD;
+        } else if (sliderPosition <= (throttleMidPointDeadZoneLower)) { // reverse
+            dir = DIRECTION_REVERSE;
+        } else { // zero - deadzone
+            dir = DIRECTION_FORWARD;
+        }
+        return dir;
+    }
+
+    void reverseDirectionIfNeeded(int dir, int whichThrottle) {
+        if (dirs[whichThrottle]!=dir) {
+            dirs[whichThrottle] = dir;
+            setEngineDirection(whichThrottle, dir, false);
+            showDirectionIndication(whichThrottle, dir);
+        }
+    }
 
     int getNewSliderPositionFromSpeed(int speed, int whichThrottle, boolean useScale) {
         int newSliderPosition;
@@ -760,8 +839,8 @@ public class throttle_switching_left_or_right extends throttle {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             int speed = 0;
-            int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
-            maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
+//            int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+//            maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
 
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 int dir = getDirection(whichThrottle);
@@ -782,8 +861,10 @@ public class throttle_switching_left_or_right extends throttle {
                     bLimitSpeeds[whichThrottle].setSelected(false);
                     sbs[whichThrottle].setMax(maxThrottle);
 
-                    throttleMidPointZero = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone);
-                    throttleSwitchingMax = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone) * 2;
+//                    throttleMidPointZero = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone);
+//                    throttleSwitchingMax = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone) * 2;
+                    throttleMidPointZero = (maxThrottle + prefSwitchingThrottleSliderDeadZone);
+                    throttleSwitchingMax = (maxThrottle + prefSwitchingThrottleSliderDeadZone) * 2;
                     vsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax);
                 }
                 throttleMidPointDeadZoneUpper = throttleMidPointZero + prefSwitchingThrottleSliderDeadZone;
