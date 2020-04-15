@@ -77,6 +77,9 @@ public class throttle_switching_left_or_right extends throttle {
 
         maxThrottlePcnt = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (0.01 * maxThrottlePcnt)); // convert from percent
+
+        prefSwitchingThrottleSliderDeadZone = Integer.parseInt(prefs.getString("prefSwitchingThrottleSliderDeadZone", getResources().getString(R.string.prefSwitchingThrottleSliderDeadZoneDefaultValue)));
+
     }
 
     @SuppressLint({"Recycle", "SetJavaScriptEnabled"})
@@ -110,10 +113,8 @@ public class throttle_switching_left_or_right extends throttle {
 
         }
 
-        prefSwitchingThrottleSliderDeadZone = Integer.parseInt(prefs.getString("prefSwitchingThrottleSliderDeadZone", getResources().getString(R.string.prefSwitchingThrottleSliderDeadZoneDefaultValue)));
-
-        throttleMidPointZero = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone);
-        throttleSwitchingMax = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone) * 2;
+        throttleMidPointZero = (maxThrottle + prefSwitchingThrottleSliderDeadZone);
+        throttleSwitchingMax = (maxThrottle + prefSwitchingThrottleSliderDeadZone) * 2;
         throttleMidPointDeadZoneUpper = throttleMidPointZero + prefSwitchingThrottleSliderDeadZone;
         throttleMidPointDeadZoneLower = throttleMidPointZero - prefSwitchingThrottleSliderDeadZone;
 //        throttleReScale = ((throttleMidPointZero * 2)) / (double) throttleMidPointDeadZoneLower;
@@ -143,6 +144,11 @@ public class throttle_switching_left_or_right extends throttle {
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
                     break;
             }
+        }
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            sbs[throttleIndex].setMax(Math.round(maxThrottle));
+            vsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax);
         }
 
         setAllFunctionLabelsAndListeners();
@@ -839,8 +845,6 @@ public class throttle_switching_left_or_right extends throttle {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             int speed = 0;
-//            int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
-//            maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
 
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 int dir = getDirection(whichThrottle);
