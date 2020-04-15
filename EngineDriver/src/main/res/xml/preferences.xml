@@ -94,14 +94,14 @@
                 android:defaultValue="@bool/prefIncreaseSliderHeightDefaultValue"
                 android:key="increase_slider_height_preference"
                 android:summary="@string/prefIncreaseSliderHeightSummary"
-                android:title="@string/prefIncreaseSliderHeightTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefIncreaseSliderHeightTitle" />
             <EditTextPreference
                 android:defaultValue="@string/prefSliderLeftMarginDefaultValue"
                 android:dialogTitle="@string/prefSliderLeftMarginTitle"
                 android:key="left_slider_margin"
                 android:maxLength="2"
-                android:numeric="integer"
+                android:inputType="number"
+                android:digits="0123456789"
                 android:summary="@string/prefSliderLeftMarginSummary"
                 android:title="@string/prefSliderLeftMarginTitle" />
             <CheckBoxPreference
@@ -261,7 +261,8 @@
                 android:dialogTitle="@string/prefScreenBrightnessDimTitle"
                 android:key="prefScreenBrightnessDim"
                 android:maxLength="3"
-                android:numeric="integer"
+                android:inputType="number"
+                android:digits="0123456789"
                 android:summary="@string/prefScreenBrightnessDimSummary"
                 android:title="@string/prefScreenBrightnessDimTitle" />
         </PreferenceScreen>
@@ -340,7 +341,8 @@
                 android:dialogTitle="@string/prefVolumeSpeedButtonsSpeedStepTitle"
                 android:key="prefVolumeSpeedButtonsSpeedStep"
                 android:maxLength="2"
-                android:numeric="integer"
+                android:inputType="number"
+                android:digits="0123456789"
                 android:summary="@string/prefVolumeSpeedButtonsSpeedStepSummary"
                 android:title="@string/prefVolumeSpeedButtonsSpeedStepTitle" />
 
@@ -424,7 +426,8 @@
                 android:dialogTitle="@string/prefGamePadSpeedButtonsSpeedStepTitle"
                 android:key="prefGamePadSpeedButtonsSpeedStep"
                 android:maxLength="2"
-                android:numeric="integer"
+                android:inputType="number"
+                android:digits="0123456789"
                 android:summary="@string/prefGamePadSpeedButtonsSpeedStepSummary"
                 android:title="@string/prefGamePadSpeedButtonsSpeedStepTitle" />
 
@@ -433,7 +436,8 @@
                 android:dialogTitle="@string/prefGamePadFeedbackVolumeTitle"
                 android:key="prefGamePadFeedbackVolume"
                 android:maxLength="3"
-                android:numeric="integer"
+                android:inputType="number"
+                android:digits="0123456789"
                 android:summary="@string/prefGamePadFeedbackVolumeSummary"
                 android:title="@string/prefGamePadFeedbackVolumeTitle" />
             <EditTextPreference
@@ -441,7 +445,8 @@
                 android:dialogTitle="@string/prefGamePadSpeedButtonsRepeatTitle"
                 android:key="prefGamePadSpeedArrowsThrottleRepeatDelay"
                 android:maxLength="4"
-                android:numeric="integer"
+                android:inputType="number"
+                android:digits="0123456789"
                 android:summary="@string/prefGamePadSpeedButtonsRepeatSummary"
                 android:title="@string/prefGamePadSpeedButtonsRepeatTitle" />
             <!--    Gamepad button preferences   -->
@@ -589,7 +594,7 @@
             android:dialogTitle="@string/prefMaximumThrottleTitle"
             android:key="maximum_throttle_preference"
             android:maxLength="3"
-            android:numeric="integer"
+            android:inputType="number"
             android:summary="@string/prefMaximumThrottleSummary"
             android:title="@string/prefMaximumThrottleTitle" >
         </EditTextPreference>
@@ -606,6 +611,7 @@
             android:dialogTitle="@string/prefLimitSpeedPercentTitle"
             android:key="prefLimitSpeedPercent"
             android:maxLength="3"
+            android:inputType="number"
             android:summary="@string/prefLimitSpeedPercentSummary"
             android:title="@string/prefLimitSpeedPercentTitle" />
 
@@ -614,7 +620,8 @@
             android:dialogTitle="@string/prefMaximumThrottleChangeTitle"
             android:key="maximum_throttle_change_preference"
             android:maxLength="3"
-            android:numeric="integer"
+            android:inputType="number"
+            android:digits="0123456789"
             android:summary="@string/prefMaximumThrottleChangeSummary"
             android:title="@string/prefMaximumThrottleChangeTitle" >
         </EditTextPreference>
@@ -624,7 +631,8 @@
             android:dialogTitle="@string/prefSpeedButtonsSpeedStepTitle"
             android:key="speed_arrows_throttle_speed_step"
             android:maxLength="2"
-            android:numeric="integer"
+            android:inputType="number"
+            android:digits="0123456789"
             android:summary="@string/prefSpeedButtonsSpeedStepSummary"
             android:title="@string/prefSpeedButtonsSpeedStepTitle" />
 
@@ -633,7 +641,8 @@
             android:dialogTitle="@string/prefSpeedButtonsRepeatTitle"
             android:key="speed_arrows_throttle_repeat_delay"
             android:maxLength="4"
-            android:numeric="integer"
+            android:inputType="number"
+            android:digits="0123456789"
             android:summary="@string/prefSpeedButtonsRepeatSummary"
             android:title="@string/prefSpeedButtonsRepeatTitle" />
         <CheckBoxPreference
@@ -797,7 +806,6 @@
                     android:defaultValue="@string/prefEsuMc2StopButtonDelayDefaultValue"
                     android:dialogTitle="@string/prefEsuMc2StopButtonDelayTitle"
                     android:maxLength="4"
-                    android:numeric="integer"
                     android:digits="0123456789"
                     android:inputType="number" />
                 <CheckBoxPreference
@@ -847,7 +855,6 @@
                     android:defaultValue="@string/prefEsuMc2ButtonsRepeatDefaultValue"
                     android:dialogTitle="@string/prefEsuMc2ButtonsRepeatTitle"
                     android:maxLength="4"
-                    android:numeric="integer"
                     android:digits="0123456789"
                     android:inputType="number" />
             </PreferenceCategory>
@@ -863,8 +870,7 @@
                     android:dialogTitle="@string/prefEsuMc2ZeroTrimTitle"
                     android:maxLength="3"
                     android:inputType="number"
-                    android:digits="0123456789"
-                    android:numeric="integer" />
+                    android:digits="0123456789"/>
                 <CheckBoxPreference
                     android:key="prefEsuMc2EndStopDirectionChange"
                     android:title="@string/prefEsuMc2EndStopDirectionChangeTitle"
@@ -926,10 +932,10 @@
             android:dialogTitle="@string/prefMaximumRecentLocosTitle"
             android:key="maximum_recent_locos_preference"
             android:maxLength="2"
-            android:numeric="integer"
+            android:inputType="number"
+            android:digits="0123456789"
             android:summary="@string/prefMaximumRecentLocosSummary"
-            android:title="@string/prefMaximumRecentLocosTitle" >
-        </EditTextPreference>
+            android:title="@string/prefMaximumRecentLocosTitle" />
         <CheckBoxPreference
             android:defaultValue="@bool/prefConsistLightsLongClickDefaultValue"
             android:key="ConsistLightsLongClickPreference"
@@ -953,10 +959,10 @@
             android:dialogTitle="@string/prefMaximumRecentConnectionsTitle"
             android:key="maximum_recent_connections_preference"
             android:maxLength="2"
-            android:numeric="integer"
+            android:inputType="number"
+            android:digits="0123456789"
             android:summary="@string/prefMaximumRecentConnectionsSummary"
-            android:title="@string/prefMaximumRecentConnectionsTitle" >
-        </EditTextPreference>
+            android:title="@string/prefMaximumRecentConnectionsTitle" />
         <CheckBoxPreference
             android:defaultValue="@bool/prefConnectToFirstServer"
             android:key="connect_to_first_server_preference"
@@ -972,18 +978,18 @@
             android:defaultValue="@string/prefConnectTimeoutMsDefaultValue"
             android:key="prefConnectTimeoutMs"
             android:maxLength="5"
-            android:numeric="integer"
+            android:inputType="number"
+            android:digits="0123456789"
             android:summary="@string/prefConnectTimeoutMsSummary"
-            android:title="@string/prefConnectTimeoutMsTitle" >
-        </EditTextPreference>
+            android:title="@string/prefConnectTimeoutMsTitle" />
         <EditTextPreference
             android:defaultValue="@string/prefSocketTimeoutMsDefaultValue"
             android:key="prefSocketTimeoutMs"
             android:maxLength="4"
-            android:numeric="integer"
+            android:inputType="number"
+            android:digits="0123456789"
             android:summary="@string/prefSocketTimeoutMsSummary"
-            android:title="@string/prefSocketTimeoutMsTitle" >
-        </EditTextPreference>
+            android:title="@string/prefSocketTimeoutMsTitle" />
     </PreferenceCategory>
     <PreferenceCategory
         android:key="prefCategoryWeb"
