@@ -855,7 +855,7 @@ public class throttle_switching_left_or_right extends throttle {
                 if (isLimitSpeeds[whichThrottle]) {
                     bLimitSpeeds[whichThrottle].setSelected(true);
                     limitSpeedSliderScalingFactors[whichThrottle]=100/prefLimitSpeedPercent;
-                    sbs[whichThrottle].setMax( Math.round(maxThrottle / limitSpeedSliderScalingFactors[whichThrottle]));
+                    sbs[whichThrottle].setMax( Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]));
 
                     throttleMidPointZero = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone);
                     throttleSwitchingMax = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone) * 2;
