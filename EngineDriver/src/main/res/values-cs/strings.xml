@@ -899,4 +899,9 @@
     <string name="dialogRecentConsistsConfirmClearQuestions">Potvrďte, že chcete odstranit všechny Nedávný Sestává</string>
     <string name="dialogRecentLocoConfirmClearQuestion">Potvrďte, že chcete odstranit všechny Nejnovější Lokomotivy</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Potvrďte, že chcete odstranit všechny Nejnovější výhybky</string>
+
+    <string name="dialogConfirmResetPreferencesTitle">Obnovit nastavení</string>
+    <string name="dialogResetPreferencesQuestion">Ujistěte se, že budete chtít obnovit všechny předvolby. \nALL budou ztraceny aktuální preference.</string>
+    <string name="dialogConfirmImportPreferencesTitle">dovozní Preferences</string>
+    <string name="dialogImportPreferencesQuestion">Ujistěte se, že budete chtít předvoleb pro import. \nALL budou ztraceny aktuální preference.</string>
 </resources>

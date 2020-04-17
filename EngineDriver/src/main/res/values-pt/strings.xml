@@ -736,4 +736,9 @@
     <string name="dialogRecentConsistsConfirmClearQuestions">Confirme que deseja remover todas Consiste a recente</string>
     <string name="dialogRecentLocoConfirmClearQuestion">Confirme que deseja remover todas as locomotivas recentes</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirme que deseja remover todas as Agulhas recentes</string>
+
+    <string name="dialogConfirmResetPreferencesTitle">Reiniciar preferências</string>
+    <string name="dialogResetPreferencesQuestion">Confirme que deseja redefinir todas as preferências. \nTodas as preferências atuais serão perdidos.</string>
+    <string name="dialogConfirmImportPreferencesTitle">Preferências de importação</string>
+    <string name="dialogImportPreferencesQuestion">Confirme que deseja preferências de importação. \nTodas as preferências atuais serão perdidos.</string>
 </resources>

@@ -798,4 +798,8 @@
     <string name="dialogRecentConsistsConfirmClearQuestions">Confirmeu que voleu eliminar tota Consisteix en la recent</string>
     <string name="dialogRecentLocoConfirmClearQuestion">Confirmeu que voleu eliminar totes les locomotores recents</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmeu que voleu eliminar tots els desviaments recents</string>
-</resources>
+
+    <string name="dialogConfirmResetPreferencesTitle">Restablir les preferències</string>
+    <string name="dialogResetPreferencesQuestion">Confirmeu que voleu restablir totes les preferències \nTot estarà perdut les preferències actuals.</string>
+    <string name="dialogConfirmImportPreferencesTitle">Preferències d\'importació</string>
+    <string name="dialogImportPreferencesQuestion">Confirmeu que voleu preferències d\'importació \nTot estarà perdut les preferències actuals.</string></resources>

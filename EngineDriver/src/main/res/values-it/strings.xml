@@ -732,4 +732,9 @@
     <string name="dialogRecentConsistsConfirmClearQuestions">Confermare che si desidera rimuovere tutti Consiste la recente</string>
     <string name="dialogRecentLocoConfirmClearQuestion">Confermare che si desidera rimuovere tutte le locomotive recenti</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confermare che si desidera rimuovere tutti i deviatoi recenti</string>
+
+    <string name="dialogConfirmResetPreferencesTitle">Resetta le preferenze</string>
+    <string name="dialogResetPreferencesQuestion">Confermare che si desidera ripristinare tutte le preferenze. \nALL sarà perso preferenze correnti.</string>
+    <string name="dialogConfirmImportPreferencesTitle">Importa Preferenze</string>
+    <string name="dialogImportPreferencesQuestion">Confermare che si desidera preferenze di importazione. \nALL sarà perso preferenze correnti.</string>
 </resources>
