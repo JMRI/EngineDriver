@@ -3,6 +3,7 @@
  * Additional French Translations by Alain Carasso
  * fix time zone offset issue
  * add clearcache at connect for web views
+ * add slf4j-nop and switch to external jars
 **Version 2.25.100
  * Swipe now works everywhere except active sliders
  * Less likely to activate function button when scrolling or swiping
