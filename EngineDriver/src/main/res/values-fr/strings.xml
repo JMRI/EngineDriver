@@ -817,4 +817,9 @@
     <string name="dialogRecentConsistsConfirmClearQuestions">Confirmez que vous voulez supprimer tous les derniers Consiste</string>
     <string name="dialogRecentLocoConfirmClearQuestion">Confirmez que vous voulez supprimer tous les récents Locomotives</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmez que vous voulez supprimer tous les Turnouts récents</string>
+
+    <string name="dialogConfirmResetPreferencesTitle">Remettre à zéro les préférences</string>
+    <string name="dialogResetPreferencesQuestion">Confirmez que vous souhaitez réinitialiser toutes les préférences. \nToutes les préférences seront perdues.</string>
+    <string name="dialogConfirmImportPreferencesTitle">Préférences d\'importation</string>
+    <string name="dialogImportPreferencesQuestion">Confirmez que vous souhaitez préférences à l\'importation. \nToutes les préférences seront perdues.</string>
 </resources>

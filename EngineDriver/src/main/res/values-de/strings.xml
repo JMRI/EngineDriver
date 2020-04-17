@@ -801,4 +801,9 @@
     <string name="dialogRecentConsistsConfirmClearQuestions">Bestätigen Sie, dass Sie entfernen möchten alle Recent Besteht</string>
     <string name="dialogRecentLocoConfirmClearQuestion">Bestätigen Sie, dass Sie die letzten Lokomotiven wollen entfernen</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Bestätigen Sie, dass Sie alle Neue Weichen wollen entfernen</string>
+
+    <string name="dialogConfirmResetPreferencesTitle">Einstellungen zurücksetzen</string>
+    <string name="dialogResetPreferencesQuestion">Bestätigen Sie, dass Sie alle Präferenzen wollen zurückgesetzt. \n Alle aktuellen Einstellungen gehen verloren.</string>
+    <string name="dialogConfirmImportPreferencesTitle">Importeinstellungen</string>
+    <string name="dialogImportPreferencesQuestion">Bestätigen Sie, dass Sie Voreinstellungen für den Import möchten. \n Alle werden die aktuellen Einstellungen verloren.</string>
 </resources>
