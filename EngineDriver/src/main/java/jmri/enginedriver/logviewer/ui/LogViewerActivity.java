@@ -1,23 +1,10 @@
 package jmri.enginedriver.logviewer.ui;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-
-import jmri.enginedriver.R;
-import jmri.enginedriver.preferences;
-import jmri.enginedriver.threaded_application;
-import jmri.enginedriver.util.PermissionsHelper;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +21,17 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
+import jmri.enginedriver.util.PermissionsHelper;
 
 //import jmri.enginedriver.logviewer.R;
 
@@ -300,7 +298,16 @@ public class LogViewerActivity extends ListActivity {
 
                 isRunning = false;
             }
-
+            finally {
+                if(reader != null) {
+                    try {
+                        reader.close();
+                    }
+                    catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
             return null;
         }
 

@@ -90,6 +90,7 @@ import eu.esu.mobilecontrol2.sdk.ThrottleFragment;
 import eu.esu.mobilecontrol2.sdk.ThrottleScale;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.util.PermissionsHelper;
+import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
 import static android.view.InputDevice.getDevice;
 import static android.view.KeyEvent.ACTION_DOWN;
@@ -965,6 +966,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     break;
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
+                    saveSharedPreferencesToFile();
                     disconnect();
                     break;
                 case message_type.WEBVIEW_LOC:      // webview location changed
@@ -1487,7 +1489,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
             webViewIsOn = !webViewIsOn;
 
-            this.onResume();
+            set_labels();
+            pauseResumeWebView();
+        }
+    }
+
+    private void pauseResumeWebView() {
+        if (webViewIsOn) {
+            this.resumeWebView();
+        }
+        else {
+            this.pauseWebView();
         }
     }
 
@@ -4381,6 +4393,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         webView.getSettings().setUseWideViewPort(true); // Enable greater
         // zoom-out
         webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+        if (savedInstanceState != null) {
+            if (savedInstanceState.getSerializable("scale") != null) {
+                scale = (float) savedInstanceState.getSerializable(("scale"));
+            }
+        }
         webView.setInitialScale((int) (100 * scale));
         webView.clearCache(true);   // force fresh javascript download on first connection
         // webView.getSettings().setLoadWithOverviewMode(true); // size image to fill width
@@ -4395,7 +4412,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // open all links inside the current view (don't start external web
         // browser)
         noUrl = getApplicationContext().getResources().getString(R.string.blank_page_url);
-
         WebViewClient EDWebClient = new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -4409,6 +4425,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     currentUrl = url;
                     if (firstUrl == null) {             // if this is the first legit url
                         firstUrl = url;
+                        scale = initialScale;
+                        webView.setInitialScale((int) (100 * scale));
                         clearHistory = true;
                     }
                     if (clearHistory) {                 // keep clearing history until off this page
@@ -4419,6 +4437,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         }
                     }
                 }
+            }
+
+            @Override
+            public void onScaleChanged(WebView view, float oldScale, float newScale) {
+                super.onScaleChanged(view, oldScale, newScale);
+                scale = newScale;
             }
         };
 
@@ -4482,15 +4506,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (prefs.getBoolean("prefImportServerAuto", getApplicationContext().getResources().getBoolean(R.bool.prefImportServerAutoDefaultValue))) {
             autoImportFromURL();
         }
-
-        mainapp.checkAndSetOrientationInfo();
-
     } // end of onCreate()
 
     @Override
     public void onResume() {
         super.onResume();
-        mainapp.removeNotification();
         if (mainapp.isForcingFinish()) { // expedite
             mainapp.appIsFinishing = true;
             this.finish();
@@ -4531,17 +4551,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         applySpeedRelatedOptions();  // update all throttles
 
         set_labels(); // handle labels and update view
-
-        noUrl = getApplicationContext().getResources().getString(R.string.about_page_url);
-
-        if (webView != null) {
-            if (!callHiddenWebViewOnResume()) {
-                webView.resumeTimers();
-            }
-//            if (noUrl.equals(webView.getUrl()) && webView.canGoBack()) {    //unload static url loaded by onPause
-//                webView.goBack();
-//            }
-        }
+        pauseResumeWebView();
 
         if (mainapp.EStopActivated) {
             speedUpdateAndNotify(0);  // update all three throttles
@@ -4630,41 +4640,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        webView.saveState(outState); // save history (on rotation) if at least one page has loaded
-
-        mainapp.isRotating = false;
-
-        // save the requested throttle direction so we can update the
-        // direction indication immediately in OnCreate following a rotate
-
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            outState.putSerializable("dir" + mainapp.throttleIntToChar(throttleIndex), dirs[throttleIndex]);
-        }
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
-        if (webView != null) {
-            if (!callHiddenWebViewOnPause()) {
-                webView.pauseTimers();
-            }
-
- //           String url = webView.getUrl();
- //           if (url != null && !noUrl.equals(url)) {    // if any url has been loaded
- //               webView.loadUrl(noUrl);                 // load a static url to stop any javascript
- //           }
+        if (webViewIsOn) {
+            pauseWebView();
         }
         CookieSyncManager.getInstance().stopSync();
-
-        if (!this.isFinishing() && !navigatingAway) { // only invoke setContentIntentNotification when going into background
-            mainapp.checkAndSetOrientationInfo();
-            if (!mainapp.isRotating) {
-                mainapp.addNotification(this.getIntent());
-            }
-        }
 
         if ((isScreenLocked) || (screenDimmed)) {
             isScreenLocked = false;
@@ -4688,17 +4669,36 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
-    /**
-     * Called when the activity is finished.
-     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("scale", scale);   // save current scale for next onCreate
+        if(webView != null) {
+            webView.saveState(outState);                // save history on rotation or bkg mode
+        }
+
+        // save the requested throttle direction so we can update the
+        // direction indication immediately in OnCreate following a rotate
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            outState.putSerializable("dir" + mainapp.throttleIntToChar(throttleIndex), dirs[throttleIndex]);
+        }
+    }
+
     @SuppressWarnings("deprecation")
     @Override
     public void onDestroy() {
+        super.onDestroy();
         Log.d("Engine_Driver", "throttle.onDestroy() called");
         if (webView != null) {
-            scale = webView.getScale(); // save current scale for next onCreate
+            final ViewGroup webGroup = (ViewGroup) webView.getParent();
+            if (webGroup != null) {
+                webGroup.removeView(webView);
+            }
         }
-        repeatUpdateHandler.removeCallbacksAndMessages(null);
+        if (repeatUpdateHandler != null) {
+            repeatUpdateHandler.removeCallbacksAndMessages(null);
+            repeatUpdateHandler = null;
+        }
         Log.d("Engine_Driver", "onDestroy: mainapp.throttle_msg_handler. Attempting to removeCallbacksAndMessages");
         if (mainapp.throttle_msg_handler !=null) {
             mainapp.throttle_msg_handler.removeCallbacksAndMessages(null);
@@ -4706,71 +4706,68 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         } else {
             Log.d("Engine_Driver", "onDestroy: mainapp.throttle_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
-        volumeKeysRepeatUpdateHandler.removeCallbacksAndMessages(null);
-        gamepadRepeatUpdateHandler.removeCallbacksAndMessages(null);
-        repeatUpdateHandler = null;
-        volumeKeysRepeatUpdateHandler = null;
-        gamepadRepeatUpdateHandler = null;
+        if (volumeKeysRepeatUpdateHandler != null) {
+            volumeKeysRepeatUpdateHandler.removeCallbacksAndMessages(null);
+            volumeKeysRepeatUpdateHandler = null;
+        }
+        if (gamepadRepeatUpdateHandler != null) {
+            gamepadRepeatUpdateHandler.removeCallbacksAndMessages(null);
+            gamepadRepeatUpdateHandler = null;
+        }
         if (IS_ESU_MCII) {
             esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.OFF);
             esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
         }
         if (tg != null) {
             tg.release();
+            tg = null;
         }
-
-        super.onDestroy();
     }
 
-//    public void onStop() {
-//        Log.d("Engine_Driver", "throttle.onStop() called");
-//        super.onStop();
-//    }
-
-    private boolean callHiddenWebViewOnPause() {
-        try {
-            Method method = WebView.class.getMethod("onPause");
-            method.invoke(webView);
-        } catch (Exception e) {
-            return false;
+    private void pauseWebView() {
+        if (webView != null) {
+            try {
+                Method method = WebView.class.getMethod("onPause");
+                method.invoke(webView);
+            }
+            catch (Exception e) {
+                webView.pauseTimers();
+            }
         }
-        return true;
     }
 
-    private boolean callHiddenWebViewOnResume() {
-        try {
-            Method method = WebView.class.getMethod("onResume");
-            method.invoke(webView);
-        } catch (Exception e) {
-            return false;
+    private void resumeWebView() {
+        if (webView != null) {
+            try {
+                Method method = WebView.class.getMethod("onResume");
+                method.invoke(webView);
+            }
+            catch (Exception e) {
+                webView.resumeTimers();
+            }
         }
-        return true;
     }
 
     // load the url
     private void load_webview() {
         String url = currentUrl;
-        if (webViewLocation.equals(WEB_VIEW_LOCATION_NONE)) {       // if not displaying webview
-            webViewIsOn = false;
-            url = noUrl;                            // load static url to stop javascript
+        webViewIsOn = !webViewLocation.equals(WEB_VIEW_LOCATION_NONE);
+        if (!webViewIsOn) {                         // if not displaying webview
+            url = noUrl;
             currentUrl = null;
             firstUrl = null;
         }
-        else if (url == null) {                // else if initializing
-            webViewIsOn = true;
-            url = mainapp.createUrl(prefs.getString("InitialThrotWebPage",
-                    getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue)));
-            if (url == null) {      //if port is invalid
-                url = noUrl;
+        else {
+            if (url == null || url.equals(noUrl)) {                // if initializing
+                url = mainapp.createUrl(prefs.getString("InitialThrotWebPage",
+                        getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue)));
+                if (url == null) {      //if port is invalid
+                    url = noUrl;
+                }
+                firstUrl = null;
             }
-
-            if (firstUrl == null) {
-                scale = initialScale;
-                webView.setInitialScale((int) (100 * scale));
-            }
-            firstUrl = null;
+            webView.loadUrl(url);
         }
-        webView.loadUrl(url);
     }
 
     void setAllFunctionLabelsAndListeners() {
@@ -4956,18 +4953,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // Handle pressing of the back button
         if (key == KEYCODE_BACK) {
             if (webViewIsOn && webView.canGoBack() && !clearHistory) {
-                scale = webView.getScale(); // save scale
                 webView.goBack();
                 webView.setInitialScale((int) (100 * scale)); // restore scale
                 return (true);
-            } else
+            }
+            else {
                 if (webView != null) {
                     setImmersiveModeOn(webView);
                 }
                 mainapp.checkExit(this);
-            return (true); // stop processing this key
+                return (true); // stop processing this key
+            }
         } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
-
             if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
                 for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
                     if (throttleIndex == whichVolume && mainapp.consists[throttleIndex].isActive()) {
@@ -5663,7 +5660,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     @SuppressLint("SwitchIntDef")
-    public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
+    public void navigateToHandler(@RequestCodes int requestCode) {
         Log.d("Engine_Driver", "throttle: navigateToHandler:" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -5674,12 +5671,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             // Only need to consider relevant request codes initiated by this Activity
             switch (requestCode) {
                 case PermissionsHelper.READ_SERVER_AUTO_PREFERENCES:
-                    Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
+                    Log.d("Engine_Driver", "Got permission for READ_SERVER_AUTO_PREFERENCES");
                     autoImportUrlAskToImportImpl();
                     break;
                 case PermissionsHelper.STORE_SERVER_AUTO_PREFERENCES:
-                    Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
+                    Log.d("Engine_Driver", "Got permission for STORE_SERVER_AUTO_PREFERENCES");
                     autoImportFromURLImpl();
+                    break;
+                case PermissionsHelper.STORE_PREFERENCES:
+                    Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
+                    saveSharedPreferencesToFileImpl();
                     break;
                 default:
                     // do nothing
@@ -5834,6 +5835,32 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         forceRestartApp(forceRestartReason);
     }
 
+    private void saveSharedPreferencesToFile() {
+        navigateToHandler(PermissionsHelper.STORE_PREFERENCES);
+    }
+
+    private void saveSharedPreferencesToFileImpl() {
+        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
+
+        if (prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT)) {
+            if (mainapp.connectedHostName != null) {
+                String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+
+                if (!exportedPreferencesFileName.equals(".ed")) {
+                    File path = Environment.getExternalStorageDirectory();
+                    File engine_driver_dir = new File(path, "engine_driver");
+                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
+
+                    importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+                }
+                Log.d("Engine_Driver", "throttle: saveSharedPreferencesToFileImpl: done");
+            } else {
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
     @SuppressLint("ApplySharedPref")
     public void forceRestartApp(int forcedRestartReason) {
         Log.d("Engine_Driver", "throttle.forceRestartApp() ");
@@ -5855,4 +5882,5 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         }
     }
+
 }

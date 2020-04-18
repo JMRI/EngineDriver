@@ -1,5 +1,11 @@
 package jmri.jmrit.roster;
 
+import android.util.Log;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -8,12 +14,6 @@ import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import android.util.Log;
 
 public class RosterLoader {
     final URL rosterUrl;
@@ -39,8 +39,9 @@ public class RosterLoader {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         HashMap<String, RosterEntry> roster = new HashMap<String, RosterEntry>();
         try {
+            InputStream rosterStream = this.getInputStream();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document dom = builder.parse(this.getInputStream());
+            Document dom = builder.parse(rosterStream);
             Element root = dom.getDocumentElement();
             NodeList items = root.getElementsByTagName("locomotive");
             for (int i = 0; i < items.getLength(); i++) {
@@ -48,6 +49,7 @@ public class RosterLoader {
                 entry.setHostURLs(rosterUrl.getHost() + ":" + rosterUrl.getPort());
                 roster.put(entry.getId(), entry);
             }
+            rosterStream.close();
         } catch (Exception e) {
             return null;
         }

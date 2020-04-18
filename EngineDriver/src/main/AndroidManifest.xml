@@ -123,7 +123,7 @@
             android:name=".routes"
             android:label="@string/app_name_routes"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask" 
+            android:launchMode="singleTask"
             >
         </activity>
         <activity
@@ -135,13 +135,13 @@
         <activity
             android:name=".about_page"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask" 
+            android:launchMode="singleTask"
             android:label="@string/app_name_about" >
         </activity>
         <activity
             android:name=".web_activity"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:label="@string/app_name_web" >
         </activity>
         <activity

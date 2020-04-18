@@ -25,7 +25,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
@@ -52,18 +51,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-//import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-//import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -691,15 +687,6 @@ public class turnouts extends Activity implements OnGestureListener {
         //update turnout list
         refresh_turnout_view();
         refreshTurnoutViewStates();
-
-        mainapp.checkAndSetOrientationInfo();
-
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mainapp.isRotating = false;
     }
 
     @Override
@@ -715,13 +702,6 @@ public class turnouts extends Activity implements OnGestureListener {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null && trn != null) {
             imm.hideSoftInputFromWindow(trn.getWindowToken(), 0);
-        }
-
-        if (!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
-            mainapp.checkAndSetOrientationInfo();
-            if (!mainapp.isRotating) {
-                mainapp.addNotification(this.getIntent());
-            }
         }
     }
 

@@ -49,6 +49,9 @@ public class ImportExportPreferences {
     boolean currentlyImporting = false;
 
     //private String exportedPreferencesFileName =  "exported_preferences.ed";
+    public static final String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
+    public static final String AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY = "Connect Only";
+
 
     public static final String RECENT_TURNOUTS_FILENAME = "engine_driver/recent_turnouts_list.txt";
     private static final String RECENT_CONSISTS_FILENAME = "engine_driver/recent_consist_list.txt";
@@ -315,7 +318,7 @@ public class ImportExportPreferences {
                     String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
 
                     Log.d("Engine_Driver", "ImportExportPreferences: " + m);
-                    Toast.makeText(context, m, Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, m, Toast.LENGTH_SHORT).show();
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
