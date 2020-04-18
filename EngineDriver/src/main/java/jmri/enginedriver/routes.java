@@ -73,7 +73,6 @@ public class routes extends Activity implements OnGestureListener {
 
     private GestureDetector myGesture;
     private Menu RMenu;
-    private boolean navigatingAway = false;     // flag for onPause: set to true when another activity is selected, false if going into background 
 
     public void refresh_route_view() {
 
@@ -237,7 +236,6 @@ public class routes extends Activity implements OnGestureListener {
     private void witRetry(String s) {
         Intent in = new Intent().setClass(this, reconnect_status.class);
         in.putExtra("status", s);
-        navigatingAway = true;
         startActivity(in);
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
@@ -386,9 +384,6 @@ public class routes extends Activity implements OnGestureListener {
 
         //update route list
         refresh_route_view();
-
-        mainapp.checkAndSetOrientationInfo();
-
     }
 
     @Override
@@ -404,14 +399,11 @@ public class routes extends Activity implements OnGestureListener {
         if (!mainapp.setActivityOrientation(this)) { //set screen orientation based on prefs
             Intent in = new Intent().setClass(this, web_activity.class);      // if autoWeb and landscape, switch to Web activity
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
-            navigatingAway = true;
             startActivity(in);
             this.finish();
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return;
         }
-
-        navigatingAway = false;
 
         //restore view to last known scroll position
         ListView lv = findViewById(R.id.routes_list);
@@ -442,12 +434,6 @@ public class routes extends Activity implements OnGestureListener {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mainapp.isRotating = false;
-    }
-
-    @Override
     public void onPause() {
         //Log.d("Engine_Driver","routes.onPause()");
         super.onPause();
@@ -460,13 +446,6 @@ public class routes extends Activity implements OnGestureListener {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null && rte != null) {
             imm.hideSoftInputFromWindow(rte.getWindowToken(), 0);
-        }
-
-        if (!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
-            mainapp.checkAndSetOrientationInfo();
-            if (!mainapp.isRotating) {
-                mainapp.addNotification(this.getIntent());
-            }
         }
     }
 
@@ -496,7 +475,6 @@ public class routes extends Activity implements OnGestureListener {
         if ((absDeltaX > threaded_application.min_fling_distance) &&
                 (Math.abs(velocityX) > threaded_application.min_fling_velocity) &&
                 (absDeltaX > Math.abs(e2.getY() - e1.getY()))) {
-            navigatingAway = true;
             // left to right swipe goes to throttle
             if (deltaX > 0.0) {
                 this.finish();
@@ -558,20 +536,17 @@ public class routes extends Activity implements OnGestureListener {
         Intent in;
         switch (item.getItemId()) {
             case R.id.throttle_mnu:
-                navigatingAway = true;
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
                 break;
             case R.id.turnouts_mnu:
                 in = new Intent().setClass(this, turnouts.class);
-                navigatingAway = true;
                 startActivity(in);
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
                 break;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
-                navigatingAway = true;
                 mainapp.webMenuSelected = true;
                 startActivity(in);
                 this.finish();
@@ -582,25 +557,21 @@ public class routes extends Activity implements OnGestureListener {
                 break;
             case R.id.power_control_mnu:
                 in = new Intent().setClass(this, power_control.class);
-                navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.preferences_mnu:
                 in = new Intent().setClass(this, preferences.class);
-                navigatingAway = true;
                 startActivityForResult(in, 0);   // refresh view on return
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.logviewer_menu:
                 Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
-                navigatingAway = true;
                 startActivity(logviewer);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.about_mnu:
                 in = new Intent().setClass(this, about_page.class);
-                navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;

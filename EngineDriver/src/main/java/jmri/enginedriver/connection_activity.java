@@ -19,6 +19,9 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -26,37 +29,15 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import java.net.Inet4Address;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.SimpleAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.PrintWriter;
-import java.io.File;
-
-import android.os.Environment;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-
 import android.util.DisplayMetrics;
 import android.util.Log;
-
-import java.io.FileReader;
-import java.lang.reflect.Method;
-
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -64,16 +45,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.os.Message;
-import android.widget.EditText;
-import android.widget.Button;
-import android.os.Handler;
-import android.provider.Settings;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import android.content.Context;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.lang.reflect.Method;
+import java.net.Inet4Address;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.util.PermissionsHelper;
@@ -95,7 +87,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private String connected_hostip;
     private String connected_hostname;
     private int connected_port;
-    private boolean navigatingAway = false;        // flag for onPause: set to true when another activity is selected, false if going into background
 
     private static final String demo_host = "jmri.mstevetodd.com";
     private static final String demo_port = "44444";
@@ -109,9 +100,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
 
-    private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
-    private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY = "Connect Only";
-
     private static final int FORCED_RESTART_REASON_NONE = 0;
     private static final int FORCED_RESTART_REASON_RESET = 1;
     private static final int FORCED_RESTART_REASON_IMPORT = 2;
@@ -121,6 +109,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private static final int FORCED_RESTART_REASON_LOCALE = 6;
     private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
     private static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
+    private Toast connToast = null;
 
     SwipeDetector connectionsListSwipeDetector;
 
@@ -193,8 +182,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                 break;
         }
 
-
-        navigatingAway = true;
         startActivity(throttle);
         this.finish();
         overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -404,11 +391,13 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         Log.d("Engine_Driver", "connection.onCreate ");
         mainapp = (threaded_application) this.getApplication();
         mainapp.connection_msg_handler = new ui_handler();
+
+        connToast = Toast.makeText(this, "", Toast.LENGTH_LONG);    // save toast obj so it can be cancelled
         // setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));	//set title to long form of label
 
         //ensure statics in all activities are reinitialize since Android might not have killed app since it was last Exited.
         //do this here instead of TA.onCreate() because that method won't be invoked if app is still running.
-//        throttle.initStatics();
+        throttle.initStatics();
         throttle_full.initStatics();
         throttle_simple.initStatics();
         web_activity.initStatics();
@@ -505,7 +494,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             switch (prefForcedRestartReason) {
                 case FORCED_RESTART_REASON_AUTO_IMPORT:
                 case FORCED_RESTART_REASON_IMPORT: {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportSucceeded), Toast.LENGTH_SHORT).show();
+//routine so suppress this one                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportSucceeded), Toast.LENGTH_SHORT).show();
                     break;
                 }
                 case FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL: {
@@ -542,18 +531,15 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                     && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET)
                     && (prefForcedRestartReason != FORCED_RESTART_REASON_AUTO_IMPORT)) {  // reload the preferences page
                 Intent in = new Intent().setClass(this, preferences.class);
-                navigatingAway = true;
                 startActivityForResult(in, 0);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
         }
-
    }
 
     @Override
     public void onResume() {
         super.onResume();
-        mainapp.removeNotification();
         if (this.isFinishing()) {        //if finishing, expedite it
             return;
         }
@@ -564,7 +550,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
         getWifiInfo();
 
-        navigatingAway = false;
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         //start up server discovery listener
         //	    sendMsgErr(0, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
@@ -572,7 +557,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         //populate the ListView with the recent connections
         getConnectionsList();
         set_labels();
-        mainapp.cancelForcingFinish();            // if fresh start are restart after being killed in the bkg, indicate app is running again
+        mainapp.cancelForcingFinish();            // if fresh start or restart after being killed in the bkg, indicate app is running again
         //start up server discovery listener again (after a 1 second delay)
         //TODO: this is a rig, figure out why this is needed for ubuntu servers
         //	    sendMsgErr(1000, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
@@ -590,26 +575,37 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     @Override
     public void onPause() {
         super.onPause();
-//        if (!this.isFinishing() && !navigatingAway && !runIntro) {        //only invoke setContentIntentNotification when going into background
-        if (!this.isFinishing() && !navigatingAway && !mainapp.introIsRunning) {        //only invoke setContentIntentNotification when going into background
-            mainapp.addNotification(this.getIntent());
-        }
 //        runIntro = false;
+        if (connToast != null) {
+            connToast.cancel();
+        }
     }
 
     @Override
     public void onStop() {
+        super.onStop();
         Log.d("Engine_Driver", "connection.onStop()");
         //shutdown server discovery listener
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 0);
-        super.onStop();
     }
 
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "connection.onDestroy() called");
-        //		mainapp.connection_msg_handler = null;
         super.onDestroy();
+        Log.d("Engine_Driver", "connection.onDestroy() called");
+        mainapp.connection_msg_handler = null;
+        Log.d("Engine_Driver", "onDestroy: mainapp.connection_msg_handler. Attempting to removeCallbacksAndMessages");
+        try {
+            mainapp.connection_msg_handler.removeCallbacksAndMessages(null);
+        }
+        catch (Exception ignored) { }
+        mainapp.connection_msg_handler = null;
+        CMenu = null;
+        connectionsListSwipeDetector = null;
+        prefs = null;
+        discovery_list_adapter = null;
+        connection_list_adapter = null;
+        mainapp = null;
     }
 
     private void shutdown() {
@@ -704,13 +700,11 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                 break;
             case R.id.preferences_mnu:
                 in = new Intent().setClass(this, preferences.class);
-                navigatingAway = true;
                 startActivityForResult(in, 0);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.about_mnu:
                 in = new Intent().setClass(this, about_page.class);
-                navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
@@ -723,13 +717,11 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                 break;
             case R.id.logviewer_menu:
                 Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
-                navigatingAway = true;
                 startActivity(logviewer);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.intro_mnu:
                 in = new Intent().setClass(this, intro_activity.class);
-                navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 break;
@@ -919,7 +911,9 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                         list_reader.close();
 
                         if (((foundDemoHost) && (connections_list.size()>1)) || (connections_list.size()>0)) {
-                            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectionsListHelp), Toast.LENGTH_LONG).show();
+                            // use connToast so onPause can cancel toast if connection is made
+                            connToast.setText(threaded_application.context.getResources().getString(R.string.toastConnectionsListHelp));
+                            connToast.show();
                         }
 
                     }
@@ -972,7 +966,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
-        if (prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT)) {
+        if (prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT)) {
             if (mainapp.connectedHostName != null) {
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
 
@@ -1003,8 +997,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         sharedPreferences.edit().putInt("prefForcedRestartReason", FORCED_RESTART_REASON_AUTO_IMPORT).commit();
 
 
-        if ((prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT))
-                || (prefAutoImportExport.equals(AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
+        if ((prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT))
+                || (prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
             if (mainapp.connectedHostName != null) {
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, true);

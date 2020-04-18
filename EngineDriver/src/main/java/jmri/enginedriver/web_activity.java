@@ -33,8 +33,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.CookieSyncManager;
-import android.webkit.WebBackForwardList;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -55,13 +55,11 @@ public class web_activity extends Activity {
     private static float scale = initialScale;        // used to restore web zoom level
     private static boolean clearHistory = false;        // flags webViewClient to clear history when page load finishes
     private static String firstUrl = null;            // first url loaded that isn't noUrl
-    private static String currentUrl = null;
-//    private String currentTime = "";
     private Menu WMenu;
-    private boolean navigatingAway = false;        // flag for onPause: set to true when another activity is selected, false if going into background
-    private boolean webInited = false;
+    private static boolean savedWebMenuSelected;
+    private int urlRestoreStep = 0;
+    private static Bundle webBundle = new Bundle();
 
-    WebBackForwardList backForwardList;
     Button closeButton;
 
     @SuppressLint("HandlerLeak")
@@ -72,16 +70,12 @@ public class web_activity extends Activity {
                 case message_type.RESPONSE: {    //handle messages from WiThrottle server
                     String s = msg.obj.toString();
                     String response_str = s.substring(0, Math.min(s.length(), 2));
-                    if ("PW".equals(response_str))        // PW - web server port info
-                        if (!webInited) {
-                            initWeb();
-                            webInited = true;
+                    if ("PW".equals(response_str)       // PW - web server port info
+                        || ("HTMRC".equals(s))) {        // If connected to the MRC Wifi adapter, treat as PW, which isn't coming
+                        if (urlRestoreStep == 3) {
+                            urlRestore(true);
                         }
-                    if ("HTMRC".equals(s))        // If connected to the MRC Wifi adapter, treat as PW, which isn't coming
-                        if (!webInited) {
-                            initWeb();
-                            webInited = true;
-                        }
+                    }
                     break;
                 }
                 case message_type.WIT_CON_RETRY:
@@ -90,7 +84,7 @@ public class web_activity extends Activity {
                 case message_type.WIT_CON_RECONNECT:
                     break;
                 case message_type.INITIAL_WEBPAGE:
-                    initWeb();
+                    urlRestore(true);
                     break;
                 case message_type.TIME_CHANGED:
                     setActivityTitle();
@@ -111,22 +105,10 @@ public class web_activity extends Activity {
             setTitle(getApplicationContext().getResources().getString(R.string.app_name_web));
     }
 
-    private void reloadWeb() {
-        webView.stopLoading();
-        load_webview(); // reload
-    }
-
-    private void initWeb() {
-        // reload from the initial webpage
-        currentUrl = null;
-        reloadWeb();
-    }
-
     private void witRetry(String s) {
         webView.stopLoading();
         Intent in = new Intent().setClass(this, reconnect_status.class);
         in.putExtra("status", s);
-        navigatingAway = true;
         startActivity(in);
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
@@ -137,7 +119,7 @@ public class web_activity extends Activity {
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("Engine_Driver","web_activity.onCreate()");
+        Log.d("Engine_Driver", "web_activity.onCreate()");
         super.onCreate(savedInstanceState);
 
         mainapp = (threaded_application) this.getApplication();
@@ -157,6 +139,11 @@ public class web_activity extends Activity {
         webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
         webView.getSettings().setUseWideViewPort(true);        // Enable greater zoom-out
         webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+        if (savedInstanceState != null) {
+            if (savedInstanceState.getSerializable("scale") != null) {
+                scale = (float) savedInstanceState.getSerializable(("scale"));
+            }
+        }
         webView.setInitialScale((int) (100 * scale));
         if (mainapp.firstWebActivity == false) {
             webView.clearCache(true);   // force fresh javascript download on first connection
@@ -170,7 +157,6 @@ public class web_activity extends Activity {
             }
         }
 
-
         // open all links inside the current view (don't start external web browser)
         WebViewClient EDWebClient = new WebViewClient() {
             @Override
@@ -181,10 +167,11 @@ public class web_activity extends Activity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if (!noUrl.equals(url)) {                // if url is legit
-                    currentUrl = url;
+                if (!noUrl.equals(url) || urlRestoreStep >= 3) {    // if url is legit or out of options
                     if (firstUrl == null) {                // if this is the first legit url
                         firstUrl = url;
+                        scale = initialScale;
+                        webView.setInitialScale((int) (100 * scale));
                         clearHistory = true;
                     }
                     if (clearHistory) {                    // keep clearing history until off this page
@@ -195,20 +182,34 @@ public class web_activity extends Activity {
                         }
                     }
                 }
+                // if webview didn't get restored but options remain, try again
+                else {
+                    urlRestore();
+                }
+            }
+
+            @Override
+            public void onScaleChanged(WebView view, float oldScale, float newScale) {
+                super.onScaleChanged(view, oldScale, newScale);
+                scale = newScale;
             }
         };
 
         noUrl = getApplicationContext().getResources().getString(R.string.blank_page_url);
-
         webView.setWebViewClient(EDWebClient);
-        if (currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null)
-            load_webview();            // reload if no saved state or no page had loaded when state was saved
+        // restore the url if possible
+        // first try loading from the savedInstanceState if it exists
+        urlRestoreStep = 0;
+        if (savedInstanceState == null || webView.restoreState(savedInstanceState) == null) {
+            // try remaining methods
+            urlRestore(true);
+        }
 
         //longpress webview to reload
         webView.setOnLongClickListener(new WebView.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                reloadWeb();
+                webView.reload();
                 return true;
             }
         });
@@ -221,22 +222,12 @@ public class web_activity extends Activity {
 
         //put pointer to this activity's handler in main app's shared variable
         mainapp.web_msg_handler = new web_handler();
-
-        mainapp.checkAndSetOrientationInfo();
-
-    }
-
-    @Override
-    public void onStart() {
-        Log.d("Engine_Driver","web_activity.onStart()");
-        super.onStart();
     }
 
     @Override
     public void onResume() {
         Log.d("Engine_Driver", "web_activity.onResume() called");
         super.onResume();
-        mainapp.removeNotification();
 
         setActivityTitle();
 
@@ -252,141 +243,84 @@ public class web_activity extends Activity {
             this.finish();
             return;
         }
-        if (!mainapp.setActivityOrientation(this, true))    //set screen orientation based on prefs
-        {
-            restartThrottleActivity();
-            return;
+
+        if (!mainapp.setActivityOrientation(this)) {   //set screen orientation based on prefs
+            this.finish();
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
-
-        navigatingAway = false;
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TIME_CHANGED);    // request time update
-        if (WMenu != null) {
-            mainapp.displayEStop(WMenu);
+        else {
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TIME_CHANGED);    // request time update
+            if (WMenu != null) {
+                mainapp.displayEStop(WMenu);
+            }
+            resumeWebView();
+            CookieSyncManager.getInstance().startSync();
         }
-
-// don't load here - onCreate already handled it.  Load might not be finished yet
-// in which case call load_webview here just creates extra work since url will still be null
-// causing load_webview to load the page again 
-//	  load_webview();
-        String x;
-        if (webView != null) {
-            if (!callHiddenWebViewOnResume())
-                webView.resumeTimers();
-//            if (noUrl.equals(webView.getUrl()) && webView.canGoBack()) {    //unload static url loaded by onPause
-//                webView.goBack();
-//            }
-        }
-        CookieSyncManager.getInstance().startSync();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        mainapp.isRotating = false;
-
-        if (webView != null)
-            webView.saveState(outState);        // save history
-
     }
 
     @Override
     public void onPause() {
         Log.d("Engine_Driver", "web_activity.onPause() called");
         super.onPause();
-        if (webView != null) {
-            if (!callHiddenWebViewOnPause())
-                webView.pauseTimers();
-//            String url = webView.getUrl();
-//            if (url != null && !noUrl.equals(url)) {    // if any url has been loaded
-//                webView.loadUrl(noUrl);                // load a static url to stop any javascript
-//            }
-        }
+        pauseWebView();
         CookieSyncManager.getInstance().stopSync();
+    }
 
-        if (!this.isFinishing() && !navigatingAway ) {        //only invoke setContentIntentNotification when going into background
-            mainapp.checkAndSetOrientationInfo();
-            if (!mainapp.isRotating) {
-                mainapp.addNotification(this.getIntent());
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("scale", scale);   // save in bundle for use if just rotationg
+        if (webView != null) {
+            webView.saveState(webBundle);           // save locally for use if finishing
+            webView.saveState(outState);            // save in bundle for use if rotating
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("Engine_Driver", "web_activity.onDestroy() called");
+
+        if (webView != null) {
+            final ViewGroup webGroup = (ViewGroup) webView.getParent();
+            if (webGroup != null) {
+                webGroup.removeView(webView);
+            }
+//            webView.removeAllViews();
+        }
+        mainapp.web_msg_handler = null;
+    }
+
+
+    public class close_button_listener implements View.OnClickListener {
+        public void onClick(View v) {
+            navigateAway();
+        }
+    }
+
+    private void pauseWebView() {
+        if (webView != null) {
+            try {
+                Method method = WebView.class.getMethod("onPause");
+                method.invoke(webView);
+            }
+            catch (Exception e) {
+                webView.pauseTimers();
             }
         }
     }
 
-    /**
-     * Called when the activity is finished.
-     */
-    @SuppressWarnings("deprecation")
-    @Override
-    public void onDestroy() {
-        Log.d("Engine_Driver", "web_activity.onDestroy() called");
-
+    private void resumeWebView() {
         if (webView != null) {
-            scale = webView.getScale();    // save scale for next onCreate
+            try {
+                Method method = WebView.class.getMethod("onResume");
+                method.invoke(webView);
+            }
+            catch (Exception e) {
+                webView.resumeTimers();
+            }
         }
-        mainapp.web_msg_handler = null;
-        super.onDestroy();
-    }
-
-    private void restartThrottleActivity() {
-        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        Intent in;
-        switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
-            case "Simple":
-                in = new Intent(this, throttle_simple.class);
-                break;
-            case "Vertical":
-                in = new Intent(this, throttle_vertical.class);
-                break;
-            case "Vertical Left":
-            case "Vertical Right":
-                in = new Intent(this, throttle_vertical_left_or_right.class);
-                break;
-            case "Switching Left":
-            case "Switching Right":
-                in = new Intent(this, throttle_switching_left_or_right.class);
-                break;
-            case "Big Left":
-            case "Big Right":
-                in = new Intent(this, throttle_big_buttons.class);
-                break;
-            case "Default":
-            default:
-                in = new Intent(this, throttle_full.class);
-                break;
-        }
-
-        mainapp.webMenuSelected = false;
-        navigatingAway = true;
-        in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
-        startActivity(in);// if autoweb and portrait, switch to throttle screen
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-
-    }
-
-    public class close_button_listener implements View.OnClickListener {
-        public void onClick(View v) {
-            restartThrottleActivity();
-        }
-    }
-
-    private boolean callHiddenWebViewOnPause() {
-        try {
-            Method method = WebView.class.getMethod("onPause");
-            method.invoke(webView);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean callHiddenWebViewOnResume() {
-        try {
-            Method method = WebView.class.getMethod("onResume");
-            method.invoke(webView);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
     }
 
     //Handle pressing of the back button to end this activity
@@ -395,14 +329,12 @@ public class web_activity extends Activity {
     public boolean onKeyDown(int key, KeyEvent event) {
         if (key == KeyEvent.KEYCODE_BACK) {
             if (webView.canGoBack() && !clearHistory) {
-                scale = webView.getScale();    // save scale
                 webView.goBack();
                 webView.setInitialScale((int) (100 * scale));    // restore scale
                 return true;
             }
-
-            restartThrottleActivity();
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            navigateAway();
+            return true;
         }
         return (super.onKeyDown(key, event));
     }
@@ -425,78 +357,88 @@ public class web_activity extends Activity {
         Intent in;
         switch (item.getItemId()) {
             case R.id.throttle_mnu:
-                restartThrottleActivity();
-                break;
+                navigateAway();
+                return true;
             case R.id.turnouts_mnu:
-                in = new Intent().setClass(this, turnouts.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                navigatingAway = true;
-                startActivity(in);
-//                this.finish();
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                navigateAway(true, turnouts.class);
+                return true;
             case R.id.routes_mnu:
-                in = new Intent().setClass(this, routes.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                navigatingAway = true;
-                startActivity(in);
-//                this.finish();
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                navigateAway(true, routes.class);
+                return true;
             case R.id.exit_mnu:
                 mainapp.checkExit(this);
-                break;
+                return true;
             case R.id.power_control_mnu:
-                in = new Intent().setClass(this, power_control.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                navigatingAway = true;
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                navigateAway(false, power_control.class);
+                return true;
             case R.id.preferences_mnu:
-                in = new Intent().setClass(this, preferences.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                navigatingAway = true;
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                navigateAway(false, preferences.class);
+                return true;
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
-                break;
+                return true;
             case R.id.logviewer_menu:
-                Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
-                navigatingAway = true;
-                startActivity(logviewer);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                navigateAway(false, LogViewerActivity.class);
+                return true;
             case R.id.about_mnu:
-                in = new Intent().setClass(this, about_page.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                navigatingAway = true;
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                navigateAway(false, about_page.class);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    // load the url
-    private void load_webview() {
-        String url = currentUrl;
-        if (url == null) {
-            url = mainapp.createUrl(prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue)));
-            Log.d("Engine_Driver", "initial web url set to '" + url + "'");
-            if (url == null) {        //if port is invalid
-                url = noUrl;
-            }
+    //handle return from menu items
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mainapp.webMenuSelected = savedWebMenuSelected;     // restore flag
+    }
 
-            if (firstUrl == null) {
-                scale = initialScale;
-                webView.setInitialScale((int) (100 * scale));
-            }
-            firstUrl = null;
+    // helper methods to handle navigating away from this activity
+    private void navigateAway() {
+        mainapp.webMenuSelected = false;    // not returning so clear flag
+        this.finish();
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    }
+
+    private void navigateAway(boolean doFinish, Class activityClass) {
+        Intent in = new Intent().setClass(this, activityClass);
+        if (doFinish) {                 // if not returning
+            startActivity(in);
+            navigateAway();
+        } else {
+            savedWebMenuSelected = mainapp.webMenuSelected; // returning so preserve flag
+            mainapp.webMenuSelected = true;     // ensure we return regardless of auto-web setting and orientation changes
+            startActivityForResult(in, 0);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
-        webView.loadUrl(url);
+    }
+
+    // attempt to reload url first from local store, then try from prefs, and if that fails then use noUrl
+    private void urlRestore() {
+        urlRestore(false);
+    }
+    private void urlRestore(boolean restart) {
+        if(restart) {
+            urlRestoreStep = 1;
+        }
+        // try the local store
+        if (urlRestoreStep == 1 && webBundle != null && webView.restoreState(webBundle) == null) {
+            urlRestoreStep = 2;
+        }
+        // try the pref setting
+        if (urlRestoreStep == 2) {
+            String url = mainapp.createUrl(prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue)));
+            if (url != null) {      // if port is valid
+                webView.loadUrl(url);
+            }
+            else {
+                urlRestoreStep = 3;
+            }
+        }
+        // use noUrl
+        if (urlRestoreStep == 3) {
+            webView.loadUrl(noUrl);
+        }
     }
 
     private void disconnect() {
@@ -509,8 +451,8 @@ public class web_activity extends Activity {
     public static void initStatics() {
         scale = initialScale;
         clearHistory = false;
-        currentUrl = null;
         firstUrl = null;
+        webBundle = new Bundle();
     }
 
     @Override

@@ -45,7 +45,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -64,11 +63,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -78,9 +73,8 @@ import java.util.List;
 import java.util.Map;
 
 import jmri.enginedriver.Consist.ConLoco;
-import jmri.jmrit.roster.RosterEntry;
-
 import jmri.enginedriver.util.SwipeDetector;
+import jmri.jmrit.roster.RosterEntry;
 
 //import java.util.Arrays;
 //import java.util.Collection;
@@ -1271,9 +1265,6 @@ public class select_loco extends Activity {
         });
 
         set_labels();
-
-        mainapp.checkAndSetOrientationInfo();
-
         overrideThrottleName = "";
     }
 
@@ -1415,24 +1406,7 @@ public class select_loco extends Activity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mainapp.isRotating = false;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
-            mainapp.checkAndSetOrientationInfo();
-            if (!mainapp.isRotating) {
-                mainapp.addNotification(this.getIntent());
-            }
-        }
-    }
-
-    @Override
+   @Override
     public void onDestroy() {
         Log.d("Engine_Driver", "select_loco.onDestroy() called");
         mainapp.select_loco_msg_handler = null;

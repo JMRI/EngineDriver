@@ -30,6 +30,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,6 +41,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
@@ -202,9 +204,6 @@ public class threaded_application extends Application {
 
     public boolean EStopActivated = false;  // Has EStop been sent?
 
-    //Used to tell set_Labels in Throttle not to update padding for throttle sliders after onCreate.
-    public boolean firstCreate = true;
-
     public int numThrottles = 1;
     public int maxThrottles = 6;   // maximum number of throttles the system supports
     public int maxThrottlesCurrentScreen = 6;   // maximum number of throttles the current screen supports
@@ -219,8 +218,6 @@ public class threaded_application extends Application {
     public boolean introIsRunning = false;
 
     public boolean webMenuSelected = false;  // used as an override for the auto-web code when the web menu is selected.
-    public boolean isRotating = false;
-    private int previousOrientation = Configuration.ORIENTATION_UNDEFINED;
 
     private static final int WHICH_SOURCE_UNKNOWN = 0;
     private static final int WHICH_SOURCE_ADDRESS = 1;
@@ -233,8 +230,9 @@ public class threaded_application extends Application {
 
     public boolean shownRosterTurnouts = false;
     public boolean firstWebActivity = false;
-
-    public boolean simpleConfirmDialogResult = false;
+    private boolean exitConfirmed = false;
+    private ApplicationLifecycleHandler lifecycleHandler;
+    public static Context context;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -247,6 +245,7 @@ public class threaded_application extends Application {
 
         comm_thread() {
             super("comm_thread");
+            this.start();
         }
 
         //Listen for a WiThrottle service advertisement on the LAN.
@@ -321,12 +320,12 @@ public class threaded_application extends Application {
 
                 } else {
 //                    show_toast_message("No local IP Address found.\nCheck your WiFi connection.", Toast.LENGTH_SHORT);
-                    show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppNoLocalIp), Toast.LENGTH_SHORT);
+                    safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNoLocalIp), Toast.LENGTH_SHORT);
                 }
             } catch (Exception except) {
                 Log.e("Engine_Driver", "start_jmdns - Error creating withrottle listener: " + except.getMessage());
 //                show_toast_message("Error creating withrottle zeroconf listener: IOException: \n" + except.getMessage(), Toast.LENGTH_SHORT);
-                show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorCreatingWiThrottle, except.getMessage()), Toast.LENGTH_SHORT);
+                safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorCreatingWiThrottle, except.getMessage()), Toast.LENGTH_SHORT);
             }
         }
 
@@ -351,11 +350,16 @@ public class threaded_application extends Application {
                     }
                     jmdns = null;
                     endingJmdns = false;
+                    Log.d("Engine_Driver", "threaded_application.end_jmdns run exit");
                 }
             };
             if (jmdnsIsActive()) {      //only need to run one instance of this thread to terminate jmdns 
                 endingJmdns = true;
                 jmdnsThread.start();
+                Log.d("Engine_Driver", "threaded_application.end_jmdns active so ending it and starting thread to remove listener");
+            } else {
+                jmdnsThread = null;
+                Log.d("Engine_Driver", "threaded_application.end_jmdns not active");
             }
         }
 
@@ -416,7 +420,6 @@ public class threaded_application extends Application {
             @SuppressLint("DefaultLocale")
             public void handleMessage(Message msg) {
 //                Log.d("Engine_Driver", "threaded_application.comm_handler: message: " +msg.what);
-
                 switch (msg.what) {
                     // note: if the Thottle is sent in arg1, it is always expected to be a int
                     // if it is sent in arg0, it will be a string
@@ -433,7 +436,7 @@ public class threaded_application extends Application {
                             } else {
                                 //show message if using mobile data
                                 if (!client_type.equals("WIFI")) {
-                                    show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppNotWIFI, client_type), Toast.LENGTH_LONG);
+                                    safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNotWIFI, client_type), Toast.LENGTH_LONG);
                                 }
                                 if (jmdns == null) {   //start jmdns if not started
                                     start_jmdns();
@@ -540,7 +543,10 @@ public class threaded_application extends Application {
                         Log.d("Engine_Driver", "threaded_application: TA alert all activities to shutdown");
                         alert_activities(message_type.SHUTDOWN, "");     //tell all activities to finish()
                         heart.stopHeartbeat();
-                        if (phone != null) phone.disable();
+                        if (phone != null) {
+                            phone.disable();
+                            phone = null;
+                        }
                         end_jmdns();
                         dlMetadataTask.stop();
                         dlRosterTask.stop();
@@ -697,7 +703,7 @@ public class threaded_application extends Application {
 
                     //send whatever message string comes in obj as a long toast message
                     case message_type.TOAST_MESSAGE:
-                        show_toast_message(msg.obj.toString(), Toast.LENGTH_LONG);
+                        safeToast(msg.obj.toString(), Toast.LENGTH_LONG);
                         break;
 
                     case message_type.KIDS_TIMER_ENABLE:
@@ -713,28 +719,46 @@ public class threaded_application extends Application {
                         sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_TICK, "", msg.arg1);
                         break;
                     case message_type.IMPORT_SERVER_AUTO_AVAILABLE:
-                        Log.d("Engine_Driver", "threaded_application.comm_handler: message: AUTO_IMPORT_URL_AVAILABLE " +msg.what);
-                        sendMsg(throttle_msg_handler, message_type.IMPORT_SERVER_AUTO_AVAILABLE,"", 0);
+                        Log.d("Engine_Driver", "threaded_application.comm_handler: message: AUTO_IMPORT_URL_AVAILABLE " + msg.what);
+                        sendMsg(throttle_msg_handler, message_type.IMPORT_SERVER_AUTO_AVAILABLE, "", 0);
                         break;
                 }
             }
         }
 
-        private void shutdown() {
+        public void shutdown() {
             Log.d("Engine_Driver", "threaded_application.Shutdown");
             end_jmdns();                        //jmdns should already be down but no harm in making call
             if (socketWiT != null) {
                 socketWiT.disconnect(true);     //stop reading from the socket
-                socketWiT = null;
+//                socketWiT = null;
             }
             host_ip = null;
             port = 0;
             doFinish = false;                   //ok for activities to run if restarted after this
 
+//            comm_msg_handler = null;
+            dlRosterTask.stop();
+            dlMetadataTask.stop();
+//            dlRosterTask = null;
+//            dlMetadataTask = null;
+//            imageDownloader = null;
+//            prefs = null;
+            heart.stopHeartbeat();
+//            heart = null;
+//            listener = null;
+//            multicast_lock = null;
+//            lifecycleHandler = null;
+//            removeNotification();
+
             // make sure flashlight is switched off at shutdown
-            flashlight.setFlashlightOff();
-            flashlight.teardown();
+            if (flashlight != null) {
+                flashlight.setFlashlightOff();
+                flashlight.teardown();
+//                flashlight = null;
+            }
             flashState = false;
+            Log.d("Engine_Driver", "threaded_application.Shutdown finished");
         }
 
         private void sendThrottleName() {
@@ -742,7 +766,7 @@ public class threaded_application extends Application {
         }
 
         private void sendThrottleName(Boolean sendHWID) {
-            String s = prefs.getString("throttle_name_preference", getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue));
+            String s = prefs.getString("throttle_name_preference", threaded_application.context.getResources().getString(R.string.prefThrottleNameDefaultValue));
             withrottle_send("N" + s);  //send throttle name
             if (sendHWID) {
                 if (deviceId.equals("")) {
@@ -773,7 +797,7 @@ public class threaded_application extends Application {
 
             //format multithrottle request for loco M1+L37<;>ECSX37
             String msgTxt = String.format("M%s+%s<;>%s", throttleIntToString(whichThrottle), address, rosterName);  //add requested loco to this throttle
-            Log.d("Engine_Driver", "threaded_application: acquireLoco: addr:'" + addr +"' msgTxt: '" + msgTxt + "'");
+            Log.d("Engine_Driver", "threaded_application: acquireLoco: addr:'" + addr + "' msgTxt: '" + msgTxt + "'");
             sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, msgTxt);
 
             if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
@@ -813,19 +837,6 @@ public class threaded_application extends Application {
                     delays++;
                 }
             }
-        }
-
-        //display error msg using Toast()
-        public void show_toast_message(final String msg_txt, int length) {
-            Log.d("Engine_Driver", "threaded_application.show_toast_message: " + msg_txt);
-            //need to do Toast() on the main thread so create a handler
-            Handler h = new Handler(Looper.getMainLooper());
-            h.post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), msg_txt, Toast.LENGTH_SHORT).show();
-                }
-            });
         }
 
         private void process_response(String response_str) {
@@ -921,7 +932,7 @@ public class threaded_application extends Application {
                         }
                     } else {
 //                        show_toast_message("WiThrottle version " + response_str.substring(2) + " not supported.", Toast.LENGTH_LONG);
-                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported, response_str.substring(2)), Toast.LENGTH_SHORT);
+                        safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported, response_str.substring(2)), Toast.LENGTH_SHORT);
                         socketWiT.disconnect(false);
                     }
                     break;
@@ -933,18 +944,18 @@ public class threaded_application extends Application {
                             web_server_port = 80; //hardcode web port for MRC
                         }
                     } else if (response_str.charAt(1) == 'M') { //alert message sent from server to throttle
-                        show_toast_message(response_str.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
+                        safeToast(response_str.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
                         //see if it is a turnout fail
                         if ((response_str.contains("Turnout")) || (response_str.contains("create not allowed"))) {
                             Pattern pattern = Pattern.compile(".*\\\'(.*)\\\'.*");
                             Matcher matcher = pattern.matcher(response_str);
-                            if(matcher.find()) {
+                            if (matcher.find()) {
                                 sendMsg(turnouts_msg_handler, message_type.WIT_TURNOUT_NOT_DEFINED, matcher.group(1));
                             }
                         }
 
                     } else if (response_str.charAt(1) == 'm') { //info message sent from server to throttle
-                        show_toast_message(response_str.substring(2), Toast.LENGTH_SHORT); // copy to UI as toast message
+                        safeToast(response_str.substring(2), Toast.LENGTH_SHORT); // copy to UI as toast message
                     }
                     break;
 
@@ -1085,8 +1096,8 @@ public class threaded_application extends Application {
         //  RL2]\[NS2591}|{2591}|{L]\[NS4805}|{4805}|{L
         private void process_roster_list(String response_str) {
             //clear the global variable
-              roster_entries = Collections.synchronizedMap(new LinkedHashMap<String,String>());
-              //todo   RDB why don't we just clear the existing map with roster_entries.clear() instead of disposing and creating a new instance?
+            roster_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
+            //todo   RDB why don't we just clear the existing map with roster_entries.clear() instead of disposing and creating a new instance?
 
             String[] ta = splitByString(response_str, "]\\[");  //initial separation
             //initialize app arrays (skipping first)
@@ -1296,10 +1307,10 @@ public class threaded_application extends Application {
         }  //end withrottle_send()
 
         public void run() {
-
             Looper.prepare();
             comm_msg_handler = new comm_handler();
             Looper.loop();
+            Log.d("Engine_Driver", "comm_thread run() exit");
         }
 
         class socket_WiT extends Thread {
@@ -1333,7 +1344,7 @@ public class threaded_application extends Application {
                         host_address = InetAddress.getByName(host_ip);
                     } catch (UnknownHostException except) {
 //                        show_toast_message("Can't determine IP address of " + host_ip, Toast.LENGTH_LONG);
-                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantDetermineIp, host_ip), Toast.LENGTH_SHORT);
+                        safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantDetermineIp, host_ip), Toast.LENGTH_SHORT);
                         socketOk = false;
                     }
                 }
@@ -1349,11 +1360,11 @@ public class threaded_application extends Application {
                         clientSocket.setSoTimeout(socketTimeoutMs);
                     } catch (Exception except) {
                         if (!firstConnect) {
-                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppCantConnect,
+                            safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantConnect,
                                     host_ip, Integer.toString(port), client_address, except.getMessage()), Toast.LENGTH_LONG);
                         }
                         if (!client_type.equals("WIFI")) { //show additional message if using mobile data
-                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppNotWIFI, client_type), Toast.LENGTH_LONG);
+                            safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNotWIFI, client_type), Toast.LENGTH_LONG);
                         }
                         socketOk = false;
                     }
@@ -1365,7 +1376,7 @@ public class threaded_application extends Application {
                         inputBR = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                     } catch (IOException except) {
 //                        show_toast_message("Error creating input stream, IOException: " + except.getMessage(), Toast.LENGTH_LONG);
-                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorInputStream, except.getMessage()), Toast.LENGTH_SHORT);
+                        safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorInputStream, except.getMessage()), Toast.LENGTH_SHORT);
                         socketOk = false;
                     }
                 }
@@ -1379,7 +1390,7 @@ public class threaded_application extends Application {
                         } catch (IllegalThreadStateException except) {
                             //ignore "already started" errors
 //                            show_toast_message("Error starting socket_WiT thread:  " + except.getMessage(), Toast.LENGTH_LONG);
-                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorStartingSocket, except.getMessage()), Toast.LENGTH_SHORT);
+                            safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorStartingSocket, except.getMessage()), Toast.LENGTH_SHORT);
                         }
                     }
                 }
@@ -1393,7 +1404,7 @@ public class threaded_application extends Application {
                         }
                     } catch (IOException e) {
 //                        show_toast_message("Error creating output stream, IOException: " + e.getMessage(), Toast.LENGTH_LONG);
-                        show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorCreatingOutputStream, e.getMessage()), Toast.LENGTH_SHORT);
+                        safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorCreatingOutputStream, e.getMessage()), Toast.LENGTH_SHORT);
                         socketOk = false;
                     }
                 }
@@ -1411,7 +1422,7 @@ public class threaded_application extends Application {
                             Thread.sleep(500);              //  give run() a chance to see endRead and exit
                         } catch (InterruptedException e) {
 //                            show_toast_message("Error sleeping the thread, InterruptedException: " + e.getMessage(), Toast.LENGTH_LONG);
-                            show_toast_message(getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorSleepingThread, e.getMessage()), Toast.LENGTH_SHORT);
+                            safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorSleepingThread, e.getMessage()), Toast.LENGTH_SHORT);
                         }
                     }
                 }
@@ -1455,6 +1466,7 @@ public class threaded_application extends Application {
                     }
                 }
                 heart.stopHeartbeat();
+                Log.d("Engine_Driver", "threaded_application: socket_WiT exit.");
             }
 
             void Send(String msg) {
@@ -1464,13 +1476,13 @@ public class threaded_application extends Application {
                     String status;
 //                    getWifiInfo();                  //update address in case network connection was lost
                     if (client_address == null) {
-                        status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNotConnected);
+                        status = threaded_application.context.getResources().getString(R.string.statusThreadedAppNotConnected);
                         Log.d("Engine_Driver", "threaded_application: WiT send reconnection attempt.");
                     } else if (inboundTimeout) {
-                        status = getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse, host_ip, Integer.toString(port), heart.sGetInboundInterval());
+                        status = threaded_application.context.getResources().getString(R.string.statusThreadedAppNoResponse, host_ip, Integer.toString(port), heart.sGetInboundInterval());
                         Log.d("Engine_Driver", "threaded_application: WiT receive reconnection attempt.");
                     } else {
-                        status = getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect, host_ip, Integer.toString(port), client_address);
+                        status = threaded_application.context.getResources().getString(R.string.statusThreadedAppUnableToConnect, host_ip, Integer.toString(port), client_address);
                         Log.d("Engine_Driver", "threaded_application: WiT send reconnection attempt.");
                     }
                     socketGood = false;
@@ -1636,6 +1648,7 @@ public class threaded_application extends Application {
                 comm_msg_handler.removeCallbacks(outboundHeartbeatTimer);           //remove any pending requests
                 comm_msg_handler.removeCallbacks(inboundHeartbeatTimer);
                 heartbeatIntervalSetpoint = 0;
+                Log.d("Engine_Driver", "threaded_application: heartbeat stopped.");
             }
 
             //outboundHeartbeatTimer()
@@ -1756,9 +1769,7 @@ public class threaded_application extends Application {
             // Add as notification
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             manager.notify(ED_NOTIFICATION_ID, builder.build());
-
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.notification_title), Toast.LENGTH_LONG).show();
-
+            safeToast(threaded_application.context.getResources().getString(R.string.notification_title), Toast.LENGTH_LONG);
         }
     }
 
@@ -1772,6 +1783,7 @@ public class threaded_application extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d("Engine_Driver", "threaded_application.onCreate()");
+        context = getApplicationContext();
 
         //When starting ED after it has been killed in the bkg, the OS restarts any activities that were running.
         //Since we aren't connected at this point, we want all those activities to finish() so we do 2 things:
@@ -1780,7 +1792,6 @@ public class threaded_application extends Application {
         doFinish = true;
         port = 0;               //indicate that no connection exists
         commThread = new comm_thread();
-        commThread.start();
         alert_activities(message_type.DISCONNECT, "");
 
         /*future Recovery
@@ -1794,12 +1805,16 @@ public class threaded_application extends Application {
          startActivity(caIntent);
          */
 
-        flashlight = Flashlight.newInstance(this.getApplicationContext());
+        flashlight = Flashlight.newInstance(threaded_application.context);
 
         androidVersion = android.os.Build.VERSION.SDK_INT;
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        numThrottles = Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
+        lifecycleHandler = new ApplicationLifecycleHandler();
+        registerActivityLifecycleCallbacks(lifecycleHandler);
+        registerComponentCallbacks(lifecycleHandler);
+
+       numThrottles = Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
 
         try {
             Map<String, ?> ddd = prefs.getAll();
@@ -1822,6 +1837,73 @@ public class threaded_application extends Application {
             }
         }, "DefaultFunctionLabels").start();
         CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
+    }
+
+    public class ApplicationLifecycleHandler implements Application.ActivityLifecycleCallbacks, ComponentCallbacks2 {
+        private boolean isInBackground = true;
+        private Activity runningActivity = null;
+
+        @Override
+        public void onActivityCreated(Activity activity, Bundle bundle) {
+        }
+
+        @Override
+        public void onActivityStarted(Activity activity) {
+            runningActivity = activity;
+        }
+
+        @Override
+        public void onActivityResumed(Activity activity) {
+            if (isInBackground && activity == runningActivity) {
+                isInBackground = false;
+                removeNotification();
+            }
+        }
+
+        @Override
+        public void onActivityPaused(Activity activity) {
+        }
+
+        @Override
+        public void onActivityStopped(Activity activity) {
+        }
+
+        @Override
+        public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+        }
+
+        @Override
+        public void onActivityDestroyed(Activity activity) {
+        }
+
+        @Override
+        public void onConfigurationChanged(Configuration configuration) {
+        }
+
+        @Override
+        public void onLowMemory() {
+        }
+
+        @Override
+        public void onTrimMemory(int i) {
+            if (!isInBackground && i >= ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {
+                Log.d("Engine Driver", "OnTrimMemory. activity: "+runningActivity.toString());
+                Log.d("Engine Driver", "OnTrimMemory. code: "+i);
+                if (!exitConfirmed) {
+                    isInBackground = true;
+                    addNotification(runningActivity.getIntent());
+                } else {
+/* force shutdown
+                    // all activities are destroyed at this point, so ok to just kill app ?
+                        Log.d("Engine_Driver", "onTrimMemory: exit");
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(1);
+end force shutdown */
+//                    unregisterActivityLifecycleCallbacks(lifecycleHandler);
+                    exitConfirmed = false;      //clear this so next notification works if ED does not properly exit
+                }
+            }
+        }
     }
 
     public boolean isForcingFinish() {
@@ -1867,11 +1949,11 @@ public class threaded_application extends Application {
                 settings_reader.close();
             } else {          //hard-code some buttons and default the rest
                 if (numberOfDefaultFunctionLabels >= 0)
-                    function_labels_default.put(0, getApplicationContext().getResources().getString(R.string.functionButton00DefaultValue));
+                    function_labels_default.put(0, threaded_application.context.getResources().getString(R.string.functionButton00DefaultValue));
                 if (numberOfDefaultFunctionLabels >= 1)
-                    function_labels_default.put(1, getApplicationContext().getResources().getString(R.string.functionButton01DefaultValue));
+                    function_labels_default.put(1, threaded_application.context.getResources().getString(R.string.functionButton01DefaultValue));
                 if (numberOfDefaultFunctionLabels >= 2)
-                    function_labels_default.put(2, getApplicationContext().getResources().getString(R.string.functionButton02DefaultValue));
+                    function_labels_default.put(2, threaded_application.context.getResources().getString(R.string.functionButton02DefaultValue));
                 if (numberOfDefaultFunctionLabels >= 3) {
                     for (int k = 3; k <= numberOfDefaultFunctionLabels; k++) {
                         function_labels_default.put(k, Integer.toString(k));        //String.format("%d",k));
@@ -1959,18 +2041,21 @@ public class threaded_application extends Application {
             public void run() {
                 try {
                     runMethod(this);
-                    if (!cancel)
+                    if (!cancel) {
                         Log.d("Engine_Driver", "threaded_application: sendMsg - message - ROSTER_UPDATE");
                         sendMsg(comm_msg_handler, message_type.ROSTER_UPDATE);      //send message to alert other activities
+                    }
                 } catch (Throwable t) {
                     Log.d("Engine_Driver", "threaded_application: Data fetch failed: " + t.getMessage());
                 }
 
                 // background load of Data completed
                 finally {
-                    if (cancel)
+                    if (cancel) {
                         Log.d("Engine_Driver", "threaded_application: Data fetch cancelled");
+                    }
                 }
+                Log.d("Engine_Driver", "threaded_application: Data fetch ended");
             }
 
             Download() {
@@ -2017,8 +2102,8 @@ public class threaded_application extends Application {
 
     public String findLocoNameInRoster(String searchName) {
         if ((roster_entries != null) && (roster_entries.size() > 0)) {
-            String rslt =  roster_entries.get(searchName);
-            if (rslt!=null) {
+            String rslt = roster_entries.get(searchName);
+            if (rslt != null) {
                 if (rslt.length() > 0) {
                     return searchName;
                 }
@@ -2085,9 +2170,9 @@ public class threaded_application extends Application {
             function_states[i] = new boolean[32];        // also allocated in onCreate() ???
         }
 
-        consist_entries = Collections.synchronizedMap(new LinkedHashMap<String,String>());
+        consist_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
         roster = null;
-        roster_entries = Collections.synchronizedMap(new LinkedHashMap<String,String>());
+        roster_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
         metadata = null;
         doFinish = false;
         turnouts_list_position = 0;
@@ -2189,7 +2274,7 @@ public class threaded_application extends Application {
      * @param menu - menu object that will be adjusted
      */
     public void setGamepadTestMenuOption(Menu menu, int gamepadCount) {
-        String whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
+        String whichGamePadMode = prefs.getString("prefGamePadType", threaded_application.context.getResources().getString(R.string.prefGamePadTypeDefaultValue));
         boolean result;
 
         if (menu != null) {
@@ -2270,7 +2355,7 @@ public class threaded_application extends Application {
         }
     }
 
-    public void setMenuItemById(Menu menu, int id, boolean show){
+    public void setMenuItemById(Menu menu, int id, boolean show) {
         if (menu != null) {
             MenuItem item = menu.findItem(id);
             if (item != null) {
@@ -2285,7 +2370,7 @@ public class threaded_application extends Application {
                 MenuItem item = menu.getItem(i);
                 //if ((item.getItemId() == R.id.preferences_mnu) || (item.getItemId() == R.id.timer_mnu)) {
                 if (item.getItemId() == R.id.timer_mnu) {
-                        item.setVisible(true);
+                    item.setVisible(true);
                 } else {
                     item.setVisible(false);
                 }
@@ -2295,7 +2380,7 @@ public class threaded_application extends Application {
             setWebMenuOption(menu);
             setRoutesMenuOption(menu);
             setTurnoutsMenuOption(menu);
-            setGamepadTestMenuOption(menu,gamepadCount);
+            setGamepadTestMenuOption(menu, gamepadCount);
             setMenuItemById(menu, R.id.preferences_mnu, true);
             setMenuItemById(menu, R.id.logviewer_menu, true);
             setMenuItemById(menu, R.id.exit_mnu, true);
@@ -2364,17 +2449,17 @@ public class threaded_application extends Application {
             if ((power_state == null) || (power_state.equals("2"))) {
                 menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_yellow);
 //                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                    menu.findItem(R.id.power_layout_button).setTitle("Layout Power is UnKnown");
+                menu.findItem(R.id.power_layout_button).setTitle("Layout Power is UnKnown");
 //                }
             } else if (power_state.equals("1")) {
                 menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_green);
 //                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                    menu.findItem(R.id.power_layout_button).setTitle("Layout Power is ON");
+                menu.findItem(R.id.power_layout_button).setTitle("Layout Power is ON");
 //                }
             } else {
                 menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_red);
 //                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                    menu.findItem(R.id.power_layout_button).setTitle("Layout Power is Off");
+                menu.findItem(R.id.power_layout_button).setTitle("Layout Power is Off");
 //                }
             }
         }
@@ -2434,7 +2519,6 @@ public class threaded_application extends Application {
         }
         try {
             sendMsg(power_control_msg_handler, msgType, msgBody);
-            sendMsg(power_control_msg_handler, msgType, msgBody);
         } catch (Exception ignored) {
         }
         try {
@@ -2483,9 +2567,13 @@ public class threaded_application extends Application {
             msg.obj = msgBody;
             msg.arg1 = msgArg1;
             msg.arg2 = msgArg2;
-            try {
+            try {                           // handler access is not locked and might have been removed by activity
                 sent = h.sendMessageDelayed(msg, delayMs);
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                try {                       // exception could be that handler is gone so use another try/catch here
+                    h.removeCallbacksAndMessages(null);
+                } catch (Exception ignored) {
+                }
             }
             if (!sent)
                 msg.recycle();
@@ -2529,10 +2617,6 @@ public class threaded_application extends Application {
         return uri;
     }
 
-    public boolean setActivityOrientation(Activity activity) {
-        return setActivityOrientation(activity, false);
-    }
-
     public int getSelectedTheme() {
         String prefTheme = getCurrentTheme();
         switch (prefTheme) {
@@ -2567,7 +2651,7 @@ public class threaded_application extends Application {
      * @return a String representation of the selected theme
      */
     public String getCurrentTheme() {
-        return prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        return prefs.getString("prefTheme", threaded_application.context.getResources().getString(R.string.prefThemeDefaultValue));
     }
 
     /**
@@ -2579,7 +2663,7 @@ public class threaded_application extends Application {
         String f = "";
         if (fastClockFormat == 2) {
             f = "HH:mm"; // display in 24 hr format
-        } else if (fastClockFormat == 1){
+        } else if (fastClockFormat == 1) {
             f = "h:mm a"; // display in 12 hr format
         }
         SimpleDateFormat sdf = new SimpleDateFormat(f, Locale.getDefault());
@@ -2591,26 +2675,25 @@ public class threaded_application extends Application {
     /**
      * Set activity screen orientation based on prefs, check to avoid sending change when already there.
      * checks "auto Web on landscape" preference and returns false if orientation requires activity switch
+     * Uses web orientation pref if called from web_activity, uses throttle orientation pref otherwise
      *
      * @param activity calling activity
-     * @param webPref  if absent or false, uses Throttle Orientation pref.
-     *                 if true, uses Web Orientation pref
      * @return true if the new orientation is ok for this activity.
      * false if "Auto Web on Landscape" is enabled and new orientation requires activity switch
      */
     @SuppressLint("SourceLockedOrientationActivity")
-    public boolean setActivityOrientation(Activity activity, Boolean webPref) {
-        String to;
-        to = prefs.getString("ThrottleOrientation",
-                activity.getApplicationContext().getResources().getString(R.string.prefThrottleOrientationDefaultValue));
+    public boolean setActivityOrientation(Activity activity) {
+        boolean isWeb = (activity.getLocalClassName().equals("web_activity"));
+        String to = prefs.getString("ThrottleOrientation",
+                threaded_application.context.getResources().getString(R.string.prefThrottleOrientationDefaultValue));
         if ((to.equals("Auto-Web")) && (!webMenuSelected)) {
             int orient = activity.getResources().getConfiguration().orientation;
-            if ((webPref && orient == Configuration.ORIENTATION_PORTRAIT)
-                    || (!webPref && orient == Configuration.ORIENTATION_LANDSCAPE))
+            if ((isWeb && orient == Configuration.ORIENTATION_PORTRAIT)
+                    || (!isWeb && orient == Configuration.ORIENTATION_LANDSCAPE))
                 return (false);
-        } else if (webPref) {
+        } else if (isWeb) {
             to = prefs.getString("WebOrientation",
-                    activity.getApplicationContext().getResources().getString(R.string.prefWebOrientationDefaultValue));
+                    threaded_application.context.getResources().getString(R.string.prefWebOrientationDefaultValue));
         }
 //        webMenuSelected= false;
 
@@ -2618,7 +2701,7 @@ public class threaded_application extends Application {
             int co = activity.getRequestedOrientation();
             if (to.equals("Landscape") && (co != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            else if ( (to.equals("Auto-Rotate")) || (to.equals("Auto-Web"))  && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))
+            else if ((to.equals("Auto-Rotate")) || (to.equals("Auto-Web")) && (co != ActivityInfo.SCREEN_ORIENTATION_SENSOR))
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             else if (to.equals("Portrait") && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -2638,7 +2721,7 @@ public class threaded_application extends Application {
         b.setCancelable(true);
         b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                firstCreate = true;
+                exitConfirmed = true;
                 sendMsg(comm_msg_handler, message_type.DISCONNECT, "");  //trigger disconnect / shutdown sequence
             }
         });
@@ -2681,12 +2764,12 @@ public class threaded_application extends Application {
             if (flashState) {
                 menu.findItem(R.id.flashlight_button).setIcon(R.drawable.flashlight_on);
 //                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                    menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOn);
+                menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOn);
 //                }
             } else {
                 menu.findItem(R.id.flashlight_button).setIcon(R.drawable.flashlight_off);
 //                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                    menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
+                menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
 //                }
             }
         }
@@ -2779,7 +2862,7 @@ public class threaded_application extends Application {
 
     @SuppressLint("ApplySharedPref")
     public String fixThrottleName(String currentValue) {
-        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
+        String defaultName = threaded_application.context.getResources().getString(R.string.prefThrottleNameDefaultValue);
 
         String newValue = currentValue;
         //if name is blank or the default name, make it unique
@@ -2792,11 +2875,11 @@ public class threaded_application extends Application {
                 deviceId = String.valueOf(rand.nextInt(9999));  //use random string
                 if (MobileControl2.isMobileControl2()) {
                     // Change default name for ESU MCII
-                    defaultName = getApplicationContext().getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
+                    defaultName = threaded_application.context.getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
                 }
             }
             newValue = defaultName + " " + deviceId;
-       }
+        }
         prefs.edit().putString("throttle_name_preference", newValue).commit();  //save new name to prefs
         return newValue;
     }
@@ -2821,7 +2904,7 @@ public class threaded_application extends Application {
         int delay = 100;
         Context context = getBaseContext();
         Intent restartIntent = getBaseContext().getPackageManager()
-                .getLaunchIntentForPackage(context.getPackageName() );
+                .getLaunchIntentForPackage(context.getPackageName());
         PendingIntent intent = PendingIntent.getActivity(
                 context, 0,
                 restartIntent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -2831,10 +2914,10 @@ public class threaded_application extends Application {
         Runtime.getRuntime().exit(0); // really force the kill
     }
 
-    public void vibrate(int duration){
+    public void vibrate(int duration) {
         //we need vibrate permissions, otherwise do nothing
         PermissionsHelper phi = PermissionsHelper.getInstance();
-        if (phi.isPermissionGranted(threaded_application.this, PermissionsHelper.VIBRATE)) {
+        if (phi.isPermissionGranted(threaded_application.context, PermissionsHelper.VIBRATE)) {
             try {
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 // Vibrate for 500 milliseconds
@@ -2851,7 +2934,7 @@ public class threaded_application extends Application {
     }
 
 
-    public void vibrate(long[] pattern ){
+    public void vibrate(long[] pattern) {
         //we need vibrate permissions, otherwise do nothing
         PermissionsHelper phi = PermissionsHelper.getInstance();
         if (phi.isPermissionGranted(threaded_application.this, PermissionsHelper.VIBRATE)) {
@@ -2870,22 +2953,27 @@ public class threaded_application extends Application {
 
     }
 
-    public void checkAndSetOrientationInfo() {
-        int currentOrientation = getResources().getConfiguration().orientation;
-        if(previousOrientation != Configuration.ORIENTATION_UNDEFINED // starts undefined
-                && previousOrientation != currentOrientation) {
-            isRotating = true;
-//            navigatingAway = false;
-        }
-
-        previousOrientation = currentOrientation;
-    }
-
     //post process loco or Consist names to reduce the size of the address length strings
     public String locoAndConsistNamesCleanupHtml(String name) {
-        return name.replaceAll("[(]S[)]","<small><small>(S)</small></small>")
-                .replaceAll("[(]L[)]","<small><small>(L)</small></small>")
-                .replaceAll("[+]","<small>+</small>");
+        return name.replaceAll("[(]S[)]", "<small><small>(S)</small></small>")
+                .replaceAll("[(]L[)]", "<small><small>(L)</small></small>")
+                .replaceAll("[+]", "<small>+</small>");
+    }
+
+    //display msg using Toast() safely by ensuring Toast() is called from the UI Thread
+    public static void safeToast(final String msg_txt) {
+        safeToast(msg_txt, Toast.LENGTH_SHORT);
+    }
+    public static void safeToast(final String msg_txt, final int length) {
+        Log.d("Engine_Driver", "threaded_application.show_toast_message: " + msg_txt);
+        //need to do Toast() on the main thread so create a handler
+        Handler h = new Handler(Looper.getMainLooper());
+        h.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(threaded_application.context, msg_txt, length).show();
+            }
+        });
     }
 }
 
