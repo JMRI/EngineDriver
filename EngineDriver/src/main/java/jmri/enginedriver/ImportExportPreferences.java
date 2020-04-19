@@ -214,7 +214,7 @@ public class ImportExportPreferences {
             }
 
             if (sharedPreferences.contains("prefRecentTurnoutServer_0")) {  // there should not be any so assume the worst
-                Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Extended Cleanout of old Recent turnouts preferences");
+                Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Extended Cleanout of old Recent turnouts preferences - these should not exist");
                 prefCount = removeExtraListDataFromPreferences(0, 600, "prefRecentTurnout", sharedPreferences);
                 removeExtraListDataFromPreferences(0, prefCount, "prefRecentTurnoutName", sharedPreferences);
                 removeExtraListDataFromPreferences(0, prefCount, "prefRecentTurnoutSource", sharedPreferences);
