@@ -181,8 +181,11 @@ public class ImportExportPreferences {
 
         int prefCount = 0;
         if (prefImportExportLocoList) {  // now clean out the preference data
+
+            Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Normal Cleanout of old Recent Locos preferences");
             prefCount = removeExtraListDataFromPreferences(0,numberOfRecentLocosToWrite+1,"prefRecentLoco", sharedPreferences);
             if (prefCount == numberOfRecentLocosToWrite+1) {  // if there were that many, assume the worst
+                Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Extended Cleanout of old Recent Locos preferences");
                 prefCount = removeExtraListDataFromPreferences(numberOfRecentLocosToWrite+1, 600, "prefRecentLoco", sharedPreferences);
             }
             removeExtraListDataFromPreferences(0, prefCount,"prefRecentLocoSize", sharedPreferences);
@@ -190,11 +193,19 @@ public class ImportExportPreferences {
             removeExtraListDataFromPreferences(0,prefCount,"prefRecentLocoSource", sharedPreferences);
 
             prefCount =removeExtraListDataFromPreferences(0,numberOfRecentLocosToWrite+1,"prefRecentConsistName", sharedPreferences);
-            if (prefCount == numberOfRecentLocosToWrite+1) {  // if there were that many, assume the worst
-                prefCount = removeExtraListDataFromPreferences(numberOfRecentLocosToWrite+1, 600, "prefRecentConsistName", sharedPreferences);
+            if (prefCount == numberOfRecentLocosToWrite+1) {  // if there were that many, look for more
+                Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Extended Cleanout of old Recent Locos preferences");
+                prefCount = removeExtraListDataFromPreferences(numberOfRecentLocosToWrite+1, numberOfRecentLocosToWrite+20, "prefRecentConsistName", sharedPreferences);
+
+                if (prefCount == numberOfRecentLocosToWrite+20) {  // if there were that many, assume the worst
+                    Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Extended DEEP CLEAN of old Recent Locos preferences");
+                    prefCount = removeExtraListDataFromPreferences(numberOfRecentLocosToWrite+1, 600, "prefRecentConsistName", sharedPreferences);
+                }
             }
-            for (int i = 0; i < prefCount; i++) {
-                int subPrefCount = removeExtraListDataFromPreferences(0,20,"prefRecentConsistAddress_"+i, sharedPreferences);
+
+            Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Normal Cleanout of old Recent Consist preferences");
+            for (int i = 0; i < numberOfRecentLocosToWrite; i++) {
+                int subPrefCount = removeExtraListDataFromPreferences(0,10,"prefRecentConsistAddress_"+i, sharedPreferences);
                 removeExtraListDataFromPreferences(0,subPrefCount,"prefRecentConsistSize_"+i, sharedPreferences);
                 removeExtraListDataFromPreferences(0,subPrefCount,"prefRecentConsistDirection_"+i, sharedPreferences);
                 removeExtraListDataFromPreferences(0,subPrefCount,"prefRecentConsistSource_"+i, sharedPreferences);
@@ -203,6 +214,7 @@ public class ImportExportPreferences {
             }
 
             if (sharedPreferences.contains("prefRecentTurnoutServer_0")) {  // there should not be any so assume the worst
+                Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Extended Cleanout of old Recent turnouts preferences - these should not exist");
                 prefCount = removeExtraListDataFromPreferences(0, 600, "prefRecentTurnout", sharedPreferences);
                 removeExtraListDataFromPreferences(0, prefCount, "prefRecentTurnoutName", sharedPreferences);
                 removeExtraListDataFromPreferences(0, prefCount, "prefRecentTurnoutSource", sharedPreferences);
@@ -829,7 +841,7 @@ public class ImportExportPreferences {
         }
         sharedPreferences.edit().commit();
 
-        Log.d("Engine_Driver", "writeRecentConsistsListToFile: removeExtraListDataFromPreferences: list: " +listName + " prefCount" + prefCount);
+//        Log.d("Engine_Driver", "writeRecentConsistsListToFile: removeExtraListDataFromPreferences: list: " +listName + " prefCount" + prefCount);
 
         return prefCount;
     }
