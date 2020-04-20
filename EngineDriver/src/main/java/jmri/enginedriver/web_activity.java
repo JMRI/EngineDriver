@@ -86,6 +86,7 @@ public class web_activity extends Activity {
                 case message_type.WIT_CON_RECONNECT:
                     break;
                 case message_type.INITIAL_WEB_WEBPAGE:
+                    initStatics();
                     urlRestore(true);
                     break;
                 case message_type.TIME_CHANGED:
