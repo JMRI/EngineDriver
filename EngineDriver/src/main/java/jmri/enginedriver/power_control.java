@@ -25,6 +25,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -173,8 +174,14 @@ public class power_control extends Activity {
      */
     @Override
     public void onDestroy() {
-        mainapp.power_control_msg_handler = null;
         super.onDestroy();
+
+        if (mainapp.power_control_msg_handler !=null) {
+            mainapp.power_control_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.power_control_msg_handler = null;
+        } else {
+            Log.d("Engine_Driver", "onDestroy: mainapp.power_control_msg_handler is null. Unable to removeCallbacksAndMessages");
+        }
     }
 
     @Override

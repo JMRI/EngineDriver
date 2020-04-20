@@ -591,15 +591,15 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         Log.d("Engine_Driver", "connection.onDestroy() called");
-        mainapp.connection_msg_handler = null;
-        Log.d("Engine_Driver", "onDestroy: mainapp.connection_msg_handler. Attempting to removeCallbacksAndMessages");
-        try {
+        super.onDestroy();
+
+        if (mainapp.connection_msg_handler !=null) {
             mainapp.connection_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.connection_msg_handler = null;
+        } else {
+            Log.d("Engine_Driver", "onDestroy: mainapp.connection_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
-        catch (Exception ignored) { }
-        mainapp.connection_msg_handler = null;
         CMenu = null;
         connectionsListSwipeDetector = null;
         prefs = null;

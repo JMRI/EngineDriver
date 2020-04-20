@@ -738,8 +738,14 @@ public class turnouts extends Activity implements OnGestureListener {
     @Override
     public void onDestroy() {
         //Log.d("Engine_Driver","turnouts.onDestroy()");
-        mainapp.turnouts_msg_handler = null;
         super.onDestroy();
+
+        if (mainapp.turnouts_msg_handler !=null) {
+            mainapp.turnouts_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.turnouts_msg_handler = null;
+        } else {
+            Log.d("Engine_Driver", "onDestroy: mainapp.turnouts_msg_handler is null. Unable to removeCallbacksAndMessages");
+        }
     }
 
 

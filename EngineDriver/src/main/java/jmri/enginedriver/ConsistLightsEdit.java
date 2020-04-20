@@ -289,6 +289,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     @Override
     public void onDestroy() {
         Log.d("Engine_Driver", "ConsistLightsEdit.onDestroy() called");
+        super.onDestroy();
 
 //        loadRecentConsistsList();
         importExportPreferences.getRecentConsistsListFromFile();
@@ -296,8 +297,12 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
 //        updateRecentConsists(whichEntryIsBeingUpdated);
         importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
 
-        mainapp.consist_lights_edit_msg_handler = null;
-        super.onDestroy();
+        if (mainapp.consist_lights_edit_msg_handler !=null) {
+            mainapp.consist_lights_edit_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.consist_lights_edit_msg_handler = null;
+        } else {
+            Log.d("Engine_Driver", "onDestroy: mainapp.consist_lights_edit_msg_handler is null. Unable to removeCallbacksAndMessages");
+        }
     }
 
     @Override

@@ -1402,8 +1402,14 @@ public class select_loco extends Activity {
    @Override
     public void onDestroy() {
         Log.d("Engine_Driver", "select_loco.onDestroy() called");
-        mainapp.select_loco_msg_handler = null;
         super.onDestroy();
+
+        if (mainapp.select_loco_msg_handler !=null) {
+           mainapp.select_loco_msg_handler.removeCallbacksAndMessages(null);
+           mainapp.select_loco_msg_handler = null;
+        } else {
+           Log.d("Engine_Driver", "onDestroy: mainapp.select_loco_msg_handler is null. Unable to removeCallbacksAndMessages");
+        }
     }
 
     @Override

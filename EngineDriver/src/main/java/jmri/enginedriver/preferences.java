@@ -253,6 +253,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     protected void onDestroy() {
         Log.d("Engine_Driver", "preferences.onDestroy() called");
         super.onDestroy();
+        if (mainapp.preferences_msg_handler !=null) {
+            mainapp.preferences_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.preferences_msg_handler = null;
+        } else {
+            Log.d("Engine_Driver", "onDestroy: mainapp.preferences_msg_handler is null. Unable to removeCallbacksAndMessages");
+        }
     }
 
     @Override

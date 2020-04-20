@@ -319,7 +319,12 @@ public class web_activity extends Activity {
             }
 //            webView.removeAllViews();
         }
-        mainapp.web_msg_handler = null;
+        if (mainapp.web_msg_handler !=null) {
+            mainapp.web_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.web_msg_handler = null;
+        } else {
+            Log.d("Engine_Driver", "onDestroy: mainapp.web_msg_handler is null. Unable to removeCallbacksAndMessages");
+        }
     }
 
 

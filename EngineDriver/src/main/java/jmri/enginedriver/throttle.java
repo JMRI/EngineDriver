@@ -4724,13 +4724,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             repeatUpdateHandler.removeCallbacksAndMessages(null);
             repeatUpdateHandler = null;
         }
-        Log.d("Engine_Driver", "onDestroy: mainapp.throttle_msg_handler. Attempting to removeCallbacksAndMessages");
+
         if (mainapp.throttle_msg_handler !=null) {
             mainapp.throttle_msg_handler.removeCallbacksAndMessages(null);
             mainapp.throttle_msg_handler = null;
         } else {
             Log.d("Engine_Driver", "onDestroy: mainapp.throttle_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
+
         if (volumeKeysRepeatUpdateHandler != null) {
             volumeKeysRepeatUpdateHandler.removeCallbacksAndMessages(null);
             volumeKeysRepeatUpdateHandler = null;

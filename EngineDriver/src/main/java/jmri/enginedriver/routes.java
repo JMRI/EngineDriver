@@ -27,6 +27,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
@@ -428,8 +429,14 @@ public class routes extends Activity implements OnGestureListener {
     @Override
     public void onDestroy() {
         //Log.d("Engine_Driver","routes.onDestroy()");
-        mainapp.routes_msg_handler = null;
         super.onDestroy();
+
+        if (mainapp.routes_msg_handler !=null) {
+            mainapp.routes_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.routes_msg_handler = null;
+        } else {
+            Log.d("Engine_Driver", "onDestroy: mainapp.routes_msg_handler is null. Unable to removeCallbacksAndMessages");
+        }
     }
 
     @Override
