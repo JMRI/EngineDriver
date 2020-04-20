@@ -190,8 +190,6 @@ public class web_activity extends Activity {
                     urlRestore();
                 }
             }
-            @Override pub
-
             @SuppressWarnings("deprecation")
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
