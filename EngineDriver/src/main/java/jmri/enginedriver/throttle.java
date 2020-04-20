@@ -5070,55 +5070,55 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-                break;
+                return true;
             case R.id.routes_mnu:
                 in = new Intent().setClass(this, routes.class);
                 navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-                break;
+                return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 navigatingAway = true;
                 mainapp.webMenuSelected = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.exit_mnu:
                 navigatingAway = true;
                 mainapp.checkExit(this);
-                break;
+                return true;
             case R.id.power_control_mnu:
                 in = new Intent().setClass(this, power_control.class);
                 navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.preferences_mnu:
                 in = new Intent().setClass(this, preferences.class);
                 navigatingAway = true;
                 startActivityForResult(in, ACTIVITY_PREFS);   // reinitialize function buttons and labels on return
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.settings_mnu:
                 in = new Intent().setClass(this, function_settings.class);
                 navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.about_mnu:
                 in = new Intent().setClass(this, about_page.class);
                 navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.logviewer_menu:
                 Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
                 navigatingAway = true;
                 startActivity(logviewer);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
                 speedUpdate(0);  // update all three throttles
@@ -5127,8 +5127,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     Log.d("Engine_Driver", "ESU_MCII: Move knob request for EStop");
                     setEsuThrottleKnobPosition(whichVolume, 0);
                 }
-
-                break;
+                return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
                     AlertDialog.Builder b = new AlertDialog.Builder(this);
@@ -5143,8 +5142,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 } else {
                     mainapp.powerStateMenuButton();
                 }
-                break;
-
+                return true;
             case R.id.EditConsist0_menu:
                 Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
 
@@ -5152,83 +5150,75 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 navigatingAway = true;
                 startActivityForResult(consistEdit, ACTIVITY_CONSIST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.EditConsist1_menu:
                 Intent consistEdit2 = new Intent().setClass(this, ConsistEdit.class);
                 consistEdit2.putExtra("whichThrottle", '1');
                 navigatingAway = true;
                 startActivityForResult(consistEdit2, ACTIVITY_CONSIST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
-                                                                                                                                                                                                                                                                                                                                            
+                return true;
             case R.id.EditConsist2_menu:
                 Intent consistEdit3 = new Intent().setClass(this, ConsistEdit.class);
                 consistEdit3.putExtra("whichThrottle", '2');
                 navigatingAway = true;
                 startActivityForResult(consistEdit3, ACTIVITY_CONSIST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
-
+                return true;
             case R.id.EditLightsConsist0_menu:
                 Intent consistLightsEdit = new Intent().setClass(this, ConsistLightsEdit.class);
                 consistLightsEdit.putExtra("whichThrottle", '0');
                 navigatingAway = true;
                 startActivityForResult(consistLightsEdit, ACTIVITY_CONSIST_LIGHTS);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
-
+                return true;
             case R.id.EditLightsConsist1_menu:
                 Intent consistLightsEdit2 = new Intent().setClass(this, ConsistLightsEdit.class);
                 consistLightsEdit2.putExtra("whichThrottle", '1');
                 navigatingAway = true;
                 startActivityForResult(consistLightsEdit2, ACTIVITY_CONSIST_LIGHTS);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.EditLightsConsist2_menu:
                 Intent consistLightsEdit3 = new Intent().setClass(this, ConsistLightsEdit.class);
                 consistLightsEdit3.putExtra("whichThrottle", '2');
                 navigatingAway = true;
                 startActivityForResult(consistLightsEdit3, ACTIVITY_CONSIST_LIGHTS);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
-
+                return true;
             case R.id.gamepad_test_mnu1:
                 in = new Intent().setClass(this, gamepad_test.class);
                 in.putExtra("whichGamepadNo", "0");
                 navigatingAway = true;
                 startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
-
+                return true;
             case R.id.gamepad_test_mnu2:
                 in = new Intent().setClass(this, gamepad_test.class);
                 in.putExtra("whichGamepadNo", "1");
                 navigatingAway = true;
                 startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
-
+                return true;
             case R.id.gamepad_test_mnu3:
                 in = new Intent().setClass(this, gamepad_test.class);
                 in.putExtra("whichGamepadNo", "2");
                 navigatingAway = true;
                 startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
-
+                return true;
             case R.id.timer_mnu:
                 showTimerPasswordDialog();
-                break;
-
+                return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, TMenu);
-                break;
-
+                return true;
             case R.id.EsuMc2Knob_button:
                 toggleEsuMc2Knob(this, TMenu);
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     // handle return from menu items

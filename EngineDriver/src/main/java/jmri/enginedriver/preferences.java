@@ -271,9 +271,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressLint("ApplySharedPref")

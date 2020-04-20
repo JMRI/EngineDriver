@@ -840,14 +840,14 @@ public class turnouts extends Activity implements OnGestureListener {
                 navigatingAway = true;
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-                break;
+                return true;
             case R.id.routes_mnu:
                 in = new Intent().setClass(this, routes.class);
                 navigatingAway = true;
                 startActivity(in);
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-                break;
+                return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
                 navigatingAway = true;
@@ -855,45 +855,46 @@ public class turnouts extends Activity implements OnGestureListener {
                 startActivity(in);
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.exit_mnu:
                 mainapp.checkExit(this);
-                break;
+                return true;
             case R.id.power_control_mnu:
                 in = new Intent().setClass(this, power_control.class);
                 navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.preferences_mnu:
                 in = new Intent().setClass(this, preferences.class);
                 navigatingAway = true;
                 startActivityForResult(in, 0);   // refresh view on return
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.about_mnu:
                 in = new Intent().setClass(this, about_page.class);
                 navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.logviewer_menu:
                 Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
                 navigatingAway = true;
                 startActivity(logviewer);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
-                break;
+                return true;
             case R.id.power_layout_button:
                 mainapp.powerStateMenuButton();
-                break;
+                return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, TuMenu);
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     //handle return from menu items

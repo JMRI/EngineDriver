@@ -208,9 +208,10 @@ public class function_settings extends Activity implements PermissionsHelper.Per
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     //build the arrays from the function_settings file
