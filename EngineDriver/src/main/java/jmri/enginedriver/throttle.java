@@ -58,6 +58,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -4398,7 +4399,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 scale = (float) savedInstanceState.getSerializable(("scale"));
             }
         }
-        webView.setInitialScale((int) (100 * scale));
         webView.clearCache(true);   // force fresh javascript download on first connection
         // webView.getSettings().setLoadWithOverviewMode(true); // size image to fill width
 
@@ -4413,16 +4413,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // browser)
         noUrl = getApplicationContext().getResources().getString(R.string.blank_page_url);
         WebViewClient EDWebClient = new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return false;
-            }
+            private int loadRetryCnt = 0;
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 if (!noUrl.equals(url)) {               // if url is legit
-                    currentUrl = url;
+                    if (!url.equals(currentUrl)) {
+                        currentUrl = url;
+                        loadRetryCnt = 0;                   // reset count for next url load
+                    }
                     if (firstUrl == null) {             // if this is the first legit url
                         firstUrl = url;
                         scale = initialScale;
@@ -4439,6 +4439,30 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 }
             }
 
+            @SuppressWarnings("deprecation")
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return handleLoadingErrorRetries();
+            }
+
+            // above form of shouldOverrideUrlloading is deprecated so support the new form if available
+            @TargetApi(Build.VERSION_CODES.N)
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return handleLoadingErrorRetries();
+            }
+
+            // stop page from continually reloading when loading errors occur
+            // (this can happen if the initial web page pref is set to a non-existant url)
+            private boolean handleLoadingErrorRetries() {
+                if (++loadRetryCnt >= 3) {   // if same page is reloading (due to errors)
+                    clearHistory = false;       // stop trying to clear history
+                    loadRetryCnt = 0;        // reset count for next url load
+                    return true;                // don't load the page
+                }
+                return false;                   // load in webView
+            }
+
             @Override
             public void onScaleChanged(WebView view, float oldScale, float newScale) {
                 super.onScaleChanged(view, oldScale, newScale);
@@ -4449,6 +4473,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         webView.setWebViewClient(EDWebClient);
         if (currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null) {
             load_webview(); // reload if no saved state or no page had loaded when state was saved
+        }
+        else {
+            webView.setInitialScale((int) (100 * scale));   // apply scale to restored webView
         }
 
         //longpress webview to reload
