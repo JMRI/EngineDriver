@@ -978,7 +978,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     webViewIsOn = false;
                     reloadWeb();
                     break;
-                case message_type.INITIAL_WEBPAGE:
+                case message_type.INITIAL_THR_WEBPAGE:
                     initWeb();
                     break;
                 case message_type.REQ_STEAL:
