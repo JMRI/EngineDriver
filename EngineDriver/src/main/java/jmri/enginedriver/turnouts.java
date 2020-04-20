@@ -87,7 +87,6 @@ public class turnouts extends Activity implements OnGestureListener {
 
     private GestureDetector myGesture;
     private Menu TuMenu;
-    private boolean navigatingAway = false;     // flag for onPause: set to true when another activity is selected, false if going into background 
 
 //    private static final int WHICH_SOURCE_UNKNOWN = 0;
     private static final int WHICH_SOURCE_ADDRESS = 1;
@@ -351,7 +350,6 @@ public class turnouts extends Activity implements OnGestureListener {
     private void witRetry(String s) {
         Intent in = new Intent().setClass(this, reconnect_status.class);
         in.putExtra("status", s);
-        navigatingAway = true;
         startActivity(in);
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
@@ -716,14 +714,11 @@ public class turnouts extends Activity implements OnGestureListener {
         {
             Intent in = new Intent().setClass(this, web_activity.class);      // if autoWeb and landscape, switch to Web activity
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
-            navigatingAway = true;
             startActivity(in);
             this.finish();
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return;
         }
-
-        navigatingAway = false;
 
         //restore view to last known scroll position
         ListView lv = findViewById(R.id.turnouts_list);
@@ -773,7 +768,6 @@ public class turnouts extends Activity implements OnGestureListener {
         if ((absDeltaX > threaded_application.min_fling_distance) &&
                 (Math.abs(velocityX) > threaded_application.min_fling_velocity) &&
                 (absDeltaX > Math.abs(e2.getY() - e1.getY()))) {
-            navigatingAway = true;
             // left to right swipe goes to routes if enabled in prefs
             if (deltaX > 0.0) {
                 boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
@@ -837,20 +831,17 @@ public class turnouts extends Activity implements OnGestureListener {
         Intent in;
         switch (item.getItemId()) {
             case R.id.throttle_mnu:
-                navigatingAway = true;
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
                 return true;
             case R.id.routes_mnu:
                 in = new Intent().setClass(this, routes.class);
-                navigatingAway = true;
                 startActivity(in);
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
                 return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
-                navigatingAway = true;
                 mainapp.webMenuSelected = true;
                 startActivity(in);
                 this.finish();
@@ -861,25 +852,21 @@ public class turnouts extends Activity implements OnGestureListener {
                 return true;
             case R.id.power_control_mnu:
                 in = new Intent().setClass(this, power_control.class);
-                navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.preferences_mnu:
                 in = new Intent().setClass(this, preferences.class);
-                navigatingAway = true;
                 startActivityForResult(in, 0);   // refresh view on return
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.about_mnu:
                 in = new Intent().setClass(this, about_page.class);
-                navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.logviewer_menu:
                 Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
-                navigatingAway = true;
                 startActivity(logviewer);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;

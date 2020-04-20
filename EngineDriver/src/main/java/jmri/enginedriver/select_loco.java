@@ -133,7 +133,6 @@ public class select_loco extends Activity {
     private SharedPreferences prefs;
     private String default_address_length;
     private Menu SMenu;
-    private boolean navigatingAway = false;     // flag for onPause: set to true when another activity is selected, false if going into background 
 
     protected int layoutViewId = R.layout.select_loco;
 
@@ -423,7 +422,6 @@ public class select_loco extends Activity {
     private void witRetry(String s) {
         Intent in = new Intent().setClass(this, reconnect_status.class);
         in.putExtra("status", s);
-        navigatingAway = true;
         startActivity(in);
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
@@ -514,7 +512,6 @@ public class select_loco extends Activity {
                 consist.setTrailAddr(l.getAddress());  // set the newly added loco as the trailing loco
 
                 if (numberInConsist<0) { // don't show the Consist edit screen.  Only used for Recent Consists
-                    navigatingAway = true;
                     startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
                     connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 }
@@ -822,7 +819,6 @@ public class select_loco extends Activity {
             consistEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
             consistEdit.putExtra("saveConsistsFile", 'Y');
 
-            navigatingAway = true;
             startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
 
@@ -842,7 +838,6 @@ public class select_loco extends Activity {
             Intent consistLightsEdit = new Intent().setClass(_selectLocoActivity, ConsistLightsEdit.class);
             consistLightsEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
 
-            navigatingAway = true;
             startActivityForResult(consistLightsEdit, throttle.ACTIVITY_CONSIST_LIGHTS);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
 
@@ -1395,7 +1390,6 @@ public class select_loco extends Activity {
             return;
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-        navigatingAway = false;
 
         // checking address length here covers (future) case where prefs changed while paused
         default_address_length = prefs.getString("default_address_length", this

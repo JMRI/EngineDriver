@@ -463,7 +463,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
             try {
                 Intent in = new Intent().setClass(this, gamepad_test.class);
-                //navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {
