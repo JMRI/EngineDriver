@@ -17,8 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import java.util.HashMap;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
@@ -29,6 +27,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.TextView;
+
+import java.util.HashMap;
 
 public class about_page extends Activity {
 
@@ -93,7 +93,6 @@ public class about_page extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        mainapp.removeNotification();
         if (mainapp.isForcingFinish()) {        //expedite
             this.finish();
             return;
@@ -102,14 +101,6 @@ public class about_page extends Activity {
 
         if (AMenu != null) {
             mainapp.displayEStop(AMenu);
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (!this.isFinishing()) {        //only invoke setContentIntentNotification when going into background
-            mainapp.addNotification(this.getIntent());
         }
     }
 

@@ -708,7 +708,6 @@ public class turnouts extends Activity implements OnGestureListener {
     @Override
     public void onResume() {
         super.onResume();
-        mainapp.removeNotification();
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;

@@ -1390,7 +1390,6 @@ public class select_loco extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        mainapp.removeNotification();
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;

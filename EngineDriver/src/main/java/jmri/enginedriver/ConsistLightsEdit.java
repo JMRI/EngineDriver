@@ -271,7 +271,6 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     @Override
     public void onResume() {
         super.onResume();
-        mainapp.removeNotification();
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;
@@ -282,14 +281,6 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         }
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (!this.isFinishing()) {       //only invoke setContentIntentNotification when going into background
-            mainapp.addNotification(this.getIntent());
-        }
     }
 
     /**

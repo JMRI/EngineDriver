@@ -981,6 +981,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 case message_type.INITIAL_THR_WEBPAGE:
                     initWeb();
                     break;
+                case message_type.INITIAL_WEB_WEBPAGE:
+                    // if web activity is not open then reinit web statics for next time it is opened
+                    if (mainapp.web_msg_handler == null) {
+                        web_activity.initStatics();
+                    }
+                    break;
                 case message_type.REQ_STEAL:
                     promptForSteal( msg.obj.toString(), msg.arg1);
                     break;

@@ -1730,7 +1730,7 @@ public class threaded_application extends Application {
      * Currently call this from each activity onPause, passing the current intent
      * to return to when reopening.
      */
-    void addNotification(Intent notificationIntent) {
+    private void addNotification(Intent notificationIntent) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String CHANNEL_ID = "ed_channel_01";// The id of the channel.
             CharSequence name = this.getString(R.string.notification_title);// The user-visible name of the channel.
@@ -1774,7 +1774,7 @@ public class threaded_application extends Application {
     }
 
     // Remove notification
-    void removeNotification() {
+    private void removeNotification() {
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.cancel(ED_NOTIFICATION_ID);
     }

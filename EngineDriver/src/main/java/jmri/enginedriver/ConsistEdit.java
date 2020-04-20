@@ -34,12 +34,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -276,7 +273,6 @@ public class ConsistEdit extends Activity implements OnGestureListener {
     @Override
     public void onResume() {
         super.onResume();
-        mainapp.removeNotification();
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;
@@ -287,14 +283,6 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         }
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (!this.isFinishing()) {       //only invoke setContentIntentNotification when going into background
-            mainapp.addNotification(this.getIntent());
-        }
     }
 
     /**
