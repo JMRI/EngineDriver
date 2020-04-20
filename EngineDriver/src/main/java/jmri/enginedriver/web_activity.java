@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +36,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieSyncManager;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -144,7 +146,6 @@ public class web_activity extends Activity {
                 scale = (float) savedInstanceState.getSerializable(("scale"));
             }
         }
-        webView.setInitialScale((int) (100 * scale));
         if (mainapp.firstWebActivity == false) {
             webView.clearCache(true);   // force fresh javascript download on first connection
             mainapp.firstWebActivity = true;
@@ -159,15 +160,17 @@ public class web_activity extends Activity {
 
         // open all links inside the current view (don't start external web browser)
         WebViewClient EDWebClient = new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return false;
-            }
+            private int loadRetryCnt = 0;
+            private String currentUrl = null;
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 if (!noUrl.equals(url) || urlRestoreStep >= 3) {    // if url is legit or out of options
+                    if (!url.equals(currentUrl)) {          // if first try loading page
+                        loadRetryCnt = 0;                // reset count for next url load
+                        currentUrl = url;
+                    }
                     if (firstUrl == null) {                // if this is the first legit url
                         firstUrl = url;
                         scale = initialScale;
@@ -187,6 +190,31 @@ public class web_activity extends Activity {
                     urlRestore();
                 }
             }
+            @Override pub
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return handleLoadingErrorRetries();
+            }
+
+            // above form of shouldOverrideUrlloading is deprecated so support the new form if available
+            @TargetApi(Build.VERSION_CODES.N)
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return handleLoadingErrorRetries();
+            }
+
+            // stop page from continually reloading when loading errors occur
+            // (this can happen if the initial web page pref is set to a non-existant url)
+            private boolean handleLoadingErrorRetries() {
+                if (++loadRetryCnt >= 3) {   // if same page is reloading (due to errors)
+                    clearHistory = false;       // stop trying to clear history
+                    loadRetryCnt = 0;        // reset count for next url load
+                    return true;                // don't load the page
+                }
+                return false;                   // load in webView
+            }
 
             @Override
             public void onScaleChanged(WebView view, float oldScale, float newScale) {
@@ -203,6 +231,9 @@ public class web_activity extends Activity {
         if (savedInstanceState == null || webView.restoreState(savedInstanceState) == null) {
             // try remaining methods
             urlRestore(true);
+        }
+        else {
+            webView.setInitialScale((int) (100 * scale));   // apply scale to restored webView
         }
 
         //longpress webview to reload
@@ -424,6 +455,9 @@ public class web_activity extends Activity {
         // try the local store
         if (urlRestoreStep == 1 && webBundle != null && webView.restoreState(webBundle) == null) {
             urlRestoreStep = 2;
+        }
+        else {
+            webView.setInitialScale((int) (100 * scale));   // apply scale to restored webView
         }
         // try the pref setting
         if (urlRestoreStep == 2) {
