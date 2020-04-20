@@ -27,6 +27,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
@@ -428,8 +429,14 @@ public class routes extends Activity implements OnGestureListener {
     @Override
     public void onDestroy() {
         //Log.d("Engine_Driver","routes.onDestroy()");
-        mainapp.routes_msg_handler = null;
         super.onDestroy();
+
+        if (mainapp.routes_msg_handler !=null) {
+            mainapp.routes_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.routes_msg_handler = null;
+        } else {
+            Log.d("Engine_Driver", "onDestroy: mainapp.routes_msg_handler is null. Unable to removeCallbacksAndMessages");
+        }
     }
 
     @Override
@@ -537,54 +544,55 @@ public class routes extends Activity implements OnGestureListener {
             case R.id.throttle_mnu:
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-                break;
+                return true;
             case R.id.turnouts_mnu:
                 in = new Intent().setClass(this, turnouts.class);
                 startActivity(in);
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-                break;
+                return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
                 mainapp.webMenuSelected = true;
                 startActivity(in);
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.exit_mnu:
                 mainapp.checkExit(this);
-                break;
+                return true;
             case R.id.power_control_mnu:
                 in = new Intent().setClass(this, power_control.class);
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.preferences_mnu:
                 in = new Intent().setClass(this, preferences.class);
                 startActivityForResult(in, 0);   // refresh view on return
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.logviewer_menu:
                 Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
                 startActivity(logviewer);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.about_mnu:
                 in = new Intent().setClass(this, about_page.class);
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
-                break;
+                return true;
             case R.id.power_layout_button:
                 mainapp.powerStateMenuButton();
-                break;
+                return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, RMenu);
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     //handle return from menu items

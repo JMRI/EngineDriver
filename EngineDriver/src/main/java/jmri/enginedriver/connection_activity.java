@@ -591,15 +591,15 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         Log.d("Engine_Driver", "connection.onDestroy() called");
-        mainapp.connection_msg_handler = null;
-        Log.d("Engine_Driver", "onDestroy: mainapp.connection_msg_handler. Attempting to removeCallbacksAndMessages");
-        try {
+        super.onDestroy();
+
+        if (mainapp.connection_msg_handler !=null) {
             mainapp.connection_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.connection_msg_handler = null;
+        } else {
+            Log.d("Engine_Driver", "onDestroy: mainapp.connection_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
-        catch (Exception ignored) { }
-        mainapp.connection_msg_handler = null;
         CMenu = null;
         connectionsListSwipeDetector = null;
         prefs = null;
@@ -697,36 +697,37 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         switch (item.getItemId()) {
             case R.id.exit_mnu:
                 mainapp.checkExit(this);
-                break;
+                return true;
             case R.id.preferences_mnu:
                 in = new Intent().setClass(this, preferences.class);
                 startActivityForResult(in, 0);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.about_mnu:
                 in = new Intent().setClass(this, about_page.class);
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.ClearconnList:
                 clearConnectionsList();
                 getConnectionsList();
-                break;
+                return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, CMenu);
-                break;
+                return true;
             case R.id.logviewer_menu:
                 Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
                 startActivity(logviewer);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
             case R.id.intro_mnu:
                 in = new Intent().setClass(this, intro_activity.class);
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     //handle return from menu items

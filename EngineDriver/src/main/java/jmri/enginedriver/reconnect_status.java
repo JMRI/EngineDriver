@@ -156,9 +156,13 @@ public class reconnect_status extends Activity {
     @Override
     public void onDestroy() {
         Log.d("Engine_Driver", "reconnect_status.onDestroy() called");
-
-        mainapp.reconnect_status_msg_handler = null;
         super.onDestroy();
+        if (mainapp.reconnect_status_msg_handler !=null) {
+            mainapp.reconnect_status_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.reconnect_status_msg_handler = null;
+        } else {
+            Log.d("Engine_Driver", "onDestroy: mainapp.reconnect_status_msg_handler is null. Unable to removeCallbacksAndMessages");
+        }
     }
 
     //Handle pressing of the back button to end this activity

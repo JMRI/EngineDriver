@@ -253,6 +253,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     protected void onDestroy() {
         Log.d("Engine_Driver", "preferences.onDestroy() called");
         super.onDestroy();
+        if (mainapp.preferences_msg_handler !=null) {
+            mainapp.preferences_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.preferences_msg_handler = null;
+        } else {
+            Log.d("Engine_Driver", "onDestroy: mainapp.preferences_msg_handler is null. Unable to removeCallbacksAndMessages");
+        }
     }
 
     @Override
@@ -271,9 +277,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressLint("ApplySharedPref")
@@ -462,7 +469,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
             try {
                 Intent in = new Intent().setClass(this, gamepad_test.class);
-                //navigatingAway = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {

@@ -291,14 +291,19 @@ public class ConsistEdit extends Activity implements OnGestureListener {
     @Override
     public void onDestroy() {
         Log.d("Engine_Driver", "ConsistEdit.onDestroy() called");
+        super.onDestroy();
 
         if (saveConsistsFile=='Y') {
             importExportPreferences.getRecentConsistsListFromFile();
             int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConistToBeginningOfList(consist);
             importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
         }
-        mainapp.consist_edit_msg_handler = null;
-        super.onDestroy();
+        if (mainapp.consist_edit_msg_handler !=null) {
+            mainapp.consist_edit_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.consist_edit_msg_handler = null;
+        } else {
+            Log.d("Engine_Driver", "onDestroy: mainapp.consist_edit_msg_handler is null. Unable to removeCallbacksAndMessages");
+        }
     }
 
     @Override
@@ -317,9 +322,10 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     //Always go to throttle if back button pressed
