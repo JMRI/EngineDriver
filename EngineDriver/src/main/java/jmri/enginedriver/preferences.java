@@ -317,10 +317,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     mainapp.setActivityOrientation(this);
                     break;
                 case "InitialWebPage":
-                    mainapp.alert_activities(message_type.INITIAL_WEBPAGE, "");
+                    mainapp.alert_activities(message_type.INITIAL_WEB_WEBPAGE, "");
                     break;
                 case "InitialThrotWebPage":
-                    mainapp.alert_activities(message_type.INITIAL_WEBPAGE, "");
+                    mainapp.alert_activities(message_type.INITIAL_THR_WEBPAGE, "");
                     break;
                 case "ClockDisplayTypePreference":
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY_CHANGED);

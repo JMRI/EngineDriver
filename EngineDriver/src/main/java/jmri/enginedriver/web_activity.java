@@ -85,7 +85,7 @@ public class web_activity extends Activity {
                     break;
                 case message_type.WIT_CON_RECONNECT:
                     break;
-                case message_type.INITIAL_WEBPAGE:
+                case message_type.INITIAL_WEB_WEBPAGE:
                     urlRestore(true);
                     break;
                 case message_type.TIME_CHANGED:
