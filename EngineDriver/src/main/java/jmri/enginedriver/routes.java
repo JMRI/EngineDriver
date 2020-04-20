@@ -390,7 +390,6 @@ public class routes extends Activity implements OnGestureListener {
     public void onResume() {
         //Log.d("Engine_Driver","routes.onResume()");
         super.onResume();
-        mainapp.removeNotification();
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;

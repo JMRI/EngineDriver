@@ -28,15 +28,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.widget.Toast;
 
-//import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
 
 import jmri.enginedriver.util.PermissionsHelper;
+
+//import com.github.paolorotolo.appintro.AppIntro;
 
 public class intro_activity extends AppIntro2 {
     private boolean introComplete = false;
@@ -208,17 +208,8 @@ public class intro_activity extends AppIntro2 {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        if (!this.isFinishing() && !mainapp.introIsRunning) {       //only invoke setContentIntentNotification when going into background
-            mainapp.addNotification(this.getIntent());
-        }
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-        mainapp.removeNotification();
 //        if (this.isFinishing()) {        //if finishing, expedite it
 //            return;
 //        }

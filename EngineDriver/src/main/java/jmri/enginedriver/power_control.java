@@ -155,7 +155,6 @@ public class power_control extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        mainapp.removeNotification();
         if (mainapp.isForcingFinish()) { //expedite
             this.finish();
             return;
@@ -167,14 +166,6 @@ public class power_control extends Activity {
         }
         //update power state
         refresh_power_control_view();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (!this.isFinishing()) {      //only invoke setContentIntentNotification when going into background
-            mainapp.addNotification(this.getIntent());
-        }
     }
 
     /**

@@ -228,7 +228,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             Log.d("Engine_Driver", "preferences.onResume() no dialog to kill");
         }
 
-        mainapp.removeNotification();
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;

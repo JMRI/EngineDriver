@@ -34,7 +34,6 @@ public class reconnect_status extends Activity {
     private threaded_application mainapp;  // hold pointer to mainapp
     private String prog = "";
     private boolean backOk = true;
-    private boolean navigatingAway = false; // true if another activity was selected (false in onPause if going into background)
     private boolean retryFirst = false;
 
     //Handle messages from the communication thread back to this thread (responses from withrottle)
@@ -97,7 +96,6 @@ public class reconnect_status extends Activity {
     };
 
     private void closeScreen() {
-        navigatingAway = true;
         this.finish();                  //end this activity
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
@@ -144,23 +142,12 @@ public class reconnect_status extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        mainapp.removeNotification();
         if (mainapp.isForcingFinish()) { //expedite
             this.finish();
             return;
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-        navigatingAway = false;
-
         this.backOk = true;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (!this.isFinishing() && !navigatingAway) {        //only invoke setContentIntentNotification when going into background
-            mainapp.addNotification(this.getIntent());
-        }
     }
 
     /**

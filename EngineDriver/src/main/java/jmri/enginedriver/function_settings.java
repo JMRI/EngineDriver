@@ -27,6 +27,8 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.TextKeyListener;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,17 +38,16 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
-
-import java.util.ArrayList;
-import java.io.*;
-
-import android.text.method.TextKeyListener;
-import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
@@ -162,7 +163,6 @@ public class function_settings extends Activity implements PermissionsHelper.Per
     @Override
     public void onResume() {
         super.onResume();
-        mainapp.removeNotification();
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;
@@ -177,14 +177,6 @@ public class function_settings extends Activity implements PermissionsHelper.Per
     public void onSaveInstanceState(Bundle saveState) {     //orientation change
         move_view_to_settings();        //update settings array so onCreate can use it to initialize
         orientationChange = true;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (!this.isFinishing()) {       //only invoke setContentIntentNotification when going into background
-            mainapp.addNotification(this.getIntent());
-        }
     }
 
     @Override
