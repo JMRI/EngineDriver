@@ -1,9 +1,13 @@
 **Version 2.25.102
- * New Switching/Shunting Throttle Screen types
- * Additional French Translations by Alain Carasso
+ * new Switching/Shunting Throttle Screen types
+ * additional French Translations by Alain Carasso
  * fix time zone offset issue
  * add clearcache at connect for web views
  * add slf4j-nop and switch to external jars
+ * add clearcache at connect for more reliable web view loading
+ * new longpress to reload web view
+ * eliminated erroneous background notifications when device is rotated
+ * invalid initial web page preference setting now handled gracefully by web view
 **Version 2.25.100
  * Swipe now works everywhere except active sliders
  * Less likely to activate function button when scrolling or swiping
