@@ -408,6 +408,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         if (!prefs.getString("prefRunIntro", "0").equals(threaded_application.INTRO_VERSION)) {
             Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
             startActivity(intent);
+            mainapp.introIsRunning = true;
         }
 
         mainapp.applyTheme(this);
