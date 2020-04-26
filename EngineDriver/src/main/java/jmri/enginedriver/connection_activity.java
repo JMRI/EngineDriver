@@ -1005,7 +1005,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, true);
             } else {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -1018,45 +1018,37 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
         Log.d("Engine_Driver", "connection_activity: navigateToHandler:" + requestCode);
-        if ((requestCode == PermissionsHelper.READ_CONNECTION_LIST) &&
-                (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) &&
-                !(prefs.getString("prefRunIntro", "0").equals(threaded_application.INTRO_VERSION))) {
-            // if the intro hasn't run yet and we don't have the permission yet, skip the read because the intro will ask for the permission
-            loadSharedPreferencesFromFileImpl();
+        if (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PermissionsHelper.getInstance().requestNecessaryPermissions(connection_activity.this, requestCode);
+            }
         } else {
-
-            if (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    PermissionsHelper.getInstance().requestNecessaryPermissions(connection_activity.this, requestCode);
-                }
-            } else {
-                // Go to the correct handler based on the request code.
-                // Only need to consider relevant request codes initiated by this Activity
-                switch (requestCode) {
-                    case PermissionsHelper.CLEAR_CONNECTION_LIST:
-                        Log.d("Engine_Driver", "Got permission for CLEAR_CONNECTION_LIST - navigate to clearConnectionsListImpl()");
-                        clearConnectionsListImpl();
-                        break;
-                    case PermissionsHelper.READ_CONNECTION_LIST:
-                        Log.d("Engine_Driver", "Got permission for READ_CONNECTION_LIST - navigate to getConnectionsListImpl()");
-                        getConnectionsListImpl("", "");
-                        break;
-                    case PermissionsHelper.STORE_PREFERENCES:
-                        Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
-                        saveSharedPreferencesToFileImpl();
-                        break;
-                    case PermissionsHelper.READ_PREFERENCES:
-                        Log.d("Engine_Driver", "Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
-                        loadSharedPreferencesFromFileImpl();
-                        break;
-                    case PermissionsHelper.CONNECT_TO_SERVER:
-                        Log.d("Engine_Driver", "Got permission for READ_PHONE_STATE - navigate to connectImpl()");
-                        connectImpl();
-                        break;
-                    default:
-                        // do nothing
-                        Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
-                }
+            // Go to the correct handler based on the request code.
+            // Only need to consider relevant request codes initiated by this Activity
+            switch (requestCode) {
+                case PermissionsHelper.CLEAR_CONNECTION_LIST:
+                    Log.d("Engine_Driver", "Got permission for CLEAR_CONNECTION_LIST - navigate to clearConnectionsListImpl()");
+                    clearConnectionsListImpl();
+                    break;
+                case PermissionsHelper.READ_CONNECTION_LIST:
+                    Log.d("Engine_Driver", "Got permission for READ_CONNECTION_LIST - navigate to getConnectionsListImpl()");
+                    getConnectionsListImpl("", "");
+                    break;
+                case PermissionsHelper.STORE_PREFERENCES:
+                    Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
+                    saveSharedPreferencesToFileImpl();
+                    break;
+                case PermissionsHelper.READ_PREFERENCES:
+                    Log.d("Engine_Driver", "Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
+                    loadSharedPreferencesFromFileImpl();
+                    break;
+                case PermissionsHelper.CONNECT_TO_SERVER:
+                    Log.d("Engine_Driver", "Got permission for READ_PHONE_STATE - navigate to connectImpl()");
+                    connectImpl();
+                    break;
+                default:
+                    // do nothing
+                    Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
             }
         }
     }

@@ -42,6 +42,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
 import android.text.format.Time;
@@ -132,7 +133,7 @@ import static android.view.KeyEvent.KEYCODE_X;
 
 // used for supporting Keyboard and Gamepad input;
 
-public class throttle extends FragmentActivity implements android.gesture.GestureOverlayView.OnGestureListener {
+public class throttle extends FragmentActivity implements android.gesture.GestureOverlayView.OnGestureListener, PermissionsHelper.PermissionsHelperGrantedCallback {
 ////public class throttle extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
 
     protected threaded_application mainapp; // hold pointer to mainapp
@@ -966,7 +967,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     break;
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
-                    saveSharedPreferencesToFile();
+                    saveSharedPreferencesToFileIfAllowed();
                     disconnect();
                     break;
                 case message_type.WEBVIEW_LOC:      // webview location changed
@@ -5675,10 +5676,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     Log.d("Engine_Driver", "Got permission for STORE_SERVER_AUTO_PREFERENCES");
                     autoImportFromURLImpl();
                     break;
-                case PermissionsHelper.STORE_PREFERENCES:
-                    Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
-                    saveSharedPreferencesToFileImpl();
-                    break;
                 default:
                     // do nothing
                     Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
@@ -5686,6 +5683,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(throttle.this, requestCode, permissions, grantResults)) {
+            Log.d("Engine_Driver", "Unrecognised request - send up to super class");
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
 
     private void autoImportFromURL() {
         navigateToHandler(PermissionsHelper.STORE_SERVER_AUTO_PREFERENCES);
@@ -5798,12 +5802,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_FULL).commit();
-                        loadSharedPreferencesFromFile(prefs, urlPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_AUTO);
+                        loadSharedPreferencesFromFileImpl(prefs, urlPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_AUTO);
 
                         break;
                     case DialogInterface.BUTTON_NEUTRAL:
                         prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_PARTIAL).commit();
-                        loadSharedPreferencesFromFile(prefs, urlPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_AUTO);
+                        loadSharedPreferencesFromFileImpl(prefs, urlPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_AUTO);
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -5821,19 +5825,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         ab.show();
     }
 
-
-    private void loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
-        Log.d("Engine_Driver", "Preferences: Loading saved preferences from file: " + exportedPreferencesFileName);
-        boolean res = importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
-
-        if (!res) {
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
+    // saveSharedPreferencesToFile if the necessary permissions have already been granted, otherwise do nothing.
+    // use this method if exiting since we don't want to prompt for permissions at this point if they have not been granted
+    private void saveSharedPreferencesToFileIfAllowed() {
+        if (PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.STORE_PREFERENCES)) {
+            saveSharedPreferencesToFileImpl();
         }
-        forceRestartApp(forceRestartReason);
-    }
-
-    private void saveSharedPreferencesToFile() {
-        navigateToHandler(PermissionsHelper.STORE_PREFERENCES);
     }
 
     private void saveSharedPreferencesToFileImpl() {
@@ -5856,6 +5853,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    // restart the app so that the new preferences can be applied
+    // note: should verify that permissions have been granted before calling this method since it will try to read the preference file
+    private void loadSharedPreferencesFromFileImpl(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
+        Log.d("Engine_Driver", "Preferences: Loading saved preferences from file: " + exportedPreferencesFileName);
+        boolean res = importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
+
+        if (!res) {
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
+        }
+        forceRestartApp(forceRestartReason);
     }
 
     @SuppressLint("ApplySharedPref")

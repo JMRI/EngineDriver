@@ -28,7 +28,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.media.ToneGenerator;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -39,7 +38,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -61,10 +59,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
-import jmri.enginedriver.util.PermissionsHelper;
-import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
-public class preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener,PermissionsHelper.PermissionsHelperGrantedCallback {
+public class preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
     static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
     static public final int RESULT_ESUMCII = RESULT_GAMEPAD + 1;
 
@@ -1014,40 +1010,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
-
-    @SuppressLint("SwitchIntDef")
-    public void navigateToHandler(@RequestCodes int requestCode) {
-        if (!PermissionsHelper.getInstance().isPermissionGranted(preferences.this, requestCode)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                PermissionsHelper.getInstance().requestNecessaryPermissions(preferences.this, requestCode);
-            }
-        } else {
-            // Go to the correct handler based on the request code.
-            // Only need to consider relevant request codes initiated by this Activity
-            switch (requestCode) {
-                case PermissionsHelper.STORE_PREFERENCES:
-                    Log.d("Engine_Driver", "Preferences: Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
-//                    saveSharedPreferencesToFileImpl();
-                    break;
-                case PermissionsHelper.READ_PREFERENCES:
-                    Log.d("Engine_Driver", "Preferences: Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
-//                    loadSharedPreferencesFromFileImpl();
-                    break;
-                default:
-                    // do nothing
-                    Log.d("Engine_Driver", "Preferences: Unrecognised permissions request code: " + requestCode);
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(preferences.this, requestCode, permissions, grantResults)) {
-            Log.d("Engine_Driver", "Preferences: Unrecognised request - send up to super class");
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
-
 
     //Handle messages from the communication thread back to the UI thread.
     // currently only for the download from a URL
