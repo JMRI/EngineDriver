@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,10 +33,11 @@ import java.util.List;
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.util.PermissionsHelper;
+import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
 //import jmri.enginedriver.logviewer.R;
 
-public class LogViewerActivity extends ListActivity {
+public class LogViewerActivity extends ListActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
     private LogStringAdaptor adaptor = null;
     private LogReaderTask logReaderTask = null;
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -188,6 +190,15 @@ public class LogViewerActivity extends ListActivity {
             }
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(LogViewerActivity.this, requestCode, permissions, grantResults)) {
+            Log.d("Engine_Driver", "Unrecognised request - send up to super class");
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {

@@ -394,7 +394,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
     }
 
     void saveSettings() {
-        saveSettingsImpl();
+        navigateToHandler(PermissionsHelper.STORE_FUNCTION_SETTINGS);
     }
 
     //save function and labels to file
