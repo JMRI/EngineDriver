@@ -821,9 +821,10 @@ public class gamepad_test extends Activity implements OnGestureListener {
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     //Always go to throttle if back button pressed
