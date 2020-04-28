@@ -833,6 +833,7 @@ public class gamepad_test extends Activity implements OnGestureListener {
             Intent resultIntent = new Intent();
             resultIntent.putExtra("whichGamepadNo", whichGamepadNo+"2");  //pass whichGamepadNo as an extra - plus "2" for fail
             setResult(result, resultIntent);
+            return true;
 
             //this.finish();  //end this activity
             //connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

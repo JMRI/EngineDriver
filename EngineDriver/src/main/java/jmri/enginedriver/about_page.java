@@ -132,6 +132,7 @@ public class about_page extends Activity {
         if (key == KeyEvent.KEYCODE_BACK) {
             this.finish();  //end this activity
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
         }
         return (super.onKeyDown(key, event));
     }
