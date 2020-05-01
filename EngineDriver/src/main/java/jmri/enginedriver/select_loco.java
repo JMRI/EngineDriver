@@ -384,7 +384,7 @@ public class select_loco extends Activity {
                     Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - message: " + response_str);
                     if (response_str.length() >= 1) {
                         char com1 = response_str.charAt(0);
-                        String com123 = response_str.substring(0,3);
+                        String com123 = response_str.substring(0 , Math.min(response_str.length(), 3) );
                         if (com1 == 'R') {                                  //refresh labels when any roster response is received
                             roster_list_adapter.notifyDataSetChanged();
                             set_labels();
