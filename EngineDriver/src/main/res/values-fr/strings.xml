@@ -258,7 +258,7 @@
 
     <string name="prefMaximumThrottleTitle">Pourcentage de vitesse Maxi</string>
 
-    <string name="prefMaximumThrottleSummary">Pourcentage de vitesse maxi pour le curseur</string>
+    <string name="prefMaximumThrottleSummary">Pourcentage de vitesse maxi applicable à tous les régulateurs</string>
     <string name="prefMaximumThrottleChangeTitle">Variation maximale du régulateur</string>
 
     <string name="prefMaximumThrottleChangeSummary">Pourcentage de vitesse maxi pour le régulateur</string>
@@ -766,23 +766,23 @@
     <string name="introMenu">Intro/Assistant Setup</string>
     <string name="rosterEmpty">Aucune entrée correspondante dans catalogue JMRI, utiliser l\'option adresse DCC ou récent.</string>
 
-    <string name="edit_consist_throttle_1">Modif UM regulateur 1</string>
-    <string name="edit_consist_throttle_2">Modif UM regulateur 2</string>
-    <string name="edit_consist_throttle_3">Modif UM regulateur 3</string>
-    <string name="edit_consist_throttle_4">Modif UM regulateur 4</string>
-    <string name="edit_consist_throttle_5">Modif UM regulateur 5</string>
-    <string name="edit_consist_throttle_6">Modif UM regulateur 6</string>
-    <string name="edit_consist_lights_throttle_1">Modif eclairage UM regulateur 1</string>
-    <string name="edit_consist_lights_throttle_2">Modif eclairage UM regulateur 2</string>
-    <string name="edit_consist_lights_throttle_3">Modif eclairage UM regulateur 3</string>
-    <string name="edit_consist_lights_throttle_4">Modif eclairage UM regulateur 4</string>
-    <string name="edit_consist_lights_throttle_5">Modif eclairage UM regulateur 5</string>
-    <string name="edit_consist_lights_throttle_6">Modif eclairage UM regulateur 6</string>
+    <string name="edit_consist_throttle_1">Modif UM régulateur 1</string>
+    <string name="edit_consist_throttle_2">Modif UM régulateur 2</string>
+    <string name="edit_consist_throttle_3">Modif UM régulateur 3</string>
+    <string name="edit_consist_throttle_4">Modif UM régulateur 4</string>
+    <string name="edit_consist_throttle_5">Modif UM régulateur 5</string>
+    <string name="edit_consist_throttle_6">Modif UM régulateur 6</string>
+    <string name="edit_consist_lights_throttle_1">Modif eclairage UM régulateur 1</string>
+    <string name="edit_consist_lights_throttle_2">Modif eclairage UM régulateur 2</string>
+    <string name="edit_consist_lights_throttle_3">Modif eclairage UM régulateur 3</string>
+    <string name="edit_consist_lights_throttle_4">Modif eclairage UM régulateur 4</string>
+    <string name="edit_consist_lights_throttle_5">Modif eclairage UM régulateur 5</string>
+    <string name="edit_consist_lights_throttle_6">Modif eclairage UM régulateur 6</string>
 
     <string name="prefLimitSpeedButtonTitle">Afficher touche \'Vitesse Maxi\'</string>
-    <string name="prefLimitSpeedButtonSummary">Option pour afficher une touche limitant la vitesse maxi de la loco</string>
+    <string name="prefLimitSpeedButtonSummary">Affichage touche pour limiter temporairement la vitesse maximale du régulateur utilisé</string>
     <string name="prefLimitSpeedPercentTitle">\'Vitesse Maxi\' à \%</string>
-    <string name="prefLimitSpeedPercentSummary">Définir le \% du régulateur fixant la Vitesse maximale</string>
+    <string name="prefLimitSpeedPercentSummary">Définir en \% la vitesse maximale du régulateur</string>
     <string name="limitSpeedButtonLabel">Vitesse Maxi</string>
     <string name="LocoSelectMethodRecentConsist">UM récent(s</string>
     <string name="toastSelectConsistsConfirmClear">Confirmer la suppression des UM récents en appuyant à nouveau sur la touche \'Efface list\'</string>
@@ -814,12 +814,12 @@
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Zone Manoeuvre inactive</string>
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Définissez la taille de la Zone Manoeuvre via le curseur du régulateur Mode Manoeuvre </string>
     <string name="dialogConfirmClearTitle">Effacer la liste</string>
-    <string name="dialogRecentConsistsConfirmClearQuestions">Confirmez que vous voulez supprimer tous les derniers Consiste</string>
-    <string name="dialogRecentLocoConfirmClearQuestion">Confirmez que vous voulez supprimer tous les récents Locomotives</string>
-    <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmez que vous voulez supprimer tous les Turnouts récents</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">Confirmer la suppression des dernières UM utilisées</string>
+    <string name="dialogRecentLocoConfirmClearQuestion">Confirmer la suppression des dernières locomotives utilisées</string>
+    <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmer la suppression des dernières aiguilles utilisées</string>
 
-    <string name="dialogConfirmResetPreferencesTitle">Remettre à zéro les préférences</string>
-    <string name="dialogResetPreferencesQuestion">Confirmez que vous souhaitez réinitialiser toutes les préférences. \nToutes les préférences seront perdues.</string>
-    <string name="dialogConfirmImportPreferencesTitle">Préférences d\'importation</string>
-    <string name="dialogImportPreferencesQuestion">Confirmez que vous souhaitez préférences à l\'importation. \nToutes les préférences seront perdues.</string>
+    <string name="dialogConfirmResetPreferencesTitle">Réinitialiser les préférences</string>
+    <string name="dialogResetPreferencesQuestion">Confirmer la réinitialisation des préférences.\nLes préférences actuelles seront affacées</string>
+    <string name="dialogConfirmImportPreferencesTitle">Préférences pour les imports</string>
+    <string name="dialogImportPreferencesQuestion">Confirmer l import des préférences.\nLes préférences actuelles seront affacées</string>
 </resources>
