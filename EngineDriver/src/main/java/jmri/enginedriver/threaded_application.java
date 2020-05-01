@@ -23,7 +23,6 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.app.Notification;
@@ -536,29 +535,30 @@ public class threaded_application extends Application {
                         break;
                     }
 
-                    //Disconnect from the WiThrottle server.
+                    case message_type.RESTART_APP: {
+                        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+                        sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
+                        sharedPreferences.edit().putInt("prefForcedRestartReason", msg.arg1).commit();
+                        stoppingConnection();
+                        withrottle_send("Q");
+                        host_ip = null;
+                        withrottle_version = 0.0;
+                        alert_activities(message_type.RESTART_APP, "");
+                        break;
+                    }
+                    //Disconnect from the WiThrottle server and  Shutdown
                     case message_type.DISCONNECT: {
                         Log.d("Engine_Driver", "threaded_application: TA Disconnect");
                         doFinish = true;
                         Log.d("Engine_Driver", "threaded_application: TA alert all activities to shutdown");
                         alert_activities(message_type.SHUTDOWN, "");     //tell all activities to finish()
-                        heart.stopHeartbeat();
-                        if (phone != null) {
-                            phone.disable();
-                            phone = null;
-                        }
-                        end_jmdns();
-                        dlMetadataTask.stop();
-                        dlRosterTask.stop();
-
+                        stoppingConnection();
                         //send quit message to withrottle after a short delay for other activities to communicate
                         sendMsgDelay(comm_msg_handler, 100L, message_type.WITHROTTLE_QUIT);
-
                         //give msgs a chance to xmit before closing socket
                         if (!sendMsgDelay(comm_msg_handler, 1500L, message_type.SHUTDOWN)) {
                             shutdown();
                         }
-
                         break;
                     }
 
@@ -726,7 +726,18 @@ public class threaded_application extends Application {
             }
         }
 
-        public void shutdown() {
+        private void stoppingConnection() {
+            heart.stopHeartbeat();
+            if (phone != null) {
+                phone.disable();
+                phone = null;
+            }
+            end_jmdns();
+            dlMetadataTask.stop();
+            dlRosterTask.stop();
+        }
+
+        private void shutdown() {
             Log.d("Engine_Driver", "threaded_application.Shutdown");
             end_jmdns();                        //jmdns should already be down but no harm in making call
             if (socketWiT != null) {
@@ -2884,35 +2895,6 @@ end force shutdown */
         return newValue;
     }
 
-
-    @SuppressLint("ApplySharedPref")
-    public void forceRestartApp(int forcedRestartReason) {
-        Log.d("Engine_Driver", "threaded_application: threaded_application.forceRestartApp() ");
-
-        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
-
-        sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
-        sharedPreferences.edit().putInt("prefForcedRestartReason", forcedRestartReason).commit();
-
-//        Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(intent);
-//        this.finish();
-//        Runtime.getRuntime().exit(0); // really force the kill
-
-        int delay = 100;
-        Context context = getBaseContext();
-        Intent restartIntent = getBaseContext().getPackageManager()
-                .getLaunchIntentForPackage(context.getPackageName());
-        PendingIntent intent = PendingIntent.getActivity(
-                context, 0,
-                restartIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        manager.set(AlarmManager.RTC, System.currentTimeMillis() + delay, intent);
-        System.exit(2);
-        Runtime.getRuntime().exit(0); // really force the kill
-    }
 
     public void vibrate(int duration) {
         //we need vibrate permissions, otherwise do nothing

@@ -411,6 +411,7 @@ public class select_loco extends Activity {
                     roster_list_adapter.notifyDataSetChanged();
                     set_labels();
                     break;
+                case message_type.RESTART_APP:
                 case message_type.DISCONNECT:
                     Log.d("Engine_Driver", "select_loco: select_loco_handler - DISCONNECT");
                     end_this_activity();

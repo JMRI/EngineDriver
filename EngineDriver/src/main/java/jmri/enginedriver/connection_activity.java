@@ -110,6 +110,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
     private static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
     private Toast connToast = null;
+    private boolean isRestarting = false;
 
     SwipeDetector connectionsListSwipeDetector;
 
@@ -183,6 +184,20 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         }
 
         startActivity(throttle);
+        this.finish();
+        overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    }
+
+    private void startNewConnectionActivity() {
+        // first remove old handler since the new Intent will have its own
+        isRestarting = true;        // tell OnDestroy to skip this step since it will run after the new Intent is created
+        if (mainapp.connection_msg_handler !=null) {
+            mainapp.connection_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.connection_msg_handler = null;
+        }
+
+        Intent newConnection = new Intent().setClass(this, connection_activity.class);
+        startActivity(newConnection);
         this.finish();
         overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
@@ -318,6 +333,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     @SuppressLint("HandlerLeak")
     private class ui_handler extends Handler {
         @SuppressWarnings("unchecked")
+
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case message_type.SERVICE_RESOLVED:
@@ -369,13 +385,16 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                     start_throttle_activity();
                     break;
 
+                case message_type.RESTART_APP:
+                    startNewConnectionActivity();
+                    break;
+
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     saveSharedPreferencesToFile();
                     mainapp.connectedHostName = "";
                     shutdown();
                     break;
-
             }
         }
     }
@@ -595,11 +614,16 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         Log.d("Engine_Driver", "connection.onDestroy() called");
         super.onDestroy();
 
-        if (mainapp.connection_msg_handler !=null) {
-            mainapp.connection_msg_handler.removeCallbacksAndMessages(null);
-            mainapp.connection_msg_handler = null;
-        } else {
-            Log.d("Engine_Driver", "onDestroy: mainapp.connection_msg_handler is null. Unable to removeCallbacksAndMessages");
+        if (!isRestarting) {
+            if (mainapp.connection_msg_handler != null) {
+                mainapp.connection_msg_handler.removeCallbacksAndMessages(null);
+                mainapp.connection_msg_handler = null;
+            } else {
+                Log.d("Engine_Driver", "onDestroy: mainapp.connection_msg_handler is null. Unable to removeCallbacksAndMessages");
+            }
+        }
+        else {
+            isRestarting = false;
         }
         CMenu = null;
         connectionsListSwipeDetector = null;
