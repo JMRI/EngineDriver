@@ -159,6 +159,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
                 case message_type.WIT_CON_RECONNECT:
                     refreshConsistLists();
                     break;
+                case message_type.RESTART_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     disconnect();

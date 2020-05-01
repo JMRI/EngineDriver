@@ -965,10 +965,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //                    currentTime = response_str;
                     setActivityTitle();
                     break;
+                case message_type.RESTART_APP:
+                    disconnect(true);
+                    break;
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     saveSharedPreferencesToFileIfAllowed();
-                    disconnect();
+                    disconnect(false);
                     break;
                 case message_type.WEBVIEW_LOC:      // webview location changed
                     // set new location
@@ -5015,7 +5018,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // processing
     }
 
-    private void disconnect() {
+    private void disconnect(boolean isRestarting) {
         //loop thru all throttles and send release to server for any that are active
         for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
             if (getConsist(throttleIndex).isActive()) {
@@ -5024,9 +5027,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         webView.stopLoading();
-        mainapp.appIsFinishing = true;
-        this.finish(); // end this activity
-        overridePendingTransition(0, 0);
+        if(isRestarting) {          // restarting
+            Intent newConnection = new Intent().setClass(this, connection_activity.class);
+            startActivity(newConnection);
+            this.finish();
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        }                               // shutting down
+        else {
+            mainapp.appIsFinishing = true;
+            this.finish(); // end this activity
+            connection_activity.overridePendingTransition(this,0, 0);
+        }
     }
 
     // request release of specified throttle
@@ -5870,7 +5881,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     @SuppressLint("ApplySharedPref")
     public void forceRestartApp(int forcedRestartReason) {
         Log.d("Engine_Driver", "throttle.forceRestartApp() ");
-        mainapp.forceRestartApp(forcedRestartReason);
+        Message msg = Message.obtain();
+        msg.what = message_type.RESTART_APP;
+        msg.arg1 = forcedRestartReason;
+        mainapp.comm_msg_handler.sendMessage(msg);
     }
 
     private void redrawVerticalSliders() {

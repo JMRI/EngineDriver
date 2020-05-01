@@ -226,6 +226,7 @@ public class routes extends Activity implements OnGestureListener {
                 case message_type.TIME_CHANGED:
                     setActivityTitle();
                     break;
+                case message_type.RESTART_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     disconnect();
