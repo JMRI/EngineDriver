@@ -55,6 +55,7 @@ public class reconnect_status extends Activity {
                     refresh_reconnect_status(msg.obj.toString());
                     reconnected();
                     break;
+                case message_type.RESTART_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     disconnect();
