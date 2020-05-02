@@ -233,6 +233,16 @@ public class threaded_application extends Application {
     private ApplicationLifecycleHandler lifecycleHandler;
     public static Context context;
 
+    public static final int FORCED_RESTART_REASON_NONE = 0;
+    public static final int FORCED_RESTART_REASON_RESET = 1;
+    public static final int FORCED_RESTART_REASON_IMPORT = 2;
+    public static final int FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL = 3;
+    public static final int FORCED_RESTART_REASON_THEME = 4;
+    public static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
+    public static final int FORCED_RESTART_REASON_LOCALE = 6;
+    public static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
+    public static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
+
     class comm_thread extends Thread {
         JmDNS jmdns = null;
         volatile boolean endingJmdns = false;
@@ -539,10 +549,6 @@ public class threaded_application extends Application {
                         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
                         sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
                         sharedPreferences.edit().putInt("prefForcedRestartReason", msg.arg1).commit();
-                        stoppingConnection();
-                        withrottle_send("Q");
-                        host_ip = null;
-                        withrottle_version = 0.0;
                         alert_activities(message_type.RESTART_APP, "");
                         break;
                     }
@@ -2956,6 +2962,84 @@ end force shutdown */
                 Toast.makeText(threaded_application.context, msg_txt, length).show();
             }
         });
+    }
+
+    public Intent getThrottleIntent() {
+        Intent throttle;
+        appIsFinishing = false;
+        switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
+            case "Simple":
+                throttle = new Intent().setClass(this, throttle_simple.class);
+                break;
+            case "Vertical":
+                throttle = new Intent().setClass(this, throttle_vertical.class);
+                break;
+            case "Vertical Left":
+            case "Vertical Right":
+                throttle = new Intent().setClass(this, throttle_vertical_left_or_right.class);
+                break;
+            case "Switching Left":
+            case "Switching Right":
+                throttle = new Intent().setClass(this, throttle_switching_left_or_right.class);
+                break;
+            case "Big Left":
+            case "Big Right":
+                throttle = new Intent().setClass(this, throttle_big_buttons.class);
+                break;
+            case "Default":
+            default:
+                throttle = new Intent().setClass(this, throttle_full.class);
+                break;
+        }
+        return throttle;
+    }
+
+    /***
+     * show appropriate messages on a restart that was forced by prefs
+     *
+     * @param prefForcedRestartReason the reason that the restart occurred
+     * @return true if the activity should immediately launch Preferences
+     */
+    public boolean prefsForcedRestart(int prefForcedRestartReason) {
+        switch (prefForcedRestartReason) {
+            case FORCED_RESTART_REASON_AUTO_IMPORT:
+            case FORCED_RESTART_REASON_IMPORT: {
+//routine so suppress this one                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportSucceeded), Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL: {
+                Toast.makeText(context,
+                        context.getResources().getString(R.string.toastPreferencesImportServerManualSucceeded, prefs.getString("prefPreferencesImportFileName","") ), Toast.LENGTH_LONG).show();
+                break;
+            }
+            case FORCED_RESTART_REASON_RESET: {
+                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesResetSucceeded), Toast.LENGTH_LONG).show();
+                break;
+            }
+            case FORCED_RESTART_REASON_THEME: {
+                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesThemeChangeSucceeded), Toast.LENGTH_LONG).show();
+                break;
+            }
+            case FORCED_RESTART_REASON_THROTTLE_PAGE: {
+                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesThrottleChangeSucceeded), Toast.LENGTH_LONG).show();
+                break;
+            }
+            case FORCED_RESTART_REASON_LOCALE: {
+                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesLocaleChangeSucceeded), Toast.LENGTH_LONG).show();
+                break;
+            }
+            case FORCED_RESTART_REASON_IMPORT_SERVER_AUTO: {
+                Toast.makeText(context,
+                        context.getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded, prefs.getString("prefPreferencesImportFileName","") ),
+                        Toast.LENGTH_LONG).show();
+                break;
+            }
+        }
+
+        return  ((prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_AUTO)
+                && (prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL)
+                && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET)
+                && (prefForcedRestartReason != FORCED_RESTART_REASON_AUTO_IMPORT));
     }
 }
 
