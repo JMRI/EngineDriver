@@ -483,6 +483,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private boolean accelerometerCurrent = false;
 
     protected static final String THEME_DEFAULT = "Default";
+    private boolean isRestarting = false;
 
     private static final int KIDS_TIMER_DISABLED = 0;
     protected static final int KIDS_TIMER_STARTED = 1;
@@ -966,12 +967,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     setActivityTitle();
                     break;
                 case message_type.RESTART_APP:
-                    disconnect(true);
+                    startNewThrottleActivity();
                     break;
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     saveSharedPreferencesToFileIfAllowed();
-                    disconnect(false);
+                    disconnect();
                     break;
                 case message_type.WEBVIEW_LOC:      // webview location changed
                     // set new location
@@ -1012,6 +1013,19 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
             }
         }
+    }
+
+    private void startNewThrottleActivity() {
+        webView.stopLoading();
+        // remove old handlers since the new Intent will have its own
+        isRestarting = true;        // tell OnDestroy to skip removing handlers since it will run after the new Intent is created
+        removeHandlers();
+
+        //end current throttle Intent then start the new Intent
+        Intent newThrottle = mainapp.getThrottleIntent();
+        this.finish();
+        startActivity(newThrottle);
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     // Change the screen brightness
@@ -4404,6 +4418,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 scale = (float) savedInstanceState.getSerializable(("scale"));
             }
         }
+        webView.setInitialScale((int) (100 * scale));
         webView.clearCache(true);   // force fresh javascript download on first connection
         // webView.getSettings().setLoadWithOverviewMode(true); // size image to fill width
 
@@ -4631,6 +4646,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         setActivityTitle();
 
+        if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
+            prefs.edit().putBoolean("prefForcedRestart", false).commit();
+
+            int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_NONE);
+            Log.d("Engine_Driver", "connection: Forced Restart Reason: " + prefForcedRestartReason);
+            if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
+                Intent in = new Intent().setClass(this, preferences.class);
+                startActivityForResult(in, 0);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            }
+        }
     }
 
     private void showHideConsistMenus(){
@@ -4718,6 +4744,15 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     public void onDestroy() {
         super.onDestroy();
         Log.d("Engine_Driver", "throttle.onDestroy() called");
+        if (!isRestarting) {
+            removeHandlers();
+        }
+        else {
+            isRestarting = false;
+        }
+    }
+
+    private void removeHandlers() {
         if (webView != null) {
             final ViewGroup webGroup = (ViewGroup) webView.getParent();
             if (webGroup != null) {
@@ -4729,7 +4764,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             repeatUpdateHandler = null;
         }
 
-        if (mainapp.throttle_msg_handler !=null) {
+        if (mainapp.throttle_msg_handler != null) {
             mainapp.throttle_msg_handler.removeCallbacksAndMessages(null);
             mainapp.throttle_msg_handler = null;
         } else {
@@ -5018,26 +5053,21 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // processing
     }
 
-    private void disconnect(boolean isRestarting) {
+    private void releaseThrottles() {
         //loop thru all throttles and send release to server for any that are active
         for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
             if (getConsist(throttleIndex).isActive()) {
                 release_loco(throttleIndex);
             }
         }
+    }
 
+    private void disconnect() {
+        releaseThrottles();
         webView.stopLoading();
-        if(isRestarting) {          // restarting
-            Intent newConnection = new Intent().setClass(this, connection_activity.class);
-            startActivity(newConnection);
-            this.finish();
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-        }                               // shutting down
-        else {
-            mainapp.appIsFinishing = true;
-            this.finish(); // end this activity
-            connection_activity.overridePendingTransition(this,0, 0);
-        }
+        mainapp.appIsFinishing = true;
+        this.finish(); // end this activity
+        connection_activity.overridePendingTransition(this,0, 0);
     }
 
     // request release of specified throttle

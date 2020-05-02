@@ -100,15 +100,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
 
-    private static final int FORCED_RESTART_REASON_NONE = 0;
-    private static final int FORCED_RESTART_REASON_RESET = 1;
-    private static final int FORCED_RESTART_REASON_IMPORT = 2;
-    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL = 3;
-    private static final int FORCED_RESTART_REASON_THEME = 4;
-    private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
-    private static final int FORCED_RESTART_REASON_LOCALE = 6;
-    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
-    private static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
     private Toast connToast = null;
     private boolean isRestarting = false;
 
@@ -156,33 +147,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
     private void start_throttle_activity() {
 //        Intent throttle = new Intent().setClass(this, throttle.class);
-        Intent throttle;
-        mainapp.appIsFinishing = false;
-        switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
-            case "Simple":
-                throttle = new Intent().setClass(this, throttle_simple.class);
-                break;
-            case "Vertical":
-                throttle = new Intent().setClass(this, throttle_vertical.class);
-                break;
-            case "Vertical Left":
-            case "Vertical Right":
-                throttle = new Intent().setClass(this, throttle_vertical_left_or_right.class);
-                break;
-            case "Switching Left":
-            case "Switching Right":
-                throttle = new Intent().setClass(this, throttle_switching_left_or_right.class);
-                break;
-            case "Big Left":
-            case "Big Right":
-                throttle = new Intent().setClass(this, throttle_big_buttons.class);
-                break;
-            case "Default":
-            default:
-                throttle = new Intent().setClass(this, throttle_full.class);
-                break;
-        }
-
+        Intent throttle = mainapp.getThrottleIntent();
         startActivity(throttle);
         this.finish();
         overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -196,9 +161,10 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             mainapp.connection_msg_handler = null;
         }
 
+        //end current CA Intent then start the new Intent
         Intent newConnection = new Intent().setClass(this, connection_activity.class);
-        startActivity(newConnection);
         this.finish();
+        startActivity(newConnection);
         overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
@@ -509,47 +475,9 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
             prefs.edit().putBoolean("prefForcedRestart", false).commit();
 
-            int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", FORCED_RESTART_REASON_NONE);
+            int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_NONE);
             Log.d("Engine_Driver", "connection: Forced Restart Reason: " + prefForcedRestartReason);
-            switch (prefForcedRestartReason) {
-                case FORCED_RESTART_REASON_AUTO_IMPORT:
-                case FORCED_RESTART_REASON_IMPORT: {
-//routine so suppress this one                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportSucceeded), Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                case FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL: {
-                    Toast.makeText(getApplicationContext(),
-                            getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualSucceeded, prefs.getString("prefPreferencesImportFileName","") ), Toast.LENGTH_LONG).show();
-                    break;
-                }
-                case FORCED_RESTART_REASON_RESET: {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesResetSucceeded), Toast.LENGTH_LONG).show();
-                    break;
-                }
-                case FORCED_RESTART_REASON_THEME: {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesThemeChangeSucceeded), Toast.LENGTH_LONG).show();
-                    break;
-                }
-                case FORCED_RESTART_REASON_THROTTLE_PAGE: {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesThrottleChangeSucceeded), Toast.LENGTH_LONG).show();
-                    break;
-                }
-                case FORCED_RESTART_REASON_LOCALE: {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesLocaleChangeSucceeded), Toast.LENGTH_LONG).show();
-                    break;
-                }
-                case FORCED_RESTART_REASON_IMPORT_SERVER_AUTO: {
-                    Toast.makeText(getApplicationContext(),
-                            getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded, prefs.getString("prefPreferencesImportFileName","") ),
-                            Toast.LENGTH_LONG).show();
-                    break;
-                }
-            }
-
-            if ((prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_AUTO)
-                    && (prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL)
-                    && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET)
-                    && (prefForcedRestartReason != FORCED_RESTART_REASON_AUTO_IMPORT)) {  // reload the preferences page
+            if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
                 Intent in = new Intent().setClass(this, preferences.class);
                 startActivityForResult(in, 0);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -1020,8 +948,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
         String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
         sharedPreferences.edit().putString("prefAndroidId", deviceId).commit();
-        sharedPreferences.edit().putInt("prefForcedRestartReason", FORCED_RESTART_REASON_AUTO_IMPORT).commit();
-
+        sharedPreferences.edit().putInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT).commit();
 
         if ((prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT))
                 || (prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
