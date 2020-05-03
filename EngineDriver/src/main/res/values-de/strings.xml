@@ -417,7 +417,7 @@
 
     <string name="prefThemeTitle">Motiv/Stil</string>
 
-    <string name="prefThemeSummary">App Motiv. WARNUNG! Engine Driver wird sofort neu starten.\'Benötigt Android Honeycomb oder neuer.</string>
+    <string name="prefThemeSummary">App Motiv.\\n\\\'Benötigt Android Honeycomb oder neuer.</string>
 <!--    <string name="prefThemeDefaultValue">Standard</string> -->
     <string name="prefHideDemoServerTitle">Demo Server ausblenden</string>
     <string name="prefHideDemoServerSummary">Verberge den Demo Server \'jmri.mstevetodd.com\' in der Liste der Verbindungen.</string>
