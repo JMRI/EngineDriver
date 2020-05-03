@@ -748,7 +748,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
 
         if ( ((prefThrottleScreenType.equals("Vertical Left")) || (prefThrottleScreenType.equals("Vertical Right"))
-                || (prefThrottleScreenType.equals("Big Left")) || (prefThrottleScreenType.equals("Big Right")) )
+                || (prefThrottleScreenType.equals("Big Left")) || (prefThrottleScreenType.equals("Big Right"))
+                || (prefThrottleScreenType.equals("Switching Left")) || (prefThrottleScreenType.equals("Switching Right")) )
                 && (numThrottles != 1)) {
             sharedPreferences.edit().putString("NumThrottle", "One").commit();
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, "One"), Toast.LENGTH_SHORT).show();
@@ -790,7 +791,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private void showHideThrottleTypePreferences() {
         boolean enable = true;
         if ((prefThrottleScreenTypeOriginal.equals("Simple")) || (prefThrottleScreenTypeOriginal.equals("Vertical"))
-                || (prefThrottleScreenTypeOriginal.equals("Vertical Left"))  || (prefThrottleScreenTypeOriginal.equals("Vertical Right"))) {
+                || (prefThrottleScreenTypeOriginal.equals("Vertical Left"))  || (prefThrottleScreenTypeOriginal.equals("Vertical Right"))
+                || (prefThrottleScreenTypeOriginal.equals("Switching Left"))  || (prefThrottleScreenTypeOriginal.equals("Switching Right"))) {
             enable = false;
         }
         enableDisablePreference("increase_slider_height_preference", enable);

@@ -67,4 +67,6 @@ interface message_type {
     int IMPORT_SERVER_AUTO_AVAILABLE = 44;    //
     int WIT_TURNOUT_NOT_DEFINED = 45;    //
     int RESTART_APP = 46;   //
+    int WIT_QUERY_SPEED = 47;   //
+    int WIT_QUERY_DIRECTION = 48;   //
 }

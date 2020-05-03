@@ -651,6 +651,24 @@ public class threaded_application extends Application {
                         withrottle_send(msg.obj.toString());
                         break;
 
+                    case message_type.WIT_QUERY_SPEED: {
+                        String addr = msg.obj.toString();
+                        char cWhichThrottle = addr.charAt(0);
+                        addr = addr.substring(1);
+                        if (addr.length() == 0)
+                            addr = "*";
+                        withrottle_send(String.format("M%sA%s<;>qV", cWhichThrottle, addr));
+                        break;
+                    }
+                    case message_type.WIT_QUERY_DIRECTION: {
+                        String addr = msg.obj.toString();
+                        char cWhichThrottle = addr.charAt(0);
+                        addr = addr.substring(1);
+                        if (addr.length() == 0)
+                            addr = "*";
+                        withrottle_send(String.format("M%sA%s<;>qR", cWhichThrottle, addr));
+                        break;
+                    }
                     //send Q to withrottle server
                     case message_type.WITHROTTLE_QUIT:
                         withrottle_send("Q");
