@@ -249,7 +249,7 @@
     <string name="prefNumOfThrottlesSummary">Escolha quantos Controladores quer visualizar na tela.</string>
 
     <string name="prefThrottleScreenTypeTitle">Tipo de tela do controlador</string>
-    <string name="prefThrottleScreenTypeSummary">Que tipo de tela de controlador usar.\nATENÇÃO! Engine Driver irá reiniciar imediatamente.</string>
+    <string name="prefThrottleScreenTypeSummary">Que tipo de tela de controlador usar.</string>
 
     <string name="prefMaximumThrottleTitle">Porcentagem máxima Controle</string>
 
@@ -437,7 +437,7 @@
     <string name="prefDirectionButtonLongPressDelaySummary">Quantos milissegundos constituem um toque longo para os botões de direção.</string>
 
     <string name="prefThemeTitle">Tema/Estilo</string>
-    <string name="prefThemeSummary">Tema App. ATENÇÃO! Engine Driver irá reiniciar imediatamente.\nNecessita Android Honeycomb ou sucessivo.</string>
+    <string name="prefThemeSummary">Tema App.\\nNecessita Android Honeycomb ou sucessivo.</string>
 
     <string name="prefHideDemoServerTitle">Esconder Servidor Demo</string>
     <string name="prefHideDemoServerSummary">Esconder o servidor demo \'jmri.mstevetodd.com\' na lista de conexões.</string>

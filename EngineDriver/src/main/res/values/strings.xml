@@ -311,7 +311,7 @@
     <string name="prefNumOfThrottlesDefault" translatable="false">Two</string>
 
     <string name="prefThrottleScreenTypeTitle">Throttle Screen Type</string>
-    <string name="prefThrottleScreenTypeSummary">Which type of throttle screen to use.\nWARNING! Engine Driver will restart immediately!</string>
+    <string name="prefThrottleScreenTypeSummary">Which type of throttle screen to use.</string>
     <string name="prefThrottleScreenTypeDefault" translatable="false">Default</string>
 
     <string name="prefMaximumThrottleTitle">Maximum Throttle Percentage</string>
@@ -540,7 +540,7 @@
     <string name="prefTickMarksOnSlidersSummary">Show or hide tick marks on the background of the speed sliders.</string>
 
     <string name="prefThemeTitle">Theme/Style</string>
-    <string name="prefThemeSummary">App theme. WARNING! Engine Driver will restart immediately!</string>
+    <string name="prefThemeSummary">App theme.</string>
     <string name="prefThemeDefaultValue" translatable="false">Default</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefHideDemoServerTitle">Hide Demo Server</string>

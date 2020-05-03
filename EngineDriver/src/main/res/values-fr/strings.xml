@@ -254,7 +254,7 @@
     <string name="prefNumOfThrottlesSummary">Choisir le nombre maximum de régulateurs désiré.</string>
 
     <string name="prefThrottleScreenTypeTitle">Type d écran du régulateur</string>
-    <string name="prefThrottleScreenTypeSummary">.\nATTENTION! Engine Driver va redémarrer immédiatement!</string>
+    <string name="prefThrottleScreenTypeSummary">Type d écran du régulateur</string>
 
     <string name="prefMaximumThrottleTitle">Pourcentage de vitesse Maxi</string>
 
@@ -424,7 +424,7 @@
     <string name="prefRightDirectionButtonsShortDefaultValue">AR</string>
 
 
-    <string name="prefThemeSummary">Thème de l appli. ATTENTION! Engine Driver va redémarrer immédiatement.\nNécessite Android 3.0 minimum.</string>
+    <string name="prefThemeSummary">Thème de l appli.\\nNécessite Android 3.0 minimum.</string>
 
     <string name="prefHideDemoServerTitle">Cache le serveur de démonstration</string>
     <string name="prefHideDemoServerSummary">Cache le serveur de démonstration \'jmri.mstevetodd.com\'  dans la liste de serveurs de connexion.</string>

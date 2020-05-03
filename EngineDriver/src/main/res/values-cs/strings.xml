@@ -291,7 +291,7 @@
     <string name="prefNumOfThrottlesSummary">Zvolte kolik ovladačů chcete zobrazit.</string>
 
     <string name="prefThrottleScreenTypeTitle">Typ obrazovky ovladače</string>
-    <string name="prefThrottleScreenTypeSummary">Jaký typ obrazovky ovladače použít.\nVarování! Engine Driver bude okamžitě restartován!</string>
+    <string name="prefThrottleScreenTypeSummary">Jaký typ obrazovky ovladače použít.</string>
 
     <string name="prefMaximumThrottleTitle">Maximum ovladače procento</string>
 

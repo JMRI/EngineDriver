@@ -249,7 +249,7 @@
     <string name="prefNumOfThrottlesSummary">Scegli quanti Controllori visualizzare sullo schermo.</string>
 
     <string name="prefThrottleScreenTypeTitle">Tipo di schermo del controllore</string>
-    <string name="prefThrottleScreenTypeSummary">Quale tipo di schermo del controllore usare.\nATTENZIONE! Engine Driver si riavvierà immediatamente.</string>
+    <string name="prefThrottleScreenTypeSummary">Quale tipo di schermo del controllore usare.</string>
 
     <string name="prefMaximumThrottleTitle">Percentuale massima di controllo</string>
 
