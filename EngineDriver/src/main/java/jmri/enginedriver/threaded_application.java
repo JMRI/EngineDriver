@@ -529,7 +529,7 @@ public class threaded_application extends Application {
                         }
                         if (prefs.getBoolean("stop_on_release_preference",                         //send stop command before releasing (if set in prefs)
                                 getResources().getBoolean(R.bool.prefStopOnReleaseDefaultValue))) {
-                            withrottle_send(String.format("M%sA*<;>V0", throttleIntToString(whichThrottle)));
+                            witSetSpeedZero(whichThrottle);
                             delays++;
                         }
 
@@ -597,7 +597,8 @@ public class threaded_application extends Application {
                     //  message sent is formatted M1A*<;>V13  was(1V13)
                     case message_type.VELOCITY: {
                         final int whichThrottle = msg.arg1;
-                        withrottle_send(String.format("M%sA*<;>V%d", throttleIntToString(whichThrottle), msg.arg2));
+                        final int speed = msg.arg2;
+                        witSetSpeed(whichThrottle, speed);
                         break;
                     }
                     //Change direction. address is in msg, whichThrottle is in arg 1 and arg2 holds the direction to change to.
@@ -645,28 +646,20 @@ public class threaded_application extends Application {
                     case message_type.POWER_CONTROL:
                         withrottle_send(String.format("PPA%d", msg.arg1));
                         break;
-
                     //send whatever command string comes in obj to Withrottle Server
                     case message_type.WITHROTTLE_SEND:
                         withrottle_send(msg.obj.toString());
                         break;
-
+                    // Request the throttle's speed. whichThrottle is in arg 1
                     case message_type.WIT_QUERY_SPEED: {
-                        String addr = msg.obj.toString();
-                        char cWhichThrottle = addr.charAt(0);
-                        addr = addr.substring(1);
-                        if (addr.length() == 0)
-                            addr = "*";
-                        withrottle_send(String.format("M%sA%s<;>qV", cWhichThrottle, addr));
+                        final int whichThrottle = msg.arg1;
+                        witRequestSpeed(whichThrottle);
                         break;
                     }
+                    // Request the throttle's direction. whichThrottle is in arg 1
                     case message_type.WIT_QUERY_DIRECTION: {
-                        String addr = msg.obj.toString();
-                        char cWhichThrottle = addr.charAt(0);
-                        addr = addr.substring(1);
-                        if (addr.length() == 0)
-                            addr = "*";
-                        withrottle_send(String.format("M%sA%s<;>qR", cWhichThrottle, addr));
+                        final int whichThrottle = msg.arg1;
+                        witRequestDir(whichThrottle);
                         break;
                     }
                     //send Q to withrottle server
@@ -1341,6 +1334,22 @@ public class threaded_application extends Application {
 
         }  //end withrottle_send()
 
+        private void witSetSpeedZero(int whichThrottle) {
+            witSetSpeed(whichThrottle, 0);
+        }
+
+        private void witSetSpeed(int whichThrottle, int speed) {
+            withrottle_send(String.format("M%sA*<;>V%d", throttleIntToString(whichThrottle), speed));
+        }
+
+        private void witRequestSpeed(int whichThrottle) {
+            withrottle_send(String.format("M%sA*<;>qV", throttleIntToString(whichThrottle)));
+        }
+
+        private void witRequestDir(int whichThrottle) {
+            withrottle_send(String.format("M%sA*<;>qR", throttleIntToString(whichThrottle)));
+        }
+
         public void run() {
             Looper.prepare();
             comm_msg_handler = new comm_handler();
@@ -1696,8 +1705,8 @@ public class threaded_application extends Application {
                         boolean anySent = false;
                         for (int i = 0; i < numThrottles; i++) {
                             if (consists[i].isActive()) {
-                                withrottle_send(String.format("M%sA*<;>qV", throttleIntToString(i))); //request speed
-                                withrottle_send(String.format("M%sA*<;>qR", throttleIntToString(i))); //request direction
+                                witRequestSpeed(i);
+                                witRequestDir(i);
                                 anySent = true;
                             }
                         }
@@ -1749,7 +1758,7 @@ public class threaded_application extends Application {
                         Log.d("Engine_Driver", "threaded_application: Phone is OffHook, Stopping Trains");
                         for (int i = 0; i < numThrottles; i++) {
                             if (consists[i].isActive()) {
-                                withrottle_send(String.format("M%sA*<;>V0", throttleIntToString(i)));
+                                witSetSpeedZero(i);
                             }
                         }
                     }
@@ -1758,6 +1767,7 @@ public class threaded_application extends Application {
         }
 
     }
+
 
     /**
      * Display OnGoing Notification that indicates EngineDriver is Running.
