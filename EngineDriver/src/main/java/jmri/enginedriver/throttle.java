@@ -1547,12 +1547,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             if ( (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
                     && (mainapp.consists[throttleIndex].isActive()) ) {
-                if (mainapp.consists[throttleIndex].size()>=0) {
-                    String leadAddr = mainapp.consists[throttleIndex].getLeadAddr();
-                   mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WIT_QUERY_SPEED, mainapp.throttleIntToString(throttleIndex) + leadAddr);
-                   mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WIT_QUERY_DIRECTION, mainapp.throttleIntToString(throttleIndex) + leadAddr);
-                }
-
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WIT_QUERY_SPEED, "", throttleIndex);
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WIT_QUERY_DIRECTION, "", throttleIndex);
             }
         }
     }
