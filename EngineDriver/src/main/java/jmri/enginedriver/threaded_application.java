@@ -1544,9 +1544,7 @@ public class threaded_application extends Application {
                     try {
                         outputPW.println(msg);
                         outputPW.flush();
-                        //we could restart outbound heartbeat timer here, but wit does not notify us of speed changes
-                        //(caused by other throttles for example) so just keep heartbeat going to get regular speed updates
-                        //heart.restartOutboundInterval();
+                        heart.restartOutboundInterval();
 
                         // if we get here without an exception then the socket is ok
                         if (reconInProg) {
