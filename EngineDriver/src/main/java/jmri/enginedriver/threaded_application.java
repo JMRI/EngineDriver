@@ -154,10 +154,12 @@ public class threaded_application extends Application {
     public final int minScreenDimNewMethodVersion = Build.VERSION_CODES.KITKAT;
     public final int minActivatedButtonsVersion = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 
-    static final int DEFAULT_HEARTBEAT_INTERVAL = 10;       //interval for heartbeat when WiT heartbeat is disabled
+    static final int DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL = 10;       //interval for outbound heartbeat when WiT heartbeat is disabled
     static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;   //minimum allowed interval for outbound heartbeat generator
     static final int MAX_OUTBOUND_HEARTBEAT_INTERVAL = 30;  //maximum allowed interval for outbound heartbeat generator
     static final int HEARTBEAT_RESPONSE_ALLOWANCE = 4;      //worst case time delay for WiT to respond to a heartbeat message
+   static final int MIN_INBOUND_HEARTBEAT_INTERVAL = 2;   //minimum allowed interval for (enabled) inbound heartbeat generator
+    static final int MAX_INBOUND_HEARTBEAT_INTERVAL = 60;  //maximum allowed interval for inbound heartbeat generator
     public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (seconds)
     public int turnouts_list_position = 0;                  //remember where user was in item lists
     public int routes_list_position = 0;
@@ -1640,28 +1642,47 @@ public class threaded_application extends Application {
             }
 
 
-            //startHeartbeat(timeoutInterval in seconds)
-            //calcs the inbound and outbound intervals and starts the beating
+
+            /***
+             * startHeartbeat(timeoutInterval in seconds)
+             * calcs the inbound and outbound intervals and starts the beating
+             *
+             * @param timeoutInterval the WiT timeoutInterval
+             */
             void startHeartbeat(int timeoutInterval) {
                 //update interval timers only when the heartbeat timeout interval changed
                 if (timeoutInterval != heartbeatIntervalSetpoint) {
                     heartbeatIntervalSetpoint = timeoutInterval;
-                    int outInterval;
-                    if (heartbeatIntervalSetpoint == 0) {   //wit heartbeat is disabled so use default
 
-                        outInterval = DEFAULT_HEARTBEAT_INTERVAL;
+                    // outbound interval
+                    int outInterval;
+                    if (heartbeatIntervalSetpoint == 0) {   //wit heartbeat is disabled so use default outbound heartbeat
+                        outInterval = DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL;
                     } else {
                         outInterval = heartbeatIntervalSetpoint - HEARTBEAT_RESPONSE_ALLOWANCE;
+                        //keep values in a reasonable range
+                        if (outInterval < MIN_OUTBOUND_HEARTBEAT_INTERVAL)
+                            outInterval = MIN_OUTBOUND_HEARTBEAT_INTERVAL;
+                        if (outInterval > MAX_OUTBOUND_HEARTBEAT_INTERVAL)
+                            outInterval = MAX_OUTBOUND_HEARTBEAT_INTERVAL;
                     }
-                    //keep values in a reasonable range
-                    if (outInterval < MIN_OUTBOUND_HEARTBEAT_INTERVAL)
-                        outInterval = MIN_OUTBOUND_HEARTBEAT_INTERVAL;
-                    if (outInterval > MAX_OUTBOUND_HEARTBEAT_INTERVAL)
-                        outInterval = MAX_OUTBOUND_HEARTBEAT_INTERVAL;
-
                     heartbeatOutboundInterval = outInterval * 1000;                     //convert to milliseconds
-                    heartbeatInboundInterval = (outInterval + HEARTBEAT_RESPONSE_ALLOWANCE) * 1000;     //convert to milliseconds
-                    sInboundInterval = Integer.toString(outInterval + HEARTBEAT_RESPONSE_ALLOWANCE);
+
+                    // inbound interval
+                    if (heartbeatIntervalSetpoint == 0) {    // wit heartbeat is disabled so disable inbound heartbeat
+                        heartbeatInboundInterval = 0;
+                    }
+                    else {
+                        int inInterval = heartbeatInterval;
+                        if (inInterval < MIN_INBOUND_HEARTBEAT_INTERVAL)
+                            inInterval = MIN_INBOUND_HEARTBEAT_INTERVAL;
+                        if (inInterval < outInterval)
+                            inInterval = outInterval + HEARTBEAT_RESPONSE_ALLOWANCE;
+                        if (inInterval > MAX_INBOUND_HEARTBEAT_INTERVAL)
+                            inInterval = MAX_INBOUND_HEARTBEAT_INTERVAL;
+                        heartbeatInboundInterval = inInterval * 1000;               //convert to milliseconds
+                    }
+                    sInboundInterval = Integer.toString(heartbeatInboundInterval);
 
                     restartOutboundInterval();
                     restartInboundInterval();
