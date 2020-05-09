@@ -708,6 +708,7 @@
     <string name="toastPreferencesThemeChangeSucceeded">Theme Change Succeeded.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Throttle Page type change Succeeded.</string>
     <string name="toastPreferencesLocaleChangeSucceeded">Locale (Language) change Succeeded.</string>
+    <string name="toastPreferencesBackgroundChangeSucceeded">Background Change Succeeded.</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver restarted with chosen Language.</string> -->
 
     <!--    Toast messages for the Turnout Activity -->
@@ -986,5 +987,12 @@
 
     <string name="dialogConfirmImportPreferencesTitle">Import Preferences</string>
     <string name="dialogImportPreferencesQuestion">Confirm that you want import preferences.\nALL current preferences will be lost.</string>
+
+    <string name="prefBackgroundImageTitle">Background Image</string>
+    <string name="prefBackgroundImageSummary">Show a background image on the Throttle page</string>
+
+    <string name="prefBackgroundImageFileNameTitle">Background Image File Name</string>
+    <string name="prefBackgroundImageFileNameSummary">Enter the name of the background image file.</string>
+    <string name="prefBackgroundImageFileNameDefaultValue">engine_driver/engine_driver_background.png</string>
 
 </resources>

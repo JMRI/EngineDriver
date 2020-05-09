@@ -103,15 +103,16 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final String ENGINE_DRIVER_DIR = "engine_driver";
     private static final String SERVER_ENGINE_DRIVER_DIR = "prefs/engine_driver";
 
-    private static final int FORCED_RESTART_REASON_NONE = 0;
-    private static final int FORCED_RESTART_REASON_RESET = 1;
-    private static final int FORCED_RESTART_REASON_IMPORT = 2;
-    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL = 3;
-    private static final int FORCED_RESTART_REASON_THEME = 4;
-    private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
-    private static final int FORCED_RESTART_REASON_LOCALE = 6;
-//    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;    // not used in preferences.  Used in throttle.java
-//    private static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
+//    private static final int FORCED_RESTART_REASON_NONE = 0;
+//    private static final int FORCED_RESTART_REASON_RESET = 1;
+//    private static final int FORCED_RESTART_REASON_IMPORT = 2;
+//    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL = 3;
+//    private static final int FORCED_RESTART_REASON_THEME = 4;
+//    private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
+//    private static final int FORCED_RESTART_REASON_LOCALE = 6;
+////    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;    // not used in preferences.  Used in throttle.java
+////    private static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
+//    private static final int FORCED_RESTART_REASON_BACKGROUND = 9;
 
     SharedPreferences sharedPreferences;
     /**
@@ -191,7 +192,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         showHideThrottleTypePreferences();
 
         sharedPreferences.edit().putBoolean("prefForcedRestart", false).commit();
-        sharedPreferences.edit().putInt("prefForcedRestartReason", FORCED_RESTART_REASON_NONE).commit();
+        sharedPreferences.edit().putInt("prefForcedRestartReason", mainapp.FORCED_RESTART_REASON_NONE).commit();
         sharedPreferences.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
 
         if (!sharedPreferences.getString("prefImportExport", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)).equals("None")) {
@@ -358,7 +359,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         if (currentValue.equals(IMPORT_EXPORT_OPTION_EXPORT)) {
                             saveSharedPreferencesToFile(sharedPreferences, exportedPreferencesFileName, true);
                         } else if (currentValue.equals(IMPORT_EXPORT_OPTION_IMPORT)) {
-                            loadSharedPreferencesFromFileDialog(sharedPreferences, exportedPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT);
+                            loadSharedPreferencesFromFileDialog(sharedPreferences, exportedPreferencesFileName, deviceId, mainapp.FORCED_RESTART_REASON_IMPORT);
                         } else if (currentValue.equals(IMPORT_EXPORT_OPTION_RESET)) {
                             resetPreferencesDialog();
                         }
@@ -380,7 +381,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                             if (action.equals(EXPORT_PREFIX)) {
                                 saveSharedPreferencesToFile(sharedPreferences, exportedPreferencesFileName, true);
                             } else if (action.equals(IMPORT_PREFIX)) {
-                                loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT);
+                                loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName, deviceId, mainapp.FORCED_RESTART_REASON_IMPORT);
                             }
                         }
                     }
@@ -410,7 +411,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     sharedPreferences.edit().putString("prefRightDirectionButtons", "").commit();
                     sharedPreferences.edit().putString("prefLeftDirectionButtonsShort", "").commit();
                     sharedPreferences.edit().putString("prefRightDirectionButtonsShort", "").commit();
-                    forceRestartApp(FORCED_RESTART_REASON_LOCALE);
+                    forceRestartApp(mainapp.FORCED_RESTART_REASON_LOCALE);
                     break;
                 case "prefDirectionButtonLongPressDelay":
                     // limit check new value
@@ -423,8 +424,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 case "prefTheme":
                     String prefTheme = sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
                     if (!prefTheme.equals(prefThemeOriginal)) {
-                        forceRestartApp(FORCED_RESTART_REASON_THEME);
+                        forceRestartApp(mainapp.FORCED_RESTART_REASON_THEME);
                     }
+                    break;
+                case "prefBackgroundImage":
+                case "prefBackgroundImageFileName":
+                    forceRestartApp(mainapp.FORCED_RESTART_REASON_BACKGROUND);
                     break;
                 case "prefConsistFollowRuleStyle":
                     prefConsistFollowRuleStyle = sharedPreferences.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
@@ -593,7 +598,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         reload();
 
-        forceRestartApp(FORCED_RESTART_REASON_RESET);
+        forceRestartApp(mainapp.FORCED_RESTART_REASON_RESET);
     }
 
     private void delete_auto_import_settings_files() {
@@ -760,7 +765,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             SharedPreferences.Editor prefEdit = sharedPreferences.edit();
             prefEdit.commit();
             reload();
-            forceRestartApp(FORCED_RESTART_REASON_THROTTLE_PAGE);
+            forceRestartApp(mainapp.FORCED_RESTART_REASON_THROTTLE_PAGE);
         }
     }
 
@@ -1028,7 +1033,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             switch (msg.what) {
                 case message_type.IMPORT_SERVER_MANUAL_SUCCESS:
                     Log.d("Engine_Driver", "Preferences: Message: Import preferences from Server: File Found");
-                    loadSharedPreferencesFromFile(sharedPreferences, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL);
+                    loadSharedPreferencesFromFile(sharedPreferences, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId, mainapp.FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL);
                     break;
                 case message_type.IMPORT_SERVER_MANUAL_FAIL:
                     Log.d("Engine_Driver", "Preferences: Message: Import preferences from Server: File not Found");

@@ -559,14 +559,12 @@
                 android:defaultValue="@bool/prefGamepadTestEnforceTestingDefaultValue"
                 android:key="prefGamepadTestEnforceTesting"
                 android:summary="@string/prefGamepadTestEnforceTestingSummary"
-                android:title="@string/prefGamepadTestEnforceTestingTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefGamepadTestEnforceTestingTitle" />
             <CheckBoxPreference
                 android:defaultValue="@bool/prefGamepadTestEnforceTestingSimpleDefaultValue"
                 android:key="prefGamepadTestEnforceTestingSimple"
                 android:summary="@string/prefGamepadTestEnforceTestingSimpleSummary"
-                android:title="@string/prefGamepadTestEnforceTestingSimpleTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefGamepadTestEnforceTestingSimpleTitle" />
         </PreferenceScreen>
 
         <ListPreference
@@ -577,6 +575,18 @@
             android:summary="@string/prefSelectedLocoIndicatorSummary"
             android:title="@string/prefSelectedLocoIndicatorTitle" />
 
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefBackgroundImageDefaultValue"
+            android:key="prefBackgroundImage"
+            android:summary="@string/prefBackgroundImageSummary"
+            android:title="@string/prefBackgroundImageTitle" />
+
+        <EditTextPreference
+            android:defaultValue="@string/prefBackgroundImageFileNameDefaultValue"
+            android:dialogTitle="@string/prefBackgroundImageFileNameTitle"
+            android:key="prefBackgroundImageFileName"
+            android:summary="@string/prefBackgroundImageFileNameSummary"
+            android:title="@string/prefBackgroundImageFileNameTitle" />
     </PreferenceCategory>
 
     <PreferenceCategory
