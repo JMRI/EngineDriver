@@ -244,6 +244,7 @@ public class threaded_application extends Application {
     public static final int FORCED_RESTART_REASON_LOCALE = 6;
     public static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
     public static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
+    public static final int FORCED_RESTART_REASON_BACKGROUND = 9;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -3065,6 +3066,10 @@ end force shutdown */
             }
             case FORCED_RESTART_REASON_THEME: {
                 Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesThemeChangeSucceeded), Toast.LENGTH_LONG).show();
+                break;
+            }
+            case FORCED_RESTART_REASON_BACKGROUND: {
+                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesBackgroundChangeSucceeded), Toast.LENGTH_LONG).show();
                 break;
             }
             case FORCED_RESTART_REASON_THROTTLE_PAGE: {

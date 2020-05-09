@@ -34,6 +34,13 @@
         android:gestureStrokeType="single"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/backgroundImgView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+        </ImageView>
+
         <LinearLayout
             android:id="@+id/throttle_screen"
             android:layout_width="fill_parent"

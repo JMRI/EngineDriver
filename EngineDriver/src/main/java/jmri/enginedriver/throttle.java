@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.gesture.GestureOverlayView;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -65,6 +66,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -428,6 +430,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected boolean pref_increase_slider_height_preference = false;
     protected boolean prefShowAddressInsteadOfName = false;
     protected boolean prefIncreaseWebViewSize = false;
+
+    protected boolean prefBackgroundImage = false;
+    protected String prefBackgroundImageFileName = "";
 
     private int[] gamePadIds = {0,0,0,0,0,0}; // which device id if assigned to each of the three throttles
     private int[] gamePadThrottleAssignment = {-1,-1,-1,-1,-1,-1};
@@ -1415,6 +1420,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefSelectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
         prefSelectiveLeadSoundF1 = prefs.getBoolean("SelectiveLeadSoundF1", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF1DefaultValue));
         prefSelectiveLeadSoundF2 = prefs.getBoolean("SelectiveLeadSoundF2", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF2DefaultValue));
+
+        prefBackgroundImage = prefs.getBoolean("prefBackgroundImage", getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue));
+        prefBackgroundImageFileName = prefs.getString("prefBackgroundImageFileName", getResources().getString(R.string.prefBackgroundImageFileNameDefaultValue));
 
         prefLimitSpeedButton = prefs.getBoolean("prefLimitSpeedButton", getResources().getBoolean(R.bool.prefLimitSpeedButtonDefaultValue));
         prefLimitSpeedPercent = Integer.parseInt(prefs.getString("prefLimitSpeedPercent", getResources().getString(R.string.prefLimitSpeedPercentDefaultValue)));
@@ -4565,6 +4573,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         queryAllSpeedsAndDirectionsWiT();
+
+        loadBackgroundImage();
+
     } // end of onCreate()
 
     @Override
@@ -5943,6 +5954,28 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 vsbSwitchingSpeeds[throttleIndex].invalidate();
             }
         }
+    }
+
+    protected void loadBackgroundImage() {
+        if (prefBackgroundImage) {
+            if (PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.READ_PREFERENCES)) {
+                loadBackgroundImageImpl();
+            }
+        }
+    }
+
+    protected void loadBackgroundImageImpl() {
+        ImageView myImage = findViewById(R.id.backgroundImgView);
+        try {
+            File sdcard_path = Environment.getExternalStorageDirectory();
+//            File image_file = new File(sdcard_path, "engine_driver/engine_driver_background.png");
+            File image_file = new File(sdcard_path, prefBackgroundImageFileName);
+            myImage.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
+            myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        } catch (Exception e) {
+            Log.d("Engine_Driver", "Throttle: failed loading background image");
+        }
+
     }
 
 }
