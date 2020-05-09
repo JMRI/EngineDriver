@@ -383,9 +383,11 @@ public class throttle_switching_left_or_right extends throttle {
             //bRSpds[throttleIndex].setText(speedButtonRightText);
         }
 
+        int lowerButtonsHeight = findViewById(R.id.loco_buttons_group_0).getHeight();
+
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             // set height of each function button area
-            svFnBtns[throttleIndex].getLayoutParams().height = screenHeight - lUppers[throttleIndex].getHeight();
+            svFnBtns[throttleIndex].getLayoutParams().height = screenHeight - lowerButtonsHeight - lUppers[throttleIndex].getHeight();
             svFnBtns[throttleIndex].requestLayout();
             lLowers[throttleIndex].getLayoutParams().height = screenHeight - lUppers[throttleIndex].getHeight();
             lLowers[throttleIndex].requestLayout();
