@@ -66,6 +66,7 @@ public class PermissionsHelper {
     public static final int READ_SERVER_AUTO_PREFERENCES = 44;
     public static final int STORE_LOG_FILES = 45;
     public static final int VIBRATE = 46;
+    public static final int READ_IMAGES = 47;
 
     private boolean isDialogOpen = false;
     private static PermissionsHelper instance = null;
@@ -139,6 +140,8 @@ public class PermissionsHelper {
                 return context.getResources().getString(R.string.permissionsStoreRecentConnections);
             case READ_PREFERENCES:
                 return context.getResources().getString(R.string.permissionsReadPreferences);
+            case READ_IMAGES:
+                return context.getResources().getString(R.string.permissionsReadImages);
             case STORE_PREFERENCES:
             case STORE_SERVER_AUTO_PREFERENCES:
             case READ_SERVER_AUTO_PREFERENCES:

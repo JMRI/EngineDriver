@@ -908,6 +908,7 @@
     <string name="permissionsStoreRecentConnections">Engine Driver needs STORAGE permissions to store recent connections.</string>
     <string name="permissionsClearRecentConnections">Engine Driver needs STORAGE permissions to clear recent connections.</string>
     <string name="permissionsReadPreferences">Engine Driver needs STORAGE permissions to read preferences.</string>
+    <string name="permissionsReadImages">Engine Driver needs STORAGE permissions to load background images.</string>
     <string name="permissionsStorePreferences">Engine Driver needs STORAGE permissions to store preferences.</string>
     <string name="permissionsClearPreferences">Engine Driver needs STORAGE permissions to clear preferences.</string>
     <string name="permissionsReadPhoneState">Engine Driver needs PHONE permissions to pause operations when on a call.</string>
@@ -994,5 +995,6 @@
     <string name="prefBackgroundImageFileNameTitle">Background Image File Name</string>
     <string name="prefBackgroundImageFileNameSummary">Enter the name of the background image file.</string>
     <string name="prefBackgroundImageFileNameDefaultValue">engine_driver/engine_driver_background.png</string>
+    <string name="prefBackgroundImageFileNameNoImageSelected">No image was selected</string>
 
 </resources>
