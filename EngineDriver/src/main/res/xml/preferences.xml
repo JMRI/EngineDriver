@@ -581,12 +581,20 @@
             android:summary="@string/prefBackgroundImageSummary"
             android:title="@string/prefBackgroundImageTitle" />
 
+<!--
         <EditTextPreference
             android:defaultValue="@string/prefBackgroundImageFileNameDefaultValue"
             android:dialogTitle="@string/prefBackgroundImageFileNameTitle"
             android:key="prefBackgroundImageFileName"
             android:summary="@string/prefBackgroundImageFileNameSummary"
             android:title="@string/prefBackgroundImageFileNameTitle" />
+-->
+
+        <Preference
+            android:summary="@string/prefBackgroundImageFileNameSummary"
+            android:title="@string/prefBackgroundImageFileNameTitle"
+            android:key="prefBackgroundImageFileNameImagePicker" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

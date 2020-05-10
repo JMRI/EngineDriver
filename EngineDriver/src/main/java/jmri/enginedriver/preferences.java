@@ -26,7 +26,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.database.Cursor;
 import android.media.ToneGenerator;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -36,13 +38,17 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
+import android.preference.PreferenceScreen;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -59,6 +65,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
+import jmri.enginedriver.util.PermissionsHelper;
 
 public class preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
     static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
@@ -126,6 +133,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final String PREF_IMPORT_ALL_RESET = "-";
 
     private String[] advancedPreferences;
+
+    public static final int RESULT_LOAD_IMG = 1;
 
     @SuppressLint("ApplySharedPref")
     @Override
@@ -210,9 +219,19 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             enableDisablePreference("prefImportServerManual", false);
         }
 
+        Preference button = getPreferenceScreen().findPreference("prefBackgroundImageFileNameImagePicker");
+        button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                loadImagefromGallery();
+                return true;
+            }
+        });
+
         advancedPreferences = getResources().getStringArray(R.array.advancedPreferences);
         hideAdvancedPreferences();
-    }
+
+    } // end onCreate
 
     @Override
     protected void onResume() {
@@ -254,7 +273,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             mainapp.preferences_msg_handler.removeCallbacksAndMessages(null);
             mainapp.preferences_msg_handler = null;
         } else {
-            Log.d("Engine_Driver", "onDestroy: mainapp.preferences_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d("Engine_Driver", "Preferences: onDestroy: mainapp.preferences_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
     }
 
@@ -625,9 +644,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             File settings_file = new File(sdcard_path, "engine_driver/" + file_name);
             if (settings_file.exists()) {
                 if (settings_file.delete()) {
-                    Log.d("Engine_Driver", file_name + " deleted");
+                    Log.d("Engine_Driver", "Preferences: " + file_name + " deleted");
                 } else {
-                    Log.e("Engine_Driver", file_name + " NOT deleted");
+                    Log.e("Engine_Driver", "Preferences: " + file_name + " NOT deleted");
                 }
             }
         }
@@ -1135,7 +1154,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_SUCCESS);
 
             } catch (Exception e) {
-                Log.e("Engine_Driver", "Import preferences from Server Failed: " + e.getMessage());
+                Log.e("Engine_Driver", "Preferences: Import preferences from Server Failed: " + e.getMessage());
                 dismissDialog(PROGRESS_BAR_TYPE);
                 sharedPreferences.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
                 mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_FAIL);
@@ -1157,6 +1176,53 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         }
 
+    }
+
+    protected void loadImagefromGallery() {
+        if (PermissionsHelper.getInstance().isPermissionGranted(preferences.this, PermissionsHelper.READ_PREFERENCES)) {
+            loadImagefromGalleryImpl();
+        }
+    }
+
+//    public void loadImagefromGallery(View view) {
+    public void loadImagefromGalleryImpl() {
+        // Create intent to Open Image applications like Gallery, Google Photos
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // Start the Intent
+        startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an Image is picked
+            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
+                // Get the Image from data
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.MediaColumns.DATA };
+
+                // Get the cursor
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String imgpath = cursor.getString(columnIndex);
+                cursor.close();
+
+                SharedPreferences.Editor edit=sharedPreferences.edit();
+                edit.putString("prefBackgroundImageFileName",imgpath);
+                edit.commit();
+
+                forceRestartApp(mainapp.FORCED_RESTART_REASON_BACKGROUND);
+            }
+            else {
+                Toast.makeText(this, R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Log.e("Engine_Driver", "Preferences: Loading background image Failed: " + e.getMessage());
+        }
     }
 
 }
