@@ -802,4 +802,11 @@
     <string name="dialogConfirmResetPreferencesTitle">Restablir les preferències</string>
     <string name="dialogResetPreferencesQuestion">Confirmeu que voleu restablir totes les preferències \nTot estarà perdut les preferències actuals.</string>
     <string name="dialogConfirmImportPreferencesTitle">Preferències d\'importació</string>
-    <string name="dialogImportPreferencesQuestion">Confirmeu que voleu preferències d\'importació \nTot estarà perdut les preferències actuals.</string></resources>
+    <string name="dialogImportPreferencesQuestion">Confirmeu que voleu preferències d\'importació \nTot estarà perdut les preferències actuals.</string>
+    <string name="permissionsReadImages">Engine Driver necessita permisos d\'emmagatzematge per a les imatges de fons de càrrega.</string>
+    <string name="prefBackgroundImageFileNameNoImageSelected">Es va seleccionar cap imatge</string>
+    <string name="prefBackgroundImageFileNameSummary">Introduïu el nom de l\'arxiu d\'imatge de fons.</string>
+    <string name="prefBackgroundImageFileNameTitle">Antecedents Nom d\'arxiu d\'imatge</string>
+    <string name="prefBackgroundImageSummary">Mostrar una imatge de fons a la pàgina de l\'accelerador</string>
+    <string name="prefBackgroundImageTitle">Imatge de fons</string>
+</resources>

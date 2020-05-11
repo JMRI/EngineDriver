@@ -904,4 +904,10 @@
     <string name="dialogResetPreferencesQuestion">Ujistěte se, že budete chtít obnovit všechny předvolby. \nALL budou ztraceny aktuální preference.</string>
     <string name="dialogConfirmImportPreferencesTitle">dovozní Preferences</string>
     <string name="dialogImportPreferencesQuestion">Ujistěte se, že budete chtít předvoleb pro import. \nALL budou ztraceny aktuální preference.</string>
+    <string name="permissionsReadImages">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="prefBackgroundImageFileNameNoImageSelected">Žádný obrázek byl vybrán</string>
+    <string name="prefBackgroundImageFileNameSummary">Zadejte název souboru na pozadí obrazu.</string>
+    <string name="prefBackgroundImageFileNameTitle">Pozadí Image File Name</string>
+    <string name="prefBackgroundImageSummary">Zobrazoval obrázek na pozadí na straně škrticí</string>
+    <string name="prefBackgroundImageTitle">Obrázek na pozadí</string>
 </resources>

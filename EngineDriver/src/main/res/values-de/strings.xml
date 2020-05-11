@@ -806,4 +806,10 @@
     <string name="dialogResetPreferencesQuestion">Bestätigen Sie, dass Sie alle Präferenzen wollen zurückgesetzt. \n Alle aktuellen Einstellungen gehen verloren.</string>
     <string name="dialogConfirmImportPreferencesTitle">Importeinstellungen</string>
     <string name="dialogImportPreferencesQuestion">Bestätigen Sie, dass Sie Voreinstellungen für den Import möchten. \n Alle werden die aktuellen Einstellungen verloren.</string>
+    <string name="permissionsReadImages">Engine Driver muss STORAGE Berechtigungen Last Hintergrundbildern.</string>
+    <string name="prefBackgroundImageFileNameNoImageSelected">Kein Bild ausgewählt wurde</string>
+    <string name="prefBackgroundImageFileNameSummary">Geben Sie den Namen des Hintergrundbilddatei.</string>
+    <string name="prefBackgroundImageFileNameTitle">Hintergrund Bilddateinamen</string>
+    <string name="prefBackgroundImageSummary">Zeigen Sie ein Hintergrundbild auf der Gasseite</string>
+    <string name="prefBackgroundImageTitle">Hintergrundbild</string>
 </resources>

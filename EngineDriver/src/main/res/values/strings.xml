@@ -994,7 +994,7 @@
 
     <string name="prefBackgroundImageFileNameTitle">Background Image File Name</string>
     <string name="prefBackgroundImageFileNameSummary">Enter the name of the background image file.</string>
-    <string name="prefBackgroundImageFileNameDefaultValue">engine_driver/engine_driver_background.png</string>
+    <string name="prefBackgroundImageFileNameDefaultValue">engine_driver/engine_driver_background.png translatable="false">9999</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefBackgroundImageFileNameNoImageSelected">No image was selected</string>
 
 </resources>
