@@ -792,4 +792,10 @@
     <string name="dialogResetPreferencesQuestion">Confirme que desea restablecer todas las preferencias \nTodo estará perdido las preferencias actuales.</string>
     <string name="dialogConfirmImportPreferencesTitle">Preferencias de importación</string>
     <string name="dialogImportPreferencesQuestion">Confirme que desea preferencias de importación \nTodo estará perdido las preferencias actuales.</string>
+    <string name="permissionsReadImages">Engine Driver necesita permisos de almacenamiento para las imágenes de fondo de carga.</string>
+    <string name="prefBackgroundImageFileNameNoImageSelected">Se seleccionó ninguna imagen</string>
+    <string name="prefBackgroundImageFileNameSummary">Introduzca el nombre del archivo de imagen de fondo.</string>
+    <string name="prefBackgroundImageFileNameTitle">Antecedentes Nombre de archivo de imagen</string>
+    <string name="prefBackgroundImageSummary">Mostrar una imagen de fondo en la página del acelerador</string>
+    <string name="prefBackgroundImageTitle">Imagen de fondo</string>
 </resources>

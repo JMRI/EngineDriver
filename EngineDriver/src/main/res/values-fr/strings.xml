@@ -822,4 +822,10 @@
     <string name="dialogResetPreferencesQuestion">Confirmer la réinitialisation des préférences.\nLes préférences actuelles seront affacées</string>
     <string name="dialogConfirmImportPreferencesTitle">Préférences pour les imports</string>
     <string name="dialogImportPreferencesQuestion">Confirmer l import des préférences.\nLes préférences actuelles seront affacées</string>
+    <string name="permissionsReadImages">Engine Driver a besoin d\'autorisations de stockage pour charger les images de fond.</string>
+    <string name="prefBackgroundImageFileNameNoImageSelected">Aucune image a été sélectionné</string>
+    <string name="prefBackgroundImageFileNameSummary">Entrez le nom du fichier image d\'arrière-plan.</string>
+    <string name="prefBackgroundImageFileNameTitle">Arrière-plan Nom du fichier</string>
+    <string name="prefBackgroundImageSummary">Montrer une image d\'arrière-plan sur la page des gaz</string>
+    <string name="prefBackgroundImageTitle">Image de fond</string>
 </resources>

@@ -737,4 +737,10 @@
     <string name="dialogResetPreferencesQuestion">Confermare che si desidera ripristinare tutte le preferenze. \nALL sarà perso preferenze correnti.</string>
     <string name="dialogConfirmImportPreferencesTitle">Importa Preferenze</string>
     <string name="dialogImportPreferencesQuestion">Confermare che si desidera preferenze di importazione. \nALL sarà perso preferenze correnti.</string>
+    <string name="permissionsReadImages">Macchinista ha bisogno di permessi di storage per caricare le immagini di sfondo.</string>
+    <string name="prefBackgroundImageFileNameNoImageSelected">Nessun immagine è stata selezionata</string>
+    <string name="prefBackgroundImageFileNameSummary">Immettere il nome del file di immagine di sfondo.</string>
+    <string name="prefBackgroundImageFileNameTitle">Background Image File Name</string>
+    <string name="prefBackgroundImageSummary">Mostra un\'immagine di sfondo sulla pagina Throttle</string>
+    <string name="prefBackgroundImageTitle">Immagine di sfondo</string>
 </resources>
