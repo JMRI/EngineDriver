@@ -380,13 +380,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         connToast = Toast.makeText(this, "", Toast.LENGTH_LONG);    // save toast obj so it can be cancelled
         // setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));	//set title to long form of label
 
-        //ensure statics in all activities are reinitialize since Android might not have killed app since it was last Exited.
-        //do this here instead of TA.onCreate() because that method won't be invoked if app is still running.
-        throttle.initStatics();
-        throttle_full.initStatics();
-        throttle_simple.initStatics();
-        web_activity.initStatics();
-
         //check for "default" throttle name and make it more unique
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 

@@ -117,10 +117,10 @@ public class threaded_application extends Application {
     public static String INTRO_VERSION = "6";  // set this to a different string to force the intro to run on next startup.
 
     public comm_thread commThread;
-    String host_ip = null; //The IP address of the WiThrottle server.
-    volatile int port = 0; //The TCP port that the WiThrottle server is running on
+    volatile String host_ip = null; //The IP address of the WiThrottle server.
+    private volatile int port = 0; //The TCP port that the WiThrottle server is running on
     Double withrottle_version = 0.0; //version of withrottle server
-    public int web_server_port = 0; //default port for jmri web server
+    volatile int web_server_port = 0; //default port for jmri web server
     private String serverType = "JMRI"; //currently, only JMRI or MRC
     private volatile boolean doFinish = false;  // when true, tells any Activities that are being created/resumed to finish()
     //shared variables returned from the withrottle server, stored here for easy access by other activities
@@ -555,18 +555,26 @@ public class threaded_application extends Application {
                         alert_activities(message_type.RESTART_APP, "");
                         break;
                     }
-                    //Disconnect from the WiThrottle server and  Shutdown
+                    //Disconnect from the WiThrottle server and Shutdown
                     case message_type.DISCONNECT: {
                         Log.d("Engine_Driver", "threaded_application: TA Disconnect");
                         doFinish = true;
                         Log.d("Engine_Driver", "threaded_application: TA alert all activities to shutdown");
                         alert_activities(message_type.SHUTDOWN, "");     //tell all activities to finish()
                         stoppingConnection();
-                        //send quit message to withrottle after a short delay for other activities to communicate
-                        sendMsgDelay(comm_msg_handler, 100L, message_type.WITHROTTLE_QUIT);
-                        //give msgs a chance to xmit before closing socket
-                        if (!sendMsgDelay(comm_msg_handler, 1500L, message_type.SHUTDOWN)) {
+
+                        // arg1=1 when called from onTrimMemory - shutdown with no delays
+                        if (msg.arg1 == 1) {
+                            withrottle_send("Q");
                             shutdown();
+                        }
+                        else {
+                            //send quit message to withrottle after a short delay for other activities to communicate
+                            sendMsgDelay(comm_msg_handler, 100L, message_type.WITHROTTLE_QUIT);
+                            //give msgs a chance to xmit before closing socket
+                            if (!sendMsgDelay(comm_msg_handler, 1500L, message_type.SHUTDOWN)) {
+                                shutdown();
+                            }
                         }
                         break;
                     }
@@ -766,6 +774,7 @@ public class threaded_application extends Application {
             }
             host_ip = null;
             port = 0;
+            reinitStatics();                    // ensure activities are ready for relaunch
             doFinish = false;                   //ok for activities to run if restarted after this
 
 //            comm_msg_handler = null;
@@ -1667,23 +1676,23 @@ public class threaded_application extends Application {
                         if (outInterval > MAX_OUTBOUND_HEARTBEAT_INTERVAL)
                             outInterval = MAX_OUTBOUND_HEARTBEAT_INTERVAL;
                     }
-                    heartbeatOutboundInterval = outInterval * 1000;                     //convert to milliseconds
+                    heartbeatOutboundInterval = outInterval * 1000;     //convert to milliseconds
 
                     // inbound interval
+                    int inInterval = heartbeatInterval;
                     if (heartbeatIntervalSetpoint == 0) {    // wit heartbeat is disabled so disable inbound heartbeat
-                        heartbeatInboundInterval = 0;
+                        inInterval = 0;
                     }
                     else {
-                        int inInterval = heartbeatInterval;
                         if (inInterval < MIN_INBOUND_HEARTBEAT_INTERVAL)
                             inInterval = MIN_INBOUND_HEARTBEAT_INTERVAL;
                         if (inInterval < outInterval)
                             inInterval = outInterval + HEARTBEAT_RESPONSE_ALLOWANCE;
                         if (inInterval > MAX_INBOUND_HEARTBEAT_INTERVAL)
                             inInterval = MAX_INBOUND_HEARTBEAT_INTERVAL;
-                        heartbeatInboundInterval = inInterval * 1000;               //convert to milliseconds
                     }
-                    sInboundInterval = Integer.toString(heartbeatInboundInterval);
+                    heartbeatInboundInterval = inInterval * 1000;       //convert to milliseconds
+                    sInboundInterval = Integer.toString(inInterval);    // seconds
 
                     restartOutboundInterval();
                     restartInboundInterval();
@@ -1849,26 +1858,7 @@ public class threaded_application extends Application {
         super.onCreate();
         Log.d("Engine_Driver", "threaded_application.onCreate()");
         context = getApplicationContext();
-
-        //When starting ED after it has been killed in the bkg, the OS restarts any activities that were running.
-        //Since we aren't connected at this point, we want all those activities to finish() so we do 2 things:
-        // doFinish=true tells activities (except CA) that aren't running yet to finish() when they reach onResume()
-        // DISCONNECT message tells any activities (except CA) that are already running to finish()
-        doFinish = true;
-        port = 0;               //indicate that no connection exists
         commThread = new comm_thread();
-        alert_activities(message_type.DISCONNECT, "");
-
-        /*future Recovery
-         //Normally CA is run via the manifest when ED is launched.
-         //However when starting ED after it has been killed in the bkg,
-         //CA may not be running (or may not be on top).
-         //We need to ensure CA is running at this point in the code,
-         //so start CA if it is not running else bring to top if already running.
-         final Intent caIntent = new Intent(this, connection_activity.class);
-         caIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-         startActivity(caIntent);
-         */
 
         flashlight = Flashlight.newInstance(threaded_application.context);
 
@@ -1914,13 +1904,14 @@ public class threaded_application extends Application {
 
         @Override
         public void onActivityStarted(Activity activity) {
-            runningActivity = activity;
+            runningActivity = activity;                             // save most recently started activity
         }
 
         @Override
         public void onActivityResumed(Activity activity) {
-            if (isInBackground && activity == runningActivity) {
+            if (isInBackground && activity == runningActivity) {    // if coming out of background
                 isInBackground = false;
+                exitConfirmed = false;
                 removeNotification();
             }
         }
@@ -1939,6 +1930,9 @@ public class threaded_application extends Application {
 
         @Override
         public void onActivityDestroyed(Activity activity) {
+            if (isInBackground && activity == runningActivity) {
+                removeNotification();
+            }
         }
 
         @Override
@@ -1950,22 +1944,28 @@ public class threaded_application extends Application {
         }
 
         @Override
-        public void onTrimMemory(int i) {
-            if (!isInBackground && i >= ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {
-                Log.d("Engine Driver", "OnTrimMemory. activity: "+runningActivity.toString());
-                Log.d("Engine Driver", "OnTrimMemory. code: "+i);
-                if (!exitConfirmed) {
+        public void onTrimMemory(int level) {
+            if (level >= ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {   // if in background
+                if (!isInBackground) {                              // if just went into bkg
                     isInBackground = true;
-                    addNotification(runningActivity.getIntent());
-                } else {
+                    if (!exitConfirmed) {                       // if user did not just confirm exit
+                        addNotification(runningActivity.getIntent());
+                    } else {                                    // user confirmed exit
 /* force shutdown
+                    // alternate approach
                     // all activities are destroyed at this point, so ok to just kill app ?
                         Log.d("Engine_Driver", "onTrimMemory: exit");
                         android.os.Process.killProcess(android.os.Process.myPid());
                         System.exit(1);
 end force shutdown */
-//                    unregisterActivityLifecycleCallbacks(lifecycleHandler);
-                    exitConfirmed = false;      //clear this so next notification works if ED does not properly exit
+                    }
+                }
+                if (level >= ComponentCallbacks2.TRIM_MEMORY_BACKGROUND) { // time to kill app
+                    if (!exitConfirmed) {       // if TA is running in bkg
+                        // disconnect and shutdown
+                        sendMsg(comm_msg_handler, message_type.DISCONNECT, "", 1);
+                        exitConfirmed = true;
+                    }
                 }
             }
         }
@@ -2210,10 +2210,19 @@ end force shutdown */
         this.serverType = serverType;
     }
 
+    //reinitialize statics in activities as required to be ready for next launch
+    private static void reinitStatics() {
+        throttle.initStatics();
+        throttle_full.initStatics();
+        throttle_simple.initStatics();
+        web_activity.initStatics();
+    }
+
     //initialize shared variables
     private void initShared() {
         withrottle_version = 0.0;
         web_server_port = 0;
+        host_ip = null;
         setServerType("JMRI");
         power_state = null;
         to_states = null;
