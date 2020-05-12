@@ -561,7 +561,6 @@ public class threaded_application extends Application {
                         Log.d("Engine_Driver", "threaded_application: TA alert all activities to shutdown");
                         alert_activities(message_type.SHUTDOWN, "");     //tell all activities to finish()
                         stoppingConnection();
-                        //send quit message to withrottle after a short delay for other activities to communicate
 
                         // arg1=1 when called from onTrimMemory - shutdown with no delays
                         if (msg.arg1 == 1) {
