@@ -708,6 +708,7 @@
     <string name="toastPreferencesThemeChangeSucceeded">Theme Change Succeeded.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Throttle Page type change Succeeded.</string>
     <string name="toastPreferencesLocaleChangeSucceeded">Locale (Language) change Succeeded.</string>
+    <string name="toastPreferencesBackgroundChangeSucceeded">Background Change Succeeded.</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver restarted with chosen Language.</string> -->
 
     <!--    Toast messages for the Turnout Activity -->
@@ -907,6 +908,7 @@
     <string name="permissionsStoreRecentConnections">Engine Driver needs STORAGE permissions to store recent connections.</string>
     <string name="permissionsClearRecentConnections">Engine Driver needs STORAGE permissions to clear recent connections.</string>
     <string name="permissionsReadPreferences">Engine Driver needs STORAGE permissions to read preferences.</string>
+    <string name="permissionsReadImages">Engine Driver needs STORAGE permissions to load background images.</string>
     <string name="permissionsStorePreferences">Engine Driver needs STORAGE permissions to store preferences.</string>
     <string name="permissionsClearPreferences">Engine Driver needs STORAGE permissions to clear preferences.</string>
     <string name="permissionsReadPhoneState">Engine Driver needs PHONE permissions to pause operations when on a call.</string>
@@ -986,5 +988,13 @@
 
     <string name="dialogConfirmImportPreferencesTitle">Import Preferences</string>
     <string name="dialogImportPreferencesQuestion">Confirm that you want import preferences.\nALL current preferences will be lost.</string>
+
+    <string name="prefBackgroundImageTitle">Background Image</string>
+    <string name="prefBackgroundImageSummary">Show a background image on the Throttle page</string>
+
+    <string name="prefBackgroundImageFileNameTitle">Background Image File Name</string>
+    <string name="prefBackgroundImageFileNameSummary">Enter the name of the background image file.</string>
+    <string name="prefBackgroundImageFileNameDefaultValue">engine_driver/engine_driver_background.png translatable="false">9999</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefBackgroundImageFileNameNoImageSelected">No image was selected</string>
 
 </resources>

@@ -283,7 +283,7 @@
                 android:dialogTitle="@string/prefAccelerometerShakeThresholdTitle"
                 android:key="prefAccelerometerShakeThreshold"
                 android:maxLength="5"
-                android:numeric="decimal"
+                android:inputType="numberDecimal"
                 android:summary="@string/prefAccelerometerShakeThresholdSummary"
                 android:title="@string/prefAccelerometerShakeThresholdTitle" />
 
@@ -559,14 +559,12 @@
                 android:defaultValue="@bool/prefGamepadTestEnforceTestingDefaultValue"
                 android:key="prefGamepadTestEnforceTesting"
                 android:summary="@string/prefGamepadTestEnforceTestingSummary"
-                android:title="@string/prefGamepadTestEnforceTestingTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefGamepadTestEnforceTestingTitle" />
             <CheckBoxPreference
                 android:defaultValue="@bool/prefGamepadTestEnforceTestingSimpleDefaultValue"
                 android:key="prefGamepadTestEnforceTestingSimple"
                 android:summary="@string/prefGamepadTestEnforceTestingSimpleSummary"
-                android:title="@string/prefGamepadTestEnforceTestingSimpleTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefGamepadTestEnforceTestingSimpleTitle" />
         </PreferenceScreen>
 
         <ListPreference
@@ -576,6 +574,26 @@
             android:key="prefSelectedLocoIndicator"
             android:summary="@string/prefSelectedLocoIndicatorSummary"
             android:title="@string/prefSelectedLocoIndicatorTitle" />
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefBackgroundImageDefaultValue"
+            android:key="prefBackgroundImage"
+            android:summary="@string/prefBackgroundImageSummary"
+            android:title="@string/prefBackgroundImageTitle" />
+
+<!--
+        <EditTextPreference
+            android:defaultValue="@string/prefBackgroundImageFileNameDefaultValue"
+            android:dialogTitle="@string/prefBackgroundImageFileNameTitle"
+            android:key="prefBackgroundImageFileName"
+            android:summary="@string/prefBackgroundImageFileNameSummary"
+            android:title="@string/prefBackgroundImageFileNameTitle" />
+-->
+
+        <Preference
+            android:summary="@string/prefBackgroundImageFileNameSummary"
+            android:title="@string/prefBackgroundImageFileNameTitle"
+            android:key="prefBackgroundImageFileNameImagePicker" />
 
     </PreferenceCategory>
 
@@ -649,24 +667,21 @@
             android:defaultValue="@bool/prefStopOnPhonecallDefaultValue"
             android:key="stop_on_phonecall_preference"
             android:summary="@string/prefStopOnPhonecallSummary"
-            android:title="@string/prefStopOnPhonecallTitle" >
-        </CheckBoxPreference>
+            android:title="@string/prefStopOnPhonecallTitle" />
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefDirChangeWhileMovingDefaultValue"
             android:key="DirChangeWhileMovingPreference"
             android:summary="@string/prefDirChangeWhileMovingSummary"
-            android:title="@string/prefDirChangeWhileMovingTitle">
-        </CheckBoxPreference>
+            android:title="@string/prefDirChangeWhileMovingTitle" />
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefStopOnDirectionChangeDefaultValue"
             android:key="prefStopOnDirectionChange"
             android:summary="@string/prefStopOnDirectionChangeSummary"
-            android:title="@string/prefStopOnDirectionChangeTitle">
-        </CheckBoxPreference>
+            android:title="@string/prefStopOnDirectionChangeTitle" />
         <PreferenceScreen
             android:key="consist_follow_preferences"
             android:title="@string/prefConsistFollowTitle"
@@ -692,14 +707,12 @@
                 android:defaultValue="@bool/prefSelectiveLeadSoundF1DefaultValue"
                 android:key="SelectiveLeadSoundF1"
                 android:summary="@string/prefSelectiveLeadSoundF1Summary"
-                android:title="@string/prefSelectiveLeadSoundF1Title" >
-            </CheckBoxPreference>
+                android:title="@string/prefSelectiveLeadSoundF1Title" />
             <CheckBoxPreference
                 android:defaultValue="@bool/prefSelectiveLeadSoundF1DefaultValue"
                 android:key="SelectiveLeadSoundF2"
                 android:summary="@string/prefSelectiveLeadSoundF2Summary"
-                android:title="@string/prefSelectiveLeadSoundF2Title" >
-            </CheckBoxPreference>
+                android:title="@string/prefSelectiveLeadSoundF2Title" />
 
             <ListPreference
                 android:defaultValue="@string/prefConsistFollowDefaultActionDefaultValue"
@@ -891,22 +904,19 @@
             android:defaultValue="@bool/prefStopOnReleaseDefaultValue"
             android:key="stop_on_release_preference"
             android:summary="@string/prefStopOnReleaseSummary"
-            android:title="@string/prefStopOnReleaseTitle" >
-        </CheckBoxPreference>
+            android:title="@string/prefStopOnReleaseTitle" />
         <CheckBoxPreference
             android:defaultValue="@bool/prefDropOnAcquireDefaultValue"
             android:key="drop_on_acquire_preference"
             android:summary="@string/prefDropOnAcquireSummary"
-            android:title="@string/prefDropOnAcquireTitle" >
-        </CheckBoxPreference>
+            android:title="@string/prefDropOnAcquireTitle" />
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefSelLocoWhileMovingDefaultValue"
             android:key="SelLocoWhileMovingPreference"
             android:summary="@string/prefSelLocoWhileMovingSummary"
-            android:title="@string/prefSelLocoWhileMovingTitle">
-        </CheckBoxPreference>
+            android:title="@string/prefSelLocoWhileMovingTitle" />
         <ListPreference
             android:defaultValue="@string/prefDefaultAddressLengthDefaultValue"
             android:entries="@array/address_size_defaultsEntries"
@@ -918,8 +928,7 @@
             android:defaultValue="@bool/prefRosterRecentLocosDefaultValue"
             android:key="roster_recent_locos_preference"
             android:summary="@string/prefRosterRecentLocosSummary"
-            android:title="@string/prefRosterRecentLocosTitle" >
-        </CheckBoxPreference>
+            android:title="@string/prefRosterRecentLocosTitle" />
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -940,16 +949,14 @@
             android:defaultValue="@bool/prefConsistLightsLongClickDefaultValue"
             android:key="ConsistLightsLongClickPreference"
             android:summary="@string/prefConsistLightsLongClickSummary"
-            android:title="@string/prefConsistLightsLongClickTitle" >
-        </CheckBoxPreference>
+            android:title="@string/prefConsistLightsLongClickTitle" />
         <EditTextPreference
             android:defaultValue="@string/prefRosterFilterDefaultValue"
             android:dialogTitle="@string/prefRosterFilterTitle"
             android:key="prefRosterFilter"
             android:maxLength="10"
             android:summary="@string/prefRosterFilterSummary"
-            android:title="@string/prefRosterFilterTitle" >
-        </EditTextPreference>
+            android:title="@string/prefRosterFilterTitle" />
     </PreferenceCategory>
     <PreferenceCategory
         android:key="prefCategoryConnect"
@@ -972,8 +979,7 @@
             android:defaultValue="@bool/prefHideDemoServerDefaultValue"
             android:key="prefHideDemoServer"
             android:summary="@string/prefHideDemoServerSummary"
-            android:title="@string/prefHideDemoServerTitle" >
-        </CheckBoxPreference>
+            android:title="@string/prefHideDemoServerTitle" />
         <EditTextPreference
             android:defaultValue="@string/prefConnectTimeoutMsDefaultValue"
             android:key="prefConnectTimeoutMs"
@@ -1024,8 +1030,7 @@
             android:defaultValue="@bool/prefHideSystemRouteNamesDefaultValue"
             android:key="hide_system_route_names_preference"
             android:summary="@string/prefHideSystemRouteNamesSummary"
-            android:title="@string/prefHideSystemRouteNamesTitle" >
-        </CheckBoxPreference>
+            android:title="@string/prefHideSystemRouteNamesTitle" />
         <EditTextPreference
             android:defaultValue="@string/prefDelimiterDefaultValue"
             android:dialogTitle="@string/prefDelimiterTitle"
@@ -1034,26 +1039,22 @@
             android:summary="@string/prefDelimiterSummary"
             android:title="@string/prefDelimiterTitle"
             android:inputType="text"
-            android:maxLines="1">
-        </EditTextPreference>
+            android:maxLines="1" />
         <CheckBoxPreference
             android:defaultValue="@bool/prefHideIfNoUserNameDefaultValue"
             android:key="HideIfNoUserNamePreference"
             android:summary="@string/prefHideIfNoUserNameSummary"
-            android:title="@string/prefHideIfNoUserNameTitle" >
-        </CheckBoxPreference>
+            android:title="@string/prefHideIfNoUserNameTitle" />
         <CheckBoxPreference
             android:defaultValue="@bool/prefSwipeThroughTurnoutsDefaultValue"
             android:key="swipe_through_turnouts_preference"
             android:summary="@string/prefSwipeThroughTurnoutsSummary"
-            android:title="@string/prefSwipeThroughTurnoutsTitle" >
-        </CheckBoxPreference>
+            android:title="@string/prefSwipeThroughTurnoutsTitle" />
         <CheckBoxPreference
             android:defaultValue="@bool/prefSwipeThroughRoutesDefaultValue"
             android:key="swipe_through_routes_preference"
             android:summary="@string/prefSwipeThroughRoutesSummary"
-            android:title="@string/prefSwipeThroughRoutesTitle" >
-        </CheckBoxPreference>
+            android:title="@string/prefSwipeThroughRoutesTitle" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -1078,8 +1079,7 @@
                 android:summary="@string/prefKidsTimerRestartPasswordSummary"
                 android:title="@string/prefKidsTimerRestartPasswordTitle"
                 android:inputType="text"
-                android:maxLines="1">
-            </EditTextPreference>
+                android:maxLines="1" />
             <EditTextPreference
                 android:defaultValue="@string/prefKidsTimerResetPasswordDefaultValue"
                 android:dialogTitle="@string/prefKidsTimerResetPasswordTitle"
@@ -1087,8 +1087,7 @@
                 android:summary="@string/prefKidsTimerResetPasswordSummary"
                 android:title="@string/prefKidsTimerResetPasswordTitle"
                 android:inputType="text"
-                android:maxLines="1">
-            </EditTextPreference>
+                android:maxLines="1" />
 
             <Preference
                 android:selectable="false"
@@ -1136,14 +1135,12 @@
                 android:defaultValue="@bool/prefImportServerAutoDefaultValue"
                 android:key="prefImportServerAuto"
                 android:summary="@string/prefImportServerAutoSummary"
-                android:title="@string/prefImportServerAutoTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefImportServerAutoTitle" />
             <CheckBoxPreference
                 android:defaultValue="@bool/prefImportExportLocoListDefaultValue"
                 android:key="prefImportExportLocoList"
                 android:summary="@string/prefImportExportLocoListSummary"
-                android:title="@string/prefImportExportLocoListTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefImportExportLocoListTitle" />
             <ListPreference
                 android:defaultValue="@string/prefAutoImportExportDefaultValue"
                 android:entries="@array/prefAutoImportExportEntries"

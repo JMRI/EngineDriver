@@ -76,4 +76,6 @@
 
     <bool name="prefLimitSpeedButtonDefaultValue">false</bool>
 
+    <bool name="prefBackgroundImageDefaultValue">false</bool>
+
 </resources>

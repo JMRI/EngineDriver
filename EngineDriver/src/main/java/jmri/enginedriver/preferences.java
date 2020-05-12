@@ -26,7 +26,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.database.Cursor;
 import android.media.ToneGenerator;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -36,13 +38,17 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
+import android.preference.PreferenceScreen;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -59,6 +65,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
+import jmri.enginedriver.util.PermissionsHelper;
 
 public class preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
     static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
@@ -103,15 +110,16 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final String ENGINE_DRIVER_DIR = "engine_driver";
     private static final String SERVER_ENGINE_DRIVER_DIR = "prefs/engine_driver";
 
-    private static final int FORCED_RESTART_REASON_NONE = 0;
-    private static final int FORCED_RESTART_REASON_RESET = 1;
-    private static final int FORCED_RESTART_REASON_IMPORT = 2;
-    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL = 3;
-    private static final int FORCED_RESTART_REASON_THEME = 4;
-    private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
-    private static final int FORCED_RESTART_REASON_LOCALE = 6;
-//    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;    // not used in preferences.  Used in throttle.java
-//    private static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
+//    private static final int FORCED_RESTART_REASON_NONE = 0;
+//    private static final int FORCED_RESTART_REASON_RESET = 1;
+//    private static final int FORCED_RESTART_REASON_IMPORT = 2;
+//    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL = 3;
+//    private static final int FORCED_RESTART_REASON_THEME = 4;
+//    private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
+//    private static final int FORCED_RESTART_REASON_LOCALE = 6;
+////    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;    // not used in preferences.  Used in throttle.java
+////    private static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
+//    private static final int FORCED_RESTART_REASON_BACKGROUND = 9;
 
     SharedPreferences sharedPreferences;
     /**
@@ -125,6 +133,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final String PREF_IMPORT_ALL_RESET = "-";
 
     private String[] advancedPreferences;
+
+    public static final int RESULT_LOAD_IMG = 1;
 
     @SuppressLint("ApplySharedPref")
     @Override
@@ -191,7 +201,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         showHideThrottleTypePreferences();
 
         sharedPreferences.edit().putBoolean("prefForcedRestart", false).commit();
-        sharedPreferences.edit().putInt("prefForcedRestartReason", FORCED_RESTART_REASON_NONE).commit();
+        sharedPreferences.edit().putInt("prefForcedRestartReason", mainapp.FORCED_RESTART_REASON_NONE).commit();
         sharedPreferences.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
 
         if (!sharedPreferences.getString("prefImportExport", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)).equals("None")) {
@@ -209,9 +219,19 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             enableDisablePreference("prefImportServerManual", false);
         }
 
+        Preference button = getPreferenceScreen().findPreference("prefBackgroundImageFileNameImagePicker");
+        button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                loadImagefromGallery();
+                return true;
+            }
+        });
+
         advancedPreferences = getResources().getStringArray(R.array.advancedPreferences);
         hideAdvancedPreferences();
-    }
+
+    } // end onCreate
 
     @Override
     protected void onResume() {
@@ -253,7 +273,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             mainapp.preferences_msg_handler.removeCallbacksAndMessages(null);
             mainapp.preferences_msg_handler = null;
         } else {
-            Log.d("Engine_Driver", "onDestroy: mainapp.preferences_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d("Engine_Driver", "Preferences: onDestroy: mainapp.preferences_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
     }
 
@@ -358,7 +378,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         if (currentValue.equals(IMPORT_EXPORT_OPTION_EXPORT)) {
                             saveSharedPreferencesToFile(sharedPreferences, exportedPreferencesFileName, true);
                         } else if (currentValue.equals(IMPORT_EXPORT_OPTION_IMPORT)) {
-                            loadSharedPreferencesFromFileDialog(sharedPreferences, exportedPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT);
+                            loadSharedPreferencesFromFileDialog(sharedPreferences, exportedPreferencesFileName, deviceId, mainapp.FORCED_RESTART_REASON_IMPORT);
                         } else if (currentValue.equals(IMPORT_EXPORT_OPTION_RESET)) {
                             resetPreferencesDialog();
                         }
@@ -380,7 +400,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                             if (action.equals(EXPORT_PREFIX)) {
                                 saveSharedPreferencesToFile(sharedPreferences, exportedPreferencesFileName, true);
                             } else if (action.equals(IMPORT_PREFIX)) {
-                                loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT);
+                                loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName, deviceId, mainapp.FORCED_RESTART_REASON_IMPORT);
                             }
                         }
                     }
@@ -410,7 +430,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     sharedPreferences.edit().putString("prefRightDirectionButtons", "").commit();
                     sharedPreferences.edit().putString("prefLeftDirectionButtonsShort", "").commit();
                     sharedPreferences.edit().putString("prefRightDirectionButtonsShort", "").commit();
-                    forceRestartApp(FORCED_RESTART_REASON_LOCALE);
+                    forceRestartApp(mainapp.FORCED_RESTART_REASON_LOCALE);
                     break;
                 case "prefDirectionButtonLongPressDelay":
                     // limit check new value
@@ -423,8 +443,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 case "prefTheme":
                     String prefTheme = sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
                     if (!prefTheme.equals(prefThemeOriginal)) {
-                        forceRestartApp(FORCED_RESTART_REASON_THEME);
+                        forceRestartApp(mainapp.FORCED_RESTART_REASON_THEME);
                     }
+                    break;
+                case "prefBackgroundImage":
+                case "prefBackgroundImageFileName":
+                    forceRestartApp(mainapp.FORCED_RESTART_REASON_BACKGROUND);
                     break;
                 case "prefConsistFollowRuleStyle":
                     prefConsistFollowRuleStyle = sharedPreferences.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
@@ -593,7 +617,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         reload();
 
-        forceRestartApp(FORCED_RESTART_REASON_RESET);
+        forceRestartApp(mainapp.FORCED_RESTART_REASON_RESET);
     }
 
     private void delete_auto_import_settings_files() {
@@ -620,9 +644,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             File settings_file = new File(sdcard_path, "engine_driver/" + file_name);
             if (settings_file.exists()) {
                 if (settings_file.delete()) {
-                    Log.d("Engine_Driver", file_name + " deleted");
+                    Log.d("Engine_Driver", "Preferences: " + file_name + " deleted");
                 } else {
-                    Log.e("Engine_Driver", file_name + " NOT deleted");
+                    Log.e("Engine_Driver", "Preferences: " + file_name + " NOT deleted");
                 }
             }
         }
@@ -760,7 +784,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             SharedPreferences.Editor prefEdit = sharedPreferences.edit();
             prefEdit.commit();
             reload();
-            forceRestartApp(FORCED_RESTART_REASON_THROTTLE_PAGE);
+            forceRestartApp(mainapp.FORCED_RESTART_REASON_THROTTLE_PAGE);
         }
     }
 
@@ -1028,7 +1052,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             switch (msg.what) {
                 case message_type.IMPORT_SERVER_MANUAL_SUCCESS:
                     Log.d("Engine_Driver", "Preferences: Message: Import preferences from Server: File Found");
-                    loadSharedPreferencesFromFile(sharedPreferences, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL);
+                    loadSharedPreferencesFromFile(sharedPreferences, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId, mainapp.FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL);
                     break;
                 case message_type.IMPORT_SERVER_MANUAL_FAIL:
                     Log.d("Engine_Driver", "Preferences: Message: Import preferences from Server: File not Found");
@@ -1130,7 +1154,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_SUCCESS);
 
             } catch (Exception e) {
-                Log.e("Engine_Driver", "Import preferences from Server Failed: " + e.getMessage());
+                Log.e("Engine_Driver", "Preferences: Import preferences from Server Failed: " + e.getMessage());
                 dismissDialog(PROGRESS_BAR_TYPE);
                 sharedPreferences.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
                 mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_FAIL);
@@ -1152,6 +1176,53 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         }
 
+    }
+
+    protected void loadImagefromGallery() {
+        if (PermissionsHelper.getInstance().isPermissionGranted(preferences.this, PermissionsHelper.READ_PREFERENCES)) {
+            loadImagefromGalleryImpl();
+        }
+    }
+
+//    public void loadImagefromGallery(View view) {
+    public void loadImagefromGalleryImpl() {
+        // Create intent to Open Image applications like Gallery, Google Photos
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // Start the Intent
+        startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an Image is picked
+            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
+                // Get the Image from data
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.MediaColumns.DATA };
+
+                // Get the cursor
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String imgpath = cursor.getString(columnIndex);
+                cursor.close();
+
+                SharedPreferences.Editor edit=sharedPreferences.edit();
+                edit.putString("prefBackgroundImageFileName",imgpath);
+                edit.commit();
+
+                forceRestartApp(mainapp.FORCED_RESTART_REASON_BACKGROUND);
+            }
+            else {
+                Toast.makeText(this, R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Log.e("Engine_Driver", "Preferences: Loading background image Failed: " + e.getMessage());
+        }
     }
 
 }
