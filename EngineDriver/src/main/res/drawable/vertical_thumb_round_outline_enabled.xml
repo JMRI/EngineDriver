@@ -25,10 +25,10 @@
 
         <shape
                 android:shape="rectangle">
-                <solid android:color="@color/buttonFill_black" />
+            <solid android:color="@android:color/transparent" />
             <stroke
                 android:width="@dimen/buttonFnStroke_outline"
-                android:color="@color/buttonFill_black"
+                android:color="@color/holoBlue"
                 />
             <size
                     android:width="10dp"
@@ -45,7 +45,7 @@
             <stroke
                 android:rotation="90"
                 android:width="@dimen/buttonFnStroke_outline"
-                android:color="@color/black"
+                android:color="@color/solidWhite"
                 />
         </shape>
         </rotate>

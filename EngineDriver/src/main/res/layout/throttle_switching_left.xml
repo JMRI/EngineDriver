@@ -116,11 +116,11 @@
                             android:minHeight="9999dp"
                             android:paddingLeft="30dp"
                             android:paddingRight="30dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="3dp"
                             android:progress="50"
                             android:progressDrawable="@android:color/transparent"
-                            android:thumb="@drawable/vertical_thumb" />
+                            android:thumb="?attr/ed_vertical_thumb" />
 
 
                         <Button

@@ -7,7 +7,7 @@
             <solid android:color="@color/transparent"/>
             <stroke
                 android:width="@dimen/buttonFnStroke_outline"
-                android:color="@color/buttonFnDisabledStroke_outline"
+                android:color="@color/buttonFnDisabledStroke_colorful"
                 />
             <size
                 android:width="20dp"
@@ -24,7 +24,7 @@
             android:shape="rectangle">
             <stroke
                 android:width="@dimen/buttonFnStroke_outline"
-                android:color="@color/buttonFnDisabledStroke_outline"
+                android:color="@color/buttonFnDisabledStroke_colorful"
                 />
             <size
                 android:width="10dp"
