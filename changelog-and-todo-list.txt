@@ -1,4 +1,8 @@
 **Version 2.25.104
+ * New thumb image for switching throttle
+ * Improve background mode, restarts and heartbeat
+ * Theme and throttle preference changes no longer restart the app
+ * Added option to use a background image on the throttle page
 **Version 2.25.102
  * new Switching/Shunting Throttle Screen types
  * additional French Translations by Alain Carasso
@@ -483,6 +487,7 @@
  *   added html About page
  */
 /*
+ *   TODO: add ED version to log
  *   TODO: verify MRC fastclock messages
  *   TODO: change config files to use db instead of .txt files, turn off sd card permission
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
