@@ -1904,16 +1904,16 @@ public class threaded_application extends Application {
 
         @Override
         public void onActivityStarted(Activity activity) {
-            runningActivity = activity;                             // save most recently started activity
         }
 
         @Override
         public void onActivityResumed(Activity activity) {
-            if (isInBackground && activity == runningActivity) {    // if coming out of background
+            if (isInBackground) {                           // if coming out of background
                 isInBackground = false;
                 exitConfirmed = false;
                 removeNotification();
             }
+            runningActivity = activity;                 // save most recently resumed activity
         }
 
         @Override
@@ -1931,7 +1931,7 @@ public class threaded_application extends Application {
         @Override
         public void onActivityDestroyed(Activity activity) {
             if (isInBackground && activity == runningActivity) {
-                removeNotification();
+                removeNotification();           // destroyed in background so remove notification
             }
         }
 
