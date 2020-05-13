@@ -976,7 +976,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     break;
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
-                    saveSharedPreferencesToFileIfAllowed();
                     disconnect();
                     break;
                 case message_type.WEBVIEW_LOC:      // webview location changed
@@ -5887,36 +5886,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 .setNegativeButton(R.string.no, dialogClickListener)
                 .setNeutralButton(R.string.importServerAutoDialogNeutralButton, dialogClickListener);
         ab.show();
-    }
-
-    // saveSharedPreferencesToFile if the necessary permissions have already been granted, otherwise do nothing.
-    // use this method if exiting since we don't want to prompt for permissions at this point if they have not been granted
-    private void saveSharedPreferencesToFileIfAllowed() {
-        if (PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.STORE_PREFERENCES)) {
-            saveSharedPreferencesToFileImpl();
-        }
-    }
-
-    private void saveSharedPreferencesToFileImpl() {
-        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
-
-        if (prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT)) {
-            if (mainapp.connectedHostName != null) {
-                String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
-
-                if (!exportedPreferencesFileName.equals(".ed")) {
-                    File path = Environment.getExternalStorageDirectory();
-                    File engine_driver_dir = new File(path, "engine_driver");
-                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
-
-                    importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
-                }
-                Log.d("Engine_Driver", "throttle: saveSharedPreferencesToFileImpl: done");
-            } else {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG).show();
-            }
-        }
     }
 
     // restart the app so that the new preferences can be applied

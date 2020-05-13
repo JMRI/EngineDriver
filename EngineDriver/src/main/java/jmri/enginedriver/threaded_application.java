@@ -563,17 +563,17 @@ public class threaded_application extends Application {
                         alert_activities(message_type.SHUTDOWN, "");     //tell all activities to finish()
                         stoppingConnection();
 
-                        // arg1=1 when called from onTrimMemory - shutdown with no delays
+                        // arg1 = 1 means shutdown with no delays
                         if (msg.arg1 == 1) {
                             withrottle_send("Q");
-                            shutdown();
+                            shutdown(true);
                         }
                         else {
                             //send quit message to withrottle after a short delay for other activities to communicate
                             sendMsgDelay(comm_msg_handler, 100L, message_type.WITHROTTLE_QUIT);
                             //give msgs a chance to xmit before closing socket
                             if (!sendMsgDelay(comm_msg_handler, 1500L, message_type.SHUTDOWN)) {
-                                shutdown();
+                                shutdown(false);
                             }
                         }
                         break;
@@ -697,7 +697,7 @@ public class threaded_application extends Application {
 
                     // SHUTDOWN - terminate socketWiT and it's done
                     case message_type.SHUTDOWN:
-                        shutdown();
+                        shutdown(false);
                         break;
 
                     // update of roster-related data completed in background
@@ -765,31 +765,22 @@ public class threaded_application extends Application {
             dlRosterTask.stop();
         }
 
-        private void shutdown() {
+        private void shutdown(boolean fast) {
             Log.d("Engine_Driver", "threaded_application.Shutdown");
-            end_jmdns();                        //jmdns should already be down but no harm in making call
+ //  CA and stopConnection already did this!         end_jmdns();                        //jmdns should already be down but no harm in making call
             if (socketWiT != null) {
-                socketWiT.disconnect(true);     //stop reading from the socket
+                socketWiT.disconnect(true, fast);     //stop reading from the socket
 //                socketWiT = null;
             }
+            saveSharedPreferencesToFileIfAllowed();
             host_ip = null;
             port = 0;
             reinitStatics();                    // ensure activities are ready for relaunch
             doFinish = false;                   //ok for activities to run if restarted after this
 
-//            comm_msg_handler = null;
             dlRosterTask.stop();
             dlMetadataTask.stop();
-//            dlRosterTask = null;
-//            dlMetadataTask = null;
-//            imageDownloader = null;
-//            prefs = null;
-            heart.stopHeartbeat();
-//            heart = null;
-//            listener = null;
-//            multicast_lock = null;
-//            lifecycleHandler = null;
-//            removeNotification();
+//            heart.stopHeartbeat();
 
             // make sure flashlight is switched off at shutdown
             if (flashlight != null) {
@@ -1471,14 +1462,20 @@ public class threaded_application extends Application {
             }
 
             public void disconnect(boolean shutdown) {
+                disconnect(shutdown, false);
+            }
+
+            public void disconnect(boolean shutdown, boolean fastShutdown) {
                 if (shutdown) {
                     endRead = true;
-                    for (int i = 0; i < 5 && this.isAlive(); i++) {
-                        try {
-                            Thread.sleep(500);              //  give run() a chance to see endRead and exit
-                        } catch (InterruptedException e) {
-//                            show_toast_message("Error sleeping the thread, InterruptedException: " + e.getMessage(), Toast.LENGTH_LONG);
-                            safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorSleepingThread, e.getMessage()), Toast.LENGTH_SHORT);
+                    if (!fastShutdown) {
+                        for (int i = 0; i < 5 && this.isAlive(); i++) {
+                            try {
+                                Thread.sleep(connectTimeoutMs);     //  give run() a chance to see endRead and exit
+                            } catch (InterruptedException e) {
+                                //                            show_toast_message("Error sleeping the thread, InterruptedException: " + e.getMessage(), Toast.LENGTH_LONG);
+                                safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorSleepingThread, e.getMessage()), Toast.LENGTH_SHORT);
+                            }
                         }
                     }
                 }
@@ -1960,7 +1957,7 @@ public class threaded_application extends Application {
 end force shutdown */
                     }
                 }
-                if (level >= ComponentCallbacks2.TRIM_MEMORY_BACKGROUND) { // time to kill app
+                if (level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE) { // time to kill app
                     if (!exitConfirmed) {       // if TA is running in bkg
                         // disconnect and shutdown
                         sendMsg(comm_msg_handler, message_type.DISCONNECT, "", 1);
@@ -3102,6 +3099,38 @@ end force shutdown */
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_AUTO_IMPORT));
     }
+
+    // saveSharedPreferencesToFile if the necessary permissions have already been granted, otherwise do nothing.
+    // use this method if exiting since we don't want to prompt for permissions at this point if they have not been granted
+    private void saveSharedPreferencesToFileIfAllowed() {
+        if (PermissionsHelper.getInstance().isPermissionGranted(threaded_application.context, PermissionsHelper.STORE_PREFERENCES)) {
+            saveSharedPreferencesToFileImpl();
+        }
+    }
+
+    private void saveSharedPreferencesToFileImpl() {
+        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", threaded_application.context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
+
+        if (prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT)) {
+            if (this.connectedHostName != null) {
+                String exportedPreferencesFileName = this.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+
+                if (!exportedPreferencesFileName.equals(".ed")) {
+                    File path = Environment.getExternalStorageDirectory();
+                    File engine_driver_dir = new File(path, "engine_driver");
+                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
+
+                    ImportExportPreferences importExportPreferences = new ImportExportPreferences();
+                    importExportPreferences.saveSharedPreferencesToFile(threaded_application.context, sharedPreferences, exportedPreferencesFileName);
+                }
+                Log.d("Engine_Driver", "TA: saveSharedPreferencesToFileImpl: done");
+            } else {
+                this.safeToast(threaded_application.context.getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG);
+            }
+        }
+    }
+
 }
 
 
