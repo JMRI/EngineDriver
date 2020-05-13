@@ -261,7 +261,10 @@
                             android:minHeight="9999dp"
                             android:maxHeight="9999dp"
                             android:paddingLeft="30dp"
-                            android:paddingRight="30dp" />
+                            android:paddingRight="30dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="3dp"
+                            android:thumb="?attr/ed_vertical_thumb"/>
 
                         <Button
                             android:id="@+id/left_speed_button_0"
@@ -987,7 +990,10 @@
                             android:minHeight="9999dp"
                             android:maxHeight="9999dp"
                             android:paddingLeft="30dp"
-                            android:paddingRight="30dp" />
+                            android:paddingRight="30dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="3dp"
+                            android:thumb="?attr/ed_vertical_thumb"/>
 
                         <Button
                             android:id="@+id/left_speed_button_1"

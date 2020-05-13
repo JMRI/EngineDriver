@@ -25,10 +25,10 @@
 
         <shape
                 android:shape="rectangle">
-                <solid android:color="@color/buttonFill_black" />
+                <solid android:color="@color/buttonSelectedFill_colorful" />
             <stroke
                 android:width="@dimen/buttonFnStroke_outline"
-                android:color="@color/buttonFill_black"
+                android:color="@color/buttonSelectedStroke_colorful"
                 />
             <size
                     android:width="10dp"

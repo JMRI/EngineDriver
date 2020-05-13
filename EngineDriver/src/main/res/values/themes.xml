@@ -57,13 +57,11 @@
         <item name="ed_fn_button_style">@style/fn_button_style</item>
         <item name="ed_list_button_style">@style/list_button_style</item>
 
-        <item name="ed_vertical_thumb_disabled_color">@color/buttonFnDisabledStroke_outline</item>
-        <item name="ed_vertical_thumb_bar_color">@color/black</item>
-        <item name="ed_vertical_thumb_color">@color/buttonFill_black</item>
-        <item name="ed_vertical_thumb_outline_color">@color/holoBlue</item>
-        <item name="ed_vertical_thumb_outline2_color">@color/buttonFill_black</item>
+        <item name="ed_vertical_thumb">@drawable/vertical_thumb</item>
+
     </style>
 
+    <!-- also appears 'round' theme' -->
     <style name="app_theme_black" parent="@android:style/Theme.Holo">
         <item name="android:windowBackground">@color/solidBlack</item>
         <item name="android:windowTitleStyle">@style/app_title_black</item>
@@ -104,11 +102,8 @@
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
 
-        <item name="ed_vertical_thumb_disabled_color">@color/buttonDisabledStroke_black</item>
-        <item name="ed_vertical_thumb_bar_color">@color/black</item>
-        <item name="ed_vertical_thumb_color">@color/buttonSelectedFill_black</item>
-        <item name="ed_vertical_thumb_outline_color">@color/buttonSelectedStroke_black</item>
-        <item name="ed_vertical_thumb_outline2_color">@color/buttonStroke_black</item>
+        <item name="ed_vertical_thumb">@drawable/vertical_thumb_round</item>
+
     </style>
 
     <style name="app_theme_outline" parent="@android:style/Theme.Holo">
@@ -151,13 +146,11 @@
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
 
-        <item name="ed_vertical_thumb_disabled_color">@color/buttonFnDisabledStroke_outline</item>
-        <item name="ed_vertical_thumb_bar_color">@color/solidWhite</item>
-        <item name="ed_vertical_thumb_color">@android:color/transparent</item>
-        <item name="ed_vertical_thumb_outline_color">@color/holoBlue</item>
-        <item name="ed_vertical_thumb_outline2_color">@color/holoBlue</item>
+        <item name="ed_vertical_thumb">@drawable/vertical_thumb_round_outline</item>
+
     </style>
 
+    <!-- also appears a 'dark' theme -->
     <style name="app_theme_ultra" parent="@android:style/Theme.Holo">
         <item name="android:windowBackground">@color/solidBlack</item>
         <item name="android:windowTitleStyle">@style/app_title_black</item>
@@ -198,11 +191,8 @@
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
 
-        <item name="ed_vertical_thumb_disabled_color">@color/buttonFnDisabledStroke_outline</item>
-        <item name="ed_vertical_thumb_bar_color">@color/holoBlue</item>
-        <item name="ed_vertical_thumb_color">@color/buttonCommonFillGradiantCenter_ultra</item>
-        <item name="ed_vertical_thumb_outline_color">@color/holoBlue</item>
-        <item name="ed_vertical_thumb_outline2_color">@color/buttonCommonFillGradiantCenter_ultra</item>
+        <item name="ed_vertical_thumb">@drawable/vertical_thumb_ultra</item>
+
     </style>
 
     <style name="app_theme_colorful" parent="@android:style/Theme.Holo.Light">
@@ -253,11 +243,8 @@
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
 
-        <item name="ed_vertical_thumb_disabled_color">@color/buttonFnDisabledStroke_colorful</item>
-        <item name="ed_vertical_thumb_bar_color">@color/black</item>
-        <item name="ed_vertical_thumb_color">@color/buttonSelectedFill_colorful</item>
-        <item name="ed_vertical_thumb_outline_color">@color/holoBlue</item>
-        <item name="ed_vertical_thumb_outline2_color">@color/buttonSelectedStroke_colorful</item>
+        <item name="ed_vertical_thumb">@drawable/vertical_thumb_colorful</item>
+
     </style>
 
 </resources>

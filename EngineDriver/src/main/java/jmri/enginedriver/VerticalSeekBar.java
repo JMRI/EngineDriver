@@ -131,7 +131,7 @@ public class VerticalSeekBar extends SeekBar {
                     tickSpacing = (paddingRight - gridBottom) / (steps - 1);
                     sizeIncrease = (gridMiddle - gridLeft - 30) / (steps * steps);
 
-                    for (int i = 0; i < steps; i++) {
+                    for (int i = -1; i < steps; i++) {
                         j = (steps - i);
                         d = gridBottom + i * tickSpacing;
                         l = gridMiddle - 10 - sizeIncrease * j * j;
@@ -145,7 +145,7 @@ public class VerticalSeekBar extends SeekBar {
                     tickSpacing = (paddingRight - gridBottom) / (tempSteps - 1);
                     sizeIncrease = (gridMiddle - gridLeft - 30) / (tempSteps * tempSteps);
 
-                    for (int i = 0; i < tempSteps; i++) {
+                    for (int i = -1; i < tempSteps; i++) {
                         j = (tempSteps - i);
                         d = gridBottom + (height/2) + (i * tickSpacing);
                         l = gridMiddle - 10 - (sizeIncrease) * j * j;
@@ -153,7 +153,7 @@ public class VerticalSeekBar extends SeekBar {
                         c.drawLine(d, l, d, r, tickPaint);
                     }
 
-                    for (int i = 0; i < tempSteps; i++) {
+                    for (int i = -1; i < tempSteps; i++) {
                         j = (tempSteps - i);
                         d = gridBottom + ((tempSteps - i - 1) * tickSpacing);
                         l = gridMiddle - 10 - (sizeIncrease) * j * j;

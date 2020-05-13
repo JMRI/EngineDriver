@@ -18,11 +18,7 @@
     <attr name="ed_fn_button_style" format="reference" />
     <attr name="ed_list_button_style" format="reference" />
 
-    <attr name="ed_vertical_thumb_disabled_color" format="reference" />
-    <attr name="ed_vertical_thumb_bar_color" format="reference" />
-    <attr name="ed_vertical_thumb_color" format="reference" />
-    <attr name="ed_vertical_thumb_outline_color" format="reference" />
-    <attr name="ed_vertical_thumb_outline2_color" format="reference" />
+    <attr name="ed_vertical_thumb" format="reference" />
 
     <attr name="ed_fn_scrollview_style" format="reference" />
 </resources>
