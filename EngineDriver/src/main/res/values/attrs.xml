@@ -18,6 +18,7 @@
     <attr name="ed_fn_button_style" format="reference" />
     <attr name="ed_list_button_style" format="reference" />
 
+    <attr name="ed_thumb" format="reference" />
     <attr name="ed_vertical_thumb" format="reference" />
 
     <attr name="ed_fn_scrollview_style" format="reference" />

@@ -255,7 +255,8 @@
                         android:layout_weight="0.7"
                         android:maxHeight="80dp"
                         android:paddingLeft="8dp"
-                        android:paddingRight="8dp" />
+                        android:paddingRight="8dp"
+                        android:thumb="?attr/ed_thumb" />
 
                     <Button
                         android:id="@+id/right_speed_button_0"
@@ -642,7 +643,8 @@
                         android:layout_weight="0.7"
                         android:maxHeight="80dp"
                         android:paddingLeft="8dp"
-                        android:paddingRight="8dp" />
+                        android:paddingRight="8dp"
+                        android:thumb="?attr/ed_thumb"/>
 
                     <Button
                         android:id="@+id/right_speed_button_1"
@@ -1037,7 +1039,8 @@
                         android:layout_weight="0.7"
                         android:maxHeight="80dp"
                         android:paddingLeft="8dp"
-                        android:paddingRight="8dp" />
+                        android:paddingRight="8dp"
+                        android:thumb="?attr/ed_thumb" />
 
                     <Button
                         android:id="@+id/right_speed_button_2"

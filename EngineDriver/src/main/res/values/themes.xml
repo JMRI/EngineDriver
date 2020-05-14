@@ -57,6 +57,7 @@
         <item name="ed_fn_button_style">@style/fn_button_style</item>
         <item name="ed_list_button_style">@style/list_button_style</item>
 
+        <item name="ed_thumb">@drawable/thumb</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb</item>
 
     </style>
@@ -102,6 +103,7 @@
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
 
+        <item name="ed_thumb">@drawable/thumb_round</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_round</item>
 
     </style>
@@ -146,6 +148,7 @@
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
 
+        <item name="ed_thumb">@drawable/thumb_round_outline</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_round_outline</item>
 
     </style>
@@ -191,6 +194,7 @@
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
 
+        <item name="ed_thumb">@drawable/thumb_ultra</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_ultra</item>
 
     </style>
@@ -243,6 +247,7 @@
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
 
+        <item name="ed_thumb">@drawable/thumb_colorful</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_colorful</item>
 
     </style>

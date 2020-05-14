@@ -342,13 +342,14 @@ public class throttle_full extends throttle {
             } else {  //hide speed buttons based on pref
                 bLSpds[throttleIndex].setVisibility(View.GONE);
                 bRSpds[throttleIndex].setVisibility(View.GONE);
-                sliderMargin += 30;  //a little extra margin previously in button
+//                sliderMargin += 30;  //a little extra margin previously in button
             }
             if (prefs.getBoolean("prefHideSliderAndSpeedButtons", getResources().getBoolean(R.bool.prefHideSliderAndSpeedButtonsDefaultValue))) {
                 llSetSpds[throttleIndex].setVisibility(View.GONE);
             }
 
-            sbs[throttleIndex].setPadding(sliderMargin, 0, sliderMargin, 0);
+            int additionalPadding = (sbs[throttleIndex].getWidth()>400 ? 40 : 20);
+            sbs[throttleIndex].setPadding(additionalPadding+sliderMargin, 0, additionalPadding+sliderMargin, 0);
 
             // update the state of each function button based on shared variable
             set_all_function_states(throttleIndex);
