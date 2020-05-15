@@ -6,7 +6,7 @@
     android:orientation="vertical" >
     <TextView
         android:id="@+id/about_info"
-        style="@style/floating_text_style"
+        style="?attr/floating_text_style"
         android:textSize="15sp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
