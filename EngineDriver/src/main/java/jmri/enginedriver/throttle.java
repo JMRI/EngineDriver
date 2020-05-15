@@ -329,8 +329,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected boolean mAutoIncrement = false;
     protected boolean mAutoDecrement = false;
 
-    private static final int changeDelay = 1000;
-    protected ChangeDelay[] changeTimers;
+    // implement delay for briefly ignoring WiT speed reports after sending a throttle speed update
+    // this prevents use of speed reports sent by WiT just prior to WiT processing the speed update
+    private static final int changeDelay = 1000;            // msec
+    protected PacingDelay[] changeTimers;
+
+    // implement delay for pacing speed change requests so we don't overload the WiT socket
+    private static final int maxSpeedMessageRate = 200;      // msec
+    protected PacingDelay[] speedMessagePacingTimers;
 
     protected boolean selectLocoRendered = false; // this will be true once set_labels() runs following rendering of the loco select textViews
 
@@ -4020,35 +4026,36 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     // send a throttle speed message to WiT
     public void sendSpeedMsg(int whichThrottle, int speed) {
-        // start timer to briefly ignore WiT speed messages - avoids speed "jumping"
-        changeTimers[whichThrottle].changeDelay();
-        // send speed update to WiT
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "", whichThrottle, speed);
+        if (speedMessagePacingTimers[whichThrottle].delayInProg == false) {
+            // start timer to briefly ignore WiT speed messages - avoids speed "jumping"
+            changeTimers[whichThrottle].pacingDelay();
+            // send speed update to WiT
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "", whichThrottle, speed);
+            speedMessagePacingTimers[whichThrottle].pacingDelay();
+        }
     }
 
-    // implement delay for briefly ignoring WiT speed reports after sending a throttle speed update
-    // this prevents use of speed reports sent by WiT just prior to WiT processing the speed update
-    protected class ChangeDelay {
+    // implement general purpose pacing delay class
+    protected class PacingDelay {
         boolean delayInProg;
-        Runnable changeTimer;
-        int whichThrottle;
+        Runnable delayTimer;
+        int delay;
 
-        protected ChangeDelay(int wThrot) {
-            delayInProg = false;
-            changeTimer = new ChangeTimer();
-            whichThrottle = wThrot;
+        protected PacingDelay(int delay) {
+            this.delay = delay;
+            delayTimer = new DelayTimer();
         }
 
-        private void changeDelay() {
+        private void pacingDelay() {
             if (mainapp.throttle_msg_handler == null) return;
-            mainapp.throttle_msg_handler.removeCallbacks(changeTimer);          //remove any pending requests
+            mainapp.throttle_msg_handler.removeCallbacks(delayTimer);          //remove any pending requests
             delayInProg = true;
-            mainapp.throttle_msg_handler.postDelayed(changeTimer, changeDelay);
+            mainapp.throttle_msg_handler.postDelayed(delayTimer, delay);
         }
 
-        class ChangeTimer implements Runnable {
+        class DelayTimer implements Runnable {
 
-            private ChangeTimer() {
+            private DelayTimer() {
                 delayInProg = false;
             }
 
@@ -4160,7 +4167,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         displayUnitScales = new double[mainapp.maxThrottlesCurrentScreen];
 
-        changeTimers = new ChangeDelay[mainapp.maxThrottlesCurrentScreen];
+        changeTimers = new PacingDelay[mainapp.maxThrottlesCurrentScreen];
+        speedMessagePacingTimers = new PacingDelay[mainapp.maxThrottlesCurrentScreen];
 
         // throttle layouts
         vThrotScr = findViewById(R.id.throttle_screen);
@@ -4404,8 +4412,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
 
             // set throttle change delay timers
-            changeTimers[i] = new ChangeDelay(i);
-
+            changeTimers[i] = new PacingDelay(changeDelay);
+            speedMessagePacingTimers[i] = new PacingDelay(maxSpeedMessageRate);
         }
 
         clearVolumeAndGamepadAdditionalIndicators();
@@ -4527,10 +4535,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // put pointer to this activity's handler in main app's shared variable
         mainapp.throttle_msg_handler = new throttle_handler();
 
-        // set throttle change delay timers
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            changeTimers[throttleIndex] = new ChangeDelay(throttleIndex);
-        }
         // tone generator for feedback sounds
         try {
             tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
