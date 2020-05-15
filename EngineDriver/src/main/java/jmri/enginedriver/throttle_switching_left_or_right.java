@@ -747,7 +747,7 @@ public class throttle_switching_left_or_right extends throttle {
             speedWiT = 0;
 
         int sliderPosition;
-        if (!changeTimers[whichThrottle].delayInProg) {
+        if (!changeTimers[whichThrottle].isDelayInProgress()) {
             sliderPosition = getNewSliderPositionFromSpeed(speedWiT, whichThrottle, false);
             vsbSwitchingSpeeds[whichThrottle].setProgress(sliderPosition);
         }

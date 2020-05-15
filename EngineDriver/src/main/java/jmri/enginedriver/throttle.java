@@ -336,7 +336,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     // implement delay for pacing speed change requests so we don't overload the WiT socket
     private static final int maxSpeedMessageRate = 200;      // msec
-    protected PacingDelay[] speedMessagePacingTimers;
+    protected SpeedPacingDelay[] speedMessagePacingTimers;
 
     protected boolean selectLocoRendered = false; // this will be true once set_labels() runs following rendering of the loco select textViews
 
@@ -4024,36 +4024,47 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
-    // send a throttle speed message to WiT
+    // send a throttle speed message to WiT with message pacing
     public void sendSpeedMsg(int whichThrottle, int speed) {
-        if (speedMessagePacingTimers[whichThrottle].delayInProg == false) {
-            // start timer to briefly ignore WiT speed messages - avoids speed "jumping"
-            changeTimers[whichThrottle].pacingDelay();
-            // send speed update to WiT
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "", whichThrottle, speed);
+        if (!speedMessagePacingTimers[whichThrottle].isDelayInProgress()) {
+            sendSpeedMsgBasic(whichThrottle, speed);
             speedMessagePacingTimers[whichThrottle].pacingDelay();
         }
+        else {
+            speedMessagePacingTimers[whichThrottle].setDelayedSpeed(speed);
+        }
+    }
+
+    public void sendSpeedMsgBasic(int whichThrottle, int speed) {
+        // start timer to briefly ignore WiT speed messages - avoids speed "jumping"
+        changeTimers[whichThrottle].pacingDelay();
+        // send speed update to WiT
+        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.VELOCITY, "", whichThrottle, speed);
     }
 
     // implement general purpose pacing delay class
     protected class PacingDelay {
-        boolean delayInProg;
-        Runnable delayTimer;
-        int delay;
+        private boolean delayInProg;
+        protected Runnable delayTimer;
+        private int delay;
 
         protected PacingDelay(int delay) {
             this.delay = delay;
             delayTimer = new DelayTimer();
         }
 
-        private void pacingDelay() {
+        protected boolean isDelayInProgress() {
+            return delayInProg;
+        }
+
+        protected void pacingDelay() {
             if (mainapp.throttle_msg_handler == null) return;
             mainapp.throttle_msg_handler.removeCallbacks(delayTimer);          //remove any pending requests
             delayInProg = true;
             mainapp.throttle_msg_handler.postDelayed(delayTimer, delay);
         }
 
-        class DelayTimer implements Runnable {
+        protected class DelayTimer implements Runnable {
 
             private DelayTimer() {
                 delayInProg = false;
@@ -4062,6 +4073,37 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             @Override
             public void run() {         // change delay is over - clear the delay flag
                 delayInProg = false;
+            }
+        }
+    }
+
+    // pacing delay class for speed messages
+    // sends speed value once the pacing delay expires to ensure WiT gets final setpoint
+    protected class SpeedPacingDelay extends PacingDelay {
+        private int speed;
+        private int whichThrottle;
+        private volatile boolean sendDelayedSpeed;
+        protected SpeedPacingDelay(int delay, int whichThrottle) {
+            super(delay);
+            delayTimer = new SpeedDelayTimer();     // replace base timer with one that sets speed
+            this.whichThrottle = whichThrottle;
+            this.sendDelayedSpeed = false;
+        }
+
+        void setDelayedSpeed(int delayedSpeed) {
+            this.speed = delayedSpeed;
+            this.sendDelayedSpeed = true;
+        }
+
+        class SpeedDelayTimer extends PacingDelay.DelayTimer {
+            @Override
+            public void run() {
+                super.run();
+                if (sendDelayedSpeed) {             // if haven't sent the latest speed value
+                    sendDelayedSpeed = false;       //  then send it now
+                    sendSpeedMsgBasic(whichThrottle, speed);
+                    pacingDelay();                  // start next delay
+                }
             }
         }
     }
@@ -4168,7 +4210,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         displayUnitScales = new double[mainapp.maxThrottlesCurrentScreen];
 
         changeTimers = new PacingDelay[mainapp.maxThrottlesCurrentScreen];
-        speedMessagePacingTimers = new PacingDelay[mainapp.maxThrottlesCurrentScreen];
+        speedMessagePacingTimers = new SpeedPacingDelay[mainapp.maxThrottlesCurrentScreen];
 
         // throttle layouts
         vThrotScr = findViewById(R.id.throttle_screen);
@@ -4413,7 +4455,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
             // set throttle change delay timers
             changeTimers[i] = new PacingDelay(changeDelay);
-            speedMessagePacingTimers[i] = new PacingDelay(maxSpeedMessageRate);
+            speedMessagePacingTimers[i] = new SpeedPacingDelay(maxSpeedMessageRate, i);
         }
 
         clearVolumeAndGamepadAdditionalIndicators();
@@ -5944,7 +5986,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //            File image_file = new File(sdcard_path, prefBackgroundImageFileName);
             File image_file = new File(prefBackgroundImageFileName);
             myImage.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
-            myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//            myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            myImage.setScaleType(ImageView.ScaleType.FIT_CENTER);//.CENTER_CROP);
         } catch (Exception e) {
             Log.d("Engine_Driver", "Throttle: failed loading background image");
         }
