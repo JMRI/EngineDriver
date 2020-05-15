@@ -439,6 +439,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     protected boolean prefBackgroundImage = false;
     protected String prefBackgroundImageFileName = "";
+    protected String prefBackgroundImagePosition = "FIT_CENTER";
 
     private int[] gamePadIds = {0,0,0,0,0,0}; // which device id if assigned to each of the three throttles
     private int[] gamePadThrottleAssignment = {-1,-1,-1,-1,-1,-1};
@@ -1428,6 +1429,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         prefBackgroundImage = prefs.getBoolean("prefBackgroundImage", getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue));
         prefBackgroundImageFileName = prefs.getString("prefBackgroundImageFileName", getResources().getString(R.string.prefBackgroundImageFileNameDefaultValue));
+        prefBackgroundImagePosition = prefs.getString("prefBackgroundImagePosition", getResources().getString(R.string.prefBackgroundImagePositionDefaultValue));
 
         prefLimitSpeedButton = prefs.getBoolean("prefLimitSpeedButton", getResources().getBoolean(R.bool.prefLimitSpeedButtonDefaultValue));
         prefLimitSpeedPercent = Integer.parseInt(prefs.getString("prefLimitSpeedPercent", getResources().getString(R.string.prefLimitSpeedPercentDefaultValue)));
@@ -5983,11 +5985,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         ImageView myImage = findViewById(R.id.backgroundImgView);
         try {
             File sdcard_path = Environment.getExternalStorageDirectory();
-//            File image_file = new File(sdcard_path, prefBackgroundImageFileName);
             File image_file = new File(prefBackgroundImageFileName);
             myImage.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
-//            myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            myImage.setScaleType(ImageView.ScaleType.FIT_CENTER);//.CENTER_CROP);
+            if (prefBackgroundImagePosition.equals("FIT_CENTER")) {
+                myImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            } else {
+                myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            }
         } catch (Exception e) {
             Log.d("Engine_Driver", "Throttle: failed loading background image");
         }

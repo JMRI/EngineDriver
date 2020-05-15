@@ -139,14 +139,14 @@
       <item name="android:shadowColor">#FF000000</item>
       <item name="android:shadowDx">2</item>
       <item name="android:shadowDy">2</item>
-      <item name="android:shadowRadius">1</item>
+      <item name="android:shadowRadius">4</item>
     </style>
     <style name="floating_text_style" parent="@android:style/Widget.TextView">
       <item name="android:textColor">@color/solidWhite</item>
       <item name="android:shadowColor">#FF000000</item>
       <item name="android:shadowDx">2</item>
       <item name="android:shadowDy">2</item>
-      <item name="android:shadowRadius">1</item>
+      <item name="android:shadowRadius">4</item>
     </style>
     <style name="list_item_style" parent="@android:style/Widget.TextView">
       <item name="android:textColor">#FFFFFF</item>
@@ -405,6 +405,10 @@
 
   <style name="floating_text_style_black" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/solidWhite</item>
+    <item name="android:shadowColor">@color/black</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">4</item>
   </style>
   <style name="edit_label_style_black" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/solidWhite</item>
@@ -553,6 +557,10 @@
 
   <style name="floating_text_style_outline" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/solidWhite</item>
+    <item name="android:shadowColor">@color/black</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">4</item>
   </style>
   <style name="edit_label_style_outline" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/solidWhite</item>
@@ -867,7 +875,11 @@
 
   <style name="floating_text_style_colorful" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/primary_colorful</item>
-    <item name="android:background">@color/transparent</item>
+    <!-- <item name="android:background">@color/transparent</item> -->
+    <item name="android:shadowColor">@color/windowBackground_colorful</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">4</item>
   </style>
   <style name="edit_label_style_colorful" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/primary_colorful</item>

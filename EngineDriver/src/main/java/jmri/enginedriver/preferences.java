@@ -448,6 +448,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     break;
                 case "prefBackgroundImage":
                 case "prefBackgroundImageFileName":
+                case "prefBackgroundImagePosition":
                     forceRestartApp(mainapp.FORCED_RESTART_REASON_BACKGROUND);
                     break;
                 case "prefConsistFollowRuleStyle":
