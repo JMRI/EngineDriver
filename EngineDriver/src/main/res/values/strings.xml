@@ -994,7 +994,11 @@
 
     <string name="prefBackgroundImageFileNameTitle">Background Image File Name</string>
     <string name="prefBackgroundImageFileNameSummary">Enter the name of the background image file.</string>
-    <string name="prefBackgroundImageFileNameDefaultValue">engine_driver/engine_driver_background.png translatable="false">9999</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefBackgroundImageFileNameDefaultValue" translatable="false">engine_driver/engine_driver_background.png</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefBackgroundImageFileNameNoImageSelected">No image was selected</string>
+
+    <string name="prefBackgroundImagePositionTitle">Background Image Position</string>
+    <string name="prefBackgroundImagePositionSummary">Select how the background image will be positioned on the screen.</string>
+    <string name="prefBackgroundImagePositionDefaultValue" translatable="false">FIT_CENTER</string>  <!-- DO NOT TRANSLATE -->
 
 </resources>

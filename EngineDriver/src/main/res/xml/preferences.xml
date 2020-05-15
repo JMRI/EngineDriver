@@ -581,19 +581,18 @@
             android:summary="@string/prefBackgroundImageSummary"
             android:title="@string/prefBackgroundImageTitle" />
 
-<!--
-        <EditTextPreference
-            android:defaultValue="@string/prefBackgroundImageFileNameDefaultValue"
-            android:dialogTitle="@string/prefBackgroundImageFileNameTitle"
-            android:key="prefBackgroundImageFileName"
-            android:summary="@string/prefBackgroundImageFileNameSummary"
-            android:title="@string/prefBackgroundImageFileNameTitle" />
--->
-
         <Preference
             android:summary="@string/prefBackgroundImageFileNameSummary"
             android:title="@string/prefBackgroundImageFileNameTitle"
             android:key="prefBackgroundImageFileNameImagePicker" />
+
+        <ListPreference
+            android:defaultValue="@string/prefBackgroundImagePositionDefaultValue"
+            android:entries="@array/prefBackgroundImagePositionEntries"
+            android:entryValues="@array/prefBackgroundImagePositionEntryValues"
+            android:key="prefBackgroundImagePosition"
+            android:summary="@string/prefBackgroundImagePositionSummary"
+            android:title="@string/prefBackgroundImagePositionTitle" />
 
     </PreferenceCategory>
 

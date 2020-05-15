@@ -855,6 +855,15 @@
         <item>Run completed</item>
     </string-array>
 
+    <string-array name="prefBackgroundImagePositionEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>FIT_CENTER</item>
+        <item>CENTER_CROP</item>
+    </string-array>
+    <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
+        <item>Fit Center</item>
+        <item>Center Crop</item>
+    </string-array>
+
     <!-- always put any categories last.  i.e. preferences, then sub categories, then categories -->
     <string-array name="advancedPreferences" translatable="false">
         <item>prefLocale</item>

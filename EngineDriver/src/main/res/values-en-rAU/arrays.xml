@@ -37,4 +37,9 @@
         <item tools:ignore="TypographyDashes">Simple &#8211; Tablet Recommended (1-6 throttles)</item>
     </string-array>
 
+    <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
+        <item>Fit Centre</item>
+        <item>Centre Crop</item>
+    </string-array>
+
 </resources>
