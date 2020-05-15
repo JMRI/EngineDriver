@@ -5944,8 +5944,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //            File image_file = new File(sdcard_path, prefBackgroundImageFileName);
             File image_file = new File(prefBackgroundImageFileName);
             myImage.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
-//            myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            myImage.setScaleType(ImageView.ScaleType.FIT_CENTER);//.CENTER_CROP);
+            myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         } catch (Exception e) {
             Log.d("Engine_Driver", "Throttle: failed loading background image");
         }
