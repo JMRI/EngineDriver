@@ -772,6 +772,7 @@ public class threaded_application extends Application {
                 socketWiT.disconnect(true, fast);     //stop reading from the socket
 //                socketWiT = null;
             }
+            Log.d("Engine_Driver", "threaded_application.Shutdown: socketWit down");
             saveSharedPreferencesToFileIfAllowed();
             host_ip = null;
             port = 0;
@@ -810,6 +811,7 @@ public class threaded_application extends Application {
                 }
             }
         }
+
 
         /* ask for specific loco to be added to a throttle
              input addr is formatted "L37<;>CSX37" or "S96" (if no roster name)
@@ -1372,6 +1374,10 @@ public class threaded_application extends Application {
             private int connectTimeoutMs = 3000; //connection timeout in milliseconds
             private int socketTimeoutMs = 500; //socket timeout in milliseconds
 
+            private final int MAX_INBOUND_TIMEOUT_RETRIES = 2;
+            private int inboundTimeoutRetryCount = 0;           // number of consecutive inbound timeouts
+            private boolean inboundTimeoutRecovery = false;     // attempting to force WiT to respond
+
 
             socket_WiT() {
                 super("socket_WiT");
@@ -1502,6 +1508,7 @@ public class threaded_application extends Application {
                             if ((str = inputBR.readLine()) != null) {
                                 if (str.length() > 0) {
                                     heart.restartInboundInterval();
+                                    clearInboundTimeout();
                                     process_response(str);
                                 }
                             }
@@ -1561,7 +1568,7 @@ public class threaded_application extends Application {
                             String status = "Connected to WiThrottle Server at " + host_ip + ":" + port;
                             sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT, status);
                             Log.d("Engine_Driver", "threaded_application: WiT reconnection successful.");
-                            inboundTimeout = false;
+                            clearInboundTimeout();
                             heart.restartInboundInterval();     //socket is good so restart inbound heartbeat timer
                         }
                     } catch (Exception e) {
@@ -1612,8 +1619,26 @@ public class threaded_application extends Application {
             }
 
             void InboundTimeout() {
-                inboundTimeout = true;
-                comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 200L);    //force a send so the reconnection process start immediately
+                if (++inboundTimeoutRetryCount >= MAX_INBOUND_TIMEOUT_RETRIES) {
+                    Log.d("Engine_Driver", "threaded_application: WiT max inbound timeouts");
+                    inboundTimeout = true;
+                    inboundTimeoutRetryCount = 0;
+                    inboundTimeoutRecovery = false;
+                    // force a send to start the reconnection process
+                    comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 200L);
+                }
+                else {
+                    Log.d("Engine_Driver", "threaded_application: WiT inbound timeout number: " + Integer.toString(inboundTimeoutRetryCount));
+                    // heartbeat should trigger a WiT reply so force that now
+                    inboundTimeoutRecovery = true;
+                    comm_msg_handler.post(heart.outboundHeartbeatTimer);
+                }
+            }
+
+            void clearInboundTimeout() {
+                inboundTimeout = false;
+                inboundTimeoutRecovery = false;
+                inboundTimeoutRetryCount = 0;
             }
         }
 
@@ -1729,6 +1754,10 @@ public class threaded_application extends Application {
                     comm_msg_handler.removeCallbacks(this);             //remove pending requests
                     if (heartbeatIntervalSetpoint != 0) {
                         boolean anySent = false;
+                        // prior to JMRI 4.20 there were cases where WiT might not respond to
+                        // speed and direction request.  If inboundTimeout handling is in progress
+                        // then we always send the Throttle Name to ensure a response
+                        boolean forceResponseMessage = socketWiT.inboundTimeoutRecovery;
                         for (int i = 0; i < numThrottles; i++) {
                             if (consists[i].isActive()) {
                                 witRequestSpeed(i);
@@ -1736,7 +1765,7 @@ public class threaded_application extends Application {
                                 anySent = true;
                             }
                         }
-                        if (!anySent) {
+                        if (!anySent || forceResponseMessage) {
                             sendThrottleName(false);    //send message that will get a response
                         }
                         comm_msg_handler.postDelayed(this, heartbeatOutboundInterval);   //set next beat
@@ -3109,6 +3138,7 @@ end force shutdown */
     }
 
     private void saveSharedPreferencesToFileImpl() {
+        Log.d("Engine_Driver", "TA: saveSharedPreferencesToFileImpl: start");
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", threaded_application.context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
