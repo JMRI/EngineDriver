@@ -195,4 +195,8 @@
         <item>Ejecución finalizada</item>
     </string-array>
 
+    <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
+        <item>Reducir el tamaño de imagen para adaptarse</item>
+        <item>llenar la pantalla - Cultivos si es necesario</item>
+    </string-array>
 </resources>

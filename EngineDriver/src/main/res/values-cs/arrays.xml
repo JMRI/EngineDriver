@@ -402,4 +402,8 @@
         <item>Běh dokončen</item>
     </string-array>
 
+    <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
+        <item>Shrink image to fit</item>
+        <item>Fill screen - Crop if needed</item>
+    </string-array>
 </resources>

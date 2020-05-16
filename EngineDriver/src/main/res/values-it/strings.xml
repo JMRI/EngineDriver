@@ -743,4 +743,6 @@
     <string name="prefBackgroundImageFileNameTitle">Background Image File Name</string>
     <string name="prefBackgroundImageSummary">Mostra un\'immagine di sfondo sulla pagina Throttle</string>
     <string name="prefBackgroundImageTitle">Immagine di sfondo</string>
+    <string name="prefBackgroundImagePositionSummary">Selezionare come l\'immagine di sfondo sarà posizionato sullo schermo.</string>
+    <string name="prefBackgroundImagePositionTitle">Immagine di sfondo di posizione</string>
 </resources>

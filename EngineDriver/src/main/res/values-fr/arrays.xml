@@ -370,4 +370,8 @@
         <item>Non</item>
     </string-array>
 
+    <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
+        <item>Réduction de la taille image pour l\'adapter</item>
+        <item>Remplir l\'écran - Culture si nécessaire</item>
+    </string-array>
 </resources>

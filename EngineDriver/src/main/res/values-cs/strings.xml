@@ -910,4 +910,6 @@
     <string name="prefBackgroundImageFileNameTitle">Pozadí Image File Name</string>
     <string name="prefBackgroundImageSummary">Zobrazoval obrázek na pozadí na straně škrticí</string>
     <string name="prefBackgroundImageTitle">Obrázek na pozadí</string>
+    <string name="prefBackgroundImagePositionSummary">Zvolit, jak bude obrázek na pozadí umístěn na obrazovce.</string>
+    <string name="prefBackgroundImagePositionTitle">Background Position Image</string>
 </resources>

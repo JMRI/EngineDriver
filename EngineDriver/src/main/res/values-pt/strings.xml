@@ -747,4 +747,6 @@
     <string name="prefBackgroundImageFileNameTitle">Fundo Nome do Arquivo de Imagem</string>
     <string name="prefBackgroundImageSummary">Mostrar uma imagem de fundo na página do acelerador</string>
     <string name="prefBackgroundImageTitle">Imagem de fundo</string>
+    <string name="prefBackgroundImagePositionSummary">Selecione como a imagem de fundo será posicionado na tela.</string>
+    <string name="prefBackgroundImagePositionTitle">Fundo Posição da Imagem</string>
 </resources>

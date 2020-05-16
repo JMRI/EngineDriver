@@ -195,4 +195,8 @@
         <item>Ausführen abgeschlossen</item>
     </string-array>
 
+    <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
+        <item>Shrink Bild zu passen</item>
+        <item>Füllen Bildschirm - Crop bei Bedarf</item>
+    </string-array>
 </resources>
