@@ -212,4 +212,8 @@
         <item>Executar concluído</item>
     </string-array>
 
+    <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
+        <item>Encolher a imagem para caber</item>
+        <item>Preencher a tela - Colheita, se necessário</item>
+    </string-array>
 </resources>

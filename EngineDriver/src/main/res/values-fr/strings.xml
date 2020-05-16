@@ -828,4 +828,6 @@
     <string name="prefBackgroundImageFileNameTitle">Arrière-plan Nom du fichier</string>
     <string name="prefBackgroundImageSummary">Montrer une image d\'arrière-plan sur la page des gaz</string>
     <string name="prefBackgroundImageTitle">Image de fond</string>
+    <string name="prefBackgroundImagePositionSummary">Sélectionnez la façon dont l\'image d\'arrière-plan sera placé sur l\'écran.</string>
+    <string name="prefBackgroundImagePositionTitle">Contexte Position de l\'image</string>
 </resources>

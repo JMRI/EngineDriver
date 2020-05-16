@@ -214,4 +214,8 @@
         <item>Esegui completato </item>
     </string-array>
 
+    <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
+        <item>Shrink immagine per adattarla</item>
+        <item>Riempire schermo - Raccolto, se necessario</item>
+    </string-array>
 </resources>

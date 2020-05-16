@@ -195,4 +195,8 @@
         <item>Execució finalitzada</item>
     </string-array>
 
+    <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
+        <item>Reduir la mida d'imatge per adaptar-</item>
+        <item>omplir la pantalla - Cultius si cal</item>
+    </string-array>
 </resources>

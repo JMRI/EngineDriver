@@ -809,4 +809,6 @@
     <string name="prefBackgroundImageFileNameTitle">Antecedents Nom d\'arxiu d\'imatge</string>
     <string name="prefBackgroundImageSummary">Mostrar una imatge de fons a la pàgina de l\'accelerador</string>
     <string name="prefBackgroundImageTitle">Imatge de fons</string>
+    <string name="prefBackgroundImagePositionSummary">Seleccionar la forma de la imatge de fons es col·locarà a la pantalla.</string>
+    <string name="prefBackgroundImagePositionTitle">Posició de la imatge de fons</string>
 </resources>

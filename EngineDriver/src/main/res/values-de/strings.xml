@@ -812,4 +812,6 @@
     <string name="prefBackgroundImageFileNameTitle">Hintergrund Bilddateinamen</string>
     <string name="prefBackgroundImageSummary">Zeigen Sie ein Hintergrundbild auf der Gasseite</string>
     <string name="prefBackgroundImageTitle">Hintergrundbild</string>
+    <string name="prefBackgroundImagePositionSummary">Wählen Sie, wie das Hintergrundbild auf dem Bildschirm positioniert werden.</string>
+    <string name="prefBackgroundImagePositionTitle">Hintergrund Bildposition</string>
 </resources>
