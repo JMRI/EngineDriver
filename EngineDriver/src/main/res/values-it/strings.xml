@@ -700,10 +700,10 @@
     <string name="prefLimitSpeedPercentSummary">Impostare il \% della valvola a farfalla che la velocità sarà limitata a.</string>
     <string name="limitSpeedButtonLabel">limite di velocità</string>
     <string name="LocoSelectMethodRecentConsist">recenti Consistono</string>
-    <string name="toastSelectConsistsConfirmClear">Confermare che si desidera rimuovere tutti i recenti Consiste premendo nuovamente il tasto \\\'Cancella elenco\\\'.</string>
-    <string name="toastRecentConsistsHelp">Toccare per selezionare.\\nPremere a lungo per rinominare.\\nSwipe sinistra a destra per rimuovere una voce.</string>
-    <string name="toastRecentsHelp">Toccare per selezionare.\\nPremere a lungo per rinominare.\\nSwipe sinistra a destra per rimuovere una voce.</string>
-    <string name="toastRosterHelp">Toccare per selezionare.\\nPremere a lungo per i dettagli.</string>
+    <string name="toastSelectConsistsConfirmClear">Confermare che si desidera rimuovere tutti i recenti Consiste premendo nuovamente il tasto \'Cancella elenco\'.</string>
+    <string name="toastRecentConsistsHelp">Toccare per selezionare.\nPremere a lungo per rinominare.\nSwipe sinistra a destra per rimuovere una voce.</string>
+    <string name="toastRecentsHelp">Toccare per selezionare.\nPremere a lungo per rinominare.\nSwipe sinistra a destra per rimuovere una voce.</string>
+    <string name="toastRosterHelp">Toccare per selezionare.\nPremere a lungo per i dettagli.</string>
     <string name="RecentConsistsNameEditText">Inserire un nome per il Consist</string>
     <string name="RecentConsistsNameEditTitle">Recenti Consistono Nome</string>
     <string name="RecentsNameEditText">Inserire un nome per il Loco</string>
@@ -713,8 +713,8 @@
     <string name="toastRecentConsistCleared">Consistono rimosso dalla lista</string>
     <string name="editConsistButtonLabel">Modifica ordine e la direzione</string>
     <string name="editConsistLightsButtonLabel">Modifica Luci</string>
-    <string name="toastConnectionsListHelp">Toccare per selezionare.\\nSwipe sinistra a destra per rimuovere una voce.</string>
-    <string name="toastConsistEditHelp">Toccare per cambiare direzione.\\nSwipe sinistra a destra per rimuovere una voce.</string>
+    <string name="toastConnectionsListHelp">Toccare per selezionare.\nSwipe sinistra a destra per rimuovere una voce.</string>
+    <string name="toastConsistEditHelp">Toccare per cambiare direzione.\nSwipe sinistra a destra per rimuovere una voce.</string>
     <string name="consistLocoFacingFront">Davanti</string>
     <string name="consistLocoFacingRear">Posteriore</string>
     <string name="editConsistLocoFacingLabel">Di fronte</string>
@@ -724,7 +724,7 @@
     <string name="turnoutsSelectionTypeRoster">%1$s Definito</string>
     <string name="turnoutsRecentHeading">deviatoi recenti</string>
     <string name="toastRecentTurnoutCleared">Affluenza rimosso dalla lista</string>
-    <string name="toastRecentTurnoutsConfirmClear">ONFERMA che si desidera rimuovere tutti i deviatoi recenti premendo il tasto \\\'Cancella elenco\\\' ANCORA.</string>
+    <string name="toastRecentTurnoutsConfirmClear">ONFERMA che si desidera rimuovere tutti i deviatoi recenti premendo il tasto \'Cancella elenco\' ANCORA.</string>
     <string name="toastTurnoutsRecentsHelp">Premere a lungo per rimuovere una voce.</string>
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Commutazione Throttle Dead Zone</string>
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Impostare la dimensione della zona morta sul cursore dello schermo Throttle Switching</string>

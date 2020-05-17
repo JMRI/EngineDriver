@@ -437,7 +437,7 @@
     <string name="prefDirectionButtonLongPressDelaySummary">Quantos milissegundos constituem um toque longo para os botões de direção.</string>
 
     <string name="prefThemeTitle">Tema/Estilo</string>
-    <string name="prefThemeSummary">Tema App.\\nNecessita Android Honeycomb ou sucessivo.</string>
+    <string name="prefThemeSummary">Tema App.\nNecessita Android Honeycomb ou sucessivo.</string>
 
     <string name="prefHideDemoServerTitle">Esconder Servidor Demo</string>
     <string name="prefHideDemoServerSummary">Esconder o servidor demo \'jmri.mstevetodd.com\' na lista de conexões.</string>
@@ -704,10 +704,10 @@
     <string name="prefLimitSpeedPercentSummary">Defina o \% do acelerador que a velocidade será limitada a.</string>
     <string name="limitSpeedButtonLabel">limite de velocidade</string>
     <string name="LocoSelectMethodRecentConsist">recentes Consistem</string>
-    <string name="toastSelectConsistsConfirmClear">Confirme que deseja remover todas as recentes Consiste pressionando o botão \\\'Limpar lista\\\' outra vez.</string>
-    <string name="toastRecentConsistsHelp">Toque para selecionar.\\nLongo pressione para mudar o nome.\\nSwipe esquerda para a direita para remover uma entrada.</string>
-    <string name="toastRecentsHelp">Toque para selecionar.\\nLongo pressione para mudar o nome.\\nSwipe esquerda para a direita para remover uma entrada.</string>
-    <string name="toastRosterHelp">Toque para selecionar.\\nLongo de imprensa para obter mais detalhes.</string>
+    <string name="toastSelectConsistsConfirmClear">Confirme que deseja remover todas as recentes Consiste pressionando o botão \'Limpar lista\' outra vez.</string>
+    <string name="toastRecentConsistsHelp">Toque para selecionar.\nLongo pressione para mudar o nome.\nSwipe esquerda para a direita para remover uma entrada.</string>
+    <string name="toastRecentsHelp">Toque para selecionar.\nLongo pressione para mudar o nome.\nSwipe esquerda para a direita para remover uma entrada.</string>
+    <string name="toastRosterHelp">Toque para selecionar.\nLongo de imprensa para obter mais detalhes.</string>
     <string name="RecentConsistsNameEditText">Digite um nome para a Consist</string>
     <string name="RecentConsistsNameEditTitle">Recentes Consistem Nome</string>
     <string name="RecentsNameEditText">Digite um nome para o Loco</string>
@@ -717,8 +717,8 @@
     <string name="toastRecentConsistCleared">Consistem removido da lista</string>
     <string name="editConsistButtonLabel">Editar ordem e direção</string>
     <string name="editConsistLightsButtonLabel">Editar Luzes</string>
-    <string name="toastConnectionsListHelp">Toque para selecionar.\\nSwipe esquerda para a direita para remover uma entrada.</string>
-    <string name="toastConsistEditHelp">Toque para mudar de direção.\\nSwipe esquerda para a direita para remover uma entrada.</string>
+    <string name="toastConnectionsListHelp">Toque para selecionar.\nSwipe esquerda para a direita para remover uma entrada.</string>
+    <string name="toastConsistEditHelp">Toque para mudar de direção.\nSwipe esquerda para a direita para remover uma entrada.</string>
     <string name="consistLocoFacingFront">Frente</string>
     <string name="consistLocoFacingRear">traseiro</string>
     <string name="editConsistLocoFacingLabel">Voltado para</string>
@@ -728,7 +728,7 @@
     <string name="turnoutsSelectionTypeHeading">O comparecimento às urnas Método de Selecção</string>
     <string name="turnoutsSelectionTypeRoster">%1$s Definiram</string>
     <string name="toastRecentTurnoutCleared">A afluência removido da lista</string>
-    <string name="toastRecentTurnoutsConfirmClear">onfirm que deseja remover todas as Agulhas recentes, pressionando o botão \\\'Limpar Lista\\\' NOVAMENTE.</string>
+    <string name="toastRecentTurnoutsConfirmClear">onfirm que deseja remover todas as Agulhas recentes, pressionando o botão \'Limpar Lista\' NOVAMENTE.</string>
     <string name="toastTurnoutsRecentsHelp">Longo pressionar para remover uma entrada.</string>
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Alternando acelerador Dead Zone</string>
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Defina o tamanho da zona morta no controle deslizante do Switching do acelerador Tela</string>

@@ -424,7 +424,7 @@
     <string name="prefRightDirectionButtonsShortDefaultValue">AR</string>
 
 
-    <string name="prefThemeSummary">Thème de l appli.\\nNécessite Android 3.0 minimum.</string>
+    <string name="prefThemeSummary">Thème de l appli.\nNécessite Android 3.0 minimum.</string>
 
     <string name="prefHideDemoServerTitle">Cache le serveur de démonstration</string>
     <string name="prefHideDemoServerSummary">Cache le serveur de démonstration \'jmri.mstevetodd.com\'  dans la liste de serveurs de connexion.</string>
