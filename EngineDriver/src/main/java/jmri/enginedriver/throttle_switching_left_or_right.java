@@ -42,7 +42,8 @@ import java.util.LinkedHashMap;
 
 public class throttle_switching_left_or_right extends throttle {
 
-    protected static final int MAX_SCREEN_THROTTLES = 1;
+    protected static final int MAX_SCREEN_THROTTLES = 2;
+    protected static final int MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT = 1;
 
     private LinearLayout[] lThrottles;
     private LinearLayout[] lUppers;
@@ -53,11 +54,11 @@ public class throttle_switching_left_or_right extends throttle {
     private static final int TICK_TYPE_0_100 = 0;
     private static final int TICK_TYPE_0_100_0 = 1;
 
-    private int throttleMidPointZero;
-    private int throttleSwitchingMax;
+    private int throttleMidPointZero[] = {0,0};
+    private int throttleSwitchingMax[] = {0,0};
 
-    private int throttleMidPointDeadZoneUpper;
-    private int throttleMidPointDeadZoneLower;
+    private int throttleMidPointDeadZoneUpper[] = {0,0};
+    private int throttleMidPointDeadZoneLower[] = {0,0};
 
     private int prefSwitchingThrottleSliderDeadZone = 10;
 
@@ -87,15 +88,20 @@ public class throttle_switching_left_or_right extends throttle {
     public void onCreate(Bundle savedInstanceState) {
 
         mainapp = (threaded_application) this.getApplication();
-        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
+            case "Switching":
+                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
+                super.layoutViewId = R.layout.throttle_switching;
+                break;
             case "Switching Right":
+                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT;
                 super.layoutViewId = R.layout.throttle_switching_right;
                 break;
             case "Switching Left":
             default:
+                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT;
                 super.layoutViewId = R.layout.throttle_switching_left;
                 break;
         }
@@ -109,15 +115,20 @@ public class throttle_switching_left_or_right extends throttle {
                 case 0:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
                     break;
+                case 1:
+                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_1);
+                    break;
             }
 
         }
 
-        throttleMidPointZero = (maxThrottle + prefSwitchingThrottleSliderDeadZone);
-        throttleSwitchingMax = (maxThrottle + prefSwitchingThrottleSliderDeadZone) * 2;
-        throttleMidPointDeadZoneUpper = throttleMidPointZero + prefSwitchingThrottleSliderDeadZone;
-        throttleMidPointDeadZoneLower = throttleMidPointZero - prefSwitchingThrottleSliderDeadZone;
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            throttleMidPointZero[throttleIndex] =(maxThrottle + prefSwitchingThrottleSliderDeadZone);
+            throttleSwitchingMax[throttleIndex] = (maxThrottle + prefSwitchingThrottleSliderDeadZone) * 2;
+            throttleMidPointDeadZoneUpper[throttleIndex] = throttleMidPointZero[throttleIndex] + prefSwitchingThrottleSliderDeadZone;
+            throttleMidPointDeadZoneLower[throttleIndex] = throttleMidPointZero[throttleIndex] - prefSwitchingThrottleSliderDeadZone;
 //        throttleReScale = ((throttleMidPointZero * 2)) / (double) throttleMidPointDeadZoneLower;
+        }
 
         lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         lSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
@@ -139,16 +150,29 @@ public class throttle_switching_left_or_right extends throttle {
                     vsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_0);
                     vsbSwitchingSpeeds[throttleIndex].setTickType(TICK_TYPE_0_100_0);
 //                    vsbSwitchingSpeeds[throttleIndex].setMax(MAX_SPEED_VAL_WIT);
-                    vsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax);
-                    vsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero);
+                    vsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
+                    vsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
+                    break;
+                case 1:
+                    lThrottles[throttleIndex] = findViewById(R.id.throttle_1);
+                    lUppers[throttleIndex] = findViewById(R.id.loco_upper_1);
+                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_1);
+                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
+                    vsbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
+                    vsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_1);
+                    vsbSwitchingSpeeds[throttleIndex].setTickType(TICK_TYPE_0_100_0);
+//                    vsbSwitchingSpeeds[throttleIndex].setMax(MAX_SPEED_VAL_WIT);
+                    vsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
+                    vsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
+                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_1);
                     break;
             }
         }
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             sbs[throttleIndex].setMax(Math.round(maxThrottle));
-            vsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax);
+            vsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
         }
 
         setAllFunctionLabelsAndListeners();
@@ -161,9 +185,9 @@ public class throttle_switching_left_or_right extends throttle {
                 case 0:
                     bLimitSpeed = findViewById(R.id.limit_speed_0);
                     break;
-//                case 1:
-//                    bLimitSpeed = findViewById(R.id.limit_speed_1);
-//                    break;
+                case 1:
+                    bLimitSpeed = findViewById(R.id.limit_speed_1);
+                    break;
 
             }
             bLimitSpeeds[throttleIndex] = bLimitSpeed;
@@ -295,11 +319,11 @@ public class throttle_switching_left_or_right extends throttle {
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
 
-//            //show speed buttons based on pref
-//            vsbSpeeds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
-//            if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
-//                vsbSpeeds[throttleIndex].setVisibility(View.GONE);
-//            }
+            //show speed buttons based on pref
+            vsbSpeeds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
+            if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
+                vsbSpeeds[throttleIndex].setVisibility(View.GONE);
+            }
 
             vsbSpeeds[throttleIndex].setVisibility(View.GONE); //always hide the real slider
 //            vsbSpeeds[throttleIndex].setVisibility(View.VISIBLE);
@@ -387,7 +411,11 @@ public class throttle_switching_left_or_right extends throttle {
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             // set height of each function button area
-            svFnBtns[throttleIndex].getLayoutParams().height = screenHeight - lowerButtonsHeight - lUppers[throttleIndex].getHeight();
+            if (mainapp.maxThrottlesCurrentScreen==1) {
+                svFnBtns[throttleIndex].getLayoutParams().height = screenHeight - lowerButtonsHeight - lUppers[throttleIndex].getHeight();
+            } else {
+                svFnBtns[throttleIndex].getLayoutParams().height = screenHeight - lUppers[throttleIndex].getHeight();
+            }
             svFnBtns[throttleIndex].requestLayout();
             lLowers[throttleIndex].getLayoutParams().height = screenHeight - lUppers[throttleIndex].getHeight();
             lLowers[throttleIndex].requestLayout();
@@ -515,7 +543,7 @@ public class throttle_switching_left_or_right extends throttle {
 
         protected throttleSwitchingListener(int new_whichThrottle) {
             whichThrottle = new_whichThrottle; // store values for this listener
-            lastSliderPosition = throttleMidPointZero;
+            lastSliderPosition = throttleMidPointZero[whichThrottle];
             limitedJump = false;
         }
 
@@ -557,9 +585,9 @@ public class throttle_switching_left_or_right extends throttle {
                             mAutoDecrement = false;
                         }
 
-                        if ((lastSliderPosition < throttleMidPointZero) && (newSliderPosition > throttleMidPointZero)) { // passing from reverse to forward
+                        if ((lastSliderPosition < throttleMidPointZero[whichThrottle]) && (newSliderPosition > throttleMidPointZero[whichThrottle])) { // passing from reverse to forward
                             mChangeDirectionAtZero= true;
-                        } else if ((lastSliderPosition > throttleMidPointZero) && (newSliderPosition < throttleMidPointZero)) { // passing from forward to reverse
+                        } else if ((lastSliderPosition > throttleMidPointZero[whichThrottle]) && (newSliderPosition < throttleMidPointZero[whichThrottle])) { // passing from forward to reverse
                             mChangeDirectionAtZero= true;
                         }
 
@@ -701,8 +729,8 @@ public class throttle_switching_left_or_right extends throttle {
         if (newSliderPosition < 0)  //insure speed is inside bounds
             newSliderPosition = 0;
 
-        if (newSliderPosition > throttleSwitchingMax)
-            newSliderPosition = throttleSwitchingMax;
+        if (newSliderPosition > throttleSwitchingMax[whichThrottle])
+            newSliderPosition = throttleSwitchingMax[whichThrottle];
 
 //        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) + " newSliderPosition: " + newSliderPosition);
 //        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange - change: " + change);
@@ -728,8 +756,8 @@ public class throttle_switching_left_or_right extends throttle {
         if (sliderPosition < 0)  //insure speed is inside bounds
             sliderPosition = 0;
 
-        if (sliderPosition > throttleSwitchingMax)
-            sliderPosition = throttleSwitchingMax;
+        if (sliderPosition > throttleSwitchingMax[whichThrottle])
+            sliderPosition = throttleSwitchingMax[whichThrottle];
 
         getSwitchingThrottleSlider(whichThrottle).setProgress(sliderPosition);
         setDisplayedSpeed(whichThrottle, speed);
@@ -780,10 +808,10 @@ public class throttle_switching_left_or_right extends throttle {
             scale = getDisplayUnitScale(whichThrottle);
         }
 
-        if (sliderPosition >= (throttleMidPointDeadZoneUpper)) { //forward
-            speed = (int) Math.round((sliderPosition - throttleMidPointDeadZoneUpper) * scale);
-        } else if (sliderPosition <= (throttleMidPointDeadZoneLower)) { // reverse
-            speed = (int) Math.round((throttleMidPointDeadZoneLower - sliderPosition) * scale);
+        if (sliderPosition >= (throttleMidPointDeadZoneUpper[whichThrottle])) { //forward
+            speed = (int) Math.round((sliderPosition - throttleMidPointDeadZoneUpper[whichThrottle]) * scale);
+        } else if (sliderPosition <= (throttleMidPointDeadZoneLower[whichThrottle])) { // reverse
+            speed = (int) Math.round((throttleMidPointDeadZoneLower[whichThrottle] - sliderPosition) * scale);
         } else { // zero - deadzone
             speed = 0;
         }
@@ -794,9 +822,9 @@ public class throttle_switching_left_or_right extends throttle {
     int getDirectionFromSliderPosition(int sliderPosition, int whichThrottle) {
         int dir;
 
-        if (sliderPosition >= (throttleMidPointDeadZoneUpper)) { //forward
+        if (sliderPosition >= (throttleMidPointDeadZoneUpper[whichThrottle])) { //forward
             dir = DIRECTION_FORWARD;
-        } else if (sliderPosition <= (throttleMidPointDeadZoneLower)) { // reverse
+        } else if (sliderPosition <= (throttleMidPointDeadZoneLower[whichThrottle])) { // reverse
             dir = DIRECTION_REVERSE;
         } else { // zero - deadzone
             dir = DIRECTION_FORWARD;
@@ -818,12 +846,12 @@ public class throttle_switching_left_or_right extends throttle {
         if (!useScale) { scale = 1;}
 
         if (speed==0) {
-            newSliderPosition = throttleMidPointZero;
+            newSliderPosition = throttleMidPointZero[whichThrottle];
         } else {
             if (getDirection(whichThrottle) == DIRECTION_FORWARD) {
-                newSliderPosition = throttleMidPointDeadZoneUpper + (int) Math.round( speed / scale );
+                newSliderPosition = throttleMidPointDeadZoneUpper[whichThrottle] + (int) Math.round( speed / scale );
             } else {
-                newSliderPosition = throttleMidPointDeadZoneLower - (int) Math.round( speed / scale );
+                newSliderPosition = throttleMidPointDeadZoneLower[whichThrottle] - (int) Math.round( speed / scale );
             }
         }
 //        Log.d("Engine_Driver","throttle_switching_left_or_right - getNewSliderPositionFromSpeed -  scale: " + scale + " speed: " + speed + " newSliderPosition: " + newSliderPosition );
@@ -860,9 +888,9 @@ public class throttle_switching_left_or_right extends throttle {
                     limitSpeedSliderScalingFactors[whichThrottle]=100/prefLimitSpeedPercent;
                     sbs[whichThrottle].setMax( Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]));
 
-                    throttleMidPointZero = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone);
-                    throttleSwitchingMax = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone) * 2;
-                    vsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax);
+                    throttleMidPointZero[whichThrottle] = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone);
+                    throttleSwitchingMax[whichThrottle] = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone) * 2;
+                    vsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax[whichThrottle]);
 
                 } else {
                     bLimitSpeeds[whichThrottle].setSelected(false);
@@ -870,12 +898,12 @@ public class throttle_switching_left_or_right extends throttle {
 
 //                    throttleMidPointZero = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone);
 //                    throttleSwitchingMax = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone) * 2;
-                    throttleMidPointZero = (maxThrottle + prefSwitchingThrottleSliderDeadZone);
-                    throttleSwitchingMax = (maxThrottle + prefSwitchingThrottleSliderDeadZone) * 2;
-                    vsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax);
+                    throttleMidPointZero[whichThrottle] = (maxThrottle + prefSwitchingThrottleSliderDeadZone);
+                    throttleSwitchingMax[whichThrottle] = (maxThrottle + prefSwitchingThrottleSliderDeadZone) * 2;
+                    vsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax[whichThrottle]);
                 }
-                throttleMidPointDeadZoneUpper = throttleMidPointZero + prefSwitchingThrottleSliderDeadZone;
-                throttleMidPointDeadZoneLower = throttleMidPointZero - prefSwitchingThrottleSliderDeadZone;
+                throttleMidPointDeadZoneUpper[whichThrottle] = throttleMidPointZero[whichThrottle] + prefSwitchingThrottleSliderDeadZone;
+                throttleMidPointDeadZoneLower[whichThrottle] = throttleMidPointZero[whichThrottle] - prefSwitchingThrottleSliderDeadZone;
 
                 speedUpdate(whichThrottle,  speed);
                 setEngineDirection(whichThrottle, dir, false);

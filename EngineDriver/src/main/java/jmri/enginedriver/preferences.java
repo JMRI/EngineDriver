@@ -766,7 +766,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             reload();
         }
 
-        if (prefThrottleScreenType.equals("Vertical") && (numThrottles != 2)) {
+        if ((prefThrottleScreenType.equals("Vertical") || (prefThrottleScreenType.equals("Switching")) )
+                && (numThrottles != 2)) {
             sharedPreferences.edit().putString("NumThrottle", "Two").commit();
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, "Two"), Toast.LENGTH_SHORT).show();
             reload();
@@ -817,6 +818,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         boolean enable = true;
         if ((prefThrottleScreenTypeOriginal.equals("Simple")) || (prefThrottleScreenTypeOriginal.equals("Vertical"))
                 || (prefThrottleScreenTypeOriginal.equals("Vertical Left"))  || (prefThrottleScreenTypeOriginal.equals("Vertical Right"))
+                || (prefThrottleScreenTypeOriginal.equals("Switching"))
                 || (prefThrottleScreenTypeOriginal.equals("Switching Left"))  || (prefThrottleScreenTypeOriginal.equals("Switching Right"))) {
             enable = false;
         }
@@ -833,6 +835,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 || prefThrottleScreenTypeOriginal.equals("Vertical")
                 || prefThrottleScreenTypeOriginal.equals("Vertical Left")
                 || prefThrottleScreenTypeOriginal.equals("Vertical Right")
+                || prefThrottleScreenTypeOriginal.equals("Switching")
                 || prefThrottleScreenTypeOriginal.equals("Switching Left")
                 || prefThrottleScreenTypeOriginal.equals("Switching Right");
         enableDisablePreference("WebViewLocation", enable);
