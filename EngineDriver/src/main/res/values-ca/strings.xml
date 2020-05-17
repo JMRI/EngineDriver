@@ -222,9 +222,9 @@
     <string name="prefEsuMc2ZeroTrimTitle">Posada a Zero del Botó Regulador</string>
     <string name="prefEsuMc2ZeroTrimSummary">Estableix els paràmetres de posada a zero del Botó Regulador.\nUn valor més petit és més proper a la posició de parada final en el sentit antihorari.\nRang permès 0&#8211;255.</string>
 
-    <string name="toastEsuMc2NoLocoChange">Canvi de Locomotora no permès: Mobile Control II en mode d\\\'aturada</string>
-    <string name="toastEsuMc2NoThrottleChange">Canvi de Controlador no permès: Mobile Control II en mode d\\\'aturada</string>
-    <string name="toastEsuMc2NoButtonPresses">Prémer el botó no està permès: Mobile Control II en mode d\\\'aturada</string>
+    <string name="toastEsuMc2NoLocoChange">Canvi de Locomotora no permès: Mobile Control II en mode d\'aturada</string>
+    <string name="toastEsuMc2NoThrottleChange">Canvi de Controlador no permès: Mobile Control II en mode d\'aturada</string>
+    <string name="toastEsuMc2NoButtonPresses">Prémer el botó no està permès: Mobile Control II en mode d\'aturada</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Utilitza les etiquetes de les funcions per defecte?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Mostra les etiquetes de funció predeterminades en lloc de les etiquetes de les entrades de la flota.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Disminueix l\'Alçada del Número de Locomotora?</string>
@@ -405,7 +405,7 @@
 
     <string name="prefThemeTitle">Tema/Estil</string>
 
-    <string name="prefThemeSummary">Tema de l\'App.\\nRequereix Android Honeycomb o posterior.</string>
+    <string name="prefThemeSummary">Tema de l\'App.\nRequereix Android Honeycomb o posterior.</string>
 
     <string name="prefHideDemoServerTitle">Amaga la Demo del Servidor</string>
     <string name="prefHideDemoServerSummary">Amaga la demo del Servidor\'jmri.mstevetodd.com\' en la llista de connexions.</string>
@@ -762,25 +762,25 @@
     <string name="edit_consist_lights_throttle_5">Edita llums de la TM Regulador 5</string>
     <string name="edit_consist_lights_throttle_6">Edita llums de la TM Regulador 6</string>
     <string name="LocoSelectMethodRecentConsist">Recents Consisteixen</string>
-    <string name="toastSelectConsistsConfirmClear">Confirmeu que voleu eliminar tots els recents Consisteix prement el botó \\\'Esborrar llista\\\' DE NOU.</string>
-    <string name="toastRecentConsistsHelp">Toc per seleccionar.\\nllarg de premsa per canviar el nom.\\npassi a l\\\'esquerra a la dreta per eliminar una entrada.</string>
-    <string name="toastRecentsHelp">Toc per seleccionar.\\nllarg de premsa per canviar el nom.\\npassi a l\\\'esquerra a la dreta per eliminar una entrada.</string>
-    <string name="toastRosterHelp">Toc per seleccionar.\\nllarg de premsa per a més detalls.</string>
+    <string name="toastSelectConsistsConfirmClear">Confirmeu que voleu eliminar tots els recents Consisteix prement el botó \'Esborrar llista\' DE NOU.</string>
+    <string name="toastRecentConsistsHelp">Toc per seleccionar.\nLlarg de premsa per canviar el nom.\nPassi a l\'esquerra a la dreta per eliminar una entrada.</string>
+    <string name="toastRecentsHelp">Toc per seleccionar.\nllarg de premsa per canviar el nom.\nPassi a l\'esquerra a la dreta per eliminar una entrada.</string>
+    <string name="toastRosterHelp">Toc per seleccionar.\nllarg de premsa per a més detalls.</string>
     <string name="RecentConsistsNameEditText">Introduïu un nom per al Consisteixen</string>
     <string name="RecentConsistsNameEditTitle">Recents Consisteixen Nom</string>
     <string name="RecentsNameEditText">Introduïu un nom per al Boig</string>
     <string name="RecentsNameEditTitle">Nom recent Boig</string>
     <string name="prefLimitSpeedButtonSummary">Opció per mostrar un botó que limita la velocitat màxima d\'un boig.</string>
-    <string name="prefLimitSpeedButtonTitle">Mostra el botó \\\'Límit de velocitat\\\'</string>
-    <string name="prefLimitSpeedPercentSummary">Ajust el \\% de l\\\'acceleració que la velocitat es limitarà a.</string>
-    <string name="prefLimitSpeedPercentTitle">\\\'Límit de velocitat\\\' a \\%</string>
+    <string name="prefLimitSpeedButtonTitle">Mostra el botó \'Límit de velocitat\'</string>
+    <string name="prefLimitSpeedPercentSummary">Ajust el \% de l\'acceleració que la velocitat es limitarà a.</string>
+    <string name="prefLimitSpeedPercentTitle">\'Límit de velocitat\' a \%</string>
     <string name="rosterDetailsDialogTitle">"Seleccionar de Llista / Consisteix entrades "</string>
     <string name="toastRecentCleared">Boig elimina de la llista</string>
     <string name="toastRecentConsistCleared">Consisteixen eliminat de la llista</string>
     <string name="editConsistButtonLabel">Edita ordre i la direcció</string>
     <string name="editConsistLightsButtonLabel">Edita Llums</string>
-    <string name="toastConnectionsListHelp">Toc per seleccionar.\\nPas a l\'esquerra a la dreta per eliminar una entrada.</string>
-    <string name="toastConsistEditHelp">Toc per canviar de direcció.\\nPas a l\'esquerra a la dreta per eliminar una entrada.</string>
+    <string name="toastConnectionsListHelp">Toc per seleccionar.\nPas a l\'esquerra a la dreta per eliminar una entrada.</string>
+    <string name="toastConsistEditHelp">Toc per canviar de direcció.\nPas a l\'esquerra a la dreta per eliminar una entrada.</string>
     <string name="consistLocoFacingFront">Front</string>
     <string name="consistLocoFacingRear">Posterior</string>
     <string name="editConsistLocoFacingLabel">Enfront de</string>
@@ -790,7 +790,7 @@
     <string name="turnoutsSelectionTypeRoster">%1$s Definit</string>
     <string name="turnoutsRecentHeading">Desviaments recents</string>
     <string name="toastRecentTurnoutCleared">La participació elimina de la llista</string>
-    <string name="toastRecentTurnoutsConfirmClear">ONFIRMAR que desitja eliminar tots els desviaments recents prement el botó \\\'Esborrar llista\\\' de nou.</string>
+    <string name="toastRecentTurnoutsConfirmClear">ONFIRMAR que desitja eliminar tots els desviaments recents prement el botó \'Esborrar llista\' de nou.</string>
     <string name="toastTurnoutsRecentsHelp">Pulsació llarga per eliminar una entrada.</string>
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Canvi de zona morta de l\'accelerador</string>
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Ajust la mida de la zona morta en el control lliscant de la pantalla de commutació de l\'accelerador</string>

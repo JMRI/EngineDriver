@@ -404,7 +404,7 @@
 
     <string name="prefThemeTitle">Tema/Estilo</string>
 
-    <string name="prefThemeSummary">Tema de la App.\\nRequiere Android Honeycomb o posterior.</string>
+    <string name="prefThemeSummary">Tema de la App.\nRequiere Android Honeycomb o posterior.</string>
 
     <string name="prefHideDemoServerTitle">Esconde la Demo del Servidor</string>
     <string name="prefHideDemoServerSummary">Esconde la demo del Servidor\'jmri.mstevetodd.com\' en la lista de conexiones.</string>
@@ -757,10 +757,10 @@
     <string name="prefLimitSpeedPercentTitle">\'Límite de velocidad\' a \%</string>
     <string name="prefLimitSpeedPercentSummary">Ajuste el \% de la aceleración que la velocidad se limitará a.</string>
     <string name="limitSpeedButtonLabel">límite de velocidad</string>
-    <string name="toastSelectConsistsConfirmClear">Confirmeu que voleu eliminar tots els recents Consisteix prement el botó \\\'Esborrar llista\\\' DE NOU.</string>
-    <string name="toastRecentConsistsHelp">Toque para seleccionar.\\nlargo de prensa para cambiar el nombre.\\npase a la izquierda a la derecha para eliminar una entrada.</string>
-    <string name="toastRecentsHelp">Toque para seleccionar.\\nlargo de prensa para cambiar el nombre.\\npase a la izquierda a la derecha para eliminar una entrada.</string>
-    <string name="toastRosterHelp">Toque para seleccionar.\\nlargo de prensa para más detalles.</string>
+    <string name="toastSelectConsistsConfirmClear">Confirmeu que voleu eliminar tots els recents Consisteix prement el botó \'Esborrar llista\' DE NOU.</string>
+    <string name="toastRecentConsistsHelp">Toque para seleccionar.\nlargo de prensa para cambiar el nombre.\nPase a la izquierda a la derecha para eliminar una entrada.</string>
+    <string name="toastRecentsHelp">Toque para seleccionar.\nLargo de prensa para cambiar el nombre.\nPase a la izquierda a la derecha para eliminar una entrada.</string>
+    <string name="toastRosterHelp">Toque para seleccionar.\nLargo de prensa para más detalles.</string>
     <string name="RecentConsistsNameEditText">Introduzca un nombre para el Consisten</string>
     <string name="RecentConsistsNameEditTitle">Recientes Consisten Nombre</string>
     <string name="RecentsNameEditText">Introduzca un nombre para el Loco</string>
@@ -770,8 +770,8 @@
     <string name="toastRecentConsistCleared">Consisten eliminado de la lista</string>
     <string name="editConsistButtonLabel">Editar orden y la dirección</string>
     <string name="editConsistLightsButtonLabel">Editar Luces</string>
-    <string name="toastConnectionsListHelp">Toque para seleccionar.\\nPase a la izquierda a la derecha para eliminar una entrada.</string>
-    <string name="toastConsistEditHelp">Toque para cambiar de dirección.\\nPase a la izquierda a la derecha para eliminar una entrada.</string>
+    <string name="toastConnectionsListHelp">Toque para seleccionar.\nPase a la izquierda a la derecha para eliminar una entrada.</string>
+    <string name="toastConsistEditHelp">Toque para cambiar de dirección.\nPase a la izquierda a la derecha para eliminar una entrada.</string>
     <string name="consistLocoFacingFront">Frente</string>
     <string name="consistLocoFacingRear">Posterior</string>
     <string name="editConsistLocoFacingLabel">Frente a</string>
@@ -781,7 +781,7 @@
     <string name="turnoutsSelectionTypeHeading">Método de selección de participación</string>
     <string name="turnoutsSelectionTypeAddress">Dirección / Recientes</string>
     <string name="toastRecentTurnoutCleared">La participación elimina de la lista</string>
-    <string name="toastRecentTurnoutsConfirmClear">ONFIRMAR que desea eliminar todos los desvíos recientes pulsando el botón \\\'Borrar lista\\\' de nuevo.</string>
+    <string name="toastRecentTurnoutsConfirmClear">ONFIRMAR que desea eliminar todos los desvíos recientes pulsando el botón \'Borrar lista\' de nuevo.</string>
     <string name="toastTurnoutsRecentsHelp">Pulsación larga para eliminar una entrada.</string>
     <string name="dialogConfirmClearTitle">Limpiar lista</string>
     <string name="dialogRecentConsistsConfirmClearQuestions">Confirme que desea eliminar toda Consiste en la reciente</string>

@@ -125,6 +125,16 @@
                     tools:ignore="RtlHardcoded" />
 
                 <RadioButton
+                    android:id="@+id/intro_throttle_type_switching_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/intro_throttle_type_switching"
+                    android:gravity="center"
+                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded" />
+
+                <RadioButton
                     android:id="@+id/intro_throttle_type_switching_left_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

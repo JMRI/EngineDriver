@@ -1,4 +1,4 @@
-**Version 2.25.104
+pt**Version 2.25.104
  * New thumb image for switching throttle
  * Clear web view cache at connect for more reliable loading
  * Improve background mode, restarts and heartbeat
