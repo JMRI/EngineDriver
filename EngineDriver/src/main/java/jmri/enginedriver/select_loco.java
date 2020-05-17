@@ -218,7 +218,10 @@ public class select_loco extends Activity {
             Comparator<HashMap<String, String>> comparator = new Comparator<HashMap<String, String>>() {
                 @Override
                 public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
-                    return arg0.get("roster_name").compareToIgnoreCase(arg1.get("roster_name"));
+                    String s0 = arg0.get("roster_name").replaceAll("_"," ").toLowerCase();
+                    String s1 = arg1.get("roster_name").replaceAll("_"," ").toLowerCase();
+//                    return arg0.get("roster_name").compareToIgnoreCase(arg1.get("roster_name"));
+                    return s0.compareTo(s1);
                 }
             };
             Collections.sort(roster_list, comparator);
