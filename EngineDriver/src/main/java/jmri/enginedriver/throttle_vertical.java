@@ -260,13 +260,13 @@ public class throttle_vertical extends throttle {
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
         int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.numThrottles;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            if ((screenWidth > 0) && (throttleWidth > 900)) {
-                svFnBtns[throttleIndex].getLayoutParams().width = throttleWidth / 3;
-                svFnBtns[throttleIndex].requestLayout();
-            }
+//            if ((screenWidth > 0) && (throttleWidth > 900)) {
+//                svFnBtns[throttleIndex].getLayoutParams().width = throttleWidth / 3;
+//                svFnBtns[throttleIndex].requestLayout();
+//            }
 
-            lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.FILL_PARENT;
-            lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
+//            lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.FILL_PARENT;
+//            lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
             lThrottles[throttleIndex].requestLayout();
 
 //            lSpeeds[throttleIndex].getLayoutParams().width = throttleWidth - svFnBtns[throttleIndex].getWidth();
