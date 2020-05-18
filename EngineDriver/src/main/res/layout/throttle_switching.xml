@@ -85,7 +85,7 @@
                                 android:layout_width="fill_parent"
                                 android:text="@string/none"
                                 android:layout_marginLeft="5dp"
-                                android:layout_marginRight="10dp" />
+                                android:layout_marginRight="2dp" />
 
                             <TextView
                                 android:id="@+id/loco_label_0"
@@ -181,9 +181,9 @@
                         android:id="@+id/throttle_0_SetSpeed"
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
-                        android:layout_weight="5"
+                        android:layout_weight="5.5"
                         android:orientation="vertical"
-                        android:paddingTop="5.5dp"
+                        android:paddingTop="5dp"
                         android:paddingLeft="5dp"
                         android:paddingRight="0dp"
                         android:paddingBottom="5dp">

@@ -269,7 +269,7 @@ public class throttle_vertical extends throttle {
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
             lThrottles[throttleIndex].requestLayout();
 
-            lSpeeds[throttleIndex].getLayoutParams().width = throttleWidth - svFnBtns[throttleIndex].getWidth();
+//            lSpeeds[throttleIndex].getLayoutParams().width = throttleWidth - svFnBtns[throttleIndex].getWidth();
             lSpeeds[throttleIndex].requestLayout();
         }
 
@@ -366,22 +366,22 @@ public class throttle_vertical extends throttle {
 
     }
 
-//    @Override
-//    void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
-//        boolean newEnabledState = false;
-//        // avoid index and null crashes
-//        if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
-//                || bFwds[whichThrottle] == null) {
-//            return;
-//        }
-//        if (!forceDisable) { // avoid index crash, but may simply push to next line
-//            newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
-//        }
-//        bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
-//
-//        super.enable_disable_buttons(whichThrottle, forceDisable);
-//
-//    } // end of enable_disable_buttons
+    @Override
+    void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
+        boolean newEnabledState = false;
+        // avoid index and null crashes
+        if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
+                || bFwds[whichThrottle] == null) {
+            return;
+        }
+        if (!forceDisable) { // avoid index crash, but may simply push to next line
+            newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
+        }
+        bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
+
+        super.enable_disable_buttons(whichThrottle, forceDisable);
+
+    } // end of enable_disable_buttons
 
     // helper function to enable/disable all children for a group
     @Override
