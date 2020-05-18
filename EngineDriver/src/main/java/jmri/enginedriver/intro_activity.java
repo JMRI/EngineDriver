@@ -36,8 +36,6 @@ import com.github.paolorotolo.appintro.model.SliderPage;
 
 import jmri.enginedriver.util.PermissionsHelper;
 
-//import com.github.paolorotolo.appintro.AppIntro;
-
 public class intro_activity extends AppIntro2 {
     private boolean introComplete = false;
     private SharedPreferences prefs;
