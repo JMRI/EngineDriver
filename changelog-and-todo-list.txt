@@ -503,13 +503,11 @@
  *   TODO: combine loco control and turnout control in one page
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout
- *   TODO: fix the swipe over the buttons
  * connection
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add confirmation dialog to clear recent connections
  * threaded_application
- *   TODO: remember consist details
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: check for error on send and do something with it 
@@ -518,7 +516,6 @@
  *   TODO: support reordering of roster labels based on function number
  *   TODO: option/button to support DPU "unfenced" mode, relatively adjusting 2nd throttle from first
  *   TODO: retrieve and show icons for function buttons (if set)
- *   TODO: manually create roster entries (function labels) and store on device
  *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
  *   TODO: clear loco buttons on reconnect attempt until actual MT+ received
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected
@@ -535,6 +532,7 @@
  *   TODO: User request to have re-arrangeable function buttons
  *   TODO: change throttle_vertical_left_or_right.java so that in inherits from throttle_vertical.java not throttle.java
  * select_loco:
+ *   TODO: manually create roster entries (function labels) and store on device
  *   TODO: handle roster entry names with forward slash
  *   TODO: check length of text to avoid overlapping images, slide images to right
  *   TODO: disconnect connections made by roster stuff
