@@ -36,6 +36,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -50,9 +51,11 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -245,6 +248,9 @@ public class threaded_application extends Application {
     public static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
     public static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
     public static final int FORCED_RESTART_REASON_BACKGROUND = 9;
+    public static final int FORCED_RESTART_REASON_THROTTLE_SWITCH = 10;
+
+    public Resources.Theme theme;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -2741,6 +2747,7 @@ end force shutdown */
     public void applyTheme(Activity activity) {
         int selectedTheme = getSelectedTheme();
         activity.setTheme(selectedTheme);
+        theme = activity.getTheme();
 
     }
 
@@ -2861,13 +2868,18 @@ end force shutdown */
      */
     public void setFlashlightButton(Menu menu) {
         if (menu != null) {
+            TypedValue outValue = new TypedValue();
             if (flashState) {
-                menu.findItem(R.id.flashlight_button).setIcon(R.drawable.flashlight_on);
+                theme.resolveAttribute(R.attr.ed_flashlight_on_button, outValue, true);
+                menu.findItem(R.id.flashlight_button).setIcon(outValue.resourceId);
+//                menu.findItem(R.id.flashlight_button).setIcon(R.drawable.flashlight_on);
 //                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                 menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOn);
 //                }
             } else {
-                menu.findItem(R.id.flashlight_button).setIcon(R.drawable.flashlight_off);
+                theme.resolveAttribute(R.attr.ed_flashlight_off_button, outValue, true);
+                menu.findItem(R.id.flashlight_button).setIcon(outValue.resourceId);
+//                menu.findItem(R.id.flashlight_button).setIcon(R.drawable.flashlight_off);
 //                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                 menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
 //                }
@@ -2890,6 +2902,17 @@ end force shutdown */
             mi.setVisible(false);
         }
 
+    }
+
+    public void displayThrottleSwitchMenuButton(Menu menu) {
+        MenuItem mi = menu.findItem(R.id.throttle_switch_button);
+        if (mi == null) return;
+
+        if (prefs.getBoolean("prefThrottleSwitchButtonDisplay", false)) {
+            mi.setVisible(true);
+        } else {
+            mi.setVisible(false);
+        }
     }
 
     /**
@@ -3108,7 +3131,8 @@ end force shutdown */
                 Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesBackgroundChangeSucceeded), Toast.LENGTH_LONG).show();
                 break;
             }
-            case FORCED_RESTART_REASON_THROTTLE_PAGE: {
+            case FORCED_RESTART_REASON_THROTTLE_PAGE:
+            case FORCED_RESTART_REASON_THROTTLE_SWITCH: {
                 Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesThrottleChangeSucceeded), Toast.LENGTH_LONG).show();
                 break;
             }
@@ -3125,6 +3149,7 @@ end force shutdown */
         }
 
         return  ((prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_AUTO)
+                && (prefForcedRestartReason != FORCED_RESTART_REASON_THROTTLE_SWITCH)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_AUTO_IMPORT));

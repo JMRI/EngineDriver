@@ -5154,6 +5154,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         TMenu = menu;
         mainapp.displayFlashlightMenuButton(menu);
         mainapp.setFlashlightButton(menu);
+        mainapp.displayThrottleSwitchMenuButton(menu);
         if (IS_ESU_MCII) {
             displayEsuMc2KnobMenuButton(menu);
         }
@@ -5299,6 +5300,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, TMenu);
+                return true;
+            case R.id.throttle_switch_button:
+                switchThrottleScreenType();
                 return true;
             case R.id.EsuMc2Knob_button:
                 toggleEsuMc2Knob(this, TMenu);
@@ -5995,6 +5999,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         } catch (Exception e) {
             Log.d("Engine_Driver", "Throttle: failed loading background image");
         }
+    }
+
+    @SuppressLint("ApplySharedPref")
+    protected void switchThrottleScreenType() {
+        String prefThrottleSwitchOption1 = prefs.getString("prefThrottleSwitchOption1", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption1DefaultValue));
+        String prefThrottleSwitchOption2 = prefs.getString("prefThrottleSwitchOption2", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption2DefaultValue));
+        if (prefThrottleScreenType.equals(prefThrottleSwitchOption1)) {
+            prefs.edit().putString("prefThrottleScreenType", prefThrottleSwitchOption2).commit();
+        } else {
+            prefs.edit().putString("prefThrottleScreenType", prefThrottleSwitchOption1).commit();
+        }
+        forceRestartApp(mainapp.FORCED_RESTART_REASON_THROTTLE_SWITCH);
     }
 
 }

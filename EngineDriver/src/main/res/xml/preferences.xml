@@ -66,6 +66,29 @@
             android:key="ClockDisplayTypePreference"
             android:summary="@string/prefDisplayClockSummary"
             android:title="@string/prefDisplayClockTitle" />
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefThrottleSwitchButtonDefaultValue"
+            android:key="prefThrottleSwitchButtonDisplay"
+            android:summary="@string/prefThrottleSwitchButtonSummary"
+            android:title="@string/prefThrottleSwitchButtonTitle" />
+
+        <ListPreference
+            android:defaultValue="@string/prefThrottleSwitchOption1DefaultValue"
+            android:entries="@array/prefThrottleScreenTypeEntries"
+            android:entryValues="@array/prefThrottleScreenTypeEntryValues"
+            android:key="prefThrottleSwitchOption1"
+            android:summary="@string/prefThrottleSwitchOption1Summary"
+            android:title="@string/prefThrottleSwitchOption1Title" />
+
+        <ListPreference
+            android:defaultValue="@string/prefThrottleSwitchOption2DefaultValue"
+            android:entries="@array/prefThrottleScreenTypeEntries"
+            android:entryValues="@array/prefThrottleScreenTypeEntryValues"
+            android:key="prefThrottleSwitchOption2"
+            android:summary="@string/prefThrottleSwitchOption2Summary"
+            android:title="@string/prefThrottleSwitchOption2Title" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
