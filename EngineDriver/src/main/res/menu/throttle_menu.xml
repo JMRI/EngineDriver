@@ -46,6 +46,10 @@
         android:showAsAction="ifRoom" />
     <item android:id="@+id/EmerStop" android:title="@string/EStop" android:visible="false"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/throttle_switch_button"
+        android:icon="?attr/ed_throttle_switch_button"
+        android:title="@string/throttleSwitchAction" android:visible="false"
+        android:showAsAction="ifRoom" />
     <item android:id="@+id/flashlight_button"
         android:title="@string/flashlightAction" android:visible="false"
         android:showAsAction="ifRoom" />

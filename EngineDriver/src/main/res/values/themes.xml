@@ -60,6 +60,13 @@
         <item name="ed_thumb">@drawable/thumb</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb</item>
 
+        <item name="ed_throttle_switch_button">@drawable/throttle_switch_button</item>
+        <item name="android:actionButtonStyle">@style/ActionButton</item>
+        <item name="actionButtonStyle">@style/ActionButton</item>
+
+        <item name="ed_flashlight_on_button">@drawable/flashlight_on</item>
+        <item name="ed_flashlight_off_button">@drawable/flashlight_off</item>
+
     </style>
 
     <!-- also appears 'round' theme' -->
@@ -106,6 +113,13 @@
         <item name="ed_thumb">@drawable/thumb_round</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_round</item>
 
+        <item name="ed_throttle_switch_button">@drawable/throttle_switch_button_outline</item>
+        <item name="android:actionButtonStyle">@style/ActionButton</item>
+        <item name="actionButtonStyle">@style/ActionButton</item>
+
+        <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
+        <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
+
     </style>
 
     <style name="app_theme_outline" parent="@android:style/Theme.Holo">
@@ -150,6 +164,13 @@
 
         <item name="ed_thumb">@drawable/thumb_round_outline</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_round_outline</item>
+
+        <item name="ed_throttle_switch_button">@drawable/throttle_switch_button_outline</item>
+        <item name="android:actionButtonStyle">@style/ActionButton</item>
+        <item name="actionButtonStyle">@style/ActionButton</item>
+
+        <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
+        <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
 
     </style>
 
@@ -196,6 +217,13 @@
 
         <item name="ed_thumb">@drawable/thumb_ultra</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_ultra</item>
+
+        <item name="ed_throttle_switch_button">@drawable/throttle_switch_button_outline</item>
+        <item name="android:actionButtonStyle">@style/ActionButton</item>
+        <item name="actionButtonStyle">@style/ActionButton</item>
+
+        <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
+        <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
 
     </style>
 
@@ -249,6 +277,13 @@
 
         <item name="ed_thumb">@drawable/thumb_colorful</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_colorful</item>
+
+        <item name="ed_throttle_switch_button">@drawable/throttle_switch_button</item>
+        <item name="android:actionButtonStyle">@style/ActionButton</item>
+        <item name="actionButtonStyle">@style/ActionButton</item>
+
+        <item name="ed_flashlight_on_button">@drawable/flashlight_on</item>
+        <item name="ed_flashlight_off_button">@drawable/flashlight_off</item>
 
     </style>
 

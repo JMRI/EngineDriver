@@ -1009,6 +1009,12 @@
 
         <item>prefBackgroundImage</item>
         <item>prefBackgroundImageFileName</item>
+        <item>prefBackgroundImagePosition</item>
+
+        <item>prefThrottleSwitchButtonDisplay</item>
+        <item>prefThrottleSwitchOption1</item>
+        <item>prefThrottleSwitchOption2</item>
+
     </string-array>
 
 </resources>
