@@ -100,6 +100,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private String prefThrottleScreenTypeOriginal = "Default";
     private String prefThemeOriginal = "Default";
 
+    boolean prefThrottleSwitchButtonDisplay = false;
+    boolean prefBackgroundImage = false;
+
     private String prefConsistFollowRuleStyle = "original";
     private static String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
     private static String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
@@ -110,16 +113,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final String ENGINE_DRIVER_DIR = "engine_driver";
     private static final String SERVER_ENGINE_DRIVER_DIR = "prefs/engine_driver";
 
-//    private static final int FORCED_RESTART_REASON_NONE = 0;
-//    private static final int FORCED_RESTART_REASON_RESET = 1;
-//    private static final int FORCED_RESTART_REASON_IMPORT = 2;
-//    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL = 3;
-//    private static final int FORCED_RESTART_REASON_THEME = 4;
-//    private static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
-//    private static final int FORCED_RESTART_REASON_LOCALE = 6;
-////    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;    // not used in preferences.  Used in throttle.java
-////    private static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
-//    private static final int FORCED_RESTART_REASON_BACKGROUND = 9;
+    private boolean forceRestartAppOnPreferencesClose = false;
+    private int forceRestartAppOnPreferencesCloseReason = 0;
 
     SharedPreferences sharedPreferences;
     /**
@@ -219,6 +214,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             enableDisablePreference("prefImportServerManual", false);
         }
 
+        prefThrottleSwitchButtonDisplay = sharedPreferences.getBoolean("prefThrottleSwitchButtonDisplay", false);
+        showHideThrottleSwitchPreferences();
+
+        prefBackgroundImage = sharedPreferences.getBoolean("prefBackgroundImage", false);
+        showHideBackgroundImagePreferences();
+
         Preference button = getPreferenceScreen().findPreference("prefBackgroundImageFileNameImagePicker");
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -274,6 +275,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             mainapp.preferences_msg_handler = null;
         } else {
             Log.d("Engine_Driver", "Preferences: onDestroy: mainapp.preferences_msg_handler is null. Unable to removeCallbacksAndMessages");
+        }
+        if (forceRestartAppOnPreferencesClose) {
+            forceRestartApp(forceRestartAppOnPreferencesCloseReason);
         }
     }
 
@@ -446,11 +450,21 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                         forceRestartApp(mainapp.FORCED_RESTART_REASON_THEME);
                     }
                     break;
+                case "prefThrottleSwitchButtonDisplay":
+                    prefThrottleSwitchButtonDisplay = sharedPreferences.getBoolean("prefThrottleSwitchButtonDisplay", false);
+                    showHideThrottleSwitchPreferences();
+                    break;
+
                 case "prefBackgroundImage":
+                    prefBackgroundImage = sharedPreferences.getBoolean("prefBackgroundImage", false);
+                    showHideBackgroundImagePreferences();
                 case "prefBackgroundImageFileName":
                 case "prefBackgroundImagePosition":
-                    forceRestartApp(mainapp.FORCED_RESTART_REASON_BACKGROUND);
+                    forceRestartAppOnPreferencesClose = true;
+                    forceRestartAppOnPreferencesCloseReason = mainapp.FORCED_RESTART_REASON_BACKGROUND;
+//                    forceRestartApp(mainapp.FORCED_RESTART_REASON_BACKGROUND);
                     break;
+
                 case "prefConsistFollowRuleStyle":
                     prefConsistFollowRuleStyle = sharedPreferences.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
                     showHideConsistRuleStylePreferences();
@@ -788,6 +802,24 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             reload();
             forceRestartApp(mainapp.FORCED_RESTART_REASON_THROTTLE_PAGE);
         }
+    }
+
+    private void showHideThrottleSwitchPreferences() {
+        boolean enable = true;
+        if (prefThrottleSwitchButtonDisplay) {
+            enable = false;
+        }
+        enableDisablePreference("prefThrottleSwitchOption1", !enable);
+        enableDisablePreference("prefThrottleSwitchOption2", !enable);
+    }
+
+    private void showHideBackgroundImagePreferences() {
+        boolean enable = true;
+        if (prefBackgroundImage) {
+            enable = false;
+        }
+        enableDisablePreference("prefBackgroundImageFileNameImagePicker", !enable);
+        enableDisablePreference("prefBackgroundImagePosition", !enable);
     }
 
     private void showHideConsistRuleStylePreferences() {
@@ -1219,7 +1251,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 edit.putString("prefBackgroundImageFileName",imgpath);
                 edit.commit();
 
-                forceRestartApp(mainapp.FORCED_RESTART_REASON_BACKGROUND);
+                forceRestartAppOnPreferencesClose = true;
+                forceRestartAppOnPreferencesCloseReason = mainapp.FORCED_RESTART_REASON_BACKGROUND;
+//                forceRestartApp(mainapp.FORCED_RESTART_REASON_BACKGROUND);
             }
             else {
                 Toast.makeText(this, R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG).show();

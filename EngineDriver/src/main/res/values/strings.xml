@@ -990,6 +990,7 @@
     <string name="dialogConfirmImportPreferencesTitle">Import Preferences</string>
     <string name="dialogImportPreferencesQuestion">Confirm that you want import preferences.\nALL current preferences will be lost.</string>
 
+    <string name="prefBackgroundImagePreferencesTitle">Background Image Preferences</string>
     <string name="prefBackgroundImageTitle">Background Image</string>
     <string name="prefBackgroundImageSummary">Show a background image on the Throttle page</string>
 
@@ -1002,6 +1003,7 @@
     <string name="prefBackgroundImagePositionSummary">Select how the background image will be positioned on the screen.</string>
     <string name="prefBackgroundImagePositionDefaultValue" translatable="false">FIT_CENTER</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefThrottleSwitchButtonPreferencesTitle">Throttle Switch Button Preferences</string>
     <string name="prefThrottleSwitchButtonTitle">Throttle Switch Button</string>
     <string name="prefThrottleSwitchButtonSummary">Display the Throttle Switch Button in the throttle screen to allow quick changing of throttle screen types.</string>
 
