@@ -745,4 +745,10 @@
     <string name="prefBackgroundImageTitle">Immagine di sfondo</string>
     <string name="prefBackgroundImagePositionSummary">Selezionare come l\'immagine di sfondo sarà posizionato sullo schermo.</string>
     <string name="prefBackgroundImagePositionTitle">Immagine di sfondo di posizione</string>
+    <string name="prefThrottleSwitchButtonSummary">Visualizzare il pulsante interruttore della valvola a farfalla nella schermata di gas per consentire un rapido cambiamento dei tipi di schermo della valvola a farfalla.</string>
+    <string name="prefThrottleSwitchButtonTitle">Button Switch Throttle</string>
+    <string name="prefThrottleSwitchOption1Summary">Button Switch Throttle passerà tra questo tipo di schermo e la prossima preferenza.</string>
+    <string name="prefThrottleSwitchOption1Title">Acceleratore Tipo di interruttore Prima schermata</string>
+    <string name="prefThrottleSwitchOption2Summary">Button Switch Throttle passerà tra il tipo di schermo nella preferenza precedente e questo.</string>
+    <string name="prefThrottleSwitchOption2Title">Acceleratore Tipo di interruttore seconda schermata</string>
 </resources>
