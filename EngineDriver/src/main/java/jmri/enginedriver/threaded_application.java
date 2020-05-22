@@ -2552,18 +2552,25 @@ end force shutdown */
 
     public void setPowerStateButton(Menu menu) {
         if (menu != null) {
+            TypedValue outValue = new TypedValue();
             if ((power_state == null) || (power_state.equals("2"))) {
-                menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_yellow);
+                theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
+                menu.findItem(R.id.power_layout_button).setIcon(outValue.resourceId);
+//                menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_yellow);
 //                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                 menu.findItem(R.id.power_layout_button).setTitle("Layout Power is UnKnown");
 //                }
             } else if (power_state.equals("1")) {
-                menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_green);
+                theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
+                menu.findItem(R.id.power_layout_button).setIcon(outValue.resourceId);
+//                menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_green);
 //                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                 menu.findItem(R.id.power_layout_button).setTitle("Layout Power is ON");
 //                }
             } else {
-                menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_red);
+                theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
+                menu.findItem(R.id.power_layout_button).setIcon(outValue.resourceId);
+//                menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_red);
 //                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                 menu.findItem(R.id.power_layout_button).setTitle("Layout Power is Off");
 //                }
@@ -2576,6 +2583,9 @@ end force shutdown */
         if (mi == null) return;
 
         if (prefs.getBoolean("show_emergency_stop_menu_preference", false)) {
+            TypedValue outValue = new TypedValue();
+            theme.resolveAttribute(R.attr.ed_estop_button, outValue, true);
+            mi.setIcon(outValue.resourceId);
             mi.setVisible(true);
         } else {
             mi.setVisible(false);
