@@ -814,4 +814,10 @@
     <string name="prefBackgroundImageTitle">Hintergrundbild</string>
     <string name="prefBackgroundImagePositionSummary">Wählen Sie, wie das Hintergrundbild auf dem Bildschirm positioniert werden.</string>
     <string name="prefBackgroundImagePositionTitle">Hintergrund Bildposition</string>
+    <string name="prefThrottleSwitchButtonSummary">Zeigen Sie den Drosselklappenschalter-Knopf in der Drossel Bildschirm schnell zu ermöglichen, der Drosselklappen Siebtypen ändern.</string>
+    <string name="prefThrottleSwitchButtonTitle">Drosselklappenschalter-Knopf</string>
+    <string name="prefThrottleSwitchOption1Summary">Drosselklappenschalter-Knopf schaltet zwischen diesem Bildschirmtyp und der nächsten Präferenz.</string>
+    <string name="prefThrottleSwitchOption1Title">Drosselklappenschalter Erster Bildschirmtyp</string>
+    <string name="prefThrottleSwitchOption2Summary">Drosselklappenschalter-Knopf schaltet zwischen dem Bildschirmtyp in der vorherige Präferenz und dieser.</string>
+    <string name="prefThrottleSwitchOption2Title">Drosselklappenschalter Zweiten Bildschirmtyp</string>
 </resources>

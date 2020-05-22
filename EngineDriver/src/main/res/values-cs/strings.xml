@@ -912,4 +912,10 @@
     <string name="prefBackgroundImageTitle">Obrázek na pozadí</string>
     <string name="prefBackgroundImagePositionSummary">Zvolit, jak bude obrázek na pozadí umístěn na obrazovce.</string>
     <string name="prefBackgroundImagePositionTitle">Background Position Image</string>
+    <string name="prefThrottleSwitchButtonSummary">Zobrazit Spínač škrticí klapky plynového obrazovce umožňují rychlé střídání škrticích typy obrazovek.</string>
+    <string name="prefThrottleSwitchButtonTitle">Throttle Spínač</string>
+    <string name="prefThrottleSwitchOption1Summary">Throttle Spínač se přepne mezi tímto typem obrazovky a další preference.</string>
+    <string name="prefThrottleSwitchOption1Title">Throttle Typ přepínače First Screen</string>
+    <string name="prefThrottleSwitchOption2Summary">Throttle Spínač se přepne mezi typem obrazovky v předchozím preference a tento jeden.</string>
+    <string name="prefThrottleSwitchOption2Title">Throttle Typ přepínače Druhá obrazovka</string>
 </resources>

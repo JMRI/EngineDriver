@@ -811,4 +811,10 @@
     <string name="prefBackgroundImageTitle">Imatge de fons</string>
     <string name="prefBackgroundImagePositionSummary">Seleccionar la forma de la imatge de fons es col·locarà a la pantalla.</string>
     <string name="prefBackgroundImagePositionTitle">Posició de la imatge de fons</string>
+    <string name="prefThrottleSwitchButtonSummary">Visualitzar el botó de l\'interruptor de l\'accelerador a la pantalla de l\'accelerador per permetre la ràpida canviant de tipus de pantalla de l\'accelerador.</string>
+    <string name="prefThrottleSwitchButtonTitle">El botó d\'interruptor de l\'accelerador</string>
+    <string name="prefThrottleSwitchOption1Summary">El botó d\'interruptor de l\'accelerador es canviarà entre aquest tipus de pantalla i la següent preferència.</string>
+    <string name="prefThrottleSwitchOption1Title">Interruptor de l\'accelerador Tipus Primera pantalla</string>
+    <string name="prefThrottleSwitchOption2Summary">El botó d\'interruptor de l\'accelerador es canviarà entre el tipus de pantalla a la preferència anterior i aquest.</string>
+    <string name="prefThrottleSwitchOption2Title">Interruptor de l\'accelerador Tipus segona pantalla</string>
 </resources>

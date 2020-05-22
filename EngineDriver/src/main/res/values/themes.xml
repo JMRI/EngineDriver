@@ -67,6 +67,11 @@
         <item name="ed_flashlight_on_button">@drawable/flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off</item>
 
+        <item name="ed_estop_button">@drawable/estop</item>
+
+        <item name="ed_power_green_button">@drawable/power_green</item>
+        <item name="ed_power_yellow_button">@drawable/power_yellow</item>
+        <item name="ed_power_red_button">@drawable/power_red</item>
     </style>
 
     <!-- also appears 'round' theme' -->
@@ -120,6 +125,11 @@
         <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
 
+        <item name="ed_estop_button">@drawable/estop_outline</item>
+
+        <item name="ed_power_green_button">@drawable/power_green_outline</item>
+        <item name="ed_power_yellow_button">@drawable/power_yellow_outline</item>
+        <item name="ed_power_red_button">@drawable/power_red_outline</item>
     </style>
 
     <style name="app_theme_outline" parent="@android:style/Theme.Holo">
@@ -172,6 +182,11 @@
         <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
 
+        <item name="ed_estop_button">@drawable/estop_outline</item>
+
+        <item name="ed_power_green_button">@drawable/power_green_outline</item>
+        <item name="ed_power_yellow_button">@drawable/power_yellow_outline</item>
+        <item name="ed_power_red_button">@drawable/power_red_outline</item>
     </style>
 
     <!-- also appears a 'dark' theme -->
@@ -225,6 +240,11 @@
         <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
 
+        <item name="ed_estop_button">@drawable/estop_outline</item>
+
+        <item name="ed_power_green_button">@drawable/power_green_outline</item>
+        <item name="ed_power_yellow_button">@drawable/power_yellow_outline</item>
+        <item name="ed_power_red_button">@drawable/power_red_outline</item>
     </style>
 
     <style name="app_theme_colorful" parent="@android:style/Theme.Holo.Light">
@@ -285,6 +305,11 @@
         <item name="ed_flashlight_on_button">@drawable/flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off</item>
 
+        <item name="ed_estop_button">@drawable/estop</item>
+
+        <item name="ed_power_green_button">@drawable/power_green</item>
+        <item name="ed_power_yellow_button">@drawable/power_yellow</item>
+        <item name="ed_power_red_button">@drawable/power_red</item>
     </style>
 
 </resources>

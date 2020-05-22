@@ -800,4 +800,10 @@
     <string name="prefBackgroundImageTitle">Imagen de fondo</string>
     <string name="prefBackgroundImagePositionSummary">Seleccionar la forma de la imagen de fondo se colocará en la pantalla.</string>
     <string name="prefBackgroundImagePositionTitle">Posición de la imagen de fondo</string>
+    <string name="prefThrottleSwitchButtonSummary">Visualizar el botón del interruptor del acelerador en la pantalla del acelerador para permitir la rápida cambiante de tipos de pantalla del acelerador.</string>
+    <string name="prefThrottleSwitchButtonTitle">El botón de interruptor del acelerador</string>
+    <string name="prefThrottleSwitchOption1Summary">El botón de interruptor del acelerador se cambiará entre este tipo de pantalla y la siguiente preferencia.</string>
+    <string name="prefThrottleSwitchOption1Title">Interruptor del acelerador Tipo Primera pantalla</string>
+    <string name="prefThrottleSwitchOption2Summary">El botón de interruptor del acelerador se cambiará entre el tipo de pantalla en la preferencia anterior y éste.</string>
+    <string name="prefThrottleSwitchOption2Title">Interruptor del acelerador Tipo segunda pantalla</string>
 </resources>
