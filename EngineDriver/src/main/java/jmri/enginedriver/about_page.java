@@ -53,12 +53,7 @@ public class about_page extends Activity {
         TextView v = findViewById(R.id.about_info);
         String s;
         // ED version info
-        try {
-            s = "Engine Driver: v"
-                    + mainapp.getPackageManager().getPackageInfo(mainapp.getPackageName(), 0).versionName;
-        } catch (Exception e) {
-            s = "";
-        }
+        s = "Engine Driver: " + mainapp.appVersion;
         if (mainapp.host_ip != null) {
             // JMRI version info
             HashMap<String, String> metadata = threaded_application.metadata;
@@ -77,7 +72,7 @@ public class about_page extends Activity {
         }
         s += String.format("\nSSID: %s Net: %s ", mainapp.client_ssid, mainapp.client_type);
         if (mainapp.client_address_inet4 != null) {
-            s += String.format("IP: %s", mainapp.client_address_inet4.toString().replaceAll("/",""));
+            s += String.format("IP: %s", mainapp.client_address_inet4.toString().replaceAll("/", ""));
         }
         s += String.format("\nOS: %s, SDK: %s ", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
 

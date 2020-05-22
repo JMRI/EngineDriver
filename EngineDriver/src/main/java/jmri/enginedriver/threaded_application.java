@@ -35,6 +35,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
@@ -95,6 +96,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
@@ -151,6 +153,7 @@ public class threaded_application extends Application {
     public int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
     private Long fastClockSeconds = 0L;
     public int androidVersion = 0;
+    public String appVersion = "";
     //minimum Android version for some features
     public final int minImmersiveModeVersion = android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
     public final int minThemeVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
@@ -1889,19 +1892,27 @@ public class threaded_application extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d("Engine_Driver", "threaded_application.onCreate()");
+        try {
+            appVersion = "v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
+        androidVersion = android.os.Build.VERSION.SDK_INT;
+
+        Log.i("Engine_Driver", "Engine Driver:" + appVersion + ", SDK:" + androidVersion);
+
         context = getApplicationContext();
+
         commThread = new comm_thread();
 
         flashlight = Flashlight.newInstance(threaded_application.context);
 
-        androidVersion = android.os.Build.VERSION.SDK_INT;
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         lifecycleHandler = new ApplicationLifecycleHandler();
         registerActivityLifecycleCallbacks(lifecycleHandler);
         registerComponentCallbacks(lifecycleHandler);
 
-       numThrottles = Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
+       numThrottles = Numeralise(Objects.requireNonNull(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue))));
 
         try {
             Map<String, ?> ddd = prefs.getAll();
