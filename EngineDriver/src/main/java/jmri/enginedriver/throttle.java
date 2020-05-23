@@ -5052,6 +5052,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.setKidsMenuOptions(TMenu, prefKidsTimer.equals(PREF_KIDS_TIMER_NONE), gamepadCount);
             mainapp.setFlashlightButton(TMenu);
             mainapp.displayFlashlightMenuButton(TMenu);
+            mainapp.displayThrottleSwitchMenuButton(TMenu);
             displayEsuMc2KnobMenuButton(TMenu);
         }
         vThrotScrWrap.invalidate();

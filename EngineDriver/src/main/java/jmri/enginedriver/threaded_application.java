@@ -2882,17 +2882,11 @@ end force shutdown */
             if (flashState) {
                 theme.resolveAttribute(R.attr.ed_flashlight_on_button, outValue, true);
                 menu.findItem(R.id.flashlight_button).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.flashlight_button).setIcon(R.drawable.flashlight_on);
-//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                 menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOn);
-//                }
             } else {
                 theme.resolveAttribute(R.attr.ed_flashlight_off_button, outValue, true);
                 menu.findItem(R.id.flashlight_button).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.flashlight_button).setIcon(R.drawable.flashlight_off);
-//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                 menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
-//                }
             }
         }
     }
@@ -3159,6 +3153,7 @@ end force shutdown */
         }
 
         return  ((prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_AUTO)
+                && (prefForcedRestartReason != FORCED_RESTART_REASON_BACKGROUND)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_THROTTLE_SWITCH)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET)

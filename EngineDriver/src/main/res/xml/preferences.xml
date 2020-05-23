@@ -67,27 +67,34 @@
             android:summary="@string/prefDisplayClockSummary"
             android:title="@string/prefDisplayClockTitle" />
 
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefThrottleSwitchButtonDefaultValue"
-            android:key="prefThrottleSwitchButtonDisplay"
+        <PreferenceScreen
+            android:key="prefThrottleSwitchButton"
+            android:title="@string/prefThrottleSwitchButtonPreferencesTitle"
             android:summary="@string/prefThrottleSwitchButtonSummary"
-            android:title="@string/prefThrottleSwitchButtonTitle" />
+            android:persistent="false">
 
-        <ListPreference
-            android:defaultValue="@string/prefThrottleSwitchOption1DefaultValue"
-            android:entries="@array/prefThrottleScreenTypeEntries"
-            android:entryValues="@array/prefThrottleScreenTypeEntryValues"
-            android:key="prefThrottleSwitchOption1"
-            android:summary="@string/prefThrottleSwitchOption1Summary"
-            android:title="@string/prefThrottleSwitchOption1Title" />
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefThrottleSwitchButtonDefaultValue"
+                android:key="prefThrottleSwitchButtonDisplay"
+                android:summary="@string/prefThrottleSwitchButtonSummary"
+                android:title="@string/prefThrottleSwitchButtonTitle" />
 
-        <ListPreference
-            android:defaultValue="@string/prefThrottleSwitchOption2DefaultValue"
-            android:entries="@array/prefThrottleScreenTypeEntries"
-            android:entryValues="@array/prefThrottleScreenTypeEntryValues"
-            android:key="prefThrottleSwitchOption2"
-            android:summary="@string/prefThrottleSwitchOption2Summary"
-            android:title="@string/prefThrottleSwitchOption2Title" />
+            <ListPreference
+                android:defaultValue="@string/prefThrottleSwitchOption1DefaultValue"
+                android:entries="@array/prefThrottleScreenTypeEntries"
+                android:entryValues="@array/prefThrottleScreenTypeEntryValues"
+                android:key="prefThrottleSwitchOption1"
+                android:summary="@string/prefThrottleSwitchOption1Summary"
+                android:title="@string/prefThrottleSwitchOption1Title" />
+
+            <ListPreference
+                android:defaultValue="@string/prefThrottleSwitchOption2DefaultValue"
+                android:entries="@array/prefThrottleScreenTypeEntries"
+                android:entryValues="@array/prefThrottleScreenTypeEntryValues"
+                android:key="prefThrottleSwitchOption2"
+                android:summary="@string/prefThrottleSwitchOption2Summary"
+                android:title="@string/prefThrottleSwitchOption2Title" />
+        </PreferenceScreen>
 
     </PreferenceCategory>
 
@@ -598,24 +605,31 @@
             android:summary="@string/prefSelectedLocoIndicatorSummary"
             android:title="@string/prefSelectedLocoIndicatorTitle" />
 
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefBackgroundImageDefaultValue"
-            android:key="prefBackgroundImage"
+        <PreferenceScreen
+            android:key="prefBackgroundImageGroup"
+            android:title="@string/prefBackgroundImagePreferencesTitle"
             android:summary="@string/prefBackgroundImageSummary"
-            android:title="@string/prefBackgroundImageTitle" />
+            android:persistent="false">
 
-        <Preference
-            android:summary="@string/prefBackgroundImageFileNameSummary"
-            android:title="@string/prefBackgroundImageFileNameTitle"
-            android:key="prefBackgroundImageFileNameImagePicker" />
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefBackgroundImageDefaultValue"
+                android:key="prefBackgroundImage"
+                android:summary="@string/prefBackgroundImageSummary"
+                android:title="@string/prefBackgroundImageTitle" />
 
-        <ListPreference
-            android:defaultValue="@string/prefBackgroundImagePositionDefaultValue"
-            android:entries="@array/prefBackgroundImagePositionEntries"
-            android:entryValues="@array/prefBackgroundImagePositionEntryValues"
-            android:key="prefBackgroundImagePosition"
-            android:summary="@string/prefBackgroundImagePositionSummary"
-            android:title="@string/prefBackgroundImagePositionTitle" />
+            <Preference
+                android:summary="@string/prefBackgroundImageFileNameSummary"
+                android:title="@string/prefBackgroundImageFileNameTitle"
+                android:key="prefBackgroundImageFileNameImagePicker" />
+
+            <ListPreference
+                android:defaultValue="@string/prefBackgroundImagePositionDefaultValue"
+                android:entries="@array/prefBackgroundImagePositionEntries"
+                android:entryValues="@array/prefBackgroundImagePositionEntryValues"
+                android:key="prefBackgroundImagePosition"
+                android:summary="@string/prefBackgroundImagePositionSummary"
+                android:title="@string/prefBackgroundImagePositionTitle" />
+        </PreferenceScreen>
 
     </PreferenceCategory>
 
