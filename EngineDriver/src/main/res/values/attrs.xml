@@ -34,4 +34,5 @@
     <attr name="ed_power_red_button" format="reference" />
 
     <attr name="ed_folder_icon" format="reference" />
+    <attr name="ed_clock_icon" format="reference" />
 </resources>

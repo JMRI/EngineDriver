@@ -568,6 +568,7 @@
     <string name="prefLocaleSummary">Language to use. WARNING! Engine Driver will restart immediately. Direction Button labels will be reset.</string>
     <string name="prefLocaleDefaultValue" translatable="false">Default</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefLimitSpeedButtonPreferencesTitle">\'Limit Speed\' button Preferences</string>
     <string name="prefLimitSpeedButtonTitle">Show \'Limit Speed\' button</string>
     <string name="prefLimitSpeedButtonSummary">Show a button to temporarily restrict the maximum speed on an individual throttle.</string>
 

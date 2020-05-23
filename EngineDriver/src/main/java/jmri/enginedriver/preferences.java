@@ -194,6 +194,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         prefThrottleScreenTypeOriginal = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         showHideThrottleTypePreferences();
+        showHideThrottleNumberPreference();
 
         sharedPreferences.edit().putBoolean("prefForcedRestart", false).commit();
         sharedPreferences.edit().putInt("prefForcedRestartReason", mainapp.FORCED_RESTART_REASON_NONE).commit();
@@ -442,6 +443,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     break;
                 case "prefThrottleScreenType":
                 case "NumThrottle":
+                    showHideThrottleNumberPreference();
                     limitNumThrottles(sharedPreferences);
                     break;
                 case "prefTheme":
@@ -774,34 +776,54 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private void limitNumThrottles(SharedPreferences sharedPreferences) {
         int numThrottles = mainapp.Numeralise(sharedPreferences.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
         String prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-        if (prefThrottleScreenType.equals("Default") && (numThrottles > 3)) {
-            sharedPreferences.edit().putString("NumThrottle", "Three").commit();
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, "Three"), Toast.LENGTH_SHORT).show();
-            reload();
-        }
-
-        if ((prefThrottleScreenType.equals("Vertical") || (prefThrottleScreenType.equals("Switching")) )
-                && (numThrottles != 2)) {
-            sharedPreferences.edit().putString("NumThrottle", "Two").commit();
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, "Two"), Toast.LENGTH_SHORT).show();
-            reload();
-        }
-
-        if ( ((prefThrottleScreenType.equals("Vertical Left")) || (prefThrottleScreenType.equals("Vertical Right"))
-                || (prefThrottleScreenType.equals("Big Left")) || (prefThrottleScreenType.equals("Big Right"))
-                || (prefThrottleScreenType.equals("Switching Left")) || (prefThrottleScreenType.equals("Switching Right")) )
-                && (numThrottles != 1)) {
-            sharedPreferences.edit().putString("NumThrottle", "One").commit();
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, "One"), Toast.LENGTH_SHORT).show();
-            reload();
-        }
 
         if (!prefThrottleScreenType.equals(prefThrottleScreenTypeOriginal)) {
             SharedPreferences.Editor prefEdit = sharedPreferences.edit();
             prefEdit.commit();
-            reload();
-            forceRestartApp(mainapp.FORCED_RESTART_REASON_THROTTLE_PAGE);
+            forceRestartAppOnPreferencesClose = true;
+            forceRestartAppOnPreferencesCloseReason =  mainapp.FORCED_RESTART_REASON_THROTTLE_SWITCH;
         }
+
+        int index = -1;
+        String[] textNumbers = this.getResources().getStringArray(R.array.NumOfThrottlesEntryValues);
+        String[] arr = this.getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
+        int[] fixed = this.getResources().getIntArray(R.array.prefThrottleScreenTypeFixedThrottleNumber);
+        int[] max = this.getResources().getIntArray(R.array.prefThrottleScreenTypeMaxThrottleNumber);
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].equals(prefThrottleScreenType)) {
+                index = i;
+            }
+        }
+
+        if ( ((fixed[index] == 1) && (numThrottles != max[index]))
+                || ((fixed[index] == 0) && (numThrottles > max[index]-1)) ) {
+//            Log.d("Engine_Driver", "Preferences: limitNumThrottles: numThrottles " +  numThrottles + " fixed " + fixed[index] + " max " + max[index]);
+
+            sharedPreferences.edit().putString("NumThrottle", textNumbers[max[index]-1]).commit();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index]-1]), Toast.LENGTH_SHORT).show();
+            reload();
+        }
+
+    }
+
+    private void showHideThrottleNumberPreference() {
+        boolean enable = true;
+        String prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        int index = -1;
+        String[] arr = this.getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
+        int[] fixed = this.getResources().getIntArray(R.array.prefThrottleScreenTypeFixedThrottleNumber);
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].equals(prefThrottleScreenType)) {
+                index = i;
+            }
+        }
+
+        if (fixed[index] == 0) {
+            enable = false;
+        }
+
+        enableDisablePreference("NumThrottle", !enable);
+
     }
 
     private void showHideThrottleSwitchPreferences() {

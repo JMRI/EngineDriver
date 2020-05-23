@@ -74,6 +74,7 @@
         <item name="ed_power_red_button">@drawable/power_red</item>
 
         <item name="ed_folder_icon">@drawable/folder</item>
+        <item name="ed_clock_icon">@drawable/fast_clock</item>
     </style>
 
     <!-- also appears 'round' theme' -->
@@ -134,6 +135,7 @@
         <item name="ed_power_red_button">@drawable/power_red_outline</item>
 
         <item name="ed_folder_icon">@drawable/folder_outline</item>
+        <item name="ed_clock_icon">@drawable/fast_clock</item>
     </style>
 
     <style name="app_theme_outline" parent="@android:style/Theme.Holo">
@@ -193,6 +195,7 @@
         <item name="ed_power_red_button">@drawable/power_red_outline</item>
 
         <item name="ed_folder_icon">@drawable/folder_outline</item>
+        <item name="ed_clock_icon">@drawable/fast_clock</item>
     </style>
 
     <!-- also appears a 'dark' theme -->
@@ -253,6 +256,7 @@
         <item name="ed_power_red_button">@drawable/power_red_outline</item>
 
         <item name="ed_folder_icon">@drawable/folder_outline</item>
+        <item name="ed_clock_icon">@drawable/fast_clock</item>
     </style>
 
     <style name="app_theme_colorful" parent="@android:style/Theme.Holo.Light">
@@ -320,6 +324,7 @@
         <item name="ed_power_red_button">@drawable/power_red</item>
 
         <item name="ed_folder_icon">@drawable/folder</item>
+        <item name="ed_clock_icon">@drawable/fast_clock</item>
     </style>
 
 </resources>

@@ -63,6 +63,7 @@
             android:summary="@string/prefFlashlightSummary"
             android:title="@string/prefFlashlightTitle" />
         <ListPreference
+            android:icon="?attr/ed_clock_icon"
             android:defaultValue="@string/prefDisplayClockDefaultValue"
             android:entries="@array/DisplayClockEntries"
             android:entryValues="@array/DisplayClockEntryValues"
@@ -668,22 +669,6 @@
             android:title="@string/prefMaximumThrottleTitle" >
         </EditTextPreference>
 
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefLimitSpeedButtonDefaultValue"
-            android:key="prefLimitSpeedButton"
-            android:summary="@string/prefLimitSpeedButtonSummary"
-            android:title="@string/prefLimitSpeedButtonTitle">
-        </CheckBoxPreference>
-
-        <EditTextPreference
-            android:defaultValue="@string/prefLimitSpeedPercentDefaultValue"
-            android:dialogTitle="@string/prefLimitSpeedPercentTitle"
-            android:key="prefLimitSpeedPercent"
-            android:maxLength="3"
-            android:inputType="number"
-            android:summary="@string/prefLimitSpeedPercentSummary"
-            android:title="@string/prefLimitSpeedPercentTitle" />
-
         <EditTextPreference
             android:defaultValue="@string/prefMaximumThrottleChangeDefaultValue"
             android:dialogTitle="@string/prefMaximumThrottleChangeTitle"
@@ -714,11 +699,37 @@
             android:digits="0123456789"
             android:summary="@string/prefSpeedButtonsRepeatSummary"
             android:title="@string/prefSpeedButtonsRepeatTitle" />
+
+        <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
+            android:key="prefLimitSpeedButtonPreferences"
+            android:title="@string/prefLimitSpeedButtonPreferencesTitle"
+            android:summary="@string/prefLimitSpeedButtonSummary"
+            android:persistent="false">
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefLimitSpeedButtonDefaultValue"
+                android:key="prefLimitSpeedButton"
+                android:summary="@string/prefLimitSpeedButtonSummary"
+                android:title="@string/prefLimitSpeedButtonTitle">
+            </CheckBoxPreference>
+
+            <EditTextPreference
+                android:defaultValue="@string/prefLimitSpeedPercentDefaultValue"
+                android:dialogTitle="@string/prefLimitSpeedPercentTitle"
+                android:key="prefLimitSpeedPercent"
+                android:maxLength="3"
+                android:inputType="number"
+                android:summary="@string/prefLimitSpeedPercentSummary"
+                android:title="@string/prefLimitSpeedPercentTitle" />
+        </PreferenceScreen>
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefStopOnPhonecallDefaultValue"
             android:key="stop_on_phonecall_preference"
             android:summary="@string/prefStopOnPhonecallSummary"
             android:title="@string/prefStopOnPhonecallTitle" />
+
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -726,6 +737,7 @@
             android:key="DirChangeWhileMovingPreference"
             android:summary="@string/prefDirChangeWhileMovingSummary"
             android:title="@string/prefDirChangeWhileMovingTitle" />
+
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -733,6 +745,7 @@
             android:key="prefStopOnDirectionChange"
             android:summary="@string/prefStopOnDirectionChangeSummary"
             android:title="@string/prefStopOnDirectionChangeTitle" />
+
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
             android:key="consist_follow_preferences"
