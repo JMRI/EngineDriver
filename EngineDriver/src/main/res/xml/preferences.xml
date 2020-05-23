@@ -45,16 +45,19 @@
         android:key="prefCategoryThrottleStatusRow"
         android:title="@string/prefThrottleStatusTitle">
         <CheckBoxPreference
+            android:icon="?attr/ed_estop_button"
             android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"
             android:key="show_emergency_stop_menu_preference"
             android:summary="@string/prefEmerStopSummary"
             android:title="@string/prefEmerStopTitle" />
         <CheckBoxPreference
+            android:icon="?attr/ed_power_green_button"
             android:defaultValue="@bool/prefLayoutPowerButtonDefaultValue"
             android:key="show_layout_power_button_preference"
             android:summary="@string/prefPowerButtonBarSummary"
             android:title="@string/prefPowerButtonBarTitle" />
         <CheckBoxPreference
+            android:icon="?attr/ed_flashlight_on_button"
             android:defaultValue="@bool/prefFlashlightButtonDefaultValue"
             android:key="prefFlashlightButtonDisplay"
             android:summary="@string/prefFlashlightSummary"
@@ -68,6 +71,7 @@
             android:title="@string/prefDisplayClockTitle" />
 
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="prefThrottleSwitchButton"
             android:title="@string/prefThrottleSwitchButtonPreferencesTitle"
             android:summary="@string/prefThrottleSwitchButtonSummary"
@@ -75,6 +79,7 @@
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefThrottleSwitchButtonDefaultValue"
+                android:icon="?attr/ed_throttle_switch_button"
                 android:key="prefThrottleSwitchButtonDisplay"
                 android:summary="@string/prefThrottleSwitchButtonSummary"
                 android:title="@string/prefThrottleSwitchButtonTitle" />
@@ -116,6 +121,7 @@
             android:summary="@string/prefNumOfThrottlesSummary"
             android:title="@string/prefNumOfThrottles" />
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="throttle_slider_preference"
             android:title="@string/prefSliderTitle"
             android:summary="@string/prefSliderSummary"
@@ -168,6 +174,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="throttle_direction_preference"
             android:title="@string/prefDirectionTitle"
             android:summary="@string/prefDirectionSummary"
@@ -237,6 +244,7 @@
         </CheckBoxPreference>
 
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="throttle_webview_preference"
             android:title="@string/prefWebViewTitle"
             android:summary="@string/prefWebViewSummary"
@@ -267,6 +275,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="swipe_up_down_preferences"
             android:title="@string/prefSwipeUpDownTitle"
             android:summary="@string/prefSwipeUpDownSummary"
@@ -297,6 +306,7 @@
                 android:title="@string/prefScreenBrightnessDimTitle" />
         </PreferenceScreen>
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="throttle_accelerometer_preference"
             android:title="@string/prefAccelerometerTitle"
             android:summary="@string/prefAccelerometerSummary"
@@ -329,6 +339,7 @@
         </CheckBoxPreference>
 
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="default_function_preferences"
             android:title="@string/prefDefaultFunctionsTitle"
             android:summary="@string/prefDefaultFunctionsSummary"
@@ -361,6 +372,7 @@
 
 
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="volume_preferences"
             android:title="@string/prefVolumeTitle"
             android:summary="@string/prefVolumeSummary"
@@ -392,6 +404,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="prefTts"
             android:title="@string/prefTtsTitle"
             android:summary="@string/prefTtsSummary"
@@ -431,6 +444,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="gamepad_preferences"
             android:title="@string/prefGamePadTitle"
             android:summary="@string/prefGamePadSummary"
@@ -606,6 +620,7 @@
             android:title="@string/prefSelectedLocoIndicatorTitle" />
 
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="prefBackgroundImageGroup"
             android:title="@string/prefBackgroundImagePreferencesTitle"
             android:summary="@string/prefBackgroundImageSummary"
@@ -719,6 +734,7 @@
             android:summary="@string/prefStopOnDirectionChangeSummary"
             android:title="@string/prefStopOnDirectionChangeTitle" />
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="consist_follow_preferences"
             android:title="@string/prefConsistFollowTitle"
             android:summary="@string/prefConsistFollowSummary"
@@ -840,6 +856,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="prefEsuMc2"
             android:title="@string/prefEsuMc2Title"
             android:summary="@string/prefEsuMc2Summary"
@@ -1097,6 +1114,7 @@
         android:key="prefCategoryChildren"
         android:title="@string/prefKidsSectionTitle" >
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="kids_preferences"
             android:title="@string/prefKidsSectionTitle"
             android:summary="@string/prefKidsSectionSummary"
@@ -1138,6 +1156,7 @@
         android:key="prefCategoryImportExport"
         android:title="@string/prefThrottleImportExportTitle" >
         <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
             android:key="importExport_preferences"
             android:title="@string/prefThrottleImportExportTitle"
             android:summary="@string/prefThrottleImportExportSummary"
