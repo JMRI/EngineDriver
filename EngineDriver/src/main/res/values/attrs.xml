@@ -35,4 +35,6 @@
 
     <attr name="ed_folder_icon" format="reference" />
     <attr name="ed_clock_icon" format="reference" />
+
+    <attr name="ed_advanced_preferences" format="reference" />
 </resources>

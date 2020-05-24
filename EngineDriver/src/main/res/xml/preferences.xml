@@ -28,6 +28,7 @@
         android:title="@string/prefThemeTitle" />
 
     <CheckBoxPreference
+        android:icon="?attr/ed_advanced_preferences"
         android:defaultValue="@bool/prefShowAdvancedPreferencesDefaultValue"
         android:key="prefShowAdvancedPreferences"
         android:summary="@string/prefShowAdvancedPreferencesSummary"
