@@ -28,6 +28,8 @@
     <color name="primary_text">#ffffffff</color>
     <color name="secondary_text">#ffffffff</color>
     <color name="tertiary_text">#ffffffff</color>
+    <color name="primaryDisabled">#ff888888</color>
+    <color name="secondaryDisabled">#ff888888</color>
 
     <color name="intro_background">#a56f00</color>
     <color name="intro_buttonbar_background">#ffac00</color>
