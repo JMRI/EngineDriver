@@ -254,7 +254,7 @@
     <string name="prefNumOfThrottlesSummary">Choisir le nombre maximum de régulateurs désiré.</string>
 
     <string name="prefThrottleScreenTypeTitle">Type d écran du régulateur</string>
-    <string name="prefThrottleScreenTypeSummary">Type d écran du régulateur</string>
+    <string name="prefThrottleScreenTypeSummary">Quelle type d ecran utiliser pour le régulateur</string>
 
     <string name="prefMaximumThrottleTitle">Pourcentage de vitesse Maxi</string>
 
@@ -292,7 +292,7 @@
 
     <string name="prefRosterRecentLocosTitle">Catalogue locos récentes?</string>
     <string name="prefRosterRecentLocosSummary">Inclure le nom du catalogue dans les loco récentes?</string>
-    <string name="prefRosterRecentLocoNamesTitle">Afficher le nom du roster pour les locos récentes?</string>
+    <string name="prefRosterRecentLocoNamesTitle">Afficher le nom du catalogue pour les locos récentes?</string>
     <string name="prefRosterRecentLocoNamesSummary">Inclure les noms de locomotive du catalogue dans les récents si l adresse correspondante est trouvée?</string>
     <string name="prefMaximumRecentLocosTitle">Nombre maxi de loco récentes</string>
 
@@ -819,21 +819,28 @@
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmer la suppression des dernières aiguilles utilisées</string>
 
     <string name="dialogConfirmResetPreferencesTitle">Réinitialiser les préférences</string>
-    <string name="dialogResetPreferencesQuestion">Confirmer la réinitialisation des préférences.\nLes préférences actuelles seront affacées</string>
+    <string name="dialogResetPreferencesQuestion">Confirmer la réinitialisation de toutes les préférences.\nTOUTES PREFERENCES REINITIALISEES</string>
     <string name="dialogConfirmImportPreferencesTitle">Préférences pour les imports</string>
     <string name="dialogImportPreferencesQuestion">Confirmer l import des préférences.\nLes préférences actuelles seront affacées</string>
-    <string name="permissionsReadImages">Engine Driver a besoin d\'autorisations de stockage pour charger les images de fond.</string>
-    <string name="prefBackgroundImageFileNameNoImageSelected">Aucune image a été sélectionné</string>
-    <string name="prefBackgroundImageFileNameSummary">Entrez le nom du fichier image d\'arrière-plan.</string>
-    <string name="prefBackgroundImageFileNameTitle">Arrière-plan Nom du fichier</string>
-    <string name="prefBackgroundImageSummary">Montrer une image d\'arrière-plan sur la page des gaz</string>
-    <string name="prefBackgroundImageTitle">Image de fond</string>
-    <string name="prefBackgroundImagePositionSummary">Sélectionnez la façon dont l\'image d\'arrière-plan sera placé sur l\'écran.</string>
-    <string name="prefBackgroundImagePositionTitle">Contexte Position de l\'image</string>
-    <string name="prefThrottleSwitchButtonSummary">Afficher le bouton de l\'interrupteur d\'accélérateur dans l\'écran des gaz pour permettre le changement rapide des types d\'écran d\'accélérateur.</string>
-    <string name="prefThrottleSwitchButtonTitle">Bouton d\'accélérateur de commutation</string>
-    <string name="prefThrottleSwitchOption1Summary">Bouton d\'accélérateur commutateur passe entre ce type d\'écran et la préférence suivante.</string>
-    <string name="prefThrottleSwitchOption1Title">Première manette des gaz Commutateur Type d\'écran</string>
-    <string name="prefThrottleSwitchOption2Summary">Bouton d\'accélérateur commutateur passe entre le type d\'écran dans la préférence précédente et celle-ci.</string>
-    <string name="prefThrottleSwitchOption2Title">Commutateur d\'accélérateur deuxième type d\'écran</string>
+    <string name="permissionsReadImages">Engine Driver a besoin des permission d acces STOCKAGE pour charger les images de fond.</string>
+    <string name="prefBackgroundImageFileNameNoImageSelected">Aucune image selectionnee</string>
+    <string name="prefBackgroundImageFileNameSummary">Entrer le nom de l image d Arriere Plan</string>
+    <string name="prefBackgroundImageFileNameTitle">Nom du fichier d Arriere Plan</string>
+    <string name="prefBackgroundImageSummary">Affichage Arriere Plan sur régulateur?</string>
+    <string name="prefBackgroundImageTitle">Image d Arriere Plan</string>
+    <string name="prefBackgroundImagePositionSummary">Choisir position de l Arriere Plan</string>
+    <string name="prefBackgroundImagePositionTitle">Position image Arriere Plan</string>
+    <string name="prefThrottleSwitchButtonSummary">Affichage du bouton pour changement rapide de l affichage du régulateur</string>
+    <string name="prefThrottleSwitchButtonTitle">Bouton changement affichage du régulateur</string>
+    <string name="prefThrottleSwitchOption1Summary">Bascule vers l affichage du prochain régulateur préféré</string>
+    <string name="prefThrottleSwitchOption1Title">Bascule vers le premier type d écran régulateur</string>
+    <string name="prefThrottleSwitchOption2Summary">Retour vers l affichage du précédent régulateur préféré</string>
+    <string name="prefThrottleSwitchOption2Title">Bascule vers le 2eme type d affichage</string>
+    <string name="recent_consists">Choisissez parmi récentes Locomotives</string>
+    <string name="prefThemeTitle">Thème/Style</string>
+    <string name="prefLimitSpeedButtonPreferencesTitle">Touche \\\'Vitesse Maxi\\\' Préférences</string>
+    <string name="toastPreferencesBackgroundChangeSucceeded">Contexte Le changement Réussi.</string>
+    <string name="throttleSwitchAction">Changer d\\\'écran Throttle</string>
+    <string name="prefBackgroundImagePreferencesTitle">Image d Arriere Plan</string>
+    <string name="prefThrottleSwitchButtonPreferencesTitle">Bouton changement affichage du régulateur</string>
 </resources>

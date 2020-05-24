@@ -820,4 +820,9 @@
     <string name="prefThrottleSwitchOption1Title">Drosselklappenschalter Erster Bildschirmtyp</string>
     <string name="prefThrottleSwitchOption2Summary">Drosselklappenschalter-Knopf schaltet zwischen dem Bildschirmtyp in der vorherige Präferenz und dieser.</string>
     <string name="prefThrottleSwitchOption2Title">Drosselklappenschalter Zweiten Bildschirmtyp</string>
+    <string name="recent_consists">Wählen Sie aus Neuen Lokomotiven</string>
+    <string name="prefLimitSpeedButtonPreferencesTitle">\\\'Limit Geschwindigkeit\\‘ Schaltfläche Einstellungen</string>
+    <string name="toastPreferencesBackgroundChangeSucceeded">Hintergrund ändern Succeeded.</string>
+    <string name="throttleSwitchAction">Schalten Gas Screens</string>
+    <string name="prefBackgroundImagePreferencesTitle">Hintergrundbild Einstellungen</string>
 </resources>

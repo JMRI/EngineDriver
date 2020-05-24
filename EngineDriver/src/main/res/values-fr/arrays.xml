@@ -372,7 +372,7 @@
     </string-array>
 
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
-        <item>Réduction de la taille image pour l\'adapter</item>
-        <item>Remplir l\'écran - Culture si nécessaire</item>
+        <item>Réduire affichage aux dimensions écran</item>
+        <item>Affichage plein écran - rogner si besoin</item>
     </string-array>
 </resources>
