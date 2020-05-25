@@ -28,8 +28,9 @@
         android:title="@string/prefThemeTitle" />
 
     <CheckBoxPreference
-        android:icon="?attr/ed_advanced_preferences"
+        android:layout="@layout/checkbox_icon_left_highlight"
         android:defaultValue="@bool/prefShowAdvancedPreferencesDefaultValue"
+        android:icon="?attr/ed_advanced_preferences"
         android:key="prefShowAdvancedPreferences"
         android:summary="@string/prefShowAdvancedPreferencesSummary"
         android:title="@string/prefShowAdvancedPreferencesTitle" />
@@ -79,9 +80,10 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
             android:key="prefThrottleSwitchButton"
-            android:title="@string/prefThrottleSwitchButtonPreferencesTitle"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
             android:summary="@string/prefThrottleSwitchButtonSummary"
-            android:persistent="false">
+            android:title="@string/prefThrottleSwitchButtonPreferencesTitle">
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefThrottleSwitchButtonDefaultValue"
@@ -128,6 +130,7 @@
             android:summary="@string/prefNumOfThrottlesSummary"
             android:title="@string/prefNumOfThrottles" />
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="throttle_slider_preference"
             android:title="@string/prefSliderTitle"
@@ -181,6 +184,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="throttle_direction_preference"
             android:title="@string/prefDirectionTitle"
@@ -251,6 +255,7 @@
         </CheckBoxPreference>
 
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="throttle_webview_preference"
             android:title="@string/prefWebViewTitle"
@@ -282,6 +287,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="swipe_up_down_preferences"
             android:title="@string/prefSwipeUpDownTitle"
@@ -313,6 +319,7 @@
                 android:title="@string/prefScreenBrightnessDimTitle" />
         </PreferenceScreen>
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="throttle_accelerometer_preference"
             android:title="@string/prefAccelerometerTitle"
@@ -346,6 +353,7 @@
         </CheckBoxPreference>
 
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="default_function_preferences"
             android:title="@string/prefDefaultFunctionsTitle"
@@ -379,6 +387,7 @@
 
 
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="volume_preferences"
             android:title="@string/prefVolumeTitle"
@@ -411,6 +420,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="prefTts"
             android:title="@string/prefTtsTitle"
@@ -451,6 +461,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="gamepad_preferences"
             android:title="@string/prefGamePadTitle"
@@ -627,6 +638,7 @@
             android:title="@string/prefSelectedLocoIndicatorTitle" />
 
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="prefBackgroundImageGroup"
             android:title="@string/prefBackgroundImagePreferencesTitle"
@@ -707,6 +719,7 @@
             android:title="@string/prefSpeedButtonsRepeatTitle" />
 
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="prefLimitSpeedButtonPreferences"
             android:title="@string/prefLimitSpeedButtonPreferencesTitle"
@@ -753,6 +766,7 @@
             android:title="@string/prefStopOnDirectionChangeTitle" />
 
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="consist_follow_preferences"
             android:title="@string/prefConsistFollowTitle"
@@ -875,6 +889,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="prefEsuMc2"
             android:title="@string/prefEsuMc2Title"
@@ -1133,6 +1148,7 @@
         android:key="prefCategoryChildren"
         android:title="@string/prefKidsSectionTitle" >
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="kids_preferences"
             android:title="@string/prefKidsSectionTitle"
@@ -1175,6 +1191,7 @@
         android:key="prefCategoryImportExport"
         android:title="@string/prefThrottleImportExportTitle" >
         <PreferenceScreen
+            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="importExport_preferences"
             android:title="@string/prefThrottleImportExportTitle"

@@ -751,4 +751,10 @@
     <string name="prefThrottleSwitchOption1Title">Acceleratore Tipo di interruttore Prima schermata</string>
     <string name="prefThrottleSwitchOption2Summary">Button Switch Throttle passerà tra il tipo di schermo nella preferenza precedente e questo.</string>
     <string name="prefThrottleSwitchOption2Title">Acceleratore Tipo di interruttore seconda schermata</string>
+    <string name="recent_consists">Seleziona da Locomotive recenti</string>
+    <string name="prefLimitSpeedButtonPreferencesTitle">Pulsante Preferenze \\\'limite di velocità\\\'</string>
+    <string name="toastPreferencesBackgroundChangeSucceeded">Sfondo Change Succeeded.</string>
+    <string name="throttleSwitchAction">Passare da una schermata a farfalla</string>
+    <string name="prefBackgroundImagePreferencesTitle">Preferenze immagine di sfondo</string>
+    <string name="prefThrottleSwitchButtonPreferencesTitle">Throttle Interruttore Preferenze Button</string>
 </resources>

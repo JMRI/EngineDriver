@@ -755,4 +755,10 @@
     <string name="prefThrottleSwitchOption1Title">Acelerador Tipo de interruptor Primeira Tela</string>
     <string name="prefThrottleSwitchOption2Summary">Mudar acelerador botão irá alternar entre o tipo de ecrã na preferência anterior e este.</string>
     <string name="prefThrottleSwitchOption2Title">Acelerador Tipo de interruptor segunda tela</string>
+    <string name="recent_consists">Seleccione a partir das locomotivas recentes</string>
+    <string name="prefLimitSpeedButtonPreferencesTitle">Preferências \\\'Limite de velocidade\\\' botão</string>
+    <string name="toastPreferencesBackgroundChangeSucceeded">Mudar fundo Sucedido.</string>
+    <string name="throttleSwitchAction">Mudar telas do acelerador</string>
+    <string name="prefBackgroundImagePreferencesTitle">Preferências imagem de fundo</string>
+    <string name="prefThrottleSwitchButtonPreferencesTitle">Preferências do botão do acelerador Interruptor</string>
 </resources>

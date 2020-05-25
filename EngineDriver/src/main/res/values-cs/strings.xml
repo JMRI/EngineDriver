@@ -918,4 +918,10 @@
     <string name="prefThrottleSwitchOption1Title">Throttle Typ přepínače First Screen</string>
     <string name="prefThrottleSwitchOption2Summary">Throttle Spínač se přepne mezi typem obrazovky v předchozím preference a tento jeden.</string>
     <string name="prefThrottleSwitchOption2Title">Throttle Typ přepínače Druhá obrazovka</string>
+    <string name="recent_consists">Vyberte si z Nedávné Lokomotivy</string>
+    <string name="prefLimitSpeedButtonPreferencesTitle">Tlačítko Preferences \\\'rychlostní limit\\\'</string>
+    <string name="toastPreferencesBackgroundChangeSucceeded">Pozadí Změna Uspěl.</string>
+    <string name="throttleSwitchAction">Přepnout Škrtící klapky obrazovek</string>
+    <string name="prefBackgroundImagePreferencesTitle">Obrázek na pozadí Preferences</string>
+    <string name="prefThrottleSwitchButtonPreferencesTitle">Throttle Spínač předvolby</string>
 </resources>

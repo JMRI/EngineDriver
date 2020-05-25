@@ -355,7 +355,7 @@
 
     <string name="prefRosterFilterTitle">Filter Roster</string>
     <string name="prefRosterFilterSummary">Only show roster entries containing…</string>
-    <string name="prefRosterFilterDefaultValue" />
+    <string name="prefRosterFilterDefaultValue" translatable="false" />
     <string name="FilterRosterList">Filter</string>
     <string name="FilterRosterListHint">Contains…</string>
     <string name="rosterEmpty">Unable to find any entries in the JMRI roster.  Use either the \'DCC Address\' or \'Recent\' option instead.</string>
@@ -457,11 +457,11 @@
     <string name="NumThrottleDefaulValue" translatable="false">Two</string>  <!-- DO NOT TRANSLATE -->
     <string name="server_address">Server address</string>
     <string name="routes_route">Route System Name</string>
-    <string name="label_percent">%</string>
-    <string name="label_14step">14</string>
-    <string name="label_27step">27</string>
-    <string name="label_28step">28</string>
-    <string name="label_128step">128</string>
+    <string name="label_percent" translatable="false">%</string>
+    <string name="label_14step" translatable="false">14</string>
+    <string name="label_27step" translatable="false">27</string>
+    <string name="label_28step" translatable="false">28</string>
+    <string name="label_128step" translatable="false">128</string>
     <string name="throttle_name">Throttle Name: %1$s</string>
 
     <string name="prefShowAdvancedPreferencesTitle">Show Advanced Preferences?</string>

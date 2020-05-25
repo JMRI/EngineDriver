@@ -817,4 +817,10 @@
     <string name="prefThrottleSwitchOption1Title">Interruptor de l\'accelerador Tipus Primera pantalla</string>
     <string name="prefThrottleSwitchOption2Summary">El botó d\'interruptor de l\'accelerador es canviarà entre el tipus de pantalla a la preferència anterior i aquest.</string>
     <string name="prefThrottleSwitchOption2Title">Interruptor de l\'accelerador Tipus segona pantalla</string>
+    <string name="recent_consists">Seleccioneu una de les locomotores recents</string>
+    <string name="prefLimitSpeedButtonPreferencesTitle">Preferències \\\'Límit de velocitat \\\' botó</string>
+    <string name="toastPreferencesBackgroundChangeSucceeded">Canviar el fons tingut èxit.</string>
+    <string name="throttleSwitchAction">Canviar les pantalles de l\\\'accelerador</string>
+    <string name="prefBackgroundImagePreferencesTitle">Preferències fons de la imatge</string>
+    <string name="prefThrottleSwitchButtonPreferencesTitle">Preferències de Botons de l\'interruptor de l\'accelerador</string>
 </resources>
