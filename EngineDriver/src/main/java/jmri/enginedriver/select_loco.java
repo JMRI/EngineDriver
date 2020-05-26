@@ -377,14 +377,14 @@ public class select_loco extends Activity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case message_type.ROSTER_UPDATE:
-                    Log.d("Engine_Driver", "select_loco: select_loco_handler - ROSTER_UPDATE");
+//                    Log.d("Engine_Driver", "select_loco: select_loco_handler - ROSTER_UPDATE");
                     //refresh labels when any roster response is received
                     roster_list_adapter.notifyDataSetChanged();
                     set_labels();
                     break;
                 case message_type.RESPONSE:
                     String response_str = msg.obj.toString();
-                    Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - message: " + response_str);
+//                    Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - message: " + response_str);
                     if (response_str.length() >= 1) {
                         char com1 = response_str.charAt(0);
                         String com123 = response_str.substring(0 , Math.min(response_str.length(), 3) );
@@ -398,7 +398,7 @@ public class select_loco extends Activity {
                                 set_labels();
                                 break;
                         } else { // ignore everything else
-                            Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - ignoring message: " + response_str);
+//                            Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - ignoring message: " + response_str);
                             break;
                         }
                     }
@@ -406,17 +406,17 @@ public class select_loco extends Activity {
                         set_labels();
                     break;
                 case message_type.WIT_CON_RETRY:
-                    Log.d("Engine_Driver", "select_loco: select_loco_handler - WIT_CON_RETRY");
+//                    Log.d("Engine_Driver", "select_loco: select_loco_handler - WIT_CON_RETRY");
                     witRetry(msg.obj.toString());
                     break;
                 case message_type.WIT_CON_RECONNECT:
-                    Log.d("Engine_Driver", "select_loco: select_loco_handler - WIT_CON_RECONNECT");
+//                    Log.d("Engine_Driver", "select_loco: select_loco_handler - WIT_CON_RECONNECT");
                     roster_list_adapter.notifyDataSetChanged();
                     set_labels();
                     break;
                 case message_type.RESTART_APP:
                 case message_type.DISCONNECT:
-                    Log.d("Engine_Driver", "select_loco: select_loco_handler - DISCONNECT");
+//                    Log.d("Engine_Driver", "select_loco: select_loco_handler - DISCONNECT");
                     end_this_activity();
                     break;
             }
