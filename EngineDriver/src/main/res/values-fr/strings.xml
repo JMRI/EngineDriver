@@ -618,7 +618,7 @@
     <string name="lightsTextUnknown">Inconnu</string>
 
     <string name="logviewerClose">Fermer</string>
-    <string name="logviewerSave">Commencer l enregistrement sur fichier log.</string>
+    <string name="logviewerSave">Commencer enregistrement fichier log.</string>
 
     <string name="prefLocaleTitle">Localisation</string>
     <string name="prefLocaleSummary">Langue à utiliser.\nATTENTION! Engine Driver va redémarrer immédiatement. Les touches de directions seront réinitialisées.</string>
@@ -836,11 +836,11 @@
     <string name="prefThrottleSwitchOption1Title">Bascule vers le premier type d écran régulateur</string>
     <string name="prefThrottleSwitchOption2Summary">Retour vers l affichage du précédent régulateur préféré</string>
     <string name="prefThrottleSwitchOption2Title">Bascule vers le 2eme type d affichage</string>
-    <string name="recent_consists">Choisissez parmi récentes Locomotives</string>
+    <string name="recent_consists">Sélectionner parmi les locomotives récentes</string>
     <string name="prefThemeTitle">Thème/Style</string>
-    <string name="prefLimitSpeedButtonPreferencesTitle">Touche \\\'Vitesse Maxi\\\' Préférences</string>
-    <string name="toastPreferencesBackgroundChangeSucceeded">Contexte Le changement Réussi.</string>
-    <string name="throttleSwitchAction">Changer d\\\'écran Throttle</string>
-    <string name="prefBackgroundImagePreferencesTitle">Image d Arriere Plan</string>
-    <string name="prefThrottleSwitchButtonPreferencesTitle">Bouton changement affichage du régulateur</string>
+    <string name="prefLimitSpeedButtonPreferencesTitle">\'Vitesse Maxi\' touche préférée</string>
+    <string name="toastPreferencesBackgroundChangeSucceeded">Changement Arriere Plan réussi</string>
+    <string name="throttleSwitchAction">Changement écrans Régulateur</string>
+    <string name="prefBackgroundImagePreferencesTitle">Préférence Image d Arriere Plan</string>
+    <string name="prefThrottleSwitchButtonPreferencesTitle">Préférences pour changer Affichage du régulateur</string>
 </resources>
