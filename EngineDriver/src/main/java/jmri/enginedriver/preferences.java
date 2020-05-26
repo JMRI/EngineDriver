@@ -185,12 +185,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         deviceId = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         sharedPreferences.edit().putString("prefAndroidId", deviceId).commit();
 
-        String currentValue = sharedPreferences.getString("prefTtsWhen", "");
-        if (currentValue.equals("None")) {
-            enableDisablePreference("prefTtsThrottleResponse", false);
-            enableDisablePreference("prefTtsGamepadTest", false);
-            enableDisablePreference("prefTtsGamepadTestComplete", false);
-        }
+        showHideTTSPreferences();
 
         prefThrottleScreenTypeOriginal = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         showHideThrottleTypePreferences();
@@ -417,13 +412,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     limitFloatPrefValue(sharedPreferences, key, 1.2F, 3.0F, "2.0"); // limit check new value
                     break;
                 case "prefTtsWhen":
-                    String currentValue = sharedPreferences.getString("prefTtsWhen", "");
-                    boolean enable = true;
-                    if (currentValue.equals("None")) {
-                        enable = false;
-                    }
-                    enableDisablePreference("prefTtsGamepadTest", enable);
-                    enableDisablePreference("prefTtsGamepadTestComplete", enable);
+                    showHideTTSPreferences();
                     break;
                 case "prefNumberOfDefaultFunctionLabels":
                     // limit check new value
@@ -835,6 +824,19 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         enableDisablePreference("prefThrottleSwitchOption2", !enable);
     }
 
+     private void showHideTTSPreferences() {
+        boolean enable = true;
+         String currentValue = sharedPreferences.getString("prefTtsWhen", "");
+         if (!currentValue.equals("None")) {
+            enable = false;
+        }
+
+         enableDisablePreference("prefTtsThrottleResponse", !enable);
+         enableDisablePreference("prefTtsGamepadTest", !enable);
+         enableDisablePreference("prefTtsGamepadTestComplete", !enable);
+
+    }
+
     private void showHideBackgroundImagePreferences() {
         boolean enable = true;
         if (prefBackgroundImage) {
@@ -900,6 +902,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         enableDisablePreference("prefTickMarksOnSliders", enable);
         enableDisablePreference("prefLimitSpeedButton", enable);
         enableDisablePreference("prefLimitSpeedPercent", enable);
+
+        enable = prefThrottleScreenTypeOriginal.equals("Default");
+        enableDisablePreference("prefDecreaseLocoNumberHeight", enable);
     }
 
 
@@ -1090,6 +1095,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         enableDisablePreference("prefGamepadSwapForwardReverseWithScreenButtons", thisEnabled);
         enableDisablePreference("prefGamepadTestEnforceTesting", thisEnabled);
         enableDisablePreference("prefGamepadTestNow", thisEnabled);
+        enableDisablePreference("prefGamePadSpeedButtonsSpeedStep", thisEnabled);
+        enableDisablePreference("prefGamepadTestEnforceTestingSimple", thisEnabled);
 
     }
 
