@@ -75,11 +75,11 @@
 
     <string name="fbResetFunctionLabels">Reset All</string>
     <string name="prefNumberOfDefaultFunctionLabelsTitle">Number of Default Functions</string>
-    <string name="prefNumberOfDefaultFunctionLabelsSummary">Limit the Function Labels shown if not available from the JMRI roster.</string>
+    <string name="prefNumberOfDefaultFunctionLabelsSummary">Limit the Function Labels shown if not available from the Server roster.</string>
     <string name="prefNumberOfDefaultFunctionLabelsDefaultValue" translatable="false">29</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Number of Default Functions for Roster</string>
-    <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limit the Function Labels shown for JMRI Roster Entries with no function Labels.</string>
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limit the Function Labels shown for Server Roster Entries with no function Labels.</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterDefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="consist_help">Click a loco to change its direction with respect to the front of the consist.  Swipe Right on a loco to remove it from the consist.  Press Back Arrow when done.</string>
@@ -98,7 +98,7 @@
     <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>
     <string name="locoPressToSelect">Select</string>
     <string name="powerWillNotWorkTitle">Will Not Work!</string>
-    <string name="powerWillNotWork">JMRI has the wiThrottle power control setting to off.\nWill now remove Power Icon.\nWill display again when JMRI setting is on.</string>
+    <string name="powerWillNotWork">Server has the wiThrottle power control setting to off.\nWill now remove Power Icon.\nWill display again when Server setting is on.</string>
     <string name="current_locos">Currently Selected Locos</string>
     <string name="release">Release</string>
     <string name="releaseThrottleNumber">Release Throttle %1$s</string>
@@ -201,8 +201,8 @@
     <string name="prefSwipeUpOptionSummary">What should happen when you swipe up on the Throttle view.</string>
 
     <!--     Volume preferences  -->
-    <string name="prefVolumeTitle">Volume Preferences</string>
-    <string name="prefVolumeSummary">Options for Volume buttons</string>
+    <string name="prefVolumeTitle">Volume Button Preferences</string>
+    <string name="prefVolumeSummary">Using Volume buttons to control speed</string>
 
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Speed button change amount</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">How much Volume buttons jump throttle speed.</string>
@@ -307,7 +307,7 @@
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. Height?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Use smaller buttons for the loco Number, speed and direction buttons.</string>
     <string name="prefNumOfThrottles">Number of throttles</string>
-    <string name="prefNumOfThrottlesSummary">Choose how many throttles you want to display.</string>
+    <string name="prefNumOfThrottlesSummary">Choose how many throttles to display.</string>
     <string name="prefNumOfThrottlesDefault" translatable="false">Two</string>
 
     <string name="prefThrottleScreenTypeTitle">Throttle Screen Type</string>
@@ -358,14 +358,14 @@
     <string name="prefRosterFilterDefaultValue" translatable="false" />
     <string name="FilterRosterList">Filter</string>
     <string name="FilterRosterListHint">Contains…</string>
-    <string name="rosterEmpty">Unable to find any entries in the JMRI roster.  Use either the \'DCC Address\' or \'Recent\' option instead.</string>
+    <string name="rosterEmpty">Unable to find any entries in the Server roster.  Use either the \'DCC Address\' or \'Recent\' option instead.</string>
 
     <string name="LocoSelectMethodQuestion">Method: </string>
     <string name="LocoSelectMethodAddress">DCC Address</string>
-    <string name="LocoSelectMethodRoster">JMRI Roster</string>
+    <string name="LocoSelectMethodRoster">Server Roster</string>
     <string name="LocoSelectMethodRecent">Recent Locos</string>
     <string name="LocoSelectMethodRecentConsist">Recent Consists</string>
-    <string name="LocoSelectMethodHelp">Enter the DCC Address of your loco above and click \'Acquire\'.\n\nAlternately, select a loco from the JMRI \'Roster\' or select from \'Recent\' locos by clicking one of the radio buttons above.</string>
+    <string name="LocoSelectMethodHelp">Enter the DCC Address of your loco above and click \'Acquire\'.\n\nAlternately, select a loco from the Server \'Roster\' or select from \'Recent\' locos by clicking one of the radio buttons above.</string>
 
     <string name="prefMaximumRecentLocosTitle">Maximum Recent Locos</string>
     <string name="prefMaximumRecentLocosDefaultValue" translatable="false">10</string>  <!-- DO NOT TRANSLATE -->
@@ -412,7 +412,7 @@
     <string name="clearLocoList">Clear List</string>
     <string name="ClearConnList">Clear Recent List</string>
     <string name="clearConsistsList">Clear Consists List</string>
-    <string name="prefEmerStopTitle">Show Emergency Stop Button?</string>
+    <string name="prefEmerStopTitle">Show Emergency Stop button?</string>
     <string name="prefEmerStopSummary">Show loco emergency stop button in action bar?</string>
     <string name="EStop">Estop</string>
     <string name="PowerButtonBar">power_button</string>
@@ -424,7 +424,7 @@
     <string name="PrefConnectToFirstServerTitle">Auto-Connect to First WiThrottle Server?</string>
     <string name="PrefConnectToFirstServerSummary">Connect automatically to first WiThrottle Server discovered?</string>
     <string name="prefDisplayClockTitle">Fast Clock Display</string>
-    <string name="prefDisplayClockSummary">Set Format for Fast Clock Display in Throttle and Web screens.</string>
+    <string name="prefDisplayClockSummary">Set Format for Fast Clock Display in action bar.</string>
     <string name="prefDisplayClockDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
     <string name="LeftButton">&lt;&lt;</string>
     <string name="RightButton">&gt;&gt;</string>
@@ -540,7 +540,7 @@
     <string name="prefTickMarksOnSlidersSummary">Show or hide tick marks on the background of the speed sliders.</string>
 
     <string name="prefThemeTitle">Theme/Style</string>
-    <string name="prefThemeSummary">App theme.</string>
+    <string name="prefThemeSummary">Select a visual appearance for this app.</string>
     <string name="prefThemeDefaultValue" translatable="false">Default</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefHideDemoServerTitle">Hide Demo Server</string>
@@ -697,7 +697,7 @@
     <string name="toastSwipeUpScreenDimmed">Throttle Screen Dimmed - Swipe up to restore</string>
     <string name="toastSwipeUpViewHidden">Web View temporarily hidden. To hide permanently change in preferences</string>
     <string name="toastThrottleAlertEstop">Alert: Engine %1$s is set to ESTOP</string>
-    <string name="toastThrottleImportServerAutoSucceeded">Automatic preferences import from JMRI Web server succeeded.</string>
+    <string name="toastThrottleImportServerAutoSucceeded">Automatic preferences import from Web server succeeded.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%1$s-%2$s). Reset to %3$s.</string>
@@ -826,7 +826,7 @@
     <string name="flashlightAction">Flashlight</string>
     <string name="flashlightStateOn">Flashlight is ON</string>
     <string name="flashlightStateOff">Flashlight is Off</string>
-    <string name="prefFlashlightSummary">Display flashlight button in Throttle, Turnout and Routes screens?</string>
+    <string name="prefFlashlightSummary">Display flashlight button in action bar?</string>
     <string name="prefFlashlightTitle">Show flashlight button?</string>
     <string name="toastFlashlightOnFailed">Sorry! There was a problem switching on the flashlight&#8230;</string>
     <string name="toastFlashlightOffFailed">Sorry! There was a problem switching off the flashlight&#8230;</string>
@@ -936,7 +936,7 @@
     <string name="introWelcomeSummary">This app can connect to a JMRI, MRC or DigiTrax WiThrottle server to control your DCC locos and devices. The following pages will guide you through initial setup.</string>
 
     <string name="introThrottleNameSummary">Set a name for this device</string>
-    <string name="introThrottleNameSummary1">The name you choose will appear in the WiThrottle window in JMRI. It can help when resolving problems with multiple devices.  It must be unique.</string>
+    <string name="introThrottleNameSummary1">The name you choose will appear in the WiThrottle Server window. It can help when resolving problems with multiple devices.  It must be unique.</string>
 
     <string name="introThemeSummary">Choose the colors and appearance of the whole app.</string>
     <string name="introThrottleTypeSummary">Choose the layout of the main throttle screen.</string>
