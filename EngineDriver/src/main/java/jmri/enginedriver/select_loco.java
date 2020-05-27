@@ -323,7 +323,7 @@ public class select_loco extends Activity {
         llThrottle.setVisibility(View.VISIBLE);
         llEditConsist.setVisibility(View.GONE);
 
-        if (mainapp.consists[whichThrottle].isActive()) {
+        if ((mainapp.consists != null) && (mainapp.consists[whichThrottle].isActive())) {
             if (mainapp.consists[whichThrottle].size()>1) {
                 llEditConsist.setVisibility(View.VISIBLE);
             }
