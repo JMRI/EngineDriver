@@ -1,4 +1,7 @@
 **Version 2.25.106
+ * fix crashes reported to Play Store
+ * several visual and organizational improvements to Preferences
+ * Optional Status Bar button to switch Throttle Screen types
  * Add ED version to log
 **Version 2.25.104
  * New thumb image for switching throttle
