@@ -214,7 +214,7 @@ public class throttle_full extends throttle {
             Button b = bSels[throttleIndex];
             bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
             bLabelPlainText = bLabel;
-            if (mainapp.consists[throttleIndex] != null) {
+            if ((mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)) {
                 if (mainapp.consists[throttleIndex].isActive()) {
                     if (!prefShowAddressInsteadOfName) {
                         if (!overrideThrottleNames[throttleIndex].equals("")) {

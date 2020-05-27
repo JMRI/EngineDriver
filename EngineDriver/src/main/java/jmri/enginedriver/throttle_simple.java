@@ -187,7 +187,7 @@ public class throttle_simple extends throttle {
         String bLabelPlainText;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             Button b = bSels[throttleIndex];
-            if (mainapp.consists[throttleIndex].isActive()) {
+            if ((mainapp.consists != null) && (mainapp.consists[throttleIndex].isActive())) {
                 if (!prefShowAddressInsteadOfName) {
                     if (!overrideThrottleNames[throttleIndex].equals("")) {
                         bLabel = overrideThrottleNames[throttleIndex];
